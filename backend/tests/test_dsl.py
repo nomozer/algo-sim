@@ -1,0 +1,341 @@
+# -*- coding: utf-8 -*-
+"""Test validator DSL generic (M6) + classify chọn generic + catalog.
+
+§5: validation bắt buộc, reject ref treo / rule lạ / chu trình / quá giới hạn /
+arbitrary code. §4: LLM không sinh state/frames/timeline.
+"""
+
+import asyncio
+import json
+
+from app.ai import pipeline
+from app.simulation.catalog import CATALOG
+from app.simulation.dsl.validator import validate_generic_config
+
+AND_SPEC = {
+    "dsl_version": "1.0",
+    "title": "Cổng AND",
+    "objects": [
+        {"id": "a", "type": "switch", "value": 0},
+        {"id": "b", "type": "switch", "value": 0},
+        {"id": "y", "type": "lamp"},
+    ],
+    "rules": [{"type": "boolean", "op": "and", "inputs": ["a", "b"], "target": "y"}],
+    "interactions": [{"type": "toggle", "target": "a"}, {"type": "toggle", "target": "b"}],
+    "processes": [],
+}
+
+PACKET_SPEC = {
+    "dsl_version": "1.0",
+    "title": "Gói tin",
+    "objects": [
+        {"id": "c", "type": "node", "node_type": "client"},
+        {"id": "s", "type": "node", "node_type": "server"},
+        {"id": "e1", "type": "edge", "from": "c", "to": "s"},
+        {"id": "pkt", "type": "moving_entity"},
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [{"type": "move_along_path", "entity": "pkt", "path": ["c", "s"]}],
+}
+
+
+def test_catalog_co_generic():
+    assert "generic.rule_scene" in CATALOG
+    assert CATALOG["generic.rule_scene"].domain == "generic"
+
+
+def test_spec_hop_le_duoc_chuan_hoa():
+    cfg, err = validate_generic_config(AND_SPEC)
+    assert err is None
+    assert cfg["title"] == "Cổng AND"
+    assert len(cfg["objects"]) == 3
+    assert cfg["rules"][0]["op"] == "and"
+
+
+def test_packet_spec_hop_le():
+    cfg, err = validate_generic_config(PACKET_SPEC)
+    assert err is None
+    assert cfg["processes"][0]["path"] == ["c", "s"]
+
+
+def test_object_type_la_bi_reject():
+    bad = {"title": "x", "objects": [{"id": "a", "type": "hologram"}]}
+    assert validate_generic_config(bad)[0] is None
+
+
+def test_rule_type_la_bi_reject():
+    bad = {
+        "title": "x",
+        "objects": [{"id": "a", "type": "switch", "value": 0}, {"id": "y", "type": "lamp"}],
+        "rules": [{"type": "quantum", "inputs": ["a"], "target": "y"}],
+    }
+    assert validate_generic_config(bad)[0] is None
+
+
+def test_dangling_reference_bi_reject():
+    bad = {
+        "title": "x",
+        "objects": [{"id": "a", "type": "switch", "value": 0}],
+        "rules": [{"type": "boolean", "op": "and", "inputs": ["khong-co"], "target": "a"}],
+    }
+    assert validate_generic_config(bad)[0] is None
+
+
+def test_chu_trinh_rule_bi_reject():
+    bad = {
+        "title": "x",
+        "objects": [{"id": "p", "type": "value_box"}, {"id": "q", "type": "value_box"}],
+        "rules": [
+            {"type": "weighted_sum", "inputs": ["q"], "weights": [1], "target": "p"},
+            {"type": "weighted_sum", "inputs": ["p"], "weights": [1], "target": "q"},
+        ],
+    }
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "vòng" in err
+
+
+def test_qua_gioi_han_object_bi_reject():
+    bad = {"title": "x", "objects": [{"id": f"o{i}", "type": "label"} for i in range(21)]}
+    assert validate_generic_config(bad)[0] is None
+
+
+def test_forbidden_key_bi_reject():
+    """§4: LLM không được sinh timeline/state/frames — engine tự dựng."""
+    for key in ("timeline", "state", "frames", "steps"):
+        bad = {**AND_SPEC, key: []}
+        config, err = validate_generic_config(bad)
+        assert config is None, f"khóa {key} phải bị từ chối"
+        assert "cấm" in err or "engine" in err.lower()
+
+
+def test_truong_la_cap_cao_nhat_bi_reject():
+    bad = {**AND_SPEC, "script": "alert(1)"}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "lạ" in err
+
+
+def test_toggle_gia_tri_dan_xuat_bi_reject():
+    """Không cho toggle object là target của rule (giá trị dẫn xuất)."""
+    bad = {**AND_SPEC, "interactions": [{"type": "toggle", "target": "y"}]}
+    assert validate_generic_config(bad)[0] is None
+
+
+def test_process_entity_khong_phai_moving_entity_bi_reject():
+    bad = {
+        "title": "x",
+        "objects": [{"id": "n1", "type": "node"}, {"id": "n2", "type": "node"}],
+        "processes": [{"type": "move_along_path", "entity": "n1", "path": ["n1", "n2"]}],
+    }
+    assert validate_generic_config(bad)[0] is None
+
+
+# ── reveal_sequence (M7.7) ────────────────────────────────────
+
+REVEAL_SPEC = {
+    "dsl_version": "1.0",
+    "title": "Tam giác ABC",
+    "objects": [
+        {"id": "A", "type": "node"},
+        {"id": "B", "type": "node"},
+        {"id": "C", "type": "node"},
+        {"id": "AB", "type": "edge", "from": "A", "to": "B"},
+        {"id": "AC", "type": "edge", "from": "A", "to": "C"},
+        {"id": "BC", "type": "edge", "from": "B", "to": "C"},
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+        {"type": "reveal_sequence", "steps": [
+            {"objects": ["A", "B"]},
+            {"objects": ["AB"]},
+            {"objects": ["C"]},
+            {"objects": ["AC"]},
+            {"objects": ["BC"]},
+        ]},
+    ],
+}
+
+
+def test_reveal_spec_hop_le():
+    cfg, err = validate_generic_config(REVEAL_SPEC)
+    assert err is None
+    assert cfg["processes"][0]["type"] == "reveal_sequence"
+    assert len(cfg["processes"][0]["steps"]) == 5
+
+
+def test_reveal_ref_object_khong_ton_tai_bi_reject():
+    bad = {**REVEAL_SPEC, "processes": [{"type": "reveal_sequence", "steps": [{"objects": ["KHONG_CO"]}]}]}
+    assert validate_generic_config(bad)[0] is None
+
+
+def test_reveal_field_la_bi_reject():
+    bad = {**REVEAL_SPEC, "processes": [{"type": "reveal_sequence", "steps": [{"objects": ["A"], "color": "red"}]}]}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "lạ" in err
+
+
+def test_reveal_qua_gioi_han_step_bi_reject():
+    steps = [{"objects": ["A"]} for _ in range(21)]  # > 20
+    bad = {**REVEAL_SPEC, "processes": [{"type": "reveal_sequence", "steps": steps}]}
+    assert validate_generic_config(bad)[0] is None
+
+
+def test_reveal_step_rong_bi_reject():
+    bad = {**REVEAL_SPEC, "processes": [{"type": "reveal_sequence", "steps": [{"objects": []}]}]}
+    assert validate_generic_config(bad)[0] is None
+
+
+# ── structural/textual primitives (M7.12) ─────────────────────
+
+WEB_SPEC = {
+    "dsl_version": "1.0",
+    "title": "Trang giới thiệu",
+    "objects": [
+        {"id": "page", "type": "container", "text": "Trang giới thiệu"},
+        {"id": "h", "type": "heading", "text": "Xin chào", "parent": "page"},
+        {"id": "p", "type": "paragraph", "text": "Đây là đoạn văn.", "parent": "page"},
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [],
+}
+
+
+def test_web_structural_spec_hop_le():
+    cfg, err = validate_generic_config(WEB_SPEC)
+    assert err is None, err
+    assert {o["type"] for o in cfg["objects"]} == {"container", "heading", "paragraph"}
+    assert cfg["objects"][1]["text"] == "Xin chào"
+    assert cfg["objects"][1]["parent"] == "page"
+
+
+def test_heading_thieu_text_bi_reject():
+    bad = {**WEB_SPEC, "objects": [
+        {"id": "page", "type": "container"},
+        {"id": "h", "type": "heading", "parent": "page"},  # thiếu text
+    ]}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "text" in err
+
+
+def test_parent_khong_phai_container_bi_reject():
+    bad = {**WEB_SPEC, "objects": [
+        {"id": "h1", "type": "heading", "text": "A"},
+        {"id": "h2", "type": "heading", "text": "B", "parent": "h1"},  # parent là heading, không phải container
+    ]}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "parent" in err
+
+
+def test_parent_chu_trinh_bi_reject():
+    bad = {**WEB_SPEC, "objects": [
+        {"id": "c1", "type": "container", "parent": "c2"},
+        {"id": "c2", "type": "container", "parent": "c1"},  # chu trình chứa
+    ]}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "chu trình" in err
+
+
+def test_text_qua_dai_bi_reject():
+    bad = {**WEB_SPEC, "objects": [
+        {"id": "p", "type": "paragraph", "text": "x" * 501},  # > max_text_len
+    ]}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "quá dài" in err
+
+
+def test_reveal_structural_tung_buoc_hop_le():
+    """Web dựng TỪNG BƯỚC: container hiện trước, rồi heading, rồi paragraph."""
+    spec = {**WEB_SPEC, "processes": [
+        {"type": "reveal_sequence", "steps": [
+            {"objects": ["page"]}, {"objects": ["h"]}, {"objects": ["p"]},
+        ]},
+    ]}
+    cfg, err = validate_generic_config(spec)
+    assert err is None, err
+    assert cfg["processes"][0]["type"] == "reveal_sequence"
+
+
+# ── classify chọn generic (pipeline mock) ─────────────────────
+
+def _fake_gemini(responses):
+    calls = []
+
+    async def fake(api_key, system_prompt, user_text, response_schema=None, temperature=0.2, image=None):
+        calls.append(user_text)
+        return responses.pop(0)
+
+    return fake, calls
+
+
+def test_classify_chon_generic_va_simulate_sinh_spec(monkeypatch):
+    analysis = {
+        "objects": ["cổng XOR"],
+        "data": [],
+        "relations": [],
+        "processes": [],
+        "constraints": [],
+        "goal": "Mô phỏng cổng XOR",
+        "input_description": "Hai đầu vào",
+        "output_description": "Đầu ra XOR",
+        "notes": None,
+    }
+    xor_spec = {
+        "dsl_version": "1.0",
+        "title": "Cổng XOR",
+        "objects": [
+            {"id": "a", "type": "switch", "value": 0},
+            {"id": "b", "type": "switch", "value": 0},
+            {"id": "y", "type": "lamp"},
+        ],
+        "rules": [{"type": "boolean", "op": "xor", "inputs": ["a", "b"], "target": "y"}],
+        "interactions": [{"type": "toggle", "target": "a"}, {"type": "toggle", "target": "b"}],
+        "processes": [],
+    }
+    fake, calls = _fake_gemini(
+        [
+            json.dumps(analysis),
+            json.dumps({"status": "ok", "simulation_id": "generic.rule_scene", "reason": None}),
+            json.dumps(xor_spec),
+        ]
+    )
+    monkeypatch.setattr(pipeline, "call_gemini", fake)
+
+    env = asyncio.run(pipeline.run_pipeline("Mô phỏng cổng XOR gồm hai đầu vào.", "khoa-gia"))
+    assert env["status"] == "ok"
+    assert env["simulation_id"] == "generic.rule_scene"
+    assert env["domain"] == "generic"
+    assert env["config"]["rules"][0]["op"] == "xor"
+    # danh mục trong prompt classify có generic
+    assert "generic.rule_scene" in calls[1]
+
+
+def test_simulate_generic_retry_khi_spec_sai(monkeypatch):
+    analysis = {"objects": [], "data": [], "relations": [], "processes": [], "constraints": [],
+                "goal": "g", "input_description": "i", "output_description": "o", "notes": None}
+    bad_spec = {"title": "x", "objects": [{"id": "a", "type": "hologram"}]}  # type lạ → reject
+    good_spec = {"title": "OK", "objects": [{"id": "a", "type": "switch", "value": 0}, {"id": "y", "type": "lamp"}],
+                 "rules": [{"type": "boolean", "op": "not", "inputs": ["a"], "target": "y"}],
+                 "interactions": [{"type": "toggle", "target": "a"}], "processes": []}
+    fake, calls = _fake_gemini(
+        [
+            json.dumps(analysis),
+            json.dumps({"status": "ok", "simulation_id": "generic.rule_scene", "reason": None}),
+            json.dumps(bad_spec),
+            json.dumps(good_spec),
+        ]
+    )
+    monkeypatch.setattr(pipeline, "call_gemini", fake)
+
+    env = asyncio.run(pipeline.run_pipeline("Cổng NOT.", "khoa-gia"))
+    assert env["status"] == "ok"
+    assert len(calls) == 4  # analyze + classify + 2 lần simulate
+    assert "bị từ chối vì" in calls[3]  # prompt retry chứa lỗi validation

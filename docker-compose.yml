@@ -1,0 +1,37 @@
+# AlgoSim — backend FastAPI + PostgreSQL trong Docker.
+# Frontend chạy ngoài để giữ hot-reload: cd frontend && npm run dev
+#
+# Chạy:      docker compose up -d --build
+# Dừng:      docker compose down
+# Xem log:   docker compose logs -f backend
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: algosim
+      POSTGRES_PASSWORD: algosim
+      POSTGRES_DB: algosim
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U algosim -d algosim"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+
+  backend:
+    build: ./backend
+    ports:
+      - "8787:8787"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://algosim:algosim@db:5432/algosim
+    env_file:
+      # GEMINI_API_KEY nằm ở đây — tạo từ backend/.env.example
+      - path: ./backend/.env
+        required: false
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

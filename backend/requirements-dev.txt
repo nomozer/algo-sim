@@ -1,0 +1,3 @@
+# Thư viện chỉ dùng khi phát triển/test (không vào image Docker)
+-r requirements.txt
+pytest

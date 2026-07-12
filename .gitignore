@@ -1,0 +1,11 @@
+node_modules/
+dist/
+__pycache__/
+.venv/
+backend/.env
+backend/*.db
+
+# Credential Google + tài liệu nguồn (SGK) / dữ liệu tri thức cục bộ — KHÔNG commit.
+# Root-anchored để KHÔNG bắt nhầm frontend/src/data (là code).
+/.secrets/
+/data/
