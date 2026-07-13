@@ -9,3 +9,5 @@ backend/*.db
 # Root-anchored để KHÔNG bắt nhầm frontend/src/data (là code).
 /.secrets/
 /data/
+CLAUDE.md
+
