@@ -18,6 +18,9 @@ class EvalItem:
     expect_simulation_id: str | None = None
     # Kỳ vọng ngữ nghĩa cho generic (semantic.check_semantic)
     semantic: dict = field(default_factory=lambda: {"kind": "none"})
+    # M7.14T: nhãn suite/phân loại — KHÔNG đổi ngữ nghĩa benchmark, chỉ để lọc.
+    # "smoke": bộ đại diện chạy live thường xuyên; "boundary": case capability gap.
+    tags: tuple[str, ...] = ()
 
 
 DATASET: list[EvalItem] = [
@@ -27,11 +30,11 @@ DATASET: list[EvalItem] = [
     EvalItem("a-countif", "Có 8 bạn điểm 7,5;9;6;8;5;9,5;7;8,5. Đếm số bạn đạt từ 8 trở lên.", "specialized", "algorithm.count_if"),
     EvalItem("a-linear", "Danh sách số báo danh 105,213,178,154,231. Tìm xem 178 có trong danh sách không.", "specialized", "algorithm.linear_search"),
     EvalItem("a-binary", "Dãy đã sắp tăng dần 4,5,6,7,8,9,10. Tìm nhanh số 8 bằng cách chia đôi.", "specialized", "algorithm.binary_search"),
-    EvalItem("a-and", "Khi nào cổng logic AND có đầu ra bằng 1?", "specialized", "logic.and_gate"),
+    EvalItem("a-and", "Khi nào cổng logic AND có đầu ra bằng 1?", "specialized", "logic.and_gate", tags=("smoke",)),
     EvalItem("a-binconv", "Số 13 được biểu diễn dưới dạng nhị phân như thế nào?", "specialized", "binary.decimal_to_binary"),
-    EvalItem("a-packet", "Minh họa đường đi của một gói tin từ máy tính đến máy chủ.", "specialized", "network.packet_routing"),
+    EvalItem("a-packet", "Minh họa đường đi của một gói tin từ máy tính đến máy chủ.", "specialized", "network.packet_routing", tags=("smoke",)),
     # M7.14C boundary #9: sum_if có engine chuyên biệt — phải route specialized
-    EvalItem("a-sumif", "Cho các số 5, 8, 3, 9, 4. Tính tổng các số lớn hơn 4.", "specialized", "algorithm.sum_if"),
+    EvalItem("a-sumif", "Cho các số 5, 8, 3, 9, 4. Tính tổng các số lớn hơn 4.", "specialized", "algorithm.sum_if", tags=("smoke",)),
 
     # ── Nhóm B: generic-composable trong DSL v1 (10) ─────────
     EvalItem("b-xor", "Mô phỏng cổng logic XOR gồm hai đầu vào và một đầu ra.", "generic", "generic.rule_scene", {"kind": "boolean_gate", "op": "xor"}),
@@ -51,19 +54,19 @@ DATASET: list[EvalItem] = [
 
     # ── Nhóm D: scene-mode consistency + interaction (M7.13A) ─
     # Cảnh TĨNH: "hiển thị cấu trúc" — không được ép reveal giả
-    EvalItem("d-webstatic", "Hiển thị cấu trúc một trang web gồm tiêu đề và một đoạn văn giới thiệu.", "generic", "generic.rule_scene", {"kind": "static_structural"}),
+    EvalItem("d-webstatic", "Hiển thị cấu trúc một trang web gồm tiêu đề và một đoạn văn giới thiệu.", "generic", "generic.rule_scene", {"kind": "static_structural"}, tags=("smoke",)),
     # Cảnh PROGRESSIVE: "quá trình tạo... từng bước" — phải reveal
-    EvalItem("d-webbuild", "Mô phỏng quá trình tạo một trang web có tiêu đề và đoạn văn, hình thành từng bước.", "generic", "generic.rule_scene", {"kind": "progressive_reveal", "min_steps": 2}),
+    EvalItem("d-webbuild", "Mô phỏng quá trình tạo một trang web có tiêu đề và đoạn văn, hình thành từng bước.", "generic", "generic.rule_scene", {"kind": "progressive_reveal", "min_steps": 2}, tags=("smoke",)),
     # HYBRID: dựng xong rồi thao tác — reveal + drag các điểm
-    EvalItem("d-tridrag", "Dựng tam giác ABC từng bước, sau đó cho phép kéo các điểm A, B, C để quan sát các cạnh thay đổi theo.", "generic", "generic.rule_scene", {"kind": "draggable_reveal", "min_steps": 3}),
+    EvalItem("d-tridrag", "Dựng tam giác ABC từng bước, sau đó cho phép kéo các điểm A, B, C để quan sát các cạnh thay đổi theo.", "generic", "generic.rule_scene", {"kind": "draggable_reveal", "min_steps": 3}, tags=("smoke",)),
 
     # ── Nhóm C: unsupported / vượt DSL v1 (6) ────────────────
-    EvalItem("c-threshold", "Đèn sáng khi ít nhất 2 trong 3 công tắc được bật.", "unsupported"),
+    EvalItem("c-threshold", "Đèn sáng khi ít nhất 2 trong 3 công tắc được bật.", "unsupported", tags=("smoke", "boundary")),
     EvalItem("c-parabola", "Vẽ đồ thị hàm số bậc hai y = x^2 - 2x.", "unsupported"),
     EvalItem("c-chem", "Mô phỏng phản ứng hóa học giữa natri và nước.", "unsupported"),
-    EvalItem("c-orbit", "Mô phỏng chuyển động tròn của các hành tinh quanh mặt trời.", "unsupported"),
+    EvalItem("c-orbit", "Mô phỏng chuyển động tròn của các hành tinh quanh mặt trời.", "unsupported", tags=("boundary",)),
     EvalItem("c-deriv", "Tính đạo hàm của hàm số f(x) = 3x^2 + 2x.", "unsupported"),
-    EvalItem("c-freealgo", "Hãy mô phỏng một thuật toán sắp xếp do em tự nghĩ ra.", "unsupported"),
+    EvalItem("c-freealgo", "Hãy mô phỏng một thuật toán sắp xếp do em tự nghĩ ra.", "unsupported", tags=("boundary",)),
     # M7.14C boundary #1: hình học DẪN XUẤT (chân đường cao/vuông góc/giao điểm/
     # đường tròn ngoại tiếp/giao thứ hai/quỹ tích) — PHẢI capability_gap,
     # tuyệt đối không render node/edge xấp xỉ "nhìn có vẻ đúng".
@@ -74,5 +77,6 @@ DATASET: list[EvalItem] = [
         "và AC tại F. Đường tròn ngoại tiếp AEF cắt AD lần thứ hai tại P. "
         "Chứng minh P luôn nằm trên một đường tròn cố định.",
         "unsupported",
+        tags=("smoke", "boundary"),
     ),
 ]

@@ -137,7 +137,29 @@ hình học kiểu chứng minh. Đề cần các quan hệ đó khi DSL chưa c
 `capability_gap`. **Không dùng tọa độ LLM đoán để giả các quan hệ này** — kể cả
 qua patch/edit (xem §3, `unsupported_to_verify`).
 
-## 7. Trạng thái known-gap & lộ trình
+## 7. Chính sách kiểm thử: offline-first, live là opt-in (M7.14T)
+
+Correctness guard chỉ có giá trị nếu **chạy được thường xuyên mà không đốt
+quota**. Vì vậy:
+
+- `pytest` và `vitest` **luôn = 0 API call thật**. Guard nằm ở BIÊN MẠNG
+  (`backend/conftest.py` patch transport httpx; `frontend/src/test-setup.ts`
+  stub `fetch`), nên **suite xanh ⇔ không có call nào** — quên mock là đỏ ngay,
+  không âm thầm gọi thật. Guard cũng gỡ `GEMINI_API_KEY` khỏi env (backend/.env
+  được `load_dotenv` nạp lúc import → key thật vốn nằm sẵn trong tiến trình test).
+- `live.py` **bắt buộc `ALLOW_LIVE_AI=1`**, có `--suite smoke|full|boundary` và
+  ngân sách `--max-cases/--max-api-calls/--max-retries`; report in số request
+  thật, retry, transient 429/5xx, và lý do dừng nếu chạm trần.
+- Khi nào tiêu call live: UI/CSS/viewport → không cần; engine/validator tất định
+  → offline trước; prompt/schema/classifier → smoke; kết thúc milestone hoặc lấy
+  số liệu → full. **Không chạy full theo thói quen.**
+
+Metric `gap_gate_recall` (M7.14T) đo **chính capability gate** ở §5 bằng
+`build_representation_plan` — chạy SONG SONG với các metric cũ (được tính từ
+classify), nên số liệu lịch sử vẫn so sánh được. Trước M7.14T, benchmark **không
+hề đo** cái gate này: `unsupported_recall` khi đó phản ánh classify tự từ chối.
+
+## 8. Trạng thái known-gap & lộ trình
 
 - `numeric_threshold` ("ít nhất 2 trong 3"): unsupported đúng — muốn support
   thật thì thêm rule threshold tất định vào DSL (quyết định riêng, ngoài M7.14).
