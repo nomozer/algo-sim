@@ -103,9 +103,15 @@ describe("patch v1 — validate + apply (song song backend)", () => {
       interactions: [],
       processes: [],
     });
+    // M7.14D: cảnh switch/lamp là VALUE_ONLY → EditPolicy chặn TRƯỚC (policy.*)
     const res = validateAndApplyPatch(gate, { operations: [{ op: "remove_object", id: "a" }] });
     expect(res.status).toBe("structurally_invalid");
-    if (res.status === "structurally_invalid") expect(res.error).toContain("rule");
+    if (res.status === "structurally_invalid") expect(res.reasonCode).toBe("policy.operation_not_allowed");
+
+    // Luật dependents ngữ nghĩa vẫn là chốt chặn ĐỘC LẬP — kiểm khi bỏ qua policy
+    const raw = validateAndApplyPatch(gate, { operations: [{ op: "remove_object", id: "a" }] }, false);
+    expect(raw.status).toBe("structurally_invalid");
+    if (raw.status === "structurally_invalid") expect(raw.error).toContain("rule");
   });
 
   it("xóa tới mức mất hết tiến trình → guard bảo toàn diễn biến chặn", () => {

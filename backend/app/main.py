@@ -258,7 +258,15 @@ async def edit(body: EditBody):
         }
     if result["status"] == "unsupported_to_verify":
         return {"status": "unsupported_to_verify", "reason": result["reason"]}
-    return JSONResponse(status_code=422, content={"error": result.get("error", "Patch không hợp lệ.")})
+    # M7.14D: reason_code phân biệt policy.* (không hợp năng lực cảnh) với
+    # structure.* (vi phạm luật DSL) — client hiển thị/xử lý khác nhau được.
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": result.get("error", "Patch không hợp lệ."),
+            "reason_code": result.get("reason_code", "structure.invalid"),
+        },
+    )
 
 
 @app.post("/api/explain")

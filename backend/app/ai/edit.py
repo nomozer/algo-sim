@@ -27,6 +27,12 @@ from app.simulation.dsl.manifest import (
     object_types,
 )
 from app.simulation.dsl.validator import validate_generic_config
+from app.simulation.edit_policy import (
+    POLICY_OPERATION_NOT_ALLOWED,
+    STRUCTURE_INVALID,
+    edit_policy_of,
+    policy_contract_text,
+)
 from app.simulation.patch import ALLOWED_OPS, MAX_OPS, UPDATE_FIELDS, validate_and_apply_patch
 
 # ── Schema structured output — sinh từ manifest, không viết tay enum rời ──
@@ -108,19 +114,35 @@ def _objects_summary(spec: dict) -> str:
 
 
 def _edit_contract(spec: dict) -> str:
+    """Hợp đồng edit — M7.14D: chỉ liệt kê thao tác/loại HỢP LỆ VỚI CẢNH NÀY
+    (EditPolicy), không phải toàn bộ DSL. Prompt nhỏ hơn, ít patch sai hơn."""
+    policy = edit_policy_of(spec)
+    allowed = set(policy["allowed_ops"])
+    addable = policy["addable_types"]
     remain = limit("max_objects") - len(spec.get("objects", []))
-    return (
-        f"CÁC THAO TÁC CHO PHÉP ({'/'.join(ALLOWED_OPS)}), tối đa {MAX_OPS} thao tác:\n"
-        '- add_object: {"op":"add_object","object":{"id","type",...}} — type thuộc '
-        f"{', '.join(sorted(object_types()))}; tọa độ x,y trong 0–100 (có thể bỏ trống để hệ tự đặt); "
-        "heading/paragraph/text cần \"text\"; con của container/group đặt \"parent\".\n"
-        '- connect: {"op":"connect","from","to","edge_id","label?"} — nối hai object ĐÃ tồn tại.\n'
-        '- disconnect: {"op":"disconnect","edge_id"}.\n'
-        '- remove_object: {"op":"remove_object","id"} — cạnh chạm object sẽ bị gỡ theo.\n'
-        f'- update_object: {{"op":"update_object","id","fields"}} — fields chỉ gồm '
-        f"{'/'.join(sorted(UPDATE_FIELDS))}.\n"
-        f"Còn được thêm tối đa {max(0, remain)} object (giới hạn {limit('max_objects')})."
-    )
+
+    lines = [f"CÁC THAO TÁC CHO PHÉP (tối đa {MAX_OPS} thao tác):"]
+    if "add_object" in allowed:
+        lines.append(
+            '- add_object: {"op":"add_object","object":{"id","type",...}} — type CHỈ thuộc '
+            f"{', '.join(addable)}; heading/paragraph/text cần \"text\"; con của container/group "
+            'đặt "parent"; node có thể có x,y trong 0–100 (bỏ trống thì hệ tự đặt).'
+        )
+    if "connect" in allowed:
+        lines.append('- connect: {"op":"connect","from","to","edge_id","label?"} — nối hai object ĐÃ tồn tại.')
+    if "disconnect" in allowed:
+        lines.append('- disconnect: {"op":"disconnect","edge_id"}.')
+    if "remove_object" in allowed:
+        lines.append('- remove_object: {"op":"remove_object","id"} — cạnh chạm object sẽ bị gỡ theo.')
+    if "update_object" in allowed:
+        lines.append(
+            '- update_object: {"op":"update_object","id","fields"} — fields chỉ gồm '
+            f"{'/'.join(sorted(UPDATE_FIELDS))}."
+        )
+    lines.append(f"Còn được thêm tối đa {max(0, remain)} object (giới hạn {limit('max_objects')}).")
+    lines.append("")
+    lines.append(policy_contract_text(spec))
+    return "\n".join(lines)
 
 
 def _fill_missing_edge_ids(spec: dict, ops: list[dict]) -> None:
@@ -162,6 +184,7 @@ async def edit_simulation(config: dict, instruction: str, api_key: str) -> dict:
     )
     prompt = base
     last_error = "không rõ"
+    last_code = STRUCTURE_INVALID
 
     for _attempt in range(2):  # 1 lần + 1 retry kèm lỗi
         raw = await call_gemini(api_key, load_skill("edit"), prompt, EDIT_SCHEMA, 0.1)
@@ -189,6 +212,20 @@ async def edit_simulation(config: dict, instruction: str, api_key: str) -> dict:
 
         # ── Phán quyết TẤT ĐỊNH #2: patch validate + apply trên bản sao ──
         ops = [op for op in parsed.get("operations", []) if isinstance(op, dict)]
+
+        # M7.14D: operations rỗng = LLM TỪ CHỐI ĐÚNG theo phạm vi cảnh (edit.md
+        # quy tắc 0). Đây là phán quyết POLICY, không phải lỗi cấu trúc — trả
+        # reason_code đúng namespace + lời giải thích, và KHÔNG retry (retry chỉ
+        # tốn thêm một call cho cùng một câu trả lời đúng).
+        if not ops:
+            policy = edit_policy_of(spec)
+            note = (parsed.get("note") or "").strip()
+            return {
+                "status": "structurally_invalid",
+                "reason_code": POLICY_OPERATION_NOT_ALLOWED,
+                "error": note or f"Yêu cầu này nằm ngoài phạm vi chỉnh sửa của cảnh. {policy['note']}",
+            }
+
         # dọn khóa null từ structured output để patch nhận đúng hình dạng
         cleaned = [{k: v for k, v in op.items() if v is not None} for op in ops]
         _fill_missing_edge_ids(spec, cleaned)
@@ -199,6 +236,7 @@ async def edit_simulation(config: dict, instruction: str, api_key: str) -> dict:
                 out["note"] = parsed["note"]
             return out
         last_error = result.get("error", "không rõ")
+        last_code = result.get("reason_code", STRUCTURE_INVALID)
         prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
 
-    return {"status": "structurally_invalid", "error": last_error}
+    return {"status": "structurally_invalid", "reason_code": last_code, "error": last_error}

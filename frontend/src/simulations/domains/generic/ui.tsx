@@ -1,9 +1,13 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { editViaServer } from "../../../llm/client";
 import { useAppStore } from "../../../state/store";
 import type { WorkspaceProps } from "../../types";
+import { EditBar, type EditTool } from "./EditBar";
+import { editPolicyOf } from "./edit-policy";
 import {
+  CONTAINER_TYPES,
   STRUCTURAL_TYPES,
+  TEXT_CONTENT_TYPES,
   applyEditedSpec,
   childrenOf,
   currentFrame,
@@ -206,15 +210,37 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     setDragging(null);
   }
 
-  /* ── Edit tăng dần (M7.14) — MỌI thay đổi cấu trúc đi qua patch → validate
-     → applyEditedSpec → store.replaceSimulation. UI không tự sửa scene. ── */
+  /* ── Edit tăng dần (M7.14) + EditPolicy (M7.14D) ─────────────────────────
+     MỌI thay đổi cấu trúc đi qua patch → validate (policy + DSL) →
+     applyEditedSpec → store.replaceSimulation. UI không tự sửa scene.
+     Affordance DẪN XUẤT TỪ SPEC: cảnh văn bản không có Thêm điểm/Nối; cảnh
+     giá trị/logic không có công cụ cấu trúc; cảnh có move_along_path khóa topology. */
   const replaceSimulation = useAppStore((s) => s.replaceSimulation);
+  const policy = editPolicyOf(spec);
   const [editMode, setEditMode] = useState(false);
-  const [editTool, setEditTool] = useState<"add_node" | "connect" | "delete" | null>(null);
+  const [editTool, setEditTool] = useState<EditTool>(null);
+  const [contentType, setContentType] = useState<string>(policy.addableTypes[0] ?? "paragraph");
   const [connectFrom, setConnectFrom] = useState<string | null>(null);
-  const [editText, setEditText] = useState("");
   const [editBusy, setEditBusy] = useState(false);
   const [editMsg, setEditMsg] = useState<string | null>(null);
+
+  const canEdit = policy.uiActions.some((a) => a !== "edit_text") || policy.allowedOps.length > 0;
+
+  function disarm() {
+    setEditTool(null);
+    setConnectFrom(null);
+    setEditMsg(null);
+  }
+
+  // Esc: hủy công cụ đang lên đạn (không thoát chế độ — tránh mất ngữ cảnh)
+  useEffect(() => {
+    if (!editMode) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") disarm();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [editMode]);
 
   function applyNewSpec(newSpec: SimulationSpec) {
     replaceSimulation(newSpec, applyEditedSpec(state, newSpec));
@@ -226,7 +252,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       applyNewSpec(result.config);
       setEditMsg(null);
     } else {
-      setEditMsg(result.error);
+      setEditMsg(result.error); // kèm reasonCode policy.* / structure.*
     }
   }
 
@@ -247,6 +273,18 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     runLocalPatch([{ op: "add_object", object: { id, type: "node", label: id, x: p.x, y: p.y } }]);
   }
 
+  /** Thêm một mục nội dung vào cuối cảnh structural (family structural). */
+  function addContent() {
+    if (editBusy) return;
+    const id = nextFreeId(contentType.slice(0, 1).toUpperCase());
+    const root = structuralRoots(spec).find((o) => CONTAINER_TYPES.has(o.type));
+    const obj: Record<string, unknown> = { id, type: contentType };
+    if (TEXT_CONTENT_TYPES.has(contentType)) obj.text = "Nội dung mới — hãy sửa lại cho đúng ý.";
+    if (CONTAINER_TYPES.has(contentType)) obj.text = "Khung mới";
+    if (root) obj.parent = root.id;
+    runLocalPatch([{ op: "add_object", object: obj as PatchOp extends { object: infer O } ? O : never }]);
+  }
+
   function onObjectEditClick(id: string) {
     if (!editMode || editBusy) return;
     if (editTool === "delete") {
@@ -256,7 +294,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     if (editTool === "connect") {
       if (connectFrom === null) {
         setConnectFrom(id);
-        setEditMsg(`Đã chọn "${id}" — bấm object thứ hai để nối.`);
+        setEditMsg(null); // hướng dẫn "chọn đối tượng thứ hai" do EditBar hiển thị
       } else if (connectFrom !== id) {
         runLocalPatch([{ op: "connect", from: connectFrom, to: id, edge_id: nextFreeId(`${connectFrom}_${id}`) }]);
         setConnectFrom(null);
@@ -264,9 +302,17 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     }
   }
 
-  async function submitNlEdit() {
-    const instruction = editText.trim();
-    if (!instruction || editBusy) return;
+  function onPickTool(tool: EditTool) {
+    setConnectFrom(null);
+    setEditMsg(null);
+    if (tool === "add_content" && editTool === "add_content") {
+      addContent(); // bấm lần hai → chèn ngay
+      return;
+    }
+    setEditTool(tool);
+  }
+
+  async function submitNlEdit(instruction: string) {
     setEditBusy(true);
     setEditMsg(null);
     try {
@@ -278,7 +324,6 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           setEditMsg(`Cấu hình từ máy chủ không hợp lệ: ${validated.error}`);
         } else {
           applyNewSpec(validated.config);
-          setEditText("");
           setEditMsg(res.note ?? "Đã cập nhật mô phỏng.");
         }
       } else {
@@ -443,58 +488,37 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
   const spatialCurrent = spatialVisible.filter((o) => objectRole(state, o.id) === "current");
   const labelsVisible = spec.objects.filter((o) => o.type === "label" && isObjectRenderable(frame, o));
 
-  const activeBtn = { fontWeight: 700, borderColor: "var(--primary)", color: "var(--primary)" } as React.CSSProperties;
-  const toolBtn = (tool: "add_node" | "connect" | "delete", label: string) => (
-    <button
-      className="btn-utility"
-      style={editTool === tool ? activeBtn : undefined}
-      disabled={editBusy}
-      onClick={() => {
-        setEditTool(editTool === tool ? null : tool);
-        setConnectFrom(null);
-        setEditMsg(null);
-      }}
-    >
-      {label}
-    </button>
-  );
-
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
-      {/* M7.14: [Quan sát]/[Chỉnh sửa] — edit là con đường patch, không phải interaction */}
+      {/* Stable control shell (M7.14D): hàng mode LUÔN tồn tại → chuyển chế độ
+          không làm nhảy layout. Fit View chỉ có ở cảnh spatial (structural
+          render theo luồng tài liệu, không cần thu khung) — không nhồi action
+          vô nghĩa chỉ để lấp chỗ. */}
       <div className="player-controls" style={{ flexWrap: "wrap", gap: 6 }}>
         <button
-          className="btn-utility"
-          style={!editMode ? activeBtn : undefined}
+          className={`btn-utility${!editMode ? " is-active" : ""}`}
+          aria-pressed={!editMode}
           onClick={() => {
             setEditMode(false);
-            setEditTool(null);
-            setConnectFrom(null);
-            setEditMsg(null);
+            disarm();
           }}
         >
           Quan sát
         </button>
-        <button
-          className="btn-utility"
-          style={editMode ? activeBtn : undefined}
-          disabled={busy}
-          onClick={() => setEditMode(true)}
-        >
-          Chỉnh sửa
-        </button>
-        {editMode && (
-          <>
-            <span style={{ width: 1, alignSelf: "stretch", background: "var(--ink-faint)" }} />
-            {toolBtn("add_node", "＋ Thêm điểm")}
-            {toolBtn("connect", "⌁ Nối")}
-            {toolBtn("delete", "✕ Xóa")}
-          </>
+        {canEdit && (
+          <button
+            className={`btn-utility${editMode ? " is-active" : ""}`}
+            aria-pressed={editMode}
+            disabled={busy}
+            onClick={() => setEditMode(true)}
+          >
+            Chỉnh sửa
+          </button>
         )}
         {!hasStructural && (
           <button
-            className="btn-utility"
-            style={{ marginLeft: "auto", ...(autoFit ? {} : activeBtn) }}
+            className={`btn-utility${autoFit ? "" : " is-active"}`}
+            style={{ marginLeft: "auto" }}
             onClick={() => setAutoFit(!autoFit)}
             title={autoFit ? "Đang tự thu vừa hình — bấm để về khung mặc định" : "Bấm để tự thu vừa hình"}
           >
@@ -503,21 +527,18 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         )}
       </div>
       {editMode && (
-        <div className="player-controls" style={{ gap: 6 }}>
-          <input
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && submitNlEdit()}
-            placeholder='Mô tả chỉnh sửa, vd: "Thêm điểm D và nối D với A, B"'
-            disabled={editBusy}
-            style={{ flex: 1, minWidth: 200, padding: "6px 10px", borderRadius: 8, border: "1px solid var(--ink-faint)", background: "var(--surface)", color: "var(--ink)" }}
-          />
-          <button className="btn-primary" onClick={submitNlEdit} disabled={editBusy || !editText.trim()}>
-            {editBusy ? "Đang xử lý..." : "Thực hiện"}
-          </button>
-        </div>
+        <EditBar
+          policy={policy}
+          tool={editTool}
+          contentType={contentType}
+          connectFrom={connectFrom}
+          busy={editBusy}
+          message={editMsg}
+          onPickTool={onPickTool}
+          onPickContentType={setContentType}
+          onSubmitInstruction={submitNlEdit}
+        />
       )}
-      {editMsg && <div className="hint">{editMsg}</div>}
       <div className="sim-stage">
         <svg
           ref={svgRef}
@@ -609,23 +630,18 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       </div>
       {/* M7.14: InteractionFeedback — dẫn xuất của RULE engine, không phải chat */}
       {state.feedback && <div className="narration-bar is-user">{state.feedback.message}</div>}
-      <div className="narration-bar">
-        {editMode
-          ? editTool === "add_node"
-            ? "Bấm vào chỗ trống trên sân khấu để thêm một điểm mới."
-            : editTool === "connect"
-              ? "Bấm lần lượt hai object để nối chúng bằng một cạnh."
-              : editTool === "delete"
-                ? "Bấm vào object muốn xóa (cạnh chạm nó sẽ được gỡ theo)."
-                : "Chọn công cụ, hoặc mô tả chỉnh sửa bằng lời và bấm Thực hiện."
-          : state.timeline.length > 1
+      {/* Ở chế độ Chỉnh sửa, hướng dẫn thao tác do EditBar hiển thị (sát nút bấm) */}
+      {!editMode && (
+        <div className="narration-bar">
+          {state.timeline.length > 1
             ? frame.narration
             : toggleable.size > 0
               ? "Bấm vào các công tắc để thay đổi trạng thái và quan sát kết quả."
               : draggable.size > 0
                 ? "Kéo các điểm có viền đứt để thay đổi hình và quan sát các cạnh cập nhật theo."
                 : spec.title}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

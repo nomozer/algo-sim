@@ -26,6 +26,7 @@ import copy
 
 from app.simulation.dsl.manifest import temporal_process_types
 from app.simulation.dsl.validator import validate_generic_config
+from app.simulation.edit_policy import STRUCTURE_INVALID, check_ops_against_policy
 from app.simulation.generic_engine import build_timeline, initial_base, values_of
 
 PATCH_STATUSES = ("valid", "structurally_invalid", "unsupported_to_verify", "invalid_with_feedback")
@@ -39,8 +40,10 @@ UPDATE_FIELDS = {"text", "label", "x", "y", "value"}
 ADD_FIELDS = {"id", "type", "x", "y", "label", "text", "parent", "value", "weight", "node_type", "from", "to"}
 
 
-def _invalid(msg: str) -> dict:
-    return {"status": "structurally_invalid", "error": msg}
+def _invalid(msg: str, reason_code: str = STRUCTURE_INVALID) -> dict:
+    """Lỗi patch. M7.14D: kèm reason_code hai namespace —
+    `structure.*` (vi phạm luật DSL) vs `policy.*` (không hợp năng lực cảnh)."""
+    return {"status": "structurally_invalid", "reason_code": reason_code, "error": msg}
 
 
 def _ids(work: dict) -> set[str]:
@@ -173,13 +176,23 @@ def _apply_one(work: dict, op: dict) -> str | None:
     return None
 
 
-def validate_and_apply_patch(spec: dict, patch: dict) -> dict:
-    """Trả PatchResult. spec đầu vào KHÔNG BAO GIỜ bị mutate."""
+def validate_and_apply_patch(spec: dict, patch: dict, enforce_policy: bool = True) -> dict:
+    """Trả PatchResult. spec đầu vào KHÔNG BAO GIỜ bị mutate.
+
+    M7.14D: kiểm EditPolicy TRƯỚC khi áp — thao tác/loại object không hợp với
+    năng lực cảnh (thêm điểm vào cảnh văn bản, sửa topology của cảnh có
+    move_along_path...) bị từ chối với reason_code `policy.*`.
+    """
     if not isinstance(patch, dict):
         return _invalid("Patch không phải đối tượng JSON.")
     ops = patch.get("operations")
     if not isinstance(ops, list) or not (1 <= len(ops) <= MAX_OPS):
         return _invalid(f'Patch cần "operations" có 1–{MAX_OPS} thao tác.')
+
+    if enforce_policy:
+        violation = check_ops_against_policy(spec, [op for op in ops if isinstance(op, dict)])
+        if violation:
+            return _invalid(violation["error"], violation["reason_code"])
 
     work = copy.deepcopy(spec)
     # chuẩn hóa các section có thể vắng (spec đã validate luôn có, nhưng phòng hờ)

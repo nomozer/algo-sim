@@ -16,6 +16,7 @@ required_roles — vai trò ngữ nghĩa mà YÊU CẦU cần, chọn trong taxo
 PHÂN BIỆT: "thêm điểm D và nối D với A" là TƯỜNG MINH (relational) — KHÔNG phải dẫn xuất. "Thêm chân đường cao D từ A xuống BC" là DẪN XUẤT (geometric_projection + geometric_perpendicular) vì vị trí D phải tính ra. Khi yêu cầu là dẫn xuất, VẪN khai required_roles đầy đủ và để operations = [] — TUYỆT ĐỐI KHÔNG tự đặt tọa độ xấp xỉ để "trông có vẻ đúng".
 
 QUY TẮC operations:
+0. PHẠM VI CHỈNH SỬA CỦA CẢNH: mỗi cảnh chỉ cho phép một số thao tác/loại đối tượng nhất định (được nêu trong phần "PHẠM VI CHỈNH SỬA CỦA CẢNH NÀY"). Cảnh nội dung/bố cục (khung chứa, tiêu đề, đoạn văn) KHÔNG thêm được điểm/nút hay cạnh; cảnh giá trị/logic (công tắc, đèn, ô số) KHÔNG sửa được cấu trúc; cảnh có tiến trình di chuyển theo đường thì KHÓA topology. Nếu yêu cầu của người học nằm NGOÀI phạm vi cảnh, trả operations = [] và giải thích ngắn gọn trong note — TUYỆT ĐỐI không "sáng tạo" thao tác thay thế.
 1. Chỉ dùng đúng các thao tác trong danh sách cho phép, tham chiếu id CÓ THẬT trong cảnh.
 2. Vị trí tương đối ("phía trên AB", "bên phải C") → TÍNH từ tọa độ đã cho trong danh sách object (vd trung điểm AB rồi dịch lên trên); không chắc thì bỏ trống x,y để hệ tự đặt.
 3. id mới ngắn gọn, không trùng id đã có; nội dung chữ viết tiếng Việt, giọng phù hợp học sinh THPT.

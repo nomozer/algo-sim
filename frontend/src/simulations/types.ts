@@ -71,6 +71,24 @@ export interface WorkspaceProps<C = unknown, S = unknown> {
   dispatch: (action: SimAction) => void;
 }
 
+/**
+ * Capability chỉnh sửa (M7.14D) — module KHÔNG khai thì UI **không** có công cụ
+ * sửa cấu trúc (mặc định an toàn: 4 domain chuyên biệt tự động không có toolbar).
+ * Cùng khuôn với `timeline?`: UI hỏi capability, không tự giả định.
+ * Nội dung policy do domain tự định nghĩa (generic: xem `generic/edit-policy.ts`).
+ */
+export interface EditPolicyLike {
+  /** Thao tác UI được phép (rỗng = không có công cụ sửa cấu trúc). */
+  uiActions: string[];
+  /** Patch op được phép ở tầng validate. */
+  allowedOps: string[];
+}
+
+export interface EditCapability<C = unknown, S = unknown> {
+  /** Suy policy TỪ CONFIG/STATE hiện tại — không phải hằng số của module. */
+  policyOf(config: C, state: S): EditPolicyLike;
+}
+
 export interface SimulationModule<C = unknown, S = unknown> {
   /** Định danh chuẩn: "<domain>.<tên>", vd "algorithm.find_max". */
   id: string;
@@ -91,6 +109,9 @@ export interface SimulationModule<C = unknown, S = unknown> {
 
   /** Optional (yêu cầu #2) — điều khiển bước cho progressive/hybrid. */
   timeline?: TimelineCapability<S>;
+
+  /** Optional (M7.14D) — chỉnh sửa cấu trúc. Không khai = không có edit. */
+  edit?: EditCapability<C, S>;
 
   /**
    * Yêu cầu #4: snapshot JSON sạch (serializable, nhỏ) mô tả trạng thái thật

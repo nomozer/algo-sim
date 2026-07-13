@@ -1,3 +1,4 @@
+import { STRUCTURE_INVALID, checkOpsAgainstPolicy } from "./edit-policy";
 import {
   TEMPORAL_PROCESS_TYPES,
   buildTimeline,
@@ -29,7 +30,7 @@ export type PatchOp =
 
 export type PatchResult =
   | { status: "valid"; config: SimulationSpec }
-  | { status: "structurally_invalid"; error: string };
+  | { status: "structurally_invalid"; reasonCode: string; error: string };
 
 export const MAX_OPS = 10;
 const UPDATE_FIELDS = new Set(["text", "label", "x", "y", "value"]);
@@ -45,8 +46,8 @@ type Work = {
   notes: string | null;
 };
 
-function invalid(error: string): PatchResult {
-  return { status: "structurally_invalid", error };
+function invalid(error: string, reasonCode: string = STRUCTURE_INVALID): PatchResult {
+  return { status: "structurally_invalid", reasonCode, error };
 }
 
 function ids(work: Work): Set<string> {
@@ -165,12 +166,26 @@ function applyOne(work: Work, op: PatchOp): string | null {
   }
 }
 
-/** Trả PatchResult. spec đầu vào KHÔNG BAO GIỜ bị mutate. */
-export function validateAndApplyPatch(spec: SimulationSpec, patch: { operations: PatchOp[] }): PatchResult {
+/**
+ * Trả PatchResult. spec đầu vào KHÔNG BAO GIỜ bị mutate.
+ * M7.14D: kiểm EditPolicy TRƯỚC khi áp (ẩn UI là không đủ) — thao tác/loại
+ * object không hợp năng lực cảnh → reason_code `policy.*`.
+ */
+export function validateAndApplyPatch(
+  spec: SimulationSpec,
+  patch: { operations: PatchOp[] },
+  enforcePolicy = true,
+): PatchResult {
   const ops = patch?.operations;
   if (!Array.isArray(ops) || ops.length < 1 || ops.length > MAX_OPS) {
     return invalid(`Patch cần "operations" có 1–${MAX_OPS} thao tác.`);
   }
+
+  if (enforcePolicy) {
+    const violation = checkOpsAgainstPolicy(spec, ops as { op?: string; object?: { type?: string } }[]);
+    if (violation) return invalid(violation.error, violation.reasonCode);
+  }
+
   const work = JSON.parse(JSON.stringify(spec)) as Work;
 
   for (const op of ops) {

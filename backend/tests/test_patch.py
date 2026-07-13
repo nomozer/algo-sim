@@ -84,11 +84,20 @@ def test_connect_endpoint_khong_ton_tai_bi_reject():
     assert "tồn tại" in res["error"]
 
 
-def test_add_object_type_la_bi_validator_full_chan():
-    """Chốt chặn cuối là validator nguồn chân lý — type ngoài manifest bị bắt."""
+def test_add_object_type_la_bi_chan():
+    """M7.14D: type ngoài manifest bị EditPolicy chặn TRƯỚC (không nằm trong
+    addable_types). Bỏ qua policy → validator nguồn chân lý vẫn là chốt cuối."""
     res = _apply(TRIANGLE, [{"op": "add_object", "object": {"id": "X", "type": "hexagon"}}])
     assert res["status"] == "structurally_invalid"
-    assert "type" in res["error"].lower()
+    assert res["reason_code"] == "policy.object_type_not_allowed"
+
+    raw = validate_and_apply_patch(
+        TRIANGLE, {"operations": [{"op": "add_object", "object": {"id": "X", "type": "hexagon"}}]},
+        enforce_policy=False,
+    )
+    assert raw["status"] == "structurally_invalid"
+    assert raw["reason_code"] == "structure.invalid"
+    assert "type" in raw["error"].lower()
 
 
 def test_qua_10_ops_bi_reject():
@@ -124,10 +133,20 @@ def test_remove_node_cascade_edges_interactions_reveal():
 
 
 def test_remove_object_dinh_rule_bi_reject():
-    """Dependents NGỮ NGHĨA không cascade mù: switch là input của rule."""
+    """Dependents NGỮ NGHĨA không cascade mù: switch là input của rule.
+
+    M7.14D: cảnh switch/lamp là VALUE_ONLY nên EditPolicy chặn remove TRƯỚC
+    (reason_code policy.*). Luật dependents vẫn là chốt chặn độc lập — kiểm
+    bằng cách bỏ qua policy."""
     res = _apply(AND_GATE, [{"op": "remove_object", "id": "a"}])
     assert res["status"] == "structurally_invalid"
-    assert "rule" in res["error"]
+    assert res["reason_code"] == "policy.operation_not_allowed"
+
+    raw = validate_and_apply_patch(
+        AND_GATE, {"operations": [{"op": "remove_object", "id": "a"}]}, enforce_policy=False,
+    )
+    assert raw["status"] == "structurally_invalid"
+    assert "rule" in raw["error"]
 
 
 def test_remove_entity_hoac_path_node_bi_reject():

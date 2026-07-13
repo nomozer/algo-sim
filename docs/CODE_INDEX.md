@@ -97,6 +97,15 @@ Exports: `spec_signature`, `pattern_key_of`, `extract_template`, `instantiate`,
 `validate_params`, `deterministic_fill`, `covered_roles_of_template`, `run_gates`,
 `DbPatternStore`. Tests: `test_patterns.py`, `test_reuse.py`.
 
+### `simulation/edit_policy.py` · Change impact: offline
+EditPolicy v1 (M7.14D): affordance sửa DẪN XUẤT TỪ SPEC (không tên bài/môn).
+Exports: `edit_policy_of`, `check_ops_against_policy`, `policy_contract_text`,
+`EditFamily`, các hằng `POLICY_*` / `STRUCTURE_INVALID`.
+Consumers: `patch.py` (enforce), `ai/edit.py` (prompt theo cảnh + enforce).
+Tests: `test_edit_policy.py`. Mirror TS: `generic/edit-policy.ts`.
+Notes: precedence bảo thủ `move > structural > spatial > value_only`;
+multi-family CHƯA hỗ trợ.
+
 ### `simulation/patch.py` · Change impact: offline
 SimulationPatch v1 (M7.14A): 5 op, áp trên bản sao, full validator + guard tiến
 trình + engine smoke. Exports: `validate_and_apply_patch`, `ALLOWED_OPS`,
@@ -179,6 +188,16 @@ Notes: tách khỏi `index.ts` (M7.14) để `patch.ts` dùng chung, tránh vòn
 ### `simulations/domains/generic/patch.ts` · Change impact: offline
 Mirror `simulation/patch.py`. Exports: `validateAndApplyPatch`, `PatchOp`,
 `PatchResult`, `MAX_OPS`. Tests: `patch.test.ts`.
+
+### `simulations/domains/generic/edit-policy.ts` · Change impact: offline
+Mirror `simulation/edit_policy.py`. Exports: `editPolicyOf`,
+`checkOpsAgainstPolicy`, `EditPolicy`, `EditFamily`, `EditUiAction`,
+`ADDABLE_TYPE_LABEL`, các hằng reason_code. Tests: `edit-policy.test.ts`.
+
+### `simulations/domains/generic/EditBar.tsx` · Change impact: offline
+Thanh công cụ sửa — component RIÊNG để state nhập liệu KHÔNG re-render SVG
+(nguyên nhân lag đã đo ở M7.14). Exports: `EditBar`, `EditTool`, `toolHint`.
+Tests: `mode-switch.test.tsx`.
 
 ### `simulations/domains/generic/index.ts` · Change impact: offline
 `makeGenericModule()` — validateConfig/init/apply/timeline/getExplainContext.

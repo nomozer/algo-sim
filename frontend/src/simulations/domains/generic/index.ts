@@ -11,6 +11,7 @@ import {
   type GenericState,
   type SimulationSpec,
 } from "./model";
+import { editPolicyOf } from "./edit-policy";
 import { validateGenericConfig } from "./validate";
 import { GenericInspector, GenericWorkspace } from "./ui";
 
@@ -58,6 +59,10 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: Math.max(0, Math.min(step, s.timeline.length - 1)) }),
     },
+
+    // M7.14D: capability chỉnh sửa — affordance suy TỪ SPEC, không mặc định
+    // giống nhau cho mọi cảnh generic. Domain chuyên biệt không khai → không có edit.
+    edit: { policyOf: (spec) => editPolicyOf(spec) },
 
     getExplainContext: (state, spec) => {
       const values = valuesOf(spec, state.base);

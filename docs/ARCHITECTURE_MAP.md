@@ -107,6 +107,17 @@ Gap của DSL **không** được lây sang specialized (bất biến #5).
 `module.apply` — spec không đổi. *Edit* đổi **cấu trúc spec** qua SimulationPatch
 → validate → rebuild. Không được trộn hai đường; UI không tự sửa scene.
 
+*EditPolicy v1 (M7.14D)*: thao tác sửa được suy từ **cấu trúc spec**, không mặc
+định giống nhau cho mọi cảnh generic — `spatial` (node/edge: thêm điểm/nối/xóa),
+`structural` (container/heading/paragraph: thêm/sửa/xóa nội dung, **không** thêm
+điểm), `value_only` (switch/lamp/value_box: chỉ tương tác sẵn có), `observation`
+(có `move_along_path`: **khóa topology**). reason_code hai namespace: `policy.*`
+(không hợp năng lực cảnh) vs `structure.*` (vi phạm luật DSL).
+**LIMITATION có chủ đích**: cảnh LAI (vừa structural vừa node/edge) dùng
+precedence bảo thủ (`move > structural > spatial > value_only`) — **multi-family
+edit CHƯA được hỗ trợ**. `EditFamily` là phân loại của EditPolicy **v1**, không
+phải taxonomy vĩnh viễn của hệ (taxonomy vĩnh viễn là `SEMANTIC_ROLES`).
+
 **Canonical ↔ Learner.** Mô phỏng hệ sinh ra: đúng hoặc `capability_gap`. Thao
 tác học sinh: được phép sai; sai mà có rule kiểm được → feedback; không có rule →
 `unsupported_to_verify`, **không phán bừa**. Chi tiết: `docs/CORRECTNESS.md`.
@@ -138,8 +149,10 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
 4. **Mock LLM ở module consumer** — `call_gemini` được import vào 4 module với 4
    binding riêng; mock một chỗ không che chỗ khác. Guard phải ở **biên mạng**.
 5. **Renderer tự sửa state/spec** — mọi biến đổi qua `apply` hoặc patch.
-6. **Toolbar/affordance vô điều kiện** — UI phải dẫn xuất từ capability (đây
-   chính là vấn đề M7.14D đang sửa).
+6. **Toolbar/affordance vô điều kiện** — UI phải dẫn xuất từ capability. Đã sửa
+   ở M7.14D: `EditPolicy` suy từ chính spec (`edit_policy.py` + mirror
+   `generic/edit-policy.ts`), thực thi ở **cả ba tầng** (affordance UI, patch FE,
+   patch/edit BE) — ẩn nút là KHÔNG đủ.
 7. **Chạy full live eval theo thói quen** — tốn quota; theo chính sách trong
    `CORRECTNESS.md §7`.
 

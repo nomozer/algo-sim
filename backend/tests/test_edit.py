@@ -119,6 +119,33 @@ def test_edit_patch_hong_retry_kem_loi_roi_thanh_cong(monkeypatch):
     assert "bị từ chối vì" in calls[1]["user"]  # retry kèm lý do
 
 
+def test_edit_ngoai_pham_vi_canh_tra_policy_code_khong_retry(monkeypatch):
+    """M7.14D (bug lộ ra ở targeted live): LLM từ chối ĐÚNG theo phạm vi cảnh
+    (operations rỗng + note) → phải trả reason_code policy.* kèm lời giải thích,
+    KHÔNG phải "Patch cần operations 1–10" (structure.*), và KHÔNG retry."""
+    web = {
+        "dsl_version": "1.0", "title": "Trang",
+        "objects": [
+            {"id": "page", "type": "container", "text": "Trang"},
+            {"id": "h", "type": "heading", "text": "Tiêu đề", "parent": "page"},
+        ],
+        "rules": [], "interactions": [], "processes": [],
+    }
+    refusal = {
+        "required_roles": ["structural"],
+        "operations": [],
+        "note": "Cảnh này là nội dung có bố cục nên không thêm được điểm.",
+    }
+    fake, calls = _fake_gemini([json.dumps(refusal)])
+    monkeypatch.setattr(edit_module, "call_gemini", fake)
+
+    result = asyncio.run(edit_simulation(web, "Thêm điểm P1 vào trang.", "khóa-giả"))
+    assert result["status"] == "structurally_invalid"
+    assert result["reason_code"] == "policy.operation_not_allowed"
+    assert "điểm" in result["error"]
+    assert len(calls) == 1  # KHÔNG retry một câu trả lời vốn đã đúng
+
+
 def test_edit_sai_mai_tra_structurally_invalid(monkeypatch):
     bad = {"required_roles": [], "operations": [{"op": "remove_object", "id": "Zzz"}], "note": None}
     fake, calls = _fake_gemini([json.dumps(bad), json.dumps(bad)])
