@@ -63,6 +63,27 @@ export async function analyzeViaServer(
   return postJson("/api/analyze", { input });
 }
 
+/** Kết quả edit tăng dần (M7.14A) — status theo docs/CORRECTNESS.md §3. */
+export type EditResponse =
+  | { status: "ok"; config: unknown; patch: { operations: unknown[] }; note?: string }
+  | { status: "unsupported_to_verify"; reason: string };
+
+/**
+ * Chỉnh sửa TĂNG DẦN mô phỏng generic hiện có — KHÔNG chạy full pipeline.
+ * Server sinh patch (1 call LLM nhỏ) + validate; lỗi cấu trúc → throw (422).
+ */
+export async function editViaServer(params: {
+  simulationId: string;
+  config: unknown;
+  instruction: string;
+}): Promise<EditResponse> {
+  return postJson("/api/edit", {
+    simulation_id: params.simulationId,
+    config: params.config,
+    instruction: params.instruction,
+  });
+}
+
 export interface ExplainTurn {
   role: "user" | "assistant";
   text: string;

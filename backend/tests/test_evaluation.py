@@ -127,16 +127,17 @@ def test_harness_cham_dung_va_tong_hop(monkeypatch):
     assert m["avg_retry_count"] >= 0
 
 
-def test_dataset_du_28_de_3_nhom():
-    assert len(DATASET) == 28
+def test_dataset_du_30_de_3_nhom():
+    assert len(DATASET) == 30
     groups = {}
     for it in DATASET:
         groups[it.group] = groups.get(it.group, 0) + 1
     # M7.6 §4: b-graphpkt generic→specialized; M7.7: +b-triangle progressive;
-    # M7.13A: +d-webstatic/d-webbuild/d-tridrag (scene-mode + drag, đều generic)
-    assert groups["specialized"] == 9
+    # M7.13A: +d-webstatic/d-webbuild/d-tridrag (scene-mode + drag, đều generic);
+    # M7.14C: +a-sumif (specialized) +c-geo-complex (unsupported — boundary)
+    assert groups["specialized"] == 10
     assert groups["generic"] == 13
-    assert groups["unsupported"] == 6
+    assert groups["unsupported"] == 7
 
 
 def test_evaluate_item_don_le(monkeypatch):

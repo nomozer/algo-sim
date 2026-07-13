@@ -1,4 +1,4 @@
-"""Bộ đề kiểm thử live AI composition (M7 §3) — 28 đề, 3 nhóm.
+"""Bộ đề kiểm thử live AI composition (M7 §3) — 30 đề, 3 nhóm.
 
 Mỗi item khai báo KỲ VỌNG: nhóm, và (với generic) kỳ vọng ngữ nghĩa để
 semantic check. Dùng cho cả harness offline (mock) lẫn live (Gemini thật).
@@ -30,6 +30,8 @@ DATASET: list[EvalItem] = [
     EvalItem("a-and", "Khi nào cổng logic AND có đầu ra bằng 1?", "specialized", "logic.and_gate"),
     EvalItem("a-binconv", "Số 13 được biểu diễn dưới dạng nhị phân như thế nào?", "specialized", "binary.decimal_to_binary"),
     EvalItem("a-packet", "Minh họa đường đi của một gói tin từ máy tính đến máy chủ.", "specialized", "network.packet_routing"),
+    # M7.14C boundary #9: sum_if có engine chuyên biệt — phải route specialized
+    EvalItem("a-sumif", "Cho các số 5, 8, 3, 9, 4. Tính tổng các số lớn hơn 4.", "specialized", "algorithm.sum_if"),
 
     # ── Nhóm B: generic-composable trong DSL v1 (10) ─────────
     EvalItem("b-xor", "Mô phỏng cổng logic XOR gồm hai đầu vào và một đầu ra.", "generic", "generic.rule_scene", {"kind": "boolean_gate", "op": "xor"}),
@@ -62,4 +64,15 @@ DATASET: list[EvalItem] = [
     EvalItem("c-orbit", "Mô phỏng chuyển động tròn của các hành tinh quanh mặt trời.", "unsupported"),
     EvalItem("c-deriv", "Tính đạo hàm của hàm số f(x) = 3x^2 + 2x.", "unsupported"),
     EvalItem("c-freealgo", "Hãy mô phỏng một thuật toán sắp xếp do em tự nghĩ ra.", "unsupported"),
+    # M7.14C boundary #1: hình học DẪN XUẤT (chân đường cao/vuông góc/giao điểm/
+    # đường tròn ngoại tiếp/giao thứ hai/quỹ tích) — PHẢI capability_gap,
+    # tuyệt đối không render node/edge xấp xỉ "nhìn có vẻ đúng".
+    EvalItem(
+        "c-geo-complex",
+        "Cho tam giác nhọn ABC, AB<AC. D là chân đường cao từ A xuống BC. "
+        "M di động trên BC, M khác D. Qua M kẻ đường vuông góc BC cắt AB tại E "
+        "và AC tại F. Đường tròn ngoại tiếp AEF cắt AD lần thứ hai tại P. "
+        "Chứng minh P luôn nằm trên một đường tròn cố định.",
+        "unsupported",
+    ),
 ]

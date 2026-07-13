@@ -1,21 +1,28 @@
 import { useRef, useState } from "react";
+import { editViaServer } from "../../../llm/client";
+import { useAppStore } from "../../../state/store";
 import type { WorkspaceProps } from "../../types";
 import {
   STRUCTURAL_TYPES,
+  applyEditedSpec,
   childrenOf,
   currentFrame,
   dragTargets,
+  findFreePosition,
   inspectorGroups,
   isObjectRenderable,
   objectRole,
   positionOf,
   structuralRoots,
   valuesOf,
+  visibleContentBounds,
   type GenericState,
   type ObjectRole,
   type SimulationSpec,
   type SpecObject,
 } from "./model";
+import { validateAndApplyPatch, type PatchOp } from "./patch";
+import { validateGenericConfig } from "./validate";
 
 /**
  * Renderer 2D tổng quát — vẽ theo primitive của SimulationSpec đã validate.
@@ -85,40 +92,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     pos[o.id] = { x: px(p.x), y: py(p.y) };
   });
 
-  // Drag (M7.13A) — theo pattern ArrayView: gesture là state cục bộ renderer,
-  // mọi biến đổi engine state đi qua dispatch({type:"move"}); engine kiểm
-  // quyền (spec khai drag + visible) và clamp constraints — renderer không tự quyết.
   const draggable = dragTargets(spec);
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const [dragging, setDragging] = useState<string | null>(null);
-
-  function domainPoint(e: React.PointerEvent): { x: number; y: number } | null {
-    const svg = svgRef.current;
-    if (!svg) return null;
-    const rect = svg.getBoundingClientRect();
-    if (rect.width <= 0) return null;
-    const scale = rect.width / VW; // SVG giữ tỉ lệ → cùng scale hai trục
-    return {
-      x: (((e.clientX - rect.left) / scale) / VW) * 100,
-      y: (((e.clientY - rect.top) / scale) / VH) * 100,
-    };
-  }
-
-  function onDragStart(e: React.PointerEvent<SVGGElement>, id: string) {
-    if (busy || !draggable.has(id)) return;
-    e.currentTarget.setPointerCapture?.(e.pointerId);
-    setDragging(id);
-  }
-
-  function onDragMove(e: React.PointerEvent<SVGGElement>) {
-    if (!dragging) return;
-    const d = domainPoint(e);
-    if (d) dispatch({ type: "move", target: dragging, x: d.x, y: d.y });
-  }
-
-  function onDragEnd() {
-    setDragging(null);
-  }
 
   // M7.12: bố cục tài liệu (container/heading/paragraph/text) — layout dọc đệ quy,
   // container vẽ khung TRƯỚC (sau đó tới con) để đúng thứ tự z. Vai trò hiển thị
@@ -180,6 +154,144 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
   const hasStructural = structuralRootsVisible.length > 0;
   const svgH = hasStructural ? Math.max(VH, flowY + FLOW_MARGIN) : VH;
 
+  /* ── Viewport (M7.14): fit/reset — viewBox là hàm tất định của state ── */
+  const [autoFit, setAutoFit] = useState(true);
+  const FIT_PAD_X = 56; // px: đủ chứa bán kính node lớn nhất + nhãn
+  const FIT_PAD_Y = 48;
+  let vb = { x: 0, y: 0, w: VW, h: svgH };
+  if (autoFit && !hasStructural) {
+    const b = visibleContentBounds(state);
+    if (b) {
+      const x1 = px(b.minX) - FIT_PAD_X;
+      const x2 = px(b.maxX) + FIT_PAD_X;
+      const y1 = py(b.minY) - FIT_PAD_Y;
+      const y2 = py(b.maxY) + FIT_PAD_Y;
+      // không zoom-in quá sát (khung ≥ 60% mặc định); zoom-out tự do khi tràn
+      const w = Math.max(x2 - x1, VW * 0.6);
+      const h = Math.max(y2 - y1, VH * 0.6);
+      vb = { x: (x1 + x2) / 2 - w / 2, y: (y1 + y2) / 2 - h / 2, w, h };
+    }
+  }
+
+  /* ── Drag (M7.13A) — gesture cục bộ renderer, biến đổi qua dispatch("move");
+     domainPoint đọc viewBox HIỆN HÀNH (fit đổi tỉ lệ — M7.14) ── */
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const [dragging, setDragging] = useState<string | null>(null);
+
+  function domainPoint(e: React.PointerEvent): { x: number; y: number } | null {
+    const svg = svgRef.current;
+    if (!svg) return null;
+    const rect = svg.getBoundingClientRect();
+    if (rect.width <= 0) return null;
+    const scale = rect.width / vb.w; // SVG giữ tỉ lệ → cùng scale hai trục
+    return {
+      x: ((vb.x + (e.clientX - rect.left) / scale) / VW) * 100,
+      y: ((vb.y + (e.clientY - rect.top) / scale) / VH) * 100,
+    };
+  }
+
+  function onDragStart(e: React.PointerEvent<SVGGElement>, id: string) {
+    if (busy || editMode || !draggable.has(id)) return;
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    setDragging(id);
+  }
+
+  function onDragMove(e: React.PointerEvent<SVGGElement>) {
+    if (!dragging) return;
+    const d = domainPoint(e);
+    if (d) dispatch({ type: "move", target: dragging, x: d.x, y: d.y });
+  }
+
+  function onDragEnd() {
+    setDragging(null);
+  }
+
+  /* ── Edit tăng dần (M7.14) — MỌI thay đổi cấu trúc đi qua patch → validate
+     → applyEditedSpec → store.replaceSimulation. UI không tự sửa scene. ── */
+  const replaceSimulation = useAppStore((s) => s.replaceSimulation);
+  const [editMode, setEditMode] = useState(false);
+  const [editTool, setEditTool] = useState<"add_node" | "connect" | "delete" | null>(null);
+  const [connectFrom, setConnectFrom] = useState<string | null>(null);
+  const [editText, setEditText] = useState("");
+  const [editBusy, setEditBusy] = useState(false);
+  const [editMsg, setEditMsg] = useState<string | null>(null);
+
+  function applyNewSpec(newSpec: SimulationSpec) {
+    replaceSimulation(newSpec, applyEditedSpec(state, newSpec));
+  }
+
+  function runLocalPatch(ops: PatchOp[]) {
+    const result = validateAndApplyPatch(spec, { operations: ops });
+    if (result.status === "valid") {
+      applyNewSpec(result.config);
+      setEditMsg(null);
+    } else {
+      setEditMsg(result.error);
+    }
+  }
+
+  function nextFreeId(prefix: string): string {
+    const taken = new Set(spec.objects.map((o) => o.id));
+    for (let n = 1; ; n += 1) if (!taken.has(`${prefix}${n}`)) return `${prefix}${n}`;
+  }
+
+  function onCanvasClick(e: React.MouseEvent) {
+    if (!editMode || editTool !== "add_node" || editBusy) return;
+    const d = domainPoint(e as unknown as React.PointerEvent);
+    if (!d) return;
+    const taken = spec.objects
+      .filter((o) => !STRUCTURAL_TYPES.has(o.type) && o.type !== "edge" && state.pos[o.id])
+      .map((o) => state.pos[o.id]);
+    const p = findFreePosition(taken, d);
+    const id = nextFreeId("P");
+    runLocalPatch([{ op: "add_object", object: { id, type: "node", label: id, x: p.x, y: p.y } }]);
+  }
+
+  function onObjectEditClick(id: string) {
+    if (!editMode || editBusy) return;
+    if (editTool === "delete") {
+      runLocalPatch([{ op: "remove_object", id }]);
+      return;
+    }
+    if (editTool === "connect") {
+      if (connectFrom === null) {
+        setConnectFrom(id);
+        setEditMsg(`Đã chọn "${id}" — bấm object thứ hai để nối.`);
+      } else if (connectFrom !== id) {
+        runLocalPatch([{ op: "connect", from: connectFrom, to: id, edge_id: nextFreeId(`${connectFrom}_${id}`) }]);
+        setConnectFrom(null);
+      }
+    }
+  }
+
+  async function submitNlEdit() {
+    const instruction = editText.trim();
+    if (!instruction || editBusy) return;
+    setEditBusy(true);
+    setEditMsg(null);
+    try {
+      const res = await editViaServer({ simulationId: "generic.rule_scene", config: spec, instruction });
+      if (res.status === "ok") {
+        // Two-tier như loadEnvelope: client tự validate lại config từ server
+        const validated = validateGenericConfig(res.config);
+        if (!validated.ok) {
+          setEditMsg(`Cấu hình từ máy chủ không hợp lệ: ${validated.error}`);
+        } else {
+          applyNewSpec(validated.config);
+          setEditText("");
+          setEditMsg(res.note ?? "Đã cập nhật mô phỏng.");
+        }
+      } else {
+        // unsupported_to_verify — phán quyết trung thực, hiển thị nguyên văn
+        setEditMsg(res.reason);
+      }
+    } catch (err) {
+      setEditMsg(err instanceof Error ? err.message : String(err));
+    } finally {
+      setEditBusy(false);
+    }
+  }
+
   function renderObject(o: SpecObject, role: ObjectRole) {
     const p = pos[o.id];
     const v = values[o.id] ?? 0;
@@ -237,9 +349,11 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       case "node": {
         // M7.13A: node có drag khai trong spec → kéo được (engine đã kiểm quyền)
-        const canDrag = draggable.has(o.id) && !busy;
+        const canDrag = draggable.has(o.id) && !busy && !editMode;
         const isDragged = dragging === o.id;
-        const dragProps = canDrag
+        const editClickable = editMode && (editTool === "connect" || editTool === "delete");
+        const isConnectFrom = connectFrom === o.id;
+        const interactProps = canDrag
           ? {
               style: { cursor: isDragged ? "grabbing" : "grab" } as React.CSSProperties,
               onPointerDown: (e: React.PointerEvent<SVGGElement>) => onDragStart(e, o.id),
@@ -247,18 +361,36 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               onPointerUp: onDragEnd,
               onPointerCancel: onDragEnd,
             }
-          : {};
+          : editClickable
+            ? {
+                style: { cursor: "pointer" } as React.CSSProperties,
+                onClick: (e: React.MouseEvent) => {
+                  e.stopPropagation();
+                  onObjectEditClick(o.id);
+                },
+              }
+            : {};
+        // M7.14: nhãn flip khi sát mép khung nhìn hiện hành — không bị cắt chữ
+        const flipX = p.x + 11 > vb.x + vb.w - 46;
+        const flipY = p.y - 9 < vb.y + 16;
+        const labelX = flipX ? p.x - 11 : p.x + 11;
+        const labelY = flipY ? p.y + 24 : p.y - 9;
+        const labelAnchor = flipX ? "end" : "start";
         if (isPoint(o)) {
           // ĐIỂM (hình học): marker tròn rõ + nhãn lệch khỏi marker
           const r = current ? 8 : 6;
           const fill = current ? "var(--primary)" : "var(--ink)";
           return (
-            <g key={o.id} className={popCls} {...dragProps}>
+            <g key={o.id} className={popCls} {...interactProps}>
+              {isConnectFrom && (
+                <circle cx={p.x} cy={p.y} r={15} fill="transparent" stroke="var(--accent-orange)" strokeWidth={2.5} />
+              )}
               {canDrag && (
                 <circle cx={p.x} cy={p.y} r={13} fill={isDragged ? "var(--canvas-soft)" : "transparent"} stroke="var(--primary)" strokeWidth={1.5} strokeDasharray="3 3" opacity={0.7} />
               )}
+              {editClickable && <circle cx={p.x} cy={p.y} r={14} fill="transparent" />}
               <circle cx={p.x} cy={p.y} r={r} fill={fill} stroke="#fff" strokeWidth={2} className={current ? "gen-glow" : undefined} />
-              <text x={p.x + 11} y={p.y - 9} fontSize={15} fontWeight={700} fill="var(--ink)">
+              <text x={labelX} y={labelY} textAnchor={labelAnchor} fontSize={15} fontWeight={700} fill="var(--ink)">
                 {o.label ?? o.id}
               </text>
             </g>
@@ -267,7 +399,10 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         // NÚT MẠNG (có node_type)
         const color = NODE_COLOR[o.node_type ?? ""] ?? "var(--primary)";
         return (
-          <g key={o.id} className={popCls} {...dragProps}>
+          <g key={o.id} className={popCls} {...interactProps}>
+            {isConnectFrom && (
+              <circle cx={p.x} cy={p.y} r={34} fill="transparent" stroke="var(--accent-orange)" strokeWidth={2.5} />
+            )}
             {canDrag && (
               <circle cx={p.x} cy={p.y} r={32} fill="transparent" stroke="var(--primary)" strokeWidth={1.5} strokeDasharray="4 4" opacity={0.6} />
             )}
@@ -294,11 +429,104 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     }
   }
 
+  // M7.14: các pass render theo Z-ORDER cố định — edge dưới node, label trên
+  // node, object CURRENT trên object completed (không chỉ glow mà nổi thật).
+  const spatialVisible = spec.objects.filter(
+    (o) =>
+      o.type !== "edge" &&
+      o.type !== "moving_entity" &&
+      o.type !== "label" &&
+      !STRUCTURAL_TYPES.has(o.type) &&
+      isObjectRenderable(frame, o),
+  );
+  const spatialCompleted = spatialVisible.filter((o) => objectRole(state, o.id) !== "current");
+  const spatialCurrent = spatialVisible.filter((o) => objectRole(state, o.id) === "current");
+  const labelsVisible = spec.objects.filter((o) => o.type === "label" && isObjectRenderable(frame, o));
+
+  const activeBtn = { fontWeight: 700, borderColor: "var(--primary)", color: "var(--primary)" } as React.CSSProperties;
+  const toolBtn = (tool: "add_node" | "connect" | "delete", label: string) => (
+    <button
+      className="btn-utility"
+      style={editTool === tool ? activeBtn : undefined}
+      disabled={editBusy}
+      onClick={() => {
+        setEditTool(editTool === tool ? null : tool);
+        setConnectFrom(null);
+        setEditMsg(null);
+      }}
+    >
+      {label}
+    </button>
+  );
+
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
+      {/* M7.14: [Quan sát]/[Chỉnh sửa] — edit là con đường patch, không phải interaction */}
+      <div className="player-controls" style={{ flexWrap: "wrap", gap: 6 }}>
+        <button
+          className="btn-utility"
+          style={!editMode ? activeBtn : undefined}
+          onClick={() => {
+            setEditMode(false);
+            setEditTool(null);
+            setConnectFrom(null);
+            setEditMsg(null);
+          }}
+        >
+          Quan sát
+        </button>
+        <button
+          className="btn-utility"
+          style={editMode ? activeBtn : undefined}
+          disabled={busy}
+          onClick={() => setEditMode(true)}
+        >
+          Chỉnh sửa
+        </button>
+        {editMode && (
+          <>
+            <span style={{ width: 1, alignSelf: "stretch", background: "var(--ink-faint)" }} />
+            {toolBtn("add_node", "＋ Thêm điểm")}
+            {toolBtn("connect", "⌁ Nối")}
+            {toolBtn("delete", "✕ Xóa")}
+          </>
+        )}
+        {!hasStructural && (
+          <button
+            className="btn-utility"
+            style={{ marginLeft: "auto", ...(autoFit ? {} : activeBtn) }}
+            onClick={() => setAutoFit(!autoFit)}
+            title={autoFit ? "Đang tự thu vừa hình — bấm để về khung mặc định" : "Bấm để tự thu vừa hình"}
+          >
+            {autoFit ? "Khung mặc định" : "Thu vừa hình"}
+          </button>
+        )}
+      </div>
+      {editMode && (
+        <div className="player-controls" style={{ gap: 6 }}>
+          <input
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && submitNlEdit()}
+            placeholder='Mô tả chỉnh sửa, vd: "Thêm điểm D và nối D với A, B"'
+            disabled={editBusy}
+            style={{ flex: 1, minWidth: 200, padding: "6px 10px", borderRadius: 8, border: "1px solid var(--ink-faint)", background: "var(--surface)", color: "var(--ink)" }}
+          />
+          <button className="btn-primary" onClick={submitNlEdit} disabled={editBusy || !editText.trim()}>
+            {editBusy ? "Đang xử lý..." : "Thực hiện"}
+          </button>
+        </div>
+      )}
+      {editMsg && <div className="hint">{editMsg}</div>}
       <div className="sim-stage">
-        <svg ref={svgRef} viewBox={`0 0 ${VW} ${svgH}`} width="100%" style={{ maxWidth: VW, display: "block", margin: "0 auto" }}>
-          {/* Cạnh (edge) vẽ trước; chỉ khi edge + hai đầu đều visible (§6) */}
+        <svg
+          ref={svgRef}
+          viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
+          width="100%"
+          style={{ maxWidth: VW, display: "block", margin: "0 auto", cursor: editMode && editTool === "add_node" ? "crosshair" : undefined }}
+          onClick={onCanvasClick}
+        >
+          {/* 1. Cạnh (edge) — dưới cùng; chỉ khi edge + hai đầu đều visible (§6) */}
           {spec.objects
             .filter((o) => o.type === "edge" && isObjectRenderable(frame, o))
             .map((o) => {
@@ -306,35 +534,67 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               const b = pos[o.to ?? ""];
               if (!a || !b) return null;
               const current = objectRole(state, o.id) === "current";
-              const len = Math.hypot(b.x - a.x, b.y - a.y);
+              const len = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+              // M7.14: nhãn cạnh ở trung điểm, dịch theo pháp tuyến (hướng lên)
+              let nx = (-(b.y - a.y) / len) * 12;
+              let ny = ((b.x - a.x) / len) * 12;
+              if (ny > 0) {
+                nx = -nx;
+                ny = -ny;
+              }
+              const deletable = editMode && editTool === "delete";
               return (
-                <line
-                  key={o.id}
-                  x1={a.x}
-                  y1={a.y}
-                  x2={b.x}
-                  y2={b.y}
-                  stroke={current ? "var(--primary)" : "var(--ink-secondary)"}
-                  strokeWidth={current ? 4 : 2.5}
-                  strokeLinecap="round"
-                  className={current ? "gen-edge-draw" : undefined}
-                  style={current ? ({ ["--len" as string]: len, strokeDasharray: len } as React.CSSProperties) : undefined}
-                />
+                <g key={o.id}>
+                  <line
+                    x1={a.x}
+                    y1={a.y}
+                    x2={b.x}
+                    y2={b.y}
+                    stroke={current ? "var(--primary)" : "var(--ink-secondary)"}
+                    strokeWidth={current ? 4 : 2.5}
+                    strokeLinecap="round"
+                    className={current ? "gen-edge-draw" : undefined}
+                    style={current ? ({ ["--len" as string]: len, strokeDasharray: len } as React.CSSProperties) : undefined}
+                  />
+                  {deletable && (
+                    <line
+                      x1={a.x}
+                      y1={a.y}
+                      x2={b.x}
+                      y2={b.y}
+                      stroke="transparent"
+                      strokeWidth={14}
+                      style={{ cursor: "pointer" }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onObjectEditClick(o.id);
+                      }}
+                    />
+                  )}
+                  {o.label && (
+                    <text
+                      x={(a.x + b.x) / 2 + nx}
+                      y={(a.y + b.y) / 2 + ny}
+                      textAnchor="middle"
+                      fontSize={12}
+                      fontWeight={600}
+                      fill="var(--ink-secondary)"
+                    >
+                      {o.label}
+                    </text>
+                  )}
+                </g>
               );
             })}
-          {/* Object thường (legacy spatial) — trừ họ cấu trúc (render theo luồng riêng) */}
-          {spec.objects
-            .filter(
-              (o) =>
-                o.type !== "edge" &&
-                o.type !== "moving_entity" &&
-                !STRUCTURAL_TYPES.has(o.type) &&
-                isObjectRenderable(frame, o),
-            )
-            .map((o) => renderObject(o, objectRole(state, o.id)))}
-          {/* Họ cấu trúc/nội dung (M7.12): container/heading/paragraph/text theo luồng dọc */}
+          {/* 2. Họ cấu trúc/nội dung (M7.12): luồng tài liệu */}
           {structuralEls}
-          {/* Thực thể di chuyển (packet) trên cùng */}
+          {/* 3. Object spatial ĐÃ HIỆN (completed) */}
+          {spatialCompleted.map((o) => renderObject(o, objectRole(state, o.id)))}
+          {/* 4. Object spatial VỪA TẠO (current) — nổi trên completed */}
+          {spatialCurrent.map((o) => renderObject(o, objectRole(state, o.id)))}
+          {/* 5. Nhãn chữ đứng riêng — trên node/edge, không bị che */}
+          {labelsVisible.map((o) => renderObject(o, objectRole(state, o.id)))}
+          {/* 6. Thực thể di chuyển (packet) trên cùng */}
           {spec.objects
             .filter((o) => o.type === "moving_entity" && isObjectRenderable(frame, o))
             .map((o) => {
@@ -347,14 +607,24 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
             })}
         </svg>
       </div>
+      {/* M7.14: InteractionFeedback — dẫn xuất của RULE engine, không phải chat */}
+      {state.feedback && <div className="narration-bar is-user">{state.feedback.message}</div>}
       <div className="narration-bar">
-        {state.timeline.length > 1
-          ? frame.narration
-          : toggleable.size > 0
-            ? "Bấm vào các công tắc để thay đổi trạng thái và quan sát kết quả."
-            : draggable.size > 0
-              ? "Kéo các điểm có viền đứt để thay đổi hình và quan sát các cạnh cập nhật theo."
-              : spec.title}
+        {editMode
+          ? editTool === "add_node"
+            ? "Bấm vào chỗ trống trên sân khấu để thêm một điểm mới."
+            : editTool === "connect"
+              ? "Bấm lần lượt hai object để nối chúng bằng một cạnh."
+              : editTool === "delete"
+                ? "Bấm vào object muốn xóa (cạnh chạm nó sẽ được gỡ theo)."
+                : "Chọn công cụ, hoặc mô tả chỉnh sửa bằng lời và bấm Thực hiện."
+          : state.timeline.length > 1
+            ? frame.narration
+            : toggleable.size > 0
+              ? "Bấm vào các công tắc để thay đổi trạng thái và quan sát kết quả."
+              : draggable.size > 0
+                ? "Kéo các điểm có viền đứt để thay đổi hình và quan sát các cạnh cập nhật theo."
+                : spec.title}
       </div>
     </div>
   );

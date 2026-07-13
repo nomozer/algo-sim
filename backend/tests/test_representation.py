@@ -21,13 +21,36 @@ from app.simulation.semantic import (
 
 # ── Role taxonomy ─────────────────────────────────────────────
 
-def test_moi_role_deu_coverable_sau_m712():
-    """M7.12: DSL v1.1 thêm container/group (structural) + heading/paragraph/text
-    (textual) → CẢ 8 role đều có primitive cover, không còn gap role hiện tại."""
-    assert all_coverable_roles() == set(SEMANTIC_ROLES)
-    assert known_gap_roles() == set()
+# M7.14C: 8 vai trò DẪN XUẤT cố ý KHÔNG có primitive cover — capability_gap thật
+GAP_ROLES_M714C = {
+    "geometric_projection", "geometric_perpendicular", "geometric_intersection",
+    "geometric_circle", "geometric_locus", "numeric_threshold",
+    "continuous_motion", "arbitrary_algorithm",
+}
+
+
+def test_8_role_co_ban_coverable_va_8_gap_role_co_y():
+    """M7.12: 8 role cơ bản đều có primitive cover. M7.14C: thêm 8 role dẫn xuất
+    CỐ Ý không cover → known_gap_roles() trả đúng chúng (thà từ chối trung thực
+    còn hơn render xấp xỉ — docs/CORRECTNESS.md §5)."""
+    assert known_gap_roles() == GAP_ROLES_M714C
+    assert all_coverable_roles() == set(SEMANTIC_ROLES) - GAP_ROLES_M714C
     assert roles_of_primitive("container") == {"structural"}
     assert roles_of_primitive("heading") == {"textual"}
+
+
+def test_plan_dung_som_voi_gap_role_dan_xuat():
+    """Analysis gắn vai trò dẫn xuất → plan liệt kê vào unsupported_capabilities
+    (run_pipeline sẽ dừng TRƯỚC classify — khóa ở test_capability_boundary)."""
+    plan = build_representation_plan({
+        "entity_roles": ["relational", "geometric_projection"],
+        "relation_roles": ["geometric_perpendicular", "geometric_intersection"],
+        "process_roles": ["geometric_locus", "temporal"],
+    })
+    assert plan["unsupported_capabilities"] == [
+        "geometric_intersection", "geometric_locus",
+        "geometric_perpendicular", "geometric_projection",
+    ]
 
 
 def test_roles_of_primitive():

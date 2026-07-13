@@ -53,6 +53,9 @@ export const DRAG_TARGET_TYPES = new Set<string>(["node"]);
 export const PROCESS_TYPES = ["move_along_path", "reveal_sequence"] as const;
 export type ProcessType = (typeof PROCESS_TYPES)[number];
 
+/** Họ process DIỄN BIẾN theo thời gian — song song manifest.temporal_process_types(). */
+export const TEMPORAL_PROCESS_TYPES = new Set<string>(["move_along_path", "reveal_sequence"]);
+
 export interface SpecObject {
   id: string;
   type: ObjectType;
@@ -132,6 +135,17 @@ export interface Frame {
   narration: string;
 }
 
+/**
+ * Feedback tương tác runtime (M7.14) — kênh RIÊNG, không trộn với PatchResult
+ * (docs/CORRECTNESS.md §3). Message là dẫn xuất của RULE tất định engine đang
+ * có, không phải văn LLM; chỉ nói điều engine đo được (vd chạm biên vùng
+ * tương tác) — TUYỆT ĐỐI không suy diễn ngữ nghĩa chưa có ("M phải thuộc BC").
+ */
+export interface InteractionFeedback {
+  rule: "drag_bounds";
+  message: string;
+}
+
 export interface GenericState {
   readonly spec: SimulationSpec;
   /** Giá trị GỐC của các object bật/tắt được (switch...) — toggle sửa ở đây. */
@@ -146,6 +160,8 @@ export interface GenericState {
   /** Timeline do engine dựng — dài 1 nếu không có process (exploratory). */
   timeline: Frame[];
   cursor: number;
+  /** Feedback tương tác gần nhất — null khi không có gì cần nói (M7.14). */
+  feedback?: InteractionFeedback | null;
 }
 
 /* ── Engine tất định ─────────────────────────────────────── */
@@ -367,10 +383,120 @@ export function applyMove(state: GenericState, target: string, x: number, y: num
     nx = Math.round(nx / c.snap) * c.snap;
     ny = Math.round(ny / c.snap) * c.snap;
   }
-  nx = clamp(nx, c.bounds?.min_x ?? 0, c.bounds?.max_x ?? 100);
-  ny = clamp(ny, c.bounds?.min_y ?? 0, c.bounds?.max_y ?? 100);
-  if (nx === prev.x && ny === prev.y) return state;
-  return { ...state, pos: { ...state.pos, [target]: { x: nx, y: ny } } };
+  const cx = clamp(nx, c.bounds?.min_x ?? 0, c.bounds?.max_x ?? 100);
+  const cy = clamp(ny, c.bounds?.min_y ?? 0, c.bounds?.max_y ?? 100);
+  // M7.14: chạm biên bounds KHAI TRONG SPEC → feedback từ rule tất định.
+  // Message chỉ nói điều engine đo được — không suy diễn ngữ nghĩa hình học.
+  const hitBounds = c.bounds !== undefined && (cx !== nx || cy !== ny);
+  const feedback: InteractionFeedback | null = hitBounds
+    ? { rule: "drag_bounds", message: "Đối tượng này chỉ di chuyển được trong vùng tương tác cho phép." }
+    : null;
+  const samePos = cx === prev.x && cy === prev.y;
+  const sameFeedback = (state.feedback ?? null) === null ? feedback === null : state.feedback?.rule === feedback?.rule;
+  if (samePos && sameFeedback) return state;
+  return {
+    ...state,
+    pos: samePos ? state.pos : { ...state.pos, [target]: { x: cx, y: cy } },
+    feedback,
+  };
+}
+
+/* ── Edit tăng dần (M7.14) — vị trí trống + chuyển state sang spec mới ── */
+
+/**
+ * Vị trí trống tất định cho object mới: quét lưới 10×10 trong domain 0–100,
+ * ưu tiên ô gần trọng tâm các vị trí hiện có, cách mọi object ≥ MIN_DIST.
+ * Không cần layout hoàn hảo — chỉ cần không đè rõ ràng lên object cũ.
+ */
+export function findFreePosition(
+  taken: { x: number; y: number }[],
+  hint?: { x: number; y: number },
+): { x: number; y: number } {
+  const MIN_DIST = 12;
+  const free = (x: number, y: number) => taken.every((p) => Math.hypot(p.x - x, p.y - y) >= MIN_DIST);
+  if (hint) {
+    const hx = clamp(hint.x, 5, 95);
+    const hy = clamp(hint.y, 5, 95);
+    if (free(hx, hy)) return { x: hx, y: hy };
+  }
+  const center = taken.length
+    ? {
+        x: taken.reduce((s, p) => s + p.x, 0) / taken.length,
+        y: taken.reduce((s, p) => s + p.y, 0) / taken.length,
+      }
+    : { x: 50, y: 50 };
+  const candidates: { x: number; y: number }[] = [];
+  for (let y = 10; y <= 90; y += 10) for (let x = 10; x <= 90; x += 10) candidates.push({ x, y });
+  candidates.sort((a, b) => {
+    const da = Math.hypot(a.x - center.x, a.y - center.y);
+    const db = Math.hypot(b.x - center.x, b.y - center.y);
+    return da - db || a.y - b.y || a.x - b.x; // tie-break tất định
+  });
+  for (const cnd of candidates) if (free(cnd.x, cnd.y)) return cnd;
+  return { x: 50, y: 50 };
+}
+
+/**
+ * Dựng state MỚI từ spec đã patch (M7.14) — config bất biến được THAY THẾ
+ * nguyên khối, state rebuild nhưng GIỮ những gì người học đã làm:
+ * - pos của id còn sống (vị trí đã kéo không mất);
+ * - base (giá trị toggle) của id còn sống;
+ * - cursor clamp vào timeline mới.
+ * Object mới: dùng x/y trong spec nếu có (LLM/click đã chọn), không thì
+ * findFreePosition — không đè lên object cũ.
+ */
+export function applyEditedSpec(state: GenericState, newSpec: SimulationSpec): GenericState {
+  const base = initialBase(newSpec);
+  for (const id of Object.keys(base)) {
+    if (id in state.base) base[id] = state.base[id];
+  }
+  const pos: Record<string, { x: number; y: number }> = {};
+  const taken: { x: number; y: number }[] = [];
+  newSpec.objects.forEach((o, i) => {
+    if (STRUCTURAL_TYPES.has(o.type)) return;
+    let p = state.pos[o.id];
+    if (!p && typeof o.x === "number" && typeof o.y === "number") p = { x: o.x, y: o.y };
+    if (!p && o.type !== "edge") p = findFreePosition(taken);
+    if (!p) p = positionOf(o, i); // edge: vị trí không dùng để vẽ (derive từ hai đầu)
+    pos[o.id] = p;
+    if (o.type !== "edge") taken.push(p);
+  });
+  const timeline = buildTimeline(newSpec);
+  return {
+    spec: newSpec,
+    base,
+    pos,
+    timeline,
+    cursor: Math.max(0, Math.min(state.cursor, timeline.length - 1)),
+    feedback: null,
+  };
+}
+
+/**
+ * Bao (domain 0–100) của các object spatial ĐANG VISIBLE — nguyên liệu cho
+ * fit-view (M7.14). null khi không có gì để fit (cảnh structural flow hoặc
+ * chưa object nào hiện). Chỉ tính tâm vị trí — renderer tự cộng padding pixel.
+ */
+export function visibleContentBounds(
+  state: GenericState,
+): { minX: number; minY: number; maxX: number; maxY: number } | null {
+  const frame = currentFrame(state);
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+  for (const o of state.spec.objects) {
+    if (o.type === "edge" || STRUCTURAL_TYPES.has(o.type)) continue;
+    if (!isVisible(frame, o.id)) continue;
+    const p = state.pos[o.id];
+    if (!p) continue;
+    minX = Math.min(minX, p.x);
+    minY = Math.min(minY, p.y);
+    maxX = Math.max(maxX, p.x);
+    maxY = Math.max(maxY, p.y);
+  }
+  if (!Number.isFinite(minX)) return null;
+  return { minX, minY, maxX, maxY };
 }
 
 /* ── Trạng thái hiển thị theo bước (M7.10) — dữ liệu THUẦN, dùng lại cho 2D lẫn 3D ── */

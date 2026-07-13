@@ -304,24 +304,31 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
     """
     analysis = await stage_analyze(text, api_key)
 
-    # M7.11: Representation Plan TẤT ĐỊNH (analysis → semantic requirements →
-    # plan). Nếu đề CẦN vai trò không primitive nào cover được → dừng SỚM với
-    # capability_gap, KHÔNG ép kiến thức vào primitive sai (M7.11 §2, §4).
+    # M7.11: Representation Plan TẤT ĐỊNH (analysis → semantic requirements → plan).
     plan = build_representation_plan(analysis)
-    if plan["unsupported_capabilities"]:
-        return {
-            "status": "unsupported",
-            "reason": (
-                "Đề cần khả năng biểu diễn mà DSL hiện chưa có "
-                f"(vai trò: {', '.join(plan['unsupported_capabilities'])}). "
-                "Chưa thể mô phỏng đúng bản chất bài này."
-            ),
-            "failure_category": "capability_gap",
-            "representation_plan": plan,
-            "analysis": analysis,
-        }
 
     classification = await stage_classify(text, analysis, api_key)
+
+    # M7.11 + M7.14C: vai trò không primitive nào cover → capability_gap, KHÔNG
+    # ép kiến thức vào primitive sai. Nhưng gap của DSL chỉ chặn ĐƯỜNG GENERIC —
+    # bài được classify về mô-đun CHUYÊN BIỆT có engine riêng (không dùng DSL)
+    # thì đi tiếp bình thường (bug live: sum_if từng bị vạ lây vì analyze gắn
+    # numeric_threshold cho điều kiện lọc "lớn hơn 4").
+    if plan["unsupported_capabilities"]:
+        chosen = classification.get("simulation_id") if classification.get("status") == "ok" else None
+        if chosen is None or chosen == "generic.rule_scene":
+            return {
+                "status": "unsupported",
+                "reason": (
+                    "Đề cần khả năng biểu diễn mà DSL hiện chưa có "
+                    f"(vai trò: {', '.join(plan['unsupported_capabilities'])}). "
+                    "Chưa thể mô phỏng đúng bản chất bài này."
+                ),
+                "failure_category": "capability_gap",
+                "representation_plan": plan,
+                "analysis": analysis,
+            }
+
     if classification.get("status") != "ok":
         return {
             "status": "unsupported",

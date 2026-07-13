@@ -27,6 +27,17 @@ PHÂN BIỆT QUAN TRỌNG (chống gán sai "structural"):
 - PHÂN BIỆT TĨNH ↔ ĐỘNG: đề "HIỂN THỊ / cho xem / trình bày cấu trúc..." (cảnh cho sẵn, chỉ xem) → temporal_needs = [] và scene_construction = "prebuilt". CHỈ khi đề nói "QUÁ TRÌNH tạo / dựng / hình thành / từng bước" → temporal + scene_construction = "step_by_step". Không tự suy "hiển thị" thành "quá trình".
 - "interactive" khi đề muốn học sinh THAO TÁC TRỰC TIẾP: bật/tắt công tắc, hoặc KÉO/di chuyển điểm-đối tượng để quan sát ("cho phép kéo", "thử di chuyển", "tự thay đổi vị trí").
 - "textual" chỉ khi cần nội dung chữ DÀI (đoạn văn/tiêu đề), KHÔNG đặt cho nhãn ngắn (tên điểm/nút).
+
+QUAN HỆ DẪN XUẤT — khi đề yêu cầu vị trí/đối tượng phải ĐƯỢC TÍNH RA từ ràng buộc toán học (không phải do đề nêu sẵn), PHẢI gắn thêm các vai trò sau vào entity_roles/relation_roles/process_roles tương ứng:
+- geometric_projection: chân đường cao, hình chiếu vuông góc của điểm lên đường thẳng.
+- geometric_perpendicular: đường thẳng phải DỰNG vuông góc với đường khác (qua điểm cho trước).
+- geometric_intersection: giao điểm phải TÍNH từ hai đối tượng (đường cắt đường, đường tròn cắt đường, "cắt ... tại điểm thứ hai").
+- geometric_circle: đường tròn đi qua các điểm cho trước, đường tròn ngoại tiếp/nội tiếp, tiếp tuyến.
+- geometric_locus: quỹ tích, "luôn nằm trên một đường cố định", điểm di động kéo theo các đối tượng khác phải tính lại.
+- numeric_threshold: TRẠNG THÁI MÔ PHỎNG phụ thuộc ngưỡng — "đèn sáng khi ít nhất/nhiều nhất k trong n", đầu ra so sánh tổng với ngưỡng. KHÔNG áp cho bài đếm/tính tổng các phần tử theo điều kiện so sánh đơn giản ("tổng các số lớn hơn 4", "đếm số bạn đạt từ 8 trở lên") — đó là thuật toán đếm/tổng có điều kiện chuẩn, hệ có mô phỏng chuyên biệt.
+- continuous_motion: chuyển động LIÊN TỤC theo thời gian thực (quỹ đạo tròn/elip, ném xiên, dao động) — khác với di chuyển RỜI RẠC qua danh sách điểm.
+- arbitrary_algorithm: yêu cầu mô phỏng một thuật toán do người dùng tự nghĩ/không mô tả cụ thể.
+PHÂN BIỆT ĐỂ KHÔNG GẮN OAN: việc DỰNG/NỐI các đối tượng ĐƯỢC NÊU TÊN TƯỜNG MINH trong đề (vẽ đoạn AB, thêm điểm C rồi nối AC, BC; đồ thị có các nút và cạnh liệt kê sẵn) KHÔNG phải quan hệ dẫn xuất — chỉ dùng relational (+ temporal nếu dựng từng bước). Từ "vuông góc"/"cắt" chỉ tính là dẫn xuất khi hệ PHẢI TÍNH vị trí thỏa ràng buộc đó; nếu đề chỉ mô tả hình dáng cho sẵn thì không gắn.
 - Toạ độ/số thứ tự đi kèm hình KHÔNG tự động là "numeric"; chỉ gán "numeric" khi bài THỰC SỰ cần tính/hiển thị giá trị số (tổng, đếm, đổi cơ số, giá trị ô).
 - notes: điều cần lưu ý (đề mơ hồ, thiếu dữ liệu, nhiều yêu cầu, số liệu quá dài...), không có thì null.
 

@@ -32,6 +32,7 @@ from app.persistence.db import (
 )
 from app.simulation.dsl.manifest import DSL_VERSION, MANIFEST, SUPPORTED_VERSIONS
 from app.simulation.patterns import DbPatternStore
+from app.ai.edit import edit_simulation
 from app.ai.explain import explain_state
 from app.ingestion.input import IngestError, ingest_to_text
 from app.ai.pipeline import run_pipeline
@@ -60,7 +61,9 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 # "3": M7.13A — drag interaction + scene-mode consistency (manifest/prompt đổi).
 # "4": M7.13B — siết định nghĩa "relational" trong analyze (chống nhiễu role
 #      phá pattern matching); cache chuyển sang simulation_cache version-aware.
-CACHE_VERSION = "4"
+# "5": M7.14C — 8 gap role dẫn xuất (geometric_*/threshold/orbit/freealgo) +
+#      analyze/classify policy đổi → đề từng cache có thể đổi phán quyết.
+CACHE_VERSION = "5"
 
 
 class InputPayload(BaseModel):
@@ -81,6 +84,14 @@ class ExplainBody(BaseModel):
     explain_context: dict
     question: str
     recent_history: list[dict] = []
+
+
+class EditBody(BaseModel):
+    """M7.14A: chỉnh sửa TĂNG DẦN mô phỏng generic hiện có — không full pipeline."""
+
+    simulation_id: str
+    config: dict
+    instruction: str
 
 
 def _cache_key(text: str) -> str:
@@ -199,6 +210,55 @@ async def analyze(body: AnalyzeBody):
             )
             session.commit()
     return envelope
+
+
+MAX_EDIT_CONFIG_BYTES = 32_768
+
+
+@app.post("/api/edit")
+async def edit(body: EditBody):
+    """Edit nhẹ (M7.14A): spec hiện tại + yêu cầu → patch → validate → spec mới.
+
+    KHÔNG analyze/classify/simulate. Trả:
+    - {"status": "ok", "config", "patch", "note?"} — client thay config, gắn source="edited";
+    - {"status": "unsupported_to_verify", "reason"} — từ chối trung thực (200,
+      đây là PHÁN QUYẾT learner-facing, không phải lỗi giao thức);
+    - 4xx/422 — lỗi input/patch không thành, spec hiện tại nguyên vẹn.
+    Không đụng exact cache (không có problem-text key), không persist pattern.
+    """
+    if body.simulation_id != "generic.rule_scene":
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Chỉnh sửa tăng dần hiện chỉ hỗ trợ mô phỏng generic.rule_scene."},
+        )
+    instruction = body.instruction.strip()
+    if not instruction:
+        return JSONResponse(status_code=400, content={"error": "Yêu cầu chỉnh sửa trống."})
+    if len(instruction) > 2000:
+        return JSONResponse(status_code=400, content={"error": "Yêu cầu quá dài (tối đa 2000 ký tự)."})
+    config_size = len(json.dumps(body.config, ensure_ascii=False).encode("utf-8"))
+    if config_size > MAX_EDIT_CONFIG_BYTES:
+        return JSONResponse(status_code=400, content={"error": "Config quá lớn."})
+
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
+
+    try:
+        result = await edit_simulation(body.config, instruction, api_key)
+    except Exception as err:
+        return JSONResponse(status_code=422, content={"error": str(err)})
+
+    if result["status"] == "valid":
+        return {
+            "status": "ok",
+            "config": result["config"],
+            "patch": result["patch"],
+            **({"note": result["note"]} if "note" in result else {}),
+        }
+    if result["status"] == "unsupported_to_verify":
+        return {"status": "unsupported_to_verify", "reason": result["reason"]}
+    return JSONResponse(status_code=422, content={"error": result.get("error", "Patch không hợp lệ.")})
 
 
 @app.post("/api/explain")

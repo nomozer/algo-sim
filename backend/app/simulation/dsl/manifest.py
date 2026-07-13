@@ -24,11 +24,24 @@ SEMANTIC_ROLES = [
     "relational",   # quan hệ nút-cạnh, điểm-đoạn, liên kết giữa đối tượng
     "movement",     # đối tượng di chuyển trong không gian
     "temporal",     # diễn biến theo thời gian/hình thành từng bước
+    # ── M7.14C: vai trò QUAN HỆ DẪN XUẤT — cố ý KHÔNG primitive nào cover ──
+    # Đề cần các quan hệ phải TÍNH RA bằng solver mà DSL chưa có → capability_gap
+    # thật: THÀ TỪ CHỐI TRUNG THỰC còn hơn để LLM đoán tọa độ rồi render một
+    # hình "nhìn có vẻ đúng" nhưng sai bản chất (kéo M mà E/F/P đứng yên).
+    "geometric_projection",    # chân đường cao / hình chiếu vuông góc
+    "geometric_perpendicular", # đường phải DỰNG vuông góc với đường khác
+    "geometric_intersection",  # giao điểm phải TÍNH (kể cả "cắt lần thứ hai")
+    "geometric_circle",        # đường tròn qua các điểm / ngoại tiếp / tiếp tuyến
+    "geometric_locus",         # quỹ tích / "luôn nằm trên một đường cố định"
+    "numeric_threshold",       # "ít nhất k trong n" / so sánh tổng với ngưỡng
+    "continuous_motion",       # quỹ đạo / chuyển động liên tục theo thời gian thực
+    "arbitrary_algorithm",     # thuật toán tự do không có engine tương ứng
 ]
 
-# Vai trò mỗi primitive (object/rule/process) ĐẠI DIỆN được.
-# Lưu ý: KHÔNG primitive nào cover "structural" → đây là capability_gap thật
-# (vd nội dung web cần khung chứa/bố cục phân cấp).
+# Vai trò mỗi primitive (object/rule/process/interaction) ĐẠI DIỆN được.
+# Lưu ý (M7.14C): các vai trò geometric_*/numeric_threshold/continuous_motion/
+# arbitrary_algorithm KHÔNG xuất hiện ở đây — known_gap_roles() trả về chúng
+# và representation plan sẽ dừng sớm với capability_gap (xem docs/CORRECTNESS.md).
 PRIMITIVE_ROLES: dict[str, set[str]] = {
     # object types
     "switch": {"interactive", "logical", "numeric"},
@@ -193,12 +206,16 @@ def manifest_capability_summary() -> str:
         "- Tương tác: toggle (bật/tắt công tắc có value 0/1); drag (học sinh KÉO/DI CHUYỂN "
         "một điểm/node, các cạnh nối tự cập nhật theo — dùng khi đề muốn thao tác trực tiếp lên hình; "
         "KHÔNG dùng toggle cho điểm/node).\n"
-        "→ Nếu bài mô tả được bằng các năng lực trên — KỂ CẢ bài Toán/hình học dựng hình, mạch logic, "
-        "đồ thị nút-cạnh, NỘI DUNG CÓ CẤU TRÚC/BỐ CỤC (trang web, tài liệu có tiêu đề/đoạn văn/khung chứa), "
-        "hay quá trình hình thành từng bước — thì chọn generic.rule_scene. "
-        "CHỈ trả unsupported khi cần năng lực THẬT SỰ CHƯA CÓ trong danh sách trên "
-        "(đồ thị hàm số liên tục, quỹ đạo/chuyển động vật lý theo thời gian thực, phản ứng hóa học, "
-        "tính toán ký hiệu/đạo hàm)."
+        "→ Nếu bài mô tả được bằng các năng lực trên — KỂ CẢ bài Toán/hình học dựng hình TƯỜNG MINH "
+        "(vẽ các điểm/đoạn được nêu tên), mạch logic, đồ thị nút-cạnh, NỘI DUNG CÓ CẤU TRÚC/BỐ CỤC "
+        "(trang web, tài liệu có tiêu đề/đoạn văn/khung chứa), hay quá trình hình thành từng bước — "
+        "thì chọn generic.rule_scene. "
+        "CHỈ trả unsupported khi cần năng lực THẬT SỰ CHƯA CÓ trong danh sách trên: "
+        "QUAN HỆ HÌNH HỌC PHẢI TÍNH (chân đường cao/hình chiếu, đường dựng vuông góc, giao điểm, "
+        "đường tròn ngoại tiếp/qua các điểm, tiếp tuyến, quỹ tích/điểm di động kéo theo hệ); "
+        "điều kiện NGƯỠNG kiểu 'ít nhất k trong n'; đồ thị hàm số liên tục; quỹ đạo/chuyển động "
+        "vật lý theo thời gian thực; phản ứng hóa học; tính toán ký hiệu/đạo hàm; "
+        "thuật toán do người dùng tự nghĩ không có mô tả cụ thể."
     )
 
 

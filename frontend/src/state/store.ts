@@ -54,6 +54,13 @@ interface AppState {
   /** Dựng lại state từ config — dùng cho cả progressive lẫn exploratory. */
   resetSim: () => void;
 
+  /**
+   * M7.14: thay config + state sau một EDIT đã validate (patch flow). Store
+   * vẫn MÙ DOMAIN — cặp config/state mới do module tự dựng (vd applyEditedSpec)
+   * rồi đưa vào đây nguyên khối; config tiếp tục bất biến sau khi thay.
+   */
+  replaceSimulation: (config: unknown, state: unknown) => void;
+
   setPlaying: (v: boolean) => void;
   setSpeedMs: (ms: number) => void;
   toggleLeft: () => void;
@@ -177,6 +184,20 @@ export const useAppStore = create<AppState>((set, get) => {
       const mod = getSimulation(active.moduleId);
       if (!mod) return;
       set({ active: { ...active, state: mod.init(active.config) }, playing: false });
+    },
+
+    replaceSimulation: (config, state) => {
+      const { active } = get();
+      if (!active) return;
+      set({
+        active: {
+          ...active,
+          config,
+          state,
+          envelope: { ...active.envelope, config },
+        },
+        playing: false,
+      });
     },
 
     setPlaying: (v) => set({ playing: v }),
