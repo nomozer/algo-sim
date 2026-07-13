@@ -44,8 +44,11 @@ export type RuleType = (typeof RULE_TYPES)[number];
 export const BOOL_OPS = ["and", "or", "not", "xor"] as const;
 export type BoolOp = (typeof BOOL_OPS)[number];
 
-export const INTERACTION_TYPES = ["toggle"] as const;
+export const INTERACTION_TYPES = ["toggle", "drag"] as const;
 export type InteractionType = (typeof INTERACTION_TYPES)[number];
+
+/** Type được phép làm target của drag (M7.13A) — v1 chỉ node; song song manifest. */
+export const DRAG_TARGET_TYPES = new Set<string>(["node"]);
 
 export const PROCESS_TYPES = ["move_along_path", "reveal_sequence"] as const;
 export type ProcessType = (typeof PROCESS_TYPES)[number];
@@ -75,10 +78,19 @@ export interface SpecRule {
   target: string;
 }
 
+/** Ràng buộc hình học của drag (M7.13A) — thuần hình học, không biết domain. */
+export interface DragConstraints {
+  bounds?: { min_x?: number; max_x?: number; min_y?: number; max_y?: number };
+  axis?: "x" | "y";
+  snap?: number;
+}
+
 export interface SpecInteraction {
   type: InteractionType;
   target: string;
   label?: string;
+  /** Chỉ có nghĩa với drag. */
+  constraints?: DragConstraints;
 }
 
 /** Di chuyển một thực thể dọc một đường (các node). */
@@ -124,6 +136,13 @@ export interface GenericState {
   readonly spec: SimulationSpec;
   /** Giá trị GỐC của các object bật/tắt được (switch...) — toggle sửa ở đây. */
   base: Record<string, number>;
+  /**
+   * Vị trí object (tọa độ domain 0–100) — STATE-OWNED (M7.13A): khởi tạo từ
+   * layout của spec, chỉ biến đổi qua action "move" (pure). Renderer ĐỌC từ
+   * đây, không tự tính lại — nhờ đó edge tự bám theo hai đầu khi kéo.
+   * Họ structural/textual không nằm ở đây (layout theo luồng tài liệu).
+   */
+  pos: Record<string, { x: number; y: number }>;
   /** Timeline do engine dựng — dài 1 nếu không có process (exploratory). */
   timeline: Frame[];
   cursor: number;
@@ -300,6 +319,58 @@ export function positionOf(obj: SpecObject, index: number): { x: number; y: numb
   if (typeof obj.x === "number" && typeof obj.y === "number") return { x: obj.x, y: obj.y };
   const perRow = 4;
   return { x: 12 + (index % perRow) * 26, y: 20 + Math.floor(index / perRow) * 30 };
+}
+
+/* ── Vị trí state-owned + drag (M7.13A) ───────────────────────── */
+
+/**
+ * Layout khởi tạo (tọa độ domain 0–100) cho mọi object KHÔNG thuộc họ
+ * structural (họ đó layout theo luồng tài liệu, không có tọa độ tự do).
+ * Đây là logic dựng map `pos` cũ của renderer, dời vào engine để state sở hữu.
+ */
+export function layoutPositions(spec: SimulationSpec): Record<string, { x: number; y: number }> {
+  const pos: Record<string, { x: number; y: number }> = {};
+  spec.objects.forEach((o, i) => {
+    if (!STRUCTURAL_TYPES.has(o.type)) pos[o.id] = positionOf(o, i);
+  });
+  return pos;
+}
+
+/** Các object có interaction drag khai trong spec. */
+export function dragTargets(spec: SimulationSpec): Set<string> {
+  return new Set(spec.interactions.filter((it) => it.type === "drag").map((it) => it.target));
+}
+
+function clamp(v: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, v));
+}
+
+/**
+ * Action "move" (pure) — engine là nơi DUY NHẤT quyết định một cú kéo có hợp
+ * lệ không (điều chỉnh #3): target tồn tại + có drag khai trong spec + type
+ * thuộc allowlist + đang visible ở frame hiện tại; rồi snap/axis/clamp theo
+ * constraints. Không hợp lệ → trả state cũ (no-op), không ném lỗi.
+ */
+export function applyMove(state: GenericState, target: string, x: number, y: number): GenericState {
+  const obj = state.spec.objects.find((o) => o.id === target);
+  if (!obj || !DRAG_TARGET_TYPES.has(obj.type)) return state;
+  const interaction = state.spec.interactions.find((it) => it.type === "drag" && it.target === target);
+  if (!interaction) return state;
+  if (!isVisible(currentFrame(state), target)) return state;
+  const prev = state.pos[target];
+  if (!prev) return state;
+
+  const c = interaction.constraints ?? {};
+  let nx = c.axis === "y" ? prev.x : x;
+  let ny = c.axis === "x" ? prev.y : y;
+  if (c.snap && c.snap > 0) {
+    nx = Math.round(nx / c.snap) * c.snap;
+    ny = Math.round(ny / c.snap) * c.snap;
+  }
+  nx = clamp(nx, c.bounds?.min_x ?? 0, c.bounds?.max_x ?? 100);
+  ny = clamp(ny, c.bounds?.min_y ?? 0, c.bounds?.max_y ?? 100);
+  if (nx === prev.x && ny === prev.y) return state;
+  return { ...state, pos: { ...state.pos, [target]: { x: nx, y: ny } } };
 }
 
 /* ── Trạng thái hiển thị theo bước (M7.10) — dữ liệu THUẦN, dùng lại cho 2D lẫn 3D ── */

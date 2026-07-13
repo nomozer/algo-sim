@@ -14,6 +14,11 @@ from dataclasses import dataclass, field
 from app.ai import pipeline
 from app.simulation.catalog import CATALOG
 from app.evaluation.dataset import DATASET, EvalItem
+from app.simulation.representation import (
+    build_representation_plan,
+    check_scene_consistency,
+    scene_mode_guidance,
+)
 from app.simulation.semantic import check_semantic
 
 # Phân loại lỗi (§5)
@@ -27,6 +32,7 @@ FAIL_INVALID_VALUE = "invalid_value"
 FAIL_OVER_LIMIT = "over_limit"
 FAIL_SEMANTIC_WRONG = "semantic_wrong"
 FAIL_UNSUPPORTED_AS_GENERIC = "unsupported_as_generic"
+FAIL_SCENE_MODE = "scene_mode_mismatch"  # M7.13A: spec trái với scene_mode của plan
 
 
 def classify_error(msg: str) -> str:
@@ -110,29 +116,47 @@ class EvalReport:
 async def _simulate_with_metrics(
     text: str, analysis: dict, simulation_id: str, api_key: str
 ) -> tuple[dict | None, int, str | None]:
-    """Bản có đo của stage_simulate: trả (config, số_retry, nhóm_lỗi)."""
+    """Bản có đo của stage_simulate: trả (config, số_retry, nhóm_lỗi).
+
+    M7.13A: mirror pipeline — chèn scene_mode guidance vào prompt và check
+    scene consistency, để metric đo ĐÚNG hành vi live."""
     spec = CATALOG[simulation_id]
+    scene_mode = None
+    if simulation_id == "generic.rule_scene":
+        scene_mode = build_representation_plan(analysis)["scene_mode"]
     base = (
         f'Đầu vào gốc:\n"""\n{text}\n"""\n\n'
         f"Kết quả phân tích:\n{json.dumps(analysis, ensure_ascii=False)}\n\n"
         f"simulation_id đã chọn: {simulation_id}\n\n{spec.contract}"
     )
+    if scene_mode:
+        base += f"\n\n{scene_mode_guidance(scene_mode)}"
     prompt = base
     last_error = None
+    scene_mode_failed = False
     for attempt in range(3):
         raw = await pipeline.call_gemini(api_key, pipeline.load_skill("simulate"), prompt, spec.config_schema, 0.1)
         try:
             candidate = json.loads(raw)
         except json.JSONDecodeError:
             last_error = "Kết quả không phải JSON hợp lệ."
+            scene_mode_failed = False
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
         config, error = spec.validate(candidate)
+        if config is not None and scene_mode:
+            mode_error = check_scene_consistency(scene_mode, config)
+            if mode_error:
+                last_error = mode_error
+                scene_mode_failed = True
+                prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+                continue
         if config is not None:
             return config, attempt, None
         last_error = error
+        scene_mode_failed = False
         prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
-    return None, 2, classify_error(last_error or "")
+    return None, 2, FAIL_SCENE_MODE if scene_mode_failed else classify_error(last_error or "")
 
 
 async def evaluate_item(item: EvalItem, api_key: str) -> ItemResult:

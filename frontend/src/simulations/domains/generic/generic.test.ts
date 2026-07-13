@@ -460,3 +460,171 @@ describe("structural/textual primitives (M7.12)", () => {
     serializable(mod.getExplainContext(mod.init(spec(GENERIC_WEB_SPEC)), spec(GENERIC_WEB_SPEC)));
   });
 });
+
+describe("drag interaction — M7.13A", () => {
+  const TRIANGLE_DRAG = {
+    dsl_version: "1.0",
+    title: "Tam giác kéo được",
+    objects: [
+      { id: "A", type: "node", x: 20, y: 70 },
+      { id: "B", type: "node", x: 80, y: 70 },
+      { id: "C", type: "node", x: 50, y: 20 },
+      { id: "AB", type: "edge", from: "A", to: "B" },
+      { id: "AC", type: "edge", from: "A", to: "C" },
+      { id: "BC", type: "edge", from: "B", to: "C" },
+    ],
+    rules: [],
+    interactions: [
+      { type: "drag", target: "A" },
+      { type: "drag", target: "B", constraints: { bounds: { min_x: 10, max_x: 90 }, snap: 5 } },
+      { type: "drag", target: "C", constraints: { axis: "x" } },
+    ],
+    processes: [
+      {
+        type: "reveal_sequence",
+        steps: [{ objects: ["A", "B"] }, { objects: ["AB"] }, { objects: ["C"] }, { objects: ["AC", "BC"] }],
+      },
+    ],
+  };
+
+  it("validate: drag trên node hợp lệ, constraints được chuẩn hóa", () => {
+    const s = spec(TRIANGLE_DRAG);
+    const drags = s.interactions.filter((i) => i.type === "drag");
+    expect(drags).toHaveLength(3);
+    expect(drags[0].constraints).toBeUndefined();
+    expect(drags[1].constraints).toEqual({ bounds: { min_x: 10, max_x: 90 }, snap: 5 });
+    expect(drags[2].constraints).toEqual({ axis: "x" });
+    serializable(s);
+  });
+
+  it("validate: drag ngoài allowlist (edge/switch) bị reject — v1 chỉ node", () => {
+    const onEdge = { ...TRIANGLE_DRAG, interactions: [{ type: "drag", target: "AB" }] };
+    const r1 = mod.validateConfig(onEdge);
+    expect(r1.ok).toBe(false);
+    if (!r1.ok) expect(r1.error).toContain("drag");
+    const onSwitch = {
+      ...TRIANGLE_DRAG,
+      objects: [...TRIANGLE_DRAG.objects, { id: "sw", type: "switch", value: 0 }],
+      interactions: [{ type: "drag", target: "sw" }],
+    };
+    const r2 = mod.validateConfig(onSwitch);
+    expect(r2.ok).toBe(false);
+    if (!r2.ok) expect(r2.error).toContain("switch");
+  });
+
+  it("validate: constraints sai bị reject (axis lạ, snap ≤ 0, bounds ngược, khóa lạ)", () => {
+    const cases = [
+      { axis: "z" },
+      { snap: 0 },
+      { bounds: { min_x: 80, max_x: 20 } },
+      { bounds: { left: 0 } },
+      { gravity: 1 },
+    ];
+    for (const constraints of cases) {
+      const bad = { ...TRIANGLE_DRAG, interactions: [{ type: "drag", target: "A", constraints }] };
+      expect(mod.validateConfig(bad).ok, JSON.stringify(constraints)).toBe(false);
+    }
+  });
+
+  it("validate: ownership — drag vật đang bị process điều khiển bị reject; node waypoint thì OK", () => {
+    const graph = {
+      dsl_version: "1.0",
+      title: "gói tin",
+      objects: [
+        { id: "c", type: "node", node_type: "client" },
+        { id: "s", type: "node", node_type: "server" },
+        { id: "pkt", type: "moving_entity" },
+      ],
+      rules: [],
+      interactions: [{ type: "drag", target: "c" }], // waypoint → hợp lệ
+      processes: [{ type: "move_along_path", entity: "pkt", path: ["c", "s"] }],
+    };
+    expect(mod.validateConfig(graph).ok).toBe(true);
+    // drag chính entity của process → allowlist chặn trước (moving_entity không phải node)
+    const onEntity = { ...graph, interactions: [{ type: "drag", target: "pkt" }] };
+    expect(mod.validateConfig(onEntity).ok).toBe(false);
+  });
+
+  it("init: pos thuộc state (0–100), spec bất biến; structural không vào pos", () => {
+    const s0 = mod.init(spec(TRIANGLE_DRAG));
+    expect(s0.pos.A).toEqual({ x: 20, y: 70 });
+    expect(s0.pos.C).toEqual({ x: 50, y: 20 });
+    serializable(s0.pos);
+    const web = mod.init(spec(GENERIC_WEB_SPEC));
+    for (const o of web.spec.objects) expect(web.pos[o.id]).toBeUndefined();
+  });
+
+  it("apply move: cập nhật pos (pure), spec.x/y KHÔNG đổi — edge derive từ pos nên tự bám", () => {
+    let s = mod.init(spec(TRIANGLE_DRAG));
+    s = { ...s, cursor: s.timeline.length - 1 }; // dựng xong mới kéo
+    const s1 = mod.apply(s, { type: "move", target: "A", x: 30, y: 60 });
+    expect(s1.pos.A).toEqual({ x: 30, y: 60 });
+    expect(s.pos.A).toEqual({ x: 20, y: 70 }); // state cũ nguyên vẹn (pure)
+    const specA = s1.spec.objects.find((o) => o.id === "A");
+    expect(specA?.x).toBe(20); // config bất biến — reset về layout gốc
+    expect(specA?.y).toBe(70);
+  });
+
+  it("apply move: clamp bounds + snap + axis lock", () => {
+    let s = mod.init(spec(TRIANGLE_DRAG));
+    s = { ...s, cursor: s.timeline.length - 1 };
+    // B: bounds [10,90] + snap 5 → 93.2 clamp về 90; 61.2 snap về 60
+    const sB = mod.apply(s, { type: "move", target: "B", x: 93.2, y: 61.2 });
+    expect(sB.pos.B).toEqual({ x: 90, y: 60 });
+    // C: axis x → y giữ nguyên 20
+    const sC = mod.apply(s, { type: "move", target: "C", x: 10, y: 99 });
+    expect(sC.pos.C).toEqual({ x: 10, y: 20 });
+    // mặc định: clamp về canvas 0–100
+    const sA = mod.apply(s, { type: "move", target: "A", x: -50, y: 150 });
+    expect(sA.pos.A).toEqual({ x: 0, y: 100 });
+  });
+
+  it("apply move: từ chối khi chưa visible / không khai drag / action lạ (điều chỉnh #3)", () => {
+    const s0 = mod.init(spec(TRIANGLE_DRAG)); // cursor 0: chỉ A, B đã hiện
+    // C chưa xuất hiện ở bước 0 → move no-op
+    expect(mod.apply(s0, { type: "move", target: "C", x: 60, y: 30 })).toBe(s0);
+    // A đã hiện ở bước 0 → move được ngay cả giữa chừng reveal
+    expect(mod.apply(s0, { type: "move", target: "A", x: 25, y: 65 }).pos.A).toEqual({ x: 25, y: 65 });
+    // edge không khai drag (và không phải node) → no-op
+    expect(mod.apply(s0, { type: "move", target: "AB", x: 1, y: 1 })).toBe(s0);
+    // spec KHÔNG khai drag cho node → no-op dù là node hợp lệ
+    const noDrag = spec({ ...TRIANGLE_DRAG, interactions: [] });
+    const sN = mod.init(noDrag);
+    expect(mod.apply(sN, { type: "move", target: "A", x: 1, y: 1 })).toBe(sN);
+  });
+
+  it("goToStep không phá pos đã kéo; init lại (Reset) mới về layout gốc", () => {
+    let s = mod.init(spec(TRIANGLE_DRAG));
+    s = mod.timeline!.goToStep(s, s.timeline.length - 1);
+    s = mod.apply(s, { type: "move", target: "A", x: 40, y: 50 });
+    s = mod.timeline!.goToStep(s, 0);
+    expect(s.pos.A).toEqual({ x: 40, y: 50 }); // điều hướng bước không reset pos
+    const fresh = mod.init(s.spec);
+    expect(fresh.pos.A).toEqual({ x: 20, y: 70 });
+  });
+
+  it("getExplainContext kèm draggable_positions (serializable)", () => {
+    let s = mod.init(spec(TRIANGLE_DRAG));
+    s = { ...s, cursor: s.timeline.length - 1 };
+    s = mod.apply(s, { type: "move", target: "A", x: 33, y: 44 });
+    const ctx = mod.getExplainContext(s, s.spec);
+    serializable(ctx);
+    expect((ctx.draggable_positions as Record<string, unknown>).A).toEqual({ x: 33, y: 44 });
+  });
+});
+
+describe("toggle cần value — M7.13A", () => {
+  it("toggle trên node (không value) bị reject, thông báo chỉ sang drag", () => {
+    const bad = {
+      dsl_version: "1.0",
+      title: "toggle chết",
+      objects: [{ id: "A", type: "node", x: 10, y: 10 }],
+      rules: [],
+      interactions: [{ type: "toggle", target: "A" }],
+      processes: [],
+    };
+    const r = mod.validateConfig(bad);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toContain("drag");
+  });
+});

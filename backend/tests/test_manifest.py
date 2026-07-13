@@ -77,3 +77,60 @@ def test_endpoint_manifest():
     body = res.json()
     assert body["dsl_version"] == "1.0"
     assert "object_types" in body
+
+
+# ── M7.13A: drag interaction + họ temporal process ────────────
+
+def test_drag_trong_manifest_va_validator_dan_xuat():
+    from app.simulation.dsl.manifest import drag_target_types
+
+    assert "drag" in MANIFEST["interaction_types"]
+    assert MANIFEST["drag_target_types"] == ["node"]  # v1: chỉ node
+    assert dsl.DRAG_TARGET_TYPES == drag_target_types()
+    assert dsl.INTERACTION_TYPES == set(MANIFEST["interaction_types"])
+
+
+def test_temporal_process_family_dan_xuat_tu_taxonomy():
+    """Điều chỉnh #1: họ temporal process suy từ role taxonomy, KHÔNG hard-code
+    tên — reveal_sequence VÀ move_along_path đều thuộc họ này."""
+    from app.simulation.dsl.manifest import PRIMITIVE_ROLES, temporal_process_types
+
+    family = temporal_process_types()
+    assert family == {"reveal_sequence", "move_along_path"}
+    for p in family:
+        assert "temporal" in PRIMITIVE_ROLES[p]
+
+
+def test_interaction_cover_vai_tro_interactive():
+    from app.simulation.dsl.manifest import roles_of_primitive
+
+    assert roles_of_primitive("toggle") == {"interactive"}
+    assert roles_of_primitive("drag") == {"interactive"}
+
+
+def test_contract_va_capability_summary_co_drag():
+    text = manifest_contract_text()
+    assert "drag" in text and "bounds" in text and "snap" in text
+    assert "drag" in manifest_capability_summary()
+
+
+def test_generic_schema_enum_dan_xuat_tu_manifest():
+    """CHỐNG DRIFT (bug live M7.13A): schema structured-output viết tay từng
+    thiếu drag → Gemini KHÔNG THỂ phát interaction mới dù contract cho phép.
+    Mọi enum của _GENERIC_SCHEMA phải == manifest."""
+    from app.simulation.catalog import CATALOG
+
+    props = CATALOG["generic.rule_scene"].config_schema["properties"]
+    obj_enum = set(props["objects"]["items"]["properties"]["type"]["enum"])
+    rule_enum = set(props["rules"]["items"]["properties"]["type"]["enum"])
+    op_enum = set(props["rules"]["items"]["properties"]["op"]["enum"])
+    inter_enum = set(props["interactions"]["items"]["properties"]["type"]["enum"])
+    proc_enum = set(props["processes"]["items"]["properties"]["type"]["enum"])
+    assert obj_enum == set(MANIFEST["object_types"])
+    assert rule_enum == set(MANIFEST["rule_types"])
+    assert op_enum == set(MANIFEST["bool_ops"])
+    assert inter_enum == set(MANIFEST["interaction_types"])
+    assert proc_enum == set(MANIFEST["process_types"])
+    # interactions phải khai được constraints (bounds/axis/snap) cho drag
+    c = props["interactions"]["items"]["properties"]["constraints"]["properties"]
+    assert set(c) == {"bounds", "axis", "snap"}

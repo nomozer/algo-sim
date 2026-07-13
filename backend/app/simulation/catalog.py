@@ -12,7 +12,14 @@ from functools import partial
 from typing import Callable
 
 from app.simulation.dsl.validator import validate_generic_config
-from app.simulation.dsl.manifest import manifest_contract_text
+from app.simulation.dsl.manifest import (
+    bool_ops,
+    interaction_types,
+    manifest_contract_text,
+    object_types,
+    process_types,
+    rule_types,
+)
 from app.validation.simulation import (
     ALGORITHM_IDS,
     ALGORITHM_NAMES_VI,
@@ -251,13 +258,9 @@ _GENERIC_SCHEMA = {
                 "type": "OBJECT",
                 "properties": {
                     "id": {"type": "STRING"},
-                    "type": {
-                        "type": "STRING",
-                        "enum": [
-                            "switch", "lamp", "value_box", "node", "edge", "moving_entity", "label",
-                            "container", "group", "heading", "paragraph", "text",
-                        ],
-                    },
+                    # Enum DẪN XUẤT từ manifest (M7.13A) — schema viết tay từng
+                    # drift (thiếu drag) khiến Gemini KHÔNG THỂ phát primitive mới.
+                    "type": {"type": "STRING", "enum": sorted(object_types())},
                     "x": {"type": "NUMBER", "nullable": True},
                     "y": {"type": "NUMBER", "nullable": True},
                     "label": {"type": "STRING", "nullable": True},
@@ -278,8 +281,8 @@ _GENERIC_SCHEMA = {
             "items": {
                 "type": "OBJECT",
                 "properties": {
-                    "type": {"type": "STRING", "enum": ["boolean", "weighted_sum"]},
-                    "op": {"type": "STRING", "enum": ["and", "or", "not", "xor"], "nullable": True},
+                    "type": {"type": "STRING", "enum": sorted(rule_types())},
+                    "op": {"type": "STRING", "enum": sorted(bool_ops()), "nullable": True},
                     "inputs": {"type": "ARRAY", "items": {"type": "STRING"}},
                     "weights": {"type": "ARRAY", "items": {"type": "NUMBER"}, "nullable": True},
                     "target": {"type": "STRING"},
@@ -292,9 +295,28 @@ _GENERIC_SCHEMA = {
             "items": {
                 "type": "OBJECT",
                 "properties": {
-                    "type": {"type": "STRING", "enum": ["toggle"]},
+                    "type": {"type": "STRING", "enum": sorted(interaction_types())},
                     "target": {"type": "STRING"},
                     "label": {"type": "STRING", "nullable": True},
+                    # M7.13A: constraints của drag (bounds/axis/snap)
+                    "constraints": {
+                        "type": "OBJECT",
+                        "nullable": True,
+                        "properties": {
+                            "bounds": {
+                                "type": "OBJECT",
+                                "nullable": True,
+                                "properties": {
+                                    "min_x": {"type": "NUMBER", "nullable": True},
+                                    "max_x": {"type": "NUMBER", "nullable": True},
+                                    "min_y": {"type": "NUMBER", "nullable": True},
+                                    "max_y": {"type": "NUMBER", "nullable": True},
+                                },
+                            },
+                            "axis": {"type": "STRING", "enum": ["x", "y"], "nullable": True},
+                            "snap": {"type": "NUMBER", "nullable": True},
+                        },
+                    },
                 },
                 "required": ["type", "target"],
             },
@@ -304,7 +326,7 @@ _GENERIC_SCHEMA = {
             "items": {
                 "type": "OBJECT",
                 "properties": {
-                    "type": {"type": "STRING", "enum": ["move_along_path", "reveal_sequence"]},
+                    "type": {"type": "STRING", "enum": sorted(process_types())},
                     # move_along_path
                     "entity": {"type": "STRING", "nullable": True},
                     "path": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},

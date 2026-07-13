@@ -1,8 +1,10 @@
+import { useRef, useState } from "react";
 import type { WorkspaceProps } from "../../types";
 import {
   STRUCTURAL_TYPES,
   childrenOf,
   currentFrame,
+  dragTargets,
   inspectorGroups,
   isObjectRenderable,
   objectRole,
@@ -70,16 +72,53 @@ function charsPerLine(width: number, fontSize: number): number {
 const FLOW_MARGIN = 16;
 const FLOW_GAP = 10;
 
-export function GenericWorkspace({ config: spec, state, dispatch }: Props) {
+export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props) {
   const values = valuesOf(spec, state.base);
   const frame = currentFrame(state);
   const toggleable = new Set(Object.keys(state.base));
 
+  // M7.13A: vị trí ĐỌC TỪ STATE (engine sở hữu) — edge/moving_entity tra cùng
+  // map nên tự bám theo khi một điểm bị kéo. positionOf chỉ là fallback an toàn.
   const pos: Record<string, { x: number; y: number }> = {};
   spec.objects.forEach((o, i) => {
-    const p = positionOf(o, i);
+    const p = state.pos[o.id] ?? positionOf(o, i);
     pos[o.id] = { x: px(p.x), y: py(p.y) };
   });
+
+  // Drag (M7.13A) — theo pattern ArrayView: gesture là state cục bộ renderer,
+  // mọi biến đổi engine state đi qua dispatch({type:"move"}); engine kiểm
+  // quyền (spec khai drag + visible) và clamp constraints — renderer không tự quyết.
+  const draggable = dragTargets(spec);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const [dragging, setDragging] = useState<string | null>(null);
+
+  function domainPoint(e: React.PointerEvent): { x: number; y: number } | null {
+    const svg = svgRef.current;
+    if (!svg) return null;
+    const rect = svg.getBoundingClientRect();
+    if (rect.width <= 0) return null;
+    const scale = rect.width / VW; // SVG giữ tỉ lệ → cùng scale hai trục
+    return {
+      x: (((e.clientX - rect.left) / scale) / VW) * 100,
+      y: (((e.clientY - rect.top) / scale) / VH) * 100,
+    };
+  }
+
+  function onDragStart(e: React.PointerEvent<SVGGElement>, id: string) {
+    if (busy || !draggable.has(id)) return;
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    setDragging(id);
+  }
+
+  function onDragMove(e: React.PointerEvent<SVGGElement>) {
+    if (!dragging) return;
+    const d = domainPoint(e);
+    if (d) dispatch({ type: "move", target: dragging, x: d.x, y: d.y });
+  }
+
+  function onDragEnd() {
+    setDragging(null);
+  }
 
   // M7.12: bố cục tài liệu (container/heading/paragraph/text) — layout dọc đệ quy,
   // container vẽ khung TRƯỚC (sau đó tới con) để đúng thứ tự z. Vai trò hiển thị
@@ -197,12 +236,27 @@ export function GenericWorkspace({ config: spec, state, dispatch }: Props) {
           </g>
         );
       case "node": {
+        // M7.13A: node có drag khai trong spec → kéo được (engine đã kiểm quyền)
+        const canDrag = draggable.has(o.id) && !busy;
+        const isDragged = dragging === o.id;
+        const dragProps = canDrag
+          ? {
+              style: { cursor: isDragged ? "grabbing" : "grab" } as React.CSSProperties,
+              onPointerDown: (e: React.PointerEvent<SVGGElement>) => onDragStart(e, o.id),
+              onPointerMove: onDragMove,
+              onPointerUp: onDragEnd,
+              onPointerCancel: onDragEnd,
+            }
+          : {};
         if (isPoint(o)) {
           // ĐIỂM (hình học): marker tròn rõ + nhãn lệch khỏi marker
           const r = current ? 8 : 6;
           const fill = current ? "var(--primary)" : "var(--ink)";
           return (
-            <g key={o.id} className={popCls}>
+            <g key={o.id} className={popCls} {...dragProps}>
+              {canDrag && (
+                <circle cx={p.x} cy={p.y} r={13} fill={isDragged ? "var(--canvas-soft)" : "transparent"} stroke="var(--primary)" strokeWidth={1.5} strokeDasharray="3 3" opacity={0.7} />
+              )}
               <circle cx={p.x} cy={p.y} r={r} fill={fill} stroke="#fff" strokeWidth={2} className={current ? "gen-glow" : undefined} />
               <text x={p.x + 11} y={p.y - 9} fontSize={15} fontWeight={700} fill="var(--ink)">
                 {o.label ?? o.id}
@@ -213,7 +267,10 @@ export function GenericWorkspace({ config: spec, state, dispatch }: Props) {
         // NÚT MẠNG (có node_type)
         const color = NODE_COLOR[o.node_type ?? ""] ?? "var(--primary)";
         return (
-          <g key={o.id} className={popCls}>
+          <g key={o.id} className={popCls} {...dragProps}>
+            {canDrag && (
+              <circle cx={p.x} cy={p.y} r={32} fill="transparent" stroke="var(--primary)" strokeWidth={1.5} strokeDasharray="4 4" opacity={0.6} />
+            )}
             <circle cx={p.x} cy={p.y} r={26} fill="var(--surface)" stroke={color} strokeWidth={current ? 4 : 2.5} className={current ? "gen-glow" : undefined} />
             <text x={p.x} y={p.y - 1} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
               {o.label ?? o.id}
@@ -240,7 +297,7 @@ export function GenericWorkspace({ config: spec, state, dispatch }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage">
-        <svg viewBox={`0 0 ${VW} ${svgH}`} width="100%" style={{ maxWidth: VW, display: "block", margin: "0 auto" }}>
+        <svg ref={svgRef} viewBox={`0 0 ${VW} ${svgH}`} width="100%" style={{ maxWidth: VW, display: "block", margin: "0 auto" }}>
           {/* Cạnh (edge) vẽ trước; chỉ khi edge + hai đầu đều visible (§6) */}
           {spec.objects
             .filter((o) => o.type === "edge" && isObjectRenderable(frame, o))
@@ -295,7 +352,9 @@ export function GenericWorkspace({ config: spec, state, dispatch }: Props) {
           ? frame.narration
           : toggleable.size > 0
             ? "Bấm vào các công tắc để thay đổi trạng thái và quan sát kết quả."
-            : spec.title}
+            : draggable.size > 0
+              ? "Kéo các điểm có viền đứt để thay đổi hình và quan sát các cạnh cập nhật theo."
+              : spec.title}
       </div>
     </div>
   );

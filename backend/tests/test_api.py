@@ -87,6 +87,11 @@ def test_analyze_anh_hop_le_thieu_key_bao_503():
 def test_moi_loai_input_di_qua_cung_pipeline(monkeypatch):
     """§1, §6: text/code/docx sau chuẩn hóa đều gọi CHUNG run_pipeline với text."""
     monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+    # Cache key phụ thuộc CACHE_VERSION — dùng version riêng mỗi lần chạy để
+    # test tất định (không trúng cache của lần chạy trước), dọn rows ở cuối.
+    import uuid
+
+    monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
     seen: list[str] = []
 
     async def fake_pipeline(text, api_key):
@@ -118,6 +123,10 @@ def test_moi_loai_input_di_qua_cung_pipeline(monkeypatch):
     assert "Tìm giá trị lớn nhất" in seen[-1]
 
     assert len(seen) == 3  # cả ba loại đều tới pipeline
+    with SessionLocal() as sess:
+        for text in seen:
+            sess.query(Problem).filter_by(problem_text=text).delete()
+        sess.commit()
 
 
 def test_analyze_thieu_key_bao_huong_dan():

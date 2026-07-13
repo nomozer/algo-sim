@@ -41,7 +41,10 @@ export type SimAction =
   | { type: "whatif_swap"; i: number; j: number }
   | { type: "exit_branch" }
   | { type: "toggle"; target: string }
-  | { type: "set_param"; name: string; value: number | string | boolean };
+  | { type: "set_param"; name: string; value: number | string | boolean }
+  /** M7.13A: kéo một object tới tọa độ domain 0–100 — engine kiểm quyền
+   *  (spec khai drag + visible) và clamp constraints; renderer chỉ phát action. */
+  | { type: "move"; target: string; x: number; y: number };
 
 /**
  * Capability tùy chọn (yêu cầu #2): chỉ mô phỏng progressive/hybrid khai báo.

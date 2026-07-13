@@ -275,6 +275,107 @@ def test_pipeline_envelope_co_representation_plan(monkeypatch):
     assert plan["scene_mode"] in {"exploratory", "progressive", "hybrid"}
 
 
+# ── M7.13A: scene-mode consistency trong stage simulate ───────
+
+ANALYSIS_WEB_STATIC = {
+    **VALID_ANALYSIS,
+    "visual_needs": ["structural", "textual"],
+    "temporal_needs": [],
+    "scene_construction": "prebuilt",
+}
+ANALYSIS_WEB_BUILD = {
+    **VALID_ANALYSIS,
+    "visual_needs": ["structural", "textual"],
+    "temporal_needs": ["temporal"],
+    "scene_construction": "step_by_step",
+}
+SPEC_WEB_FAKE_REVEAL = {
+    **SPEC_WEB,
+    "processes": [{"type": "reveal_sequence", "steps": [{"objects": ["h"]}, {"objects": ["p"]}]}],
+}
+
+
+def test_simulate_prompt_co_scene_mode(monkeypatch):
+    """M7.13A §9: plan.scene_mode PHẢI được truyền vào prompt simulate của
+    generic — root cause của reveal giả là prompt không biết chế độ cảnh."""
+    fake, calls = _fake_gemini(
+        [json.dumps(ANALYSIS_WEB_STATIC), json.dumps(GENERIC_CLASSIFY), json.dumps(SPEC_WEB)]
+    )
+    monkeypatch.setattr(pipeline, "call_gemini", fake)
+
+    env = asyncio.run(pipeline.run_pipeline("Hiển thị cấu trúc một trang web.", "khóa-giả"))
+    assert env["status"] == "ok"
+    assert env["representation_plan"]["scene_mode"] == "exploratory"
+    assert "CHẾ ĐỘ CẢNH" in calls[2]["user"]
+    assert "exploratory" in calls[2]["user"]
+
+
+def test_exploratory_reveal_gia_bi_tu_choi_va_retry(monkeypatch):
+    """Điều chỉnh #1+#3: cảnh TĨNH mà spec chèn reveal giả → consistency check
+    tất định từ chối + retry kèm lý do; lần 2 bỏ process → OK."""
+    fake, calls = _fake_gemini(
+        [
+            json.dumps(ANALYSIS_WEB_STATIC),
+            json.dumps(GENERIC_CLASSIFY),
+            json.dumps(SPEC_WEB_FAKE_REVEAL),  # reveal giả cho cảnh tĩnh
+            json.dumps(SPEC_WEB),              # sửa: bỏ process
+        ]
+    )
+    monkeypatch.setattr(pipeline, "call_gemini", fake)
+
+    env = asyncio.run(pipeline.run_pipeline("Hiển thị cấu trúc một trang web.", "khóa-giả"))
+    assert env["status"] == "ok"
+    assert env["config"]["processes"] == []
+    assert len(calls) == 4  # analyze + classify + 2 lần simulate
+    assert "TĨNH" in calls[3]["user"]  # retry kèm lý do exploratory
+
+
+def test_progressive_thieu_temporal_process_bi_tu_choi(monkeypatch):
+    """Chiều ngược: đề 'quá trình tạo từng bước' (progressive) mà spec KHÔNG có
+    process diễn biến → từ chối + retry; lần 2 có reveal → OK."""
+    fake, calls = _fake_gemini(
+        [
+            json.dumps(ANALYSIS_WEB_BUILD),
+            json.dumps(GENERIC_CLASSIFY),
+            json.dumps(SPEC_WEB),              # thiếu process
+            json.dumps(SPEC_WEB_FAKE_REVEAL),  # progressive thì reveal là ĐÚNG
+        ]
+    )
+    monkeypatch.setattr(pipeline, "call_gemini", fake)
+
+    env = asyncio.run(pipeline.run_pipeline("Mô phỏng quá trình tạo trang web từng bước.", "khóa-giả"))
+    assert env["status"] == "ok"
+    assert env["representation_plan"]["scene_mode"] == "progressive"
+    assert env["config"]["processes"][0]["type"] == "reveal_sequence"
+    assert len(calls) == 4
+    assert "diễn biến" in calls[3]["user"]
+
+
+def test_hybrid_prebuilt_voi_move_khong_can_reveal(monkeypatch):
+    """Điều chỉnh #1: topology CHO SẴN + gói tin chạy = hybrid; move_along_path
+    thuộc HỌ temporal nên thỏa consistency — KHÔNG bắt buộc reveal_sequence."""
+    analysis_pkt = {
+        **VALID_ANALYSIS,
+        "relation_roles": ["relational"],
+        "process_roles": ["movement", "temporal"],
+        "scene_construction": "prebuilt",
+    }
+    spec_graph_move = {
+        **SPEC_GRAPH,
+        "objects": SPEC_GRAPH["objects"] + [{"id": "pkt", "type": "moving_entity"}],
+        "processes": [{"type": "move_along_path", "entity": "pkt", "path": ["n1", "n2"]}],
+    }
+    fake, calls = _fake_gemini(
+        [json.dumps(analysis_pkt), json.dumps(GENERIC_CLASSIFY), json.dumps(spec_graph_move)]
+    )
+    monkeypatch.setattr(pipeline, "call_gemini", fake)
+
+    env = asyncio.run(pipeline.run_pipeline("Gói tin đi trên topology cho sẵn.", "khóa-giả"))
+    assert env["status"] == "ok"
+    assert env["representation_plan"]["scene_mode"] == "hybrid"
+    assert len(calls) == 3  # pass ngay lần đầu, không retry
+
+
 def test_analyze_json_hong_duoc_retry(monkeypatch):
     fake, calls = _fake_gemini(
         [

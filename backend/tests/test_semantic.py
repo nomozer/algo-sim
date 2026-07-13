@@ -178,3 +178,78 @@ def test_semantic_progressive_reveal_khong_co_reveal_thi_fail():
     no_reveal = {**_TRIANGLE, "processes": []}
     ok, _ = check_semantic(no_reveal, {"kind": "progressive_reveal", "min_steps": 4})
     assert not ok
+
+
+# ── M7.13A: role coverage quét interactions + kinds mới ───────
+
+from app.simulation.semantic import roles_covered_by_spec
+
+_TRIANGLE_DRAG = {
+    "dsl_version": "1.0",
+    "title": "Tam giác kéo được",
+    "objects": [
+        {"id": "A", "type": "node", "x": 20, "y": 70},
+        {"id": "B", "type": "node", "x": 80, "y": 70},
+        {"id": "C", "type": "node", "x": 50, "y": 20},
+        {"id": "AB", "type": "edge", "from": "A", "to": "B"},
+        {"id": "AC", "type": "edge", "from": "A", "to": "C"},
+        {"id": "BC", "type": "edge", "from": "B", "to": "C"},
+    ],
+    "rules": [],
+    "interactions": [{"type": "drag", "target": "A"}],
+    "processes": [{"type": "reveal_sequence", "steps": [
+        {"objects": ["A", "B"]}, {"objects": ["AB"]}, {"objects": ["C"]}, {"objects": ["AC", "BC"]},
+    ]}],
+}
+
+_WEB_STATIC = {
+    "dsl_version": "1.0",
+    "title": "Trang web",
+    "objects": [
+        {"id": "page", "type": "container", "text": "Trang web"},
+        {"id": "h", "type": "heading", "text": "Xin chào", "parent": "page"},
+        {"id": "p", "type": "paragraph", "text": "Đoạn giới thiệu.", "parent": "page"},
+    ],
+    "rules": [], "interactions": [], "processes": [],
+}
+
+
+def test_roles_covered_quet_ca_interactions():
+    """M7.13A: cảnh node/edge + drag (KHÔNG switch) phải được tính là cover
+    'interactive' — trước đây chỉ objects/rules/processes được quét."""
+    covered = roles_covered_by_spec(_TRIANGLE_DRAG)
+    assert "interactive" in covered
+    assert "relational" in covered and "temporal" in covered
+
+
+def test_static_structural_dung():
+    ok, detail = check_semantic(_WEB_STATIC, {"kind": "static_structural"})
+    assert ok, detail
+
+
+def test_static_structural_bat_reveal_gia():
+    """Cảnh tĩnh mà spec chèn reveal giả (để 'có nhiều bước') → FAIL."""
+    fake = {**_WEB_STATIC, "processes": [{"type": "reveal_sequence", "steps": [
+        {"objects": ["h"]}, {"objects": ["p"]},
+    ]}]}
+    ok, detail = check_semantic(fake, {"kind": "static_structural"})
+    assert not ok
+    assert "reveal giả" in detail or "diễn biến" in detail
+
+
+def test_static_structural_can_object_cau_truc():
+    gate = _gate("and")
+    ok, _ = check_semantic(gate, {"kind": "static_structural"})
+    assert not ok
+
+
+def test_draggable_reveal_dung():
+    ok, detail = check_semantic(_TRIANGLE_DRAG, {"kind": "draggable_reveal", "min_steps": 3})
+    assert ok, detail
+
+
+def test_draggable_reveal_thieu_drag_thi_fail():
+    no_drag = {**_TRIANGLE_DRAG, "interactions": []}
+    ok, detail = check_semantic(no_drag, {"kind": "draggable_reveal", "min_steps": 3})
+    assert not ok
+    assert "drag" in detail

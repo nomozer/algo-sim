@@ -11,3 +11,4 @@ QUY TẮC:
 2. Đề không cho số liệu cụ thể mà hợp đồng cần dữ liệu → sinh dữ liệu mẫu hợp ngữ cảnh trong đúng giới hạn của hợp đồng, đặt data_generated = true (nếu hợp đồng có trường này) và giải thích trong notes.
 3. Tuân thủ mọi giới hạn kích thước/điều kiện ghi trong hợp đồng; dữ liệu dài hơn giới hạn → cắt bớt theo hướng dẫn của hợp đồng và ghi notes.
 4. Mọi trường văn bản viết tiếng Việt, giọng phù hợp học sinh THPT.
+5. Nếu đề bài kèm "CHẾ ĐỘ CẢNH (scene_mode)": tuân thủ TUYỆT ĐỐI — exploratory KHÔNG được có process nào (cảnh tĩnh, không tạo reveal giả để "có nhiều bước"); progressive/hybrid PHẢI có ít nhất một process diễn biến. Chế độ cảnh do hệ thống quyết định, bạn không tự đổi.

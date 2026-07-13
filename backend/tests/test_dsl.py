@@ -264,6 +264,128 @@ def test_reveal_structural_tung_buoc_hop_le():
     assert cfg["processes"][0]["type"] == "reveal_sequence"
 
 
+# ── M7.13A: drag interaction ──────────────────────────────────
+
+TRIANGLE_DRAG_SPEC = {
+    "dsl_version": "1.0",
+    "title": "Tam giác kéo được",
+    "objects": [
+        {"id": "A", "type": "node", "x": 20, "y": 70},
+        {"id": "B", "type": "node", "x": 80, "y": 70},
+        {"id": "C", "type": "node", "x": 50, "y": 20},
+        {"id": "AB", "type": "edge", "from": "A", "to": "B"},
+        {"id": "AC", "type": "edge", "from": "A", "to": "C"},
+        {"id": "BC", "type": "edge", "from": "B", "to": "C"},
+    ],
+    "rules": [],
+    "interactions": [
+        {"type": "drag", "target": "A"},
+        {"type": "drag", "target": "B", "constraints": {"bounds": {"min_x": 10, "max_x": 90}, "snap": 5}},
+        {"type": "drag", "target": "C", "constraints": {"axis": "x"}},
+    ],
+    "processes": [
+        {"type": "reveal_sequence", "steps": [
+            {"objects": ["A", "B"]}, {"objects": ["AB"]}, {"objects": ["C"]}, {"objects": ["AC", "BC"]},
+        ]},
+    ],
+}
+
+
+def test_drag_tren_node_hop_le_va_chuan_hoa_constraints():
+    cfg, err = validate_generic_config(TRIANGLE_DRAG_SPEC)
+    assert err is None, err
+    drags = [i for i in cfg["interactions"] if i["type"] == "drag"]
+    assert len(drags) == 3
+    assert "constraints" not in drags[0]  # không constraints → không thêm khóa thừa
+    assert drags[1]["constraints"] == {"bounds": {"min_x": 10, "max_x": 90}, "snap": 5}
+    assert drags[2]["constraints"] == {"axis": "x"}
+
+
+def test_drag_ngoai_allowlist_bi_reject():
+    """v1: drag CHỈ áp cho node — edge (vị trí dẫn xuất) và switch bị chặn."""
+    for target in ("AB", ):
+        bad = {**TRIANGLE_DRAG_SPEC, "interactions": [{"type": "drag", "target": target}]}
+        config, err = validate_generic_config(bad)
+        assert config is None
+        assert "drag" in err
+    bad_switch = {**AND_SPEC, "interactions": [{"type": "drag", "target": "a"}]}
+    config, err = validate_generic_config(bad_switch)
+    assert config is None
+    assert "switch" in err
+
+
+def test_drag_target_khong_ton_tai_bi_reject():
+    bad = {**TRIANGLE_DRAG_SPEC, "interactions": [{"type": "drag", "target": "Z"}]}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "không tồn tại" in err
+
+
+def test_drag_constraints_sai_bi_reject():
+    cases = [
+        ({"axis": "z"}, "axis"),
+        ({"snap": 0}, "snap"),
+        ({"snap": -2}, "snap"),
+        ({"bounds": {"min_x": 80, "max_x": 20}}, "min"),
+        ({"bounds": {"min_x": -5}}, "0–100"),
+        ({"bounds": {"left": 0}}, "bounds"),
+        ({"gravity": 1}, "Trường lạ"),
+    ]
+    for constraints, needle in cases:
+        bad = {**TRIANGLE_DRAG_SPEC, "interactions": [{"type": "drag", "target": "A", "constraints": constraints}]}
+        config, err = validate_generic_config(bad)
+        assert config is None, f"constraints {constraints} phải bị reject"
+        assert needle in err, f"lỗi cho {constraints} phải nhắc {needle}, nhận: {err}"
+
+
+def test_ownership_mot_thuoc_tinh_khong_hai_chu():
+    """Điều chỉnh #2: cùng (thuộc tính, object) không được vừa interaction vừa
+    process điều khiển. v1 allowlist đã chặn drag moving_entity từ trước —
+    test helper trực tiếp để khóa quy tắc cho process tương lai."""
+    from app.simulation.dsl.validator import ownership_conflict
+
+    procs = [{"type": "move_along_path", "entity": "pkt", "path": ["a", "b"]}]
+    # drag đúng vật process đang điều khiển position → conflict
+    assert ownership_conflict([{"type": "drag", "target": "pkt"}], procs) is not None
+    # node chỉ là WAYPOINT của path (không bị sở hữu position) → drag hợp lệ
+    assert ownership_conflict([{"type": "drag", "target": "a"}], procs) is None
+    # toggle không đụng position → không conflict
+    assert ownership_conflict([{"type": "toggle", "target": "pkt"}], procs) is None
+
+
+def test_toggle_object_khong_value_bi_reject():
+    """M7.13A (phát hiện từ live verify): LLM hay gán toggle cho node/điểm —
+    interaction CHẾT vì node không có value. Reject + retry message chỉ sang drag."""
+    bad = {**TRIANGLE_DRAG_SPEC, "interactions": [{"type": "toggle", "target": "A"}]}
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "drag" in err  # thông báo lỗi phải chỉ đường sang drag
+    # toggle trên switch có value vẫn hợp lệ như cũ
+    cfg, err2 = validate_generic_config(AND_SPEC)
+    assert err2 is None
+
+
+def test_drag_node_lam_waypoint_van_hop_le():
+    """Kéo một node nằm TRONG path của move_along_path là hợp lệ — position
+    của node không bị process sở hữu (process sở hữu position của entity)."""
+    spec = {
+        "dsl_version": "1.0",
+        "title": "Gói tin + kéo node",
+        "objects": [
+            {"id": "c", "type": "node", "node_type": "client"},
+            {"id": "s", "type": "node", "node_type": "server"},
+            {"id": "e1", "type": "edge", "from": "c", "to": "s"},
+            {"id": "pkt", "type": "moving_entity"},
+        ],
+        "rules": [],
+        "interactions": [{"type": "drag", "target": "c"}],
+        "processes": [{"type": "move_along_path", "entity": "pkt", "path": ["c", "s"]}],
+    }
+    cfg, err = validate_generic_config(spec)
+    assert err is None, err
+    assert cfg["interactions"][0]["type"] == "drag"
+
+
 # ── classify chọn generic (pipeline mock) ─────────────────────
 
 def _fake_gemini(responses):

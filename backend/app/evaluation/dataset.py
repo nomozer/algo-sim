@@ -1,4 +1,4 @@
-"""Bộ đề kiểm thử live AI composition (M7 §3) — 24 đề, 3 nhóm.
+"""Bộ đề kiểm thử live AI composition (M7 §3) — 28 đề, 3 nhóm.
 
 Mỗi item khai báo KỲ VỌNG: nhóm, và (với generic) kỳ vọng ngữ nghĩa để
 semantic check. Dùng cho cả harness offline (mock) lẫn live (Gemini thật).
@@ -46,6 +46,14 @@ DATASET: list[EvalItem] = [
     EvalItem("b-orlamp", "Một đèn sáng nếu công tắc X HOẶC công tắc Y đang bật.", "generic", "generic.rule_scene", {"kind": "boolean_gate", "op": "or"}),
     # Progressive (M7.7): cảnh dựng hình phải hình thành TỪNG BƯỚC (reveal_sequence)
     EvalItem("b-triangle", "Cho hai điểm A và B. Dựng tam giác ABC từng bước: vẽ AB, rồi thêm điểm C, rồi vẽ AC và BC.", "generic", "generic.rule_scene", {"kind": "progressive_reveal", "min_steps": 4}),
+
+    # ── Nhóm D: scene-mode consistency + interaction (M7.13A) ─
+    # Cảnh TĨNH: "hiển thị cấu trúc" — không được ép reveal giả
+    EvalItem("d-webstatic", "Hiển thị cấu trúc một trang web gồm tiêu đề và một đoạn văn giới thiệu.", "generic", "generic.rule_scene", {"kind": "static_structural"}),
+    # Cảnh PROGRESSIVE: "quá trình tạo... từng bước" — phải reveal
+    EvalItem("d-webbuild", "Mô phỏng quá trình tạo một trang web có tiêu đề và đoạn văn, hình thành từng bước.", "generic", "generic.rule_scene", {"kind": "progressive_reveal", "min_steps": 2}),
+    # HYBRID: dựng xong rồi thao tác — reveal + drag các điểm
+    EvalItem("d-tridrag", "Dựng tam giác ABC từng bước, sau đó cho phép kéo các điểm A, B, C để quan sát các cạnh thay đổi theo.", "generic", "generic.rule_scene", {"kind": "draggable_reveal", "min_steps": 3}),
 
     # ── Nhóm C: unsupported / vượt DSL v1 (6) ────────────────
     EvalItem("c-threshold", "Đèn sáng khi ít nhất 2 trong 3 công tắc được bật.", "unsupported"),

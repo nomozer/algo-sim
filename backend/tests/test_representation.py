@@ -229,3 +229,71 @@ def test_compat_khong_yeu_cau_thi_luon_ok():
     """required rỗng (analysis cũ) → luôn ok (backward-compat)."""
     res = check_semantic_compatibility(set(), _switch_lamp_spec())
     assert res["ok"]
+
+
+# ── M7.13A: scene_mode 4 nhánh + consistency check ────────────
+
+from app.simulation.representation import check_scene_consistency, scene_mode_guidance
+
+
+def _analysis(**kw) -> dict:
+    return {"objects": [], "data": [], "relations": [], "processes": [],
+            "constraints": [], "goal": "", "input_description": "", "output_description": "", **kw}
+
+
+def test_scene_mode_nam_vi_du_da_duyet():
+    """5 ví dụ chốt trong kế hoạch M7.13A — quyết định bằng role/scene_construction,
+    KHÔNG bằng keyword môn học hay simulation_id."""
+    # 1. Web tĩnh (hiển thị cấu trúc) → exploratory
+    p = build_representation_plan(_analysis(visual_needs=["structural", "textual"]))
+    assert p["scene_mode"] == "exploratory"
+    # 2. Web dựng từng bước → progressive
+    p = build_representation_plan(_analysis(
+        visual_needs=["structural", "textual"], temporal_needs=["temporal"],
+        scene_construction="step_by_step"))
+    assert p["scene_mode"] == "progressive"
+    # 3. Dựng tam giác rồi KÉO điểm → hybrid (temporal + interactive)
+    p = build_representation_plan(_analysis(
+        entity_roles=["relational"], temporal_needs=["temporal"], interaction_needs=["interactive"]))
+    assert p["scene_mode"] == "hybrid"
+    # 4. Topology CHO SẴN + gói tin chạy → hybrid (temporal + prebuilt)
+    p = build_representation_plan(_analysis(
+        entity_roles=["relational"], process_roles=["movement", "temporal"],
+        scene_construction="prebuilt"))
+    assert p["scene_mode"] == "hybrid"
+    # 5. Cổng AND + toggle → exploratory (interactive nhưng KHÔNG temporal)
+    p = build_representation_plan(_analysis(
+        entity_roles=["logical"], interaction_needs=["interactive"]))
+    assert p["scene_mode"] == "exploratory"
+
+
+def test_consistency_exploratory_cam_temporal_process():
+    reveal = {"processes": [{"type": "reveal_sequence", "steps": [{"objects": ["a"]}]}]}
+    move = {"processes": [{"type": "move_along_path", "entity": "p", "path": ["a", "b"]}]}
+    assert check_scene_consistency("exploratory", reveal) is not None
+    assert check_scene_consistency("exploratory", move) is not None
+    assert check_scene_consistency("exploratory", {"processes": []}) is None
+
+
+def test_consistency_progressive_can_ho_temporal_khong_hardcode_reveal():
+    """Điều chỉnh #1: 'diễn biến' = HỌ temporal process — move_along_path cũng
+    thỏa progressive/hybrid, KHÔNG bắt buộc riêng reveal_sequence."""
+    move = {"processes": [{"type": "move_along_path", "entity": "p", "path": ["a", "b"]}]}
+    reveal = {"processes": [{"type": "reveal_sequence", "steps": [{"objects": ["a"]}]}]}
+    for mode in ("progressive", "hybrid"):
+        assert check_scene_consistency(mode, move) is None
+        assert check_scene_consistency(mode, reveal) is None
+        assert check_scene_consistency(mode, {"processes": []}) is not None
+
+
+def test_consistency_khong_check_interactions():
+    """Toggle/drag trong cảnh tĩnh là HỢP LỆ (cổng AND) — consistency chỉ nhìn
+    process, tránh over-reject."""
+    spec = {"processes": [], "interactions": [{"type": "toggle", "target": "a"}]}
+    assert check_scene_consistency("exploratory", spec) is None
+
+
+def test_scene_mode_guidance_ba_che_do():
+    assert "KHÔNG thêm bất kỳ process nào" in scene_mode_guidance("exploratory")
+    assert "PHẢI có ít nhất một process" in scene_mode_guidance("progressive")
+    assert "hybrid" in scene_mode_guidance("hybrid")

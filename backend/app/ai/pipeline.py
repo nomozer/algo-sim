@@ -12,7 +12,12 @@ import json
 
 from app.simulation.catalog import CATALOG, catalog_text
 from app.simulation.dsl.manifest import manifest_capability_summary
-from app.simulation.representation import build_representation_plan, required_roles
+from app.simulation.representation import (
+    build_representation_plan,
+    check_scene_consistency,
+    required_roles,
+    scene_mode_guidance,
+)
 from app.simulation.semantic import check_semantic_compatibility
 from app.ai.gemini import call_gemini, load_skill
 
@@ -149,18 +154,24 @@ async def stage_simulate(
     simulation_id: str,
     api_key: str,
     required_semantic_roles: set[str] | None = None,
+    plan: dict | None = None,
 ) -> tuple[dict | None, str | None]:
-    """Sinh config + VALIDATE cấu trúc + (với generic) KIỂM SEMANTIC COMPAT;
-    sai → retry tối đa 2 lần kèm thông báo lỗi.
+    """Sinh config + VALIDATE cấu trúc + (với generic) KIỂM SCENE-MODE
+    CONSISTENCY và SEMANTIC COMPAT; sai → retry tối đa 2 lần kèm thông báo lỗi.
 
     Trả (config chuẩn hóa, None) hoặc (None, lỗi cuối cùng).
     """
     spec = CATALOG[simulation_id]
+    # M7.13A: scene_mode từ Representation Plan là NGUỒN QUYẾT ĐỊNH chế độ cảnh
+    # — truyền vào prompt để LLM không tự ép reveal cho cảnh tĩnh (và ngược lại).
+    scene_mode = (plan or {}).get("scene_mode") if simulation_id == "generic.rule_scene" else None
     base = (
         f'Đầu vào gốc:\n"""\n{text}\n"""\n\n'
         f"Kết quả phân tích:\n{json.dumps(analysis, ensure_ascii=False)}\n\n"
         f"simulation_id đã chọn: {simulation_id}\n\n{spec.contract}"
     )
+    if scene_mode:
+        base += f"\n\n{scene_mode_guidance(scene_mode)}"
     prompt = base
     last_error = "không rõ"
 
@@ -177,6 +188,14 @@ async def stage_simulate(
             last_error = error or "không rõ"
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
+
+        # M7.13A: spec ↔ scene_mode phải nhất quán (tất định, check trước semantic)
+        if scene_mode:
+            mode_error = check_scene_consistency(scene_mode, config)
+            if mode_error:
+                last_error = mode_error
+                prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+                continue
 
         # M7.11: kiểm SEMANTIC COMPAT cho generic — spec phải cover vai trò đề cần
         if required_semantic_roles and simulation_id == "generic.rule_scene":
@@ -237,7 +256,7 @@ async def run_pipeline(text: str, api_key: str) -> dict:
 
     roles = required_roles(analysis)
     config, error = await stage_simulate(
-        text, analysis, simulation_id, api_key, required_semantic_roles=roles
+        text, analysis, simulation_id, api_key, required_semantic_roles=roles, plan=plan
     )
     if config is None and error and error.startswith("__GAP__:"):
         # Retry lộ ra vai trò không cover được (phòng hờ — thường plan chặn trước)

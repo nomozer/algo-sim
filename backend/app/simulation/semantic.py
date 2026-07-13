@@ -11,21 +11,28 @@ from __future__ import annotations
 
 from itertools import product
 
-from app.simulation.dsl.manifest import all_coverable_roles, roles_of_primitive
+from app.simulation.dsl.manifest import (
+    all_coverable_roles,
+    roles_of_primitive,
+    temporal_process_types,
+)
 from app.simulation.generic_engine import build_timeline, initial_base, values_of
+
+# Họ object cấu trúc/nội dung (M7.12) — dùng cho kỳ vọng static_structural
+_STRUCTURAL_TYPES = {"container", "group", "heading", "paragraph", "text"}
 
 
 # ── Semantic compatibility (M7.11) — kiểm TRƯỚC render ─────────
 
 def roles_covered_by_spec(spec: dict) -> set[str]:
-    """Hợp vai trò ngữ nghĩa của các primitive THỰC SỰ có trong spec."""
+    """Hợp vai trò ngữ nghĩa của các primitive THỰC SỰ có trong spec.
+
+    M7.13A: quét CẢ interactions — toggle/drag cover vai trò "interactive"
+    (trước đây chỉ switch mang interactive, cảnh kéo-điểm bị tính thiếu)."""
     covered: set[str] = set()
-    for o in spec.get("objects", []):
-        covered |= roles_of_primitive(o.get("type", ""))
-    for r in spec.get("rules", []):
-        covered |= roles_of_primitive(r.get("type", ""))
-    for p in spec.get("processes", []):
-        covered |= roles_of_primitive(p.get("type", ""))
+    for section in ("objects", "rules", "interactions", "processes"):
+        for item in spec.get(section, []):
+            covered |= roles_of_primitive(item.get("type", ""))
     return covered
 
 
@@ -72,7 +79,41 @@ def check_semantic(spec: dict, expectation: dict) -> tuple[bool, str]:
         return _check_moving_path(spec, expectation.get("min_len", 2))
     if kind == "progressive_reveal":
         return _check_progressive_reveal(spec, expectation.get("min_steps", 2))
+    if kind == "static_structural":
+        return _check_static_structural(spec)
+    if kind == "draggable_reveal":
+        return _check_draggable_reveal(spec, expectation.get("min_steps", 2))
     return False, f"Loại kỳ vọng lạ: {kind}"
+
+
+def _check_static_structural(spec: dict) -> tuple[bool, str]:
+    """M7.13A §scene-mode: cảnh TĨNH có bố cục/nội dung — mọi object hiện từ
+    đầu, KHÔNG có process diễn biến (không reveal giả cho cảnh tĩnh)."""
+    structural = [o for o in spec.get("objects", []) if o.get("type") in _STRUCTURAL_TYPES]
+    if not structural:
+        return False, "Không có object cấu trúc/nội dung (container/heading/paragraph...) nào"
+    temporal = temporal_process_types()
+    if any(p.get("type") in temporal for p in spec.get("processes", [])):
+        return False, "Cảnh tĩnh nhưng spec lại có process diễn biến theo thời gian (reveal giả)"
+    frames = build_timeline(spec)
+    if len(frames) != 1:
+        return False, f"Cảnh tĩnh phải có đúng 1 khung, engine dựng ra {len(frames)}"
+    all_ids = {o["id"] for o in spec.get("objects", [])}
+    if set(frames[0]["visibleIds"]) != all_ids:
+        return False, "Cảnh tĩnh nhưng có object không hiện ngay từ đầu"
+    return True, "Cảnh tĩnh đúng: 1 khung, mọi object hiện từ đầu, không reveal giả"
+
+
+def _check_draggable_reveal(spec: dict, min_steps: int) -> tuple[bool, str]:
+    """M7.13A: cảnh hình thành từng bước RỒI thao tác được — progressive reveal
+    hợp lệ VÀ có ít nhất một interaction drag (hybrid)."""
+    ok, detail = _check_progressive_reveal(spec, min_steps)
+    if not ok:
+        return False, detail
+    drags = [i for i in spec.get("interactions", []) if i.get("type") == "drag"]
+    if not drags:
+        return False, "Không có interaction drag — học sinh không kéo được điểm sau khi dựng xong"
+    return True, f"{detail}; {len(drags)} điểm kéo được"
 
 
 def _check_progressive_reveal(spec: dict, min_steps: int) -> tuple[bool, str]:

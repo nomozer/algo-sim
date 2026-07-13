@@ -32,6 +32,12 @@ MAX_NESTING_DEPTH = M.limit("max_nesting_depth")
 CONTAINER_TYPES = {"container", "group"}
 TEXT_CONTENT_TYPES = {"heading", "paragraph", "text"}
 
+# M7.13A: drag — allowlist target + constraints, dẫn xuất từ manifest
+DRAG_TARGET_TYPES = M.drag_target_types()
+DRAG_CONSTRAINT_KEYS = {"bounds", "axis", "snap"}
+DRAG_BOUND_KEYS = {"min_x", "max_x", "min_y", "max_y"}
+DRAG_AXES = {"x", "y"}
+
 
 def _is_num(v) -> bool:
     return isinstance(v, (int, float)) and not isinstance(v, bool)
@@ -55,6 +61,73 @@ def _detect_cycle(rules: list[dict]) -> bool:
         return False
 
     return any(visit(t) for t in targets)
+
+
+def _validate_drag_constraints(raw) -> tuple[dict | None, str | None]:
+    """Kiểm "constraints" của drag: bounds/axis/snap (M7.13A). Trả (chuẩn hóa, lỗi)."""
+    if raw is None:
+        return None, None
+    if not isinstance(raw, dict):
+        return None, 'drag "constraints" phải là đối tượng JSON.'
+    for k in raw:
+        if k not in DRAG_CONSTRAINT_KEYS:
+            return None, f'Trường lạ trong drag constraints: "{k}" (chỉ nhận bounds/axis/snap).'
+    out: dict = {}
+    bounds = raw.get("bounds")
+    if bounds is not None:
+        if not isinstance(bounds, dict) or any(k not in DRAG_BOUND_KEYS for k in bounds):
+            return None, f'drag "bounds" chỉ nhận các khóa {"/".join(sorted(DRAG_BOUND_KEYS))}.'
+        norm: dict = {}
+        for k in DRAG_BOUND_KEYS:
+            v = bounds.get(k)
+            if v is None:
+                continue
+            if not _is_num(v) or not (0 <= v <= 100):
+                return None, f'drag bounds "{k}" phải là số trong 0–100.'
+            norm[k] = v
+        if norm.get("min_x", 0) > norm.get("max_x", 100) or norm.get("min_y", 0) > norm.get("max_y", 100):
+            return None, "drag bounds có min lớn hơn max."
+        if norm:
+            out["bounds"] = norm
+    axis = raw.get("axis")
+    if axis is not None:
+        if axis not in DRAG_AXES:
+            return None, f'drag "axis" phải là {"/".join(sorted(DRAG_AXES))}.'
+        out["axis"] = axis
+    snap = raw.get("snap")
+    if snap is not None:
+        if not _is_num(snap) or snap <= 0:
+            return None, 'drag "snap" phải là số dương.'
+        out["snap"] = snap
+    return (out or None), None
+
+
+# Thuộc tính mỗi loại interaction/process ĐIỀU KHIỂN — dùng cho ownership rule
+# (M7.13A): một thuộc tính biến đổi không được có HAI chủ (interaction + process)
+# khi chưa có arbitration policy.
+_INTERACTION_CONTROLS = {"drag": "position", "toggle": "value"}
+_PROCESS_CONTROLS = {"move_along_path": ("position", "entity")}  # type → (property, trường target)
+
+
+def ownership_conflict(interactions: list[dict], processes: list[dict]) -> str | None:
+    """Trả thông báo lỗi nếu cùng (thuộc tính, object) bị cả interaction lẫn
+    process điều khiển; None nếu sạch."""
+    owned_by_process: set[tuple[str, str]] = set()
+    for p in processes:
+        control = _PROCESS_CONTROLS.get(p.get("type", ""))
+        if control:
+            prop, field = control
+            target = p.get(field)
+            if isinstance(target, str):
+                owned_by_process.add((prop, target))
+    for it in interactions:
+        prop = _INTERACTION_CONTROLS.get(it.get("type", ""))
+        if prop and (prop, it.get("target")) in owned_by_process:
+            return (
+                f'"{it["target"]}" đã được một process điều khiển ({prop}) — '
+                f"không thể vừa {it['type']} vừa chạy process trên cùng thuộc tính."
+            )
+    return None
 
 
 def validate_generic_config(raw) -> tuple[dict | None, str | None]:
@@ -164,11 +237,32 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
             return None, "Interaction type không hợp lệ."
         if it.get("target") not in ids:
             return None, "Interaction tham chiếu target không tồn tại."
-        if it["target"] in rule_targets:
-            return None, f'Không thể toggle "{it["target"]}" vì nó là giá trị dẫn xuất từ rule.'
-        inter = {"type": "toggle", "target": it["target"]}
+        inter = {"type": it["type"], "target": it["target"]}
         if isinstance(it.get("label"), str):
             inter["label"] = it["label"]
+
+        if it["type"] == "toggle":
+            if it["target"] in rule_targets:
+                return None, f'Không thể toggle "{it["target"]}" vì nó là giá trị dẫn xuất từ rule.'
+            # M7.13A: toggle chỉ có nghĩa trên object CÓ value (0/1) — toggle một
+            # node/điểm là interaction chết; muốn di chuyển điểm phải dùng drag.
+            if "value" not in by_id[it["target"]]:
+                return None, (
+                    f'toggle "{it["target"]}" vô nghĩa vì object không có "value" khởi tạo — '
+                    "muốn học sinh DI CHUYỂN/KÉO điểm thì dùng interaction drag."
+                )
+        else:  # drag (M7.13A)
+            target_type = by_id[it["target"]]["type"]
+            if target_type not in DRAG_TARGET_TYPES:
+                return None, (
+                    f'drag chỉ áp cho object type {"/".join(sorted(DRAG_TARGET_TYPES))} — '
+                    f'"{it["target"]}" là {target_type}.'
+                )
+            constraints, c_err = _validate_drag_constraints(it.get("constraints"))
+            if c_err:
+                return None, c_err
+            if constraints is not None:
+                inter["constraints"] = constraints
         interactions.append(inter)
 
     raw_proc = raw.get("processes") if isinstance(raw.get("processes"), list) else []
@@ -211,6 +305,11 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
             if by_id.get(nid, {}).get("type") != "node":
                 return None, 'Process "path" phải toàn id của object type node.'
         processes.append({"type": "move_along_path", "entity": p["entity"], "path": list(path)})
+
+    # M7.13A: ownership rule — một thuộc tính không có hai chủ điều khiển
+    own_err = ownership_conflict(interactions, processes)
+    if own_err:
+        return None, own_err
 
     return {
         "dsl_version": raw["dsl_version"] if isinstance(raw.get("dsl_version"), str) and raw.get("dsl_version") else "1.0",

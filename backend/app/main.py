@@ -47,7 +47,8 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 
 # Phiên bản chính sách định tuyến/DSL. Tăng số này khi thay đổi classify/manifest
 # để VÔ HIỆU HÓA cache cũ (đề từng lưu với sim_id cũ sẽ được phân tích lại) — M7.9 §7.
-CACHE_VERSION = "2"
+# "3": M7.13A — drag interaction + scene-mode consistency (manifest/prompt đổi).
+CACHE_VERSION = "3"
 
 
 class InputPayload(BaseModel):

@@ -127,14 +127,15 @@ def test_harness_cham_dung_va_tong_hop(monkeypatch):
     assert m["avg_retry_count"] >= 0
 
 
-def test_dataset_du_24_de_3_nhom():
-    assert len(DATASET) == 25
+def test_dataset_du_28_de_3_nhom():
+    assert len(DATASET) == 28
     groups = {}
     for it in DATASET:
         groups[it.group] = groups.get(it.group, 0) + 1
-    # M7.6 §4: b-graphpkt generic→specialized; M7.7: +b-triangle progressive (generic)
+    # M7.6 §4: b-graphpkt generic→specialized; M7.7: +b-triangle progressive;
+    # M7.13A: +d-webstatic/d-webbuild/d-tridrag (scene-mode + drag, đều generic)
     assert groups["specialized"] == 9
-    assert groups["generic"] == 10
+    assert groups["generic"] == 13
     assert groups["unsupported"] == 6
 
 

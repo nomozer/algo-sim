@@ -3,18 +3,24 @@ import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import {
   BOOL_OPS,
   CONTAINER_TYPES,
+  DRAG_TARGET_TYPES,
   INTERACTION_TYPES,
   OBJECT_TYPES,
   PROCESS_TYPES,
   RULE_TYPES,
   SUPPORTED_DSL_VERSIONS,
   TEXT_CONTENT_TYPES,
+  applyMove,
   buildTimeline,
   currentFrame,
+  dragTargets,
   initialBase,
+  layoutPositions,
   valuesOf,
   type BoolOp,
+  type DragConstraints,
   type GenericState,
+  type InteractionType,
   type ObjectType,
   type RuleType,
   type SimulationSpec,
@@ -45,6 +51,73 @@ const FORBIDDEN = ["steps", "timeline", "state", "frames", "transitions", "anima
 
 function isObj(v: unknown): v is Record<string, unknown> {
   return typeof v === "object" && v !== null && !Array.isArray(v);
+}
+
+function isNum(v: unknown): v is number {
+  return typeof v === "number" && Number.isFinite(v);
+}
+
+const DRAG_CONSTRAINT_KEYS = new Set(["bounds", "axis", "snap"]);
+const DRAG_BOUND_KEYS = ["min_x", "max_x", "min_y", "max_y"] as const;
+
+/** Kiểm "constraints" của drag (M7.13A) — trả constraints chuẩn hóa | null | thông báo lỗi. */
+function validateDragConstraints(raw: unknown): DragConstraints | null | string {
+  if (raw === undefined || raw === null) return null;
+  if (!isObj(raw)) return 'drag "constraints" phải là đối tượng JSON.';
+  for (const k of Object.keys(raw)) {
+    if (!DRAG_CONSTRAINT_KEYS.has(k)) return `Trường lạ trong drag constraints: "${k}" (chỉ nhận bounds/axis/snap).`;
+  }
+  const out: DragConstraints = {};
+  if (raw.bounds !== undefined) {
+    if (!isObj(raw.bounds)) return `drag "bounds" chỉ nhận các khóa ${DRAG_BOUND_KEYS.join("/")}.`;
+    const bounds: NonNullable<DragConstraints["bounds"]> = {};
+    for (const k of Object.keys(raw.bounds)) {
+      if (!(DRAG_BOUND_KEYS as readonly string[]).includes(k)) {
+        return `drag "bounds" chỉ nhận các khóa ${DRAG_BOUND_KEYS.join("/")}.`;
+      }
+    }
+    for (const k of DRAG_BOUND_KEYS) {
+      const v = raw.bounds[k];
+      if (v === undefined || v === null) continue;
+      if (!isNum(v) || v < 0 || v > 100) return `drag bounds "${k}" phải là số trong 0–100.`;
+      bounds[k] = v;
+    }
+    if ((bounds.min_x ?? 0) > (bounds.max_x ?? 100) || (bounds.min_y ?? 0) > (bounds.max_y ?? 100)) {
+      return "drag bounds có min lớn hơn max.";
+    }
+    if (Object.keys(bounds).length > 0) out.bounds = bounds;
+  }
+  if (raw.axis !== undefined) {
+    if (raw.axis !== "x" && raw.axis !== "y") return 'drag "axis" phải là x/y.';
+    out.axis = raw.axis;
+  }
+  if (raw.snap !== undefined) {
+    if (!isNum(raw.snap) || raw.snap <= 0) return 'drag "snap" phải là số dương.';
+    out.snap = raw.snap;
+  }
+  return Object.keys(out).length > 0 ? out : null;
+}
+
+// Ownership rule (M7.13A, điều chỉnh #2): một thuộc tính biến đổi không được
+// có HAI chủ điều khiển (interaction + process) khi chưa có arbitration policy.
+const INTERACTION_CONTROLS: Record<string, string> = { drag: "position", toggle: "value" };
+const PROCESS_CONTROLS: Record<string, { prop: string; field: "entity" }> = {
+  move_along_path: { prop: "position", field: "entity" },
+};
+
+function ownershipConflict(interactions: SpecInteraction[], processes: SpecProcess[]): string | null {
+  const ownedByProcess = new Set<string>();
+  for (const p of processes) {
+    const control = PROCESS_CONTROLS[p.type];
+    if (control) ownedByProcess.add(`${control.prop}:${(p as { entity?: string })[control.field] ?? ""}`);
+  }
+  for (const it of interactions) {
+    const prop = INTERACTION_CONTROLS[it.type];
+    if (prop && ownedByProcess.has(`${prop}:${it.target}`)) {
+      return `"${it.target}" đã được một process điều khiển (${prop}) — không thể vừa ${it.type} vừa chạy process trên cùng thuộc tính.`;
+    }
+  }
+  return null;
 }
 
 function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec> {
@@ -175,10 +248,37 @@ function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec> {
     if (typeof it.target !== "string" || !ids.has(it.target)) {
       return { ok: false, error: `Interaction tham chiếu target không tồn tại.` };
     }
-    if (targets.has(it.target)) {
-      return { ok: false, error: `Không thể toggle "${it.target}" vì nó là giá trị dẫn xuất từ rule.` };
+    const inter: SpecInteraction = {
+      type: it.type as InteractionType,
+      target: it.target,
+      ...(typeof it.label === "string" ? { label: it.label } : {}),
+    };
+    if (it.type === "toggle") {
+      if (targets.has(it.target)) {
+        return { ok: false, error: `Không thể toggle "${it.target}" vì nó là giá trị dẫn xuất từ rule.` };
+      }
+      // M7.13A: toggle chỉ có nghĩa trên object CÓ value (0/1) — toggle một
+      // node/điểm là interaction chết; muốn di chuyển điểm phải dùng drag.
+      if (byId[it.target].value === undefined) {
+        return {
+          ok: false,
+          error: `toggle "${it.target}" vô nghĩa vì object không có "value" khởi tạo — muốn học sinh DI CHUYỂN/KÉO điểm thì dùng interaction drag.`,
+        };
+      }
+    } else {
+      // drag (M7.13A) — allowlist target + constraints, song song validator Python
+      const targetType = byId[it.target].type;
+      if (!DRAG_TARGET_TYPES.has(targetType)) {
+        return {
+          ok: false,
+          error: `drag chỉ áp cho object type ${[...DRAG_TARGET_TYPES].sort().join("/")} — "${it.target}" là ${targetType}.`,
+        };
+      }
+      const c = validateDragConstraints(it.constraints);
+      if (typeof c === "string") return { ok: false, error: c };
+      if (c) inter.constraints = c;
     }
-    interactions.push({ type: "toggle", target: it.target, ...(typeof it.label === "string" ? { label: it.label } : {}) });
+    interactions.push(inter);
   }
 
   const rawProc = Array.isArray(raw.processes) ? raw.processes : [];
@@ -232,6 +332,10 @@ function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec> {
     processes.push({ type: "move_along_path", entity: p.entity, path: p.path as string[] });
   }
 
+  // M7.13A: ownership rule — một thuộc tính không có hai chủ điều khiển
+  const ownErr = ownershipConflict(interactions, processes);
+  if (ownErr) return { ok: false, error: ownErr };
+
   return {
     ok: true,
     config: {
@@ -279,7 +383,14 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
 
     validateConfig: validateGenericConfig,
 
-    init: (spec) => ({ spec, base: initialBase(spec), timeline: buildTimeline(spec), cursor: 0 }),
+    // pos state-owned (M7.13A): khởi tạo từ layout của spec, chỉ đổi qua "move"
+    init: (spec) => ({
+      spec,
+      base: initialBase(spec),
+      pos: layoutPositions(spec),
+      timeline: buildTimeline(spec),
+      cursor: 0,
+    }),
 
     apply: (state, action: SimAction) => {
       if (action.type === "toggle") {
@@ -287,6 +398,9 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
           const cur = state.base[action.target];
           return { ...state, base: { ...state.base, [action.target]: cur >= 1 ? 0 : 1 } };
         }
+      }
+      if (action.type === "move") {
+        return applyMove(state, action.target, action.x, action.y);
       }
       return state;
     },
@@ -301,11 +415,20 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
     getExplainContext: (state, spec) => {
       const values = valuesOf(spec, state.base);
       const frame = currentFrame(state);
+      const draggable = dragTargets(spec);
       return {
         simulation_id: "generic.rule_scene",
         title: spec.title,
         values,
         objects: spec.objects.map((o) => ({ id: o.id, type: o.type, value: values[o.id] })),
+        // M7.13A: vị trí THẬT của các điểm kéo được — tutor giải thích đúng cảnh hiện tại
+        ...(draggable.size > 0
+          ? {
+              draggable_positions: Object.fromEntries(
+                [...draggable].filter((id) => state.pos[id]).map((id) => [id, state.pos[id]]),
+              ),
+            }
+          : {}),
         ...(state.timeline.length > 1
           ? {
               current_step: state.cursor + 1,

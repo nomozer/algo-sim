@@ -47,6 +47,9 @@ PRIMITIVE_ROLES: dict[str, set[str]] = {
     # rule types
     "boolean": {"logical"},
     "weighted_sum": {"numeric"},
+    # interaction types (M7.13A) — tương tác cũng cover vai trò "interactive"
+    "toggle": {"interactive"},
+    "drag": {"interactive"},
     # process types
     "reveal_sequence": {"temporal"},
     "move_along_path": {"movement", "temporal"},
@@ -74,8 +77,16 @@ MANIFEST: dict = {
     },
     "bool_ops": ["and", "or", "not", "xor"],
     "interaction_types": {
-        "toggle": "bật/tắt giá trị của một object (không phải target của rule)",
+        "toggle": "bật/tắt giá trị 0/1 của một object CÓ \"value\" khởi tạo (không phải target của rule)",
+        "drag": (
+            "kéo-thả một object trong canvas — vị trí do engine sở hữu, "
+            "cạnh nối (edge) tự bám theo hai đầu; constraints tùy chọn: bounds/axis/snap"
+        ),
     },
+    # M7.13A: type được phép làm target của drag (v1 chỉ node — điểm hình học/đỉnh đồ thị).
+    # KHÔNG drag: edge (vị trí dẫn xuất từ hai đầu), structural/textual (layout theo
+    # luồng tài liệu), moving_entity (vị trí do process sở hữu — ownership rule).
+    "drag_target_types": ["node"],
     "process_types": {
         "move_along_path": "thực thể entity đi qua path (danh sách node) — engine bung thành các bước",
         "reveal_sequence": "hình thành cảnh TỪNG BƯỚC — mỗi step hé lộ thêm object; visibility tích lũy tất định",
@@ -112,6 +123,17 @@ def interaction_types() -> set[str]:
 
 def process_types() -> set[str]:
     return set(MANIFEST["process_types"])
+
+
+def drag_target_types() -> set[str]:
+    """Type được phép làm target của interaction drag (M7.13A)."""
+    return set(MANIFEST["drag_target_types"])
+
+
+def temporal_process_types() -> set[str]:
+    """Họ process DIỄN BIẾN THEO THỜI GIAN — dẫn xuất từ role taxonomy, KHÔNG
+    hard-code tên process (M7.13A): mọi process có vai trò "temporal"."""
+    return {p for p in MANIFEST["process_types"] if "temporal" in PRIMITIVE_ROLES.get(p, set())}
 
 
 def top_keys() -> set[str]:
@@ -168,6 +190,9 @@ def manifest_capability_summary() -> str:
         f"- Tiến trình ({procs}): move_along_path (vật đi theo đường); reveal_sequence "
         "(HÌNH THÀNH CẢNH TỪNG BƯỚC — tạo/hiện đối tượng lần lượt, ví dụ dựng hình học bằng cách "
         "hiện các điểm rồi vẽ dần các đoạn thẳng).\n"
+        "- Tương tác: toggle (bật/tắt công tắc có value 0/1); drag (học sinh KÉO/DI CHUYỂN "
+        "một điểm/node, các cạnh nối tự cập nhật theo — dùng khi đề muốn thao tác trực tiếp lên hình; "
+        "KHÔNG dùng toggle cho điểm/node).\n"
         "→ Nếu bài mô tả được bằng các năng lực trên — KỂ CẢ bài Toán/hình học dựng hình, mạch logic, "
         "đồ thị nút-cạnh, NỘI DUNG CÓ CẤU TRÚC/BỐ CỤC (trang web, tài liệu có tiêu đề/đoạn văn/khung chứa), "
         "hay quá trình hình thành từng bước — thì chọn generic.rule_scene. "
@@ -195,7 +220,13 @@ def manifest_contract_text() -> str:
         f"chứa nó (lồng nhau, KHÔNG chu trình, độ sâu ≤ {lim['max_nesting_depth']}).\n\n"
         f"rule_types (giá trị DẪN XUẤT, có \"target\" là id một object):\n{rule_lines}\n"
         "  boolean cần \"op\" và \"inputs\"; weighted_sum cần \"inputs\" và \"weights\" cùng độ dài.\n\n"
-        f"interaction_types:\n{inter_lines}\n  toggle chỉ áp cho object KHÔNG phải target của rule.\n\n"
+        f"interaction_types:\n{inter_lines}\n"
+        "  toggle chỉ áp cho object CÓ \"value\" khởi tạo (0/1) và KHÔNG phải target của rule. "
+        "KHÔNG dùng toggle cho node/điểm — muốn học sinh DI CHUYỂN/KÉO điểm thì dùng drag.\n"
+        f"  drag chỉ áp cho object type {'/'.join(sorted(MANIFEST['drag_target_types']))}; "
+        "KHÔNG drag vật đang được process điều khiển. \"constraints\" tùy chọn: "
+        '{"bounds": {"min_x", "max_x", "min_y", "max_y"} trong 0–100, "axis": "x"|"y", "snap": số > 0}. '
+        "Chỉ thêm drag khi bài CẦN học sinh thao tác trực tiếp (kéo điểm để quan sát) — không thêm bừa.\n\n"
         f"process_types:\n{proc_lines}\n"
         "  move_along_path: {entity: id moving_entity, path: [id node]}.\n"
         "  reveal_sequence: {steps: [{objects: [id object], narration?}]} — dùng khi cảnh phải HÌNH THÀNH TỪNG BƯỚC "
