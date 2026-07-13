@@ -4,7 +4,7 @@ import { makeAndGateModule } from "../logic";
 import { makeBinaryModule } from "../binary";
 import { makeNetworkModule } from "../network";
 import { makeGenericModule } from "./index";
-import { checkOpsAgainstPolicy, editPolicyOf } from "./edit-policy";
+import { checkOpsAgainstPolicy, editPolicyOf, hasMeaningfulEditAffordance } from "./edit-policy";
 import type { SimulationSpec } from "./model";
 import { validateAndApplyPatch } from "./patch";
 
@@ -145,6 +145,36 @@ describe("EditPolicy — affordance theo năng lực cảnh", () => {
     });
     expect(editPolicyOf(mixed).family).toBe("structural"); // structural > spatial
     expect(editPolicyOf(mixed).allowedOps).not.toContain("connect");
+  });
+});
+
+describe("M7.14D.1 — không quảng bá chế độ Chỉnh sửa RỖNG", () => {
+  it("value_only & observation: KHÔNG có affordance đáng kể → ẩn nút Chỉnh sửa", () => {
+    for (const scene of [GENERIC_LOGIC, GENERIC_BINARY, PACKET]) {
+      const p = editPolicyOf(scene);
+      expect(p.uiActions.filter((a) => a !== "edit_text")).toHaveLength(0);
+      expect(hasMeaningfulEditAffordance(p)).toBe(false);
+    }
+  });
+
+  it("spatial & structural: CÓ affordance đáng kể → vẫn hiện Chỉnh sửa", () => {
+    expect(hasMeaningfulEditAffordance(editPolicyOf(TRIANGLE))).toBe(true);
+    expect(hasMeaningfulEditAffordance(editPolicyOf(WEB))).toBe(true);
+  });
+
+  it("suy từ POLICY, không hard-code theo loại object/tên cảnh", () => {
+    // Cảnh value_only nhưng đổi tiêu đề/nhãn → vẫn ẩn (quyết định theo uiActions)
+    const renamed = spec({
+      ...GENERIC_LOGIC,
+      title: "Tam giác giả danh",
+    } as object);
+    expect(hasMeaningfulEditAffordance(editPolicyOf(renamed))).toBe(false);
+
+    // Backend policy KHÔNG bị xóa: update_object vẫn hợp lệ nếu gọi thẳng patch
+    const res = validateAndApplyPatch(GENERIC_LOGIC, {
+      operations: [{ op: "update_object", id: "a", fields: { label: "Công tắc A" } }],
+    });
+    expect(res.status).toBe("valid");
   });
 });
 

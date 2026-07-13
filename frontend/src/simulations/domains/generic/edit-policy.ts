@@ -122,6 +122,19 @@ export function editPolicyOf(spec: SimulationSpec): EditPolicy {
   };
 }
 
+/**
+ * Có công cụ sửa nào ĐÁNG để mở chế độ Chỉnh sửa không? (M7.14D.1)
+ *
+ * Suy TỪ POLICY, không hard-code theo binary/logic/tiêu đề. `edit_text` một
+ * mình KHÔNG tính là "đáng": nó không có công cụ trực quan nào trên sân khấu,
+ * nên mở chế độ Chỉnh sửa chỉ để hiện một ô nhập trống là quảng bá một
+ * affordance rỗng. Backend policy vẫn giữ nguyên (update_object qua NL edit vẫn
+ * hợp lệ nếu ai đó gọi API) — đây chỉ là chuyện UI không mời gọi.
+ */
+export function hasMeaningfulEditAffordance(policy: EditPolicy): boolean {
+  return policy.uiActions.some((a) => a !== "edit_text");
+}
+
 export interface PolicyViolation {
   reasonCode: string;
   error: string;

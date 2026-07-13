@@ -68,6 +68,68 @@ describe("mode switch — không đụng engine/mạng", () => {
     expect(state.pos.C).toEqual({ x: 44, y: 33 }); // vị trí đã kéo còn nguyên
   });
 
+  it("M7.14D.1: nút Chỉnh sửa CHỈ hiện khi policy có công cụ thật", () => {
+    const render = (s: SimulationSpec) =>
+      renderToString(
+        <GenericWorkspace
+          config={s}
+          state={mod.init(s) as GenericState}
+          busy={false}
+          dispatch={() => {}}
+        />,
+      );
+
+    // spatial → có Chỉnh sửa
+    expect(render(TRIANGLE)).toContain("Chỉnh sửa");
+
+    // structural → có Chỉnh sửa
+    const web = spec({
+      dsl_version: "1.0",
+      title: "Trang",
+      objects: [
+        { id: "page", type: "container", text: "Trang" },
+        { id: "h", type: "heading", text: "Tiêu đề", parent: "page" },
+      ],
+      rules: [],
+      interactions: [],
+      processes: [],
+    });
+    expect(render(web)).toContain("Chỉnh sửa");
+
+    // value_only (switch/lamp) → KHÔNG có Chỉnh sửa, nhưng Quan sát vẫn còn
+    const gate = spec({
+      dsl_version: "1.0",
+      title: "Cổng AND",
+      objects: [
+        { id: "a", type: "switch", value: 0 },
+        { id: "b", type: "switch", value: 0 },
+        { id: "y", type: "lamp" },
+      ],
+      rules: [{ type: "boolean", op: "and", inputs: ["a", "b"], target: "y" }],
+      interactions: [{ type: "toggle", target: "a" }],
+      processes: [],
+    });
+    const gateHtml = render(gate);
+    expect(gateHtml).not.toContain("Chỉnh sửa");
+    expect(gateHtml).toContain("Quan sát");
+    expect(gateHtml).toContain("Bấm vào các công tắc"); // tương tác trực tiếp vẫn còn
+
+    // observation (move_along_path) → KHÔNG có Chỉnh sửa
+    const packet = spec({
+      dsl_version: "1.0",
+      title: "Gói tin",
+      objects: [
+        { id: "c", type: "node", node_type: "client" },
+        { id: "s", type: "node", node_type: "server" },
+        { id: "pkt", type: "moving_entity" },
+      ],
+      rules: [],
+      interactions: [],
+      processes: [{ type: "move_along_path", entity: "pkt", path: ["c", "s"] }],
+    });
+    expect(render(packet)).not.toContain("Chỉnh sửa");
+  });
+
   it("EditBar: trạng thái công cụ Nối rõ ràng từng bước", () => {
     expect(toolHint(null, null, "Đoạn văn")).toContain("Chọn một công cụ");
     expect(toolHint("connect", null, "Đoạn văn")).toContain("THỨ NHẤT");

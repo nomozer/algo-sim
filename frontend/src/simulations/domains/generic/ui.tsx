@@ -3,7 +3,7 @@ import { editViaServer } from "../../../llm/client";
 import { useAppStore } from "../../../state/store";
 import type { WorkspaceProps } from "../../types";
 import { EditBar, type EditTool } from "./EditBar";
-import { editPolicyOf } from "./edit-policy";
+import { editPolicyOf, hasMeaningfulEditAffordance } from "./edit-policy";
 import {
   CONTAINER_TYPES,
   STRUCTURAL_TYPES,
@@ -224,7 +224,10 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
   const [editBusy, setEditBusy] = useState(false);
   const [editMsg, setEditMsg] = useState<string | null>(null);
 
-  const canEdit = policy.uiActions.some((a) => a !== "edit_text") || policy.allowedOps.length > 0;
+  // M7.14D.1: không quảng bá chế độ Chỉnh sửa RỖNG. Cảnh value_only/observation
+  // chỉ có edit_text → không có công cụ nào trên sân khấu → ẩn nút Chỉnh sửa;
+  // tương tác trực tiếp (toggle/kéo) vẫn chạy bình thường. Suy từ policy thật.
+  const canEdit = hasMeaningfulEditAffordance(policy);
 
   function disarm() {
     setEditTool(null);

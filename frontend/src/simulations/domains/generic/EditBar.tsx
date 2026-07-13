@@ -80,12 +80,9 @@ export function EditBar({
 
   return (
     <div className="stack" style={{ gap: "var(--sp-xs)" }}>
+      {/* M7.14D.1: EditBar chỉ render khi policy CÓ công cụ thật (xem
+          hasMeaningfulEditAffordance) — không có nhánh "chế độ sửa rỗng". */}
       <div className="player-controls" style={{ flexWrap: "wrap", gap: 6 }}>
-        {actions.length === 0 && (
-          <span className="hint">
-            Cảnh này không có công cụ sửa cấu trúc — {policy.note.toLowerCase()}
-          </span>
-        )}
         {actions.map((action) => {
           const armed = tool === action;
           const label =
