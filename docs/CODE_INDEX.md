@@ -212,6 +212,10 @@ Trạng thái edit (`editMode`/`editTool`/`editText`) là useState cục bộ.
 4 module chuyên biệt, engine riêng, **không** dùng DSL: what-if branch
 (`core/algorithms.ts`), truth table, bits⇄decimal, BFS route.
 Notes: **không** module nào render edit toolbar (đúng thiết kế).
+`network/model.ts` exports: `bfsRoute`, `buildSteps`, `currentStep`, `typeLabel`,
+`NetworkState` (topology + route + steps + cursor). **M7.FREEZE**: bố cục KHÔNG
+còn trong state — `layout2d` sống trong `network/ui.tsx` (renderer). Tests:
+`domains.test.ts` (khóa state renderer-neutral), `network/render.test.tsx`.
 
 ### `core/` (`algorithms.ts`, `trace-builder.ts`, `pseudocode.ts`, `types.ts`) · offline
 Engine của domain `algorithm` (ngoài `simulations/` vì có trước registry).

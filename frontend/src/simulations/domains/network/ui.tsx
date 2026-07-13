@@ -1,8 +1,8 @@
 import type { WorkspaceProps } from "../../types";
 import {
   currentStep,
-  layout,
   typeLabel,
+  type NetNode,
   type NetworkConfig,
   type NetworkState,
   type NodeType,
@@ -11,6 +11,10 @@ import {
 /**
  * UI domain network — nút + link + chấm gói tin chạy theo bước.
  * Không array/pseudocode (§7): inspector riêng cho node/route/packet.
+ *
+ * M7.FREEZE: BỐ CỤC thuộc renderer, không thuộc engine state. `layout2d` dưới
+ * đây là chi tiết trình bày của renderer 2D (toạ độ pixel SVG); một renderer 3D
+ * sẽ có bố cục riêng và dùng lại NGUYÊN state (topology + route + packetAt).
  */
 
 type Props = WorkspaceProps<NetworkConfig, NetworkState>;
@@ -25,10 +29,33 @@ const NODE_COLOR: Record<NodeType, string> = {
 
 const NODE_R = 30;
 
+interface Pos2D {
+  x: number;
+  y: number;
+}
+
+/** Bố trí 2D: nút trên route xếp hàng ngang, nút ngoài route xếp hàng dưới. */
+function layout2d(
+  nodes: NetNode[],
+  route: string[],
+): { positions: Record<string, Pos2D>; width: number; height: number } {
+  const COL = 150;
+  const X0 = 80;
+  const positions: Record<string, Pos2D> = {};
+  route.forEach((id, i) => {
+    positions[id] = { x: X0 + i * COL, y: 70 };
+  });
+  const off = nodes.filter((n) => !route.includes(n.id));
+  off.forEach((n, i) => {
+    positions[n.id] = { x: X0 + i * COL, y: 190 };
+  });
+  const cols = Math.max(route.length, off.length, 1);
+  return { positions, width: X0 * 2 + (cols - 1) * COL, height: off.length ? 250 : 140 };
+}
+
 export function NetworkWorkspace({ state }: Props) {
-  const { width, height } = layout(state.nodes, state.route);
+  const { positions: pos, width, height } = layout2d(state.nodes, state.route);
   const step = currentStep(state);
-  const pos = state.positions;
   const packetPos = pos[step.packetAt];
   const onRoute = new Set(state.route);
 

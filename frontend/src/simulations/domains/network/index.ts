@@ -1,6 +1,6 @@
 import { registerSimulation } from "../../registry";
 import type { NetNode, NetworkConfig, NetworkState, NodeType } from "./model";
-import { bfsRoute, buildSteps, currentStep, layout } from "./model";
+import { bfsRoute, buildSteps, currentStep } from "./model";
 import type { ConfigResult, SimulationModule } from "../../types";
 import { NetworkInspector, NetworkWorkspace } from "./ui";
 
@@ -58,20 +58,21 @@ function validateNetworkConfig(raw: unknown): ConfigResult<NetworkConfig> {
   };
 }
 
+/**
+ * State = topology + route (BFS) + diễn biến + con trỏ bước. KHÔNG có bố cục:
+ * vị trí là chuyện của renderer (M7.FREEZE — renderer-neutral state).
+ */
 function buildState(config: NetworkConfig): NetworkState {
   const ids = config.nodes.map((n) => n.id);
   const byId = Object.fromEntries(config.nodes.map((n) => [n.id, n]));
   const route = bfsRoute(ids, config.links, config.source, config.destination);
-  const steps = buildSteps(route, byId);
-  const { positions } = layout(config.nodes, route);
   return {
     nodes: config.nodes,
     links: config.links,
     source: config.source,
     destination: config.destination,
     route,
-    steps,
-    positions,
+    steps: buildSteps(route, byId),
     cursor: 0,
   };
 }

@@ -59,10 +59,31 @@ spec hiện tại + yêu cầu → (LLM đề xuất patch) → SimulationPatch
 | Từ vựng capability (types/limits/roles) | `simulation/dsl/manifest.py` | mọi allowlist/enum/prompt **dẫn xuất** từ đây |
 | Luật hợp lệ của spec | `dsl/validator.py` (+ mirror TS `generic/validate.ts`) | hai tầng, cùng luật |
 | Timeline / state / kết quả | **engine tất định** (`core/algorithms.ts`, `generic/model.ts`, `generic_engine.py`) | LLM **không bao giờ** |
-| Vị trí object lúc chạy | `GenericState.pos` (engine-owned) | spec bất biến; drag chỉ đổi state |
+| Vị trí object lúc chạy | `GenericState.pos` (engine-owned, **toạ độ miền 0–100**) | spec bất biến; drag chỉ đổi state |
+| **Bố cục/kích thước canvas** | **RENDERER** — không bao giờ là engine state | xem quy tắc renderer-neutral bên dưới |
 | Định tuyến bài → mô phỏng | `catalog.py` + classify (LLM) + capability gate (tất định) | gate có quyền phủ quyết |
 | Đúng/sai của thao tác học sinh | **chỉ rule tất định** | không có rule → `unsupported_to_verify` |
 | Cấu hình đang chạy | store (`active.config`) — **opaque**, bất biến | store mù domain |
+
+## 3b. Quy tắc RENDERER-NEUTRAL STATE (M7.FREEZE — điều kiện để có 3D)
+
+**Engine state chỉ chứa sự thật NGỮ NGHĨA. Bố cục là chuyện của renderer.**
+
+- Vị trí trong không gian **mô phỏng** (vd `GenericState.pos`, toạ độ miền 0–100)
+  là ngữ nghĩa → ở engine. **Toạ độ pixel / kích thước canvas / viewBox** là
+  trình bày → **cấm** nằm trong state.
+- Diễn biến chuyển động diễn đạt bằng **định danh ngữ nghĩa**, không bằng toạ độ:
+  `Frame.entityPos: entityId → **nodeId**` (generic) và `NetStep.packetAt =
+  **nodeId**` (network). Nhờ vậy renderer 3D tính vị trí riêng mà **dùng lại
+  nguyên state**.
+- 2D và 3D **dùng chung** config/state/timeline/action của **cùng một module**.
+  **Không** tạo `simulation_id` riêng cho 3D, **không** fork engine.
+
+*Tiền lệ đã sửa (M7.FREEZE):* `NetworkState` từng chứa `positions` là **toạ độ
+pixel** do `layout()` sinh (COL=150, X0=80…) — dữ liệu trình bày lọt vào state
+quyền uy. Nay `layout2d` sống trong `network/ui.tsx`; state chỉ còn topology +
+route (BFS) + steps + cursor. Khóa bằng test: state không được chứa
+`positions/width/height` hay bất kỳ `"x"/"y"` số nào.
 
 ## 4. Hướng phụ thuộc (không được đảo)
 

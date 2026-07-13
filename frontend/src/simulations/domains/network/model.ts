@@ -21,11 +21,16 @@ export interface NetStep {
   narration: string;
 }
 
-export interface NetPos {
-  x: number;
-  y: number;
-}
-
+/**
+ * State CHỈ chứa sự thật ngữ nghĩa của mô phỏng — RENDERER-NEUTRAL (M7.FREEZE).
+ *
+ * Trước đây state còn giữ `positions` (toạ độ pixel do `layout()` sinh). Đó là
+ * dữ liệu TRÌNH BÀY, không phải ngữ nghĩa: vị trí gói tin được diễn đạt bằng
+ * `steps[].packetAt` = **id nút** (giống `Frame.entityPos` của generic), và
+ * `getExplainContext` chưa bao giờ dùng tới toạ độ. Bố cục nay thuộc renderer
+ * (xem `layout2d` trong ui.tsx) — nhờ vậy một renderer 3D dùng lại được ĐÚNG
+ * state này mà không phải fork module hay tự bịa ngữ nghĩa.
+ */
 export interface NetworkState {
   nodes: NetNode[];
   links: [string, string][];
@@ -35,7 +40,6 @@ export interface NetworkState {
   route: string[];
   /** Diễn biến từng bước — engine dựng, không phải LLM sinh. */
   steps: NetStep[];
-  positions: Record<string, NetPos>;
   cursor: number;
 }
 
@@ -102,25 +106,6 @@ export function buildSteps(route: string[], byId: Record<string, NetNode>): NetS
     });
   }
   return steps;
-}
-
-/** Bố trí vị trí nút: nút trên route xếp hàng ngang, nút ngoài route xếp hàng dưới. */
-export function layout(
-  nodes: NetNode[],
-  route: string[],
-): { positions: Record<string, NetPos>; width: number; height: number } {
-  const COL = 150;
-  const X0 = 80;
-  const positions: Record<string, NetPos> = {};
-  route.forEach((id, i) => {
-    positions[id] = { x: X0 + i * COL, y: 70 };
-  });
-  const off = nodes.filter((n) => !route.includes(n.id));
-  off.forEach((n, i) => {
-    positions[n.id] = { x: X0 + i * COL, y: 190 };
-  });
-  const cols = Math.max(route.length, off.length, 1);
-  return { positions, width: X0 * 2 + (cols - 1) * COL, height: off.length ? 250 : 140 };
 }
 
 export function currentStep(state: NetworkState): NetStep {

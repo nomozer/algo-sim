@@ -146,6 +146,34 @@ describe("network.packet_routing (progressive)", () => {
     expect(mod.timeline!.stepCount(s)).toBe(4); // create + 3 hop
   });
 
+  it("M7.FREEZE: engine state RENDERER-NEUTRAL — không chứa toạ độ/kích thước canvas", () => {
+    const s = mod.init(config);
+    // Khóa chính xác bộ khóa của state: bố cục (positions/width/height) KHÔNG
+    // được nằm ở đây — đó là dữ liệu trình bày, thuộc renderer.
+    expect(Object.keys(s).sort()).toEqual(
+      ["cursor", "destination", "links", "nodes", "route", "source", "steps"].sort(),
+    );
+    const dump = JSON.stringify(s);
+    for (const forbidden of ["positions", "width", "height", "viewBox", "svg"]) {
+      expect(dump).not.toContain(forbidden);
+    }
+    // Không có giá trị pixel nào lọt vào state (bố cục cũ dùng X0=80, COL=150, y=70/190)
+    expect(dump).not.toMatch(/"x":\s*\d/);
+    expect(dump).not.toMatch(/"y":\s*\d/);
+  });
+
+  it("M7.FREEZE: vị trí gói tin diễn đạt bằng ID NÚT (3D dùng lại được)", () => {
+    let s = mod.init(config);
+    const at: string[] = [];
+    for (let i = 0; i < mod.timeline!.stepCount(s); i++) {
+      s = mod.timeline!.goToStep(s, i);
+      at.push(s.steps[s.cursor].packetAt);
+    }
+    // Tiến trình gói tin KHÔNG đổi sau refactor; và nó là id nút, không phải toạ độ
+    expect(at).toEqual(["client", "router", "isp", "server"]);
+    expect(at.every((id) => config.nodes.some((n) => n.id === id))).toBe(true);
+  });
+
   it("goToStep tất định + pure, clamp biên", () => {
     const s = mod.init(config);
     const tl = mod.timeline!;
