@@ -15,7 +15,8 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app import main as main_module
-from app.persistence.db import Problem, SessionLocal, init_db
+from app.persistence.db import ReuseMetric, SessionLocal, SimulationCache, init_db
+from app.simulation.dsl.manifest import DSL_VERSION
 from app.main import _cache_key, app
 
 client = TestClient(app)
@@ -94,7 +95,7 @@ def test_moi_loai_input_di_qua_cung_pipeline(monkeypatch):
     monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
     seen: list[str] = []
 
-    async def fake_pipeline(text, api_key):
+    async def fake_pipeline(text, api_key, pattern_store=None):
         seen.append(text)
         return {
             "status": "ok",
@@ -125,7 +126,7 @@ def test_moi_loai_input_di_qua_cung_pipeline(monkeypatch):
     assert len(seen) == 3  # cả ba loại đều tới pipeline
     with SessionLocal() as sess:
         for text in seen:
-            sess.query(Problem).filter_by(problem_text=text).delete()
+            sess.query(SimulationCache).filter_by(problem_text=text).delete()
         sess.commit()
 
 
@@ -158,28 +159,65 @@ def test_analyze_trung_de_lay_envelope_tu_ngan_hang():
     }
     key = _cache_key(text)
     with SessionLocal() as s:
-        s.query(Problem).filter_by(key=key).delete()
-        s.add(Problem(key=key, problem_text=text, envelope_json=json.dumps(envelope)))
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.add(SimulationCache(
+            key=key, problem_text=text, simulation_id="algorithm.find_max",
+            envelope_json=json.dumps(envelope),
+            dsl_version=DSL_VERSION, policy_version=main_module.CACHE_VERSION,
+        ))
         s.commit()
 
     res = _analyze(text)
     assert res.status_code == 200
     body = res.json()
     assert body["cached"] is True
+    assert body["source"] == "exact_cache"
     assert body["simulation_id"] == "algorithm.find_max"
 
+    # M7.13B: hit phải tăng hit_count + counter exact_cache_hits
     with SessionLocal() as s:
-        s.query(Problem).filter_by(key=key).delete()
+        row = s.query(SimulationCache).filter_by(key=key).first()
+        assert row.hit_count == 1
+        s.query(SimulationCache).filter_by(key=key).delete()
         s.commit()
 
 
-def test_cache_key_co_version_chong_stale(monkeypatch):
-    """M7.9 §7: đổi CACHE_VERSION → khóa cache đổi → entry cũ (sim_id cũ) tự miss."""
-    text = "Cùng một đề bài để kiểm cache versioning"
-    k1 = _cache_key(text)
-    monkeypatch.setattr(main_module, "CACHE_VERSION", "999")
-    k2 = _cache_key(text)
-    assert k1 != k2  # cùng text nhưng version khác → khóa khác
+def test_cache_version_o_cot_lech_la_miss():
+    """M7.13B (thay cơ chế M7.9 §7): version lưu ở CỘT thay vì nướng vào key —
+    policy_version/dsl_version lệch → lookup MISS (không dùng mù), row vẫn
+    nhìn thấy được để dọn/thống kê."""
+    from app.main import _cache_lookup
+
+    init_db()
+    text = "Đề kiểm version-aware cache M7.13B nhé"
+    key = _cache_key(text)
+    with SessionLocal() as s:
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.add(SimulationCache(
+            key=key, problem_text=text, simulation_id="x.y",
+            envelope_json="{}", dsl_version=DSL_VERSION, policy_version="phiên-bản-cũ",
+        ))
+        s.commit()
+        assert _cache_lookup(s, key) is None  # policy_version lệch → miss
+
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.add(SimulationCache(
+            key=key, problem_text=text, simulation_id="x.y",
+            envelope_json="{}", dsl_version="0.1", policy_version=main_module.CACHE_VERSION,
+        ))
+        s.commit()
+        assert _cache_lookup(s, key) is None  # dsl_version không hỗ trợ → miss
+
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.add(SimulationCache(
+            key=key, problem_text=text, simulation_id="x.y",
+            envelope_json="{}", dsl_version=DSL_VERSION, policy_version=main_module.CACHE_VERSION,
+        ))
+        s.commit()
+        assert _cache_lookup(s, key) is not None  # version khớp → hit
+
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.commit()
 
 
 def test_khong_cache_ket_qua_unsupported(monkeypatch):
@@ -189,14 +227,14 @@ def test_khong_cache_ket_qua_unsupported(monkeypatch):
     init_db()
     text = "Đề test không cache unsupported: một bài vượt năng lực hiện tại nhé"
 
-    async def fake_unsupported(t, api_key):
+    async def fake_unsupported(t, api_key, pattern_store=None):
         return {"status": "unsupported", "reason": "vượt năng lực"}
 
     monkeypatch.setattr(main_module, "run_pipeline", fake_unsupported)
 
     key = _cache_key(text)
     with SessionLocal() as s:
-        s.query(Problem).filter_by(key=key).delete()
+        s.query(SimulationCache).filter_by(key=key).delete()
         s.commit()
 
     res = _analyze(text)
@@ -205,7 +243,54 @@ def test_khong_cache_ket_qua_unsupported(monkeypatch):
 
     # KHÔNG được lưu vào ngân hàng bài
     with SessionLocal() as s:
-        assert s.query(Problem).filter_by(key=key).first() is None
+        assert s.query(SimulationCache).filter_by(key=key).first() is None
+
+
+def test_exact_cache_lan_hai_khong_goi_pipeline(monkeypatch):
+    """M7.13B case A: cùng đề ok gửi 2 lần → lần 2 exact cache hit, pipeline
+    KHÔNG được gọi lại (0 call LLM), counter exact_cache_hits tăng."""
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+    import uuid
+
+    monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
+    calls: list[str] = []
+
+    async def fake_pipeline(text, api_key, pattern_store=None):
+        calls.append(text)
+        return {
+            "status": "ok",
+            "simulation_id": "algorithm.find_max",
+            "domain": "algorithm",
+            "visual_mode": "2d",
+            "title": "t",
+            "description": "d",
+            "config": {"algorithm_id": "find_max", "data": {"array": [1, 2]}},
+            "notes": None,
+            "source": "composed",
+        }
+
+    monkeypatch.setattr(main_module, "run_pipeline", fake_pipeline)
+    init_db()
+    text = "Đề test exact cache M7.13B: tìm max dãy 5 2 8 nhé"
+
+    with SessionLocal() as s:
+        before = {r.name: r.count for r in s.query(ReuseMetric).all()}
+
+    r1 = _analyze(text)
+    assert r1.status_code == 200 and "cached" not in r1.json()
+    r2 = _analyze(text)
+    assert r2.status_code == 200
+    assert r2.json()["cached"] is True
+    assert r2.json()["source"] == "exact_cache"
+    assert len(calls) == 1  # lần 2 KHÔNG chạy pipeline
+
+    with SessionLocal() as s:
+        after = {r.name: r.count for r in s.query(ReuseMetric).all()}
+        assert after.get("exact_cache_hits", 0) == before.get("exact_cache_hits", 0) + 1
+        assert after.get("compose_new_count", 0) == before.get("compose_new_count", 0) + 1
+        assert after.get("estimated_llm_calls_saved", 0) >= before.get("estimated_llm_calls_saved", 0) + 3
+        s.query(SimulationCache).filter_by(key=_cache_key(text)).delete()
+        s.commit()
 
 
 def test_endpoint_tutor_flow_da_xoa():

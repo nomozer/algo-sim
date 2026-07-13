@@ -13,6 +13,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+from datetime import datetime, timezone
 from typing import Literal
 
 from fastapi import FastAPI
@@ -20,8 +21,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-from app.persistence.db import Problem, SessionLocal, db_dialect, init_db
-from app.simulation.dsl.manifest import MANIFEST
+from app.persistence.db import (
+    SessionLocal,
+    SimulationCache,
+    SimulationPattern,
+    bump_metric,
+    db_dialect,
+    init_db,
+    read_metrics,
+)
+from app.simulation.dsl.manifest import DSL_VERSION, MANIFEST, SUPPORTED_VERSIONS
+from app.simulation.patterns import DbPatternStore
 from app.ai.explain import explain_state
 from app.ingestion.input import IngestError, ingest_to_text
 from app.ai.pipeline import run_pipeline
@@ -48,7 +58,9 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 # Phiên bản chính sách định tuyến/DSL. Tăng số này khi thay đổi classify/manifest
 # để VÔ HIỆU HÓA cache cũ (đề từng lưu với sim_id cũ sẽ được phân tích lại) — M7.9 §7.
 # "3": M7.13A — drag interaction + scene-mode consistency (manifest/prompt đổi).
-CACHE_VERSION = "3"
+# "4": M7.13B — siết định nghĩa "relational" trong analyze (chống nhiễu role
+#      phá pattern matching); cache chuyển sang simulation_cache version-aware.
+CACHE_VERSION = "4"
 
 
 class InputPayload(BaseModel):
@@ -72,9 +84,21 @@ class ExplainBody(BaseModel):
 
 
 def _cache_key(text: str) -> str:
+    """M7.13B: version KHÔNG nướng vào key nữa — lưu ở CỘT (dsl_version/
+    policy_version) và lọc lúc lookup. Row version cũ nhìn thấy được để
+    dọn/thống kê thay vì thành rác vô hình."""
     normalized = " ".join(text.strip().lower().split())
-    # Gộp CACHE_VERSION vào khóa → đổi policy là mọi entry cũ tự động "miss"
-    return hashlib.sha256(f"{CACHE_VERSION}|{normalized}".encode("utf-8")).hexdigest()
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+
+
+def _cache_lookup(session, key: str) -> SimulationCache | None:
+    """Exact cache hit CHỈ khi version còn tương thích (version-aware)."""
+    row = session.query(SimulationCache).filter_by(key=key).first()
+    if row is None:
+        return None
+    if row.policy_version != CACHE_VERSION or row.dsl_version not in SUPPORTED_VERSIONS:
+        return None  # version lệch → miss, không dùng mù (row giữ lại để dọn)
+    return row
 
 
 @app.get("/api/manifest")
@@ -86,11 +110,15 @@ def manifest():
 @app.get("/api/health")
 def health():
     with SessionLocal() as session:
-        count = session.query(Problem).count()
+        count = session.query(SimulationCache).count()
+        patterns = session.query(SimulationPattern).count()
+        reuse = read_metrics(session)
     return {
         "ok": True,
         "hasKey": bool(os.getenv("GEMINI_API_KEY")),
         "cachedProblems": count,
+        "patterns": patterns,
+        "reuse": reuse,
         "db": db_dialect(),
     }
 
@@ -121,19 +149,27 @@ async def analyze(body: AnalyzeBody):
             content={"error": "Nội dung đề quá ngắn — hãy nhập/chọn đầy đủ bài toán."},
         )
 
-    # Bước 2: cache theo text đã chuẩn hóa (ảnh trùng → đề đã phiên dịch trùng)
+    # Bước 2 — TẦNG 1 reuse (M7.13B): exact validated cache, version-aware.
+    # Hit = 0 call LLM (tiết kiệm tối thiểu analyze + classify + simulate = 3).
     key = _cache_key(text)
     with SessionLocal() as session:
-        row = session.query(Problem).filter_by(key=key).first()
+        row = _cache_lookup(session, key)
         if row:
-            return {**json.loads(row.envelope_json), "cached": True}
+            row.hit_count += 1
+            row.last_used_at = datetime.now(timezone.utc)
+            bump_metric(session, "exact_cache_hits")
+            bump_metric(session, "estimated_llm_calls_saved", 3)
+            session.commit()
+            return {**json.loads(row.envelope_json), "cached": True, "source": "exact_cache"}
 
     if not api_key:
         return JSONResponse(status_code=503, content={"error": MISSING_KEY_MSG})
 
-    # Bước 3: pipeline analyze → classify → simulate → validate (M3, không đổi)
+    # Bước 3: pipeline analyze → classify → (pattern reuse | simulate) → validate.
+    # TẦNG 2 (pattern reuse) bật qua store inject — pipeline tự giới hạn nó
+    # sau classify và chỉ cho generic.rule_scene.
     try:
-        envelope = await run_pipeline(text, api_key)
+        envelope = await run_pipeline(text, api_key, pattern_store=DbPatternStore(CACHE_VERSION))
     except Exception as err:  # pipeline thất bại sau retry → báo người dùng
         return JSONResponse(status_code=422, content={"error": str(err)})
 
@@ -141,8 +177,25 @@ async def analyze(body: AnalyzeBody):
     # kết quả cũ khi năng lực classify/DSL được cải thiện (chống stale).
     if envelope.get("status") == "ok":
         with SessionLocal() as session:
+            src = envelope.get("source", "composed")
+            bump_metric(session, "pattern_reuse_hits" if src == "pattern_reuse" else "compose_new_count")
+            if src == "pattern_reuse":
+                # tiết kiệm 1–3 call simulate; ước lượng bảo thủ trừ đi call adapt
+                bump_metric(session, "estimated_llm_calls_saved", 1 if envelope.get("adapt_used") else 2)
+            if envelope.get("reuse_fallback"):
+                bump_metric(session, "fallback_after_reuse_failure")
+            stale = session.query(SimulationCache).filter_by(key=key).first()
+            if stale is not None:
+                session.delete(stale)  # row version cũ → thay bằng kết quả mới
             session.add(
-                Problem(key=key, problem_text=text, envelope_json=json.dumps(envelope, ensure_ascii=False))
+                SimulationCache(
+                    key=key,
+                    problem_text=text,
+                    simulation_id=str(envelope.get("simulation_id", "")),
+                    envelope_json=json.dumps(envelope, ensure_ascii=False),
+                    dsl_version=DSL_VERSION,
+                    policy_version=CACHE_VERSION,
+                )
             )
             session.commit()
     return envelope

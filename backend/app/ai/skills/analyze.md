@@ -22,6 +22,7 @@ SEMANTIC REQUIREMENTS — vai trò NGỮ NGHĨA đề cần, mỗi trường là
 PHÂN BIỆT QUAN TRỌNG (chống gán sai "structural"):
 - "structural" CHỈ dành cho KHUNG CHỨA/BỐ CỤC LỒNG NHAU (vùng trang, phần header/thân/chân, mục lồng mục — thứ CHỨA nội dung khác bên trong theo phân cấp). Thường chỉ gặp ở bài trang web/tài liệu có bố cục.
 - HÌNH HÌNH HỌC và ĐỒ THỊ/MẠNG KHÔNG phải structural: điểm/đỉnh/nút → relational; đoạn thẳng/cạnh/liên kết → relational. Một tam giác, một đồ thị, một topology mạng = tập ĐIỂM và ĐOẠN NỐI → chỉ dùng "relational" (+ "temporal" nếu dựng từng bước), TUYỆT ĐỐI không gán "structural".
+- "relational" CHỈ khi cảnh THẬT SỰ cần VẼ nút-cạnh/điểm-đoạn/liên kết nhìn thấy được. Quan hệ đời thường trong đề (thành viên câu lạc bộ, bạn cùng lớp, sở hữu, chủ đề nói về ai/cái gì) KHÔNG phải "relational" — đừng gán vì đề NHẮC tới một tổ chức/nhóm người.
 - Việc cảnh được "dựng/hình thành từng bước" là "temporal", KHÔNG phải "structural".
 - PHÂN BIỆT TĨNH ↔ ĐỘNG: đề "HIỂN THỊ / cho xem / trình bày cấu trúc..." (cảnh cho sẵn, chỉ xem) → temporal_needs = [] và scene_construction = "prebuilt". CHỈ khi đề nói "QUÁ TRÌNH tạo / dựng / hình thành / từng bước" → temporal + scene_construction = "step_by_step". Không tự suy "hiển thị" thành "quá trình".
 - "interactive" khi đề muốn học sinh THAO TÁC TRỰC TIẾP: bật/tắt công tắc, hoặc KÉO/di chuyển điểm-đối tượng để quan sát ("cho phép kéo", "thử di chuyển", "tự thay đổi vị trí").

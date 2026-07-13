@@ -12,6 +12,12 @@ import json
 
 from app.simulation.catalog import CATALOG, catalog_text
 from app.simulation.dsl.manifest import manifest_capability_summary
+from app.simulation.patterns import (
+    deterministic_fill,
+    instantiate,
+    run_gates,
+    validate_params,
+)
 from app.simulation.representation import (
     build_representation_plan,
     check_scene_consistency,
@@ -216,12 +222,85 @@ async def stage_simulate(
     return None, last_error
 
 
+# ── Pattern reuse (M7.13B) — thay stage_simulate khi có mẫu khớp ──
+
+def _adapt_schema(unresolved: dict) -> dict:
+    """Schema structured-output cho stage adapt — SINH TỪ parameter_schema
+    của pattern, chỉ chứa đúng các slot chưa resolve."""
+    props: dict = {}
+    for name, meta in unresolved.items():
+        if meta["kind"] == "string":
+            props[name] = {"type": "STRING"}
+        elif meta["kind"] == "bit":
+            props[name] = {"type": "NUMBER"}
+        else:  # number_array
+            props[name] = {"type": "ARRAY", "items": {"type": "NUMBER"}}
+    return {"type": "OBJECT", "properties": props, "required": list(props)}
+
+
+async def stage_adapt(
+    text: str, analysis: dict, pattern_name: str, unresolved: dict, api_key: str
+) -> dict:
+    """MỘT call LLM nhỏ điền slot chưa resolve — prompt chỉ gồm mô tả slot
+    (kèm ví dụ gốc), KHÔNG kèm contract DSL đồ sộ như simulate."""
+    slot_lines = "\n".join(
+        f'- {name} ({meta["kind"]}'
+        + (f', {meta["length"]} số' if meta["kind"] == "number_array" else "")
+        + f"): ví dụ từ bài gốc của mẫu: {json.dumps(meta['example'], ensure_ascii=False)}"
+        for name, meta in unresolved.items()
+    )
+    user = (
+        f'Đề bài hiện tại:\n"""\n{text}\n"""\n\n'
+        f"Kết quả phân tích:\n{json.dumps(analysis, ensure_ascii=False)}\n\n"
+        f"Mẫu mô phỏng: {pattern_name}\n"
+        f"Các tham số cần điền cho ĐỀ BÀI HIỆN TẠI:\n{slot_lines}"
+    )
+    return await _call_json(
+        api_key, "adapt", user, _adapt_schema(unresolved), 0.1, 1,
+        "Lần trước không phải JSON hợp lệ. Trả về đúng một đối tượng JSON theo schema.",
+    )
+
+
+async def try_pattern_reuse(
+    text: str, analysis: dict, plan: dict, roles: set[str], api_key: str, pattern_store
+) -> tuple[dict | None, dict]:
+    """Tầng 2: tìm pattern verified/validated khớp EXACT (scene_mode + roles),
+    adapt tham số (deterministic trước, 1 call LLM nhỏ cho phần còn lại) rồi
+    chạy ĐỦ 4 cổng. Bất kỳ bước nào fail → (None, meta) để fallback compose —
+    không crash, không sửa pattern gốc."""
+    row = pattern_store.find(plan["scene_mode"], roles)
+    if row is None:
+        return None, {"attempted": False}
+    meta = {"attempted": True, "pattern_key": row.pattern_key, "adapt_used": False}
+    schema = json.loads(row.parameter_schema_json)
+    template = json.loads(row.template_json)
+    params, unresolved = deterministic_fill(schema, analysis)
+    if unresolved:
+        meta["adapt_used"] = True
+        try:
+            llm_params = await stage_adapt(text, analysis, row.name, unresolved, api_key)
+        except Exception:
+            return None, meta  # adapt hỏng → fallback compose, không poison store
+        params.update({k: llm_params[k] for k in unresolved if k in llm_params})
+    if validate_params(schema, params) is not None:
+        return None, meta
+    config, err = run_gates(plan["scene_mode"], roles, instantiate(template, params))
+    if config is None or err:
+        return None, meta
+    pattern_store.bump_usage(row.pattern_key)
+    return config, meta
+
+
 # ── Orchestrator ──────────────────────────────────────────────
 
-async def run_pipeline(text: str, api_key: str) -> dict:
+async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
     """Chạy trọn pipeline; trả ValidatedSimulationEnvelope hoặc unsupported.
 
     Ném RuntimeError khi stage simulate thất bại sau retry (API trả 422).
+
+    M7.13B: `pattern_store` (inject, optional) bật pattern reuse — CHỈ sau
+    classify và CHỈ cho generic.rule_scene (bảo vệ specialized selection).
+    None → hành vi compose cũ nguyên vẹn.
     """
     analysis = await stage_analyze(text, api_key)
 
@@ -255,6 +334,31 @@ async def run_pipeline(text: str, api_key: str) -> dict:
     spec = CATALOG[simulation_id]
 
     roles = required_roles(analysis)
+
+    # M7.13B tầng 2: pattern reuse CHỈ thay stage_simulate của generic —
+    # specialized đi đường cũ nguyên vẹn (không regression selection).
+    reuse_meta = {"attempted": False}
+    if pattern_store is not None and simulation_id == "generic.rule_scene":
+        config, reuse_meta = await try_pattern_reuse(
+            text, analysis, plan, roles, api_key, pattern_store
+        )
+        if config is not None:
+            return {
+                "status": "ok",
+                "simulation_id": simulation_id,
+                "domain": spec.domain,
+                "visual_mode": spec.visual_mode,
+                "title": spec.make_title(config, analysis),
+                "description": f"{analysis.get('input_description', '')} → {analysis.get('output_description', '')}",
+                "config": config,
+                "notes": config.get("notes") if isinstance(config, dict) else None,
+                "analysis": analysis,
+                "representation_plan": plan,
+                "source": "pattern_reuse",
+                "pattern_key": reuse_meta.get("pattern_key"),
+                "adapt_used": reuse_meta.get("adapt_used", False),
+            }
+
     config, error = await stage_simulate(
         text, analysis, simulation_id, api_key, required_semantic_roles=roles, plan=plan
     )
@@ -277,6 +381,14 @@ async def run_pipeline(text: str, api_key: str) -> dict:
             "Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại."
         )
 
+    # M7.13B: compose-new thành công → thử persist reusable pattern (best-effort;
+    # extraction ngoài safe allowlist / round-trip lệch / cổng fail → không lưu).
+    if pattern_store is not None and simulation_id == "generic.rule_scene":
+        try:
+            pattern_store.persist_from_spec(plan["scene_mode"], roles, config)
+        except Exception:
+            pass  # lỗi persist không được làm hỏng envelope trả người dùng
+
     return {
         "status": "ok",
         "simulation_id": simulation_id,
@@ -288,4 +400,6 @@ async def run_pipeline(text: str, api_key: str) -> dict:
         "notes": config.get("notes") if isinstance(config, dict) else None,
         "analysis": analysis,
         "representation_plan": plan,
+        "source": "composed",
+        "reuse_fallback": bool(reuse_meta.get("attempted")),
     }
