@@ -61,7 +61,9 @@ export function ProblemInput() {
         : { type: "text" as const, content: problemText.trim() };
       const result = await analyzeViaServer(payload);
       if (result.status === "ok") {
-        store.loadEnvelope(result);
+        // originalInput vào lịch sử: CHỈ text an toàn (tệp có thể là nhị phân
+        // base64 — chính sách M9-UX1 cấm persist blob).
+        store.loadEnvelope(result, undefined, file ? undefined : problemText.trim());
       } else {
         store.loadUnsupported(result);
       }

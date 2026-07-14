@@ -3,7 +3,7 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
-Cập nhật lần cuối: sau **M9-S1** — mechanism-aligned interactions (algorithm domain).
+Cập nhật lần cuối: sau **M9-UX1** — Home + lịch sử học cục bộ zero-AI + vệ sinh RULES.
 
 > ## ✅ M8 SLICE 1+2 HOÀN THÀNH — SCOPE FREEZE §5b VẪN HIỆU LỰC CHO PHẦN CÒN LẠI
 >
@@ -23,7 +23,7 @@ Cập nhật lần cuối: sau **M9-S1** — mechanism-aligned interactions (alg
 | | |
 |---|---|
 | pytest | **289 pass** (0 API call thật — guard là bằng chứng) |
-| vitest | **235 pass** (0 network call; +40 M9-S1: decision 21, policy 7, algorithm-ui 7 + 5 nhóm khác) |
+| vitest | **259 pass** (0 network call; +24 M9-UX1: history 10, view-history 9, rules-hygiene 5) |
 | build | `tsc -b && vite build` sạch — bundle chính 258.6KB; chunk Three.js 549KB **code-split**, chỉ tải khi bấm 3D |
 | Docker | `docker compose up -d --build` OK (backend :8787 + Postgres) |
 | Live smoke gần nhất (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` · không false positive |
@@ -89,6 +89,7 @@ M7.14D.1 là **UI-only: 0 live call**.
 | **M7.FREEZE** | `7452cbf` | **Đóng M7.x.** Gỡ bố cục pixel khỏi `NetworkState` (blocker 3D duy nhất): state chỉ còn topology + route + steps + cursor; `layout2d` chuyển sang renderer. Quy tắc **renderer-neutral state** vào ARCHITECTURE_MAP. Danh sách **DO NOT ADD BEFORE M8** |
 | **M8-PRE** | `cb31adc` | **Coverage + Pedagogical audit → hardening trước M8** (`docs/COVERAGE.md`). **S1**: metadata `EvalItem` (optional, backward-compat) + 4 pool đề mới (`curriculum`/`capability`/`cross_domain`/`thesis` 12 case) + **luật kết nạp** thực thi bằng code; `dataset.py` 30 case **ĐÓNG BĂNG**. Vá lỗ hổng bằng chứng **sắp xếp** (engine có từ lâu, benchmark 0 case). **S2**: `edge.directed` (manifest-first) + node_type mở rộng (actor/process/data_store/input/output) + mũi tên ở renderer + analyze/classify/simulate hỗ trợ **sơ đồ hệ thống thông tin** → đề "phân tích hệ thống" **không còn bị từ chối im lặng**. `CACHE_VERSION` 5→6 |
 | M8-PRE-LIP | `f4e3793` | **PredictionCapability** (`predict?` cùng khuôn `timeline?`/`edit?`) + **một** `PredictionBar` dùng chung 2 domain (network: chọn nút; algorithm: có/không); engine tất định chấm; kết quả ở `store.prediction` TÁCH khỏi engine state |
+| **M9-UX1** | `1f95e92` | **Home + phiên học + lịch sử zero-AI + vệ sinh RULES.** Home thật (view mặc định): MỘT hành động chính + gợi ý chọn lọc + "Tiếp tục học"; không inspector/timeline rỗng trước khi có bài. `state/history.ts`: lịch sử BỀN (localStorage schema v1, whitelist, dedup theo id tất định, max 30 evict, corrupt-safe) lưu **envelope đã validate** → **mở lại ZERO-AI** (bất biến #17) + khôi phục lastCursor/visualMode; reset/goHome không phá lịch sử. Header gọn [Trang chủ][Lịch sử]; HistoryView đủ item + xóa. §17: `applications?` trên module (tĩnh, không LLM) cho 4 domain chuyên biệt. RULES.md → con trỏ ngắn (thứ tự đọc + 10 luật cứng); bản v0.3 lưu `docs/legacy/RULES_v0.3.md` kèm cảnh báo LEGACY (khoá bằng `rules-hygiene.test.ts`). Acceptance browser thật 23/23 (reload + reopen 0 /api/analyze); 0 live AI |
 | **M9-S1** | `548f1fc` | **Mechanism-aligned interactions (algorithm).** `decision.ts` — điểm quyết định theo cơ chế từng bài: max/min "có cập nhật?", sum/count "cộng/tăng?", linear "tìm thấy chưa?", binary "**nửa nào bị loại**" (3 lựa chọn, hỏi ở bước lấy mid), sorts "đổi chỗ?/dời?"; đáp án + bằng chứng nhân quả (số thật, biến trước → sau) DẪN XUẤT từ sự kiện trace kế tiếp; MỘT nguồn nuôi cả predict lẫn dải nhân quả. `interaction-policy.ts` — hết "một swap cho cả 8 bài": free (sorts) · framed (linear: chi phí) · challenge (find_max/min: bất biến vùng-đã-duyệt; binary: tiền điều kiện dãy-đã-sắp — ẩn mặc định, mở qua nút thí nghiệm có khung) · hidden (sum/count). Engine: narration bước quyết định thành CÂU HỎI (không lộ đáp án sớm), marks `eliminated` cho phần tử đã duyệt. Nguyên tắc sư phạm #6 vào `COVERAGE.md §2`. UX acceptance 18/18 trên browser thật; 0 live AI |
 | **M8 Slice 1+2** | `f83b635`, `18e4c2a`, `cce75fc` | **Shared 2D/3D renderer.** S1: `renderers?` trên SimulationModule ("2d" mặc định = Workspace), `simulations/renderer.ts` (khả dụng = tuyên bố ∩ có renderer thật), `store.visualMode` (lát TRÌNH BÀY — đổi mode không đụng active/cursor/prediction, không rebuild, không AI), `VisualModeToggle` theo capability. S2: `network/ui3d.tsx` — Three.js thuần (KHÔNG R3F), `React.lazy` code-split; `layout3d` renderer-owned (route z=0, ngoài route lùi sâu); OrbitControls xoay+zoom khoá pan; reset GÓC NHÌN ≠ reset mô phỏng; WebGL fail → fallback tiếng Việt; nội suy HÌNH ẢNH gói tin, sự thật vẫn là `packetAt`. Nghiệm thu browser thật 16/16 (headless Chrome + SwiftShader, bài mẫu offline). **Bất biến #16** vào ARCHITECTURE_MAP. Slice 3 (mạng phân tầng) HOÃN — cần semantics đóng gói tất định mới |
 
@@ -270,11 +271,14 @@ hợp đồng `PredictionCapability` vốn đã hỗ trợ N lựa chọn). Khô
    khiếm khuyết trên: điểm quyết định theo cơ chế + chính sách what-if 4 mode.
    **Bất biến mới** (`COVERAGE.md §2.6`): *mọi tương tác phải chạm cơ chế ẩn và
    sinh hệ quả tất định; tương tác trang trí không được admit.*
-9. **Kế tiếp — M9-S2: binary "dựng số N"** (`COVERAGE.md §6`, M9-PED-AUDIT §8):
+9. ~~**M9-UX1 — Home + lịch sử học cục bộ zero-AI + vệ sinh RULES**~~ (`1f95e92`).
+   Nền sản phẩm: vào cửa đơn giản → phiên học → liên tục học không tốn AI;
+   RULES.md hết gây nhiễu cho coding agent tương lai.
+10. **Kế tiếp — M9-S2: binary "dựng số N"** (`COVERAGE.md §6`, M9-PED-AUDIT §8):
    `binary.decimal_to_binary` là cảnh thao-tác-trực-tiếp tốt nhất nhưng học sinh
    **không thể sai** (không có đích) → thêm thử thách tất định dùng LẠI
    `PredictionCapability`, ground truth `bitsOf`/`decimalOf`/`placeValues` có sẵn.
    Sau đó M9-S3 (packet routing: học sinh tự dẫn đường, engine so chi phí với BFS).
-10. Sau M9: `table/grid` (mở khoá CSDL) · practice_activity đầy đủ (cần duyệt
+11. Sau M9: `table/grid` (mở khoá CSDL) · practice_activity đầy đủ (cần duyệt
     riêng — vẫn **PARTIAL / CHƯA IMPLEMENT**).
-11. Không có M7.15.
+12. Không có M7.15.

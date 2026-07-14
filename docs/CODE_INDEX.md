@@ -164,7 +164,9 @@ Hợp đồng module. Exports: `SimulationModule`, `SimAction`, `TimelineCapabil
 `VisualMode`, `PredictionCapability`, `EditCapability`.
 Notes: capability **optional** (vd `timeline?`) là cách mở rộng chuẩn. M8:
 `renderers?: Partial<Record<VisualMode, ComponentType>>` — renderer theo mode,
-"2d" mặc định là `Workspace` (tương thích ngược).
+"2d" mặc định là `Workspace` (tương thích ngược). M9-UX1: `applications?:
+string[]` — "Ứng dụng của cơ chế này" (tĩnh, module tự khai, không LLM;
+generic cố ý không có), render ở SimulationInspector.
 
 ### `simulations/renderer.ts` · Change impact: offline
 M8 — chọn renderer từ HỢP ĐỒNG module (không switch-case id). Exports:
@@ -181,9 +183,31 @@ Zustand, **mù domain**: `active {moduleId, envelope, config, state}` + timeline
 actions + `dispatch` + `resetSim` + `replaceSimulation` (M7.14, sau edit) +
 `prediction`/`submitPrediction` (M8-PRE-LIP) + `visualMode`/`setVisualMode` (M8 —
 lát TRÌNH BÀY: đổi mode không đụng active/cursor/prediction; loadEnvelope reset
-về "2d"). Tests: `registry.test.ts`, `visual-mode.test.tsx`.
+về "2d") + M9-UX1: `view` (home/workspace/history), `history` (mirror), `goHome`,
+`openHistory`, `reopenFromHistory` (ZERO-AI), `removeHistoryItem`, `clearHistory`;
+`loadEnvelope(env, sampleId?, originalInput?)` ghi lịch sử; bước/visualMode
+touch tiến độ. Tests: `registry.test.ts`, `visual-mode.test.tsx`,
+`view-history.test.tsx`.
 Notes: **không** đặt logic domain vào store. Zustand v5 trả INITIAL state khi
-renderToString (SSR) — component cần test SSR phải nhận dữ liệu qua PROPS.
+renderToString (SSR) — component cần test SSR phải nhận dữ liệu qua PROPS
+(ngoại lệ: Home LÀ initial state nên SSR App test được).
+
+### `state/history.ts` · Change impact: offline
+M9-UX1 — lịch sử học BỀN (localStorage, schema v1, `algosim.history.v1`).
+Exports: `createHistoryStore` (inject storage — test được), `historyStore`
+(singleton; node/SSR → shim in-memory), `historyIdOf` (hash tất định
+simulation_id+config → dedup), `HistoryItem`, `HISTORY_SCHEMA_VERSION`,
+`HISTORY_MAX_ITEMS` (30, evict theo lastViewedAt), `__resetHistoryForTest`.
+Notes: lưu envelope ĐÃ VALIDATE (mở lại zero-AI — bất biến #17) + lastCursor/
+visualMode; CHỈ trường whitelist — không secret/blob/prediction/branch/camera;
+entry hỏng/version lạ bỏ qua êm. Tests: `history.test.ts`.
+
+### `components/HomeView.tsx` · `HistoryView.tsx` · `data/offline-catalog.ts` · offline
+M9-UX1 — Home (hero + composer + gợi ý chọn lọc + "Tiếp tục học" ≤5) và trang
+Lịch sử (đủ item, Mở lại/Xóa/Xóa tất cả). `offline-catalog.ts`: danh mục mẫu
+hợp nhất (`offlineCatalog`, `starterEntries`, `DOMAIN_COLOR/LABEL`) dùng chung
+Home + InputPanel. `App.tsx` route theo `store.view`; toggle panel chỉ trong
+workspace. Exports thêm: `formatRelativeTime` (HomeView).
 
 ### `simulations/domains/generic/model.ts` · Change impact: offline
 Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,
