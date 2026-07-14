@@ -96,11 +96,6 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
     // M8: module ĐẦU TIÊN khai 3D — topology/chiều sâu là chỗ 3D thêm giá trị
     // biểu diễn thật (COVERAGE.md §8); logic/binary/algorithm CỐ Ý giữ 2D-only.
     supportedVisualModes: ["2d", "3d"],
-    applications: [
-      "Gói tin Internet tìm đường qua các router",
-      "Định tuyến đơn hàng qua các kho trung chuyển",
-      "Tin nhắn đi từ điện thoại em tới máy chủ",
-    ],
 
     validateConfig: validateNetworkConfig,
 

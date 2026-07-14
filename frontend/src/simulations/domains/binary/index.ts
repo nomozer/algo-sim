@@ -37,10 +37,6 @@ export function makeBinaryModule(): SimulationModule<BinaryConfig, BinaryState> 
     title: "Đổi thập phân sang nhị phân",
     interactionMode: "exploratory",
     supportedVisualModes: ["2d"],
-    applications: [
-      "Cách máy tính lưu mọi dữ liệu (số, chữ, ảnh) bằng bit",
-      "Địa chỉ IP và màu RGB đều là các nhóm bit",
-    ],
 
     validateConfig: validateBinaryConfig,
 

@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { DOMAIN_COLOR, DOMAIN_LABEL, offlineCatalog, starterEntries } from "../data/offline-catalog";
+import { DOMAIN_LABEL, publicCatalog, starterEntries } from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
+import { previewKindOf, SamplePreview } from "./SamplePreview";
 
 /**
  * HOME (M9-UX1) — trạng thái vào app: MỘT hành động chính rõ ràng.
@@ -34,8 +35,10 @@ export function HomeView() {
   const openHistory = useAppStore((s) => s.openHistory);
   const [showAll, setShowAll] = useState(false);
 
+  // M9-UX2: học sinh chỉ thấy danh mục CÔNG KHAI (Tin học THPT) —
+  // fixture nội bộ vẫn sống cho test/dev qua offlineCatalog().
   const starters = starterEntries();
-  const all = offlineCatalog();
+  const all = publicCatalog();
   const recents = history.slice(0, RECENT_ON_HOME);
 
   return (
@@ -70,9 +73,9 @@ export function HomeView() {
               className="starter-card"
               onClick={() => loadEnvelope(e.envelope, e.id)}
             >
-              <span className="sample-dot" style={{ background: DOMAIN_COLOR[e.domain] }} />
+              <SamplePreview kind={previewKindOf(e.simId, e.preview)} />
               <span className="starter-card-body">
-                <strong>{e.title}</strong>
+                <strong className="starter-card-title">{e.title}</strong>
                 <span className="hint">{DOMAIN_LABEL[e.domain]}</span>
               </span>
             </button>
@@ -101,7 +104,10 @@ export function HomeView() {
                     <> · đang ở bước {item.lastCursor + 1}</>
                   )}
                 </span>
-                <span className="hint">{formatRelativeTime(item.lastViewedAt)}</span>
+                <span className="recent-foot">
+                  <span className="hint">{formatRelativeTime(item.lastViewedAt)}</span>
+                  <span className="recent-continue">Tiếp tục ▸</span>
+                </span>
               </button>
             ))}
           </div>

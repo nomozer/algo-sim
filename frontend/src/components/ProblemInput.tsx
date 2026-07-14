@@ -74,27 +74,21 @@ export function ProblemInput() {
     }
   }
 
+  // M9-UX2 §9: trạng thái kĩ thuật GIỮ IM khi mọi thứ ổn — học sinh không cần
+  // biết "ngân hàng bài: N". Chỉ nói khi có việc phải làm (server tắt/thiếu key).
   const serverStatus =
-    health === "loading" ? (
-      <span className="hint">Đang kiểm tra máy chủ…</span>
-    ) : health === null ? (
+    health === null ? (
       <span className="hint" style={{ color: "var(--accent-orange)" }}>
-        ● Máy chủ phân tích chưa chạy — chạy <code>docker compose up -d --build</code>
+        ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới
       </span>
-    ) : !health.hasKey ? (
+    ) : health !== "loading" && !health.hasKey ? (
       <span className="hint" style={{ color: "var(--accent-orange)" }}>
-        ● Máy chủ đang chạy nhưng thiếu key — tạo <code>backend/.env</code> với{" "}
-        <code>GEMINI_API_KEY=…</code>
+        ● Máy chủ thiếu khóa AI — vẫn dùng được các mô phỏng mẫu bên dưới
       </span>
-    ) : (
-      <span className="hint" style={{ color: "var(--accent-green)" }}>
-        ● Máy chủ sẵn sàng · ngân hàng bài: {health.cachedProblems} bài
-      </span>
-    );
+    ) : null;
 
   return (
-    <section className="card stack" style={{ gap: "var(--sp-sm)" }}>
-      <span className="eyebrow">ĐỀ BÀI</span>
+    <section className="card stack home-composer-card" style={{ gap: "var(--sp-sm)" }}>
       <textarea
         className="text-input"
         rows={5}
