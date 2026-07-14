@@ -6,6 +6,7 @@ import type {
   SimAction,
   SimulationEnvelope,
   TimelineCapability,
+  VisualMode,
 } from "../simulations/types";
 
 /**
@@ -48,6 +49,14 @@ interface AppState {
   rightOpen: boolean;
   /** AI Help KHÔNG mở mặc định (M2 #7). */
   inspectorTab: "inspect" | "ai";
+  /**
+   * M8: visual mode là TRÌNH BÀY THUẦN TÚY — chọn component vẽ, không hơn.
+   * KHÔNG nằm trong engine state/SimulationSpec, KHÔNG do LLM chọn, KHÔNG ảnh
+   * hưởng tính toán tất định. Đổi mode giữ nguyên active/state/cursor/prediction
+   * (dự đoán gắn với BƯỚC, không gắn với renderer). Mặc định "2d"; nạp mô
+   * phỏng mới thì quay về "2d" (chính sách M8: 2D là mặc định).
+   */
+  visualMode: VisualMode;
 
   setProblemText: (text: string) => void;
   setAnalyzing: (v: boolean) => void;
@@ -84,6 +93,8 @@ interface AppState {
   toggleLeft: () => void;
   toggleRight: () => void;
   setInspectorTab: (tab: "inspect" | "ai") => void;
+  /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active/prediction. */
+  setVisualMode: (mode: VisualMode) => void;
   reset: () => void;
 }
 
@@ -117,6 +128,7 @@ export const useAppStore = create<AppState>((set, get) => {
     leftOpen: WIDE_SCREEN,
     rightOpen: WIDE_SCREEN,
     inspectorTab: "inspect",
+    visualMode: "2d",
 
     setProblemText: (text) => set({ problemText: text }),
     setAnalyzing: (v) => set({ analyzing: v }),
@@ -151,6 +163,9 @@ export const useAppStore = create<AppState>((set, get) => {
         activeSampleId: sampleId ?? null,
         playing: false,
         prediction: null,
+        // Chính sách M8: mô phỏng MỚI luôn mở ở 2D (mặc định); 3D là lựa chọn
+        // của người dùng SAU đó, và chỉ khi module khai hỗ trợ.
+        visualMode: "2d",
       });
     },
 
@@ -241,6 +256,11 @@ export const useAppStore = create<AppState>((set, get) => {
     toggleRight: () => set({ rightOpen: !get().rightOpen }),
     setInspectorTab: (tab) => set({ inspectorTab: tab }),
 
+    // M8: CHỈ đổi trường trình bày. Không đụng active (engine state/cursor giữ
+    // nguyên khối), không xoá prediction (nó gắn với BƯỚC hiện tại — bước không
+    // đổi thì dự đoán còn nguyên hiệu lực), không rebuild, không gọi mạng.
+    setVisualMode: (mode) => set({ visualMode: mode }),
+
     reset: () =>
       set({
         active: null,
@@ -249,6 +269,7 @@ export const useAppStore = create<AppState>((set, get) => {
         activeSampleId: null,
         playing: false,
         prediction: null,
+        visualMode: "2d",
       }),
   };
 });

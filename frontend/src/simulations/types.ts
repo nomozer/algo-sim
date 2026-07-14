@@ -176,8 +176,24 @@ export interface SimulationModule<C = unknown, S = unknown> {
    * Sân khấu chính của mô phỏng — bắt buộc. Chỉ domain UI này được biết
    * ruột state của mình; core UI (SimulationWorkspace) render qua đây,
    * không được giả định mọi simulation là thuật toán/có trace/mảng.
+   * Đây đồng thời là RENDERER 2D mặc định (xem `renderers` bên dưới).
    */
   Workspace: ComponentType<WorkspaceProps<C, S>>;
+
+  /**
+   * Optional (M8) — renderer theo visual mode, CÙNG hợp đồng WorkspaceProps:
+   * đọc CÙNG config/state, phát CÙNG SimAction. "2d" không khai thì mặc định
+   * là `Workspace` (tương thích ngược — không module nào phải sửa).
+   *
+   * RÀNG BUỘC:
+   * - 3D là MỘT RENDERER, không phải domain mới: không có simulation_id "_3d",
+   *   không fork engine — 2D/3D dùng chung config/state/timeline/action.
+   * - Một mode chỉ KHẢ DỤNG khi vừa nằm trong `supportedVisualModes` vừa có
+   *   renderer thật (xem `availableVisualModes` — chống toggle giả).
+   * - Bố cục/camera/mesh của renderer là dữ liệu TRÌNH BÀY, renderer tự giữ —
+   *   cấm đưa vào engine state (bất biến renderer-neutral, M7.FREEZE).
+   */
+  renderers?: Partial<Record<VisualMode, ComponentType<WorkspaceProps<C, S>>>>;
 
   /** Panel quan sát bên phải — nội dung theo domain (biến/mã giả, truth table, bit...). */
   Inspector?: ComponentType<WorkspaceProps<C, S>>;

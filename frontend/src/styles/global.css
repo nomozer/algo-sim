@@ -523,6 +523,14 @@ button:disabled {
   padding-bottom: var(--sp-sm);
 }
 
+/* M8: toggle 2D/3D — chỉ xuất hiện khi module có ≥2 renderer thật. */
+.visual-mode-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 4px;
+  align-self: center;
+}
+
 .workspace-title {
   font-size: 22px;
   font-weight: 700;
