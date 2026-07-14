@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
-import { SimulationWorkspace } from "../components/SimulationWorkspace";
+import { VisualModeToggle } from "../components/SimulationWorkspace";
 import { useAppStore } from "../state/store";
 import { makeAndGateModule } from "./domains/logic";
 import { makeNetworkModule } from "./domains/network";
@@ -128,28 +128,26 @@ describe("renderer selection — DẪN XUẤT TỪ HỢP ĐỒNG MODULE (không 
   });
 });
 
-describe("SimulationWorkspace — toggle theo capability", () => {
-  it("(2) module 2D-only: KHÔNG render nút chuyển chế độ", () => {
-    useAppStore
-      .getState()
-      .loadEnvelope(envelopeFor("logic.and_gate", { inputA: 0, inputB: 0, notes: null }));
-    const html = renderToString(<SimulationWorkspace />);
-    expect(html).not.toContain("visual-mode-toggle");
+describe("VisualModeToggle — affordance theo capability (component thuần, SSR được)", () => {
+  // Lưu ý hạ tầng test: zustand v5 trả INITIAL state trong renderToString, nên
+  // không SSR SimulationWorkspace-qua-store được — toggle được tách thành
+  // component thuần theo props và test TRỰC TIẾP; phần dẫn xuất modes từ module
+  // đã được khoá ở describe "renderer selection" phía trên.
+  it("(2) module 2D-only → modes có 1 phần tử → KHÔNG render gì (không toggle giả)", () => {
+    const modes = availableVisualModes(makeAndGateModule());
+    expect(modes).toEqual(["2d"]);
+    const html = renderToString(<VisualModeToggle modes={modes} mode="2d" onSelect={() => {}} />);
+    expect(html).toBe("");
   });
 
-  it("(3) module khai 2D+3D: hiện đủ hai nút chế độ", () => {
-    // Dùng module network THẬT nếu đã có 3D; nếu chưa (Slice 1 thuần), test này
-    // vẫn đúng nhờ module giả — nhưng ưu tiên kiểm module thật qua registry.
-    const net = makeNetworkModule();
-    if (availableVisualModes(net).length > 1) {
-      useAppStore.getState().loadEnvelope(envelopeFor("network.packet_routing", NET_CONFIG));
-      const html = renderToString(<SimulationWorkspace />);
-      expect(html).toContain("visual-mode-toggle");
-      expect(html).toContain(">2D<");
-      expect(html).toContain(">3D<");
-    } else {
-      // Slice 1: chưa có module 3D thật — chấp nhận, Slice 2 sẽ kích hoạt nhánh trên.
-      expect(availableVisualModes(net)).toEqual(["2d"]);
-    }
+  it("(3) module khai 2D+3D → hiện đủ hai nút, nút mode hiện tại được đánh dấu", () => {
+    const modes = availableVisualModes(makeNetworkModule());
+    expect(modes).toEqual(["2d", "3d"]);
+    const html = renderToString(<VisualModeToggle modes={modes} mode="3d" onSelect={() => {}} />);
+    expect(html).toContain("visual-mode-toggle");
+    expect(html).toContain(">2D<");
+    expect(html).toContain(">3D<");
+    // nút 3D đang chọn có is-active
+    expect(html).toMatch(/is-active[^>]*>3D</);
   });
 });

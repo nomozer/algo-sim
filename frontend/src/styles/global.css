@@ -531,6 +531,27 @@ button:disabled {
   align-self: center;
 }
 
+/* M8: sân khấu 3D — canvas WebGL do renderer sở hữu, cao cố định, rộng theo khung. */
+.sim-stage-3d {
+  position: relative;
+}
+
+.three-container {
+  width: 100%;
+  height: 340px;
+}
+
+.three-container canvas {
+  display: block;
+  border-radius: var(--rounded-md);
+}
+
+.three-reset-view {
+  position: absolute;
+  top: var(--sp-sm);
+  right: var(--sp-sm);
+}
+
 .workspace-title {
   font-size: 22px;
   font-weight: 700;
