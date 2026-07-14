@@ -224,6 +224,22 @@ Trạng thái edit (`editMode`/`editTool`/`editText`) là useState cục bộ.
 4 module chuyên biệt, engine riêng, **không** dùng DSL: what-if branch
 (`core/algorithms.ts`), truth table, bits⇄decimal, BFS route.
 Notes: **không** module nào render edit toolbar (đúng thiết kế).
+
+### `simulations/domains/algorithm/decision.ts` · Change impact: offline
+M9-S1 — điểm quyết định theo CƠ CHẾ từng thuật toán. Exports: `decisionPointOf`
+(câu hỏi + options + expectedId + evidence + consideration + expression — đáp án
+DẪN XUẤT từ sự kiện trace kế tiếp), `consequenceOf` (câu nhân quả cho bước hệ
+quả — CÙNG chuỗi evidence). Một nguồn nuôi cả `module.predict` lẫn dải nhân quả
+trong Workspace → hỏi/chấm/trình bày không lệch nhau. binary_search hỏi ở bước
+LẤY MID (3 lựa chọn trái/phải/found). Tests: `decision.test.ts`.
+
+### `simulations/domains/algorithm/interaction-policy.ts` · Change impact: offline
+M9-S1 — chính sách what-if theo cơ chế (hết "một swap cho cả 8 bài"). Exports:
+`whatIfPolicyOf`, `WhatIfPolicy`, `WhatIfMode` (free: bubble/insertion · framed:
+linear_search · challenge: find_max/min + binary_search, ẩn mặc định, mở qua nút
+thí nghiệm có khung · hidden: sum/count). Mỗi policy kèm `rationale` (vì sao
+không trang trí). Gating theo `algorithm_id` ngữ nghĩa. Tests:
+`interaction-policy.test.ts`, `algorithm-ui.test.tsx`.
 `network/model.ts` exports: `bfsRoute`, `buildSteps`, `currentStep`, `typeLabel`,
 `neighborsOf`, `hopDistance`, `NetworkState` (topology + route + steps + cursor).
 **M7.FREEZE**: bố cục KHÔNG còn trong state — `layout2d` sống trong
@@ -243,7 +259,9 @@ thu 2D→dự đoán→3D→2D). Deps: `three` (+ `@types/three` dev).
 
 ### `core/` (`algorithms.ts`, `trace-builder.ts`, `pseudocode.ts`, `types.ts`) · offline
 Engine của domain `algorithm` (ngoài `simulations/` vì có trước registry).
-**Không** dùng làm hạ tầng chung cho domain khác.
+**Không** dùng làm hạ tầng chung cho domain khác. M9-S1: narration ở BƯỚC QUYẾT
+ĐỊNH là câu hỏi (không lộ đáp án sớm — hệ quả thuộc bước kế tiếp); phần tử đã
+duyệt/không thỏa được mark `eliminated`; export thêm `OP_TEXT`.
 
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
 Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
