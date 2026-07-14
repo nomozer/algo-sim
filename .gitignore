@@ -11,3 +11,6 @@ backend/*.db
 /data/
 CLAUDE.md
 
+# Mockup phiên brainstorm (visual companion) — cục bộ, không commit.
+/.superpowers/
+
