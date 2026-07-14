@@ -552,6 +552,30 @@ button:disabled {
   right: var(--sp-sm);
 }
 
+/* M9-S1: dải nhân quả của điểm quyết định — cùng nguồn dữ liệu với ô dự đoán. */
+.decision-strip {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-sm);
+  flex-wrap: wrap;
+  padding: 6px 12px;
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--rounded-md);
+  background: var(--surface);
+  font-size: 14px;
+}
+
+.decision-strip.is-consequence {
+  border-left-color: var(--accent-green);
+}
+
+.decision-expression {
+  font-variant-numeric: tabular-nums;
+  color: var(--primary);
+}
+
+
 .workspace-title {
   font-size: 22px;
   font-weight: 700;

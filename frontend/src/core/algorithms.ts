@@ -16,7 +16,7 @@ function elem(b: TraceBuilder, labels: string[] | null, i: number): string {
   return labels && labels[i] ? `${labels[i]} (${v})` : `a[${i}] = ${v}`;
 }
 
-const OP_TEXT: Record<Condition["op"], string> = {
+export const OP_TEXT: Record<Condition["op"], string> = {
   ">": "lớn hơn",
   ">=": "lớn hơn hoặc bằng",
   "<": "nhỏ hơn",
@@ -63,6 +63,8 @@ function runFindExtreme(a: AnalysisOk, mode: "max" | "min", whatIf?: WhatIfSwap)
   let best = 0;
   for (let i = 1; i < b.length; i++) {
     const better = mode === "max" ? b.at(i) > b.at(best) : b.at(i) < b.at(best);
+    // M9-S1: narration bước quyết định là CÂU HỎI — không lộ đáp án sớm.
+    // Hệ quả thuộc bước kế tiếp (cập nhật) hoặc phản hồi dự đoán/dải nhân quả.
     b.step(
       [
         {
@@ -72,15 +74,14 @@ function runFindExtreme(a: AnalysisOk, mode: "max" | "min", whatIf?: WhatIfSwap)
           result: b.at(i) > b.at(best) ? ">" : b.at(i) < b.at(best) ? "<" : "==",
         },
       ],
-      `So sánh ${elem(b, labels, i)} với ${varName} = ${fmt(b.at(best))}: ` +
-        (better
-          ? `${fmt(b.at(i))} ${mode === "max" ? "lớn hơn" : "nhỏ hơn"} → sẽ cập nhật ${varName}.`
-          : `chưa vượt qua, giữ nguyên ${varName}.`),
+      `So sánh ${elem(b, labels, i)} với ${varName} = ${fmt(b.at(best))}: ${varName} có được cập nhật không?`,
       true,
       3,
     );
     if (better) {
-      b.unmark(best);
+      // Phần tử tốt-nhất-cũ đã bị vượt qua = loại khỏi vòng ứng viên (xám) —
+      // phân biệt rõ vùng ĐÃ DUYỆT với vùng chưa duyệt (M9-S1 §3.1).
+      b.mark(best, "eliminated");
       best = i;
       b.setVar(varName, b.at(i));
       b.setVar("vt", i);
@@ -94,6 +95,9 @@ function runFindExtreme(a: AnalysisOk, mode: "max" | "min", whatIf?: WhatIfSwap)
         false,
         4,
       );
+    } else {
+      // Không vượt qua → phần tử này đã duyệt xong, rời vòng ứng viên (xám).
+      b.mark(i, "eliminated");
     }
   }
 
@@ -125,6 +129,7 @@ function runAggregateIf(a: AnalysisOk, mode: "sum" | "count", whatIf?: WhatIfSwa
   let acc = 0;
   for (let i = 0; i < b.length; i++) {
     const match = testCondition(b.at(i), cond);
+    // M9-S1: hỏi, không phán trước — đáp án nằm ở bước cộng/đếm kế tiếp.
     b.step(
       [
         {
@@ -134,10 +139,11 @@ function runAggregateIf(a: AnalysisOk, mode: "sum" | "count", whatIf?: WhatIfSwa
           result: match ? "match" : "no_match",
         },
       ],
-      `Xét ${elem(b, labels, i)}: ${match ? `thỏa điều kiện ${condText}.` : `không thỏa điều kiện ${condText}, bỏ qua.`}`,
+      `Xét ${elem(b, labels, i)}: có thỏa điều kiện "${condText}" không?`,
       true,
       3,
     );
+    if (!match) b.mark(i, "eliminated"); // không thỏa → xám từ bước sau
     if (match) {
       acc = mode === "sum" ? acc + b.at(i) : acc + 1;
       b.setVar(varName, acc);
@@ -176,6 +182,7 @@ function runLinearSearch(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
   for (let i = 0; i < b.length; i++) {
     const match = b.at(i) === target;
     b.setVar("i", i);
+    // M9-S1: câu hỏi thay vì phán trước "khớp!" — đáp án ở bước kế/kết quả.
     b.step(
       [
         {
@@ -185,10 +192,11 @@ function runLinearSearch(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
           result: match ? "match" : "no_match",
         },
       ],
-      `So sánh ${elem(b, labels, i)} với ${fmt(target)}: ${match ? "khớp!" : "không khớp, sang phần tử tiếp theo."}`,
+      `So sánh ${elem(b, labels, i)} với ${fmt(target)}: có khớp không?`,
       true,
       2,
     );
+    if (!match) b.mark(i, "eliminated"); // đã xét, không khớp → xám từ bước sau
     if (match) {
       b.mark(i, "found");
       const result = `Tìm thấy ${fmt(target)} tại vị trí thứ ${i + 1}${labels && labels[i] ? ` (${labels[i]})` : ""}. Số lần so sánh: ${i + 1}.`;
@@ -310,6 +318,7 @@ function runBubbleSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
     b.setVar("luot", i + 1);
     for (let j = 0; j < n - 1 - i; j++) {
       const wrong = order === "asc" ? b.at(j) > b.at(j + 1) : b.at(j) < b.at(j + 1);
+      // M9-S1: narration hỏi — quyết định đổi chỗ thuộc bước kế tiếp.
       b.step(
         [
           {
@@ -319,9 +328,7 @@ function runBubbleSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
             result: b.at(j) > b.at(j + 1) ? ">" : b.at(j) < b.at(j + 1) ? "<" : "==",
           },
         ],
-        `So sánh cặp kề (${fmt(b.at(j))}, ${fmt(b.at(j + 1))}): ${
-          wrong ? "sai thứ tự → đổi chỗ." : "đã đúng thứ tự, giữ nguyên."
-        }`,
+        `So sánh cặp kề (${fmt(b.at(j))}, ${fmt(b.at(j + 1))}): có cần đổi chỗ không?`,
         true,
         3,
       );
@@ -380,6 +387,7 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
 
     let j = i - 1;
     while (j >= 0 && (order === "asc" ? b.at(j) > key : b.at(j) < key)) {
+      // M9-S1: hỏi trước — việc dời hiện ra ở bước shift kế tiếp.
       b.step(
         [
           {
@@ -389,7 +397,7 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
             result: b.at(j) > key ? ">" : "<",
           },
         ],
-        `${fmt(b.at(j))} ${order === "asc" ? "lớn hơn" : "nhỏ hơn"} ${fmt(key)} → dời ${fmt(b.at(j))} sang phải một ô.`,
+        `So sánh ${fmt(b.at(j))} với giá trị chèn ${fmt(key)}: có phải dời ${fmt(b.at(j))} sang phải không?`,
         false,
         4,
       );
@@ -402,6 +410,7 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
       j--;
     }
     if (j >= 0) {
+      // Cùng dạng câu hỏi — đáp án ("dừng dời") hiện ở bước chèn kế tiếp.
       b.step(
         [
           {
@@ -411,7 +420,7 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
             result: b.at(j) > key ? ">" : b.at(j) < key ? "<" : "==",
           },
         ],
-        `${fmt(b.at(j))} ${order === "asc" ? "không lớn hơn" : "không nhỏ hơn"} ${fmt(key)} → dừng dời, đã tìm được chỗ chèn.`,
+        `So sánh ${fmt(b.at(j))} với giá trị chèn ${fmt(key)}: có phải dời ${fmt(b.at(j))} sang phải không?`,
         false,
         4,
       );
