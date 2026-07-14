@@ -18,7 +18,7 @@ Cập nhật lần cuối: sau **M7.FREEZE**.
 | | |
 |---|---|
 | pytest | **289 pass** (0 API call thật — guard là bằng chứng) |
-| vitest | **153 pass** (0 network call) |
+| vitest | **168 pass** (0 network call) |
 | build | `tsc -b && vite build` sạch |
 | Docker | `docker compose up -d --build` OK (backend :8787 + Postgres) |
 | Live smoke gần nhất (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` · không false positive |
@@ -167,11 +167,37 @@ Cho tới khi M8 bắt đầu, **không thêm** — trừ khi một **blocker 3D
 - mở rộng RAG / OCR;
 - edit mode mới;
 - primitive DSL mới tùy hứng;
-- hệ learner-feedback mới;
+- hệ learner-feedback mới — **đã MỞ HẸP MỘT LẦN cho M8-PRE-LIP, nay ĐÓNG LẠI** (xem §5c);
 - undo/redo · pan/zoom · style editor · topology editing;
 - rule DSL mới không liên quan blocker M8.
 
 Mục đích: chấm dứt vòng lặp M7.x tự nuôi chính nó.
+
+## 5c. M8-PRE-LIP — Learning Interaction Proof (ĐÃ XONG, ĐÃ RE-FREEZE)
+
+**Đây KHÔNG phải `practice_activity` đầy đủ.** Đây là **bằng chứng tối thiểu** rằng
+**MỘT** optional capability + **MỘT** UI dùng chung phục vụ được **NHIỀU** domain:
+
+> Quan sát → Dự đoán/Chọn → Nộp → **engine TẤT ĐỊNH chấm** → phản hồi là **dữ liệu
+> kết quả** → **mô phỏng canonical KHÔNG ĐỔI**.
+
+- `PredictionCapability` (`predict?` trong `SimulationModule`) — cùng khuôn
+  `timeline?` / `edit?`: **không khai → không có UI** (3 domain còn lại giữ nguyên).
+- Một component **duy nhất** `components/PredictionBar.tsx` phục vụ **cả hai**:
+  `network` (N lựa chọn — chọn nút) và `algorithm` (2 lựa chọn — có/không).
+- Ground truth **có sẵn miễn phí** trong engine: BFS route (network) · trace thật
+  (algorithm). **Không engine mới, không LLM, không gọi mạng.**
+- `network.packet_routing` **hết watch-only**: trước đây `apply: (state) => state`.
+- Kết quả chấm sống ở `store.prediction`, **TÁCH KHỎI** engine state → học sinh sai
+  cũng không đụng được dòng chính (khoá bằng test).
+- Phát ngôn thận trọng (network): chỉ nói *"không phải chặng kế tiếp trên đường đi
+  ngắn nhất mà engine BFS đã tính"*; nếu nút học sinh chọn **cũng** nằm trên một
+  đường ngắn nhất khác thì **phải nói rõ**. **Cấm** nói "đi lối đó là không thể".
+
+**FREEZE ĐÃ ĐÓNG LẠI.** Mở rộng tiếp (chấm điểm, mục tiêu/nhiệm vụ, theo dõi tiến
+độ, gợi ý, phản hồi hội thoại, dashboard) → **post-M8**, cần duyệt riêng.
+
+> **`practice_activity` vẫn là PARTIAL / CHƯA IMPLEMENT** (xem `COVERAGE.md` §6).
 
 ## 6. Việc hoãn CÓ CHỦ ĐÍCH
 

@@ -89,6 +89,53 @@ export interface EditCapability<C = unknown, S = unknown> {
   policyOf(config: C, state: S): EditPolicyLike;
 }
 
+/* ── PredictionCapability (M8-PRE-LIP) ────────────────────────────────────
+ *
+ * BẰNG CHỨNG TƯƠNG TÁC HỌC TẬP, KHÔNG PHẢI practice_activity đầy đủ.
+ * Vòng lặp: Quan sát → Dự đoán/Chọn → Nộp → ENGINE TẤT ĐỊNH chấm → phản hồi là
+ * DỮ LIỆU KẾT QUẢ (không phải chat) → mô phỏng canonical KHÔNG đổi.
+ *
+ * Cùng khuôn `timeline?` / `edit?`: module KHÔNG khai → UI KHÔNG có affordance
+ * dự đoán (mặc định an toàn, không module nào phải sửa).
+ *
+ * RÀNG BUỘC CỨNG:
+ * - `challenge` và `check` là HÀM THUẦN, chấm bằng ENGINE/TRACE có sẵn.
+ * - TUYỆT ĐỐI KHÔNG gọi LLM (CORRECTNESS.md §1.6: LLM không bao giờ là judge).
+ * - Không chứng minh được đúng/sai → "unsupported_to_verify", KHÔNG phán bừa.
+ * - `check` KHÔNG được đổi state canonical (học sinh sai vẫn không phá dòng chính).
+ */
+
+export interface PredictionOption {
+  id: string;
+  label: string;
+}
+
+export interface PredictionChallenge {
+  /** Câu hỏi TẤT ĐỊNH sinh từ state hiện tại. */
+  question: string;
+  /** 2 lựa chọn (có/không) hay N lựa chọn (chọn nút) — contract không bó vào một kiểu. */
+  options: PredictionOption[];
+}
+
+export type PredictionVerdict = "correct" | "incorrect" | "unsupported_to_verify";
+
+export interface PredictionResult {
+  verdict: PredictionVerdict;
+  /** Đáp án học sinh chọn. */
+  answerId: string;
+  /** Đáp án chuẩn — CHỈ đặt khi engine CHỨNG MINH được. */
+  expectedId?: string;
+  /** Giải thích TẤT ĐỊNH (do engine dựng, không phải hội thoại). */
+  message: string;
+}
+
+export interface PredictionCapability<S = unknown> {
+  /** null = ở trạng thái này không có gì để dự đoán (hết bước / không phải điểm quyết định). */
+  challenge(state: S): PredictionChallenge | null;
+  /** Chấm TẤT ĐỊNH, PURE — không đổi state canonical. */
+  check(state: S, answerId: string): PredictionResult;
+}
+
 export interface SimulationModule<C = unknown, S = unknown> {
   /** Định danh chuẩn: "<domain>.<tên>", vd "algorithm.find_max". */
   id: string;
@@ -112,6 +159,12 @@ export interface SimulationModule<C = unknown, S = unknown> {
 
   /** Optional (M7.14D) — chỉnh sửa cấu trúc. Không khai = không có edit. */
   edit?: EditCapability<C, S>;
+
+  /**
+   * Optional (M8-PRE-LIP) — nhịp DỰ ĐOÁN của người học. Không khai = UI không
+   * hiện ô dự đoán. Ground truth lấy từ chính engine tất định (trace/BFS).
+   */
+  predict?: PredictionCapability<S>;
 
   /**
    * Yêu cầu #4: snapshot JSON sạch (serializable, nhỏ) mô tả trạng thái thật

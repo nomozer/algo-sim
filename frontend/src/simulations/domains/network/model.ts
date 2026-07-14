@@ -111,3 +111,29 @@ export function buildSteps(route: string[], byId: Record<string, NetNode>): NetS
 export function currentStep(state: NetworkState): NetStep {
   return state.steps[Math.max(0, Math.min(state.cursor, state.steps.length - 1))];
 }
+
+/* ── M8-PRE-LIP: nền tảng cho nhịp DỰ ĐOÁN "chặng kế tiếp" ────────────────
+ * Ground truth CÓ SẴN MIỄN PHÍ: engine đã chạy BFS để dựng route. Ta chỉ ĐỌC lại,
+ * không thêm engine mới, không gọi LLM.
+ */
+
+/** Các nút nối trực tiếp với `id` (theo links — vô hướng). */
+export function neighborsOf(state: NetworkState, id: string): string[] {
+  const out: string[] = [];
+  for (const [a, b] of state.links) {
+    if (a === id && !out.includes(b)) out.push(b);
+    if (b === id && !out.includes(a)) out.push(a);
+  }
+  return out;
+}
+
+/** Số CHẶNG ngắn nhất từ `from` tới `to`; -1 nếu không có đường (BFS tất định). */
+export function hopDistance(state: NetworkState, from: string, to: string): number {
+  const path = bfsRoute(
+    state.nodes.map((n) => n.id),
+    state.links,
+    from,
+    to,
+  );
+  return path.length === 0 ? -1 : path.length - 1;
+}

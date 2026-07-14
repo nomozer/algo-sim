@@ -17,6 +17,64 @@ export { activeTrace, type AlgorithmConfig, type AlgorithmSimState } from "./mod
 
 const CONDITION_OPS: Condition["op"][] = [">", ">=", "<", "<=", "==", "!="];
 
+/* ── M8-PRE-LIP: sinh câu hỏi dự đoán TỪ TRACE THẬT ───────────────────────── */
+
+interface PredictionQuestion {
+  question: string;
+  /** Sự thật của bước KẾ TIẾP (ground truth lấy từ trace, không suy đoán). */
+  actual: boolean;
+  /** Mô tả hệ quả đang hỏi (dùng dựng message). */
+  effect: string;
+  /** Bằng chứng tất định trích từ chính sự kiện của trace. */
+  evidence: string;
+}
+
+/**
+ * Điểm quyết định = bước HIỆN TẠI có phép so sánh và CÒN bước kế tiếp.
+ * Ground truth = sự kiện THẬT của bước kế tiếp. Không có điểm quyết định → null
+ * (UI sẽ không hiện ô dự đoán — đúng tinh thần "không phán khi không có luật").
+ */
+function predictionQuestion(s: AlgorithmSimState): PredictionQuestion | null {
+  const trace = activeTrace(s);
+  const cur = clampStep(s, s.cursor);
+  const step = trace.steps[cur];
+  const next = trace.steps[cur + 1];
+  if (!step || !next) return null;
+
+  const cmp = step.events.find((e) => e.type === "compare" || e.type === "compare_value");
+  if (!cmp) return null;
+
+  // Trace CÓ đổi chỗ ở đâu đó → đây là bài sắp xếp → hỏi về đổi chỗ.
+  const isSwapping = trace.steps.some((st) => st.events.some((e) => e.type === "swap"));
+  if (isSwapping && cmp.type === "compare") {
+    const swap = next.events.find((e) => e.type === "swap");
+    return {
+      question:
+        `Engine vừa so sánh phần tử ở vị trí ${cmp.i + 1} và ${cmp.j + 1}. ` +
+        `Theo em, hai phần tử này có bị ĐỔI CHỖ ở bước tiếp theo không?`,
+      actual: swap !== undefined,
+      effect: "đổi chỗ hai phần tử này",
+      evidence: swap
+        ? `bước sau là một phép đổi chỗ (vị trí ${(swap as { i: number }).i + 1} ↔ ${(swap as { j: number }).j + 1}).`
+        : "bước sau không có phép đổi chỗ nào.",
+    };
+  }
+
+  // Còn lại (tìm max/min, đếm/tổng, tìm kiếm, chèn) → hỏi biến có được cập nhật không.
+  const assign = next.events.find((e) => e.type === "assign_var");
+  const name = assign ? (assign as { name: string }).name : undefined;
+  return {
+    question:
+      `Engine vừa thực hiện một phép so sánh. ` +
+      `Theo em, ở bước tiếp theo có biến nào được CẬP NHẬT không?`,
+    actual: assign !== undefined,
+    effect: "cập nhật biến",
+    evidence: assign
+      ? `bước sau gán ${name} = ${String((assign as { value: unknown }).value)}.`
+      : "bước sau không gán biến nào — engine đi tiếp mà không đổi giá trị đang theo dõi.",
+  };
+}
+
 /** Chốt chặn config (phía frontend — tầng validate thứ hai sau backend). */
 function validateAlgorithmConfig(
   algorithmId: AlgorithmId,
@@ -133,6 +191,59 @@ export function makeAlgorithmModule(
         default:
           return state; // action không hỗ trợ → no-op
       }
+    },
+
+    /**
+     * M8-PRE-LIP — nhịp DỰ ĐOÁN, GẮN CHẶT vào trace thật.
+     *
+     * Trước đây tương tác duy nhất là kéo-thả what-if (đúng nhưng KHÓ THẤY) nên
+     * cảm giác "chỉ chạy cho em xem". Nay ở mỗi ĐIỂM QUYẾT ĐỊNH (bước có phép so
+     * sánh) hệ hỏi học sinh HỆ QUẢ của phép so sánh đó — rồi so với sự kiện THẬT
+     * của bước kế tiếp. KHÔNG bịa hành vi ngoài trace, KHÔNG gọi LLM.
+     *
+     * Hai kiểu câu hỏi, chọn TẤT ĐỊNH theo bản chất trace (không hard-code tên
+     * thuật toán): trace có `swap` → hỏi "có đổi chỗ không?"; còn lại → hỏi
+     * "biến theo dõi có được cập nhật không?".
+     */
+    predict: {
+      challenge: (s) => {
+        const q = predictionQuestion(s);
+        if (!q) return null;
+        return {
+          question: q.question,
+          options: [
+            { id: "yes", label: "Có" },
+            { id: "no", label: "Không" },
+          ],
+        };
+      },
+      check: (s, answerId) => {
+        const q = predictionQuestion(s);
+        if (!q) {
+          return {
+            verdict: "unsupported_to_verify",
+            answerId,
+            message: "Ở bước này không có phép so sánh nào để dự đoán hệ quả.",
+          };
+        }
+        if (answerId !== "yes" && answerId !== "no") {
+          return {
+            verdict: "unsupported_to_verify",
+            answerId,
+            message: "Câu trả lời không hợp lệ.",
+          };
+        }
+        const expectedId = q.actual ? "yes" : "no";
+        const verdict = answerId === expectedId ? "correct" : "incorrect";
+        return {
+          verdict,
+          answerId,
+          expectedId,
+          message:
+            (verdict === "correct" ? "Chính xác. " : "Chưa đúng. ") +
+            `Ở bước tiếp theo, engine ${q.actual ? "CÓ" : "KHÔNG"} ${q.effect} — ${q.evidence}`,
+        };
+      },
     },
 
     // Yêu cầu #2: capability timeline — domain này là progressive nên có
