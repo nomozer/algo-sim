@@ -65,6 +65,13 @@ Hệ quả bắt buộc:
 4. **2D là mặc định.** 3D chỉ khi chiều sâu/phân tầng/không gian mang NGHĨA.
 5. Dạng mạnh nhất là **phủ định dự đoán**: học sinh dự đoán → làm sai → engine
    tất định cho thấy hậu quả (`what-if branch`). Hiện **chỉ domain algorithm** có.
+6. **(M9-S1) Mọi tương tác của người học phải CHẠM VÀO CƠ CHẾ ẨN và sinh hệ quả
+   tất định.** Tương tác trang trí / gần-như-không-đổi-gì **không được admit** —
+   phải gỡ, đóng khung (framed/challenge), hoặc ẩn. Tiền lệ thực thi:
+   `frontend/.../algorithm/interaction-policy.ts` (free/framed/challenge/hidden,
+   kèm `rationale` tự khai; khoá bằng `interaction-policy.test.ts`). Câu hỏi
+   dự đoán phải nhắm ĐÚNG cơ chế của từng bài và KHÔNG được lộ đáp án sớm
+   (narration bước quyết định là câu hỏi — `decision.test.ts`).
 
 ---
 

@@ -3,7 +3,7 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
-Cập nhật lần cuối: sau **M8 (Slice 1 + 2)** — shared 2D/3D renderer.
+Cập nhật lần cuối: sau **M9-S1** — mechanism-aligned interactions (algorithm domain).
 
 > ## ✅ M8 SLICE 1+2 HOÀN THÀNH — SCOPE FREEZE §5b VẪN HIỆU LỰC CHO PHẦN CÒN LẠI
 >
@@ -23,7 +23,7 @@ Cập nhật lần cuối: sau **M8 (Slice 1 + 2)** — shared 2D/3D renderer.
 | | |
 |---|---|
 | pytest | **289 pass** (0 API call thật — guard là bằng chứng) |
-| vitest | **195 pass** (0 network call; +27 so với M8-PRE-LIP: visual-mode 12, render3d 14, acceptance 1) |
+| vitest | **235 pass** (0 network call; +40 M9-S1: decision 21, policy 7, algorithm-ui 7 + 5 nhóm khác) |
 | build | `tsc -b && vite build` sạch — bundle chính 258.6KB; chunk Three.js 549KB **code-split**, chỉ tải khi bấm 3D |
 | Docker | `docker compose up -d --build` OK (backend :8787 + Postgres) |
 | Live smoke gần nhất (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` · không false positive |
@@ -89,6 +89,7 @@ M7.14D.1 là **UI-only: 0 live call**.
 | **M7.FREEZE** | `7452cbf` | **Đóng M7.x.** Gỡ bố cục pixel khỏi `NetworkState` (blocker 3D duy nhất): state chỉ còn topology + route + steps + cursor; `layout2d` chuyển sang renderer. Quy tắc **renderer-neutral state** vào ARCHITECTURE_MAP. Danh sách **DO NOT ADD BEFORE M8** |
 | **M8-PRE** | `cb31adc` | **Coverage + Pedagogical audit → hardening trước M8** (`docs/COVERAGE.md`). **S1**: metadata `EvalItem` (optional, backward-compat) + 4 pool đề mới (`curriculum`/`capability`/`cross_domain`/`thesis` 12 case) + **luật kết nạp** thực thi bằng code; `dataset.py` 30 case **ĐÓNG BĂNG**. Vá lỗ hổng bằng chứng **sắp xếp** (engine có từ lâu, benchmark 0 case). **S2**: `edge.directed` (manifest-first) + node_type mở rộng (actor/process/data_store/input/output) + mũi tên ở renderer + analyze/classify/simulate hỗ trợ **sơ đồ hệ thống thông tin** → đề "phân tích hệ thống" **không còn bị từ chối im lặng**. `CACHE_VERSION` 5→6 |
 | M8-PRE-LIP | `f4e3793` | **PredictionCapability** (`predict?` cùng khuôn `timeline?`/`edit?`) + **một** `PredictionBar` dùng chung 2 domain (network: chọn nút; algorithm: có/không); engine tất định chấm; kết quả ở `store.prediction` TÁCH khỏi engine state |
+| **M9-S1** | `548f1fc` | **Mechanism-aligned interactions (algorithm).** `decision.ts` — điểm quyết định theo cơ chế từng bài: max/min "có cập nhật?", sum/count "cộng/tăng?", linear "tìm thấy chưa?", binary "**nửa nào bị loại**" (3 lựa chọn, hỏi ở bước lấy mid), sorts "đổi chỗ?/dời?"; đáp án + bằng chứng nhân quả (số thật, biến trước → sau) DẪN XUẤT từ sự kiện trace kế tiếp; MỘT nguồn nuôi cả predict lẫn dải nhân quả. `interaction-policy.ts` — hết "một swap cho cả 8 bài": free (sorts) · framed (linear: chi phí) · challenge (find_max/min: bất biến vùng-đã-duyệt; binary: tiền điều kiện dãy-đã-sắp — ẩn mặc định, mở qua nút thí nghiệm có khung) · hidden (sum/count). Engine: narration bước quyết định thành CÂU HỎI (không lộ đáp án sớm), marks `eliminated` cho phần tử đã duyệt. Nguyên tắc sư phạm #6 vào `COVERAGE.md §2`. UX acceptance 18/18 trên browser thật; 0 live AI |
 | **M8 Slice 1+2** | `f83b635`, `18e4c2a`, `cce75fc` | **Shared 2D/3D renderer.** S1: `renderers?` trên SimulationModule ("2d" mặc định = Workspace), `simulations/renderer.ts` (khả dụng = tuyên bố ∩ có renderer thật), `store.visualMode` (lát TRÌNH BÀY — đổi mode không đụng active/cursor/prediction, không rebuild, không AI), `VisualModeToggle` theo capability. S2: `network/ui3d.tsx` — Three.js thuần (KHÔNG R3F), `React.lazy` code-split; `layout3d` renderer-owned (route z=0, ngoài route lùi sâu); OrbitControls xoay+zoom khoá pan; reset GÓC NHÌN ≠ reset mô phỏng; WebGL fail → fallback tiếng Việt; nội suy HÌNH ẢNH gói tin, sự thật vẫn là `packetAt`. Nghiệm thu browser thật 16/16 (headless Chrome + SwiftShader, bài mẫu offline). **Bất biến #16** vào ARCHITECTURE_MAP. Slice 3 (mạng phân tầng) HOÃN — cần semantics đóng gói tất định mới |
 
 Milestone trước đó (M1–M7.12) đã có trong lịch sử commit gộp/ban đầu; kiến trúc
@@ -98,7 +99,10 @@ của chúng được mô tả trong `ARCHITECTURE_MAP.md`.
 
 **Chuyên biệt (engine tất định riêng, không dùng DSL):**
 - `algorithm.*`: find_max, find_min, sum_if, count_if, linear_search,
-  binary_search, bubble_sort, insertion_sort (+ what-if branch).
+  binary_search, bubble_sort, insertion_sort. **M9-S1**: mỗi bài có ĐIỂM QUYẾT
+  ĐỊNH riêng theo cơ chế ẩn (dự đoán + dải nhân quả cùng nguồn `decision.ts`) và
+  **chính sách what-if theo cơ chế** (`interaction-policy.ts`) — what-if branch
+  chỉ mở nơi nó dạy được điều gì đó.
 - `logic.and_gate` (bảng chân trị), `binary.decimal_to_binary` (bits⇄decimal),
   `network.packet_routing` (**route = BFS tất định**, không phải LLM) — M8:
   module DUY NHẤT có renderer **2D + 3D** (cùng engine state; các module khác
@@ -207,7 +211,15 @@ Mục đích: chấm dứt vòng lặp M7.x tự nuôi chính nó.
 **FREEZE ĐÃ ĐÓNG LẠI.** Mở rộng tiếp (chấm điểm, mục tiêu/nhiệm vụ, theo dõi tiến
 độ, gợi ý, phản hồi hội thoại, dashboard) → **post-M8**, cần duyệt riêng.
 
+**M9-S1 dùng LẠI capability này, không thêm framework thứ hai**: nội dung câu hỏi
+của domain algorithm được nâng từ MỘT câu chung ("có biến nào được cập nhật
+không?") thành câu hỏi ĐÚNG CƠ CHẾ từng bài (kể cả 3 lựa chọn cho binary_search —
+hợp đồng `PredictionCapability` vốn đã hỗ trợ N lựa chọn). Không đổi
+`PredictionBar`, không đổi store, không đổi hợp đồng module.
+
 > **`practice_activity` vẫn là PARTIAL / CHƯA IMPLEMENT** (xem `COVERAGE.md` §6).
+> M9-S1 **không** thay đổi điều này: vẫn không có chấm điểm / mục tiêu-nhiệm vụ /
+> theo dõi tiến độ / gợi ý / dashboard.
 
 ## 6. Việc hoãn CÓ CHỦ ĐÍCH
 
@@ -218,7 +230,10 @@ Mục đích: chấm dứt vòng lặp M7.x tự nuôi chính nó.
 - **`invalid_with_feedback`**: đã có trong taxonomy, **chưa có producer** nào.
 - **`code_experiment`**: deferred — cần sandbox, không được bypass engine tất
   định, **không** pivot thành IDE.
-- **3D (M8)**: chưa bắt đầu.
+- **3D phân tầng (M8 Slice 3)**: hoãn post-M8 — cần semantics đóng gói/mở gói
+  tất định (trạng thái PDU biến đổi qua tầng); **cấm** giả bằng reveal-boxes.
+- **M9-S2 / M9-S3** (theo M9-PED-AUDIT §8): *binary — thử thách dựng số N* và
+  *packet routing — học sinh tự dẫn gói tin, engine so chi phí với BFS*. Chưa làm.
 - **Topology editing cho cảnh network-like**: chỉ mở khi EditPolicy cho phép
   tường minh.
 - **Embeddings/pgvector/RAG/OCR/GraphRAG**: cố ý không làm.
@@ -246,9 +261,20 @@ Mục đích: chấm dứt vòng lặp M7.x tự nuôi chính nó.
      KHÔNG được gọi là executable simulation.
    - Chưa làm (không phải blocker M8): `z?` optional cho `pos`/`SimAction.move`;
      3D cho cảnh generic `node+edge+moving_entity` — mở khi có nhu cầu thật.
-7. **Sau M8 — ưu tiên #1: learner practice/experimental mode** (`COVERAGE.md §6`) —
-   giá trị sư phạm cao hơn thêm primitive mới, vì **ground truth đã có sẵn miễn phí**
-   trong mọi engine tất định (PredictionCapability là bằng chứng tối thiểu đã có).
-   Sau đó mới tới `table/grid` (mở khoá CSDL). `practice_activity` vẫn
-   **PARTIAL / CHƯA IMPLEMENT**.
-8. Không có M7.15.
+7. ~~**M9-PED-AUDIT** — audit chất lượng sư phạm + tham chiếu bên ngoài (PhET
+   implicit scaffolding; Mayer coherence)~~. Kết luận: kiến trúc đúng, nhưng
+   nhiều cảnh còn *watch-heavy*; **một** affordance kéo-đổi-chỗ dùng cho cả 8
+   thuật toán là khiếm khuyết lớn nhất (hệ quả hầu như bằng 0, riêng
+   binary_search còn gây hiểu lầm vì phá tiền điều kiện mà không có khung).
+8. ~~**M9-S1 — mechanism-aligned interactions (algorithm)**~~ (`548f1fc`). Vá đúng
+   khiếm khuyết trên: điểm quyết định theo cơ chế + chính sách what-if 4 mode.
+   **Bất biến mới** (`COVERAGE.md §2.6`): *mọi tương tác phải chạm cơ chế ẩn và
+   sinh hệ quả tất định; tương tác trang trí không được admit.*
+9. **Kế tiếp — M9-S2: binary "dựng số N"** (`COVERAGE.md §6`, M9-PED-AUDIT §8):
+   `binary.decimal_to_binary` là cảnh thao-tác-trực-tiếp tốt nhất nhưng học sinh
+   **không thể sai** (không có đích) → thêm thử thách tất định dùng LẠI
+   `PredictionCapability`, ground truth `bitsOf`/`decimalOf`/`placeValues` có sẵn.
+   Sau đó M9-S3 (packet routing: học sinh tự dẫn đường, engine so chi phí với BFS).
+10. Sau M9: `table/grid` (mở khoá CSDL) · practice_activity đầy đủ (cần duyệt
+    riêng — vẫn **PARTIAL / CHƯA IMPLEMENT**).
+11. Không có M7.15.
