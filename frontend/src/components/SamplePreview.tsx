@@ -1,17 +1,30 @@
 /**
- * SamplePreview (M9-UX2) — preview TRỰC QUAN cho starter card.
+ * SamplePreview (M9-UX2 · mở rộng M9-UX3) — preview TRỰC QUAN cho starter card.
  *
  * Thuần trình bày: SVG tĩnh, DỮ LIỆU AN TOÀN CỐ ĐỊNH — không chạy engine,
  * không đụng state, không fetch, không nhân bản logic domain (đây là "tranh
  * minh hoạ", không phải mô phỏng thứ hai). Kind suy từ ĐỊNH DANH simulation_id
  * hoặc metadata `preview` tường minh của mẫu — không bao giờ từ chuỗi tiêu đề.
  * Id lạ → fallback "generic" (icon node-edge trung tính) — không bao giờ ném.
+ *
+ * M9-UX3 — LUẬT: MỘT TRANH = MỘT CƠ CHẾ = MỘT BÀI.
+ * Tranh phải vẽ đúng cơ chế ẩn của CHÍNH bài đó (nguyên tắc sư phạm #6,
+ * COVERAGE §2.6) — cùng cơ chế mà `decision.ts` (M9-S1) đem ra hỏi học sinh.
+ * Trước M9-UX3, 8 bài thuật toán chen vào 3 tranh, và hai trong số đó DẠY SAI:
+ * linear_search mượn tranh trái/giữa/phải của binary_search (tìm tuần tự không
+ * có mid), insertion_sort mượn mũi tên ĐỔI CHỖ của bubble_sort (chèn là DỜI).
+ * Khoá bằng test "không hai bài thuật toán nào dùng chung một tranh".
  */
 
 export type PreviewKind =
   | "algorithm-bars"
+  | "bars-min"
+  | "sum-threshold"
+  | "count-threshold"
+  | "linear-scan"
   | "search-range"
   | "sort-swap"
+  | "insertion-lift"
   | "binary-bits"
   | "network-path"
   | "logic-gate"
@@ -20,13 +33,13 @@ export type PreviewKind =
 
 const KIND_BY_SIM_ID: Record<string, PreviewKind> = {
   "algorithm.find_max": "algorithm-bars",
-  "algorithm.find_min": "algorithm-bars",
-  "algorithm.sum_if": "algorithm-bars",
-  "algorithm.count_if": "algorithm-bars",
-  "algorithm.linear_search": "search-range",
+  "algorithm.find_min": "bars-min",
+  "algorithm.sum_if": "sum-threshold",
+  "algorithm.count_if": "count-threshold",
+  "algorithm.linear_search": "linear-scan",
   "algorithm.binary_search": "search-range",
   "algorithm.bubble_sort": "sort-swap",
-  "algorithm.insertion_sort": "sort-swap",
+  "algorithm.insertion_sort": "insertion-lift",
   "binary.decimal_to_binary": "binary-bits",
   "network.packet_routing": "network-path",
   "logic.and_gate": "logic-gate",
@@ -38,27 +51,18 @@ export function previewKindOf(simId: string, explicit?: string): PreviewKind {
 }
 
 function isPreviewKind(s: string): s is PreviewKind {
-  return (
-    s in
-    {
-      "algorithm-bars": 1,
-      "search-range": 1,
-      "sort-swap": 1,
-      "binary-bits": 1,
-      "network-path": 1,
-      "logic-gate": 1,
-      "web-structure": 1,
-      generic: 1,
-    }
-  );
+  return s in RENDERERS;
 }
 
 /* Dữ liệu minh hoạ TĨNH — chỉ để tranh đẹp, không phải sự thật engine. */
 const BARS = [34, 22, 46, 16, 28];
 const SORT_BARS = [18, 40, 28, 34, 46];
+/** Cột cho cảnh "có ngưỡng": 3 cột vượt ngưỡng, 2 cột dưới. */
+const THRESHOLD_BARS = [30, 16, 38, 12, 28];
+const THRESHOLD_Y = 24; // y của đường ngưỡng trong viewBox 0 0 96 56
 
 function Bars() {
-  // cột cao nhất được tô nổi (max) — gợi cơ chế "giá trị đang thắng"
+  // cột CAO NHẤT tô xanh — cơ chế find_max: "giá trị đang thắng"
   const maxIdx = BARS.indexOf(Math.max(...BARS));
   return (
     <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
@@ -73,6 +77,110 @@ function Bars() {
           fill={i === maxIdx ? "var(--accent-green)" : "#cfe3f7"}
         />
       ))}
+    </svg>
+  );
+}
+
+function BarsMin() {
+  // cột THẤP NHẤT tô tím — cùng bố cục Bars, khác ĐÍCH. Phân biệt tức thì.
+  const minIdx = BARS.indexOf(Math.min(...BARS));
+  return (
+    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
+      {BARS.map((h, i) => (
+        <rect
+          key={i}
+          x={8 + i * 17}
+          y={50 - h}
+          width={12}
+          height={h}
+          rx={2}
+          fill={i === minIdx ? "var(--accent-purple)" : "#cfe3f7"}
+        />
+      ))}
+      <path d="M 55 30 l -4 5 h 8 z" fill="var(--accent-purple)" />
+    </svg>
+  );
+}
+
+/** Cột + đường ngưỡng nét đứt — nền chung của sum_if và count_if. */
+function ThresholdBars({ fill }: { fill: string }) {
+  return (
+    <>
+      <line
+        x1={4}
+        y1={THRESHOLD_Y}
+        x2={92}
+        y2={THRESHOLD_Y}
+        stroke="var(--accent-orange)"
+        strokeWidth={1.2}
+        strokeDasharray="3 2"
+      />
+      {THRESHOLD_BARS.map((h, i) => (
+        <rect
+          key={i}
+          x={8 + i * 17}
+          y={46 - h}
+          width={12}
+          height={h}
+          rx={2}
+          fill={46 - h < THRESHOLD_Y ? fill : "var(--hairline)"}
+        />
+      ))}
+    </>
+  );
+}
+
+function SumThreshold() {
+  // cơ chế sum_if: chỉ cột VƯỢT NGƯỠNG mới được CỘNG DỒN vào tổng.
+  return (
+    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
+      <ThresholdBars fill="var(--accent-green)" />
+      <rect x={58} y={0} width={36} height={13} rx={3} fill="var(--accent-green)" />
+      <text x={76} y={9.5} textAnchor="middle" fontSize={9} fontWeight={700} fill="#fff">
+        Σ 96
+      </text>
+    </svg>
+  );
+}
+
+function CountThreshold() {
+  // cơ chế count_if: cùng ngưỡng, nhưng ĐẾM chứ không cộng — đây đúng là chỗ
+  // học sinh hay lẫn sum với count, nên hai tranh phải khác nhau thấy được.
+  return (
+    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
+      <ThresholdBars fill="var(--primary)" />
+      <circle cx={80} cy={7} r={7} fill="var(--primary)" />
+      <text x={80} y={10.5} textAnchor="middle" fontSize={9} fontWeight={700} fill="#fff">
+        3
+      </text>
+    </svg>
+  );
+}
+
+function LinearScan() {
+  // cơ chế linear_search: QUÉT TRÁI → PHẢI. Ô đã xem xám đi, kính lúp dừng ở ô
+  // đang xét. TUYỆT ĐỐI không trái/giữa/phải — tìm tuần tự không có mid.
+  const scanned = 3; // 3 ô đã xem, ô thứ 4 (idx 3) đang xét
+  return (
+    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
+      {[0, 1, 2, 3, 4].map((i) => (
+        <rect
+          key={i}
+          x={6 + i * 17}
+          y={i === scanned ? 18 : 20}
+          width={13}
+          height={i === scanned ? 21 : 17}
+          rx={2}
+          fill={i < scanned ? "#eef1f4" : i === scanned ? "var(--primary)" : "#cfe3f7"}
+          stroke={i < scanned ? "var(--hairline)" : "none"}
+        />
+      ))}
+      {/* mũi tên tiến trình quét, từ trái tới ô đang xét */}
+      <path d="M 12 46 h 46" stroke="var(--ink-faint)" strokeWidth={1.2} strokeDasharray="2 2" />
+      <path d="M 62 46 l -5 -3 v 6 z" fill="var(--ink-faint)" />
+      {/* kính lúp trên ô đang xét */}
+      <circle cx={62} cy={9} r={4.5} fill="none" stroke="var(--primary)" strokeWidth={1.8} />
+      <line x1={65} y1={12} x2={67.5} y2={14.5} stroke="var(--primary)" strokeWidth={1.8} />
     </svg>
   );
 }
@@ -106,6 +214,8 @@ function SearchRange() {
 }
 
 function SortSwap() {
+  // cơ chế bubble_sort: ĐỔI CHỖ cặp kề nhau — hai mũi tên vòng NGƯỢC nhau,
+  // hai cột cùng được tô cam (cả hai cùng di chuyển).
   return (
     <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
       {SORT_BARS.map((h, i) => (
@@ -116,19 +226,75 @@ function SortSwap() {
           width={12}
           height={h}
           rx={2}
-          fill={i === 1 || i === 2 ? "var(--accent-orange)" : i === 4 ? "var(--accent-green)" : "#cfe3f7"}
+          fill={
+            i === 1 || i === 2
+              ? "var(--accent-orange)"
+              : i === 4
+                ? "var(--accent-green)"
+                : "#cfe3f7"
+          }
         />
       ))}
-      {/* mũi tên đổi chỗ giữa cặp đang so sánh */}
+      {/* hai cung ngược chiều = hoán vị tại chỗ của cặp đang so sánh */}
       <path
-        d="M 31 6 q 8 -6 17 0"
+        d="M 31 6 q 8 -7 17 0"
         fill="none"
         stroke="var(--accent-orange-deep)"
-        strokeWidth={1.6}
+        strokeWidth={1.5}
+        markerEnd="url(#swap-arr)"
+      />
+      <path
+        d="M 48 7 q -8 7 -17 0"
+        fill="none"
+        stroke="var(--accent-orange-deep)"
+        strokeWidth={1.5}
         markerEnd="url(#swap-arr)"
       />
       <defs>
         <marker id="swap-arr" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
+          <path d="M0,0 L5,3 L0,6 z" fill="var(--accent-orange-deep)" />
+        </marker>
+      </defs>
+    </svg>
+  );
+}
+
+function InsertionLift() {
+  // cơ chế insertion_sort: NHẤC phần tử ra khỏi hàng rồi DỜI vào đúng chỗ.
+  // KHÔNG phải đổi chỗ — decision.ts hỏi "dời?", không hỏi "đổi chỗ?".
+  const rest = [
+    { x: 8, h: 16 },
+    { x: 25, h: 24 },
+    { x: 59, h: 32 },
+    { x: 76, h: 42 },
+  ];
+  return (
+    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
+      {rest.map((b, i) => (
+        <rect key={i} x={b.x} y={50 - b.h} width={12} height={b.h} rx={2} fill="#cfe3f7" />
+      ))}
+      {/* chỗ trống nó vừa rời khỏi */}
+      <rect
+        x={42}
+        y={30}
+        width={12}
+        height={20}
+        rx={2}
+        fill="none"
+        stroke="var(--hairline)"
+        strokeDasharray="2 2"
+      />
+      {/* phần tử đang được cầm trên tay */}
+      <rect x={42} y={2} width={12} height={20} rx={2} fill="var(--accent-orange)" />
+      {/* dời xuống chỗ chèn */}
+      <path
+        d="M 48 24 v 4"
+        stroke="var(--accent-orange-deep)"
+        strokeWidth={1.6}
+        markerEnd="url(#lift-arr)"
+      />
+      <defs>
+        <marker id="lift-arr" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
           <path d="M0,0 L5,3 L0,6 z" fill="var(--accent-orange-deep)" />
         </marker>
       </defs>
@@ -247,8 +413,13 @@ function GenericIcon() {
 
 const RENDERERS: Record<PreviewKind, () => JSX.Element> = {
   "algorithm-bars": Bars,
+  "bars-min": BarsMin,
+  "sum-threshold": SumThreshold,
+  "count-threshold": CountThreshold,
+  "linear-scan": LinearScan,
   "search-range": SearchRange,
   "sort-swap": SortSwap,
+  "insertion-lift": InsertionLift,
   "binary-bits": BinaryBits,
   "network-path": NetworkPath,
   "logic-gate": LogicGate,

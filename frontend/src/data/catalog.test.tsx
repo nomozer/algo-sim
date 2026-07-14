@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
+import { InputPanel } from "../components/InputPanel";
 import { SamplePreview, previewKindOf } from "../components/SamplePreview";
 import { makeAlgorithmModule } from "../simulations/domains/algorithm";
 import { makeAndGateModule } from "../simulations/domains/logic";
@@ -107,15 +108,45 @@ describe("(8)(9) thẻ 'Ứng dụng của cơ chế này' đã gỡ + metadata 
 describe("(12)(13)(14) preview — kiến trúc nhẹ, theo định danh, fallback an toàn", () => {
   it("previewKindOf suy từ simulation id/metadata — đủ các mẫu nổi bật", () => {
     expect(previewKindOf("algorithm.find_max")).toBe("algorithm-bars");
-    expect(previewKindOf("algorithm.find_min")).toBe("algorithm-bars");
+    expect(previewKindOf("algorithm.find_min")).toBe("bars-min");
+    expect(previewKindOf("algorithm.sum_if")).toBe("sum-threshold");
+    expect(previewKindOf("algorithm.count_if")).toBe("count-threshold");
+    expect(previewKindOf("algorithm.linear_search")).toBe("linear-scan");
     expect(previewKindOf("algorithm.binary_search")).toBe("search-range");
-    expect(previewKindOf("algorithm.linear_search")).toBe("search-range");
     expect(previewKindOf("algorithm.bubble_sort")).toBe("sort-swap");
-    expect(previewKindOf("algorithm.insertion_sort")).toBe("sort-swap");
-    expect(previewKindOf("algorithm.sum_if")).toBe("algorithm-bars");
+    expect(previewKindOf("algorithm.insertion_sort")).toBe("insertion-lift");
     expect(previewKindOf("binary.decimal_to_binary")).toBe("binary-bits");
     expect(previewKindOf("network.packet_routing")).toBe("network-path");
     expect(previewKindOf("logic.and_gate")).toBe("logic-gate");
+  });
+
+  /**
+   * M9-UX3 — BẤT BIẾN CHỐNG TÁI PHÁT.
+   *
+   * Trước M9-UX3, 8 bài thuật toán chen vào 3 tranh. Hệ quả KHÔNG phải "xấu" mà
+   * là DẠY SAI: linear_search mượn tranh trái/giữa/phải của binary_search (tìm
+   * tuần tự không có mid); insertion_sort mượn mũi tên ĐỔI CHỖ của bubble_sort
+   * (chèn là DỜI, không đổi chỗ) — trong khi decision.ts (M9-S1) hỏi học sinh
+   * hai câu khác hẳn nhau. Vi phạm nguyên tắc sư phạm #6 (COVERAGE §2.6): mọi
+   * thứ trực quan phải chạm ĐÚNG cơ chế ẩn của chính bài đó.
+   *
+   * Test này khoá lại: một tranh = một cơ chế = một bài.
+   */
+  it("KHÔNG hai bài thuật toán nào dùng chung một tranh (mỗi cơ chế một tranh)", () => {
+    const algoIds = [
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.sum_if",
+      "algorithm.count_if",
+      "algorithm.linear_search",
+      "algorithm.binary_search",
+      "algorithm.bubble_sort",
+      "algorithm.insertion_sort",
+    ];
+    const kinds = algoIds.map((id) => previewKindOf(id));
+    expect(new Set(kinds).size).toBe(algoIds.length);
+    // và không bài nào rơi vào fallback (fallback = "chưa có tranh của mình")
+    expect(kinds).not.toContain("generic");
   });
 
   it("id lạ → fallback 'generic' và VẪN render được (không ném)", () => {
@@ -127,8 +158,13 @@ describe("(12)(13)(14) preview — kiến trúc nhẹ, theo định danh, fallba
   it("mọi kind đều là SVG tĩnh thuần trình bày (không fetch, không engine)", () => {
     for (const kind of [
       "algorithm-bars",
+      "bars-min",
+      "sum-threshold",
+      "count-threshold",
+      "linear-scan",
       "search-range",
       "sort-swap",
+      "insertion-lift",
       "binary-bits",
       "network-path",
       "logic-gate",
@@ -138,6 +174,25 @@ describe("(12)(13)(14) preview — kiến trúc nhẹ, theo định danh, fallba
       const html = renderToString(<SamplePreview kind={kind} />);
       expect(html).toContain("<svg");
     }
+  });
+});
+
+/**
+ * M9-UX3 — luật phạm vi M9-UX2 phải áp ở MỌI bề mặt học sinh thấy, không chỉ Home.
+ * InputPanel (panel trái workspace) từng gọi offlineCatalog() → fixture nội bộ
+ * (tam giác, 3 bản "(tổng quát)") vẫn rò ra, kèm chuỗi kĩ thuật `algorithm.find_max`
+ * làm phụ đề. Test M9-UX2 chỉ kiểm Home nên lọt.
+ */
+describe("(M9-UX3) InputPanel — danh mục công khai, không rò fixture/chuỗi kĩ thuật", () => {
+  it("panel trái chỉ hiện mẫu public; không lộ simulation_id ra UI", () => {
+    const html = renderToString(<InputPanel />);
+    expect(html).not.toContain("tam giác");
+    expect(html).not.toContain("(tổng quát)");
+    // phụ đề kĩ thuật đã thay bằng nhãn domain tiếng Việt
+    expect(html).not.toContain("algorithm.");
+    expect(html).not.toContain("generic.rule_scene");
+    // vẫn còn mẫu thật để chạy
+    expect(html).toContain("Cổng logic AND");
   });
 });
 

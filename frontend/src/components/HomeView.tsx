@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { DOMAIN_LABEL, publicCatalog, starterEntries } from "../data/offline-catalog";
+import {
+  DOMAIN_COLOR,
+  DOMAIN_LABEL,
+  publicCatalog,
+  starterEntries,
+  type CatalogEntry,
+} from "../data/offline-catalog";
+import type { Domain } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
 import { previewKindOf, SamplePreview } from "./SamplePreview";
@@ -27,6 +34,61 @@ export function formatRelativeTime(ts: number, nowMs = Date.now()): string {
 
 const RECENT_ON_HOME = 5;
 
+/** Thứ tự nhóm khi mở "xem tất cả" — bám chương trình, không bám bảng chữ cái. */
+const GROUP_ORDER: Domain[] = [
+  "algorithm",
+  "binary",
+  "network",
+  "logic",
+  "web",
+  "database",
+  "geometry",
+  "generic",
+];
+
+function groupByDomain(entries: CatalogEntry[]): [Domain, CatalogEntry[]][] {
+  const byDomain = new Map<Domain, CatalogEntry[]>();
+  for (const e of entries) {
+    const bucket = byDomain.get(e.domain);
+    if (bucket) bucket.push(e);
+    else byDomain.set(e.domain, [e]);
+  }
+  return GROUP_ORDER.filter((d) => byDomain.has(d)).map((d) => [d, byDomain.get(d)!]);
+}
+
+/**
+ * Card gợi ý (M9-UX3) — HÀNG NGANG: tranh nhỏ bên trái, chữ bên phải.
+ * Trước đây tranh nằm trên, chữ dưới → tiêu đề dài ngắn khác nhau làm card cao
+ * thấp so le, lưới bị gãy. Hàng ngang thì chiều cao do tranh quyết định, không
+ * do độ dài tiêu đề — mọi card bằng nhau.
+ */
+function StarterCard({
+  entry,
+  onPick,
+  showDomain = true,
+}: {
+  entry: CatalogEntry;
+  onPick: (envelope: CatalogEntry["envelope"], sampleId: string) => void;
+  /** Trong chế độ GOM NHÓM, tiêu đề nhóm đã nói domain rồi — lặp lại ở từng
+      card là nhiễu thuần tuý (nguyên tắc coherence, COVERAGE §2). */
+  showDomain?: boolean;
+}) {
+  return (
+    <button className="starter-card" onClick={() => onPick(entry.envelope, entry.id)}>
+      <SamplePreview kind={previewKindOf(entry.simId, entry.preview)} />
+      <span className="starter-card-body">
+        <strong className="starter-card-title">{entry.title}</strong>
+        {showDomain && (
+          <span className="starter-card-domain">
+            <span className="starter-dot" style={{ background: DOMAIN_COLOR[entry.domain] }} />
+            {DOMAIN_LABEL[entry.domain]}
+          </span>
+        )}
+      </span>
+    </button>
+  );
+}
+
 export function HomeView() {
   const loadEnvelope = useAppStore((s) => s.loadEnvelope);
   const unsupported = useAppStore((s) => s.unsupported);
@@ -52,7 +114,7 @@ export function HomeView() {
       </div>
 
       <div className="home-composer">
-        <ProblemInput />
+        <ProblemInput variant="hero" />
         {unsupported && (
           <section className="card" role="status">
             <span className="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span>
@@ -66,21 +128,31 @@ export function HomeView() {
 
       <section className="home-section">
         <h2 className="home-section-title">Gợi ý khám phá</h2>
-        <div className="starter-grid">
-          {(showAll ? all : starters).map((e) => (
-            <button
-              key={e.id}
-              className="starter-card"
-              onClick={() => loadEnvelope(e.envelope, e.id)}
-            >
-              <SamplePreview kind={previewKindOf(e.simId, e.preview)} />
-              <span className="starter-card-body">
-                <strong className="starter-card-title">{e.title}</strong>
-                <span className="hint">{DOMAIN_LABEL[e.domain]}</span>
-              </span>
-            </button>
-          ))}
-        </div>
+
+        {showAll ? (
+          // Mở rộng: GOM NHÓM theo chủ đề — 12 card phẳng đổ một lượt là bức tường,
+          // học sinh không có mỏ neo nào để định vị mình đang xem phần nào.
+          groupByDomain(all).map(([domain, entries]) => (
+            <div key={domain} className="starter-group">
+              <h3 className="starter-group-title">
+                <span className="starter-dot" style={{ background: DOMAIN_COLOR[domain] }} />
+                {DOMAIN_LABEL[domain]}
+              </h3>
+              <div className="starter-grid">
+                {entries.map((e) => (
+                  <StarterCard key={e.id} entry={e} onPick={loadEnvelope} showDomain={false} />
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="starter-grid">
+            {starters.map((e) => (
+              <StarterCard key={e.id} entry={e} onPick={loadEnvelope} />
+            ))}
+          </div>
+        )}
+
         <button className="btn-utility home-see-all" onClick={() => setShowAll(!showAll)}>
           {showAll ? "Thu gọn gợi ý" : `Xem tất cả mô phỏng mẫu (${all.length})`}
         </button>

@@ -64,9 +64,11 @@ button:disabled {
 
 /* ── M9-UX1: Home / History — một hành động chính, ít nhiễu ─────────────── */
 
+/* M9-UX3: 1040 → 920, khớp với .home-section (vốn đã 920) — hết cảnh nội dung
+   trôi lửng trong khoảng trắng quá rộng. */
 .app-single {
   width: 100%;
-  max-width: 1040px;
+  max-width: 920px;
   margin: 0 auto;
   padding: var(--sp-xl) var(--sp-lg) var(--sp-2xl);
   min-height: calc(100vh - 57px);
@@ -111,11 +113,128 @@ button:disabled {
   margin: 0 0 var(--sp-sm);
 }
 
+/* M9-UX3 — COMPOSER "PILL" (chỉ Home). Ô nhập cũ là textarea 5 dòng RỖNG cộng
+   một nút xanh đặc kín chiều ngang: nuốt trọn màn hình đầu mà chẳng nói gì.
+   Pill: một dòng, tự cao dần; kẹp tệp và nút gửi nằm TRONG ô. */
+.composer-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.composer-pill {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-xs);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 26px;
+  padding: 6px 6px 6px 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.composer-pill:focus-within {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.composer-pill.is-busy {
+  opacity: 0.75;
+}
+
+.composer-text {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.45;
+  padding: 8px 2px;
+  resize: none;
+  max-height: 148px;
+  overflow-y: auto;
+}
+
+.composer-text::placeholder {
+  color: var(--ink-faint);
+}
+
+.composer-example {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+
+.composer-attach,
+.composer-send {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.composer-attach {
+  background: transparent;
+  color: var(--ink-muted);
+}
+
+.composer-attach:hover {
+  background: var(--canvas-soft);
+}
+
+.composer-send {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+.composer-send:disabled {
+  background: var(--hairline);
+  color: var(--ink-faint);
+  cursor: not-allowed;
+}
+
+.composer-send:not(:disabled):hover {
+  transform: scale(1.06);
+}
+
 .starter-grid,
 .recent-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: var(--sp-sm);
+}
+
+/* M9-UX3: 2 cột — 4 cột làm tiêu đề xuống 3 dòng. */
+.starter-grid {
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+
+.starter-group {
+  margin-bottom: var(--sp-lg);
+}
+
+.starter-group-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 var(--sp-xs);
 }
 
 .starter-card,
@@ -139,39 +258,62 @@ button:disabled {
   transform: scale(0.98);
 }
 
-/* M9-UX2: starter card = PREVIEW trực quan trên + chữ dưới. */
+/* M9-UX3: starter card HÀNG NGANG — tranh trái, chữ phải.
+   (M9-UX2 để tranh trên / chữ dưới: tiêu đề dài ngắn khác nhau làm card cao thấp
+   so le, lưới gãy. Hàng ngang thì chiều cao do TRANH quyết định → mọi card bằng
+   nhau bất kể tiêu đề.) */
 .starter-card {
   display: flex;
-  flex-direction: column;
-  padding: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-sm);
+  padding: var(--sp-sm) var(--sp-md);
   overflow: hidden;
 }
 
 .sample-preview {
-  display: block;
-  width: 100%;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 66px;
+  height: 46px;
   background: var(--canvas-soft);
-  border-bottom: 1px solid var(--hairline);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-xs);
 }
 
 .sample-preview-svg {
   display: block;
-  width: 100%;
-  height: 84px;
+  width: 58px;
+  height: 34px;
 }
 
 .starter-card-body {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   min-width: 0;
-  padding: var(--sp-sm) var(--sp-md);
 }
 
 .starter-card-title {
   font-weight: 600;
   font-size: 14px;
   line-height: 1.35;
+}
+
+.starter-card-domain {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+
+.starter-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: 0 0 auto;
 }
 
 /* M9-UX2: recent card KHÁC HẲN starter — viền trái đậm + hàng "Tiếp tục". */

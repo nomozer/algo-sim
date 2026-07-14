@@ -1,5 +1,5 @@
 import { SAMPLE_PROMPTS } from "../data/sim-samples";
-import { DOMAIN_COLOR, offlineCatalog } from "../data/offline-catalog";
+import { DOMAIN_COLOR, DOMAIN_LABEL, publicCatalog } from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
 
@@ -8,13 +8,20 @@ import { ProblemInput } from "./ProblemInput";
  * "Chạy ngay" (envelope offline, không cần AI) vs "Thử phân tích bằng AI"
  * (đề đưa qua pipeline thật analyze→classify→simulate→validate, M5 §8).
  * M9-UX1: danh mục lấy từ offline-catalog dùng chung với HomeView.
+ *
+ * M9-UX3 — `publicCatalog()`, KHÔNG phải `offlineCatalog()`. Luật phạm vi M9-UX2
+ * ("danh mục công khai khoanh trong Tin học THPT") phải áp ở MỌI bề mặt học sinh
+ * thấy, không riêng Home: panel này từng đổ cả fixture nội bộ (tam giác, 3 bản
+ * "(tổng quát)") ra cho học sinh, kèm chuỗi kĩ thuật `algorithm.find_max` làm phụ
+ * đề. Fixture KHÔNG mất — `offlineCatalog()` vẫn còn nguyên cho test/dev, và lịch
+ * sử mở lại bằng envelope nên không phụ thuộc danh mục (bất biến #17).
  */
 export function InputPanel() {
   const activeSampleId = useAppStore((s) => s.activeSampleId);
   const loadEnvelope = useAppStore((s) => s.loadEnvelope);
   const setProblemText = useAppStore((s) => s.setProblemText);
 
-  const offlineRows = offlineCatalog().map((e) => ({
+  const offlineRows = publicCatalog().map((e) => ({
     ...e,
     load: () => loadEnvelope(e.envelope, e.id),
   }));
@@ -39,7 +46,8 @@ export function InputPanel() {
               <span>
                 <strong style={{ fontWeight: 600 }}>{row.title}</strong>
                 <br />
-                <span className="hint">{row.simId}</span>
+                {/* nhãn domain tiếng Việt — KHÔNG lộ simulation_id kĩ thuật */}
+                <span className="hint">{DOMAIN_LABEL[row.domain]}</span>
               </span>
             </button>
           ))}

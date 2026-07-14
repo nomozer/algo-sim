@@ -209,15 +209,32 @@ hợp nhất (`offlineCatalog` — ĐẦY ĐỦ kể cả fixture, `publicCatalo
 Tin học THPT cho học sinh (M9-UX2, nguyên tắc COVERAGE §2.7), `starterEntries`
 (6), `DOMAIN_COLOR/LABEL`) dùng chung Home + InputPanel. `App.tsx` route theo
 `store.view`; toggle panel chỉ trong workspace. Exports thêm:
-`formatRelativeTime` (HomeView). Tests: `catalog.test.tsx`.
+`formatRelativeTime` (HomeView). **M9-UX3**: card gợi ý HÀNG NGANG (tranh trái /
+chữ phải → mọi card cao bằng nhau bất kể tiêu đề); "xem tất cả" GOM NHÓM theo
+domain (nhóm đã nói domain → card trong nhóm bỏ nhãn, tránh nhiễu); `InputPanel`
+dùng `publicCatalog()` (KHÔNG phải `offlineCatalog()`) và không lộ `simulation_id`
+ra UI — luật phạm vi M9-UX2 nay áp ở MỌI bề mặt học sinh thấy, không riêng Home.
+Tests: `catalog.test.tsx`.
 
 ### `components/SamplePreview.tsx` · Change impact: offline
-M9-UX2 — preview SVG TĨNH cho starter card (thuần trình bày: không engine,
-không fetch, dữ liệu minh hoạ cố định). Exports: `SamplePreview`, `PreviewKind`,
-`previewKindOf(simId, explicit?)` — kind suy từ simulation_id hoặc metadata
-`preview` tường minh của mẫu (KHÔNG từ tiêu đề); id lạ → "generic" fallback.
-8 kind: algorithm-bars · search-range · sort-swap · binary-bits · network-path ·
-logic-gate · web-structure · generic. Tests: `catalog.test.tsx`.
+M9-UX2 (mở rộng M9-UX3) — preview SVG TĨNH cho starter card (thuần trình bày:
+không engine, không fetch, dữ liệu minh hoạ cố định). Exports: `SamplePreview`,
+`PreviewKind`, `previewKindOf(simId, explicit?)` — kind suy từ simulation_id hoặc
+metadata `preview` tường minh của mẫu (KHÔNG từ tiêu đề); id lạ → "generic".
+**M9-UX3 — LUẬT: một tranh = một cơ chế = một bài.** 13 kind: algorithm-bars
+(find_max) · bars-min · sum-threshold · count-threshold · linear-scan ·
+search-range (binary_search) · sort-swap (bubble) · insertion-lift · binary-bits ·
+network-path · logic-gate · web-structure · generic. Trước M9-UX3, 8 bài thuật
+toán chen vào 3 tranh và **2 tranh dạy SAI cơ chế** (linear_search mượn
+trái/giữa/phải của binary; insertion mượn mũi tên đổi chỗ của bubble) — khoá lại
+bằng test "không hai bài thuật toán nào dùng chung một tranh".
+Tests: `catalog.test.tsx`.
+
+### `components/ProblemInput.tsx` · Change impact: offline
+M9-UX3 — HAI VỎ, MỘT LÕI: `variant="hero"` (Home — pill, ô tự cao dần, kẹp tệp +
+nút gửi nằm TRONG ô, Enter gửi / Shift+Enter xuống dòng) vs `variant="compact"`
+(mặc định; InputPanel cột 264px — form xếp dọc như cũ). Mọi logic analyze/tệp/
+health/lỗi DÙNG CHUNG, chỉ khác JSX bao ngoài. Tests: `catalog.test.tsx`.
 
 ### `simulations/domains/generic/model.ts` · Change impact: offline
 Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,

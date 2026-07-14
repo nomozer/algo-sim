@@ -7,8 +7,16 @@ import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input
  * Nhập đề: gõ văn bản HOẶC tải tệp (.docx / .py / ảnh) — M4.
  * Mọi đầu vào chuẩn hóa thành InputPayload rồi gọi /api/analyze (một contract).
  * Việc gọi Gemini do backend đảm nhiệm (trình duyệt không giữ API key).
+ *
+ * M9-UX3 — HAI VỎ, MỘT LÕI. Component này phục vụ hai chỗ có ràng buộc bề rộng
+ * khác hẳn nhau, nên tách LỚP VỎ chứ không nhân đôi hành vi:
+ *   - "hero"    (HomeView): pill — ô một dòng tự cao dần, kẹp tệp và nút gửi
+ *                nằm TRONG ô. Đây là hành động chính của Trang chủ.
+ *   - "compact" (InputPanel, cột trái workspace 264px): form xếp dọc như cũ —
+ *                pill có icon hai đầu sẽ vỡ ở bề rộng đó.
+ * Mọi logic (analyze, tệp, health, lỗi) DÙNG CHUNG — chỉ khác JSX bao ngoài.
  */
-export function ProblemInput() {
+export function ProblemInput({ variant = "compact" }: { variant?: "hero" | "compact" }) {
   const problemText = useAppStore((s) => s.problemText);
   const setProblemText = useAppStore((s) => s.setProblemText);
   const analyzing = useAppStore((s) => s.analyzing);
@@ -17,6 +25,7 @@ export function ProblemInput() {
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const textRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -30,6 +39,26 @@ export function ProblemInput() {
 
   // Có tệp → gửi tệp; không thì gửi văn bản (≥10 ký tự)
   const canAnalyze = !analyzing && (file !== null || problemText.trim().length >= 10);
+
+  // Pill cao dần theo nội dung (tới ~6 dòng). DOM thuần, không state, không store.
+  function autoGrow(el: HTMLTextAreaElement) {
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, 148)}px`;
+  }
+
+  function onChangeText(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setProblemText(e.target.value);
+    if (variant === "hero") autoGrow(e.target);
+  }
+
+  // Enter = gửi, Shift+Enter = xuống dòng (quy ước quen thuộc của ô chat).
+  function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (variant !== "hero") return;
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (canAnalyze) void onAnalyze();
+    }
+  }
 
   function onPickFile(e: React.ChangeEvent<HTMLInputElement>) {
     setFileError(null);
@@ -87,6 +116,80 @@ export function ProblemInput() {
       </span>
     ) : null;
 
+  // Dùng chung cho cả hai vỏ — input tệp ẩn, chip tệp đã chọn, băng lỗi.
+  const hiddenFileInput = (
+    <input
+      ref={fileInputRef}
+      type="file"
+      accept={acceptAttr()}
+      onChange={onPickFile}
+      style={{ display: "none" }}
+    />
+  );
+
+  const fileChip = file && (
+    <div className="file-chip">
+      <span className="file-chip-info">
+        <strong>{file.name}</strong>
+        <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>
+      </span>
+      <button className="file-chip-remove" onClick={removeFile} title="Bỏ tệp">
+        ×
+      </button>
+    </div>
+  );
+
+  if (variant === "hero") {
+    return (
+      <div className="composer-hero">
+        <div className={`composer-pill${analyzing ? " is-busy" : ""}`}>
+          {hiddenFileInput}
+          <button
+            className="composer-attach"
+            onClick={() => fileInputRef.current?.click()}
+            title="Tải tệp (.docx / .py / ảnh)"
+            aria-label="Tải tệp"
+          >
+            📎
+          </button>
+          {/* Pill cao 1 dòng → placeholder phải NGẮN, nếu không nó xuống dòng và
+              bị cắt cụt (auto-grow chỉ chạy khi gõ). Ví dụ dài đã nằm ở phụ đề. */}
+          <textarea
+            ref={textRef}
+            className="composer-text"
+            rows={1}
+            placeholder="Nhập đề bài Tin học của em…"
+            value={problemText}
+            onChange={onChangeText}
+            onKeyDown={onKeyDown}
+            disabled={file !== null}
+          />
+          <button
+            className="composer-send"
+            onClick={onAnalyze}
+            disabled={!canAnalyze}
+            title="Phân tích đề bằng AI"
+            aria-label="Phân tích đề bằng AI"
+          >
+            {analyzing ? "…" : "↑"}
+          </button>
+        </div>
+
+        {/* Ví dụ cụ thể: học sinh chưa dùng bao giờ thì không biết gõ gì cho vừa. */}
+        {!file && problemText.length === 0 && (
+          <p className="composer-example">
+            Ví dụ: “Lớp 10A có các bạn với điểm kiểm tra khác nhau. Tìm bạn có điểm cao nhất.”
+          </p>
+        )}
+
+        {fileChip}
+        {fileError && <div className="error-banner">{fileError}</div>}
+        {serverStatus}
+        {analysisError && <div className="error-banner">{analysisError}</div>}
+      </div>
+    );
+  }
+
   return (
     <section className="card stack home-composer-card" style={{ gap: "var(--sp-sm)" }}>
       <textarea
@@ -94,34 +197,18 @@ export function ProblemInput() {
         rows={5}
         placeholder='Nhập đề bài, ví dụ: "Lớp 10A có các bạn với điểm kiểm tra khác nhau. Tìm bạn có điểm cao nhất."'
         value={problemText}
-        onChange={(e) => setProblemText(e.target.value)}
+        onChange={onChangeText}
         disabled={file !== null}
       />
 
       <div className="upload-row">
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept={acceptAttr()}
-          onChange={onPickFile}
-          style={{ display: "none" }}
-        />
+        {hiddenFileInput}
         <button className="btn-utility" onClick={() => fileInputRef.current?.click()}>
           📎 Tải tệp (.docx / .py / ảnh)
         </button>
       </div>
 
-      {file && (
-        <div className="file-chip">
-          <span className="file-chip-info">
-            <strong>{file.name}</strong>
-            <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>
-          </span>
-          <button className="file-chip-remove" onClick={removeFile} title="Bỏ tệp">
-            ×
-          </button>
-        </div>
-      )}
+      {fileChip}
       {fileError && <div className="error-banner">{fileError}</div>}
 
       <button className="btn-primary" onClick={onAnalyze} disabled={!canAnalyze}>
