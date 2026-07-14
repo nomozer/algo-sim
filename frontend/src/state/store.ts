@@ -160,7 +160,11 @@ export const useAppStore = create<AppState>((set, get) => {
     playing: false,
     speedMs: 1200,
     prediction: null,
-    leftOpen: WIDE_SCREEN,
+    // M9-UX2 (simulation-first): panel TRÁI (đề/danh mục) đóng mặc định — việc
+    // chọn bài đã có Home lo; sân khấu nhận không gian. Mở lại bằng "◧ Đề bài".
+    // Panel PHẢI (Quan sát) giữ mở trên màn rộng: biến/mã giả là biểu diễn
+    // liên kết cốt lõi của M9-S1, không phải trang trí.
+    leftOpen: false,
     rightOpen: WIDE_SCREEN,
     inspectorTab: "inspect",
     visualMode: "2d",

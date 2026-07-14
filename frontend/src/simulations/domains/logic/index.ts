@@ -38,10 +38,6 @@ export function makeAndGateModule(): SimulationModule<LogicConfig, LogicState> {
     title: "Cổng logic AND",
     interactionMode: "exploratory",
     supportedVisualModes: ["2d"],
-    applications: [
-      "Cửa an toàn chỉ mở khi CÓ thẻ VÀ đúng mã PIN",
-      "Đèn báo lỗi sáng khi cả hai cảm biến cùng kích hoạt",
-    ],
 
     validateConfig: validateLogicConfig,
 

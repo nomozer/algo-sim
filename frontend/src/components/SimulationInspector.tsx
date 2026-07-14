@@ -38,37 +38,24 @@ export function SimulationInspector() {
         </button>
       </div>
 
-      {tab === "inspect" && (
-        <>
-          {active && Inspector ? (
-            <Inspector
-              config={active.config}
-              state={active.state}
-              busy={playing}
-              dispatch={dispatch}
-            />
-          ) : (
-            <p className="hint">
-              {active
-                ? "Mô phỏng này không có panel quan sát riêng."
-                : "Chưa có mô phỏng nào đang chạy."}
-            </p>
-          )}
-          {/* M9-UX1 §17: ứng dụng đời thực — module tự khai, tĩnh, không LLM. */}
-          {mod?.applications && mod.applications.length > 0 && (
-            <section className="card" style={{ padding: "var(--sp-md)" }}>
-              <span className="eyebrow">ỨNG DỤNG CỦA CƠ CHẾ NÀY</span>
-              <ul style={{ margin: "var(--sp-sm) 0 0", paddingLeft: 18 }}>
-                {mod.applications.map((a) => (
-                  <li key={a} className="hint" style={{ marginBottom: 2 }}>
-                    {a}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-        </>
-      )}
+      {/* M9-UX2: thẻ "Ứng dụng của cơ chế này" (M9-UX1 §17) đã GỠ — nội dung
+          tay quá nông so với mô hình học mô phỏng và gây nhiễu thị giác.
+          Trải nghiệm transfer-of-learning thật là việc tương lai (cần duyệt). */}
+      {tab === "inspect" &&
+        (active && Inspector ? (
+          <Inspector
+            config={active.config}
+            state={active.state}
+            busy={playing}
+            dispatch={dispatch}
+          />
+        ) : (
+          <p className="hint">
+            {active
+              ? "Mô phỏng này không có panel quan sát riêng."
+              : "Chưa có mô phỏng nào đang chạy."}
+          </p>
+        ))}
 
       {tab === "ai" && <AIHelpPanel />}
     </div>

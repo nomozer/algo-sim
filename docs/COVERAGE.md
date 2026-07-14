@@ -72,6 +72,15 @@ Hệ quả bắt buộc:
    kèm `rationale` tự khai; khoá bằng `interaction-policy.test.ts`). Câu hỏi
    dự đoán phải nhắm ĐÚNG cơ chế của từng bài và KHÔNG được lộ đáp án sớm
    (narration bước quyết định là câu hỏi — `decision.test.ts`).
+7. **(M9-UX2) Kiến trúc được phép TỔNG QUÁT, nhưng danh mục CÔNG KHAI hướng
+   học sinh khoanh CÓ CHỦ ĐÍCH trong các trải nghiệm Tin học THPT đại diện.**
+   Ví dụ liên miền (vd tam giác) có thể ở lại làm **fixture nội bộ** hoặc
+   **case đánh giá** mà không được quảng bá cho học sinh. Hệ quả hai chiều:
+   (a) gỡ một mẫu khỏi danh mục công khai **không** đồng nghĩa gỡ năng lực
+   tái sử dụng đã nuôi nó; (b) phân loại bằng **metadata tường minh**
+   (`OfflineSample.visibility`), cấm lọc theo chuỗi tiêu đề. Lịch sử học mở
+   lại bằng envelope đã validate nên không phụ thuộc danh mục. Thực thi:
+   `data/offline-catalog.ts` (`publicCatalog`); khoá bằng `catalog.test.tsx`.
 
 ---
 

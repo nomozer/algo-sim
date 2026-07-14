@@ -6,9 +6,23 @@ import type { SimulationEnvelope } from "../simulations/types";
  * là văn bản đưa qua analyze→classify→simulate→validate thật (M5 §8).
  */
 
+/**
+ * M9-UX2 — phạm vi luận văn: kiến trúc tổng quát, TRẢI NGHIỆM CÔNG KHAI khoanh
+ * trong Tin học THPT. Phân loại bằng METADATA TƯỜNG MINH (không lọc tiêu đề):
+ * - "public" (mặc định khi không khai): mẫu học đại diện Tin học THPT.
+ * - "internal_fixture": chứng minh năng lực generic / parity với module chuyên
+ *   biệt — vẫn dùng cho test/dev/regression, KHÔNG quảng bá cho học sinh.
+ * (Case "evaluation_only" sống ở backend `evaluation/datasets/` — không ở đây.)
+ */
+export type SampleVisibility = "public" | "internal_fixture";
+
 export interface OfflineSample {
   id: string;
   envelope: SimulationEnvelope;
+  /** Không khai = "public". */
+  visibility?: SampleVisibility;
+  /** Gợi ý preview tường minh khi simulation_id không tự nói lên (vd generic). */
+  preview?: string;
 }
 
 export const OFFLINE_SAMPLES: OfflineSample[] = [
@@ -201,11 +215,38 @@ function genericEnvelope(title: string, spec: object): SimulationEnvelope {
 }
 
 OFFLINE_SAMPLES.push(
-  { id: "gen-and", envelope: genericEnvelope("Cổng AND (tổng quát)", GENERIC_AND_SPEC) },
-  { id: "gen-binary", envelope: genericEnvelope("Đổi 13 → nhị phân (tổng quát)", GENERIC_BINARY_SPEC) },
-  { id: "gen-packet", envelope: genericEnvelope("Gói tin (tổng quát)", GENERIC_PACKET_SPEC) },
-  { id: "gen-reveal", envelope: genericEnvelope("Dựng tam giác ABC (từng bước)", GENERIC_REVEAL_SPEC) },
-  { id: "gen-web", envelope: genericEnvelope("Trang giới thiệu (từng bước)", GENERIC_WEB_SPEC) },
+  // Ba bản "(tổng quát)" là FIXTURE PARITY: chứng minh generic engine tái tạo
+  // được hành vi module chuyên biệt — giá trị cho test/dev, trùng lặp và gây
+  // nhiễu với học sinh (đã có bản chuyên biệt ở trên) → internal.
+  {
+    id: "gen-and",
+    envelope: genericEnvelope("Cổng AND (tổng quát)", GENERIC_AND_SPEC),
+    visibility: "internal_fixture",
+  },
+  {
+    id: "gen-binary",
+    envelope: genericEnvelope("Đổi 13 → nhị phân (tổng quát)", GENERIC_BINARY_SPEC),
+    visibility: "internal_fixture",
+  },
+  {
+    id: "gen-packet",
+    envelope: genericEnvelope("Gói tin (tổng quát)", GENERIC_PACKET_SPEC),
+    visibility: "internal_fixture",
+  },
+  // Tam giác = ví dụ LIÊN MIỀN (toán) có trước khi phạm vi luận văn khoanh về
+  // Tin học THPT — giữ làm fixture reveal/node-edge, không quảng bá cho học sinh.
+  {
+    id: "gen-reveal",
+    envelope: genericEnvelope("Dựng tam giác ABC (từng bước)", GENERIC_REVEAL_SPEC),
+    visibility: "internal_fixture",
+  },
+  // Trang web thuộc chương trình Tin học (T12 CĐ4 HTML/CSS) → public; trung
+  // thực về bản chất: progressive structural visualization ("từng bước").
+  {
+    id: "gen-web",
+    envelope: genericEnvelope("Trang giới thiệu (từng bước)", GENERIC_WEB_SPEC),
+    preview: "web-structure",
+  },
 );
 
 /** Đề mẫu để THỬ pipeline AI (§8) — điền vào ô nhập rồi bấm Phân tích. */

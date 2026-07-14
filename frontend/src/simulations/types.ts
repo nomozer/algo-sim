@@ -167,13 +167,6 @@ export interface SimulationModule<C = unknown, S = unknown> {
   predict?: PredictionCapability<S>;
 
   /**
-   * Optional (M9-UX1 §17) — "Ứng dụng của cơ chế này": 2–3 ví dụ đời thực
-   * NGẮN, TĨNH, do module tự khai (không LLM, không lớp application riêng).
-   * Không khai → UI không hiện mục này. Generic (LLM compose) cố ý không có.
-   */
-  applications?: string[];
-
-  /**
    * Yêu cầu #4: snapshot JSON sạch (serializable, nhỏ) mô tả trạng thái thật
    * để gửi /api/explain. KHÔNG BAO GIỜ gửi Zustand/React/Three.js object.
    */

@@ -164,9 +164,9 @@ Hợp đồng module. Exports: `SimulationModule`, `SimAction`, `TimelineCapabil
 `VisualMode`, `PredictionCapability`, `EditCapability`.
 Notes: capability **optional** (vd `timeline?`) là cách mở rộng chuẩn. M8:
 `renderers?: Partial<Record<VisualMode, ComponentType>>` — renderer theo mode,
-"2d" mặc định là `Workspace` (tương thích ngược). M9-UX1: `applications?:
-string[]` — "Ứng dụng của cơ chế này" (tĩnh, module tự khai, không LLM;
-generic cố ý không có), render ở SimulationInspector.
+"2d" mặc định là `Workspace` (tương thích ngược). (`applications?` của M9-UX1
+đã GỠ ở M9-UX2 — thẻ "Ứng dụng" tay quá nông; transfer-of-learning thật là
+việc tương lai cần duyệt riêng.)
 
 ### `simulations/renderer.ts` · Change impact: offline
 M8 — chọn renderer từ HỢP ĐỒNG module (không switch-case id). Exports:
@@ -205,9 +205,19 @@ entry hỏng/version lạ bỏ qua êm. Tests: `history.test.ts`.
 ### `components/HomeView.tsx` · `HistoryView.tsx` · `data/offline-catalog.ts` · offline
 M9-UX1 — Home (hero + composer + gợi ý chọn lọc + "Tiếp tục học" ≤5) và trang
 Lịch sử (đủ item, Mở lại/Xóa/Xóa tất cả). `offline-catalog.ts`: danh mục mẫu
-hợp nhất (`offlineCatalog`, `starterEntries`, `DOMAIN_COLOR/LABEL`) dùng chung
-Home + InputPanel. `App.tsx` route theo `store.view`; toggle panel chỉ trong
-workspace. Exports thêm: `formatRelativeTime` (HomeView).
+hợp nhất (`offlineCatalog` — ĐẦY ĐỦ kể cả fixture, `publicCatalog` — chỉ
+Tin học THPT cho học sinh (M9-UX2, nguyên tắc COVERAGE §2.7), `starterEntries`
+(6), `DOMAIN_COLOR/LABEL`) dùng chung Home + InputPanel. `App.tsx` route theo
+`store.view`; toggle panel chỉ trong workspace. Exports thêm:
+`formatRelativeTime` (HomeView). Tests: `catalog.test.tsx`.
+
+### `components/SamplePreview.tsx` · Change impact: offline
+M9-UX2 — preview SVG TĨNH cho starter card (thuần trình bày: không engine,
+không fetch, dữ liệu minh hoạ cố định). Exports: `SamplePreview`, `PreviewKind`,
+`previewKindOf(simId, explicit?)` — kind suy từ simulation_id hoặc metadata
+`preview` tường minh của mẫu (KHÔNG từ tiêu đề); id lạ → "generic" fallback.
+8 kind: algorithm-bars · search-range · sort-swap · binary-bits · network-path ·
+logic-gate · web-structure · generic. Tests: `catalog.test.tsx`.
 
 ### `simulations/domains/generic/model.ts` · Change impact: offline
 Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,
