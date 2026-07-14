@@ -38,6 +38,8 @@ const MAX_REVEAL_STEPS = 20;
 const MAX_TEXT_LEN = 500;
 const MAX_NESTING_DEPTH = 4;
 const TOP_KEYS = new Set(["dsl_version", "title", "objects", "rules", "interactions", "processes", "notes"]);
+/** Vai trò node HỆ THỐNG THÔNG TIN — mirror `node_type_vocabulary()["system"]` của manifest. */
+const SYSTEM_NODE_TYPES = new Set(["actor", "process", "data_store", "input", "output"]);
 const FORBIDDEN = ["steps", "timeline", "state", "frames", "transitions", "animations"];
 
 function isObj(v: unknown): v is Record<string, unknown> {
@@ -111,6 +113,64 @@ function ownershipConflict(interactions: SpecInteraction[], processes: SpecProce
   return null;
 }
 
+const normText = (s: unknown): string =>
+  typeof s === "string" ? s.split(/\s+/).filter(Boolean).join(" ").toLowerCase() : "";
+
+/**
+ * Mirror backend `compact_redundant_labels` (M8-PRE plan C).
+ *
+ * Gỡ object `label` RỜI mà nội dung TRÙNG HỆT nhãn inline của một node/edge có thật
+ * — renderer đã vẽ chữ đó rồi nên gỡ đi KHÔNG mất thông tin. Không đoán theo khoảng
+ * cách, không gỡ chữ có nghĩa, không gỡ label đang bị tham chiếu cấu trúc.
+ */
+function compactRedundantLabels(rawObjects: Record<string, unknown>[], raw: Record<string, unknown>): Record<string, unknown>[] {
+  const inline = new Set<string>();
+  for (const o of rawObjects) {
+    if (o.type === "node" || o.type === "edge") {
+      for (const key of ["label", "text"]) {
+        const t = normText(o[key]);
+        if (t) inline.add(t);
+      }
+    }
+  }
+  if (inline.size === 0) return rawObjects;
+
+  const hard = new Set<string>();
+  for (const r of (raw.rules as Record<string, unknown>[] | undefined) ?? []) {
+    for (const i of (r?.inputs as string[] | undefined) ?? []) if (typeof i === "string") hard.add(i);
+    if (typeof r?.target === "string") hard.add(r.target);
+  }
+  for (const it of (raw.interactions as Record<string, unknown>[] | undefined) ?? []) {
+    if (typeof it?.target === "string") hard.add(it.target);
+  }
+  for (const p of (raw.processes as Record<string, unknown>[] | undefined) ?? []) {
+    if (typeof p?.entity === "string") hard.add(p.entity);
+    for (const n of (p?.path as string[] | undefined) ?? []) if (typeof n === "string") hard.add(n);
+  }
+  for (const o of rawObjects) if (typeof o.parent === "string") hard.add(o.parent);
+
+  const drop = new Set<string>();
+  for (const o of rawObjects) {
+    if (o.type === "label" && typeof o.id === "string" && !hard.has(o.id) && inline.has(normText(o.label))) {
+      drop.add(o.id);
+    }
+  }
+  if (drop.size === 0) return rawObjects;
+
+  const procs = (raw.processes as Record<string, unknown>[] | undefined) ?? [];
+  for (const p of procs) {
+    if (p?.type !== "reveal_sequence") continue;
+    const steps = ((p.steps as Record<string, unknown>[] | undefined) ?? [])
+      .map((st) => ({ ...st, objects: (((st?.objects as string[]) ?? []).filter((i) => !drop.has(i))) }))
+      .filter((st) => st.objects.length > 0);
+    p.steps = steps;
+  }
+  raw.processes = procs.filter(
+    (p) => !(p?.type === "reveal_sequence" && ((p.steps as unknown[]) ?? []).length === 0),
+  );
+  return rawObjects.filter((o) => !drop.has(o.id as string));
+}
+
 export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec> {
   if (!isObj(raw)) return { ok: false, error: "Spec không phải đối tượng JSON." };
 
@@ -130,8 +190,17 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
     return { ok: false, error: '"title" phải là chuỗi.' };
   }
 
-  const rawObjects = raw.objects;
-  if (!Array.isArray(rawObjects) || rawObjects.length < 1 || rawObjects.length > MAX_OBJECTS) {
+  const objectsField = raw.objects;
+  if (!Array.isArray(objectsField) || objectsField.length < 1) {
+    return { ok: false, error: `"objects" phải có 1–${MAX_OBJECTS} phần tử.` };
+  }
+  // M8-PRE (plan C): CHỈ khi vượt hạn mức mới nén phần dư thừa chứng minh được.
+  // Cảnh trong hạn mức KHÔNG bị đụng → 0 bề mặt regression. Mirror backend.
+  let rawObjects: unknown[] = objectsField;
+  if (rawObjects.length > MAX_OBJECTS && rawObjects.every((o) => isObj(o))) {
+    rawObjects = compactRedundantLabels(rawObjects as Record<string, unknown>[], raw);
+  }
+  if (rawObjects.length > MAX_OBJECTS) {
     return { ok: false, error: `"objects" phải có 1–${MAX_OBJECTS} phần tử.` };
   }
   const ids = new Set<string>();
@@ -151,6 +220,8 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
     for (const key of ["label", "node_type", "from", "to", "text", "parent"] as const) {
       if (typeof o[key] === "string") obj[key] = o[key] as string;
     }
+    // M8-PRE (S2): mirror backend — chỉ edge, chỉ bool THẬT (không nhận 0/1/chuỗi).
+    if (o.type === "edge" && typeof o.directed === "boolean") obj.directed = o.directed;
     objects.push(obj);
     byId[o.id] = obj;
   }
@@ -160,6 +231,17 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
       if (!o.from || !o.to || !ids.has(o.from) || !ids.has(o.to)) {
         return { ok: false, error: `edge "${o.id}" phải nối hai object có thật (from/to).` };
       }
+    }
+  }
+  // M8-PRE (S2): mirror backend — CHIỀU luồng dữ liệu được SUY từ from/to giữa hai
+  // node vai trò hệ thống (LLM không đáng tin cho việc khai `directed`). Hai tầng
+  // validator phải suy ra CÙNG một spec, nếu không spec sửa cục bộ sẽ lệch server.
+  const sysNodes = new Set(
+    objects.filter((o) => o.type === "node" && o.node_type && SYSTEM_NODE_TYPES.has(o.node_type)).map((o) => o.id),
+  );
+  for (const o of objects) {
+    if (o.type === "edge" && o.directed === undefined && o.from && o.to && sysNodes.has(o.from) && sysNodes.has(o.to)) {
+      o.directed = true;
     }
   }
   // M7.12: nội dung chữ + lồng nhau (structural/textual)

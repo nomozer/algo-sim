@@ -74,8 +74,15 @@ MANIFEST: dict = {
         "switch": "công tắc bật/tắt (value 0/1); người học toggle được",
         "lamp": "đèn hiển thị giá trị 0/1 (thường là target của rule)",
         "value_box": "ô hiển thị một con số (thường là target của rule)",
-        "node": "nút mạng (có node_type: client/router/server/switch/isp)",
-        "edge": "cạnh nối hai object (from → to)",
+        "node": (
+            "nút/đỉnh — điểm hình học (không node_type) HOẶC một thành phần có vai trò "
+            "(node_type, chuỗi tự do): mạng (client/router/server/switch/isp) hoặc "
+            "hệ thống thông tin (actor/process/data_store/input/output)"
+        ),
+        "edge": (
+            "cạnh nối hai object (from → to); \"directed\": true khi CHIỀU có ý nghĩa "
+            "(luồng dữ liệu, request/response) — renderer vẽ mũi tên from → to"
+        ),
         "moving_entity": "thực thể di chuyển theo process (gói tin...)",
         "label": "nhãn chữ tĩnh ngắn",
         "container": "khung chứa/bố cục — gom các object con qua \"parent\"; \"text\" là tiêu đề khung (tùy chọn)",
@@ -100,6 +107,14 @@ MANIFEST: dict = {
     # KHÔNG drag: edge (vị trí dẫn xuất từ hai đầu), structural/textual (layout theo
     # luồng tài liệu), moving_entity (vị trí do process sở hữu — ownership rule).
     "drag_target_types": ["node"],
+    # M8-PRE (S2): từ vựng GỢI Ý cho node_type — node_type là CHUỖI TỰ DO (validator
+    # không ép enum); danh sách này chỉ để prompt không bó hẹp vào danh từ MẠNG.
+    # Cùng một primitive (node+edge) phục vụ nhiều miền: mạng máy tính VÀ hệ thống
+    # thông tin (actor/process/data_store) — tái sử dụng năng lực, KHÔNG thêm type mới.
+    "node_type_vocabulary": {
+        "network": ["client", "router", "server", "switch", "isp"],
+        "system": ["actor", "process", "data_store", "input", "output"],
+    },
     "process_types": {
         "move_along_path": "thực thể entity đi qua path (danh sách node) — engine bung thành các bước",
         "reveal_sequence": "hình thành cảnh TỪNG BƯỚC — mỗi step hé lộ thêm object; visibility tích lũy tất định",
@@ -141,6 +156,16 @@ def process_types() -> set[str]:
 def drag_target_types() -> set[str]:
     """Type được phép làm target của interaction drag (M7.13A)."""
     return set(MANIFEST["drag_target_types"])
+
+
+def node_type_vocabulary() -> dict[str, list[str]]:
+    """Từ vựng GỢI Ý cho node_type theo miền (M8-PRE S2).
+
+    KHÔNG phải allowlist: validator chấp nhận node_type là chuỗi bất kỳ. Danh
+    sách này chỉ dùng để SINH prompt — chống việc prompt chỉ nêu danh từ mạng
+    khiến LLM không nghĩ tới actor/process/data_store (bug: cảnh phân tích hệ
+    thống bị từ chối im lặng dù DSL biểu diễn được)."""
+    return {k: list(v) for k, v in MANIFEST["node_type_vocabulary"].items()}
 
 
 def temporal_process_types() -> set[str]:
@@ -191,6 +216,8 @@ def manifest_capability_summary() -> str:
     objs = ", ".join(MANIFEST["object_types"].keys())
     rules = ", ".join(MANIFEST["rule_types"].keys())
     procs = ", ".join(MANIFEST["process_types"].keys())
+    sysv = "/".join(MANIFEST["node_type_vocabulary"]["system"])
+    netv = "/".join(MANIFEST["node_type_vocabulary"]["network"])
     return (
         "NĂNG LỰC BIỂU DIỄN của generic.rule_scene (đối chiếu năng lực bài cần với danh sách này "
         "để quyết định — KHÔNG dựa vào tên môn học):\n"
@@ -199,6 +226,13 @@ def manifest_capability_summary() -> str:
         "đèn / đầu ra 0-1 → lamp; nhãn chữ ngắn → label; gói tin / vật di chuyển → moving_entity; "
         "KHUNG CHỨA / BỐ CỤC / phần trang → container; NHÓM → group; TIÊU ĐỀ → heading; "
         "ĐOẠN VĂN → paragraph; DÒNG CHỮ → text.\n"
+        f"- HỆ THỐNG THÔNG TIN / SƠ ĐỒ LUỒNG DỮ LIỆU (cùng primitive node+edge, node_type là "
+        f"chuỗi tự do): NGƯỜI DÙNG / TÁC NHÂN → node (node_type actor); CHỨC NĂNG / XỬ LÍ / "
+        f"công đoạn → node (node_type process); KHO DỮ LIỆU / nơi lưu trữ → node (node_type "
+        f"data_store); ĐẦU VÀO / ĐẦU RA → node (node_type input/output). LUỒNG DỮ LIỆU / "
+        f'yêu cầu / phản hồi giữa chúng → edge có "directed": true (vẽ mũi tên from → to). '
+        f"Dữ liệu ĐI QUA các công đoạn → moving_entity + move_along_path. "
+        f"Từ vựng node_type gợi ý: hệ thống ({sysv}); mạng ({netv}).\n"
         f"- Quy tắc dẫn xuất ({rules}): logic and/or/not/xor; tổng có trọng số.\n"
         f"- Tiến trình ({procs}): move_along_path (vật đi theo đường); reveal_sequence "
         "(HÌNH THÀNH CẢNH TỪNG BƯỚC — tạo/hiện đối tượng lần lượt, ví dụ dựng hình học bằng cách "
@@ -208,8 +242,10 @@ def manifest_capability_summary() -> str:
         "KHÔNG dùng toggle cho điểm/node).\n"
         "→ Nếu bài mô tả được bằng các năng lực trên — KỂ CẢ bài Toán/hình học dựng hình TƯỜNG MINH "
         "(vẽ các điểm/đoạn được nêu tên), mạch logic, đồ thị nút-cạnh, NỘI DUNG CÓ CẤU TRÚC/BỐ CỤC "
-        "(trang web, tài liệu có tiêu đề/đoạn văn/khung chứa), hay quá trình hình thành từng bước — "
-        "thì chọn generic.rule_scene. "
+        "(trang web, tài liệu có tiêu đề/đoạn văn/khung chứa), SƠ ĐỒ HỆ THỐNG THÔNG TIN "
+        "(người dùng/chức năng/kho dữ liệu/luồng dữ liệu — kể cả khi đề hỏi 'phân tích hệ thống', "
+        "'xác định người dùng, dữ liệu lưu trữ, đầu vào, đầu ra, chức năng, mô tả hoạt động'), "
+        "hay quá trình hình thành từng bước — thì chọn generic.rule_scene. "
         "CHỈ trả unsupported khi cần năng lực THẬT SỰ CHƯA CÓ trong danh sách trên: "
         "QUAN HỆ HÌNH HỌC PHẢI TÍNH (chân đường cao/hình chiếu, đường dựng vuông góc, giao điểm, "
         "đường tròn ngoại tiếp/qua các điểm, tiếp tuyến, quỹ tích/điểm di động kéo theo hệ); "
@@ -222,6 +258,7 @@ def manifest_capability_summary() -> str:
 def manifest_contract_text() -> str:
     """Sinh phần contract cho prompt simulate — DẪN XUẤT từ manifest (§2)."""
     lim = MANIFEST["limits"]
+    vocab = MANIFEST["node_type_vocabulary"]
     obj_lines = "\n".join(f"  - {k}: {v}" for k, v in MANIFEST["object_types"].items())
     rule_lines = "\n".join(f"  - {k}: {v}" for k, v in MANIFEST["rule_types"].items())
     inter_lines = "\n".join(f"  - {k}: {v}" for k, v in MANIFEST["interaction_types"].items())
@@ -231,7 +268,16 @@ def manifest_contract_text() -> str:
         "Bạn mô tả mô phỏng bằng đối tượng/quy tắc/tương tác/tiến trình; engine tất định tự tính diễn biến.\n\n"
         f"dsl_version PHẢI là \"{DSL_VERSION}\".\n\n"
         f"object_types cho phép (chỉ dùng trong danh sách này):\n{obj_lines}\n"
-        "  Toạ độ x,y trong 0–100 để bố trí; switch có \"value\" khởi tạo 0/1; node có \"node_type\"; edge có \"from\"/\"to\".\n"
+        "  Toạ độ x,y trong 0–100 để bố trí; switch có \"value\" khởi tạo 0/1; edge có \"from\"/\"to\".\n"
+        f"  node có \"node_type\" (chuỗi tự do) — mạng: {'/'.join(vocab['network'])}; "
+        f"hệ thống thông tin: {'/'.join(vocab['system'])}; điểm hình học thì BỎ TRỐNG node_type.\n"
+        "  edge có \"directed\": true khi CHIỀU mang ý nghĩa (luồng dữ liệu, yêu cầu → phản hồi, "
+        "dữ liệu đi vào một chức năng rồi ra kho lưu trữ) — renderer vẽ mũi tên từ \"from\" tới \"to\". "
+        "Quan hệ KHÔNG có chiều (đoạn thẳng hình học, liên kết mạng hai chiều) thì bỏ trống/false.\n"
+        f"  BẮT BUỘC: nếu cảnh có từ 2 node vai trò HỆ THỐNG trở lên ({'/'.join(vocab['system'])}) "
+        "thì MỌI edge nối chúng PHẢI có \"directed\": true — sơ đồ luồng dữ liệu mà không thấy "
+        "hướng đi thì vô nghĩa. Spec thiếu điều này sẽ bị TỪ CHỐI.\n"
+        "  Đặt tên hiển thị cho node bằng \"label\" (KHÔNG dùng \"text\" cho node).\n"
         f"  heading/paragraph/text CẦN \"text\" (nội dung chữ, ≤ {lim['max_text_len']} ký tự). "
         f"container/group gom nội dung bằng cách cho mỗi object CON một \"parent\" = id của container/group "
         f"chứa nó (lồng nhau, KHÔNG chu trình, độ sâu ≤ {lim['max_nesting_depth']}).\n\n"
@@ -249,6 +295,15 @@ def manifest_contract_text() -> str:
         "  reveal_sequence: {steps: [{objects: [id object], narration?}]} — dùng khi cảnh phải HÌNH THÀNH TỪNG BƯỚC "
         "(vd dựng hình: bước 1 hé lộ điểm A,B; bước 2 hé lộ đoạn AB; bước 3 điểm C; bước 4 đoạn AC; bước 5 đoạn BC). "
         "Object không nằm trong reveal step nào sẽ hiện ngay từ đầu.\n\n"
+        f"GIỚI HẠN — ĐẾM CHO ĐÚNG: edge, moving_entity, heading, paragraph, label… TẤT CẢ đều nằm "
+        f"trong \"objects\" nên đều TÍNH vào giới hạn {lim['max_objects']}. Một sơ đồ 6 thành phần "
+        f"nối bằng 6 luồng đã tốn 12 object. Hãy chọn các thành phần CHÍNH và GỘP chi tiết phụ "
+        f"(sơ đồ hệ thống: tối đa ~6 thành phần + các luồng giữa chúng); đừng vẽ mọi chi tiết rồi vượt hạn mức.\n"
+        "  TIẾT KIỆM OBJECT — hai lỗi thường gặp làm vượt hạn mức:\n"
+        "  (a) Muốn ghi chữ trên một CẠNH thì dùng chính trường \"label\" CỦA EDGE ĐÓ "
+        "(vd {\"id\":\"f1\",\"type\":\"edge\",\"from\":\"a\",\"to\":\"b\",\"directed\":true,\"label\":\"gửi yêu cầu\"}) — "
+        "TUYỆT ĐỐI KHÔNG tạo thêm object \"label\" riêng cho mỗi cạnh.\n"
+        "  (b) Sơ đồ đã có \"title\" ở cấp cao nhất → KHÔNG cần thêm heading/paragraph/container trang trí.\n"
         f"GIỚI HẠN: tối đa {lim['max_objects']} object, {lim['max_rules']} rule, "
         f"{lim['max_interactions']} interaction, {lim['max_processes']} process, path ≤ {lim['max_path']} nút, "
         f"reveal_sequence ≤ {lim['max_reveal_steps']} bước.\n\n"
@@ -257,7 +312,10 @@ def manifest_contract_text() -> str:
         "Gói tin = node + edge + moving_entity + process move_along_path. "
         "Dựng hình tam giác = point/line (label) + reveal_sequence hé lộ dần. "
         "Trang web/tài liệu có bố cục = container + heading(text) + paragraph(text), "
-        "mỗi con đặt parent = id container; muốn HÌNH THÀNH TỪNG BƯỚC thì thêm reveal_sequence.\n"
+        "mỗi con đặt parent = id container; muốn HÌNH THÀNH TỪNG BƯỚC thì thêm reveal_sequence. "
+        "Sơ đồ HỆ THỐNG THÔNG TIN = node(node_type actor/process/data_store/input/output) + "
+        "edge directed=true cho từng LUỒNG DỮ LIỆU; muốn cho thấy dữ liệu CHẠY QUA các công đoạn "
+        "thì thêm moving_entity + move_along_path đi theo đúng các node đó.\n"
         "TUYỆT ĐỐI KHÔNG dùng object/rule/interaction/process ngoài manifest. "
         "KHÔNG sinh steps/timeline/state/frames/kết quả — engine tự dựng."
     )

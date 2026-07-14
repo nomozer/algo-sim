@@ -63,7 +63,11 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #      phá pattern matching); cache chuyển sang simulation_cache version-aware.
 # "5": M7.14C — 8 gap role dẫn xuất (geometric_*/threshold/orbit/freealgo) +
 #      analyze/classify policy đổi → đề từng cache có thể đổi phán quyết.
-CACHE_VERSION = "5"
+# "6": M8-PRE (S2) — edge có "directed" + node_type mở rộng (actor/process/
+#      data_store/input/output) + analyze/classify hỗ trợ sơ đồ hệ thống thông tin.
+#      Đề "phân tích hệ thống" TỪNG bị unsupported nay mô phỏng được → phải
+#      invalidate cache cũ, nếu không phán quyết cũ sẽ kẹt lại vĩnh viễn.
+CACHE_VERSION = "6"
 
 
 class InputPayload(BaseModel):

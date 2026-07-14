@@ -22,6 +22,20 @@ class EvalItem:
     # "smoke": bộ đại diện chạy live thường xuyên; "boundary": case capability gap.
     tags: tuple[str, ...] = ()
 
+    # ── M8-PRE (S1): metadata MÔ TẢ/CHỌN LỌC — optional, backward-compatible ──
+    # KHÔNG metric nào đọc các trường này (ngữ nghĩa metric cũ giữ nguyên tuyệt
+    # đối). 30 case lịch sử bên dưới KHÔNG khai báo chúng → giữ nguyên như cũ.
+    curriculum_area: str | None = None      # neo SGK, vd "T11CS.CD6"
+    curriculum_topic: str | None = None     # vd "Thuật toán sắp xếp"
+    capability_family: str | None = None    # vd "sorting_movement"
+    complexity: str = "L1"                  # L1 atomic · L2 composed · L3 multi-stage · L4 boundary
+    result_mode: str | None = None          # executable_simulation | interactive_visualization
+                                            # | practice_activity | unsupported
+    cross_domain_group: str | None = None   # cùng capability, khác miền bề mặt
+    learning_objective: str = ""            # học sinh hiểu/làm được gì
+    pedagogical_rationale: str = ""         # CƠ CHẾ ẨN nào được mô phỏng + vì sao
+                                            # hơn text/ảnh/video/quiz. Mơ hồ → loại case.
+
 
 DATASET: list[EvalItem] = [
     # ── Nhóm A: specialized-supported (8) ────────────────────

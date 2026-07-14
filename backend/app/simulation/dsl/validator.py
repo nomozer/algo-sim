@@ -130,6 +130,96 @@ def ownership_conflict(interactions: list[dict], processes: list[dict]) -> str |
     return None
 
 
+def _norm_text(s) -> str:
+    return " ".join(s.split()).casefold() if isinstance(s, str) else ""
+
+
+def compact_redundant_labels(raw_objects: list, raw: dict) -> list:
+    """Gỡ object `label` RỜI mà nội dung TRÙNG HỆT nhãn của một node/edge đã có.
+
+    Vì sao tồn tại (M8-PRE plan C): Gemini thỉnh thoảng vừa đặt `label` inline cho
+    node/edge, VỪA tạo thêm một object `label` rời lặp lại đúng chuỗi đó (đo live:
+    11 label rời cho 5 node + 6 edge) → cảnh vượt `max_objects` dù NGỮ NGHĨA chỉ có
+    ~12 object. Đây là DƯ THỪA CHỨNG MINH ĐƯỢC, không phải nội dung.
+
+    Luật (tất định, KHÔNG đoán):
+    - Chỉ gỡ object type "label".
+    - Chỉ khi chuỗi của nó TRÙNG HỆT (chuẩn hoá khoảng trắng + hoa/thường) với
+      `label`/`text` của một node hoặc edge CÓ THẬT trong spec → renderer đã vẽ chữ
+      đó rồi, gỡ đi không mất thông tin nào.
+    - TUYỆT ĐỐI không gỡ nếu label đang được THAM CHIẾU về mặt cấu trúc/ngữ nghĩa
+      (rule input/target, interaction target, process entity/path, parent của object
+      khác) — gỡ sẽ làm hỏng tham chiếu.
+    - KHÔNG đoán liên kết theo KHOẢNG CÁCH. KHÔNG dùng LLM. KHÔNG gỡ chữ có nghĩa.
+
+    Tham chiếu trong `reveal_sequence.steps` KHÔNG phải tham chiếu cấu trúc: nó chỉ
+    nói "bước này hé lộ thêm id X". Label bị gỡ sẽ được rút khỏi các step (và step
+    rỗng bị bỏ) — nội dung vẫn hiện vì node/edge mang chính chuỗi đó cũng được hé lộ.
+    """
+    objs = [o for o in raw_objects if isinstance(o, dict)]
+    if len(objs) != len(raw_objects):
+        return raw_objects  # có phần tử lạ → để validator chính báo lỗi, không đụng
+
+    inline: set[str] = set()
+    for o in objs:
+        if o.get("type") in ("node", "edge"):
+            for key in ("label", "text"):
+                t = _norm_text(o.get(key))
+                if t:
+                    inline.add(t)
+    if not inline:
+        return raw_objects
+
+    hard_refs: set[str] = set()
+    for r in raw.get("rules", []) or []:
+        if isinstance(r, dict):
+            hard_refs.update(i for i in (r.get("inputs") or []) if isinstance(i, str))
+            if isinstance(r.get("target"), str):
+                hard_refs.add(r["target"])
+    for it in raw.get("interactions", []) or []:
+        if isinstance(it, dict) and isinstance(it.get("target"), str):
+            hard_refs.add(it["target"])
+    for p in raw.get("processes", []) or []:
+        if isinstance(p, dict):
+            if isinstance(p.get("entity"), str):
+                hard_refs.add(p["entity"])
+            hard_refs.update(n for n in (p.get("path") or []) if isinstance(n, str))
+    for o in objs:
+        if isinstance(o.get("parent"), str):
+            hard_refs.add(o["parent"])
+
+    drop = {
+        o["id"]
+        for o in objs
+        if o.get("type") == "label"
+        and isinstance(o.get("id"), str)
+        and o["id"] not in hard_refs
+        and _norm_text(o.get("label")) in inline
+    }
+    if not drop:
+        return raw_objects
+
+    # Gỡ id đã bỏ khỏi các step reveal; step rỗng thì bỏ hẳn (giữ spec nhất quán).
+    for p in raw.get("processes", []) or []:
+        if not isinstance(p, dict) or p.get("type") != "reveal_sequence":
+            continue
+        steps = []
+        for st in p.get("steps") or []:
+            if not isinstance(st, dict):
+                steps.append(st)
+                continue
+            kept = [i for i in (st.get("objects") or []) if i not in drop]
+            if kept:
+                steps.append({**st, "objects": kept})
+        p["steps"] = steps
+    raw["processes"] = [
+        p
+        for p in (raw.get("processes") or [])
+        if not (isinstance(p, dict) and p.get("type") == "reveal_sequence" and not p.get("steps"))
+    ]
+    return [o for o in objs if o.get("id") not in drop]
+
+
 def validate_generic_config(raw) -> tuple[dict | None, str | None]:
     """Trả (spec chuẩn hóa, None) hoặc (None, lỗi tiếng Việt cho LLM retry)."""
     if not isinstance(raw, dict):
@@ -149,7 +239,14 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
         return None, '"title" phải là chuỗi.'
 
     raw_objects = raw.get("objects")
-    if not isinstance(raw_objects, list) or not (1 <= len(raw_objects) <= MAX_OBJECTS):
+    if not isinstance(raw_objects, list) or len(raw_objects) < 1:
+        return None, f'"objects" phải có 1–{MAX_OBJECTS} phần tử.'
+    # M8-PRE (plan C): CHỈ khi vượt hạn mức mới thử nén phần dư thừa CHỨNG MINH ĐƯỢC.
+    # Cảnh đang trong hạn mức KHÔNG bị đụng tới → 0 bề mặt regression.
+    # Thứ tự: candidate → nén dư thừa an toàn → kiểm hạn mức → validator còn lại.
+    if len(raw_objects) > MAX_OBJECTS:
+        raw_objects = compact_redundant_labels(raw_objects, raw)
+    if len(raw_objects) > MAX_OBJECTS:
         return None, f'"objects" phải có 1–{MAX_OBJECTS} phần tử.'
     ids: set[str] = set()
     objects: list[dict] = []
@@ -169,12 +266,33 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
         for key in ("label", "node_type", "from", "to", "text", "parent"):
             if isinstance(o.get(key), str):
                 obj[key] = o[key]
+        # M8-PRE (S2): edge có CHIỀU — chỉ giữ khi là bool THẬT (không nhận 0/1,
+        # không nhận chuỗi) và chỉ trên edge; renderer vẽ mũi tên from → to.
+        if o["type"] == "edge" and isinstance(o.get("directed"), bool):
+            obj["directed"] = o["directed"]
         objects.append(obj)
         by_id[o["id"]] = obj
     for o in objects:
         if o["type"] == "edge":
             if o.get("from") not in ids or o.get("to") not in ids:
                 return None, f'edge "{o["id"]}" phải nối hai object có thật (from/to).'
+
+    # M8-PRE (S2): CHIỀU luồng dữ liệu là thứ DẪN XUẤT ĐƯỢC, không phải thứ phải
+    # đi xin LLM. Đo live: model dựng đúng actor→process→data_store trong from/to
+    # nhưng BỎ QUA `directed` kể cả khi prompt yêu cầu tường minh và kể cả sau khi
+    # bị từ chối kèm lý do. Hướng đã nằm sẵn trong from/to → server TỰ SUY.
+    # Chỉ áp cho cạnh nối HAI node vai trò HỆ THỐNG → không đụng hình học
+    # (node không node_type) và không đụng liên kết mạng (client/router… vốn 2 chiều).
+    _sys_types = set(M.node_type_vocabulary()["system"])
+    _sys_nodes = {o["id"] for o in objects if o["type"] == "node" and o.get("node_type") in _sys_types}
+    for o in objects:
+        if (
+            o["type"] == "edge"
+            and "directed" not in o  # LLM khai tường minh thì TÔN TRỌNG, không ghi đè
+            and o.get("from") in _sys_nodes
+            and o.get("to") in _sys_nodes
+        ):
+            o["directed"] = True
 
     # M7.12: nội dung chữ + lồng nhau (structural/textual)
     for o in objects:
