@@ -1,56 +1,23 @@
-import { SAMPLES } from "../data/samples";
-import { OFFLINE_SAMPLES, SAMPLE_PROMPTS } from "../data/sim-samples";
-import { fromLegacyAnalysis, toSimulationId } from "../simulations/legacy";
-import type { Domain } from "../simulations/types";
+import { SAMPLE_PROMPTS } from "../data/sim-samples";
+import { DOMAIN_COLOR, offlineCatalog } from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
 
-/** Chấm màu theo domain — trang trí (sticker palette). */
-const DOMAIN_COLOR: Record<Domain, string> = {
-  algorithm: "var(--accent-green)",
-  logic: "var(--accent-purple-deep)",
-  binary: "var(--primary)",
-  network: "var(--accent-pink)",
-  database: "var(--accent-teal)",
-  web: "var(--accent-orange)",
-  geometry: "var(--secondary)",
-  generic: "var(--accent-orange-deep)",
-};
-
-interface OfflineRow {
-  id: string;
-  title: string;
-  simId: string;
-  domain: Domain;
-  load: () => void;
-}
-
 /**
- * Panel trái: nhập đề + hai nhóm mẫu tách bạch —
+ * Panel trái TRONG WORKSPACE: nhập đề + hai nhóm mẫu tách bạch —
  * "Chạy ngay" (envelope offline, không cần AI) vs "Thử phân tích bằng AI"
  * (đề đưa qua pipeline thật analyze→classify→simulate→validate, M5 §8).
+ * M9-UX1: danh mục lấy từ offline-catalog dùng chung với HomeView.
  */
 export function InputPanel() {
   const activeSampleId = useAppStore((s) => s.activeSampleId);
   const loadEnvelope = useAppStore((s) => s.loadEnvelope);
   const setProblemText = useAppStore((s) => s.setProblemText);
 
-  const offlineRows: OfflineRow[] = [
-    ...SAMPLES.map((s) => ({
-      id: s.id,
-      title: s.analysis.problem.summary,
-      simId: toSimulationId(s.algorithmId),
-      domain: "algorithm" as Domain,
-      load: () => loadEnvelope(fromLegacyAnalysis(s.analysis), s.id),
-    })),
-    ...OFFLINE_SAMPLES.map((s) => ({
-      id: s.id,
-      title: s.envelope.title,
-      simId: s.envelope.simulation_id,
-      domain: s.envelope.domain,
-      load: () => loadEnvelope(s.envelope, s.id),
-    })),
-  ];
+  const offlineRows = offlineCatalog().map((e) => ({
+    ...e,
+    load: () => loadEnvelope(e.envelope, e.id),
+  }));
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>

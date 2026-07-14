@@ -18,6 +18,43 @@ export { activeTrace, type AlgorithmConfig, type AlgorithmSimState } from "./mod
 
 const CONDITION_OPS: Condition["op"][] = [">", ">=", "<", "<=", "==", "!="];
 
+/** M9-UX1 §17 — ứng dụng đời thực của TỪNG cơ chế (tĩnh, ngắn, không LLM). */
+const APPLICATIONS: Record<AlgorithmId, string[]> = {
+  find_max: [
+    "Tìm bạn có điểm cao nhất lớp",
+    "Tìm ngày nóng nhất trong tuần",
+    "Tìm sản phẩm bán chạy nhất tháng",
+  ],
+  find_min: [
+    "Tìm giá rẻ nhất khi so sánh cửa hàng",
+    "Tìm ngày lạnh nhất trong tuần",
+  ],
+  sum_if: [
+    "Tổng doanh thu của các đơn hàng đạt chuẩn",
+    "Tổng điểm các môn đạt từ 8 trở lên",
+  ],
+  count_if: [
+    "Đếm số học sinh đạt học lực giỏi",
+    "Đếm số ngày mưa trong tháng",
+  ],
+  linear_search: [
+    "Tìm tên trong danh sách chưa xếp thứ tự",
+    "Tìm một tệp trong thư mục lộn xộn",
+  ],
+  binary_search: [
+    "Tra từ trong từ điển (đã xếp vần)",
+    "Tìm số báo danh trong danh sách đã sắp",
+  ],
+  bubble_sort: [
+    "Xếp hạng điểm thi từ thấp đến cao",
+    "Xếp hàng theo chiều cao",
+  ],
+  insertion_sort: [
+    "Sắp bài trên tay khi chơi bài",
+    "Chèn hồ sơ mới vào tủ đã xếp thứ tự",
+  ],
+};
+
 /** Chốt chặn config (phía frontend — tầng validate thứ hai sau backend). */
 function validateAlgorithmConfig(
   algorithmId: AlgorithmId,
@@ -104,6 +141,7 @@ export function makeAlgorithmModule(
     title: ALGORITHM_NAMES[algorithmId],
     interactionMode: "progressive",
     supportedVisualModes: ["2d"], // "3d" bổ sung ở Milestone 6 (Three.js)
+    applications: APPLICATIONS[algorithmId],
 
     validateConfig: (raw) => validateAlgorithmConfig(algorithmId, raw),
 

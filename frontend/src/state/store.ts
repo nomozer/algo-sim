@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type { AnalysisUnsupported } from "../core/types";
 import { getSimulation } from "../simulations/registry";
+import { historyStore, type HistoryItem } from "./history";
 import type {
   PredictionResult,
   SimAction,
@@ -32,6 +33,21 @@ interface AppState {
   unsupported: AnalysisUnsupported | null;
   activeSampleId: string | null;
 
+  /**
+   * M9-UX1: ba MẶT TRÌNH BÀY trên cùng store — "home" (mặc định, composer +
+   * gợi ý + gần đây), "workspace" (khi có mô phỏng), "history" (toàn bộ lịch
+   * sử). Là presentation state như visualMode: không đụng engine.
+   */
+  view: "home" | "workspace" | "history";
+  /**
+   * M9-UX1: BẢN CHIẾU lịch sử bền (localStorage qua historyStore) để render.
+   * Nguồn chân lý là storage; store chỉ mirror sau mỗi thao tác. reset()/goHome
+   * KHÔNG xoá lịch sử — runtime state và learning history là hai đời sống riêng.
+   */
+  history: HistoryItem[];
+  /** id item lịch sử của mô phỏng đang mở — để ghi tiến độ (cursor/mode). */
+  activeHistoryId: string | null;
+
   active: ActiveSimulation | null;
   /** Chỉ có nghĩa khi module có timeline capability. */
   playing: boolean;
@@ -61,8 +77,17 @@ interface AppState {
   setProblemText: (text: string) => void;
   setAnalyzing: (v: boolean) => void;
   setAnalysisError: (msg: string | null) => void;
-  loadEnvelope: (env: SimulationEnvelope, sampleId?: string) => void;
+  /** `originalInput`: đề gốc (text đã chuẩn hoá) — lưu vào lịch sử nếu có. */
+  loadEnvelope: (env: SimulationEnvelope, sampleId?: string, originalInput?: string) => void;
   loadUnsupported: (u: AnalysisUnsupported) => void;
+
+  /** M9-UX1 — điều hướng trình bày + lịch sử bền. */
+  goHome: () => void;
+  openHistory: () => void;
+  /** Mở lại từ lịch sử: envelope đã validate + engine tất định — 0 gọi AI. */
+  reopenFromHistory: (id: string) => void;
+  removeHistoryItem: (id: string) => void;
+  clearHistory: () => void;
 
   /** Tương tác người học → module.apply (what-if, toggle, tham số...). */
   dispatch: (action: SimAction) => void;
@@ -106,13 +131,20 @@ export const useAppStore = create<AppState>((set, get) => {
   function withTimeline(
     fn: (tl: TimelineCapability<unknown>, state: unknown) => unknown,
   ): void {
-    const { active } = get();
+    const { active, activeHistoryId } = get();
     if (!active) return;
     const mod = getSimulation(active.moduleId);
     if (!mod?.timeline) return;
     const next = fn(mod.timeline, active.state);
     // Đổi bước → dự đoán cũ hết hiệu lực (nó gắn với MỘT thời điểm cụ thể).
-    if (next !== active.state) set({ active: { ...active, state: next }, prediction: null });
+    if (next !== active.state) {
+      set({ active: { ...active, state: next }, prediction: null });
+      // M9-UX1: ghi tiến độ TRÌNH BÀY vào lịch sử bền (cursor là tất định nên
+      // goToStep khôi phục đúng). Chỉ storage — không set() để khỏi re-render.
+      if (activeHistoryId) {
+        historyStore.touch(activeHistoryId, { lastCursor: mod.timeline.currentStep(next) });
+      }
+    }
   }
 
   return {
@@ -121,6 +153,9 @@ export const useAppStore = create<AppState>((set, get) => {
     analysisError: null,
     unsupported: null,
     activeSampleId: null,
+    view: "home",
+    history: historyStore.list(),
+    activeHistoryId: null,
     active: null,
     playing: false,
     speedMs: 1200,
@@ -134,7 +169,7 @@ export const useAppStore = create<AppState>((set, get) => {
     setAnalyzing: (v) => set({ analyzing: v }),
     setAnalysisError: (msg) => set({ analysisError: msg }),
 
-    loadEnvelope: (env, sampleId) => {
+    loadEnvelope: (env, sampleId, originalInput) => {
       const mod = getSimulation(env.simulation_id);
       if (!mod) {
         set({
@@ -151,6 +186,9 @@ export const useAppStore = create<AppState>((set, get) => {
         });
         return;
       }
+      // M9-UX1: mô phỏng validate thành công → ghi lịch sử bền (dedup theo
+      // simulation_id + config; mở lại chỉ touch, không nhân bản).
+      const item = historyStore.record(env, originalInput ?? null);
       set({
         active: {
           moduleId: mod.id,
@@ -166,7 +204,48 @@ export const useAppStore = create<AppState>((set, get) => {
         // Chính sách M8: mô phỏng MỚI luôn mở ở 2D (mặc định); 3D là lựa chọn
         // của người dùng SAU đó, và chỉ khi module khai hỗ trợ.
         visualMode: "2d",
+        view: "workspace",
+        history: historyStore.list(),
+        activeHistoryId: item.id,
       });
+    },
+
+    goHome: () =>
+      set({
+        view: "home",
+        active: null,
+        activeHistoryId: null,
+        unsupported: null,
+        analysisError: null,
+        activeSampleId: null,
+        playing: false,
+        prediction: null,
+        history: historyStore.list(),
+      }),
+
+    openHistory: () => set({ view: "history", history: historyStore.list() }),
+
+    reopenFromHistory: (id) => {
+      const item = historyStore.list().find((x) => x.id === id);
+      if (!item) return;
+      // Envelope đã validate + engine tất định → 0 gọi AI, không đi pipeline.
+      get().loadEnvelope(item.envelope, undefined, item.originalInput ?? undefined);
+      if (get().active) {
+        if (item.lastCursor !== null) get().goToStep(item.lastCursor);
+        if (item.visualMode) get().setVisualMode(item.visualMode);
+        // goToStep xoá prediction (đúng ngữ nghĩa); tiến độ đã khôi phục xong.
+        set({ prediction: null });
+      }
+    },
+
+    removeHistoryItem: (id) => {
+      historyStore.remove(id);
+      set({ history: historyStore.list() });
+    },
+
+    clearHistory: () => {
+      historyStore.clear();
+      set({ history: [] });
     },
 
     loadUnsupported: (u) =>
@@ -259,8 +338,14 @@ export const useAppStore = create<AppState>((set, get) => {
     // M8: CHỈ đổi trường trình bày. Không đụng active (engine state/cursor giữ
     // nguyên khối), không xoá prediction (nó gắn với BƯỚC hiện tại — bước không
     // đổi thì dự đoán còn nguyên hiệu lực), không rebuild, không gọi mạng.
-    setVisualMode: (mode) => set({ visualMode: mode }),
+    setVisualMode: (mode) => {
+      set({ visualMode: mode });
+      // M9-UX1: visual mode là tiến độ trình bày an toàn → ghi vào lịch sử.
+      const id = get().activeHistoryId;
+      if (id) historyStore.touch(id, { visualMode: mode });
+    },
 
+    // Dọn RUNTIME — lịch sử bền KHÔNG bị đụng (hai đời sống tách biệt, M9-UX1).
     reset: () =>
       set({
         active: null,
@@ -270,6 +355,9 @@ export const useAppStore = create<AppState>((set, get) => {
         playing: false,
         prediction: null,
         visualMode: "2d",
+        view: "home",
+        activeHistoryId: null,
+        history: historyStore.list(),
       }),
   };
 });

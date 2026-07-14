@@ -50,11 +50,163 @@ button:disabled {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.125px;
+  background: none;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
 }
 
 .nav-tagline {
   font-size: 14px;
   color: var(--ink-muted);
+}
+
+/* ── M9-UX1: Home / History — một hành động chính, ít nhiễu ─────────────── */
+
+.app-single {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: var(--sp-xl) var(--sp-lg) var(--sp-2xl);
+  min-height: calc(100vh - 57px);
+}
+
+.home-hero {
+  text-align: center;
+  margin: var(--sp-2xl) 0 var(--sp-lg);
+}
+
+.home-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.75px;
+  margin: 0 0 var(--sp-sm);
+}
+
+.home-subtitle {
+  color: var(--ink-muted);
+  font-size: 16px;
+  margin: 0 auto;
+  max-width: 560px;
+}
+
+.home-composer {
+  max-width: 680px;
+  margin: 0 auto var(--sp-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.home-section {
+  max-width: 760px;
+  margin: 0 auto var(--sp-xl);
+}
+
+.home-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  margin: 0 0 var(--sp-sm);
+}
+
+.starter-grid,
+.recent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--sp-sm);
+}
+
+.starter-card,
+.recent-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-xs);
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: var(--sp-sm) var(--sp-md);
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+
+.starter-card:hover,
+.recent-card:hover {
+  border-color: var(--primary);
+}
+
+.starter-card:active,
+.recent-card:active {
+  transform: scale(0.98);
+}
+
+.starter-card-body,
+.recent-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.starter-card .sample-dot {
+  margin-top: 6px;
+  flex: none;
+}
+
+.starter-card-body {
+  min-width: 0;
+}
+
+.recent-title {
+  font-weight: 600;
+}
+
+.home-see-all {
+  margin-top: var(--sp-sm);
+}
+
+/* History view */
+.history-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.history-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.history-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: var(--sp-sm) var(--sp-md);
+}
+
+.history-row-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.history-row-actions {
+  margin-left: auto;
+  display: flex;
+  gap: var(--sp-xs);
+  flex: none;
 }
 
 .page {
