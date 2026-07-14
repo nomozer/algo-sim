@@ -36,15 +36,24 @@ Cập nhật lần cuối: sau **M7.FREEZE**.
 | **Tổng M7.14D** | | **8** | 0 | 0 |
 | M8-PRE (S3) | verify có mục tiêu: đề "phân tích hệ thống" + guard quan hệ đời thường; 3 lần diag đếm object/attempt; 1 lần probe schema | **55** | 6 | 9 (1 ReadTimeout + 8× HTTP 503 "high demand" ở lần chạy cuối) |
 | M8-PRE (plan C) | inspect composition (2 dump) + verify sau nén (V1 + V2) | **15** | 1 | 1 |
+| M8-PRE (stability smoke) | đề "phân tích hệ thống" × **5 lần hoàn tất** | **19** | 2 | 2 (429/5xx — retry nuốt trọn, **0 run bị hỏng**) |
 
-**TRẠNG THÁI TRUNG THỰC của đề "phân tích hệ thống" (không được nói quá):**
-- Định tuyến: ✅ **đã sửa** — không còn `unsupported` im lặng.
-- End-to-end: ✅ **đã đạt cảnh executable ĐÃ VALIDATE** (verify live sau nén: 7 node vai
-  trò · **10/10 edge có chiều** · `reveal_sequence` + `move_along_path` · 19 object).
-- Độ ỔN ĐỊNH: ⚠️ **chưa có bằng chứng thống kê**. Số object của bản nháp dao động
-  11–27 tuỳ lần sinh. Nén dư thừa xử lí đúng dạng phồng đã quan sát (test offline:
-  22 → 11), nhưng **lần verify live vừa rồi bản nháp đã sẵn 19 object nên nén KHÔNG
-  cần chạy** → chưa quan sát được nén "cứu" một ca thật. Chưa tuyên bố "hỗ trợ đầy đủ".
+**TRẠNG THÁI của đề "phân tích hệ thống" — sau STABILITY SMOKE 5 lần chạy hoàn tất:**
+- Định tuyến: ✅ **đã sửa** — **0/5** lần `unsupported` im lặng; **5/5** vào `generic.rule_scene`.
+- Vai trò hệ thống: ✅ **5/5** có đủ actor + process + data_store (4/5 có cả input/output).
+- Chiều luồng dữ liệu: ✅ **39/39 edge (100%) có `directed`** — cổng suy tất định hoạt
+  động ổn định (LLM vẫn không tự khai, đúng như đã đo).
+- Kết quả: ✅ **5/5 validate end-to-end**, đều là `executable_simulation`
+  (`reveal_sequence` 5/5; `move_along_path` 3/5) — **result mode khai báo trung thực**.
+- Ngân sách object: **KHÔNG cảnh hợp lệ nào cần > 20** (spec cuối: 13, 14, 15, 17, 17).
+  Khẳng định lại kết luận plan C: **không nâng hạn mức, không cần capability-aware budget.**
+- **Nén dư thừa: fired 0/5.** Nó là LƯỚI AN TOÀN, không phải thứ đang gánh tính năng.
+  Ở run 4 có một bản nháp 27 object bị từ chối vì hạn mức — nén **cố ý KHÔNG cứu** vì
+  các label đó **không trùng hệt** nhãn inline nào (không có dư thừa chứng minh được),
+  đúng thiết kế bảo thủ; **retry của pipeline** phục hồi (27 → 16 → 15 ✅).
+- Cách diễn đạt ĐƯỢC PHÉP: *"Repeated targeted live verification showed consistent
+  end-to-end success across a five-run stability sample."*
+  **CẤM** nói: ~~"đã chứng minh tin cậy về mặt thống kê"~~ (n = 5, không đủ).
 
 **M8-PRE (S3) — điều live PHÁT HIỆN ra mà offline không thấy được:**
 1. LLM dựng đúng `actor→process→data_store` trong `from`/`to` nhưng **KHÔNG BAO GIỜ khai
