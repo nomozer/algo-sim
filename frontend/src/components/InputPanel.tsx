@@ -1,76 +1,75 @@
-import { SAMPLE_PROMPTS } from "../data/sim-samples";
+import { useState } from "react";
 import { DOMAIN_COLOR, DOMAIN_LABEL, publicCatalog } from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
-import { ProblemInput } from "./ProblemInput";
+import { previewKindOf, SamplePreview } from "./SamplePreview";
 
 /**
- * Panel trái TRONG WORKSPACE: nhập đề + hai nhóm mẫu tách bạch —
- * "Chạy ngay" (envelope offline, không cần AI) vs "Thử phân tích bằng AI"
- * (đề đưa qua pipeline thật analyze→classify→simulate→validate, M5 §8).
- * M9-UX1: danh mục lấy từ offline-catalog dùng chung với HomeView.
+ * Panel trái TRONG WORKSPACE (M9-UX4) — MỘT việc duy nhất: **đổi sang bài khác**.
  *
- * M9-UX3 — `publicCatalog()`, KHÔNG phải `offlineCatalog()`. Luật phạm vi M9-UX2
- * ("danh mục công khai khoanh trong Tin học THPT") phải áp ở MỌI bề mặt học sinh
- * thấy, không riêng Home: panel này từng đổ cả fixture nội bộ (tam giác, 3 bản
- * "(tổng quát)") ra cho học sinh, kèm chuỗi kĩ thuật `algorithm.find_max` làm phụ
- * đề. Fixture KHÔNG mất — `offlineCatalog()` vẫn còn nguyên cho test/dev, và lịch
- * sử mở lại bằng envelope nên không phụ thuộc danh mục (bất biến #17).
+ * Trước M9-UX4 panel này nhồi ba khối vào một cột ~270px: composer đầy đủ (ô nhập
+ * + nút tải tệp xuống 2 dòng + nút xanh to) + 12 mẫu + 3 đề "thử phân tích bằng AI".
+ * Trang chủ ĐÃ LÀ nơi phân tích đề — giữ thêm một composer ở đây là hai nơi làm
+ * cùng một việc, và chính nó là thứ làm cột này chật. Nay: về Trang chủ để nhập đề
+ * mới; panel chỉ còn danh mục (có tranh) + bộ lọc.
+ *
+ * `publicCatalog()` (M9-UX3): học sinh chỉ thấy mẫu Tin học THPT; fixture nội bộ
+ * vẫn sống trong `offlineCatalog()` cho test/dev.
  */
 export function InputPanel() {
   const activeSampleId = useAppStore((s) => s.activeSampleId);
   const loadEnvelope = useAppStore((s) => s.loadEnvelope);
-  const setProblemText = useAppStore((s) => s.setProblemText);
+  const goHome = useAppStore((s) => s.goHome);
+  const [filter, setFilter] = useState("");
 
-  const offlineRows = publicCatalog().map((e) => ({
-    ...e,
-    load: () => loadEnvelope(e.envelope, e.id),
-  }));
+  const q = filter.trim().toLowerCase();
+  const rows = publicCatalog().filter(
+    (e) =>
+      q === "" ||
+      e.title.toLowerCase().includes(q) ||
+      DOMAIN_LABEL[e.domain].toLowerCase().includes(q),
+  );
 
   return (
-    <div className="stack" style={{ gap: "var(--sp-md)" }}>
-      <ProblemInput />
+    <div className="stack" style={{ gap: "var(--sp-sm)" }}>
+      <button className="panel-home-link" onClick={goHome}>
+        ← Trang chủ · nhập đề bài mới
+      </button>
 
       <section className="card stack" style={{ gap: "var(--sp-sm)" }}>
-        <span className="eyebrow">CHẠY NGAY — KHÔNG CẦN AI</span>
+        <span className="eyebrow">ĐỔI SANG BÀI KHÁC</span>
+
+        <input
+          className="panel-filter"
+          type="search"
+          placeholder="Lọc mô phỏng…"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+        />
+
         <div className="stack" style={{ gap: 2 }}>
-          {offlineRows.map((row) => (
+          {rows.map((row) => (
             <button
               key={row.id}
               className={`sample-row${activeSampleId === row.id ? " is-active" : ""}`}
-              onClick={() => {
-                setProblemText("");
-                row.load();
-              }}
+              onClick={() => loadEnvelope(row.envelope, row.id)}
             >
-              <span className="sample-dot" style={{ background: DOMAIN_COLOR[row.domain] }} />
-              <span>
-                <strong style={{ fontWeight: 600 }}>{row.title}</strong>
-                <br />
-                {/* nhãn domain tiếng Việt — KHÔNG lộ simulation_id kĩ thuật */}
-                <span className="hint">{DOMAIN_LABEL[row.domain]}</span>
+              <SamplePreview kind={previewKindOf(row.simId, row.preview)} />
+              <span className="sample-row-body">
+                <strong className="sample-row-title">{row.title}</strong>
+                {/* nhãn tiếng Việt — KHÔNG lộ simulation_id kĩ thuật */}
+                <span className="starter-card-domain">
+                  <span className="starter-dot" style={{ background: DOMAIN_COLOR[row.domain] }} />
+                  {DOMAIN_LABEL[row.domain]}
+                </span>
               </span>
             </button>
           ))}
-        </div>
-      </section>
 
-      <section className="card stack" style={{ gap: "var(--sp-sm)" }}>
-        <span className="eyebrow">THỬ PHÂN TÍCH BẰNG AI</span>
-        <span className="hint">
-          Điền đề vào ô trên rồi bấm <strong>Phân tích đề bằng AI</strong> — đề đi qua pipeline
-          thật (phân tích → phân loại → sinh cấu hình → kiểm tra).
-        </span>
-        <div className="stack" style={{ gap: 2 }}>
-          {SAMPLE_PROMPTS.map((p) => (
-            <button key={p.id} className="sample-row" onClick={() => setProblemText(p.text)}>
-              <span className="sample-dot" style={{ background: "var(--ink-faint)" }} />
-              <span>
-                <strong style={{ fontWeight: 600 }}>{p.label}</strong>
-                <br />
-                <span className="hint">{p.text}</span>
-              </span>
-            </button>
-          ))}
+          {rows.length === 0 && (
+            <span className="hint" style={{ padding: "var(--sp-sm) 0" }}>
+              Không có mô phỏng nào khớp “{filter}”.
+            </span>
+          )}
         </div>
       </section>
     </div>

@@ -10,6 +10,7 @@ import type { Domain } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
 import { previewKindOf, SamplePreview } from "./SamplePreview";
+import { SessionCard } from "./SessionCard";
 
 /**
  * HOME (M9-UX1) — trạng thái vào app: MỘT hành động chính rõ ràng.
@@ -114,7 +115,7 @@ export function HomeView() {
       </div>
 
       <div className="home-composer">
-        <ProblemInput variant="hero" />
+        <ProblemInput />
         {unsupported && (
           <section className="card" role="status">
             <span className="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span>
@@ -161,26 +162,13 @@ export function HomeView() {
       {recents.length > 0 && (
         <section className="home-section">
           <h2 className="home-section-title">Tiếp tục học</h2>
-          <div className="recent-grid">
+          <div className="session-list">
             {recents.map((item) => (
-              <button
+              <SessionCard
                 key={item.id}
-                className="recent-card"
-                onClick={() => reopenFromHistory(item.id)}
-                title="Mở lại — không gọi AI"
-              >
-                <strong className="recent-title">{item.title}</strong>
-                <span className="hint">
-                  {DOMAIN_LABEL[item.domain as keyof typeof DOMAIN_LABEL] ?? item.domain}
-                  {item.lastCursor !== null && item.lastCursor > 0 && (
-                    <> · đang ở bước {item.lastCursor + 1}</>
-                  )}
-                </span>
-                <span className="recent-foot">
-                  <span className="hint">{formatRelativeTime(item.lastViewedAt)}</span>
-                  <span className="recent-continue">Tiếp tục ▸</span>
-                </span>
-              </button>
+                item={item}
+                onOpen={() => reopenFromHistory(item.id)}
+              />
             ))}
           </div>
           {history.length > recents.length && (

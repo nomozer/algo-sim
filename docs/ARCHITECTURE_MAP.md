@@ -194,6 +194,20 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
    patch/edit BE) — ẩn nút là KHÔNG đủ.
 7. **Chạy full live eval theo thói quen** — tốn quota; theo chính sách trong
    `CORRECTNESS.md §7`.
+8. **`renderToString(<App/>)` để kiểm một view CÓ DỮ LIỆU** (M9-UX4) — zustand v5
+   dùng `useSyncExternalStore`; khi SSR, React lấy **getServerSnapshot = initial
+   state**, nên state vừa mutate KHÔNG hiện ra. Test kiểu này xanh/đỏ vì lý do
+   sai: một assert `toContain("Thuật toán")` tưởng là đang kiểm thẻ Lịch sử, thực
+   ra khớp nhãn domain của starter card ở **Home**. **Luật**: test SSR qua `App`
+   chỉ hợp lệ ở **trạng thái đầu**; muốn kiểm view có dữ liệu thì **render thẳng
+   component với prop** (vd `SessionCard` nhận `item`) hoặc assert trên `store()`.
+9. **Ký tự Unicode hình khối làm icon** (M9-UX4) — `◧`/`◨` (U+25E7/25E8) không có
+   glyph trong font hệ thống Windows → hiện **ô vuông rỗng (tofu)** ngay trên
+   header. Icon phải là SVG, đừng phụ thuộc font.
+10. **Chuỗi kĩ thuật lọt lên UI học sinh** (M9-UX3/UX4) — `simulation_id`
+   (`algorithm.bubble_sort`) từng bị render ở `InputPanel` rồi `HistoryView`. Vá
+   một chỗ **không** vá chỗ kia: luật phạm vi phải áp ở **mọi bề mặt** học sinh
+   thấy, và tốt nhất là gom về **một component chung** (nay là `SessionCard`).
 
 ## 9. Vị trí cache & pattern reuse
 

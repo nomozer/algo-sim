@@ -16,6 +16,37 @@ import { useAppStore } from "./state/store";
  *   history   = toàn bộ lịch sử học (mở lại zero-AI).
  * Về Home KHÔNG phá liên tục học: active dọn đi nhưng lịch sử bền giữ nguyên.
  */
+
+/**
+ * Icon panel (M9-UX4) — SVG, KHÔNG dùng ký tự Unicode.
+ * Trước đây nút này ghi `◧` / `◨` (U+25E7/25E8): font hệ thống Windows không có
+ * glyph nên hiện ra Ô VUÔNG RỖNG (tofu) ngay trên header. Ký tự hình khối hiếm
+ * là bẫy — vẽ SVG thì không phụ thuộc font nào.
+ */
+function PanelIcon({ side }: { side: "left" | "right" }) {
+  return (
+    <svg
+      className="panel-icon"
+      viewBox="0 0 16 16"
+      width="13"
+      height="13"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="1.5" y="2.5" width="13" height="11" rx="2" fill="none" stroke="currentColor" />
+      <rect
+        x={side === "left" ? 1.5 : 9.5}
+        y="2.5"
+        width="5"
+        height="11"
+        rx={0}
+        fill="currentColor"
+        opacity={0.75}
+      />
+    </svg>
+  );
+}
+
 export default function App() {
   const view = useAppStore((s) => s.view);
   const active = useAppStore((s) => s.active);
@@ -54,16 +85,18 @@ export default function App() {
             <button
               className={`btn-utility${leftOpen ? " is-active" : ""}`}
               onClick={toggleLeft}
-              title="Ẩn/hiện bảng nhập đề và danh mục"
+              title="Ẩn/hiện danh mục mô phỏng"
             >
-              ◧ Đề bài
+              <PanelIcon side="left" />
+              Danh mục
             </button>
             <button
               className={`btn-utility${rightOpen ? " is-active" : ""}`}
               onClick={toggleRight}
               title="Ẩn/hiện bảng quan sát và hỏi AI"
             >
-              Quan sát ◨
+              Quan sát
+              <PanelIcon side="right" />
             </button>
           </span>
         )}

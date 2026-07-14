@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { SAMPLE_PROMPTS } from "../data/sim-samples";
 import { useAppStore } from "../state/store";
 import { analyzeViaServer, fetchHealth, type ServerHealth } from "../llm/client";
 import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input";
@@ -8,15 +9,13 @@ import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input
  * Mọi đầu vào chuẩn hóa thành InputPayload rồi gọi /api/analyze (một contract).
  * Việc gọi Gemini do backend đảm nhiệm (trình duyệt không giữ API key).
  *
- * M9-UX3 — HAI VỎ, MỘT LÕI. Component này phục vụ hai chỗ có ràng buộc bề rộng
- * khác hẳn nhau, nên tách LỚP VỎ chứ không nhân đôi hành vi:
- *   - "hero"    (HomeView): pill — ô một dòng tự cao dần, kẹp tệp và nút gửi
- *                nằm TRONG ô. Đây là hành động chính của Trang chủ.
- *   - "compact" (InputPanel, cột trái workspace 264px): form xếp dọc như cũ —
- *                pill có icon hai đầu sẽ vỡ ở bề rộng đó.
- * Mọi logic (analyze, tệp, health, lỗi) DÙNG CHUNG — chỉ khác JSX bao ngoài.
+ * M9-UX4 — MỘT DẠNG DUY NHẤT (pill), và CHỈ SỐNG Ở TRANG CHỦ.
+ * M9-UX3 từng tách hai vỏ hero/compact vì `InputPanel` (cột trái workspace) cũng
+ * nhúng composer. M9-UX4 gỡ composer khỏi workspace — Trang chủ LÀ nơi phân tích
+ * đề, giữ thêm một bản trong cột 270px là hai nơi làm cùng một việc. Vỏ "compact"
+ * hết người dùng nên gỡ luôn, không nuôi code chết.
  */
-export function ProblemInput({ variant = "compact" }: { variant?: "hero" | "compact" }) {
+export function ProblemInput() {
   const problemText = useAppStore((s) => s.problemText);
   const setProblemText = useAppStore((s) => s.setProblemText);
   const analyzing = useAppStore((s) => s.analyzing);
@@ -48,12 +47,11 @@ export function ProblemInput({ variant = "compact" }: { variant?: "hero" | "comp
 
   function onChangeText(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setProblemText(e.target.value);
-    if (variant === "hero") autoGrow(e.target);
+    autoGrow(e.target);
   }
 
   // Enter = gửi, Shift+Enter = xuống dòng (quy ước quen thuộc của ô chat).
   function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (variant !== "hero") return;
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (canAnalyze) void onAnalyze();
@@ -116,106 +114,83 @@ export function ProblemInput({ variant = "compact" }: { variant?: "hero" | "comp
       </span>
     ) : null;
 
-  // Dùng chung cho cả hai vỏ — input tệp ẩn, chip tệp đã chọn, băng lỗi.
-  const hiddenFileInput = (
-    <input
-      ref={fileInputRef}
-      type="file"
-      accept={acceptAttr()}
-      onChange={onPickFile}
-      style={{ display: "none" }}
-    />
-  );
-
-  const fileChip = file && (
-    <div className="file-chip">
-      <span className="file-chip-info">
-        <strong>{file.name}</strong>
-        <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>
-      </span>
-      <button className="file-chip-remove" onClick={removeFile} title="Bỏ tệp">
-        ×
-      </button>
-    </div>
-  );
-
-  if (variant === "hero") {
-    return (
-      <div className="composer-hero">
-        <div className={`composer-pill${analyzing ? " is-busy" : ""}`}>
-          {hiddenFileInput}
-          <button
-            className="composer-attach"
-            onClick={() => fileInputRef.current?.click()}
-            title="Tải tệp (.docx / .py / ảnh)"
-            aria-label="Tải tệp"
-          >
-            📎
-          </button>
-          {/* Pill cao 1 dòng → placeholder phải NGẮN, nếu không nó xuống dòng và
-              bị cắt cụt (auto-grow chỉ chạy khi gõ). Ví dụ dài đã nằm ở phụ đề. */}
-          <textarea
-            ref={textRef}
-            className="composer-text"
-            rows={1}
-            placeholder="Nhập đề bài Tin học của em…"
-            value={problemText}
-            onChange={onChangeText}
-            onKeyDown={onKeyDown}
-            disabled={file !== null}
-          />
-          <button
-            className="composer-send"
-            onClick={onAnalyze}
-            disabled={!canAnalyze}
-            title="Phân tích đề bằng AI"
-            aria-label="Phân tích đề bằng AI"
-          >
-            {analyzing ? "…" : "↑"}
-          </button>
-        </div>
-
-        {/* Ví dụ cụ thể: học sinh chưa dùng bao giờ thì không biết gõ gì cho vừa. */}
-        {!file && problemText.length === 0 && (
-          <p className="composer-example">
-            Ví dụ: “Lớp 10A có các bạn với điểm kiểm tra khác nhau. Tìm bạn có điểm cao nhất.”
-          </p>
-        )}
-
-        {fileChip}
-        {fileError && <div className="error-banner">{fileError}</div>}
-        {serverStatus}
-        {analysisError && <div className="error-banner">{analysisError}</div>}
-      </div>
-    );
-  }
+  const idle = !file && problemText.length === 0;
 
   return (
-    <section className="card stack home-composer-card" style={{ gap: "var(--sp-sm)" }}>
-      <textarea
-        className="text-input"
-        rows={5}
-        placeholder='Nhập đề bài, ví dụ: "Lớp 10A có các bạn với điểm kiểm tra khác nhau. Tìm bạn có điểm cao nhất."'
-        value={problemText}
-        onChange={onChangeText}
-        disabled={file !== null}
-      />
-
-      <div className="upload-row">
-        {hiddenFileInput}
-        <button className="btn-utility" onClick={() => fileInputRef.current?.click()}>
-          📎 Tải tệp (.docx / .py / ảnh)
+    <div className="composer-hero">
+      <div className={`composer-pill${analyzing ? " is-busy" : ""}`}>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept={acceptAttr()}
+          onChange={onPickFile}
+          style={{ display: "none" }}
+        />
+        <button
+          className="composer-attach"
+          onClick={() => fileInputRef.current?.click()}
+          title="Tải tệp (.docx / .py / ảnh)"
+          aria-label="Tải tệp"
+        >
+          📎
+        </button>
+        {/* Pill cao 1 dòng → placeholder phải NGẮN, nếu không nó xuống dòng và bị
+            cắt cụt (auto-grow chỉ chạy khi gõ). Đề mẫu đã nằm ở hàng chip bên dưới. */}
+        <textarea
+          ref={textRef}
+          className="composer-text"
+          rows={1}
+          placeholder="Nhập đề bài Tin học của em…"
+          value={problemText}
+          onChange={onChangeText}
+          onKeyDown={onKeyDown}
+          disabled={file !== null}
+        />
+        <button
+          className="composer-send"
+          onClick={onAnalyze}
+          disabled={!canAnalyze}
+          title="Phân tích đề bằng AI"
+          aria-label="Phân tích đề bằng AI"
+        >
+          {analyzing ? "…" : "↑"}
         </button>
       </div>
 
-      {fileChip}
-      {fileError && <div className="error-banner">{fileError}</div>}
+      {/* M9-UX4 — đề mẫu BẤM ĐƯỢC, thay cho câu ví dụ tĩnh. Học sinh chưa dùng bao
+          giờ thì không biết gõ gì cho vừa; chip điền sẵn đề thật vào ô (VẪN phải tự
+          bấm gửi — không lén tiêu một lượt gọi AI). Đây cũng là chỗ ở mới của
+          SAMPLE_PROMPTS sau khi panel workspace bỏ mục "thử phân tích bằng AI". */}
+      {idle && (
+        <div className="composer-prompts">
+          <span className="hint">Chưa biết bắt đầu từ đâu? Thử:</span>
+          {SAMPLE_PROMPTS.map((p) => (
+            <button
+              key={p.id}
+              className="prompt-chip"
+              onClick={() => setProblemText(p.text)}
+              title={p.text}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+      )}
 
-      <button className="btn-primary" onClick={onAnalyze} disabled={!canAnalyze}>
-        {analyzing ? "Đang phân tích…" : "Phân tích đề bằng AI"}
-      </button>
+      {file && (
+        <div className="file-chip">
+          <span className="file-chip-info">
+            <strong>{file.name}</strong>
+            <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>
+          </span>
+          <button className="file-chip-remove" onClick={removeFile} title="Bỏ tệp">
+            ×
+          </button>
+        </div>
+      )}
+      {fileError && <div className="error-banner">{fileError}</div>}
       {serverStatus}
       {analysisError && <div className="error-banner">{analysisError}</div>}
-    </section>
+    </div>
   );
 }

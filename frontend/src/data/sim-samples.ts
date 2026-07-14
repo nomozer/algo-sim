@@ -250,16 +250,23 @@ OFFLINE_SAMPLES.push(
 );
 
 /** Đề mẫu để THỬ pipeline AI (§8) — điền vào ô nhập rồi bấm Phân tích. */
+/**
+ * Đề mẫu để THỬ PIPELINE AI thật (analyze→classify→simulate→validate) — khác với
+ * OFFLINE_SAMPLES (envelope dựng sẵn, chạy ngay, 0 gọi AI).
+ * M9-UX4: hiện thành chip dưới ô nhập ở Trang chủ; bấm chip chỉ ĐIỀN SẴN đề vào ô,
+ * học sinh vẫn phải tự bấm gửi — không lén tiêu một lượt gọi AI.
+ * Nhãn giữ tiếng Việt thuần: không lộ tên domain kĩ thuật (logic/binary/network).
+ */
 export const SAMPLE_PROMPTS: { id: string; label: string; text: string }[] = [
-  { id: "p-logic", label: "Cổng AND (logic)", text: "Khi nào cổng AND có đầu ra bằng 1?" },
+  { id: "p-logic", label: "Cổng logic AND", text: "Khi nào cổng AND có đầu ra bằng 1?" },
   {
     id: "p-binary",
-    label: "Số 13 nhị phân (binary)",
+    label: "Số 13 sang nhị phân",
     text: "Số 13 được biểu diễn dưới dạng nhị phân như thế nào?",
   },
   {
     id: "p-network",
-    label: "Gói tin (network)",
+    label: "Đường đi của gói tin",
     text: "Minh họa đường đi của một gói tin từ máy tính đến máy chủ.",
   },
 ];

@@ -231,10 +231,24 @@ bằng test "không hai bài thuật toán nào dùng chung một tranh".
 Tests: `catalog.test.tsx`.
 
 ### `components/ProblemInput.tsx` · Change impact: offline
-M9-UX3 — HAI VỎ, MỘT LÕI: `variant="hero"` (Home — pill, ô tự cao dần, kẹp tệp +
-nút gửi nằm TRONG ô, Enter gửi / Shift+Enter xuống dòng) vs `variant="compact"`
-(mặc định; InputPanel cột 264px — form xếp dọc như cũ). Mọi logic analyze/tệp/
-health/lỗi DÙNG CHUNG, chỉ khác JSX bao ngoài. Tests: `catalog.test.tsx`.
+M9-UX4 — MỘT dạng duy nhất (pill: ô tự cao dần, kẹp tệp + nút gửi nằm TRONG ô,
+Enter gửi / Shift+Enter xuống dòng) và **chỉ sống ở Trang chủ**. M9-UX3 từng có
+hai vỏ hero/compact vì `InputPanel` cũng nhúng composer; M9-UX4 gỡ composer khỏi
+workspace nên vỏ `compact` hết người dùng → gỡ prop `variant`, không nuôi code
+chết. `SAMPLE_PROMPTS` hiện thành chip bấm được dưới ô nhập (điền sẵn đề, học
+sinh vẫn phải tự bấm gửi — không lén tiêu lượt gọi AI). Tests: `catalog.test.tsx`.
+
+### `components/SessionCard.tsx` · Change impact: offline
+M9-UX4 — MỘT thẻ cho phiên đã học, dùng chung `HomeView` ("Tiếp tục học") +
+`HistoryView`. Exports: `SessionCard`, `progressOf(item)`.
+**Tiến độ SUY TỪ ENGINE TẤT ĐỊNH**, không persist: `progressOf` gọi
+`getSimulation(item.simulationId).init(envelope.config)` → `timeline.stepCount`.
+Lý do không lưu `totalSteps` vào `HistoryItem`: schema v1 đã nằm trong máy người
+dùng, bump version sẽ **xoá sạch lịch sử đang có**. Module KHÔNG khai `timeline`
+(exploratory, vd `logic.and_gate`) → trả `null` → **không có thanh tiến độ** (UI
+dẫn xuất từ capability, không bịa "1 bước"). Envelope lạ/hỏng → `null`, không ném.
+**KHÔNG BAO GIỜ render `simulationId`** ra UI (rò rỉ cũ của `HistoryView`).
+Tests: `catalog.test.tsx`.
 
 ### `simulations/domains/generic/model.ts` · Change impact: offline
 Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,
