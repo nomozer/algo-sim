@@ -66,6 +66,8 @@ spec hiện tại + yêu cầu → (LLM đề xuất patch) → SimulationPatch
 | Cấu hình đang chạy | store (`active.config`) — **opaque**, bất biến | store mù domain |
 | **Visual mode (2D/3D) đang hiển thị** | store — **lát trình bày** (`visualMode`, cạnh `leftOpen`) | M8: không bao giờ vào engine state/spec; **không do LLM chọn**; đổi mode không đụng active/cursor/prediction |
 | Renderer khả dụng của một module | hợp đồng module (`supportedVisualModes` ∩ `renderers`) qua `simulations/renderer.ts` | **cấm** switch-case theo simulation_id |
+| Mặt trình bày đang mở (home/workspace/history) | store — `view` (M9-UX1) | như visualMode: trình bày thuần, không đụng engine |
+| **Lịch sử học BỀN** | `state/history.ts` → localStorage (schema v1, whitelist) | M9-UX1: envelope ĐÃ VALIDATE + tiến độ trình bày an toàn (lastCursor/visualMode); **runtime reset/goHome không phá lịch sử** |
 
 ## 3b. Quy tắc RENDERER-NEUTRAL STATE (M7.FREEZE — điều kiện để có 3D)
 
@@ -126,6 +128,7 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 | 14 | Live eval là **opt-in**, không phải thói quen | `evaluation/live.py` (`ALLOW_LIVE_AI=1`) | `test_live_budget::test_live_khong_co_opt_in_thi_abort` |
 | 15 | Patch fail → spec hiện tại **nguyên vẹn** | `patch.py` áp trên bản sao | `test_patch::test_patch_fail_giua_chung_khong_mutate_spec` |
 | 16 | **3D là renderer, không phải domain** (M8): 2D/3D dùng chung module/config/state/timeline/action/prediction; `visualMode` là trình bày thuần; renderer khả dụng dẫn xuất từ hợp đồng module | `simulations/renderer.ts` + `SimulationWorkspace` (không switch-case id) | `visual-mode.test.tsx`, `render3d.test.tsx`, `m8-acceptance.test.tsx` |
+| 17 | **Mở lại từ lịch sử = ZERO-AI** (M9-UX1): lưu envelope ĐÃ VALIDATE, mở lại qua `loadEnvelope` + engine tất định — không đi pipeline, không LLM; chỉ persist trường whitelist (không prediction/branch/camera/secret); runtime reset không phá lịch sử | `state/history.ts` + `store.reopenFromHistory` | `history.test.ts`, `view-history.test.tsx` |
 
 ## 6. Bốn trục khái niệm
 
