@@ -238,6 +238,24 @@ workspace nên vỏ `compact` hết người dùng → gỡ prop `variant`, khô
 chết. `SAMPLE_PROMPTS` hiện thành chip bấm được dưới ô nhập (điền sẵn đề, học
 sinh vẫn phải tự bấm gửi — không lén tiêu lượt gọi AI). Tests: `catalog.test.tsx`.
 
+### `components/icons.tsx` · Change impact: offline
+M9-UX5/UX6 — bộ icon SVG nét đậm bo tròn (stroke 2.4, `currentColor`, khung 24×24).
+**LUẬT: icon trong UI phải là component ở file này** — CẤM emoji/ký tự Unicode.
+Đã cháy: `◧` (U+25E7) không có glyph trong font Windows → ô vuông rỗng trên header.
+Khoá bằng `components/ui-hygiene.test.ts` (**quét MÃ NGUỒN**, không quét HTML render).
+
+### `components/LibraryView.tsx` · Change impact: offline
+M9-UX5 — trang **Thư viện** (`store.view === "library"`): danh mục ĐẦY ĐỦ, gom nhóm
+theo domain + lọc. Nhà riêng của danh mục → Home không phải gánh nó nữa nên
+**không bao giờ phình**. M9-UX7: cũng thay luôn vai trò của `InputPanel` (đã gỡ).
+
+### `scripts/audit-layout.mjs` · Change impact: offline (cần `npm run dev`)
+M9-UX7 — **soát bố cục trên Chrome thật** qua CDP: `npm run audit:layout`.
+Đo 5 thứ trên cả 4 route: icon lệch tâm · chữ bị cắt · phần tử đè nhau · tràn khỏi
+khung cha · khoảng cách ngoài thang 4px. Có **dấu vân tay trang** (đo nhầm route →
+thoát mã 2) và đã được **chứng minh bằng tiêm lỗi giả**. Đây là thứ DUY NHẤT bắt
+được lớp lỗi CSS im lặng (vd `var(--sp-2xl)` không tồn tại) — vitest không chạy CSS.
+
 ### `components/SessionCard.tsx` · Change impact: offline
 M9-UX4 — MỘT thẻ cho phiên đã học, dùng chung `HomeView` ("Tiếp tục học") +
 `HistoryView`. Exports: `SessionCard`, `progressOf(item)`.

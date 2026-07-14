@@ -1,7 +1,6 @@
 import { HistoryView } from "./components/HistoryView";
 import { HomeView } from "./components/HomeView";
 import { IconPanel } from "./components/icons";
-import { InputPanel } from "./components/InputPanel";
 import { LibraryView } from "./components/LibraryView";
 import { SimulationControls } from "./components/SimulationControls";
 import { SimulationInspector } from "./components/SimulationInspector";
@@ -9,29 +8,31 @@ import { SimulationWorkspace } from "./components/SimulationWorkspace";
 import { useAppStore } from "./state/store";
 
 /**
- * M9-UX1 — ba mặt trình bày trên MỘT store:
- *   home      = vào cửa: MỘT hành động chính (phân tích đề) + gợi ý + gần đây;
- *               KHÔNG inspector rỗng, KHÔNG timeline rỗng, KHÔNG panel thừa.
- *   workspace = phiên học đầy đủ (bố cục simulation-centered M2 giữ nguyên:
- *               trái đề/danh mục · GIỮA sân khấu lớn nhất · phải quan sát/AI ·
- *               đáy điều khiển theo capability).
+ * M9-UX1 (mở rộng M9-UX5/UX7) — BỐN mặt trình bày trên MỘT store:
+ *   home      = vào cửa: MỘT hành động chính (phân tích đề) + 6 gợi ý + 1 thẻ tiếp tục;
+ *   library   = danh mục mô phỏng ĐẦY ĐỦ (gom nhóm, có lọc);
+ *   workspace = phiên học: SÂN KHẤU + Quan sát + điều khiển theo capability;
  *   history   = toàn bộ lịch sử học (mở lại zero-AI).
  * Về Home KHÔNG phá liên tục học: active dọn đi nhưng lịch sử bền giữ nguyên.
+ *
+ * M9-UX7 — PANEL TRÁI ĐÃ GỠ HẲN. Sau khi có trang Thư viện, danh mục tồn tại ở BA
+ * nơi (Home / Thư viện / panel trái) — panel trái là bản sao thứ ba, đúng thứ lỗi
+ * "hai nơi làm một việc" mà M9-UX4 đã dùng để gỡ composer khỏi chính panel đó.
+ * Đổi bài nay đi qua **Thư viện** trên header. Workspace còn 2 cột → sân khấu rộng
+ * hẳn, header bớt một nút, bớt một component phải giữ đồng bộ.
  */
 
 export default function App() {
   const view = useAppStore((s) => s.view);
   const active = useAppStore((s) => s.active);
-  const leftOpen = useAppStore((s) => s.leftOpen);
   const rightOpen = useAppStore((s) => s.rightOpen);
-  const toggleLeft = useAppStore((s) => s.toggleLeft);
   const toggleRight = useAppStore((s) => s.toggleRight);
   const goHome = useAppStore((s) => s.goHome);
   const openHistory = useAppStore((s) => s.openHistory);
   const openLibrary = useAppStore((s) => s.openLibrary);
 
   const inWorkspace = view === "workspace" && active !== null;
-  const layoutClass = `app-layout${leftOpen ? "" : " left-closed"}${rightOpen ? "" : " right-closed"}`;
+  const layoutClass = `app-layout${rightOpen ? "" : " right-closed"}`;
 
   return (
     <>
@@ -40,8 +41,7 @@ export default function App() {
           AlgoSim
         </button>
         {/* M9-UX5: điều hướng là LINK CHỮ đẩy sang phải, trang đang xem gạch chân.
-            Trước đây là hai nút pill dính sát wordmark — trông như thanh công cụ,
-            không phải điều hướng. Nút bật/tắt panel nằm cùng bên phải, sau vạch ngăn. */}
+            M9-UX7: chỉ còn MỘT nút bật/tắt panel (Quan sát) — panel trái đã gỡ hẳn. */}
         <nav className="nav-links">
           <button
             className={`nav-link${view === "home" ? " is-active" : ""}`}
@@ -66,14 +66,6 @@ export default function App() {
             <>
               <span className="nav-divider" />
               <button
-                className={`btn-utility${leftOpen ? " is-active" : ""}`}
-                onClick={toggleLeft}
-                title="Ẩn/hiện danh mục mô phỏng"
-              >
-                <IconPanel side="left" size={14} />
-                Danh mục
-              </button>
-              <button
                 className={`btn-utility${rightOpen ? " is-active" : ""}`}
                 onClick={toggleRight}
                 title="Ẩn/hiện bảng quan sát"
@@ -88,11 +80,6 @@ export default function App() {
 
       {inWorkspace ? (
         <main className={layoutClass}>
-          {leftOpen && (
-            <aside className="panel-left">
-              <InputPanel />
-            </aside>
-          )}
 
           <section className="panel-center">
             <SimulationWorkspace />

@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
-import { InputPanel } from "../components/InputPanel";
 import { SamplePreview, previewKindOf } from "../components/SamplePreview";
 import { makeAlgorithmModule } from "../simulations/domains/algorithm";
 import { makeAndGateModule } from "../simulations/domains/logic";
@@ -179,38 +178,14 @@ describe("(12)(13)(14) preview — kiến trúc nhẹ, theo định danh, fallba
 });
 
 /**
- * M9-UX3 — luật phạm vi M9-UX2 phải áp ở MỌI bề mặt học sinh thấy, không chỉ Home.
- * InputPanel (panel trái workspace) từng gọi offlineCatalog() → fixture nội bộ
- * (tam giác, 3 bản "(tổng quát)") vẫn rò ra, kèm chuỗi kĩ thuật `algorithm.find_max`
- * làm phụ đề. Test M9-UX2 chỉ kiểm Home nên lọt.
+ * M9-UX7 — `InputPanel` (panel trái workspace) ĐÃ GỠ HẲN: sau khi có trang Thư
+ * viện, danh mục tồn tại ở ba nơi và panel trái là bản sao thứ ba.
+ *
+ * Hai test của nó (chỉ mẫu công khai · không lộ simulation_id) KHÔNG mất độ phủ:
+ * - "chỉ mẫu công khai" nay do `ux-shell.test.tsx` kiểm trên `LibraryView`;
+ * - "không lộ chuỗi kĩ thuật" nay do `ui-hygiene.test.ts` QUÉT MÃ NGUỒN — mạnh hơn
+ *   hẳn, vì nó soi mọi component chứ không chỉ component có test đi qua.
  */
-describe("(M9-UX3) InputPanel — danh mục công khai, không rò fixture/chuỗi kĩ thuật", () => {
-  it("panel trái chỉ hiện mẫu public; không lộ simulation_id ra UI", () => {
-    const html = renderToString(<InputPanel />);
-    expect(html).not.toContain("tam giác");
-    expect(html).not.toContain("(tổng quát)");
-    // phụ đề kĩ thuật đã thay bằng nhãn domain tiếng Việt
-    expect(html).not.toContain("algorithm.");
-    expect(html).not.toContain("generic.rule_scene");
-    // vẫn còn mẫu thật để chạy
-    expect(html).toContain("Cổng logic AND");
-  });
-
-  /**
-   * M9-UX4 (phương án A) — panel workspace CHỈ làm một việc: đổi sang bài khác.
-   * Trang chủ ĐÃ LÀ nơi phân tích đề; giữ thêm một composer trong cột ~270px là
-   * hai nơi làm cùng một việc — và chính nó làm cột này chật.
-   */
-  it("panel KHÔNG còn composer — phân tích đề chỉ sống ở Trang chủ", () => {
-    const html = renderToString(<InputPanel />);
-    expect(html).not.toContain("Phân tích đề bằng AI");
-    expect(html).not.toContain("THỬ PHÂN TÍCH BẰNG AI");
-    expect(html).not.toContain("<textarea");
-    // thay bằng đường về Trang chủ + bộ lọc danh mục
-    expect(html).toContain("Trang chủ");
-    expect(html).toContain("ĐỔI SANG BÀI KHÁC");
-  });
-});
 
 /**
  * M9-UX4 — CHUỖI KĨ THUẬT KHÔNG BAO GIỜ LÊN UI HỌC SINH.

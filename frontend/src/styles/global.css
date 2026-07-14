@@ -561,39 +561,6 @@ html {
 }
 
 /* ── Panel trái workspace (M9-UX4) — chỉ còn "đổi bài" ──────────────────── */
-.panel-home-link {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  padding: 2px 0 0;
-  color: var(--primary);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.panel-home-link:hover {
-  text-decoration: underline;
-}
-
-.panel-filter {
-  width: 100%;
-  background: var(--surface);
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 13px;
-  border: 1px solid #dddddd;
-  border-radius: var(--rounded-xs);
-  padding: 6px 10px;
-}
-
-.panel-filter:focus {
-  outline: none;
-  border-color: var(--primary);
-}
-
 .panel-icon {
   flex: 0 0 auto;
   vertical-align: -2px;
@@ -601,34 +568,6 @@ html {
 
 /* Hàng mẫu trong panel: tranh nhỏ + tiêu đề 2 dòng (trước đây tiêu đề dài xuống
    3 dòng làm mỗi hàng cao ngoằng, 12 mẫu đẩy panel dài vô tận). */
-.sample-row-body {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.sample-row-title {
-  font-weight: 600;
-  font-size: 13px;
-  line-height: 1.35;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.sample-row .sample-preview {
-  width: 46px;
-  height: 32px;
-}
-
-.sample-row .sample-preview-svg {
-  width: 40px;
-  height: 24px;
-}
-
 .page {
   width: 100%;
   max-width: 1240px;
@@ -798,30 +737,6 @@ html {
 }
 
 /* ── Danh sách bài mẫu ───────────────────────────────── */
-.sample-row {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  text-align: left;
-  gap: var(--sp-sm);
-  background: var(--canvas);
-  border: none;
-  border-radius: var(--rounded-sm);
-  padding: var(--sp-sm) var(--sp-md);
-  font-size: 15px;
-  color: var(--ink-secondary);
-  transition: background 0.15s ease;
-}
-
-.sample-row:hover {
-  background: var(--canvas-soft);
-}
-
-.sample-row.is-active {
-  background: var(--canvas-soft);
-  box-shadow: inset 3px 0 0 var(--primary);
-}
-
 /* ── Phân tích bài toán ──────────────────────────────── */
 .analysis-grid {
   display: grid;
@@ -1022,26 +937,29 @@ html {
 }
 
 /* ── Bố cục simulation-centered (M2) ─────────────────────── */
+/* ── M9-UX7: workspace còn HAI cột — sân khấu + Quan sát ────────────────────
+   Panel trái (danh mục) đã gỡ hẳn: sau khi có trang Thư viện, danh mục tồn tại ở
+   ba nơi và panel trái là bản sao thứ ba. Sân khấu nhận lại toàn bộ chỗ đó. */
 .app-layout {
   display: grid;
-  /* M9-UX2: sân khấu mô phỏng là TIÊU ĐIỂM — panel phụ hẹp lại, im lặng hơn. */
-  grid-template-columns: 264px minmax(0, 1fr) 300px;
+  grid-template-columns: minmax(0, 1fr) 300px;
   grid-template-rows: minmax(0, 1fr) auto;
   grid-template-areas:
-    "left center right"
-    "controls controls controls";
+    "center right"
+    "controls controls";
   gap: var(--sp-md);
   padding: var(--sp-md) var(--sp-lg);
   height: calc(100vh - 57px);
   max-width: 1720px;
   margin: 0 auto;
-  width: 100%;
 }
 
-.panel-left {
-  grid-area: left;
-  overflow-y: auto;
-  min-height: 0;
+/* Đóng panel Quan sát → sân khấu chiếm trọn. */
+.app-layout.right-closed {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "center"
+    "controls";
 }
 
 .panel-center {
@@ -1066,34 +984,10 @@ html {
   padding: var(--sp-sm) var(--sp-md);
 }
 
-/* Panel đóng → workspace nở ra chiếm chỗ (không bao giờ bị bóp) */
-.app-layout.left-closed {
-  grid-template-columns: minmax(0, 1fr) 320px;
-  grid-template-areas:
-    "center right"
-    "controls controls";
-}
-
-.app-layout.right-closed {
-  grid-template-columns: 320px minmax(0, 1fr);
-  grid-template-areas:
-    "left center"
-    "controls controls";
-}
-
-.app-layout.left-closed.right-closed {
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "center"
-    "controls";
-}
-
-/* Màn hình hẹp: panel thành DRAWER nổi trên workspace thay vì ép nhỏ nó */
+/* Màn hẹp: Quan sát thành DRAWER nổi trên sân khấu thay vì ép nhỏ nó. */
 @media (max-width: 1100px) {
   .app-layout,
-  .app-layout.left-closed,
-  .app-layout.right-closed,
-  .app-layout.left-closed.right-closed {
+  .app-layout.right-closed {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "center"
@@ -1102,26 +996,17 @@ html {
     min-height: calc(100vh - 57px);
   }
 
-  .panel-left,
   .panel-right {
     position: fixed;
     top: 57px;
+    right: 0;
     bottom: 0;
     width: min(360px, 88vw);
     z-index: 40;
     background: var(--canvas-soft);
+    border-left: 1px solid var(--hairline);
     box-shadow: var(--shadow-elevated);
     padding: var(--sp-md);
-  }
-
-  .panel-left {
-    left: 0;
-    border-right: 1px solid var(--hairline);
-  }
-
-  .panel-right {
-    right: 0;
-    border-left: 1px solid var(--hairline);
   }
 }
 

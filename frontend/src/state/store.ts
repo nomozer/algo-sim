@@ -66,8 +66,12 @@ interface AppState {
    */
   prediction: PredictionResult | null;
 
-  /** Trạng thái panel (tổng quát, không dính domain — M2 #3, #8). */
-  leftOpen: boolean;
+  /**
+   * Trạng thái panel (tổng quát, không dính domain — M2 #3, #8).
+   * M9-UX7: panel TRÁI đã GỠ HẲN — sau khi có trang Thư viện, danh mục tồn tại ở
+   * ba nơi (Home / Thư viện / panel trái). Panel trái là bản sao thứ ba; đổi bài
+   * nay đi qua Thư viện trên header. Workspace còn 2 cột: sân khấu + Quan sát.
+   */
   rightOpen: boolean;
   /**
    * M9-UX5 — AI KHÔNG còn ngang hàng với Quan sát.
@@ -127,7 +131,6 @@ interface AppState {
 
   setPlaying: (v: boolean) => void;
   setSpeedMs: (ms: number) => void;
-  toggleLeft: () => void;
   toggleRight: () => void;
   setAiOpen: (v: boolean) => void;
   openLibrary: () => void;
@@ -173,11 +176,8 @@ export const useAppStore = create<AppState>((set, get) => {
     playing: false,
     speedMs: 1200,
     prediction: null,
-    // M9-UX2 (simulation-first): panel TRÁI (đề/danh mục) đóng mặc định — việc
-    // chọn bài đã có Home lo; sân khấu nhận không gian. Mở lại bằng nút "Danh mục".
     // Panel PHẢI (Quan sát) giữ mở trên màn rộng: biến/mã giả là biểu diễn
     // liên kết cốt lõi của M9-S1, không phải trang trí.
-    leftOpen: false,
     rightOpen: WIDE_SCREEN,
     aiOpen: false,
     visualMode: "2d",
@@ -350,7 +350,6 @@ export const useAppStore = create<AppState>((set, get) => {
 
     setPlaying: (v) => set({ playing: v }),
     setSpeedMs: (ms) => set({ speedMs: ms }),
-    toggleLeft: () => set({ leftOpen: !get().leftOpen }),
     toggleRight: () => set({ rightOpen: !get().rightOpen }),
     setAiOpen: (v) => set({ aiOpen: v }),
 

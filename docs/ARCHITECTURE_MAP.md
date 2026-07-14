@@ -208,6 +208,13 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
    (`algorithm.bubble_sort`) từng bị render ở `InputPanel` rồi `HistoryView`. Vá
    một chỗ **không** vá chỗ kia: luật phạm vi phải áp ở **mọi bề mặt** học sinh
    thấy, và tốt nhất là gom về **một component chung** (nay là `SessionCard`).
+14. **Tin một bản soát "sạch" mà không chứng minh nó bắt được lỗi** (M9-UX7) —
+   `scripts/audit-layout.mjs` lần chạy đầu báo "TẤT CẢ SẠCH". Đó đúng là loại kết
+   quả xanh vì **đo nhầm trang** (cùng họ với anti-pattern #13). Hai thứ bắt buộc
+   phải có trước khi tin: (a) **dấu vân tay trang** — soát xong phải khẳng định
+   mình đã ở đúng route, sai thì thoát mã 2; (b) **tiêm lỗi giả** — cố ý thêm
+   `margin-top: 7px` + icon lệch 9px, chạy lại, thấy nó bắt đủ, rồi mới trả CSS về.
+   Một guard chưa từng thấy màu đỏ là một guard chưa được chứng minh.
 12. **Tự chế ngôn ngữ thị giác trong khi dự án ĐÃ CÓ `DESIGN.md`** (M9-UX6) —
    `DESIGN.md` §Don't nói rõ: *"Don't paint a CTA or structural fill in any
    sticker-palette colour — those are decoration only"* và *"Don't introduce a
