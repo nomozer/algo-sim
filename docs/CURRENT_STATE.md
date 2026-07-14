@@ -3,23 +3,28 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
-Cập nhật lần cuối: sau **M7.FREEZE**.
+Cập nhật lần cuối: sau **M8 (Slice 1 + 2)** — shared 2D/3D renderer.
 
-> ## 🔒 M7.x ĐÃ ĐÓNG — 2D FEATURE FREEZE ĐANG HIỆU LỰC
+> ## ✅ M8 SLICE 1+2 HOÀN THÀNH — SCOPE FREEZE §5b VẪN HIỆU LỰC CHO PHẦN CÒN LẠI
 >
-> - **M7.x CLOSED.** 2D core đủ cho mục tiêu luận văn.
-> - **M7.15 (geometry) KHÔNG nằm trong kế hoạch.**
-> - Geometry solver · theorem prover/CAS · code playground · RAG/OCR:
->   **hoãn hoặc ngoài phạm vi** (xem §6, §8).
-> - **Milestone kế tiếp: M8 — Generic 3D Renderer.**
+> - **M8 đã chứng minh tuyên bố kiến trúc**: cùng config → cùng engine tất định →
+>   cùng state/timeline/action/prediction → renderer 2D **hoặc** 3D
+>   (`network.packet_routing` là PoC duy nhất, đúng kế hoạch).
+> - **3D là renderer, không phải domain**: không có simulation_id "_3d" nào,
+>   không fork engine (bất biến #16, `ARCHITECTURE_MAP.md §5`).
+> - **M8 Slice 3 (mạng phân tầng) HOÃN post-M8**: cần năng lực tất định MỚI
+>   (đóng gói/mở gói qua tầng — biến đổi trạng thái PDU), không fake bằng
+>   reveal-boxes (xem §6).
+> - M7.15 (geometry) vẫn KHÔNG nằm trong kế hoạch; danh sách §5b vẫn áp dụng
+>   cho mọi thứ không phải blocker renderer.
 
 ## 1. Baseline
 
 | | |
 |---|---|
 | pytest | **289 pass** (0 API call thật — guard là bằng chứng) |
-| vitest | **168 pass** (0 network call) |
-| build | `tsc -b && vite build` sạch |
+| vitest | **195 pass** (0 network call; +27 so với M8-PRE-LIP: visual-mode 12, render3d 14, acceptance 1) |
+| build | `tsc -b && vite build` sạch — bundle chính 258.6KB; chunk Three.js 549KB **code-split**, chỉ tải khi bấm 3D |
 | Docker | `docker compose up -d --build` OK (backend :8787 + Postgres) |
 | Live smoke gần nhất (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` · không false positive |
 
@@ -37,6 +42,7 @@ Cập nhật lần cuối: sau **M7.FREEZE**.
 | M8-PRE (S3) | verify có mục tiêu: đề "phân tích hệ thống" + guard quan hệ đời thường; 3 lần diag đếm object/attempt; 1 lần probe schema | **55** | 6 | 9 (1 ReadTimeout + 8× HTTP 503 "high demand" ở lần chạy cuối) |
 | M8-PRE (plan C) | inspect composition (2 dump) + verify sau nén (V1 + V2) | **15** | 1 | 1 |
 | M8-PRE (stability smoke) | đề "phân tích hệ thống" × **5 lần hoàn tất** | **19** | 2 | 2 (429/5xx — retry nuốt trọn, **0 run bị hỏng**) |
+| **M8 (Slice 1+2)** | frontend-only: kiến trúc renderer + network 3D; nghiệm thu bằng bài mẫu offline trên browser thật | **0** | 0 | 0 |
 
 **TRẠNG THÁI của đề "phân tích hệ thống" — sau STABILITY SMOKE 5 lần chạy hoàn tất:**
 - Định tuyến: ✅ **đã sửa** — **0/5** lần `unsupported` im lặng; **5/5** vào `generic.rule_scene`.
@@ -81,7 +87,9 @@ M7.14D.1 là **UI-only: 0 live call**.
 | M7.14D | `27c0f1f` | **EditPolicy v1**: affordance sửa suy từ spec (spatial/structural/value_only/observation), reason_code `policy.*` vs `structure.*`, enforce 3 tầng; EditBar tách component (fix lag); stable control shell; Esc hủy công cụ |
 | M7.14D.1 | `af6dc4f` | UI-only: ẩn nút "Chỉnh sửa" khi policy không có công cụ thật (`hasMeaningfulEditAffordance`) — value_only/observation không còn chế độ sửa RỖNG; backend policy giữ nguyên |
 | **M7.FREEZE** | `7452cbf` | **Đóng M7.x.** Gỡ bố cục pixel khỏi `NetworkState` (blocker 3D duy nhất): state chỉ còn topology + route + steps + cursor; `layout2d` chuyển sang renderer. Quy tắc **renderer-neutral state** vào ARCHITECTURE_MAP. Danh sách **DO NOT ADD BEFORE M8** |
-| **M8-PRE** | *(commit này)* | **Coverage + Pedagogical audit → hardening trước M8** (`docs/COVERAGE.md`). **S1**: metadata `EvalItem` (optional, backward-compat) + 4 pool đề mới (`curriculum`/`capability`/`cross_domain`/`thesis` 12 case) + **luật kết nạp** thực thi bằng code; `dataset.py` 30 case **ĐÓNG BĂNG**. Vá lỗ hổng bằng chứng **sắp xếp** (engine có từ lâu, benchmark 0 case). **S2**: `edge.directed` (manifest-first) + node_type mở rộng (actor/process/data_store/input/output) + mũi tên ở renderer + analyze/classify/simulate hỗ trợ **sơ đồ hệ thống thông tin** → đề "phân tích hệ thống" **không còn bị từ chối im lặng**. `CACHE_VERSION` 5→6 |
+| **M8-PRE** | `cb31adc` | **Coverage + Pedagogical audit → hardening trước M8** (`docs/COVERAGE.md`). **S1**: metadata `EvalItem` (optional, backward-compat) + 4 pool đề mới (`curriculum`/`capability`/`cross_domain`/`thesis` 12 case) + **luật kết nạp** thực thi bằng code; `dataset.py` 30 case **ĐÓNG BĂNG**. Vá lỗ hổng bằng chứng **sắp xếp** (engine có từ lâu, benchmark 0 case). **S2**: `edge.directed` (manifest-first) + node_type mở rộng (actor/process/data_store/input/output) + mũi tên ở renderer + analyze/classify/simulate hỗ trợ **sơ đồ hệ thống thông tin** → đề "phân tích hệ thống" **không còn bị từ chối im lặng**. `CACHE_VERSION` 5→6 |
+| M8-PRE-LIP | `f4e3793` | **PredictionCapability** (`predict?` cùng khuôn `timeline?`/`edit?`) + **một** `PredictionBar` dùng chung 2 domain (network: chọn nút; algorithm: có/không); engine tất định chấm; kết quả ở `store.prediction` TÁCH khỏi engine state |
+| **M8 Slice 1+2** | `f83b635`, `18e4c2a`, `cce75fc` | **Shared 2D/3D renderer.** S1: `renderers?` trên SimulationModule ("2d" mặc định = Workspace), `simulations/renderer.ts` (khả dụng = tuyên bố ∩ có renderer thật), `store.visualMode` (lát TRÌNH BÀY — đổi mode không đụng active/cursor/prediction, không rebuild, không AI), `VisualModeToggle` theo capability. S2: `network/ui3d.tsx` — Three.js thuần (KHÔNG R3F), `React.lazy` code-split; `layout3d` renderer-owned (route z=0, ngoài route lùi sâu); OrbitControls xoay+zoom khoá pan; reset GÓC NHÌN ≠ reset mô phỏng; WebGL fail → fallback tiếng Việt; nội suy HÌNH ẢNH gói tin, sự thật vẫn là `packetAt`. Nghiệm thu browser thật 16/16 (headless Chrome + SwiftShader, bài mẫu offline). **Bất biến #16** vào ARCHITECTURE_MAP. Slice 3 (mạng phân tầng) HOÃN — cần semantics đóng gói tất định mới |
 
 Milestone trước đó (M1–M7.12) đã có trong lịch sử commit gộp/ban đầu; kiến trúc
 của chúng được mô tả trong `ARCHITECTURE_MAP.md`.
@@ -92,7 +100,9 @@ của chúng được mô tả trong `ARCHITECTURE_MAP.md`.
 - `algorithm.*`: find_max, find_min, sum_if, count_if, linear_search,
   binary_search, bubble_sort, insertion_sort (+ what-if branch).
 - `logic.and_gate` (bảng chân trị), `binary.decimal_to_binary` (bits⇄decimal),
-  `network.packet_routing` (**route = BFS tất định**, không phải LLM).
+  `network.packet_routing` (**route = BFS tất định**, không phải LLM) — M8:
+  module DUY NHẤT có renderer **2D + 3D** (cùng engine state; các module khác
+  CỐ Ý 2D-only vì 3D không thêm giá trị sư phạm, `COVERAGE.md §8`).
 
 **Generic (`generic.rule_scene`, DSL v1):**
 - Object: `switch`, `lamp`, `value_box`, `node`, `edge`, `moving_entity`, `label`,
@@ -218,25 +228,27 @@ Mục đích: chấm dứt vòng lặp M7.x tự nuôi chính nó.
 1. ~~Phase 0 — 3 file context~~ (`9034d7c`).
 2. ~~M7.14D / D.1 — capability-driven EditPolicy + UI/UX~~ (`27c0f1f`, `af6dc4f`).
 3. ~~M7.FREEZE — gỡ blocker 3D, đóng M7.x~~ (`7452cbf`).
-4. ~~M8-PRE — coverage/pedagogical audit + S1 dataset + S2 directed data-flow~~ (commit này).
-   Còn **1 quyết định mở**: known issue #8 (`max_objects`).
-5. **M8 — Generic 3D Renderer: *architectural-first, pedagogically bounded*** (kế tiếp).
+4. ~~M8-PRE — coverage/pedagogical audit + S1 dataset + S2 directed data-flow~~
+   (`cb31adc`). Quyết định mở #8 (`max_objects`) đã chốt ở plan C: giữ 20 + nén.
+5. ~~M8-PRE-LIP — PredictionCapability (2 domain, 1 UI)~~ (`f4e3793`).
+6. ~~**M8 Slice 1+2 — shared 2D/3D renderer + network 3D PoC**~~ (nhánh
+   `m8-shared-renderer`). Đã chứng minh: cùng config/state/timeline/action/
+   prediction → renderer 2D hoặc 3D; 3D là renderer, không phải domain.
    - **Tuyên bố được phép**: "AlgoSim dùng lại config/state/timeline tất định trên
      nhiều renderer, và **chỉ** áp dụng 3D cho nội dung mà chiều sâu/phân tầng thực
      sự mang giá trị biểu diễn." **CẤM** tuyên bố "3D luôn giúp học tốt hơn"
-     (`COVERAGE.md §8` — audit không tìm được bằng chứng cho điều đó).
-   - PoC ưu tiên: **kiến trúc mạng phân tầng / topology / dữ liệu di chuyển**.
-   - **KHÔNG 3D hoá**: cổng logic · nhị phân · **sắp xếp** · **mảng** · trang web ·
-     **bảng CSDL**.
-6. **Sau M8 — ưu tiên #1: learner practice/experimental mode** (`COVERAGE.md §6`) —
+     (`COVERAGE.md §8`).
+   - **KHÔNG 3D hoá** (giữ nguyên): cổng logic · nhị phân · **sắp xếp** · **mảng** ·
+     trang web · **bảng CSDL**.
+   - **Slice 3 (mạng phân tầng) HOÃN post-M8**: có cơ sở sư phạm (T12 B4; 12CS
+     B22–24) nhưng đòi năng lực tất định MỚI — trạng thái PDU biến đổi khi qua
+     tầng (đóng gói/mở gói). Reveal-boxes chỉ là progressive visualization,
+     KHÔNG được gọi là executable simulation.
+   - Chưa làm (không phải blocker M8): `z?` optional cho `pos`/`SimAction.move`;
+     3D cho cảnh generic `node+edge+moving_entity` — mở khi có nhu cầu thật.
+7. **Sau M8 — ưu tiên #1: learner practice/experimental mode** (`COVERAGE.md §6`) —
    giá trị sư phạm cao hơn thêm primitive mới, vì **ground truth đã có sẵn miễn phí**
-   trong mọi engine tất định. Sau đó mới tới `table/grid` (mở khoá CSDL).
-   - Slice 1: renderer selection (thêm renderer vào **cùng module**, dùng thật
-     `supportedVisualModes` + `visualMode` trong store) · `z?` optional cho
-     `pos`/`SimAction.move`/drag bounds.
-   - PoC đầu tiên: **`network.packet_routing`** + cảnh generic
-     `node+edge+moving_entity+move_along_path` (cùng primitive; `packetAt`/
-     `entityPos` đã là id nút nên 3D chỉ cần bố cục riêng).
-   - **KHÔNG 3D hoá**: trang web/structural · cổng AND · đổi nhị phân —
-     3D chỉ để trang trí, không thêm giá trị sư phạm.
-5. Không có M7.15.
+   trong mọi engine tất định (PredictionCapability là bằng chứng tối thiểu đã có).
+   Sau đó mới tới `table/grid` (mở khoá CSDL). `practice_activity` vẫn
+   **PARTIAL / CHƯA IMPLEMENT**.
+8. Không có M7.15.

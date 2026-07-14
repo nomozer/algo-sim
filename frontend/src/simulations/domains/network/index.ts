@@ -1,8 +1,18 @@
+import { lazy } from "react";
 import { registerSimulation } from "../../registry";
 import type { NetNode, NetworkConfig, NetworkState, NodeType } from "./model";
 import { bfsRoute, buildSteps, currentStep, hopDistance, neighborsOf, typeLabel } from "./model";
 import type { ConfigResult, SimulationModule } from "../../types";
 import { NetworkInspector, NetworkWorkspace } from "./ui";
+
+/**
+ * M8: renderer 3D nạp LƯỜI (code-split) — Three.js (~600KB) chỉ tải khi người
+ * dùng thật sự bấm 3D; người dùng 2D không trả thêm một byte bundle nào.
+ * VẪN là cùng module/config/state/timeline — chỉ khác component vẽ.
+ */
+const Network3DWorkspace = lazy(() =>
+  import("./ui3d").then((m) => ({ default: m.Network3DWorkspace })),
+);
 
 /**
  * network.packet_routing — mô phỏng TIẾN TRÌNH (progressive): có timeline.
@@ -83,7 +93,9 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
     domain: "network",
     title: "Định tuyến gói tin",
     interactionMode: "progressive",
-    supportedVisualModes: ["2d"],
+    // M8: module ĐẦU TIÊN khai 3D — topology/chiều sâu là chỗ 3D thêm giá trị
+    // biểu diễn thật (COVERAGE.md §8); logic/binary/algorithm CỐ Ý giữ 2D-only.
+    supportedVisualModes: ["2d", "3d"],
 
     validateConfig: validateNetworkConfig,
 
@@ -200,6 +212,9 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
     },
 
     Workspace: NetworkWorkspace,
+    // M8: renderer 3D — CÙNG WorkspaceProps, đọc CÙNG state; "2d" mặc định
+    // là Workspace nên không cần khai lại.
+    renderers: { "3d": Network3DWorkspace },
     Inspector: NetworkInspector,
   };
 }

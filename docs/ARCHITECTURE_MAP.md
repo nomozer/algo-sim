@@ -64,6 +64,8 @@ spec hiện tại + yêu cầu → (LLM đề xuất patch) → SimulationPatch
 | Định tuyến bài → mô phỏng | `catalog.py` + classify (LLM) + capability gate (tất định) | gate có quyền phủ quyết |
 | Đúng/sai của thao tác học sinh | **chỉ rule tất định** | không có rule → `unsupported_to_verify` |
 | Cấu hình đang chạy | store (`active.config`) — **opaque**, bất biến | store mù domain |
+| **Visual mode (2D/3D) đang hiển thị** | store — **lát trình bày** (`visualMode`, cạnh `leftOpen`) | M8: không bao giờ vào engine state/spec; **không do LLM chọn**; đổi mode không đụng active/cursor/prediction |
+| Renderer khả dụng của một module | hợp đồng module (`supportedVisualModes` ∩ `renderers`) qua `simulations/renderer.ts` | **cấm** switch-case theo simulation_id |
 
 ## 3b. Quy tắc RENDERER-NEUTRAL STATE (M7.FREEZE — điều kiện để có 3D)
 
@@ -84,6 +86,13 @@ pixel** do `layout()` sinh (COL=150, X0=80…) — dữ liệu trình bày lọt
 quyền uy. Nay `layout2d` sống trong `network/ui.tsx`; state chỉ còn topology +
 route (BFS) + steps + cursor. Khóa bằng test: state không được chứa
 `positions/width/height` hay bất kỳ `"x"/"y"` số nào.
+
+*Quy tắc này ĐÃ ĐƯỢC HIỆN THỰC HÓA (M8):* `network/ui3d.tsx` là renderer 3D
+(Three.js) đọc **nguyên** NetworkState đó — `layout3d` (nodeId → Vector3),
+camera, mesh, nội suy chuyển động đều renderer-owned trong ref/closure của
+component; state không thêm một trường nào (khoá bởi `render3d.test.tsx`).
+Renderer 3D được phép **nội suy hình ảnh** giữa hai bước ngữ nghĩa nhưng không
+bịa trạng thái trung gian: sự thật vẫn là `packetAt` của bước hiện tại.
 
 ## 4. Hướng phụ thuộc (không được đảo)
 
@@ -116,6 +125,7 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 | 13 | `pytest`/`vitest` mặc định = **0 call AI thật** | `backend/conftest.py`, `frontend/src/test-setup.ts` | `test_offline_guard.py`, `offline-guard.test.ts` |
 | 14 | Live eval là **opt-in**, không phải thói quen | `evaluation/live.py` (`ALLOW_LIVE_AI=1`) | `test_live_budget::test_live_khong_co_opt_in_thi_abort` |
 | 15 | Patch fail → spec hiện tại **nguyên vẹn** | `patch.py` áp trên bản sao | `test_patch::test_patch_fail_giua_chung_khong_mutate_spec` |
+| 16 | **3D là renderer, không phải domain** (M8): 2D/3D dùng chung module/config/state/timeline/action/prediction; `visualMode` là trình bày thuần; renderer khả dụng dẫn xuất từ hợp đồng module | `simulations/renderer.ts` + `SimulationWorkspace` (không switch-case id) | `visual-mode.test.tsx`, `render3d.test.tsx`, `m8-acceptance.test.tsx` |
 
 ## 6. Bốn trục khái niệm
 
@@ -157,6 +167,11 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
 - **Capability tùy chọn của module**: thêm field optional vào `SimulationModule`
   (tiền lệ: `timeline?` → `SimulationControls` hiện nút theo capability). Module
   không khai → UI mặc định **không** cho tính năng đó.
+- **Renderer mới cho module có sẵn (M8)**: khai `renderers[mode]` + thêm mode vào
+  `supportedVisualModes` — cả hai điều kiện mới có toggle (chống affordance rỗng).
+  KHÔNG tạo simulation_id mới, KHÔNG fork engine, KHÔNG đụng store/registry/pipeline.
+  Renderer nặng (Three.js) nạp qua `React.lazy` để code-split. Tiền lệ:
+  `network/ui3d.tsx`.
 
 ## 8. Anti-pattern (đã từng gây bug thật)
 

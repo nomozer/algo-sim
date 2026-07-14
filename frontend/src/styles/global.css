@@ -523,6 +523,35 @@ button:disabled {
   padding-bottom: var(--sp-sm);
 }
 
+/* M8: toggle 2D/3D — chỉ xuất hiện khi module có ≥2 renderer thật. */
+.visual-mode-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 4px;
+  align-self: center;
+}
+
+/* M8: sân khấu 3D — canvas WebGL do renderer sở hữu, cao cố định, rộng theo khung. */
+.sim-stage-3d {
+  position: relative;
+}
+
+.three-container {
+  width: 100%;
+  height: 340px;
+}
+
+.three-container canvas {
+  display: block;
+  border-radius: var(--rounded-md);
+}
+
+.three-reset-view {
+  position: absolute;
+  top: var(--sp-sm);
+  right: var(--sp-sm);
+}
+
 .workspace-title {
   font-size: 22px;
   font-weight: 700;

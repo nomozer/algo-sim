@@ -1,8 +1,40 @@
-import type { ComponentType } from "react";
+import { Suspense, type ComponentType } from "react";
 import { getSimulation } from "../simulations/registry";
-import type { WorkspaceProps } from "../simulations/types";
+import { availableVisualModes, effectiveVisualMode, rendererFor } from "../simulations/renderer";
+import type { VisualMode, WorkspaceProps } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { PredictionBar } from "./PredictionBar";
+
+/**
+ * M8: toggle 2D/3D — component THUẦN theo props (export để test SSR được:
+ * store zustand trả initial state khi renderToString nên không test qua store).
+ * Dưới 2 mode khả dụng → null: không affordance rỗng (triết lý M7.14D.1).
+ */
+export function VisualModeToggle({
+  modes,
+  mode,
+  onSelect,
+}: {
+  modes: VisualMode[];
+  mode: VisualMode;
+  onSelect: (m: VisualMode) => void;
+}) {
+  if (modes.length < 2) return null;
+  return (
+    <span className="visual-mode-toggle" role="group" aria-label="Chế độ hiển thị">
+      {modes.map((m) => (
+        <button
+          key={m}
+          type="button"
+          className={`btn-utility${mode === m ? " is-active" : ""}`}
+          onClick={() => onSelect(m)}
+        >
+          {m.toUpperCase()}
+        </button>
+      ))}
+    </span>
+  );
+}
 
 const MODE_LABEL: Record<string, string> = {
   progressive: "từng bước",
@@ -20,6 +52,8 @@ export function SimulationWorkspace() {
   const unsupported = useAppStore((s) => s.unsupported);
   const playing = useAppStore((s) => s.playing);
   const dispatch = useAppStore((s) => s.dispatch);
+  const visualMode = useAppStore((s) => s.visualMode);
+  const setVisualMode = useAppStore((s) => s.setVisualMode);
 
   if (unsupported) {
     return (
@@ -50,7 +84,12 @@ export function SimulationWorkspace() {
   if (!mod) {
     return <div className="error-banner">Không tìm thấy module "{active.moduleId}".</div>;
   }
-  const Workspace = mod.Workspace as ComponentType<WorkspaceProps>;
+
+  // M8: renderer DẪN XUẤT TỪ CAPABILITY của module (không switch-case theo id).
+  // Mode người dùng chọn nhưng module không đáp ứng → rơi an toàn về 2D.
+  const modes = availableVisualModes(mod);
+  const mode = effectiveVisualMode(mod, visualMode);
+  const Stage = rendererFor(mod, mode) as ComponentType<WorkspaceProps>;
 
   return (
     <section className="card card-elevated workspace-card">
@@ -61,10 +100,19 @@ export function SimulationWorkspace() {
           {mod.title} · {MODE_LABEL[mod.interactionMode]} ·{" "}
           {mod.supportedVisualModes.join(" / ").toUpperCase()}
         </span>
+        {/* M8: toggle 2D/3D CHỈ khi module thật sự có ≥2 renderer — module 2D-only
+            không thấy nút nào. Đổi mode = đổi component vẽ, engine state/timeline/
+            prediction giữ nguyên. */}
+        <VisualModeToggle modes={modes} mode={mode} onSelect={setVisualMode} />
       </div>
-      <Workspace config={active.config} state={active.state} busy={playing} dispatch={dispatch} />
+      {/* Suspense: renderer 3D được code-split (React.lazy) — chờ tải chunk
+          Three.js thì hiện placeholder; renderer 2D đồng bộ, không suspend. */}
+      <Suspense fallback={<div className="empty-state">Đang tải chế độ hiển thị…</div>}>
+        <Stage config={active.config} state={active.state} busy={playing} dispatch={dispatch} />
+      </Suspense>
       {/* M8-PRE-LIP: một UI dự đoán DÙNG CHUNG — module không khai `predict` thì
-          không render gì (3 domain còn lại giữ nguyên hành vi cũ). */}
+          không render gì. M8: nằm NGOÀI renderer nên tự nhiên renderer-independent —
+          2D hay 3D đều cùng PredictionBar này, không có bản 3D riêng. */}
       <PredictionBar module={mod} state={active.state} busy={playing} />
     </section>
   );
