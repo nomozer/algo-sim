@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import { getSimulation } from "../simulations/registry";
 import type { WorkspaceProps } from "../simulations/types";
 import { useAppStore } from "../state/store";
+import { PredictionBar } from "./PredictionBar";
 
 const MODE_LABEL: Record<string, string> = {
   progressive: "từng bước",
@@ -62,6 +63,9 @@ export function SimulationWorkspace() {
         </span>
       </div>
       <Workspace config={active.config} state={active.state} busy={playing} dispatch={dispatch} />
+      {/* M8-PRE-LIP: một UI dự đoán DÙNG CHUNG — module không khai `predict` thì
+          không render gì (3 domain còn lại giữ nguyên hành vi cũ). */}
+      <PredictionBar module={mod} state={active.state} busy={playing} />
     </section>
   );
 }

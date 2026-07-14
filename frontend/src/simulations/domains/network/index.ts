@@ -1,6 +1,6 @@
 import { registerSimulation } from "../../registry";
 import type { NetNode, NetworkConfig, NetworkState, NodeType } from "./model";
-import { bfsRoute, buildSteps, currentStep } from "./model";
+import { bfsRoute, buildSteps, currentStep, hopDistance, neighborsOf, typeLabel } from "./model";
 import type { ConfigResult, SimulationModule } from "../../types";
 import { NetworkInspector, NetworkWorkspace } from "./ui";
 
@@ -96,6 +96,93 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
       stepCount: (s) => s.steps.length,
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: Math.max(0, Math.min(step, s.steps.length - 1)) }),
+    },
+
+    /**
+     * M8-PRE-LIP — nhịp DỰ ĐOÁN: "chặng kế tiếp là nút nào?"
+     *
+     * Trước đây domain này KHÔNG có tương tác nào (apply = identity): học sinh chỉ
+     * bấm Play và xem. Nay có một hành động THẬT, chấm bằng chính BFS engine đã chạy.
+     *
+     * NGUYÊN TẮC PHÁT NGÔN (chỉ nói điều engine CHỨNG MINH được):
+     * - Sai ⇒ chỉ được nói "không phải chặng kế tiếp trên đường đi ngắn nhất mà
+     *   engine BFS đã chọn". TUYỆT ĐỐI không nói "đi lối đó là không thể".
+     * - Nếu nút học sinh chọn CŨNG nằm trên một đường ngắn nhất khác (bằng chặng),
+     *   phải NÓI RÕ điều đó — không được để học sinh hiểu nhầm là lựa chọn tồi.
+     * - Route canonical BẤT BIẾN: check là hàm thuần, không đụng state.
+     */
+    predict: {
+      challenge: (s) => {
+        // Chỉ hỏi khi gói tin còn chặng phía trước.
+        if (s.route.length < 2 || s.cursor >= s.route.length - 1) return null;
+        const here = s.route[s.cursor];
+        const options = neighborsOf(s, here).map((id) => {
+          const n = s.nodes.find((x) => x.id === id)!;
+          return { id, label: `${typeLabel(n.type)} (${id})` };
+        });
+        if (options.length === 0) return null;
+        const cur = s.nodes.find((x) => x.id === here)!;
+        return {
+          question:
+            `Gói tin đang ở ${typeLabel(cur.type)} (${here}), cần tới ${s.destination}. ` +
+            `Theo em, chặng KẾ TIẾP trên đường đi ngắn nhất là nút nào?`,
+          options,
+        };
+      },
+
+      check: (s, answerId) => {
+        if (s.route.length < 2 || s.cursor >= s.route.length - 1) {
+          return {
+            verdict: "unsupported_to_verify",
+            answerId,
+            message: "Gói tin đã tới đích — không còn chặng nào để dự đoán.",
+          };
+        }
+        const here = s.route[s.cursor];
+        const expectedId = s.route[s.cursor + 1];
+        if (!neighborsOf(s, here).includes(answerId)) {
+          return {
+            verdict: "incorrect",
+            answerId,
+            expectedId,
+            message: `Nút "${answerId}" không nối trực tiếp với "${here}" nên gói tin không thể nhảy thẳng tới đó.`,
+          };
+        }
+        if (answerId === expectedId) {
+          return {
+            verdict: "correct",
+            answerId,
+            expectedId,
+            message:
+              `Chính xác. Engine BFS cũng chọn "${expectedId}" làm chặng kế tiếp trên ` +
+              `đường đi ngắn nhất tới "${s.destination}".`,
+          };
+        }
+        // SAI so với đường chuẩn — nhưng chỉ được nói ĐÚNG điều engine tính được.
+        const remaining = hopDistance(s, here, s.destination); // số chặng còn lại theo đường ngắn nhất
+        const viaAnswer = hopDistance(s, answerId, s.destination);
+        let consequence: string;
+        if (viaAnswer < 0) {
+          consequence = `Từ "${answerId}" thì KHÔNG còn đường nào tới "${s.destination}" — gói tin sẽ mắc kẹt.`;
+        } else if (1 + viaAnswer === remaining) {
+          // Trung thực: đây cũng là MỘT đường ngắn nhất, chỉ không phải đường engine chọn.
+          consequence =
+            `Lưu ý: đi qua "${answerId}" CŨNG cho một đường ngắn nhất (${1 + viaAnswer} chặng, ` +
+            `bằng đường chuẩn). Engine BFS chọn "${expectedId}" vì duyệt các liên kết theo thứ tự khai báo.`;
+        } else {
+          consequence =
+            `Đi qua "${answerId}" thì còn ${1 + viaAnswer} chặng tới đích, ` +
+            `dài hơn đường ngắn nhất (${remaining} chặng).`;
+        }
+        return {
+          verdict: "incorrect",
+          answerId,
+          expectedId,
+          message:
+            `Đây không phải chặng kế tiếp trên đường đi ngắn nhất mà engine BFS đã tính ` +
+            `(chặng chuẩn là "${expectedId}"). ${consequence}`,
+        };
+      },
     },
 
     getExplainContext: (state) => {

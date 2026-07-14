@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import type { AnalysisUnsupported } from "../core/types";
 import { getSimulation } from "../simulations/registry";
-import type { SimAction, SimulationEnvelope, TimelineCapability } from "../simulations/types";
+import type {
+  PredictionResult,
+  SimAction,
+  SimulationEnvelope,
+  TimelineCapability,
+} from "../simulations/types";
 
 /**
  * Store lõi — MÙ DOMAIN (ràng buộc M2 #7): chỉ giữ moduleId + envelope +
@@ -31,6 +36,13 @@ interface AppState {
   playing: boolean;
   speedMs: number;
 
+  /**
+   * M8-PRE-LIP: kết quả chấm dự đoán của người học — DỮ LIỆU KẾT QUẢ, giữ TÁCH
+   * KHỎI engine state để mô phỏng canonical KHÔNG BAO GIỜ bị thao tác học sinh
+   * làm sai lệch. Tự xoá mỗi khi state/bước đổi (dự đoán gắn với một thời điểm).
+   */
+  prediction: PredictionResult | null;
+
   /** Trạng thái panel (tổng quát, không dính domain — M2 #3, #8). */
   leftOpen: boolean;
   rightOpen: boolean;
@@ -45,6 +57,12 @@ interface AppState {
 
   /** Tương tác người học → module.apply (what-if, toggle, tham số...). */
   dispatch: (action: SimAction) => void;
+  /**
+   * M8-PRE-LIP: nộp dự đoán → module.predict.check (ENGINE chấm, KHÔNG LLM).
+   * NO-OP nếu module không khai capability. KHÔNG đụng engine state.
+   */
+  submitPrediction: (answerId: string) => void;
+  clearPrediction: () => void;
   /** Điều khiển timeline — NO-OP nếu module không có capability (M2 #4). */
   goToStep: (step: number) => void;
   nextStep: () => void;
@@ -82,7 +100,8 @@ export const useAppStore = create<AppState>((set, get) => {
     const mod = getSimulation(active.moduleId);
     if (!mod?.timeline) return;
     const next = fn(mod.timeline, active.state);
-    if (next !== active.state) set({ active: { ...active, state: next } });
+    // Đổi bước → dự đoán cũ hết hiệu lực (nó gắn với MỘT thời điểm cụ thể).
+    if (next !== active.state) set({ active: { ...active, state: next }, prediction: null });
   }
 
   return {
@@ -94,6 +113,7 @@ export const useAppStore = create<AppState>((set, get) => {
     active: null,
     playing: false,
     speedMs: 1200,
+    prediction: null,
     leftOpen: WIDE_SCREEN,
     rightOpen: WIDE_SCREEN,
     inspectorTab: "inspect",
@@ -130,6 +150,7 @@ export const useAppStore = create<AppState>((set, get) => {
         analysisError: null,
         activeSampleId: sampleId ?? null,
         playing: false,
+        prediction: null,
       });
     },
 
@@ -148,8 +169,21 @@ export const useAppStore = create<AppState>((set, get) => {
       const mod = getSimulation(active.moduleId);
       if (!mod) return;
       const next = mod.apply(active.state, action);
-      if (next !== active.state) set({ active: { ...active, state: next } });
+      if (next !== active.state) set({ active: { ...active, state: next }, prediction: null });
     },
+
+    submitPrediction: (answerId) => {
+      const { active } = get();
+      if (!active) return;
+      const mod = getSimulation(active.moduleId);
+      // Module không khai capability → KHÔNG có dự đoán (mặc định an toàn).
+      if (!mod?.predict) return;
+      // ENGINE chấm. `check` là hàm thuần → engine state KHÔNG hề bị đụng:
+      // kết quả sống ở `prediction`, tách khỏi `active.state` (canonical).
+      set({ prediction: mod.predict.check(active.state, answerId) });
+    },
+
+    clearPrediction: () => set({ prediction: null }),
 
     goToStep: (step) => withTimeline((tl, s) => tl.goToStep(s, step)),
 
@@ -183,7 +217,7 @@ export const useAppStore = create<AppState>((set, get) => {
       if (!active) return;
       const mod = getSimulation(active.moduleId);
       if (!mod) return;
-      set({ active: { ...active, state: mod.init(active.config) }, playing: false });
+      set({ active: { ...active, state: mod.init(active.config) }, playing: false, prediction: null });
     },
 
     replaceSimulation: (config, state) => {
@@ -197,6 +231,7 @@ export const useAppStore = create<AppState>((set, get) => {
           envelope: { ...active.envelope, config },
         },
         playing: false,
+        prediction: null,
       });
     },
 
@@ -213,6 +248,7 @@ export const useAppStore = create<AppState>((set, get) => {
         analysisError: null,
         activeSampleId: null,
         playing: false,
+        prediction: null,
       }),
   };
 });

@@ -682,3 +682,52 @@ button:disabled {
   font-weight: 400;
   color: var(--ink-faint);
 }
+
+/* ── PredictionBar (M8-PRE-LIP) — UI dự đoán dùng chung cho mọi domain ── */
+.predict-bar {
+  margin-top: var(--sp-md);
+  padding: var(--sp-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--canvas-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+.predict-question {
+  margin: 4px 0 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+.predict-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  align-items: center;
+}
+.btn-choice {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn-choice:hover:not(:disabled) { border-color: var(--primary); }
+.btn-choice.is-picked {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #fff;
+}
+.btn-choice:disabled { opacity: 0.55; cursor: default; }
+.predict-result {
+  margin: 0;
+  padding: var(--sp-sm);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.predict-result.is-correct { background: color-mix(in srgb, var(--accent-green) 14%, transparent); }
+.predict-result.is-incorrect { background: color-mix(in srgb, var(--accent-orange) 16%, transparent); }
+.predict-result.is-unsupported_to_verify { background: var(--canvas-soft); color: var(--ink-secondary); }

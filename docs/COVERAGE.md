@@ -144,10 +144,18 @@ Xem §7 — danh sách chống "phủ giả".
 dần) và engine *phán được* **chỉ khi có rule tất định** (drag bounds →
 `InteractionFeedback`; không có rule → `unsupported_to_verify`).
 
-**CHƯA CÓ:** cấu trúc **mục tiêu → kiểm tra → phản hồi**. Không có "bạn sai ở đây,
-vì...".
+**M8-PRE-LIP (mới):** thêm **`PredictionCapability`** — vòng lặp *Quan sát → Dự đoán
+→ Nộp → engine tất định chấm → phản hồi là dữ liệu → canonical không đổi*, dùng
+**một** UI chung cho **hai** domain (`network`: chọn chặng kế tiếp, ground truth =
+BFS; `algorithm`: hệ quả của phép so sánh, ground truth = trace thật).
+`network.packet_routing` **hết watch-only**.
 
-→ **CẤM tuyên bố `practice_activity` đã hoàn thiện.**
+**VẪN CHƯA CÓ:** cấu trúc **mục tiêu → nhiệm vụ → chấm điểm → theo dõi tiến độ**.
+Không có gợi ý, không có dashboard, không có phản hồi hội thoại.
+
+→ **`practice_activity` = PARTIAL / CHƯA IMPLEMENT. CẤM tuyên bố đã hoàn thiện.**
+M8-PRE-LIP là **bằng chứng khả thi** (một capability + một UI phục vụ nhiều domain),
+**không phải** practice mode đầy đủ.
 
 **Ưu tiên #1 sau M8** — cao hơn cả việc thêm primitive mới (kể cả table/grid):
 **learner practice/experimental mode**. Lý do: **ground truth đã có sẵn miễn phí**
