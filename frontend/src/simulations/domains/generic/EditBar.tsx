@@ -28,11 +28,16 @@ interface Props {
   onSubmitInstruction: (text: string) => void;
 }
 
+/**
+ * M9-UX5: nhãn là CHỮ THUẦN — bỏ ký tự trang trí (＋ ⌁ ✕). Đây là Record<string>
+ * nên không nhét được component icon; mà chữ "Thêm điểm" / "Nối" / "Xóa" tự nó
+ * đã rõ, thêm ký tự chỉ là nhiễu và rủi ro tofu trên máy khác.
+ */
 const ACTION_LABEL: Record<Exclude<EditUiAction, "edit_text">, string> = {
-  add_node: "＋ Thêm điểm",
-  add_content: "＋ Thêm nội dung",
-  connect: "⌁ Nối",
-  delete: "✕ Xóa",
+  add_node: "Thêm điểm",
+  add_content: "Thêm nội dung",
+  connect: "Nối",
+  delete: "Xóa",
 };
 
 /** Hướng dẫn theo công cụ đang "lên đạn" — người học luôn biết click tiếp theo làm gì. */
@@ -86,7 +91,7 @@ export function EditBar({
         {actions.map((action) => {
           const armed = tool === action;
           const label =
-            action === "add_content" ? `＋ Thêm ${contentLabel.toLowerCase()}` : ACTION_LABEL[action];
+            action === "add_content" ? `Thêm ${contentLabel.toLowerCase()}` : ACTION_LABEL[action];
           return (
             <button
               key={action}

@@ -8,6 +8,7 @@ import type { WorkspaceProps } from "../../types";
 import { consequenceOf, decisionPointOf } from "./decision";
 import { whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
+import { IconExperiment } from "../../../components/icons";
 
 /**
  * UI adapter của domain algorithm — nơi DUY NHẤT được biết trace/mảng/mã giả.
@@ -48,7 +49,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {state.branch && (
         <div className="branch-banner">
           <span>
-            🧪 <strong>Nhánh thử nghiệm</strong> — em đã đổi chỗ vị trí thứ {state.branch.i + 1}{" "}
+            <IconExperiment size={14} /> <strong>Nhánh thử nghiệm</strong> — em đã đổi chỗ vị trí thứ {state.branch.i + 1}{" "}
             và {state.branch.j + 1} tại bước {state.branch.fromStep + 1}. Dòng chính vẫn được giữ
             nguyên.
             {policy.mode === "challenge" && policy.framing && (
@@ -101,12 +102,13 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {/* Mode "challenge": nút mở thí nghiệm có khung — không kéo tự do mặc định. */}
       {policy.mode === "challenge" && !labOpen && !state.branch && !last && (
         <button className="btn-utility" style={{ alignSelf: "flex-start" }} onClick={() => setLabOpen(true)}>
+          <IconExperiment size={14} />
           {policy.challengeLabel}
         </button>
       )}
       {policy.mode === "challenge" && labOpen && !state.branch && (
         <div className="notes" role="note">
-          🧪 {policy.framing}{" "}
+          <IconExperiment size={14} /> {policy.framing}{" "}
           <button className="btn-utility" style={{ marginLeft: 8 }} onClick={() => setLabOpen(false)}>
             Đóng thí nghiệm
           </button>

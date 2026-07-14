@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { SAMPLE_PROMPTS } from "../data/sim-samples";
 import { useAppStore } from "../state/store";
+import { IconAttach, IconSend } from "./icons";
 import { analyzeViaServer, fetchHealth, type ServerHealth } from "../llm/client";
 import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input";
 
@@ -9,11 +9,17 @@ import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input
  * Mọi đầu vào chuẩn hóa thành InputPayload rồi gọi /api/analyze (một contract).
  * Việc gọi Gemini do backend đảm nhiệm (trình duyệt không giữ API key).
  *
- * M9-UX4 — MỘT DẠNG DUY NHẤT (pill), và CHỈ SỐNG Ở TRANG CHỦ.
+ * M9-UX4 — MỘT DẠNG DUY NHẤT, và CHỈ SỐNG Ở TRANG CHỦ.
  * M9-UX3 từng tách hai vỏ hero/compact vì `InputPanel` (cột trái workspace) cũng
  * nhúng composer. M9-UX4 gỡ composer khỏi workspace — Trang chủ LÀ nơi phân tích
  * đề, giữ thêm một bản trong cột 270px là hai nơi làm cùng một việc. Vỏ "compact"
  * hết người dùng nên gỡ luôn, không nuôi code chết.
+ *
+ * M9-UX5 — HỘP nhiều dòng thay pill một dòng, nút `+` / gửi nằm ở ĐÁY hộp.
+ * Hàng chip "thử đề mẫu AI" (`SAMPLE_PROMPTS`) đã GỠ: 3 đề đó trùng nội dung với
+ * 3 bài mẫu ngay bên dưới Trang chủ, chỉ khác là tốn một lượt gọi API. Trang chủ
+ * có ĐÚNG MỘT đường dùng AI: gõ đề của chính em. (`SAMPLE_PROMPTS` vẫn còn trong
+ * `sim-samples.ts` cho dev/test — chỉ không quảng bá cho học sinh.)
  */
 export function ProblemInput() {
   const problemText = useAppStore((s) => s.problemText);
@@ -114,11 +120,12 @@ export function ProblemInput() {
       </span>
     ) : null;
 
-  const idle = !file && problemText.length === 0;
-
   return (
     <div className="composer-hero">
-      <div className={`composer-pill${analyzing ? " is-busy" : ""}`}>
+      {/* M9-UX5 — HỘP nhiều dòng (không còn pill một dòng): ô gõ ở trên, hai nút
+          tròn ở đáy — `+` trái (tải tệp), gửi phải. Placeholder được nói đủ ý vì
+          hộp cao sẵn, không sợ cắt cụt như pill. */}
+      <div className={`composer-box${analyzing ? " is-busy" : ""}`}>
         <input
           ref={fileInputRef}
           type="file"
@@ -126,56 +133,38 @@ export function ProblemInput() {
           onChange={onPickFile}
           style={{ display: "none" }}
         />
-        <button
-          className="composer-attach"
-          onClick={() => fileInputRef.current?.click()}
-          title="Tải tệp (.docx / .py / ảnh)"
-          aria-label="Tải tệp"
-        >
-          📎
-        </button>
-        {/* Pill cao 1 dòng → placeholder phải NGẮN, nếu không nó xuống dòng và bị
-            cắt cụt (auto-grow chỉ chạy khi gõ). Đề mẫu đã nằm ở hàng chip bên dưới. */}
+
         <textarea
           ref={textRef}
           className="composer-text"
-          rows={1}
-          placeholder="Nhập đề bài Tin học của em…"
+          rows={2}
+          placeholder="Nhập đề bài Tin học của em, hoặc tải lên tệp đề…"
           value={problemText}
           onChange={onChangeText}
           onKeyDown={onKeyDown}
           disabled={file !== null}
         />
-        <button
-          className="composer-send"
-          onClick={onAnalyze}
-          disabled={!canAnalyze}
-          title="Phân tích đề bằng AI"
-          aria-label="Phân tích đề bằng AI"
-        >
-          {analyzing ? "…" : "↑"}
-        </button>
-      </div>
 
-      {/* M9-UX4 — đề mẫu BẤM ĐƯỢC, thay cho câu ví dụ tĩnh. Học sinh chưa dùng bao
-          giờ thì không biết gõ gì cho vừa; chip điền sẵn đề thật vào ô (VẪN phải tự
-          bấm gửi — không lén tiêu một lượt gọi AI). Đây cũng là chỗ ở mới của
-          SAMPLE_PROMPTS sau khi panel workspace bỏ mục "thử phân tích bằng AI". */}
-      {idle && (
-        <div className="composer-prompts">
-          <span className="hint">Chưa biết bắt đầu từ đâu? Thử:</span>
-          {SAMPLE_PROMPTS.map((p) => (
-            <button
-              key={p.id}
-              className="prompt-chip"
-              onClick={() => setProblemText(p.text)}
-              title={p.text}
-            >
-              {p.label}
-            </button>
-          ))}
+        <div className="composer-foot">
+          <button
+            className="composer-attach"
+            onClick={() => fileInputRef.current?.click()}
+            title="Tải tệp đề (.docx / .py / ảnh)"
+            aria-label="Tải tệp đề"
+          >
+            <IconAttach size={17} />
+          </button>
+          <button
+            className="composer-send"
+            onClick={onAnalyze}
+            disabled={!canAnalyze}
+            title="Phân tích đề bằng AI"
+            aria-label="Phân tích đề bằng AI"
+          >
+            {analyzing ? <span className="composer-spin" /> : <IconSend size={17} />}
+          </button>
         </div>
-      )}
+      </div>
 
       {file && (
         <div className="file-chip">

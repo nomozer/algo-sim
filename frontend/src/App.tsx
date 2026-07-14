@@ -1,6 +1,8 @@
 import { HistoryView } from "./components/HistoryView";
 import { HomeView } from "./components/HomeView";
+import { IconPanel } from "./components/icons";
 import { InputPanel } from "./components/InputPanel";
+import { LibraryView } from "./components/LibraryView";
 import { SimulationControls } from "./components/SimulationControls";
 import { SimulationInspector } from "./components/SimulationInspector";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
@@ -17,36 +19,6 @@ import { useAppStore } from "./state/store";
  * Về Home KHÔNG phá liên tục học: active dọn đi nhưng lịch sử bền giữ nguyên.
  */
 
-/**
- * Icon panel (M9-UX4) — SVG, KHÔNG dùng ký tự Unicode.
- * Trước đây nút này ghi `◧` / `◨` (U+25E7/25E8): font hệ thống Windows không có
- * glyph nên hiện ra Ô VUÔNG RỖNG (tofu) ngay trên header. Ký tự hình khối hiếm
- * là bẫy — vẽ SVG thì không phụ thuộc font nào.
- */
-function PanelIcon({ side }: { side: "left" | "right" }) {
-  return (
-    <svg
-      className="panel-icon"
-      viewBox="0 0 16 16"
-      width="13"
-      height="13"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <rect x="1.5" y="2.5" width="13" height="11" rx="2" fill="none" stroke="currentColor" />
-      <rect
-        x={side === "left" ? 1.5 : 9.5}
-        y="2.5"
-        width="5"
-        height="11"
-        rx={0}
-        fill="currentColor"
-        opacity={0.75}
-      />
-    </svg>
-  );
-}
-
 export default function App() {
   const view = useAppStore((s) => s.view);
   const active = useAppStore((s) => s.active);
@@ -56,6 +28,7 @@ export default function App() {
   const toggleRight = useAppStore((s) => s.toggleRight);
   const goHome = useAppStore((s) => s.goHome);
   const openHistory = useAppStore((s) => s.openHistory);
+  const openLibrary = useAppStore((s) => s.openLibrary);
 
   const inWorkspace = view === "workspace" && active !== null;
   const layoutClass = `app-layout${leftOpen ? "" : " left-closed"}${rightOpen ? "" : " right-closed"}`;
@@ -66,40 +39,51 @@ export default function App() {
         <button className="nav-wordmark" onClick={goHome} title="Về trang chủ">
           AlgoSim
         </button>
-        <nav style={{ display: "flex", gap: "var(--sp-xs)" }}>
+        {/* M9-UX5: điều hướng là LINK CHỮ đẩy sang phải, trang đang xem gạch chân.
+            Trước đây là hai nút pill dính sát wordmark — trông như thanh công cụ,
+            không phải điều hướng. Nút bật/tắt panel nằm cùng bên phải, sau vạch ngăn. */}
+        <nav className="nav-links">
           <button
-            className={`btn-utility${view === "home" ? " is-active" : ""}`}
+            className={`nav-link${view === "home" ? " is-active" : ""}`}
             onClick={goHome}
           >
             Trang chủ
           </button>
           <button
-            className={`btn-utility${view === "history" ? " is-active" : ""}`}
+            className={`nav-link${view === "library" ? " is-active" : ""}`}
+            onClick={openLibrary}
+          >
+            Thư viện
+          </button>
+          <button
+            className={`nav-link${view === "history" ? " is-active" : ""}`}
             onClick={openHistory}
           >
             Lịch sử
           </button>
+
+          {inWorkspace && (
+            <>
+              <span className="nav-divider" />
+              <button
+                className={`btn-utility${leftOpen ? " is-active" : ""}`}
+                onClick={toggleLeft}
+                title="Ẩn/hiện danh mục mô phỏng"
+              >
+                <IconPanel side="left" size={14} />
+                Danh mục
+              </button>
+              <button
+                className={`btn-utility${rightOpen ? " is-active" : ""}`}
+                onClick={toggleRight}
+                title="Ẩn/hiện bảng quan sát"
+              >
+                Quan sát
+                <IconPanel side="right" size={14} />
+              </button>
+            </>
+          )}
         </nav>
-        {inWorkspace && (
-          <span style={{ marginLeft: "auto", display: "flex", gap: "var(--sp-xs)" }}>
-            <button
-              className={`btn-utility${leftOpen ? " is-active" : ""}`}
-              onClick={toggleLeft}
-              title="Ẩn/hiện danh mục mô phỏng"
-            >
-              <PanelIcon side="left" />
-              Danh mục
-            </button>
-            <button
-              className={`btn-utility${rightOpen ? " is-active" : ""}`}
-              onClick={toggleRight}
-              title="Ẩn/hiện bảng quan sát và hỏi AI"
-            >
-              Quan sát
-              <PanelIcon side="right" />
-            </button>
-          </span>
-        )}
       </header>
 
       {inWorkspace ? (
@@ -125,7 +109,15 @@ export default function App() {
           </footer>
         </main>
       ) : (
-        <main className="app-single">{view === "history" ? <HistoryView /> : <HomeView />}</main>
+        <main className="app-single">
+          {view === "history" ? (
+            <HistoryView />
+          ) : view === "library" ? (
+            <LibraryView />
+          ) : (
+            <HomeView />
+          )}
+        </main>
       )}
     </>
   );

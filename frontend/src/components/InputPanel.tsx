@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DOMAIN_COLOR, DOMAIN_LABEL, publicCatalog } from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
+import { IconBack } from "./icons";
 import { previewKindOf, SamplePreview } from "./SamplePreview";
 
 /**
@@ -32,7 +33,8 @@ export function InputPanel() {
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <button className="panel-home-link" onClick={goHome}>
-        ← Trang chủ · nhập đề bài mới
+        <IconBack size={14} />
+        Trang chủ · nhập đề bài mới
       </button>
 
       <section className="card stack" style={{ gap: "var(--sp-sm)" }}>

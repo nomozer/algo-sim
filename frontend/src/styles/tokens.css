@@ -45,6 +45,11 @@
   --sp-lg: 24px;
   --sp-xl: 28px;
   --sp-xxl: 32px;
+  /* M9-UX5: thang cách rộng hơn cho trang chủ — trước đây CSS gọi var(--sp-2xl)
+     mà token này KHÔNG TỒN TẠI: trình duyệt vứt im lặng cả dòng khai báo, làm
+     mất margin/padding (composer lệch trái, tiêu đề dí sát ô nhập). */
+  --sp-3xl: 48px;
+  --sp-4xl: 64px;
 
   /* Elevation — bóng nhiều lớp gần trong suốt theo DESIGN.md */
   --shadow-soft: rgba(0, 0, 0, 0.01) 0 0.175px 1.041px,

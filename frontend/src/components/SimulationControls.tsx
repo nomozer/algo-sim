@@ -1,11 +1,22 @@
 import { useEffect } from "react";
 import { getSimulation } from "../simulations/registry";
 import { useAppStore } from "../state/store";
+import {
+  IconNext,
+  IconPause,
+  IconPlay,
+  IconPrev,
+  IconReset,
+  IconToEnd,
+  IconToStart,
+} from "./icons";
 
 /**
  * Thanh điều khiển đáy — CAPABILITY-DRIVEN (M2 #4):
- * - module có timeline → đủ bộ ⏮ ◀ ▶/⏸ ▶ ⏭ + seek + tốc độ + Reset + phím tắt;
- * - module không có timeline (exploratory) → chỉ Reset, không nút step giả.
+ * - module có timeline → đủ bộ về-đầu / lùi / chạy-dừng / tiến / đến-cuối +
+ *   seek + tốc độ + Đặt lại + phím tắt;
+ * - module không có timeline (exploratory) → chỉ Đặt lại, không nút step giả.
+ * M9-UX5: icon là component SVG (`icons.tsx`), không còn ký tự ⏮ ◀ ▶ ⏸ ⏭ ⟳.
  */
 export function SimulationControls() {
   const active = useAppStore((s) => s.active);
@@ -61,7 +72,8 @@ export function SimulationControls() {
     return (
       <div className="player-controls">
         <button className="btn-utility" onClick={resetSim}>
-          ⟳ Đặt lại
+          <IconReset size={14} />
+          Đặt lại
         </button>
         <span className="hint">Mô phỏng khám phá — thao tác trực tiếp trên sân khấu.</span>
       </div>
@@ -76,27 +88,28 @@ export function SimulationControls() {
     <div className="stack" style={{ gap: "var(--sp-xs)" }}>
       <div className="player-controls">
         <button className="btn-icon" onClick={toStart} disabled={cursor === 0} title="Về đầu">
-          ⏮
+          <IconToStart />
         </button>
         <button className="btn-icon" onClick={prevStep} disabled={cursor === 0} title="Lùi một bước">
-          ◀
+          <IconPrev />
         </button>
         <button
-          className="btn-primary"
+          className="btn-primary btn-play"
           onClick={() => setPlaying(!playing)}
           disabled={last && !playing}
-          style={{ minWidth: 110 }}
         >
-          {playing ? "⏸ Dừng" : "▶ Tự chạy"}
+          {playing ? <IconPause size={15} /> : <IconPlay size={15} />}
+          {playing ? "Dừng" : "Tự chạy"}
         </button>
         <button className="btn-icon" onClick={nextStep} disabled={last} title="Tiến một bước">
-          ▶
+          <IconNext />
         </button>
         <button className="btn-icon" onClick={toEnd} disabled={last} title="Đến cuối">
-          ⏭
+          <IconToEnd />
         </button>
         <button className="btn-utility" onClick={resetSim} title="Dựng lại từ đầu">
-          ⟳ Đặt lại
+          <IconReset size={14} />
+          Đặt lại
         </button>
         <span className="step-indicator">
           Bước {cursor + 1} / {total}

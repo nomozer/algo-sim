@@ -1,4 +1,5 @@
 import { useAppStore } from "../state/store";
+import { IconBack } from "./icons";
 import { SessionCard } from "./SessionCard";
 
 /**
@@ -38,7 +39,8 @@ export function HistoryView() {
             </button>
           )}
           <button className="btn-utility" onClick={goHome}>
-            ← Trang chủ
+            <IconBack size={14} />
+            Trang chủ
           </button>
         </span>
       </div>

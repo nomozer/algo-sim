@@ -1,24 +1,25 @@
-import { useState } from "react";
-import {
-  DOMAIN_COLOR,
-  DOMAIN_LABEL,
-  publicCatalog,
-  starterEntries,
-  type CatalogEntry,
-} from "../data/offline-catalog";
-import type { Domain } from "../simulations/types";
+import { DOMAIN_COLOR, DOMAIN_LABEL, starterEntries, type CatalogEntry } from "../data/offline-catalog";
 import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
 import { previewKindOf, SamplePreview } from "./SamplePreview";
 import { SessionCard } from "./SessionCard";
 
 /**
- * HOME (M9-UX1) — trạng thái vào app: MỘT hành động chính rõ ràng.
+ * HOME (M9-UX1 · dọn lại M9-UX5) — trạng thái vào app: MỘT hành động chính.
  *
- * Nguyên tắc: học sinh không cần hiểu kiến trúc AlgoSim trước khi dùng.
- * Không inspector rỗng, không timeline rỗng, không panel thừa — chỉ:
- *   composer (phân tích đề) → gợi ý khám phá (bộ nhỏ) → tiếp tục học (gần đây).
- * Toàn bộ mục "gần đây" mở lại bằng envelope đã validate — KHÔNG gọi AI.
+ * M9-UX5 — HOME KHÔNG BAO GIỜ PHÌNH. Ba thứ bị gỡ vì chúng làm Home to dần theo
+ * lượng dữ liệu, đúng thứ khiến nó "rối":
+ *   1. Nút "Xem tất cả mô phỏng mẫu (12)" — bung cả danh mục ngay tại chỗ.
+ *      Danh mục đầy đủ nay có nhà riêng: `LibraryView` (mục Thư viện trên header).
+ *   2. Danh sách "Tiếp tục học" nhiều thẻ — học sinh học dở 30 bài thì gợi ý bị
+ *      đẩy khuất. Nay CHỈ MỘT thẻ gần nhất; phần còn lại ở trang Lịch sử.
+ *   3. Phụ đề hai dòng + hàng chip "thử đề mẫu AI" — phụ đề trùng ý tiêu đề, còn
+ *      3 đề chip thì TRÙNG NỘI DUNG với 3 bài mẫu ngay bên dưới (chỉ khác là tốn
+ *      một lượt gọi API). Trang chủ nên có ĐÚNG MỘT đường dùng AI: gõ đề của em.
+ *
+ * Thứ tự: composer → gợi ý (6 nổi bật) → tiếp tục học (1 thẻ).
+ * "Tiếp tục học" nằm DƯỚI gợi ý: Home dẫn bằng khám phá, không dẫn bằng đống bài
+ * đang học dở của người dùng cũ.
  */
 
 export function formatRelativeTime(ts: number, nowMs = Date.now()): string {
@@ -33,58 +34,22 @@ export function formatRelativeTime(ts: number, nowMs = Date.now()): string {
   return new Date(ts).toLocaleDateString("vi-VN");
 }
 
-const RECENT_ON_HOME = 5;
-
-/** Thứ tự nhóm khi mở "xem tất cả" — bám chương trình, không bám bảng chữ cái. */
-const GROUP_ORDER: Domain[] = [
-  "algorithm",
-  "binary",
-  "network",
-  "logic",
-  "web",
-  "database",
-  "geometry",
-  "generic",
-];
-
-function groupByDomain(entries: CatalogEntry[]): [Domain, CatalogEntry[]][] {
-  const byDomain = new Map<Domain, CatalogEntry[]>();
-  for (const e of entries) {
-    const bucket = byDomain.get(e.domain);
-    if (bucket) bucket.push(e);
-    else byDomain.set(e.domain, [e]);
-  }
-  return GROUP_ORDER.filter((d) => byDomain.has(d)).map((d) => [d, byDomain.get(d)!]);
-}
-
-/**
- * Card gợi ý (M9-UX3) — HÀNG NGANG: tranh nhỏ bên trái, chữ bên phải.
- * Trước đây tranh nằm trên, chữ dưới → tiêu đề dài ngắn khác nhau làm card cao
- * thấp so le, lưới bị gãy. Hàng ngang thì chiều cao do tranh quyết định, không
- * do độ dài tiêu đề — mọi card bằng nhau.
- */
 function StarterCard({
   entry,
   onPick,
-  showDomain = true,
 }: {
   entry: CatalogEntry;
   onPick: (envelope: CatalogEntry["envelope"], sampleId: string) => void;
-  /** Trong chế độ GOM NHÓM, tiêu đề nhóm đã nói domain rồi — lặp lại ở từng
-      card là nhiễu thuần tuý (nguyên tắc coherence, COVERAGE §2). */
-  showDomain?: boolean;
 }) {
   return (
     <button className="starter-card" onClick={() => onPick(entry.envelope, entry.id)}>
       <SamplePreview kind={previewKindOf(entry.simId, entry.preview)} />
       <span className="starter-card-body">
         <strong className="starter-card-title">{entry.title}</strong>
-        {showDomain && (
-          <span className="starter-card-domain">
-            <span className="starter-dot" style={{ background: DOMAIN_COLOR[entry.domain] }} />
-            {DOMAIN_LABEL[entry.domain]}
-          </span>
-        )}
+        <span className="starter-card-domain">
+          <span className="starter-dot" style={{ background: DOMAIN_COLOR[entry.domain] }} />
+          {DOMAIN_LABEL[entry.domain]}
+        </span>
       </span>
     </button>
   );
@@ -96,23 +61,14 @@ export function HomeView() {
   const history = useAppStore((s) => s.history);
   const reopenFromHistory = useAppStore((s) => s.reopenFromHistory);
   const openHistory = useAppStore((s) => s.openHistory);
-  const [showAll, setShowAll] = useState(false);
+  const openLibrary = useAppStore((s) => s.openLibrary);
 
-  // M9-UX2: học sinh chỉ thấy danh mục CÔNG KHAI (Tin học THPT) —
-  // fixture nội bộ vẫn sống cho test/dev qua offlineCatalog().
   const starters = starterEntries();
-  const all = publicCatalog();
-  const recents = history.slice(0, RECENT_ON_HOME);
+  const latest = history[0] ?? null;
 
   return (
     <div className="home-view">
-      <div className="home-hero">
-        <h1 className="home-title">Em muốn khám phá bài toán nào?</h1>
-        <p className="home-subtitle">
-          Nhập một bài toán Tin học để AlgoSim phân tích và tạo mô phỏng phù hợp — hoặc chọn
-          một mô phỏng mẫu bên dưới để chạy ngay.
-        </p>
-      </div>
+      <h1 className="home-title">Em muốn khám phá bài toán nào?</h1>
 
       <div className="home-composer">
         <ProblemInput />
@@ -128,54 +84,32 @@ export function HomeView() {
       </div>
 
       <section className="home-section">
-        <h2 className="home-section-title">Gợi ý khám phá</h2>
-
-        {showAll ? (
-          // Mở rộng: GOM NHÓM theo chủ đề — 12 card phẳng đổ một lượt là bức tường,
-          // học sinh không có mỏ neo nào để định vị mình đang xem phần nào.
-          groupByDomain(all).map(([domain, entries]) => (
-            <div key={domain} className="starter-group">
-              <h3 className="starter-group-title">
-                <span className="starter-dot" style={{ background: DOMAIN_COLOR[domain] }} />
-                {DOMAIN_LABEL[domain]}
-              </h3>
-              <div className="starter-grid">
-                {entries.map((e) => (
-                  <StarterCard key={e.id} entry={e} onPick={loadEnvelope} showDomain={false} />
-                ))}
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="starter-grid">
-            {starters.map((e) => (
-              <StarterCard key={e.id} entry={e} onPick={loadEnvelope} />
-            ))}
-          </div>
-        )}
-
-        <button className="btn-utility home-see-all" onClick={() => setShowAll(!showAll)}>
-          {showAll ? "Thu gọn gợi ý" : `Xem tất cả mô phỏng mẫu (${all.length})`}
-        </button>
+        <div className="home-section-head">
+          <h2 className="home-section-title">Gợi ý khám phá</h2>
+          <button className="link-btn" onClick={openLibrary}>
+            Xem thư viện
+          </button>
+        </div>
+        <div className="starter-grid">
+          {starters.map((e) => (
+            <StarterCard key={e.id} entry={e} onPick={loadEnvelope} />
+          ))}
+        </div>
       </section>
 
-      {recents.length > 0 && (
+      {latest && (
         <section className="home-section">
-          <h2 className="home-section-title">Tiếp tục học</h2>
-          <div className="session-list">
-            {recents.map((item) => (
-              <SessionCard
-                key={item.id}
-                item={item}
-                onOpen={() => reopenFromHistory(item.id)}
-              />
-            ))}
+          <div className="home-section-head">
+            <h2 className="home-section-title">Tiếp tục học</h2>
+            {history.length > 1 && (
+              <button className="link-btn" onClick={openHistory}>
+                Xem tất cả ({history.length})
+              </button>
+            )}
           </div>
-          {history.length > recents.length && (
-            <button className="btn-utility home-see-all" onClick={openHistory}>
-              Xem tất cả lịch sử ({history.length})
-            </button>
-          )}
+          <div className="session-list">
+            <SessionCard item={latest} onOpen={() => reopenFromHistory(latest.id)} />
+          </div>
         </section>
       )}
     </div>

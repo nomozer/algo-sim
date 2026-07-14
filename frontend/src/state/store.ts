@@ -34,11 +34,17 @@ interface AppState {
   activeSampleId: string | null;
 
   /**
-   * M9-UX1: ba MẶT TRÌNH BÀY trên cùng store — "home" (mặc định, composer +
-   * gợi ý + gần đây), "workspace" (khi có mô phỏng), "history" (toàn bộ lịch
-   * sử). Là presentation state như visualMode: không đụng engine.
+   * M9-UX1 (mở rộng M9-UX5): BỐN MẶT TRÌNH BÀY trên cùng store — "home" (mặc
+   * định: composer + vài gợi ý nổi bật), "workspace" (khi có mô phỏng),
+   * "library" (danh mục ĐẦY ĐỦ, gom nhóm), "history" (toàn bộ lịch sử).
+   * Là presentation state như visualMode: không đụng engine.
+   *
+   * Vì sao tách "library" khỏi Home (M9-UX5): Home từng bung cả 12 mẫu tại chỗ
+   * và liệt kê mọi bài đang học dở — học sinh học dở nhiều thì gợi ý bị đẩy
+   * xuống, Home phình theo lịch sử. Danh mục đầy đủ có NHÀ RIÊNG thì Home
+   * KHÔNG BAO GIỜ phình: luôn là composer + 6 gợi ý + 1 thẻ tiếp tục.
    */
-  view: "home" | "workspace" | "history";
+  view: "home" | "workspace" | "library" | "history";
   /**
    * M9-UX1: BẢN CHIẾU lịch sử bền (localStorage qua historyStore) để render.
    * Nguồn chân lý là storage; store chỉ mirror sau mỗi thao tác. reset()/goHome
@@ -63,8 +69,14 @@ interface AppState {
   /** Trạng thái panel (tổng quát, không dính domain — M2 #3, #8). */
   leftOpen: boolean;
   rightOpen: boolean;
-  /** AI Help KHÔNG mở mặc định (M2 #7). */
-  inspectorTab: "inspect" | "ai";
+  /**
+   * M9-UX5 — AI KHÔNG còn ngang hàng với Quan sát.
+   * Trước đây panel phải là hai tab [Quan sát][Hỏi AI]: một nửa cột phải, lúc
+   * nào cũng vậy, dành cho AI — trong khi luật gốc R0 nói LLM KHÔNG phải xương
+   * sống của hệ. Nay cột phải LUÔN là Quan sát; AI là một mục THU GỌN ở đáy.
+   * (Thay `inspectorTab: "inspect" | "ai"`.)
+   */
+  aiOpen: boolean;
   /**
    * M8: visual mode là TRÌNH BÀY THUẦN TÚY — chọn component vẽ, không hơn.
    * KHÔNG nằm trong engine state/SimulationSpec, KHÔNG do LLM chọn, KHÔNG ảnh
@@ -117,7 +129,8 @@ interface AppState {
   setSpeedMs: (ms: number) => void;
   toggleLeft: () => void;
   toggleRight: () => void;
-  setInspectorTab: (tab: "inspect" | "ai") => void;
+  setAiOpen: (v: boolean) => void;
+  openLibrary: () => void;
   /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active/prediction. */
   setVisualMode: (mode: VisualMode) => void;
   reset: () => void;
@@ -161,12 +174,12 @@ export const useAppStore = create<AppState>((set, get) => {
     speedMs: 1200,
     prediction: null,
     // M9-UX2 (simulation-first): panel TRÁI (đề/danh mục) đóng mặc định — việc
-    // chọn bài đã có Home lo; sân khấu nhận không gian. Mở lại bằng "◧ Đề bài".
+    // chọn bài đã có Home lo; sân khấu nhận không gian. Mở lại bằng nút "Danh mục".
     // Panel PHẢI (Quan sát) giữ mở trên màn rộng: biến/mã giả là biểu diễn
     // liên kết cốt lõi của M9-S1, không phải trang trí.
     leftOpen: false,
     rightOpen: WIDE_SCREEN,
-    inspectorTab: "inspect",
+    aiOpen: false,
     visualMode: "2d",
 
     setProblemText: (text) => set({ problemText: text }),
@@ -228,6 +241,8 @@ export const useAppStore = create<AppState>((set, get) => {
       }),
 
     openHistory: () => set({ view: "history", history: historyStore.list() }),
+
+    openLibrary: () => set({ view: "library" }),
 
     reopenFromHistory: (id) => {
       const item = historyStore.list().find((x) => x.id === id);
@@ -337,7 +352,7 @@ export const useAppStore = create<AppState>((set, get) => {
     setSpeedMs: (ms) => set({ speedMs: ms }),
     toggleLeft: () => set({ leftOpen: !get().leftOpen }),
     toggleRight: () => set({ rightOpen: !get().rightOpen }),
-    setInspectorTab: (tab) => set({ inspectorTab: tab }),
+    setAiOpen: (v) => set({ aiOpen: v }),
 
     // M8: CHỈ đổi trường trình bày. Không đụng active (engine state/cursor giữ
     // nguyên khối), không xoá prediction (nó gắn với BƯỚC hiện tại — bước không

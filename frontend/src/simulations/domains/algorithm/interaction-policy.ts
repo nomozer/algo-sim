@@ -60,7 +60,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   },
   binary_search: {
     mode: "challenge",
-    challengeLabel: "🧪 Thí nghiệm: nếu dãy không còn được sắp thứ tự?",
+    challengeLabel: "Thí nghiệm: nếu dãy không còn được sắp thứ tự?",
     framing:
       "Tìm kiếm nhị phân chỉ đúng khi dãy đã sắp thứ tự. Hãy đổi chỗ hai phần tử để phá thứ tự đó, rồi quan sát: thuật toán có thể bỏ sót giá trị có thật trong dãy.",
     hint: "Kéo đổi chỗ hai cột để phá thứ tự sắp — rồi xem thuật toán còn tìm thấy đúng không.",
@@ -69,7 +69,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   },
   find_max: {
     mode: "challenge",
-    challengeLabel: "🧪 Thí nghiệm: thử đánh lừa thuật toán",
+    challengeLabel: "Thí nghiệm: thử đánh lừa thuật toán",
     framing:
       "Thuật toán chỉ nhớ giá trị tốt nhất ĐÃ GẶP và không bao giờ quay lại vùng đã duyệt. Hãy đổi một phần tử chưa duyệt vào vùng đã duyệt rồi xem kết quả cuối.",
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
@@ -78,7 +78,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   },
   find_min: {
     mode: "challenge",
-    challengeLabel: "🧪 Thí nghiệm: thử đánh lừa thuật toán",
+    challengeLabel: "Thí nghiệm: thử đánh lừa thuật toán",
     framing:
       "Thuật toán chỉ nhớ giá trị tốt nhất ĐÃ GẶP và không bao giờ quay lại vùng đã duyệt. Hãy đổi một phần tử chưa duyệt vào vùng đã duyệt rồi xem kết quả cuối.",
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",

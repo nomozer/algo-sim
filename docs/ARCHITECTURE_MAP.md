@@ -208,6 +208,15 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
    (`algorithm.bubble_sort`) từng bị render ở `InputPanel` rồi `HistoryView`. Vá
    một chỗ **không** vá chỗ kia: luật phạm vi phải áp ở **mọi bề mặt** học sinh
    thấy, và tốt nhất là gom về **một component chung** (nay là `SessionCard`).
+11. **`var(--token)` trỏ vào token KHÔNG TỒN TẠI** (M9-UX5) — lỗi **IM LẶNG** và
+   nguy hiểm nhất trong CSS: trình duyệt vứt **cả dòng khai báo**, không cảnh báo,
+   không đỏ ở đâu. `global.css` gọi `var(--sp-2xl)` trong khi token thật là
+   `--sp-xxl` → `.home-composer` mất `margin: 0 auto` → **ô nhập lệch hẳn sang
+   trái**, `.home-title` mất margin → **chữ dí sát ô**, `.app-single` mất padding
+   đáy. Trôi từ M9-UX1 tới M9-UX5 mới bị phát hiện — bằng cách **đo trong browser
+   thật**, không phải bằng đọc code. Cùng lúc lộ thêm `--border`/`--radius-sm`/
+   `--radius-md` (M8-PRE-LIP): `PredictionBar` suốt nay **không có viền, không bo
+   góc**. Nay khoá bằng `styles/tokens.test.ts` (mọi `var()` phải có định nghĩa).
 
 ## 9. Vị trí cache & pattern reuse
 

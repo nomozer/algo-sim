@@ -4,6 +4,7 @@ import { getSimulation } from "../simulations/registry";
 import type { Domain } from "../simulations/types";
 import type { HistoryItem } from "../state/history";
 import { formatRelativeTime } from "./HomeView";
+import { IconChevronRight, IconClose } from "./icons";
 import { previewKindOf, SamplePreview } from "./SamplePreview";
 
 /**
@@ -87,12 +88,15 @@ export function SessionCard({
           )}
         </span>
 
-        <span className="session-go">Tiếp tục ▸</span>
+        <span className="session-go">
+          Tiếp tục
+          <IconChevronRight size={14} />
+        </span>
       </button>
 
       {onRemove && (
         <button className="session-remove" onClick={onRemove} title="Xóa khỏi lịch sử">
-          ✕
+          <IconClose size={15} />
         </button>
       )}
     </div>

@@ -33,6 +33,61 @@ button:disabled {
   opacity: 0.4;
 }
 
+/* ── M9-UX5 — THANH CUỘN: mảnh, chìm, TỰ ẨN khi đứng yên ─────────────────────
+   Thanh cuộn mặc định của Windows là một dải xám dày có hai nút mũi tên — nó
+   nặng hơn cả nội dung nó cuộn, và cắt ngang ngôn ngữ thị giác nhẹ của hệ.
+   Mặc định: TRONG SUỐT (chỉ chiếm chỗ, không nhìn thấy). Khi rê chuột vào vùng
+   cuộn được → hiện ra mờ; rê thẳng vào thanh → đậm hơn. Rời chuột → chìm lại.
+   `scrollbar-gutter: stable` giữ chỗ sẵn nên nội dung KHÔNG nhảy khi thanh
+   hiện/ẩn — đây là lý do phải "ẩn bằng màu" chứ không phải bằng `width: 0`. */
+* {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
+  scrollbar-color: var(--hairline) transparent; /* Firefox */
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s ease;
+}
+
+/* Chỉ hiện khi con trỏ đang ở trong vùng cuộn được. */
+:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.18);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.34);
+}
+
+/* Không có nút mũi tên hai đầu — chúng là thứ khiến thanh cuộn Windows nặng nề. */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
 /* ── Khung trang ─────────────────────────────────────── */
 .nav-bar {
   background: var(--canvas);
@@ -44,6 +99,46 @@ button:disabled {
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+/* ── M9-UX5: điều hướng là LINK CHỮ, đẩy sang phải ──────────────────────────
+   Trước đây hai nút pill dính sát wordmark — đọc ra như thanh công cụ chứ không
+   phải điều hướng trang. Nay: wordmark trái, link chữ phải, trang đang xem gạch
+   chân. Nút bật/tắt panel (chỉ trong workspace) nằm cùng bên phải, sau vạch ngăn. */
+.nav-links {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  padding: 6px 2px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+}
+
+.nav-link.is-active {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom-color: var(--primary);
+}
+
+.nav-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--hairline);
+  margin: 0 var(--sp-xs);
 }
 
 .nav-wordmark {
@@ -70,32 +165,24 @@ button:disabled {
   width: 100%;
   max-width: 920px;
   margin: 0 auto;
-  padding: var(--sp-xl) var(--sp-lg) var(--sp-2xl);
+  padding: var(--sp-xl) var(--sp-lg) var(--sp-4xl);
   min-height: calc(100vh - 57px);
 }
 
-.home-hero {
-  text-align: center;
-  margin: var(--sp-2xl) 0 var(--sp-lg);
-}
-
 .home-title {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.75px;
-  margin: 0 0 var(--sp-sm);
-}
-
-.home-subtitle {
-  color: var(--ink-muted);
-  font-size: 16px;
-  margin: 0 auto;
-  max-width: 560px;
+  text-align: center;
+  margin: var(--sp-3xl) auto var(--sp-lg);
 }
 
 .home-composer {
-  max-width: 680px;
-  margin: 0 auto var(--sp-xl);
+  max-width: 620px;
+  /* margin-inline auto = CĂN GIỮA. Trước đây dòng này dùng var(--sp-2xl) —
+     token không tồn tại → trình duyệt vứt CẢ dòng margin → composer dính mép
+     trái cột 920px. Đây chính là chỗ "lệch" nhìn thấy trên Trang chủ. */
+  margin: 0 auto var(--sp-4xl);
   display: flex;
   flex-direction: column;
   gap: var(--sp-sm);
@@ -103,59 +190,82 @@ button:disabled {
 
 .home-section {
   max-width: 920px;
-  margin: 0 auto var(--sp-xl);
+  margin: 0 auto var(--sp-3xl);
+}
+
+.home-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-sm);
 }
 
 .home-section-title {
   font-size: 18px;
   font-weight: 700;
   letter-spacing: -0.25px;
-  margin: 0 0 var(--sp-sm);
+  margin: 0;
 }
 
-/* M9-UX3 — COMPOSER "PILL" (chỉ Home). Ô nhập cũ là textarea 5 dòng RỖNG cộng
-   một nút xanh đặc kín chiều ngang: nuốt trọn màn hình đầu mà chẳng nói gì.
-   Pill: một dòng, tự cao dần; kẹp tệp và nút gửi nằm TRONG ô. */
+.link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+
+/* ── M9-UX5 — COMPOSER "HỘP" (chỉ Home) ────────────────────────────────────
+   Lịch sử: M9-UX2 là textarea 5 dòng RỖNG + nút xanh đặc kín chiều ngang (nuốt
+   trọn màn hình đầu). M9-UX3 nén thành pill một dòng — nhưng pill quá chật để
+   nói đủ ý, placeholder dài là bị cắt. M9-UX5: HỘP nhiều dòng, hai nút tròn ở
+   ĐÁY (`+` trái tải tệp, gửi phải) — đủ chỗ thở, đủ chỗ cho placeholder nói hết. */
 .composer-hero {
   display: flex;
   flex-direction: column;
   gap: var(--sp-sm);
 }
 
-.composer-pill {
+.composer-box {
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
   gap: var(--sp-xs);
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-radius: 26px;
-  padding: 6px 6px 6px 8px;
+  border-radius: 16px;
+  padding: var(--sp-sm) var(--sp-sm) 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.composer-pill:focus-within {
+.composer-box:focus-within {
   border-color: var(--primary);
   box-shadow: var(--shadow-soft);
 }
 
-.composer-pill.is-busy {
+.composer-box.is-busy {
   opacity: 0.75;
 }
 
 .composer-text {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   border: none;
   outline: none;
   background: transparent;
   color: var(--ink);
   font-family: inherit;
   font-size: 15px;
-  line-height: 1.45;
-  padding: 8px 2px;
+  line-height: 1.5;
+  padding: 4px 4px 0;
   resize: none;
-  max-height: 148px;
+  min-height: 46px;
+  max-height: 200px;
   overflow-y: auto;
 }
 
@@ -163,29 +273,10 @@ button:disabled {
   color: var(--ink-faint);
 }
 
-/* M9-UX4: đề mẫu BẤM ĐƯỢC thay câu ví dụ tĩnh — chip điền sẵn đề vào ô nhập. */
-.composer-prompts {
+.composer-foot {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  gap: var(--sp-xs);
-}
-
-.prompt-chip {
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  padding: 4px 11px;
-  font-size: 12.5px;
-  color: var(--ink-muted);
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.prompt-chip:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+  justify-content: space-between;
 }
 
 .composer-attach,
@@ -194,31 +285,31 @@ button:disabled {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  border: none;
   cursor: pointer;
   display: grid;
   place-items: center;
-  font-size: 15px;
-  transition: background 0.15s ease, transform 0.1s ease;
+  transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
 }
 
 .composer-attach {
-  background: transparent;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
   color: var(--ink-muted);
 }
 
 .composer-attach:hover {
-  background: var(--canvas-soft);
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .composer-send {
   background: var(--primary);
+  border: none;
   color: #fff;
-  font-weight: 700;
 }
 
 .composer-send:disabled {
-  background: var(--hairline);
+  background: var(--canvas-soft);
   color: var(--ink-faint);
   cursor: not-allowed;
 }
@@ -227,7 +318,21 @@ button:disabled {
   transform: scale(1.06);
 }
 
-/* M9-UX3: 2 cột — 4 cột làm tiêu đề xuống 3 dòng. */
+.composer-spin {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: #fff;
+  animation: composer-spin 0.7s linear infinite;
+}
+
+@keyframes composer-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .starter-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -579,6 +684,23 @@ button:disabled {
 .btn-primary:active {
   background: var(--primary-active);
   transform: scale(0.95);
+}
+
+/* M9-UX5: nút có icon → icon và chữ luôn thẳng hàng, cách đều. */
+.btn-primary,
+.btn-utility {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-play {
+  min-width: 112px;
+  justify-content: center;
+}
+
+.icon {
+  flex: 0 0 auto;
 }
 
 .btn-utility {
@@ -1042,9 +1164,85 @@ button:disabled {
   letter-spacing: -0.25px;
 }
 
-.tab-bar {
+/* ── M9-UX5: AI là MỤC THU GỌN ở đáy panel Quan sát, không phải tab ngang hàng.
+   (`.tab-bar` cũ đã gỡ cùng cặp tab [Quan sát][Hỏi AI].) ───────────────────── */
+.ai-section {
+  margin-top: var(--sp-sm);
+  border-top: 1px solid var(--hairline);
+  padding-top: var(--sp-sm);
+}
+
+.ai-toggle {
   display: flex;
+  align-items: center;
   gap: var(--sp-xs);
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 6px 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.ai-toggle:hover {
+  color: var(--primary);
+}
+
+.ai-toggle-caret {
+  margin-left: auto;
+  display: inline-flex;
+  color: var(--ink-faint);
+}
+
+/* ── M9-UX5: trang Thư viện — nhà riêng của danh mục đầy đủ ──────────────── */
+.library-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+}
+
+.library-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 2px;
+}
+
+.library-search {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-full);
+  padding: 6px 14px;
+  color: var(--ink-faint);
+}
+
+.library-search:focus-within {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.library-search input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  width: 200px;
 }
 
 .context-preview {
@@ -1197,8 +1395,8 @@ button:disabled {
 .predict-bar {
   margin-top: var(--sp-md);
   padding: var(--sp-md);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
   background: var(--canvas-soft);
   display: flex;
   flex-direction: column;
@@ -1217,8 +1415,8 @@ button:disabled {
 }
 .btn-choice {
   padding: 6px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--rounded-sm);
   background: var(--surface);
   color: var(--ink);
   cursor: pointer;
@@ -1234,7 +1432,7 @@ button:disabled {
 .predict-result {
   margin: 0;
   padding: var(--sp-sm);
-  border-radius: var(--radius-sm);
+  border-radius: var(--rounded-sm);
   font-size: 14px;
   line-height: 1.5;
 }
