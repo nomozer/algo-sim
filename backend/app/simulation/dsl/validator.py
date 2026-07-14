@@ -169,12 +169,33 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
         for key in ("label", "node_type", "from", "to", "text", "parent"):
             if isinstance(o.get(key), str):
                 obj[key] = o[key]
+        # M8-PRE (S2): edge có CHIỀU — chỉ giữ khi là bool THẬT (không nhận 0/1,
+        # không nhận chuỗi) và chỉ trên edge; renderer vẽ mũi tên from → to.
+        if o["type"] == "edge" and isinstance(o.get("directed"), bool):
+            obj["directed"] = o["directed"]
         objects.append(obj)
         by_id[o["id"]] = obj
     for o in objects:
         if o["type"] == "edge":
             if o.get("from") not in ids or o.get("to") not in ids:
                 return None, f'edge "{o["id"]}" phải nối hai object có thật (from/to).'
+
+    # M8-PRE (S2): CHIỀU luồng dữ liệu là thứ DẪN XUẤT ĐƯỢC, không phải thứ phải
+    # đi xin LLM. Đo live: model dựng đúng actor→process→data_store trong from/to
+    # nhưng BỎ QUA `directed` kể cả khi prompt yêu cầu tường minh và kể cả sau khi
+    # bị từ chối kèm lý do. Hướng đã nằm sẵn trong from/to → server TỰ SUY.
+    # Chỉ áp cho cạnh nối HAI node vai trò HỆ THỐNG → không đụng hình học
+    # (node không node_type) và không đụng liên kết mạng (client/router… vốn 2 chiều).
+    _sys_types = set(M.node_type_vocabulary()["system"])
+    _sys_nodes = {o["id"] for o in objects if o["type"] == "node" and o.get("node_type") in _sys_types}
+    for o in objects:
+        if (
+            o["type"] == "edge"
+            and "directed" not in o  # LLM khai tường minh thì TÔN TRỌNG, không ghi đè
+            and o.get("from") in _sys_nodes
+            and o.get("to") in _sys_nodes
+        ):
+            o["directed"] = True
 
     # M7.12: nội dung chữ + lồng nhau (structural/textual)
     for o in objects:

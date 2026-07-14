@@ -38,6 +38,8 @@ const MAX_REVEAL_STEPS = 20;
 const MAX_TEXT_LEN = 500;
 const MAX_NESTING_DEPTH = 4;
 const TOP_KEYS = new Set(["dsl_version", "title", "objects", "rules", "interactions", "processes", "notes"]);
+/** Vai trò node HỆ THỐNG THÔNG TIN — mirror `node_type_vocabulary()["system"]` của manifest. */
+const SYSTEM_NODE_TYPES = new Set(["actor", "process", "data_store", "input", "output"]);
 const FORBIDDEN = ["steps", "timeline", "state", "frames", "transitions", "animations"];
 
 function isObj(v: unknown): v is Record<string, unknown> {
@@ -151,6 +153,8 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
     for (const key of ["label", "node_type", "from", "to", "text", "parent"] as const) {
       if (typeof o[key] === "string") obj[key] = o[key] as string;
     }
+    // M8-PRE (S2): mirror backend — chỉ edge, chỉ bool THẬT (không nhận 0/1/chuỗi).
+    if (o.type === "edge" && typeof o.directed === "boolean") obj.directed = o.directed;
     objects.push(obj);
     byId[o.id] = obj;
   }
@@ -160,6 +164,17 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
       if (!o.from || !o.to || !ids.has(o.from) || !ids.has(o.to)) {
         return { ok: false, error: `edge "${o.id}" phải nối hai object có thật (from/to).` };
       }
+    }
+  }
+  // M8-PRE (S2): mirror backend — CHIỀU luồng dữ liệu được SUY từ from/to giữa hai
+  // node vai trò hệ thống (LLM không đáng tin cho việc khai `directed`). Hai tầng
+  // validator phải suy ra CÙNG một spec, nếu không spec sửa cục bộ sẽ lệch server.
+  const sysNodes = new Set(
+    objects.filter((o) => o.type === "node" && o.node_type && SYSTEM_NODE_TYPES.has(o.node_type)).map((o) => o.id),
+  );
+  for (const o of objects) {
+    if (o.type === "edge" && o.directed === undefined && o.from && o.to && sysNodes.has(o.from) && sysNodes.has(o.to)) {
+      o.directed = true;
     }
   }
   // M7.12: nội dung chữ + lồng nhau (structural/textual)

@@ -13,6 +13,7 @@ from itertools import product
 
 from app.simulation.dsl.manifest import (
     all_coverable_roles,
+    node_type_vocabulary,
     roles_of_primitive,
     temporal_process_types,
 )
@@ -58,6 +59,46 @@ def check_semantic_compatibility(required: set[str], spec: dict) -> dict:
     return {"ok": True, "kind": "ok", "missing": []}
 
 
+# M8-PRE (S2): vai trò node thuộc HỆ THỐNG THÔNG TIN — dẫn xuất từ manifest,
+# không viết tay (chống drift với từ vựng prompt).
+def _system_node_types() -> set[str]:
+    return set(node_type_vocabulary()["system"])
+
+
+def check_system_flow_consistency(spec: dict) -> str | None:
+    """Cảnh HỆ THỐNG THÔNG TIN phải nêu rõ CHIỀU của luồng dữ liệu.
+
+    Vì sao là cổng TẤT ĐỊNH chứ không phải câu dặn trong prompt: đo live cho thấy
+    LLM dựng đúng node actor/process/data_store nhưng BỎ QUA `directed`, khiến sơ
+    đồ luồng dữ liệu không thấy được hướng — đúng lỗ hổng sư phạm mà S2 phải vá.
+    Prompt là lời khuyên; cổng này là luật (từ chối → pipeline retry kèm lý do).
+
+    Chỉ áp cho cảnh THỰC SỰ dùng từ vựng hệ thống → KHÔNG đụng hình học
+    (node không node_type) và KHÔNG đụng topology mạng (client/router/... vốn là
+    liên kết hai chiều, không có chiều luồng).
+    """
+    sys_types = _system_node_types()
+    sys_nodes = {
+        o["id"]
+        for o in spec.get("objects", [])
+        if o.get("type") == "node" and o.get("node_type") in sys_types
+    }
+    if len(sys_nodes) < 2:
+        return None
+    edges = [o for o in spec.get("objects", []) if o.get("type") == "edge"]
+    flow_edges = [e for e in edges if e.get("from") in sys_nodes and e.get("to") in sys_nodes]
+    if not flow_edges:
+        return None
+    if any(e.get("directed") is True for e in flow_edges):
+        return None
+    return (
+        "Cảnh này là SƠ ĐỒ HỆ THỐNG THÔNG TIN (có node actor/process/data_store/"
+        "input/output) nhưng KHÔNG cạnh nào khai \"directed\": true. Luồng dữ liệu "
+        "phải thấy được HƯỚNG đi. Hãy đặt \"directed\": true cho mỗi edge biểu diễn "
+        "một luồng dữ liệu, với \"from\" là nơi dữ liệu đi RA và \"to\" là nơi dữ liệu ĐẾN."
+    )
+
+
 _BOOL = {
     "and": lambda bits: 1 if all(bits) else 0,
     "or": lambda bits: 1 if any(bits) else 0,
@@ -83,7 +124,52 @@ def check_semantic(spec: dict, expectation: dict) -> tuple[bool, str]:
         return _check_static_structural(spec)
     if kind == "draggable_reveal":
         return _check_draggable_reveal(spec, expectation.get("min_steps", 2))
+    if kind == "system_flow":
+        return _check_system_flow(
+            spec, expectation.get("min_directed", 1), expectation.get("moving", False)
+        )
     return False, f"Loại kỳ vọng lạ: {kind}"
+
+
+def _check_system_flow(spec: dict, min_directed: int, moving: bool) -> tuple[bool, str]:
+    """M8-PRE (S2): sơ đồ HỆ THỐNG THÔNG TIN — thành phần có vai trò + luồng dữ
+    liệu CÓ CHIỀU.
+
+    Ranh giới sư phạm được THỰC THI ở đây, không chỉ tuyên bố:
+    - moving=False → sơ đồ TĨNH (interactive_visualization): phải KHÔNG có process
+      diễn biến. Cấm gọi một sơ đồ tĩnh là "executable simulation".
+    - moving=True  → executable_simulation: phải có move_along_path THẬT đưa dữ
+      liệu đi qua các công đoạn.
+    """
+    roled = [o for o in spec.get("objects", []) if o.get("type") == "node" and o.get("node_type")]
+    if len(roled) < 2:
+        return False, "Cần ≥2 node có node_type (tác nhân/chức năng/kho dữ liệu)"
+    directed = [
+        o for o in spec.get("objects", []) if o.get("type") == "edge" and o.get("directed") is True
+    ]
+    if len(directed) < min_directed:
+        return False, (
+            f"Chỉ có {len(directed)} luồng CÓ CHIỀU (directed=true), cần ≥ {min_directed} — "
+            "luồng dữ liệu không có chiều thì học sinh không thấy dữ liệu đi hướng nào"
+        )
+    temporal = temporal_process_types()
+    procs = [p for p in spec.get("processes", []) if p.get("type") in temporal]
+    if not moving:
+        if procs:
+            return False, "Sơ đồ TĨNH nhưng spec có process diễn biến — không được giả vờ là mô phỏng chạy được"
+        return True, f"Sơ đồ hệ thống tĩnh: {len(roled)} thành phần, {len(directed)} luồng có chiều"
+    move = next((p for p in spec.get("processes", []) if p.get("type") == "move_along_path"), None)
+    if move is None:
+        return False, "Kỳ vọng dữ liệu CHẠY QUA các công đoạn nhưng không có move_along_path"
+    if len(move.get("path", [])) < 3:
+        return False, "path ngắn hơn 3 nút — chưa thể hiện dữ liệu đi qua nhiều công đoạn"
+    ok, detail = _structural_ok(spec)
+    if not ok:
+        return False, detail
+    return True, (
+        f"Hệ thống chạy được: {len(roled)} thành phần, {len(directed)} luồng có chiều, "
+        f"dữ liệu đi qua {len(move['path'])} công đoạn"
+    )
 
 
 def _check_static_structural(spec: dict) -> tuple[bool, str]:

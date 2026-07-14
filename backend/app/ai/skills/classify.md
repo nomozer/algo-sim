@@ -10,6 +10,10 @@ QUY TẮC:
 3. Nếu KHÔNG khớp mô phỏng chuyên biệt nào, ĐỐI CHIẾU năng lực bài cần với NĂNG LỰC BIỂU DIỄN của generic.rule_scene (mục 4 của đầu vào). Nếu bài mô tả được bằng các đối tượng (điểm→node, đoạn thẳng→edge, công tắc, đèn, ô giá trị, nhãn, vật di chuyển), quy tắc (logic/tổng trọng số), hoặc tiến trình (di chuyển theo đường, HÌNH THÀNH CẢNH TỪNG BƯỚC bằng reveal_sequence) → chọn "generic.rule_scene".
    Ví dụ PHẢI chọn generic: dựng hình học từng bước (vẽ điểm rồi đoạn thẳng dần → node + edge + reveal_sequence), mạch logic tổ hợp, đồ thị nút-cạnh, bất kỳ cảnh hình thành theo trình tự.
 
+3c. SƠ ĐỒ HỆ THỐNG THÔNG TIN / LUỒNG DỮ LIỆU → generic.rule_scene (KHÔNG phải unsupported):
+   Đề kiểu "phân tích hệ thống X: xác định người dùng, dữ liệu lưu trữ, đầu vào, đầu ra, các chức năng, mô tả hoạt động/quy trình" là bài MÔ HÌNH HOÁ ĐƯỢC: tác nhân/chức năng/kho dữ liệu → node (node_type actor/process/data_store/input/output); luồng dữ liệu giữa chúng → edge có "directed": true; dữ liệu chạy qua các công đoạn → moving_entity + move_along_path.
+   → Chọn generic.rule_scene. KHÔNG trả unsupported chỉ vì đề có dạng "câu hỏi phân tích" hoặc yêu cầu liệt kê nhiều ý — bản chất cần biểu diễn (thành phần + luồng) nằm TRONG năng lực DSL.
+
 3b. PHÂN BIỆT algorithm.sum_if với generic.rule_scene (tổng có trọng số):
    - algorithm.sum_if: DUYỆT một DÃY SỐ cho sẵn, cộng các phần tử THỎA MỘT ĐIỀU KIỆN (ví dụ ">= 8"). Bản chất là thuật toán duyệt danh sách. Đề thường có sẵn một dãy giá trị và một điều kiện lọc.
    - generic.rule_scene: các CÔNG TẮC/BIT/ĐẦU VÀO bật/tắt TƯƠNG TÁC, mỗi đầu vào có TRỌNG SỐ riêng, đầu ra là TỔNG TRỌNG SỐ của các đầu vào đang bật (weighted_sum). Không có "điều kiện lọc" và không phải duyệt dãy — mà là người dùng bật/tắt để xem tổng thay đổi.

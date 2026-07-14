@@ -43,14 +43,22 @@ const px = (nx: number) => (nx / 100) * VW;
 const py = (ny: number) => (ny / 100) * VH;
 
 const NODE_COLOR: Record<string, string> = {
+  // mạng máy tính
   client: "var(--accent-sky)",
   router: "var(--accent-purple)",
   server: "var(--accent-green)",
   switch: "var(--accent-teal)",
   isp: "var(--accent-orange)",
+  // hệ thống thông tin (M8-PRE S2) — cùng primitive node, vai trò khác nhau phải
+  // PHÂN BIỆT ĐƯỢC bằng mắt, nếu không sơ đồ mất ý nghĩa.
+  actor: "var(--accent-sky)",
+  process: "var(--accent-purple)",
+  data_store: "var(--accent-teal)",
+  input: "var(--accent-green)",
+  output: "var(--accent-orange)",
 };
 
-/** node không có node_type → coi là "điểm" (geometry); có node_type → nút mạng. */
+/** node không có node_type → "điểm" (geometry); có node_type → nút mạng / thành phần hệ thống. */
 function isPoint(o: SpecObject): boolean {
   return o.type === "node" && !o.node_type;
 }
@@ -455,8 +463,10 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               <circle cx={p.x} cy={p.y} r={32} fill="transparent" stroke="var(--primary)" strokeWidth={1.5} strokeDasharray="4 4" opacity={0.6} />
             )}
             <circle cx={p.x} cy={p.y} r={26} fill="var(--surface)" stroke={color} strokeWidth={current ? 4 : 2.5} className={current ? "gen-glow" : undefined} />
+            {/* M8-PRE: hợp đồng bảo node dùng "label"; LLM đôi khi đặt "text" — nút
+                KHÔNG TÊN thì sơ đồ mất nghĩa, nên fallback thay vì bỏ trống. */}
             <text x={p.x} y={p.y - 1} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
-              {o.label ?? o.id}
+              {o.label ?? o.text ?? o.id}
             </text>
             {o.node_type && (
               <text x={p.x} y={p.y + 11} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
@@ -550,6 +560,17 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           style={{ maxWidth: VW, display: "block", margin: "0 auto", cursor: editMode && editTool === "add_node" ? "crosshair" : undefined }}
           onClick={onCanvasClick}
         >
+          {/* M8-PRE (S2): đầu mũi tên cho edge CÓ CHIỀU (luồng dữ liệu). Hai biến thể
+              màu vì marker không kế thừa stroke của line. userSpaceOnUse → kích thước
+              mũi tên không đổi theo strokeWidth. */}
+          <defs>
+            <marker id="gen-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth={12} markerHeight={12} orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--ink-secondary)" />
+            </marker>
+            <marker id="gen-arrow-current" viewBox="0 0 10 10" refX="10" refY="5" markerWidth={12} markerHeight={12} orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary)" />
+            </marker>
+          </defs>
           {/* 1. Cạnh (edge) — dưới cùng; chỉ khi edge + hai đầu đều visible (§6) */}
           {spec.objects
             .filter((o) => o.type === "edge" && isObjectRenderable(frame, o))
@@ -559,6 +580,13 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               if (!a || !b) return null;
               const current = objectRole(state, o.id) === "current";
               const len = Math.hypot(b.x - a.x, b.y - a.y) || 1;
+              // M8-PRE (S2): edge có chiều → lùi điểm cuối ra khỏi hình đích để
+              // mũi tên không bị nút (r=26) che; điểm hình học nhỏ hơn nên lùi ít.
+              const target = spec.objects.find((t) => t.id === o.to);
+              const pad = o.directed ? (target?.type === "node" && target.node_type ? 28 : 16) : 0;
+              const ex = b.x - ((b.x - a.x) / len) * pad;
+              const ey = b.y - ((b.y - a.y) / len) * pad;
+              const drawLen = Math.hypot(ex - a.x, ey - a.y) || 1;
               // M7.14: nhãn cạnh ở trung điểm, dịch theo pháp tuyến (hướng lên)
               let nx = (-(b.y - a.y) / len) * 12;
               let ny = ((b.x - a.x) / len) * 12;
@@ -572,13 +600,14 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                   <line
                     x1={a.x}
                     y1={a.y}
-                    x2={b.x}
-                    y2={b.y}
+                    x2={ex}
+                    y2={ey}
                     stroke={current ? "var(--primary)" : "var(--ink-secondary)"}
                     strokeWidth={current ? 4 : 2.5}
-                    strokeLinecap="round"
+                    strokeLinecap={o.directed ? "butt" : "round"}
+                    markerEnd={o.directed ? (current ? "url(#gen-arrow-current)" : "url(#gen-arrow)") : undefined}
                     className={current ? "gen-edge-draw" : undefined}
-                    style={current ? ({ ["--len" as string]: len, strokeDasharray: len } as React.CSSProperties) : undefined}
+                    style={current ? ({ ["--len" as string]: drawLen, strokeDasharray: drawLen } as React.CSSProperties) : undefined}
                   />
                   {deletable && (
                     <line

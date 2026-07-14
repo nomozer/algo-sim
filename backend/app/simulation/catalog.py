@@ -269,6 +269,10 @@ _GENERIC_SCHEMA = {
                     "node_type": {"type": "STRING", "nullable": True},
                     "from": {"type": "STRING", "nullable": True},
                     "to": {"type": "STRING", "nullable": True},
+                    # M8-PRE (S2): chiều của edge (luồng dữ liệu / request→response).
+                    # Thiếu field này trong schema = Gemini KHÔNG THỂ phát ra dù prompt
+                    # cho phép — đúng anti-pattern #1 đã từng gây bug với `drag`.
+                    "directed": {"type": "BOOLEAN", "nullable": True},
                     # M7.12: nội dung chữ + lồng nhau
                     "text": {"type": "STRING", "nullable": True},
                     "parent": {"type": "STRING", "nullable": True},

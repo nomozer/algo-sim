@@ -24,7 +24,7 @@ from app.simulation.representation import (
     required_roles,
     scene_mode_guidance,
 )
-from app.simulation.semantic import check_semantic_compatibility
+from app.simulation.semantic import check_semantic_compatibility, check_system_flow_consistency
 from app.ai.gemini import call_gemini, load_skill
 
 # ── Schema structured output từng stage ───────────────────────
@@ -200,6 +200,16 @@ async def stage_simulate(
             mode_error = check_scene_consistency(scene_mode, config)
             if mode_error:
                 last_error = mode_error
+                prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+                continue
+
+        # M8-PRE (S2): sơ đồ hệ thống thông tin phải nêu CHIỀU luồng dữ liệu.
+        # Cổng TẤT ĐỊNH — đo live cho thấy prompt một mình KHÔNG đủ (LLM dựng đúng
+        # node vai trò nhưng bỏ qua `directed` → mất chính giá trị sư phạm cần có).
+        if simulation_id == "generic.rule_scene":
+            flow_error = check_system_flow_consistency(config)
+            if flow_error:
+                last_error = flow_error
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
 

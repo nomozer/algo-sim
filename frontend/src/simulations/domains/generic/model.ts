@@ -67,6 +67,8 @@ export interface SpecObject {
   node_type?: string;
   from?: string;
   to?: string;
+  /** Edge CÓ CHIỀU (luồng dữ liệu / request→response) — renderer vẽ mũi tên from → to (M8-PRE S2). */
+  directed?: boolean;
   /** Nội dung chữ cho heading/paragraph/text (M7.12). */
   text?: string;
   /** id của container/group chứa object này (lồng nhau — M7.12). */

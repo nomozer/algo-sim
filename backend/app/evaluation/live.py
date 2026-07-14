@@ -25,9 +25,11 @@ import sys
 from app.persistence.db import init_db  # noqa: F401 (đảm bảo .env được nạp qua db module)
 from app.ai import gemini
 from app.ai.gemini import ApiBudget
+from app.evaluation.datasets import POOLS, get_pool
 from app.evaluation.harness import format_report, run_eval, select_suite
 
-SUITES = ("smoke", "full", "boundary")
+SUITES = ("smoke", "full", "boundary", "smoke_v2", "flagship", "L3", "system_flow")
+DATASETS = tuple(sorted(POOLS))
 
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
@@ -35,8 +37,12 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         prog="python -m app.evaluation.live",
         description="Đánh giá AI composition với Gemini THẬT (cần ALLOW_LIVE_AI=1).",
     )
+    p.add_argument("--dataset", choices=DATASETS, default="regression",
+                   help="regression (mặc định — 30 case lịch sử, ĐÓNG BĂNG) | curriculum | "
+                        "capability | cross_domain | thesis (bộ flagship)")
     p.add_argument("--suite", choices=SUITES, default="smoke",
-                   help="smoke (mặc định, ~8 đề đại diện) | full (toàn bộ) | boundary (case capability gap)")
+                   help="full (toàn bộ pool) | hoặc lọc theo tag: smoke | boundary | "
+                        "smoke_v2 | flagship | L3 | system_flow")
     p.add_argument("--max-cases", type=int, default=None, help="Chỉ chạy N đề đầu của suite.")
     p.add_argument("--max-api-calls", type=int, default=None,
                    help="Trần request HTTP thật; chạm trần → dừng sạch và vẫn in report.")
@@ -53,11 +59,12 @@ async def _main(args: argparse.Namespace) -> int:
         print("Tạo backend/.env với GEMINI_API_KEY=<key> rồi chạy lại.")
         return 1
 
-    items = select_suite(args.suite)
+    pool = get_pool(args.dataset)
+    items = select_suite(args.suite, pool)
     if args.max_cases is not None:
         items = items[: max(0, args.max_cases)]
     if not items:
-        print(f"Suite '{args.suite}' không có đề nào.")
+        print(f"Dataset '{args.dataset}' + suite '{args.suite}': không có đề nào.")
         return 1
 
     budget = ApiBudget(
@@ -65,7 +72,7 @@ async def _main(args: argparse.Namespace) -> int:
         max_attempts=(args.max_retries + 1) if args.max_retries is not None else None,
     )
     gemini.set_budget(budget)
-    print(f"Suite '{args.suite}': {len(items)} đề với Gemini THẬT "
+    print(f"Dataset '{args.dataset}' · suite '{args.suite}': {len(items)} đề với Gemini THẬT "
           f"(trần API: {args.max_api_calls or 'không giới hạn'})...\n")
     try:
         report = await run_eval(items, api_key, budget=budget)

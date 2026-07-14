@@ -20,7 +20,7 @@ from app.simulation.representation import (
     check_scene_consistency,
     scene_mode_guidance,
 )
-from app.simulation.semantic import check_semantic
+from app.simulation.semantic import check_semantic, check_system_flow_consistency
 
 # Phân loại lỗi (§5)
 FAIL_WRONG_SELECTION = "wrong_selection"
@@ -168,6 +168,15 @@ async def _simulate_with_metrics(
             if mode_error:
                 last_error = mode_error
                 scene_mode_failed = True
+                prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+                continue
+        # M8-PRE (S2): mirror pipeline — cùng cổng tất định, nếu không metric live
+        # sẽ đo một hành vi KHÁC với sản phẩm (known issue #1: harness mirror pipeline).
+        if config is not None and simulation_id == "generic.rule_scene":
+            flow_error = check_system_flow_consistency(config)
+            if flow_error:
+                last_error = flow_error
+                scene_mode_failed = False
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
         if config is not None:
