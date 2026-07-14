@@ -146,6 +146,36 @@ export const IconExperiment = (p: IconProps) => (
   </Svg>
 );
 
+/** Dự đoán bước tiếp theo — bóng đèn. Thay emoji 🔮. */
+export const IconPredict = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M9 18h6M10 21h4" />
+    <path d="M12 3a6 6 0 00-3.5 10.9V16h7v-2.1A6 6 0 0012 3z" />
+  </Svg>
+);
+
+/** Đúng — dùng cho phán quyết dự đoán (thay ký tự ✓). */
+export const IconCheck = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M4 12.5l5 5L20 6.5" />
+  </Svg>
+);
+
+/** Sai — thay ký tự ✗. */
+export const IconCross = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M18 6L6 18M6 6l12 12" />
+  </Svg>
+);
+
+/** Không kết luận được (unsupported_to_verify) — thay ký tự •. */
+export const IconInfo = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 11v5M12 7.5v.01" />
+  </Svg>
+);
+
 /**
  * Bật/tắt panel. Thay `◧`/`◨` (U+25E7/25E8) — hai ký tự này không có glyph trong
  * font hệ thống Windows nên hiện ra Ô VUÔNG RỖNG (tofu) ngay trên header.

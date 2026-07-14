@@ -1,6 +1,7 @@
 import type { AnalysisOk } from "../core/types";
 import { ALGORITHM_NAMES } from "../core/types";
 import { fmt } from "../core/trace-builder";
+import { IconInfo } from "./icons";
 
 const OP_SYMBOL: Record<string, string> = {
   ">": ">",
@@ -26,19 +27,11 @@ export function AnalysisCard({ analysis }: { analysis: AnalysisOk }) {
         <span className="analysis-label">Output</span>
         <span>{problem.output}</span>
         <span className="analysis-label">Thuật toán</span>
+        {/* M9-UX6: GỠ chip `{analysis.algorithm_id}` (`find_max`). Đây là lần THỨ BA
+            chuỗi định danh kĩ thuật lọt lên UI học sinh (sau InputPanel, HistoryView).
+            Tên tiếng Việt đã nói đủ; `find_max` là khoá định tuyến nội bộ. */}
         <span>
-          <strong>{ALGORITHM_NAMES[analysis.algorithm_id]}</strong>{" "}
-          <code
-            style={{
-              fontSize: 13,
-              color: "var(--ink-muted)",
-              background: "var(--canvas-soft)",
-              borderRadius: "var(--rounded-xs)",
-              padding: "1px 6px",
-            }}
-          >
-            {analysis.algorithm_id}
-          </code>
+          <strong>{ALGORITHM_NAMES[analysis.algorithm_id]}</strong>
         </span>
         <span className="analysis-label">Dữ liệu</span>
         <span style={{ fontVariantNumeric: "tabular-nums" }}>
@@ -62,7 +55,7 @@ export function AnalysisCard({ analysis }: { analysis: AnalysisOk }) {
       </div>
       {analysis.data_generated && (
         <p className="notes">
-          ⚠ Đề không cho số liệu cụ thể — dữ liệu mẫu do hệ thống sinh ra để mô phỏng.
+          <IconInfo size={14} /> Đề không cho số liệu cụ thể — dữ liệu mẫu do hệ thống sinh ra để mô phỏng.
         </p>
       )}
       {analysis.notes && <p className="notes">{analysis.notes}</p>}

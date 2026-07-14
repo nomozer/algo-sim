@@ -8,7 +8,13 @@ import type { WorkspaceProps } from "../../types";
 import { consequenceOf, decisionPointOf } from "./decision";
 import { whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
-import { IconExperiment } from "../../../components/icons";
+import {
+  IconBack,
+  IconCheck,
+  IconExperiment,
+  IconPredict,
+  IconSearch,
+} from "../../../components/icons";
 
 /**
  * UI adapter của domain algorithm — nơi DUY NHẤT được biết trace/mảng/mã giả.
@@ -57,7 +63,8 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
             )}
           </span>
           <button className="btn-utility" onClick={() => dispatch({ type: "exit_branch" })}>
-            ⤺ Quay về dòng chính
+            <IconBack size={14} />
+            Quay về dòng chính
           </button>
         </div>
       )}
@@ -74,13 +81,19 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8). */}
       {decision && (
         <div className="decision-strip">
-          <span className="decision-consideration">🔍 {decision.consideration}</span>
+          <span className="decision-consideration">
+            <IconSearch size={14} />
+            {decision.consideration}
+          </span>
           <strong className="decision-expression">{decision.expression}</strong>
         </div>
       )}
       {consequence && (
         <div className="decision-strip is-consequence">
-          <span>💡 {consequence}</span>
+          <span>
+            <IconPredict size={14} />
+            {consequence}
+          </span>
         </div>
       )}
 
@@ -88,7 +101,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
 
       {last && doneEvent && doneEvent.type === "done" && (
         <div className="result-banner">
-          ✓ {doneEvent.result}
+          <IconCheck size={15} /> {doneEvent.result}
           {state.branch && (
             <span style={{ display: "block", fontWeight: 400, marginTop: 4 }}>
               (kết quả của nhánh thử nghiệm — dãy gốc: [

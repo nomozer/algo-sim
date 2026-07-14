@@ -1,9 +1,11 @@
 import { useState } from "react";
 import type { SimulationModule } from "../simulations/types";
 import { useAppStore } from "../state/store";
+import { IconCheck, IconCross, IconInfo, IconPredict } from "./icons";
 
 /**
- * PredictionBar (M8-PRE-LIP) — UI DỰ ĐOÁN DÙNG CHUNG cho MỌI domain.
+ * PredictionBar (M8-PRE-LIP · trình bày lại theo DESIGN.md ở M9-UX6)
+ * — UI DỰ ĐOÁN DÙNG CHUNG cho MỌI domain.
  *
  * Bằng chứng cho tuyên bố kiến trúc: CÙNG một capability (`predict?`) + CÙNG một
  * component phục vụ nhiều domain khác nhau (network: chọn nút — N lựa chọn;
@@ -17,6 +19,17 @@ import { useAppStore } from "../state/store";
  * - Chấm bằng ENGINE TẤT ĐỊNH (`module.predict.check`) — KHÔNG LLM, không fetch.
  * - Kết quả là DỮ LIỆU (store.prediction), không phải hội thoại; mô phỏng
  *   canonical (`active.state`) KHÔNG hề bị đụng tới.
+ *
+ * TRÌNH BÀY — theo `DESIGN.md`, KHÔNG tự chế:
+ * - Thẻ nổi lên bằng **nền canvas ấm** trên nền trắng, hairline, `rounded-md` —
+ *   đúng khuôn `pricing-plan-card-featured`: *"Distinguished by SURFACE TINT
+ *   rather than a coloured border."* KHÔNG viền màu, KHÔNG nền tím.
+ * - Bảng màu sticker (tím/hồng/cam/teal) là **TRANG TRÍ**: cấm sơn nút, cấm sơn
+ *   nền cấu trúc (`DESIGN.md` §Don't). Màu DUY NHẤT sơn hành động là `--primary`.
+ * - Lựa chọn = `button-utility` (trắng, hairline, 8px); lựa chọn đang chọn dùng
+ *   `--primary` — đây là *active signal*, đúng vai của primary.
+ * - Phán quyết đúng/sai được phép dùng sticker palette vì `DESIGN.md` §Semantic
+ *   nói rõ *"status is carried by the sticker palette"* — status thì được, nút thì không.
  */
 
 interface PredictionBarProps {
@@ -41,7 +54,11 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
   return (
     <section className="predict-bar" aria-label="Dự đoán bước tiếp theo">
       <div className="predict-head">
-        <span className="eyebrow">🔮 DỰ ĐOÁN BƯỚC TIẾP THEO</span>
+        {/* badge-pill (DESIGN.md): nền trắng, chữ primary, 12px/600, pill 4px 8px */}
+        <span className="eyebrow">
+          <IconPredict size={13} />
+          DỰ ĐOÁN BƯỚC TIẾP THEO
+        </span>
         <p className="predict-question">{challenge.question}</p>
       </div>
 
@@ -69,10 +86,10 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
 
       {prediction && (
         <p className={`predict-result is-${prediction.verdict}`} role="status">
-          {prediction.verdict === "correct" && "✓ "}
-          {prediction.verdict === "incorrect" && "✗ "}
-          {prediction.verdict === "unsupported_to_verify" && "• "}
-          {prediction.message}
+          {prediction.verdict === "correct" && <IconCheck size={15} />}
+          {prediction.verdict === "incorrect" && <IconCross size={15} />}
+          {prediction.verdict === "unsupported_to_verify" && <IconInfo size={15} />}
+          <span>{prediction.message}</span>
         </p>
       )}
     </section>

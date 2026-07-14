@@ -208,6 +208,21 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
    (`algorithm.bubble_sort`) từng bị render ở `InputPanel` rồi `HistoryView`. Vá
    một chỗ **không** vá chỗ kia: luật phạm vi phải áp ở **mọi bề mặt** học sinh
    thấy, và tốt nhất là gom về **một component chung** (nay là `SessionCard`).
+12. **Tự chế ngôn ngữ thị giác trong khi dự án ĐÃ CÓ `DESIGN.md`** (M9-UX6) —
+   `DESIGN.md` §Don't nói rõ: *"Don't paint a CTA or structural fill in any
+   sticker-palette colour — those are decoration only"* và *"Don't introduce a
+   second structural accent alongside primary"*. Tím/hồng/cam/teal là **trang trí**
+   (chấm phân loại, minh hoạ); màu DUY NHẤT sơn hành động là `--primary`. Muốn một
+   thẻ nổi lên thì dùng **surface tint** (`canvas-soft`), KHÔNG viền màu — đúng
+   khuôn `pricing-plan-card-featured`. Ngoại lệ hợp lệ: §Semantic cho phép sticker
+   palette mang **status** (xanh lá = đúng, cam = sai). Khoá bằng
+   `components/ui-hygiene.test.ts`.
+13. **Đặt guard ở chỗ phụ thuộc route** (M9-UX6) — guard cấm-emoji đầu tiên quét
+   `renderToString(<App/>)`, mà SSR chỉ đi qua **trạng thái đầu** (Home) nên không
+   bao giờ chạm workspace: emoji 🔮 (`PredictionBar`) và chuỗi `find_max`
+   (`AnalysisCard`) **lọt qua guard xanh lè**. Guard vệ sinh phải quét **MÃ NGUỒN**,
+   không quét HTML đã render — như vậy mọi component đều bị soi, kể cả component
+   chưa có test nào đi qua.
 11. **`var(--token)` trỏ vào token KHÔNG TỒN TẠI** (M9-UX5) — lỗi **IM LẶNG** và
    nguy hiểm nhất trong CSS: trình duyệt vứt **cả dòng khai báo**, không cảnh báo,
    không đỏ ở đâu. `global.css` gọi `var(--sp-2xl)` trong khi token thật là

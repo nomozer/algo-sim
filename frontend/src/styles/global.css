@@ -238,7 +238,7 @@ html {
   gap: var(--sp-xs);
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-radius: 16px;
+  border-radius: var(--rounded-lg);
   padding: var(--sp-sm) var(--sp-sm) 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -291,15 +291,15 @@ html {
   transition: background 0.15s ease, transform 0.1s ease, border-color 0.15s ease;
 }
 
+/* button-icon-circular (DESIGN.md): tròn, fill mờ rgba(0,0,0,0.05). */
 .composer-attach {
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  color: var(--ink-muted);
+  background: rgba(0, 0, 0, 0.05);
+  border: none;
+  color: var(--ink-secondary);
 }
 
 .composer-attach:hover {
-  border-color: var(--primary);
-  color: var(--primary);
+  background: rgba(0, 0, 0, 0.09);
 }
 
 .composer-send {
@@ -309,9 +309,10 @@ html {
 }
 
 .composer-send:disabled {
-  background: var(--canvas-soft);
+  background: rgba(0, 0, 0, 0.05);
   color: var(--ink-faint);
-  cursor: not-allowed;
+  cursor: default;
+  opacity: 1;
 }
 
 .composer-send:not(:disabled):hover {
@@ -583,9 +584,9 @@ html {
   color: var(--ink);
   font-family: inherit;
   font-size: 13px;
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  padding: 6px 12px;
+  border: 1px solid #dddddd;
+  border-radius: var(--rounded-xs);
+  padding: 6px 10px;
 }
 
 .panel-filter:focus {
@@ -658,8 +659,14 @@ html {
   margin-bottom: var(--sp-sm);
 }
 
+/* badge-pill (DESIGN.md): trắng, chữ primary, 12px/600, pill, padding 4px 8px.
+   M9-UX6: `inline-flex` + gap để ICON KHÔNG DÍNH SÁT CHỮ; `align-self: flex-start`
+   để nó không bị kéo giãn hết chiều ngang khi nằm trong flex column (stretch). */
 .eyebrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.125px;
@@ -684,6 +691,17 @@ html {
 .btn-primary:active {
   background: var(--primary-active);
   transform: scale(0.95);
+}
+
+/* Disabled = XÁM TRUNG TÍNH, không phải xanh mờ 40%.
+   `button:disabled { opacity: .4 }` toàn cục làm nút primary thành XANH NHẠT —
+   học sinh đọc ra là "hỏng", không phải "chưa tới lượt". Greys là ngôn ngữ của
+   trạng thái nghỉ trong DESIGN.md; primary chỉ nói "đây là hành động". */
+.btn-primary:disabled {
+  background: var(--canvas-soft);
+  color: var(--ink-faint);
+  border: 1px solid var(--hairline);
+  opacity: 1;
 }
 
 /* M9-UX5: nút có icon → icon và chữ luôn thẳng hàng, cách đều. */
@@ -819,6 +837,24 @@ html {
   color: var(--ink-faint);
   text-transform: uppercase;
   padding-top: 2px;
+}
+
+/* M9-UX6: mọi dải chữ có icon dẫn đầu → flex + gap, không để icon dính chữ. */
+.notes,
+.result-banner,
+.decision-strip > span,
+.branch-banner > span {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.notes .icon,
+.result-banner .icon,
+.decision-strip .icon,
+.branch-banner .icon {
+  flex: 0 0 auto;
+  margin-top: 2px;
 }
 
 .notes {
@@ -1219,14 +1255,16 @@ html {
   margin: 0 0 2px;
 }
 
+/* DESIGN.md §Don't: "Don't put pill rounded.full radii on form fields — inputs
+   stay tight at rounded.xs (4px)." Ô tìm kiếm là FORM FIELD. */
 .library-search {
   display: flex;
   align-items: center;
   gap: var(--sp-xs);
   background: var(--surface);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-full);
-  padding: 6px 14px;
+  border: 1px solid #dddddd;
+  border-radius: var(--rounded-xs);
+  padding: 6px 10px;
   color: var(--ink-faint);
 }
 
@@ -1391,51 +1429,105 @@ html {
   color: var(--ink-faint);
 }
 
-/* ── PredictionBar (M8-PRE-LIP) — UI dự đoán dùng chung cho mọi domain ── */
+/* ── PredictionBar — TRÌNH BÀY THEO DESIGN.md (sửa ở M9-UX6) ─────────────────
+   Thẻ nổi lên bằng NỀN CANVAS ẤM trên nền trắng + hairline + rounded-md —
+   đúng khuôn `pricing-plan-card-featured`: "Distinguished by SURFACE TINT rather
+   than a coloured border". KHÔNG viền màu, KHÔNG nền tím.
+   Bảng màu sticker là TRANG TRÍ — cấm sơn nút (DESIGN.md §Don't). Màu duy nhất
+   sơn hành động là --primary. Riêng PHÁN QUYẾT đúng/sai được dùng sticker vì
+   §Semantic nói "status is carried by the sticker palette". */
 .predict-bar {
   margin-top: var(--sp-md);
-  padding: var(--sp-md);
+  padding: var(--sp-lg);
+  background: var(--canvas-soft);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
-  background: var(--canvas-soft);
   display: flex;
   flex-direction: column;
   gap: var(--sp-sm);
 }
+
 .predict-question {
-  margin: 4px 0 0;
-  font-weight: 600;
+  margin: var(--sp-xs) 0 0;
+  font-size: 16px;
+  font-weight: 400; /* DESIGN.md §Don't: body copy KHÔNG để weight nặng */
   color: var(--ink);
 }
+
 .predict-options {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--sp-sm);
+  gap: var(--sp-xs);
   align-items: center;
 }
+
+/* button-utility (DESIGN.md): trắng, hairline, rounded-md 8px, padding 4px 14px */
 .btn-choice {
-  padding: 6px 14px;
-  border: 1.5px solid var(--hairline);
-  border-radius: var(--rounded-sm);
   background: var(--surface);
   color: var(--ink);
+  font-size: 16px;
+  font-weight: 500;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: 6px 18px;
   cursor: pointer;
-  font-size: 14px;
+  transition: border-color 0.15s ease, background 0.15s ease;
 }
-.btn-choice:hover:not(:disabled) { border-color: var(--primary); }
+
+/* Đang chọn = ACTIVE SIGNAL → dùng --primary. Đây đúng vai của primary
+   ("active-tab and focus signal"), không phải tô màu trang trí. */
 .btn-choice.is-picked {
-  border-color: var(--primary);
   background: var(--primary);
-  color: #fff;
+  border-color: var(--primary);
+  color: var(--on-primary);
 }
-.btn-choice:disabled { opacity: 0.55; cursor: default; }
+
+.btn-choice:disabled {
+  cursor: default;
+}
+
+/* Khoảng thở trước nút Kiểm tra — nó là hành động, không phải lựa chọn thứ ba. */
+.predict-options .btn-primary {
+  margin-left: var(--sp-xs);
+}
+
 .predict-result {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-xs);
   margin: 0;
-  padding: var(--sp-sm);
-  border-radius: var(--rounded-sm);
-  font-size: 14px;
+  padding: var(--sp-sm) var(--sp-md);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-left: 3px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  font-size: 15px;
   line-height: 1.5;
 }
-.predict-result.is-correct { background: color-mix(in srgb, var(--accent-green) 14%, transparent); }
-.predict-result.is-incorrect { background: color-mix(in srgb, var(--accent-orange) 16%, transparent); }
+
+.predict-result .icon {
+  margin-top: 3px;
+}
+
+/* Status → sticker palette (DESIGN.md §Semantic cho phép ĐÚNG chỗ này). */
+.predict-result.is-correct {
+  border-left-color: var(--accent-green);
+  color: var(--ink);
+}
+
+.predict-result.is-correct .icon {
+  color: var(--accent-green);
+}
+
+.predict-result.is-incorrect {
+  border-left-color: var(--accent-orange);
+}
+
+.predict-result.is-incorrect .icon {
+  color: var(--accent-orange);
+}
+
+.predict-result.is-unsupported_to_verify .icon {
+  color: var(--ink-faint);
+}
 .predict-result.is-unsupported_to_verify { background: var(--canvas-soft); color: var(--ink-secondary); }
