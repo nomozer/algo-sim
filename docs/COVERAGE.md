@@ -268,6 +268,29 @@ sử bằng **bản sao** (`dataclasses.replace`), **không** sửa `DATASET`.
 
 ---
 
+## 11b. Ngân sách object & NÉN DƯ THỪA AN TOÀN (M8-PRE plan C)
+
+`max_objects = 20` **không phải bất biến ngữ nghĩa** — nó là **ngân sách chứa đầu ra
+LLM + ngân sách dễ đọc của renderer**. Engine không phụ thuộc con số này.
+
+**Bằng chứng (đo live):** mọi cảnh hệ thống HỢP LỆ đều nằm gọn trong 20 (11–19 object).
+Chỉ bản nháp BỊ PHỒNG mới vượt: Gemini vừa đặt `label` inline cho node/edge, vừa tạo
+thêm **object `label` rời lặp lại đúng chuỗi đó**.
+
+→ **Không nâng hạn mức toàn cục. Không capability-aware budget.** Thay bằng
+`compact_redundant_labels` (cả hai tầng validator):
+
+| Được phép gỡ | KHÔNG BAO GIỜ gỡ |
+|---|---|
+| object `label` rời có chữ **TRÙNG HỆT** nhãn inline của node/edge có thật | label mang chữ **riêng** (có nghĩa) |
+| …và **chỉ khi** cảnh đã **vượt** hạn mức | label đang bị **tham chiếu cấu trúc** (rule/interaction/parent/path) |
+| | bất cứ gì chỉ để "lách" hạn mức |
+
+Cấm tuyệt đối: đoán liên kết theo **khoảng cách**; dùng **LLM** để nén; bỏ **chữ có
+nghĩa**. Cảnh đang trong hạn mức **không bị đụng tới** → 0 bề mặt regression.
+Thứ tự: candidate → suy `directed` (tất định) → nén dư thừa an toàn → kiểm hạn mức →
+validator còn lại → engine smoke.
+
 ## 12. Cái gì phải ĐÓNG BĂNG
 
 1. `dataset.py` — 30 case lịch sử (id, text, group, expectation, tags).

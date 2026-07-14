@@ -114,6 +114,68 @@ describe("directed edge — mirror validator TS", () => {
 });
 
 /**
+ * M8-PRE plan C: nén dư thừa an toàn (mirror backend `compact_redundant_labels`).
+ * Hai tầng validator phải cho ra CÙNG một spec, nếu không spec sửa cục bộ sẽ lệch server.
+ */
+describe("nén dư thừa an toàn — mirror backend", () => {
+  const NODES = [
+    { id: "gv", type: "node", node_type: "actor", label: "Giáo viên", x: 10, y: 30 },
+    { id: "nhap", type: "node", node_type: "process", label: "Nhập điểm", x: 30, y: 30 },
+    { id: "kho", type: "node", node_type: "data_store", label: "CSDL điểm", x: 50, y: 30 },
+    { id: "bc", type: "node", node_type: "output", label: "Bảng điểm", x: 70, y: 30 },
+    { id: "hs", type: "node", node_type: "actor", label: "Học sinh", x: 90, y: 30 },
+  ];
+  const EDGES = [
+    ["gv", "nhap", "nhập điểm"],
+    ["nhap", "kho", "ghi dữ liệu"],
+    ["kho", "bc", "kết xuất"],
+    ["bc", "hs", "xem điểm"],
+    ["hs", "gv", "phản hồi"],
+    ["nhap", "bc", "in nhanh"],
+  ].map(([from, to, label], i) => ({ id: `e${i}`, type: "edge", from, to, label }));
+  const DUP = [...NODES, ...EDGES].map((o) => ({
+    id: `lb_${o.id}`,
+    type: "label",
+    label: o.label,
+    x: 10,
+    y: 40,
+  }));
+
+  it("vượt hạn mức vì label TRÙNG → nén lại và hợp lệ, không mất nội dung", () => {
+    const res = validateGenericConfig(spec([...NODES, ...EDGES, ...DUP])); // 22 object
+    expect(res.ok).toBe(true);
+    const s = (res as { ok: true; config: SimulationSpec }).config;
+    expect(s.objects).toHaveLength(11);
+    expect(s.objects.some((o) => o.type === "label")).toBe(false);
+    for (const o of [...NODES, ...EDGES]) {
+      expect(s.objects.some((x) => x.label === o.label)).toBe(true);
+    }
+  });
+
+  it("label CÓ NGHĨA (không trùng) → KHÔNG gỡ; vượt hạn mức thì vẫn từ chối", () => {
+    const unique = Array.from({ length: 11 }, (_, i) => ({
+      id: `note${i}`,
+      type: "label",
+      label: `Ghi chú số ${i}`,
+      x: 5,
+      y: 5,
+    }));
+    const res = validateGenericConfig(spec([...NODES, ...EDGES, ...unique]));
+    expect(res.ok).toBe(false);
+    expect((res as { ok: false; error: string }).error).toContain("1–20");
+  });
+
+  it("cảnh TRONG hạn mức không bị đụng tới (0 regression)", () => {
+    const res = validateGenericConfig(
+      spec([...NODES.slice(0, 2), { id: "lb_gv", type: "label", label: "Giáo viên", x: 5, y: 5 }]),
+    );
+    expect(res.ok).toBe(true);
+    const s = (res as { ok: true; config: SimulationSpec }).config;
+    expect(s.objects.map((o) => o.id)).toEqual(["gv", "nhap", "lb_gv"]);
+  });
+});
+
+/**
  * Mũi tên phải THẤY ĐƯỢC: luồng dữ liệu mà không nhìn ra chiều thì sơ đồ vô
  * nghĩa về mặt sư phạm (đây chính là lỗ hổng PRE-M8 audit tìm ra).
  */
