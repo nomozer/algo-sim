@@ -160,8 +160,16 @@ Exports: `BLOCK_MESSAGE`, `live_allowed`. Tests: `test_offline_guard.py`.
 
 ### `simulations/types.ts` · Change impact: offline
 Hợp đồng module. Exports: `SimulationModule`, `SimAction`, `TimelineCapability`,
-`WorkspaceProps`, `ConfigResult`, `SimulationEnvelope`, `Domain`, `InteractionMode`.
-Notes: capability **optional** (vd `timeline?`) là cách mở rộng chuẩn.
+`WorkspaceProps`, `ConfigResult`, `SimulationEnvelope`, `Domain`, `InteractionMode`,
+`VisualMode`, `PredictionCapability`, `EditCapability`.
+Notes: capability **optional** (vd `timeline?`) là cách mở rộng chuẩn. M8:
+`renderers?: Partial<Record<VisualMode, ComponentType>>` — renderer theo mode,
+"2d" mặc định là `Workspace` (tương thích ngược).
+
+### `simulations/renderer.ts` · Change impact: offline
+M8 — chọn renderer từ HỢP ĐỒNG module (không switch-case id). Exports:
+`rendererFor`, `availableVisualModes` (= tuyên bố ∩ có renderer thật),
+`effectiveVisualMode` (rơi an toàn về "2d"). Tests: `visual-mode.test.tsx`.
 
 ### `simulations/registry.ts` · `legacy.ts` · Change impact: offline
 Đăng ký/tra module theo id; `legacy.ts` nâng `algorithm_id` cũ thành envelope.
@@ -170,8 +178,12 @@ Exports: `registerSimulation`, `getSimulation`, `listSimulations`,
 
 ### `state/store.ts` · Change impact: offline
 Zustand, **mù domain**: `active {moduleId, envelope, config, state}` + timeline
-actions + `dispatch` + `resetSim` + `replaceSimulation` (M7.14, sau edit).
-Tests: `registry.test.ts`. Notes: **không** đặt logic domain vào store.
+actions + `dispatch` + `resetSim` + `replaceSimulation` (M7.14, sau edit) +
+`prediction`/`submitPrediction` (M8-PRE-LIP) + `visualMode`/`setVisualMode` (M8 —
+lát TRÌNH BÀY: đổi mode không đụng active/cursor/prediction; loadEnvelope reset
+về "2d"). Tests: `registry.test.ts`, `visual-mode.test.tsx`.
+Notes: **không** đặt logic domain vào store. Zustand v5 trả INITIAL state khi
+renderToString (SSR) — component cần test SSR phải nhận dữ liệu qua PROPS.
 
 ### `simulations/domains/generic/model.ts` · Change impact: offline
 Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,
@@ -213,17 +225,32 @@ Trạng thái edit (`editMode`/`editTool`/`editText`) là useState cục bộ.
 (`core/algorithms.ts`), truth table, bits⇄decimal, BFS route.
 Notes: **không** module nào render edit toolbar (đúng thiết kế).
 `network/model.ts` exports: `bfsRoute`, `buildSteps`, `currentStep`, `typeLabel`,
-`NetworkState` (topology + route + steps + cursor). **M7.FREEZE**: bố cục KHÔNG
-còn trong state — `layout2d` sống trong `network/ui.tsx` (renderer). Tests:
-`domains.test.ts` (khóa state renderer-neutral), `network/render.test.tsx`.
+`neighborsOf`, `hopDistance`, `NetworkState` (topology + route + steps + cursor).
+**M7.FREEZE**: bố cục KHÔNG còn trong state — `layout2d` sống trong
+`network/ui.tsx` (renderer). Tests: `domains.test.ts` (khóa state
+renderer-neutral), `network/render.test.tsx`.
+
+### `simulations/domains/network/ui3d.tsx` · Change impact: offline
+M8 — renderer 3D (Three.js thuần, KHÔNG @react-three/fiber) của
+`network.packet_routing`: đọc NGUYÊN NetworkState, không engine/BFS/prediction
+riêng. Exports: `Network3DWorkspace`, `layout3d` (pure: route z=0, ngoài route
+lùi chiều sâu), `tryCreateWebGLRenderer` (fail → null, không ném),
+`WEBGL_FALLBACK_MESSAGE`. Nạp qua `React.lazy` trong `network/index.ts`
+(code-split ~549KB — chỉ tải khi bấm 3D). Camera OrbitControls (xoay+zoom, khoá
+pan) + nút reset GÓC NHÌN (không reset mô phỏng); dispose/RAF-cancel đầy đủ khi
+unmount. Tests: `render3d.test.tsx`, `m8-acceptance.test.tsx` (kịch bản nghiệm
+thu 2D→dự đoán→3D→2D). Deps: `three` (+ `@types/three` dev).
 
 ### `core/` (`algorithms.ts`, `trace-builder.ts`, `pseudocode.ts`, `types.ts`) · offline
 Engine của domain `algorithm` (ngoài `simulations/` vì có trước registry).
 **Không** dùng làm hạ tầng chung cho domain khác.
 
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
-Host sân khấu (render `module.Workspace`); thanh điều khiển **capability-driven**
-(có `timeline` mới hiện Next/Prev/Play) — tiền lệ cho EditPolicy.
+Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
+Next/Prev/Play) — tiền lệ cho EditPolicy. M8: Stage = `rendererFor(mod, mode)`
+trong `<Suspense>` (renderer lazy); export `VisualModeToggle` (component thuần
+theo props — toggle 2D/3D chỉ khi ≥2 mode khả dụng); `PredictionBar` nằm NGOÀI
+renderer nên tự nhiên renderer-independent.
 
 ### `llm/client.ts` · Change impact: offline
 Exports: `analyzeViaServer`, `editViaServer`, `explainViaServer`, `fetchHealth`,

@@ -205,6 +205,21 @@ Chống "phủ giả" (fake coverage). Các chủ đề sau **có trong chương
 
 **Tuyên bố bị cấm:** ~~"3D luôn giúp học tốt hơn."~~
 
+### Kết quả M8 (Slice 1+2 — đã ship, xem `CURRENT_STATE.md §2`)
+
+- **Đã chứng minh phần kiến trúc** của tuyên bố trên bằng PoC
+  `network.packet_routing`: cùng module/config/engine state/timeline/action/
+  PredictionCapability phục vụ renderer 2D **và** 3D; đổi mode không restart,
+  không reset cursor, không đụng canonical state (bất biến #16).
+- **M8 KHÔNG chứng minh** 3D dạy tốt hơn 2D cho bất kỳ chủ đề nào — nó chỉ chứng
+  minh **renderer sharing**. Mọi phát ngôn sư phạm về 3D vẫn bị ràng bởi mục này.
+- **Mạng phân tầng (ứng viên có cơ sở duy nhất) CHƯA làm**: cần năng lực tất định
+  mới (trạng thái PDU biến đổi khi đóng gói/mở gói qua tầng). Hộp-tầng hiện dần
+  bằng `reveal_sequence` là **progressive visualization**, CẤM dán nhãn
+  *executable simulation* (phân biệt ở §6). Hoãn post-M8.
+- Phạm vi 3D hiện tại: **một** module (`network.packet_routing`); logic/binary/
+  algorithm/generic **cố ý** 2D-only.
+
 ---
 
 ## 9. Bộ đề: baseline ĐÓNG BĂNG + pool mới
