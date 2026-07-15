@@ -236,6 +236,22 @@ Chống "phủ giả" (fake coverage). Các chủ đề sau **có trong chương
 - Phạm vi 3D hiện tại: **một** module (`network.packet_routing`); logic/binary/
   algorithm/generic **cố ý** 2D-only.
 
+### M10 — 3D SƯ PHẠM đầu tiên (đã ship, nhánh `m10-3d-ped`)
+
+- `network.protocol_encapsulation` là mô phỏng ĐẦU TIÊN có **chiều sâu 3D mang
+  nghĩa khái niệm**: `meaning_of_z = tầng giao thức` (X = chiều truyền gửi→nhận).
+  Đóng gói đi xuống, truyền băng ngang, mở gói đi lên — **cùng engine/state** cho
+  2D và 3D (PDU là danh sách phân đoạn ngữ nghĩa; renderer không tính lại).
+- `network.packet_routing` được **phân loại lại TRUNG THỰC** là `architectural_poc`
+  (Z ở đó chỉ tách nút trên/ngoài tuyến — bố cục). Khoá bằng `threeD` metadata
+  (bất biến #18, `ARCHITECTURE_MAP §5`).
+- 2D vẫn có, là baseline dễ đọc + **mặc định khi mở**; 3D là lựa chọn qua toggle.
+  Tuyên bố được phép: *"dùng chiều thứ ba để mã hoá độ sâu tầng giao thức, cho
+  biểu diễn 3D một vai trò ngữ nghĩa tường minh."* **CẤM**: ~~"3D dạy tốt hơn 2D."~~
+- Là **MÔ HÌNH SƯ PHẠM** của đóng gói (một transport TCP; không bắt tay/seq/ack/
+  phân mảnh/UDP) — không phải bộ mô phỏng chồng giao thức đầy đủ.
+- `practice_activity` vẫn **PARTIAL / CHƯA làm**.
+
 ---
 
 ## 9. Bộ đề: baseline ĐÓNG BĂNG + pool mới

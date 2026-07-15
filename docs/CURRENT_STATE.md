@@ -23,9 +23,10 @@ Cập nhật lần cuối: sau **M9-UX7** — gỡ panel trái (workspace 2 cộ
 | | |
 |---|---|
 | pytest | **289 pass** (0 API call thật — guard là bằng chứng) |
-| vitest | **291 pass** (0 network call; −2 do gỡ `InputPanel`, độ phủ KHÔNG mất — xem M9-UX7) |
+| vitest | **323 pass** (0 network call; +32 do M10 đóng gói TCP/IP — engine/2D/3D/prediction/catalog) |
 | audit bố cục | `npm run audit:layout` — **4/4 route sạch** (Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả) |
-| build | `tsc -b && vite build` sạch — bundle chính 258.6KB; chunk Three.js 549KB **code-split**, chỉ tải khi bấm 3D |
+| build | `tsc -b && vite build` sạch — bundle chính 295KB; chunk Three.js 544KB + `ui3d` 5.4KB + `encap-ui3d` 4.7KB **đều code-split**, chỉ tải khi bấm 3D |
+| nghiệm thu M10 | CDP browser thật (SwiftShader WebGL) — **15/15**: 2D đóng gói→truyền→mở gói→giao đúng payload; dự đoán sai → phản hồi tất định; 3D canvas dựng thật + caption; parity 2D↔3D; **0 gọi /api/analyze\|edit\|explain** |
 | Docker | `docker compose up -d --build` OK (backend :8787 + Postgres) |
 | Live smoke gần nhất (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` · không false positive |
 
@@ -80,6 +81,7 @@ M7.14D.1 là **UI-only: 0 live call**.
 
 | Milestone | Commit | Nội dung |
 |---|---|---|
+| **M10-3D-PED** | *(nhánh `m10-3d-ped`)* | **3D SƯ PHẠM đầu tiên: đóng gói/mở gói TCP/IP.** Module THỨ HAI của domain network (`network.protocol_encapsulation`) — engine tất định **9 bước** dựng PDU phân đoạn với **delta tường minh** `{kind, layer, componentIds[]}` (add/remove/transmit/deliver); LINK+FCS **thêm/gỡ NGUYÊN TỬ**. 2D (stack MÁY GỬI/MÁY NHẬN, phân đoạn trải ngang) + **3D CÓ NGHĨA**: X = chiều truyền, **Z = tầng giao thức** (`meaning_of_z`), PDU đi xuống→băng ngang→đi lên. Dùng chung `PredictionCapability` (LINK+FCS là MỘT đáp án gộp; chấm bằng engine). Thêm field hợp đồng **`threeD`** phân loại TRUNG THỰC: encapsulation = `pedagogical`, packet_routing hạ về `architectural_poc`. **Bất biến #18**. Một mẫu công khai (Thư viện) + preview phân đoạn. **Định tuyến AI HOÃN** (frontend + mẫu offline; **0 gọi AI**); **click 3D trực tiếp HOÃN**; không TCP/UDP branching / handshake / phân mảnh. `practice_activity` vẫn PARTIAL. pytest 289 · vitest 323 · build sạch · audit 4/4 · nghiệm thu browser 15/15 |
 | M7.13A | `7fa4046` | Generic interaction semantics: `drag` (allowlist `node`), constraints (bounds/axis/snap), ownership rule, **position state-owned** (`GenericState.pos`), scene-mode consistency (exploratory/progressive/hybrid) truyền vào simulate |
 | M7.13B | `d1d518c` | Exact cache version-aware (`simulation_cache`), validated **pattern reuse** (`simulation_patterns`), matcher tất định (không embedding), hybrid adaptation (deterministic fill + 1 call adapt), metrics reuse |
 | M7.14 | `7835330` | **Correctness audit** (8 gap role, canonical↔learner policy, `docs/CORRECTNESS.md`), **SimulationPatch v1** + NL edit + manual edit generic, viewport safety (fit/reset, layering, label flip, edge label) |

@@ -129,6 +129,7 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 | 15 | Patch fail → spec hiện tại **nguyên vẹn** | `patch.py` áp trên bản sao | `test_patch::test_patch_fail_giua_chung_khong_mutate_spec` |
 | 16 | **3D là renderer, không phải domain** (M8): 2D/3D dùng chung module/config/state/timeline/action/prediction; `visualMode` là trình bày thuần; renderer khả dụng dẫn xuất từ hợp đồng module | `simulations/renderer.ts` + `SimulationWorkspace` (không switch-case id) | `visual-mode.test.tsx`, `render3d.test.tsx`, `m8-acceptance.test.tsx` |
 | 17 | **Mở lại từ lịch sử = ZERO-AI** (M9-UX1): lưu envelope ĐÃ VALIDATE, mở lại qua `loadEnvelope` + engine tất định — không đi pipeline, không LLM; chỉ persist trường whitelist (không prediction/branch/camera/secret); runtime reset không phá lịch sử | `state/history.ts` + `store.reopenFromHistory` | `history.test.ts`, `view-history.test.tsx` |
+| 18 | **Nghĩa của chiều sâu 3D phải TRUNG THỰC** (M10): module có 3D khai `threeD.role` = `architectural_poc` (Z chỉ là bố cục, vd `network.packet_routing`) hoặc `pedagogical` (Z mã hoá biến khái niệm thật, vd `network.protocol_encapsulation`: **Z = tầng giao thức**, X = chiều truyền). PoC KHÔNG được giả vờ có nghĩa khái niệm. PDU là state ngữ nghĩa dùng chung (2D+3D đọc cùng), 3D không tính lại PDU | `SimulationModule.threeD` (`types.ts`) + caption trong `encap-ui3d.tsx` | `render3d.test.tsx` (packet_routing=poc), `encap-render3d.test.tsx` (encap=pedagogical) |
 
 ## 6. Bốn trục khái niệm
 
