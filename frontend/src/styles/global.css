@@ -1481,3 +1481,15 @@ html {
   font-size: 12px;
   color: var(--ink-muted);
 }
+.three-caption {
+  position: absolute;
+  left: var(--sp-sm);
+  bottom: var(--sp-sm);
+  font-size: 12px;
+  color: var(--ink-muted);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: 4px 8px;
+  pointer-events: none;
+}
