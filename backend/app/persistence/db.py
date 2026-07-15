@@ -20,11 +20,32 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 load_dotenv(Path(__file__).resolve().parent.parent.parent / ".env")
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./algosim.db")
+IS_SQLITE = DATABASE_URL.startswith("sqlite")
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {},
-)
+
+def _engine_kwargs() -> dict:
+    """Tham số engine phụ thuộc dialect.
+
+    SQLite (dev nhanh + test offline): chỉ cần tắt check_same_thread vì FastAPI
+    phục vụ đa luồng. Pool của SQLite là file cục bộ, không cần tinh chỉnh.
+
+    PostgreSQL (production, nhiều user đồng thời): pool BỀN —
+      - pool_pre_ping: loại kết nối đã chết sau idle trước khi giao cho request;
+      - pool_recycle: tái tạo kết nối cũ hơn ngưỡng (tránh bị server/proxy cắt);
+      - pool_size / max_overflow: sức chứa kết nối đồng thời.
+    Chỉnh được qua biến môi trường để tinh chỉnh lúc deploy mà không sửa code.
+    """
+    if IS_SQLITE:
+        return {"connect_args": {"check_same_thread": False}}
+    return {
+        "pool_pre_ping": True,
+        "pool_recycle": int(os.getenv("DB_POOL_RECYCLE", "1800")),
+        "pool_size": int(os.getenv("DB_POOL_SIZE", "10")),
+        "max_overflow": int(os.getenv("DB_MAX_OVERFLOW", "20")),
+    }
+
+
+engine = create_engine(DATABASE_URL, **_engine_kwargs())
 SessionLocal = sessionmaker(bind=engine, autoflush=False)
 
 
@@ -107,8 +128,30 @@ def read_metrics(session) -> dict[str, int]:
     return {r.name: r.count for r in session.query(ReuseMetric).all()}
 
 
-def init_db() -> None:
-    Base.metadata.create_all(engine)
+def sqlite_owns_schema(target_engine) -> bool:
+    """create_all() có được phép sở hữu schema trên engine này không?
+
+    CHỈ SQLite (test offline / dev nhanh, DB ephemeral). Quyết định dựa trên
+    dialect metadata THẬT (`engine.dialect.name`), không string-check URL — nhờ
+    vậy `sqlite+pysqlite`, `postgresql+psycopg2`… đều phân loại đúng.
+    """
+    return target_engine.dialect.name == "sqlite"
+
+
+def init_db(target_engine=None) -> None:
+    """Tạo schema trên DB ephemeral SQLite (idempotent — checkfirst mặc định).
+
+    QUYỀN SỞ HỮU SCHEMA THEO DIALECT (DB-HARDEN-2):
+    - SQLite (test offline, dev nhanh): create_all() là LƯỚI AN TOÀN — tạo bảng
+      còn thiếu, KHÔNG bao giờ ALTER bảng cũ.
+    - PostgreSQL (deploy bền): **no-op có chủ đích**. Nguồn tạo & tiến hoá schema
+      DUY NHẤT là **Alembic** (`alembic upgrade head`, chạy ở entrypoint Docker
+      TRƯỚC khi app khởi động). Runtime KHÔNG được lặng lẽ create_all() — schema
+      thiếu/cũ phải hỏng thật (chưa migrate) chứ không được app tự vá nửa vời.
+    """
+    eng = engine if target_engine is None else target_engine
+    if sqlite_owns_schema(eng):
+        Base.metadata.create_all(eng)
 
 
 def db_dialect() -> str:

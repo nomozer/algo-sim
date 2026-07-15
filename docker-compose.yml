@@ -22,7 +22,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8787:8787"
+      - "8000:8000"
     environment:
       DATABASE_URL: postgresql+psycopg2://algosim:algosim@db:5432/algosim
     env_file:
