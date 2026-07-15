@@ -96,6 +96,12 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
     // M8: module ĐẦU TIÊN khai 3D — topology/chiều sâu là chỗ 3D thêm giá trị
     // biểu diễn thật (COVERAGE.md §8); logic/binary/algorithm CỐ Ý giữ 2D-only.
     supportedVisualModes: ["2d", "3d"],
+    // M10: TRUNG THỰC — Z ở đây chỉ tách hàng route/ngoài-route (bố cục), KHÔNG
+    // mang nghĩa khái niệm. Đây là PoC kiến trúc, không phải 3D sư phạm.
+    threeD: {
+      role: "architectural_poc",
+      meaningOfZ: "phân tách nút trên/ngoài tuyến (bố cục), không mang nghĩa khái niệm",
+    },
 
     validateConfig: validateNetworkConfig,
 

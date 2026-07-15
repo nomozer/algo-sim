@@ -226,3 +226,11 @@ describe("(19) WebGL fallback tử tế", () => {
     expect(html).toContain("Góc nhìn"); // nút reset CAMERA — không phải reset mô phỏng
   });
 });
+
+describe("(M10) 3D meaning metadata — honest classification", () => {
+  it("packet_routing khai threeD.role='architectural_poc' (Z chỉ là bố cục)", () => {
+    expect(mod.threeD).toBeDefined();
+    expect(mod.threeD!.role).toBe("architectural_poc");
+    expect(mod.threeD!.meaningOfZ.toLowerCase()).toContain("bố cục");
+  });
+});

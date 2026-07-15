@@ -136,6 +136,19 @@ export interface PredictionCapability<S = unknown> {
   check(state: S, answerId: string): PredictionResult;
 }
 
+/**
+ * M10 — vai trò của renderer 3D. Phân biệt TRUNG THỰC:
+ * - "architectural_poc": 3D chứng minh dùng chung renderer, nhưng chiều sâu (Z)
+ *   chỉ là BỐ CỤC (vd tách nút trên/ngoài tuyến) — không mang nghĩa khái niệm.
+ * - "pedagogical": Z mã hoá một biến khái niệm thật (vd tầng giao thức).
+ * Không khai = module không có 3D hoặc chưa phân loại.
+ */
+export interface ThreeDMeaning {
+  role: "architectural_poc" | "pedagogical";
+  /** Trục sâu (Z) mã hoá điều gì — tiếng Việt, dùng cho caption + test trung thực. */
+  meaningOfZ: string;
+}
+
 export interface SimulationModule<C = unknown, S = unknown> {
   /** Định danh chuẩn: "<domain>.<tên>", vd "algorithm.find_max". */
   id: string;
@@ -194,6 +207,12 @@ export interface SimulationModule<C = unknown, S = unknown> {
    *   cấm đưa vào engine state (bất biến renderer-neutral, M7.FREEZE).
    */
   renderers?: Partial<Record<VisualMode, ComponentType<WorkspaceProps<C, S>>>>;
+
+  /**
+   * M10 — tuyên bố TRUNG THỰC về nghĩa của chiều sâu 3D (chỉ khai khi có 3D).
+   * Khoá bằng test: PoC không được giả vờ có nghĩa khái niệm.
+   */
+  threeD?: ThreeDMeaning;
 
   /** Panel quan sát bên phải — nội dung theo domain (biến/mã giả, truth table, bit...). */
   Inspector?: ComponentType<WorkspaceProps<C, S>>;
