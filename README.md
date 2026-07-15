@@ -9,7 +9,7 @@ Quy tắc hệ thống: [docs/RULES.md](docs/RULES.md).
 algo-sim/
 ├─ docs/        Tài liệu (RULES.md)
 ├─ frontend/    React + TypeScript + Vite; simulation registry, renderer SVG 2D (3D Three.js — dự kiến M8)
-└─ backend/     Python FastAPI + Gemini API + SQLAlchemy (PostgreSQL/SQLite), cổng 8787
+└─ backend/     Python FastAPI + Gemini API + SQLAlchemy (PostgreSQL/SQLite), cổng 8000
 ```
 
 ## Chạy lần đầu
@@ -26,22 +26,70 @@ cd frontend && npm install
 docker compose up -d --build
 
 # 4. Frontend (cửa sổ lệnh riêng, giữ hot-reload khi dev)
-cd frontend && npm run dev     # mở http://localhost:5173
+cd frontend && npm run dev     # mở http://localhost:3000
 ```
 
 Lệnh hay dùng: `docker compose logs -f backend` (xem log) ·
 `docker compose down` (dừng) · `docker compose up -d --build` (chạy lại sau khi sửa backend).
 
-## Cơ sở dữ liệu
+## Cơ sở dữ liệu & migration
 
 **PostgreSQL 16** chạy trong Docker (service `db`, dữ liệu bền trong volume `pgdata`).
-Ngân hàng bài nằm ở bảng `problems`. Code dùng SQLAlchemy nên khi chạy backend
-ngoài Docker mà không đặt `DATABASE_URL` sẽ tự rơi về SQLite — tiện chạy nhanh:
+Bảng: `simulation_cache` (cache envelope đã validate), `simulation_patterns`,
+`reuse_metrics` — toàn dữ liệu server tự sinh, tái tạo được. Code dùng SQLAlchemy
+nên chạy backend ngoài Docker mà không đặt `DATABASE_URL` sẽ tự rơi về SQLite:
 
 ```bash
 cd backend && python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
-.venv/Scripts/python -m uvicorn app.main:app --port 8787
+.venv/Scripts/python -m uvicorn app.main:app --port 8000
 ```
+
+**Migration (Alembic).** Trên DB bền (Postgres), schema tiến hoá qua Alembic —
+container tự chạy `alembic upgrade head` ở entrypoint trước khi phục vụ. Khi đổi
+model trong `app/persistence/db.py`:
+
+```bash
+cd backend
+.venv/Scripts/alembic revision --autogenerate -m "mô tả thay đổi"   # sinh migration
+.venv/Scripts/alembic upgrade head                                   # áp dụng
+```
+
+**Quyền sở hữu schema (DB-HARDEN-2).** Hai dialect là *lựa chọn thay thế* theo
+môi trường, không phải bản sao ghi song song:
+
+| | SQLite | PostgreSQL |
+|---|---|---|
+| Vai trò | test offline, dev nhanh, DB ephemeral | DB triển khai BỀN |
+| Tạo/tiến hoá schema | `create_all()` được phép (lưới an toàn) | **CHỈ Alembic** (`alembic upgrade head`) |
+| Runtime `create_all()` | có | **không** — thiếu schema phải hỏng thật, không tự vá |
+
+Quyết định dựa trên **dialect metadata thật** (`engine.dialect.name`), không
+string-check URL. `init_db()` là no-op trên Postgres — Alembic là nguồn tiến hoá
+schema DUY NHẤT.
+
+**Kiểm tra (offline, không cần Docker):**
+
+```bash
+cd backend
+.venv/Scripts/python -m pytest tests/test_migration_drift.py   # cổng chống trôi: model ↔ head migration
+```
+
+Cổng này cũng chạy trong suite mặc định `pytest` — đổi model mà quên tạo
+migration là test ĐỎ. (Tương đương `alembic check`, chạy trên SQLite tạm.)
+
+**Smoke Postgres thật (opt-in, cần Docker + `pip install psycopg2-binary`):**
+
+```bash
+cd backend
+.venv/Scripts/python -m pytest -m postgres   # spin container throwaway (KHÔNG đụng pgdata), migrate+ghi/đọc+restart+alembic check
+```
+
+> Lần ĐẦU chuyển một volume Postgres cũ (tạo bằng `create_all`, chưa có
+> `alembic_version`) sang Alembic có HAI đường AN TOÀN:
+> **(A)** dữ liệu bỏ được (chỉ là cache) → `docker compose down -v` rồi rebuild
+> cho volume mới sạch; **(B)** muốn giữ dữ liệu → `alembic stamp head` **chỉ khi**
+> operator đã xác nhận schema hiện có KHỚP head migration. Tuyệt đối **không**
+> tự động stamp một DB lạ — làm vậy sẽ giấu drift.
 
 Không có key vẫn dùng được: chọn **bài mẫu** trong giao diện — các mô phỏng
 phân tích sẵn (thuật toán, logic, nhị phân, mạng, DSL generic) chạy offline,

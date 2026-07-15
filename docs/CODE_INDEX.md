@@ -118,12 +118,35 @@ timeline/state). Exports: `validate_algorithm_config`, `validate_logic_config`,
 `validate_binary_config`, `validate_network_config`, `ALGORITHM_IDS`.
 Tests: `test_validate.py`.
 
-### `persistence/db.py` · Change impact: offline
+### `persistence/db.py` · Change impact: offline (drift gate) + targeted (Postgres smoke)
 SQLAlchemy (SQLite mặc định / Postgres qua `DATABASE_URL`).
 Exports: `SimulationCache`, `SimulationPattern`, `ReuseMetric`, `bump_metric`,
-`read_metrics`, `init_db`, `db_dialect`, `SessionLocal`.
+`read_metrics`, `init_db(target_engine=None)`, `sqlite_owns_schema`, `db_dialect`,
+`SessionLocal`, `IS_SQLITE`, `_engine_kwargs`.
 Notes: `load_dotenv()` chạy **lúc import** → key thật vào `os.environ` (vì vậy
-conftest phải gỡ key). Không có migration system: thêm bảng OK, ALTER thì không.
+conftest phải gỡ key). **Migration = Alembic** (`backend/alembic/`); trên DB bền
+Postgres, Alembic sở hữu DUY NHẤT tạo/tiến hoá schema. **Quyền sở hữu schema theo
+dialect (DB-HARDEN-2)**: `init_db()` gọi `create_all()` **chỉ khi** `sqlite_owns_schema(engine)`
+(`engine.dialect.name == "sqlite"`) — no-op trên Postgres. `_engine_kwargs()` là
+pool dialect-aware (SQLite: `check_same_thread`; Postgres: `pool_pre_ping/recycle/
+size/max_overflow`). Đổi model → phải tạo migration, nếu không **cổng chống trôi**
+`tests/test_migration_drift.py` sẽ ĐỎ.
+
+### `tests/test_db_ownership.py` · Change impact: offline
+Khoá quyền sở hữu schema theo dialect: SQLite dùng `create_all`, Postgres KHÔNG;
+`_engine_kwargs()` dialect-aware (SQLite không nhận pool option Postgres).
+
+### `tests/test_migration_drift.py` · Change impact: offline
+Cổng chống trôi Alembic (chạy trong suite mặc định): `upgrade head` + `alembic
+check` trên **SQLite tạm** (không đụng DB dev). Đổi model mà quên migration → ĐỎ.
+Đã chứng minh bằng fault-injection (thêm cột không migration → gate bắt được).
+
+### `tests/test_postgres_integration.py` · Change impact: targeted (opt-in `pytest -m postgres`)
+Smoke Postgres THẬT (marker `postgres`, mặc định bị loại qua `pytest.ini` addopts).
+Container throwaway **không volume** (không đụng `pgdata`), tự skip nếu thiếu
+Docker/psycopg2: migrate→head, `alembic_version`==head, ghi/đọc/sửa qua model thật,
+**restart+reconnect** (dùng host port cố định vì Docker đổi random port sau restart),
+`alembic check` sạch, cleanup `docker rm -f` có kiểm chứng.
 
 ### `ingestion/input.py` · Change impact: targeted live (ảnh cần LLM)
 Chuẩn hóa text/document/code/image → text. Exports: `ingest_to_text`, `IngestError`.
