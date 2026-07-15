@@ -1416,3 +1416,68 @@ html {
   color: var(--ink-faint);
 }
 .predict-result.is-unsupported_to_verify { background: var(--canvas-soft); color: var(--ink-secondary); }
+
+/* ── M10: renderer 2D đóng gói TCP/IP ─────────────────────────────────────── */
+.encap-2d {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-md);
+}
+.encap-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.encap-col-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  letter-spacing: 0.04em;
+}
+.encap-col.is-active-side .encap-col-label {
+  color: var(--primary);
+}
+.encap-layer {
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: 8px 12px;
+  min-height: 44px;
+  background: var(--surface);
+}
+.encap-layer.is-active-layer {
+  background: var(--canvas-soft);
+  border-color: var(--primary);
+}
+.encap-layer-name {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+.encap-pdu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+.encap-seg {
+  border: 2px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface);
+}
+.encap-seg.is-changed {
+  box-shadow: 0 0 0 2px var(--canvas-soft);
+}
+.encap-medium {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-md);
+  padding: 8px 12px;
+  border-top: 1px dashed var(--hairline);
+}
+.encap-medium-label {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
