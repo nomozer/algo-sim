@@ -104,6 +104,22 @@ cd frontend && npm test          # vitest: engine + simulation domains + generic
 cd backend  && python -m pytest  # pipeline, DSL validator, semantic checks
 ```
 
+## Quyền sở hữu dependency (Python)
+
+Hệ dependency **duy nhất** là pip + hai file requirements (không dùng
+Poetry/uv/pipenv, không pyproject/lockfile). Mỗi dep khai **đúng một chỗ**:
+
+| Manifest | Vai trò (nguồn chân lý) | Ai dùng |
+|---|---|---|
+| `backend/requirements.txt` | **runtime** — mọi dep chạy app (gồm `psycopg2-binary`) | `Dockerfile`, lệnh chạy app trong README |
+| `backend/requirements-dev.txt` | **dev/test** — kế thừa runtime qua `-r requirements.txt`, chỉ thêm tool test (`pytest`) | setup standalone `pip install -r requirements-dev.txt` (test offline + `pytest -m postgres`) |
+
+**Luật cho người/agent đóng góp:** **Không** tạo file manifest hay lockfile
+dependency mới theo kiểu tùy tiện. Trước khi thêm dep, **kiểm chính sách hiện có**
+và dùng lại nguồn chân lý sẵn có (runtime → `requirements.txt`; chỉ-test →
+`requirements-dev.txt`). Không nhân bản cùng một dep qua nhiều manifest. Dep chỉ
+cần cho một lần kiểm thủ công thì **đừng commit** trừ khi nó thành workflow bền.
+
 ## Kiến trúc (tóm tắt)
 
 Mô phỏng là **xương sống**; LLM chỉ phân tích/ánh xạ, không điều khiển engine.
