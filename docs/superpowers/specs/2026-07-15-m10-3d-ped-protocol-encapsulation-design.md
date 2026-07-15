@@ -204,7 +204,7 @@ The 3D renderer surfaces `meaningOfZ` as a small on-stage caption so the semanti
               config: { payloadLabel: "Dữ liệu ứng dụng", appProtocol: "HTTP", notes: null } }
   // visibility omitted → public
   ```
-- Featured on Home starters (add `"network.protocol_encapsulation"` to `STARTER_SIM_IDS`) + appears in Library.
+- Reachable via the **Library** (full public catalog; its card count is dynamic = `publicCatalog().length`). **Not** added to Home starters: Home is deliberately curated at exactly 6 (locked by `ux-shell.test.tsx`; store comment "composer + 6 gợi ý + 1 thẻ tiếp tục"), and the spec requires only a public sample, not Home featuring. Promoting to Home would be a separate one-line follow-up.
 - `SamplePreview`: new `kind: "network-encapsulation"` (static segmented-stack SVG) + `previewKindOf("network.protocol_encapsulation") → "network-encapsulation"`.
 - History reopen (cursor + visualMode, zero-AI) works via the existing envelope path — no new code; add a targeted acceptance test only.
 
@@ -214,7 +214,7 @@ The 3D renderer surfaces `meaningOfZ` as a small on-stage caption so the semanti
 
 **Renderer/metadata** (`encap-render3d.test.tsx`): 2D reads `state.pdu`; 3D reads the *same* `state.pdu`; `layerDepth` monotonic (Application 0 → Network Access most negative) and deterministic; `sideX` sender<medium<receiver; no PDU recomputation in 3D; store mode-switch preserves state+cursor; WebGL fallback; `threeD` metadata truthful for both network modules (invariant #5); no banned Unicode/emoji icons (hygiene guard).
 
-**Catalog/history**: update `catalog.test.tsx` counts (public 12→13, offline 16→17), `previewKindOf` + SVG enumeration, starter list; new public sample present; zero-AI reopen restores cursor + visualMode.
+**Catalog/history**: update `catalog.test.tsx` counts (public 12→13, offline 16→17), `previewKindOf` + SVG enumeration; new public sample present in Library (starter list unchanged — see §9); zero-AI reopen restores cursor + visualMode.
 
 **Regression + gates**: full `pytest` (expect 289), full `vitest` (new count reported honestly), `tsc -b` clean, `vite build` clean, `npm run audit:layout` 4/4 (fault-injection-checked). M8 / M9-S1 / M9-UX1 / M9-UX2 suites green.
 
