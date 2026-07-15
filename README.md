@@ -77,7 +77,9 @@ cd backend
 Cổng này cũng chạy trong suite mặc định `pytest` — đổi model mà quên tạo
 migration là test ĐỎ. (Tương đương `alembic check`, chạy trên SQLite tạm.)
 
-**Smoke Postgres thật (opt-in, cần Docker + `pip install psycopg2-binary`):**
+**Smoke Postgres thật (opt-in, cần Docker):** driver `psycopg2-binary` đã nằm
+trong `requirements.txt` và được `requirements-dev.txt` kế thừa qua `-r`, nên
+setup dev chuẩn (`pip install -r requirements-dev.txt`) đã đủ — không cần cài tay.
 
 ```bash
 cd backend
