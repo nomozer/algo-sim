@@ -271,3 +271,48 @@ def validate_network_config(raw) -> tuple[dict | None, str | None]:
         "destination": dest,
         "notes": notes,
     }, None
+
+
+# Khóa v1 KHÔNG cho LLM tự mô hình hoá — tầng/PDU/gói thuộc engine tất định (M10)
+_ENCAP_OWNED_BY_ENGINE = {"layers", "pdu", "headers", "packets", "protocols"}
+_ENCAP_PAYLOAD_MAX = 80
+_ENCAP_PROTOCOL_MAX = 24
+
+
+def validate_encapsulation_config(raw) -> tuple[dict | None, str | None]:
+    """network.protocol_encapsulation (M10-AI-ROUTE) — bề mặt config v1 NHỎ.
+
+    LLM chỉ được điền nhãn ngữ cảnh: payloadLabel + appProtocol (+ notes).
+    Mô hình 4 tầng TCP/IP, 9 bước, PDU, timeline — engine frontend tất định
+    sở hữu toàn bộ (khớp validateEncapConfig trong frontend encap.ts: mọi
+    field optional, có mặc định an toàn).
+    """
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+    engine_owned = _ENCAP_OWNED_BY_ENGINE.intersection(raw.keys())
+    if engine_owned:
+        return None, (
+            f"Config chứa khóa ngoài hợp đồng v1: {', '.join(sorted(engine_owned))}. "
+            "Mô hình tầng giao thức và PDU do engine tất định sở hữu — "
+            "chỉ điền payloadLabel/appProtocol/notes."
+        )
+
+    payload = raw.get("payloadLabel")
+    if payload is not None and not isinstance(payload, str):
+        return None, '"payloadLabel" phải là chuỗi.'
+    payload = (payload or "").strip() or "Dữ liệu ứng dụng"
+    if len(payload) > _ENCAP_PAYLOAD_MAX:
+        return None, f'"payloadLabel" tối đa {_ENCAP_PAYLOAD_MAX} ký tự.'
+
+    proto = raw.get("appProtocol")
+    if proto is not None and not isinstance(proto, str):
+        return None, '"appProtocol" phải là chuỗi.'
+    proto = (proto or "").strip() or None
+    if proto and len(proto) > _ENCAP_PROTOCOL_MAX:
+        return None, f'"appProtocol" tối đa {_ENCAP_PROTOCOL_MAX} ký tự.'
+
+    notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
+    return {"payloadLabel": payload, "appProtocol": proto, "notes": notes}, None

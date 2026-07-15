@@ -67,7 +67,10 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #      data_store/input/output) + analyze/classify hỗ trợ sơ đồ hệ thống thông tin.
 #      Đề "phân tích hệ thống" TỪNG bị unsupported nay mô phỏng được → phải
 #      invalidate cache cũ, nếu không phán quyết cũ sẽ kẹt lại vĩnh viễn.
-CACHE_VERSION = "6"
+# "7": M10-AI-ROUTE — network.protocol_encapsulation vào CATALOG (menu classify
+#      đổi): đề đóng gói qua tầng TỪNG bị unsupported/định tuyến nhầm nay có
+#      module chuyên biệt → invalidate cache cũ.
+CACHE_VERSION = "7"
 
 
 class InputPayload(BaseModel):

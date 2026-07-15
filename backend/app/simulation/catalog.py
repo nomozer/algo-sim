@@ -25,6 +25,7 @@ from app.validation.simulation import (
     ALGORITHM_NAMES_VI,
     validate_algorithm_config,
     validate_binary_config,
+    validate_encapsulation_config,
     validate_logic_config,
     validate_network_config,
 )
@@ -237,11 +238,45 @@ CATALOG["network.packet_routing"] = SimSpec(
     simulation_id="network.packet_routing",
     domain="network",
     visual_mode="2d",
-    description="định tuyến gói tin trên MỘT MẠNG CHO SẴN đầy đủ — mô phỏng gói tin đi từng chặng từ máy nguồn qua các router tới máy đích. CHỈ dùng khi topology có sẵn ngay; KHÔNG dựng mạng từng bước (không tạo từng thiết bị/liên kết dần)",
+    description="định tuyến gói tin trên MỘT MẠNG CHO SẴN đầy đủ — mô phỏng gói tin đi từng chặng từ máy nguồn qua các router tới máy đích. CHỈ dùng khi topology có sẵn ngay; KHÔNG dựng mạng từng bước (không tạo từng thiết bị/liên kết dần). Cơ chế ẩn là ĐƯỜNG ĐI qua các NÚT thiết bị; bài hỏi dữ liệu được ĐÓNG GÓI/THÁO GÓI qua các TẦNG giao thức (thêm/gỡ TCP, IP, header) → network.protocol_encapsulation",
     config_schema=_NETWORK_SCHEMA,
     contract=_NETWORK_CONTRACT,
     validate=validate_network_config,
     make_title=lambda config, analysis: "Đường đi của gói tin trong mạng",
+)
+
+
+# ── network.protocol_encapsulation (M10-AI-ROUTE) ─────────────
+# Engine tất định 9 bước (frontend encap-model.ts) sở hữu TOÀN BỘ mô hình:
+# 4 tầng TCP/IP cố định, PDU, delta thêm/gỡ, timeline, kết quả. LLM chỉ điền
+# nhãn ngữ cảnh — bề mặt v1 nhỏ đúng bằng validateEncapConfig phía frontend.
+
+_ENCAP_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "payloadLabel": {"type": "STRING", "nullable": True},
+        "appProtocol": {"type": "STRING", "nullable": True},
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": [],
+}
+
+_ENCAP_CONTRACT = """HỢP ĐỒNG CONFIG (network.protocol_encapsulation):
+- payloadLabel: nhãn NGẮN (≤80 ký tự) cho dữ liệu ứng dụng lấy từ đề (vd "Thư gửi bạn Lan"); đề không nêu → bỏ trống, hệ thống dùng mặc định "Dữ liệu ứng dụng".
+- appProtocol: tên giao thức ứng dụng CHỈ ĐỂ HIỂN THỊ NGỮ CẢNH (vd "HTTP", "Email") nếu đề nêu rõ; không nêu → null. KHÔNG mô hình hoá hành vi giao thức.
+- notes: ghi chú ngắn (tùy chọn).
+- Mô hình v1 CỐ ĐỊNH do engine tất định sở hữu: 4 tầng TCP/IP (Ứng dụng → Giao vận → Internet → Truy cập mạng), 9 bước đóng gói → truyền → tháo gói.
+- KHÔNG sinh layers, pdu, headers, steps, timeline, trạng thái hay kết quả — engine tự dựng toàn bộ diễn biến từ config."""
+
+CATALOG["network.protocol_encapsulation"] = SimSpec(
+    simulation_id="network.protocol_encapsulation",
+    domain="network",
+    visual_mode="2d",
+    description="đóng gói dữ liệu qua các tầng giao thức TCP/IP — dữ liệu từ tầng ứng dụng được THÊM DẦN thông tin giao thức (TCP, IP, thông tin liên kết) khi đi xuống từng tầng ở máy gửi, truyền đi, rồi được GỠ DẦN (tháo gói) ở máy nhận. Dùng khi cơ chế ẩn là BIẾN ĐỔI PDU qua từng TẦNG. Bài hỏi ĐƯỜNG ĐI của gói tin qua các thiết bị (router/switch/ISP) → network.packet_routing. KHÔNG hỗ trợ chi tiết bắt tay TCP ba bước, số sequence/ACK, phân mảnh, retransmission, congestion control, DNS — các đề đó vượt năng lực v1, trả unsupported",
+    config_schema=_ENCAP_SCHEMA,
+    contract=_ENCAP_CONTRACT,
+    validate=validate_encapsulation_config,
+    make_title=lambda config, analysis: "Đóng gói dữ liệu qua các tầng TCP/IP",
 )
 
 
