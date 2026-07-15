@@ -3,6 +3,7 @@ import {
   buildEncapState, currentStep, LAYERS, PROTOCOL_PIECES, pieceForComponents,
   type EncapConfig, type EncapState,
 } from "./encap-model";
+import { makeEncapsulationModule } from "./encap";
 
 const CONFIG: EncapConfig = { payloadLabel: "Dữ liệu ứng dụng", appProtocol: "HTTP", notes: null };
 
@@ -87,5 +88,75 @@ describe("(M10) engine đóng gói — dựng PDU tất định", () => {
 
   it("LAYERS đủ 4 tầng đúng thứ tự trên→dưới", () => {
     expect(LAYERS).toEqual(["application", "transport", "internet", "network_access"]);
+  });
+});
+
+const emod = makeEncapsulationModule();
+
+describe("(M10) module đóng gói — hợp đồng + validate", () => {
+  it("id/domain/mode/threeD đúng", () => {
+    expect(emod.id).toBe("network.protocol_encapsulation");
+    expect(emod.domain).toBe("network");
+    expect(emod.interactionMode).toBe("progressive");
+    expect(emod.supportedVisualModes).toEqual(["2d", "3d"]);
+    expect(emod.threeD!.role).toBe("pedagogical");
+    expect(emod.threeD!.meaningOfZ.toLowerCase()).toContain("tầng");
+  });
+
+  it("validateConfig chuẩn hoá payload thiếu về mặc định", () => {
+    const r = emod.validateConfig({});
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.config.payloadLabel).toBe("Dữ liệu ứng dụng");
+  });
+
+  it("init dựng 9 bước; timeline kẹp", () => {
+    const s = emod.init({ payloadLabel: "X", appProtocol: null, notes: null });
+    expect(emod.timeline!.stepCount(s)).toBe(9);
+    expect(emod.timeline!.currentStep(emod.timeline!.goToStep(s, 99))).toBe(8);
+  });
+
+  it("getExplainContext sạch, serializable, không lộ toạ độ", () => {
+    const s = emod.timeline!.goToStep(emod.init({ payloadLabel: "X", appProtocol: null, notes: null }), 2);
+    const ctx = emod.getExplainContext(s, { payloadLabel: "X", appProtocol: null, notes: null });
+    expect(JSON.parse(JSON.stringify(ctx))).toEqual(ctx);
+    expect(ctx.simulation_id).toBe("network.protocol_encapsulation");
+    expect(ctx.active_layer).toBe("internet");
+  });
+});
+
+describe("(M10) prediction — bám delta thật của bước kế tiếp", () => {
+  const base = emod.init({ payloadLabel: "Dữ liệu ứng dụng", appProtocol: null, notes: null });
+  const at = (i: number) => ({ ...base, cursor: i });
+
+  it("ở bước đóng gói: hỏi 'thêm gì', đáp án đúng = mảnh của bước kế", () => {
+    const ch = emod.predict!.challenge(at(0));
+    expect(ch).not.toBeNull();
+    expect(ch!.question).toContain("THÊM");
+    expect(ch!.options.map((o) => o.id)).toEqual(["tcp", "ip", "link+fcs"]);
+    expect(emod.predict!.check(at(0), "tcp").verdict).toBe("correct");
+    expect(emod.predict!.check(at(0), "ip").verdict).toBe("incorrect");
+  });
+
+  it("ở Network Access: LINK+FCS là MỘT đáp án gộp đúng", () => {
+    expect(emod.predict!.check(at(2), "link+fcs").verdict).toBe("correct");
+    expect(emod.predict!.check(at(2), "link+fcs").expectedId).toBe("link+fcs");
+  });
+
+  it("ở bước mở gói: hỏi 'gỡ gì', gỡ LINK+FCS trước", () => {
+    const ch = emod.predict!.challenge(at(4));
+    expect(ch!.question).toContain("GỠ");
+    expect(emod.predict!.check(at(4), "link+fcs").verdict).toBe("correct");
+  });
+
+  it("bước truyền tin / đã xong → không có challenge", () => {
+    expect(emod.predict!.challenge(at(3))).toBeNull(); // kế tiếp là transmit
+    expect(emod.predict!.challenge(at(8))).toBeNull(); // hết bước
+    expect(emod.predict!.check(at(3), "tcp").verdict).toBe("unsupported_to_verify");
+  });
+
+  it("(bất biến) check là hàm THUẦN — không đụng state", () => {
+    const before = JSON.stringify(at(1));
+    emod.predict!.check(at(1), "ip");
+    expect(JSON.stringify(at(1))).toBe(before);
   });
 });

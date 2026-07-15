@@ -5,6 +5,26 @@ import { EncapWorkspace, EncapInspector } from "./encap-ui";
 import {
   layerDepth, sideX, Encap3DWorkspace, tryCreateWebGLRenderer, ENCAP_WEBGL_FALLBACK,
 } from "./encap-ui3d";
+import { makeEncapsulationModule } from "./encap";
+import { registerAllSimulations } from "../../index";
+import { availableVisualModes, rendererFor } from "../../renderer";
+import { useAppStore } from "../../../state/store";
+import type { SimulationEnvelope } from "../../types";
+
+registerAllSimulations();
+
+function encapEnvelope(): SimulationEnvelope {
+  return {
+    status: "ok",
+    simulation_id: "network.protocol_encapsulation",
+    domain: "network",
+    visual_mode: "2d",
+    title: "t",
+    description: null,
+    config: { payloadLabel: "Dữ liệu ứng dụng", appProtocol: "HTTP", notes: null },
+    notes: null,
+  };
+}
 
 const CONFIG: EncapConfig = { payloadLabel: "Dữ liệu ứng dụng", appProtocol: "HTTP", notes: null };
 function at(step: number): EncapState {
@@ -67,5 +87,32 @@ describe("(M10) 3D renderer — Z = tầng giao thức (nghĩa thật)", () => {
       <Encap3DWorkspace config={CONFIG} state={at(3)} busy={false} dispatch={() => {}} />,
     );
     expect(html3d).toContain("gói IP trở thành khung");
+  });
+});
+
+describe("(M10) shared renderer + store: đổi 2D/3D không đụng engine", () => {
+  const emod = makeEncapsulationModule();
+
+  it("khai đủ hai mode, cả hai có renderer thật, id KHÔNG có hậu tố _3d", () => {
+    expect(availableVisualModes(emod)).toEqual(["2d", "3d"]);
+    expect(rendererFor(emod, "2d")).toBe(emod.Workspace);
+    expect(rendererFor(emod, "3d")).toBeDefined();
+    expect(emod.id).toBe("network.protocol_encapsulation");
+  });
+
+  it("đổi mode nhiều lần: state + cursor nguyên vẹn", () => {
+    useAppStore.getState().reset();
+    useAppStore.getState().loadEnvelope(encapEnvelope());
+    useAppStore.getState().nextStep();
+    useAppStore.getState().nextStep();
+    const before = useAppStore.getState().active!.state;
+    for (let i = 0; i < 5; i++) useAppStore.getState().setVisualMode(i % 2 === 0 ? "3d" : "2d");
+    expect(useAppStore.getState().active!.state).toBe(before);
+    expect((useAppStore.getState().active!.state as EncapState).cursor).toBe(2);
+  });
+
+  it("(honesty) encapsulation là 3D SƯ PHẠM; meaningOfZ nói về tầng", () => {
+    expect(emod.threeD!.role).toBe("pedagogical");
+    expect(emod.threeD!.meaningOfZ).toContain("tầng");
   });
 });

@@ -4,6 +4,7 @@ import type { NetNode, NetworkConfig, NetworkState, NodeType } from "./model";
 import { bfsRoute, buildSteps, currentStep, hopDistance, neighborsOf, typeLabel } from "./model";
 import type { ConfigResult, SimulationModule } from "../../types";
 import { NetworkInspector, NetworkWorkspace } from "./ui";
+import { makeEncapsulationModule } from "./encap";
 
 /**
  * M8: renderer 3D nạp LƯỜI (code-split) — Three.js (~600KB) chỉ tải khi người
@@ -227,4 +228,6 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
 
 export function registerNetworkDomain(): void {
   registerSimulation(makeNetworkModule());
+  // M10: module THỨ HAI của domain network — đóng gói/mở gói TCP/IP (3D sư phạm).
+  registerSimulation(makeEncapsulationModule());
 }
