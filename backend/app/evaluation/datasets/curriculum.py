@@ -145,4 +145,112 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "đường ống thẳng; đi từng chặng phá vỡ hình dung đó."
         ),
     ),
+
+    # ── M10-AI-ROUTE: định tuyến NL cho network.protocol_encapsulation ──
+    # Bộ 5 case tự chứa (tag "m10_route") cho một lần live smoke có mục tiêu:
+    # 2 encapsulation rõ + 1 mixed (ranh giới) + 1 routing tương phản + 1
+    # unsupported nâng cao. Phân biệt PHẢI ngữ nghĩa: đường đi qua NÚT
+    # (packet_routing) ↔ biến đổi PDU qua TẦNG (encapsulation).
+    EvalItem(
+        id="cur-t12-encap1",
+        text=(
+            "Mô phỏng cách dữ liệu từ ứng dụng được đóng gói qua các tầng TCP/IP "
+            "rồi truyền tới máy nhận."
+        ),
+        group="specialized",
+        expect_simulation_id="network.protocol_encapsulation",
+        tags=("curriculum", "m10_route"),
+        curriculum_area="T12.CD2",
+        curriculum_topic="Giao thức mạng, mô hình TCP/IP (Bài 3–4)",
+        capability_family="layered_transformation",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective="Hiểu dữ liệu được THÊM DẦN thông tin giao thức khi đi xuống từng tầng ở máy gửi.",
+        pedagogical_rationale=(
+            "Cơ chế ẩn: PDU BIẾN ĐỔI qua từng tầng — mỗi tầng thêm đúng phần thông tin của "
+            "mình theo THỨ TỰ cố định. Sơ đồ tĩnh 4 tầng không cho thấy thứ tự thêm/gỡ và "
+            "tính đối xứng gửi–nhận; mô phỏng từng bước làm hiện cả hai."
+        ),
+    ),
+    EvalItem(
+        id="cur-t12-encap2",
+        text=(
+            "Dữ liệu thay đổi thế nào khi đi từ tầng ứng dụng xuống tầng truy cập mạng "
+            "và được tháo gói ở máy nhận?"
+        ),
+        group="specialized",
+        expect_simulation_id="network.protocol_encapsulation",
+        tags=("curriculum", "m10_route"),
+        curriculum_area="T12.CD2",
+        curriculum_topic="Giao thức mạng, mô hình TCP/IP (Bài 3–4)",
+        capability_family="layered_transformation",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective="Mô tả được PDU ở từng tầng và giải thích tháo gói là quá trình NGƯỢC của đóng gói.",
+        pedagogical_rationale=(
+            "Cơ chế ẩn: tính ĐỐI XỨNG gửi–nhận — máy nhận gỡ đúng phần thông tin theo thứ tự "
+            "ngược lại. Học sinh thường thuộc lòng tên 4 tầng nhưng không thấy dữ liệu THAY "
+            "ĐỔI ra sao; theo dõi PDU từng bước mới lộ cơ chế đó."
+        ),
+    ),
+    EvalItem(
+        id="cur-t12-encap-mixed",
+        text=(
+            "Dữ liệu từ máy tính được đóng gói qua các tầng TCP/IP, truyền qua router "
+            "tới máy chủ, rồi được tháo gói ở đó."
+        ),
+        group="specialized",
+        expect_simulation_id="network.protocol_encapsulation",
+        tags=("curriculum", "boundary", "m10_route"),
+        curriculum_area="T12.CD2",
+        curriculum_topic="Giao thức mạng, mô hình TCP/IP (Bài 3–4)",
+        capability_family="layered_transformation",
+        complexity="L3",
+        result_mode="executable_simulation",
+        learning_objective="Phân biệt được cơ chế ĐÓNG GÓI theo tầng với việc gói tin ĐI QUA thiết bị trung gian.",
+        pedagogical_rationale=(
+            "Case RANH GIỚI có cả hai tín hiệu (tầng + router): cơ chế ẩn được HỎI là biến "
+            "đổi PDU (đóng gói/tháo gói) — router chỉ là ngữ cảnh trung chuyển. Classify phải "
+            "phân biệt theo cơ chế, không theo từ khóa thiết bị."
+        ),
+    ),
+    EvalItem(
+        id="cur-t12-route-contrast",
+        text="Gói tin đi từ máy khách qua router và ISP tới máy chủ theo đường nào?",
+        group="specialized",
+        expect_simulation_id="network.packet_routing",
+        tags=("curriculum", "boundary", "m10_route"),
+        curriculum_area="T12.CD2",
+        curriculum_topic="Thiết bị mạng và đường truyền (Bài 3–4)",
+        capability_family="node_edge_graph+movement",
+        complexity="L2",
+        result_mode="executable_simulation",
+        cross_domain_group="node_edge_flow",
+        learning_objective="Xác định được đường đi từng chặng của gói tin trên một topology cho sẵn.",
+        pedagogical_rationale=(
+            "Cặp TƯƠNG PHẢN với cur-t12-encap*: cùng bề mặt 'mạng máy tính' nhưng cơ chế ẩn "
+            "là ĐƯỜNG ĐI qua các NÚT (BFS trên topology), không phải biến đổi PDU theo tầng. "
+            "Khóa ranh giới hai module network để routing không nuốt encapsulation và ngược lại."
+        ),
+    ),
+    EvalItem(
+        id="cur-t12-tcp-advanced",
+        text=(
+            "Mô phỏng chi tiết bắt tay TCP ba bước, số thứ tự sequence, ACK, "
+            "retransmission khi mất gói và congestion control."
+        ),
+        group="unsupported",
+        tags=("boundary", "m10_route"),
+        curriculum_area="T12.CD2",
+        curriculum_topic="Giao thức mạng (kiến thức nâng cao ngoài phạm vi)",
+        capability_family="layered_transformation",
+        complexity="L4",
+        result_mode="unsupported",
+        learning_objective="(Ngoài phạm vi v1 — case ranh giới để kiểm tính trung thực năng lực.)",
+        pedagogical_rationale=(
+            "Cơ chế được hỏi (handshake, seq/ACK, retransmission, congestion) đòi mô hình "
+            "TRẠNG THÁI GIAO THỨC hai chiều mà engine v1 (9 bước đóng gói một chiều) KHÔNG có. "
+            "Thà unsupported trung thực còn hơn ép vào mô phỏng đơn giản gây hiểu lầm (bất biến #8/#9)."
+        ),
+    ),
 ]
