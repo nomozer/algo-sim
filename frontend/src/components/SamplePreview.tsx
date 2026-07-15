@@ -27,6 +27,7 @@ export type PreviewKind =
   | "insertion-lift"
   | "binary-bits"
   | "network-path"
+  | "network-encapsulation"
   | "logic-gate"
   | "web-structure"
   | "generic";
@@ -42,6 +43,7 @@ const KIND_BY_SIM_ID: Record<string, PreviewKind> = {
   "algorithm.insertion_sort": "insertion-lift",
   "binary.decimal_to_binary": "binary-bits",
   "network.packet_routing": "network-path",
+  "network.protocol_encapsulation": "network-encapsulation",
   "logic.and_gate": "logic-gate",
 };
 
@@ -373,6 +375,22 @@ function NetworkPath() {
   );
 }
 
+/**
+ * network.protocol_encapsulation — cơ chế: PDU LỚN DẦN khi đóng gói qua các tầng.
+ * Các đoạn rộng dần (payload → +TCP → +IP → +LINK/FCS): payload xanh lá, header
+ * xanh da trời, trailer cam. Đúng cơ chế bài dạy (một tranh = một cơ chế, #6).
+ */
+function NetworkEncap() {
+  return (
+    <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
+      <rect x={8} y={8} width={34} height={8} rx={2} fill="var(--accent-green)" />
+      <rect x={8} y={20} width={48} height={8} rx={2} fill="var(--accent-sky)" />
+      <rect x={8} y={32} width={62} height={8} rx={2} fill="var(--accent-sky)" opacity={0.6} />
+      <rect x={8} y={44} width={80} height={8} rx={2} fill="var(--accent-orange)" opacity={0.7} />
+    </svg>
+  );
+}
+
 function LogicGate() {
   return (
     <svg viewBox="0 0 96 56" className="sample-preview-svg" aria-hidden="true">
@@ -422,6 +440,7 @@ const RENDERERS: Record<PreviewKind, () => JSX.Element> = {
   "insertion-lift": InsertionLift,
   "binary-bits": BinaryBits,
   "network-path": NetworkPath,
+  "network-encapsulation": NetworkEncap,
   "logic-gate": LogicGate,
   "web-structure": WebStructure,
   generic: GenericIcon,

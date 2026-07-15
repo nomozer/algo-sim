@@ -80,6 +80,20 @@ export const OFFLINE_SAMPLES: OfflineSample[] = [
       notes: null,
     },
   },
+  {
+    // M10 flagship — 3D sư phạm: đóng gói/mở gói TCP/IP. Công khai (Tin học THPT).
+    id: "network-encapsulation",
+    envelope: {
+      status: "ok",
+      simulation_id: "network.protocol_encapsulation",
+      domain: "network",
+      visual_mode: "2d",
+      title: "Dữ liệu được đóng gói qua các tầng TCP/IP như thế nào?",
+      description: "Đóng gói ở máy gửi, truyền đi, rồi mở gói ở máy nhận",
+      config: { payloadLabel: "Dữ liệu ứng dụng", appProtocol: "HTTP", notes: null },
+      notes: null,
+    },
+  },
 ];
 
 /**

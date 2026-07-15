@@ -42,15 +42,16 @@ describe("(1)(2)(5)(6) visibility — metadata tường minh, không lọc tiêu
     expect(ids).not.toContain("gen-and");
     expect(ids).not.toContain("gen-binary");
     expect(ids).not.toContain("gen-packet");
-    // 8 algorithm + logic + binary + network + web = 12 mẫu công khai
-    expect(pub).toHaveLength(12);
+    // 8 algorithm + logic + binary + network(x2) + web = 13 mẫu công khai
+    expect(pub).toHaveLength(13);
     expect(ids).toContain("gen-web"); // HTML/CSS là chương trình Tin học (T12 CĐ4)
+    expect(ids).toContain("network-encapsulation"); // M10 flagship (Thư viện)
   });
 
   it("(3) fixture nội bộ VẪN trong offlineCatalog đầy đủ (test/dev dùng được)", () => {
     const all = offlineCatalog();
     expect(all.map((e) => e.id)).toContain("gen-reveal");
-    expect(all).toHaveLength(16);
+    expect(all).toHaveLength(17);
     const reveal = all.find((e) => e.id === "gen-reveal")!;
     expect(reveal.visibility).toBe("internal_fixture");
     expect(reveal.envelope.simulation_id).toBe("generic.rule_scene");
@@ -117,6 +118,7 @@ describe("(12)(13)(14) preview — kiến trúc nhẹ, theo định danh, fallba
     expect(previewKindOf("algorithm.insertion_sort")).toBe("insertion-lift");
     expect(previewKindOf("binary.decimal_to_binary")).toBe("binary-bits");
     expect(previewKindOf("network.packet_routing")).toBe("network-path");
+    expect(previewKindOf("network.protocol_encapsulation")).toBe("network-encapsulation");
     expect(previewKindOf("logic.and_gate")).toBe("logic-gate");
   });
 
@@ -167,6 +169,7 @@ describe("(12)(13)(14) preview — kiến trúc nhẹ, theo định danh, fallba
       "insertion-lift",
       "binary-bits",
       "network-path",
+      "network-encapsulation",
       "logic-gate",
       "web-structure",
       "generic",
