@@ -89,6 +89,11 @@ Notes: phải giữ **cùng luật** với `generic/model.ts`.
 Bản chiếu registry phía backend: `SimSpec` (description/schema/contract/validator/
 make_title) cho từng `simulation_id`. Exports: `CATALOG`, `SimSpec`, `catalog_text`.
 Notes: `_GENERIC_SCHEMA` enum **phải** dẫn xuất từ manifest (anti-pattern #1).
+Enum `simulation_id` của classify (`_classify_schema`) DẪN XUẤT từ `CATALOG.keys()`
+→ thêm entry vào CATALOG là ĐỦ để classify được phép trả id đó (M10-AI-ROUTE:
+`network.protocol_encapsulation`). Hai module network phân biệt bằng **description**
+(biến đổi PDU qua TẦNG ↔ đường đi qua NÚT), không keyword hard-code trong runtime.
+Đổi menu classify → **bump `CACHE_VERSION`** ở `main.py`.
 
 ### `simulation/patterns.py` · Change impact: offline
 Pattern reuse (M7.13B): chữ ký, extraction (safe allowlist), instantiate, matcher
@@ -115,8 +120,21 @@ Mirror TS: `generic/patch.ts`.
 ### `validation/simulation.py` · Change impact: offline
 Validator config các domain chuyên biệt + `check_forbidden_keys` (chặn LLM sinh
 timeline/state). Exports: `validate_algorithm_config`, `validate_logic_config`,
-`validate_binary_config`, `validate_network_config`, `ALGORITHM_IDS`.
-Tests: `test_validate.py`.
+`validate_binary_config`, `validate_network_config`, `validate_encapsulation_config`,
+`ALGORITHM_IDS`.
+Tests: `test_validate.py`, `test_encap_routing.py`.
+Notes (M10-AI-ROUTE): `validate_encapsulation_config` là bề mặt v1 NHỎ
+(payloadLabel/appProtocol/notes, mọi field optional, mặc định an toàn — khớp
+`validateEncapConfig` frontend); ngoài `check_forbidden_keys` còn cấm khóa
+engine-owned (`layers/pdu/headers/packets/protocols`) — mô hình 4 tầng/9 bước
+thuộc engine tất định, LLM chỉ điền nhãn ngữ cảnh (R0).
+
+### `tests/test_encap_routing.py` · Change impact: offline
+M10-AI-ROUTE — khóa định tuyến NL cho `network.protocol_encapsulation` (mock,
+offline): CATALOG đăng ký + enum classify dẫn xuất; `catalog_text`/`classify.md`
+mang phân biệt ngữ nghĩa encap↔routing + giới hạn v1; validator R0/v1; e2e mock
+tiếng Việt → envelope encap; packet_routing nguyên vẹn. Bằng chứng live 5/5 ghi
+ở `CURRENT_STATE.md` §nhật-ký-live.
 
 ### `persistence/db.py` · Change impact: offline (drift gate) + targeted (Postgres smoke)
 SQLAlchemy (SQLite mặc định / Postgres qua `DATABASE_URL`).

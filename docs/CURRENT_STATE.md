@@ -45,6 +45,10 @@ Cập nhật lần cuối: sau **M9-UX7** — gỡ panel trái (workspace 2 cộ
 | M8-PRE (plan C) | inspect composition (2 dump) + verify sau nén (V1 + V2) | **15** | 1 | 1 |
 | M8-PRE (stability smoke) | đề "phân tích hệ thống" × **5 lần hoàn tất** | **19** | 2 | 2 (429/5xx — retry nuốt trọn, **0 run bị hỏng**) |
 | **M8 (Slice 1+2)** | frontend-only: kiến trúc renderer + network 3D; nghiệm thu bằng bài mẫu offline trên browser thật | **0** | 0 | 0 |
+| **M9-UX1..7 · M10-3D-PED · DB-HARDEN-2** | frontend/UX + engine + DB infra — offline-first, không đụng hợp đồng AI | **0** | 0 | 0 |
+| **M10-AI-ROUTE — run 1** (menu classify mới, prompt CŨ) | suite `m10_route` (5 case: 2 encap + mixed + routing tương phản + unsupported) | **18** | 6 | 6 (429) — **2/5 đúng**: 2 đề encap rơi về generic, TCP nâng cao ép về generic |
+| **M10-AI-ROUTE — run 2** (sau vá classify.md) | cùng 5 case | **19** | 5 | 5 (429) — **5/5 đúng**: classification 1.0, unsupported recall/precision 1.0, valid_spec_first_attempt 1.0, 0 retry validation |
+| **Tổng M10-AI-ROUTE** | | **37** | 11 | 11 |
 
 **TRẠNG THÁI của đề "phân tích hệ thống" — sau STABILITY SMOKE 5 lần chạy hoàn tất:**
 - Định tuyến: ✅ **đã sửa** — **0/5** lần `unsupported` im lặng; **5/5** vào `generic.rule_scene`.
@@ -81,7 +85,8 @@ M7.14D.1 là **UI-only: 0 live call**.
 
 | Milestone | Commit | Nội dung |
 |---|---|---|
-| **M10-3D-PED** | *(nhánh `m10-3d-ped`)* | **3D SƯ PHẠM đầu tiên: đóng gói/mở gói TCP/IP.** Module THỨ HAI của domain network (`network.protocol_encapsulation`) — engine tất định **9 bước** dựng PDU phân đoạn với **delta tường minh** `{kind, layer, componentIds[]}` (add/remove/transmit/deliver); LINK+FCS **thêm/gỡ NGUYÊN TỬ**. 2D (stack MÁY GỬI/MÁY NHẬN, phân đoạn trải ngang) + **3D CÓ NGHĨA**: X = chiều truyền, **Z = tầng giao thức** (`meaning_of_z`), PDU đi xuống→băng ngang→đi lên. Dùng chung `PredictionCapability` (LINK+FCS là MỘT đáp án gộp; chấm bằng engine). Thêm field hợp đồng **`threeD`** phân loại TRUNG THỰC: encapsulation = `pedagogical`, packet_routing hạ về `architectural_poc`. **Bất biến #18**. Một mẫu công khai (Thư viện) + preview phân đoạn. **Định tuyến AI HOÃN** (frontend + mẫu offline; **0 gọi AI**); **click 3D trực tiếp HOÃN**; không TCP/UDP branching / handshake / phân mảnh. `practice_activity` vẫn PARTIAL. pytest 289 · vitest 323 · build sạch · audit 4/4 · nghiệm thu browser 15/15 |
+| **M10-AI-ROUTE** | `422297b`→`45c0aa3` | **Đóng gap M10 deferred: định tuyến NL tiếng Việt → `network.protocol_encapsulation`.** Đề tiếng Việt về đóng gói dữ liệu qua tầng TCP/IP nay được pipeline LLM phân tích → classify → chọn module encapsulation → config v1 được validate → engine tất định 9 bước (LLM **không** sở hữu tầng/PDU/timeline). Đăng ký backend: `_ENCAP_SCHEMA` (bề mặt v1 nhỏ: payloadLabel/appProtocol/notes) + `validate_encapsulation_config` (R0 + cấm khóa engine-owned) + `SimSpec` mang phân biệt ngữ nghĩa (biến đổi PDU qua TẦNG ↔ đường đi qua NÚT). `CACHE_VERSION` 6→7. Vá `classify.md`: tách **tiến trình diễn biến** (engine tự dựng) khỏi **dựng cảnh từng bước** (generic) + quy tắc mạng 3d (encap/routing/unsupported). **Live smoke có mục tiêu: 2/5 → 5/5** sau vá (tổng 37 HTTP call, 0 full dataset). **Merge M10-3D-PED vào main** (FF `1c05d4e`→`422297b`). Còn HOÃN: click 3D trực tiếp, TCP/UDP branching/handshake/phân mảnh. pytest **307** · vitest 323 · build sạch |
+| **M10-3D-PED** | `810b5ed`→`dcd31ca` *(đã merge vào main)* | **3D SƯ PHẠM đầu tiên: đóng gói/mở gói TCP/IP.** Module THỨ HAI của domain network (`network.protocol_encapsulation`) — engine tất định **9 bước** dựng PDU phân đoạn với **delta tường minh** `{kind, layer, componentIds[]}` (add/remove/transmit/deliver); LINK+FCS **thêm/gỡ NGUYÊN TỬ**. 2D (stack MÁY GỬI/MÁY NHẬN, phân đoạn trải ngang) + **3D CÓ NGHĨA**: X = chiều truyền, **Z = tầng giao thức** (`meaning_of_z`), PDU đi xuống→băng ngang→đi lên. Dùng chung `PredictionCapability` (LINK+FCS là MỘT đáp án gộp; chấm bằng engine). Thêm field hợp đồng **`threeD`** phân loại TRUNG THỰC: encapsulation = `pedagogical`, packet_routing hạ về `architectural_poc`. **Bất biến #18**. Một mẫu công khai (Thư viện) + preview phân đoạn. **Định tuyến AI HOÃN** (frontend + mẫu offline; **0 gọi AI**); **click 3D trực tiếp HOÃN**; không TCP/UDP branching / handshake / phân mảnh. `practice_activity` vẫn PARTIAL. pytest 289 · vitest 323 · build sạch · audit 4/4 · nghiệm thu browser 15/15 |
 | M7.13A | `7fa4046` | Generic interaction semantics: `drag` (allowlist `node`), constraints (bounds/axis/snap), ownership rule, **position state-owned** (`GenericState.pos`), scene-mode consistency (exploratory/progressive/hybrid) truyền vào simulate |
 | M7.13B | `d1d518c` | Exact cache version-aware (`simulation_cache`), validated **pattern reuse** (`simulation_patterns`), matcher tất định (không embedding), hybrid adaptation (deterministic fill + 1 call adapt), metrics reuse |
 | M7.14 | `7835330` | **Correctness audit** (8 gap role, canonical↔learner policy, `docs/CORRECTNESS.md`), **SimulationPatch v1** + NL edit + manual edit generic, viewport safety (fit/reset, layering, label flip, edge label) |
@@ -267,8 +272,11 @@ hợp đồng `PredictionCapability` vốn đã hỗ trợ N lựa chọn). Khô
 - **`invalid_with_feedback`**: đã có trong taxonomy, **chưa có producer** nào.
 - **`code_experiment`**: deferred — cần sandbox, không được bypass engine tất
   định, **không** pivot thành IDE.
-- **3D phân tầng (M8 Slice 3)**: hoãn post-M8 — cần semantics đóng gói/mở gói
-  tất định (trạng thái PDU biến đổi qua tầng); **cấm** giả bằng reveal-boxes.
+- **3D phân tầng (M8 Slice 3)**: ✅ **đã ship ở M10** (`network.protocol_encapsulation`,
+  engine 9 bước tất định) và **định tuyến AI đã ship ở M10-AI-ROUTE**. Còn hoãn
+  TRONG module: click 3D trực tiếp, TCP/UDP branching / handshake ba bước / phân
+  mảnh / retransmission / congestion / DNS — các đề này classify trả **unsupported
+  trung thực** (kiểm bằng case `cur-t12-tcp-advanced`), **cấm** ép vào mô hình v1.
 - **M9-S2 / M9-S3** (theo M9-PED-AUDIT §8): *binary — thử thách dựng số N* và
   *packet routing — học sinh tự dẫn gói tin, engine so chi phí với BFS*. Chưa làm.
 - **Topology editing cho cảnh network-like**: chỉ mở khi EditPolicy cho phép

@@ -105,7 +105,7 @@ Hệ quả bắt buộc:
 |---|---|---|---|
 | HTML/CSS (T12 CĐ4, 12 bài) | quan hệ markup ↔ kết quả hiển thị | ⚠️ structural + reveal | **practice**: học sinh tự dựng/đổi thứ tự |
 | **CSDL: bảng, bản ghi, truy vấn** (T11 CĐ4, **cả hai ban**) | **vị từ WHERE giữ lại dòng nào** | ❌ | **table/grid + query** ← khối chương trình lớn nhất chưa phủ |
-| Giao thức, phân tầng mạng (T12 B4 · 12CS B22–24) | đóng gói qua các tầng | ❌ | layering (**ứng viên 3D duy nhất**) |
+| Giao thức, phân tầng mạng (T12 B4 · 12CS B22–24) | đóng gói/mở gói qua các tầng | ✅ **M10 (2D+3D) · định tuyến NL M10-AI-ROUTE** | — (`network.protocol_encapsulation`; **3D có nghĩa: Z=tầng**). Còn thiếu: TCP/UDP branching, handshake — cố ý ngoài v1 |
 | Hệ điều hành: tiến trình (T11 B1–2) | máy trạng thái | ❌ | FSM |
 | Kiểm soát truy cập (T10 B9 · T11 B15) | quy tắc logic sau cánh cửa | ✅ **tái sử dụng `boolean`** | — (đã có case) |
 | Mã hoá văn bản/âm thanh/ảnh (T10 B3, B6) | bảng mã / lấy mẫu | ⚠️ một phần | table/grid |
@@ -229,10 +229,11 @@ Chống "phủ giả" (fake coverage). Các chủ đề sau **có trong chương
   không reset cursor, không đụng canonical state (bất biến #16).
 - **M8 KHÔNG chứng minh** 3D dạy tốt hơn 2D cho bất kỳ chủ đề nào — nó chỉ chứng
   minh **renderer sharing**. Mọi phát ngôn sư phạm về 3D vẫn bị ràng bởi mục này.
-- **Mạng phân tầng (ứng viên có cơ sở duy nhất) CHƯA làm**: cần năng lực tất định
-  mới (trạng thái PDU biến đổi khi đóng gói/mở gói qua tầng). Hộp-tầng hiện dần
-  bằng `reveal_sequence` là **progressive visualization**, CẤM dán nhãn
-  *executable simulation* (phân biệt ở §6). Hoãn post-M8.
+- **Mạng phân tầng (ứng viên có cơ sở duy nhất) — (ghi chú M8) khi đó CHƯA làm**:
+  cần năng lực tất định mới (trạng thái PDU biến đổi khi đóng gói/mở gói qua tầng).
+  Hộp-tầng hiện dần bằng `reveal_sequence` là **progressive visualization**, CẤM
+  dán nhãn *executable simulation* (phân biệt ở §6). → **✅ ĐÃ SHIP ở M10** với
+  engine 9 bước tất định (xem mục M10 ngay dưới) — reveal-boxes vẫn bị cấm.
 - Phạm vi 3D hiện tại: **một** module (`network.packet_routing`); logic/binary/
   algorithm/generic **cố ý** 2D-only.
 
@@ -250,6 +251,13 @@ Chống "phủ giả" (fake coverage). Các chủ đề sau **có trong chương
   biểu diễn 3D một vai trò ngữ nghĩa tường minh."* **CẤM**: ~~"3D dạy tốt hơn 2D."~~
 - Là **MÔ HÌNH SƯ PHẠM** của đóng gói (một transport TCP; không bắt tay/seq/ack/
   phân mảnh/UDP) — không phải bộ mô phỏng chồng giao thức đầy đủ.
+- **M10-AI-ROUTE (đã ship):** đề tiếng Việt về đóng gói qua tầng nay được pipeline
+  LLM phân tích → classify → định tuyến tới `network.protocol_encapsulation` (không
+  còn catalog/offline-only). Tuyên bố được phép: *"LLM phân tích đề ngôn ngữ tự
+  nhiên và ĐỀ XUẤT ứng viên năng lực/config trong ranh giới được validate; engine
+  tất định sở hữu và sinh trạng thái/timeline/hệ quả."* **CẤM**: ~~"LLM sinh ra mô
+  phỏng."~~ Đề giao thức nâng cao (handshake/seq-ACK/retransmission/congestion/DNS)
+  → **unsupported trung thực** (kiểm live 5/5, xem `CURRENT_STATE.md §nhật-ký-live`).
 - `practice_activity` vẫn **PARTIAL / CHƯA làm**.
 
 ---
