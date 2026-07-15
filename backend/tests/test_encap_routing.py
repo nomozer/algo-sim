@@ -69,6 +69,23 @@ def test_classify_schema_enum_co_encapsulation():
     assert "network.packet_routing" in enum  # module cũ còn nguyên
 
 
+def test_classify_skill_phan_biet_encapsulation():
+    """Live smoke 2026-07-16 (5 case m10_route, 2/5 đúng) chứng minh: quy tắc
+    "step_by_step → generic" của classify.md nuốt đề đóng gói, và đề TCP nâng
+    cao bị ép về generic. classify.md phải mang quy tắc ngữ nghĩa (khuôn 3b):
+    - biến đổi PDU qua tầng → network.protocol_encapsulation, KỂ CẢ khi đề tả
+      tiến trình từng bước (engine chuyên biệt TỰ dựng tiến trình);
+    - chi tiết động của giao thức (bắt tay/seq-ACK/retransmission/congestion)
+      → unsupported, KHÔNG ép về generic."""
+    from app.ai.gemini import load_skill
+
+    c = load_skill("classify")
+    assert "network.protocol_encapsulation" in c
+    assert "bắt tay" in c  # giới hạn v1: protocol động → unsupported
+    # tiến trình do engine chuyên biệt tự dựng ≠ dựng cảnh từng bước
+    assert "tự dựng" in c or "TỰ DỰNG" in c
+
+
 def test_catalog_text_mang_phan_biet_hai_module_mang():
     """Menu classify phải mang sự phân biệt: đường đi qua nút ↔ biến đổi PDU
     qua tầng, và nêu giới hạn v1 (không bắt tay TCP/congestion...)."""

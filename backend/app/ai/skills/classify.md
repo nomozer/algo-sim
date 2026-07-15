@@ -5,7 +5,8 @@ QUYẾT ĐỊNH THEO NĂNG LỰC, KHÔNG THEO TÊN MÔN HỌC: một bài Toán/
 QUY TẮC:
 1. Chỉ được chọn simulation_id CÓ TRONG danh mục được cung cấp — không tự đặt id mới.
 2. ƯU TIÊN mô phỏng CHUYÊN BIỆT — NHƯNG phải KIỂM TRA ĐỦ NĂNG LỰC (không chỉ đúng domain): chỉ chọn mô phỏng chuyên biệt khi nó đáp ứng ĐẦY ĐỦ required_capabilities của đề.
-   QUAN TRỌNG: mọi mô phỏng chuyên biệt luôn HIỂN THỊ CẢNH ĐẦY ĐỦ NGAY TỪ ĐẦU — chúng KHÔNG có năng lực HÌNH THÀNH CẢNH TỪNG BƯỚC (reveal_sequence). Vì vậy, nếu scene_construction = "step_by_step" hoặc required_capabilities chứa "step_by_step_construction" (đề yêu cầu TẠO/VẼ/DỰNG các đối tượng lần lượt rồi mới diễn ra quá trình), thì KHÔNG mô phỏng chuyên biệt nào đủ năng lực → phải chọn generic.rule_scene.
+   QUAN TRỌNG: mô phỏng chuyên biệt HIỂN THỊ CẢNH ĐẦY ĐỦ NGAY TỪ ĐẦU — chúng KHÔNG có năng lực DỰNG CẢNH TỪNG BƯỚC (reveal_sequence: TẠO/VẼ/THÊM các ĐỐI TƯỢNG lần lượt rồi mới diễn ra quá trình). Nếu đề yêu cầu dựng cảnh như vậy (scene_construction = "step_by_step" vì các đối tượng xuất hiện dần) → chọn generic.rule_scene.
+   NHƯNG đừng nhầm với TIẾN TRÌNH DIỄN BIẾN: đề mô tả một quá trình diễn ra qua nhiều bước (dữ liệu được đóng gói dần qua các tầng, thuật toán duyệt dần qua các phần tử...) mà cảnh/đối tượng CÓ SẴN ngay từ đầu thì KHÔNG phải dựng cảnh từng bước — engine chuyên biệt TỰ DỰNG toàn bộ tiến trình đó (timeline là việc của engine, không phải của cảnh). Đừng loại mô phỏng chuyên biệt chỉ vì đề tả quá trình từng bước.
    Ví dụ: network.packet_routing chỉ dùng khi topology CHO SẴN đầy đủ và đề chỉ yêu cầu gói tin di chuyển; còn đề yêu cầu DỰNG mạng từng bước (tạo từng thiết bị, nối từng liên kết) rồi mới truyền gói tin → cần reveal_sequence + move_along_path → generic.rule_scene.
 3. Nếu KHÔNG khớp mô phỏng chuyên biệt nào, ĐỐI CHIẾU năng lực bài cần với NĂNG LỰC BIỂU DIỄN của generic.rule_scene (mục 4 của đầu vào). Nếu bài mô tả được bằng các đối tượng (điểm→node, đoạn thẳng→edge, công tắc, đèn, ô giá trị, nhãn, vật di chuyển), quy tắc (logic/tổng trọng số), hoặc tiến trình (di chuyển theo đường, HÌNH THÀNH CẢNH TỪNG BƯỚC bằng reveal_sequence) → chọn "generic.rule_scene".
    Ví dụ PHẢI chọn generic: dựng hình học từng bước (vẽ điểm rồi đoạn thẳng dần → node + edge + reveal_sequence), mạch logic tổ hợp, đồ thị nút-cạnh, bất kỳ cảnh hình thành theo trình tự.
@@ -13,6 +14,12 @@ QUY TẮC:
 3c. SƠ ĐỒ HỆ THỐNG THÔNG TIN / LUỒNG DỮ LIỆU → generic.rule_scene (KHÔNG phải unsupported):
    Đề kiểu "phân tích hệ thống X: xác định người dùng, dữ liệu lưu trữ, đầu vào, đầu ra, các chức năng, mô tả hoạt động/quy trình" là bài MÔ HÌNH HOÁ ĐƯỢC: tác nhân/chức năng/kho dữ liệu → node (node_type actor/process/data_store/input/output); luồng dữ liệu giữa chúng → edge có "directed": true; dữ liệu chạy qua các công đoạn → moving_entity + move_along_path.
    → Chọn generic.rule_scene. KHÔNG trả unsupported chỉ vì đề có dạng "câu hỏi phân tích" hoặc yêu cầu liệt kê nhiều ý — bản chất cần biểu diễn (thành phần + luồng) nằm TRONG năng lực DSL.
+
+3d. PHÂN BIỆT hai mô phỏng MẠNG theo CƠ CHẾ ẨN (không theo từ khóa "mạng/gói tin"):
+   - Cơ chế được hỏi là BIẾN ĐỔI PDU qua các TẦNG giao thức — dữ liệu được ĐÓNG GÓI (thêm dần TCP, IP, thông tin liên kết khi đi xuống các tầng) và/hoặc THÁO GÓI ở máy nhận → network.protocol_encapsulation. Chọn nó KỂ CẢ khi đề tả quá trình từng bước — engine chuyên biệt TỰ DỰNG tiến trình đóng gói → truyền → tháo gói (xem quy tắc 2: đây là diễn biến, không phải dựng cảnh).
+   - Cơ chế được hỏi là ĐƯỜNG ĐI của gói tin qua các NÚT thiết bị (máy, switch, router, ISP) trên topology → network.packet_routing.
+   - Đề có CẢ HAI tín hiệu (tầng + thiết bị trung gian) → phân theo cơ chế được HỎI: hỏi dữ liệu THAY ĐỔI/được đóng gói thế nào → protocol_encapsulation; hỏi đi theo ĐƯỜNG nào → packet_routing.
+   - Đề đòi chi tiết ĐỘNG của giao thức: bắt tay ba bước, số sequence/ACK, retransmission, congestion control, phân mảnh, phân giải DNS... → unsupported. Cả hai mô phỏng mạng đều KHÔNG mô hình hoá trạng thái giao thức, và generic.rule_scene cũng KHÔNG có năng lực máy-trạng-thái giao thức — ĐỪNG ép về generic chỉ vì vẽ được vài nút và mũi tên: cảnh tĩnh không dạy được cơ chế động mà đề hỏi.
 
 3b. PHÂN BIỆT algorithm.sum_if với generic.rule_scene (tổng có trọng số):
    - algorithm.sum_if: DUYỆT một DÃY SỐ cho sẵn, cộng các phần tử THỎA MỘT ĐIỀU KIỆN (ví dụ ">= 8"). Bản chất là thuật toán duyệt danh sách. Đề thường có sẵn một dãy giá trị và một điều kiện lọc.
