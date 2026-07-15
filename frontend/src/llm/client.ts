@@ -4,7 +4,7 @@ import type { InputPayload } from "./input";
 
 /**
  * Client gọi backend — trình duyệt không bao giờ giữ API key.
- * Đường dẫn /api/* được vite dev server chuyển tiếp sang backend (cổng 8787).
+ * Đường dẫn /api/* được vite dev server chuyển tiếp sang backend (cổng 8000).
  * /api/analyze trả ValidatedSimulationEnvelope (đã qua server-side validation).
  */
 

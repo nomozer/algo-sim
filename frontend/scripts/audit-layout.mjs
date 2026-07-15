@@ -14,7 +14,7 @@
  *   5. KHOẢNG LẺ   — gap/margin/padding không nằm trên thang 4px của tokens.
  *
  * Chạy:  node scripts/audit-layout.mjs            (cần `npm run dev` đang chạy)
- *        node scripts/audit-layout.mjs --port 5174
+ *        node scripts/audit-layout.mjs --port 3001
  */
 
 import { spawn } from "node:child_process";
@@ -27,7 +27,7 @@ const argOf = (name, dflt) => {
   const i = args.indexOf(name);
   return i >= 0 ? args[i + 1] : dflt;
 };
-const APP = `http://localhost:${argOf("--port", "5173")}`;
+const APP = `http://localhost:${argOf("--port", "3000")}`;
 const CDP_PORT = 9333;
 
 const CHROME = [

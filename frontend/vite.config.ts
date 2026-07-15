@@ -4,9 +4,10 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   server: {
+    port: 3000,
     proxy: {
-      // Chuyển tiếp API sang backend (docker compose up -d, cổng 8787)
-      "/api": "http://localhost:8787",
+      // Chuyển tiếp API sang backend (docker compose up -d, cổng 8000)
+      "/api": "http://localhost:8000",
     },
   },
   test: {
