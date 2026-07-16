@@ -625,19 +625,22 @@ def values_of(spec: dict, base: dict[str, float]) -> dict[str, float]:
                 values[rule["target"]] = _eval_rule(rule, values)
             else:
                 still.append(rule)
-        if not still:
+        progressed = len(still) < len(pending)
+        pending = still          # PHẢI cập nhật TRƯỚC break/progress check (xem ghi chú)
+        if not pending:
             break
-        if len(still) == len(pending):  # không tiến triển → không bao giờ resolve
-            missing = sorted({i for r in still for i in r.get("inputs", []) if i not in values})
+        if not progressed:       # không tiến triển → không bao giờ resolve
+            missing = sorted({i for r in pending for i in r.get("inputs", []) if i not in values})
             raise GenericEvaluationError(
                 "unresolved_dependency_after_bound",
                 f'không resolve được: {", ".join(missing)}',
             )
-        pending = still
     if pending:
         raise GenericEvaluationError("unresolved_dependency_after_bound", "vượt bound evaluation")
     return values
 ```
+
+> **Sửa 2026-07-17 (bug trong bản plan đầu, implementer Task 4 bắt được trước khi commit).** Bản đầu đặt `pending = still` **sau** `if not still: break` → khi lượt cuối resolve hết, `break` nhảy ra khi `pending` vẫn giữ giá trị cũ non-empty → `if pending: raise` bắn `unresolved_dependency_after_bound` **cho mọi spec có ≥ 1 rule** (kể cả một cổng AND đơn); `run_gates` bọc `except Exception` sẽ biến nó thành reject sạch mọi cảnh generic. Bản trên đã sửa: cập nhật `pending` trước, tách cờ `progressed`. **Task 6 port sang TS phải dùng bản ĐÃ SỬA này** — cùng lỗi sẽ tái sinh nếu port bản cũ.
 
 **Chú ý ngữ nghĩa giữ nguyên cho spec hợp lệ:** trước đây toggle làm rule re-evaluate qua fixed-point trên values đã seed; bản mới thuần forward-resolve trên DAG — với spec đã qua validator (không chu trình, không trùng target, operand hợp lệ) kết quả **giống hệt**. Test M11 boolean sẵn có là bằng chứng (Step 4).
 
