@@ -32,13 +32,20 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
     validateConfig: validateGenericConfig,
 
     // pos state-owned (M7.13A): khởi tạo từ layout của spec, chỉ đổi qua "move"
-    init: (spec) => ({
-      spec,
-      base: initialBase(spec),
-      pos: layoutPositions(spec),
-      timeline: buildTimeline(spec),
-      cursor: 0,
-    }),
+    init: (spec) => {
+      const base = initialBase(spec);
+      // M13 fail-fast: spec không evaluate được (GenericExecutionError) thì
+      // FAIL Ở ĐÂY — trước khi cảnh lên sân khấu, không phải lặng lẽ ra 0 rồi
+      // "chạy" hết 10/10 bước như sự cố gốc "Dijkstra" giả.
+      valuesOf(spec, base);
+      return {
+        spec,
+        base,
+        pos: layoutPositions(spec),
+        timeline: buildTimeline(spec),
+        cursor: 0,
+      };
+    },
 
     apply: (state, action: SimAction) => {
       if (action.type === "toggle") {

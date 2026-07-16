@@ -4,6 +4,8 @@ import {
   buildTimeline,
   childrenOf,
   currentStepObjectIds,
+  GenericExecutionError,
+  initialBase,
   inspectorGroups,
   isObjectRenderable,
   isVisible,
@@ -888,5 +890,126 @@ describe("M13 regression lock — matrix §8 (frontend)", () => {
       processes: [],
     });
     expect(res.ok).toBe(false);
+  });
+});
+
+/**
+ * M13 Task 6 — runtime BA TRẠNG THÁI ở valuesOf: mirror 3 test Task 4
+ * (backend/tests/test_generic_engine_m13.py) sang vitest, thuật toán PHẢI
+ * khớp bản Python đã merge (generic_engine.py: pending/still, `pending = still`
+ * TRƯỚC break/progress check). Đây là LƯỚI SAU CÙNG — validator (Task 3/5) đã
+ * chặn các spec này ở tầng validate; ở đây gọi thẳng valuesOf trên SimulationSpec
+ * dựng tay (bỏ qua validateConfig) để khoá hành vi ENGINE khi lưới validate bị
+ * vượt qua (defense in depth, giống test Python bypass validator).
+ */
+describe("M13: valuesOf ba trạng thái (unresolved / resolved / lỗi typed)", () => {
+  it("chuỗi rule khai báo đảo thứ tự vẫn hội tụ đúng giá trị (song song test_chuoi_dao_thu_tu_hoi_tu_dung_gia_tri)", () => {
+    const s: SimulationSpec = {
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "x", type: "switch", value: 1 },
+        { id: "mid", type: "value_box" },
+        { id: "kq", type: "value_box" },
+      ],
+      rules: [
+        // kq phụ thuộc mid — mid được rule SAU định nghĩa (thứ tự khai báo đảo).
+        { type: "weighted_sum", target: "kq", inputs: ["mid"], weights: [2] },
+        { type: "weighted_sum", target: "mid", inputs: ["x"], weights: [3] },
+      ],
+      interactions: [],
+      processes: [],
+    };
+    const values = valuesOf(s, initialBase(s));
+    expect(values.mid).toBe(3);
+    expect(values.kq).toBe(6);
+  });
+
+  it("operand vắng mặt trong values → GenericExecutionError code unresolved_dependency_after_bound (song song test_toan_hang_khong_ton_tai_trong_values_nem_typed_error)", () => {
+    // Validator (Task 3/5) đã chặn "edge làm input numeric" từ trước — đây là
+    // LƯỚI SAU CÙNG: dựng thẳng SimulationSpec bỏ qua validateConfig, mô
+    // phỏng đúng tình huống gốc M13 (weighted_sum ăn input là id CẠNH, cạnh
+    // không mang giá trị số nên không bao giờ có trong `values`).
+    const s: SimulationSpec = {
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "e1", type: "edge" },
+        { id: "kq", type: "value_box" },
+      ],
+      rules: [{ type: "weighted_sum", target: "kq", inputs: ["e1"], weights: [1] }],
+      interactions: [],
+      processes: [],
+    };
+    let caught: unknown;
+    try {
+      valuesOf(s, initialBase(s));
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(GenericExecutionError);
+    expect((caught as GenericExecutionError).code).toBe("unresolved_dependency_after_bound");
+  });
+
+  it("kết quả non-finite → GenericExecutionError code non_finite_numeric_value (song song test_ket_qua_non_finite_nem_typed_error)", () => {
+    const s: SimulationSpec = {
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "v", type: "value_box", value: 1e308 },
+        { id: "kq", type: "value_box" },
+      ],
+      rules: [{ type: "weighted_sum", target: "kq", inputs: ["v"], weights: [1e308] }],
+      interactions: [],
+      processes: [],
+    };
+    let caught: unknown;
+    try {
+      valuesOf(s, initialBase(s));
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(GenericExecutionError);
+    expect((caught as GenericExecutionError).code).toBe("non_finite_numeric_value");
+  });
+
+  it("weight thiếu (số weight ≠ số input) → GenericExecutionError code missing_weight", () => {
+    // Defense in depth song song backend `_eval_rule` — validator chuyên biệt
+    // (Task 3/5) không kiểm độ dài weights/inputs khớp nhau, engine phải tự vệ.
+    const s: SimulationSpec = {
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "a", type: "switch", value: 1 },
+        { id: "b", type: "switch", value: 1 },
+        { id: "kq", type: "value_box" },
+      ],
+      rules: [{ type: "weighted_sum", target: "kq", inputs: ["a", "b"], weights: [1] }],
+      interactions: [],
+      processes: [],
+    };
+    let caught: unknown;
+    try {
+      valuesOf(s, initialBase(s));
+    } catch (e) {
+      caught = e;
+    }
+    expect(caught).toBeInstanceOf(GenericExecutionError);
+    expect((caught as GenericExecutionError).code).toBe("missing_weight");
+  });
+
+  it("init module ném GenericExecutionError khi spec không evaluate được (fail-fast tại init, không tới render)", () => {
+    const badSpec: SimulationSpec = {
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "e1", type: "edge" },
+        { id: "kq", type: "value_box" },
+      ],
+      rules: [{ type: "weighted_sum", target: "kq", inputs: ["e1"], weights: [1] }],
+      interactions: [],
+      processes: [],
+    };
+    expect(() => mod.init(badSpec)).toThrow(GenericExecutionError);
   });
 });

@@ -203,15 +203,32 @@ export const useAppStore = create<AppState>((set, get) => {
         });
         return;
       }
-      // M9-UX1: mô phỏng validate thành công → ghi lịch sử bền (dedup theo
-      // simulation_id + config; mở lại chỉ touch, không nhân bản).
+      // M13: lưới sau cùng — config qua được validateConfig (hai tầng, Task
+      // 3/5) nhưng runtime vẫn có thể phát hiện không evaluate được (defense
+      // in depth). Store MÙ DOMAIN: bắt Error BẤT KỲ từ mod.init, không
+      // import kiểu lỗi domain generic. Ghi lịch sử PHẢI nằm SAU init thành
+      // công — cảnh hỏng không được lên sân khấu, cũng không bị ghi lại.
+      let initialState: unknown;
+      try {
+        initialState = mod.init(result.config);
+      } catch {
+        set({
+          analysisError:
+            "Mô phỏng này không còn mở được: cấu hình không vượt qua kiểm tra an toàn hiện hành. " +
+            "Hãy phân tích lại đề để tạo mô phỏng mới.",
+          activeSampleId: null,
+        });
+        return;
+      }
+      // M9-UX1: mô phỏng validate + khởi tạo thành công → ghi lịch sử bền
+      // (dedup theo simulation_id + config; mở lại chỉ touch, không nhân bản).
       const item = historyStore.record(env, originalInput ?? null);
       set({
         active: {
           moduleId: mod.id,
           envelope: env,
           config: result.config,
-          state: mod.init(result.config),
+          state: initialState,
         },
         unsupported: null,
         analysisError: null,

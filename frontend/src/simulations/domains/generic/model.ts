@@ -167,6 +167,30 @@ export interface GenericState {
 
 /* ── Engine tất định ─────────────────────────────────────── */
 
+/**
+ * M13 §3.4 — lỗi runtime TYPED tại ranh giới evaluator, song song
+ * `GenericEvaluationError` bên `backend/app/simulation/generic_engine.py`.
+ * Sự cố gốc: `weighted_sum` ăn input là id CẠNH → runtime lặng lẽ hoá 0 →
+ * cảnh "chạy" 10/10 bước nhưng kết quả sai câm lặng. Từ M13, engine KHÔNG
+ * BAO GIỜ hoá một giá trị thiếu/không xác định thành 0 — nó ném lỗi typed.
+ */
+export class GenericExecutionError extends Error {
+  readonly code:
+    | "invalid_numeric_source"
+    | "missing_weight"
+    | "unresolved_dependency_after_bound"
+    | "non_finite_numeric_value";
+
+  constructor(
+    code: GenericExecutionError["code"],
+    detail: string,
+  ) {
+    super(`${code}: ${detail}`);
+    this.name = "GenericExecutionError";
+    this.code = code;
+  }
+}
+
 export function ruleTargets(spec: SimulationSpec): Set<string> {
   return new Set(spec.rules.map((r) => r.target));
 }
@@ -181,8 +205,21 @@ export function initialBase(spec: SimulationSpec): Record<string, number> {
   return base;
 }
 
+/**
+ * M13: mọi input PHẢI đã có trong `values` — thiếu là lỗi typed, không bao
+ * giờ coi ngầm là 0. Nhánh `invalid_numeric_source` này KHÔNG reachable qua
+ * `valuesOf` bình thường (nó chỉ gọi evalRule khi mọi input đã resolve —
+ * xem vòng lặp bên dưới); giữ lại cho parity với backend + phòng thủ nếu
+ * evalRule bị gọi trực tiếp từ nơi khác trong tương lai.
+ */
 function evalRule(rule: SpecRule, values: Record<string, number>): number {
-  const inputs = (rule.inputs ?? []).map((id) => values[id] ?? 0);
+  const inputs: number[] = [];
+  for (const id of rule.inputs ?? []) {
+    if (!(id in values)) {
+      throw new GenericExecutionError("invalid_numeric_source", `input "${id}" chưa có giá trị`);
+    }
+    inputs.push(values[id]);
+  }
   if (rule.type === "boolean") {
     const bits = inputs.map((v) => (v >= 1 ? 1 : 0));
     switch (rule.op) {
@@ -200,24 +237,62 @@ function evalRule(rule: SpecRule, values: Record<string, number>): number {
   }
   // weighted_sum
   const weights = rule.weights ?? [];
-  return inputs.reduce((sum, v, i) => sum + v * (weights[i] ?? 0), 0);
+  if (weights.length !== inputs.length) {
+    throw new GenericExecutionError("missing_weight", `rule "${rule.target}" thiếu weight`);
+  }
+  const result = inputs.reduce((sum, v, i) => sum + v * weights[i], 0);
+  if (!Number.isFinite(result)) {
+    throw new GenericExecutionError("non_finite_numeric_value", `rule "${rule.target}" ra ${result}`);
+  }
+  return result;
 }
 
-/** Giá trị đầy đủ = base + giá trị dẫn xuất (áp rule đến khi ổn định). */
+/**
+ * Giá trị đầy đủ = base + giá trị dẫn xuất, áp rule đến khi ổn định.
+ *
+ * M13 §3.4 — BA TRẠNG THÁI: KHÔNG seed target = 0 nữa (trước đây xoá nhòa
+ * "chưa resolve" với "đã tính ra 0" — đúng gốc sự cố "Dijkstra" giả). Một
+ * target chưa resolve là UNRESOLVED (vắng mặt trong `values`); rule chỉ
+ * chạy khi MỌI input đã resolve. DAG hợp lệ hội tụ trong ≤ len(rules) lượt
+ * (validator đã cấm chu trình); còn sót sau bound → lỗi typed thay vì hoá 0
+ * im lặng.
+ *
+ * Thuật toán PORT ĐÚNG bản Python đã merge (`generic_engine.py:values_of`,
+ * đã qua review Task 4 — bản snippet cũ trong plan có bug `pending = still`
+ * đặt SAU `if (!pending.length) break`, khiến MỌI spec có ≥1 rule bắn oan
+ * `unresolved_dependency_after_bound`). Ở đây `pending = still` luôn chạy
+ * TRƯỚC break/progress check.
+ */
 export function valuesOf(spec: SimulationSpec, base: Record<string, number>): Record<string, number> {
   const values: Record<string, number> = { ...base };
-  for (const t of ruleTargets(spec)) if (!(t in values)) values[t] = 0;
-  // Lặp tối đa (số rule + 1) lần — đủ hội tụ cho DAG, validator đã cấm chu trình
-  for (let iter = 0; iter <= spec.rules.length; iter++) {
-    let changed = false;
-    for (const rule of spec.rules) {
-      const v = evalRule(rule, values);
-      if (values[rule.target] !== v) {
-        values[rule.target] = v;
-        changed = true;
+  const rules = spec.rules;
+  let pending: SpecRule[] = [...rules];
+  for (let iter = 0; iter <= rules.length; iter++) {
+    const still: SpecRule[] = [];
+    for (const rule of pending) {
+      const inputs = rule.inputs ?? [];
+      if (inputs.every((id) => id in values)) {
+        values[rule.target] = evalRule(rule, values);
+      } else {
+        still.push(rule);
       }
     }
-    if (!changed) break;
+    const progressed = still.length < pending.length;
+    pending = still; // PHẢI cập nhật TRƯỚC break/progress check (Task 4 bug fix)
+    if (pending.length === 0) break;
+    if (!progressed) {
+      const missing = new Set<string>();
+      for (const r of pending) {
+        for (const id of r.inputs ?? []) if (!(id in values)) missing.add(id);
+      }
+      throw new GenericExecutionError(
+        "unresolved_dependency_after_bound",
+        `không resolve được: ${[...missing].sort().join(", ")}`,
+      );
+    }
+  }
+  if (pending.length > 0) {
+    throw new GenericExecutionError("unresolved_dependency_after_bound", "vượt bound evaluation");
   }
   return values;
 }
