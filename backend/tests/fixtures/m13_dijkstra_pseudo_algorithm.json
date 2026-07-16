@@ -1,0 +1,28 @@
+{
+  "source": "reconstructed_from_screenshot_2026-07-16",
+  "config": {
+    "dsl_version": "1.0",
+    "title": "Mô phỏng so sánh đường đi trong thuật toán Dijkstra",
+    "objects": [
+      { "id": "node_A", "type": "node", "label": "node_A" },
+      { "id": "node_B", "type": "node", "label": "node_B" },
+      { "id": "node_C", "type": "node", "label": "node_C" },
+      { "id": "edge_AB", "type": "edge", "label": "edge_AB", "from": "node_A", "to": "node_B" },
+      { "id": "edge_BC", "type": "edge", "label": "edge_BC", "from": "node_B", "to": "node_C" },
+      { "id": "edge_AC", "type": "edge", "label": "edge_AC", "from": "node_A", "to": "node_C" },
+      { "id": "runner_ABC", "type": "moving_entity", "label": "Đường A-B-C" },
+      { "id": "runner_AC", "type": "moving_entity", "label": "Đường A-C" },
+      { "id": "calc_path_ABC", "type": "value_box", "label": "calc_path_ABC" },
+      { "id": "calc_path_AC", "type": "value_box", "label": "calc_path_AC" }
+    ],
+    "rules": [
+      { "type": "weighted_sum", "target": "calc_path_ABC", "inputs": ["edge_AB", "edge_BC"], "weights": [1, 1] },
+      { "type": "weighted_sum", "target": "calc_path_AC", "inputs": ["edge_AC"], "weights": [1] }
+    ],
+    "interactions": [],
+    "processes": [
+      { "type": "move_along_path", "entity": "runner_ABC", "path": ["node_A", "node_B", "node_C"] },
+      { "type": "move_along_path", "entity": "runner_AC", "path": ["node_A", "node_C"] }
+    ]
+  }
+}
