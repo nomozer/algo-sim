@@ -12,6 +12,7 @@ import {
   valuesOf,
   type SimulationSpec,
 } from "./model";
+import { validateGenericConfig } from "./validate";
 import { andOutput } from "../logic/model";
 import { decimalOf } from "../binary/model";
 import { makeNetworkModule } from "../network";
@@ -682,5 +683,210 @@ describe("toggle cần value — M7.13A", () => {
     const r = mod.validateConfig(bad);
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.error).toContain("drag");
+  });
+});
+
+/**
+ * M13 §3.2 + blocker 3 — operand coherence với role-typing, mirror TS của
+ * backend `validator.py:369-408` (parity Task 3). validate.ts TIÊU THỤ
+ * `dsl-contract.json` (sinh từ manifest — Task 2), KHÔNG hardcode allowlist.
+ * Sự cố gốc: "mô phỏng Dijkstra" cho weighted_sum ăn input là id CẠNH — cạnh
+ * không mang giá trị số → runtime lặng lẽ ra 0.
+ */
+describe("M13 operand coherence", () => {
+  it("weighted_sum input là edge bị từ chối — tồn tại id là KHÔNG đủ, cạnh không mang giá trị số", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "a", type: "node", label: "A" },
+        { id: "b", type: "node", label: "B" },
+        { id: "e1", type: "edge", label: "AB", from: "a", to: "b" },
+        { id: "kq", type: "value_box", label: "Tổng" },
+      ],
+      rules: [{ type: "weighted_sum", target: "kq", inputs: ["e1"], weights: [1] }],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(false);
+    if (!res.ok) expect(res.error).toContain("không có nguồn giá trị");
+  });
+
+  it("chuỗi dẫn xuất khai báo đảo (kq trước mid) vẫn hợp lệ — UNRESOLVED_DERIVED_SOURCE, thứ tự khai báo tự do", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "x", type: "switch", label: "X", value: 1 },
+        { id: "mid", type: "value_box", label: "Trung gian" },
+        { id: "kq", type: "value_box", label: "Kết quả" },
+      ],
+      rules: [
+        // kq phụ thuộc mid — mid được rule SAU định nghĩa: phải hợp lệ.
+        { type: "weighted_sum", target: "kq", inputs: ["mid"], weights: [2] },
+        { type: "weighted_sum", target: "mid", inputs: ["x"], weights: [3] },
+      ],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(true);
+  });
+
+  it("value_box nuôi boolean rule bị từ chối — value_box chỉ numeric, không logical", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "v", type: "value_box", label: "V", value: 5 },
+        { id: "den", type: "lamp", label: "Đèn" },
+      ],
+      rules: [{ type: "boolean", op: "not", target: "den", inputs: ["v"] }],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(false);
+    if (!res.ok) expect(res.error).toContain("không có nguồn giá trị");
+  });
+
+  it("provider hợp lệ nhưng thiếu value bị từ chối — switch không khai value, không là rule target", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "s", type: "switch", label: "S" }, // không value
+        { id: "kq", type: "value_box", label: "KQ" },
+      ],
+      rules: [{ type: "weighted_sum", target: "kq", inputs: ["s"], weights: [1] }],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(false);
+    if (!res.ok) expect(res.error).toContain("không có nguồn giá trị");
+  });
+
+  it("weighted_sum-target (numeric) nuôi boolean input bị từ chối — role mismatch, coercion DENY mặc định", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "v", type: "value_box", label: "V", value: 5 },
+        { id: "tong", type: "value_box", label: "Tổng" },
+        { id: "den", type: "lamp", label: "Đèn" },
+      ],
+      rules: [
+        { type: "weighted_sum", target: "tong", inputs: ["v"], weights: [1] },
+        { type: "boolean", op: "not", target: "den", inputs: ["tong"] },
+      ],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(false);
+    if (!res.ok) expect(res.error).toContain("vai trò");
+  });
+
+  it("chuỗi weighted_sum → weighted_sum (numeric → numeric) hợp lệ", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "x", type: "switch", label: "X", value: 1 },
+        { id: "mid", type: "value_box", label: "TG" },
+        { id: "kq", type: "value_box", label: "KQ" },
+      ],
+      rules: [
+        { type: "weighted_sum", target: "mid", inputs: ["x"], weights: [3] },
+        { type: "weighted_sum", target: "kq", inputs: ["mid"], weights: [2] },
+      ],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(true);
+  });
+
+  it("weighted_sum ghi vào node bị từ chối — node chỉ relational, không nhận numeric (Ràng buộc 2)", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "v", type: "value_box", label: "V", value: 3 },
+        { id: "n1", type: "node", label: "N1" },
+      ],
+      rules: [{ type: "weighted_sum", target: "n1", inputs: ["v"], weights: [1] }],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(false);
+    if (!res.ok) expect(res.error).toContain("không nhận được");
+  });
+
+  it("boolean ghi vào lamp hợp lệ — lamp chấp nhận logical", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "s", type: "switch", label: "S", value: 0 },
+        { id: "den", type: "lamp", label: "Đèn" },
+      ],
+      rules: [{ type: "boolean", op: "not", target: "den", inputs: ["s"] }],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(true);
+  });
+});
+
+/**
+ * M13 Step 5 — regression lock nhánh matrix §8 phía frontend (duyệt 2026-07-17).
+ * Task 5 mổ validateGenericConfig; các nhánh dưới đây ĐÃ đúng sẵn trong source
+ * TRƯỚC khi thêm coherence — test này KHOÁ lại, không phải RED.
+ */
+describe("M13 regression lock — matrix §8 (frontend)", () => {
+  it("toggle nhắm vào target của rule bị từ chối (giá trị dẫn xuất không toggle được)", () => {
+    // "den" khai value:0 CÓ CHỦ ĐÍCH — nếu để trống (như ví dụ trong brief),
+    // fault-injection cho thấy check "toggle vô nghĩa vì thiếu value" (dòng
+    // dưới, lý do khác) cũng reject cùng spec, khiến test không cô lập được
+    // nhánh "target là giá trị dẫn xuất" mà tên test khẳng định đang khoá.
+    // Khai value:0 loại bỏ nhánh phụ đó — chỉ còn nhánh rule-target reject được.
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "s", type: "switch", label: "S", value: 1 },
+        { id: "den", type: "lamp", label: "Đèn", value: 0 },
+      ],
+      rules: [{ type: "boolean", op: "not", target: "den", inputs: ["s"] }],
+      interactions: [{ type: "toggle", target: "den" }],
+      processes: [],
+    });
+    expect(res.ok).toBe(false);
+  });
+
+  it("move_along_path path trỏ id không phải node bị từ chối", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "n1", type: "node", label: "A" },
+        { id: "v1", type: "value_box", label: "V", value: 1 },
+        { id: "e", type: "moving_entity", label: "Gói" },
+      ],
+      rules: [],
+      processes: [{ type: "move_along_path", entity: "e", path: ["n1", "v1"] }],
+    });
+    expect(res.ok).toBe(false);
+  });
+
+  it("edge.from/to trỏ object không tồn tại bị từ chối", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "n1", type: "node", label: "A" },
+        { id: "e1", type: "edge", label: "AB", from: "n1", to: "khong_ton_tai" },
+      ],
+      rules: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(false);
   });
 });

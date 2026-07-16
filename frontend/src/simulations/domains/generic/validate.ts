@@ -1,4 +1,5 @@
 import type { ConfigResult } from "../../types";
+import dslContract from "./dsl-contract.json";
 import {
   BOOL_OPS,
   CONTAINER_TYPES,
@@ -333,6 +334,57 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
   // Cấm chu trình phụ thuộc rule (target ← input là target khác)
   const cycleErr = detectCycle(rules);
   if (cycleErr) return { ok: false, error: cycleErr };
+
+  // M13 §3.2 + blocker 3: operand coherence với role-typing — contract SINH từ
+  // manifest backend (dsl-contract.json), sync-lock test backend chống drift.
+  // Mirror `backend/app/simulation/dsl/validator.py:369-408` (Task 3).
+  const ruleIo = dslContract.rule_io as Record<string, { input_role: string; output_role: string }>;
+  const targetOutputRole = new Map(rules.map((r) => [r.target, ruleIo[r.type].output_role]));
+  const coercions = new Set(
+    (dslContract.role_coercions as { from: string; to: string }[]).map((c) => `${c.from}->${c.to}`),
+  );
+  const objectRoles = dslContract.object_roles as Record<string, string[]>;
+  for (const r of rules) {
+    // Ràng buộc 2: target phải chấp nhận output role của rule (parity backend).
+    const outRole = ruleIo[r.type].output_role;
+    const targetObj = byId[r.target];
+    if (!objectRoles[targetObj.type]?.includes(outRole)) {
+      return {
+        ok: false,
+        error:
+          `Rule ${r.type} sinh giá trị vai trò "${outRole}" nhưng target "${r.target}" ` +
+          `(${targetObj.type}) không nhận được vai trò đó — dùng object type có vai trò ` +
+          `${outRole} làm target (vd value_box/lamp).`,
+      };
+    }
+    const need = ruleIo[r.type].input_role;
+    const providers: string[] = (dslContract.value_providers as Record<string, string[]>)[need];
+    for (const inp of r.inputs ?? []) {
+      const out = targetOutputRole.get(inp);
+      if (out !== undefined) {
+        if (out !== need && !coercions.has(`${out}->${need}`)) {
+          return {
+            ok: false,
+            error:
+              `Rule "${r.target}" dùng input "${inp}" là kết quả rule khác có vai trò "${out}", ` +
+              `nhưng rule ${r.type} cần vai trò "${need}" — không có coercion được khai. ` +
+              `Dùng nguồn đúng vai trò.`,
+          };
+        }
+        continue; // derived + đúng role → defer theo bound lúc chạy
+      }
+      const o = byId[inp];
+      if (!providers.includes(o.type) || o.value === undefined) {
+        return {
+          ok: false,
+          error:
+            `Rule "${r.target}" dùng input "${inp}" (${o.type}) không có nguồn giá trị ` +
+            `${need} theo hợp đồng DSL — chỉ chấp nhận: ${providers.join(", ")} có "value", ` +
+            `hoặc target của một rule cùng vai trò. Đừng dùng node/edge làm toán hạng.`,
+        };
+      }
+    }
+  }
 
   const rawInter = Array.isArray(raw.interactions) ? raw.interactions : [];
   if (rawInter.length > MAX_INTERACTIONS) return { ok: false, error: `Tối đa ${MAX_INTERACTIONS} interaction.` };
