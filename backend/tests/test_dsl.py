@@ -158,6 +158,42 @@ def test_forbidden_key_bi_reject():
         assert "cấm" in err or "engine" in err.lower()
 
 
+def test_object_weight_bi_tu_choi_khong_strip_im_lang():
+    """M13 Task 2b: field không runtime nào đọc mà prompt lại DẠY → từ chối
+    tường minh, không nuốt im lặng (LLM phải biết mô hình của nó sai)."""
+    spec = {
+        "title": "x",
+        "objects": [
+            {"id": "b0", "type": "switch", "label": "8", "value": 1, "weight": 8},
+            {"id": "out", "type": "value_box", "label": "Giá trị"},
+        ],
+        "rules": [{"type": "weighted_sum", "target": "out", "inputs": ["b0"], "weights": [8]}],
+    }
+    config, err = validate_generic_config(spec)
+    assert config is None
+    assert "không còn được hỗ trợ" in err
+
+
+def test_binary_weighted_sum_khong_can_object_weight_van_dung():
+    """Sample nhị phân sau migrate: chỉ rule.weights — vẫn validate + tính đúng."""
+    spec = {
+        "title": "x",
+        "objects": [
+            {"id": "b0", "type": "switch", "label": "8", "value": 1},
+            {"id": "b1", "type": "switch", "label": "4", "value": 1},
+            {"id": "b2", "type": "switch", "label": "2", "value": 0},
+            {"id": "b3", "type": "switch", "label": "1", "value": 1},
+            {"id": "out", "type": "value_box", "label": "Giá trị"},
+        ],
+        "rules": [{"type": "weighted_sum", "target": "out",
+                "inputs": ["b0", "b1", "b2", "b3"], "weights": [8, 4, 2, 1]}],
+    }
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
+    from app.simulation.generic_engine import initial_base, values_of
+    assert values_of(config, initial_base(config))["out"] == 13  # 1101₂ = 13
+
+
 def test_truong_la_cap_cao_nhat_bi_reject():
     bad = {**AND_SPEC, "script": "alert(1)"}
     config, err = validate_generic_config(bad)

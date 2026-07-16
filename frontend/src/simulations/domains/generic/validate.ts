@@ -213,8 +213,20 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
       return { ok: false, error: `Object type không hợp lệ: "${String(o.type)}".` };
     }
     ids.add(o.id);
+    // M13 Task 2b: "weight" cấp OBJECT là silent semantic no-op — không engine
+    // nào đọc nó (trọng số THẬT của weighted_sum luôn là "weights" TRÊN RULE).
+    // Reject tường minh, KHÔNG strip im lặng — LLM phải biết mô hình của nó sai.
+    if ("weight" in o) {
+      return {
+        ok: false,
+        error:
+          `Object "${o.id}" khai "weight" — trường này không còn được hỗ trợ ` +
+          `(không engine nào đọc nó). Trọng số của weighted_sum khai bằng mảng ` +
+          `"weights" TRÊN RULE, vd {"type": "weighted_sum", "inputs": [...], "weights": [8,4,2,1]}.`,
+      };
+    }
     const obj: SpecObject = { id: o.id, type: o.type as ObjectType };
-    for (const key of ["x", "y", "value", "weight"] as const) {
+    for (const key of ["x", "y", "value"] as const) {
       if (typeof o[key] === "number" && Number.isFinite(o[key])) obj[key] = o[key] as number;
     }
     for (const key of ["label", "node_type", "from", "to", "text", "parent"] as const) {

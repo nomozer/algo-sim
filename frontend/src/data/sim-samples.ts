@@ -120,10 +120,10 @@ export const GENERIC_BINARY_SPEC = {
   dsl_version: "1.0",
   title: "Đổi 13 sang nhị phân (tổng quát)",
   objects: [
-    { id: "bit0", type: "switch", value: 1, weight: 8, x: 14, y: 45, label: "8" },
-    { id: "bit1", type: "switch", value: 1, weight: 4, x: 34, y: 45, label: "4" },
-    { id: "bit2", type: "switch", value: 0, weight: 2, x: 54, y: 45, label: "2" },
-    { id: "bit3", type: "switch", value: 1, weight: 1, x: 74, y: 45, label: "1" },
+    { id: "bit0", type: "switch", value: 1, x: 14, y: 45, label: "8" },
+    { id: "bit1", type: "switch", value: 1, x: 34, y: 45, label: "4" },
+    { id: "bit2", type: "switch", value: 0, x: 54, y: 45, label: "2" },
+    { id: "bit3", type: "switch", value: 1, x: 74, y: 45, label: "1" },
     { id: "out", type: "value_box", x: 92, y: 45, label: "Thập phân" },
   ],
   rules: [

@@ -63,7 +63,6 @@ export interface SpecObject {
   y?: number;
   label?: string;
   value?: number;
-  weight?: number;
   node_type?: string;
   from?: string;
   to?: string;

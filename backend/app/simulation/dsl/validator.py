@@ -259,8 +259,17 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
         if o.get("type") not in OBJECT_TYPES:
             return None, f'Object type không hợp lệ: "{o.get("type")}".'
         ids.add(o["id"])
+        # M13 Task 2b: "weight" cấp OBJECT là silent semantic no-op — không engine
+        # nào đọc nó (trọng số THẬT của weighted_sum luôn là "weights" TRÊN RULE).
+        # Reject tường minh, KHÔNG strip im lặng — LLM phải biết mô hình của nó sai.
+        if "weight" in o:
+            return None, (
+                f'Object "{o.get("id")}" khai "weight" — trường này không còn được hỗ trợ '
+                f'(không engine nào đọc nó). Trọng số của weighted_sum khai bằng mảng '
+                f'"weights" TRÊN RULE, vd {{"type": "weighted_sum", "inputs": [...], "weights": [8,4,2,1]}}.'
+            )
         obj = {"id": o["id"], "type": o["type"]}
-        for key in ("x", "y", "value", "weight"):
+        for key in ("x", "y", "value"):
             if _is_num(o.get(key)):
                 obj[key] = o[key]
         for key in ("label", "node_type", "from", "to", "text", "parent"):

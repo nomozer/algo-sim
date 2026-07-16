@@ -34,7 +34,7 @@ export type PatchResult =
 
 export const MAX_OPS = 10;
 const UPDATE_FIELDS = new Set(["text", "label", "x", "y", "value"]);
-const ADD_FIELDS = new Set(["id", "type", "x", "y", "label", "text", "parent", "value", "weight", "node_type", "from", "to"]);
+const ADD_FIELDS = new Set(["id", "type", "x", "y", "label", "text", "parent", "value", "node_type", "from", "to"]);
 
 type Work = {
   dsl_version: string;

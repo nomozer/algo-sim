@@ -37,7 +37,7 @@ ALLOWED_OPS = ("add_object", "remove_object", "update_object", "connect", "disco
 # phải remove + add tường minh.
 UPDATE_FIELDS = {"text", "label", "x", "y", "value"}
 # Trường được nhận khi add_object (validator full vẫn là chốt chặn cuối).
-ADD_FIELDS = {"id", "type", "x", "y", "label", "text", "parent", "value", "weight", "node_type", "from", "to", "directed"}
+ADD_FIELDS = {"id", "type", "x", "y", "label", "text", "parent", "value", "node_type", "from", "to", "directed"}
 
 
 def _invalid(msg: str, reason_code: str = STRUCTURE_INVALID) -> dict:

@@ -381,7 +381,6 @@ _GENERIC_SCHEMA = {
                     "y": {"type": "NUMBER", "nullable": True},
                     "label": {"type": "STRING", "nullable": True},
                     "value": {"type": "NUMBER", "nullable": True},
-                    "weight": {"type": "NUMBER", "nullable": True},
                     "node_type": {"type": "STRING", "nullable": True},
                     "from": {"type": "STRING", "nullable": True},
                     "to": {"type": "STRING", "nullable": True},

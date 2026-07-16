@@ -66,8 +66,8 @@ const GENERIC_BINARY = spec({
   dsl_version: "1.0",
   title: "Đổi nhị phân",
   objects: [
-    { id: "b0", type: "switch", value: 1, weight: 8 },
-    { id: "b1", type: "switch", value: 0, weight: 4 },
+    { id: "b0", type: "switch", value: 1 },
+    { id: "b1", type: "switch", value: 0 },
     { id: "out", type: "value_box" },
   ],
   rules: [{ type: "weighted_sum", inputs: ["b0", "b1"], weights: [8, 4], target: "out" }],

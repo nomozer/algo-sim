@@ -59,6 +59,20 @@ describe("generic engine cơ bản", () => {
     expect(valuesOf(s.spec, s.base).out).toBe(7);
   });
 
+  it("object.weight bị từ chối tường minh — không strip im lặng (M13 Task 2b)", () => {
+    const r = mod.validateConfig({
+      dsl_version: "1.0",
+      title: "x",
+      objects: [
+        { id: "b0", type: "switch", label: "8", value: 1, weight: 8 },
+        { id: "out", type: "value_box", label: "Giá trị" },
+      ],
+      rules: [{ type: "weighted_sum", target: "out", inputs: ["b0"], weights: [8] }],
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toContain("không còn được hỗ trợ");
+  });
+
   it("move_along_path: timeline tất định theo path", () => {
     const s = mod.init(spec(GENERIC_PACKET_SPEC));
     expect(mod.timeline!.stepCount(s)).toBe(4); // create + 3 hop

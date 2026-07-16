@@ -318,7 +318,7 @@ def manifest_contract_text() -> str:
         f"{lim['max_interactions']} interaction, {lim['max_processes']} process, path ≤ {lim['max_path']} nút, "
         f"reveal_sequence ≤ {lim['max_reveal_steps']} bước.\n\n"
         "Ví dụ: cổng AND = 2 switch + 1 lamp + rule boolean op=and. "
-        "Đổi nhị phân = switch bit (có weight) + value_box + rule weighted_sum. "
+        "Đổi nhị phân = switch bit + value_box + rule weighted_sum (weights là mảng TRÊN RULE, vd [8,4,2,1]). "
         "Gói tin = node + edge + moving_entity + process move_along_path. "
         "Dựng hình tam giác = point/line (label) + reveal_sequence hé lộ dần. "
         "Trang web/tài liệu có bố cục = container + heading(text) + paragraph(text), "
