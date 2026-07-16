@@ -402,6 +402,24 @@ Engine của domain `algorithm` (ngoài `simulations/` vì có trước registry
 **Không** dùng làm hạ tầng chung cho domain khác. M9-S1: narration ở BƯỚC QUYẾT
 ĐỊNH là câu hỏi (không lộ đáp án sớm — hệ quả thuộc bước kế tiếp); phần tử đã
 duyệt/không thỏa được mark `eliminated`; export thêm `OP_TEXT`.
+`TraceBuilder` (M12) = **substrate thực thi tái dụng** cho MỌI engine trace
+(cùng union `TraceEvent`); 8 engine specialized là 8 driver mệnh lệnh ~15 dòng
+trên cùng substrate, KHÔNG phải 8 module rời.
+
+### `core/scan.ts` (M12) · offline
+**Declarative Bounded Scan** — MỘT interpreter tất định, engine-owned, cho họ
+bài single-pass trên mảng. Exports: `ScanSpec` (+ `ScanSeed/ScanCompare/
+ScanUpdate/ScanMarking/ScanStop`), `runScan(spec, whatIf?) → Trace`,
+`validateScanSpec(raw) → {ok, spec|error}`, `SCAN_VERSION`.
+Interpreter sở hữu **toàn bộ** vòng lặp/tiến chỉ số/biên dừng (≤ n, non-Turing)/
+sinh event/gọi `TraceBuilder`; spec chỉ chọn **enum ĐÓNG** (seed/compare/update/
+marking/stop) + hằng đầu vào — **KHÔNG** while/guard/mutation/đệ quy/code. Chứng
+minh (`scan.test.ts`): parity NGỮ NGHĨA (decisions + finalMarks + stepCount) với
+`runAlgorithm` cho find_max/count_if/sum_if/linear_search — cùng interpreter,
+spec khác, **0 primitive theo-thuật-toán**. `validateScanSpec` allowlist mọi
+trường + coherence "quét trên GIÁ TRỊ phần tử". **Chưa** wire vào registry/UI,
+**chưa** có đường LLM sinh ScanSpec (HOÃN có chủ đích). Specialized giữ nguyên
+làm oracle — KHÔNG thay thế.
 
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
 Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
