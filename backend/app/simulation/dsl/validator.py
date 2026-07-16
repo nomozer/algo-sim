@@ -366,6 +366,46 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
     if _detect_cycle(rules):
         return None, "Rule có phụ thuộc vòng (circular dependency)."
 
+    # ── M13 §3.2 + blocker 3: operand coherence VỚI role-typing ──
+    # INVALID_SOURCE: type không phải provider của role rule cần, hoặc provider
+    #   nhưng không khai value; HOẶC derived target có output_role KHÔNG khớp
+    #   input_role của rule tiêu thụ (coercion DENY mặc định — role_coercions rỗng).
+    # UNRESOLVED_DERIVED_SOURCE (hợp lệ ở tầng validate): input là target của rule
+    #   khác VÀ output_role khớp — thứ tự khai báo tự do, runtime defer theo bound.
+    target_output_role = {r["target"]: M.RULE_IO_ROLES[r["type"]]["output_role"] for r in rules}
+    coercions = {(c["from"], c["to"]) for c in M.dsl_semantic_contract()["role_coercions"]}
+    for r in rules:
+        # Ràng buộc 2: target object phải CHẤP NHẬN output role của rule —
+        # weighted_sum (numeric) không được ghi vào node/edge (relational).
+        out_role = M.RULE_IO_ROLES[r["type"]]["output_role"]
+        target_obj = by_id[r["target"]]
+        if out_role not in M.PRIMITIVE_ROLES.get(target_obj["type"], set()):
+            return None, (
+                f'Rule {r["type"]} sinh giá trị vai trò "{out_role}" nhưng target '
+                f'"{r["target"]}" ({target_obj["type"]}) không nhận được vai trò đó — '
+                f'dùng object type có vai trò {out_role} làm target (vd value_box/lamp).'
+            )
+        need = M.RULE_IO_ROLES[r["type"]]["input_role"]
+        providers = M.value_provider_types(need)
+        for inp in r.get("inputs", []):
+            if inp in target_output_role:
+                out = target_output_role[inp]
+                if out != need and (out, need) not in coercions:
+                    return None, (
+                        f'Rule "{r["target"]}" dùng input "{inp}" là kết quả rule khác có '
+                        f'vai trò "{out}", nhưng rule {r["type"]} cần vai trò "{need}" — '
+                        f'không có coercion được khai. Dùng nguồn đúng vai trò.'
+                    )
+                continue  # derived + đúng role → defer lúc chạy
+            o = by_id[inp]
+            if o["type"] not in providers or "value" not in o:
+                return None, (
+                    f'Rule "{r["target"]}" dùng input "{inp}" ({o["type"]}) '
+                    f'không có nguồn giá trị {need} theo hợp đồng DSL — '
+                    f'chỉ chấp nhận: {", ".join(sorted(providers))} có "value", '
+                    f'hoặc target của một rule cùng vai trò. Đừng dùng node/edge làm toán hạng.'
+                )
+
     rule_targets = {r["target"] for r in rules}
     raw_inter = raw.get("interactions") if isinstance(raw.get("interactions"), list) else []
     if len(raw_inter) > MAX_INTERACTIONS:

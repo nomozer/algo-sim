@@ -194,6 +194,191 @@ def test_binary_weighted_sum_khong_can_object_weight_van_dung():
     assert values_of(config, initial_base(config))["out"] == 13  # 1101₂ = 13
 
 
+# ── M13 Task 3: operand coherence VỚI role-typing (INVALID_SOURCE) ────
+# Sự cố gốc: 2 ô weighted_sum lấy input là id CẠNH (edge_AB, edge_BC) — cạnh
+# không mang giá trị số, runtime lặng lẽ tính ra 0, cảnh vẫn chạy 10/10 bước.
+# Validator cũ chỉ kiểm id TỒN TẠI, không kiểm toán hạng có NGUỒN GIÁ TRỊ.
+
+def _spec(objects, rules=None, processes=None):
+    return {
+        "dsl_version": "1.0",
+        "title": "M13 operand coherence",
+        "objects": objects,
+        "rules": rules or [],
+        "interactions": [],
+        "processes": processes or [],
+    }
+
+
+def test_weighted_sum_input_edge_bi_tu_choi():
+    """M13 E6: tồn tại id là KHÔNG đủ — edge không có hợp đồng giá trị số."""
+    spec = _spec(
+        objects=[
+            {"id": "a", "type": "node", "label": "A"},
+            {"id": "b", "type": "node", "label": "B"},
+            {"id": "e1", "type": "edge", "label": "AB", "from": "a", "to": "b"},
+            {"id": "kq", "type": "value_box", "label": "Tổng"},
+        ],
+        rules=[{"type": "weighted_sum", "target": "kq", "inputs": ["e1"], "weights": [1]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None
+    assert "không có nguồn giá trị" in err
+
+
+def test_chuoi_dan_xuat_khai_bao_dao_van_hop_le():
+    """M13 §3.2: UNRESOLVED_DERIVED_SOURCE — rule khai trước provider vẫn hợp lệ."""
+    spec = _spec(
+        objects=[
+            {"id": "x", "type": "switch", "label": "X", "value": 1},
+            {"id": "mid", "type": "value_box", "label": "Trung gian"},
+            {"id": "kq", "type": "value_box", "label": "Kết quả"},
+        ],
+        rules=[
+            # kq phụ thuộc mid — mid được rule SAU định nghĩa: phải hợp lệ.
+            {"type": "weighted_sum", "target": "kq", "inputs": ["mid"], "weights": [2]},
+            {"type": "weighted_sum", "target": "mid", "inputs": ["x"], "weights": [3]},
+        ],
+    )
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
+
+
+def test_boolean_input_value_box_bi_tu_choi():
+    """value_box chỉ numeric, không logical → không được nuôi boolean rule."""
+    spec = _spec(
+        objects=[
+            {"id": "v", "type": "value_box", "label": "V", "value": 5},
+            {"id": "den", "type": "lamp", "label": "Đèn"},
+        ],
+        rules=[{"type": "boolean", "op": "not", "target": "den", "inputs": ["v"]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None
+    assert "không có nguồn giá trị" in err
+
+
+def test_provider_thieu_value_bi_tu_choi():
+    """switch (provider hợp lệ) nhưng KHÔNG khai value và không là rule target."""
+    spec = _spec(
+        objects=[
+            {"id": "s", "type": "switch", "label": "S"},  # không value
+            {"id": "kq", "type": "value_box", "label": "KQ"},
+        ],
+        rules=[{"type": "weighted_sum", "target": "kq", "inputs": ["s"], "weights": [1]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None
+    assert "không có nguồn giá trị" in err
+
+
+def test_derived_target_sai_role_bi_tu_choi_weighted_sum_nuoi_boolean():
+    """M13 blocker 3: numeric output (weighted_sum target) KHÔNG được nuôi boolean
+    input — chính là lớp coercion im lặng v>=1. DENY mặc định."""
+    spec = _spec(
+        objects=[
+            {"id": "v", "type": "value_box", "label": "V", "value": 5},
+            {"id": "tong", "type": "value_box", "label": "Tổng"},
+            {"id": "den", "type": "lamp", "label": "Đèn"},
+        ],
+        rules=[
+            {"type": "weighted_sum", "target": "tong", "inputs": ["v"], "weights": [1]},
+            {"type": "boolean", "op": "not", "target": "den", "inputs": ["tong"]},
+        ],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None
+    assert "vai trò" in err  # lỗi nêu rõ mismatch output_role ↔ input_role
+
+
+def test_derived_target_dung_role_van_hop_le_chain_numeric():
+    """weighted_sum target (numeric) nuôi weighted_sum input (numeric) — hợp lệ."""
+    spec = _spec(
+        objects=[
+            {"id": "x", "type": "switch", "label": "X", "value": 1},
+            {"id": "mid", "type": "value_box", "label": "TG"},
+            {"id": "kq", "type": "value_box", "label": "KQ"},
+        ],
+        rules=[
+            {"type": "weighted_sum", "target": "mid", "inputs": ["x"], "weights": [3]},
+            {"type": "weighted_sum", "target": "kq", "inputs": ["mid"], "weights": [2]},
+        ],
+    )
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
+
+
+def test_rule_output_ghi_vao_target_sai_role_bi_tu_choi():
+    """Ràng buộc 2 (duyệt lần 3): weighted_sum (output numeric) KHÔNG được ghi
+    vào node (chỉ relational) — target phải CHẤP NHẬN output role của rule."""
+    spec = _spec(
+        objects=[
+            {"id": "v", "type": "value_box", "label": "V", "value": 3},
+            {"id": "n1", "type": "node", "label": "N1"},
+        ],
+        rules=[{"type": "weighted_sum", "target": "n1", "inputs": ["v"], "weights": [1]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None
+    assert "không nhận được" in err
+
+
+def test_rule_output_ghi_vao_target_dung_role_hop_le():
+    """boolean (output logical) ghi vào lamp ({logical, numeric}) — hợp lệ."""
+    spec = _spec(
+        objects=[
+            {"id": "s", "type": "switch", "label": "S", "value": 0},
+            {"id": "den", "type": "lamp", "label": "Đèn"},
+        ],
+        rules=[{"type": "boolean", "op": "not", "target": "den", "inputs": ["s"]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
+
+
+# ── M13 Task 3 Step 5: regression lock cho 3 nhánh matrix §8 đã đúng sẵn
+# trong validate_generic_config — khoá lại trước khi mổ tiếp hàm này.
+
+def test_move_along_path_ref_id_khong_phai_node_bi_reject():
+    """matrix §8.1 — validator.py đã chặn đúng (path chứa id không phải node), nay khoá lại."""
+    spec = _spec(
+        objects=[
+            {"id": "n1", "type": "node", "label": "A"},
+            {"id": "v1", "type": "value_box", "label": "V", "value": 1},
+            {"id": "e", "type": "moving_entity", "label": "Gói"},
+        ],
+        rules=[],
+        processes=[{"type": "move_along_path", "entity": "e", "path": ["n1", "v1"]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None and err
+
+
+def test_move_along_path_ref_id_khong_ton_tai_bi_reject():
+    spec = _spec(
+        objects=[
+            {"id": "n1", "type": "node", "label": "A"},
+            {"id": "e", "type": "moving_entity", "label": "Gói"},
+        ],
+        rules=[],
+        processes=[{"type": "move_along_path", "entity": "e", "path": ["n1", "khong_ton_tai"]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None and err
+
+
+def test_edge_from_to_ref_object_khong_ton_tai_bi_reject():
+    spec = _spec(
+        objects=[
+            {"id": "n1", "type": "node", "label": "A"},
+            {"id": "e1", "type": "edge", "label": "AB", "from": "n1", "to": "khong_ton_tai"},
+        ],
+        rules=[],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None and err
+
+
 def test_truong_la_cap_cao_nhat_bi_reject():
     bad = {**AND_SPEC, "script": "alert(1)"}
     config, err = validate_generic_config(bad)
