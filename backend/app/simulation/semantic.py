@@ -9,7 +9,7 @@ Kỳ vọng đọc từ CHÍNH cấu trúc spec (bất kể LLM đặt id gì) n
 
 from __future__ import annotations
 
-from itertools import product
+from itertools import permutations, product
 
 from app.simulation.dsl.manifest import (
     all_coverable_roles,
@@ -114,6 +114,8 @@ def check_semantic(spec: dict, expectation: dict) -> tuple[bool, str]:
         return _structural_ok(spec)
     if kind == "boolean_gate":
         return _check_boolean_gate(spec, expectation["op"])
+    if kind == "nested_boolean":
+        return _check_nested_boolean(spec, expectation["expr"])
     if kind == "weighted_sum":
         return _check_weighted_sum(spec, expectation["value"])
     if kind == "moving_path":
@@ -255,6 +257,72 @@ def _check_boolean_gate(spec: dict, op: str) -> tuple[bool, str]:
         if got != want:
             return False, f"Bảng chân trị sai tại {combo}: engine={got}, đúng={want}"
     return True, f"Bảng chân trị {op} đúng toàn bộ"
+
+
+def _eval_expr(expr, env: dict[str, int]) -> int:
+    """Đánh giá cây biểu thức kỳ vọng {op, args} với lá là placeholder."""
+    if isinstance(expr, str):
+        return env[expr]
+    bits = [_eval_expr(a, env) for a in expr["args"]]
+    return _BOOL[expr["op"]](bits)
+
+
+def _expr_leaves(expr) -> list[str]:
+    if isinstance(expr, str):
+        return [expr]
+    out: list[str] = []
+    for a in expr["args"]:
+        out.extend(_expr_leaves(a))
+    return out
+
+
+def _check_nested_boolean(spec: dict, expr: dict) -> tuple[bool, str]:
+    """M11: kỳ vọng boolean HỢP THÀNH (≥2 rule nối chuỗi qua trung gian).
+
+    Vì sao không dùng _check_boolean_gate: probe đó tiêm giá trị vào INPUT của
+    rule — với rule lồng, input là TARGET của rule khác nên bị values_of tính
+    ĐÈ trong vòng quét điểm bất động → spec lồng ĐÚNG vẫn trượt (âm tính giả).
+    Probe này chỉ tiêm vào NGUỒN (initial_base) rồi so bảng chân trị hợp thành
+    tại SINK; ánh xạ nguồn ↔ lá kỳ vọng là id-agnostic (thử mọi hoán vị — n
+    nguồn ≤ vài biến logic nên tổ hợp không đáng kể).
+    """
+    rules = [r for r in spec.get("rules", []) if r["type"] == "boolean"]
+    if len(rules) < 2:
+        return False, f"Cần ≥2 rule boolean nối chuỗi (composition), spec chỉ có {len(rules)}"
+    targets = {r["target"] for r in rules}
+    chained = any(i in targets for r in rules for i in r.get("inputs", []))
+    if not chained:
+        return False, "Không rule nào dùng target của rule khác làm input — chưa phải chuỗi composition"
+    sinks = [
+        r["target"]
+        for r in rules
+        if not any(r["target"] in r2.get("inputs", []) for r2 in rules)
+    ]
+    if len(sinks) != 1:
+        return False, f"Cần đúng MỘT đầu ra cuối (sink), thấy {len(sinks)}"
+    sink = sinks[0]
+
+    leaves = sorted(set(_expr_leaves(expr)))
+    base0 = initial_base(spec)
+    sources = sorted(base0)
+    if len(sources) != len(leaves):
+        return False, f"Số đầu vào nguồn ({len(sources)}) khác số biến của kỳ vọng ({len(leaves)})"
+
+    for perm in permutations(sources):
+        mapping = dict(zip(leaves, perm))
+        for combo in product([0, 1], repeat=len(leaves)):
+            env = dict(zip(leaves, combo))
+            base = dict(base0)
+            for leaf, src in mapping.items():
+                base[src] = env[leaf]
+            if values_of(spec, base).get(sink) != _eval_expr(expr, env):
+                break
+        else:
+            return True, (
+                f"Bảng chân trị hợp thành đúng toàn bộ ({2 ** len(leaves)} tổ hợp, "
+                f"sink \"{sink}\", {len(rules)} rule nối chuỗi)"
+            )
+    return False, "Không ánh xạ nguồn↔biến nào khớp bảng chân trị hợp thành kỳ vọng"
 
 
 def _check_weighted_sum(spec: dict, expected: float) -> tuple[bool, str]:

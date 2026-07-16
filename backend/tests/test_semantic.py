@@ -23,6 +23,32 @@ def _gate(op):
     }
 
 
+def _nested(rules):
+    """Cảnh 3 công tắc + trung gian t + đèn y — rules truyền vào để thử biến thể."""
+    return {
+        "dsl_version": "1.0",
+        "title": "Đèn A và (B hoặc C)",
+        "objects": [
+            {"id": "sa", "type": "switch", "value": 0},
+            {"id": "sb", "type": "switch", "value": 0},
+            {"id": "sc", "type": "switch", "value": 0},
+            {"id": "t", "type": "lamp", "label": "B hoặc C"},
+            {"id": "y", "type": "lamp", "label": "Đèn"},
+        ],
+        "rules": rules,
+        "interactions": [
+            {"type": "toggle", "target": "sa"},
+            {"type": "toggle", "target": "sb"},
+            {"type": "toggle", "target": "sc"},
+        ],
+        "processes": [],
+    }
+
+
+# Kỳ vọng hợp thành AND(x, OR(y, z)) — lá là placeholder, ánh xạ id-agnostic.
+NESTED_AND_OR = {"op": "and", "args": ["x", {"op": "or", "args": ["y", "z"]}]}
+
+
 # ── Python engine ─────────────────────────────────────────────
 
 def test_engine_xor_truth_table():
@@ -253,3 +279,80 @@ def test_draggable_reveal_thieu_drag_thi_fail():
     ok, detail = check_semantic(no_drag, {"kind": "draggable_reveal", "min_steps": 3})
     assert not ok
     assert "drag" in detail
+
+
+# ── M11: nested_boolean — kỳ vọng HỢP THÀNH, dò theo NGUỒN ────────────────
+# Probe boolean_gate cũ tiêm giá trị vào input của rule; với rule lồng, input
+# là TARGET của rule khác nên bị values_of tính đè → âm tính giả. nested_boolean
+# chỉ tiêm vào NGUỒN (initial_base) và so bảng chân trị hợp thành tại sink.
+
+def test_nested_boolean_dung_toan_bo_bang_chan_tri():
+    spec = _nested([
+        {"type": "boolean", "op": "or", "inputs": ["sb", "sc"], "target": "t"},
+        {"type": "boolean", "op": "and", "inputs": ["sa", "t"], "target": "y"},
+    ])
+    ok, detail = check_semantic(spec, {"kind": "nested_boolean", "expr": NESTED_AND_OR})
+    assert ok, detail
+
+
+def test_nested_boolean_id_agnostic_hoan_vi_nguon():
+    """Biến phân biệt (x) là sc chứ không phải sa — ánh xạ phải tự tìm ra."""
+    spec = _nested([
+        {"type": "boolean", "op": "or", "inputs": ["sa", "sb"], "target": "t"},
+        {"type": "boolean", "op": "and", "inputs": ["sc", "t"], "target": "y"},
+    ])
+    ok, detail = check_semantic(spec, {"kind": "nested_boolean", "expr": NESTED_AND_OR})
+    assert ok, detail
+
+
+def test_nested_boolean_doc_lap_thu_tu_khai_bao_rule():
+    """Rule AND khai TRƯỚC rule OR nuôi nó — điểm bất động vẫn hội tụ đúng."""
+    spec = _nested([
+        {"type": "boolean", "op": "and", "inputs": ["sa", "t"], "target": "y"},
+        {"type": "boolean", "op": "or", "inputs": ["sb", "sc"], "target": "t"},
+    ])
+    ok, detail = check_semantic(spec, {"kind": "nested_boolean", "expr": NESTED_AND_OR})
+    assert ok, detail
+
+
+def test_nested_boolean_sai_logic_bi_fail():
+    """OR ở cả hai tầng ≠ AND(x, OR(y,z)) → phải trượt bảng chân trị."""
+    spec = _nested([
+        {"type": "boolean", "op": "or", "inputs": ["sb", "sc"], "target": "t"},
+        {"type": "boolean", "op": "or", "inputs": ["sa", "t"], "target": "y"},
+    ])
+    ok, _ = check_semantic(spec, {"kind": "nested_boolean", "expr": NESTED_AND_OR})
+    assert not ok
+
+
+def test_nested_boolean_spec_phang_khong_phai_composition():
+    """Một rule AND 3 đầu vào phẳng: không có chuỗi rule → FAIL cấu trúc."""
+    flat = _nested([
+        {"type": "boolean", "op": "and", "inputs": ["sa", "sb", "sc"], "target": "y"},
+    ])
+    ok, detail = check_semantic(flat, {"kind": "nested_boolean", "expr": NESTED_AND_OR})
+    assert not ok
+    assert "chuỗi" in detail or "composition" in detail.lower() or "rule" in detail.lower()
+
+
+def test_nested_boolean_not_bien_the():
+    """AND(x, NOT y) — 2 nguồn, dùng op not có thật trong manifest."""
+    spec = {
+        "dsl_version": "1.0",
+        "title": "A và không B",
+        "objects": [
+            {"id": "sa", "type": "switch", "value": 0},
+            {"id": "sb", "type": "switch", "value": 0},
+            {"id": "t", "type": "lamp", "label": "không B"},
+            {"id": "y", "type": "lamp"},
+        ],
+        "rules": [
+            {"type": "boolean", "op": "not", "inputs": ["sb"], "target": "t"},
+            {"type": "boolean", "op": "and", "inputs": ["sa", "t"], "target": "y"},
+        ],
+        "interactions": [{"type": "toggle", "target": "sa"}, {"type": "toggle", "target": "sb"}],
+        "processes": [],
+    }
+    expr = {"op": "and", "args": ["x", {"op": "not", "args": ["y"]}]}
+    ok, detail = check_semantic(spec, {"kind": "nested_boolean", "expr": expr})
+    assert ok, detail
