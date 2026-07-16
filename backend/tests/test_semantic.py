@@ -335,6 +335,23 @@ def test_nested_boolean_spec_phang_khong_phai_composition():
     assert "chuỗi" in detail or "composition" in detail.lower() or "rule" in detail.lower()
 
 
+def test_nested_boolean_bo_qua_object_trang_tri_co_value():
+    """Đo live (M11 baseline): LLM thỉnh thoảng gắn value=0 cho label/đèn trang
+    trí → probe đếm 'mọi object có value' ra 7 nguồn thay vì 3 (âm tính giả).
+    Nguồn của bảng chân trị phải là ĐẦU VÀO HỌC SINH ĐIỀU KHIỂN — target của
+    toggle khai trong spec."""
+    spec = _nested([
+        {"type": "boolean", "op": "or", "inputs": ["sb", "sc"], "target": "t"},
+        {"type": "boolean", "op": "and", "inputs": ["sa", "t"], "target": "y"},
+    ])
+    spec["objects"] = spec["objects"] + [
+        {"id": f"lbl{i}", "type": "label", "label": f"nhãn {i}", "value": 0}
+        for i in range(4)
+    ]
+    ok, detail = check_semantic(spec, {"kind": "nested_boolean", "expr": NESTED_AND_OR})
+    assert ok, detail
+
+
 def test_nested_boolean_not_bien_the():
     """AND(x, NOT y) — 2 nguồn, dùng op not có thật trong manifest."""
     spec = {

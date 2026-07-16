@@ -304,9 +304,22 @@ def _check_nested_boolean(spec: dict, expr: dict) -> tuple[bool, str]:
 
     leaves = sorted(set(_expr_leaves(expr)))
     base0 = initial_base(spec)
-    sources = sorted(base0)
+    # Nguồn của bảng chân trị = ĐẦU VÀO HỌC SINH ĐIỀU KHIỂN (target của toggle
+    # khai trong spec, giao với giá trị nguồn thật). Đo live (M11 baseline): LLM
+    # thỉnh thoảng gắn value=0 cho label/đèn trang trí — đếm "mọi object có
+    # value" sẽ ra 7 nguồn thay vì 3 → âm tính giả. Object có value nhưng không
+    # toggle được giữ NGUYÊN giá trị khởi tạo trong lúc dò (hằng số của cảnh);
+    # nếu hằng đó làm sai bảng chân trị thì probe vẫn trượt đúng.
+    toggles = [
+        it["target"]
+        for it in spec.get("interactions", [])
+        if it.get("type") == "toggle" and it.get("target") in base0
+    ]
+    sources = sorted(set(toggles)) if toggles else sorted(base0)
     if len(sources) != len(leaves):
-        return False, f"Số đầu vào nguồn ({len(sources)}) khác số biến của kỳ vọng ({len(leaves)})"
+        return False, (
+            f"Số đầu vào học sinh điều khiển ({len(sources)}) khác số biến của kỳ vọng ({len(leaves)})"
+        )
 
     for perm in permutations(sources):
         mapping = dict(zip(leaves, perm))
