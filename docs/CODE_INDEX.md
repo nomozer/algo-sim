@@ -98,6 +98,16 @@ Port Python của engine TS — **chỉ để kiểm ngữ nghĩa server-side**.
 Exports: `values_of`, `initial_base`, `build_timeline`, `apply_toggle`, `rule_targets`.
 Notes: phải giữ **cùng luật** với `generic/model.ts`.
 
+### `simulation/scan_engine.py` (M12) · Change impact: offline
+Port Python của scan-interpreter — mirror `frontend/src/core/scan.ts` (CÙNG
+LUẬT, đổi một bên thì đổi cả hai). Backend không dựng timeline cho học sinh;
+port tồn tại để validator server-side + harness chấm HÀNH VI (semantic kind
+`bounded_scan`). Exports: `validate_scan_spec`, `run_scan`, `SCAN_VERSION`,
+`CONDITION_OPS`, `UPDATE_KINDS`, `MARKINGS`, `STOPS` (hằng public — schema
+Gemini trong catalog DẪN XUẤT từ đây, khoá bằng
+`test_scan_routing::test_scan_schema_enum_dan_xuat_tu_scan_engine`).
+Tests: `test_scan_engine.py`, `test_scan_routing.py`.
+
 ### `simulation/catalog.py` · Change impact: targeted live
 Bản chiếu registry phía backend: `SimSpec` (description/schema/contract/validator/
 make_title) cho từng `simulation_id`. Exports: `CATALOG`, `SimSpec`, `catalog_text`.
@@ -430,9 +440,13 @@ marking/stop) + hằng đầu vào — **KHÔNG** while/guard/mutation/đệ quy
 minh (`scan.test.ts`): parity NGỮ NGHĨA (decisions + finalMarks + stepCount) với
 `runAlgorithm` cho find_max/count_if/sum_if/linear_search — cùng interpreter,
 spec khác, **0 primitive theo-thuật-toán**. `validateScanSpec` allowlist mọi
-trường + coherence "quét trên GIÁ TRỊ phần tử". **Chưa** wire vào registry/UI,
-**chưa** có đường LLM sinh ScanSpec (HOÃN có chủ đích). Specialized giữ nguyên
-làm oracle — KHÔNG thay thế.
+trường + coherence "quét trên GIÁ TRỊ phần tử". (M12-AI-SCAN) `scanPseudocode(spec)` — mã giả
+5 dòng DẪN XUẤT từ spec; `runScan` gắn `Step.line`/narration từ CÙNG layout
+(một nguồn, chống highlight trôi). Đã wire: module `algorithm.scan`
+(`domains/algorithm/scan-module.tsx` — module thứ 9 của domain, adapter mỏng,
+prediction/what-if HOÃN) + route NL backend (catalog `algorithm.scan`).
+Specialized giữ nguyên làm oracle — KHÔNG thay thế. Mirror Python:
+`simulation/scan_engine.py`.
 
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
 Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
