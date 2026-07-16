@@ -28,7 +28,7 @@ from app.ai.gemini import ApiBudget
 from app.evaluation.datasets import POOLS, get_pool
 from app.evaluation.harness import format_report, run_eval, select_suite
 
-SUITES = ("smoke", "full", "boundary", "smoke_v2", "flagship", "L3", "system_flow", "m10_route")
+SUITES = ("smoke", "full", "boundary", "smoke_v2", "flagship", "L3", "system_flow", "m10_route", "m11_compose")
 DATASETS = tuple(sorted(POOLS))
 
 

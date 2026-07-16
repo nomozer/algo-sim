@@ -253,4 +253,149 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "Thà unsupported trung thực còn hơn ép vào mô phỏng đơn giản gây hiểu lầm (bất biến #8/#9)."
         ),
     ),
+
+    # ── M11: composition boolean LỒNG qua giá trị trung gian (tag "m11_compose") ──
+    # Bộ 5 case tự chứa cho live smoke có mục tiêu: 2 case lồng AND(x, OR(y,z))
+    # khác miền bề mặt + 1 case NOT + 1 paraphrase probe ("ít nhất một trong") +
+    # 1 capability_gap thật (vòng lặp có điều kiện dừng). Đây là case
+    # DEVELOPMENT/REGRESSION — dùng để soi lỗi và mài prompt, KHÔNG được trình
+    # bày về sau như held-out benchmark chưa đụng tới.
+    EvalItem(
+        id="m11-nested-canonical",
+        text=(
+            "Có ba công tắc A, B, C và một bóng đèn. Đèn sáng khi công tắc A bật và "
+            "(công tắc B hoặc công tắc C) bật. Mô phỏng mạch để học sinh bật/tắt "
+            "từng công tắc và quan sát đèn."
+        ),
+        group="generic",
+        expect_simulation_id="generic.rule_scene",
+        semantic={"kind": "nested_boolean", "expr": {"op": "and", "args": ["x", {"op": "or", "args": ["y", "z"]}]}},
+        tags=("curriculum", "m11_compose"),
+        curriculum_area="T10.CD1",
+        curriculum_topic="Dữ liệu lôgic — biểu thức lôgic ghép (Bài 5)",
+        capability_family="boolean_rule_chain",
+        complexity="L2",
+        result_mode="interactive_visualization",
+        cross_domain_group="boolean_rule_chain",
+        learning_objective=(
+            "Giải thích được vì sao đèn sáng/tắt theo biểu thức ghép có nhóm: kết quả "
+            "đi qua một GIÁ TRỊ TRUNG GIAN (B hoặc C) rồi mới kết hợp với A."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: cấu trúc NHÓM của biểu thức lôgic — giá trị trung gian B∨C "
+            "không nhìn thấy được trong biểu thức phẳng hay đáp án cuối. Nghiên cứu "
+            "CS-education (Herman et al., TOCE 2012) ghi nhận dịch đặc tả lời văn sang "
+            "biểu thức Boolean là kỹ năng khó có misconception hệ thống. Bật từng công "
+            "tắc và thấy trung gian đổi TRƯỚC đèn chính làm lộ cấu trúc hai tầng. Về "
+            "kiến trúc: đây là bằng chứng LLM compose ĐƯỢC hai rule nối chuỗi qua object "
+            "trung gian — điều chưa case nào đo (mọi case boolean cũ đều một rule)."
+        ),
+    ),
+    EvalItem(
+        id="m11-nested-access",
+        text=(
+            "Hệ thống quản lí học tập của trường chỉ cho phép vào trang quản trị khi "
+            "tài khoản hợp lệ và người dùng là giáo viên hoặc quản trị viên. Mô phỏng "
+            "quy tắc truy cập này với các điều kiện bật/tắt và một đèn báo được phép truy cập."
+        ),
+        group="generic",
+        expect_simulation_id="generic.rule_scene",
+        semantic={"kind": "nested_boolean", "expr": {"op": "and", "args": ["x", {"op": "or", "args": ["y", "z"]}]}},
+        tags=("curriculum", "m11_compose"),
+        curriculum_area="T11.CD4 / T10.CD2",
+        curriculum_topic="Kiểm soát truy cập, phân quyền người dùng (Bài 15 / Bài 9)",
+        capability_family="boolean_rule_chain",
+        complexity="L2",
+        result_mode="interactive_visualization",
+        cross_domain_group="boolean_rule_chain",
+        learning_objective=(
+            "Nhận ra phân quyền truy cập là một biểu thức lôgic GHÉP: điều kiện vai trò "
+            "(giáo viên HOẶC quản trị viên) là một giá trị trung gian trước khi VÀ với tài khoản hợp lệ."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: cùng cấu trúc AND(x, OR(y,z)) như case canonical nhưng ở miền "
+            "PHÂN QUYỀN — cặp cùng-capability-khác-miền cho chuỗi rule lồng, nối tiếp "
+            "bằng chứng tái sử dụng của xd-access-boolean (một tầng). Học sinh tắt "
+            "'tài khoản hợp lệ' và thấy đèn tắt DÙ vai trò đúng — lộ ra điều kiện "
+            "chặn tổng ở tầng ngoài, điều một bảng phân quyền tĩnh không cho thấy."
+        ),
+    ),
+    EvalItem(
+        id="m11-paraphrase-atleast",
+        text=(
+            "Có ba công tắc A, B, C và một bóng đèn. Đèn sáng khi A bật và ít nhất "
+            "một trong hai công tắc B hoặc C bật. Mô phỏng mạch này."
+        ),
+        group="generic",
+        expect_simulation_id="generic.rule_scene",
+        semantic={"kind": "nested_boolean", "expr": {"op": "and", "args": ["x", {"op": "or", "args": ["y", "z"]}]}},
+        tags=("curriculum", "boundary", "m11_compose"),
+        curriculum_area="T10.CD1",
+        curriculum_topic="Dữ liệu lôgic — biểu thức lôgic ghép (Bài 5)",
+        capability_family="boolean_rule_chain",
+        complexity="L2",
+        result_mode="interactive_visualization",
+        cross_domain_group="boolean_rule_chain",
+        learning_objective=(
+            "Như m11-nested-canonical — cùng mạch, chỉ khác cách phát biểu điều kiện OR."
+        ),
+        pedagogical_rationale=(
+            "PARAPHRASE ROBUSTNESS PROBE: 'ít nhất một trong HAI' với k=1 tương đương "
+            "thuần OR — DSL biểu diễn được, nên từ chối là ROUTING UNDER-CLAIM, không "
+            "phải capability_gap thật (ngưỡng thật sự là 'ít nhất 2 trong 3' — case "
+            "c-threshold). Câu chữ này va chạm bề mặt với hướng dẫn numeric_threshold "
+            "trong analyze.md; case này ghi nhận baseline và khóa kỳ vọng cuối M11: "
+            "phải về generic composition lồng."
+        ),
+    ),
+    EvalItem(
+        id="m11-nested-not",
+        text=(
+            "Máy tính ở phòng thực hành truy cập được Internet khi công tắc mạng bật "
+            "và chế độ khóa của giáo viên đang tắt. Mô phỏng quy tắc này với các công "
+            "tắc và một đèn báo có mạng."
+        ),
+        group="generic",
+        expect_simulation_id="generic.rule_scene",
+        semantic={"kind": "nested_boolean", "expr": {"op": "and", "args": ["x", {"op": "not", "args": ["y"]}]}},
+        tags=("curriculum", "m11_compose"),
+        curriculum_area="T10.CD1",
+        curriculum_topic="Dữ liệu lôgic — phép phủ định (Bài 5)",
+        capability_family="boolean_rule_chain",
+        complexity="L2",
+        result_mode="interactive_visualization",
+        cross_domain_group="boolean_rule_chain",
+        learning_objective=(
+            "Hiểu điều kiện PHỦ ĐỊNH trong quy tắc ghép: 'đang tắt' nghĩa là NOT — "
+            "bật chế độ khóa làm mất mạng dù công tắc mạng vẫn bật."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: phủ định trong điều kiện ghép — chỗ misconception kinh điển "
+            "(học sinh đọc 'khóa đang tắt' thành điều kiện thuận). Cần rule NOT nuôi "
+            "rule AND qua trung gian — một biến thể chuỗi KHÁC cấu trúc AND-OR, kiểm "
+            "khả năng khái quát của composition thay vì lặp lại một khuôn."
+        ),
+    ),
+    EvalItem(
+        id="m11-loop-gap",
+        text=(
+            "Cho biến x = 2. Mỗi vòng lặp x tăng thêm 3. Vòng lặp dừng khi x lớn hơn "
+            "14. Hãy mô phỏng quá trình thay đổi của x qua từng vòng lặp."
+        ),
+        group="unsupported",
+        tags=("boundary", "m11_compose"),
+        curriculum_area="T10.CD5",
+        curriculum_topic="Câu lệnh lặp trong lập trình (mô phỏng thực thi vòng lặp ngoài năng lực v1)",
+        capability_family="control_flow_loop",
+        complexity="L4",
+        result_mode="unsupported",
+        learning_objective="(Ngoài phạm vi v1 — case ranh giới kiểm tính trung thực năng lực.)",
+        pedagogical_rationale=(
+            "Cơ chế được hỏi là VÒNG LẶP CÓ TRẠNG THÁI với điều kiện dừng theo ngưỡng — "
+            "đúng hai gap-role numeric_threshold + arbitrary_algorithm mà manifest cố ý "
+            "không cover. LLM tự tính dãy 2→5→8→11→14→17 rồi nhét vào reveal_sequence "
+            "sẽ là LLM sở hữu tiến trình canonical (vi phạm R0) — phải unsupported "
+            "trung thực, không render ảnh tĩnh giả."
+        ),
+    ),
 ]
