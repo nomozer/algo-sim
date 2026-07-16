@@ -45,7 +45,15 @@
 
 - [ ] **Step 1: Đối chiếu nguồn** — đọc `backend/app/simulation/dsl/manifest.py` (`PRIMITIVE_ROLES`, `MANIFEST`), `frontend/src/simulations/domains/generic/model.ts` (`RULE_TYPES`, `evalRule`, `initialBase`, `buildTimeline`), `backend/app/simulation/generic_engine.py`, `validate.ts`, `validator.py`. Mỗi hàng matrix phải trỏ symbol thật.
 
-- [ ] **Step 2: Viết matrix** với đúng các cột spec §9b (input/provider roles · output role · trường bắt buộc · input thiếu = invalid/unresolved/optional · dependency · bound · fail behavior · bản chất biểu diễn), phủ:
+- [ ] **Step 2: Viết matrix** với đúng các cột spec §9b (input/provider roles · output role · trường bắt buộc · input thiếu = invalid/unresolved/optional · dependency · bound · fail behavior · bản chất biểu diễn) **+ cột ENFORCEMENT DISPOSITION bắt buộc cho TỪNG hàng**, giá trị đúng một trong bốn:
+  - `EXISTING` — enforcement + test đã tồn tại (trỏ file:test cụ thể);
+  - `TASK-N` — được task N của plan này xử lý (trỏ đúng task + RED test);
+  - `STOP-UNRESOLVED` — lỗ ngữ nghĩa CHƯA có task nào xử lý;
+  - `OUT-OF-SCOPE` — kèm rationale vì sao chấp nhận được trong M13.
+
+  **Luật dừng:** tồn tại ≥ 1 hàng `STOP-UNRESOLVED` → DỪNG sau Task 1, amend plan (thêm task hoặc chuyển thành OUT-OF-SCOPE có rationale được duyệt) — KHÔNG ghi tài liệu rồi đi tiếp.
+
+  Phủ:
   - object: `switch` `lamp` `value_box` `node` `edge` `moving_entity` `label` `container` `group` `heading` `paragraph` `text`
   - rule: `boolean` · `weighted_sum` (comparison rule: **ghi VẮNG MẶT** — `RULE_TYPES` chỉ có 2)
   - interaction: `toggle` (chỉ base value 0/1, xem `index.ts:44-49`) · `drag`
@@ -76,9 +84,12 @@ git commit -m "M13: semantic matrix audit — hợp đồng ngữ nghĩa mọi p
     "value_providers": { "numeric": ["lamp", "switch", "value_box"], "logical": ["lamp", "switch"] },
     "rule_io": { "weighted_sum": { "input_role": "numeric", "output_role": "numeric" },
                   "boolean": { "input_role": "logical", "output_role": "logical" } },
+    "object_roles": { "switch": ["interactive", "logical", "numeric"], "lamp": ["logical", "numeric"],
+                       "value_box": ["numeric"], "node": ["relational"], "edge": ["relational"] },
     "role_coercions": []
   }
   ```
+  (`object_roles` = `PRIMITIVE_ROLES` của các object type, sinh tự động — ràng buộc 2: kiểm cả rule-output → target-object-role, không chỉ provider → input.)
   Task 3 dùng hàm backend; Task 5 import JSON — **không tầng nào viết tay allowlist**. `role_coercions` rỗng = DENY mặc định; matrix audit chứng minh được mới thêm (vd `{"from": "logical", "to": "numeric"}`).
 
 - [ ] **Step 1: Viết test fail**
@@ -133,11 +144,15 @@ RULE_IO_ROLES = {
 def dsl_semantic_contract() -> dict:
     """M13: hợp đồng ngữ nghĩa CANONICAL — nguồn duy nhất cho cả hai tầng.
     Frontend tiêu thụ bản sinh (dsl-contract.json); test sync-lock chống drift."""
+    object_types = set(MANIFEST["object_types"])
     return {
         "value_providers": {
             role: sorted(value_provider_types(role)) for role in ("numeric", "logical")
         },
         "rule_io": RULE_IO_ROLES,
+        "object_roles": {
+            t: sorted(PRIMITIVE_ROLES[t]) for t in sorted(object_types)
+        },
         "role_coercions": [],  # DENY mặc định — chỉ thêm khi matrix audit chứng minh
     }
 ```
@@ -287,6 +302,34 @@ def test_derived_target_dung_role_van_hop_le_chain_numeric():
     )
     config, err = validate_generic_config(spec)
     assert err is None and config is not None
+
+
+def test_rule_output_ghi_vao_target_sai_role_bi_tu_choi():
+    """Ràng buộc 2 (duyệt lần 3): weighted_sum (output numeric) KHÔNG được ghi
+    vào node (chỉ relational) — target phải CHẤP NHẬN output role của rule."""
+    spec = _spec(
+        objects=[
+            {"id": "v", "type": "value_box", "label": "V", "value": 3},
+            {"id": "n1", "type": "node", "label": "N1"},
+        ],
+        rules=[{"type": "weighted_sum", "target": "n1", "inputs": ["v"], "weights": [1]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert config is None
+    assert "không nhận được" in err
+
+
+def test_rule_output_ghi_vao_target_dung_role_hop_le():
+    """boolean (output logical) ghi vào lamp ({logical, numeric}) — hợp lệ."""
+    spec = _spec(
+        objects=[
+            {"id": "s", "type": "switch", "label": "S", "value": 0},
+            {"id": "den", "type": "lamp", "label": "Đèn"},
+        ],
+        rules=[{"type": "boolean", "op": "not", "target": "den", "inputs": ["s"]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
 ```
 
 - [ ] **Step 2: RED** — `python -m pytest tests/test_dsl_validator.py -v -k "m13 or edge_bi or dao or provider_thieu or boolean_input"` (chỉnh -k theo tên thật) → 3 test đầu FAIL (validator hiện chấp nhận), test đảo PASS sẵn (không được làm nó đỏ về sau).
@@ -300,11 +343,21 @@ def test_derived_target_dung_role_van_hop_le_chain_numeric():
     #   input_role của rule tiêu thụ (coercion DENY mặc định — role_coercions rỗng).
     # UNRESOLVED_DERIVED_SOURCE (hợp lệ ở tầng validate): input là target của rule
     #   khác VÀ output_role khớp — thứ tự khai báo tự do, runtime defer theo bound.
-    from app.simulation.dsl.manifest import RULE_IO_ROLES, dsl_semantic_contract, value_provider_types  # (đầu file)
+    from app.simulation.dsl.manifest import PRIMITIVE_ROLES, RULE_IO_ROLES, dsl_semantic_contract, value_provider_types  # (đầu file)
     obj_by_id = {o["id"]: o for o in objects}
     target_output_role = {r["target"]: RULE_IO_ROLES[r["type"]]["output_role"] for r in rules}
     coercions = {(c["from"], c["to"]) for c in dsl_semantic_contract()["role_coercions"]}
     for r in rules:
+        # Ràng buộc 2: target object phải CHẤP NHẬN output role của rule —
+        # weighted_sum (numeric) không được ghi vào node/edge (relational).
+        out_role = RULE_IO_ROLES[r["type"]]["output_role"]
+        target_obj = obj_by_id[r["target"]]
+        if out_role not in PRIMITIVE_ROLES.get(target_obj["type"], set()):
+            return None, (
+                f'Rule {r["type"]} sinh giá trị vai trò "{out_role}" nhưng target '
+                f'"{r["target"]}" ({target_obj["type"]}) không nhận được vai trò đó — '
+                f'dùng object type có vai trò {out_role} làm target (vd value_box/lamp).'
+            )
         need = RULE_IO_ROLES[r["type"]]["input_role"]
         providers = value_provider_types(need)
         for inp in r.get("inputs", []):
@@ -522,7 +575,19 @@ sau khối chu trình:
   const coercions = new Set(
     (dslContract.role_coercions as { from: string; to: string }[]).map((c) => `${c.from}->${c.to}`),
   );
+  const objectRoles = dslContract.object_roles as Record<string, string[]>;
   for (const r of rules) {
+    // Ràng buộc 2: target phải chấp nhận output role của rule (parity backend).
+    const outRole = ruleIo[r.type].output_role;
+    const targetObj = objById.get(r.target)!;
+    if (!objectRoles[targetObj.type]?.includes(outRole)) {
+      return {
+        ok: false,
+        error:
+          `Rule ${r.type} sinh giá trị vai trò "${outRole}" nhưng target "${r.target}" ` +
+          `(${targetObj.type}) không nhận được vai trò đó.`,
+      };
+    }
     const need = ruleIo[r.type].input_role;
     const providers: string[] = (dslContract.value_providers as Record<string, string[]>)[need];
     for (const inp of r.inputs) {
@@ -552,9 +617,9 @@ sau khối chu trình:
   }
 ```
 
-(`objects`/`rules` là biến sẵn có trong `validate.ts` — dùng đúng tên hiện hành trong file. Vite hỗ trợ import JSON sẵn, không cần config.) Thêm 2 test mirror của 2 test role-typing Task 3 (weighted_sum-target nuôi boolean → reject; chain numeric→numeric → ok).
+(`objects`/`rules` là biến sẵn có trong `validate.ts` — dùng đúng tên hiện hành trong file. Vite hỗ trợ import JSON sẵn, không cần config.) Thêm 4 test mirror của 4 test role-typing Task 3: weighted_sum-target nuôi boolean → reject · chain numeric→numeric → ok · weighted_sum ghi vào node → reject (`không nhận được`) · boolean ghi vào lamp → ok.
 
-- [ ] **Step 4: GREEN + parity backend↔frontend** — vitest block M13 PASS; toàn `npm test` PASS. Đối chiếu tay: 6 case Task 3 và Task 5 cùng phán quyết từng case (ghi vào commit message).
+- [ ] **Step 4: GREEN + parity backend↔frontend** — vitest block M13 PASS; toàn `npm test` PASS. Đối chiếu tay: 8 case Task 3 và Task 5 cùng phán quyết từng case (ghi vào commit message).
 
 - [ ] **Step 5: Commit** — `M13: validator frontend tiêu thụ dsl-contract.json — operand coherence + role-typing parity backend`
 
@@ -740,7 +805,7 @@ Chạy: PASS. **Kiểm chứng nó là lock thật**: tạm comment khối coher
 
 **Interfaces:**
 - Consumes: cơ chế gap sẵn có (`known_gap_roles()`, `build_representation_plan`, E7/E15) + field analyze MỚI.
-- Produces: `check_computation_ownership(analysis: dict, plan: dict) -> str | None` — trả reason tiếng Việt khi phải gap, `None` khi đi tiếp. **SERVER ra phán quyết cuối** trên hai kênh tín hiệu CÓ CẤU TRÚC độc lập: (i) known-gap roles trong role tags, (ii) enum `result_ownership`. Prompt chỉ là kênh trích xuất — LLM bỏ sót MỘT kênh vẫn còn kênh kia; bỏ sót CẢ HAI thì lớp validator (Task 3/5) vẫn chặn shape numeric-fakery. Giới hạn trung thực này ghi vào docs (Task 13): server không đọc đề tiếng Việt trực tiếp — làm vậy là keyword-patch trá hình.
+- Produces: `check_computation_ownership(analysis: dict, plan: dict) -> str | None` — trả reason tiếng Việt khi phải gap, `None` khi đi tiếp. **SERVER ra phán quyết cuối** trên hai tín hiệu CÓ CẤU TRÚC **BỔ SUNG** nhau (không claim "độc lập" — cả hai cùng ra từ MỘT lần gọi analyze, có thể fail tương quan): (i) known-gap roles trong role tags, (ii) enum `result_ownership` **bắt buộc, fail-closed**. LLM bỏ sót MỘT tín hiệu vẫn còn tín hiệu kia; bỏ sót CẢ HAI thì lớp validator (Task 3/5) vẫn chặn shape numeric-fakery. `result_ownership` thiếu/ngoài enum → **reject/retry, KHÔNG default** sang bất kỳ giá trị nào. Giới hạn trung thực ghi vào docs (Task 13): server không đọc đề tiếng Việt trực tiếp — làm vậy là keyword-patch trá hình.
 
 - [ ] **Step 0a: Schema + gate tất định.** Schema analyze (pipeline.py ~dòng 60-70) thêm:
 
@@ -751,7 +816,7 @@ Chạy: PASS. **Kiểm chứng nó là lock thật**: tạm comment khối coher
         },
 ```
 
-(vào `required` của schema nếu schema có danh sách required — kiểm trong file). `backend/app/simulation/computation_gate.py`:
+**BẮT BUỘC**: thêm `"result_ownership"` vào danh sách `required` của schema analyze (kiểm tên danh sách trong file). Fail-closed hai lớp: (1) structured output + required ép Gemini phải phát giá trị trong enum; (2) gate phòng thủ — giá trị thiếu/ngoài enum vẫn lọt tới server → **reject với reason trung thực, KHÔNG default** (test bên dưới). `backend/app/simulation/computation_gate.py`:
 
 ```python
 """M13 gate B lớp (a): computation-ownership — SERVER quyết, tất định, sau classify,
@@ -768,11 +833,19 @@ def check_computation_ownership(analysis: dict, plan: dict) -> str | None:
             f"Bài cần cơ chế chưa có engine tất định sở hữu ({', '.join(gaps)}) — "
             "hệ từ chối trung thực thay vì dựng cảnh xấp xỉ."
         )
-    if analysis.get("result_ownership") == "algorithmic":
+    ownership = analysis.get("result_ownership")
+    if ownership not in ("provided", "rule_derivable"):
+        # Fail-closed (ràng buộc duyệt lần 3): "algorithmic" → gap có chủ đích;
+        # thiếu/ngoài enum → CŨNG từ chối, không default sang giá trị nào.
+        if ownership == "algorithmic":
+            return (
+                "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không "
+                "engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để "
+                "AI tự giải rồi dựng cảnh minh hoạ đáp án."
+            )
         return (
-            "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không "
-            "engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để "
-            "AI tự giải rồi dựng cảnh minh hoạ đáp án."
+            "Phân tích không xác định được nguồn kết quả của bài (result_ownership "
+            f"= {ownership!r}) — hệ từ chối an toàn thay vì đoán."
         )
     return None
 ```
@@ -803,7 +876,7 @@ def check_computation_ownership(analysis: dict, plan: dict) -> str | None:
 
 ```python
 # backend/tests/test_m13_routing.py
-"""M13 §4: SERVER quyết accept/gap — tất định, KHÔNG mock LLM thật, hai kênh độc lập."""
+"""M13 §4: SERVER quyết accept/gap — tất định, KHÔNG mock LLM thật, hai tín hiệu bổ sung."""
 from app.simulation.computation_gate import check_computation_ownership
 from app.simulation.representation import build_representation_plan
 
@@ -846,11 +919,24 @@ def test_rule_derivable_khong_bi_gap():
     analysis = _analysis(result_ownership="rule_derivable", entity_roles=["numeric", "interactive"])
     plan = build_representation_plan(analysis)
     assert check_computation_ownership(analysis, plan) is None
+
+
+def test_result_ownership_thieu_hoac_la_bi_tu_choi_an_toan():
+    """Ràng buộc duyệt lần 3: fail-closed — thiếu/ngoài enum KHÔNG default."""
+    for bad in (None, "", "unknown", "maybe_algorithmic"):
+        analysis = _analysis()
+        if bad is None:
+            analysis.pop("result_ownership")
+        else:
+            analysis["result_ownership"] = bad
+        plan = build_representation_plan(analysis)
+        reason = check_computation_ownership(analysis, plan)
+        assert reason is not None and "từ chối an toàn" in reason
 ```
 
 Cache: nếu chưa có test version-mismatch, thêm vào file test cache sẵn có: row `policy_version="9"` → `_cache_lookup` trả None (envelope luật cũ không bao giờ được trả lại).
 
-- [ ] **Step 5: Restart-note + toàn suite** — ghi vào commit message: `load_skill` cache per process → backend phải restart sau khi sửa .md. `python -m pytest` xanh.
+- [ ] **Step 5: Restart-note + cập nhật fixture CHỦ ĐÍCH + toàn suite** — (a) `load_skill` cache per process → backend phải restart sau khi sửa .md (ghi vào commit message). (b) **Hệ quả fail-closed đã lường trước**: mọi fixture analysis trong test sẵn có (test_pipeline, test_evaluation... — mock analyze output) CHƯA có `result_ownership` → gate sẽ từ chối trên đường generic. Cập nhật các fixture đó với giá trị ĐÚNG NGỮ NGHĨA từng case (`provided` cho cảnh dựng/hiển thị, `rule_derivable` cho logic/nhị phân) — đây là cập nhật hợp đồng có chủ đích, KHÔNG phải nới gate cho test xanh; fixture nào KHÓ gán trung thực → dấu hiệu case đó cần xem lại, dừng hỏi thay vì đoán. (c) `python -m pytest` xanh.
 
 - [ ] **Step 6: Commit** — `M13: computation_gate server-side (2 kênh tín hiệu) + result_ownership + taxonomy arbitrary_algorithm mở rộng + classify 4c + CACHE_VERSION 10`
 
