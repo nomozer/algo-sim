@@ -44,6 +44,20 @@ def test_contract_chua_moi_type_tu_manifest():
     assert '"1.0"' in text
 
 
+def test_contract_huong_dan_chuoi_rule_m11():
+    """M11 (đo live): thiếu hướng dẫn chained-dependency → LLM ép phẳng điều
+    kiện ghép thành 1 rule (sai ngữ nghĩa) hoặc sinh spec không hợp lệ. Contract
+    phải nêu: target làm input rule khác + object trung gian + không gắn value
+    cho object dẫn xuất/trang trí. Ví dụ trong contract phải TRỪU TƯỢNG (không
+    trùng câu đề đánh giá nào — chống overfit prompt vào benchmark)."""
+    text = manifest_contract_text()
+    assert "trung gian" in text
+    assert "input của rule khác" in text or "làm input" in text
+    assert "MỘT rule sở hữu" in text
+    # ví dụ trừu tượng dùng id trung tính, không phải A/B/C của case đánh giá
+    assert "kq_phu" in text
+
+
 def test_reject_dsl_version_khong_ho_tro():
     spec = {"dsl_version": "2.0", "title": "x", "objects": [{"id": "a", "type": "switch", "value": 0}]}
     config, err = validate_generic_config(spec)
