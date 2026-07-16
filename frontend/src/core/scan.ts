@@ -13,7 +13,7 @@
  * hằng số đầu vào — nó KHÔNG sở hữu thuật toán, chỉ chọn cấu hình trong không
  * gian đã đóng. Đây KHÔNG phải ngôn ngữ lập trình.
  */
-import { TraceBuilder, type WhatIfSwap } from "./trace-builder";
+import { fmt, TraceBuilder, type WhatIfSwap } from "./trace-builder";
 import type { ConditionOp, Trace, TraceEvent } from "./types";
 
 export const SCAN_VERSION = "1.0";
@@ -156,6 +156,51 @@ export function validateScanSpec(raw: unknown): ScanValidation {
   return { ok: true, spec: raw as unknown as ScanSpec };
 }
 
+/** Ký hiệu phép so sánh cho mã giả (khớp giọng PSEUDOCODE kiểu SGK). */
+const OP_SYMBOL: Record<ConditionOp, string> = {
+  ">": ">",
+  ">=": "≥",
+  "<": "<",
+  "<=": "≤",
+  "==": "=",
+  "!=": "≠",
+};
+
+/**
+ * Mã giả DẪN XUẤT TỪ SPEC — skeleton 5 dòng cố định (seed / lặp / so sánh /
+ * hành-động-khi-trúng / trả về), nội dung từng dòng điền theo enum của spec.
+ * runScan gắn Step.line theo CÙNG layout này (một nguồn, chống highlight trôi):
+ *   1 = seed · 3 = so sánh · 4 = cập nhật / trả-về-khi-trúng · 5 = kết thúc.
+ * Đây là TEMPLATE ĐÓNG trên không gian enum đã validate — không phải renderer
+ * chương trình tổng quát.
+ */
+export function scanPseudocode(spec: ScanSpec): string[] {
+  const { seed, compare, update, stop } = spec;
+  const v = seed.varName;
+  const ivar = seed.from === "first_element" ? seed.trackIndexVar : undefined;
+
+  const seedLine =
+    seed.from === "first_element"
+      ? `${v} ← a[1]${ivar ? `; ${ivar} ← 1` : ""}`
+      : `${v} ← ${fmt(seed.value)}`;
+  const start = seed.from === "first_element" ? 2 : 1;
+  const loopLine = `với mỗi i từ ${start} đến n:`;
+  const rhs = compare.kind === "to_accumulator" ? v : fmt(compare.value);
+  const compareLine = `   nếu a[i] ${OP_SYMBOL[compare.op]} ${rhs} thì`;
+
+  let hitLine: string;
+  if (update.kind === "replace_with_current") hitLine = `      ${v} ← a[i]${ivar ? `; ${ivar} ← i` : ""}`;
+  else if (update.kind === "add_current") hitLine = `      ${v} ← ${v} + a[i]`;
+  else if (update.kind === "increment") hitLine = `      ${v} ← ${v} + 1`;
+  else hitLine = stop === "first_match" ? "      trả về vị trí i" : "      đánh dấu a[i]";
+  if (stop === "first_match" && update.kind !== "none") hitLine += "; trả về vị trí i";
+
+  const doneLine =
+    stop === "first_match" ? "trả về “không tìm thấy”" : `trả về ${v}${ivar ? ` và vị trí ${ivar}` : ""}`;
+
+  return [seedLine, loopLine, compareLine, hitLine, doneLine];
+}
+
 function relation(x: number, y: number): "<" | ">" | "==" {
   return x > y ? ">" : x < y ? "<" : "==";
 }
@@ -190,6 +235,7 @@ export function runScan(spec: ScanSpec, whatIf?: WhatIfSwap): Trace {
   const { seed, compare, update, marking, stop } = spec;
 
   // ── Seed accumulator + chỉ số bắt đầu ──
+  // Line theo CÙNG layout scanPseudocode: 1=seed · 3=so sánh · 4=cập nhật/trả-về-khi-trúng · 5=kết thúc.
   let acc: number;
   let accIndex = 0;
   let start: number;
@@ -199,12 +245,17 @@ export function runScan(spec: ScanSpec, whatIf?: WhatIfSwap): Trace {
     b.setVar(seed.varName, acc);
     if (seed.trackIndexVar) b.setVar(seed.trackIndexVar, 0);
     if (marking === "running_winner") b.mark(0, "considering");
-    b.step([{ type: "assign_var", name: seed.varName, value: acc }], `Khởi tạo ${seed.varName} = ${acc}.`, false);
+    b.step(
+      [{ type: "assign_var", name: seed.varName, value: acc }],
+      `Bắt đầu: tạm coi phần tử đầu tiên là ${seed.varName} = ${fmt(acc)}.`,
+      false,
+      1,
+    );
     start = 1;
   } else {
     acc = seed.value;
     b.setVar(seed.varName, acc);
-    b.step([{ type: "assign_var", name: seed.varName, value: acc }], `Khởi tạo ${seed.varName} = ${acc}.`, false);
+    b.step([{ type: "assign_var", name: seed.varName, value: acc }], `Khởi tạo ${seed.varName} = ${fmt(acc)}.`, false, 1);
     start = 0;
   }
 
@@ -214,10 +265,21 @@ export function runScan(spec: ScanSpec, whatIf?: WhatIfSwap): Trace {
     let hit: boolean;
     if (compare.kind === "to_accumulator") {
       hit = opHolds(cur, acc, compare.op);
-      b.step([{ type: "compare", i, j: accIndex, result: relation(cur, acc) }], "So sánh phần tử với giá trị đang giữ.", true);
+      // M9-S1: bước quyết định là CÂU HỎI — không lộ đáp án sớm.
+      b.step(
+        [{ type: "compare", i, j: accIndex, result: relation(cur, acc) }],
+        `So sánh a[${i + 1}] = ${fmt(cur)} với ${seed.varName} = ${fmt(acc)}: ${seed.varName} có được cập nhật không?`,
+        true,
+        3,
+      );
     } else {
       hit = opHolds(cur, compare.value, compare.op);
-      b.step([{ type: "compare_value", i, value: compare.value, result: hit ? "match" : "no_match" }], "Xét điều kiện của phần tử.", true);
+      b.step(
+        [{ type: "compare_value", i, value: compare.value, result: hit ? "match" : "no_match" }],
+        `Xét a[${i + 1}] = ${fmt(cur)}: có thỏa điều kiện "${OP_SYMBOL[compare.op]} ${fmt(compare.value)}" không?`,
+        true,
+        3,
+      );
     }
 
     if (!hit) {
@@ -247,11 +309,11 @@ export function runScan(spec: ScanSpec, whatIf?: WhatIfSwap): Trace {
         events.push({ type: "assign_var", name: seed.trackIndexVar, value: i });
       }
     }
-    if (events.length) b.step(events, `Cập nhật ${seed.varName} = ${acc}.`, false);
+    if (events.length) b.step(events, `Cập nhật: ${seed.varName} = ${fmt(acc)}.`, false, 4);
 
     if (stop === "first_match") {
-      const result = `Tìm thấy tại vị trí thứ ${i + 1}.`;
-      b.step([{ type: "done", result }], result, false);
+      const result = `Tìm thấy tại vị trí thứ ${i + 1}. Số lần so sánh: ${i + 1}.`;
+      b.step([{ type: "done", result }], result, false, 4);
       return b.build();
     }
   }
@@ -261,7 +323,12 @@ export function runScan(spec: ScanSpec, whatIf?: WhatIfSwap): Trace {
     b.clearMarks();
     b.mark(accIndex, "found");
   }
-  const result = `Duyệt hết dãy. Kết quả: ${acc}.`;
-  b.step([{ type: "done", result }], result, false);
+  const result =
+    stop === "first_match"
+      ? `Duyệt hết dãy, không phần tử nào thỏa điều kiện. Số lần so sánh: ${n - start}.`
+      : marking === "running_winner"
+        ? `Duyệt hết dãy. ${seed.varName} = ${fmt(acc)}, tại vị trí thứ ${accIndex + 1}.`
+        : `Duyệt hết dãy. ${seed.varName} = ${fmt(acc)}.`;
+  b.step([{ type: "done", result }], result, false, 5);
   return b.build();
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { runScan, validateScanSpec, type ScanSpec } from "./scan";
+import { runScan, scanPseudocode, validateScanSpec, type ScanSpec } from "./scan";
 import { runAlgorithm } from "./algorithms";
 import type { AlgorithmId, AnalysisOk, Condition, Mark, Trace } from "./types";
 
@@ -238,5 +238,99 @@ describe("M12 tất định + biên non-Turing", () => {
   it("số bước bị chặn: ≤ 2·n + 2 (một compare + tối đa một update mỗi phần tử)", () => {
     const t = runScan(spec);
     expect(t.steps.length).toBeLessThanOrEqual(2 * spec.array.length + 2);
+  });
+});
+
+describe("M12b pseudocode dẫn xuất từ ScanSpec + line/narration", () => {
+  const FIND_MAX: ScanSpec = {
+    scan_version: "1.0",
+    array: [3, 7, 2, 9, 4],
+    seed: { from: "first_element", varName: "max", trackIndexVar: "vt" },
+    compare: { kind: "to_accumulator", op: ">" },
+    update: { kind: "replace_with_current" },
+    marking: "running_winner",
+    stop: "end_of_array",
+  };
+  const SEARCH: ScanSpec = {
+    scan_version: "1.0",
+    array: [4, 8, 15, 16],
+    seed: { from: "constant", value: 15, varName: "can_tim" },
+    compare: { kind: "to_constant", op: "==", value: 15 },
+    update: { kind: "none" },
+    marking: "match_highlight",
+    stop: "first_match",
+  };
+
+  it("skeleton 5 dòng kiểu SGK, phản ánh đúng biến thể spec", () => {
+    const linesMax = scanPseudocode(FIND_MAX);
+    expect(linesMax).toHaveLength(5);
+    expect(linesMax[0]).toContain("max ← a[1]");
+    expect(linesMax[1]).toContain("từ 2 đến n"); // seed first_element → quét từ 2
+    expect(linesMax[2]).toContain("a[i] > max");
+    expect(linesMax[3]).toContain("max ← a[i]");
+
+    const linesSearch = scanPseudocode(SEARCH);
+    expect(linesSearch[1]).toContain("từ 1 đến n"); // seed constant → quét từ 1
+    expect(linesSearch[2]).toContain("a[i] = 15");
+    expect(linesSearch[3]).toContain("trả về vị trí i"); // first_match + none
+    expect(linesSearch[4]).toContain("không tìm thấy");
+  });
+
+  it("mọi step.line của runScan trỏ vào dòng tồn tại — vét cạn mọi combo hợp lệ", () => {
+    const seeds = [
+      { from: "first_element", varName: "v", trackIndexVar: "vt" } as const,
+      { from: "constant", value: 0, varName: "v" } as const,
+    ];
+    const compares = [
+      { kind: "to_accumulator", op: ">" } as const,
+      { kind: "to_constant", op: ">=", value: 5 } as const,
+    ];
+    const updates = ["replace_with_current", "add_current", "increment", "none"] as const;
+    const markings = ["running_winner", "match_highlight"] as const;
+    const stops = ["end_of_array", "first_match"] as const;
+    let checked = 0;
+    for (const seed of seeds)
+      for (const compare of compares)
+        for (const uk of updates)
+          for (const marking of markings)
+            for (const stop of stops) {
+              const raw = {
+                scan_version: "1.0",
+                array: [3, 7, 2, 9],
+                seed,
+                compare,
+                update: { kind: uk },
+                marking,
+                stop,
+              };
+              const v = validateScanSpec(raw);
+              if (!v.ok) continue; // combo bị coherence cấm — bỏ qua
+              checked++;
+              const lines = scanPseudocode(v.spec);
+              const t = runScan(v.spec);
+              for (const s of t.steps) {
+                expect(s.line, `combo ${JSON.stringify(raw)}`).toBeDefined();
+                expect(s.line!).toBeGreaterThanOrEqual(1);
+                expect(s.line!).toBeLessThanOrEqual(lines.length);
+              }
+            }
+    expect(checked).toBeGreaterThanOrEqual(8); // thật sự vét được nhiều combo
+  });
+
+  it("narration bước so sánh là CÂU HỎI (M9-S1 — không lộ đáp án sớm)", () => {
+    for (const spec of [FIND_MAX, SEARCH]) {
+      const t = runScan(spec);
+      const compareSteps = t.steps.filter((s) =>
+        s.events.some((e) => e.type === "compare" || e.type === "compare_value"),
+      );
+      expect(compareSteps.length).toBeGreaterThan(0);
+      for (const s of compareSteps) expect(s.narration).toMatch(/\?$/);
+    }
+  });
+
+  it("narration chứa số liệu thật của spec (không placeholder chung chung)", () => {
+    const t = runScan(SEARCH);
+    expect(t.steps.some((s) => s.narration.includes("15"))).toBe(true);
+    expect(t.steps.every((s) => !s.narration.includes("giá trị đang giữ"))).toBe(true);
   });
 });
