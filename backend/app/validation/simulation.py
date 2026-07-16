@@ -279,6 +279,23 @@ _ENCAP_PAYLOAD_MAX = 80
 _ENCAP_PROTOCOL_MAX = 24
 
 
+def validate_scan_config(raw) -> tuple[dict | None, str | None]:
+    """algorithm.scan (M12) — ScanSpec khai báo cho scan-interpreter.
+
+    LLM chỉ CẤU HÌNH việc quét (enum đóng: seed/compare/update/marking/stop
+    + dãy số của đề); interpreter tất định (frontend core/scan.ts, mirror
+    scan_engine.py) sở hữu vòng lặp/thứ tự/điểm dừng/kết quả (R0).
+    """
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+    from app.simulation.scan_engine import validate_scan_spec
+
+    return validate_scan_spec(raw)
+
+
 def validate_encapsulation_config(raw) -> tuple[dict | None, str | None]:
     """network.protocol_encapsulation (M10-AI-ROUTE) — bề mặt config v1 NHỎ.
 

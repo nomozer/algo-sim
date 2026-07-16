@@ -20,6 +20,13 @@ from app.simulation.dsl.manifest import (
     process_types,
     rule_types,
 )
+from app.simulation.scan_engine import (
+    CONDITION_OPS as SCAN_OPS,
+    MARKINGS as SCAN_MARKINGS,
+    SCAN_VERSION,
+    STOPS as SCAN_STOPS,
+    UPDATE_KINDS as SCAN_UPDATES,
+)
 from app.validation.simulation import (
     ALGORITHM_IDS,
     ALGORITHM_NAMES_VI,
@@ -28,6 +35,7 @@ from app.validation.simulation import (
     validate_encapsulation_config,
     validate_logic_config,
     validate_network_config,
+    validate_scan_config,
 )
 
 # ── Domain algorithm ──────────────────────────────────────────
@@ -250,6 +258,79 @@ CATALOG["network.packet_routing"] = SimSpec(
 # Engine tất định 9 bước (frontend encap-model.ts) sở hữu TOÀN BỘ mô hình:
 # 4 tầng TCP/IP cố định, PDU, delta thêm/gỡ, timeline, kết quả. LLM chỉ điền
 # nhãn ngữ cảnh — bề mặt v1 nhỏ đúng bằng validateEncapConfig phía frontend.
+
+# ── algorithm.scan (M12) — quét dãy MỘT LƯỢT, cấu hình khai báo ──
+# Enum DẪN XUẤT từ scan_engine (một nguồn — anti-pattern #1: enum viết tay từng
+# làm Gemini không thể phát giá trị mới). Interpreter frontend (core/scan.ts)
+# sở hữu vòng lặp/điểm dừng/kết quả; LLM chỉ điền cấu hình + dãy số của đề.
+
+_SCAN_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "scan_version": {"type": "STRING", "enum": [SCAN_VERSION]},
+        "array": {"type": "ARRAY", "items": {"type": "NUMBER"}},
+        "labels": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
+        "seed": {
+            "type": "OBJECT",
+            "properties": {
+                "from": {"type": "STRING", "enum": ["first_element", "constant"]},
+                "varName": {"type": "STRING"},
+                "value": {"type": "NUMBER", "nullable": True},
+                "trackIndexVar": {"type": "STRING", "nullable": True},
+            },
+            "required": ["from", "varName"],
+        },
+        "compare": {
+            "type": "OBJECT",
+            "properties": {
+                "kind": {"type": "STRING", "enum": ["to_accumulator", "to_constant"]},
+                "op": {"type": "STRING", "enum": list(SCAN_OPS)},
+                "value": {"type": "NUMBER", "nullable": True},
+            },
+            "required": ["kind", "op"],
+        },
+        "update": {
+            "type": "OBJECT",
+            "properties": {"kind": {"type": "STRING", "enum": list(SCAN_UPDATES)}},
+            "required": ["kind"],
+        },
+        "marking": {"type": "STRING", "enum": list(SCAN_MARKINGS)},
+        "stop": {"type": "STRING", "enum": list(SCAN_STOPS)},
+    },
+    "required": ["scan_version", "array", "seed", "compare", "update", "marking", "stop"],
+}
+
+_SCAN_CONTRACT = f"""HỢP ĐỒNG CONFIG (algorithm.scan — quét dãy MỘT LƯỢT, scan_version "{SCAN_VERSION}"):
+Bạn chỉ CẤU HÌNH việc quét; interpreter tất định sở hữu vòng lặp, thứ tự duyệt, điểm dừng và kết quả.
+- array: dãy số CỦA ĐỀ, đúng thứ tự (không bịa). labels: nhãn từng phần tử nếu đề nêu (cùng độ dài).
+- seed (biến tích lũy): {{"from": "first_element", "varName": ..., "trackIndexVar": ...}} khi giá trị khởi đầu là phần tử đầu (kiểu tìm lớn/nhỏ nhất); {{"from": "constant", "value": c, "varName": ...}} khi khởi từ hằng (đếm/tổng: 0; so ngưỡng: giá trị ngưỡng).
+- compare (mỗi phần tử được so thế nào): to_accumulator (so với biến đang giữ, vd a[i] > max) hoặc to_constant (so với hằng của đề). op thuộc {"/".join(SCAN_OPS)}.
+- update khi so sánh TRÚNG: replace_with_current (giữ phần tử mới) / add_current (cộng dồn) / increment (đếm) / none (không đổi biến — kiểu tìm kiếm).
+- marking: running_winner (theo dõi phần tử "đang dẫn đầu") / match_highlight (tô phần tử thỏa).
+- stop: end_of_array (duyệt hết dãy) / first_match (DỪNG NGAY lần trúng đầu tiên — đề kiểu "tìm phần tử ĐẦU TIÊN ...").
+- varName ngắn, tiếng Việt không dấu, đặt theo đề (nguong, dem, tong, max...).
+- Ràng buộc: marking running_winner và compare to_accumulator đều đòi update replace_with_current.
+- TUYỆT ĐỐI KHÔNG sinh steps/timeline/kết quả/vị trí tìm thấy — interpreter tự tính khi chạy.
+Ví dụ (đề "tìm số ĐẦU TIÊN nhỏ hơn 50 trong dãy"): seed {{"from": "constant", "value": 50, "varName": "nguong"}}; compare {{"kind": "to_constant", "op": "<", "value": 50}}; update {{"kind": "none"}}; marking "match_highlight"; stop "first_match"."""
+
+CATALOG["algorithm.scan"] = SimSpec(
+    simulation_id="algorithm.scan",
+    domain="algorithm",
+    visual_mode="2d",
+    description=(
+        "quét dãy số MỘT LƯỢT theo cấu hình khai báo — CHỈ cho biến thể single-pass mà "
+        "các bài chuyên biệt không khớp, điển hình: tìm phần tử ĐẦU TIÊN thỏa BẤT đẳng thức "
+        "(lớn hơn/nhỏ hơn ngưỡng — tìm kiếm tuần tự chỉ so BẰNG) hoặc đánh dấu-rồi-dừng-sớm. "
+        "KHÔNG dùng khi đề khớp bài chuyên biệt sẵn có (tìm max/min, đếm/tổng theo điều kiện "
+        "duyệt hết dãy, tìm giá trị bằng x, sắp xếp); KHÔNG dùng cho vòng lặp trên biến tự do "
+        "không có dãy số (unsupported)"
+    ),
+    config_schema=_SCAN_SCHEMA,
+    contract=_SCAN_CONTRACT,
+    validate=validate_scan_config,
+    make_title=lambda config, analysis: "Quét dãy một lượt",
+)
+
 
 _ENCAP_SCHEMA = {
     "type": "OBJECT",

@@ -70,7 +70,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 # "7": M10-AI-ROUTE — network.protocol_encapsulation vào CATALOG (menu classify
 #      đổi): đề đóng gói qua tầng TỪNG bị unsupported/định tuyến nhầm nay có
 #      module chuyên biệt → invalidate cache cũ.
-CACHE_VERSION = "8"
+CACHE_VERSION = "9"
 
 
 class InputPayload(BaseModel):

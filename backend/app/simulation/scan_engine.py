@@ -14,10 +14,10 @@ from __future__ import annotations
 
 SCAN_VERSION = "1.0"
 
-_CONDITION_OPS = (">", ">=", "<", "<=", "==", "!=")
-_UPDATE_KINDS = ("replace_with_current", "add_current", "increment", "none")
-_MARKINGS = ("running_winner", "match_highlight")
-_STOPS = ("end_of_array", "first_match")
+CONDITION_OPS = (">", ">=", "<", "<=", "==", "!=")
+UPDATE_KINDS = ("replace_with_current", "add_current", "increment", "none")
+MARKINGS = ("running_winner", "match_highlight")
+STOPS = ("end_of_array", "first_match")
 
 _TOP_KEYS = ("scan_version", "array", "labels", "seed", "compare", "update", "marking", "stop")
 
@@ -79,7 +79,7 @@ def validate_scan_spec(raw) -> tuple[dict | None, str | None]:
     compare = raw.get("compare")
     if not isinstance(compare, dict):
         return None, "compare phải là object."
-    if compare.get("op") not in _CONDITION_OPS:
+    if compare.get("op") not in CONDITION_OPS:
         return None, f"compare.op lạ: {compare.get('op')!r}."
     if compare.get("kind") == "to_accumulator":
         bad = _unknown_key(compare, ("kind", "op"))
@@ -97,11 +97,11 @@ def validate_scan_spec(raw) -> tuple[dict | None, str | None]:
     update = raw.get("update")
     if not isinstance(update, dict) or _unknown_key(update, ("kind",)):
         return None, "update phải là object chỉ có 'kind'."
-    if update.get("kind") not in _UPDATE_KINDS:
+    if update.get("kind") not in UPDATE_KINDS:
         return None, f"update.kind lạ: {update.get('kind')!r}."
-    if raw.get("marking") not in _MARKINGS:
+    if raw.get("marking") not in MARKINGS:
         return None, f"marking lạ: {raw.get('marking')!r}."
-    if raw.get("stop") not in _STOPS:
+    if raw.get("stop") not in STOPS:
         return None, f"stop lạ: {raw.get('stop')!r}."
 
     # Coherence — mirror TS: giữ họ = quét trên GIÁ TRỊ phần tử
