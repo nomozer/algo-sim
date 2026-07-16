@@ -342,6 +342,18 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
                 return None, 'weighted_sum cần "weights" cùng độ dài với "inputs".'
             rule["weights"] = list(weights)
         rules.append(rule)
+    # M11: mỗi giá trị dẫn xuất đúng MỘT rule sở hữu — hai rule cùng target thì
+    # rule sau thắng mỗi vòng quét điểm bất động → kết quả phụ thuộc thứ tự khai
+    # báo trong mảng (ngữ nghĩa nhập nhằng), phải chặn trước khi engine chạy.
+    seen_targets: set[str] = set()
+    for r in rules:
+        if r["target"] in seen_targets:
+            return None, (
+                f'Hai rule cùng ghi vào target "{r["target"]}" — mỗi giá trị dẫn xuất '
+                "chỉ được đúng MỘT rule sở hữu. Hãy gộp điều kiện vào một rule hoặc "
+                "dùng thêm một object trung gian làm target riêng."
+            )
+        seen_targets.add(r["target"])
     if _detect_cycle(rules):
         return None, "Rule có phụ thuộc vòng (circular dependency)."
 

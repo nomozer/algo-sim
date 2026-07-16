@@ -122,6 +122,48 @@ describe("validateConfig từ chối spec sai (§5)", () => {
     });
     expect(r.ok).toBe(false);
   });
+  // M11: rule lồng (target làm input rule khác) hợp lệ; trùng target thì không —
+  // rule sau thắng mỗi vòng quét điểm bất động → phụ thuộc thứ tự khai báo.
+  it("rule lồng qua trung gian hợp lệ (M11)", () => {
+    const r = mod.validateConfig({
+      dsl_version: "1.0",
+      title: "Đèn A và (B hoặc C)",
+      objects: [
+        { id: "a", type: "switch", value: 0 },
+        { id: "b", type: "switch", value: 0 },
+        { id: "c", type: "switch", value: 0 },
+        { id: "t", type: "lamp", label: "B hoặc C" },
+        { id: "y", type: "lamp" },
+      ],
+      rules: [
+        { type: "boolean", op: "or", inputs: ["b", "c"], target: "t" },
+        { type: "boolean", op: "and", inputs: ["a", "t"], target: "y" },
+      ],
+      interactions: [
+        { type: "toggle", target: "a" },
+        { type: "toggle", target: "b" },
+        { type: "toggle", target: "c" },
+      ],
+    });
+    expect(r.ok).toBe(true);
+  });
+  it("hai rule cùng ghi một target bị reject (M11)", () => {
+    const r = mod.validateConfig({
+      dsl_version: "1.0",
+      title: "x",
+      objects: [
+        { id: "a", type: "switch", value: 0 },
+        { id: "b", type: "switch", value: 0 },
+        { id: "y", type: "lamp" },
+      ],
+      rules: [
+        { type: "boolean", op: "and", inputs: ["a", "b"], target: "y" },
+        { type: "boolean", op: "or", inputs: ["a", "b"], target: "y" },
+      ],
+    });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toContain("y");
+  });
   it("vượt giới hạn số object", () => {
     const objects = Array.from({ length: 21 }, (_, i) => ({ id: `o${i}`, type: "label" }));
     expect(mod.validateConfig({ title: "x", objects }).ok).toBe(false);

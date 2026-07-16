@@ -96,6 +96,54 @@ def test_chu_trinh_rule_bi_reject():
     assert "vòng" in err
 
 
+# M11: rule lồng qua giá trị trung gian là pattern HỢP LỆ (cycle-detector đã
+# lường trước); hai rule cùng ghi MỘT target thì KHÔNG — với đánh giá điểm bất
+# động, rule đứng sau trong mảng thắng mỗi vòng quét → ngữ nghĩa phụ thuộc thứ
+# tự khai báo. Mỗi giá trị dẫn xuất phải có đúng một rule sở hữu.
+
+NESTED_SPEC = {
+    "dsl_version": "1.0",
+    "title": "Đèn A và (B hoặc C)",
+    "objects": [
+        {"id": "a", "type": "switch", "value": 0},
+        {"id": "b", "type": "switch", "value": 0},
+        {"id": "c", "type": "switch", "value": 0},
+        {"id": "t", "type": "lamp", "label": "B hoặc C"},
+        {"id": "y", "type": "lamp", "label": "Đèn"},
+    ],
+    "rules": [
+        {"type": "boolean", "op": "or", "inputs": ["b", "c"], "target": "t"},
+        {"type": "boolean", "op": "and", "inputs": ["a", "t"], "target": "y"},
+    ],
+    "interactions": [
+        {"type": "toggle", "target": "a"},
+        {"type": "toggle", "target": "b"},
+        {"type": "toggle", "target": "c"},
+    ],
+    "processes": [],
+}
+
+
+def test_rule_long_qua_trung_gian_hop_le():
+    """Target của rule này làm input rule khác (DAG) phải được chấp nhận."""
+    cfg, err = validate_generic_config(NESTED_SPEC)
+    assert err is None
+    assert len(cfg["rules"]) == 2
+
+
+def test_hai_rule_cung_target_bi_reject():
+    bad = {
+        **NESTED_SPEC,
+        "rules": [
+            {"type": "boolean", "op": "and", "inputs": ["a", "b"], "target": "y"},
+            {"type": "boolean", "op": "or", "inputs": ["b", "c"], "target": "y"},
+        ],
+    }
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "y" in err and "rule" in err.lower()
+
+
 def test_qua_gioi_han_object_bi_reject():
     bad = {"title": "x", "objects": [{"id": f"o{i}", "type": "label"} for i in range(21)]}
     assert validate_generic_config(bad)[0] is None

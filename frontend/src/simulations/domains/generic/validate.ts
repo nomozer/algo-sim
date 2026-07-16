@@ -306,6 +306,18 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
     }
     rules.push(rule);
   }
+  // M11: mỗi giá trị dẫn xuất đúng MỘT rule sở hữu — hai rule cùng target thì
+  // rule sau thắng mỗi vòng quét điểm bất động → phụ thuộc thứ tự khai báo.
+  const seenTargets = new Set<string>();
+  for (const r of rules) {
+    if (seenTargets.has(r.target)) {
+      return {
+        ok: false,
+        error: `Hai rule cùng ghi vào target "${r.target}" — mỗi giá trị dẫn xuất chỉ được đúng MỘT rule sở hữu. Hãy gộp điều kiện vào một rule hoặc dùng thêm một object trung gian làm target riêng.`,
+      };
+    }
+    seenTargets.add(r.target);
+  }
   // Cấm chu trình phụ thuộc rule (target ← input là target khác)
   const cycleErr = detectCycle(rules);
   if (cycleErr) return { ok: false, error: cycleErr };
