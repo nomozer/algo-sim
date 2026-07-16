@@ -8,12 +8,16 @@ import { PSEUDOCODE } from "../core/pseudocode";
  */
 export function PseudocodeView({
   algorithmId,
+  lines: linesProp,
   currentLine,
 }: {
-  algorithmId: AlgorithmId;
+  /** Tra bảng PSEUDOCODE tĩnh theo thuật toán (8 bài chuyên biệt). */
+  algorithmId?: AlgorithmId;
+  /** M12: mã giả DẪN XUẤT (vd từ ScanSpec) — truyền thẳng, ưu tiên hơn tra bảng. */
+  lines?: string[];
   currentLine?: number;
 }) {
-  const lines = PSEUDOCODE[algorithmId];
+  const lines = linesProp ?? (algorithmId ? PSEUDOCODE[algorithmId] : []);
   return (
     <div className="pseudo-panel">
       <div className="pseudo-title">THUẬT TOÁN</div>

@@ -6,6 +6,7 @@ import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import { decisionPointOf } from "./decision";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
+import { makeScanModule } from "./scan-module";
 
 /**
  * Domain "algorithm" — adapter mỏng quanh engine tất định hiện có
@@ -15,6 +16,7 @@ import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
  */
 
 export { activeTrace, type AlgorithmConfig, type AlgorithmSimState } from "./model";
+export { makeScanModule, type ScanSimState } from "./scan-module";
 
 const CONDITION_OPS: Condition["op"][] = [">", ">=", "<", "<=", "==", "!="];
 
@@ -216,9 +218,10 @@ export function makeAlgorithmModule(
   };
 }
 
-/** Đăng ký cả 8 mô phỏng thuật toán vào registry. */
+/** Đăng ký 8 mô phỏng thuật toán + module scan khai báo (M12) vào registry. */
 export function registerAlgorithmDomain(): void {
   for (const id of ALGORITHM_IDS) {
     registerSimulation(makeAlgorithmModule(id));
   }
+  registerSimulation(makeScanModule());
 }

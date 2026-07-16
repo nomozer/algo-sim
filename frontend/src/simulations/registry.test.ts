@@ -17,12 +17,13 @@ beforeEach(() => {
 });
 
 describe("registry", () => {
-  it("đăng ký đủ 8 mô phỏng domain algorithm", () => {
+  it("đăng ký đủ 9 mô phỏng domain algorithm (8 chuyên biệt + scan M12)", () => {
     registerAlgorithmDomain();
     const metas = listSimulations();
-    expect(metas).toHaveLength(8);
+    expect(metas).toHaveLength(9);
     expect(metas.map((m) => m.id)).toContain("algorithm.find_max");
     expect(metas.map((m) => m.id)).toContain("algorithm.bubble_sort");
+    expect(metas.map((m) => m.id)).toContain("algorithm.scan");
     expect(metas.every((m) => m.domain === "algorithm")).toBe(true);
     expect(metas.every((m) => m.interactionMode === "progressive")).toBe(true);
     // Yêu cầu #2: progressive khai báo timeline capability
