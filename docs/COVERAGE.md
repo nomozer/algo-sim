@@ -311,8 +311,12 @@ sử bằng **bản sao** (`dataclasses.replace`), **không** sửa `DATASET`.
 | `xd-access-boolean` | L2 | **tái sử dụng** `boolean` sang miền bảo mật — không thêm module |
 | `xd-order-workflow` | L3 | **tái sử dụng** node+edge+moving_entity **ngoài miền mạng** (S2) |
 | `c-geo-complex` | L4 | **từ chối trung thực** bài "nhìn có vẻ vẽ được" → `capability_gap` |
+| `m11-nested-canonical` | L2 | (M11) LLM compose **CHUỖI rule qua trung gian** — `A ∧ (B ∨ C)` = 2 rule nối, không module mới; khác hẳn `b-xor` (một rule phẳng) |
+| `m11-loop-gap` | L4 | (M11) **vòng lặp biến tự do bị từ chối trung thực** (gate fired) — LLM không được tự tính dãy 2→5→8… nhét vào reveal (R0) |
 
 **Không** nhồi biến thể OR/NOT/XOR — chúng chứng minh lặp lại đúng một năng lực.
+(M11: `m11-nested-access`/`-not`/`-paraphrase` là case REGRESSION/robustness cho
+chuỗi rule — đã dùng để tune prompt, **không** được trình bày như held-out.)
 
 ---
 
@@ -320,7 +324,7 @@ sử bằng **bản sao** (`dataclasses.replace`), **không** sửa `DATASET`.
 
 | Năng lực | Dùng lại ở các miền |
 |---|---|
-| `boolean` | cổng logic (T10 B5) · **kiểm soát truy cập** (T11 B15) · đèn cầu thang (XOR) |
+| `boolean` | cổng logic (T10 B5) · **kiểm soát truy cập** (T11 B15) · đèn cầu thang (XOR) · **biểu thức ghép lồng** `A ∧ (B ∨ C)` / `A ∧ ¬B` qua CHUỖI rule (M11 — T10 B5, phân quyền) |
 | `weighted_sum` | **đổi nhị phân** (T10 B4) · **mã ASCII** (T10 B3) |
 | `node`+`edge` | mạng · đồ thị · **hệ thống thông tin** · quy trình nghiệp vụ · hình học (node không node_type) |
 | `moving_entity`+`move_along_path` | **gói tin** · **dữ liệu qua các công đoạn xử lí** |

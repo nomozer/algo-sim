@@ -61,11 +61,17 @@ Exports: `DSL_VERSION`, `SUPPORTED_VERSIONS`, `object_types`, `rule_types`,
 `manifest_contract_text`, `MANIFEST`.
 Consumers: validator, catalog (enum structured-output), representation, semantic,
 patterns, edit. Tests: `test_manifest.py`.
-Notes: thêm primitive = **chỉ sửa file này** (+ mirror TS).
+Notes: thêm primitive = **chỉ sửa file này** (+ mirror TS). M11:
+`manifest_contract_text` có đoạn hướng dẫn **chuỗi rule qua trung gian** (ví dụ
+trừu tượng `kq_phu` — cố ý KHÔNG trùng case đánh giá nào, chống overfit prompt
+vào benchmark; khoá bằng `test_contract_huong_dan_chuoi_rule_m11`). Đây là
+**prompt-surface**, không phải từ vựng.
 
 ### `simulation/dsl/validator.py` · Change impact: offline
 Validator SimulationSpec (allowlist/limits **dẫn xuất từ manifest**), drag
-constraints, ownership rule, cấm chu trình parent/rule.
+constraints, ownership rule, cấm chu trình parent/rule; (M11) **cấm hai rule
+cùng ghi một target** — với đánh giá điểm bất động, rule sau trong mảng thắng
+mỗi vòng quét → ngữ nghĩa phụ thuộc thứ tự khai báo.
 Exports: `validate_generic_config`, `ownership_conflict`, các hằng allowlist.
 Tests: `test_dsl.py`, `test_manifest.py`. Mirror TS: `generic/validate.ts`.
 
@@ -77,8 +83,15 @@ Exports: `required_roles`, `build_representation_plan`, `scene_mode_guidance`,
 ### `simulation/semantic.py` · Change impact: offline
 Cổng hai: `check_semantic_compatibility` (gap/mismatch) + `check_semantic` (kỳ
 vọng hành vi cho harness: boolean_gate/weighted_sum/moving_path/progressive_reveal/
-static_structural/draggable_reveal). Exports: cả hai + `roles_covered_by_spec`.
-Tests: `test_semantic.py`.
+static_structural/draggable_reveal/**nested_boolean** (M11)). Exports: cả hai +
+`roles_covered_by_spec`. Tests: `test_semantic.py`.
+Notes (M11): `nested_boolean` chấm boolean HỢP THÀNH (≥2 rule nối chuỗi, đúng 1
+sink) — dò bảng chân trị bằng cách tiêm vào **đầu vào toggle của học sinh**,
+KHÔNG tiêm vào input của rule (input có thể là target rule khác, bị `values_of`
+tính đè → âm tính giả — đúng lỗi của probe `boolean_gate` với spec lồng) và
+KHÔNG đếm object trang trí có `value` (đo live: 7 "nguồn" giả). Ánh xạ
+nguồn↔biến kỳ vọng là id-agnostic (thử hoán vị). `check_semantic` chỉ chạy ở
+HARNESS — pipeline production không chấm bảng chân trị.
 
 ### `simulation/generic_engine.py` · Change impact: offline
 Port Python của engine TS — **chỉ để kiểm ngữ nghĩa server-side**.
