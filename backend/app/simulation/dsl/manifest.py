@@ -329,3 +329,36 @@ def manifest_contract_text() -> str:
         "TUYỆT ĐỐI KHÔNG dùng object/rule/interaction/process ngoài manifest. "
         "KHÔNG sinh steps/timeline/state/frames/kết quả — engine tự dựng."
     )
+
+
+def value_provider_types(role: str) -> set[str]:
+    """M13: các OBJECT type có vai trò cung cấp giá trị `role` (vd "numeric").
+
+    DẪN XUẤT từ PRIMITIVE_ROLES ∩ object_types — không viết tay allowlist
+    (anti-pattern #1). node/edge chỉ relational → không bao giờ là provider.
+    """
+    object_types = set(MANIFEST["object_types"])
+    return {t for t in object_types if role in PRIMITIVE_ROLES.get(t, set())}
+
+
+# M13: vai trò input/output của mỗi rule type (không viết tay ở validator/frontend).
+RULE_IO_ROLES = {
+    "weighted_sum": {"input_role": "numeric", "output_role": "numeric"},
+    "boolean": {"input_role": "logical", "output_role": "logical"},
+}
+
+
+def dsl_semantic_contract() -> dict:
+    """M13: hợp đồng ngữ nghĩa CANONICAL — nguồn duy nhất cho cả hai tầng.
+    Frontend tiêu thụ bản sinh (dsl-contract.json); test sync-lock chống drift."""
+    object_types = set(MANIFEST["object_types"])
+    return {
+        "value_providers": {
+            role: sorted(value_provider_types(role)) for role in ("numeric", "logical")
+        },
+        "rule_io": RULE_IO_ROLES,
+        "object_roles": {
+            t: sorted(PRIMITIVE_ROLES[t]) for t in sorted(object_types)
+        },
+        "role_coercions": [],  # DENY mặc định — chỉ thêm khi matrix audit chứng minh
+    }

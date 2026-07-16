@@ -1,0 +1,65 @@
+{
+  "value_providers": {
+    "numeric": [
+      "lamp",
+      "switch",
+      "value_box"
+    ],
+    "logical": [
+      "lamp",
+      "switch"
+    ]
+  },
+  "rule_io": {
+    "weighted_sum": {
+      "input_role": "numeric",
+      "output_role": "numeric"
+    },
+    "boolean": {
+      "input_role": "logical",
+      "output_role": "logical"
+    }
+  },
+  "object_roles": {
+    "container": [
+      "structural"
+    ],
+    "edge": [
+      "relational"
+    ],
+    "group": [
+      "structural"
+    ],
+    "heading": [
+      "textual"
+    ],
+    "label": [
+      "textual"
+    ],
+    "lamp": [
+      "logical",
+      "numeric"
+    ],
+    "moving_entity": [
+      "movement"
+    ],
+    "node": [
+      "relational"
+    ],
+    "paragraph": [
+      "textual"
+    ],
+    "switch": [
+      "interactive",
+      "logical",
+      "numeric"
+    ],
+    "text": [
+      "textual"
+    ],
+    "value_box": [
+      "numeric"
+    ]
+  },
+  "role_coercions": []
+}
