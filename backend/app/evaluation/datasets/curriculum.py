@@ -87,7 +87,9 @@ CURRICULUM_ITEMS: list[EvalItem] = [
         text="Lớp có 8 bạn với điểm 7,5; 9; 6; 8; 5; 9,5; 7; 8,5. Đếm số bạn đạt từ 8 điểm trở lên.",
         group="specialized",
         expect_simulation_id="algorithm.count_if",
-        tags=("curriculum",),
+        # M12: kiêm ĐỐI CHỨNG cho ranh giới scan — đếm theo điều kiện duyệt HẾT
+        # dãy vẫn thuộc chuyên biệt count_if, algorithm.scan không được nuốt.
+        tags=("curriculum", "m12_scan"),
         curriculum_area="T10.CD5",
         curriculum_topic="Câu lệnh lặp và rẽ nhánh trên danh sách (Bài 19–23)",
         capability_family="conditional_accumulator",
@@ -383,7 +385,9 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "14. Hãy mô phỏng quá trình thay đổi của x qua từng vòng lặp."
         ),
         group="unsupported",
-        tags=("boundary", "m11_compose"),
+        # M12: kiêm case ranh giới cho scan — vòng lặp BIẾN TỰ DO (không dãy số)
+        # phải TIẾP TỤC bị từ chối, không bị ép vào algorithm.scan.
+        tags=("boundary", "m11_compose", "m12_scan"),
         curriculum_area="T10.CD5",
         curriculum_topic="Câu lệnh lặp trong lập trình (mô phỏng thực thi vòng lặp ngoài năng lực v1)",
         capability_family="control_flow_loop",
@@ -396,6 +400,61 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "không cover. LLM tự tính dãy 2→5→8→11→14→17 rồi nhét vào reveal_sequence "
             "sẽ là LLM sở hữu tiến trình canonical (vi phạm R0) — phải unsupported "
             "trung thực, không render ảnh tĩnh giả."
+        ),
+    ),
+
+    # ── M12: định tuyến scan khai báo (tag "m12_scan") ──
+    # Suite 4 case: flagship first-above-threshold (scan) + đối chứng linear
+    # (so BẰNG → chuyên biệt thắng) + 2 case sẵn có gắn thêm tag (cur-t10-count:
+    # đếm duyệt hết → count_if; m11-loop-gap: biến tự do → vẫn unsupported).
+    # Đây là case DEVELOPMENT/REGRESSION — không trình bày như held-out.
+    EvalItem(
+        id="m12-scan-first-above",
+        text=(
+            "Nhiệt độ trung bình các ngày trong tuần lần lượt là 31, 33, 30, 36, 32, "
+            "38, 29 độ C. Hãy tìm ngày đầu tiên có nhiệt độ vượt quá 35 độ."
+        ),
+        group="specialized",
+        expect_simulation_id="algorithm.scan",
+        semantic={"kind": "bounded_scan", "stop": "first_match", "found_pos": 4},
+        tags=("curriculum", "m12_scan"),
+        curriculum_area="T10.CD5",
+        curriculum_topic="Câu lệnh lặp và rẽ nhánh — duyệt dãy với điều kiện dừng sớm (Bài 19–23)",
+        capability_family="bounded_scan",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Hiểu duyệt tuần tự có DỪNG SỚM: vòng lặp kết thúc ngay khi gặp phần tử "
+            "đầu tiên thỏa điều kiện — các phần tử sau không bao giờ bị xét."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: ĐIỀU KIỆN DỪNG SỚM theo bất đẳng thức — khác count_if (duyệt "
+            "hết dãy) và khác linear_search (chỉ so BẰNG một giá trị đích). 8 bài chuyên "
+            "biệt không biểu diễn được bài này; case chứng minh LLM CẤU HÌNH scan-"
+            "interpreter (enum đóng, M12) thay vì cần module thực thi mới — và "
+            "interpreter, không phải LLM, sở hữu vị trí dừng/kết quả (R0)."
+        ),
+    ),
+    EvalItem(
+        id="m12-scan-contrast-linear",
+        text="Cho dãy số 37, 12, 25, 8, 19. Tìm xem giá trị 25 nằm ở vị trí thứ mấy trong dãy.",
+        group="specialized",
+        expect_simulation_id="algorithm.linear_search",
+        tags=("curriculum", "m12_scan"),
+        curriculum_area="T11CS.CD6",
+        curriculum_topic="Bài toán tìm kiếm — tìm kiếm tuần tự",
+        capability_family="search_path",
+        complexity="L1",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Đối chứng ranh giới scan: tìm giá trị BẰNG x trên dãy chưa sắp thuộc "
+            "mô phỏng chuyên biệt tìm kiếm tuần tự."
+        ),
+        pedagogical_rationale=(
+            "Case ĐỐI CHỨNG: cùng bề mặt 'duyệt dãy tìm...' nhưng so BẰNG một giá trị "
+            "đích — linear_search chuyên biệt khớp trọn nên PHẢI thắng (ưu tiên chuyên "
+            "biệt, quy tắc 2). Khóa để algorithm.scan không nuốt bài đã có engine riêng "
+            "với decision/prediction theo cơ chế (M9-S1) giàu hơn."
         ),
     ),
 ]
