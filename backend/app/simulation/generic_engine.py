@@ -7,6 +7,17 @@ có thể THỰC THI spec đã compose mà kiểm hành vi (§6).
 
 from __future__ import annotations
 
+import math
+
+
+class GenericEvaluationError(Exception):
+    """M13 §3.4 — typed failure tại ranh giới executor; KHÔNG bao giờ thành 0."""
+
+    def __init__(self, code: str, detail: str):
+        super().__init__(f"{code}: {detail}")
+        self.code = code
+        self.detail = detail
+
 
 def rule_targets(spec: dict) -> set[str]:
     return {r["target"] for r in spec.get("rules", [])}
@@ -22,7 +33,11 @@ def initial_base(spec: dict) -> dict[str, float]:
 
 
 def _eval_rule(rule: dict, values: dict[str, float]) -> float:
-    inputs = [values.get(i, 0) for i in rule.get("inputs", [])]
+    inputs = []
+    for i in rule.get("inputs", []):
+        if i not in values:
+            raise GenericEvaluationError("invalid_numeric_source", f'input "{i}" chưa có giá trị')
+        inputs.append(values[i])
     if rule["type"] == "boolean":
         bits = [1 if v >= 1 else 0 for v in inputs]
         op = rule.get("op")
@@ -36,24 +51,40 @@ def _eval_rule(rule: dict, values: dict[str, float]) -> float:
             return 0 if bits and bits[0] == 1 else 1
         return 0
     weights = rule.get("weights", [])
-    return sum(v * (weights[i] if i < len(weights) else 0) for i, v in enumerate(inputs))
+    if len(weights) != len(inputs):
+        raise GenericEvaluationError("missing_weight", f'rule "{rule["target"]}" thiếu weight')
+    result = sum(v * w for v, w in zip(inputs, weights))
+    if not math.isfinite(result):
+        raise GenericEvaluationError("non_finite_numeric_value", f'rule "{rule["target"]}" ra {result}')
+    return result
 
 
 def values_of(spec: dict, base: dict[str, float]) -> dict[str, float]:
-    """Giá trị đầy đủ = base + dẫn xuất (áp rule đến khi ổn định)."""
+    """M13 ba trạng thái: KHÔNG seed target = 0 nữa — target chưa resolve là
+    UNRESOLVED (vắng mặt trong values), rule chỉ chạy khi MỌI input resolved.
+    DAG hợp lệ hội tụ trong ≤ len(rules) lượt; còn sót sau bound → typed error."""
     values = dict(base)
-    for t in rule_targets(spec):
-        values.setdefault(t, 0)
-    rules = spec.get("rules", [])
+    rules = list(spec.get("rules", []))
+    pending = list(rules)
     for _ in range(len(rules) + 1):
-        changed = False
-        for rule in rules:
-            v = _eval_rule(rule, values)
-            if values.get(rule["target"]) != v:
-                values[rule["target"]] = v
-                changed = True
-        if not changed:
+        still = []
+        for rule in pending:
+            if all(i in values for i in rule.get("inputs", [])):
+                values[rule["target"]] = _eval_rule(rule, values)
+            else:
+                still.append(rule)
+        progressed = len(still) < len(pending)
+        pending = still          # PHẢI cập nhật TRƯỚC break/progress check
+        if not pending:
             break
+        if not progressed:
+            missing = sorted({i for r in pending for i in r.get("inputs", []) if i not in values})
+            raise GenericEvaluationError(
+                "unresolved_dependency_after_bound",
+                f'không resolve được: {", ".join(missing)}',
+            )
+    if pending:
+        raise GenericEvaluationError("unresolved_dependency_after_bound", "vượt bound evaluation")
     return values
 
 
