@@ -100,9 +100,27 @@ trên object). Xác nhận bằng grep: không có site đọc `.weight` ngoài
 Mẫu `GENERIC_BINARY_SPEC` (`frontend/src/data/sim-samples.ts` dòng 123–130)
 đặt CẢ HAI (`switch.weight` và `rule.weights`) trùng khớp (8/4/2/1) — vô hại vì
 trùng, nhưng nếu một spec khác đặt chúng LỆCH NHAU, `object.weight` bị NGÓ LƠ
-HOÀN TOÀN mà không có cảnh báo. **Không gây sai kết quả tính toán** (vì không
-được đọc), chỉ có thể gây hiểu lầm khi đọc/debug spec. Xem §7 vì sao đây là
-OUT-OF-SCOPE chứ không phải STOP-UNRESOLVED.
+HOÀN TOÀN mà không có cảnh báo.
+
+**RECLASSIFY (duyệt 2026-07-17) — `UNSUPPORTED_SEMANTIC_FIELD` / TASK-2b, KHÔNG
+phải OUT-OF-SCOPE.** Bản audit đầu kết luận "vô hại vì không được đọc" — kết
+luận đó **thiếu một site quyết định**: [`manifest.py:321`](../../../backend/app/simulation/dsl/manifest.py)
+là **contract text nạp thẳng vào prompt simulate**, nguyên văn *"Đổi nhị phân =
+switch bit (**có weight**) + value_box + rule weighted_sum."* Tức hệ thống
+**chủ động DẠY LLM viết một field mà chính nó không đọc**, trong khi cùng prompt
+đó (`manifest.py:96`) định nghĩa `weighted_sum` = tổng inputs nhân `rule.weights`.
+Hai chữ "weight" trong một prompt: một thật, một giả.
+
+Đây **là** silent semantic no-op đúng lớp bug §9b (*"tham số lặng lẽ đổi
+nghĩa"*): field được quảng bá trong public schema (`catalog.py:384`), được cả
+hai validator chấp nhận + giữ lại (`validator.py:263`, `validate.ts:217`), được
+patch allowlist cho sửa (`patch.py:40`, `patch.ts:37`), **và được prompt dạy** —
+nhưng không runtime nào đọc. Một LLM đặt `switch.weight = 8` tin rằng mình đã
+cấu hình phép đổi nhị phân; giá trị đó không tạo hệ quả nào. Cùng họ với
+`weighted_sum` trên id cạnh — thứ M13 sinh ra để diệt.
+
+Xử lí = **GỠ BỎ, không thêm ngữ nghĩa**: không cài trọng-số-cạnh, không thêm
+accessor. Chi tiết ở **Task 2b** của plan.
 
 **F4 — `initialBase`/`initial_base` không lọc theo object type, chỉ theo "có
 trường `value`" + "không phải rule target".** `model.ts` dòng 176–183:
@@ -765,13 +783,17 @@ mặt + 2 interaction + 2 process) đối chiếu trực tiếp với
   (E6/E16/F1/F2), unresolved-lẫn-0 (E17), non-finite không chặn, lạm dụng
   process làm "kết quả thuật toán" (E7/E15) — ĐỀU đã có TASK-N cụ thể với RED
   test đặt tên trong plan (Task 2–11), không phải khoảng trống chưa ai xử lý.
-- `object.weight` chết (F3) và nhánh ownership `toggle`↔`"value"` chưa từng
-  kích hoạt — cả hai đều **KHÔNG** có khả năng gây "kết quả sai trông như
-  đúng" (right-or-refuse violation): F3 không được đọc nên không thể làm lệch
-  kết quả; nhánh ownership chết chỉ là code phòng thủ chưa có kịch bản, không
-  chạy sai gì. → **OUT-OF-SCOPE**, không phải STOP-UNRESOLVED (không phải né
-  tránh: cả hai đã được truy đến tận cùng cơ chế, không dừng ở "trông vô hại"
-  mà đã CHỨNG MINH vô hại bằng cách đọc toàn bộ site đọc/ghi liên quan).
+- `object.weight` (F3) — **RECLASSIFY 2026-07-17: `UNSUPPORTED_SEMANTIC_FIELD`
+  / TASK-2b.** Kết luận OUT-OF-SCOPE ban đầu dựa trên "không được đọc nên không
+  làm lệch kết quả" — đúng về runtime nhưng **bỏ sót `manifest.py:321`**:
+  contract text nạp vào prompt simulate DẠY LLM đặt `weight` lên switch. Field
+  được quảng bá + validate + patch được + prompt dạy, nhưng không ai đọc =
+  silent semantic no-op, đúng lớp bug M13 phải diệt (§9b). Xử lí: GỠ (Task 2b),
+  không thêm ngữ nghĩa. Đây là bài học phương pháp: "không site nào ĐỌC" chưa
+  đủ để kết luận vô hại — phải hỏi cả "có site nào QUẢNG BÁ/DẠY nó không".
+- Nhánh ownership `toggle`↔`"value"` chưa từng kích hoạt — **OUT-OF-SCOPE**:
+  code phòng thủ chưa có kịch bản, không chạy sai gì, không quảng bá gì cho
+  LLM (khác hẳn F3).
 - Comparison rule vắng mặt — **OUT-OF-SCOPE** có rationale (§3.3): không tồn
   tại nghĩa là không có hành vi runtime nào để audit, và Global Constraint của
   plan cấm thêm primitive DSL mới trong M13.
@@ -828,9 +850,15 @@ hành động trong M13, không redesign UI):
 | Disposition | Số hàng | Danh sách |
 |---|---|---|
 | EXISTING (thuần, không kèm TASK-N) | 2 | `toggle`, `drag` |
-| EXISTING + TASK-N (phần cấu trúc đúng, phần role/computation cần Task) | 17 | 12 object + `boolean` + `weighted_sum` + `reveal_sequence` + `move_along_path` |
+| EXISTING + TASK-N (phần cấu trúc đúng, phần role/computation cần Task) | 16 | 12 object + `boolean` + `weighted_sum` + `reveal_sequence` + `move_along_path` |
 | OUT-OF-SCOPE | 1 | comparison rule (vắng mặt) |
 | STOP-UNRESOLVED | 0 | — |
 
-**19/19 hàng có disposition. 0 hàng STOP-UNRESOLVED. Luật dừng không kích
-hoạt — Task 2 được phép tiếp tục theo đúng matrix này.**
+**19/19 hàng có disposition** (2 + 16 + 1 = 19 — bản đầu ghi 16 thành 17, tổng
+ra 20; sửa 2026-07-17). **0 hàng STOP-UNRESOLVED. Luật dừng không kích hoạt.**
+
+### Field-level disposition (ngoài 19 hàng primitive)
+
+| Field | Disposition | Ghi chú |
+|---|---|---|
+| `object.weight` | **UNSUPPORTED_SEMANTIC_FIELD / TASK-2b** | Reclassify 2026-07-17 (§7). Gỡ khỏi schema/normalization/patch-allowlist/contract-text/sample; validator từ chối config legacy chứa nó (không strip im lặng). KHÔNG thêm ngữ nghĩa trọng-số-cạnh, KHÔNG accessor. |
