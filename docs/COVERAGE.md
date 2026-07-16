@@ -126,6 +126,7 @@ Xem §7 — danh sách chống "phủ giả".
 | Boolean rule · Weighted sum · Node-edge · Moving entity · Progressive reveal · Structural/textual · Toggle · Drag · Contextual edit | ✅ generic |
 | **Data flow (edge có chiều)** | ✅ **mới (M8-PRE S2)** |
 | Conditional branching · State transition | ⚠️ chỉ trong specialized |
+| **Single-pass scan (khai báo, tái dụng)** | ✅ **M12 PROOF** — `core/scan.ts`: MỘT interpreter tất định phủ find_max/count_if/sum_if/linear_search bằng spec bounded; bài single-pass MỚI trong họ không cần module thực thi mới. **Chưa** nối LLM/UI (HOÃN). Ngoài họ (sort/binary/routing/encap) vẫn specialized. |
 | **Table/grid · Query/filter** | ❌ — ứng viên **post-M8** giá trị cao nhất (mở khoá CSDL, mảng 2D, bảng chân trị, bảng tính) |
 | State machine (FSM) · Client/server hai chiều | ❌ |
 | Stack/queue/tree | ❌ **KHÔNG có trong chương trình KNTT → scope creep** |
