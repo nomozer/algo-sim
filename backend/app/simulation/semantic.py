@@ -116,6 +116,8 @@ def check_semantic(spec: dict, expectation: dict) -> tuple[bool, str]:
         return _check_boolean_gate(spec, expectation["op"])
     if kind == "nested_boolean":
         return _check_nested_boolean(spec, expectation["expr"])
+    if kind == "bounded_scan":
+        return _check_bounded_scan(spec, expectation)
     if kind == "weighted_sum":
         return _check_weighted_sum(spec, expectation["value"])
     if kind == "moving_path":
@@ -336,6 +338,37 @@ def _check_nested_boolean(spec: dict, expr: dict) -> tuple[bool, str]:
                 f"sink \"{sink}\", {len(rules)} rule nối chuỗi)"
             )
     return False, "Không ánh xạ nguồn↔biến nào khớp bảng chân trị hợp thành kỳ vọng"
+
+
+def _check_bounded_scan(spec: dict, exp: dict) -> tuple[bool, str]:
+    """M12: chấm HÀNH VI ScanSpec bằng port scan_engine (không chỉ cấu trúc).
+
+    exp hỗ trợ: "stop" (khớp enum), "found_pos" (1-based, first_match),
+    "final_value" (giá trị accumulator cuối, cho count/sum/max).
+    """
+    from app.simulation.scan_engine import run_scan, validate_scan_spec
+
+    valid, err = validate_scan_spec(spec)
+    if valid is None:
+        return False, f"Spec scan không hợp lệ: {err}"
+    out = run_scan(valid)
+
+    if "stop" in exp and spec.get("stop") != exp["stop"]:
+        return False, f"stop = {spec.get('stop')!r}, kỳ vọng {exp['stop']!r}"
+    if "found_pos" in exp:
+        want = exp["found_pos"] - 1
+        if out["found_index"] != want:
+            got = out["found_index"]
+            return False, f"Tìm thấy tại index {got}, kỳ vọng {want} (vị trí thứ {exp['found_pos']})"
+    if "final_value" in exp:
+        var = spec["seed"]["varName"]
+        got_v = out["final_vars"].get(var)
+        if got_v != exp["final_value"]:
+            return False, f"{var} cuối = {got_v}, kỳ vọng {exp['final_value']}"
+    return True, (
+        f"Scan đúng hành vi: {len(out['decisions'])} so sánh, "
+        f"found_index={out['found_index']}, vars={out['final_vars']}"
+    )
 
 
 def _check_weighted_sum(spec: dict, expected: float) -> tuple[bool, str]:
