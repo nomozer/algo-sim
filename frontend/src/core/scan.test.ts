@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { runScan, type ScanSpec } from "./scan";
+import { runScan, validateScanSpec, type ScanSpec } from "./scan";
 import { runAlgorithm } from "./algorithms";
 import type { AlgorithmId, AnalysisOk, Condition, Mark, Trace } from "./types";
 
@@ -153,5 +153,90 @@ describe("M12 bounded scan — parity với engine specialized (oracle)", () => 
       stop: "first_match",
     };
     expect(parity(runScan(spec))).toEqual(parity(oracle));
+  });
+});
+
+describe("M12 validateScanSpec — chặn spec lạ/không an toàn/mơ hồ", () => {
+  const VALID: ScanSpec = {
+    scan_version: "1.0",
+    array: [3, 7, 2],
+    seed: { from: "first_element", varName: "max", trackIndexVar: "vt" },
+    compare: { kind: "to_accumulator", op: ">" },
+    update: { kind: "replace_with_current" },
+    marking: "running_winner",
+    stop: "end_of_array",
+  };
+  const bad = (o: unknown) => expect(validateScanSpec(o).ok).toBe(false);
+
+  it("spec hợp lệ được chấp nhận", () => {
+    expect(validateScanSpec(VALID).ok).toBe(true);
+  });
+  it("scan_version lạ bị reject", () => bad({ ...VALID, scan_version: "2.0" }));
+  it("mảng rỗng bị reject", () => bad({ ...VALID, array: [] }));
+  it("mảng chứa phần tử không phải số bị reject", () => bad({ ...VALID, array: [1, "x", 3] }));
+  it("khóa lạ ở cấp cao nhất bị reject", () => bad({ ...VALID, secret: 1 }));
+  it("op so sánh lạ bị reject", () => bad({ ...VALID, compare: { kind: "to_accumulator", op: "≈" } }));
+  it("marking lạ bị reject", () => bad({ ...VALID, marking: "rainbow" }));
+  it("stop lạ bị reject", () => bad({ ...VALID, stop: "forever" }));
+  it("update kind lạ bị reject", () => bad({ ...VALID, update: { kind: "explode" } }));
+  it("seed.from lạ bị reject", () => bad({ ...VALID, seed: { from: "middle", varName: "m" } }));
+  it("to_constant thiếu value số bị reject", () =>
+    bad({ ...VALID, compare: { kind: "to_constant", op: "==" } }));
+  it("seed constant thiếu value số bị reject", () =>
+    bad({ ...VALID, seed: { from: "constant", varName: "x" } }));
+  it("khóa lạ trong seed bị reject", () =>
+    bad({ ...VALID, seed: { from: "first_element", varName: "m", junk: 1 } }));
+  it("varName rỗng bị reject", () =>
+    bad({ ...VALID, seed: { from: "first_element", varName: "" } }));
+  it("labels sai độ dài bị reject", () => bad({ ...VALID, labels: ["chỉ một"] }));
+
+  // ── Coherence: giữ họ = quét trên GIÁ TRỊ phần tử, chống cấu hình vô nghĩa ──
+  it("running_winner mà update không phải replace bị reject (winner vô nghĩa)", () =>
+    bad({ ...VALID, update: { kind: "increment" } }));
+  it("to_accumulator mà update none bị reject (so với hằng cố định = nên dùng to_constant)", () =>
+    bad({ ...VALID, update: { kind: "none" } }));
+
+  it("spec count_if / linear_search hợp lệ được chấp nhận", () => {
+    expect(
+      validateScanSpec({
+        scan_version: "1.0",
+        array: [5, 9, 6],
+        seed: { from: "constant", value: 0, varName: "dem" },
+        compare: { kind: "to_constant", op: ">=", value: 8 },
+        update: { kind: "increment" },
+        marking: "match_highlight",
+        stop: "end_of_array",
+      }).ok,
+    ).toBe(true);
+    expect(
+      validateScanSpec({
+        scan_version: "1.0",
+        array: [4, 8, 15],
+        seed: { from: "constant", value: 16, varName: "can_tim" },
+        compare: { kind: "to_constant", op: "==", value: 16 },
+        update: { kind: "none" },
+        marking: "match_highlight",
+        stop: "first_match",
+      }).ok,
+    ).toBe(true);
+  });
+});
+
+describe("M12 tất định + biên non-Turing", () => {
+  const spec: ScanSpec = {
+    scan_version: "1.0",
+    array: [3, 7, 2, 9, 4, 9, 1],
+    seed: { from: "first_element", varName: "max", trackIndexVar: "vt" },
+    compare: { kind: "to_accumulator", op: ">" },
+    update: { kind: "replace_with_current" },
+    marking: "running_winner",
+    stop: "end_of_array",
+  };
+  it("chạy lại cùng spec → Trace y hệt (tất định)", () => {
+    expect(runScan(spec)).toEqual(runScan(spec));
+  });
+  it("số bước bị chặn: ≤ 2·n + 2 (một compare + tối đa một update mỗi phần tử)", () => {
+    const t = runScan(spec);
+    expect(t.steps.length).toBeLessThanOrEqual(2 * spec.array.length + 2);
   });
 });
