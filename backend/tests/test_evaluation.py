@@ -32,9 +32,14 @@ BAD_TYPE = {"dsl_version": "1.0", "title": "x", "objects": [{"id": "a", "type": 
 
 
 def _analysis(item_id: str) -> dict:
+    # M14: eval nay chạy QUA run_pipeline → computation gate M13 THẬT chạy. Mock
+    # analysis phải khai result_ownership như analyze thật (các case generic ở đây
+    # là boolean rule → "rule_derivable"). Thiếu field = gate fail-closed (đúng),
+    # nên fixture nêu rõ để đo đúng hành vi, KHÔNG che gate.
     return {
         "objects": [], "data": [], "relations": [], "processes": [], "constraints": [],
         "goal": f"ITEM:{item_id}", "input_description": "i", "output_description": "o", "notes": None,
+        "result_ownership": "rule_derivable",
     }
 
 

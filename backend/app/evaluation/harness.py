@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 
 from app.ai import pipeline
 from app.ai.gemini import ApiBudget, BudgetExceeded
+from app.evaluation.observer import AttemptObserver
 from app.simulation.catalog import CATALOG
 from app.evaluation.dataset import DATASET, EvalItem
 from app.simulation.representation import (
@@ -82,6 +83,13 @@ class ItemResult:
     # M7.14T: capability gate THẬT (representation plan) có bắt được đề này
     # không — metric SONG SONG, KHÔNG đổi ngữ nghĩa các metric cũ (§8 phương án c).
     gap_gate_fired: bool | None = None
+    # M14 §F3 — metric split (family/variant/final-route) + kênh gate. predicted
+    # là output CLASSIFY (có thể là selector token); final là envelope id (concrete).
+    classify_simulation_id: str | None = None
+    final_simulation_id: str | None = None
+    variant: str | None = None
+    computation_gate_fired: bool | None = None
+    mechanism_gate_fired: bool | None = None
 
 
 @dataclass
@@ -203,12 +211,12 @@ async def _simulate_with_metrics(
     return None, 2, FAIL_SCENE_MODE if scene_mode_failed else classify_error(last_error or ""), (last_error or "")[:200]
 
 
-async def evaluate_item(item: EvalItem, api_key: str) -> ItemResult:
-    analysis = await pipeline.stage_analyze(item.text, api_key)
+async def _evaluate_item_legacy(item: EvalItem, api_key: str) -> ItemResult:
+    """M7.14T (DEPRECATED — chờ retire ở M14 Task 10 sau parity proof).
 
-    # M7.14T: đo capability gate THẬT của pipeline (M7.14C) — TẤT ĐỊNH, không
-    # tốn API call. Chỉ GHI NHẬN (metric song song), KHÔNG dùng để quyết định
-    # kết quả benchmark → ngữ nghĩa các metric cũ giữ nguyên tuyệt đối.
+    Tái dựng chuỗi stage RIÊNG (KHÔNG qua run_pipeline) → vi phạm #22. Giữ tạm để
+    parity test so với evaluate_item mới. Xóa cùng _simulate_with_metrics."""
+    analysis = await pipeline.stage_analyze(item.text, api_key)
     plan = build_representation_plan(analysis)
     gap_gate_fired = bool(plan["unsupported_capabilities"])
 
@@ -245,6 +253,88 @@ async def evaluate_item(item: EvalItem, api_key: str) -> ItemResult:
         failure=None if semantic_ok else FAIL_SEMANTIC_WRONG, detail=detail,
         gap_gate_fired=gap_gate_fired,
     )
+
+
+def _retry_count(attempts: list[dict]) -> int:
+    """retry_count đồng bộ _simulate_with_metrics: n của attempt THÀNH CÔNG, hoặc
+    n của attempt cuối nếu thất bại (3 attempt → 2)."""
+    if not attempts:
+        return 0
+    ok = next((a for a in attempts if a.get("ok")), None)
+    return ok["n"] if ok is not None else attempts[-1]["n"]
+
+
+def _item_result_from(
+    item: EvalItem, obs: AttemptObserver, envelope: dict | None, pipeline_error: str | None
+) -> ItemResult:
+    """M14 §F2/§F3 — dựng ItemResult TỪ observer + envelope (production lifecycle).
+    Bao gồm metric split family/variant/final-route (Task 11 đọc thêm)."""
+    classify = obs.classify() or {}
+    predicted = classify.get("simulation_id") if classify.get("status") == "ok" else None
+    gap_gate_fired = obs.gap_gate_fired()
+    attempts = obs.simulate_attempts()
+    env = envelope or {}
+    env_ok = env.get("status") == "ok"
+    final_id = env.get("simulation_id") if env_ok else None
+    fam = obs.family_resolved() or {}
+
+    common = dict(
+        gap_gate_fired=gap_gate_fired,
+        classify_simulation_id=predicted,
+        final_simulation_id=final_id,
+        variant=fam.get("variant"),
+        computation_gate_fired=any(g.get("gate") == "computation" and g.get("fired") for g in obs.gates()),
+        mechanism_gate_fired=any(g.get("gate") == "mechanism" and g.get("fired") for g in obs.gates()),
+    )
+
+    # nhóm unsupported: ĐÚNG khi pipeline KHÔNG ra envelope ok (từ chối trung thực)
+    if item.group == "unsupported":
+        refused = pipeline_error is None and not env_ok
+        fail = None
+        if not refused:
+            fail = FAIL_UNSUPPORTED_AS_GENERIC if final_id == "generic.rule_scene" else FAIL_WRONG_SELECTION
+        return ItemResult(item.id, item.group, predicted, refused, failure=fail, **common)
+
+    # specialized/generic: classify đúng nếu classify-output HOẶC final-route == expect
+    classified_ok = predicted == item.expect_simulation_id or final_id == item.expect_simulation_id
+    if not classified_ok:
+        return ItemResult(item.id, item.group, predicted, False, failure=FAIL_WRONG_SELECTION, **common)
+
+    if env_ok:
+        semantic_ok, detail = True, ""
+        if final_id == "generic.rule_scene":
+            semantic_ok, detail = check_semantic(env.get("config", {}), item.semantic)
+        return ItemResult(
+            item.id, item.group, predicted, True, spec_valid=True,
+            retry_count=_retry_count(attempts),
+            semantic_ok=semantic_ok, detail=detail,
+            failure=None if semantic_ok else FAIL_SEMANTIC_WRONG, **common,
+        )
+
+    # classify đúng nhưng KHÔNG ra envelope: simulate thất bại (raise) hoặc gap
+    last = attempts[-1] if attempts else {}
+    err_cat = last.get("error_code") or classify_error(last.get("message") or pipeline_error or "")
+    return ItemResult(
+        item.id, item.group, predicted, True, spec_valid=False,
+        retry_count=_retry_count(attempts) if attempts else 2,
+        failure=err_cat, detail=(last.get("message") or pipeline_error or "")[:200], **common,
+    )
+
+
+async def evaluate_item(item: EvalItem, api_key: str) -> ItemResult:
+    """M14 §F2 (bất biến #22) — chấm QUA production orchestration `run_pipeline`
+    với observer THỤ ĐỘNG; KHÔNG tái dựng stage, KHÔNG ghi cache/pattern
+    (pattern_store=None → reuse/persist bị guard bỏ qua; cache sống ở main.py)."""
+    obs = AttemptObserver()
+    pipeline_error: str | None = None
+    envelope: dict | None = None
+    try:
+        envelope = await pipeline.run_pipeline(item.text, api_key, pattern_store=None, observer=obs)
+    except BudgetExceeded:
+        raise  # chạm trần → để run_eval dừng cả bộ
+    except Exception as err:  # simulate thất bại sau retry (RuntimeError) hoặc lỗi khác
+        pipeline_error = str(err)
+    return _item_result_from(item, obs, envelope, pipeline_error)
 
 
 # ── Suite selection (M7.14T) — dataset.py vẫn là benchmark definition ──

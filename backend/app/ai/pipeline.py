@@ -18,6 +18,14 @@ from app.simulation.mechanism_gate import (
     check_mechanism_ownership,
     check_variant_consistency,
 )
+from app.simulation.error_codes import ErrorCode
+
+
+def _emit(observer, event_type: str, **data) -> None:
+    """M14 §F2 — phát event cho observer THỤ ĐỘNG (None → no-op, hành vi
+    production không đổi một bit)."""
+    if observer is not None:
+        observer.emit(event_type, data)
 from app.simulation.dsl.manifest import manifest_capability_summary
 from app.simulation.patterns import (
     deterministic_fill,
@@ -188,6 +196,7 @@ async def stage_simulate(
     api_key: str,
     required_semantic_roles: set[str] | None = None,
     plan: dict | None = None,
+    observer=None,
 ) -> tuple[dict | None, str | None]:
     """Sinh config + VALIDATE cấu trúc + (với generic) KIỂM SCENE-MODE
     CONSISTENCY và SEMANTIC COMPAT; sai → retry tối đa 2 lần kèm thông báo lỗi.
@@ -214,11 +223,13 @@ async def stage_simulate(
             candidate = json.loads(raw)
         except json.JSONDecodeError:
             last_error = "Kết quả không phải JSON hợp lệ."
+            _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=None, message=last_error)
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
         config, error = spec.validate(candidate)
         if config is None:
             last_error = error or "không rõ"
+            _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=ErrorCode.STRUCTURAL_INVALID.value, message=last_error)
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
 
@@ -227,6 +238,7 @@ async def stage_simulate(
             mode_error = check_scene_consistency(scene_mode, config)
             if mode_error:
                 last_error = mode_error
+                _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=ErrorCode.SCENE_MODE_MISMATCH.value, message=last_error)
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
 
@@ -237,6 +249,7 @@ async def stage_simulate(
             flow_error = check_system_flow_consistency(config)
             if flow_error:
                 last_error = flow_error
+                _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=ErrorCode.SYSTEM_FLOW_INVALID.value, message=last_error)
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
 
@@ -251,16 +264,18 @@ async def stage_simulate(
                     f"Spec chưa thể hiện các vai trò ngữ nghĩa đề cần: "
                     f"{', '.join(compat['missing'])}. Hãy dùng primitive phù hợp với các vai trò này."
                 )
+                _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=ErrorCode.SEMANTIC_INCOMPAT.value, message=last_error)
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
 
+        _emit(observer, "simulate_attempt", n=_attempt, ok=True, error_code=None, message="")
         return config, None
 
     return None, last_error
 
 
 async def stage_simulate_family(
-    text: str, analysis: dict, selector, api_key: str
+    text: str, analysis: dict, selector, api_key: str, observer=None
 ) -> tuple[dict | None, str | None]:
     """M14 §E — sinh FamilySpec (selector.config_schema/contract) + validate
     fail-closed + VARIANT-CONSISTENCY (E4 tầng 2, so analysis × variant). Retry
@@ -278,19 +293,23 @@ async def stage_simulate_family(
             candidate = json.loads(raw)
         except json.JSONDecodeError:
             last_error = "Kết quả không phải JSON hợp lệ."
+            _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=None, message=last_error)
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
         config, error = selector.validate_family_spec(candidate)
         if config is None:
             last_error = error or "không rõ"
+            _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=ErrorCode.FAMILY_SPEC_INVALID.value, message=last_error)
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
         # E4 tầng 2: variant có khớp cơ chế đề yêu cầu không (không chỉ nhìn FamilySpec)
         mism = check_variant_consistency(analysis, selector, config["variant"])
         if mism is not None:
             last_error = mism[1]
+            _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=mism[0].value, message=last_error)
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
+        _emit(observer, "simulate_attempt", n=_attempt, ok=True, error_code=None, message="")
         return config, None
     return None, last_error
 
@@ -366,7 +385,7 @@ async def try_pattern_reuse(
 
 # ── Orchestrator ──────────────────────────────────────────────
 
-async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
+async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=None) -> dict:
     """Chạy trọn pipeline; trả ValidatedSimulationEnvelope hoặc unsupported.
 
     Ném RuntimeError khi stage simulate thất bại sau retry (API trả 422).
@@ -374,13 +393,23 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
     M7.13B: `pattern_store` (inject, optional) bật pattern reuse — CHỈ sau
     classify và CHỈ cho generic.rule_scene (bảo vệ specialized selection).
     None → hành vi compose cũ nguyên vẹn.
+
+    M14 §F2: `observer` (inject, optional) THỤ ĐỘNG — thu event có cấu trúc; None
+    → hành vi production KHÔNG đổi một bit (evaluation dùng CHUNG orchestration
+    này, bất biến #22).
     """
     analysis = await stage_analyze(text, api_key)
+    _emit(observer, "analyze_done",
+          result_ownership=analysis.get("result_ownership") if isinstance(analysis, dict) else None,
+          prescribed_procedure=analysis.get("prescribed_procedure") if isinstance(analysis, dict) else None)
 
     # M7.11: Representation Plan TẤT ĐỊNH (analysis → semantic requirements → plan).
     plan = build_representation_plan(analysis)
+    _emit(observer, "plan_built", unsupported_capabilities=list(plan.get("unsupported_capabilities", [])))
 
     classification = await stage_classify(text, analysis, api_key)
+    _emit(observer, "classify_done",
+          status=classification.get("status"), simulation_id=classification.get("simulation_id"))
 
     # M7.11 + M7.14C + M13 Gate B: vai trò không primitive nào cover HOẶC kết
     # quả đòi cơ chế thuật toán không engine nào sở hữu → capability_gap, KHÔNG
@@ -393,16 +422,22 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
     chosen = classification.get("simulation_id") if classification.get("status") == "ok" else None
     if chosen is None or chosen == "generic.rule_scene":
         gate_reason = check_computation_ownership(analysis, plan)
+        _emit(observer, "gate_checked", gate="computation", fired=bool(gate_reason),
+              reason_code=ErrorCode.GATE_RESULT_OWNERSHIP.value if gate_reason else None)
         if gate_reason:
-            return {
+            env = {
                 "status": "unsupported",
                 "reason": gate_reason,
                 "failure_category": "capability_gap",
                 "representation_plan": plan,
                 "analysis": analysis,
             }
+            _emit(observer, "envelope", status="unsupported", simulation_id=None,
+                  failure_category="capability_gap")
+            return env
 
     if classification.get("status") != "ok":
+        _emit(observer, "envelope", status="unsupported", simulation_id=None, failure_category=None)
         return {
             "status": "unsupported",
             "reason": classification.get("reason")
@@ -418,7 +453,11 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
     selector = selector_for_token(simulation_id)
     if selector is not None:
         gate = check_mechanism_ownership(analysis, selector)
+        _emit(observer, "gate_checked", gate="mechanism", fired=bool(gate),
+              reason_code=gate[0].value if gate else None)
         if gate is not None:
+            _emit(observer, "envelope", status="unsupported", simulation_id=None,
+                  failure_category="capability_gap")
             return {
                 "status": "unsupported",
                 "reason": gate[1],
@@ -427,13 +466,15 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
                 "representation_plan": plan,
                 "analysis": analysis,
             }
-        family_config, ferr = await stage_simulate_family(text, analysis, selector, api_key)
+        family_config, ferr = await stage_simulate_family(text, analysis, selector, api_key, observer=observer)
         if family_config is None:
             raise RuntimeError(
                 f"Không sinh được FamilySpec hợp lệ cho {simulation_id} sau 3 lần thử "
                 f"(lỗi cuối: {ferr})."
             )
         concrete_id, concrete_config = selector.resolve(family_config, analysis)
+        _emit(observer, "family_resolved", family_id=selector.family_id.value,
+              variant=family_config["variant"], concrete_id=concrete_id)
         concrete_spec = CATALOG.get(concrete_id)
         if concrete_spec is None:  # adapter trỏ target không tồn tại (lock C4 chống)
             raise RuntimeError(f"Adapter trỏ tới target không tồn tại: {concrete_id}.")
@@ -442,6 +483,7 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
             raise RuntimeError(
                 f"Config sau adapter không qua validator concrete ({concrete_id}): {verr}"
             )
+        _emit(observer, "envelope", status="ok", simulation_id=concrete_id, source="family_resolved")
         return {
             "status": "ok",
             "simulation_id": concrete_id,
@@ -470,6 +512,7 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
             text, analysis, plan, roles, api_key, pattern_store
         )
         if config is not None:
+            _emit(observer, "envelope", status="ok", simulation_id=simulation_id, source="pattern_reuse")
             return {
                 "status": "ok",
                 "simulation_id": simulation_id,
@@ -487,11 +530,14 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
             }
 
     config, error = await stage_simulate(
-        text, analysis, simulation_id, api_key, required_semantic_roles=roles, plan=plan
+        text, analysis, simulation_id, api_key, required_semantic_roles=roles, plan=plan,
+        observer=observer,
     )
     if config is None and error and error.startswith("__GAP__:"):
         # Retry lộ ra vai trò không cover được (phòng hờ — thường plan chặn trước)
         missing = error[len("__GAP__:"):]
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category="capability_gap")
         return {
             "status": "unsupported",
             "reason": (
@@ -516,6 +562,7 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
         except Exception:
             pass  # lỗi persist không được làm hỏng envelope trả người dùng
 
+    _emit(observer, "envelope", status="ok", simulation_id=simulation_id, source="composed")
     return {
         "status": "ok",
         "simulation_id": simulation_id,
