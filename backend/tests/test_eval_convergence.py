@@ -59,13 +59,11 @@ def test_observer_passive_khong_doi_output(monkeypatch):
 
 
 # ── evaluate_item KHÔNG gọi _simulate_with_metrics (đi qua run_pipeline) ──
-def test_evaluate_item_khong_dung_simulate_with_metrics(monkeypatch):
-    called = {"legacy": False, "pipeline": False}
-
-    async def boom(*a, **k):
-        called["legacy"] = True
-        raise AssertionError("_simulate_with_metrics KHÔNG được gọi (vi phạm #22)")
-    monkeypatch.setattr(harness, "_simulate_with_metrics", boom)
+def test_evaluate_item_di_qua_run_pipeline(monkeypatch):
+    # #22: eval PHẢI đi qua production run_pipeline. _simulate_with_metrics đã
+    # retire (Task 10) → không còn hàm tái dựng stage riêng.
+    assert not hasattr(harness, "_simulate_with_metrics")
+    called = {"pipeline": False}
 
     real_run = pipeline.run_pipeline
 
@@ -80,7 +78,6 @@ def test_evaluate_item_khong_dung_simulate_with_metrics(monkeypatch):
     res = asyncio.run(harness.evaluate_item(item, "k"))
 
     assert called["pipeline"] is True
-    assert called["legacy"] is False
     assert res.classified_ok and res.spec_valid
     # metric split: classify = token, final = concrete
     assert res.classify_simulation_id == "algorithm.comparison_sort"

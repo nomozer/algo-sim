@@ -8,20 +8,13 @@ thật) — CI không phụ thuộc mạng.
 
 from __future__ import annotations
 
-import json
 from dataclasses import dataclass, field
 
 from app.ai import pipeline
 from app.ai.gemini import ApiBudget, BudgetExceeded
 from app.evaluation.observer import AttemptObserver
-from app.simulation.catalog import CATALOG
 from app.evaluation.dataset import DATASET, EvalItem
-from app.simulation.representation import (
-    build_representation_plan,
-    check_scene_consistency,
-    scene_mode_guidance,
-)
-from app.simulation.semantic import check_semantic, check_system_flow_consistency
+from app.simulation.semantic import check_semantic
 
 # Phân loại lỗi (§5)
 FAIL_WRONG_SELECTION = "wrong_selection"
@@ -154,105 +147,11 @@ class EvalReport:
         }
 
 
-async def _simulate_with_metrics(
-    text: str, analysis: dict, simulation_id: str, api_key: str
-) -> tuple[dict | None, int, str | None, str]:
-    """Bản có đo của stage_simulate: trả (config, số_retry, nhóm_lỗi, message_lỗi_cuối).
-
-    M7.13A: mirror pipeline — chèn scene_mode guidance vào prompt và check
-    scene consistency, để metric đo ĐÚNG hành vi live."""
-    spec = CATALOG[simulation_id]
-    scene_mode = None
-    if simulation_id == "generic.rule_scene":
-        scene_mode = build_representation_plan(analysis)["scene_mode"]
-    base = (
-        f'Đầu vào gốc:\n"""\n{text}\n"""\n\n'
-        f"Kết quả phân tích:\n{json.dumps(analysis, ensure_ascii=False)}\n\n"
-        f"simulation_id đã chọn: {simulation_id}\n\n{spec.contract}"
-    )
-    if scene_mode:
-        base += f"\n\n{scene_mode_guidance(scene_mode)}"
-    prompt = base
-    last_error = None
-    scene_mode_failed = False
-    for attempt in range(3):
-        raw = await pipeline.call_gemini(api_key, pipeline.load_skill("simulate"), prompt, spec.config_schema, 0.1)
-        try:
-            candidate = json.loads(raw)
-        except json.JSONDecodeError:
-            last_error = "Kết quả không phải JSON hợp lệ."
-            scene_mode_failed = False
-            prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
-            continue
-        config, error = spec.validate(candidate)
-        if config is not None and scene_mode:
-            mode_error = check_scene_consistency(scene_mode, config)
-            if mode_error:
-                last_error = mode_error
-                scene_mode_failed = True
-                prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
-                continue
-        # M8-PRE (S2): mirror pipeline — cùng cổng tất định, nếu không metric live
-        # sẽ đo một hành vi KHÁC với sản phẩm (known issue #1: harness mirror pipeline).
-        if config is not None and simulation_id == "generic.rule_scene":
-            flow_error = check_system_flow_consistency(config)
-            if flow_error:
-                last_error = flow_error
-                scene_mode_failed = False
-                prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
-                continue
-        if config is not None:
-            return config, attempt, None, ""
-        last_error = error
-        scene_mode_failed = False
-        prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
-    # M13 Task 14: trả kèm message lỗi cuối — trước đây bị vứt, khiến ca
-    # canonical đỏ ×2 (unknown_primitive) KHÔNG chẩn đoán nổi vì bằng chứng mất.
-    return None, 2, FAIL_SCENE_MODE if scene_mode_failed else classify_error(last_error or ""), (last_error or "")[:200]
-
-
-async def _evaluate_item_legacy(item: EvalItem, api_key: str) -> ItemResult:
-    """M7.14T (DEPRECATED — chờ retire ở M14 Task 10 sau parity proof).
-
-    Tái dựng chuỗi stage RIÊNG (KHÔNG qua run_pipeline) → vi phạm #22. Giữ tạm để
-    parity test so với evaluate_item mới. Xóa cùng _simulate_with_metrics."""
-    analysis = await pipeline.stage_analyze(item.text, api_key)
-    plan = build_representation_plan(analysis)
-    gap_gate_fired = bool(plan["unsupported_capabilities"])
-
-    classification = await pipeline.stage_classify(item.text, analysis, api_key)
-    predicted = classification.get("simulation_id") if classification.get("status") == "ok" else None
-
-    if item.group == "unsupported":
-        ok = classification.get("status") != "ok"
-        fail = None
-        if not ok:
-            fail = FAIL_UNSUPPORTED_AS_GENERIC if predicted == "generic.rule_scene" else FAIL_WRONG_SELECTION
-        return ItemResult(item.id, item.group, predicted, ok, failure=fail, gap_gate_fired=gap_gate_fired)
-
-    classified_ok = predicted == item.expect_simulation_id
-    if not classified_ok:
-        return ItemResult(
-            item.id, item.group, predicted, False,
-            failure=FAIL_WRONG_SELECTION, gap_gate_fired=gap_gate_fired,
-        )
-
-    config, retry, err_cat, err_msg = await _simulate_with_metrics(item.text, analysis, predicted, api_key)
-    if config is None:
-        return ItemResult(
-            item.id, item.group, predicted, True, spec_valid=False, retry_count=retry,
-            failure=err_cat, detail=err_msg, gap_gate_fired=gap_gate_fired,
-        )
-
-    semantic_ok, detail = True, ""
-    if predicted == "generic.rule_scene":
-        semantic_ok, detail = check_semantic(config, item.semantic)
-    return ItemResult(
-        item.id, item.group, predicted, True,
-        spec_valid=True, retry_count=retry, semantic_ok=semantic_ok,
-        failure=None if semantic_ok else FAIL_SEMANTIC_WRONG, detail=detail,
-        gap_gate_fired=gap_gate_fired,
-    )
+# M14 Task 10: `_simulate_with_metrics` + `_evaluate_item_legacy` ĐÃ RETIRE sau
+# transcript parity proof (test_eval_parity — non-gate cases khớp; gate-refusal
+# là khác biệt hợp lệ đã ghi). Eval nay đi CHUNG production `run_pipeline` +
+# observer (bất biến #22). `classify_error` còn dùng làm FALLBACK khi attempt
+# không mang error_code có cấu trúc (_item_result_from).
 
 
 def _retry_count(attempts: list[dict]) -> int:
