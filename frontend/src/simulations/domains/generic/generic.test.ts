@@ -806,7 +806,7 @@ describe("M13 operand coherence", () => {
     if (!res.ok) expect(res.error).toContain("không có nguồn giá trị");
   });
 
-  it("weighted_sum-target (numeric) nuôi boolean input bị từ chối — role mismatch, coercion DENY mặc định", () => {
+  it("CANARY — weighted_sum-target (numeric) nuôi boolean input bị từ chối — numeric↛logical VẪN DENY (M13 hotfix chỉ nới MỘT CHIỀU logical→numeric)", () => {
     const res = validateGenericConfig({
       dsl_version: "1.0",
       title: "t",
@@ -858,7 +858,14 @@ describe("M13 operand coherence", () => {
       processes: [],
     });
     expect(res.ok).toBe(false);
-    if (!res.ok) expect(res.error).toContain("không nhận được");
+    if (!res.ok) {
+      expect(res.error).toContain("không nhận được");
+      // M13 hotfix: gợi ý DẪN XUẤT từ contract, không được tự mâu thuẫn — không
+      // bao giờ gợi ý lại "node" (type vừa bị từ chối) trong đoạn "(vd ...)".
+      expect(res.error).toContain("value_box");
+      const suggestion = res.error.split("vd ")[1] ?? "";
+      expect(suggestion).not.toContain("node");
+    }
   });
 
   it("boolean ghi vào lamp hợp lệ — lamp chấp nhận logical", () => {
@@ -870,6 +877,68 @@ describe("M13 operand coherence", () => {
         { id: "den", type: "lamp", label: "Đèn" },
       ],
       rules: [{ type: "boolean", op: "not", target: "den", inputs: ["s"] }],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(true);
+  });
+
+  // ── M13 HOTFIX (role compatibility một chiều) ──────────────────────────
+  // Sự cố live thật: đề canonical "A ∧ (B ∨ C)" dựng trung gian bằng value_box
+  // (không phải lamp) — bị M13 Task 3 từ chối oan vì check role cũ đòi EXACT
+  // match. logical satisfies numeric (boolean executor sinh đúng 0/1, 0/1 LÀ
+  // số) → roleSatisfies() nới đúng MỘT CHIỀU này, KHÔNG runtime conversion.
+
+  it("M13 hotfix — boolean → value_box PASS (FP live đã sửa)", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "b", type: "switch", label: "B", value: 1 },
+        { id: "c", type: "switch", label: "C", value: 0 },
+        { id: "vbOR", type: "value_box", label: "B hoặc C" },
+      ],
+      rules: [{ type: "boolean", op: "or", target: "vbOR", inputs: ["b", "c"] }],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(true);
+  });
+
+  it("M13 hotfix — chain boolean → value_box → boolean PASS", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "a", type: "switch", label: "A", value: 1 },
+        { id: "b", type: "switch", label: "B", value: 0 },
+        { id: "c", type: "switch", label: "C", value: 1 },
+        { id: "vbOR", type: "value_box", label: "B hoặc C" },
+        { id: "den", type: "lamp", label: "A và (B hoặc C)" },
+      ],
+      rules: [
+        { type: "boolean", op: "or", target: "vbOR", inputs: ["b", "c"] },
+        { type: "boolean", op: "and", target: "den", inputs: ["a", "vbOR"] },
+      ],
+      interactions: [],
+      processes: [],
+    });
+    expect(res.ok).toBe(true);
+  });
+
+  it("M13 hotfix — boolean-derived → weighted_sum PASS (produced logical satisfies accepted numeric)", () => {
+    const res = validateGenericConfig({
+      dsl_version: "1.0",
+      title: "t",
+      objects: [
+        { id: "s", type: "switch", label: "S", value: 1 },
+        { id: "cond", type: "value_box", label: "Điều kiện" },
+        { id: "tong", type: "value_box", label: "Tổng" },
+      ],
+      rules: [
+        { type: "boolean", op: "not", target: "cond", inputs: ["s"] },
+        { type: "weighted_sum", target: "tong", inputs: ["cond"], weights: [5] },
+      ],
       interactions: [],
       processes: [],
     });

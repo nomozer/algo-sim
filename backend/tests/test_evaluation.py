@@ -66,6 +66,22 @@ def test_classify_error_mapping():
     assert classify_error("Tối đa 20 rule") == "over_limit"
 
 
+def test_classify_error_role_mismatch_khong_bi_khop_nham_unknown_primitive():
+    """M13 hotfix — known-issue 7f: message role-mismatch (validator.py check
+    rule-output→target-role) CHỨA cụm "object type" trong câu gợi ý, khiến
+    nhánh unknown_primitive khớp nhầm và chẩn đoán live canonical đỏ ×2 đi sai
+    hướng (docs/CURRENT_STATE.md §5 7f). Message dưới đây là NGUYÊN VĂN lỗi
+    live thật thu được (trước hotfix) — phải phân loại role_mismatch, KHÔNG
+    phải unknown_primitive."""
+    live_msg = (
+        'Rule boolean sinh giá trị vai trò "logical" nhưng target "vbOR" (value_box) '
+        "không nhận được vai trò đó — dùng object type có vai trò logical làm target "
+        "(vd value_box/lamp)."
+    )
+    assert classify_error(live_msg) == "role_mismatch"
+    assert classify_error(live_msg) != "unknown_primitive"
+
+
 def test_harness_cham_dung_va_tong_hop(monkeypatch):
     items = [
         EvalItem("t-spec", "tìm max", "specialized", "algorithm.find_max"),

@@ -51,6 +51,19 @@ function isNum(v: unknown): v is number {
   return typeof v === "number" && Number.isFinite(v);
 }
 
+/**
+ * M13 hotfix (FP live boolean→value_box): subtyping một chiều — True khi một
+ * giá trị mang vai trò `produced` được CHẤP NHẬN ở vị trí cần `accepted`.
+ * Exact match luôn đúng; ngoài ra đọc `dslContract.role_compatibility` (sinh
+ * từ manifest backend — cùng nguồn dữ liệu, KHÔNG viết tay bảng riêng ở đây).
+ * Mirror `backend/app/simulation/dsl/manifest.py::role_satisfies`.
+ */
+function roleSatisfies(produced: string, accepted: string): boolean {
+  if (produced === accepted) return true;
+  const compat = dslContract.role_compatibility as { produced: string; accepted: string }[];
+  return compat.some((c) => c.produced === produced && c.accepted === accepted);
+}
+
 const DRAG_CONSTRAINT_KEYS = new Set(["bounds", "axis", "snap"]);
 const DRAG_BOUND_KEYS = ["min_x", "max_x", "min_y", "max_y"] as const;
 
@@ -337,24 +350,30 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
 
   // M13 §3.2 + blocker 3: operand coherence với role-typing — contract SINH từ
   // manifest backend (dsl-contract.json), sync-lock test backend chống drift.
-  // Mirror `backend/app/simulation/dsl/validator.py:369-408` (Task 3).
+  // Mirror `backend/app/simulation/dsl/validator.py:369-415` (Task 3 + M13 hotfix
+  // role_satisfies — subtyping một chiều logical→numeric, KHÔNG runtime conversion).
   const ruleIo = dslContract.rule_io as Record<string, { input_role: string; output_role: string }>;
   const targetOutputRole = new Map(rules.map((r) => [r.target, ruleIo[r.type].output_role]));
-  const coercions = new Set(
-    (dslContract.role_coercions as { from: string; to: string }[]).map((c) => `${c.from}->${c.to}`),
-  );
   const objectRoles = dslContract.object_roles as Record<string, string[]>;
   for (const r of rules) {
-    // Ràng buộc 2: target phải chấp nhận output role của rule (parity backend).
+    // Ràng buộc 2: target phải CHẤP NHẬN (qua roleSatisfies) output role của
+    // rule (parity backend). boolean (logical) GIỜ được ghi vào value_box
+    // (numeric) vì logical satisfies numeric (M13 hotfix — FP live thật).
     const outRole = ruleIo[r.type].output_role;
     const targetObj = byId[r.target];
-    if (!objectRoles[targetObj.type]?.includes(outRole)) {
+    if (!objectRoles[targetObj.type]?.some((tr) => roleSatisfies(outRole, tr))) {
+      // Gợi ý DẪN XUẤT từ contract — không hardcode "value_box/lamp": chỉ type
+      // thật sự nhận được outRole (qua roleSatisfies) mới liệt kê, nên không
+      // bao giờ gợi ý lại đúng type vừa bị từ chối (tự mâu thuẫn).
+      const validTypes = Object.keys(objectRoles)
+        .filter((t) => objectRoles[t].some((tr) => roleSatisfies(outRole, tr)))
+        .sort();
       return {
         ok: false,
         error:
           `Rule ${r.type} sinh giá trị vai trò "${outRole}" nhưng target "${r.target}" ` +
-          `(${targetObj.type}) không nhận được vai trò đó — dùng object type có vai trò ` +
-          `${outRole} làm target (vd value_box/lamp).`,
+          `(${targetObj.type}) không nhận được vai trò đó — dùng object type nhận được ` +
+          `vai trò ${outRole} làm target (vd ${validTypes.join(", ")}).`,
       };
     }
     const need = ruleIo[r.type].input_role;
@@ -362,16 +381,16 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
     for (const inp of r.inputs ?? []) {
       const out = targetOutputRole.get(inp);
       if (out !== undefined) {
-        if (out !== need && !coercions.has(`${out}->${need}`)) {
+        if (!roleSatisfies(out, need)) {
           return {
             ok: false,
             error:
               `Rule "${r.target}" dùng input "${inp}" là kết quả rule khác có vai trò "${out}", ` +
-              `nhưng rule ${r.type} cần vai trò "${need}" — không có coercion được khai. ` +
-              `Dùng nguồn đúng vai trò.`,
+              `nhưng rule ${r.type} cần vai trò "${need}" — "${out}" không tương thích với ` +
+              `"${need}" theo hợp đồng vai trò. Dùng nguồn đúng vai trò.`,
           };
         }
-        continue; // derived + đúng role → defer theo bound lúc chạy
+        continue; // derived + role thỏa → defer theo bound lúc chạy
       }
       const o = byId[inp];
       if (!providers.includes(o.type) || o.value === undefined) {

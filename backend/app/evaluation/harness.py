@@ -34,11 +34,25 @@ FAIL_OVER_LIMIT = "over_limit"
 FAIL_SEMANTIC_WRONG = "semantic_wrong"
 FAIL_UNSUPPORTED_AS_GENERIC = "unsupported_as_generic"
 FAIL_SCENE_MODE = "scene_mode_mismatch"  # M7.13A: spec trái với scene_mode của plan
+# M13 hotfix: nhóm riêng cho role-typing mismatch (validator.py operand
+# coherence, §3.2/blocker 3) — message của nhóm này CHỨA cụm "object type"
+# trong câu gợi ý ("dùng object type ... làm target"), nên từng bị nhánh
+# unknown_primitive bên dưới khớp nhầm và làm chẩn đoán live đi sai hướng
+# (known-issue 7f — canonical đỏ ×2 bị dán nhãn unknown_primitive trong khi
+# validator KHÔNG hề chặn ở primitive allowlist). Phải kiểm nhóm này TRƯỚC.
+FAIL_ROLE_MISMATCH = "role_mismatch"
 
 
 def classify_error(msg: str) -> str:
     """Ánh xạ thông báo lỗi validation → nhóm lỗi (§5)."""
     m = (msg or "").lower()
+    # M13 hotfix: role mismatch TRƯỚC unknown_primitive — không dựa vào cụm
+    # chung "object type" (message role-typing cũng chứa cụm đó trong gợi ý),
+    # mà dựa vào cụm ĐẶC THÙ của chính hai nhánh role-typing trong validator.py
+    # (check (a) target-role, check (b) derived-source-role — cả hai đều nêu
+    # "vai trò" theo cách unknown_primitive/unknown_rule không dùng).
+    if "không nhận được vai trò" in m or ("không tương thích" in m and "vai trò" in m):
+        return FAIL_ROLE_MISMATCH
     if "object type" in m or "type không hợp lệ" in m and "rule" not in m:
         return FAIL_UNKNOWN_PRIMITIVE
     if "rule type" in m or "boolean rule" in m or "weighted_sum" in m:

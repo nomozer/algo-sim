@@ -368,35 +368,49 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
 
     # ── M13 §3.2 + blocker 3: operand coherence VỚI role-typing ──
     # INVALID_SOURCE: type không phải provider của role rule cần, hoặc provider
-    #   nhưng không khai value; HOẶC derived target có output_role KHÔNG khớp
-    #   input_role của rule tiêu thụ (coercion DENY mặc định — role_coercions rỗng).
+    #   nhưng không khai value; HOẶC derived target có output_role KHÔNG THỎA
+    #   input_role của rule tiêu thụ theo role_satisfies() (subtyping một chiều
+    #   logical→numeric; mọi cặp khác vẫn DENY mặc định — M13 hotfix).
     # UNRESOLVED_DERIVED_SOURCE (hợp lệ ở tầng validate): input là target của rule
-    #   khác VÀ output_role khớp — thứ tự khai báo tự do, runtime defer theo bound.
+    #   khác VÀ output_role thỏa input_role — thứ tự khai báo tự do, runtime defer
+    #   theo bound.
     target_output_role = {r["target"]: M.RULE_IO_ROLES[r["type"]]["output_role"] for r in rules}
-    coercions = {(c["from"], c["to"]) for c in M.dsl_semantic_contract()["role_coercions"]}
+    object_roles = M.dsl_semantic_contract()["object_roles"]
     for r in rules:
-        # Ràng buộc 2: target object phải CHẤP NHẬN output role của rule —
-        # weighted_sum (numeric) không được ghi vào node/edge (relational).
+        # Ràng buộc 2: target object phải CHẤP NHẬN (qua role_satisfies) output
+        # role của rule — weighted_sum (numeric) không được ghi vào node/edge
+        # (relational); boolean (logical) GIỜ được ghi vào value_box (numeric)
+        # vì logical satisfies numeric (M13 hotfix — FP live boolean→value_box).
         out_role = M.RULE_IO_ROLES[r["type"]]["output_role"]
         target_obj = by_id[r["target"]]
-        if out_role not in M.PRIMITIVE_ROLES.get(target_obj["type"], set()):
+        target_roles = M.PRIMITIVE_ROLES.get(target_obj["type"], set())
+        if not any(M.role_satisfies(out_role, tr) for tr in target_roles):
+            # Gợi ý DẪN XUẤT từ contract — không hardcode "value_box/lamp":
+            # type nào thật sự nhận được out_role (qua role_satisfies) mới liệt kê,
+            # nên không bao giờ gợi ý đúng type vừa bị từ chối (tự mâu thuẫn).
+            valid_types = sorted(
+                t for t, roles in object_roles.items()
+                if any(M.role_satisfies(out_role, tr) for tr in roles)
+            )
             return None, (
                 f'Rule {r["type"]} sinh giá trị vai trò "{out_role}" nhưng target '
                 f'"{r["target"]}" ({target_obj["type"]}) không nhận được vai trò đó — '
-                f'dùng object type có vai trò {out_role} làm target (vd value_box/lamp).'
+                f'dùng object type nhận được vai trò {out_role} làm target '
+                f'(vd {", ".join(valid_types)}).'
             )
         need = M.RULE_IO_ROLES[r["type"]]["input_role"]
         providers = M.value_provider_types(need)
         for inp in r.get("inputs", []):
             if inp in target_output_role:
                 out = target_output_role[inp]
-                if out != need and (out, need) not in coercions:
+                if not M.role_satisfies(out, need):
                     return None, (
                         f'Rule "{r["target"]}" dùng input "{inp}" là kết quả rule khác có '
                         f'vai trò "{out}", nhưng rule {r["type"]} cần vai trò "{need}" — '
-                        f'không có coercion được khai. Dùng nguồn đúng vai trò.'
+                        f'"{out}" không tương thích với "{need}" theo hợp đồng vai trò. '
+                        f'Dùng nguồn đúng vai trò.'
                     )
-                continue  # derived + đúng role → defer lúc chạy
+                continue  # derived + role thỏa → defer lúc chạy
             o = by_id[inp]
             if o["type"] not in providers or "value" not in o:
                 return None, (

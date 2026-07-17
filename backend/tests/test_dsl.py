@@ -321,6 +321,12 @@ def test_rule_output_ghi_vao_target_sai_role_bi_tu_choi():
     config, err = validate_generic_config(spec)
     assert config is None
     assert "không nhận được" in err
+    # M13 hotfix: gợi ý target types phải DẪN XUẤT từ contract (không hardcode)
+    # và KHÔNG được tự mâu thuẫn — không bao giờ gợi ý lại "node" (type vừa
+    # bị từ chối) trong đoạn "(vd ...)".
+    assert "value_box" in err
+    suggestion = err.rsplit("vd ", 1)[1]
+    assert "node" not in suggestion
 
 
 def test_rule_output_ghi_vao_target_dung_role_hop_le():
@@ -331,6 +337,66 @@ def test_rule_output_ghi_vao_target_dung_role_hop_le():
             {"id": "den", "type": "lamp", "label": "Đèn"},
         ],
         rules=[{"type": "boolean", "op": "not", "target": "den", "inputs": ["s"]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
+
+
+# ── M13 HOTFIX (role compatibility một chiều) ──────────────────────────
+# Sự cố live thật: đề canonical "A ∧ (B ∨ C)" dựng trung gian bằng value_box
+# (không phải lamp) — bị M13 Task 3 từ chối oan vì check role cũ đòi EXACT
+# match. boolean executor sinh đúng 0/1 (0/1 LÀ số) nên logical output hợp lệ
+# ở vị trí numeric — role_satisfies() nới đúng MỘT CHIỀU này (không runtime
+# conversion). Chiều ngược lại numeric↛logical VẪN DENY (xem canary
+# test_derived_target_sai_role_bi_tu_choi_weighted_sum_nuoi_boolean ở trên).
+
+def test_boolean_target_value_box_hop_le_M13_hotfix():
+    """FP live thật đã sửa: boolean → value_box PASS (logical satisfies numeric)."""
+    spec = _spec(
+        objects=[
+            {"id": "b", "type": "switch", "label": "B", "value": 1},
+            {"id": "c", "type": "switch", "label": "C", "value": 0},
+            {"id": "vbOR", "type": "value_box", "label": "B hoặc C"},
+        ],
+        rules=[{"type": "boolean", "op": "or", "target": "vbOR", "inputs": ["b", "c"]}],
+    )
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
+
+
+def test_chain_boolean_value_box_boolean_hop_le_M13_hotfix():
+    """chain boolean → value_box → boolean PASS: value_box trung gian nhận
+    output_role="logical" từ rule sở hữu nó (RULE_IO_ROLES, không phải
+    PRIMITIVE_ROLES của object) → input_role của rule ngoài khớp EXACT."""
+    spec = _spec(
+        objects=[
+            {"id": "a", "type": "switch", "label": "A", "value": 1},
+            {"id": "b", "type": "switch", "label": "B", "value": 0},
+            {"id": "c", "type": "switch", "label": "C", "value": 1},
+            {"id": "vbOR", "type": "value_box", "label": "B hoặc C"},
+            {"id": "den", "type": "lamp", "label": "A và (B hoặc C)"},
+        ],
+        rules=[
+            {"type": "boolean", "op": "or", "target": "vbOR", "inputs": ["b", "c"]},
+            {"type": "boolean", "op": "and", "target": "den", "inputs": ["a", "vbOR"]},
+        ],
+    )
+    config, err = validate_generic_config(spec)
+    assert err is None and config is not None
+
+
+def test_boolean_derived_nuoi_weighted_sum_hop_le_M13_hotfix():
+    """boolean-derived → weighted_sum PASS: produced logical satisfies accepted numeric."""
+    spec = _spec(
+        objects=[
+            {"id": "s", "type": "switch", "label": "S", "value": 1},
+            {"id": "cond", "type": "value_box", "label": "Điều kiện"},
+            {"id": "tong", "type": "value_box", "label": "Tổng"},
+        ],
+        rules=[
+            {"type": "boolean", "op": "not", "target": "cond", "inputs": ["s"]},
+            {"type": "weighted_sum", "target": "tong", "inputs": ["cond"], "weights": [5]},
+        ],
     )
     config, err = validate_generic_config(spec)
     assert err is None and config is not None

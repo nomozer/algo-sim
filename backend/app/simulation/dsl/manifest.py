@@ -331,6 +331,35 @@ def manifest_contract_text() -> str:
     )
 
 
+# M13 hotfix: subtyping một chiều — bảng NGUỒN DUY NHẤT cho role_satisfies()
+# và dsl_semantic_contract()["role_compatibility"]. Thêm cặp mới CHỈ khi có
+# audit chứng minh (như logical→numeric ở đây); mặc định vẫn DENY mọi cặp
+# khác role_satisfies chưa cover.
+ROLE_COMPATIBILITY: list[dict[str, str]] = [
+    {"produced": "logical", "accepted": "numeric"},
+]
+
+
+def role_satisfies(produced: str, accepted: str) -> bool:
+    """M13 hotfix (FP live boolean→value_box): subtyping một chiều — True khi
+    một giá trị mang vai trò `produced` được CHẤP NHẬN ở vị trí cần `accepted`.
+
+    Exact match luôn đúng. Ngoài ra: `logical` SATISFIES `numeric` — boolean
+    executor sinh đúng 0/1, giá trị 0/1 LÀ số, nên hợp lệ ở vị trí numeric.
+    KHÔNG có runtime conversion nào chạy vì việc này — engine không đổi gì,
+    đây thuần là nới validator theo MỘT CHIỀU.
+
+    Chiều ngược lại (`numeric` KHÔNG satisfies `logical`) LUÔN False — đó
+    chính là lớp coercion ngầm kiểu `v >= 1` mà M13 (Task 3) sinh ra để diệt,
+    và phải giữ DENY (canary `test_derived_target_sai_role_bi_tu_choi_weighted_sum_nuoi_boolean`).
+
+    Dẫn xuất từ ROLE_COMPATIBILITY — cùng bảng dữ liệu nguồn với
+    `dsl_semantic_contract()["role_compatibility"]`, không viết tay hai nơi."""
+    if produced == accepted:
+        return True
+    return any(c["produced"] == produced and c["accepted"] == accepted for c in ROLE_COMPATIBILITY)
+
+
 def value_provider_types(role: str) -> set[str]:
     """M13: các OBJECT type có vai trò cung cấp giá trị `role` (vd "numeric").
 
@@ -372,6 +401,9 @@ def dsl_semantic_contract() -> dict:
         "object_roles": {
             t: sorted(PRIMITIVE_ROLES[t]) for t in sorted(object_types)
         },
-        "role_coercions": [],  # DENY mặc định — chỉ thêm khi matrix audit chứng minh
+        # M13 hotfix: subtyping một chiều (logical satisfies numeric); KHÔNG
+        # runtime conversion. Dẫn xuất từ ROLE_COMPATIBILITY — nguồn duy nhất
+        # cũng cấp cho role_satisfies().
+        "role_compatibility": [dict(c) for c in ROLE_COMPATIBILITY],
         "patch_add_fields": sorted(PATCH_ADD_FIELDS),
     }

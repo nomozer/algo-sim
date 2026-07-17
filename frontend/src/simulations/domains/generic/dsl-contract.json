@@ -61,7 +61,12 @@
       "numeric"
     ]
   },
-  "role_coercions": [],
+  "role_compatibility": [
+    {
+      "produced": "logical",
+      "accepted": "numeric"
+    }
+  ],
   "patch_add_fields": [
     "directed",
     "from",
