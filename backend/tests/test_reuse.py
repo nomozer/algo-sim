@@ -23,6 +23,9 @@ VALID_ANALYSIS = {
     "input_description": "Dãy 3 số",
     "output_description": "Giá trị lớn nhất",
     "notes": None,
+    # M13: ANALYSIS_WEB_STATIC (bên dưới) dẫn xuất từ đây — cảnh dựng/hiển thị
+    # trang web CHO SẴN, không đòi tính toán → "provided".
+    "result_ownership": "provided",
 }
 FINDMAX_CLASSIFY = {"status": "ok", "simulation_id": "algorithm.find_max", "reason": None}
 FINDMAX_CONFIG = {

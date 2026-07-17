@@ -678,6 +678,8 @@ def test_classify_chon_generic_va_simulate_sinh_spec(monkeypatch):
         "input_description": "Hai đầu vào",
         "output_description": "Đầu ra XOR",
         "notes": None,
+        # M13: đầu ra cổng logic tính TỪ giá trị công tắc cho sẵn bằng rule — rule_derivable.
+        "result_ownership": "rule_derivable",
     }
     xor_spec = {
         "dsl_version": "1.0",
@@ -710,8 +712,10 @@ def test_classify_chon_generic_va_simulate_sinh_spec(monkeypatch):
 
 
 def test_simulate_generic_retry_khi_spec_sai(monkeypatch):
+    # M13: cổng NOT — đầu ra tính TỪ công tắc cho sẵn bằng rule — rule_derivable.
     analysis = {"objects": [], "data": [], "relations": [], "processes": [], "constraints": [],
-                "goal": "g", "input_description": "i", "output_description": "o", "notes": None}
+                "goal": "g", "input_description": "i", "output_description": "o", "notes": None,
+                "result_ownership": "rule_derivable"}
     bad_spec = {"title": "x", "objects": [{"id": "a", "type": "hologram"}]}  # type lạ → reject
     good_spec = {"title": "OK", "objects": [{"id": "a", "type": "switch", "value": 0}, {"id": "y", "type": "lamp"}],
                  "rules": [{"type": "boolean", "op": "not", "inputs": ["a"], "target": "y"}],

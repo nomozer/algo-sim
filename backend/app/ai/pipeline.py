@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 
 from app.simulation.catalog import CATALOG, catalog_text
+from app.simulation.computation_gate import check_computation_ownership
 from app.simulation.dsl.manifest import manifest_capability_summary
 from app.simulation.patterns import (
     deterministic_fill,
@@ -67,6 +68,13 @@ ANALYZE_SCHEMA = {
         "interaction_needs": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
         "visual_needs": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
         "temporal_needs": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
+        # M13: nguồn kết quả cuối của bài — SERVER dùng để chặn "AI tự giải rồi
+        # dựng cảnh minh hoạ đáp án" (computation-ownership gate). Bắt buộc +
+        # fail-closed: xem app/simulation/computation_gate.py.
+        "result_ownership": {
+            "type": "STRING",
+            "enum": ["provided", "rule_derivable", "algorithmic"],
+        },
         "notes": {"type": "STRING", "nullable": True},
     },
     "required": [
@@ -78,6 +86,7 @@ ANALYZE_SCHEMA = {
         "goal",
         "input_description",
         "output_description",
+        "result_ownership",
     ],
 }
 
@@ -319,21 +328,21 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
 
     classification = await stage_classify(text, analysis, api_key)
 
-    # M7.11 + M7.14C: vai trò không primitive nào cover → capability_gap, KHÔNG
-    # ép kiến thức vào primitive sai. Nhưng gap của DSL chỉ chặn ĐƯỜNG GENERIC —
-    # bài được classify về mô-đun CHUYÊN BIỆT có engine riêng (không dùng DSL)
-    # thì đi tiếp bình thường (bug live: sum_if từng bị vạ lây vì analyze gắn
-    # numeric_threshold cho điều kiện lọc "lớn hơn 4").
-    if plan["unsupported_capabilities"]:
-        chosen = classification.get("simulation_id") if classification.get("status") == "ok" else None
-        if chosen is None or chosen == "generic.rule_scene":
+    # M7.11 + M7.14C + M13 Gate B: vai trò không primitive nào cover HOẶC kết
+    # quả đòi cơ chế thuật toán không engine nào sở hữu → capability_gap, KHÔNG
+    # ép kiến thức vào primitive sai / để AI tự giải rồi dựng cảnh minh hoạ đáp
+    # án. Nhưng gate chỉ chặn ĐƯỜNG GENERIC — bài được classify về mô-đun
+    # CHUYÊN BIỆT có engine riêng (không dùng DSL) thì đi tiếp bình thường (bug
+    # live: sum_if từng bị vạ lây vì analyze gắn numeric_threshold cho điều
+    # kiện lọc "lớn hơn 4"). SERVER ra phán quyết cuối, tất định — không đọc
+    # text đề (không keyword-patch).
+    chosen = classification.get("simulation_id") if classification.get("status") == "ok" else None
+    if chosen is None or chosen == "generic.rule_scene":
+        gate_reason = check_computation_ownership(analysis, plan)
+        if gate_reason:
             return {
                 "status": "unsupported",
-                "reason": (
-                    "Đề cần khả năng biểu diễn mà DSL hiện chưa có "
-                    f"(vai trò: {', '.join(plan['unsupported_capabilities'])}). "
-                    "Chưa thể mô phỏng đúng bản chất bài này."
-                ),
+                "reason": gate_reason,
                 "failure_category": "capability_gap",
                 "representation_plan": plan,
                 "analysis": analysis,

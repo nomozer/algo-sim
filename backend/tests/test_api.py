@@ -220,6 +220,30 @@ def test_cache_version_o_cot_lech_la_miss():
         s.commit()
 
 
+def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
+    """M13 Task 9: CACHE_VERSION bump "9" → "10" (computation-ownership gate) —
+    envelope cache dưới chính sách LUẬT CŨ (policy_version="9", trước khi gate
+    tồn tại) không bao giờ được trả lại mù; phải MISS để đề được phân tích lại
+    dưới luật mới."""
+    from app.main import _cache_lookup
+
+    assert main_module.CACHE_VERSION == "10"
+    init_db()
+    text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
+    key = _cache_key(text)
+    with SessionLocal() as s:
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.add(SimulationCache(
+            key=key, problem_text=text, simulation_id="generic.rule_scene",
+            envelope_json="{}", dsl_version=DSL_VERSION, policy_version="9",
+        ))
+        s.commit()
+        assert _cache_lookup(s, key) is None  # policy_version="9" (luật cũ) → miss
+
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.commit()
+
+
 def test_khong_cache_ket_qua_unsupported(monkeypatch):
     """M7.8 §5: unsupported KHÔNG được cache → tránh kẹt kết quả cũ khi
     năng lực classify/DSL cải thiện."""

@@ -23,6 +23,10 @@ VALID_ANALYSIS = {
     "input_description": "Dãy 3 số",
     "output_description": "Giá trị lớn nhất",
     "notes": None,
+    # M13: cảnh dựng/hiển thị (dãy số CHO SẴN) — không đòi cơ chế thuật toán
+    # riêng ngoài engine chuyên biệt; các fixture DẪN XUẤT (**VALID_ANALYSIS)
+    # bên dưới đều là cảnh dựng/hiển thị nên kế thừa "provided" là đúng ngữ nghĩa.
+    "result_ownership": "provided",
 }
 
 VALID_CLASSIFY = {"status": "ok", "simulation_id": "algorithm.find_max", "reason": None}

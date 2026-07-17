@@ -70,7 +70,11 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 # "7": M10-AI-ROUTE — network.protocol_encapsulation vào CATALOG (menu classify
 #      đổi): đề đóng gói qua tầng TỪNG bị unsupported/định tuyến nhầm nay có
 #      module chuyên biệt → invalidate cache cũ.
-CACHE_VERSION = "9"
+# "10": M13 — operand coherence + taxonomy arbitrary_algorithm mở rộng +
+#       result_ownership (computation-ownership gate, Task 9): đề "mô phỏng
+#       thuật toán X có tên" TỪNG bị định tuyến nhầm vào generic.rule_scene
+#       (dựng cảnh giả kết quả) nay gap trung thực → invalidate cache cũ.
+CACHE_VERSION = "10"
 
 
 class InputPayload(BaseModel):
