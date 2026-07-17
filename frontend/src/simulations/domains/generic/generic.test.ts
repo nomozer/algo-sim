@@ -164,6 +164,41 @@ describe("validateConfig từ chối spec sai (§5)", () => {
     });
     expect(r.ok).toBe(true);
   });
+  // M13 Task 8 (FP-budget): test trên chỉ validate (r.ok===true) — không có
+  // test nào evaluate bảng chân trị nested-boolean trên config ĐÃ QUA
+  // validateGenericConfig mới (operand coherence + role-typing). Test dưới
+  // nối liền cả hai: validate rồi eval 2 dòng đại diện AND(a, OR(b, c)).
+  it("nested-boolean M11 qua validateGenericConfig mới rồi eval 2 dòng đại diện", () => {
+    const s = spec({
+      dsl_version: "1.0",
+      title: "Đèn A và (B hoặc C)",
+      objects: [
+        { id: "a", type: "switch", value: 0, label: "A" },
+        { id: "b", type: "switch", value: 0, label: "B" },
+        { id: "c", type: "switch", value: 0, label: "C" },
+        { id: "t", type: "lamp", label: "B hoặc C" },
+        { id: "y", type: "lamp", label: "Đèn" },
+      ],
+      rules: [
+        { type: "boolean", op: "or", inputs: ["b", "c"], target: "t" },
+        { type: "boolean", op: "and", inputs: ["a", "t"], target: "y" },
+      ],
+      interactions: [
+        { type: "toggle", target: "a" },
+        { type: "toggle", target: "b" },
+        { type: "toggle", target: "c" },
+      ],
+    });
+    const base = initialBase(s);
+    // Dòng 1: a=0 chặn AND dù nhánh OR trung gian bật (t=1) → y=0.
+    const row1 = valuesOf(s, { ...base, a: 0, b: 1, c: 0 });
+    expect(row1.t).toBe(1);
+    expect(row1.y).toBe(0);
+    // Dòng 2: a=1, đúng một trong b/c bật → t=1 → y=AND(1,1)=1.
+    const row2 = valuesOf(s, { ...base, a: 1, b: 0, c: 1 });
+    expect(row2.t).toBe(1);
+    expect(row2.y).toBe(1);
+  });
   it("hai rule cùng ghi một target bị reject (M11)", () => {
     const r = mod.validateConfig({
       dsl_version: "1.0",
