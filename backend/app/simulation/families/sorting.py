@@ -126,6 +126,30 @@ def validate_family_spec(raw) -> tuple[dict | None, str | None]:
     }, None
 
 
+def resolve(family_config: dict, analysis: dict) -> tuple[str, dict]:
+    """Task 7 — adapter TẤT ĐỊNH: FamilySpec (đã validate) → (concrete_id, config
+    AnalysisOk-shape). KHÔNG đọc text đề, KHÔNG LLM, KHÔNG đổi array/order. Output
+    đi qua validate_algorithm_config(variant_id) hiện có (validation kép, Task 8).
+    """
+    variant = family_config["variant"]
+    var = next(v for v in _VARIANTS if v.variant_id == variant)
+    a = analysis if isinstance(analysis, dict) else {}
+    data: dict = {"array": list(family_config["array"]), "order": family_config["order"]}
+    if family_config.get("labels"):
+        data["labels"] = list(family_config["labels"])
+    config: dict = {
+        "problem": {
+            "summary": a.get("goal") or "Sắp xếp dãy số",
+            "input": a.get("input_description") or "Dãy số cần sắp xếp",
+            "output": a.get("output_description") or "Dãy đã sắp xếp",
+        },
+        "data": data,
+    }
+    if family_config.get("notes"):
+        config["notes"] = family_config["notes"]
+    return var.concrete_simulation_id, config
+
+
 SORTING_SELECTOR = FamilySelector(
     family_id=FamilyId.COMPARISON_SORT,
     selector_token=SELECTOR_TOKEN,
@@ -141,5 +165,5 @@ SORTING_SELECTOR = FamilySelector(
     config_schema=SORTING_FAMILY_SCHEMA,
     contract=SORTING_FAMILY_CONTRACT,
     validate_family_spec=validate_family_spec,
-    # resolve: Task 7
+    resolve=resolve,
 )
