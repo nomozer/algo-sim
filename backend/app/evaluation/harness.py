@@ -14,7 +14,20 @@ from app.ai import pipeline
 from app.ai.gemini import ApiBudget, BudgetExceeded
 from app.evaluation.observer import AttemptObserver
 from app.evaluation.dataset import DATASET, EvalItem
+from app.simulation.families import FAMILY_SELECTORS
 from app.simulation.semantic import check_semantic
+
+
+def _selector_token_for_concrete(concrete_id: str | None) -> str | None:
+    """M14 §F3 — token selector mà một concrete id nằm SAU (None nếu concrete
+    không thuộc family nào có selector). Dùng để đo family/variant selection."""
+    if not concrete_id:
+        return None
+    for sel in FAMILY_SELECTORS.values():
+        for v in sel.variants:
+            if v.concrete_simulation_id == concrete_id:
+                return sel.selector_token
+    return None
 
 # Phân loại lỗi (§5)
 FAIL_WRONG_SELECTION = "wrong_selection"
@@ -83,6 +96,12 @@ class ItemResult:
     variant: str | None = None
     computation_gate_fired: bool | None = None
     mechanism_gate_fired: bool | None = None
+    # M14 §F3 — cờ dẫn xuất để tách metric (đo trên final ENVELOPE, không phải
+    # classify output — vì classify nay có thể trả selector token).
+    expected_family_routed: bool = False       # expect nằm sau một family selector
+    final_route_correct: bool | None = None     # final_simulation_id == expect
+    family_selection_correct: bool | None = None  # classify token == selector kỳ vọng
+    variant_selection_correct: bool | None = None  # variant resolve đúng concrete
 
 
 @dataclass
@@ -128,11 +147,24 @@ class EvalReport:
         supported = [r for r in self.results if r.group != "unsupported" and r.gap_gate_fired is not None]
         false_gaps = [r.id for r in supported if r.gap_gate_fired]
 
+        # M14 §F3 — metric TÁCH BẠCH đo trên FINAL ENVELOPE (không phải classify
+        # output — vì classify nay có thể trả selector token). classification_accuracy
+        # CŨ vẫn tính trên classified_ok (đã dung nạp final==expect ở
+        # _item_result_from) → cho item KHÔNG family-routed, hai số TRÙNG (so sánh
+        # baseline hợp lệ); cho item family-routed, đọc final_route_accuracy.
+        sup_all = spec_a + spec_b
+        routed = [r for r in sup_all if r.expected_family_routed]
+
         return {
             "total": total,
             "classification_accuracy": rate(classified_ok, total),
+            "final_route_accuracy": rate(sum(1 for r in sup_all if r.final_route_correct), len(sup_all)),
+            "family_selection_accuracy": rate(sum(1 for r in routed if r.family_selection_correct), len(routed)),
+            "variant_selection_accuracy": rate(sum(1 for r in routed if r.variant_selection_correct), len(routed)),
+            "family_routed_count": len(routed),
             "gap_gate_recall": rate(len(gap_gate_hits), len(gap_gate_expected)),
             "gap_gate_false_positives": false_gaps,
+            "mechanism_gate_fired_ids": [r.id for r in self.results if r.mechanism_gate_fired],
             "specialized_selection_accuracy": rate(sum(1 for r in spec_a if r.classified_ok), len(spec_a)),
             "generic_selection_accuracy": rate(sum(1 for r in spec_b if r.classified_ok), len(spec_b)),
             "unsupported_recall": rate(sum(1 for r in spec_c if r.classified_ok), len(spec_c)),
@@ -177,6 +209,7 @@ def _item_result_from(
     final_id = env.get("simulation_id") if env_ok else None
     fam = obs.family_resolved() or {}
 
+    expected_token = _selector_token_for_concrete(item.expect_simulation_id)
     common = dict(
         gap_gate_fired=gap_gate_fired,
         classify_simulation_id=predicted,
@@ -184,6 +217,11 @@ def _item_result_from(
         variant=fam.get("variant"),
         computation_gate_fired=any(g.get("gate") == "computation" and g.get("fired") for g in obs.gates()),
         mechanism_gate_fired=any(g.get("gate") == "mechanism" and g.get("fired") for g in obs.gates()),
+        # M14 §F3 — đo trên FINAL envelope (không phải classify output)
+        expected_family_routed=expected_token is not None,
+        final_route_correct=(final_id == item.expect_simulation_id) if item.group != "unsupported" else None,
+        family_selection_correct=(predicted == expected_token) if expected_token else None,
+        variant_selection_correct=(final_id == item.expect_simulation_id) if expected_token else None,
     )
 
     # nhóm unsupported: ĐÚNG khi pipeline KHÔNG ra envelope ok (từ chối trung thực)
@@ -285,6 +323,14 @@ def format_report(report: EvalReport) -> str:
     ):
         lines.append(f"  {key}: {m[key]}")
     lines.append(f"  error_categories: {m['error_categories']}")
+    lines.append("")
+    # M14 §F3 — metric TÁCH BẠCH (đo trên FINAL envelope). classification_accuracy
+    # ở trên đo classify_ok (dung nạp final==expect); các số dưới tách rõ.
+    lines.append("--- Family routing (metric mới M14, đo trên FINAL envelope) ---")
+    lines.append(f"  final_route_accuracy: {m['final_route_accuracy']}")
+    lines.append(f"  family_selection_accuracy: {m['family_selection_accuracy']} (n={m['family_routed_count']})")
+    lines.append(f"  variant_selection_accuracy: {m['variant_selection_accuracy']} (n={m['family_routed_count']})")
+    lines.append(f"  mechanism_gate_fired: {m['mechanism_gate_fired_ids'] or 'không có'}")
     lines.append("")
     # M7.14T: metric SONG SONG — đo capability gate thật, không đụng metric cũ
     lines.append("--- Capability gate (metric mới, M7.14C) ---")

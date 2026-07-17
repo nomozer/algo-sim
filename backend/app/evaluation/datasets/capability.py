@@ -19,7 +19,7 @@ CAPABILITY_ITEMS: list[EvalItem] = [
         text="Cho dãy 5, 2, 9, 1, 7. Hãy sắp xếp dãy tăng dần bằng thuật toán sắp xếp nổi bọt.",
         group="specialized",
         expect_simulation_id="algorithm.bubble_sort",
-        tags=("capability", "smoke_v2", "flagship"),
+        tags=("capability", "smoke_v2", "flagship", "m14_sorting"),
         curriculum_area="T11CS.CD6",
         curriculum_topic="Các thuật toán sắp xếp đơn giản (Bài 21)",
         capability_family="sorting_movement",
@@ -39,7 +39,7 @@ CAPABILITY_ITEMS: list[EvalItem] = [
         text="Sắp xếp dãy 8, 3, 5, 2 theo thứ tự tăng dần bằng thuật toán sắp xếp chèn.",
         group="specialized",
         expect_simulation_id="algorithm.insertion_sort",
-        tags=("capability",),
+        tags=("capability", "m14_sorting"),
         curriculum_area="T11CS.CD6",
         curriculum_topic="Các thuật toán sắp xếp đơn giản (Bài 21)",
         capability_family="sorting_movement",
@@ -50,6 +50,66 @@ CAPABILITY_ITEMS: list[EvalItem] = [
             "Cơ chế ẩn: vùng ĐÃ SẮP ở đầu dãy lớn dần, và mỗi phần tử mới phải LÙI dần "
             "về đúng vị trí. Học sinh thường nhầm hai thuật toán sắp xếp vì kết quả cuối "
             "giống hệt nhau — chỉ có diễn biến từng bước mới phân biệt được."
+        ),
+    ),
+    # ── M14 paraphrase THEO CƠ CHẾ (không nêu tên "nổi bọt") ──────────
+    EvalItem(
+        id="cap-bubble-paraphrase",
+        text=(
+            "Xếp các bạn theo điểm tăng dần bằng cách lần lượt so sánh HAI bạn ĐỨNG KỀ "
+            "nhau và đổi chỗ nếu bạn trước có điểm cao hơn. Dãy điểm: 6, 3, 8, 4."
+        ),
+        group="specialized",
+        expect_simulation_id="algorithm.bubble_sort",
+        tags=("capability", "m14_sorting"),
+        curriculum_area="T11CS.CD6",
+        curriculum_topic="Các thuật toán sắp xếp đơn giản (Bài 21)",
+        capability_family="sorting_movement",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective="Nhận ra cơ chế đổi-chỗ-cặp-kề của sắp xếp nổi bọt qua MÔ TẢ, không qua tên gọi.",
+        pedagogical_rationale=(
+            "Cơ chế ẩn: so sánh và ĐỔI CHỖ hai phần tử KỀ nhau — đặc trưng của nổi bọt. "
+            "Đề diễn đạt cơ chế bằng lời (không gọi tên thuật toán) để kiểm hệ định tuyến "
+            "theo CƠ CHẾ chứ không theo từ khóa tên thuật toán."
+        ),
+    ),
+    # ── M14 near-miss: cơ chế NGOÀI family → capability_gap trung thực ──
+    EvalItem(
+        id="cap-selection-sort-gap",
+        text="Sắp xếp dãy 5, 2, 9, 1 tăng dần bằng thuật toán sắp xếp chọn: mỗi bước tìm phần tử nhỏ nhất của phần còn lại rồi đưa lên đầu.",
+        group="unsupported",
+        expect_simulation_id=None,
+        tags=("capability", "boundary", "m14_sorting"),
+        curriculum_area="T11CS.CD6 (biến thể sắp xếp — cơ chế chưa có engine)",
+        curriculum_topic="Sắp xếp chọn (selection sort)",
+        capability_family="sorting_mechanism_gap",
+        complexity="L4",
+        result_mode="unsupported",
+        learning_objective="Hệ từ chối trung thực khi đề ép một cơ chế sắp xếp mà không executor nào sở hữu, thay vì minh hoạ bằng thuật toán khác.",
+        pedagogical_rationale=(
+            "Cơ chế ẩn của sắp xếp CHỌN — CHỌN CỰC TIỂU LẶP trên phần chưa sắp — khác hẳn "
+            "đổi-chỗ-cặp-kề (nổi bọt) và dời-vào-phần-đã-sắp (chèn). Engine hiện có KHÔNG sở "
+            "hữu cơ chế này; dựng cảnh nổi bọt/chèn để 'minh hoạ' selection sort là dạy SAI "
+            "cơ chế. capability_gap trung thực (mechanism gate) tốt hơn."
+        ),
+    ),
+    EvalItem(
+        id="cap-quicksort-gap",
+        text="Mô phỏng sắp xếp nhanh (quick sort) dãy 5, 3, 8, 1, 9: chọn một mốc, chia dãy quanh mốc rồi sắp mỗi phần một cách đệ quy.",
+        group="unsupported",
+        expect_simulation_id=None,
+        tags=("capability", "boundary"),
+        curriculum_area="ngoài phạm vi sắp xếp đơn giản THPT — cơ chế phân hoạch đệ quy",
+        curriculum_topic="Sắp xếp nhanh (quick sort)",
+        capability_family="sorting_mechanism_gap",
+        complexity="L4",
+        result_mode="unsupported",
+        learning_objective="Hệ từ chối cơ chế phân hoạch đệ quy khi không có engine tất định sở hữu.",
+        pedagogical_rationale=(
+            "Cơ chế ẩn của quick sort — CHIA quanh mốc + ĐỆ QUY hai nửa — không thuộc họ so "
+            "sánh-đổi-chỗ tuyến tính mà engine hiện có biểu diễn. Ép về nổi bọt/chèn là dạy "
+            "sai; mechanism gate trả capability_gap."
         ),
     ),
     # ── Sơ đồ hệ thống thông tin TĨNH (đề THẬT từng bị từ chối im lặng) ──
