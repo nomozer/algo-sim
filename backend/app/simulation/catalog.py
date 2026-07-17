@@ -11,6 +11,18 @@ from __future__ import annotations
 from functools import partial
 from typing import Callable
 
+from app.simulation.descriptor import (
+    FamilyId,
+    FamilyMembership,
+    ReachabilityLevel,
+    ResultAuthority,
+)
+from app.simulation.families import FAMILY_SELECTORS, SELECTOR_FAMILY_IDS
+from app.simulation.families.sorting import (
+    MECH_ADJACENT_SWAP,
+    MECH_SHIFT_INSERT,
+    SORT_FAMILY_VERSION,
+)
 from app.simulation.dsl.validator import validate_generic_config
 from app.simulation.dsl.manifest import (
     bool_ops,
@@ -152,6 +164,52 @@ class SimSpec:
 
 CATALOG: dict[str, SimSpec] = {}
 
+# M14 §C1 — reachability chung + metadata descriptor per-id cho 8 algorithm.
+_R_FULL = (
+    ReachabilityLevel.REGISTERED,
+    ReachabilityLevel.LIBRARY_DISCOVERABLE,
+    ReachabilityLevel.AI_REACHABLE_PUBLIC,
+)
+
+
+def _scan_member() -> tuple[FamilyMembership, ...]:
+    return (FamilyMembership(FamilyId.SINGLE_PASS_SCAN, ResultAuthority.COMPUTATION),)
+
+
+# family_memberships + curriculum_anchor cho từng thuật toán (§O2). bubble/insertion
+# mang variant_id/family_spec_version/mechanism_id → cross-lock với SORTING_SELECTOR.
+_ALGO_META: dict[str, dict] = {
+    "find_max": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
+    "find_min": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
+    "sum_if": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
+    "count_if": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
+    "linear_search": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
+    "binary_search": {
+        "memberships": (FamilyMembership(FamilyId.INTERVAL_ELIMINATION, ResultAuthority.COMPUTATION),),
+        "anchor": "T11CS B19",
+    },
+    "bubble_sort": {
+        "memberships": (
+            FamilyMembership(
+                FamilyId.COMPARISON_SORT, ResultAuthority.COMPUTATION,
+                variant_id="bubble", family_spec_version=SORT_FAMILY_VERSION,
+                mechanism_id=MECH_ADJACENT_SWAP,
+            ),
+        ),
+        "anchor": "T11CS B21–22",
+    },
+    "insertion_sort": {
+        "memberships": (
+            FamilyMembership(
+                FamilyId.COMPARISON_SORT, ResultAuthority.COMPUTATION,
+                variant_id="insertion", family_spec_version=SORT_FAMILY_VERSION,
+                mechanism_id=MECH_SHIFT_INSERT,
+            ),
+        ),
+        "anchor": "T11CS B21–22",
+    },
+}
+
 for _aid in ALGORITHM_IDS:
     _sim_id = f"algorithm.{_aid}"
     CATALOG[_sim_id] = SimSpec(
@@ -163,6 +221,9 @@ for _aid in ALGORITHM_IDS:
         contract=_ALGO_CONTRACT,
         validate=partial(validate_algorithm_config, _aid),
         make_title=_algo_title,
+        family_memberships=_ALGO_META[_aid]["memberships"],
+        reachability=_R_FULL,
+        curriculum_anchor=_ALGO_META[_aid]["anchor"],
     )
 
 
@@ -194,6 +255,11 @@ CATALOG["logic.and_gate"] = SimSpec(
     contract=_LOGIC_AND_CONTRACT,
     validate=validate_logic_config,
     make_title=lambda config, analysis: "Cổng logic AND",
+    family_memberships=(
+        FamilyMembership(FamilyId.BOOLEAN_COMPOSITION, ResultAuthority.COMPUTATION),
+    ),
+    reachability=_R_FULL,
+    curriculum_anchor="T10 B5 · T10 B9",
 )
 
 
@@ -223,6 +289,11 @@ CATALOG["binary.decimal_to_binary"] = SimSpec(
     contract=_BINARY_CONTRACT,
     validate=validate_binary_config,
     make_title=lambda config, analysis: f"Đổi {config.get('decimalValue', '')} sang nhị phân",
+    family_memberships=(
+        FamilyMembership(FamilyId.POSITIONAL_REPRESENTATION, ResultAuthority.COMPUTATION),
+    ),
+    reachability=_R_FULL,
+    curriculum_anchor="T10 B4",
 )
 
 
@@ -269,6 +340,11 @@ CATALOG["network.packet_routing"] = SimSpec(
     contract=_NETWORK_CONTRACT,
     validate=validate_network_config,
     make_title=lambda config, analysis: "Đường đi của gói tin trong mạng",
+    family_memberships=(
+        FamilyMembership(FamilyId.GRAPH_TRAVERSAL, ResultAuthority.COMPUTATION),
+    ),
+    reachability=_R_FULL,
+    curriculum_anchor="T10 CĐ2 · T12 CĐ2",
 )
 
 
@@ -347,6 +423,12 @@ CATALOG["algorithm.scan"] = SimSpec(
     contract=_SCAN_CONTRACT,
     validate=validate_scan_config,
     make_title=lambda config, analysis: "Quét dãy một lượt",
+    family_memberships=(
+        FamilyMembership(FamilyId.SINGLE_PASS_SCAN, ResultAuthority.COMPUTATION),
+    ),
+    # scan KHÔNG có sample offline (discovery A) → không library_discoverable
+    reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),
+    curriculum_anchor="T10 CĐ5 · T11CS B17",
 )
 
 
@@ -376,6 +458,12 @@ CATALOG["network.protocol_encapsulation"] = SimSpec(
     contract=_ENCAP_CONTRACT,
     validate=validate_encapsulation_config,
     make_title=lambda config, analysis: "Đóng gói dữ liệu qua các tầng TCP/IP",
+    family_memberships=(
+        FamilyMembership(FamilyId.LAYERED_PDU_TRANSFORM, ResultAuthority.COMPUTATION),
+    ),
+    reachability=_R_FULL,
+    curriculum_anchor="T12 B4 · 12CS B22–24",
+    known_gaps=("bắt tay TCP ba bước", "phân mảnh", "retransmission", "congestion", "DNS"),
 )
 
 
@@ -501,7 +589,37 @@ CATALOG["generic.rule_scene"] = SimSpec(
     contract=_GENERIC_CONTRACT,
     validate=validate_generic_config,
     make_title=lambda config, analysis: config.get("title") or "Mô phỏng tổng quát",
+    # §C1: HAI membership, result_authority khác nhau (computation + representation)
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.BOOLEAN_COMPOSITION, ResultAuthority.COMPUTATION, family_spec_version="dsl-1"
+        ),
+        FamilyMembership(
+            FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION, ResultAuthority.REPRESENTATION,
+            family_spec_version="dsl-1",
+        ),
+    ),
+    reachability=_R_FULL,
+    curriculum_anchor="T11 B10 · T12CS B29 · T12 CĐ4",
 )
+
+
+def llm_choices() -> list[str]:
+    """M14 §C2 — tập LỰA CHỌN classifier (DẪN XUẤT, không cờ tay).
+
+    = {sim_id runtime target KHÔNG có membership thuộc family có selector}
+    ∪ {selector_token của mỗi FamilySelector}.
+    Hệ quả: bubble_sort/insertion_sort (thuộc comparison_sort có selector) bị
+    ẩn khỏi menu; token comparison_sort thay chỗ. generic/logic/scan giữ nguyên.
+    """
+    out: list[str] = []
+    for sim_id, spec in CATALOG.items():
+        if any(m.family_id.value in SELECTOR_FAMILY_IDS for m in spec.family_memberships):
+            continue
+        out.append(sim_id)
+    for sel in FAMILY_SELECTORS.values():
+        out.append(sel.selector_token)
+    return out
 
 
 def catalog_text() -> str:
