@@ -10,9 +10,14 @@ from __future__ import annotations
 
 import json
 
-from app.simulation.catalog import CATALOG, catalog_text
+from app.simulation.catalog import CATALOG, catalog_text, llm_choices
 from app.simulation.computation_gate import check_computation_ownership
+from app.simulation.families import selector_for_token
 from app.simulation.families.sorting import PRESCRIBED_PROCEDURES
+from app.simulation.mechanism_gate import (
+    check_mechanism_ownership,
+    check_variant_consistency,
+)
 from app.simulation.dsl.manifest import manifest_capability_summary
 from app.simulation.patterns import (
     deterministic_fill,
@@ -109,7 +114,9 @@ def _classify_schema() -> dict:
             "simulation_id": {
                 "type": "STRING",
                 "nullable": True,
-                "enum": list(CATALOG.keys()),
+                # M14 §C2 — menu = llm_choices (concrete llm-facing + selector token);
+                # bubble/insertion ẩn, comparison_sort thay chỗ.
+                "enum": llm_choices(),
             },
             "reason": {"type": "STRING", "nullable": True},
         },
@@ -164,7 +171,8 @@ async def stage_classify(text: str, analysis: dict, api_key: str) -> dict:
         api_key, "classify", user, _classify_schema(), 0.0, 1,
         "Lần trước không phải JSON hợp lệ. Trả về đúng một đối tượng JSON theo schema.",
     )
-    if result.get("status") == "ok" and result.get("simulation_id") not in CATALOG:
+    # M14: hợp lệ = trong llm_choices (CATALOG concrete llm-facing HOẶC selector token)
+    if result.get("status") == "ok" and result.get("simulation_id") not in set(llm_choices()):
         # LLM chọn id ngoài danh mục → coi như không hỗ trợ, không gán bừa
         return {
             "status": "unsupported",
@@ -248,6 +256,42 @@ async def stage_simulate(
 
         return config, None
 
+    return None, last_error
+
+
+async def stage_simulate_family(
+    text: str, analysis: dict, selector, api_key: str
+) -> tuple[dict | None, str | None]:
+    """M14 §E — sinh FamilySpec (selector.config_schema/contract) + validate
+    fail-closed + VARIANT-CONSISTENCY (E4 tầng 2, so analysis × variant). Retry
+    tối đa 3 lần kèm message lỗi. Trả (family_config, None) hoặc (None, lỗi cuối)."""
+    base = (
+        f'Đầu vào gốc:\n"""\n{text}\n"""\n\n'
+        f"Kết quả phân tích:\n{json.dumps(analysis, ensure_ascii=False)}\n\n"
+        f"simulation_id đã chọn: {selector.selector_token}\n\n{selector.contract}"
+    )
+    prompt = base
+    last_error = "không rõ"
+    for _attempt in range(3):
+        raw = await call_gemini(api_key, load_skill("simulate"), prompt, selector.config_schema, 0.1)
+        try:
+            candidate = json.loads(raw)
+        except json.JSONDecodeError:
+            last_error = "Kết quả không phải JSON hợp lệ."
+            prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+            continue
+        config, error = selector.validate_family_spec(candidate)
+        if config is None:
+            last_error = error or "không rõ"
+            prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+            continue
+        # E4 tầng 2: variant có khớp cơ chế đề yêu cầu không (không chỉ nhìn FamilySpec)
+        mism = check_variant_consistency(analysis, selector, config["variant"])
+        if mism is not None:
+            last_error = mism[1]
+            prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+            continue
+        return config, None
     return None, last_error
 
 
@@ -367,6 +411,53 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None) -> dict:
         }
 
     simulation_id = classification["simulation_id"]
+
+    # M14 §E — NHÁNH FAMILY SELECTOR (vd comparison_sort): mechanism gate (tầng 1)
+    # → sinh FamilySpec → resolve TẤT ĐỊNH → validate concrete → envelope mang
+    # CONCRETE id (token selector KHÔNG BAO GIỜ là envelope id, §D).
+    selector = selector_for_token(simulation_id)
+    if selector is not None:
+        gate = check_mechanism_ownership(analysis, selector)
+        if gate is not None:
+            return {
+                "status": "unsupported",
+                "reason": gate[1],
+                "failure_category": "capability_gap",
+                "error_code": gate[0].value,
+                "representation_plan": plan,
+                "analysis": analysis,
+            }
+        family_config, ferr = await stage_simulate_family(text, analysis, selector, api_key)
+        if family_config is None:
+            raise RuntimeError(
+                f"Không sinh được FamilySpec hợp lệ cho {simulation_id} sau 3 lần thử "
+                f"(lỗi cuối: {ferr})."
+            )
+        concrete_id, concrete_config = selector.resolve(family_config, analysis)
+        concrete_spec = CATALOG.get(concrete_id)
+        if concrete_spec is None:  # adapter trỏ target không tồn tại (lock C4 chống)
+            raise RuntimeError(f"Adapter trỏ tới target không tồn tại: {concrete_id}.")
+        validated, verr = concrete_spec.validate(concrete_config)
+        if validated is None:  # validation kép qua validator concrete hiện có
+            raise RuntimeError(
+                f"Config sau adapter không qua validator concrete ({concrete_id}): {verr}"
+            )
+        return {
+            "status": "ok",
+            "simulation_id": concrete_id,
+            "domain": concrete_spec.domain,
+            "visual_mode": concrete_spec.visual_mode,
+            "title": concrete_spec.make_title(validated, analysis),
+            "description": f"{analysis.get('input_description', '')} → {analysis.get('output_description', '')}",
+            "config": validated,
+            "notes": validated.get("notes") if isinstance(validated, dict) else None,
+            "analysis": analysis,
+            "representation_plan": plan,
+            "source": "family_resolved",
+            "family_id": selector.family_id.value,
+            "variant": family_config["variant"],
+        }
+
     spec = CATALOG[simulation_id]
 
     roles = required_roles(analysis)

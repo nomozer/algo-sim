@@ -17,7 +17,11 @@ from app.simulation.descriptor import (
     ReachabilityLevel,
     ResultAuthority,
 )
-from app.simulation.families import FAMILY_SELECTORS, SELECTOR_FAMILY_IDS
+from app.simulation.families import (
+    FAMILY_SELECTORS,
+    SELECTOR_FAMILY_IDS,
+    selector_for_token,
+)
 from app.simulation.families.sorting import (
     MECH_ADJACENT_SWAP,
     MECH_SHIFT_INSERT,
@@ -673,8 +677,16 @@ def capability_descriptors() -> dict:
 
 
 def catalog_text() -> str:
-    """Danh mục dạng chữ đưa vào prompt của stage classify."""
+    """Danh mục dạng chữ đưa vào prompt của stage classify — DẪN XUẤT từ
+    llm_choices (§C2): concrete llm-facing + selector token. Hai sort concrete bị
+    ẩn (nằm sau selector), token comparison_sort thay chỗ."""
     lines = ["DANH MỤC MÔ PHỎNG ĐANG HỖ TRỢ:"]
-    for spec in CATALOG.values():
-        lines.append(f"- {spec.simulation_id}: {spec.description}")
+    for choice in llm_choices():
+        spec = CATALOG.get(choice)
+        if spec is not None:
+            lines.append(f"- {choice}: {spec.description}")
+        else:
+            sel = selector_for_token(choice)
+            if sel is not None:
+                lines.append(f"- {choice}: {sel.description}")
     return "\n".join(lines)
