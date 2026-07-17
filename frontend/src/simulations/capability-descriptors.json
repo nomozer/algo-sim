@@ -1,0 +1,333 @@
+{
+  "runtime_targets": {
+    "algorithm.find_max": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.find_max",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "single_pass_scan",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "algorithm.find_min": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.find_min",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "single_pass_scan",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "algorithm.sum_if": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.sum_if",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "single_pass_scan",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "algorithm.count_if": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.count_if",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "single_pass_scan",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "algorithm.linear_search": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.linear_search",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "single_pass_scan",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "algorithm.binary_search": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.binary_search",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T11CS B19",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "interval_elimination",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "algorithm.bubble_sort": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.bubble_sort",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T11CS B21–22",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "comparison_sort",
+          "result_authority": "computation",
+          "variant_id": "bubble",
+          "family_spec_version": "sort-fam-1",
+          "mechanism_id": "adjacent_compare_swap"
+        }
+      ]
+    },
+    "algorithm.insertion_sort": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.insertion_sort",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T11CS B21–22",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "comparison_sort",
+          "result_authority": "computation",
+          "variant_id": "insertion",
+          "family_spec_version": "sort-fam-1",
+          "mechanism_id": "shift_into_sorted_prefix"
+        }
+      ]
+    },
+    "logic.and_gate": {
+      "domain": "logic",
+      "executor_id": "logic.and_gate",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 B5 · T10 B9",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "boolean_composition",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "binary.decimal_to_binary": {
+      "domain": "binary",
+      "executor_id": "binary.decimal_to_binary",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 B4",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "positional_representation",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "network.packet_routing": {
+      "domain": "network",
+      "executor_id": "network.packet_routing",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 CĐ2 · T12 CĐ2",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "graph_traversal",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "algorithm.scan": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.scan",
+      "reachability": [
+        "registered",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "single_pass_scan",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "network.protocol_encapsulation": {
+      "domain": "network",
+      "executor_id": "network.protocol_encapsulation",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T12 B4 · 12CS B22–24",
+      "known_gaps": [
+        "bắt tay TCP ba bước",
+        "phân mảnh",
+        "retransmission",
+        "congestion",
+        "DNS"
+      ],
+      "family_memberships": [
+        {
+          "family_id": "layered_pdu_transform",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null
+        }
+      ]
+    },
+    "generic.rule_scene": {
+      "domain": "generic",
+      "executor_id": "generic.rule_scene",
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T11 B10 · T12CS B29 · T12 CĐ4",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "boolean_composition",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": "dsl-1",
+          "mechanism_id": null
+        },
+        {
+          "family_id": "structural_progressive_representation",
+          "result_authority": "representation",
+          "variant_id": null,
+          "family_spec_version": "dsl-1",
+          "mechanism_id": null
+        }
+      ]
+    }
+  },
+  "family_selectors": {
+    "comparison_sort": {
+      "selector_token": "algorithm.comparison_sort",
+      "family_spec_version": "sort-fam-1",
+      "owned_mechanisms": [
+        "adjacent_compare_swap",
+        "shift_into_sorted_prefix"
+      ],
+      "variants": [
+        {
+          "variant_id": "bubble",
+          "concrete_simulation_id": "algorithm.bubble_sort",
+          "mechanism_id": "adjacent_compare_swap"
+        },
+        {
+          "variant_id": "insertion",
+          "concrete_simulation_id": "algorithm.insertion_sort",
+          "mechanism_id": "shift_into_sorted_prefix"
+        }
+      ]
+    }
+  },
+  "llm_choices": [
+    "algorithm.find_max",
+    "algorithm.find_min",
+    "algorithm.sum_if",
+    "algorithm.count_if",
+    "algorithm.linear_search",
+    "algorithm.binary_search",
+    "logic.and_gate",
+    "binary.decimal_to_binary",
+    "network.packet_routing",
+    "algorithm.scan",
+    "network.protocol_encapsulation",
+    "generic.rule_scene",
+    "algorithm.comparison_sort"
+  ]
+}

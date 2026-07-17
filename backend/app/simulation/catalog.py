@@ -622,6 +622,56 @@ def llm_choices() -> list[str]:
     return out
 
 
+def capability_descriptors() -> dict:
+    """M14 §C4 — descriptor SINH-TỪ-NGUỒN (CATALOG + FAMILY_SELECTORS).
+
+    Xuất ra `frontend/src/simulations/capability-descriptors.json` (artifact
+    TEST/GENERATED). Production FE KHÔNG import file này (điểm 6) — nó chỉ để
+    test cross-lock BE↔FE. Ordering theo CATALOG (ổn định cho sync-lock).
+    """
+    def _member(m) -> dict:
+        return {
+            "family_id": m.family_id.value,
+            "result_authority": m.result_authority.value,
+            "variant_id": m.variant_id,
+            "family_spec_version": m.family_spec_version,
+            "mechanism_id": m.mechanism_id,
+        }
+
+    targets = {
+        sim_id: {
+            "domain": spec.domain,
+            "executor_id": spec.executor_id,
+            "reachability": [r.value for r in spec.reachability],
+            "curriculum_anchor": spec.curriculum_anchor,
+            "known_gaps": list(spec.known_gaps),
+            "family_memberships": [_member(m) for m in spec.family_memberships],
+        }
+        for sim_id, spec in CATALOG.items()
+    }
+    selectors = {
+        fid: {
+            "selector_token": sel.selector_token,
+            "family_spec_version": sel.family_spec_version,
+            "owned_mechanisms": list(sel.owned_mechanisms),
+            "variants": [
+                {
+                    "variant_id": v.variant_id,
+                    "concrete_simulation_id": v.concrete_simulation_id,
+                    "mechanism_id": v.mechanism_id,
+                }
+                for v in sel.variants
+            ],
+        }
+        for fid, sel in FAMILY_SELECTORS.items()
+    }
+    return {
+        "runtime_targets": targets,
+        "family_selectors": selectors,
+        "llm_choices": llm_choices(),
+    }
+
+
 def catalog_text() -> str:
     """Danh mục dạng chữ đưa vào prompt của stage classify."""
     lines = ["DANH MỤC MÔ PHỎNG ĐANG HỖ TRỢ:"]
