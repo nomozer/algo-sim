@@ -387,9 +387,17 @@ def test_truong_la_cap_cao_nhat_bi_reject():
 
 
 def test_toggle_gia_tri_dan_xuat_bi_reject():
-    """Không cho toggle object là target của rule (giá trị dẫn xuất)."""
+    """Không cho toggle object là target của rule (giá trị dẫn xuất).
+
+    "y" (AND_SPEC) vừa là target của rule vừa không có "value" — overdetermined
+    nếu chỉ assert config is None (nhánh "không có value" cũng đủ làm test xanh
+    dù nhánh rule-target regress). Assert đúng thông điệp của nhánh rule-target
+    (validator.py dòng ~424-425) để lock đúng nhánh đang test.
+    """
     bad = {**AND_SPEC, "interactions": [{"type": "toggle", "target": "y"}]}
-    assert validate_generic_config(bad)[0] is None
+    config, err = validate_generic_config(bad)
+    assert config is None
+    assert "giá trị dẫn xuất từ rule" in err
 
 
 def test_process_entity_khong_phai_moving_entity_bi_reject():

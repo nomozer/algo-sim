@@ -6,6 +6,7 @@ from app.simulation.dsl.manifest import known_gap_roles
 def check_computation_ownership(analysis: dict, plan: dict) -> str | None:
     """Trả reason (tiếng Việt) khi yêu cầu đòi CƠ CHẾ TÍNH KẾT QUẢ mà không engine
     nào sở hữu → capability_gap; None khi generic được phép tiếp tục."""
+    # unsupported_capabilities ⊆ known_gap_roles theo construction (required_roles lọc r in SEMANTIC_ROLES — representation.py) → phép giao là tương đương hành vi cũ, giữ làm phòng thủ tường minh.
     gaps = sorted(set(plan.get("unsupported_capabilities", [])) & known_gap_roles())
     if gaps:
         return (

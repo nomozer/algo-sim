@@ -37,7 +37,7 @@ tránh). Chi tiết §7. Vì vậy: **không dừng, Task 2 được phép tiế
 | 2 | `lamp` | object | logical, numeric | logical, numeric | TASK-3/4/5/6 |
 | 3 | `value_box` | object | numeric | numeric | TASK-3/4/5/6 |
 | 4 | `node` | object | *(không — chỉ relational)* | *(không)* | TASK-3/4/5/6 |
-| 5 | `edge` | object | *(không — chỉ relational)* | *(không)* | TASK-3/4/5/6 (fixture khoá: TASK-7) |
+| 5 | `edge` | object | *(không — chỉ relational)* | *(không)* | TASK-3/4/5/6 (fixture khoá: TASK-7) + TASK-10 |
 | 6 | `moving_entity` | object | *(không — chỉ movement)* | *(không)* | TASK-3/4/5/6 |
 | 7 | `label` | object | *(không — chỉ textual)* | *(không)* | TASK-3/4/5/6 + TASK-11 (display) |
 | 8 | `container` | object | *(không — chỉ structural)* | *(không)* | TASK-3/4/5/6 |
@@ -51,7 +51,7 @@ tránh). Chi tiết §7. Vì vậy: **không dừng, Task 2 được phép tiế
 | 15 | `toggle` | interaction | N/A (thao tác base value, không sinh giá trị) | N/A | EXISTING |
 | 16 | `drag` | interaction | N/A (thao tác position) | N/A | EXISTING |
 | 17 | `reveal_sequence` | process | N/A (visibility, không sinh giá trị) | N/A | EXISTING (cấu trúc) + TASK-9 (lạm dụng làm "diễn" thuật toán) |
-| 18 | `move_along_path` | process | N/A (entityPos, không sinh giá trị) | N/A | EXISTING (cấu trúc) + TASK-3/4/5/6 (nếu bị dùng làm rule input/target) + TASK-9 (lạm dụng — ĐÂY LÀ CƠ CHẾ CHÍNH của bug Dijkstra) + TASK-7 |
+| 18 | `move_along_path` | process | N/A (entityPos, không sinh giá trị) | N/A | EXISTING (cấu trúc) + TASK-3/4/5/6 (nếu bị dùng làm rule input/target) + TASK-9 (lạm dụng — ĐÂY LÀ CƠ CHẾ CHÍNH của bug Dijkstra) + TASK-7 + TASK-10 |
 
 **Tổng:** 19 hàng dữ liệu (12 object + 2 rule + 1 rule-vắng-mặt + 2 interaction +
 2 process). Disposition: **0 STOP-UNRESOLVED · 17 hàng có TASK-N (một số kèm

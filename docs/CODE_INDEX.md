@@ -84,7 +84,8 @@ sẽ đỏ.
 ### `simulation/computation_gate.py` (M13) · Change impact: offline
 Cổng B (workstream B): SERVER quyết accept/gap trên đường generic bằng **hai
 kênh tín hiệu có cấu trúc bổ sung nhau**, tất định, KHÔNG đọc text đề, chạy
-**sau** `build_representation_plan`, **trước** classify.
+**sau classify**, scoped vào đường generic bằng kết quả classify (giữ
+carve-out chuyên biệt).
 Exports: `check_computation_ownership(analysis, plan) -> str | None`.
 Consumers: `ai/pipeline.py::run_pipeline`. Tests: `test_m13_routing.py`.
 Notes: kênh 1 = `known_gap_roles()` lọt vào `plan["unsupported_capabilities"]`
