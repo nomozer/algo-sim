@@ -58,7 +58,8 @@ Exports: `DSL_VERSION`, `SUPPORTED_VERSIONS`, `object_types`, `rule_types`,
 `bool_ops`, `interaction_types`, `process_types`, `drag_target_types`,
 `temporal_process_types`, `limit`, `roles_of_primitive`, `all_coverable_roles`,
 `known_gap_roles`, `primitives_for_role`, `manifest_capability_summary`,
-`manifest_contract_text`, `MANIFEST`.
+`manifest_contract_text`, `MANIFEST`, (M13) `value_provider_types(role)`,
+`RULE_IO_ROLES`, `PATCH_ADD_FIELDS`, `patch_add_fields()`, `dsl_semantic_contract()`.
 Consumers: validator, catalog (enum structured-output), representation, semantic,
 patterns, edit. Tests: `test_manifest.py`.
 Notes: thêm primitive = **chỉ sửa file này** (+ mirror TS). M11:
@@ -66,6 +67,35 @@ Notes: thêm primitive = **chỉ sửa file này** (+ mirror TS). M11:
 trừu tượng `kq_phu` — cố ý KHÔNG trùng case đánh giá nào, chống overfit prompt
 vào benchmark; khoá bằng `test_contract_huong_dan_chuoi_rule_m11`). Đây là
 **prompt-surface**, không phải từ vựng.
+M13: `value_provider_types(role)` = object type nào có vai trò cung cấp giá trị
+`role` (DẪN XUẤT từ `PRIMITIVE_ROLES ∩ object_types`, không viết tay). `RULE_IO_ROLES`
+= input/output role của mỗi rule type (completeness khoá bằng
+`test_rule_io_roles_phu_du_moi_rule_type_cua_manifest`, chống thêm rule type mà
+quên khai role). `PATCH_ADD_FIELDS` (Task 12b) = allowlist field `add_object` của
+SimulationPatch v1 — nguồn chân lý duy nhất cho `patch.py`/`patch.ts`, chống lệch
+tay kiểu `directed` từng lệch (backend có, frontend không). `dsl_semantic_contract()`
+gộp cả bốn thứ trên (+ `object_roles`, `role_coercions` rỗng = DENY mặc định)
+thành **MỘT artifact hợp đồng ngữ nghĩa canonical**, sinh ra `dsl-contract.json`
+cho frontend (xem entry `scripts/generate_dsl_contract.py` bên dưới) — không tầng
+nào viết tay allowlist song song. Re-verify: offline; nếu đổi shape hợp đồng thì
+**phải chạy lại generator** trước khi commit hoặc `test_dsl_contract_json_khong_troi_khoi_manifest`
+sẽ đỏ.
+
+### `simulation/computation_gate.py` (M13) · Change impact: offline
+Cổng B (workstream B): SERVER quyết accept/gap trên đường generic bằng **hai
+kênh tín hiệu có cấu trúc bổ sung nhau**, tất định, KHÔNG đọc text đề, chạy
+**sau** `build_representation_plan`, **trước** classify.
+Exports: `check_computation_ownership(analysis, plan) -> str | None`.
+Consumers: `ai/pipeline.py::run_pipeline`. Tests: `test_m13_routing.py`.
+Notes: kênh 1 = `known_gap_roles()` lọt vào `plan["unsupported_capabilities"]`
+(vd `arbitrary_algorithm`); kênh 2 = `analysis["result_ownership"]` **fail-closed**
+— chỉ `"provided"`/`"rule_derivable"` được đi tiếp, `"algorithmic"` HOẶC
+thiếu/ngoài enum đều → gap (không default sang giá trị nào). Hai kênh **bổ sung
+nhau có chủ đích**: test chứng minh gap vẫn fired dù kênh 1 bị bỏ sót role
+(`test_kenh_2_result_ownership_algorithmic_gap_KE_CA_khi_role_bi_bo_sot`). Không
+đụng carve-out chuyên biệt (bất biến #5) — gate chỉ chặn đường generic. Đổi
+taxonomy/prompt dạy `result_ownership` (`analyze.md`/`classify.md`) →
+**targeted live**, đã kèm `CACHE_VERSION` 9→10.
 
 ### `simulation/dsl/validator.py` · Change impact: offline
 Validator SimulationSpec (allowlist/limits **dẫn xuất từ manifest**), drag
@@ -95,8 +125,33 @@ HARNESS — pipeline production không chấm bảng chân trị.
 
 ### `simulation/generic_engine.py` · Change impact: offline
 Port Python của engine TS — **chỉ để kiểm ngữ nghĩa server-side**.
-Exports: `values_of`, `initial_base`, `build_timeline`, `apply_toggle`, `rule_targets`.
-Notes: phải giữ **cùng luật** với `generic/model.ts`.
+Exports: `values_of`, `initial_base`, `build_timeline`, `apply_toggle`,
+`rule_targets`, (M13) `GenericEvaluationError`.
+Notes: phải giữ **cùng luật** với `generic/model.ts`. M13 §3.4: `values_of` là
+**forward-resolve trên DAG ba trạng thái** — KHÔNG còn seed target = 0; rule chỉ
+chạy khi mọi input đã resolve; input còn thiếu sau ≤ `len(rules)` lượt (không
+tiến triển nữa) → ném `GenericEvaluationError` thay vì hoá 0 im lặng. 4 mã lỗi:
+`invalid_numeric_source` · `missing_weight` · `unresolved_dependency_after_bound` ·
+`non_finite_numeric_value`. `run_gates` (patterns.py) đã bọc `values_of` trong
+try/except từ trước → lỗi tự động thành reject, không cần sửa `run_gates`. Bug đã
+vá trong lúc viết plan (không phải trong code cuối): thứ tự cập nhật `pending`
+PHẢI đứng TRƯỚC check `break`, nếu không mọi spec có ≥ 1 rule sẽ bị raise oan —
+xem cảnh báo ở `docs/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`
+Task 4. Tests: `test_generic_engine_m13.py` (mới) + `test_semantic.py` (M11
+canary chuỗi đảo thứ tự vẫn đúng giá trị — bằng chứng ngữ nghĩa KHÔNG đổi cho
+spec hợp lệ).
+
+### `scripts/generate_dsl_contract.py` → `frontend/src/simulations/domains/generic/dsl-contract.json` (M13) · Change impact: offline
+Generator chạy TAY (không phải build step tự động): đọc
+`manifest.dsl_semantic_contract()`, ghi ra JSON committed mà frontend import
+trực tiếp (`import dslContract from "./dsl-contract.json"`). Cách chạy: `cd
+backend && .venv/Scripts/python scripts/generate_dsl_contract.py`. **KHÔNG sửa
+tay `dsl-contract.json`** — sửa = sửa `manifest.py` rồi chạy lại generator.
+Sync-lock test (`test_manifest_providers.py::test_dsl_contract_json_khong_troi_khoi_manifest`)
+so sánh file committed với `dsl_semantic_contract()` hiện tại — quên chạy
+generator sau khi đổi manifest → test ĐỎ (anti-pattern #1: allowlist song song
+lệch tay). Đây là artifact JSON DUY NHẤT của repo được sinh thủ công và commit
+thẳng; không có CI job tự regenerate.
 
 ### `simulation/scan_engine.py` (M12) · Change impact: offline
 Port Python của scan-interpreter — mirror `frontend/src/core/scan.ts` (CÙNG
@@ -254,7 +309,11 @@ touch tiến độ. Tests: `registry.test.ts`, `visual-mode.test.tsx`,
 `view-history.test.tsx`.
 Notes: **không** đặt logic domain vào store. Zustand v5 trả INITIAL state khi
 renderToString (SSR) — component cần test SSR phải nhận dữ liệu qua PROPS
-(ngoại lệ: Home LÀ initial state nên SSR App test được).
+(ngoại lệ: Home LÀ initial state nên SSR App test được). M13 (Task 6): gọi
+`mod.init` được bọc try/catch **domain-blind** (bắt `Error` trần, không riêng
+`GenericExecutionError`) — `init` ném lỗi (vd operand không có nguồn giá trị lọt
+qua tới runtime) → `analysisError` tiếng Việt thân thiện, `active` giữ `null`
+(fail-closed, không dựng cảnh một phần).
 
 ### `state/history.ts` · Change impact: offline
 M9-UX1 — lịch sử học BỀN (localStorage, schema v1, `algosim.history.v1`).
@@ -337,12 +396,29 @@ Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,
 `GenericState`, `InteractionFeedback`, `valuesOf`, `buildTimeline`, `currentFrame`,
 `initialBase`, `applyMove`, `layoutPositions`, `dragTargets`, `findFreePosition`,
 `applyEditedSpec`, `visibleContentBounds`, `objectRole`, `inspectorGroups`,
-`STRUCTURAL_TYPES`, `TEMPORAL_PROCESS_TYPES`, `DRAG_TARGET_TYPES`.
+`STRUCTURAL_TYPES`, `TEMPORAL_PROCESS_TYPES`, `DRAG_TARGET_TYPES`, (M13)
+`GenericExecutionError`, `displayLabel`.
 Tests: `generic.test.ts`, `patch.test.ts`.
+Notes (M13 §3.4): `valuesOf` port ĐÚNG bản forward-resolve ba trạng thái của
+`generic_engine.py::values_of` (đối chiếu 1:1 — port bản ĐÃ SỬA lỗi control-flow
+`pending`, xem note ở entry backend) — KHÔNG còn seed 0. `GenericExecutionError`
+mang `code: "invalid_numeric_source" | "missing_weight" |
+"unresolved_dependency_after_bound" | "non_finite_numeric_value"`, song song
+`GenericEvaluationError` backend; `store.ts` bọc `mod.init` để bắt lỗi này
+fail-closed (xem entry `state/store.ts`). `displayLabel(spec, id)` (Task 11) —
+nhãn hiển thị learner-facing: sanitize khi label **thiếu** ∨ label **=== id**
+(ca lộ id kỹ thuật kiểu Dijkstra) ∨ label **dạng kỹ thuật** (snake_case/kebab-case
+thuần, không khoảng trắng) → thay bằng tên tiếng Việt theo type (+ số thứ tự nếu
+trùng type); label tiếng Việt thân thiện GIỮ NGUYÊN, không sanitize oan.
 
 ### `simulations/domains/generic/validate.ts` · Change impact: offline
 Validator TS song song `dsl/validator.py`. Export: `validateGenericConfig`.
 Notes: tách khỏi `index.ts` (M7.14) để `patch.ts` dùng chung, tránh vòng import.
+M13 (Task 5): import trực tiếp `./dsl-contract.json` (KHÔNG hằng viết tay) để
+kiểm operand coherence + role-typing — mirror `validator.py` từng dòng (cùng
+thông điệp lỗi `"không có nguồn giá trị"`/`"vai trò"` để test hai tầng khớp
+nhau). Đổi luật coherence = sửa `manifest.py` + chạy lại generator, KHÔNG sửa
+tay ở đây.
 
 ### `simulations/domains/generic/patch.ts` · Change impact: offline
 Mirror `simulation/patch.py`. Exports: `validateAndApplyPatch`, `PatchOp`,
