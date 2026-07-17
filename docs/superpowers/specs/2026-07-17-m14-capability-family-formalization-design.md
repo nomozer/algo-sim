@@ -373,7 +373,8 @@ prescribed_procedure ∈ {
   "select_extreme_repeated", # chọn cực trị lặp (selection — KHÔNG ai sở hữu)
   "partition_recursive",     # phân hoạch đệ quy (quick/merge — KHÔNG ai sở hữu)
   "other_unspecified"        # đề ép một cơ chế analyze không đặc trưng được
-}   # fail-closed: thiếu/ngoài enum → xử như một cơ chế KHÔNG khớp owned (từ chối an toàn)
+}   # null/"none" = VẮNG tín hiệu → permissive (đề sắp-xếp-thường); select/partition/
+    # other_unspecified = CÓ tín hiệu cơ chế không sở hữu → gap (fail-closed đúng chỗ)
 ```
 
 Đây KHÔNG phải keyword-patch: analyze nhận diện cơ chế bằng HIỂU NGỮ NGHĨA
@@ -388,8 +389,15 @@ KHÔNG bao giờ quét chuỗi "selection sort" trong đề.
    KHÔNG nằm trong `selector.owned_mechanisms`
    (`{adjacent_compare_swap, shift_into_sorted_prefix}`) → **`capability_gap`**,
    `failure_category = capability_gap`, KHÔNG vào simulate. Selection/quick/
-   merge/`other_unspecified`/thiếu đều rơi nhánh này → gap trung thực (cơ chế
-   không executor sở hữu — giống Dijkstra M13).
+   merge/`other_unspecified` rơi nhánh này → gap trung thực (cơ chế không
+   executor sở hữu — giống Dijkstra M13).
+   **[SỬA rev2→impl, M14 Task 6]** Ranh giới `null`/`none` vs `thiếu`: rev2 từng
+   ghi "thiếu → gap". Cài đặt LÀM RÕ: **`null` HOẶC `"none"` = VẮNG tín hiệu ép
+   cơ chế → PERMISSIVE** (đề "sắp xếp tăng dần" không ép cơ chế; bubble/insertion
+   đều là minh hoạ hợp lệ — nếu để "thiếu→gap" thì mọi đề sắp-xếp-thường bị từ
+   chối oan, hỏng happy-path). Fail-closed đặt ĐÚNG chỗ: chỉ khi CÓ tín hiệu cơ
+   chế KHÔNG sở hữu (kể cả `other_unspecified` — model detect được "có ép" nhưng
+   không đặc trưng nổi) mới → gap. Xem `mechanism_gate.py`.
 
 2. **Variant-consistency check — SAU khi FamilySpec validate**: nếu
    `prescribed_procedure` ∈ owned NHƯNG variant LLM chọn không khớp cơ chế đó
@@ -575,7 +583,7 @@ KHÔNG được để lại dấu vết. Chính sách side-effect tường minh:
 | 5 | invalid bounds: array 1 phần tử / 16 phần tử / NaN → reject có mã | unit validator |
 | 6 | selection-sort near-miss: analyze `prescribed_procedure="select_extreme_repeated"`, classify → comparison_sort → **mechanism gate tầng 1** → `capability_gap` (`gate_mechanism_ownership`), KHÔNG vào simulate, KHÔNG ra envelope | pipeline mock |
 | 7 | quick-sort near-miss: `prescribed_procedure="partition_recursive"` → như 6 | pipeline mock |
-| 7b | fail-closed gate: `prescribed_procedure` thiếu/ngoài enum + classify comparison_sort → gap (không default sang "none") | pipeline mock |
+| 7b | `prescribed_procedure` null/"none" + classify comparison_sort → PERMISSIVE (không gap — đề sắp-xếp-thường); `other_unspecified` → gap (fail-closed đúng chỗ) | pipeline/unit mock |
 | 7c | variant-consistency (E4 tầng 2): đề `shift_into_sorted_prefix` nhưng FamilySpec `variant="bubble"` → `mechanism_variant_mismatch` → retry; retry đúng insertion → pass | pipeline mock |
 | 7d | `prescribed_procedure="none"` ("sắp xếp tăng dần"): bất kỳ variant hợp lệ nào cũng qua, KHÔNG gap, KHÔNG mismatch | pipeline mock |
 | 8 | invalid/unknown variant trong FamilySpec (vd "selection") → `family_spec_invalid`, không strip, không đoán | unit validator |
@@ -721,7 +729,7 @@ chặn design)
    (mặc định) hay `curriculum` — chốt khi viết case theo luật kết nạp.
 7. **`prescribed_procedure` thêm vào ANALYZE_SCHEMA — bắt buộc hay nullable
    fail-closed?** Song song `result_ownership` (required, fail-closed). Mặc
-   định: nullable + fail-closed (thiếu → xử như không khớp owned, E4 tầng 1) để
+   định: nullable; null/"none" → PERMISSIVE (E4 tầng 1 làm rõ), chỉ tín hiệu cơ chế-không-sở-hữu mới gap, để
    không phá analyze của mọi domain khác; xác nhận khi chạm schema.
 
 ## O. Curriculum coverage guardrail (Bước 0 — bổ sung sau rev2)
