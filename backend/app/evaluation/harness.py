@@ -134,8 +134,8 @@ class EvalReport:
 
 async def _simulate_with_metrics(
     text: str, analysis: dict, simulation_id: str, api_key: str
-) -> tuple[dict | None, int, str | None]:
-    """Bản có đo của stage_simulate: trả (config, số_retry, nhóm_lỗi).
+) -> tuple[dict | None, int, str | None, str]:
+    """Bản có đo của stage_simulate: trả (config, số_retry, nhóm_lỗi, message_lỗi_cuối).
 
     M7.13A: mirror pipeline — chèn scene_mode guidance vào prompt và check
     scene consistency, để metric đo ĐÚNG hành vi live."""
@@ -180,11 +180,13 @@ async def _simulate_with_metrics(
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
         if config is not None:
-            return config, attempt, None
+            return config, attempt, None, ""
         last_error = error
         scene_mode_failed = False
         prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
-    return None, 2, FAIL_SCENE_MODE if scene_mode_failed else classify_error(last_error or "")
+    # M13 Task 14: trả kèm message lỗi cuối — trước đây bị vứt, khiến ca
+    # canonical đỏ ×2 (unknown_primitive) KHÔNG chẩn đoán nổi vì bằng chứng mất.
+    return None, 2, FAIL_SCENE_MODE if scene_mode_failed else classify_error(last_error or ""), (last_error or "")[:200]
 
 
 async def evaluate_item(item: EvalItem, api_key: str) -> ItemResult:
@@ -213,11 +215,11 @@ async def evaluate_item(item: EvalItem, api_key: str) -> ItemResult:
             failure=FAIL_WRONG_SELECTION, gap_gate_fired=gap_gate_fired,
         )
 
-    config, retry, err_cat = await _simulate_with_metrics(item.text, analysis, predicted, api_key)
+    config, retry, err_cat, err_msg = await _simulate_with_metrics(item.text, analysis, predicted, api_key)
     if config is None:
         return ItemResult(
             item.id, item.group, predicted, True, spec_valid=False, retry_count=retry,
-            failure=err_cat, gap_gate_fired=gap_gate_fired,
+            failure=err_cat, detail=err_msg, gap_gate_fired=gap_gate_fired,
         )
 
     semantic_ok, detail = True, ""
