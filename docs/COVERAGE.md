@@ -203,6 +203,37 @@ Chống "phủ giả" (fake coverage). Các chủ đề sau **có trong chương
 
 ---
 
+## 7b. Dijkstra / đường đi ngắn nhất có trọng số (M13)
+
+**Phán quyết: A — NGOÀI phạm vi công khai đề tài.**
+
+Căn cứ (đối chiếu Mục lục 5 SGK KNTT ở §1 — không tìm thấy anchor):
+- Không bài/chủ đề nào trong Tin học 10–12 (cả CS lẫn ICT) nhắc tới Dijkstra,
+  đường đi ngắn nhất có trọng số, hay thuật toán đồ thị có trọng số nói chung.
+  Chỉ có **BFS** (không trọng số) làm oracle cho `network.packet_routing` — xem
+  Tier 1 §3 ("Định tuyến gói tin… đường đi được **tính** (BFS)") và §6 ("BFS
+  biết đường đi ngắn nhất" = ngắn nhất theo **số chặng**, không phải theo trọng
+  số cạnh).
+- `network.packet_routing` là minh hoạ **BFS trên mạng phân tầng**, KHÔNG phải
+  shortest-path **có trọng số** tổng quát — cùng họ "đồ thị" không có nghĩa là
+  "đã phủ Dijkstra một phần".
+- Sự cố M13 (kế hoạch `docs/superpowers/plans/2026-07-16-m13-generic-semantic-soundness.md`,
+  Task 7 — fixture pseudo-Dijkstra): một cảnh dựng bằng `generic.rule_scene`
+  (đường đi khai sẵn + `weighted_sum` cộng trọng số trên id cạnh) **trông hợp lý
+  nhưng dạy SAI cơ chế**. Dijkstra thật vận hành bằng khoảng cách tạm,
+  extract-min, nới cạnh (relaxation), tập finalized — generic DSL không sở hữu
+  engine nào cho các cơ chế này.
+
+**Hệ quả:**
+- `capability_gap` là câu trả lời đúng **dài hạn** cho lớp đề này, không phải
+  khoảng trống tạm chờ vá. Case `cap-dijkstra-gap` (`datasets/capability.py`,
+  pool `capability`) khoá kỳ vọng `unsupported` này cho harness live (M13).
+- `graph.shortest_path` (hay bất kỳ engine đồ thị có trọng số nào) **KHÔNG** ở
+  trong roadmap đề tài. Đổi phán quyết này là đổi roadmap → cần approval mới,
+  không tự quyết theo độ nổi tiếng của thuật toán.
+
+---
+
 ## 8. 2D / 3D — vị trí chính thức của M8
 
 **M8 = architectural-first, pedagogically bounded 3D.**

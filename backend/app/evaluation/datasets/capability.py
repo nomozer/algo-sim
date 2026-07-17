@@ -109,4 +109,25 @@ CAPABILITY_ITEMS: list[EvalItem] = [
             "chứng minh hệ compose được cảnh phức tạp, không chỉ cảnh nguyên tử."
         ),
     ),
+    # ── M13: capability_gap trung thực cho Dijkstra — xem COVERAGE.md §7b ──
+    # Dijkstra KHÔNG có anchor SGK nào (ngoài phạm vi công khai đề tài); case này
+    # KHÔNG gán curriculum_area giả để qua admission — dùng chuỗi trung thực.
+    EvalItem(
+        "cap-dijkstra-gap",
+        "Mô phỏng thuật toán Dijkstra tìm đường ngắn nhất từ A đến C trên đồ thị có trọng số.",
+        "unsupported", None,
+        tags=("boundary", "m13_soundness"),
+        curriculum_area="ngoài phạm vi công khai Tin học THPT — không anchor SGK (COVERAGE §Dijkstra-M13)",
+        curriculum_topic="Đồ thị có trọng số (ngoài phạm vi)",
+        capability_family="algorithmic_computation_gap",
+        complexity="L4",
+        result_mode="unsupported",
+        learning_objective="Hệ từ chối trung thực yêu cầu thuật toán không có engine, thay vì render cảnh giả.",
+        pedagogical_rationale=(
+            "Cơ chế ẩn của Dijkstra — khoảng cách tạm, extract-min, nới cạnh, tập finalized — "
+            "KHÔNG có engine tất định nào sở hữu; cảnh generic với đường đi khai sẵn và tổng trọng số "
+            "trên id cạnh dạy SAI cơ chế (LLM tự giải bài thay engine). capability_gap trung thực "
+            "tốt hơn một pseudo-simulation trông-hợp-lý."
+        ),
+    ),
 ]
