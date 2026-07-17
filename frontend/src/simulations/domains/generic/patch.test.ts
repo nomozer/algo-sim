@@ -153,6 +153,54 @@ describe("patch v1 — validate + apply (song song backend)", () => {
   });
 });
 
+describe("patch v1 — add_object trường lạ fail-closed (Task 12b, song song backend)", () => {
+  it("field hợp lệ (label/x/y) vẫn valid — FP budget", () => {
+    const res = validateAndApplyPatch(TRIANGLE, {
+      operations: [{ op: "add_object", object: { id: "D", type: "node", label: "D", x: 50, y: 90 } }],
+    });
+    expect(res.status).toBe("valid");
+  });
+
+  it('field "weight" bị reject, nêu tên field', () => {
+    const res = validateAndApplyPatch(TRIANGLE, {
+      operations: [{ op: "add_object", object: { id: "D", type: "node", weight: 5 } }] as never,
+    });
+    expect(res.status).toBe("structurally_invalid");
+    if (res.status === "structurally_invalid") expect(res.error).toContain("weight");
+  });
+
+  it('field lạ khác weight (vd "color") bị reject qua CÙNG đường — không hardcode weight', () => {
+    const res = validateAndApplyPatch(TRIANGLE, {
+      operations: [{ op: "add_object", object: { id: "D", type: "node", color: "red" } }] as never,
+    });
+    expect(res.status).toBe("structurally_invalid");
+    if (res.status === "structurally_invalid") expect(res.error).toContain("color");
+  });
+
+  it("patch bị reject → config canonical KHÔNG đổi (deep-equal trước/sau)", () => {
+    const before = JSON.stringify(TRIANGLE);
+    const res = validateAndApplyPatch(TRIANGLE, {
+      operations: [{ op: "add_object", object: { id: "D", type: "node", weight: 5 } }] as never,
+    });
+    expect(res.status).toBe("structurally_invalid");
+    expect(JSON.stringify(TRIANGLE)).toBe(before);
+  });
+
+  it("edge có directed:true → được chấp nhận (khoá drift directed đã giải)", () => {
+    const res = validateAndApplyPatch(TRIANGLE, {
+      operations: [
+        { op: "add_object", object: { id: "D", type: "node", x: 50, y: 90 } },
+        { op: "add_object", object: { id: "AD", type: "edge", from: "A", to: "D", directed: true } },
+      ],
+    });
+    expect(res.status).toBe("valid");
+    if (res.status === "valid") {
+      const ad = res.config.objects.find((o) => o.id === "AD");
+      expect(ad?.directed).toBe(true);
+    }
+  });
+});
+
 describe("edit helpers — findFreePosition / applyEditedSpec / bounds", () => {
   it("findFreePosition không đè object cũ, tất định, tôn trọng hint khi trống", () => {
     const taken = [

@@ -235,3 +235,45 @@ def test_patch_khong_operations_bi_reject():
     assert validate_and_apply_patch(TRIANGLE, {})["status"] == "structurally_invalid"
     assert validate_and_apply_patch(TRIANGLE, {"operations": []})["status"] == "structurally_invalid"
     assert validate_and_apply_patch(TRIANGLE, "x")["status"] == "structurally_invalid"
+
+
+# ── D. Task 12b: add_object trường lạ fail-closed (KHÔNG strip im lặng) ──
+
+def test_add_object_field_hop_le_van_valid():
+    """FP budget: field trong allowlist (label/x/y) không bị preflight chặn."""
+    res = _apply(TRIANGLE, [
+        {"op": "add_object", "object": {"id": "D", "type": "node", "label": "D", "x": 50, "y": 90}},
+    ])
+    assert res["status"] == "valid"
+
+
+def test_add_object_truong_weight_bi_reject_neu_ten_truong():
+    res = _apply(TRIANGLE, [{"op": "add_object", "object": {"id": "D", "type": "node", "weight": 5}}])
+    assert res["status"] == "structurally_invalid"
+    assert "weight" in res["error"]
+
+
+def test_add_object_truong_la_khac_weight_cung_bi_reject_cung_duong():
+    """Chứng minh preflight là allowlist chung — KHÔNG hardcode riêng "weight"."""
+    res = _apply(TRIANGLE, [{"op": "add_object", "object": {"id": "D", "type": "node", "color": "red"}}])
+    assert res["status"] == "structurally_invalid"
+    assert "color" in res["error"]
+
+
+def test_add_object_reject_khong_mutate_spec_goc():
+    snapshot = copy.deepcopy(TRIANGLE)
+    res = _apply(TRIANGLE, [{"op": "add_object", "object": {"id": "D", "type": "node", "weight": 5}}])
+    assert res["status"] == "structurally_invalid"
+    assert TRIANGLE == snapshot
+
+
+def test_add_object_edge_directed_true_duoc_chap_nhan():
+    """Khoá drift "directed" (backend có, frontend từng thiếu) — allowlist sinh
+    từ manifest phải CHẤP NHẬN directed khi add_object edge."""
+    res = _apply(TRIANGLE, [
+        {"op": "add_object", "object": {"id": "D", "type": "node", "x": 50, "y": 90}},
+        {"op": "add_object", "object": {"id": "AD", "type": "edge", "from": "A", "to": "D", "directed": True}},
+    ])
+    assert res["status"] == "valid"
+    ad = next(o for o in res["config"]["objects"] if o["id"] == "AD")
+    assert ad["directed"] is True

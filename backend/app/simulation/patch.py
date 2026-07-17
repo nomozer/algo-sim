@@ -24,7 +24,7 @@ from __future__ import annotations
 
 import copy
 
-from app.simulation.dsl.manifest import temporal_process_types
+from app.simulation.dsl.manifest import patch_add_fields, temporal_process_types
 from app.simulation.dsl.validator import validate_generic_config
 from app.simulation.edit_policy import STRUCTURE_INVALID, check_ops_against_policy
 from app.simulation.generic_engine import build_timeline, initial_base, values_of
@@ -36,8 +36,11 @@ ALLOWED_OPS = ("add_object", "remove_object", "update_object", "connect", "disco
 # update_object chỉ đổi NỘI DUNG/VỊ TRÍ — đổi cấu trúc (type/id/from/to/parent)
 # phải remove + add tường minh.
 UPDATE_FIELDS = {"text", "label", "x", "y", "value"}
-# Trường được nhận khi add_object (validator full vẫn là chốt chặn cuối).
-ADD_FIELDS = {"id", "type", "x", "y", "label", "text", "parent", "value", "node_type", "from", "to", "directed"}
+# Trường được nhận khi add_object — DẪN XUẤT từ manifest (M13 Task 12b, NGUỒN
+# CHÂN LÝ DUY NHẤT; patch.ts frontend tiêu thụ cùng danh sách qua dsl-contract.json).
+# Validator full vẫn là chốt chặn cuối; đây là preflight FAIL-CLOSED — field
+# ngoài allowlist bị REJECT tường minh, KHÔNG âm thầm strip.
+ADD_FIELDS = patch_add_fields()
 
 
 def _invalid(msg: str, reason_code: str = STRUCTURE_INVALID) -> dict:
@@ -117,7 +120,15 @@ def _apply_one(work: dict, op: dict) -> str | None:
             return 'add_object cần "object" có "id" chuỗi.'
         if obj["id"] in _ids(work):
             return f'add_object: id "{obj["id"]}" đã tồn tại.'
-        clean = {k: v for k, v in obj.items() if k in ADD_FIELDS and v is not None}
+        # M13 Task 12b: field ngoài allowlist → REJECT tường minh, KHÔNG âm thầm
+        # strip (LLM cần biết mô hình của nó sai, không phải im lặng bị bỏ qua).
+        bad = set(obj) - ADD_FIELDS
+        if bad:
+            return (
+                f'add_object: trường "{sorted(bad)[0]}" không thuộc hợp đồng DSL cho object — '
+                f'chỉ nhận {"/".join(sorted(ADD_FIELDS))}.'
+            )
+        clean = {k: v for k, v in obj.items() if v is not None}
         work["objects"].append(clean)
         return None
 

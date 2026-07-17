@@ -347,6 +347,18 @@ RULE_IO_ROLES = {
     "boolean": {"input_role": "logical", "output_role": "logical"},
 }
 
+# M13 Task 12b: field object được nhận khi add_object qua SimulationPatch v1.
+# NGUỒN CHÂN LÝ DUY NHẤT — backend patch.py và frontend patch.ts đều tiêu thụ
+# qua dsl_semantic_contract()/dsl-contract.json, chống lệch tay như "directed"
+# từng lệch (backend có, frontend không — M8-PRE S2 không được mirror sang patch.ts).
+PATCH_ADD_FIELDS: tuple[str, ...] = (
+    "id", "type", "x", "y", "label", "text", "parent", "value", "node_type", "from", "to", "directed",
+)
+
+
+def patch_add_fields() -> set[str]:
+    return set(PATCH_ADD_FIELDS)
+
 
 def dsl_semantic_contract() -> dict:
     """M13: hợp đồng ngữ nghĩa CANONICAL — nguồn duy nhất cho cả hai tầng.
@@ -361,4 +373,5 @@ def dsl_semantic_contract() -> dict:
             t: sorted(PRIMITIVE_ROLES[t]) for t in sorted(object_types)
         },
         "role_coercions": [],  # DENY mặc định — chỉ thêm khi matrix audit chứng minh
+        "patch_add_fields": sorted(PATCH_ADD_FIELDS),
     }

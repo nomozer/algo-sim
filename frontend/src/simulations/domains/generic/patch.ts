@@ -1,3 +1,4 @@
+import dslContract from "./dsl-contract.json";
 import { STRUCTURE_INVALID, checkOpsAgainstPolicy } from "./edit-policy";
 import {
   TEMPORAL_PROCESS_TYPES,
@@ -34,7 +35,10 @@ export type PatchResult =
 
 export const MAX_OPS = 10;
 const UPDATE_FIELDS = new Set(["text", "label", "x", "y", "value"]);
-const ADD_FIELDS = new Set(["id", "type", "x", "y", "label", "text", "parent", "value", "node_type", "from", "to"]);
+// Trường được nhận khi add_object — TIÊU THỤ dsl-contract.json (M13 Task 12b),
+// KHÔNG viết tay: backend là nguồn chân lý (manifest.py PATCH_ADD_FIELDS), sync-lock
+// test (test_manifest_providers.py) chống lệch như "directed" từng lệch (M8-PRE S2).
+const ADD_FIELDS = new Set(dslContract.patch_add_fields as string[]);
 
 type Work = {
   dsl_version: string;
@@ -111,9 +115,18 @@ function applyOne(work: Work, op: PatchOp): string | null {
       const obj = op.object;
       if (!obj || typeof obj.id !== "string" || !obj.id) return 'add_object cần "object" có "id" chuỗi.';
       if (ids(work).has(obj.id)) return `add_object: id "${obj.id}" đã tồn tại.`;
+      // M13 Task 12b: field ngoài allowlist → REJECT tường minh, KHÔNG âm thầm
+      // strip (LLM cần biết mô hình của nó sai, không phải im lặng bị bỏ qua).
+      const bad = Object.keys(obj).filter((k) => !ADD_FIELDS.has(k));
+      if (bad.length > 0) {
+        return (
+          `add_object: trường "${bad.sort()[0]}" không thuộc hợp đồng DSL cho object — ` +
+          `chỉ nhận ${[...ADD_FIELDS].sort().join("/")}.`
+        );
+      }
       const clean: Record<string, unknown> = {};
       for (const [k, v] of Object.entries(obj)) {
-        if (ADD_FIELDS.has(k) && v !== null && v !== undefined) clean[k] = v;
+        if (v !== null && v !== undefined) clean[k] = v;
       }
       work.objects.push(clean);
       return null;

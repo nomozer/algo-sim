@@ -61,5 +61,19 @@
       "numeric"
     ]
   },
-  "role_coercions": []
+  "role_coercions": [],
+  "patch_add_fields": [
+    "directed",
+    "from",
+    "id",
+    "label",
+    "node_type",
+    "parent",
+    "text",
+    "to",
+    "type",
+    "value",
+    "x",
+    "y"
+  ]
 }
