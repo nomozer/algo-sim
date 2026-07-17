@@ -82,6 +82,38 @@ def test_classify_error_role_mismatch_khong_bi_khop_nham_unknown_primitive():
     assert classify_error(live_msg) != "unknown_primitive"
 
 
+def test_classify_error_role_mismatch_case_b_noi_message_that_voi_categorizer():
+    """M13 hotfix (review Important): nhánh categorizer case-(b) — derived
+    provider output → consumer input role (message "không tương thích ... vai
+    trò") — là CODE MỚI chưa khoá. Đây đúng lớp bug tạo ra 7f (một nhánh
+    categorizer không test dán nhãn sai). Test nối THẲNG validator sinh message
+    thật (không copy chuỗi tay) → classify_error: một weighted_sum-derived nuôi
+    input boolean (numeric ↛ logical, DENY một chiều) phải ra role_mismatch,
+    KHÔNG rơi xuống unknown_rule (message chứa "weighted_sum" trong câu)."""
+    from app.simulation.dsl.validator import validate_generic_config
+
+    spec = {
+        "dsl_version": "1.0",
+        "title": "t",
+        "objects": [
+            {"id": "v", "type": "value_box", "label": "V", "value": 3},
+            {"id": "tong", "type": "value_box", "label": "Tổng"},
+            {"id": "den", "type": "lamp", "label": "Đèn"},
+        ],
+        "rules": [
+            {"type": "weighted_sum", "target": "tong", "inputs": ["v"], "weights": [1]},
+            {"type": "boolean", "op": "not", "target": "den", "inputs": ["tong"]},
+        ],
+        "interactions": [],
+        "processes": [],
+    }
+    config, err = validate_generic_config(spec)
+    assert config is None and err  # case-(b) reject (numeric derived → boolean input)
+    assert "không tương thích" in err  # xác nhận đây ĐÚNG là message case-(b)
+    assert classify_error(err) == "role_mismatch"
+    assert classify_error(err) not in ("unknown_primitive", "unknown_rule")
+
+
 def test_harness_cham_dung_va_tong_hop(monkeypatch):
     items = [
         EvalItem("t-spec", "tìm max", "specialized", "algorithm.find_max"),
