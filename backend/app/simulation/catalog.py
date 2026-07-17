@@ -109,7 +109,13 @@ def _algo_title(config: dict, analysis: dict) -> str:
 
 
 class SimSpec:
-    """Đặc tả một mô phỏng trong danh mục backend."""
+    """Đặc tả một mô phỏng RUNTIME trong danh mục backend (§C0: runtime target).
+
+    M14 (§C1.2): mở rộng bằng metadata descriptor cấp-entry — `family_memberships`
+    (quan hệ cơ chế↔family), `executor_id`, `reachability`, `curriculum_anchor`
+    (§O2 bắt buộc cho public/AI-reachable), `known_gaps`. Mặc định rỗng để entry
+    chưa khai không vỡ; lock (Task 2) buộc khai đủ cho 14 entry.
+    """
 
     def __init__(
         self,
@@ -121,6 +127,12 @@ class SimSpec:
         contract: str,
         validate: Callable[[object], tuple[dict | None, str | None]],
         make_title: Callable[[dict, dict], str],
+        *,
+        family_memberships: tuple = (),
+        executor_id: str | None = None,
+        reachability: tuple = (),
+        curriculum_anchor: str = "",
+        known_gaps: tuple = (),
     ) -> None:
         self.simulation_id = simulation_id
         self.domain = domain
@@ -130,6 +142,12 @@ class SimSpec:
         self.contract = contract
         self.validate = validate
         self.make_title = make_title
+        # M14 descriptor (§C1.2)
+        self.family_memberships = family_memberships
+        self.executor_id = executor_id if executor_id is not None else simulation_id
+        self.reachability = reachability
+        self.curriculum_anchor = curriculum_anchor
+        self.known_gaps = known_gaps
 
 
 CATALOG: dict[str, SimSpec] = {}
