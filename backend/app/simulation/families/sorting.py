@@ -25,6 +25,26 @@ MECH_ADJACENT_SWAP = "adjacent_compare_swap"
 MECH_SHIFT_INSERT = "shift_into_sorted_prefix"
 OWNED_MECHANISMS: tuple[str, ...] = (MECH_ADJACENT_SWAP, MECH_SHIFT_INSERT)
 
+# ── prescribed_procedure (analyze signal, §E4/§O7) ────────────
+# Enum ĐÓNG mô tả CƠ CHẾ đề yêu cầu — KHÔNG free-text, KHÔNG tên thuật toán,
+# KHÔNG chứa result/trace/timeline. Đủ để mechanism gate (Task 6) so
+# family/variant consistency. Gồm: none (không ép cơ chế) + cơ chế OWNED +
+# cơ chế NGOÀI family (select/partition — không executor nào sở hữu) + other.
+PROC_NONE = "none"
+PROC_ADJACENT_SWAP = MECH_ADJACENT_SWAP
+PROC_SHIFT_INSERT = MECH_SHIFT_INSERT
+PROC_SELECT_EXTREME = "select_extreme_repeated"
+PROC_PARTITION = "partition_recursive"
+PROC_OTHER = "other_unspecified"
+PRESCRIBED_PROCEDURES: tuple[str, ...] = (
+    PROC_NONE,
+    PROC_ADJACENT_SWAP,
+    PROC_SHIFT_INSERT,
+    PROC_SELECT_EXTREME,
+    PROC_PARTITION,
+    PROC_OTHER,
+)
+
 _VARIANTS: tuple[VariantSpec, ...] = (
     VariantSpec("bubble", "algorithm.bubble_sort", MECH_ADJACENT_SWAP),
     VariantSpec("insertion", "algorithm.insertion_sort", MECH_SHIFT_INSERT),

@@ -12,6 +12,7 @@ import json
 
 from app.simulation.catalog import CATALOG, catalog_text
 from app.simulation.computation_gate import check_computation_ownership
+from app.simulation.families.sorting import PRESCRIBED_PROCEDURES
 from app.simulation.dsl.manifest import manifest_capability_summary
 from app.simulation.patterns import (
     deterministic_fill,
@@ -74,6 +75,15 @@ ANALYZE_SCHEMA = {
         "result_ownership": {
             "type": "STRING",
             "enum": ["provided", "rule_derivable", "algorithmic"],
+        },
+        # M14 §E4 — cơ chế THỦ TỤC đề YÊU CẦU (nếu ép cụ thể). Nullable +
+        # fail-closed: thiếu → mechanism gate xử như KHÔNG khớp owned (không phá
+        # analyze domain khác). Mô tả CƠ CHẾ (thao tác), KHÔNG tên thuật toán,
+        # KHÔNG kết quả (§O7).
+        "prescribed_procedure": {
+            "type": "STRING",
+            "enum": list(PRESCRIBED_PROCEDURES),
+            "nullable": True,
         },
         "notes": {"type": "STRING", "nullable": True},
     },
