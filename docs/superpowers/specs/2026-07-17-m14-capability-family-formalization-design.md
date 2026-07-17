@@ -165,7 +165,7 @@ Ví dụ then chốt:
 |---|---|---|
 | `executor_id` | module FE sở hữu execution (= chính simulation_id với mọi runtime target) | tồn tại trong registry FE (test, C4) |
 | `reachability` | tập con của `{registered, library_discoverable, ai_reachable_public, internal_fixture}` | khớp `publicCatalog()`/registry thật (test, C4) |
-| `curriculum_anchor` | tham chiếu SGK (khớp COVERAGE.md) | non-empty cho entry public |
+| `curriculum_anchor` | tham chiếu SGK (khớp COVERAGE.md) | non-empty cho MỌI runtime target (14) + capability public/AI-reachable (O2); test ĐỎ nếu thiếu |
 | `known_gaps` | giới hạn trung thực | được phép rỗng |
 
 **(3) FAMILY_SELECTORS — bề mặt LLM của family (c2).** Một mapping
@@ -665,6 +665,11 @@ migration toàn catalog…) vẫn hiệu lực nguyên vẹn.
 1. Descriptor cấp-entry + `family_memberships[]` + FAMILY_SELECTORS đầy đủ;
    consistency locks C4 (gồm cross-lock selector↔membership, song ánh 1:1
    CATALOG↔registry vẫn 14) XANH.
+1b. **Curriculum coverage guardrail (§O):** matrix enum đóng
+   {SUPPORTED/PARTIAL/PILOT/CAPABILITY_GAP/OUT_OF_SCOPE} phủ 100% đơn vị kiến
+   thức trong scope tuyên bố, gap khai trung thực (KHÔNG cần 100% SUPPORTED);
+   mọi runtime target + public/AI-reachable có `curriculum_anchor` (O2); matrix
+   sinh-từ-nguồn có lock chống drift.
 2. Classify chọn được token `algorithm.comparison_sort` qua `llm_choices(...)`
    (mock + live); hai id sort concrete không còn trong menu LLM nhưng còn
    nguyên là runtime target; token selector KHÔNG BAO GIỜ là envelope id.
@@ -718,3 +723,53 @@ chặn design)
    fail-closed?** Song song `result_ownership` (required, fail-closed). Mặc
    định: nullable + fail-closed (thiếu → xử như không khớp owned, E4 tầng 1) để
    không phá analyze của mọi domain khác; xác nhận khi chạm schema.
+
+## O. Curriculum coverage guardrail (Bước 0 — bổ sung sau rev2)
+
+Chống overclaim phủ chương trình; buộc M14 khai TRUNG THỰC phần đã/chưa phủ,
+không "phủ giả". Nhất quán `docs/COVERAGE.md` §1 (nguồn = SGK KNTT title-level,
+KHÔNG phải toàn văn GDPT 2018).
+
+**O1. Ranh giới claim.** M14 KHÔNG claim bao quát toàn bộ chương trình Tin học
+THPT. Claim hợp lệ vẫn giới hạn ở §M ("một public specialized capability family
+đã formalize + kiểm chứng end-to-end").
+
+**O2. `curriculum_anchor` bắt buộc.** Mọi runtime target trong CATALOG (14) VÀ
+mọi capability public/AI-reachable phải có `curriculum_anchor` (hoặc
+`curriculum_reference`) hợp lệ non-empty trong descriptor (C1.2). Lock: test
+descriptor ĐỎ nếu thiếu. Selector `comparison_sort` thừa hưởng anchor của các
+runtime target thành viên (anchor khai trên target concrete; selector tham
+chiếu chúng — không khai trùng).
+
+**O3. Coverage matrix (machine-readable + docs-generated, enum ĐÓNG).** Một
+artifact ánh xạ mỗi ĐƠN VỊ KIẾN THỨC trong phạm vi đề tài đã tuyên bố → đúng
+MỘT trạng thái:
+
+| Trạng thái | Nghĩa |
+|---|---|
+| `SUPPORTED` | có engine tất định sở hữu, đã ship, public |
+| `PARTIAL` | có phần, còn giới hạn khai (vd `practice_activity` — COVERAGE §6) |
+| `PILOT` | đang là pilot M14 (comparison_sort family selector) |
+| `CAPABILITY_GAP` | trong phạm vi nhưng CỐ Ý từ chối (vd Dijkstra trọng số — COVERAGE §7b) |
+| `OUT_OF_SCOPE` | ngoài phạm vi đề tài đã khoanh |
+
+"Đơn vị kiến thức trong scope" = danh sách chủ đề `COVERAGE.md` §3 (Tier 1/2/3)
++ §7/§7b. Matrix SINH từ nguồn (descriptor + COVERAGE, script chạy tay như
+`dsl-contract.json`), lock chống drift; enum đóng, KHÔNG trạng thái tự do.
+
+**O4. M14 COMPLETE (phần coverage).** 100% đơn vị kiến thức trong scope tuyên bố
+XUẤT HIỆN trong matrix + mọi gap khai trung thực. **KHÔNG yêu cầu 100% ở
+`SUPPORTED`** (cập nhật §M#3).
+
+**O5. Không lấp coverage bằng capability giả.** Không thêm capability/executor
+mới chỉ để làm đẹp coverage trong M14 (nhất quán §K + quyết định khóa 2). Gap
+khai là gap.
+
+**O6. Phân kỳ.** M15 = migrate public catalog theo family-spec + xử lý
+capability gap được chọn; M16 = kiểm chứng LLM generation end-to-end toàn public
+catalog. M14 KHÔNG làm.
+
+**O7. `prescribed_procedure` là mô tả CƠ CHẾ, không mô tả kết quả** (nhắc lại E4,
+part-2 #8): enum ĐÓNG theo cơ chế; không free-text; KHÔNG chứa result/trace/
+timeline; chỉ đủ để kiểm family/variant consistency. Đây là ranh giới R0 áp cho
+chính tín hiệu gate — gate mô tả "đề đòi cơ chế gì", không bao giờ "đáp án là gì".
