@@ -1226,6 +1226,29 @@ EvalItem(
 
 ---
 
+### Task 12b: Patch unknown-field fail-closed (duyệt 2026-07-17, sau checkpoint Task 7)
+
+**Bối cảnh:** Task 2b để lộ (reviewer bắt): `add_object` patch **im lặng strip** field ngoài `ADD_FIELDS` rồi báo `valid` — LLM không bao giờ biết mô hình của nó sai. Kèm drift có sẵn: backend `ADD_FIELDS` có `"directed"` (M8-PRE S2), frontend `patch.ts` KHÔNG — hai allowlist viết tay đã lệch nhau (anti-pattern #1).
+
+**Quyết định:** (a) allowlist chuyển vào hợp đồng sinh — `PATCH_ADD_FIELDS` định nghĩa ở `manifest.py` (patch.py import từ đó; chiều import đúng: patch → dsl), `dsl_semantic_contract()` thêm khóa `"patch_add_fields"`, regenerate JSON, frontend `patch.ts` tiêu thụ JSON **xóa Set viết tay** → drift `directed` tự giải (frontend nhận `directed`, backend là nguồn chân lý). (b) preflight trong apply add_object: key ngoài allowlist → **reject qua kênh kết quả sẵn có** (`structurally_invalid` hoặc tương đương trong `PATCH_STATUSES`), reason tiếng Việt nêu tên field — KHÔNG strip, KHÔNG hardcode `weight`, KHÔNG redesign PatchResult. Nếu audit thấy `update_object` có cùng pattern strip → áp cùng preflight (cùng cơ chế); cấu trúc khác → báo, không tự chế.
+
+**Files:**
+- Modify: `backend/app/simulation/dsl/manifest.py` (thêm `PATCH_ADD_FIELDS` + khóa contract), `backend/app/simulation/patch.py` (import + preflight), `frontend/src/simulations/domains/generic/patch.ts` (tiêu thụ JSON + preflight), `frontend/src/simulations/domains/generic/dsl-contract.json` (regenerate bằng generator, không sửa tay)
+- Test: `backend/tests/test_patch.py` (hoặc file test patch thật — grep), `frontend/src/simulations/domains/generic/patch.test.ts`
+
+**Test parity bắt buộc (cả hai tầng):**
+- add_object hợp lệ → vẫn `valid` (FP budget);
+- add_object mang `weight` → reject, reason nêu `weight`;
+- add_object mang field lạ KHÁC (vd `"color"`) → reject qua CÙNG đường (chứng minh không hardcode weight);
+- patch bị reject → **config canonical không đổi** (deep-equal trước/sau);
+- add_object edge có `directed: true` → hai tầng CÙNG chấp nhận (khoá drift vừa giải).
+
+**Stop condition:** nếu không làm được bằng preflight nhỏ + kênh kết quả sẵn có mà buộc đổi public PatchResult contract diện rộng → DỪNG BÁO; chỉ taxonomy redesign mới defer sang M14, fail-closed thì không.
+
+- [ ] Step 1: RED tests hai tầng → Step 2: cài manifest/generator/preflight → Step 3: GREEN + toàn suite hai phía + build → Step 4: commit `M13 Task 12b: patch unknown-field fail-closed — allowlist vào hợp đồng sinh, reject không strip, giải drift directed`
+
+---
+
 ### Task 13: Verify offline toàn cục + docs milestone
 
 **Files:**
