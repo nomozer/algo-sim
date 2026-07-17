@@ -297,9 +297,35 @@ export function valuesOf(spec: SimulationSpec, base: Record<string, number>): Re
   return values;
 }
 
-function objLabel(spec: SimulationSpec, id: string): string {
+/** M13 workstream C: tên hiển thị learner-facing — id nội bộ KHÔNG BAO GIỜ là nhãn chính. */
+const TYPE_DISPLAY_VI: Record<string, string> = {
+  switch: "Công tắc", lamp: "Đèn", value_box: "Ô giá trị", node: "Điểm",
+  edge: "Đoạn nối", moving_entity: "Vật di chuyển", label: "Nhãn", container: "Khung",
+  group: "Nhóm", heading: "Tiêu đề", paragraph: "Đoạn văn", text: "Chữ",
+};
+
+/** Dạng định danh kỹ thuật theo HÌNH THỨC (không keyword): snake/kebab-case
+ * chuỗi ASCII — bắt node_A, edge_AB, calc_path_ABC; cho qua "Đường A-B-C"
+ * (có dấu cách/ký tự tiếng Việt), "AB" (không có _/-). */
+const TECHNICAL_ID_FORM = /^[A-Za-z0-9]+([_-][A-Za-z0-9]+)+$/;
+
+function isTechnicalLabel(label: string | undefined, id: string): boolean {
+  if (!label) return true; // thiếu
+  if (label === id) return true; // LLM điền label = id (ca Dijkstra thật)
+  return TECHNICAL_ID_FORM.test(label) && !label.includes(" ");
+}
+
+export function displayLabel(spec: SimulationSpec, id: string): string {
   const o = spec.objects.find((x) => x.id === id);
-  return o?.label ?? id;
+  if (!o) return id; // sau validate không xảy ra; giữ để total
+  if (!isTechnicalLabel(o.label, id)) return o.label!;
+  const sameType = spec.objects.filter((x) => x.type === o.type);
+  const base = TYPE_DISPLAY_VI[o.type] ?? o.type;
+  return sameType.length > 1 ? `${base} ${sameType.findIndex((x) => x.id === id) + 1}` : base;
+}
+
+function objLabel(spec: SimulationSpec, id: string): string {
+  return displayLabel(spec, id);
 }
 
 /** Object được quản lý bởi reveal (chỉ xuất hiện ở step của nó). */

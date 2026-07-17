@@ -1,9 +1,12 @@
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { makeGenericModule } from "./index";
 import {
   buildTimeline,
   childrenOf,
   currentStepObjectIds,
+  displayLabel,
   GenericExecutionError,
   initialBase,
   inspectorGroups,
@@ -13,8 +16,10 @@ import {
   structuralRoots,
   valuesOf,
   type SimulationSpec,
+  type SpecObject,
 } from "./model";
 import { validateGenericConfig } from "./validate";
+import { GenericInspector } from "./ui";
 import { andOutput } from "../logic/model";
 import { decimalOf } from "../binary/model";
 import { makeNetworkModule } from "../network";
@@ -1046,5 +1051,119 @@ describe("M13: valuesOf ba trạng thái (unresolved / resolved / lỗi typed)",
       processes: [],
     };
     expect(() => mod.init(badSpec)).toThrow(GenericExecutionError);
+  });
+});
+
+/**
+ * M13 Task 11 (workstream C) — runtime display label. Sự cố gốc: id kỹ thuật
+ * do LLM sinh lúc runtime ("node_A", "calc_path_ABC") rò thẳng ra UI học sinh
+ * — kể cả khi LLM điền `label` BẰNG id (ca Dijkstra thật), không chỉ khi
+ * label thiếu. `displayLabel` dựng tay SimulationSpec (bỏ qua validateConfig,
+ * cùng mẫu với describe "valuesOf ba trạng thái" bên trên) vì chỉ cần
+ * spec.objects — không phụ thuộc rules/interactions/processes hợp lệ.
+ */
+describe("M13: displayLabel — nhãn hiển thị learner-facing", () => {
+  function mk(partial: { objects: SpecObject[] }): SimulationSpec {
+    return {
+      dsl_version: "1.0",
+      title: "t",
+      objects: partial.objects,
+      rules: [],
+      interactions: [],
+      processes: [],
+    };
+  }
+
+  it("M13: label thiếu → tên tiếng Việt theo type", () => {
+    const spec = mk({
+      objects: [
+        { id: "n1", type: "node" },
+        { id: "n2", type: "node" },
+        { id: "v1", type: "value_box", value: 0 },
+      ],
+    });
+    expect(displayLabel(spec, "n1")).toBe("Điểm 1");
+    expect(displayLabel(spec, "n2")).toBe("Điểm 2");
+    expect(displayLabel(spec, "v1")).toBe("Ô giá trị");
+  });
+
+  it("M13: label BẰNG id (ca Dijkstra thật) → sanitize, không rò", () => {
+    const spec = mk({
+      objects: [
+        { id: "node_A", type: "node", label: "node_A" },
+        { id: "calc_path_ABC", type: "value_box", label: "calc_path_ABC", value: 0 },
+      ],
+    });
+    expect(displayLabel(spec, "node_A")).toBe("Điểm"); // 1 node duy nhất → không đánh số
+    expect(displayLabel(spec, "calc_path_ABC")).toBe("Ô giá trị");
+  });
+
+  it("M13: label dạng snake_case kỹ thuật (khác id) vẫn bị sanitize", () => {
+    const spec = mk({ objects: [{ id: "e9", type: "edge", label: "edge_AB", from: "n1", to: "n2" }] });
+    expect(displayLabel(spec, "e9")).toBe("Đoạn nối");
+  });
+
+  it("M13: label tiếng Việt thân thiện GIỮ NGUYÊN (không sanitize oan)", () => {
+    const spec = mk({
+      objects: [
+        { id: "runner_ABC", type: "moving_entity", label: "Đường A-B-C" },
+        { id: "e1", type: "edge", label: "AB", from: "n1", to: "n2" },
+      ],
+    });
+    expect(displayLabel(spec, "runner_ABC")).toBe("Đường A-B-C");
+    expect(displayLabel(spec, "e1")).toBe("AB");
+  });
+});
+
+/**
+ * M13 Task 11 — render-test: tái tạo NGUYÊN VẸN artifact thật gây sự cố gốc
+ * (chip "node_A điểm/nút", "calc_path_ABC ô giá trị", panel QUY TẮC
+ * "calc_path_ABC = Σ(...)") — object KHÔNG label (node_A/node_B/edge_AB) VÀ
+ * object label BẰNG id (calc_path_ABC). reveal_sequence buộc Inspector đi qua
+ * nhánh ObjChips (current/completed/hidden) — nhánh phủ TẤT CẢ object type,
+ * khác nhánh FragmentRow (chỉ object có value). Rule dùng switch_gia_tri làm
+ * input hợp lệ (không phải edge — Task 3/5 đã chặn input numeric là edge ở
+ * validate; test này KHÔNG nhắm lại nhánh đó) để panel QUY TẮC cũng render.
+ */
+describe("M13 Task 11: render-test — Inspector không rò id kỹ thuật runtime", () => {
+  it("spec không label + label===id (ca Dijkstra thật) → DOM nhãn chính không lộ id thô", () => {
+    const mod = makeGenericModule();
+    const raw = {
+      dsl_version: "1.0",
+      title: "Đường đi ngắn nhất",
+      objects: [
+        { id: "node_A", type: "node", x: 15, y: 50 },
+        { id: "node_B", type: "node", x: 85, y: 50 },
+        { id: "edge_AB", type: "edge", from: "node_A", to: "node_B" },
+        { id: "switch_gia_tri", type: "switch", value: 1 },
+        { id: "calc_path_ABC", type: "value_box", label: "calc_path_ABC" },
+      ],
+      rules: [{ type: "weighted_sum", target: "calc_path_ABC", inputs: ["switch_gia_tri"], weights: [5] }],
+      interactions: [],
+      processes: [
+        {
+          type: "reveal_sequence",
+          steps: [
+            { objects: ["node_A", "node_B"] },
+            { objects: ["edge_AB"] },
+            { objects: ["switch_gia_tri"] },
+            { objects: ["calc_path_ABC"] },
+          ],
+        },
+      ],
+    };
+    const r = mod.validateConfig(raw);
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    const config = r.config;
+    const state = mod.init(config);
+    const html = renderToString(
+      createElement(GenericInspector, { config, state, busy: false, dispatch: () => {} }),
+    );
+    expect(html).not.toMatch(/node_[A-Za-z]+|calc_path/);
+    // sanity: nhãn thân thiện thật sự có mặt (test không xanh vì render rỗng)
+    expect(html).toContain("Điểm");
+    expect(html).toContain("Ô giá trị");
+    expect(html).toContain("Đoạn nối");
   });
 });

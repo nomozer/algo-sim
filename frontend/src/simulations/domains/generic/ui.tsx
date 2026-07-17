@@ -11,6 +11,7 @@ import {
   applyEditedSpec,
   childrenOf,
   currentFrame,
+  displayLabel,
   dragTargets,
   findFreePosition,
   inspectorGroups,
@@ -353,6 +354,8 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     const v = values[o.id] ?? 0;
     const current = role === "current";
     const popCls = current ? "gen-pop" : undefined;
+    // M13 Task 11: nhãn CHÍNH không bao giờ là id kỹ thuật thô (xem displayLabel).
+    const dl = displayLabel(spec, o.id);
 
     switch (o.type) {
       case "switch": {
@@ -362,7 +365,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           <g key={o.id} className={popCls} style={{ cursor: clickable ? "pointer" : "default" }} onClick={() => clickable && dispatch({ type: "toggle", target: o.id })}>
             {o.label && (
               <text x={p.x} y={p.y - 28} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
-                {o.label}
+                {dl}
               </text>
             )}
             <rect x={p.x - 30} y={p.y - 17} width={60} height={34} rx={17} fill={on ? "var(--primary)" : "var(--canvas-soft)"} stroke={on ? "var(--primary)" : "var(--ink-faint)"} strokeWidth={2} style={{ transition: "fill 0.15s ease" }} />
@@ -379,7 +382,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           <g key={o.id} className={popCls}>
             {o.label && (
               <text x={p.x} y={p.y + 44} textAnchor="middle" fontSize={12} fill="var(--ink-secondary)">
-                {o.label}
+                {dl}
               </text>
             )}
             <circle cx={p.x} cy={p.y} r={26} fill={on ? "var(--accent-green)" : "var(--canvas-soft)"} stroke={on ? "var(--accent-green)" : "var(--ink-faint)"} strokeWidth={current ? 3.5 : 2} style={{ transition: "fill 0.2s ease" }} />
@@ -394,7 +397,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           <g key={o.id} className={popCls}>
             {o.label && (
               <text x={p.x} y={p.y - 26} textAnchor="middle" fontSize={12} fill="var(--ink-secondary)">
-                {o.label}
+                {dl}
               </text>
             )}
             <rect x={p.x - 34} y={p.y - 20} width={68} height={40} rx={8} fill="var(--surface)" stroke="var(--primary)" strokeWidth={current ? 3 : 2} />
@@ -447,7 +450,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               {editClickable && <circle cx={p.x} cy={p.y} r={14} fill="transparent" />}
               <circle cx={p.x} cy={p.y} r={r} fill={fill} stroke="#fff" strokeWidth={2} className={current ? "gen-glow" : undefined} />
               <text x={labelX} y={labelY} textAnchor={labelAnchor} fontSize={15} fontWeight={700} fill="var(--ink)">
-                {o.label ?? o.id}
+                {dl}
               </text>
             </g>
           );
@@ -464,9 +467,11 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
             )}
             <circle cx={p.x} cy={p.y} r={26} fill="var(--surface)" stroke={color} strokeWidth={current ? 4 : 2.5} className={current ? "gen-glow" : undefined} />
             {/* M8-PRE: hợp đồng bảo node dùng "label"; LLM đôi khi đặt "text" — nút
-                KHÔNG TÊN thì sơ đồ mất nghĩa, nên fallback thay vì bỏ trống. */}
+                KHÔNG TÊN thì sơ đồ mất nghĩa, nên fallback thay vì bỏ trống.
+                M13 Task 11: label kỹ thuật (thiếu/=id/dạng snake-kebab) đi qua
+                displayLabel để sanitize trước khi rơi ra UI học sinh. */}
             <text x={p.x} y={p.y - 1} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
-              {o.label ?? o.text ?? o.id}
+              {o.label ? dl : (o.text ?? dl)}
             </text>
             {o.node_type && (
               <text x={p.x} y={p.y + 11} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
@@ -479,7 +484,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       case "label":
         return (
           <text key={o.id} className={popCls} x={p.x} y={p.y} textAnchor="middle" fontSize={14} fontWeight={current ? 700 : 400} fill="var(--ink-secondary)">
-            {o.label ?? ""}
+            {dl}
           </text>
         );
       default:
@@ -544,7 +549,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           policy={policy}
           tool={editTool}
           contentType={contentType}
-          connectFrom={connectFrom}
+          connectFrom={connectFrom ? displayLabel(spec, connectFrom) : null}
           busy={editBusy}
           message={editMsg}
           onPickTool={onPickTool}
@@ -633,7 +638,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                       fontWeight={600}
                       fill="var(--ink-secondary)"
                     >
-                      {o.label}
+                      {displayLabel(spec, o.id)}
                     </text>
                   )}
                 </g>
@@ -693,19 +698,24 @@ const TYPE_LABEL: Record<string, string> = {
   text: "chữ",
 };
 
-/** Tên hiển thị của object trong inspector: nhãn > nội dung chữ (rút gọn) > id. */
-function chipName(o: SpecObject): string {
-  if (o.label) return o.label;
-  if (o.text) return o.text.length > 32 ? `${o.text.slice(0, 32)}…` : o.text;
-  return o.id;
+/**
+ * Tên hiển thị của object trong inspector: nội dung chữ (rút gọn, cho họ
+ * structural/textual — heading/paragraph/... vốn không mang `.label`) >
+ * displayLabel (M13 Task 11: id kỹ thuật thô KHÔNG BAO GIỜ là nhãn chính).
+ */
+function chipName(spec: SimulationSpec, o: SpecObject): string {
+  if (STRUCTURAL_TYPES.has(o.type) && o.text) {
+    return o.text.length > 32 ? `${o.text.slice(0, 32)}…` : o.text;
+  }
+  return displayLabel(spec, o.id);
 }
 
-function ObjChips({ objs }: { objs: SpecObject[] }) {
+function ObjChips({ spec, objs }: { spec: SimulationSpec; objs: SpecObject[] }) {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4 }}>
       {objs.map((o) => (
         <span key={o.id} className="obj-chip">
-          {chipName(o)}
+          {chipName(spec, o)}
           <span className="obj-chip-type">{TYPE_LABEL[o.type] ?? o.type}</span>
         </span>
       ))}
@@ -728,31 +738,31 @@ export function GenericInspector({ config: spec, state }: Props) {
             {groups.current.length > 0 && (
               <div>
                 <span className="obj-group-label" style={{ color: "var(--primary)" }}>Vừa tạo</span>
-                <ObjChips objs={groups.current} />
+                <ObjChips spec={spec} objs={groups.current} />
               </div>
             )}
             {groups.completed.length > 0 && (
               <div>
                 <span className="obj-group-label">Đã hiện</span>
-                <ObjChips objs={groups.completed} />
+                <ObjChips spec={spec} objs={groups.completed} />
               </div>
             )}
             {groups.hidden.length > 0 && (
               <div>
                 <span className="obj-group-label" style={{ color: "var(--ink-faint)" }}>Chưa xuất hiện</span>
-                <ObjChips objs={groups.hidden} />
+                <ObjChips spec={spec} objs={groups.hidden} />
               </div>
             )}
           </div>
         ) : withValue.length > 0 ? (
           <div className="analysis-grid" style={{ marginTop: "var(--sp-sm)" }}>
             {withValue.map((o) => (
-              <FragmentRow key={o.id} label={o.label ?? o.id} value={values[o.id] ?? 0} />
+              <FragmentRow key={o.id} label={displayLabel(spec, o.id)} value={values[o.id] ?? 0} />
             ))}
           </div>
         ) : (
           <div style={{ marginTop: "var(--sp-sm)" }}>
-            <ObjChips objs={spec.objects} />
+            <ObjChips spec={spec} objs={spec.objects} />
           </div>
         )}
       </section>
@@ -761,11 +771,15 @@ export function GenericInspector({ config: spec, state }: Props) {
         <section className="card" style={{ padding: "var(--sp-md)" }}>
           <span className="eyebrow">QUY TẮC</span>
           <ul style={{ margin: "var(--sp-xs) 0 0 var(--sp-md)", fontSize: 14, color: "var(--ink-secondary)" }}>
-            {spec.rules.map((r, i) => (
-              <li key={i}>
-                {r.target} = {r.type === "boolean" ? `${r.op?.toUpperCase()}(${(r.inputs ?? []).join(", ")})` : `Σ(${(r.inputs ?? []).join(", ")} × trọng số)`}
-              </li>
-            ))}
+            {spec.rules.map((r, i) => {
+              const targetLabel = displayLabel(spec, r.target);
+              const inputLabels = (r.inputs ?? []).map((id) => displayLabel(spec, id));
+              return (
+                <li key={i}>
+                  {targetLabel} = {r.type === "boolean" ? `${r.op?.toUpperCase()}(${inputLabels.join(", ")})` : `Σ(${inputLabels.join(", ")} × trọng số)`}
+                </li>
+              );
+            })}
           </ul>
         </section>
       )}
