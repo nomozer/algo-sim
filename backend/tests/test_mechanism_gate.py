@@ -74,3 +74,8 @@ def test_error_codes_dong():
     assert "gate_mechanism_ownership" in vals
     assert "mechanism_variant_mismatch" in vals
     assert "family_spec_invalid" in vals
+
+
+# ── M15 Task 4: mã lỗi structured cho E2 nhánh 3 ───────────────
+def test_error_code_route_mismatch_ton_tai():
+    assert ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH.value == "route_mechanism_family_mismatch"

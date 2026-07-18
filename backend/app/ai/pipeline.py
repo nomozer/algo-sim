@@ -18,6 +18,7 @@ from app.simulation.mechanism_gate import (
     check_mechanism_ownership,
     check_variant_consistency,
 )
+from app.simulation.mechanisms import canonical_mechanism
 from app.simulation.error_codes import ErrorCode
 
 
@@ -401,7 +402,8 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
     analysis = await stage_analyze(text, api_key)
     _emit(observer, "analyze_done",
           result_ownership=analysis.get("result_ownership") if isinstance(analysis, dict) else None,
-          prescribed_procedure=analysis.get("prescribed_procedure") if isinstance(analysis, dict) else None)
+          prescribed_procedure=analysis.get("prescribed_procedure") if isinstance(analysis, dict) else None,
+          canonical_prescribed=canonical_mechanism(analysis.get("prescribed_procedure")) if isinstance(analysis, dict) else None)
 
     # M7.11: Representation Plan TẤT ĐỊNH (analysis → semantic requirements → plan).
     plan = build_representation_plan(analysis)

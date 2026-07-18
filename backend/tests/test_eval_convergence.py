@@ -94,3 +94,15 @@ def test_evaluate_item_selection_near_miss_la_capability_gap(monkeypatch):
     assert res.classified_ok is True  # từ chối đúng
     assert res.mechanism_gate_fired is True
     assert res.final_simulation_id is None
+
+
+# ── M15 Task 4: analyze_done mang cả raw lẫn canonical (khóa 5) ────
+def test_analyze_done_event_mang_raw_va_canonical(monkeypatch):
+    monkeypatch.setattr(pipeline, "call_gemini",
+                        _fake_gemini([_analysis("adjacent_compare_swap"), _classify("algorithm.comparison_sort"), _sort_spec()]))
+    obs = AttemptObserver()
+    asyncio.run(pipeline.run_pipeline("Sắp xếp nổi bọt 5,2,9.", "k", observer=obs))
+    data = obs.analyze()
+    assert data is not None
+    assert data["prescribed_procedure"] == "adjacent_compare_swap"  # raw, KHÔNG đổi
+    assert data["canonical_prescribed"] == "comparison_sort.adjacent_compare_swap"

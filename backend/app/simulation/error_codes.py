@@ -24,3 +24,5 @@ class ErrorCode(str, Enum):
     GATE_RESULT_OWNERSHIP = "gate_result_ownership"
     GATE_MECHANISM_OWNERSHIP = "gate_mechanism_ownership"  # E4 tầng 1 → capability_gap
     MECHANISM_VARIANT_MISMATCH = "mechanism_variant_mismatch"  # E4 tầng 2 → retry
+    # M15 E2 nhánh 3 — analyze mechanism family ↔ classify target family mâu thuẫn
+    ROUTE_MECHANISM_FAMILY_MISMATCH = "route_mechanism_family_mismatch"
