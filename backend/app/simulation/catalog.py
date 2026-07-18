@@ -663,6 +663,13 @@ CATALOG["generic.rule_scene"] = SimSpec(
         FamilyMembership(
             FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION, ResultAuthority.REPRESENTATION,
             family_spec_version="dsl-1",
+            # W5 (Task 15): owned DẪN XUẤT trực tiếp từ manifest process_types()
+            # (một nguồn — không viết tay); sorted() để tất định (thứ tự không
+            # mang ý nghĩa — mọi lock chỉ so SET, xem FAMILY_MECHANISMS ở
+            # mechanisms.py và test_membership_owned_mechanisms_canonical_...).
+            owned_mechanisms=tuple(
+                f"structural_progressive_representation.{p}" for p in sorted(process_types())
+            ),
         ),
     ),
     reachability=_R_FULL,

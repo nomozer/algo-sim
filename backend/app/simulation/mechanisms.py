@@ -72,7 +72,8 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.BOOLEAN_COMPOSITION,       # W3 (Task 13) — dual surface, owned tách bạch
     FamilyId.GRAPH_TRAVERSAL,           # W4 (Task 14) — routing owned unweighted BFS only
     FamilyId.LAYERED_PDU_TRANSFORM,     # W4 (Task 14) — encap owned 4-layer encap/decap
-})
+    FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION,  # W5 (Task 15) — owned dẫn xuất manifest process_types()
+})  # đủ 8 == frozenset(FamilyId) — K1 lock kích hoạt ĐẦY ĐỦ (test_formalized_families_owned_khong_rong)
 
 
 def canonical_mechanism(raw: str | None) -> str | None:

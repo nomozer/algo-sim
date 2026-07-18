@@ -351,7 +351,10 @@
           "variant_id": null,
           "family_spec_version": "dsl-1",
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "structural_progressive_representation.move_along_path",
+            "structural_progressive_representation.reveal_sequence"
+          ]
         }
       ],
       "config_contract_version": "dsl-1.0"
