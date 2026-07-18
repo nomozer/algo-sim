@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from app.simulation.error_codes import ErrorCode
 from app.simulation.families.base import FamilySelector
-from app.simulation.mechanisms import canonical_mechanism
+from app.simulation.mechanisms import canonical_mechanism, mechanism_family
 
 
 def check_mechanism_ownership(
@@ -63,5 +63,30 @@ def check_variant_consistency(
             ErrorCode.MECHANISM_VARIANT_MISMATCH,
             f"Đề yêu cầu cơ chế '{prescribed}' nhưng biến thể '{variant_id}' biểu diễn "
             "cơ chế khác — chọn đúng biến thể khớp cơ chế đề yêu cầu.",
+        )
+    return None
+
+
+def check_mechanism_consistency_for_target(analysis, spec):
+    prescribed = canonical_mechanism(analysis.get("prescribed_procedure"))
+    if prescribed is None:
+        return None
+    fam = mechanism_family(prescribed)
+    fams = {m.family_id.value for m in spec.family_memberships}
+    if fam not in fams:
+        return (
+            ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH,
+            "Cơ chế đề yêu cầu thuộc một họ năng lực khác với mô phỏng đã chọn — "
+            "cần chọn lại mô phỏng đúng họ hoặc từ chối trung thực.",
+        )
+    owned: set[str] = set()
+    for m in spec.family_memberships:
+        if m.family_id.value == fam:
+            owned |= set(m.owned_mechanisms)
+    if prescribed not in owned:
+        return (
+            ErrorCode.GATE_MECHANISM_OWNERSHIP,
+            "Đề yêu cầu một cơ chế mà engine tất định của mô phỏng này không sở hữu "
+            "— hệ từ chối trung thực thay vì minh hoạ bằng cơ chế khác.",
         )
     return None

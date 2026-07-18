@@ -79,3 +79,40 @@ def test_error_codes_dong():
 # ── M15 Task 4: mã lỗi structured cho E2 nhánh 3 ───────────────
 def test_error_code_route_mismatch_ton_tai():
     assert ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH.value == "route_mechanism_family_mismatch"
+
+
+# ── M15 Task 5: check_mechanism_consistency_for_target (pure, direct route) ──
+from app.simulation.catalog import CATALOG
+from app.simulation.mechanism_gate import (
+    check_mechanism_consistency_for_target as check,
+)
+
+
+def test_T1_non_binary_base_tren_binary_target_la_ownership_gap():
+    r = check({"prescribed_procedure": "positional_representation.non_binary_base"},
+              CATALOG["binary.decimal_to_binary"])
+    assert r is not None and r[0] == ErrorCode.GATE_MECHANISM_OWNERSHIP
+
+
+def test_T3_sorting_prescribed_tren_binary_target_la_family_mismatch():
+    r = check({"prescribed_procedure": "adjacent_compare_swap"},  # legacy → alias
+              CATALOG["binary.decimal_to_binary"])
+    assert r is not None and r[0] == ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH
+
+
+def test_positional_tren_binary_search_la_family_mismatch():  # T2 phần pure
+    r = check({"prescribed_procedure": "positional_representation.non_binary_base"},
+              CATALOG["algorithm.binary_search"])
+    assert r is not None and r[0] == ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH
+
+
+def test_T4_null_va_none_khong_chan_moi_direct_entry():
+    for sim_id, spec in CATALOG.items():
+        assert check({"prescribed_procedure": None}, spec) is None
+        assert check({"prescribed_procedure": "none"}, spec) is None
+
+
+def test_owned_hop_le_di_tiep():
+    r = check({"prescribed_procedure": "positional_representation.binary_positional_weights"},
+              CATALOG["binary.decimal_to_binary"])
+    assert r is None
