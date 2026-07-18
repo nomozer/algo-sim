@@ -662,6 +662,7 @@ def capability_descriptors() -> dict:
             "variant_id": m.variant_id,
             "family_spec_version": m.family_spec_version,
             "mechanism_id": m.mechanism_id,
+            "owned_mechanisms": list(m.owned_mechanisms),
         }
 
     targets = {
@@ -672,6 +673,7 @@ def capability_descriptors() -> dict:
             "curriculum_anchor": spec.curriculum_anchor,
             "known_gaps": list(spec.known_gaps),
             "family_memberships": [_member(m) for m in spec.family_memberships],
+            "config_contract_version": spec.config_contract_version,
         }
         for sim_id, spec in CATALOG.items()
     }

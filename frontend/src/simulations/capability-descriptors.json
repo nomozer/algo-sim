@@ -16,9 +16,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "algorithm.find_min": {
       "domain": "algorithm",
@@ -36,9 +38,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "algorithm.sum_if": {
       "domain": "algorithm",
@@ -56,9 +60,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "algorithm.count_if": {
       "domain": "algorithm",
@@ -76,9 +82,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "algorithm.linear_search": {
       "domain": "algorithm",
@@ -96,9 +104,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "algorithm.binary_search": {
       "domain": "algorithm",
@@ -116,9 +126,13 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "interval_elimination.halve_sorted_interval"
+          ]
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "algorithm.bubble_sort": {
       "domain": "algorithm",
@@ -136,9 +150,13 @@
           "result_authority": "computation",
           "variant_id": "bubble",
           "family_spec_version": "sort-fam-1",
-          "mechanism_id": "comparison_sort.adjacent_compare_swap"
+          "mechanism_id": "comparison_sort.adjacent_compare_swap",
+          "owned_mechanisms": [
+            "comparison_sort.adjacent_compare_swap"
+          ]
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "algorithm.insertion_sort": {
       "domain": "algorithm",
@@ -156,9 +174,13 @@
           "result_authority": "computation",
           "variant_id": "insertion",
           "family_spec_version": "sort-fam-1",
-          "mechanism_id": "comparison_sort.shift_into_sorted_prefix"
+          "mechanism_id": "comparison_sort.shift_into_sorted_prefix",
+          "owned_mechanisms": [
+            "comparison_sort.shift_into_sorted_prefix"
+          ]
         }
-      ]
+      ],
+      "config_contract_version": "algo-cfg-1"
     },
     "logic.and_gate": {
       "domain": "logic",
@@ -176,9 +198,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "logic-cfg-1"
     },
     "binary.decimal_to_binary": {
       "domain": "binary",
@@ -196,9 +220,13 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "positional_representation.binary_positional_weights"
+          ]
         }
-      ]
+      ],
+      "config_contract_version": "binary-cfg-1"
     },
     "network.packet_routing": {
       "domain": "network",
@@ -216,9 +244,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "net-cfg-1"
     },
     "algorithm.scan": {
       "domain": "algorithm",
@@ -235,9 +265,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "scan-1.0"
     },
     "network.protocol_encapsulation": {
       "domain": "network",
@@ -261,9 +293,11 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": null,
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "encap-cfg-1"
     },
     "generic.rule_scene": {
       "domain": "generic",
@@ -281,16 +315,19 @@
           "result_authority": "computation",
           "variant_id": null,
           "family_spec_version": "dsl-1",
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         },
         {
           "family_id": "structural_progressive_representation",
           "result_authority": "representation",
           "variant_id": null,
           "family_spec_version": "dsl-1",
-          "mechanism_id": null
+          "mechanism_id": null,
+          "owned_mechanisms": []
         }
-      ]
+      ],
+      "config_contract_version": "dsl-1.0"
     }
   },
   "family_selectors": {
