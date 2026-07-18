@@ -390,10 +390,14 @@ CATALOG["network.packet_routing"] = SimSpec(
     validate=validate_network_config,
     make_title=lambda config, analysis: "Đường đi của gói tin trong mạng",
     family_memberships=(
-        FamilyMembership(FamilyId.GRAPH_TRAVERSAL, ResultAuthority.COMPUTATION),
+        FamilyMembership(
+            FamilyId.GRAPH_TRAVERSAL, ResultAuthority.COMPUTATION,
+            owned_mechanisms=("graph_traversal.unweighted_hop_bfs",),
+        ),
     ),
     reachability=_R_FULL,
     curriculum_anchor="T10 CĐ2 · T12 CĐ2",
+    known_gaps=("đường đi ngắn nhất có trọng số (Dijkstra)", "dựng topo từng bước"),
     config_contract_version="net-cfg-1",
 )
 
@@ -516,7 +520,10 @@ CATALOG["network.protocol_encapsulation"] = SimSpec(
     validate=validate_encapsulation_config,
     make_title=lambda config, analysis: "Đóng gói dữ liệu qua các tầng TCP/IP",
     family_memberships=(
-        FamilyMembership(FamilyId.LAYERED_PDU_TRANSFORM, ResultAuthority.COMPUTATION),
+        FamilyMembership(
+            FamilyId.LAYERED_PDU_TRANSFORM, ResultAuthority.COMPUTATION,
+            owned_mechanisms=("layered_pdu_transform.encapsulate_decapsulate_4layer",),
+        ),
     ),
     reachability=_R_FULL,
     curriculum_anchor="T12 B4 · 12CS B22–24",

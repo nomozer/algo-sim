@@ -249,7 +249,10 @@
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 CĐ2 · T12 CĐ2",
-      "known_gaps": [],
+      "known_gaps": [
+        "đường đi ngắn nhất có trọng số (Dijkstra)",
+        "dựng topo từng bước"
+      ],
       "family_memberships": [
         {
           "family_id": "graph_traversal",
@@ -257,7 +260,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "graph_traversal.unweighted_hop_bfs"
+          ]
         }
       ],
       "config_contract_version": "net-cfg-1"
@@ -312,7 +317,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "layered_pdu_transform.encapsulate_decapsulate_4layer"
+          ]
         }
       ],
       "config_contract_version": "encap-cfg-1"

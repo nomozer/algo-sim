@@ -70,6 +70,8 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.INTERVAL_ELIMINATION,      # W1
     FamilyId.SINGLE_PASS_SCAN,          # W2 (Task 12) — KHÔNG selector, scan = catch-all
     FamilyId.BOOLEAN_COMPOSITION,       # W3 (Task 13) — dual surface, owned tách bạch
+    FamilyId.GRAPH_TRAVERSAL,           # W4 (Task 14) — routing owned unweighted BFS only
+    FamilyId.LAYERED_PDU_TRANSFORM,     # W4 (Task 14) — encap owned 4-layer encap/decap
 })
 
 
