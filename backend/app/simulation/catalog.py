@@ -27,6 +27,7 @@ from app.simulation.families.sorting import (
     MECH_SHIFT_INSERT,
     SORT_FAMILY_VERSION,
 )
+from app.simulation.mechanisms import FAMILY_MECHANISMS
 from app.simulation.dsl.validator import validate_generic_config
 from app.simulation.dsl.manifest import (
     bool_ops,
@@ -181,18 +182,41 @@ _R_FULL = (
 )
 
 
-def _scan_member() -> tuple[FamilyMembership, ...]:
-    return (FamilyMembership(FamilyId.SINGLE_PASS_SCAN, ResultAuthority.COMPUTATION),)
+def _scan_member(owned: tuple[str, ...]) -> tuple[FamilyMembership, ...]:
+    return (
+        FamilyMembership(
+            FamilyId.SINGLE_PASS_SCAN, ResultAuthority.COMPUTATION,
+            owned_mechanisms=owned,
+        ),
+    )
 
 
 # family_memberships + curriculum_anchor cho từng thuật toán (§O2). bubble/insertion
 # mang variant_id/family_spec_version/mechanism_id → cross-lock với SORTING_SELECTOR.
+# find_max/find_min/sum_if/count_if/linear_search (M15 W2 Task 12): mỗi bài SỞ HỮU
+# đúng một cơ chế canonical trong single_pass_scan — KHÔNG selector (khóa 10), 5 bài
+# vẫn là choice độc lập trên menu classify; algorithm.scan là catch-all trong-family.
 _ALGO_META: dict[str, dict] = {
-    "find_max": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
-    "find_min": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
-    "sum_if": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
-    "count_if": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
-    "linear_search": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
+    "find_max": {
+        "memberships": _scan_member(("single_pass_scan.track_extreme",)),
+        "anchor": "T10 CĐ5 · T11CS B17",
+    },
+    "find_min": {
+        "memberships": _scan_member(("single_pass_scan.track_extreme",)),
+        "anchor": "T10 CĐ5 · T11CS B17",
+    },
+    "sum_if": {
+        "memberships": _scan_member(("single_pass_scan.accumulate_conditional",)),
+        "anchor": "T10 CĐ5 · T11CS B17",
+    },
+    "count_if": {
+        "memberships": _scan_member(("single_pass_scan.count_conditional",)),
+        "anchor": "T10 CĐ5 · T11CS B17",
+    },
+    "linear_search": {
+        "memberships": _scan_member(("single_pass_scan.find_equal_early_stop",)),
+        "anchor": "T10 CĐ5 · T11CS B17",
+    },
     "binary_search": {
         "memberships": (
             FamilyMembership(
@@ -446,8 +470,14 @@ CATALOG["algorithm.scan"] = SimSpec(
     contract=_SCAN_CONTRACT,
     validate=validate_scan_config,
     make_title=lambda config, analysis: "Quét dãy một lượt",
+    # algorithm.scan = catch-all TRONG-family (M15 W2 Task 12): owned là TOÀN BỘ
+    # không gian cơ chế single_pass_scan — dẫn xuất từ FAMILY_MECHANISMS (một
+    # nguồn), không hand-written, vì scan CHÍNH LÀ toàn bộ family space.
     family_memberships=(
-        FamilyMembership(FamilyId.SINGLE_PASS_SCAN, ResultAuthority.COMPUTATION),
+        FamilyMembership(
+            FamilyId.SINGLE_PASS_SCAN, ResultAuthority.COMPUTATION,
+            owned_mechanisms=FAMILY_MECHANISMS[FamilyId.SINGLE_PASS_SCAN],
+        ),
     ),
     # scan KHÔNG có sample offline (discovery A) → không library_discoverable
     reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),

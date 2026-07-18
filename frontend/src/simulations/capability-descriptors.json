@@ -17,7 +17,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "single_pass_scan.track_extreme"
+          ]
         }
       ],
       "config_contract_version": "algo-cfg-1"
@@ -39,7 +41,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "single_pass_scan.track_extreme"
+          ]
         }
       ],
       "config_contract_version": "algo-cfg-1"
@@ -61,7 +65,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "single_pass_scan.accumulate_conditional"
+          ]
         }
       ],
       "config_contract_version": "algo-cfg-1"
@@ -83,7 +89,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "single_pass_scan.count_conditional"
+          ]
         }
       ],
       "config_contract_version": "algo-cfg-1"
@@ -105,7 +113,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "single_pass_scan.find_equal_early_stop"
+          ]
         }
       ],
       "config_contract_version": "algo-cfg-1"
@@ -266,7 +276,13 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "single_pass_scan.track_extreme",
+            "single_pass_scan.accumulate_conditional",
+            "single_pass_scan.count_conditional",
+            "single_pass_scan.find_equal_early_stop",
+            "single_pass_scan.configured_single_pass"
+          ]
         }
       ],
       "config_contract_version": "scan-1.0"

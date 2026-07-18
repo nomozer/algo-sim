@@ -26,6 +26,9 @@ describe("module algorithm.scan (M12)", () => {
     expect(mod).toBeDefined();
     expect(mod!.domain).toBe("algorithm");
     expect(mod!.interactionMode).toBe("progressive");
+    // M15 Task 12 (W2) — scan là catch-all trong-family, KHÔNG predict (capability
+    // learner-feedback ngoài phạm vi formalize family này).
+    expect(mod!.predict).toBeUndefined();
   });
 
   it("validateConfig: nhận spec hợp lệ, từ chối spec sai", () => {

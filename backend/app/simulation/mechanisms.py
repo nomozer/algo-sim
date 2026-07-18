@@ -68,6 +68,7 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.COMPARISON_SORT,           # M14 (reference)
     FamilyId.POSITIONAL_REPRESENTATION, # W1
     FamilyId.INTERVAL_ELIMINATION,      # W1
+    FamilyId.SINGLE_PASS_SCAN,          # W2 (Task 12) — KHÔNG selector, scan = catch-all
 })
 
 
