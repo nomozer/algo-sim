@@ -259,8 +259,9 @@ Exports: `KNOWLEDGE_UNITS`, `KnowledgeUnit` (frozen dataclass), `CoverageStatus`
 `coverage_rows()`. Tests: `test_coverage_matrix.py`.
 Notes (M15 Task 16): `sorting` tốt nghiệp `PILOT` → `SUPPORTED` sau formalize
 thành family selector (M14) + conformance proof (M15) — note tự giới hạn claim
-(live n=4 M14 + n=1 M15 W1 là **targeted acceptance, KHÔNG phải bằng chứng
-thống kê**, không được nói mạnh hơn). `binary_system` note bổ sung control cơ
+(live n=4 M14 + n=2 M15 W1 — đếm case live chạm sorting gồm cả near-miss từ
+chối đúng — là **targeted acceptance, KHÔNG phải bằng chứng thống kê**, không
+được nói mạnh hơn). `binary_system` note bổ sung control cơ
 số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
 `mechanism_gate.py`).
 

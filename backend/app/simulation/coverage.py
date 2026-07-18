@@ -45,7 +45,8 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
     KnowledgeUnit("sorting", "Sắp xếp so sánh", "T11CS B21–22",
                   CoverageStatus.SUPPORTED,
                   "M14 pilot + M15 formalize (comparison_sort selector); live n=4 (M14) "
-                  "+ n=1 (M15 W1) là targeted acceptance, KHÔNG phải bằng chứng thống kê"),
+                  "+ n=2 (M15 W1) — đếm case live chạm sorting gồm cả near-miss từ chối "
+                  "đúng; targeted acceptance, KHÔNG phải bằng chứng thống kê"),
     KnowledgeUnit("binary_search", "Tìm kiếm nhị phân", "T11CS B19",
                   CoverageStatus.SUPPORTED, "algorithm.binary_search"),
     KnowledgeUnit("single_pass_scan", "Quét dãy một lượt (tìm/đếm/tổng/tìm-đầu-tiên)",
