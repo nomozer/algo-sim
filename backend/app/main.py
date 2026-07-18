@@ -74,7 +74,10 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       result_ownership (computation-ownership gate, Task 9): đề "mô phỏng
 #       thuật toán X có tên" TỪNG bị định tuyến nhầm vào generic.rule_scene
 #       (dựng cảnh giả kết quả) nay gap trung thực → invalidate cache cũ.
-CACHE_VERSION = "11"
+# "12": M15 W1 — enum analyze mở rộng (positional namespaced) + analyze.md
+#       khối positional + mechanism-consistency gate/reclassify (route-dependent
+#       gates sau FINAL ROUTE).
+CACHE_VERSION = "12"
 
 
 class InputPayload(BaseModel):
