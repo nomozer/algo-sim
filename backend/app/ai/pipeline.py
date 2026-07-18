@@ -15,10 +15,12 @@ from app.simulation.computation_gate import check_computation_ownership
 from app.simulation.families import selector_for_token
 from app.simulation.families.sorting import PRESCRIBED_PROCEDURES
 from app.simulation.mechanism_gate import (
+    ROUTE_MECHANISM_FAMILY_MISMATCH_MSG as _MISMATCH_MSG,
+    check_mechanism_consistency_for_target,
     check_mechanism_ownership,
     check_variant_consistency,
 )
-from app.simulation.mechanisms import canonical_mechanism
+from app.simulation.mechanisms import canonical_mechanism, mechanism_family
 from app.simulation.error_codes import ErrorCode
 
 
@@ -167,7 +169,9 @@ async def stage_analyze(text: str, api_key: str) -> dict:
     )
 
 
-async def stage_classify(text: str, analysis: dict, api_key: str) -> dict:
+async def stage_classify(
+    text: str, analysis: dict, api_key: str, extra_note: str | None = None
+) -> dict:
     # M7.8: cho classify thấy NĂNG LỰC thực tế của generic (từ manifest) để
     # định tuyến theo capability, không theo tên môn học → tránh unsupported oan.
     user = (
@@ -176,6 +180,10 @@ async def stage_classify(text: str, analysis: dict, api_key: str) -> dict:
         f"{catalog_text()}\n\n"
         f"{manifest_capability_summary()}"
     )
+    # M15 Task 6: reclassify note ghép CUỐI — extra_note=None → user y NGUYÊN
+    # (hành vi cũ bit-một-bit; sync-lock các test hiện có không đổi).
+    if extra_note is not None:
+        user = f"{user}\n\n{extra_note}"
     result = await _call_json(
         api_key, "classify", user, _classify_schema(), 0.0, 1,
         "Lần trước không phải JSON hợp lệ. Trả về đúng một đối tượng JSON theo schema.",
@@ -384,6 +392,65 @@ async def try_pattern_reuse(
     return config, meta
 
 
+# ── M15 Task 6: route-consistency recovery (bounded, TRƯỚC route-dependent gate) ──
+
+def _family_mismatch(analysis: dict, sim_id: str) -> tuple[ErrorCode, str] | None:
+    """CHỈ nhánh 3 (family mismatch) — cho cả selector token lẫn direct entry.
+    Ownership (nhánh 2) là route-dependent gate, chạy SAU trên FINAL route
+    (check_mechanism_consistency_for_target). MỘT nguồn message (_MISMATCH_MSG)."""
+    pres = canonical_mechanism(analysis.get("prescribed_procedure"))
+    if pres is None:
+        return None
+    sel = selector_for_token(sim_id)
+    fams = (
+        {sel.family_id.value}
+        if sel is not None
+        else {m.family_id.value for m in CATALOG[sim_id].family_memberships}
+    )
+    if mechanism_family(pres) not in fams:
+        return (ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH, _MISMATCH_MSG)
+    return None
+
+
+async def classify_with_one_route_recovery(
+    text: str, analysis: dict, classification: dict, api_key: str, observer=None
+) -> tuple[dict, tuple[ErrorCode, str] | None]:
+    """Khóa 3 — bounded, KHÔNG recursion, KHÔNG pipeline thứ hai, KHÔNG gọi
+    analyze/simulate, KHÔNG chạy route-dependent gate nào. Trả
+    (classification_final, mismatch_gap|None).
+
+    - status ≠ ok → passthrough.
+    - không mismatch (nhánh 3) → passthrough.
+    - mismatch → phát event + ĐÚNG 1 reclassify (extra_note); reclassify ra
+      unsupported → passthrough (từ chối trung thực của classify); reclassify VẪN
+      lệch → (second, verdict) để caller fail-closed (KHÔNG lượt 3)."""
+    if classification.get("status") != "ok":
+        return classification, None
+    verdict = _family_mismatch(analysis, classification["simulation_id"])
+    if verdict is None:
+        return classification, None
+    _emit(observer, "gate_checked", gate="route_mechanism", fired=True,
+          reason_code=verdict[0].value)
+    _emit(observer, "reclassify_attempted",
+          from_simulation_id=classification["simulation_id"],
+          canonical_prescribed=canonical_mechanism(analysis.get("prescribed_procedure")))
+    second = await stage_classify(
+        text, analysis, api_key,
+        extra_note=(
+            "Phân tích xác định cơ chế đề yêu cầu thuộc họ năng lực khác với "
+            "simulation_id đã chọn. Chọn lại đúng mô phỏng biểu diễn cơ chế đó, "
+            "hoặc trả unsupported."
+        ),
+    )
+    _emit(observer, "reclassify_result", status=second.get("status"),
+          simulation_id=second.get("simulation_id"))
+    if second.get("status") != "ok":
+        return second, None  # từ chối trung thực của classify
+    if _family_mismatch(analysis, second["simulation_id"]) is not None:
+        return second, verdict  # VẪN lệch → caller fail-closed, KHÔNG lượt 3
+    return second, None
+
+
 # ── Orchestrator ──────────────────────────────────────────────
 
 async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=None) -> dict:
@@ -409,10 +476,29 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
     plan = build_representation_plan(analysis)
     _emit(observer, "plan_built", unsupported_capabilities=list(plan.get("unsupported_capabilities", [])))
 
-    classification = await stage_classify(text, analysis, api_key)
+    classification = await stage_classify(text, analysis, api_key)  # lần 1
     _emit(observer, "classify_done",
           status=classification.get("status"), simulation_id=classification.get("simulation_id"))
 
+    # M15 Task 6 (khóa 3, Global Constraint 15): route/mechanism-family consistency
+    # + ĐÚNG 1 reclassify TRƯỚC mọi route-dependent gate. Vẫn lệch sau 1 lượt →
+    # capability_gap fail-closed (KHÔNG simulate target mâu thuẫn, KHÔNG lượt 3).
+    classification, mismatch_gap = await classify_with_one_route_recovery(
+        text, analysis, classification, api_key, observer
+    )
+    if mismatch_gap is not None:
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category="capability_gap")
+        return {
+            "status": "unsupported",
+            "reason": mismatch_gap[1],
+            "failure_category": "capability_gap",
+            "error_code": mismatch_gap[0].value,
+            "representation_plan": plan,
+            "analysis": analysis,
+        }
+
+    # ─── FINAL ROUTE — mọi route-dependent gate chạy DƯỚI dòng này ───
     # M7.11 + M7.14C + M13 Gate B: vai trò không primitive nào cover HOẶC kết
     # quả đòi cơ chế thuật toán không engine nào sở hữu → capability_gap, KHÔNG
     # ép kiến thức vào primitive sai / để AI tự giải rồi dựng cảnh minh hoạ đáp
@@ -500,6 +586,24 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             "source": "family_resolved",
             "family_id": selector.family_id.value,
             "variant": family_config["variant"],
+        }
+
+    # M15 Task 6 — DIRECT ENTRY (không selector): ownership gate trên FINAL route.
+    # Nhánh mismatch (nhánh 3) đã xử ở recovery; ở đây thường chỉ còn ownership
+    # (nhánh 2), nhánh mismatch là DEFENSIVE — vẫn fail-closed cùng khuôn.
+    direct_verdict = check_mechanism_consistency_for_target(analysis, CATALOG[simulation_id])
+    if direct_verdict is not None:
+        _emit(observer, "gate_checked", gate="mechanism", fired=True,
+              reason_code=direct_verdict[0].value)
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category="capability_gap")
+        return {
+            "status": "unsupported",
+            "reason": direct_verdict[1],
+            "failure_category": "capability_gap",
+            "error_code": direct_verdict[0].value,
+            "representation_plan": plan,
+            "analysis": analysis,
         }
 
     spec = CATALOG[simulation_id]

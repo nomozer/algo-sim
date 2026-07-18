@@ -21,6 +21,13 @@ from app.simulation.error_codes import ErrorCode
 from app.simulation.families.base import FamilySelector
 from app.simulation.mechanisms import canonical_mechanism, mechanism_family
 
+# M15 E2 nhánh 3 — MỘT nguồn message cho route-family mismatch (dùng lại ở
+# pipeline._family_mismatch để KHÔNG nhân đôi chuỗi tiếng Việt).
+ROUTE_MECHANISM_FAMILY_MISMATCH_MSG = (
+    "Cơ chế đề yêu cầu thuộc một họ năng lực khác với mô phỏng đã chọn — "
+    "cần chọn lại mô phỏng đúng họ hoặc từ chối trung thực."
+)
+
 
 def check_mechanism_ownership(
     analysis: dict, selector: FamilySelector
@@ -76,8 +83,7 @@ def check_mechanism_consistency_for_target(analysis, spec):
     if fam not in fams:
         return (
             ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH,
-            "Cơ chế đề yêu cầu thuộc một họ năng lực khác với mô phỏng đã chọn — "
-            "cần chọn lại mô phỏng đúng họ hoặc từ chối trung thực.",
+            ROUTE_MECHANISM_FAMILY_MISMATCH_MSG,
         )
     owned: set[str] = set()
     for m in spec.family_memberships:
