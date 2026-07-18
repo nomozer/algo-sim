@@ -262,3 +262,103 @@ def test_khong_recursion(monkeypatch):
     assert env["error_code"] == "route_mechanism_family_mismatch"
     assert counts["classify"] == 2  # KHÔNG lượt 3
     assert counts["simulate"] == 0
+
+
+# ── M15 Task 9: hex/octal → capability_gap qua HAI LỚP PHÒNG THỦ (run_pipeline THẬT) ──
+# mechanisms.py KHÔNG tách hex/octal — cả hai cùng chung MỘT canonical mechanism
+# "positional_representation.non_binary_base" (INTENTIONAL_GAP_MECHANISMS: không
+# target nào sở hữu). Parametrize theo NHÃN chỉ để khoá rằng offline proof này áp
+# dụng CHO CẢ hex lẫn octal — mock hoàn toàn không đọc text đề, chỉ đọc tín hiệu
+# analyze có cấu trúc (đúng ranh giới R0: LLM không tự giải, server ra phán quyết).
+@pytest.mark.parametrize("base_label", ["hex", "octal"])
+def test_hex_octal_nhanh_A_ownership_gap_qua_binary_target(monkeypatch, base_label):
+    """Nhánh A: classify lần 1 ĐÚNG family (POSITIONAL_REPRESENTATION) nhưng chọn
+    target chỉ sở hữu binary_positional_weights → binary.decimal_to_binary. KHÔNG
+    mismatch (cùng family) nên KHÔNG reclassify — direct-entry ownership gate
+    (check_mechanism_consistency_for_target) chặn NGAY trên FINAL route vì
+    non_binary_base không nằm trong owned_mechanisms của binary.decimal_to_binary."""
+    mock, counts = _mock(
+        _analysis(proc="positional_representation.non_binary_base", ownership="rule_derivable",
+                  goal="Đổi sang hệ cơ số khác"),
+        classify_seq=[_classify("binary.decimal_to_binary")],
+    )
+    obs = AttemptObserver()
+    env = _run(monkeypatch, mock, obs, text=f"Đề {base_label} (nhánh A).")
+
+    assert env["status"] == "unsupported"
+    assert env["failure_category"] == "capability_gap"
+    assert env["error_code"] == "gate_mechanism_ownership"
+    assert env.get("simulation_id") is None
+    assert "config" not in env  # KHÔNG config nào được sinh
+    assert counts["classify"] == 1  # cùng family → KHÔNG reclassify
+    assert counts["simulate"] == 0  # gate chặn TRƯỚC stage_simulate
+    mech = _gates(obs, "mechanism")
+    assert any(m["fired"] and m["reason_code"] == "gate_mechanism_ownership" for m in mech)
+    assert _gates(obs, "route_mechanism") == []  # recovery KHÔNG chạy (không mismatch)
+
+
+@pytest.mark.parametrize("base_label", ["hex", "octal"])
+def test_hex_octal_nhanh_B_fault_injection_generic_mismatch_fail_closed(monkeypatch, base_label):
+    """Nhánh B (fault-injection, giả lập classify misroute sang generic):
+    classify lần 1 trả "generic.rule_scene" + result_ownership="algorithmic".
+    generic.rule_scene CHỈ có family_memberships {BOOLEAN_COMPOSITION,
+    STRUCTURAL_PROGRESSIVE_REPRESENTATION} — KHÔNG có POSITIONAL_REPRESENTATION
+    → route-mismatch recovery (khóa 3, Task 6 ordering) FIRE TRƯỚC khi tới
+    computation-ownership gate M13 (recovery luôn chạy trước MỌI route-dependent
+    gate — xem run_pipeline "FINAL ROUTE" comment). Đây LÀ hành vi thiết kế hiện
+    tại: nhánh này chứng minh phòng thủ qua route-mismatch, KHÔNG qua computation
+    gate. Mock reclassify (lượt 2) vẫn trả generic → mismatch CÒN → fail-closed
+    ĐÚNG 1 lượt (không lượt 3), KHÔNG simulate nào chạy."""
+    mock, counts = _mock(
+        _analysis(proc="positional_representation.non_binary_base", ownership="algorithmic",
+                  goal="Đổi sang hệ cơ số khác"),
+        classify_seq=[_classify("generic.rule_scene"), _classify("generic.rule_scene")],
+    )
+    obs = AttemptObserver()
+    env = _run(monkeypatch, mock, obs, text=f"Đề {base_label} (nhánh B).")
+
+    assert env["status"] == "unsupported"
+    assert env["failure_category"] == "capability_gap"
+    assert env["error_code"] == "route_mechanism_family_mismatch"
+    assert env.get("simulation_id") is None
+    assert "config" not in env  # KHÔNG config generic nào được sinh
+    assert counts["classify"] == 2  # 1 + đúng 1 reclassify (khóa 3, KHÔNG lượt 3)
+    assert counts["simulate"] == 0
+    rm = _gates(obs, "route_mechanism")
+    assert rm and rm[0]["fired"] is True and rm[0]["reason_code"] == "route_mechanism_family_mismatch"
+    # computation gate M13 KHÔNG chạy ở nhánh này — recovery đã chặn TRƯỚC (ordering Task 6)
+    assert _gates(obs, "computation") == []
+
+
+@pytest.mark.parametrize("base_label", ["hex", "octal"])
+def test_hex_octal_nhanh_B2_reclassify_ra_unsupported_tu_choi_trung_thuc(monkeypatch, base_label):
+    """Biến thể B2 của nhánh B: reclassify (sau mismatch lượt 1) trả "unsupported"
+    THẲNG — từ chối trung thực CỦA CLASSIFY (không phải capability_gap của gate).
+    Vẫn refuse, vẫn KHÔNG simulate nào chạy — chỉ khác error_code/failure_category
+    với nhánh B (mismatch dai dẳng).
+
+    LƯU Ý ownership="rule_derivable" (KHÔNG "algorithmic") — có chủ đích: sau khi
+    classify cuối cùng trả unsupported, chosen=None nên run_pipeline VẪN chạy
+    computation-ownership gate (điều kiện "chosen is None or generic") TRƯỚC khi
+    rơi xuống nhánh passthrough reason-của-classify. Nếu ownership="algorithmic",
+    gate M13 sẽ fire TRƯỚC và ĐÈ message — envelope vẫn unsupported nhưng qua
+    capability_gap của gate, không còn là "từ chối trung thực của classify" thuần
+    túy nữa. Dùng rule_derivable để cô lập ĐÚNG nhánh classify-tự-từ-chối."""
+    mock, counts = _mock(
+        _analysis(proc="positional_representation.non_binary_base", ownership="rule_derivable",
+                  goal="Đổi sang hệ cơ số khác"),
+        classify_seq=[
+            _classify("generic.rule_scene"),
+            _classify(status="unsupported", reason="Bài này chưa khớp mô phỏng nào."),
+        ],
+    )
+    env = _run(monkeypatch, mock, text=f"Đề {base_label} (nhánh B2).")
+
+    assert env["status"] == "unsupported"
+    assert env.get("failure_category") != "capability_gap"  # từ chối của classify, KHÔNG phải gate
+    assert env.get("error_code") is None
+    assert env["reason"] == "Bài này chưa khớp mô phỏng nào."
+    assert env.get("simulation_id") is None
+    assert "config" not in env
+    assert counts["classify"] == 2
+    assert counts["simulate"] == 0

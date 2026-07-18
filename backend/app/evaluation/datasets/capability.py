@@ -61,7 +61,7 @@ CAPABILITY_ITEMS: list[EvalItem] = [
         ),
         group="specialized",
         expect_simulation_id="algorithm.bubble_sort",
-        tags=("capability", "m14_sorting"),
+        tags=("capability", "m14_sorting", "m15_wave1"),
         curriculum_area="T11CS.CD6",
         curriculum_topic="Các thuật toán sắp xếp đơn giản (Bài 21)",
         capability_family="sorting_movement",
@@ -80,7 +80,7 @@ CAPABILITY_ITEMS: list[EvalItem] = [
         text="Sắp xếp dãy 5, 2, 9, 1 tăng dần bằng thuật toán sắp xếp chọn: mỗi bước tìm phần tử nhỏ nhất của phần còn lại rồi đưa lên đầu.",
         group="unsupported",
         expect_simulation_id=None,
-        tags=("capability", "boundary", "m14_sorting"),
+        tags=("capability", "boundary", "m14_sorting", "m15_wave1"),
         curriculum_area="T11CS.CD6 (biến thể sắp xếp — cơ chế chưa có engine)",
         curriculum_topic="Sắp xếp chọn (selection sort)",
         capability_family="sorting_mechanism_gap",
@@ -188,6 +188,107 @@ CAPABILITY_ITEMS: list[EvalItem] = [
             "KHÔNG có engine tất định nào sở hữu; cảnh generic với đường đi khai sẵn và tổng trọng số "
             "trên id cạnh dạy SAI cơ chế (LLM tự giải bài thay engine). capability_gap trung thực "
             "tốt hơn một pseudo-simulation trông-hợp-lý."
+        ),
+    ),
+    # ── M15 wave 1: đổi cơ số KHÁC nhị phân — capability_gap trung thực ──────
+    # SGK T10 B4 (Hệ nhị phân và dữ liệu số nguyên) CHỈ dạy đổi sang cơ số 2;
+    # binary.decimal_to_binary CHỈ sở hữu positional_representation.binary_positional_weights
+    # (xem catalog.py) — hex/octal là positional_representation.non_binary_base, một
+    # INTENTIONAL_GAP_MECHANISM (mechanisms.py): KHÔNG target nào sở hữu. Hai lớp
+    # phòng thủ độc lập cùng từ chối: (A) ownership gate trên direct entry
+    # binary.decimal_to_binary, (B) route-mismatch recovery khi bị misroute sang
+    # generic.rule_scene (xem test_pipeline_mechanism_consistency.py, Task 9).
+    EvalItem(
+        id="m15-hex-gap",
+        text="Đổi số 200 sang hệ thập lục phân và giải thích từng bước biểu diễn.",
+        group="unsupported",
+        expect_simulation_id=None,
+        tags=("m15_wave1",),
+        curriculum_area="T10.CD1 chỉ phủ đổi sang NHỊ PHÂN (Bài 4) — hệ thập lục phân ngoài phạm vi anchor",
+        curriculum_topic="Đổi cơ số ngoài nhị phân (thập lục phân — ngoài anchor SGK Tin 10 Bài 4)",
+        capability_family="positional_representation_base_gap",
+        complexity="L4",
+        result_mode="unsupported",
+        learning_objective=(
+            "Hệ từ chối trung thực khi đề yêu cầu đổi sang cơ số khác nhị phân (thập lục phân) mà "
+            "không engine tất định nào sở hữu cơ chế biểu diễn vị trí ở cơ số đó."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn của đổi cơ số thập lục phân — chia lấy dư LẶP theo cơ số 16, không phải "
+            "trọng số bit 8/4/2/1 của nhị phân — KHÔNG có engine tất định nào sở hữu "
+            "(binary.decimal_to_binary chỉ sở hữu binary_positional_weights). Ép vào engine nhị "
+            "phân sẽ ra kết quả SAI cơ số một cách im lặng; dựng cảnh generic minh hoạ đáp án cũng "
+            "là AI tự giải thay engine. capability_gap trung thực tốt hơn cả hai."
+        ),
+    ),
+    EvalItem(
+        id="m15-octal-gap",
+        text="Đổi số 200 sang hệ bát phân và giải thích từng bước biểu diễn.",
+        group="unsupported",
+        expect_simulation_id=None,
+        tags=("m15_wave1",),
+        curriculum_area="T10.CD1 chỉ phủ đổi sang NHỊ PHÂN (Bài 4) — hệ bát phân ngoài phạm vi anchor",
+        curriculum_topic="Đổi cơ số ngoài nhị phân (bát phân — ngoài anchor SGK Tin 10 Bài 4)",
+        capability_family="positional_representation_base_gap",
+        complexity="L4",
+        result_mode="unsupported",
+        learning_objective=(
+            "Hệ từ chối trung thực khi đề yêu cầu đổi sang cơ số khác nhị phân (bát phân) mà không "
+            "engine tất định nào sở hữu cơ chế biểu diễn vị trí ở cơ số đó."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn của đổi cơ số bát phân — chia lấy dư LẶP theo cơ số 8, không phải trọng số "
+            "bit 8/4/2/1 của nhị phân — KHÔNG có engine tất định nào sở hữu (binary.decimal_to_binary "
+            "chỉ sở hữu binary_positional_weights). Ép vào engine nhị phân sẽ ra kết quả SAI cơ số "
+            "một cách im lặng; dựng cảnh generic minh hoạ đáp án cũng là AI tự giải thay engine. "
+            "capability_gap trung thực tốt hơn cả hai."
+        ),
+    ),
+    EvalItem(
+        id="m15-binary-positive",
+        text="Số 173 được biểu diễn trong hệ nhị phân như thế nào? Hãy chỉ rõ những bit trọng số nào đang bật.",
+        group="specialized",
+        expect_simulation_id="binary.decimal_to_binary",
+        tags=("m15_wave1",),
+        curriculum_area="T10.CD1",
+        curriculum_topic="Hệ nhị phân và dữ liệu số nguyên (Bài 4)",
+        capability_family="data_representation",
+        complexity="L1",
+        result_mode="executable_simulation",
+        learning_objective="Đổi được số thập phân sang nhị phân và giải thích vai trò trọng số của từng bit.",
+        pedagogical_rationale=(
+            "Cơ chế ẩn: mỗi bit ĐÓNG GÓP một trọng số (128/64/32/16/8/4/2/1) vào giá trị cuối. Học "
+            "sinh tính tay ra đúng dãy bit nhưng không thấy TỪNG bit bật/tắt góp phần thế nào vào "
+            "tổng — timeline bật/tắt từng trọng số và cộng dồn cho thấy quan hệ nhân quả đó. Case "
+            "này là ĐỐI CHỨNG DƯƠNG cho m15-hex-gap/m15-octal-gap: cùng domain đổi cơ số, nhưng "
+            "trong phạm vi engine sở hữu (cơ số 2) → PHẢI chạy được, không bị gate chặn oan."
+        ),
+    ),
+    EvalItem(
+        id="m15-binsearch-unsorted",
+        text=(
+            "Cho dãy số 15, 3, 42, 8, 23, 4, 16 (chưa được sắp xếp). Hãy tìm nhanh số 23 trong dãy "
+            "này bằng cách chia đôi phạm vi tìm kiếm."
+        ),
+        group="specialized",
+        expect_simulation_id="algorithm.binary_search",
+        tags=("m15_wave1",),
+        curriculum_area="T11CS.CD6",
+        curriculum_topic="Bài toán tìm kiếm (Bài 19)",
+        capability_family="search_path",
+        complexity="L4",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Nhận ra tìm kiếm nhị phân đòi hỏi dãy có thứ tự — và thấy hệ TỰ SẮP XẾP trước khi "
+            "chạy thay vì áp thuật toán sai tiền đề hoặc từ chối oan vì thiếu từ khoá 'đã sắp'."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: interval_elimination.halve_sorted_interval CHỈ đúng trên dãy ĐÃ có thứ tự — "
+            "một TIỀN ĐỀ hay bị bỏ qua khi học sinh chỉ nhớ 'chia đôi cho nhanh'. Đề cố ý cho dãy "
+            "CHƯA sắp nhưng vẫn nêu đúng cơ chế ('tìm nhanh', 'chia đôi') để kiểm: (1) hệ định "
+            "tuyến theo CƠ CHẾ chứ không theo từ khoá 'đã sắp'; (2) validator tự sắp dãy trước khi "
+            "mô phỏng (app/validation/simulation.py) và chú thích sư phạm rõ ràng, thay vì chạy sai "
+            "tiền đề hoặc từ chối oan."
         ),
     ),
 ]
