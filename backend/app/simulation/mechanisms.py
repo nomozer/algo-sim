@@ -69,6 +69,7 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.POSITIONAL_REPRESENTATION, # W1
     FamilyId.INTERVAL_ELIMINATION,      # W1
     FamilyId.SINGLE_PASS_SCAN,          # W2 (Task 12) — KHÔNG selector, scan = catch-all
+    FamilyId.BOOLEAN_COMPOSITION,       # W3 (Task 13) — dual surface, owned tách bạch
 })
 
 

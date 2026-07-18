@@ -297,7 +297,10 @@ CATALOG["logic.and_gate"] = SimSpec(
     validate=validate_logic_config,
     make_title=lambda config, analysis: "Cổng logic AND",
     family_memberships=(
-        FamilyMembership(FamilyId.BOOLEAN_COMPOSITION, ResultAuthority.COMPUTATION),
+        FamilyMembership(
+            FamilyId.BOOLEAN_COMPOSITION, ResultAuthority.COMPUTATION,
+            owned_mechanisms=("boolean_composition.single_gate_truth_table",),
+        ),
     ),
     reachability=_R_FULL,
     curriculum_anchor="T10 B5 · T10 B9",
@@ -647,7 +650,8 @@ CATALOG["generic.rule_scene"] = SimSpec(
     # §C1: HAI membership, result_authority khác nhau (computation + representation)
     family_memberships=(
         FamilyMembership(
-            FamilyId.BOOLEAN_COMPOSITION, ResultAuthority.COMPUTATION, family_spec_version="dsl-1"
+            FamilyId.BOOLEAN_COMPOSITION, ResultAuthority.COMPUTATION, family_spec_version="dsl-1",
+            owned_mechanisms=("boolean_composition.composed_rule_dag",),
         ),
         FamilyMembership(
             FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION, ResultAuthority.REPRESENTATION,

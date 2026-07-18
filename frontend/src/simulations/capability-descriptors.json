@@ -209,7 +209,9 @@
           "variant_id": null,
           "family_spec_version": null,
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "boolean_composition.single_gate_truth_table"
+          ]
         }
       ],
       "config_contract_version": "logic-cfg-1"
@@ -332,7 +334,9 @@
           "variant_id": null,
           "family_spec_version": "dsl-1",
           "mechanism_id": null,
-          "owned_mechanisms": []
+          "owned_mechanisms": [
+            "boolean_composition.composed_rule_dag"
+          ]
         },
         {
           "family_id": "structural_progressive_representation",
