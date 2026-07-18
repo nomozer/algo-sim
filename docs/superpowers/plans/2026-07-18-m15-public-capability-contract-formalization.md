@@ -25,6 +25,9 @@
 11. W3 Boolean: giữ dual surface, không nested truth-table production gate.
 12. W4 Network: BFS unweighted ownership; weighted shortest path = gap; không Dijkstra; giữ 2D/3D hiện tại.
 13. W5: generic representation authority proof; sorting PILOT→SUPPORTED (kèm claim boundary n=4); docs close; KHÔNG mở M16.
+14. **Negative-test isolation (plan rev2):** MỌI negative validator/contract test bắt đầu từ một **valid fixture builder** rồi mutate ĐÚNG MỘT thuộc tính; assert đúng error branch/code hoặc message đặc trưng. CẤM test chỉ assert `config is None` khi config có thể sai vì nhiều lý do (chống false-green). Fixture gốc phải có test chứng minh nó hợp lệ.
+15. **Route-consistency ordering (plan rev2):** pipeline chuẩn hoá thành `analyze → classify lần 1 → route/mechanism-family consistency → tối đa 1 reclassification → FINAL ROUTE → toàn bộ route-dependent gates (computation gate M13, selector tier-1 M14, direct ownership M15) → simulate`. KHÔNG chạy bất kỳ route-dependent gate nào trên route TẠM trước reclassification.
+16. **STOP-GATE dependency (plan rev2):** KHÔNG bắt đầu W2–W5 trước khi Task 11 được GIẢI QUYẾT + user review/approval — dù dependency code thuần cho phép.
 
 Chuẩn chung: R0 + bất biến #20/#21/#22 nguyên vẹn; offline-first (pytest/vitest 0 network); test tiếng Việt đặt tên theo hành vi; commit KHÔNG có Co-Authored-By trailer; FE production diff = 0 (chỉ `capability-descriptors.json` + test); baseline vào M15: pytest 450 · vitest 403 · build sạch — task nào thấy baseline đỏ không liên quan → DỪNG báo user.
 
@@ -459,17 +462,28 @@ def check_mechanism_consistency_for_target(analysis, spec):
 
 ---
 
-### Task 6: Pipeline wiring — direct gate + bounded reclassification (1 lượt)
+### Task 6: Pipeline wiring — route-consistency ordering + bounded reclassification (1 lượt)
 
-**Mục tiêu:** Mismatch/ownership sống trong `run_pipeline`; reclassify đúng 1 lượt; analyze không chạy lại; events đầy đủ.
+**Mục tiêu:** Formalize pipeline thành `analyze → classify lần 1 → route/mechanism-family consistency → tối đa 1 reclassification → FINAL ROUTE → toàn bộ route-dependent gates → simulate` (Global Constraint 15). KHÔNG route-dependent gate nào (computation gate M13, selector tier-1 M14, direct ownership) chạy trên route TẠM trước reclassification. Helper bounded `classify_with_one_route_recovery` — không recursion, không pipeline thứ hai.
 
 **Files:**
 - Modify: `backend/app/ai/pipeline.py`
 - Test: Create `backend/tests/test_pipeline_mechanism_consistency.py`
 
-**Interfaces — Produces:** `stage_classify(text, analysis, api_key, extra_note: str | None = None)` (None → prompt y nguyên — hành vi cũ bit-một-bit); events mới: `gate_checked {gate: "route_mechanism", fired, reason_code}`, `reclassify_attempted {from_simulation_id, canonical_prescribed}`, `reclassify_result {status, simulation_id}`.
+**Interfaces — Produces:**
+```python
+async def classify_with_one_route_recovery(
+    text, analysis, classification, api_key, observer=None
+) -> tuple[dict, tuple[ErrorCode, str] | None]
+# Trả (classification_final, mismatch_gap). CHỈ xử family-mismatch (nhánh 3);
+# ownership là route-dependent gate — caller chạy trên FINAL route.
+# mismatch_gap ≠ None → caller phát envelope capability_gap fail-closed.
+async def stage_classify(text, analysis, api_key, extra_note: str | None = None)
+# None → prompt y nguyên (hành vi cũ bit-một-bit).
+```
+Events mới: `gate_checked {gate: "route_mechanism", fired, reason_code}`, `reclassify_attempted {from_simulation_id, canonical_prescribed}`, `reclassify_result {status, simulation_id}`.
 
-**Dependency:** Task 4, 5. **Invariant:** khóa 3, 4, 5; bất biến #22 (eval tự thấy gate mới qua observer — KHÔNG sửa harness); #5 (specialized không bị vạ lây: check chỉ nổ khi CÓ prescribed non-null).
+**Dependency:** Task 4, 5. **Invariant:** khóa 3, 4, 5; Global Constraint 15; bất biến #22 (eval tự thấy gate mới qua observer — KHÔNG sửa harness); #5 (specialized không bị vạ lây: check chỉ nổ khi CÓ prescribed non-null); #21 (computation gate GIỮ NGUYÊN hành vi, chỉ dời xuống sau final route).
 
 - [ ] **Step 1 — test trước** (mock `pipeline.call_gemini` theo khuôn `test_eval_convergence.py`; mock đếm call theo skill name):
 
@@ -483,11 +497,32 @@ async def test_T2_mismatch_khong_goi_simulate_va_reclassify_dung_1_luot():
     #   số call skill "analyze" == 1 (khóa 3: analyze KHÔNG chạy lại);
     #   observer có gate_checked route_mechanism fired + reclassify_attempted + reclassify_result.
 
-async def test_reclassify_phuc_hoi_ve_dung_route():
-    # analyze → prescribed="adjacent_compare_swap" (legacy sorting)
-    # classify lần 1 → generic.rule_scene (misroute); lần 2 → "algorithm.comparison_sort"
-    # KỲ VỌNG: đi tiếp nhánh selector, envelope ok concrete bubble/insertion
-    #   (mock simulate family trả spec hợp lệ); reclassify_result status="ok".
+async def test_generic_misroute_sorting_prescribed_reclassify_TRUOC_computation_gate():
+    # ORDERING PROOF (Global Constraint 15): analyze → prescribed="adjacent_compare_swap",
+    #   result_ownership="algorithmic" (bình thường với đề sắp xếp);
+    # classify lần 1 → generic.rule_scene (misroute); lần 2 → "algorithm.comparison_sort".
+    # KỲ VỌNG: envelope ok concrete bubble/insertion (mock FamilySpec hợp lệ) —
+    #   computation gate KHÔNG được fire trên route TẠM generic (nếu gate chạy trước
+    #   recovery, ownership="algorithmic" sẽ chặn oan đề sorting này);
+    #   observer: KHÔNG có gate_checked{gate:"computation"} nào TRƯỚC reclassify_result.
+
+async def test_final_route_generic_ownership_algorithmic_computation_gate_van_fire():
+    # prescribed=None (không mismatch) + classify → generic + result_ownership="algorithmic"
+    # → computation gate VẪN fire y hệt M13 (final route = generic): unsupported capability_gap.
+
+async def test_reclassification_khong_bypass_gate_M13_M14():
+    # prescribed="select_extreme_repeated" (legacy → canonical unowned);
+    # classify lần 1 → binary.decimal_to_binary (mismatch) → lần 2 → "algorithm.comparison_sort".
+    # KỲ VỌNG: tier-1 M14 fire TRÊN FINAL ROUTE → capability_gap gate_mechanism_ownership
+    #   (recovery KHÔNG bypass gate; gate chạy sau final route).
+
+async def test_route_dependent_gates_chi_chay_tren_final_route():
+    # trong cả hai kịch bản trên: mọi event gate_checked{computation|mechanism} xuất hiện
+    #   SAU reclassify_result trong obs.events (assert thứ tự chuỗi event).
+
+async def test_call_budget_analyze_1_classify_max2_simulate_max1():
+    # trên TỪNG kịch bản của file test này: analyze == 1, classify ≤ 2, simulate ≤ 1
+    #   (đếm theo skill name trong mock call_gemini).
 
 async def test_reclassify_ra_unsupported_la_tu_choi_trung_thuc():
     # lần 2 classify trả status="unsupported" → envelope unsupported thường (reason của classify).
@@ -501,46 +536,81 @@ async def test_ownership_gap_khong_reclassify():
     #   — cùng family, không phải mâu thuẫn route); simulate == 0.
 
 async def test_khong_recursion():
-    # sau reclassify, route mới lại mismatch → KHÔNG lượt 3: classify == 2, gap fail-closed.
+    # sau reclassify, route mới lại mismatch → KHÔNG lượt 3: classify == 2, gap fail-closed
+    #   error_code "route_mechanism_family_mismatch".
 ```
 
-- [ ] **Step 2 — FAIL. Step 3 — implement** trong `run_pipeline` (sau khối computation-gate, quanh `selector = selector_for_token(...)` hiện có):
+- [ ] **Step 2 — FAIL. Step 3 — implement** — RESTRUCTURE `run_pipeline` theo ordering Global Constraint 15 (recovery TRƯỚC mọi route-dependent gate):
 
 ```python
-def _consistency_verdict(analysis, sim_id):
+def _family_mismatch(analysis, sim_id) -> tuple[ErrorCode, str] | None:
+    """CHỈ nhánh 3 (family mismatch) — cho cả selector token lẫn direct entry.
+    Ownership (nhánh 2) là route-dependent gate, chạy SAU trên final route."""
+    pres = canonical_mechanism(analysis.get("prescribed_procedure"))
+    if pres is None:
+        return None
     sel = selector_for_token(sim_id)
-    if sel is not None:
-        pres = canonical_mechanism(analysis.get("prescribed_procedure"))
-        if pres is not None and mechanism_family(pres) != sel.family_id.value:
-            return (ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH, _MISMATCH_MSG)
-        return None  # ownership trong-family: tier-1 sẵn có của nhánh selector lo
-    return check_mechanism_consistency_for_target(analysis, CATALOG[sim_id])
+    fams = ({sel.family_id.value} if sel is not None
+            else {m.family_id.value for m in CATALOG[sim_id].family_memberships})
+    if mechanism_family(pres) not in fams:
+        return (ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH, _MISMATCH_MSG)
+    return None
 
-# trong run_pipeline, sau khi có simulation_id:
-verdict = _consistency_verdict(analysis, simulation_id)
-if verdict and verdict[0] == ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH:
+
+async def classify_with_one_route_recovery(text, analysis, classification, api_key, observer=None):
+    """Khóa 3 — bounded, KHÔNG recursion, KHÔNG pipeline thứ hai, KHÔNG gọi
+    analyze/simulate, KHÔNG chạy route-dependent gate nào. Trả
+    (classification_final, mismatch_gap|None)."""
+    if classification.get("status") != "ok":
+        return classification, None
+    verdict = _family_mismatch(analysis, classification["simulation_id"])
+    if verdict is None:
+        return classification, None
     _emit(observer, "gate_checked", gate="route_mechanism", fired=True,
           reason_code=verdict[0].value)
-    _emit(observer, "reclassify_attempted", from_simulation_id=simulation_id,
+    _emit(observer, "reclassify_attempted",
+          from_simulation_id=classification["simulation_id"],
           canonical_prescribed=canonical_mechanism(analysis.get("prescribed_procedure")))
-    classification = await stage_classify(
+    second = await stage_classify(
         text, analysis, api_key,
         extra_note=("Phân tích xác định cơ chế đề yêu cầu thuộc họ năng lực khác với "
                     "simulation_id đã chọn. Chọn lại đúng mô phỏng biểu diễn cơ chế đó, "
                     "hoặc trả unsupported."))
-    _emit(observer, "reclassify_result", status=classification.get("status"),
-          simulation_id=classification.get("simulation_id"))
-    if classification.get("status") != "ok":
-        ...  # envelope unsupported thường (nhánh sẵn có)
-    simulation_id = classification["simulation_id"]
-    verdict = _consistency_verdict(analysis, simulation_id)
-    if verdict is not None:   # vẫn lệch (mismatch HOẶC ownership) → fail-closed, KHÔNG lượt 3
-        return {..."status": "unsupported", "failure_category": "capability_gap",
-                "error_code": verdict[0].value, ...}
-elif verdict:  # GATE_MECHANISM_OWNERSHIP — không reclassify
-    _emit(observer, "gate_checked", gate="mechanism", fired=True, reason_code=verdict[0].value)
-    return {..."status": "unsupported", "failure_category": "capability_gap",
-            "error_code": verdict[0].value, ...}
+    _emit(observer, "reclassify_result", status=second.get("status"),
+          simulation_id=second.get("simulation_id"))
+    if second.get("status") != "ok":
+        return second, None                      # từ chối trung thực của classify
+    if _family_mismatch(analysis, second["simulation_id"]) is not None:
+        return second, verdict                   # VẪN lệch → caller fail-closed, KHÔNG lượt 3
+    return second, None
+
+
+# run_pipeline — thứ tự MỚI (Global Constraint 15):
+analysis = await stage_analyze(text, api_key)            # đúng 1 lần (khóa 3)
+plan = build_representation_plan(analysis)
+classification = await stage_classify(text, analysis, api_key)   # lần 1
+classification, mismatch_gap = await classify_with_one_route_recovery(
+    text, analysis, classification, api_key, observer)
+if mismatch_gap is not None:                              # vẫn lệch sau 1 lượt
+    return {..., "status": "unsupported", "failure_category": "capability_gap",
+            "error_code": mismatch_gap[0].value, ...}
+# ─── FINAL ROUTE — mọi route-dependent gate chạy DƯỚI dòng này ───
+chosen = classification.get("simulation_id") if classification.get("status") == "ok" else None
+if chosen is None or chosen == "generic.rule_scene":
+    ...  # computation gate M13 — NGUYÊN TRẠNG hành vi, chỉ dời vị trí xuống sau recovery
+if classification.get("status") != "ok":
+    ...  # unsupported envelope (nguyên trạng)
+selector = selector_for_token(simulation_id)
+if selector is not None:
+    ...  # tier-1 mechanism ownership M14 (nguyên trạng) + family branch
+else:
+    v = check_mechanism_consistency_for_target(analysis, CATALOG[simulation_id])
+    if v is not None:  # trên final route chỉ còn ownership (mismatch đã xử ở recovery;
+                       # nhánh mismatch ở đây là defensive — vẫn fail-closed cùng khuôn)
+        _emit(observer, "gate_checked", gate="mechanism", fired=True, reason_code=v[0].value)
+        return {..., "status": "unsupported", "failure_category": "capability_gap",
+                "error_code": v[0].value, ...}
+...  # stage_simulate — tối đa 1 nhánh simulate cho mọi đường
 ```
 
   `stage_classify` thêm `extra_note` ghép cuối user message khi không None. `analysis` KHÔNG mutate, KHÔNG re-run (khóa 3).
@@ -602,44 +672,96 @@ def test_enum_giu_legacy_sorting_va_co_positional():
 
 **Dependency:** Task 2. **Invariant:** khóa 6, 7; R0 (validator server là chốt chặn); FE production diff = 0.
 
-- [ ] **Step 1 — test trước (BE, parametrize đủ 8 id):**
+- [ ] **Step 1 — test trước (BE — tuân Global Constraint 14: valid fixture builder + mutate ĐÚNG MỘT thuộc tính + assert đúng nhánh lỗi):**
 
 ```python
 import pytest
 from app.validation.simulation import validate_algorithm_config
 
-@pytest.mark.parametrize("aid,missing_field,bad", [
-    ("linear_search", "target", {"problem": {}, "data": {"array": [1, 2, 3]}}),
-    ("binary_search", "target", {"problem": {}, "data": {"array": [1, 2, 3]}}),
-    ("sum_if", "condition", {"problem": {}, "data": {"array": [1, 2, 3]}}),
-    ("count_if", "condition", {"problem": {}, "data": {"array": [1, 2, 3]}}),
-    ("bubble_sort", "order", {"problem": {}, "data": {"array": [3, 1, 2]}}),
-    ("insertion_sort", "order", {"problem": {}, "data": {"array": [3, 1, 2]}}),
+ALL_8 = ["find_max", "find_min", "sum_if", "count_if",
+         "linear_search", "binary_search", "bubble_sort", "insertion_sort"]
+
+
+def _valid_config(aid: str) -> dict:
+    """Fixture builder: config HỢP LỆ TỐI THIỂU per algorithm_id — điểm xuất phát
+    của MỌI negative test (chống false-green: sai chỉ vì đúng MỘT mutation)."""
+    data: dict = {"array": [5, 2, 9, 1]}
+    if aid in ("linear_search", "binary_search"):
+        data["target"] = 9
+    if aid in ("sum_if", "count_if"):
+        data["condition"] = {"op": ">", "value": 3}
+    if aid in ("bubble_sort", "insertion_sort"):
+        data["order"] = "asc"
+    return {"problem": {"summary": "s", "input": "i", "output": "o"}, "data": data}
+
+
+@pytest.mark.parametrize("aid", ALL_8)
+def test_fixture_goc_hop_le(aid):
+    """Chống false-green: fixture gốc PHẢI validate xanh trước khi mutate."""
+    config, err = validate_algorithm_config(aid, _valid_config(aid))
+    assert err is None and config is not None
+
+
+@pytest.mark.parametrize("aid,field,expected_msg", [
+    ("linear_search", "target", '"data.target"'),
+    ("binary_search", "target", '"data.target"'),
+    ("sum_if", "condition", '"data.condition"'),
+    ("count_if", "condition", '"data.condition"'),
+    ("bubble_sort", "order", '"data.order"'),
+    ("insertion_sort", "order", '"data.order"'),
 ])
-def test_required_field_theo_tung_entry_bi_ep(aid, missing_field, bad):
-    config, err = validate_algorithm_config(aid, bad)
-    assert config is None and missing_field in (err or "").replace('"', "")
+def test_xoa_dung_mot_required_field_ra_dung_nhanh_loi(aid, field, expected_msg):
+    cfg = _valid_config(aid)
+    del cfg["data"][field]                          # mutate ĐÚNG MỘT thuộc tính
+    config, err = validate_algorithm_config(aid, cfg)
+    assert config is None
+    assert expected_msg in (err or "")              # đúng NHÁNH lỗi — không chỉ is None
 
-@pytest.mark.parametrize("aid", ["find_max", "find_min", "sum_if", "count_if",
-                                 "linear_search", "binary_search", "bubble_sort", "insertion_sort"])
-def test_bounds_2_15_ap_moi_entry(aid):
-    base = {"problem": {}, "data": {"array": [1], "target": 1,
-            "condition": {"op": ">", "value": 0}, "order": "asc"}}
-    config, err = validate_algorithm_config(aid, base)
-    assert config is None  # 1 phần tử < 2
 
-def test_binary_search_chuan_hoa_tat_dinh_labels_giu_lien_ket_va_annotation():
-    """Khóa 7 — normalize + labels theo value + note sư phạm + KHÔNG refuse."""
-    raw = {"problem": {}, "data": {"array": [9, 3, 7], "labels": ["chin", "ba", "bay"], "target": 7}}
-    config, err = validate_algorithm_config("binary_search", raw)
-    assert err is None and config is not None            # KHÔNG refuse
-    assert config["data"]["array"] == [3, 7, 9]          # normalize tất định
+@pytest.mark.parametrize("aid", ALL_8)
+def test_bounds_2_15_tu_fixture_hop_le(aid):
+    cfg = _valid_config(aid)
+    cfg["data"]["array"] = [7]                      # mutate ĐÚNG MỘT thuộc tính
+    config, err = validate_algorithm_config(aid, cfg)
+    assert config is None
+    assert "2–15" in (err or "")                    # message đặc trưng của nhánh bounds
+
+
+# ── Khóa 7 — BỐN proof RIÊNG BIỆT cho binary_search (cùng một fixture unsorted) ──
+
+def _unsorted_binsearch() -> dict:
+    cfg = _valid_config("binary_search")
+    cfg["data"]["array"] = [9, 3, 7]
+    cfg["data"]["labels"] = ["chin", "ba", "bay"]
+    cfg["data"]["target"] = 7
+    return cfg
+
+
+def test_binsearch_normalization_tat_dinh_khong_refuse():
+    config, err = validate_algorithm_config("binary_search", _unsorted_binsearch())
+    assert err is None and config is not None       # KHÔNG refuse
+    assert config["data"]["array"] == [3, 7, 9]     # normalize tất định
+
+
+def test_binsearch_label_giu_lien_ket_theo_gia_tri():
+    config, _ = validate_algorithm_config("binary_search", _unsorted_binsearch())
     assert config["data"]["labels"] == ["ba", "bay", "chin"]  # label đi theo GIÁ TRỊ
-    assert "sắp xếp trước" in (config["notes"] or "")    # annotation học sinh thấy
-    # idempotent: chạy lại trên output → không đổi nữa, không note đúp
-    config2, _ = validate_algorithm_config("binary_search", config)
-    assert config2["data"]["array"] == [3, 7, 9]
+
+
+def test_binsearch_annotation_su_pham_ton_tai():
+    config, _ = validate_algorithm_config("binary_search", _unsorted_binsearch())
+    assert "sắp xếp trước" in (config["notes"] or "")
+
+
+def test_binsearch_idempotent_tren_output_da_chuan_hoa():
+    config, _ = validate_algorithm_config("binary_search", _unsorted_binsearch())
+    config2, err2 = validate_algorithm_config("binary_search", config)
+    assert err2 is None and config2["data"]["array"] == [3, 7, 9]
 ```
+
+  Proof thứ tư của khóa 7 — **trace chạy trên normalized input** — là vitest RIÊNG
+  (`binary-normalized.test.ts`): init module `algorithm.binary_search` với config
+  normalize output ở trên → mọi `step.snapshot.array` đã sắp, trace tìm thấy 7.
 
   **FE vitest** (`binary-normalized.test.ts`, test-only): init module `algorithm.binary_search` với config đã normalize (array [3,7,9], target 7) → trace tồn tại, mọi step snapshot.array là dãy ĐÃ SẮP (trace chạy trên normalized input — khóa 7).
 - [ ] **Step 2 — chạy: kỳ vọng PHẦN LỚN PASS NGAY** (đây là LOCK hành vi có sẵn [simulation.py:92-129] — pass-ngay là bằng chứng policy tồn tại; test nào FAIL nghĩa là phát hiện policy chưa có thật → DỪNG báo user, không lặng lẽ sửa validator). **Step 3 —** CORRECTNESS.md thêm mục "Chính sách normalize-not-refuse của binary_search" (2–3 dòng, dẫn test làm chốt). **Step 4 — suite đủ xanh cả BE+FE. Step 5 — Commit:** `M15 Task 8: per-entry policy locks algo-cfg-1 (required/bounds/normalize/annotation) + binary_search normalization proof BE+FE (labels giữ liên kết, trace trên normalized, không refuse) + CORRECTNESS.md`
@@ -705,7 +827,7 @@ async def test_hex_va_octal_offline_deu_capability_gap_khong_generic():
 - OPTIONAL theo ngân sách: (4) octal; (5) sorting positive paraphrase (control salience — analyze.md dài thêm); (6) selection near-miss.
 - Trần đề xuất: ≤6 case logic / ≤20 HTTP. Ghi nhật ký CURRENT_STATE §1 (logical case, HTTP thực, retry, transient). Không prompt-fix trước khi có exact trace; tối đa MỘT prompt-only fix/root-cause đã chứng minh; không sửa validator/gate đúng để LLM pass.
 
-**Dependency:** Task 10. **Rollback:** live fail có chữ ký rõ → xử theo bảng failure-mode design §Q (hex-control hỏng → gỡ `non_binary_base` khỏi analyze-exposed, giữ phần còn lại W1). **Commit checkpoint:** cập nhật CURRENT_STATE §1 sau run (docs).
+**Dependency:** Task 10. **Rollback:** live fail có chữ ký rõ → xử theo bảng failure-mode design §Q (hex-control hỏng → gỡ `non_binary_base` khỏi analyze-exposed, giữ phần còn lại W1). **Commit checkpoint:** cập nhật CURRENT_STATE §1 sau run (docs). **Sau T11: DỪNG chờ user review kết quả — W2–W5 chỉ mở khi user approve (Global Constraint 16).**
 
 ---
 
@@ -721,7 +843,7 @@ async def test_hex_va_octal_offline_deu_capability_gap_khong_generic():
 
 **Owned khai:** find_max/find_min `("single_pass_scan.track_extreme",)`; sum_if `("single_pass_scan.accumulate_conditional",)`; count_if `("single_pass_scan.count_conditional",)`; linear_search `("single_pass_scan.find_equal_early_stop",)`; algorithm.scan = CẢ 5 giá trị (catch-all trong-family: `("single_pass_scan.track_extreme", "single_pass_scan.accumulate_conditional", "single_pass_scan.count_conditional", "single_pass_scan.find_equal_early_stop", "single_pass_scan.configured_single_pass")`).
 
-**Dependency:** Task 3 (lock theo pha tự siết khi FORMALIZED_FAMILIES mở rộng). **Invariant:** khóa 10; M12 (interpreter sở hữu loop); classify menu KHÔNG đổi.
+**Dependency:** Task 3 (code) + **T11 ĐÃ GIẢI QUYẾT + user approval (Global Constraint 16 — chặn cứng)**. **Invariant:** khóa 10; M12 (interpreter sở hữu loop); classify menu KHÔNG đổi.
 
 - [ ] **Step 1 — test trước** (`test_scan_conformance.py`) — checklist conformance §B design bằng assert:
 
@@ -792,7 +914,7 @@ def test_khong_them_production_truth_table_gate():
 
 - [ ] **Steps 2–4:** FAIL → khai owned + FORMALIZED += → PASS + full suite. **Step 5 — Commit:** `M15 Task 13 (W3): boolean dual-surface — owned tách bạch single_gate_truth_table ↔ composed_rule_dag, boundary lock pin m11 expectations, không production truth-table gate`
 
-**Rollback:** revert commit. **Dependency:** Task 3.
+**Rollback:** revert commit. **Dependency:** Task 12 (thực thi tuần tự sau T11 — Global Constraint 16).
 
 ---
 
@@ -830,7 +952,7 @@ def test_dijkstra_gap_lock_van_nguyen():
 
 - [ ] **Steps 2–4:** FAIL → khai → PASS + full suite (encap/routing/3D tests nguyên trạng — `render3d`/`encap-render3d` vitest không đổi). **Step 5 — Commit:** `M15 Task 14 (W4): network ownership — routing owned unweighted_hop_bfs + known_gaps Dijkstra máy-đọc, encap owned encap_decap_4layer, 2D/3D nguyên trạng, dijkstra-gap lock pin`
 
-**Rollback:** revert commit. **Dependency:** Task 3.
+**Rollback:** revert commit. **Dependency:** Task 13 (thực thi tuần tự — Global Constraint 16).
 
 ---
 
@@ -896,14 +1018,19 @@ def test_representation_khong_tra_loi_bai_computation():
 
 ---
 
-## Thứ tự & phụ thuộc tổng (tóm tắt)
+## Thứ tự & phụ thuộc tổng (Global Constraint 16 — STOP GATE là chặn cứng)
 
 ```
-T1 ──→ T2 ──→ T3 ──→ (T12 W2, T13 W3, T14 W4 — độc lập nhau, sau T3)
- │      │
- │      └──→ T5 ──→ T6 ──→ T7 ──→ T9 ──→ T10 ──→ T11 (STOP GATE live)
+T1 ──→ T2 ──→ T3 ─┐
+ │      │          │
+ │      └──→ T5 ──→ T6 ──→ T7 ──→ T9 ──→ T10
  └──→ T4 ──↗                T8 (sau T2, song song nhánh T5–T7)
-T12+T13+T14 ──→ T15 ──→ T16 (cần cả T11 cho nhật ký live)
+
+T1–T10 ──→ T11 (STOP GATE live — user duyệt ngân sách, chạy, user review kết quả)
+T11 ĐÃ GIẢI QUYẾT + user approval ──→ T12 → T13 → T14 → T15 → T16
 ```
 
-Mỗi task một commit checkpoint, full suite xanh tại MỌI commit. Task nào phát hiện buộc lệch design rev2 → DỪNG báo user trước khi viết tiếp.
+**KHÔNG bắt đầu W2–W5 (T12–T16) trước khi T11 được giải quyết và user duyệt —
+dù dependency code thuần (T3) cho phép.** Mỗi task một commit checkpoint, full
+suite xanh tại MỌI commit. Task nào phát hiện buộc lệch design rev2 → DỪNG báo
+user trước khi viết tiếp.
