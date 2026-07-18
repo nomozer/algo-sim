@@ -24,8 +24,11 @@ def test_field_ton_tai_nullable_khong_bat_buoc():
 
 
 def test_enum_dong_dung_sau_gia_tri():
+    # M15 Task 7: enum giờ dẫn xuất từ analyze_exposed_values() (superset của
+    # PRESCRIBED_PROCEDURES legacy sorting + giá trị positional mới) — vẫn ĐÓNG,
+    # legacy sorting giữ nguyên giá trị (rev2 điểm 2).
     field = ANALYZE_SCHEMA["properties"]["prescribed_procedure"]
-    assert field["enum"] == list(PRESCRIBED_PROCEDURES)
+    assert set(PRESCRIBED_PROCEDURES) <= set(field["enum"])
     assert set(field["enum"]) == {
         PROC_NONE,
         PROC_ADJACENT_SWAP,
@@ -33,6 +36,8 @@ def test_enum_dong_dung_sau_gia_tri():
         PROC_SELECT_EXTREME,
         PROC_PARTITION,
         "other_unspecified",
+        "positional_representation.binary_positional_weights",
+        "positional_representation.non_binary_base",
     }
 
 
@@ -42,3 +47,15 @@ def test_khong_chua_gia_tri_dang_ket_qua_hay_ten_thuat_toan():
     banned = {"bubble", "insertion", "selection", "quick", "sorted", "result", "trace", "timeline"}
     for val in field["enum"]:
         assert val not in banned
+
+
+def test_analyze_schema_enum_dan_xuat_tu_mechanisms():
+    from app.ai.pipeline import ANALYZE_SCHEMA
+    from app.simulation.mechanisms import analyze_exposed_values
+    assert ANALYZE_SCHEMA["properties"]["prescribed_procedure"]["enum"] == list(analyze_exposed_values())
+
+
+def test_enum_giu_legacy_sorting_va_co_positional():
+    from app.ai.pipeline import ANALYZE_SCHEMA
+    e = ANALYZE_SCHEMA["properties"]["prescribed_procedure"]["enum"]
+    assert "adjacent_compare_swap" in e and "positional_representation.non_binary_base" in e

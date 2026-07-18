@@ -13,14 +13,13 @@ import json
 from app.simulation.catalog import CATALOG, catalog_text, llm_choices
 from app.simulation.computation_gate import check_computation_ownership
 from app.simulation.families import selector_for_token
-from app.simulation.families.sorting import PRESCRIBED_PROCEDURES
 from app.simulation.mechanism_gate import (
     ROUTE_MECHANISM_FAMILY_MISMATCH_MSG as _MISMATCH_MSG,
     check_mechanism_consistency_for_target,
     check_mechanism_ownership,
     check_variant_consistency,
 )
-from app.simulation.mechanisms import canonical_mechanism, mechanism_family
+from app.simulation.mechanisms import analyze_exposed_values, canonical_mechanism, mechanism_family
 from app.simulation.error_codes import ErrorCode
 
 
@@ -98,7 +97,7 @@ ANALYZE_SCHEMA = {
         # KHÔNG kết quả (§O7).
         "prescribed_procedure": {
             "type": "STRING",
-            "enum": list(PRESCRIBED_PROCEDURES),
+            "enum": list(analyze_exposed_values()),
             "nullable": True,
         },
         "notes": {"type": "STRING", "nullable": True},

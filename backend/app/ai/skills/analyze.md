@@ -19,6 +19,13 @@ CÁC TRƯỜNG TRÍCH XUẤT:
   - "partition_recursive": CHIA dãy quanh một mốc rồi sắp mỗi phần một cách ĐỆ QUY, hoặc TRỘN các nửa đã sắp.
   - "other_unspecified": đề ép một cách sắp xếp cụ thể nhưng KHÔNG khớp mô tả thao tác nào ở trên.
   - Đề CHỈ nói "sắp xếp" / "xếp theo thứ tự" mà KHÔNG ép cách làm → để null (KHÔNG đặt "none" trừ khi bạn muốn nói rõ "không ép cơ chế"; null cũng được xử như không ép). Bài KHÔNG phải sắp xếp → luôn null. TUYỆT ĐỐI không mô tả kết quả/các bước ở trường này — chỉ nêu LOẠI thao tác.
+- prescribed_procedure (bổ sung M15 — bài ĐỔI CƠ SỐ/biểu diễn vị trí): CHỈ đặt khi
+  đề là bài đổi một số sang hệ đếm khác / biểu diễn theo trọng số vị trí.
+  - "positional_representation.binary_positional_weights": đổi/biểu diễn sang HỆ NHỊ PHÂN
+    (cơ số 2) — các bit trọng số 8/4/2/1.
+  - "positional_representation.non_binary_base": đề yêu cầu cơ số KHÁC 2 (thập lục phân/16,
+    bát phân/8, hay cơ số bất kỳ khác 2).
+  - Bài không phải đổi cơ số → giữ nguyên quy tắc cũ (null / giá trị sắp xếp ở trên).
 
 SEMANTIC REQUIREMENTS — vai trò NGỮ NGHĨA đề cần, mỗi trường là danh sách tag chọn trong TAXONOMY: structural (BỐ CỤC/KHUNG CHỨA LỒNG NHAU — vùng trang, khung chứa nội dung phân cấp như trang web có header/thân/cột, tài liệu có mục lồng mục), textual (nội dung chữ DÀI: tiêu đề/đoạn văn), logical (đúng-sai/cổng logic), numeric (GIÁ TRỊ SỐ cần tính/hiển thị: tổng, đếm, giá trị ô), interactive (người dùng bật/tắt/kéo thay đổi), relational (quan hệ nút-cạnh/liên kết/điểm-đoạn), movement (đối tượng di chuyển trong không gian), temporal (diễn biến theo thời gian/HÌNH THÀNH TỪNG BƯỚC). Chỉ chọn tag ĐÚNG bản chất đề, không suy diễn thừa:
 - entity_roles: vai trò của các đối tượng chính.
