@@ -77,7 +77,11 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 # "12": M15 W1 — enum analyze mở rộng (positional namespaced) + analyze.md
 #       khối positional + mechanism-consistency gate/reclassify (route-dependent
 #       gates sau FINAL ROUTE).
-CACHE_VERSION = "12"
+# "13": M15 T11 hotfix (1 prompt-only fix, root cause chứng minh live): bề mặt
+#       classify của binary_search từng khoá "dãy ĐÃ SẮP" — mâu thuẫn policy
+#       normalize-not-refuse (CORRECTNESS §9) → đề chưa-sắp bị từ chối oan.
+#       Vá description + classify.md 2c → invalidate cache classify cũ.
+CACHE_VERSION = "13"
 
 
 class InputPayload(BaseModel):

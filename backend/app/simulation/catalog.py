@@ -62,7 +62,7 @@ _ALGO_DESCRIPTIONS = {
     "sum_if": "tính tổng các phần tử của dãy thỏa một điều kiện so sánh",
     "count_if": "đếm số phần tử của dãy thỏa một điều kiện so sánh",
     "linear_search": "tìm một giá trị trong dãy bằng cách duyệt tuần tự từ đầu",
-    "binary_search": "tìm một giá trị trong dãy ĐÃ SẮP THỨ TỰ bằng cách chia đôi vùng xét (đề thường gợi ý 'tìm nhanh', 'dãy đã sắp xếp')",
+    "binary_search": "tìm một giá trị bằng cách CHIA ĐÔI vùng xét — tìm kiếm nhị phân (đề thường gợi ý 'tìm nhanh', 'chia đôi'). Dãy chưa sắp thứ tự VẪN chọn được: hệ tự sắp dãy trước và chú thích cho học sinh (không từ chối vì dãy chưa sắp)",
     "bubble_sort": "sắp xếp dãy bằng cách so sánh và đổi chỗ các cặp kề nhau (nổi bọt)",
     "insertion_sort": "sắp xếp dãy bằng cách rút từng phần tử chèn vào phần đã sắp (chèn)",
 }

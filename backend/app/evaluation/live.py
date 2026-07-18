@@ -44,6 +44,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
                    help="full (toàn bộ pool) | hoặc lọc theo tag: smoke | boundary | "
                         "smoke_v2 | flagship | L3 | system_flow")
     p.add_argument("--max-cases", type=int, default=None, help="Chỉ chạy N đề đầu của suite.")
+    p.add_argument("--case", default=None,
+                   help="Chỉ chạy ĐÚNG MỘT đề theo id (rerun có mục tiêu sau vá — M15 T11).")
     p.add_argument("--max-api-calls", type=int, default=None,
                    help="Trần request HTTP thật; chạm trần → dừng sạch và vẫn in report.")
     p.add_argument("--max-retries", type=int, default=None,
@@ -61,6 +63,8 @@ async def _main(args: argparse.Namespace) -> int:
 
     pool = get_pool(args.dataset)
     items = select_suite(args.suite, pool)
+    if args.case is not None:
+        items = [it for it in items if it.id == args.case]
     if args.max_cases is not None:
         items = items[: max(0, args.max_cases)]
     if not items:
