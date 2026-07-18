@@ -32,9 +32,12 @@ per-entry policy lock cho `algo-cfg-1` (required/bounds/normalize/annotation)
 + proof `binary_search` normalize-không-refuse dãy chưa sắp (BE+FE,
 `docs/CORRECTNESS.md §9`). **(8)** suite eval `m15_wave1` (4 case mới: hex-gap
 · octal-gap · binary-positive · binsearch-unsorted, + 2 case `m14_sorting` tái
-dùng tag). `CACHE_VERSION` 11→12 (Task 10, một bump duy nhất cho toàn W1)
-→ **13** (Task 11 hotfix — vá bề mặt classify `binary_search` mâu thuẫn policy
-normalize-not-refuse đã lock, xem nhật ký live §1). **(9)** coverage matrix
+dùng tag). `CACHE_VERSION` **= "13", HAI bump — ACCEPTED WITH EVIDENCE** (user
+duyệt khi đóng M15): 11→12 = planned W1 contract/analyze/gate update (Task 10);
+12→13 = live-discovered Binary Search classify-policy correction (Task 11
+hotfix `f52f1a2` — bề mặt classify khoá "dãy ĐÃ SẮP" mâu thuẫn policy
+normalize-not-refuse đã lock); lần bump thứ hai được GIỮ vì nó loại bỏ
+false-refusal đã được chứng minh trong live Task 11 (nhật ký §1). **(9)** coverage matrix
 (Task 16): `sorting` tốt nghiệp `PILOT` → `SUPPORTED` (claim boundary tự giới
 hạn — targeted acceptance, KHÔNG phải bằng chứng thống kê); `binary_system`
 note bổ sung control cơ số ≠ 2. Offline cuối: pytest **529 pass, 2 skipped, 1
@@ -47,6 +50,17 @@ chối oan ở classify — root cause CHỨNG MINH: bề mặt classify mâu th
 policy đã lock) + hotfix prompt-only (`f52f1a2`, dùng ĐÚNG MỘT quyền prompt-fix)
 + rerun **3 HTTP OK** → **tổng 19/20 · 0 retry · 0 transient**. KHÔNG: selector
 mới, đổi executor/renderer, Alembic, M16 (chưa mở). Xem hàng **M15** ở §2.
+
+> **M15 — Public Capability Contract Formalization & Migration: COMPLETE.**
+> Final whole-branch review (18 commit) ĐÃ DUYỆT · COMPLETE §R **13/13** (mục
+> cache/version: ACCEPTED WITH EVIDENCE — xem đoạn CACHE_VERSION ở trên) · bất
+> biến **#23 ĐÃ ĐĂNG** (`ARCHITECTURE_MAP.md` §5) · 13 minor findings giữ
+> **BACKLOG** có ghi nhận (ledger) · claim boundary sau M15 GIỮ NGUYÊN.
+> HEAD trước close: `6e31a2c` · range M15: `b54e507..6e31a2c` (trước commit
+> đóng) · offline: pytest **529** · vitest **406/33 files** · build sạch ·
+> live: **19/20 HTTP · 0 retry · 0 transient · 1 approved prompt-only fix** ·
+> FE production diff **= 0**. **M16: NOT STARTED.**
+
 Trước đó: sau **M14 — Capability Family Formalization & End-to-End
 Pilot (Task 1–14, nhánh làm việc trên `main`)**. Offline: pytest **450 pass, 1
 deselected** · vitest **403 pass (32 files)** · build sạch. Live pilot
