@@ -28,11 +28,23 @@ Notes: **biên mạng duy nhất** của hệ. Guard offline nằm ở `conftest
 ### `ai/pipeline.py` · Change impact: targeted live
 Orchestrator: analyze → plan/gate → classify → (pattern reuse | simulate) → envelope.
 Exports: `ANALYZE_SCHEMA`, `stage_analyze`, `stage_classify`, `stage_simulate`,
-`stage_adapt`, `try_pattern_reuse`, `run_pipeline(text, api_key, pattern_store=None)`.
-Deps: catalog, manifest, representation, semantic, patterns, gemini.
-Tests: `test_pipeline.py`, `test_reuse.py`, `test_capability_boundary.py`.
+`stage_adapt`, `try_pattern_reuse`, `run_pipeline(text, api_key, pattern_store=None,
+observer=None)`, (M15) `classify_with_one_route_recovery`.
+Deps: catalog, manifest, representation, semantic, patterns, gemini, (M15)
+`mechanism_gate.check_mechanism_consistency_for_target`, `mechanisms.canonical_mechanism`.
+Tests: `test_pipeline.py`, `test_reuse.py`, `test_capability_boundary.py`,
+(M15) `test_pipeline_mechanism_consistency.py`.
 Notes: capability gate chỉ chặn **đường generic** (bất biến #5). `pattern_store`
-inject → None = hành vi compose cũ.
+inject → None = hành vi compose cũ. (M14 bất biến #22) `observer` THỤ ĐỘNG —
+`None` → hành vi production không đổi; eval đi CHUNG `run_pipeline`.
+(M15) `classify_with_one_route_recovery(text, analysis, classification, api_key, observer=None)` —
+route-consistency ordering: **≤ 1 reclassify BOUNDED** chạy TRƯỚC mọi
+route-dependent gate khác khi `check_mechanism_consistency_for_target` phát
+hiện `ROUTE_MECHANISM_FAMILY_MISMATCH` trên route đầu; reclassify ra
+`unsupported` → passthrough (từ chối trung thực, không ép reclassify thêm lần
+nữa); mismatch vẫn còn sau 1 lượt → `capability_gap`. Ngân sách cố định: analyze
+tối đa 1 call, classify tối đa 2 (gốc + đúng 1 reclassify), simulate tối đa 1 —
+không có đường quay lại vô hạn.
 
 ### `ai/edit.py` · Change impact: targeted live
 NL edit nhẹ (M7.14A): 1 call LLM sinh `{required_roles, operations}`; server đối
@@ -98,6 +110,52 @@ nhau có chủ đích**: test chứng minh gap vẫn fired dù kênh 1 bị bỏ
 đụng carve-out chuyên biệt (bất biến #5) — gate chỉ chặn đường generic. Đổi
 taxonomy/prompt dạy `result_ownership` (`analyze.md`/`classify.md`) →
 **targeted live**, đã kèm `CACHE_VERSION` 9→10.
+
+### `simulation/mechanisms.py` (M15) · Change impact: offline (targeted live nếu đổi `analyze_exposed_values()`/`LEGACY_ALIASES`)
+Taxonomy cơ chế **canonical namespaced** (`family.mechanism`) — nguồn DUY NHẤT
+cho mọi so sánh cơ chế trong pipeline; KHÔNG import `catalog` (chống vòng
+import; cross-lock ở test thay vì import).
+Exports: `FAMILY_MECHANISMS`, `INTENTIONAL_GAP_MECHANISMS`, `LEGACY_ALIASES`,
+`FORMALIZED_FAMILIES`, `canonical_mechanism(raw)`, `mechanism_family(canonical)`,
+`analyze_exposed_values()`, `NO_PRESCRIPTION`.
+Consumers: `mechanism_gate.py`, `ai/pipeline.py` (`ANALYZE_SCHEMA.prescribed_procedure.enum`
+DẪN XUẤT từ `analyze_exposed_values()` — anti-pattern #1), `catalog.py`
+(`owned_mechanisms` trên từng `FamilyMembership` phải ∈ `FAMILY_MECHANISMS`).
+Tests: `test_mechanisms.py`.
+Notes: **Khóa 1** — `canonical_mechanism()` là compatibility boundary DUY NHẤT:
+legacy sorting bare id (live-verified M14, vd `"adjacent_compare_swap"`) →
+namespaced qua `LEGACY_ALIASES` một chiều; canonical passthrough; `None`/`"none"`
+→ `None` (permissive, không ép cơ chế). **Khóa 2** — mọi giá trị analyze-exposed
+KHÔNG được sở hữu bởi target nào phải nằm trong `INTENTIONAL_GAP_MECHANISMS`
+(gap-trigger khai tường minh, không rơi tự do). `FORMALIZED_FAMILIES` là registry
+tiến độ — W1–W5 lần lượt thêm family, W5 (Task 15) đủ 8/8 == `frozenset(FamilyId)`
+(kích hoạt lock K1 14/14 owned ≠ rỗng). Đổi `analyze_exposed_values()`/
+`LEGACY_ALIASES` → ảnh hưởng enum Gemini thấy ở stage analyze → **targeted live**;
+đổi `FAMILY_MECHANISMS`/`INTENTIONAL_GAP_MECHANISMS`/`FORMALIZED_FAMILIES` thuần
+nội bộ (không đụng enum LLM) → offline.
+
+### `simulation/mechanism_gate.py` (M14 §E4 + M15 mở rộng) · Change impact: offline
+Mechanism-consistency gate: so cơ chế đề **YÊU CẦU** (`analysis.prescribed_procedure`,
+chuẩn hoá qua `canonical_mechanism`) với cơ chế family/target **THỰC SỰ SỞ HỮU**
+— tín hiệu có cấu trúc, KHÔNG đọc text đề, KHÔNG keyword-patch tên thuật toán.
+Exports: `check_mechanism_ownership(analysis, selector)` (tầng 1, TRƯỚC simulate —
+selector lifecycle), `check_variant_consistency(analysis, selector, variant_id)`
+(tầng 2, SAU khi FamilySpec validate — variant có khớp cơ chế không), (M15)
+`check_mechanism_consistency_for_target(analysis, spec)` (lifecycle **direct
+route** — không qua selector: so canonical family/mechanism với
+`spec.family_memberships[*].owned_mechanisms`; trả `ROUTE_MECHANISM_FAMILY_MISMATCH`
+nếu family còn không khớp, `GATE_MECHANISM_OWNERSHIP` nếu family khớp nhưng
+mechanism không được sở hữu), `ROUTE_MECHANISM_FAMILY_MISMATCH_MSG` (MỘT nguồn
+message, tái dùng ở `ai/pipeline.py::_family_mismatch` — chống nhân đôi chuỗi).
+Consumers: `ai/pipeline.py` (`run_pipeline`, `classify_with_one_route_recovery`).
+Tests: `test_mechanism_gate.py`, `test_pipeline_mechanism_consistency.py`.
+Notes: ranh giới permissive vs fail-closed — `prescribed ∈ {null, "none"}` →
+KHÔNG ép cơ chế (vắng tín hiệu ≠ bằng chứng cơ chế ngoài phạm vi);
+`prescribed ∈ owned` → qua; `prescribed ∉ owned` → gap/mismatch thật. M15 thêm
+HAI mã lỗi tách bạch cho lifecycle direct-route: mismatch cross-family
+(`ROUTE_MECHANISM_FAMILY_MISMATCH`) không bao giờ đi tới `stage_simulate` trên
+target mâu thuẫn — `run_pipeline` reclassify **bounded đúng 1 lượt**
+(`classify_with_one_route_recovery`) trước khi mọi route-dependent gate khác chạy.
 
 ### `simulation/dsl/validator.py` · Change impact: offline
 Validator SimulationSpec (allowlist/limits **dẫn xuất từ manifest**), drag
@@ -167,13 +225,44 @@ Tests: `test_scan_engine.py`, `test_scan_routing.py`.
 
 ### `simulation/catalog.py` · Change impact: targeted live
 Bản chiếu registry phía backend: `SimSpec` (description/schema/contract/validator/
-make_title) cho từng `simulation_id`. Exports: `CATALOG`, `SimSpec`, `catalog_text`.
+make_title) cho từng `simulation_id`. Exports: `CATALOG`, `SimSpec`, `catalog_text`,
+(M14) `llm_choices()` (menu classify — ẩn concrete member của một family sau
+selector token), (M14/M15) mỗi `SimSpec.family_memberships: tuple[FamilyMembership, ...]`
+(`descriptor.py`) mang `owned_mechanisms` (M15, canonical — xem `mechanisms.py`) +
+`config_contract_version` (descriptor-level, KHÔNG vào envelope, KHÔNG Alembic).
 Notes: `_GENERIC_SCHEMA` enum **phải** dẫn xuất từ manifest (anti-pattern #1).
 Enum `simulation_id` của classify (`_classify_schema`) DẪN XUẤT từ `CATALOG.keys()`
 → thêm entry vào CATALOG là ĐỦ để classify được phép trả id đó (M10-AI-ROUTE:
 `network.protocol_encapsulation`). Hai module network phân biệt bằng **description**
 (biến đổi PDU qua TẦNG ↔ đường đi qua NÚT), không keyword hard-code trong runtime.
 Đổi menu classify → **bump `CACHE_VERSION`** ở `main.py`.
+M15 W2–W5 khai `owned_mechanisms` đủ 14/14 entry (K1 lock) qua 4 conformance-proof
+test riêng theo family: `test_scan_conformance.py` (W2 — `algorithm.scan` +
+4 scan oracle, KHÔNG selector, scan = catch-all trong-family), `test_boolean_dual_surface.py`
+(W3 — `logic.and_gate` sở hữu `single_gate_truth_table`, `generic.rule_scene` sở
+hữu `composed_rule_dag`, hai bề mặt KHÔNG hợp nhất), `test_network_ownership.py`
+(W4 — `network.packet_routing` sở hữu `unweighted_hop_bfs` + `known_gaps` máy-đọc
+ghi Dijkstra; `network.protocol_encapsulation` sở hữu `encapsulate_decapsulate_4layer`),
+`test_generic_representation_authority.py` (W5 — membership
+`structural_progressive_representation` của `generic.rule_scene` owned DẪN XUẤT
+từ `manifest.process_types()`, tách bạch khỏi membership `boolean_composition`
+bằng `ResultAuthority` khác nhau — computation vs representation; pin bất biến
+#21 làm lock của family này). `capability-descriptors.json` (sinh từ
+`CATALOG`/`descriptor.py`, cross-lock FE test-only) phải regenerate mỗi khi
+đổi `family_memberships`.
+
+### `simulation/coverage.py` (M14 §O) · Change impact: offline
+Curriculum coverage matrix — machine-readable, enum ĐÓNG `CoverageStatus`
+{SUPPORTED/PARTIAL/PILOT/CAPABILITY_GAP/OUT_OF_SCOPE}, curate từ `COVERAGE.md`
+§3/§7/§7b. KHÔNG claim phủ toàn chương trình; gap/out-of-scope khai trung thực.
+Exports: `KNOWLEDGE_UNITS`, `KnowledgeUnit` (frozen dataclass), `CoverageStatus`,
+`coverage_rows()`. Tests: `test_coverage_matrix.py`.
+Notes (M15 Task 16): `sorting` tốt nghiệp `PILOT` → `SUPPORTED` sau formalize
+thành family selector (M14) + conformance proof (M15) — note tự giới hạn claim
+(live n=4 M14 + n=1 M15 W1 là **targeted acceptance, KHÔNG phải bằng chứng
+thống kê**, không được nói mạnh hơn). `binary_system` note bổ sung control cơ
+số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
+`mechanism_gate.py`).
 
 ### `simulation/patterns.py` · Change impact: offline
 Pattern reuse (M7.13B): chữ ký, extraction (safe allowlist), instantiate, matcher
@@ -262,8 +351,16 @@ Notes: `gap_gate_recall` là metric **song song** (M7.14T) — không đổi cá
 metric cũ. `_simulate_with_metrics` **mirror** `stage_simulate` (rủi ro drift).
 
 ### `evaluation/live.py` · Change impact: full live
-CLI live: **bắt buộc `ALLOW_LIVE_AI=1`**, `--suite smoke|full|boundary`,
-`--max-cases`, `--max-api-calls`, `--max-retries`. Tests: `test_live_budget.py`.
+CLI live: **bắt buộc `ALLOW_LIVE_AI=1`**, `--suite <tên>` (xem hằng `SUITES` —
+tại M15: `smoke`/`full`/`boundary`/`smoke_v2`/`flagship`/`L3`/`system_flow`/
+`m10_route`/`m11_compose`/`m12_scan`/`m13_soundness`/`m14_sorting`/**`m15_wave1`**),
+`--case <id>` (M15 T11 hotfix — rerun CÓ MỤC TIÊU 1 case qua id, không chạy lại
+cả suite), `--max-cases`, `--max-api-calls`, `--max-retries`. Tests: `test_live_budget.py`.
+Notes (M15): suite `m15_wave1` (`datasets/capability.py`, tag `"m15_wave1"`) —
+4 case W1 (hex-gap · octal-gap · binary-positive · binsearch-unsorted) + 2 case
+`m14_sorting` cũ tái dùng tag (sorting-paraphrase · selection-near-miss); live
+đã chạy tại Task 11 (nhật ký `CURRENT_STATE.md` §1: run 1 = 16 HTTP 5/6, rerun
+hotfix = 3 HTTP 1/1, tổng 19/20, 0 retry, 0 transient).
 
 ### `main.py` · Change impact: offline (trừ khi đổi CACHE_VERSION/pipeline)
 FastAPI: `POST /api/analyze`, `POST /api/edit`, `POST /api/explain`,

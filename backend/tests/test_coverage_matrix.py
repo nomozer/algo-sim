@@ -46,9 +46,14 @@ def test_gap_va_out_of_scope_duoc_khai_trung_thuc():
     assert by_id["ai_ml_datascience_overview"].status is CoverageStatus.OUT_OF_SCOPE
 
 
-def test_sorting_la_pilot_M14():
+def test_sorting_la_supported_M15_claim_boundary():
+    # M15 W5 (Task 16): pilot M14 tốt nghiệp SUPPORTED sau khi formalize thành
+    # comparison_sort family selector (M15 W1-W3). Note PHẢI tự giới hạn claim:
+    # n nhỏ (targeted acceptance), không phải bằng chứng thống kê.
     by_id = {u.unit_id: u for u in KNOWLEDGE_UNITS}
-    assert by_id["sorting"].status is CoverageStatus.PILOT
+    sorting = by_id["sorting"]
+    assert sorting.status is CoverageStatus.SUPPORTED
+    assert "không phải bằng chứng thống kê" in sorting.note.lower()
 
 
 def test_khong_yeu_cau_tat_ca_SUPPORTED_nhung_phai_co_it_nhat_moi_trang_thai_dung_ngu_canh():
@@ -56,7 +61,9 @@ def test_khong_yeu_cau_tat_ca_SUPPORTED_nhung_phai_co_it_nhat_moi_trang_thai_dun
     statuses = {u.status for u in KNOWLEDGE_UNITS}
     assert CoverageStatus.CAPABILITY_GAP in statuses
     assert CoverageStatus.OUT_OF_SCOPE in statuses
-    assert CoverageStatus.PILOT in statuses
+    # M15 W5: sorting tốt nghiệp PILOT → SUPPORTED (xem
+    # test_sorting_la_supported_M15_claim_boundary) — hiện KHÔNG còn unit nào
+    # ở PILOT; enum member vẫn mở cho pilot tương lai, không xoá.
 
 
 def test_knowledge_unit_immutable():

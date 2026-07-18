@@ -43,7 +43,9 @@ class KnowledgeUnit:
 KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
     # ── Tier 1 (COVERAGE §3) ──────────────────────────────────
     KnowledgeUnit("sorting", "Sắp xếp so sánh", "T11CS B21–22",
-                  CoverageStatus.PILOT, "pilot M14 — comparison_sort family selector"),
+                  CoverageStatus.SUPPORTED,
+                  "M14 pilot + M15 formalize (comparison_sort selector); live n=4 (M14) "
+                  "+ n=1 (M15 W1) là targeted acceptance, KHÔNG phải bằng chứng thống kê"),
     KnowledgeUnit("binary_search", "Tìm kiếm nhị phân", "T11CS B19",
                   CoverageStatus.SUPPORTED, "algorithm.binary_search"),
     KnowledgeUnit("single_pass_scan", "Quét dãy một lượt (tìm/đếm/tổng/tìm-đầu-tiên)",
@@ -52,7 +54,8 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
     KnowledgeUnit("loops_branch_variable", "Lặp / rẽ nhánh / biến", "T10 B17–21",
                   CoverageStatus.PARTIAL, "chỉ trong các thuật toán cố định, không phải code tự do"),
     KnowledgeUnit("binary_system", "Hệ nhị phân (trọng số vị trí)", "T10 B4",
-                  CoverageStatus.SUPPORTED, "binary.decimal_to_binary"),
+                  CoverageStatus.SUPPORTED,
+                  "binary.decimal_to_binary; cơ số ≠ 2 → capability_gap có control (M15 W1)"),
     KnowledgeUnit("logic_data", "Dữ liệu lôgic / bảng chân trị", "T10 B5",
                   CoverageStatus.SUPPORTED, "logic.and_gate + generic boolean composition"),
     KnowledgeUnit("packet_routing", "Định tuyến gói tin (BFS số chặng)", "T10 CĐ2 · T12 CĐ2",
