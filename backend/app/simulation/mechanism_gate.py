@@ -19,18 +19,19 @@ from __future__ import annotations
 
 from app.simulation.error_codes import ErrorCode
 from app.simulation.families.base import FamilySelector
-from app.simulation.families.sorting import PROC_NONE
-
-_NO_PRESCRIPTION = (None, PROC_NONE)
+from app.simulation.mechanisms import canonical_mechanism
 
 
 def check_mechanism_ownership(
     analysis: dict, selector: FamilySelector
 ) -> tuple[ErrorCode, str] | None:
     """Tầng 1 (TRƯỚC simulate): cơ chế đề yêu cầu có được family sở hữu không?
-    Trả (code, message) khi gap; None khi được phép đi tiếp."""
-    prescribed = analysis.get("prescribed_procedure")
-    if prescribed in _NO_PRESCRIPTION:
+    Trả (code, message) khi gap; None khi được phép đi tiếp.
+
+    M15: chuẩn hoá đầu vào qua `canonical_mechanism` (legacy sorting bare →
+    canonical namespaced) TRƯỚC khi so — `owned_mechanisms` nay là canonical."""
+    prescribed = canonical_mechanism(analysis.get("prescribed_procedure"))
+    if prescribed is None:
         return None
     if prescribed in selector.owned_mechanisms:
         return None
@@ -46,9 +47,11 @@ def check_variant_consistency(
 ) -> tuple[ErrorCode, str] | None:
     """Tầng 2 (SAU khi FamilySpec validate): variant LLM chọn có khớp cơ chế đề
     yêu cầu không? So analysis × variant (KHÔNG chỉ nhìn FamilySpec). Trả
-    (code, message) → retry khi lệch; None khi khớp/không ràng buộc."""
-    prescribed = analysis.get("prescribed_procedure")
-    if prescribed in _NO_PRESCRIPTION:
+    (code, message) → retry khi lệch; None khi khớp/không ràng buộc.
+
+    M15: chuẩn hoá qua `canonical_mechanism` — `var.mechanism_id` nay canonical."""
+    prescribed = canonical_mechanism(analysis.get("prescribed_procedure"))
+    if prescribed is None:
         return None  # không ép cơ chế → variant nào cũng được
     if prescribed not in selector.owned_mechanisms:
         return None  # đã bị tầng 1 chặn — không báo trùng ở đây

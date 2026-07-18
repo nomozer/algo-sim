@@ -56,3 +56,16 @@ def test_membership_variant_fields_mac_dinh_none():
     assert m.variant_id is None
     assert m.family_spec_version is None
     assert m.mechanism_id is None
+
+
+def test_membership_owned_mechanisms_canonical_va_mechanism_id_thuoc_owned():
+    from app.simulation.catalog import CATALOG
+    from app.simulation import mechanisms as M
+    all_canonical = {m for ms in M.FAMILY_MECHANISMS.values() for m in ms}
+    for spec in CATALOG.values():
+        for mem in spec.family_memberships:
+            for om in mem.owned_mechanisms:
+                assert om in all_canonical
+                assert M.mechanism_family(om) == mem.family_id.value
+            if mem.mechanism_id is not None and mem.owned_mechanisms:
+                assert mem.mechanism_id in mem.owned_mechanisms

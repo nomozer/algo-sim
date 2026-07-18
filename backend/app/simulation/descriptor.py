@@ -55,6 +55,10 @@ class FamilyMembership:
     structural_progressive_representation=representation). `variant_id`/
     `family_spec_version`/`mechanism_id` chỉ đặt khi target được với qua một
     FamilySelector (vd sorting); None khi target là choice độc lập.
+
+    `owned_mechanisms` (M15): tập cơ chế membership SỞ HỮU — CHỈ canonical id
+    (namespaced `family.<mechanism>`, xem `app.simulation.mechanisms`). Mặc
+    định rỗng — wave sau lần lượt điền; `mechanism_id` (khi có) phải ∈ tập này.
     """
 
     family_id: FamilyId
@@ -62,3 +66,4 @@ class FamilyMembership:
     variant_id: str | None = None
     family_spec_version: str | None = None
     mechanism_id: str | None = None
+    owned_mechanisms: tuple[str, ...] = ()

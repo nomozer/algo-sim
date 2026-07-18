@@ -149,6 +149,7 @@ class SimSpec:
         reachability: tuple = (),
         curriculum_anchor: str = "",
         known_gaps: tuple = (),
+        config_contract_version: str = "",
     ) -> None:
         self.simulation_id = simulation_id
         self.domain = domain
@@ -164,6 +165,10 @@ class SimSpec:
         self.reachability = reachability
         self.curriculum_anchor = curriculum_anchor
         self.known_gaps = known_gaps
+        # M15 Task 2 — id phiên bản hợp đồng config (shape + VALIDATION POLICY,
+        # §C2 rev2). Mặc định "" cho entry chưa khai; lock (test_family_registry)
+        # buộc khai đủ cho 14 entry.
+        self.config_contract_version = config_contract_version
 
 
 CATALOG: dict[str, SimSpec] = {}
@@ -189,7 +194,12 @@ _ALGO_META: dict[str, dict] = {
     "count_if": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
     "linear_search": {"memberships": _scan_member(), "anchor": "T10 CĐ5 · T11CS B17"},
     "binary_search": {
-        "memberships": (FamilyMembership(FamilyId.INTERVAL_ELIMINATION, ResultAuthority.COMPUTATION),),
+        "memberships": (
+            FamilyMembership(
+                FamilyId.INTERVAL_ELIMINATION, ResultAuthority.COMPUTATION,
+                owned_mechanisms=("interval_elimination.halve_sorted_interval",),
+            ),
+        ),
         "anchor": "T11CS B19",
     },
     "bubble_sort": {
@@ -198,6 +208,7 @@ _ALGO_META: dict[str, dict] = {
                 FamilyId.COMPARISON_SORT, ResultAuthority.COMPUTATION,
                 variant_id="bubble", family_spec_version=SORT_FAMILY_VERSION,
                 mechanism_id=MECH_ADJACENT_SWAP,
+                owned_mechanisms=(MECH_ADJACENT_SWAP,),
             ),
         ),
         "anchor": "T11CS B21–22",
@@ -208,6 +219,7 @@ _ALGO_META: dict[str, dict] = {
                 FamilyId.COMPARISON_SORT, ResultAuthority.COMPUTATION,
                 variant_id="insertion", family_spec_version=SORT_FAMILY_VERSION,
                 mechanism_id=MECH_SHIFT_INSERT,
+                owned_mechanisms=(MECH_SHIFT_INSERT,),
             ),
         ),
         "anchor": "T11CS B21–22",
@@ -228,6 +240,7 @@ for _aid in ALGORITHM_IDS:
         family_memberships=_ALGO_META[_aid]["memberships"],
         reachability=_R_FULL,
         curriculum_anchor=_ALGO_META[_aid]["anchor"],
+        config_contract_version="algo-cfg-1",
     )
 
 
@@ -264,6 +277,7 @@ CATALOG["logic.and_gate"] = SimSpec(
     ),
     reachability=_R_FULL,
     curriculum_anchor="T10 B5 · T10 B9",
+    config_contract_version="logic-cfg-1",
 )
 
 
@@ -294,10 +308,14 @@ CATALOG["binary.decimal_to_binary"] = SimSpec(
     validate=validate_binary_config,
     make_title=lambda config, analysis: f"Đổi {config.get('decimalValue', '')} sang nhị phân",
     family_memberships=(
-        FamilyMembership(FamilyId.POSITIONAL_REPRESENTATION, ResultAuthority.COMPUTATION),
+        FamilyMembership(
+            FamilyId.POSITIONAL_REPRESENTATION, ResultAuthority.COMPUTATION,
+            owned_mechanisms=("positional_representation.binary_positional_weights",),
+        ),
     ),
     reachability=_R_FULL,
     curriculum_anchor="T10 B4",
+    config_contract_version="binary-cfg-1",
 )
 
 
@@ -349,6 +367,7 @@ CATALOG["network.packet_routing"] = SimSpec(
     ),
     reachability=_R_FULL,
     curriculum_anchor="T10 CĐ2 · T12 CĐ2",
+    config_contract_version="net-cfg-1",
 )
 
 
@@ -433,6 +452,7 @@ CATALOG["algorithm.scan"] = SimSpec(
     # scan KHÔNG có sample offline (discovery A) → không library_discoverable
     reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),
     curriculum_anchor="T10 CĐ5 · T11CS B17",
+    config_contract_version="scan-1.0",
 )
 
 
@@ -468,6 +488,7 @@ CATALOG["network.protocol_encapsulation"] = SimSpec(
     reachability=_R_FULL,
     curriculum_anchor="T12 B4 · 12CS B22–24",
     known_gaps=("bắt tay TCP ba bước", "phân mảnh", "retransmission", "congestion", "DNS"),
+    config_contract_version="encap-cfg-1",
 )
 
 
@@ -605,6 +626,7 @@ CATALOG["generic.rule_scene"] = SimSpec(
     ),
     reachability=_R_FULL,
     curriculum_anchor="T11 B10 · T12CS B29 · T12 CĐ4",
+    config_contract_version="dsl-1.0",
 )
 
 

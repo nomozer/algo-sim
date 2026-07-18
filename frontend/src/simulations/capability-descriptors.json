@@ -136,7 +136,7 @@
           "result_authority": "computation",
           "variant_id": "bubble",
           "family_spec_version": "sort-fam-1",
-          "mechanism_id": "adjacent_compare_swap"
+          "mechanism_id": "comparison_sort.adjacent_compare_swap"
         }
       ]
     },
@@ -156,7 +156,7 @@
           "result_authority": "computation",
           "variant_id": "insertion",
           "family_spec_version": "sort-fam-1",
-          "mechanism_id": "shift_into_sorted_prefix"
+          "mechanism_id": "comparison_sort.shift_into_sorted_prefix"
         }
       ]
     },
@@ -298,19 +298,19 @@
       "selector_token": "algorithm.comparison_sort",
       "family_spec_version": "sort-fam-1",
       "owned_mechanisms": [
-        "adjacent_compare_swap",
-        "shift_into_sorted_prefix"
+        "comparison_sort.adjacent_compare_swap",
+        "comparison_sort.shift_into_sorted_prefix"
       ],
       "variants": [
         {
           "variant_id": "bubble",
           "concrete_simulation_id": "algorithm.bubble_sort",
-          "mechanism_id": "adjacent_compare_swap"
+          "mechanism_id": "comparison_sort.adjacent_compare_swap"
         },
         {
           "variant_id": "insertion",
           "concrete_simulation_id": "algorithm.insertion_sort",
-          "mechanism_id": "shift_into_sorted_prefix"
+          "mechanism_id": "comparison_sort.shift_into_sorted_prefix"
         }
       ]
     }

@@ -13,16 +13,19 @@ nhật ở các task đó.
 
 from __future__ import annotations
 
+from app.simulation import mechanisms as _M
 from app.simulation.descriptor import FamilyId
 from app.simulation.families.base import FamilySelector, VariantSpec
 
 SORT_FAMILY_VERSION = "sort-fam-1"
 SELECTOR_TOKEN = "algorithm.comparison_sort"
 
-# Cơ chế family THỰC SỰ sở hữu (executor hiện có biểu diễn được). Dùng cho
-# mechanism gate (Task 6) và cross-lock variant.mechanism_id ⊆ owned.
-MECH_ADJACENT_SWAP = "adjacent_compare_swap"
-MECH_SHIFT_INSERT = "shift_into_sorted_prefix"
+# Cơ chế family THỰC SỰ sở hữu (executor hiện có biểu diễn được) — M15: CANONICAL
+# namespaced (nguồn `app.simulation.mechanisms`). Dùng cho mechanism gate
+# (Task 6, nay normalize qua canonical_mechanism) và cross-lock
+# variant.mechanism_id ⊆ owned.
+MECH_ADJACENT_SWAP = "comparison_sort.adjacent_compare_swap"
+MECH_SHIFT_INSERT = "comparison_sort.shift_into_sorted_prefix"
 OWNED_MECHANISMS: tuple[str, ...] = (MECH_ADJACENT_SWAP, MECH_SHIFT_INSERT)
 
 # ── prescribed_procedure (analyze signal, §E4/§O7) ────────────
@@ -30,9 +33,12 @@ OWNED_MECHANISMS: tuple[str, ...] = (MECH_ADJACENT_SWAP, MECH_SHIFT_INSERT)
 # KHÔNG chứa result/trace/timeline. Đủ để mechanism gate (Task 6) so
 # family/variant consistency. Gồm: none (không ép cơ chế) + cơ chế OWNED +
 # cơ chế NGOÀI family (select/partition — không executor nào sở hữu) + other.
+# M15 (rev2 điểm 2): PROC_* GIỮ NGUYÊN giá trị legacy bare (live-verified M14 —
+# đây là bề mặt analyze enum thực tế, KHÔNG được đổi). MECH_* ở trên đã chuyển
+# canonical; hai nguồn nối qua LEGACY_ALIASES — assert dưới đây chống trôi.
 PROC_NONE = "none"
-PROC_ADJACENT_SWAP = MECH_ADJACENT_SWAP
-PROC_SHIFT_INSERT = MECH_SHIFT_INSERT
+PROC_ADJACENT_SWAP = "adjacent_compare_swap"
+PROC_SHIFT_INSERT = "shift_into_sorted_prefix"
 PROC_SELECT_EXTREME = "select_extreme_repeated"
 PROC_PARTITION = "partition_recursive"
 PROC_OTHER = "other_unspecified"
@@ -44,6 +50,11 @@ PRESCRIBED_PROCEDURES: tuple[str, ...] = (
     PROC_PARTITION,
     PROC_OTHER,
 )
+
+# Chống hai nguồn (legacy PROC_* vs canonical MECH_*) trôi nhau — alias boundary
+# (mechanisms.LEGACY_ALIASES) phải nối đúng cặp.
+assert _M.LEGACY_ALIASES[PROC_ADJACENT_SWAP] == MECH_ADJACENT_SWAP
+assert _M.LEGACY_ALIASES[PROC_SHIFT_INSERT] == MECH_SHIFT_INSERT
 
 _VARIANTS: tuple[VariantSpec, ...] = (
     VariantSpec("bubble", "algorithm.bubble_sort", MECH_ADJACENT_SWAP),

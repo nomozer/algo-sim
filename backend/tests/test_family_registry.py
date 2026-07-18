@@ -101,3 +101,20 @@ def test_cross_lock_phat_hien_target_thieu_membership():
     fake_catalog = {"algorithm.bubble_sort": _FakeSpec(), "algorithm.insertion_sort": _FakeSpec()}
     violations = cross_lock_violations(fake_catalog)
     assert any("thiếu membership" in v for v in violations)
+
+
+def test_config_contract_version_khai_du_14_entry():
+    assert len(CATALOG) == 14
+    for spec in CATALOG.values():
+        assert spec.config_contract_version  # ≠ "" (K1 — shape + VALIDATION POLICY, §C2 rev2)
+
+
+def test_selector_owned_bang_hop_owned_cua_variant_membership():
+    sel = FAMILY_SELECTORS["comparison_sort"]
+    union = set()
+    for var in sel.variants:
+        spec = CATALOG[var.concrete_simulation_id]
+        for mem in spec.family_memberships:
+            if mem.family_id.value == "comparison_sort":
+                union |= set(mem.owned_mechanisms)
+    assert set(sel.owned_mechanisms) == union  # cross-lock C1
