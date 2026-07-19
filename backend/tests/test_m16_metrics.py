@@ -375,18 +375,20 @@ def test_metric_16_concrete_envelope_integrity_route_khong_trong_catalog():
     assert (mv.numerator, mv.denominator, mv.value) == (0, 1, 0.0)
 
 
-def test_metric_17_production_evaluation_parity_la_product_case_khong_them_dieu_kien():
-    """brief Aggregation: 'micro: mỗi metric trên toàn product cases' — #17
-    ('mọi evaluated case') mẫu số CHÍNH LÀ product case, không thêm điều kiện
-    nào khác (khác #13 chỉ ở tên gọi, giống nhau ở việc CẢ hai đều KHÔNG có
-    predicate bổ sung ngoài product-case)."""
+def test_metric_17_production_evaluation_parity_khong_loc_product_case():
+    """Phân xử review Task 3: #17 đo trên 'MỌI evaluated case' — cố ý KHÔNG
+    lọc product-case. Nếu lọc infra_error thì parity tự-triệt-tiêu đúng tín
+    hiệu nó phải bắt (record không đi qua production pipeline vì harness
+    crash trước pipeline) → làm mù bất biến #22. Record q3 (infra_error +
+    via=False) PHẢI kéo parity xuống."""
     records = [
         _rec(case_id="q1", via_production_pipeline=True),
         _rec(case_id="q2", via_production_pipeline=False),
-        _rec(case_id="q3", via_production_pipeline=False, infra_error="mock crash"),  # loại: infra_error
+        _rec(case_id="q3", via_production_pipeline=False, infra_error="mock crash"),  # VẪN trong mẫu số
     ]
     mv = m16_metrics.metric_production_evaluation_parity(records)
-    assert (mv.numerator, mv.denominator, mv.value) == (1, 2, 0.5)
+    assert (mv.numerator, mv.denominator) == (1, 3)
+    assert mv.value == pytest.approx(1 / 3)
 
 
 def test_product_case_filter_ap_dung_cho_nhieu_metric_khong_chi_13():

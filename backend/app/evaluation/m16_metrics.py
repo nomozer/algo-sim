@@ -314,9 +314,13 @@ _METRIC_REGISTRY: tuple[tuple[str, str, _Pred, _Pred], ...] = (
             r.final_route is not None and r.final_route in CATALOG and r.final_route not in _SELECTOR_TOKENS
         ),
     ),
-    _metric_entry(
+    # #17 KHÔNG gate product-case (phân xử review Task 3): brief cố ý dùng
+    # "mọi evaluated case" — nếu lọc infra_error thì parity tự-triệt-tiêu đúng
+    # tín hiệu nó phải bắt (record không đi qua production pipeline / harness
+    # crash trước pipeline), làm mù bất biến #22.
+    (
         "production_evaluation_parity",
-        "",  # mẫu số CHÍNH LÀ product case — "mọi evaluated case" (brief #17)
+        "mọi evaluated case (KHÔNG lọc product-case — bắt cả infra_error)",
         lambda r, m: True,
         lambda r, m: r.via_production_pipeline is True,
     ),
