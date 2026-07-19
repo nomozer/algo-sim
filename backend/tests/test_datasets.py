@@ -120,5 +120,6 @@ def test_select_suite_loc_duoc_tren_pool_moi():
 
 
 def test_pools_dang_ky_du():
-    assert set(POOLS) == {"regression", "curriculum", "capability", "cross_domain", "thesis"}
+    # M16 Task 4: pool "m16" (catalog-wide eval) đăng ký thêm vào POOLS.
+    assert set(POOLS) == {"regression", "curriculum", "capability", "cross_domain", "thesis", "m16"}
     assert get_pool("regression") is DATASET

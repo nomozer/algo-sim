@@ -76,3 +76,15 @@ def check_admission(item: EvalItem) -> list[str]:
     if item.result_mode not in RESULT_MODES:
         errs.append(f"{item.id}: result_mode lạ {item.result_mode!r}")
     return errs
+
+
+# ── M16 Task 4 (W4): đăng ký pool `m16` (catalog-wide eval) ─────────────────
+# Import ĐẶT Ở CUỐI file có chủ đích: m16_catalog → m16_schema → `from
+# app.evaluation.datasets import check_admission`. Nếu import ở đầu file thì
+# check_admission (định nghĩa phía trên) CHƯA bound khi m16_schema chạy → vòng
+# import. Đặt sau khi check_admission đã định nghĩa để phá vòng, rồi mutate
+# NEW_POOLS/POOLS (mọi test import module HOÀN CHỈNH nên thấy đủ pool m16).
+from app.evaluation.datasets.m16_catalog import M16_ITEMS  # noqa: E402
+
+NEW_POOLS["m16"] = M16_ITEMS
+POOLS["m16"] = M16_ITEMS
