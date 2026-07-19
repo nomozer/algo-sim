@@ -21,7 +21,6 @@ from dataclasses import dataclass
 from enum import Enum
 
 from app.evaluation.dataset import DATASET, EvalItem
-from app.evaluation.datasets import check_admission
 from app.simulation.descriptor import FamilyId
 
 M16_DATASET_VERSION = "m16-v1"
@@ -90,6 +89,11 @@ def check_m16_admission(item: EvalItem) -> list[str]:
     BỔ SUNG lên luật kết nạp cũ (`app.evaluation.datasets.check_admission`) —
     không thay thế; case phải qua CẢ hai bộ luật.
     """
+    # Import trễ CÓ CHỦ ĐÍCH: datasets/__init__ đăng ký pool m16 (import
+    # m16_catalog → import m16_schema) — import mức module ở đây tạo chu trình
+    # làm pytest chạy ĐƠN LẺ test_m16_*.py chết ngay lúc collection.
+    from app.evaluation.datasets import check_admission
+
     errs: list[str] = check_admission(item)
 
     m16 = item.m16
