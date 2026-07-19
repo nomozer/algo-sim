@@ -730,7 +730,7 @@ M16_ITEMS: list[EvalItem] = [
         id="m16-vb-binary-overrange",
         text="Số 300 được biểu diễn trong hệ nhị phân như thế nào?",
         group="specialized", expect="binary.decimal_to_binary", route="binary.decimal_to_binary",
-        archetype=VB, family=PR, mech=MECH_BINW,
+        archetype=VB, family=PR, mech=MECH_BINW, live=False,
         cap_family="data_representation", area="T10.CD1", complexity="L4",
         result_mode="executable_simulation",
         learning="Kiểm hành vi khi giá trị VƯỢT phạm vi hợp đồng (decimalValue > 255) — validator từ chối cấu trúc.",
@@ -741,8 +741,9 @@ M16_ITEMS: list[EvalItem] = [
             "phần biên là validator từ chối cấu trúc → LLM retry/clamp theo hành vi thực, KHÔNG phải capability gap."
         ),
         notes=(
-            "Contract-error control: 300 > 255 → validator từ chối cấu trúc (decimalValue phải 0–255) "
-            "→ LLM retry/clamp theo hành vi thực. KHÔNG phải capability gap: bài đúng loại, route đúng."
+            "Contract-error control: validator 0–255 từ chối cấu trúc; hai kết cục hợp lệ: LLM điều "
+            "chỉnh theo thông báo lỗi (retry → ok) HOẶC không điều chỉnh được → RuntimeError sau 3 lần "
+            "(KHÔNG envelope ok, KHÔNG capability_gap). Offline script phủ nhánh retry; case KHÔNG chạy live."
         ),
     ),
 
@@ -884,7 +885,10 @@ M16_ITEMS: list[EvalItem] = [
         notes=(
             "interval_elimination KHÔNG mechanism-exposed → analyze không phát mechanism family này "
             "(analyze_mechanism_expected phải None). Từ chối dựa trên result_ownership=algorithmic "
-            "(classify 4c / computation gate), không phải mechanism gate."
+            "(classify 4c / computation gate), không phải mechanism gate. "
+            "Đo KỶ LUẬT CLASSIFY (family không có analyze-exposed signal / gate chỉ chặn đường generic) "
+            "— không có backstop gate tất định nếu classify chọn nhầm sibling chuyên biệt; false-route "
+            "sang sibling sẽ hiện ở unsupported_recall, không phải gate metric."
         ),
     ),
 
@@ -957,7 +961,10 @@ M16_ITEMS: list[EvalItem] = [
         notes=(
             "graph_traversal KHÔNG mechanism-exposed → analyze_mechanism_expected None. Từ chối dựa "
             "trên result_ownership=algorithmic (Dijkstra), không phải mechanism gate. So với packet_"
-            "routing known_gaps='đường đi ngắn nhất có trọng số (Dijkstra)'."
+            "routing known_gaps='đường đi ngắn nhất có trọng số (Dijkstra)'. "
+            "Đo KỶ LUẬT CLASSIFY (family không có analyze-exposed signal / gate chỉ chặn đường generic) "
+            "— không có backstop gate tất định nếu classify chọn nhầm sibling chuyên biệt; false-route "
+            "sang sibling sẽ hiện ở unsupported_recall, không phải gate metric."
         ),
     ),
 
@@ -1021,22 +1028,25 @@ M16_ITEMS: list[EvalItem] = [
         ),
         group="unsupported", route=None,
         archetype=CR, family=PR, mech=MECH_NONBIN,
-        gate="route_mechanism", error_code=EC_ROUTE_MISMATCH,
+        gate=None, error_code=None,
         algorithmic=False, recovery=False, live=True,
         cap_family="positional_representation_base_gap",
         area="T10.CD1 chỉ phủ nhị phân — cơ số 5 ngoài phạm vi, không target nào sở hữu",
         complexity="L4", result_mode="unsupported",
-        learning="Hệ FAIL-CLOSED khi cơ chế positional được prescribed nhưng không route nào (binary/generic) thỏa.",
+        learning="Hệ TỪ CHỐI trung thực khi cơ chế positional được prescribed nhưng không route nào (binary/generic) thỏa.",
         rationale=(
             "Cơ chế ẩn: biểu diễn vị trí cơ số 5 (non_binary_base) — analyze phát mechanism "
             "positional_representation. binary.decimal_to_binary CHỈ sở hữu cơ số 2 (không nhận cơ "
             "số 5); framing 'vẽ ô, tô đậm' đẩy classify về generic (family mismatch với positional). "
-            "Sau ≤1 reclassify VẪN mismatch → fail-closed route_mechanism_family_mismatch. Không route nào thỏa."
+            "Không route nào thỏa → từ chối trung thực (capability_gap)."
         ),
         notes=(
             "recovery_route_exists=False: analyze prescribes positional non_binary_base; binary target "
-            "không sở hữu cơ số 5, generic mâu thuẫn family positional → sau 1 reclassify vẫn mismatch "
-            "→ route_mechanism_family_mismatch (pipeline trả error_code này, capability_gap)."
+            "không sở hữu cơ số 5, generic mâu thuẫn family positional. Chấp nhận CẢ BA kết cục từ chối "
+            "trung thực tùy classify lượt 1: (a) classify→generic → route_mechanism mismatch → reclassify "
+            "→ fail-closed route_mechanism_family_mismatch; (b) classify→binary.decimal_to_binary → direct "
+            "gate gate_mechanism_ownership; (c) classify→unsupported thẳng (không error_code). Offline "
+            "script cố định đường (a)."
         ),
     ),
 
@@ -1069,7 +1079,10 @@ M16_ITEMS: list[EvalItem] = [
             "computation gate (M13) fire: chosen=generic + result_ownership algorithmic → capability_gap "
             "KHÔNG kèm error_code (đã KIỂM pipeline.py nhánh check_computation_ownership: return "
             "failure_category=capability_gap, không có trường error_code) → expected_error_code=None. "
-            "Đếm CHO CẢ near_miss của structural_progressive_representation (§3)."
+            "Đếm CHO CẢ near_miss của structural_progressive_representation (§3). "
+            "Đo KỶ LUẬT CLASSIFY (family không có analyze-exposed signal / gate chỉ chặn đường generic) "
+            "— không có backstop gate tất định nếu classify chọn nhầm sibling chuyên biệt; false-route "
+            "sang sibling sẽ hiện ở unsupported_recall, không phải gate metric."
         ),
     ),
     # (b) representation ĐỐI CHỨNG: chỉ VẼ theo mô tả cho sẵn → generic ok

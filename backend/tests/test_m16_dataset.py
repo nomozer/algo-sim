@@ -293,9 +293,11 @@ def test_cross_family_recovery_success_va_failure():
 
     for it in failure:
         m = _m16(it)
+        # F1: KHÔNG assert cứng một đường phòng thủ (gate/error_code) — case chấp
+        # nhận cả ba kết cục từ chối trung thực tùy classify lượt 1 (xem notes).
         assert m.recovery_route_exists is False, it.id
-        assert m.expected_error_code == "route_mechanism_family_mismatch", it.id
-        assert m.expected_gate == "route_mechanism", it.id
+        assert m.archetype == M16Archetype.CROSS_FAMILY_RECOVERY, it.id
+        assert it.group == "unsupported", it.id
 
 
 # ── Phụ lục B §5 — authority_control cặp ──────────────────────
