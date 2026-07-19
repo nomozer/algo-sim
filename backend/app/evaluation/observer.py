@@ -44,3 +44,19 @@ class AttemptObserver:
     def gap_gate_fired(self) -> bool:
         p = self.plan()
         return bool(p and p.get("unsupported_capabilities"))
+
+    # ── M16 Task 2 (W2): accessor bổ sung — quan sát route-consistency
+    # recovery (M15 khóa 3) có cấu trúc, KHÔNG đoán từ text. ─────────────
+    def reclassify_attempted(self) -> dict | None:
+        return self._first("reclassify_attempted")
+
+    def reclassify_result(self) -> dict | None:
+        return self._first("reclassify_result")
+
+    def gate_events(self, gate: str | None = None) -> list[dict]:
+        """gate=None → mọi gate_checked (tương đương gates()); gate="mechanism"
+        (vd) → chỉ lọc đúng loại gate đó."""
+        return [
+            d for (et, d) in self.events
+            if et == "gate_checked" and (gate is None or d.get("gate") == gate)
+        ]

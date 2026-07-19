@@ -604,6 +604,8 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             "representation_plan": plan,
             "analysis": analysis,
         }
+    else:
+        _emit(observer, "gate_checked", gate="mechanism", fired=False, reason_code=None)
 
     spec = CATALOG[simulation_id]
 

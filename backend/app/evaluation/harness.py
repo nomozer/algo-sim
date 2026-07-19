@@ -14,6 +14,7 @@ from app.ai import pipeline
 from app.ai.gemini import ApiBudget, BudgetExceeded
 from app.evaluation.observer import AttemptObserver
 from app.evaluation.dataset import DATASET, EvalItem
+from app.evaluation.m16_record import build_m16_record
 from app.simulation.families import FAMILY_SELECTORS
 from app.simulation.semantic import check_semantic
 
@@ -258,20 +259,52 @@ def _item_result_from(
     )
 
 
-async def evaluate_item(item: EvalItem, api_key: str) -> ItemResult:
+_BUDGET_COUNTERS = ("logical_calls", "http_requests", "retry_requests", "transient_hits")
+
+
+def _budget_snapshot(budget: ApiBudget | None) -> dict:
+    """M16 Task 2 (W2) — 4 counter tại một thời điểm (0 khi không có budget,
+    §c: budget_delta luôn là dict 4 khoá, không None)."""
+    if budget is None:
+        return {k: 0 for k in _BUDGET_COUNTERS}
+    return {k: getattr(budget, k) for k in _BUDGET_COUNTERS}
+
+
+async def evaluate_item(
+    item: EvalItem,
+    api_key: str,
+    budget: ApiBudget | None = None,
+    record_sink: list | None = None,
+) -> ItemResult:
     """M14 §F2 (bất biến #22) — chấm QUA production orchestration `run_pipeline`
     với observer THỤ ĐỘNG; KHÔNG tái dựng stage, KHÔNG ghi cache/pattern
-    (pattern_store=None → reuse/persist bị guard bỏ qua; cache sống ở main.py)."""
+    (pattern_store=None → reuse/persist bị guard bỏ qua; cache sống ở main.py).
+
+    M16 Task 2 (W2, cả hai tham số optional, mặc định None — chữ ký cũ gọi
+    KHÔNG đổi hành vi): `budget` — snapshot 4 counter TRƯỚC/SAU run_pipeline →
+    `budget_delta` (KHÔNG đưa vào ItemResult, metric cũ không đổi một bit).
+    `record_sink` — nếu có, append một `M16CaseRecord` (quan sát có cấu trúc
+    SONG SONG, không thay ItemResult/metric hiện có)."""
     obs = AttemptObserver()
     pipeline_error: str | None = None
     envelope: dict | None = None
+    before = _budget_snapshot(budget)
     try:
         envelope = await pipeline.run_pipeline(item.text, api_key, pattern_store=None, observer=obs)
     except BudgetExceeded:
         raise  # chạm trần → để run_eval dừng cả bộ
     except Exception as err:  # simulate thất bại sau retry (RuntimeError) hoặc lỗi khác
         pipeline_error = str(err)
-    return _item_result_from(item, obs, envelope, pipeline_error)
+    after = _budget_snapshot(budget)
+    budget_delta = {k: after[k] - before[k] for k in _BUDGET_COUNTERS}
+    result = _item_result_from(item, obs, envelope, pipeline_error)
+    if record_sink is not None:
+        record_sink.append(
+            build_m16_record(
+                item, obs, envelope, pipeline_error, budget_delta, semantic_ok=result.semantic_ok
+            )
+        )
+    return result
 
 
 # ── Suite selection (M7.14T) — dataset.py vẫn là benchmark definition ──
@@ -290,7 +323,7 @@ async def run_eval(
     report = EvalReport(planned=len(items))
     for item in items:
         try:
-            report.results.append(await evaluate_item(item, api_key))
+            report.results.append(await evaluate_item(item, api_key, budget=budget))
         except BudgetExceeded as err:  # chạm trần API → DỪNG cả bộ, vẫn in report
             report.aborted_reason = str(err)
             break
