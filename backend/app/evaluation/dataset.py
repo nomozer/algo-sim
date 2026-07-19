@@ -36,6 +36,12 @@ class EvalItem:
     pedagogical_rationale: str = ""         # CƠ CHẾ ẨN nào được mô phỏng + vì sao
                                             # hơn text/ảnh/video/quiz. Mơ hồ → loại case.
 
+    # ── M16 Task 1 (W1): kỳ vọng CÓ CẤU TRÚC cho eval M16 — optional, backward-
+    # compatible. Kiểu thật là `m16_schema.M16Expectation`; khai `object` ở đây
+    # để KHÔNG import m16_schema vào dataset.py (tránh vòng import — chiều import
+    # là m16_schema → dataset). 30 case DATASET + 4 pool cũ không khai → None.
+    m16: object | None = None
+
 
 DATASET: list[EvalItem] = [
     # ── Nhóm A: specialized-supported (8) ────────────────────
