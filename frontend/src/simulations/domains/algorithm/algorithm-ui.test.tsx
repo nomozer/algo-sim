@@ -55,6 +55,15 @@ describe("gating swap trong AlgorithmWorkspace", () => {
     expect(h).toContain("Thí nghiệm");
   });
 
+  it("(PhET/CLT) challenge: teaser tự-giải-thích hiện TRƯỚC khi mở thí nghiệm — nút không còn bí ẩn", () => {
+    // find_max: teaser nêu bất biến vùng-đã-duyệt, mời thử mà chưa lộ hệ quả.
+    const hMax = html("find_max", { array: [7.5, 9, 6] }, 1);
+    expect(hMax).toContain("vùng đã duyệt");
+    // binary_search: teaser nêu tiền điều kiện dãy-đã-sắp, ngay khi CHƯA mở lab.
+    const hBin = html("binary_search", { array: [1, 3, 5, 7, 9, 11, 13], target: 3 }, 1);
+    expect(hBin).toContain("phá thứ tự");
+  });
+
   it("linear_search (framed): kéo được nhưng khung câu hỏi là CHI PHÍ tìm kiếm", () => {
     const h = html("linear_search", { array: [4, 9, 7], target: 9 }, 1);
     expect(h).toContain("sớm hơn"); // khung: đưa target sớm/muộn → số lần so sánh đổi

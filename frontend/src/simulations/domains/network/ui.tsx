@@ -34,8 +34,9 @@ interface Pos2D {
   y: number;
 }
 
-/** Bố trí 2D: nút trên route xếp hàng ngang, nút ngoài route xếp hàng dưới. */
-function layout2d(
+/** Bố trí 2D: nút trên route xếp hàng ngang, nút ngoài route xếp hàng dưới.
+ *  Export để test totality/parity với `layout3d` (bố cục renderer-owned). */
+export function layout2d(
   nodes: NetNode[],
   route: string[],
 ): { positions: Record<string, Pos2D>; width: number; height: number } {

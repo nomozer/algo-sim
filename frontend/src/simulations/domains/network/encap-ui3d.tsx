@@ -32,11 +32,53 @@ export function sideX(side: Side): number {
   return side === "sender" ? -6 : side === "receiver" ? 6 : 0;
 }
 
-const ROLE_COLOR_3D: Record<string, number> = {
+/**
+ * Sắc riêng từng tầng — để BỐN phiến ĐỌC RA thành bốn mặt phẳng phân biệt thay
+ * vì bốn vệt xám mờ đồng nhất (Mayer coherence: chiều sâu phải mang nghĩa đọc
+ * được, không phải trang trí). Phiến của tầng đang hoạt động được làm đục hơn.
+ */
+const LAYER_TINT: Record<LayerId, number> = {
+  application: 0x34d399, // green
+  transport: 0x60a5fa, // blue
+  internet: 0xa78bfa, // violet
+  network_access: 0xfbbf24, // amber
+};
+const SLAB_OPACITY_BASE = 0.2;
+const SLAB_OPACITY_ACTIVE = 0.58;
+
+export const ROLE_COLOR_3D: Record<string, number> = {
   payload: 0x1aae39, // green — khớp --accent-green
   header: 0x62aef0, // sky — khớp --accent-sky
   trailer: 0xdd5b00, // orange — khớp --accent-orange
 };
+
+/** Bề rộng một hộp phân đoạn PDU (đơn vị thế giới 3D). */
+const PDU_SEG_W = 0.9;
+
+/** Mô tả một hộp phân đoạn 3D — vị trí X derive từ THỨ TỰ trong PDU. */
+export interface PduSeg3D {
+  id: string;
+  label: string;
+  role: string;
+  color: number;
+  x: number;
+}
+
+/**
+ * Bố cục PDU 3D — PURE, tất định, KHÔNG cần WebGL/canvas (export để test parity).
+ * Đây là SỰ THẬT NGỮ NGHĨA mà renderer 3D vẽ: một hộp mỗi phân đoạn, theo đúng
+ * thứ tự `state.pdu`, tô màu theo vai trò. `buildPduGroup` chỉ dựng mesh từ đây.
+ */
+export function pduLayout3d(pdu: PduComponent[]): PduSeg3D[] {
+  const total = pdu.length * PDU_SEG_W;
+  return pdu.map((c, i) => ({
+    id: c.id,
+    label: c.label,
+    role: c.role,
+    color: ROLE_COLOR_3D[c.role],
+    x: -total / 2 + PDU_SEG_W * (i + 0.5),
+  }));
+}
 
 export const ENCAP_WEBGL_FALLBACK =
   "Không khởi tạo được chế độ 3D trên thiết bị này (WebGL không khả dụng). " +
@@ -77,28 +119,27 @@ interface SceneHandles {
   controls: OrbitControls;
   pduGroup: THREE.Group;
   pduTarget: THREE.Vector3;
+  slabs: Record<LayerId, THREE.Mesh>; // phiến mỗi tầng — để làm nổi tầng đang hoạt động
   raf: number;
   observer: ResizeObserver;
   home: { position: THREE.Vector3; target: THREE.Vector3 };
 }
 
-/** Dựng lại nhóm PDU (các hộp phân đoạn) theo state.pdu — thứ tự từ engine. */
+/** Dựng lại nhóm PDU (các hộp phân đoạn) theo state.pdu — bố cục từ `pduLayout3d`. */
 function buildPduGroup(pdu: PduComponent[]): THREE.Group {
   const group = new THREE.Group();
-  const W = 0.9;
-  const total = pdu.length * W;
-  pdu.forEach((c, i) => {
+  for (const seg of pduLayout3d(pdu)) {
     const box = new THREE.Mesh(
-      new THREE.BoxGeometry(W * 0.92, 0.6, 0.6),
-      new THREE.MeshLambertMaterial({ color: ROLE_COLOR_3D[c.role] }),
+      new THREE.BoxGeometry(PDU_SEG_W * 0.92, 0.6, 0.6),
+      new THREE.MeshLambertMaterial({ color: seg.color }),
     );
-    box.position.x = -total / 2 + W * (i + 0.5);
+    box.position.x = seg.x;
     group.add(box);
-    const label = makeLabelSprite(c.label);
-    label.position.set(box.position.x, 0.7, 0);
+    const label = makeLabelSprite(seg.label);
+    label.position.set(seg.x, 0.7, 0);
     label.scale.set(1.2, 0.4, 1);
     group.add(label);
-  });
+  }
   return group;
 }
 
@@ -158,22 +199,36 @@ export function Encap3DWorkspace({ state }: Props) {
       return;
     }
     const scene = new THREE.Scene();
-    scene.add(new THREE.AmbientLight(0xffffff, 1.1));
+    scene.add(new THREE.AmbientLight(0xffffff, 1.15));
     const sun = new THREE.DirectionalLight(0xffffff, 1.5);
     sun.position.set(6, 10, 8);
     scene.add(sun);
 
-    // Bốn phiến tầng (slab) ở mỗi độ sâu Z — nhãn tầng ở cạnh trái.
+    // Lưới nền mờ — mốc không gian để CHIỀU SÂU (trục tầng) đọc được (như routing 3D).
+    const grid = new THREE.GridHelper(30, 30, 0x94a3b8, 0xcbd5e1);
+    (grid.material as THREE.Material).opacity = 0.25;
+    (grid.material as THREE.Material).transparent = true;
+    grid.position.y = -1.4;
+    scene.add(grid);
+
+    // Bốn phiến tầng (slab) ở mỗi độ sâu Z — sắc riêng + nhãn tầng lớn ở cạnh trái.
+    const slabs = {} as Record<LayerId, THREE.Mesh>;
     for (const layer of LAYERS) {
       const z = layerDepth(layer);
       const slab = new THREE.Mesh(
-        new THREE.BoxGeometry(16, 0.08, 2.6),
-        new THREE.MeshLambertMaterial({ color: 0x94a3b8, transparent: true, opacity: 0.18 }),
+        new THREE.BoxGeometry(16, 0.22, 3.0),
+        new THREE.MeshLambertMaterial({
+          color: LAYER_TINT[layer],
+          transparent: true,
+          opacity: SLAB_OPACITY_BASE,
+        }),
       );
-      slab.position.set(0, -0.5, z);
+      slab.position.set(0, -0.6, z);
       scene.add(slab);
+      slabs[layer] = slab;
       const label = makeLabelSprite(LAYER_LABEL[layer]);
-      label.position.set(-7.4, 0, z);
+      label.position.set(-9.2, 0.15, z);
+      label.scale.set(3.6, 0.9, 1); // to hơn để đọc được, không chồng lên nhau
       scene.add(label);
     }
     // Nhãn hai đầu trục X (chiều truyền).
@@ -189,10 +244,12 @@ export function Encap3DWorkspace({ state }: Props) {
     pduGroup.position.copy(startPos);
     scene.add(pduGroup);
 
+    // Camera nghiêng-CẠNH (không phải nhìn từ trên xuống): lộ trục Z = tầng để
+    // thấy PDU đi XUỐNG qua các phiến khi đóng gói, không bị bóp dẹp.
     const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-    camera.position.set(0, 9, 12);
+    camera.position.set(12, 7.5, 13);
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0, -6);
+    controls.target.set(0, -0.3, -6);
     controls.enablePan = false;
     controls.minDistance = 6;
     controls.maxDistance = 40;
@@ -213,7 +270,7 @@ export function Encap3DWorkspace({ state }: Props) {
     observer.observe(container);
 
     const handles: SceneHandles = {
-      renderer, scene, camera, controls, pduGroup,
+      renderer, scene, camera, controls, pduGroup, slabs,
       pduTarget: startPos.clone(), raf: 0, observer, home,
     };
     const tick = () => {
@@ -244,6 +301,12 @@ export function Encap3DWorkspace({ state }: Props) {
     h.scene.add(group);
     h.pduGroup = group;
     h.pduTarget = pduPosition(state);
+    // Làm NỔI tầng đang hoạt động: phiến đục hơn để thấy PDU đang ở tầng nào
+    // (bước truyền tin activeLayer = null → mọi phiến trở lại mức nền).
+    for (const layer of LAYERS) {
+      const mat = h.slabs[layer].material as THREE.MeshLambertMaterial;
+      mat.opacity = step.activeLayer === layer ? SLAB_OPACITY_ACTIVE : SLAB_OPACITY_BASE;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.cursor]);
 

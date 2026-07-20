@@ -14,7 +14,8 @@ import {
 
 type Props = WorkspaceProps<EncapConfig, EncapState>;
 
-const ROLE_COLOR: Record<string, string> = {
+/** Màu 2D theo VAI TRÒ phân đoạn — export để test đối chiếu key với bản 3D. */
+export const ROLE_COLOR: Record<string, string> = {
   payload: "var(--accent-green)",
   header: "var(--accent-sky)",
   trailer: "var(--accent-orange)",

@@ -118,7 +118,9 @@ export function LogicInspector({ state }: Props) {
                   <td>{a}</td>
                   <td>{b}</td>
                   <td>
-                    <strong>{a === 1 && b === 1 ? 1 : 0}</strong>
+                    {/* Dẫn xuất từ engine `andOutput` — KHÔNG chép lại luật cổng
+                        trong renderer (một nguồn sự thật; đổi cổng chỉ sửa model). */}
+                    <strong>{andOutput({ inputA: a, inputB: b })}</strong>
                   </td>
                 </tr>
               );

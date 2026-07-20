@@ -33,6 +33,10 @@ export interface WhatIfPolicy {
   hint?: string;
   /** Nhãn nút mở thí nghiệm (chỉ mode "challenge"). */
   challengeLabel?: string;
+  /** Câu mời-thử NGẮN hiện TRƯỚC khi mở (PhET/CLT: affordance tự giải thích,
+   *  giảm tải "loay hoay vận hành công cụ"). Nêu bất biến/tiền-điều-kiện đang
+   *  thử mà KHÔNG lộ hệ quả — hệ quả để dành cho `framing` khi đã mở. */
+  challengeTeaser?: string;
   /** Khung giải thích thí nghiệm — nói rõ bất biến/tiền điều kiện đang thử. */
   framing?: string;
   /** Vì sao thao tác này KHÔNG phải trang trí (tự khai, phục vụ audit). */
@@ -61,6 +65,8 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   binary_search: {
     mode: "challenge",
     challengeLabel: "Thí nghiệm: nếu dãy không còn được sắp thứ tự?",
+    challengeTeaser:
+      "Tìm nhị phân chỉ đúng khi dãy đã được sắp thứ tự — thử phá thứ tự đó rồi xem chuyện gì xảy ra.",
     framing:
       "Tìm kiếm nhị phân chỉ đúng khi dãy đã sắp thứ tự. Hãy đổi chỗ hai phần tử để phá thứ tự đó, rồi quan sát: thuật toán có thể bỏ sót giá trị có thật trong dãy.",
     hint: "Kéo đổi chỗ hai cột để phá thứ tự sắp — rồi xem thuật toán còn tìm thấy đúng không.",
@@ -70,6 +76,8 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   find_max: {
     mode: "challenge",
     challengeLabel: "Thí nghiệm: thử đánh lừa thuật toán",
+    challengeTeaser:
+      "Thuật toán không bao giờ nhìn lại vùng đã duyệt — thử xem điều đó có đánh lừa được nó không.",
     framing:
       "Thuật toán chỉ nhớ giá trị tốt nhất ĐÃ GẶP và không bao giờ quay lại vùng đã duyệt. Hãy đổi một phần tử chưa duyệt vào vùng đã duyệt rồi xem kết quả cuối.",
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
@@ -79,6 +87,8 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   find_min: {
     mode: "challenge",
     challengeLabel: "Thí nghiệm: thử đánh lừa thuật toán",
+    challengeTeaser:
+      "Thuật toán không bao giờ nhìn lại vùng đã duyệt — thử xem điều đó có đánh lừa được nó không.",
     framing:
       "Thuật toán chỉ nhớ giá trị tốt nhất ĐÃ GẶP và không bao giờ quay lại vùng đã duyệt. Hãy đổi một phần tử chưa duyệt vào vùng đã duyệt rồi xem kết quả cuối.",
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",

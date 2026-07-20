@@ -54,13 +54,12 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       {state.branch && (
         <div className="branch-banner">
+          {/* Framing (vì sao thử) đã hiện TRƯỚC khi mở thí nghiệm — không lặp lại
+              ở đây để banner gọn, chỉ nói em vừa làm gì + lối quay về. */}
           <span>
             <IconExperiment size={14} /> <strong>Nhánh thử nghiệm</strong> — em đã đổi chỗ vị trí thứ {state.branch.i + 1}{" "}
             và {state.branch.j + 1} tại bước {state.branch.fromStep + 1}. Dòng chính vẫn được giữ
             nguyên.
-            {policy.mode === "challenge" && policy.framing && (
-              <span style={{ display: "block", fontWeight: 400, marginTop: 4 }}>{policy.framing}</span>
-            )}
           </span>
           <button className="btn-utility" onClick={() => dispatch({ type: "exit_branch" })}>
             <IconBack size={14} />
@@ -112,12 +111,17 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         </div>
       )}
 
-      {/* Mode "challenge": nút mở thí nghiệm có khung — không kéo tự do mặc định. */}
+      {/* Mode "challenge": nút mở thí nghiệm có khung — không kéo tự do mặc định.
+          PhET/CLT: teaser hiện TRƯỚC nút để affordance tự giải thích (giảm tải
+          "nút bí ẩn"), không lộ hệ quả — hệ quả để dành `framing` khi đã mở. */}
       {policy.mode === "challenge" && !labOpen && !state.branch && !last && (
-        <button className="btn-utility" style={{ alignSelf: "flex-start" }} onClick={() => setLabOpen(true)}>
-          <IconExperiment size={14} />
-          {policy.challengeLabel}
-        </button>
+        <div className="stack" style={{ gap: "var(--sp-xs)", alignItems: "flex-start" }}>
+          {policy.challengeTeaser && <span className="hint">{policy.challengeTeaser}</span>}
+          <button className="btn-utility" onClick={() => setLabOpen(true)}>
+            <IconExperiment size={14} />
+            {policy.challengeLabel}
+          </button>
+        </div>
       )}
       {policy.mode === "challenge" && labOpen && !state.branch && (
         <div className="notes" role="note">

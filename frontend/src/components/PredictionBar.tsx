@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { SimulationModule } from "../simulations/types";
 import { useAppStore } from "../state/store";
-import { IconCheck, IconCross, IconInfo, IconPredict } from "./icons";
+import { IconCheck, IconInfo, IconPredict } from "./icons";
 
 /**
  * PredictionBar (M8-PRE-LIP · trình bày lại theo DESIGN.md ở M9-UX6)
@@ -87,7 +87,9 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
       {prediction && (
         <p className={`predict-result is-${prediction.verdict}`} role="status">
           {prediction.verdict === "correct" && <IconCheck size={15} />}
-          {prediction.verdict === "incorrect" && <IconCross size={15} />}
+          {/* Đoán sai = cơ hội học, KHÔNG phải lỗi hệ thống (CORRECTNESS.md):
+              bóng đèn "đây là điều xảy ra" thay cho dấu × mang tông báo lỗi. */}
+          {prediction.verdict === "incorrect" && <IconPredict size={15} />}
           {prediction.verdict === "unsupported_to_verify" && <IconInfo size={15} />}
           <span>{prediction.message}</span>
         </p>

@@ -862,18 +862,22 @@ html {
   justify-content: space-between;
   gap: var(--sp-sm);
   flex-wrap: wrap;
+  /* DESIGN.md: phân biệt bằng SURFACE-TINT chứ không viền màu sticker — nền tím
+     nhạt + hairline, KHÔNG viền tím đặc (màu sticker không cấu trúc layout). */
   background: #f6effd;
-  border: 1px solid var(--accent-purple);
+  border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
   padding: var(--sp-xs) var(--sp-sm);
   font-size: 14px;
-  color: var(--accent-purple-deep);
+  /* Chữ gần-đen (DESIGN.md), KHÔNG tô cả câu bằng tím — tím chỉ còn ở nền/viền
+     làm DẤU "thao tác của em", nhẹ như dấu trạng thái green/orange khác. */
+  color: var(--ink-secondary);
 }
 
 .narration-bar.is-user {
   border-left: 3px solid var(--accent-purple-deep);
   background: #f6effd;
-  color: var(--accent-purple-deep);
+  /* giữ chữ như narration thường (--ink-secondary kế thừa), chỉ dấu viền tím */
 }
 
 /* ── Bố cục mô phỏng + panel mã giả ──────────────────────── */
