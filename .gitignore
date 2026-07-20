@@ -14,3 +14,6 @@ CLAUDE.md
 # Mockup phiên brainstorm (visual companion) — cục bộ, không commit.
 /.superpowers/
 
+# Claude Code local settings (permissions, machine-specific paths) — không commit.
+/.claude/
+
