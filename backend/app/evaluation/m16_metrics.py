@@ -256,10 +256,17 @@ _METRIC_REGISTRY: tuple[tuple[str, str, _Pred, _Pred], ...] = (
         lambda r, m: _is_supported(r) and len(r.simulate_attempts) >= 1,
         lambda r, m: r.first_attempt_ok is True,
     ),
+    # #7 (final review A): mẫu số CHỈ là case semantic check THẬT SỰ chạy —
+    # đường generic (check_semantic chỉ áp cho generic.rule_scene). Harness đặt
+    # semantic_ok=True cho MỌI envelope ok (kể cả specialized, nơi check không
+    # chạy) → nếu chỉ lọc "semantic_ok is not None" thì 36 case specialized pha
+    # loãng mẫu số, metric không thể phản ánh semantic-composition thật.
     _metric_entry(
         "semantic_pass_rate",
-        "case supported có semantic_ok khác None",
-        lambda r, m: _is_supported(r) and r.semantic_ok is not None,
+        "case supported có final_route generic.rule_scene và semantic_ok khác None",
+        lambda r, m: _is_supported(r)
+        and r.final_route == "generic.rule_scene"
+        and r.semantic_ok is not None,
         lambda r, m: r.semantic_ok is True,
     ),
     _metric_entry(

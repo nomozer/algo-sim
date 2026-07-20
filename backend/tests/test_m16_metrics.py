@@ -189,10 +189,15 @@ def test_metric_6_valid_spec_first_attempt_rate():
 
 
 def test_metric_7_semantic_pass_rate():
+    """Final review A: mẫu số CHỈ gồm case check_semantic thật sự chạy — đường
+    generic (final_route generic.rule_scene). Harness đặt semantic_ok=True cho
+    MỌI envelope ok kể cả specialized (nơi check KHÔNG chạy) — record g4 mô
+    phỏng đúng thực tế đó và PHẢI bị loại khỏi mẫu số (không pha loãng)."""
     records = [
-        _rec(case_id="g1", group="generic", semantic_ok=True),
-        _rec(case_id="g2", group="generic", semantic_ok=False),
+        _rec(case_id="g1", group="generic", final_route="generic.rule_scene", semantic_ok=True),
+        _rec(case_id="g2", group="generic", final_route="generic.rule_scene", semantic_ok=False),
         _rec(case_id="g3", group="specialized", semantic_ok=None),
+        _rec(case_id="g4", group="specialized", final_route="algorithm.find_max", semantic_ok=True),
     ]
     mv = m16_metrics.metric_semantic_pass_rate(records)
     assert (mv.numerator, mv.denominator, mv.value) == (1, 2, 0.5)

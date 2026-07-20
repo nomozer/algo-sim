@@ -151,12 +151,43 @@ def build_offline_results(records: Sequence[M16CaseRecord]) -> list[dict]:
 
 
 # ── 4. m16-metrics.json ──────────────────────────────────────────────────
-def _mv_dict(mv: MetricValue) -> dict:
+# Final review B: band là nhãn CHẤT LƯỢNG — với metric "càng thấp càng tốt"
+# (false_refusal/FP-sim/leak) giá trị 0.0 là lý tưởng nhưng quality_band thô
+# trả WEAK, gây hiểu lầm cho người đọc artifact. Artifact khai `direction`
+# tường minh và band tính trên điểm hiệu dụng (1 - value) cho nhóm đảo chiều;
+# reclassification_rate là số chẩn đoán (không tốt/xấu) → band "N/A".
+# `quality_band` trong m16_metrics GIỮ NGUYÊN (đúng công thức design §4).
+_LOWER_IS_BETTER = frozenset({
+    "false_refusal_rate",
+    "false_positive_simulation_rate",
+    "generic_fallback_leak_rate",
+})
+_DIAGNOSTIC = frozenset({"reclassification_rate"})
+
+
+def _direction(name: str) -> str:
+    if name in _LOWER_IS_BETTER:
+        return "lower_is_better"
+    if name in _DIAGNOSTIC:
+        return "diagnostic"
+    return "higher_is_better"
+
+
+def _band(name: str, value: float | None) -> str:
+    if value is None or name in _DIAGNOSTIC:
+        return "N/A"
+    if name in _LOWER_IS_BETTER:
+        return MM.quality_band(1.0 - value)
+    return MM.quality_band(value)
+
+
+def _mv_dict(name: str, mv: MetricValue) -> dict:
     return {
         "numerator": mv.numerator,
         "denominator": mv.denominator,
         "value": mv.value,
-        "band": MM.quality_band(mv.value),
+        "direction": _direction(name),
+        "band": _band(name, mv.value),
     }
 
 
@@ -176,13 +207,19 @@ def _has_selector_token_leak(agg: AggregateResult) -> bool:
 
 
 def build_metrics_artifact(agg: AggregateResult) -> dict:
-    micro = {name: _mv_dict(ma.micro) for name, ma in agg.metrics.items()}
+    micro = {name: _mv_dict(name, ma.micro) for name, ma in agg.metrics.items()}
     macro = {
-        name: {"value": ma.macro, "band": MM.quality_band(ma.macro), "excluded_families": ma.excluded_families}
+        name: {
+            "value": ma.macro,
+            "direction": _direction(name),
+            "band": _band(name, ma.macro),
+            "excluded_families": ma.excluded_families,
+        }
         for name, ma in agg.metrics.items()
     }
     per_family = {
-        name: {fam: _mv_dict(mv) for fam, mv in ma.per_family.items()} for name, ma in agg.metrics.items()
+        name: {fam: _mv_dict(name, mv) for fam, mv in ma.per_family.items()}
+        for name, ma in agg.metrics.items()
     }
 
     hard_correctness = {

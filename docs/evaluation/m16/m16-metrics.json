@@ -3,8 +3,8 @@
   "dataset_version": "m16-v1",
   "run_label": "offline",
   "run_meta": {
-    "git_commit": "59a5bbe2dc9ccd36630d4429ffd4104022bd53be",
-    "generated_at": "2026-07-20T03:26:47.420405+00:00"
+    "git_commit": "13aaada56451202b741c3aa07c57475561d19d12",
+    "generated_at": "2026-07-20T04:22:37.064173+00:00"
   },
   "data": {
     "micro": {
@@ -12,102 +12,119 @@
         "numerator": 14,
         "denominator": 14,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "family_selection_accuracy": {
         "numerator": 41,
         "denominator": 41,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "variant_selection_accuracy": {
         "numerator": 5,
         "denominator": 5,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "initial_route_accuracy": {
         "numerator": 40,
         "denominator": 41,
         "value": 0.975609756097561,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "final_route_accuracy": {
         "numerator": 41,
         "denominator": 41,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "valid_spec_first_attempt_rate": {
         "numerator": 40,
         "denominator": 41,
         "value": 0.975609756097561,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "semantic_pass_rate": {
-        "numerator": 41,
-        "denominator": 41,
+        "numerator": 5,
+        "denominator": 5,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "false_refusal_rate": {
         "numerator": 0,
         "denominator": 41,
         "value": 0.0,
-        "band": "WEAK"
+        "direction": "lower_is_better",
+        "band": "STRONG"
       },
       "unsupported_recall": {
         "numerator": 9,
         "denominator": 9,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "unsupported_precision": {
         "numerator": 9,
         "denominator": 9,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "false_positive_simulation_rate": {
         "numerator": 0,
         "denominator": 9,
         "value": 0.0,
-        "band": "WEAK"
+        "direction": "lower_is_better",
+        "band": "STRONG"
       },
       "generic_fallback_leak_rate": {
         "numerator": 0,
         "denominator": 5,
         "value": 0.0,
-        "band": "WEAK"
+        "direction": "lower_is_better",
+        "band": "STRONG"
       },
       "reclassification_rate": {
         "numerator": 2,
         "denominator": 50,
         "value": 0.04,
-        "band": "WEAK"
+        "direction": "diagnostic",
+        "band": "N/A"
       },
       "route_recovery_success_rate": {
         "numerator": 1,
         "denominator": 1,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "concrete_envelope_integrity": {
         "numerator": 41,
         "denominator": 41,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       },
       "production_evaluation_parity": {
         "numerator": 50,
         "denominator": 50,
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG"
       }
     },
     "macro": {
       "analyze_mechanism_accuracy": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": [
           "boolean_composition",
@@ -120,11 +137,13 @@
       },
       "family_selection_accuracy": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       },
       "variant_selection_accuracy": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": [
           "boolean_composition",
@@ -138,47 +157,63 @@
       },
       "initial_route_accuracy": {
         "value": 0.9791666666666666,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       },
       "final_route_accuracy": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       },
       "valid_spec_first_attempt_rate": {
         "value": 0.9791666666666666,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       },
       "semantic_pass_rate": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
-        "excluded_families": []
+        "excluded_families": [
+          "comparison_sort",
+          "graph_traversal",
+          "interval_elimination",
+          "layered_pdu_transform",
+          "positional_representation",
+          "single_pass_scan"
+        ]
       },
       "false_refusal_rate": {
         "value": 0.0,
-        "band": "WEAK",
+        "direction": "lower_is_better",
+        "band": "STRONG",
         "excluded_families": []
       },
       "unsupported_recall": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       },
       "unsupported_precision": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       },
       "false_positive_simulation_rate": {
         "value": 0.0,
-        "band": "WEAK",
+        "direction": "lower_is_better",
+        "band": "STRONG",
         "excluded_families": []
       },
       "generic_fallback_leak_rate": {
         "value": 0.0,
-        "band": "WEAK",
+        "direction": "lower_is_better",
+        "band": "STRONG",
         "excluded_families": [
           "boolean_composition",
           "layered_pdu_transform",
@@ -187,11 +222,13 @@
       },
       "reclassification_rate": {
         "value": 0.03125,
-        "band": "WEAK",
+        "direction": "diagnostic",
+        "band": "N/A",
         "excluded_families": []
       },
       "route_recovery_success_rate": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": [
           "boolean_composition",
@@ -205,11 +242,13 @@
       },
       "concrete_envelope_integrity": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       },
       "production_evaluation_parity": {
         "value": 1.0,
+        "direction": "higher_is_better",
         "band": "STRONG",
         "excluded_families": []
       }
@@ -220,48 +259,56 @@
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "comparison_sort": {
           "numerator": 6,
           "denominator": 6,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "interval_elimination": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "layered_pdu_transform": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "positional_representation": {
           "numerator": 8,
           "denominator": 8,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "structural_progressive_representation": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         }
       },
@@ -270,48 +317,56 @@
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 6,
           "denominator": 6,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 13,
           "denominator": 13,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
@@ -320,48 +375,56 @@
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "comparison_sort": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "interval_elimination": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "layered_pdu_transform": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "positional_representation": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "single_pass_scan": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "structural_progressive_representation": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         }
       },
@@ -370,48 +433,56 @@
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 5,
           "denominator": 6,
           "value": 0.8333333333333334,
+          "direction": "higher_is_better",
           "band": "MODERATE"
         },
         "single_pass_scan": {
           "numerator": 13,
           "denominator": 13,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
@@ -420,48 +491,56 @@
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 6,
           "denominator": 6,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 13,
           "denominator": 13,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
@@ -470,98 +549,114 @@
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 5,
           "denominator": 6,
           "value": 0.8333333333333334,
+          "direction": "higher_is_better",
           "band": "MODERATE"
         },
         "single_pass_scan": {
           "numerator": 13,
           "denominator": 13,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
       "semantic_pass_rate": {
         "boolean_composition": {
-          "numerator": 3,
-          "denominator": 3,
+          "numerator": 1,
+          "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
-          "numerator": 5,
-          "denominator": 5,
-          "value": 1.0,
-          "band": "STRONG"
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "direction": "higher_is_better",
+          "band": "N/A"
         },
         "graph_traversal": {
-          "numerator": 3,
-          "denominator": 3,
-          "value": 1.0,
-          "band": "STRONG"
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "direction": "higher_is_better",
+          "band": "N/A"
         },
         "interval_elimination": {
-          "numerator": 4,
-          "denominator": 4,
-          "value": 1.0,
-          "band": "STRONG"
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "direction": "higher_is_better",
+          "band": "N/A"
         },
         "layered_pdu_transform": {
-          "numerator": 3,
-          "denominator": 3,
-          "value": 1.0,
-          "band": "STRONG"
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "direction": "higher_is_better",
+          "band": "N/A"
         },
         "positional_representation": {
-          "numerator": 6,
-          "denominator": 6,
-          "value": 1.0,
-          "band": "STRONG"
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "direction": "higher_is_better",
+          "band": "N/A"
         },
         "single_pass_scan": {
-          "numerator": 13,
-          "denominator": 13,
-          "value": 1.0,
-          "band": "STRONG"
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "direction": "higher_is_better",
+          "band": "N/A"
         },
         "structural_progressive_representation": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
@@ -570,49 +665,57 @@
           "numerator": 0,
           "denominator": 3,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 0,
           "denominator": 5,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 0,
           "denominator": 3,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 0,
           "denominator": 4,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 0,
           "denominator": 3,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 0,
           "denominator": 6,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 0,
           "denominator": 13,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 0,
           "denominator": 4,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         }
       },
       "unsupported_recall": {
@@ -620,48 +723,56 @@
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 2,
           "denominator": 2,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
@@ -670,48 +781,56 @@
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 2,
           "denominator": 2,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
@@ -720,49 +839,57 @@
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 0,
           "denominator": 2,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         }
       },
       "generic_fallback_leak_rate": {
@@ -770,49 +897,57 @@
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "lower_is_better",
           "band": "N/A"
         },
         "comparison_sort": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "lower_is_better",
           "band": "N/A"
         },
         "positional_representation": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "lower_is_better",
           "band": "N/A"
         },
         "single_pass_scan": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 0,
           "denominator": 1,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "lower_is_better",
+          "band": "STRONG"
         }
       },
       "reclassification_rate": {
@@ -820,49 +955,57 @@
           "numerator": 0,
           "denominator": 4,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         },
         "comparison_sort": {
           "numerator": 0,
           "denominator": 6,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         },
         "graph_traversal": {
           "numerator": 0,
           "denominator": 4,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         },
         "interval_elimination": {
           "numerator": 0,
           "denominator": 5,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         },
         "layered_pdu_transform": {
           "numerator": 0,
           "denominator": 4,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         },
         "positional_representation": {
           "numerator": 2,
           "denominator": 8,
           "value": 0.25,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         },
         "single_pass_scan": {
           "numerator": 0,
           "denominator": 14,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         },
         "structural_progressive_representation": {
           "numerator": 0,
           "denominator": 5,
           "value": 0.0,
-          "band": "WEAK"
+          "direction": "diagnostic",
+          "band": "N/A"
         }
       },
       "route_recovery_success_rate": {
@@ -870,48 +1013,56 @@
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "comparison_sort": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "graph_traversal": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "interval_elimination": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "layered_pdu_transform": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "positional_representation": {
           "numerator": 1,
           "denominator": 1,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         },
         "structural_progressive_representation": {
           "numerator": 0,
           "denominator": 0,
           "value": null,
+          "direction": "higher_is_better",
           "band": "N/A"
         }
       },
@@ -920,48 +1071,56 @@
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 3,
           "denominator": 3,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 6,
           "denominator": 6,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 13,
           "denominator": 13,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       },
@@ -970,48 +1129,56 @@
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "comparison_sort": {
           "numerator": 6,
           "denominator": 6,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "graph_traversal": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "interval_elimination": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "layered_pdu_transform": {
           "numerator": 4,
           "denominator": 4,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "positional_representation": {
           "numerator": 8,
           "denominator": 8,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "single_pass_scan": {
           "numerator": 14,
           "denominator": 14,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         },
         "structural_progressive_representation": {
           "numerator": 5,
           "denominator": 5,
           "value": 1.0,
+          "direction": "higher_is_better",
           "band": "STRONG"
         }
       }
@@ -1225,8 +1392,43 @@
         ]
       },
       "semantic_pass_rate": {
-        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported có semantic_ok khác None",
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported có final_route generic.rule_scene và semantic_ok khác None",
         "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-bubble-explicit",
+          "m16-bubble-paraphrase",
+          "m16-insertion-explicit",
+          "m16-insertion-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-binary-explicit",
+          "m16-binary-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-sort-duplicates",
+          "m16-vb-binary-zero",
+          "m16-vb-binary-255",
+          "m16-vb-binary-overrange",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
           "m16-nm-sort-partition",
           "m16-nm-freevar-loop",
           "m16-nm-interpolation",
@@ -1234,6 +1436,7 @@
           "m16-nm-hex-gap",
           "m16-nm-weighted-shortest",
           "m16-nm-tcp-handshake",
+          "m16-cr-positional-recover",
           "m16-cr-positional-fail",
           "m16-ac-computation-leak"
         ]
