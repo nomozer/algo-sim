@@ -1,0 +1,52 @@
+{
+  "schema_version": "1",
+  "dataset_version": "m16-v1",
+  "run_label": "baseline",
+  "prefix_label": "pre-fix",
+  "model": "gemini-2.5-flash",
+  "provider": "google-gemini",
+  "run_meta": {
+    "git_commit": "183eb1aff67658ecc35f189592b64d5f99a9b070",
+    "generated_at": "2026-07-20T04:54:45.222057+00:00",
+    "source_trace_started_at": "2026-07-20T04:44:23.813062+00:00"
+  },
+  "usage": {
+    "logical_cases_attempted": 24,
+    "http_calls": 66,
+    "logical_calls": 66,
+    "retry_requests": 0,
+    "transient_hits": 0
+  },
+  "data": {
+    "attempted_case_ids": [
+      "m16-findmax-paraphrase",
+      "m16-findmin-explicit",
+      "m16-sumif-explicit",
+      "m16-countif-explicit",
+      "m16-linear-explicit",
+      "m16-binsearch-paraphrase",
+      "m16-bubble-paraphrase",
+      "m16-insertion-explicit",
+      "m16-scan-explicit",
+      "m16-and-paraphrase",
+      "m16-binary-paraphrase",
+      "m16-routing-paraphrase",
+      "m16-encap-paraphrase",
+      "m16-generic-move",
+      "m16-nm-sort-partition",
+      "m16-nm-freevar-loop",
+      "m16-nm-interpolation",
+      "m16-nm-threshold-kofn",
+      "m16-nm-hex-gap",
+      "m16-nm-weighted-shortest",
+      "m16-nm-tcp-handshake",
+      "m16-cr-positional-recover",
+      "m16-cr-positional-fail",
+      "m16-ac-computation-leak"
+    ],
+    "status_final_counts": {
+      "ok": 15,
+      "refused": 9
+    }
+  }
+}

@@ -1,0 +1,1130 @@
+{
+  "schema_version": "1",
+  "dataset_version": "m16-v1",
+  "run_label": "baseline",
+  "prefix_label": "pre-fix",
+  "model": "gemini-2.5-flash",
+  "provider": "google-gemini",
+  "run_meta": {
+    "git_commit": "183eb1aff67658ecc35f189592b64d5f99a9b070",
+    "generated_at": "2026-07-20T04:54:45.146578+00:00",
+    "source_trace_started_at": "2026-07-20T04:44:23.813062+00:00"
+  },
+  "usage": {
+    "logical_cases_attempted": 24,
+    "http_calls": 66,
+    "logical_calls": 66,
+    "retry_requests": 0,
+    "transient_hits": 0
+  },
+  "data": [
+    {
+      "case_id": "m16-findmax-paraphrase",
+      "group": "specialized",
+      "archetype": "paraphrase_positive",
+      "expected_family": "single_pass_scan",
+      "expected_initial_route": "algorithm.find_max",
+      "expected_final_route": "algorithm.find_max",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.find_max",
+      "initial_family": "single_pass_scan",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.find_max",
+      "final_family": "single_pass_scan",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-findmin-explicit",
+      "group": "specialized",
+      "archetype": "explicit_positive",
+      "expected_family": "single_pass_scan",
+      "expected_initial_route": "algorithm.find_min",
+      "expected_final_route": "algorithm.find_min",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.find_min",
+      "initial_family": "single_pass_scan",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.find_min",
+      "final_family": "single_pass_scan",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-sumif-explicit",
+      "group": "specialized",
+      "archetype": "explicit_positive",
+      "expected_family": "single_pass_scan",
+      "expected_initial_route": "algorithm.sum_if",
+      "expected_final_route": "algorithm.sum_if",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.sum_if",
+      "initial_family": "single_pass_scan",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.sum_if",
+      "final_family": "single_pass_scan",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-countif-explicit",
+      "group": "specialized",
+      "archetype": "explicit_positive",
+      "expected_family": "single_pass_scan",
+      "expected_initial_route": "algorithm.count_if",
+      "expected_final_route": "algorithm.count_if",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.count_if",
+      "initial_family": "single_pass_scan",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.count_if",
+      "final_family": "single_pass_scan",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-linear-explicit",
+      "group": "specialized",
+      "archetype": "explicit_positive",
+      "expected_family": "single_pass_scan",
+      "expected_initial_route": "algorithm.linear_search",
+      "expected_final_route": "algorithm.linear_search",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.linear_search",
+      "initial_family": "single_pass_scan",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.linear_search",
+      "final_family": "single_pass_scan",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-binsearch-paraphrase",
+      "group": "specialized",
+      "archetype": "paraphrase_positive",
+      "expected_family": "interval_elimination",
+      "expected_initial_route": "algorithm.binary_search",
+      "expected_final_route": "algorithm.binary_search",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.binary_search",
+      "initial_family": "interval_elimination",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.binary_search",
+      "final_family": "interval_elimination",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-bubble-paraphrase",
+      "group": "specialized",
+      "archetype": "paraphrase_positive",
+      "expected_family": "comparison_sort",
+      "expected_initial_route": "algorithm.comparison_sort",
+      "expected_final_route": "algorithm.bubble_sort",
+      "raw_prescribed": "adjacent_compare_swap",
+      "canonical_prescribed": "comparison_sort.adjacent_compare_swap",
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.comparison_sort",
+      "initial_family": "comparison_sort",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.bubble_sort",
+      "final_family": "comparison_sort",
+      "selector_token_used": true,
+      "variant": "bubble",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "family_resolved",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-insertion-explicit",
+      "group": "specialized",
+      "archetype": "explicit_positive",
+      "expected_family": "comparison_sort",
+      "expected_initial_route": "algorithm.comparison_sort",
+      "expected_final_route": "algorithm.insertion_sort",
+      "raw_prescribed": "shift_into_sorted_prefix",
+      "canonical_prescribed": "comparison_sort.shift_into_sorted_prefix",
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.comparison_sort",
+      "initial_family": "comparison_sort",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.insertion_sort",
+      "final_family": "comparison_sort",
+      "selector_token_used": true,
+      "variant": "insertion",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "family_resolved",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-scan-explicit",
+      "group": "specialized",
+      "archetype": "explicit_positive",
+      "expected_family": "single_pass_scan",
+      "expected_initial_route": "algorithm.scan",
+      "expected_final_route": "algorithm.scan",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "algorithm.scan",
+      "initial_family": "single_pass_scan",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "algorithm.scan",
+      "final_family": "single_pass_scan",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": false,
+          "error_code": "structural_invalid"
+        },
+        {
+          "n": 1,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": false,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 4,
+        "http_requests": 4,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-and-paraphrase",
+      "group": "specialized",
+      "archetype": "paraphrase_positive",
+      "expected_family": "boolean_composition",
+      "expected_initial_route": "logic.and_gate",
+      "expected_final_route": "logic.and_gate",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "rule_derivable",
+      "initial_route": "logic.and_gate",
+      "initial_family": "boolean_composition",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "logic.and_gate",
+      "final_family": "boolean_composition",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-binary-paraphrase",
+      "group": "specialized",
+      "archetype": "paraphrase_positive",
+      "expected_family": "positional_representation",
+      "expected_initial_route": "binary.decimal_to_binary",
+      "expected_final_route": "binary.decimal_to_binary",
+      "raw_prescribed": "positional_representation.binary_positional_weights",
+      "canonical_prescribed": "positional_representation.binary_positional_weights",
+      "result_ownership": "rule_derivable",
+      "initial_route": "binary.decimal_to_binary",
+      "initial_family": "positional_representation",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "binary.decimal_to_binary",
+      "final_family": "positional_representation",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-routing-paraphrase",
+      "group": "specialized",
+      "archetype": "paraphrase_positive",
+      "expected_family": "graph_traversal",
+      "expected_initial_route": "network.packet_routing",
+      "expected_final_route": "network.packet_routing",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": "network.packet_routing",
+      "initial_family": "graph_traversal",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "network.packet_routing",
+      "final_family": "graph_traversal",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-encap-paraphrase",
+      "group": "specialized",
+      "archetype": "paraphrase_positive",
+      "expected_family": "layered_pdu_transform",
+      "expected_initial_route": "network.protocol_encapsulation",
+      "expected_final_route": "network.protocol_encapsulation",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "rule_derivable",
+      "initial_route": "network.protocol_encapsulation",
+      "initial_family": "layered_pdu_transform",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "network.protocol_encapsulation",
+      "final_family": "layered_pdu_transform",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-generic-move",
+      "group": "generic",
+      "archetype": "paraphrase_positive",
+      "expected_family": "structural_progressive_representation",
+      "expected_initial_route": "generic.rule_scene",
+      "expected_final_route": "generic.rule_scene",
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "provided",
+      "initial_route": "generic.rule_scene",
+      "initial_family": "structural_progressive_representation",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "generic.rule_scene",
+      "final_family": "structural_progressive_representation",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-nm-sort-partition",
+      "group": "unsupported",
+      "archetype": "near_miss_gap",
+      "expected_family": "comparison_sort",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": "partition_recursive",
+      "canonical_prescribed": "comparison_sort.partition_recursive",
+      "result_ownership": "algorithmic",
+      "initial_route": null,
+      "initial_family": null,
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": true,
+          "reason_code": "gate_result_ownership"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": null,
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 2,
+        "http_requests": 2,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-nm-freevar-loop",
+      "group": "unsupported",
+      "archetype": "near_miss_gap",
+      "expected_family": "single_pass_scan",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": null,
+      "initial_family": null,
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": true,
+          "reason_code": "gate_result_ownership"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": null,
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 2,
+        "http_requests": 2,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-nm-interpolation",
+      "group": "unsupported",
+      "archetype": "near_miss_gap",
+      "expected_family": "interval_elimination",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": null,
+      "initial_family": null,
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": true,
+          "reason_code": "gate_result_ownership"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": null,
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 2,
+        "http_requests": 2,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-nm-threshold-kofn",
+      "group": "unsupported",
+      "archetype": "near_miss_gap",
+      "expected_family": "boolean_composition",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "rule_derivable",
+      "initial_route": "generic.rule_scene",
+      "initial_family": "boolean_composition",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": true,
+          "reason_code": "gate_result_ownership"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": null,
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 2,
+        "http_requests": 2,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-nm-hex-gap",
+      "group": "unsupported",
+      "archetype": "near_miss_gap",
+      "expected_family": "positional_representation",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": "positional_representation.non_binary_base",
+      "canonical_prescribed": "positional_representation.non_binary_base",
+      "result_ownership": "algorithmic",
+      "initial_route": "generic.rule_scene",
+      "initial_family": "generic_dual",
+      "reclassify_attempted": true,
+      "reclassify_result_route": "generic.rule_scene",
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "route_mechanism",
+          "fired": true,
+          "reason_code": "route_mechanism_family_mismatch"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": "route_mechanism_family_mismatch",
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-nm-weighted-shortest",
+      "group": "unsupported",
+      "archetype": "near_miss_gap",
+      "expected_family": "graph_traversal",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": null,
+      "initial_family": null,
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": true,
+          "reason_code": "gate_result_ownership"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": null,
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 2,
+        "http_requests": 2,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-nm-tcp-handshake",
+      "group": "unsupported",
+      "archetype": "near_miss_gap",
+      "expected_family": "layered_pdu_transform",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "rule_derivable",
+      "initial_route": null,
+      "initial_family": null,
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 2,
+        "http_requests": 2,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-cr-positional-recover",
+      "group": "specialized",
+      "archetype": "cross_family_recovery",
+      "expected_family": "positional_representation",
+      "expected_initial_route": "binary.decimal_to_binary",
+      "expected_final_route": "binary.decimal_to_binary",
+      "raw_prescribed": "positional_representation.binary_positional_weights",
+      "canonical_prescribed": "positional_representation.binary_positional_weights",
+      "result_ownership": "rule_derivable",
+      "initial_route": "binary.decimal_to_binary",
+      "initial_family": "positional_representation",
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": "binary.decimal_to_binary",
+      "final_family": "positional_representation",
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        }
+      ],
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null
+        }
+      ],
+      "first_attempt_ok": true,
+      "semantic_ok": true,
+      "envelope_status": "ok",
+      "envelope_error_code": null,
+      "envelope_failure_category": null,
+      "source": "composed",
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-cr-positional-fail",
+      "group": "unsupported",
+      "archetype": "cross_family_recovery",
+      "expected_family": "positional_representation",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": "positional_representation.non_binary_base",
+      "canonical_prescribed": "positional_representation.non_binary_base",
+      "result_ownership": "algorithmic",
+      "initial_route": "generic.rule_scene",
+      "initial_family": "generic_dual",
+      "reclassify_attempted": true,
+      "reclassify_result_route": "generic.rule_scene",
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "route_mechanism",
+          "fired": true,
+          "reason_code": "route_mechanism_family_mismatch"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": "route_mechanism_family_mismatch",
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 3,
+        "http_requests": 3,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    },
+    {
+      "case_id": "m16-ac-computation-leak",
+      "group": "unsupported",
+      "archetype": "authority_control",
+      "expected_family": "structural_progressive_representation",
+      "expected_initial_route": null,
+      "expected_final_route": null,
+      "raw_prescribed": null,
+      "canonical_prescribed": null,
+      "result_ownership": "algorithmic",
+      "initial_route": null,
+      "initial_family": null,
+      "reclassify_attempted": false,
+      "reclassify_result_route": null,
+      "final_route": null,
+      "final_family": null,
+      "selector_token_used": false,
+      "variant": null,
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": true,
+          "reason_code": "gate_result_ownership"
+        }
+      ],
+      "simulate_attempts": [],
+      "first_attempt_ok": null,
+      "semantic_ok": null,
+      "envelope_status": "unsupported",
+      "envelope_error_code": null,
+      "envelope_failure_category": "capability_gap",
+      "source": null,
+      "budget_delta": {
+        "logical_calls": 2,
+        "http_requests": 2,
+        "retry_requests": 0,
+        "transient_hits": 0
+      },
+      "via_production_pipeline": true,
+      "infra_error": null,
+      "detail": ""
+    }
+  ]
+}
