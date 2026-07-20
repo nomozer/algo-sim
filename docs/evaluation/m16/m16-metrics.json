@@ -1,0 +1,1533 @@
+{
+  "schema_version": "1",
+  "dataset_version": "m16-v1",
+  "run_label": "offline",
+  "run_meta": {
+    "git_commit": "59a5bbe2dc9ccd36630d4429ffd4104022bd53be",
+    "generated_at": "2026-07-20T03:26:47.420405+00:00"
+  },
+  "data": {
+    "micro": {
+      "analyze_mechanism_accuracy": {
+        "numerator": 14,
+        "denominator": 14,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "family_selection_accuracy": {
+        "numerator": 41,
+        "denominator": 41,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "variant_selection_accuracy": {
+        "numerator": 5,
+        "denominator": 5,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "initial_route_accuracy": {
+        "numerator": 40,
+        "denominator": 41,
+        "value": 0.975609756097561,
+        "band": "STRONG"
+      },
+      "final_route_accuracy": {
+        "numerator": 41,
+        "denominator": 41,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "valid_spec_first_attempt_rate": {
+        "numerator": 40,
+        "denominator": 41,
+        "value": 0.975609756097561,
+        "band": "STRONG"
+      },
+      "semantic_pass_rate": {
+        "numerator": 41,
+        "denominator": 41,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "false_refusal_rate": {
+        "numerator": 0,
+        "denominator": 41,
+        "value": 0.0,
+        "band": "WEAK"
+      },
+      "unsupported_recall": {
+        "numerator": 9,
+        "denominator": 9,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "unsupported_precision": {
+        "numerator": 9,
+        "denominator": 9,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "false_positive_simulation_rate": {
+        "numerator": 0,
+        "denominator": 9,
+        "value": 0.0,
+        "band": "WEAK"
+      },
+      "generic_fallback_leak_rate": {
+        "numerator": 0,
+        "denominator": 5,
+        "value": 0.0,
+        "band": "WEAK"
+      },
+      "reclassification_rate": {
+        "numerator": 2,
+        "denominator": 50,
+        "value": 0.04,
+        "band": "WEAK"
+      },
+      "route_recovery_success_rate": {
+        "numerator": 1,
+        "denominator": 1,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "concrete_envelope_integrity": {
+        "numerator": 41,
+        "denominator": 41,
+        "value": 1.0,
+        "band": "STRONG"
+      },
+      "production_evaluation_parity": {
+        "numerator": 50,
+        "denominator": 50,
+        "value": 1.0,
+        "band": "STRONG"
+      }
+    },
+    "macro": {
+      "analyze_mechanism_accuracy": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": [
+          "boolean_composition",
+          "graph_traversal",
+          "interval_elimination",
+          "layered_pdu_transform",
+          "single_pass_scan",
+          "structural_progressive_representation"
+        ]
+      },
+      "family_selection_accuracy": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "variant_selection_accuracy": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": [
+          "boolean_composition",
+          "graph_traversal",
+          "interval_elimination",
+          "layered_pdu_transform",
+          "positional_representation",
+          "single_pass_scan",
+          "structural_progressive_representation"
+        ]
+      },
+      "initial_route_accuracy": {
+        "value": 0.9791666666666666,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "final_route_accuracy": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "valid_spec_first_attempt_rate": {
+        "value": 0.9791666666666666,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "semantic_pass_rate": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "false_refusal_rate": {
+        "value": 0.0,
+        "band": "WEAK",
+        "excluded_families": []
+      },
+      "unsupported_recall": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "unsupported_precision": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "false_positive_simulation_rate": {
+        "value": 0.0,
+        "band": "WEAK",
+        "excluded_families": []
+      },
+      "generic_fallback_leak_rate": {
+        "value": 0.0,
+        "band": "WEAK",
+        "excluded_families": [
+          "boolean_composition",
+          "layered_pdu_transform",
+          "positional_representation"
+        ]
+      },
+      "reclassification_rate": {
+        "value": 0.03125,
+        "band": "WEAK",
+        "excluded_families": []
+      },
+      "route_recovery_success_rate": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": [
+          "boolean_composition",
+          "comparison_sort",
+          "graph_traversal",
+          "interval_elimination",
+          "layered_pdu_transform",
+          "single_pass_scan",
+          "structural_progressive_representation"
+        ]
+      },
+      "concrete_envelope_integrity": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": []
+      },
+      "production_evaluation_parity": {
+        "value": 1.0,
+        "band": "STRONG",
+        "excluded_families": []
+      }
+    },
+    "per_family": {
+      "analyze_mechanism_accuracy": {
+        "boolean_composition": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "comparison_sort": {
+          "numerator": 6,
+          "denominator": 6,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "interval_elimination": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "layered_pdu_transform": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "positional_representation": {
+          "numerator": 8,
+          "denominator": 8,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "structural_progressive_representation": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        }
+      },
+      "family_selection_accuracy": {
+        "boolean_composition": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 6,
+          "denominator": 6,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 13,
+          "denominator": 13,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "variant_selection_accuracy": {
+        "boolean_composition": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "comparison_sort": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "interval_elimination": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "layered_pdu_transform": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "positional_representation": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "single_pass_scan": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "structural_progressive_representation": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        }
+      },
+      "initial_route_accuracy": {
+        "boolean_composition": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 5,
+          "denominator": 6,
+          "value": 0.8333333333333334,
+          "band": "MODERATE"
+        },
+        "single_pass_scan": {
+          "numerator": 13,
+          "denominator": 13,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "final_route_accuracy": {
+        "boolean_composition": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 6,
+          "denominator": 6,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 13,
+          "denominator": 13,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "valid_spec_first_attempt_rate": {
+        "boolean_composition": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 5,
+          "denominator": 6,
+          "value": 0.8333333333333334,
+          "band": "MODERATE"
+        },
+        "single_pass_scan": {
+          "numerator": 13,
+          "denominator": 13,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "semantic_pass_rate": {
+        "boolean_composition": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 6,
+          "denominator": 6,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 13,
+          "denominator": 13,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "false_refusal_rate": {
+        "boolean_composition": {
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "comparison_sort": {
+          "numerator": 0,
+          "denominator": 5,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "graph_traversal": {
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "interval_elimination": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "layered_pdu_transform": {
+          "numerator": 0,
+          "denominator": 3,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "positional_representation": {
+          "numerator": 0,
+          "denominator": 6,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "single_pass_scan": {
+          "numerator": 0,
+          "denominator": 13,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "structural_progressive_representation": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0,
+          "band": "WEAK"
+        }
+      },
+      "unsupported_recall": {
+        "boolean_composition": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "unsupported_precision": {
+        "boolean_composition": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 2,
+          "denominator": 2,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "false_positive_simulation_rate": {
+        "boolean_composition": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "comparison_sort": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "graph_traversal": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "interval_elimination": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "layered_pdu_transform": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "positional_representation": {
+          "numerator": 0,
+          "denominator": 2,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "single_pass_scan": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "structural_progressive_representation": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        }
+      },
+      "generic_fallback_leak_rate": {
+        "boolean_composition": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "comparison_sort": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "graph_traversal": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "interval_elimination": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "layered_pdu_transform": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "positional_representation": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "single_pass_scan": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "structural_progressive_representation": {
+          "numerator": 0,
+          "denominator": 1,
+          "value": 0.0,
+          "band": "WEAK"
+        }
+      },
+      "reclassification_rate": {
+        "boolean_composition": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "comparison_sort": {
+          "numerator": 0,
+          "denominator": 6,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "graph_traversal": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "interval_elimination": {
+          "numerator": 0,
+          "denominator": 5,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "layered_pdu_transform": {
+          "numerator": 0,
+          "denominator": 4,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "positional_representation": {
+          "numerator": 2,
+          "denominator": 8,
+          "value": 0.25,
+          "band": "WEAK"
+        },
+        "single_pass_scan": {
+          "numerator": 0,
+          "denominator": 14,
+          "value": 0.0,
+          "band": "WEAK"
+        },
+        "structural_progressive_representation": {
+          "numerator": 0,
+          "denominator": 5,
+          "value": 0.0,
+          "band": "WEAK"
+        }
+      },
+      "route_recovery_success_rate": {
+        "boolean_composition": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "comparison_sort": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "graph_traversal": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "interval_elimination": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "layered_pdu_transform": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "positional_representation": {
+          "numerator": 1,
+          "denominator": 1,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        },
+        "structural_progressive_representation": {
+          "numerator": 0,
+          "denominator": 0,
+          "value": null,
+          "band": "N/A"
+        }
+      },
+      "concrete_envelope_integrity": {
+        "boolean_composition": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 3,
+          "denominator": 3,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 6,
+          "denominator": 6,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 13,
+          "denominator": 13,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      },
+      "production_evaluation_parity": {
+        "boolean_composition": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "comparison_sort": {
+          "numerator": 6,
+          "denominator": 6,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "graph_traversal": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "interval_elimination": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "layered_pdu_transform": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "positional_representation": {
+          "numerator": 8,
+          "denominator": 8,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "single_pass_scan": {
+          "numerator": 14,
+          "denominator": 14,
+          "value": 1.0,
+          "band": "STRONG"
+        },
+        "structural_progressive_representation": {
+          "numerator": 5,
+          "denominator": 5,
+          "value": 1.0,
+          "band": "STRONG"
+        }
+      }
+    },
+    "retry_channels": {
+      "semantic_retries_total": 1,
+      "semantic_retries_avg": 0.02,
+      "transient_retries_total": 0,
+      "transient_retries_avg": 0.0,
+      "reclassify_count_total": 2,
+      "reclassify_count_avg": 0.04
+    },
+    "confusion_matrix": {
+      "algorithm.find_max": {
+        "algorithm.find_max": 2
+      },
+      "algorithm.find_min": {
+        "algorithm.find_min": 3
+      },
+      "algorithm.sum_if": {
+        "algorithm.sum_if": 2
+      },
+      "algorithm.count_if": {
+        "algorithm.count_if": 2
+      },
+      "algorithm.linear_search": {
+        "algorithm.linear_search": 2
+      },
+      "algorithm.binary_search": {
+        "algorithm.binary_search": 4
+      },
+      "algorithm.bubble_sort": {
+        "algorithm.bubble_sort": 3
+      },
+      "algorithm.insertion_sort": {
+        "algorithm.insertion_sort": 2
+      },
+      "algorithm.scan": {
+        "algorithm.scan": 2
+      },
+      "logic.and_gate": {
+        "logic.and_gate": 2
+      },
+      "binary.decimal_to_binary": {
+        "binary.decimal_to_binary": 6
+      },
+      "network.packet_routing": {
+        "network.packet_routing": 3
+      },
+      "network.protocol_encapsulation": {
+        "network.protocol_encapsulation": 3
+      },
+      "generic.rule_scene": {
+        "generic.rule_scene": 5
+      },
+      "expected_refusal": {
+        "refused": 9
+      }
+    },
+    "failure_distribution": {
+      "GATE_MECHANISM_OWNERSHIP": 2,
+      "INITIAL_FAMILY_SELECTION_ERROR": 1,
+      "ROUTE_MECHANISM_FAMILY_MISMATCH": 2
+    },
+    "applicability_report": {
+      "analyze_mechanism_accuracy": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case có m16.analyze_mechanism_expected khác None",
+        "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-generic-reveal",
+          "m16-generic-move",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-and3-generic",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
+          "m16-vb-web-static",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-ac-computation-leak",
+          "m16-ac-representation-ok"
+        ]
+      },
+      "family_selection_accuracy": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported (group specialized|generic) có expected_family",
+        "excluded_case_ids": [
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak"
+        ]
+      },
+      "variant_selection_accuracy": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported có expected_initial_route == 'algorithm.comparison_sort'",
+        "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-binary-explicit",
+          "m16-binary-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-generic-reveal",
+          "m16-generic-move",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-and3-generic",
+          "m16-vb-binary-zero",
+          "m16-vb-binary-255",
+          "m16-vb-binary-overrange",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
+          "m16-vb-web-static",
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-recover",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak",
+          "m16-ac-representation-ok"
+        ]
+      },
+      "initial_route_accuracy": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported (group specialized|generic)",
+        "excluded_case_ids": [
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak"
+        ]
+      },
+      "final_route_accuracy": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported",
+        "excluded_case_ids": [
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak"
+        ]
+      },
+      "valid_spec_first_attempt_rate": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported có ít nhất 1 simulate_attempt",
+        "excluded_case_ids": [
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak"
+        ]
+      },
+      "semantic_pass_rate": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported có semantic_ok khác None",
+        "excluded_case_ids": [
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak"
+        ]
+      },
+      "false_refusal_rate": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case supported",
+        "excluded_case_ids": [
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak"
+        ]
+      },
+      "unsupported_recall": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case group == 'unsupported'",
+        "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-bubble-explicit",
+          "m16-bubble-paraphrase",
+          "m16-insertion-explicit",
+          "m16-insertion-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-binary-explicit",
+          "m16-binary-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-generic-reveal",
+          "m16-generic-move",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-sort-duplicates",
+          "m16-vb-and3-generic",
+          "m16-vb-binary-zero",
+          "m16-vb-binary-255",
+          "m16-vb-binary-overrange",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
+          "m16-vb-web-static",
+          "m16-cr-positional-recover",
+          "m16-ac-representation-ok"
+        ]
+      },
+      "unsupported_precision": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case bị refused (envelope_status == 'unsupported')",
+        "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-bubble-explicit",
+          "m16-bubble-paraphrase",
+          "m16-insertion-explicit",
+          "m16-insertion-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-binary-explicit",
+          "m16-binary-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-generic-reveal",
+          "m16-generic-move",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-sort-duplicates",
+          "m16-vb-and3-generic",
+          "m16-vb-binary-zero",
+          "m16-vb-binary-255",
+          "m16-vb-binary-overrange",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
+          "m16-vb-web-static",
+          "m16-cr-positional-recover",
+          "m16-ac-representation-ok"
+        ]
+      },
+      "false_positive_simulation_rate": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case group == 'unsupported'",
+        "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-bubble-explicit",
+          "m16-bubble-paraphrase",
+          "m16-insertion-explicit",
+          "m16-insertion-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-binary-explicit",
+          "m16-binary-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-generic-reveal",
+          "m16-generic-move",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-sort-duplicates",
+          "m16-vb-and3-generic",
+          "m16-vb-binary-zero",
+          "m16-vb-binary-255",
+          "m16-vb-binary-overrange",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
+          "m16-vb-web-static",
+          "m16-cr-positional-recover",
+          "m16-ac-representation-ok"
+        ]
+      },
+      "generic_fallback_leak_rate": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case group == 'unsupported' có m16.algorithmic_request == True",
+        "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-bubble-explicit",
+          "m16-bubble-paraphrase",
+          "m16-insertion-explicit",
+          "m16-insertion-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-binary-explicit",
+          "m16-binary-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-generic-reveal",
+          "m16-generic-move",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-sort-duplicates",
+          "m16-vb-and3-generic",
+          "m16-vb-binary-zero",
+          "m16-vb-binary-255",
+          "m16-vb-binary-overrange",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
+          "m16-vb-web-static",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-recover",
+          "m16-cr-positional-fail",
+          "m16-ac-representation-ok"
+        ]
+      },
+      "reclassification_rate": {
+        "rule": "product case (không infra_error, không internal-fixture route)",
+        "excluded_case_ids": []
+      },
+      "route_recovery_success_rate": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ case reclassify_attempted có m16.recovery_route_exists == True",
+        "excluded_case_ids": [
+          "m16-findmax-explicit",
+          "m16-findmax-paraphrase",
+          "m16-findmin-explicit",
+          "m16-findmin-paraphrase",
+          "m16-sumif-explicit",
+          "m16-sumif-paraphrase",
+          "m16-countif-explicit",
+          "m16-countif-paraphrase",
+          "m16-linear-explicit",
+          "m16-linear-paraphrase",
+          "m16-binsearch-explicit",
+          "m16-binsearch-paraphrase",
+          "m16-bubble-explicit",
+          "m16-bubble-paraphrase",
+          "m16-insertion-explicit",
+          "m16-insertion-paraphrase",
+          "m16-scan-explicit",
+          "m16-scan-paraphrase",
+          "m16-and-explicit",
+          "m16-and-paraphrase",
+          "m16-binary-explicit",
+          "m16-binary-paraphrase",
+          "m16-routing-explicit",
+          "m16-routing-paraphrase",
+          "m16-encap-explicit",
+          "m16-encap-paraphrase",
+          "m16-generic-reveal",
+          "m16-generic-move",
+          "m16-vb-scan-optional",
+          "m16-vb-binsearch-absent",
+          "m16-vb-binsearch-unsorted",
+          "m16-vb-sort-duplicates",
+          "m16-vb-and3-generic",
+          "m16-vb-binary-zero",
+          "m16-vb-binary-255",
+          "m16-vb-binary-overrange",
+          "m16-vb-routing-multipath",
+          "m16-vb-decapsulation",
+          "m16-vb-web-static",
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak",
+          "m16-ac-representation-ok"
+        ]
+      },
+      "concrete_envelope_integrity": {
+        "rule": "product case (không infra_error, không internal-fixture route) ∧ mọi ok envelope",
+        "excluded_case_ids": [
+          "m16-nm-sort-partition",
+          "m16-nm-freevar-loop",
+          "m16-nm-interpolation",
+          "m16-nm-threshold-kofn",
+          "m16-nm-hex-gap",
+          "m16-nm-weighted-shortest",
+          "m16-nm-tcp-handshake",
+          "m16-cr-positional-fail",
+          "m16-ac-computation-leak"
+        ]
+      },
+      "production_evaluation_parity": {
+        "rule": "mọi evaluated case (KHÔNG lọc product-case — bắt cả infra_error)",
+        "excluded_case_ids": []
+      },
+      "retry_channels": {
+        "rule": "product case (không infra_error, không internal-fixture route)",
+        "excluded_case_ids": []
+      }
+    },
+    "hard_correctness": {
+      "false_positive_simulation": "0/9",
+      "generic_fallback_leak": "0/5",
+      "concrete_envelope_integrity": "41/41",
+      "production_evaluation_parity": "50/50",
+      "selector_token_in_envelope": false,
+      "frozen_fingerprint_ok": true
+    }
+  }
+}

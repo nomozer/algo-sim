@@ -1,0 +1,86 @@
+{
+  "schema_version": "1",
+  "dataset_version": "m16-v1",
+  "run_label": "offline",
+  "run_meta": {
+    "git_commit": "59a5bbe2dc9ccd36630d4429ffd4104022bd53be",
+    "generated_at": "2026-07-20T03:26:47.420405+00:00"
+  },
+  "data": {
+    "cases": [
+      {
+        "case_id": "m16-nm-sort-partition",
+        "categories": [
+          "GATE_MECHANISM_OWNERSHIP"
+        ],
+        "outcome_matches_expectation": true,
+        "injected": false
+      },
+      {
+        "case_id": "m16-nm-hex-gap",
+        "categories": [
+          "GATE_MECHANISM_OWNERSHIP"
+        ],
+        "outcome_matches_expectation": true,
+        "injected": false
+      },
+      {
+        "case_id": "m16-cr-positional-recover",
+        "categories": [
+          "INITIAL_FAMILY_SELECTION_ERROR",
+          "ROUTE_MECHANISM_FAMILY_MISMATCH"
+        ],
+        "outcome_matches_expectation": true,
+        "injected": false
+      },
+      {
+        "case_id": "m16-cr-positional-fail",
+        "categories": [
+          "ROUTE_MECHANISM_FAMILY_MISMATCH"
+        ],
+        "outcome_matches_expectation": true,
+        "injected": false
+      }
+    ],
+    "injected_proofs": [
+      {
+        "proof": "false_refusal",
+        "test_names": [
+          "test_fault_false_refusal_bi_metric_8_bat"
+        ],
+        "metric_caught": "metric_false_refusal_rate (#8)",
+        "categories_caught": [
+          "FALSE_REFUSAL"
+        ],
+        "injected": true,
+        "description": "Case supported (item.m16 explicit_positive) bị script classify trả unsupported giả ('từ chối oan') — metric_false_refusal_rate bắt numerator=1/denominator=1; classify_failures gắn FALSE_REFUSAL."
+      },
+      {
+        "proof": "generic_fallback_leak",
+        "test_names": [
+          "test_fault_leak_bi_computation_gate_chan",
+          "test_fault_leak_metric_12_nhay_khi_gate_hut"
+        ],
+        "metric_caught": "metric_generic_fallback_leak_rate (#12)",
+        "categories_caught": [
+          "GENERIC_FALLBACK_LEAK",
+          "FALSE_POSITIVE_SIMULATION"
+        ],
+        "injected": true,
+        "description": "Nhánh (i): item unsupported-algorithmic script classify→generic.rule_scene + analysis result_ownership=algorithmic — computation gate PRODUCTION THẬT chặn (fired), record bị refused → leak numerator=0 NHỜ GATE, không phải vacuous (assert gate 'computation' fired). Nhánh (ii): record tổng hợp DỰNG TAY (không qua pipeline, mô phỏng gate hụt) có envelope ok generic.rule_scene cho case unsupported-algorithmic → metric_generic_fallback_leak_rate bắt numerator=1, chứng minh metric NHẠY khi outcome bất thường thật sự xảy ra."
+      },
+      {
+        "proof": "transient_provider_error",
+        "test_names": [
+          "test_fault_transient_tach_kenh_retry"
+        ],
+        "metric_caught": "metric_retry_channels (#15) + classify_failures",
+        "categories_caught": [
+          "TRANSIENT_PROVIDER_ERROR"
+        ],
+        "injected": true,
+        "description": "budget_delta giả {'retry_requests':2,'transient_hits':1} trên record tổng hợp (2 simulate_attempt = 1 semantic retry) — metric_retry_channels tách ĐÚNG hai kênh (semantic_retries_total=1, transient_retries_total=2, không trộn); classify_failures gắn cờ TRANSIENT_PROVIDER_ERROR khi transient_hits>0, KHÔNG gắn trên record sạch (đối chứng âm cùng test)."
+      }
+    ]
+  }
+}

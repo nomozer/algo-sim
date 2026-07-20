@@ -1,0 +1,140 @@
+{
+  "schema_version": "1",
+  "dataset_version": "m16-v1",
+  "run_label": "offline",
+  "run_meta": {
+    "git_commit": "59a5bbe2dc9ccd36630d4429ffd4104022bd53be",
+    "generated_at": "2026-07-20T03:26:47.420405+00:00"
+  },
+  "data": {
+    "per_target": {
+      "algorithm.binary_search": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 4
+      },
+      "algorithm.bubble_sort": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 3
+      },
+      "algorithm.count_if": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 2
+      },
+      "algorithm.find_max": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 2
+      },
+      "algorithm.find_min": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 3
+      },
+      "algorithm.insertion_sort": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 2
+      },
+      "algorithm.linear_search": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 2
+      },
+      "algorithm.scan": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 2
+      },
+      "algorithm.sum_if": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 2
+      },
+      "binary.decimal_to_binary": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 6
+      },
+      "generic.rule_scene": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 5
+      },
+      "logic.and_gate": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 2
+      },
+      "network.packet_routing": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 3
+      },
+      "network.protocol_encapsulation": {
+        "explicit": 1,
+        "paraphrase": 1,
+        "total_positive": 3
+      }
+    },
+    "per_family": {
+      "boolean_composition": {
+        "valid_boundary": 1,
+        "near_miss": 1,
+        "positive": 3
+      },
+      "comparison_sort": {
+        "valid_boundary": 1,
+        "near_miss": 1,
+        "positive": 5
+      },
+      "graph_traversal": {
+        "valid_boundary": 1,
+        "near_miss": 1,
+        "positive": 3
+      },
+      "interval_elimination": {
+        "valid_boundary": 2,
+        "near_miss": 1,
+        "positive": 4
+      },
+      "layered_pdu_transform": {
+        "valid_boundary": 1,
+        "near_miss": 1,
+        "positive": 3
+      },
+      "positional_representation": {
+        "valid_boundary": 3,
+        "near_miss": 1,
+        "positive": 6
+      },
+      "single_pass_scan": {
+        "valid_boundary": 1,
+        "near_miss": 1,
+        "positive": 13
+      },
+      "structural_progressive_representation": {
+        "valid_boundary": 1,
+        "near_miss": 1,
+        "positive": 4
+      }
+    },
+    "per_archetype": {
+      "explicit_positive": 14,
+      "paraphrase_positive": 14,
+      "valid_boundary": 11,
+      "near_miss_gap": 7,
+      "cross_family_recovery": 2,
+      "authority_control": 2
+    },
+    "locks": {
+      "targets_covered": "14/14",
+      "families_boundary": "8/8",
+      "families_near_miss": "8/8",
+      "live_eligible_count": 24,
+      "total_cases": 50
+    }
+  }
+}
