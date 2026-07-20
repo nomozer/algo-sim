@@ -303,8 +303,24 @@ Căn cứ (đối chiếu Mục lục 5 SGK KNTT ở §1 — không tìm thấy 
 | `capability` | phủ hình thức mô phỏng (4 case) — **sorting**, L3, data-flow | vá lỗ hổng bằng chứng |
 | `cross_domain` | **cùng năng lực, khác miền** (3 case) | bằng chứng tái sử dụng |
 | `thesis` | **flagship 12 case** | mỗi case chứng minh một tính chất RIÊNG |
+| `m16` | **50 case catalog-wide (M16)** — `datasets/m16_catalog.py`, mỗi case mang `M16Expectation` máy-đọc (expected route/gate/error_code/archetype) | admission KÉP (6 câu cũ + `check_m16_admission`); coverage lock ĐẾM THẬT; frozen fingerprint bảo vệ 30 case lịch sử |
 
 Chạy: `ALLOW_LIVE_AI=1 python -m app.evaluation.live --dataset thesis --suite full`
+
+### §9b — M16: representative public-catalog coverage (COMPLETE, 2026-07-20)
+
+- **14/14 AI-reachable public target** có CẢ explicit positive lẫn **paraphrase
+  positive** (không nêu tên thuật toán khi cơ chế mô tả tự nhiên được);
+- **8/8 capability family** có CẢ **valid-boundary** lẫn **near-miss/gap**
+  coverage (near-miss của structural_progressive qua authority-control
+  computation-leak, khai tường minh trong lock);
+- **Live suite `m16_catalog_live`** phủ **14 positive** (đủ 14 target) +
+  **8 near-miss** (đủ 8 family) + **2 recovery-control** — 24/24 đúng kỳ vọng,
+  66/80 HTTP, chi tiết `docs/evaluation/m16/` + CURRENT_STATE §1/§2;
+- Đây là **representative public catalog coverage trong phạm vi đề tài** —
+  targeted catalog-wide evaluation, KHÔNG phải bằng chứng bao phủ toàn bộ
+  chương trình Tin học THPT hay mọi cách diễn đạt tự nhiên (limitation
+  CURRENT_STATE §5-M16).
 
 ### LUẬT KẾT NẠP (thực thi bằng `datasets.check_admission`, khoá bằng test)
 
