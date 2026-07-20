@@ -351,17 +351,137 @@ Chạy pipeline thật + metrics. Exports: `evaluate_item`, `run_eval`, `select_
 Notes: `gap_gate_recall` là metric **song song** (M7.14T) — không đổi cách tính
 metric cũ. `_simulate_with_metrics` **mirror** `stage_simulate` (rủi ro drift).
 
+### `evaluation/m16_schema.py` · Change impact: offline
+M16 Task 1 — lớp expectation có cấu trúc cho case đánh giá M16 + khoá integrity
+nội dung dataset. Exports: `M16_DATASET_VERSION`, `M16Archetype` (enum ĐÓNG, 6
+giá trị), `M16Expectation`, `check_m16_admission`, `frozen_dataset_fingerprint`.
+Tests: `test_m16_schema.py`.
+Notes: gắn lên `EvalItem` qua trường `m16` (kiểu khai `object | None` bên
+`dataset.py` để tránh vòng import — chiều import CHỈ MỘT chiều: m16_schema →
+dataset, KHÔNG ngược lại). `check_m16_admission` import trễ
+`datasets.check_admission` bên TRONG hàm (phá vòng
+`datasets→m16_catalog→m16_schema→datasets`, xem docstring). `frozen_dataset_
+fingerprint()` khoá SHA-256 canonical JSON 30 case DATASET gốc bằng hằng PIN
+trong test — DATASET đó KHÔNG BAO GIỜ được sửa nội dung.
+
+### `evaluation/m16_record.py` · Change impact: offline
+M16 Task 2 — builder `M16CaseRecord`: quan sát có cấu trúc MỘT case đánh giá,
+dẫn xuất TẤT ĐỊNH từ `AttemptObserver` + envelope `run_pipeline` THẬT (bất
+biến #22) — KHÔNG tái dựng stage, KHÔNG đoán khi thiếu event. Exports:
+`M16CaseRecord` (dataclass, ~27 field + `detail` mặc định `""`),
+`build_m16_record`, `family_of_route`.
+Tests: `test_m16_record.py`.
+Notes: `family_of_route(route_id, expected_family=None)` suy family canonical
+của MỘT route (selector token HOẶC concrete id trong CATALOG); route mang
+nhiều `family_membership` (hiện chỉ `generic.rule_scene`) mà không có
+`expected_family` tham chiếu → trả `"generic_dual"` (KHÔNG đoán bừa).
+`harness.evaluate_item` (M16 Task 2) nhận tham số optional `record_sink` —
+truyền list thì append một `M16CaseRecord` SONG SONG, không đổi `ItemResult`/
+metric cũ một bit.
+
+### `evaluation/m16_metrics.py` · Change impact: offline
+M16 Task 3 — 17 metric tỉ lệ (bảng công thức KHOÁ theo brief §4) + failure
+taxonomy 15 category (structured-only, multi-label) + aggregation (micro/
+per-family/macro/confusion-matrix/failure-distribution/applicability-report)
+trên `M16CaseRecord` — lớp SONG SONG với `EvalReport.metrics()`, KHÔNG
+import/sửa `harness.py`. Exports: `MetricValue`, `RetryChannels`,
+`quality_band`, 16 hàm `metric_<name>(records, m16_by_case=None) -> MetricValue`
+(vd `metric_final_route_accuracy`, `metric_unsupported_recall`…),
+`metric_retry_channels`, `classify_failures`, `failure_distribution`,
+`confusion_matrix`, `applicability_report`, `MetricAggregate`,
+`AggregateResult`, `aggregate(records, run_label, m16_by_case=None)`.
+Tests: `test_m16_metrics.py`.
+Notes: mọi metric tỉ lệ (+ #15 retry_channels) gate qua "product case" (không
+`infra_error`, không route `ReachabilityLevel.INTERNAL_FIXTURE`) TRỪ #17
+`production_evaluation_parity` (đo trên MỌI case CÓ CHỦ Ý — lọc product-case
+sẽ tự-triệt-tiêu đúng tín hiệu nó phải bắt). `aggregate()` chỉ nhận
+`run_label ∈ {"offline","live_baseline","live_postfix"}` (khác domain giá trị
+với `live.py --label {baseline,postfix}` — hai khái niệm riêng, không lẫn).
+
+### `evaluation/m16_offline_scripts.py` · Change impact: offline
+M16 Task 5 — kịch bản provider OFFLINE (module DATA THUẦN, không import
+pytest) cho TOÀN BỘ pool m16 (50 case): `CaseScript` (analysis/classify-seq/
+simulate-seq đúng schema production) + `SCRIPTS` (map case_id → CaseScript) +
+factory `build_scripted_provider` (async fake `call_gemini`, dispatch theo
+marker trong `user_text`). Exports: `CaseScript`, `SCRIPTS`,
+`build_scripted_provider`.
+Tests: `test_m16_offline_eval.py` (chạy qua `harness.evaluate_item` →
+`run_pipeline` THẬT, bất biến #22 — script chỉ cấp analysis/classify/config,
+validator thật chấm).
+Notes: đường đi CỐ ĐỊNH cho case đa-nhánh ghi rõ trong docstring module (vd
+`m16-nm-hex-gap` nhánh A gate ownership, `m16-cr-positional-fail` nhánh (a)
+fail-closed, `m16-vb-binary-overrange` phủ nhánh retry) — đối chiếu notes
+từng case ở `datasets/m16_catalog.py`, KHÔNG đoán.
+
+### `evaluation/m16_artifacts.py` · Change impact: offline
+M16 Task 6 — builder THUẦN cho 5 artifact JSON máy-đọc (`docs/evaluation/m16/`),
+mọi hàm trả dict/list JSON-serializable, KHÔNG side-effect file. Exports:
+`build_case_matrix`, `build_coverage_report`, `build_offline_results`,
+`build_metrics_artifact`, `build_failure_ledger`, `run_offline_and_build_all()`
+(chạy TOÀN pool m16 qua `evaluate_item`/`run_pipeline` thật với provider
+scripted — Task 5 — monkeypatch THỦ CÔNG `pipeline.call_gemini`, tự khôi phục
+trong `finally`, chạy được cả trong pytest lẫn ngoài pytest).
+Tests: `test_m16_artifacts.py` (sync-lock so khớp JSON đã commit).
+Notes: `_outcome_matches_expectation` (private, module-level) là luật DUY
+NHẤT xác định "outcome khớp expectation" (unsupported↔refused;
+supported↔ok+final_route đúng) — M16 Task 7 (`live.py --resume-from`) IMPORT
+TRỰC TIẾP hàm này để tái dùng nguyên văn, không phát minh luật mới (không có
+vòng import: module này không import `live.py`).
+
+### `evaluation/datasets/m16_catalog.py` · Change impact: offline
+M16 Task 4 — pool đánh giá ĐẦU-CUỐI toàn danh mục: 50 case phủ 14 concrete
+target / 8 capability family, mỗi case gắn `m16=M16Expectation` qua 6
+archetype (`explicit_positive`/`paraphrase_positive`/`valid_boundary`/
+`near_miss_gap`/`cross_family_recovery`/`authority_control`). Exports:
+`M16_ITEMS`, `M16_REFERENCED_CASES` (registry case pool CŨ tham chiếu vào
+coverage matrix M16 — không chép lại text đề).
+Tests: `test_m16_dataset.py`.
+Notes: đăng ký vào `POOLS["m16"]`/`NEW_POOLS["m16"]` ở CUỐI
+`datasets/__init__.py` (import đặt SAU khi `check_admission` đã định nghĩa —
+phá vòng `m16_catalog→m16_schema→datasets.check_admission`, xem comment tại
+chỗ). Mỗi case gắn tag `"m16_offline"` (luôn có) + `"m16_catalog_live"` (CHỈ
+khi `m16.live_eligible`) — `live.py` đăng ký hai suite cùng tên qua
+`select_suite`. KHÔNG sửa `dataset.py` (30 case đóng băng) hay 4 pool cũ.
+
+### `scripts/generate_m16_artifacts.py` → `docs/evaluation/m16/*.json` (M16) · Change impact: offline
+Generator chạy TAY: gọi `m16_artifacts.run_offline_and_build_all()` (chạy
+TRONG-PROCESS toàn pool 50 case qua production pipeline + provider scripted,
+KHÔNG mạng thật) rồi ghi 5 file JSON committed (`m16-case-matrix.json`,
+`m16-coverage-report.json`, `m16-offline-results.json`, `m16-metrics.json`,
+`m16-failure-ledger.json`), mỗi file bọc `{schema_version, dataset_version,
+run_label:"offline", run_meta:{git_commit, generated_at}, data}`. Cách chạy:
+`cd backend && .venv/Scripts/python scripts/generate_m16_artifacts.py`
+(Windows: set `PYTHONIOENCODING=utf-8` trước nếu console lỗi encode tiếng
+Việt). Sync-lock: `test_m16_artifacts.py` — sửa pool/scripts/metric M16 mà
+quên chạy lại generator → test ĐỎ (cùng anti-pattern #1 như
+`generate_dsl_contract.py`/`generate_capability_descriptors.py`).
+
 ### `evaluation/live.py` · Change impact: full live
 CLI live: **bắt buộc `ALLOW_LIVE_AI=1`**, `--suite <tên>` (xem hằng `SUITES` —
-tại M15: `smoke`/`full`/`boundary`/`smoke_v2`/`flagship`/`L3`/`system_flow`/
-`m10_route`/`m11_compose`/`m12_scan`/`m13_soundness`/`m14_sorting`/**`m15_wave1`**),
-`--case <id>` (M15 T11 hotfix — rerun CÓ MỤC TIÊU 1 case qua id, không chạy lại
-cả suite), `--max-cases`, `--max-api-calls`, `--max-retries`. Tests: `test_live_budget.py`.
+tại M16: `smoke`/`full`/`boundary`/`smoke_v2`/`flagship`/`L3`/`system_flow`/
+`m10_route`/`m11_compose`/`m12_scan`/`m13_soundness`/`m14_sorting`/`m15_wave1`/
+**`m16_offline`/`m16_catalog_live`**), `--case <id>` (M15 T11 hotfix — rerun CÓ
+MỤC TIÊU 1 case qua id, không chạy lại cả suite), `--max-cases`,
+`--max-api-calls`, `--max-retries`, (M16 Task 7) **`--label {baseline,postfix}`**
+(mặc định `baseline` — chỉ ghi vào `trace["run_label"]`, không đổi cách chạy),
+**`--out <path>`** (ghi trace JSON: `M16CaseRecord` mỗi case qua
+`evaluate_item(record_sink=...)` + budget cuối run + `run_meta`), **`--resume-from
+<path>`** (nạp trace cũ, bỏ qua case `status_final=="ok"` VÀ khớp expectation —
+tái dùng nguyên `m16_artifacts._outcome_matches_expectation`, KHÔNG chế luật
+mới — chạy lại phần còn lại, `trace["budget_cumulative"]` cộng dồn budget cũ +
+mới). Tests: `test_live_budget.py`, (M16) `test_m16_live_runner.py`.
 Notes (M15): suite `m15_wave1` (`datasets/capability.py`, tag `"m15_wave1"`) —
 4 case W1 (hex-gap · octal-gap · binary-positive · binsearch-unsorted) + 2 case
 `m14_sorting` cũ tái dùng tag (sorting-paraphrase · selection-near-miss); live
 đã chạy tại Task 11 (nhật ký `CURRENT_STATE.md` §1: run 1 = 16 HTTP 5/6, rerun
 hotfix = 3 HTTP 1/1, tổng 19/20, 0 retry, 0 transient).
+Notes (M16 Task 7): 3 cờ mới KHÔNG đổi hành vi khi không truyền — đường không
+cờ vẫn gọi `harness.run_eval` GỐC nguyên văn. `harness.py` ngoài phạm vi sửa
+của Task 7 (`run_eval` không có tham số `record_sink`) nên khi cần trace,
+`live.py` tự lặp qua `evaluate_item` (helper nội bộ `_run_eval_with_records` —
+bản sao TỐI THIỂU vòng lặp `run_eval`, chỉ nối thêm `record_sink`) thay vì gọi
+`run_eval`. Live vẫn **PENDING APPROVAL** — Task 7 chỉ mở khả năng chạy
+(trace/resume/label), chưa có run thật nào.
 
 ### `main.py` · Change impact: offline (trừ khi đổi CACHE_VERSION/pipeline)
 FastAPI: `POST /api/analyze`, `POST /api/edit`, `POST /api/explain`,
