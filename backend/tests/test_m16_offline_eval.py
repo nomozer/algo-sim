@@ -90,6 +90,10 @@ def test_hard_correctness(monkeypatch):
     # (b) không rò rỉ generic-fallback cho đề đòi thuật toán
     leak = MM.metric_generic_fallback_leak_rate(records, m16)
     assert leak.numerator == 0, f"generic_fallback_leak numerator={leak.numerator}"
+    # Review Task 5 Minor: mẫu số phải > 0 — nếu pool mất hết case
+    # unsupported-algorithmic thì leak=0 chỉ là đúng-rỗng (vacuous), không phải
+    # bằng chứng.
+    assert leak.denominator > 0, "leak denominator rỗng — hard-correctness thành vacuous"
     # (c) mọi ok-envelope là CONCRETE id trong CATALOG, KHÔNG token selector
     integ = MM.metric_concrete_envelope_integrity(records, m16)
     assert integ.value == 1.0, f"concrete_envelope_integrity={integ}"
