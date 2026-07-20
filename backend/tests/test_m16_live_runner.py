@@ -205,6 +205,48 @@ def test_resume_bo_case_ok_giu_case_fail(monkeypatch, tmp_path):
     assert set(trace["budget_cumulative"]) == {"logical_calls", "http_requests", "retry_requests", "transient_hits"}
 
 
+def test_resume_bo_ca_case_unsupported_bi_tu_choi_dung(monkeypatch, tmp_path):
+    """Review Task 7 (Important): case group="unsupported" bị TỪ CHỐI ĐÚNG
+    (status_final=="refused", khớp expectation) cũng PHẢI được skip khi
+    --resume-from — gate literal status_final=="ok" cũ khiến 9/50 case
+    unsupported của pool m16 luôn chạy lại, đốt budget live vô ích."""
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-test")
+
+    # Vòng 1: a-and OK-khớp; a-packet đóng vai case unsupported bị từ chối ĐÚNG.
+    round1 = {
+        "a-and": _rec("a-and", final_route="logic.and_gate", expected_final_route="logic.and_gate"),
+        "a-packet": _rec(
+            "a-packet", group="unsupported", envelope_status="unsupported",
+            final_route=None, expected_final_route=None,
+        ),
+    }
+    calls1: list[str] = []
+    monkeypatch.setattr(live, "evaluate_item", _fake_evaluate_item(round1, calls1))
+    old_path = tmp_path / "old.json"
+    args1 = live._parse_args(["--suite", "smoke", "--max-cases", "2", "--out", str(old_path)])
+    assert asyncio.run(live._main(args1)) == 0
+    assert calls1 == SMOKE_2
+    old_trace = json.loads(old_path.read_text(encoding="utf-8"))
+    a_packet_old = next(c for c in old_trace["cases"] if c["case_id"] == "a-packet")
+    assert a_packet_old["status_final"] == "refused"  # tiền đề của test
+
+    # Vòng 2: resume — CẢ HAI đều khớp expectation → không case nào chạy lại
+    # (bảng round2 rỗng: lỡ gọi case nào sẽ KeyError ngay).
+    calls2: list[str] = []
+    monkeypatch.setattr(live, "evaluate_item", _fake_evaluate_item({}, calls2))
+    new_path = tmp_path / "new.json"
+    args2 = live._parse_args([
+        "--suite", "smoke", "--max-cases", "2",
+        "--resume-from", str(old_path), "--out", str(new_path),
+    ])
+    assert asyncio.run(live._main(args2)) == 0
+    assert calls2 == []
+
+    trace = json.loads(new_path.read_text(encoding="utf-8"))
+    kept = {c["case_id"]: c["status_final"] for c in trace["cases"]}
+    assert kept == {"a-and": "ok", "a-packet": "refused"}  # giữ nguyên bản ghi cũ
+
+
 def test_resume_khong_co_trace_cu_thi_chay_lai_ca_hai(monkeypatch, tmp_path):
     """Case KHÔNG có trong trace cũ (id lạ/trace rỗng) → coi như chưa chạy,
     PHẢI chạy lại — không tự ý bỏ qua."""

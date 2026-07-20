@@ -162,12 +162,16 @@ def _load_trace(path: str) -> dict | None:
 
 
 def _entry_matches_expectation(entry: dict) -> bool:
-    """"đã OK + khớp expectation" (brief Phụ lục) — dựng lại `M16CaseRecord`
-    TỪ dict đã json round-trip rồi gọi ĐÚNG luật `_outcome_matches_expectation`
-    của m16_artifacts (không phát minh tiêu chí mới). Entry hỏng/thiếu field
-    (schema trace cũ lệch) → coi như CHƯA khớp (an toàn: chạy lại thay vì bỏ
-    sót)."""
-    if entry.get("status_final") != "ok":
+    """"đã ĐÚNG expectation" — dựng lại `M16CaseRecord` TỪ dict đã json
+    round-trip rồi gọi ĐÚNG luật `_outcome_matches_expectation` của
+    m16_artifacts (không phát minh tiêu chí mới). Review Task 7 (Important):
+    KHÔNG gate literal `status_final=="ok"` — case unsupported bị TỪ CHỐI ĐÚNG
+    có status_final=="refused" và cũng phải được skip (mục đích tiết kiệm
+    ngân sách live của --resume-from); "error" tự trượt vì
+    `_outcome_matches_expectation` không bao giờ nhận envelope_status=None.
+    Entry hỏng/thiếu field (schema trace cũ lệch) → coi như CHƯA khớp (an
+    toàn: chạy lại thay vì bỏ sót)."""
+    if entry.get("status_final") not in ("ok", "refused"):
         return False
     record_dict = entry.get("record")
     if not isinstance(record_dict, dict):
