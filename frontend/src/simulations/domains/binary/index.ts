@@ -1,4 +1,5 @@
 import { registerSimulation } from "../../registry";
+import { registerBaseConvModule } from "./convert-module";
 import type { BinaryConfig, BinaryState } from "./model";
 import { binaryString, bitsOf, decimalOf, placeValues } from "./model";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
@@ -80,4 +81,5 @@ export function makeBinaryModule(): SimulationModule<BinaryConfig, BinaryState> 
 
 export function registerBinaryDomain(): void {
   registerSimulation(makeBinaryModule());
+  registerBaseConvModule(); // M17 W1 — đổi cơ số tổng quát {2,8,10,16}
 }

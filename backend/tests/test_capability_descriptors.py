@@ -21,7 +21,7 @@ def test_descriptor_json_khong_troi_khoi_nguon():
 
 def test_cau_truc_co_ban():
     d = capability_descriptors()
-    assert len(d["runtime_targets"]) == 15  # M17 W1.A: +algorithm.selection_sort
+    assert len(d["runtime_targets"]) == 16  # M17 W1: +selection_sort +base_conversion
     assert "comparison_sort" in d["family_selectors"]
     token = d["family_selectors"]["comparison_sort"]["selector_token"]
     # token selector KHÔNG được là một runtime target

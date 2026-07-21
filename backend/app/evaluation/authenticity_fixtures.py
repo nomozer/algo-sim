@@ -54,6 +54,11 @@ _P_NONBIN = "positional_representation.non_binary_base"
 OK_ARCHETYPES = ("direct", "paraphrase", "changed_input", "boundary")
 
 
+def _baseconv_cfg(source: int, target: int, value: str) -> str:
+    """Config binary.base_conversion (M17 W1) — đúng schema validator BE."""
+    return _j({"sourceBase": source, "targetBase": target, "inputValue": value})
+
+
 @dataclass(frozen=True)
 class TargetFixture:
     """Kịch bản audit cho MỘT target: archetype → (đề VI, CaseScript).
@@ -388,6 +393,38 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
             ),
         },
     ),
+    # M17 W1 — base conversion tổng quát (gap hex/octal flip → owned)
+    "binary.base_conversion": TargetFixture(
+        prompts={
+            "direct": "Đổi số 2026 sang hệ thập lục phân.",
+            "paraphrase": "Số bát phân 755 bằng bao nhiêu trong hệ thập phân?",
+            "changed_input": "Đổi số thập lục phân 9C sang hệ nhị phân.",
+            "boundary": "Đổi 45 sang nhị phân (LLM khai nhầm cùng cơ số ở lượt đầu — validator từ chối, retry).",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Đổi 2026 sang thập lục phân", ownership="rule_derivable", prescribed=_P_NONBIN),
+                [_classify("binary.base_conversion")],
+                [_baseconv_cfg(10, 16, "2026")],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Giá trị thập phân của số bát phân 755", ownership="rule_derivable", prescribed=_P_NONBIN),
+                [_classify("binary.base_conversion")],
+                [_baseconv_cfg(8, 10, "755")],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Đổi 9C (hex) sang nhị phân", ownership="rule_derivable", prescribed=_P_NONBIN),
+                [_classify("binary.base_conversion")],
+                [_baseconv_cfg(16, 2, "9C")],
+            ),
+            # contract-retry: attempt1 cùng cơ số (validator từ chối) → attempt2 hợp lệ
+            "boundary": CaseScript(
+                _analysis(goal="Đổi 45 sang nhị phân", ownership="rule_derivable", prescribed=_P_NONBIN),
+                [_classify("binary.base_conversion")],
+                [_baseconv_cfg(10, 10, "45"), _baseconv_cfg(10, 2, "45")],
+            ),
+        },
+    ),
     "network.packet_routing": TargetFixture(
         prompts={
             "direct": "Gói tin đi từ máy tính qua switch, router, ISP tới máy chủ. Mô phỏng đường đi.",
@@ -523,17 +560,8 @@ NEAR_MISS_FIXTURES: dict[str, ControlFixture] = {
         mechanism="comparison_sort.other_unspecified",
         note="Cơ chế không xác định — từ chối trung thực thay vì đoán biến thể.",
     ),
-    "positional_representation.non_binary_base": ControlFixture(
-        case_id="aud-nm-hex-base",
-        kind="near_miss",
-        prompt="Đổi số 2026 sang hệ thập lục phân.",
-        script=CaseScript(
-            _analysis(goal="Đổi 2026 sang thập lục phân", ownership="rule_derivable", prescribed=_P_NONBIN),
-            [_classify(_BINARY)],
-        ),
-        mechanism="positional_representation.non_binary_base",
-        note="Cơ số ≠ 2 là intentional gap M15 (W1 sẽ flip thành owned).",
-    ),
+    # M17 W1: near-miss non_binary_base ĐÃ flip thành ok-case của target
+    # binary.base_conversion (xem TARGET_FIXTURES) — không còn ở đây.
 }
 
 

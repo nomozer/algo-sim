@@ -139,6 +139,32 @@ describe("M17 W0 — authenticity cross-lock: domain algorithm", () => {
   });
 });
 
+describe("M17 W1 — authenticity cross-lock: binary.base_conversion", () => {
+  it("state fields + event divide/weight/result trên HAI mẫu (10→16 và 16→10)", () => {
+    const a = auth("binary.base_conversion");
+    // mẫu 1: 10→16 (chia lấy dư) — divide + result
+    const s1 = initState("binary.base_conversion", {
+      sourceBase: 10, targetBase: 16, inputValue: "2026",
+    }) as unknown as { steps: { kind: string }[]; result: string };
+    expectStateFields("binary.base_conversion", s1 as unknown as Record<string, unknown>);
+    const k1 = new Set(s1.steps.map((s) => s.kind));
+    expect(k1.has("divide") && k1.has("result")).toBe(true);
+    expect(s1.result).toBe("7EA"); // authoritative — engine tính
+    // mẫu 2: 16→10 (trọng số vị trí) — weight + result
+    const s2 = initState("binary.base_conversion", {
+      sourceBase: 16, targetBase: 10, inputValue: "9C",
+    }) as unknown as { steps: { kind: string }[]; result: string };
+    const k2 = new Set(s2.steps.map((s) => s.kind));
+    expect(k2.has("weight") && k2.has("result")).toBe(true);
+    expect(s2.result).toBe("156");
+    // hợp hai mẫu phủ đủ required_trace_events của contract
+    const union = new Set([...k1, ...k2]);
+    for (const evt of a.required_trace_events) {
+      expect(union.has(evt), `base_conversion: thiếu event ${evt}`).toBe(true);
+    }
+  });
+});
+
 describe("M17 W0 — authenticity cross-lock: logic / binary (exploratory)", () => {
   it("logic.and_gate: state fields + andOutput dẫn xuất tất định", () => {
     const state = initState("logic.and_gate", sampleConfig("logic.and_gate"));

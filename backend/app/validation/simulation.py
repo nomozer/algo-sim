@@ -205,6 +205,65 @@ def validate_binary_config(raw) -> tuple[dict | None, str | None]:
     return {"decimalValue": dec, "bitWidth": width, "notes": notes}, None
 
 
+# ── binary.base_conversion (M17 W1) ───────────────────────────
+
+CONV_BASES = (2, 8, 10, 16)
+CONV_MAX_VALUE = 65535  # bound 16 bit — bounded capability
+_CONV_DIGITS = "0123456789ABCDEF"
+
+
+def _conv_strategy(source: int, target: int) -> str:
+    """Chiến lược DẪN XUẤT TẤT ĐỊNH từ cặp cơ số — LLM không được chọn khác."""
+    if source == 10:
+        return "quotient_remainder"
+    if target == 10:
+        return "positional_weights"
+    return "two_stage"
+
+
+def validate_base_conversion_config(raw) -> tuple[dict | None, str | None]:
+    """binary.base_conversion — đổi cơ số {2,8,10,16}. Trace chia-lấy-dư /
+    trọng số vị trí / hai giai đoạn + KẾT QUẢ do engine tất định tính."""
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+    src = raw.get("sourceBase")
+    tgt = raw.get("targetBase")
+    for name, v in (("sourceBase", src), ("targetBase", tgt)):
+        if not isinstance(v, int) or isinstance(v, bool) or v not in CONV_BASES:
+            return None, f'"{name}" phải thuộc {{2, 8, 10, 16}}.'
+    if src == tgt:
+        return None, '"sourceBase" phải KHÁC "targetBase".'
+    value_raw = raw.get("inputValue")
+    if not isinstance(value_raw, str) or not (1 <= len(value_raw) <= 16):
+        return None, '"inputValue" phải là chuỗi chữ số (1–16 ký tự) theo sourceBase.'
+    canonical = value_raw.upper()
+    allowed = _CONV_DIGITS[:src]
+    if not all(ch in allowed for ch in canonical):
+        return None, (
+            f'"inputValue" chứa ký tự không hợp lệ với cơ số {src} '
+            f"(chỉ được dùng: {' '.join(allowed)})."
+        )
+    canonical = canonical.lstrip("0") or "0"
+    value = int(canonical, src)
+    if value > CONV_MAX_VALUE:
+        return None, f"Giá trị vượt giới hạn {CONV_MAX_VALUE} — ngoài phạm vi mô phỏng."
+    derived = _conv_strategy(src, tgt)
+    strategy = raw.get("strategy")
+    if strategy is not None and strategy != derived:
+        return None, f'"strategy" (nếu có) phải là "{derived}" — dẫn xuất từ cặp cơ số.'
+    notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
+    return {
+        "sourceBase": src,
+        "targetBase": tgt,
+        "inputValue": canonical,
+        "strategy": derived,
+        "notes": notes,
+    }, None
+
+
 # ── Domain network (M5) ───────────────────────────────────────
 
 _NODE_TYPES = {"client", "router", "server", "switch", "isp"}

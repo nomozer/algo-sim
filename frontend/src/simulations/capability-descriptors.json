@@ -506,9 +506,55 @@
           "bit_cells"
         ],
         "generic_allowed": false,
-        "near_miss_mechanisms": [
-          "positional_representation.non_binary_base"
-        ]
+        "near_miss_mechanisms": []
+      }
+    },
+    "binary.base_conversion": {
+      "domain": "binary",
+      "executor_id": "binary.base_conversion",
+      "reachability": [
+        "registered",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 B4",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "positional_representation",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "positional_representation.binary_positional_weights",
+            "positional_representation.non_binary_base"
+          ]
+        }
+      ],
+      "config_contract_version": "baseconv-1.0",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "decimalValue",
+          "steps",
+          "result",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "divide",
+          "weight",
+          "result"
+        ],
+        "required_result_fields": [
+          "result"
+        ],
+        "renderer_semantic_requirements": [
+          "division_or_weight_rows",
+          "digit_assembly",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
       }
     },
     "network.packet_routing": {
@@ -761,6 +807,7 @@
     "algorithm.binary_search",
     "logic.and_gate",
     "binary.decimal_to_binary",
+    "binary.base_conversion",
     "network.packet_routing",
     "algorithm.scan",
     "network.protocol_encapsulation",

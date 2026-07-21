@@ -50,6 +50,7 @@ from app.validation.simulation import (
     ALGORITHM_IDS,
     ALGORITHM_NAMES_VI,
     validate_algorithm_config,
+    validate_base_conversion_config,
     validate_binary_config,
     validate_encapsulation_config,
     validate_logic_config,
@@ -364,6 +365,70 @@ CATALOG["binary.decimal_to_binary"] = SimSpec(
     reachability=_R_FULL,
     curriculum_anchor="T10 B4",
     config_contract_version="binary-cfg-1",
+)
+
+
+# ── binary.base_conversion (M17 W1) — đổi cơ số tổng quát {2,8,10,16} ──
+
+_BASECONV_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "sourceBase": {"type": "INTEGER"},
+        "targetBase": {"type": "INTEGER"},
+        "inputValue": {"type": "STRING"},
+        "strategy": {
+            "type": "STRING",
+            "enum": ["quotient_remainder", "positional_weights", "two_stage"],
+            "nullable": True,
+        },
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["sourceBase", "targetBase", "inputValue"],
+}
+
+_BASECONV_CONTRACT = """HỢP ĐỒNG CONFIG (binary.base_conversion):
+- sourceBase, targetBase: cơ số nguồn/đích, MỖI cái thuộc {2, 8, 10, 16}, PHẢI khác nhau.
+- inputValue: CHUỖI chữ số của số cần đổi, viết theo sourceBase (vd "2026" cơ số 10, "9C" cơ số 16, "755" cơ số 8, "101101" cơ số 2). Giá trị tối đa 65535.
+- strategy: BỎ TRỐNG — hệ tự dẫn xuất (10→X: chia lấy dư; X→10: trọng số vị trí; X→Y: hai giai đoạn qua thập phân).
+- KHÔNG sinh các bước chia/tổng/kết quả — engine tất định tự tính toàn bộ trace và đáp số."""
+
+CATALOG["binary.base_conversion"] = SimSpec(
+    simulation_id="binary.base_conversion",
+    domain="binary",
+    visual_mode="2d",
+    description=(
+        "đổi một số giữa các hệ cơ số 2, 8, 10, 16 (nhị phân/bát phân/thập phân/"
+        "thập lục phân) — engine tất định dựng trace chia-lấy-dư, trọng số vị trí "
+        "hoặc hai giai đoạn qua thập phân và tự tính kết quả. Dùng khi đề yêu cầu "
+        "ĐỔI CƠ SỐ (kể cả hex/octal); riêng bài 'bật bit trọng số 8/4/2/1' trực "
+        "quan thì dùng binary.decimal_to_binary"
+    ),
+    config_schema=_BASECONV_SCHEMA,
+    contract=_BASECONV_CONTRACT,
+    validate=validate_base_conversion_config,
+    make_title=lambda config, analysis: (
+        f"Đổi {config.get('inputValue', '')} từ cơ số {config.get('sourceBase', '')} "
+        f"sang cơ số {config.get('targetBase', '')}"
+    ),
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.POSITIONAL_REPRESENTATION, ResultAuthority.COMPUTATION,
+            # Sở hữu CẢ HAI cơ chế positional: non_binary_base (gap flip W1) +
+            # binary_positional_weights (dec↔bin cũng là đổi cơ số hợp lệ —
+            # nhiều target cùng own một cơ chế có tiền lệ find_max/find_min).
+            owned_mechanisms=(
+                "positional_representation.binary_positional_weights",
+                "positional_representation.non_binary_base",
+            ),
+        ),
+    ),
+    # Như scan/selection: AI-reachable, KHÔNG library_discoverable (chưa có mẫu offline)
+    reachability=(
+        ReachabilityLevel.REGISTERED,
+        ReachabilityLevel.AI_REACHABLE_PUBLIC,
+    ),
+    curriculum_anchor="T10 B4",
+    config_contract_version="baseconv-1.0",
 )
 
 

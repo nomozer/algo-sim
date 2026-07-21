@@ -47,11 +47,11 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
 }
 
 # Khóa 2 — giá trị CỐ Ý không target nào sở hữu (gap-trigger, khai tường minh)
-# M17 W1: select_extreme_repeated flip GAP → OWNED (algorithm.selection_sort).
+# M17 W1: select_extreme_repeated flip → OWNED (algorithm.selection_sort);
+#         non_binary_base flip → OWNED (binary.base_conversion).
 INTENTIONAL_GAP_MECHANISMS: frozenset[str] = frozenset({
     "comparison_sort.partition_recursive",
     "comparison_sort.other_unspecified",
-    "positional_representation.non_binary_base",
 })
 
 # Khóa 1 — alias MỘT CHIỀU legacy→canonical, CHỈ namespace comparison_sort (M14 compat)

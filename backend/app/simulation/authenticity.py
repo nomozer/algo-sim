@@ -102,12 +102,22 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
         renderer_semantic_requirements=("gate_diagram", "output_lamp_reflects_rule"),
     ),
     # binary — exploratory; decimal/binaryString dẫn xuất tất định từ bits
+    # (M17 W1: near-miss non_binary_base đã flip owned → binary.base_conversion)
     "binary.decimal_to_binary": AuthenticityContract(
         required_state_fields=("bits", "bitWidth"),
         required_trace_events=(),
         required_result_fields=("decimalOf", "binaryString"),
         renderer_semantic_requirements=("place_values_row", "bit_cells"),
-        near_miss_mechanisms=("positional_representation.non_binary_base",),
+    ),
+    # M17 W1 — base conversion tổng quát: progressive, step kinds là event
+    # thật của engine (divide 10→X, weight X→10, cả hai + stage khi X→Y).
+    "binary.base_conversion": AuthenticityContract(
+        required_state_fields=("config", "decimalValue", "steps", "result", "cursor"),
+        required_trace_events=("divide", "weight", "result"),
+        required_result_fields=("result",),
+        renderer_semantic_requirements=(
+            "division_or_weight_rows", "digit_assembly", "narration_per_step",
+        ),
     ),
     # network.packet_routing — route BFS engine tính, KHÔNG từ LLM
     "network.packet_routing": AuthenticityContract(
