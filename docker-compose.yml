@@ -20,7 +20,14 @@ services:
       retries: 15
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      args:
+        # M17-RC1 §A — truyền danh tính build vào image. `make runtime-doctor`
+        # so SHA này với source; lệch = RUNTIME_STALE_IMAGE.
+        # Đặt qua env khi build:  GIT_SHA=$(git rev-parse HEAD) docker compose ...
+        GIT_SHA: ${GIT_SHA:-unknown}
+        BUILD_TIME: ${BUILD_TIME:-unknown}
     ports:
       - "8000:8000"
     environment:

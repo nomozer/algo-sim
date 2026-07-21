@@ -37,6 +37,7 @@ from app.ai.explain import explain_state
 from app.ingestion.input import IngestError, ingest_to_text
 from app.ai.pipeline import run_pipeline
 from app.learner_messages import attach_learner_reason, learner_error_message
+from app.runtime_identity import runtime_identity
 
 app = FastAPI(title="AlgoSim backend", version="0.3.0")
 
@@ -163,7 +164,16 @@ def health():
         "patterns": patterns,
         "reuse": reuse,
         "db": db_dialect(),
+        # M17-RC1 §A — danh tính runtime để phát hiện container chạy code cũ.
+        "runtime": runtime_identity(),
     }
+
+
+@app.get("/api/diagnostics/runtime")
+def diagnostics_runtime():
+    """M17-RC1 §A — danh tính runtime máy-đọc (nguồn cho `runtime-doctor`).
+    Tách khỏi /api/health để công cụ chẩn đoán không phụ thuộc DB."""
+    return runtime_identity()
 
 
 @app.post("/api/analyze")
