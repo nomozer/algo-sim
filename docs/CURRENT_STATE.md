@@ -41,8 +41,15 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > (NON-BLOCKING):** cân nhắc để base ngoài {2,8,10,16} → `capability_gap`
 > (route base_conversion + validator phát gap) ở wave sau, vd khi làm coverage
 > dashboard W3. Runner reproducible `scripts/live_smoke_m17_wave1.py` +
-> artifact `live_smoke.json` + report. **Wave 1 COMPLETE (offline + live).**
-> Wave 2 (tree_traversal + relational_table_query) chưa mở — chờ duyệt.
+> artifact `live_smoke.json` + report. **"17 REAL + 1 PARTIAL":** PARTIAL =
+> `generic.rule_scene` — nhãn heuristic audit cho target DUAL-AUTHORITY
+> (computation rule-DAG + representation reveal/move), KHÔNG phải contract
+> chưa đạt hay renderer yếu, KHÔNG ảnh hưởng learner (ship từ M7); backlog:
+> tinh chỉnh heuristic PARTIAL cho khớp ý kế hoạch. **BACKLOG NON-BLOCKING
+> (2 mục, cân nhắc W3):** (1) base ngoài {2,8,10,16} → `capability_gap`;
+> (2) heuristic PARTIAL audit (dual-authority ≠ partial-authenticity).
+> **Wave 1 COMPLETE (offline + live), closeout `f64fc67`.** Wave 2A
+> (tree_traversal) mở sau.
 >
 > **Wave 0 XONG**
 > (authenticity audit + learner error mapping, đo lường + trình bày — 0

@@ -63,6 +63,30 @@ capability_gap vì thời điểm đó CHƯA có base_conversion → route gener
 route-mismatch. Nay base_conversion tồn tại nên classify từ chối sớm hơn, rẻ
 hơn, tag khác (plain). Frozen M16 KHÔNG đổi — overlay đã ghi.
 
+## Giải trình "17 REAL + 1 PARTIAL" (yêu cầu closeout)
+
+- **Target PARTIAL: `generic.rule_scene`** (1/18). Bằng chứng:
+  `authenticity_results.json → data.target_classifications`.
+- **Vì sao PARTIAL:** heuristic phân loại của audit (`authenticity_audit.
+  classify_targets`) gán PARTIAL cho target mang ĐỒNG THỜI hai result-authority
+  (COMPUTATION + REPRESENTATION). `generic.rule_scene` là target dual-authority
+  duy nhất: `boolean_composition` (computation — rule DAG) +
+  `structural_progressive_representation` (representation — reveal/move).
+- **Contract nào chưa đạt?** KHÔNG có. Authenticity contract của
+  generic.rule_scene (state `spec/base/pos/timeline/cursor`, event
+  `reveal/move`, result `rule_derived_values`) ĐẠT; cả 4 ok-archetype
+  (direct/paraphrase/changed_input/boundary) đều matched trong audit. Đây
+  KHÔNG phải "executor đúng nhưng UI chỉ hiện generic points/edges" (nghĩa
+  PARTIAL mà kế hoạch M17 định) — biểu diễn của generic là ĐÚNG object khai
+  báo, không phải placeholder giả.
+- **Ảnh hưởng learner-facing demo?** KHÔNG. generic.rule_scene ship từ M7,
+  hoạt động đầy đủ; PARTIAL chỉ là nhãn taxonomy của audit, không phải trải
+  nghiệm suy giảm. Không correctness issue.
+- **Hành động:** KHÔNG reopen (không phải lỗi đúng-sai hay renderer). **BACKLOG
+  NON-BLOCKING:** tinh chỉnh heuristic PARTIAL của audit cho khớp ý kế hoạch
+  (dual-authority ≠ partial-authenticity) — cân nhắc ở Wave 3 khi làm coverage
+  dashboard.
+
 ## Trạng thái close — QUYẾT ĐỊNH USER: chấp nhận + backlog
 
 - **Blocking conditions user nêu: 0 hit.** 4/4 supported đúng trọn, 0 generic
