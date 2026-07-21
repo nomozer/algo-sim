@@ -12,16 +12,22 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > cho 14/14 AI-reachable target (state/trace/result/renderer requirements +
 > `generic_allowed` + `near_miss_mechanisms`), nhúng vào
 > `capability-descriptors.json` (sync-lock) + cross-lock vitest chạy ENGINE
-> THẬT trên config thật. **(2)** audit matrix 56 case SINH TỪ REGISTRY
+> THẬT trên config thật. **(2)** audit matrix **55 case** SINH TỪ REGISTRY
 > (`evaluation/authenticity_{fixtures,matrix,audit,artifacts}.py`) chạy qua
-> production `run_pipeline` (bất biến #22): 47/47 ok-archetype đúng route ·
-> 4/4 near-miss gap trung thực (`gate_mechanism_ownership`) · phân loại
-> **13 REAL + 1 PARTIAL** (generic dual-authority) · 0 BROKEN · 0 chặn oan.
-> **(3)** regression duyệt cây: honest analyze → fail-closed ✔; probe
-> adversarial (analyze khai man ownership) → **CONDITIONAL_LEAK_CONFIRMED**,
-> PIN bằng test — gate fail-closed theo tín hiệu cấu trúc, bảo chứng phụ
-> thuộc analyze trung thực (live M16 24/24 trung thực); fix dài hạn =
-> `tree_traversal` W2; mọi siết gate là production change cần user duyệt.
+> production `run_pipeline` (bất biến #22): **46/46** ok-archetype đúng route
+> (direct/paraphrase/changed-input 14+14+14, boundary 4) · 4/4 near-miss gap
+> trung thực (`gate_mechanism_ownership`) · phân loại **13 REAL + 1 PARTIAL**
+> (generic dual-authority) · 0 BROKEN · 0 chặn oan. (Số 56/47 trong commit
+> message `f1cdce0` là LỖI TƯỜNG THUẬT — artifact máy-sinh là nguồn đúng;
+> xem `docs/evaluation/m17/wave0/PROVENANCE.md`.) **(3)** regression duyệt
+> cây: honest analyze → fail-closed ✔; probe adversarial (analyze khai man
+> ownership) → **CONDITIONAL_LEAK_CONFIRMED**, PIN bằng test — **limitation
+> ĐÃ BIẾT, user chấp nhận phương án (a)**: KHÔNG siết gate trong W0; claim
+> đúng là (i) 0 generic leak VÔ ĐIỀU KIỆN trong audit hiện tại, (ii) luồng
+> production PHỤ THUỘC analyze cung cấp `result_ownership` đúng — KHÔNG
+> tuyên bố gate chống được analyze khai sai, (iii) adversarial đã ghi
+> ledger + pin regression; limitation này PHẢI kiểm lại và đóng khi
+> `tree_traversal` ship (Wave 2).
 > **(4)** learner error mapping (`app/learner_messages.py` + biên API +
 > `UnsupportedNotice` FE): học sinh không thấy token kỹ thuật/JSON path;
 > `reason` kỹ thuật + `error_detail` giữ cho dev. **(5)** 6 artifact
