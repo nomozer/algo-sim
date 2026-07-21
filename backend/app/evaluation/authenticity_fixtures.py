@@ -284,6 +284,31 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
             ),
         },
     ),
+    # M17 W1 — Selection Sort (route qua token comparison_sort, variant "selection")
+    "algorithm.selection_sort": TargetFixture(
+        prompts={
+            "direct": "Sắp xếp dãy 9, 2, 7, 4 bằng thuật toán sắp xếp chọn (selection sort).",
+            "paraphrase": "Sắp xếp 6, 1, 8, 3, 5 bằng cách mỗi lượt tìm phần tử nhỏ nhất còn lại rồi đưa lên đầu.",
+            "changed_input": "Dùng sắp xếp chọn cho dãy 12, 5, 9, 3 theo thứ tự giảm dần.",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Sắp xếp bằng chọn cực trị lặp", prescribed=_P_SELECT),
+                [_classify(_TOKEN)],
+                [_sort_spec("selection", [9, 2, 7, 4])],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Mỗi lượt tìm phần tử nhỏ nhất đưa lên đầu", prescribed=_P_SELECT),
+                [_classify(_TOKEN)],
+                [_sort_spec("selection", [6, 1, 8, 3, 5])],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Sắp xếp chọn giảm dần", prescribed=_P_SELECT),
+                [_classify(_TOKEN)],
+                [_sort_spec("selection", [12, 5, 9, 3], order="desc")],
+            ),
+        },
+    ),
     "algorithm.scan": TargetFixture(
         prompts={
             "direct": "Nhiệt độ 7 ngày: 31, 33, 30, 36, 32, 38, 29. Tìm ngày ĐẦU TIÊN vượt 35 độ.",
@@ -473,18 +498,9 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
 
 
 # ══════════════ near-miss per cơ chế INTENTIONAL_GAP (dedupe theo mechanism) ══
+# M17 W1: near-miss select_extreme_repeated ĐÃ flip thành ok-case của target
+# algorithm.selection_sort (xem TARGET_FIXTURES) — không còn ở đây.
 NEAR_MISS_FIXTURES: dict[str, ControlFixture] = {
-    "comparison_sort.select_extreme_repeated": ControlFixture(
-        case_id="aud-nm-selection-sort",
-        kind="near_miss",
-        prompt="Sắp xếp dãy 9, 2, 7, 4 bằng cách MỖI LƯỢT CHỌN phần tử nhỏ nhất còn lại đưa lên đầu (selection sort).",
-        script=CaseScript(
-            _analysis(goal="Sắp xếp bằng chọn cực trị lặp", ownership="algorithmic", prescribed=_P_SELECT),
-            [_classify(_TOKEN)],
-        ),
-        mechanism="comparison_sort.select_extreme_repeated",
-        note="Selection sort chưa được sở hữu (W1 sẽ flip) — mechanism gate phải chặn.",
-    ),
     "comparison_sort.partition_recursive": ControlFixture(
         case_id="aud-nm-quick-sort",
         kind="near_miss",

@@ -68,7 +68,7 @@ function expectStateFields(id: string, state: Record<string, unknown>) {
   }
 }
 
-// ── 9 target domain algorithm (8 chuyên biệt + scan) — trace engine ──
+// ── target domain algorithm (8 chuyên biệt có mẫu offline) — trace engine ──
 const ALGO_IDS = [
   "algorithm.find_max",
   "algorithm.find_min",
@@ -79,6 +79,13 @@ const ALGO_IDS = [
   "algorithm.bubble_sort",
   "algorithm.insertion_sort",
 ] as const;
+
+/** Config nội tuyến cho selection_sort (M17 W1 — như scan: AI-reachable,
+ * KHÔNG library_discoverable nên không có mẫu offline). */
+const SELECTION_CONFIG = {
+  problem: { summary: "Sắp xếp chọn", input: "Dãy số", output: "Dãy đã sắp" },
+  data: { array: [9, 4, 7, 2, 6], order: "asc" },
+};
 
 /** ScanSpec nội tuyến (không có mẫu offline cho scan — discovery A). */
 const SCAN_SPEC = {
@@ -107,6 +114,18 @@ describe("M17 W0 — authenticity cross-lock: domain algorithm", () => {
       expect((done as { result: string }).result.length).toBeGreaterThan(0);
     });
   }
+
+  it("algorithm.selection_sort: state + trace event + done.result đúng contract (M17 W1)", () => {
+    const state = initState("algorithm.selection_sort", SELECTION_CONFIG);
+    expectStateFields("algorithm.selection_sort", state);
+    const types = traceEventTypes(state.trace as Trace);
+    for (const evt of auth("algorithm.selection_sort").required_trace_events) {
+      expect(types.has(evt), `selection: trace thiếu event ${evt}`).toBe(true);
+    }
+    const steps = (state.trace as Trace).steps;
+    const done = steps[steps.length - 1].events.find((e) => e.type === "done");
+    expect(done).toBeDefined();
+  });
 
   it("algorithm.scan: state + trace event + done.result đúng contract", () => {
     const state = initState("algorithm.scan", SCAN_SPEC);

@@ -66,4 +66,12 @@ export const PSEUDOCODE: Record<AlgorithmId, string[]> = {
     "   chèn k vào vị trí j + 1",
     "trả về dãy đã sắp xếp",
   ],
+  selection_sort: [
+    "với mỗi i từ 1 đến n − 1:",
+    "   vt ← i (vị trí cực trị tạm của phần chưa sắp)",
+    "   với mỗi j từ i + 1 đến n:",
+    "      nếu a[j] tốt hơn a[vt] theo thứ tự sắp thì vt ← j",
+    "   đổi chỗ a[i] và a[vt] (nếu vt ≠ i)",
+    "trả về dãy đã sắp xếp",
+  ],
 };

@@ -141,7 +141,7 @@ def test_final_route_generic_ownership_algorithmic_computation_gate_van_fire(mon
 # ── 4. reclassify KHÔNG bypass gate M13/M14 — tier-1 fire trên FINAL route ──
 def test_reclassification_khong_bypass_gate_M13_M14(monkeypatch):
     mock, counts = _mock(
-        _analysis(proc="select_extreme_repeated", ownership="algorithmic"),
+        _analysis(proc="partition_recursive", ownership="algorithmic"),
         classify_seq=[_classify("binary.decimal_to_binary"), _classify("algorithm.comparison_sort")],
     )
     obs = AttemptObserver()
@@ -160,7 +160,7 @@ def test_reclassification_khong_bypass_gate_M13_M14(monkeypatch):
 def test_route_dependent_gates_chi_chay_tren_final_route(monkeypatch):
     # kịch bản có reclassify + có route-dependent gate (tier-1) sau đó
     mock, _ = _mock(
-        _analysis(proc="select_extreme_repeated", ownership="algorithmic"),
+        _analysis(proc="partition_recursive", ownership="algorithmic"),
         classify_seq=[_classify("binary.decimal_to_binary"), _classify("algorithm.comparison_sort")],
     )
     obs = AttemptObserver()
@@ -184,7 +184,7 @@ def test_route_dependent_gates_chi_chay_tren_final_route(monkeypatch):
     # prescribed null → classify 1 lần, simulate 1
     (None, "algorithmic", [_classify("algorithm.comparison_sort")], [_sort_spec("bubble")]),
     # reclassify → tier-1 gap (không simulate)
-    ("select_extreme_repeated", "algorithmic",
+    ("partition_recursive", "algorithmic",
      [_classify("binary.decimal_to_binary"), _classify("algorithm.comparison_sort")], None),
 ])
 def test_call_budget_analyze_1_classify_max2_simulate_max1(monkeypatch, proc, ownership, classify_seq, simulate_seq):

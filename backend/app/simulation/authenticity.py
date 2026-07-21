@@ -59,10 +59,10 @@ def _algo(events: tuple[str, ...], *, near_miss: tuple[str, ...] = ()) -> Authen
     )
 
 
-# Near-miss của family comparison_sort (INTENTIONAL_GAP): khai trên CẢ HAI
-# target sort — matrix dedupe theo mechanism nên mỗi cơ chế sinh ĐÚNG MỘT case.
+# Near-miss của family comparison_sort (INTENTIONAL_GAP): khai trên các target
+# sort — matrix dedupe theo mechanism nên mỗi cơ chế sinh ĐÚNG MỘT case.
+# M17 W1: select_extreme_repeated flip owned (selection_sort) → rời khỏi near-miss.
 _SORT_NEAR_MISS = (
-    "comparison_sort.select_extreme_repeated",
     "comparison_sort.partition_recursive",
     "comparison_sort.other_unspecified",
 )
@@ -80,6 +80,12 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
     "algorithm.bubble_sort": _algo(("compare", "swap", "mark", "done"), near_miss=_SORT_NEAR_MISS),
     "algorithm.insertion_sort": _algo(
         ("compare", "shift", "insert", "mark", "done"), near_miss=_SORT_NEAR_MISS
+    ),
+    # M17 W1 — Selection Sort: set_range = vùng chưa sắp, assign_var = vị trí
+    # cực trị đang nhớ, swap/mark = đưa về đầu + ranh giới đã sắp.
+    "algorithm.selection_sort": _algo(
+        ("set_range", "assign_var", "compare", "swap", "mark", "done"),
+        near_miss=_SORT_NEAR_MISS,
     ),
     # scan catch-all (ScanSimState = {spec, trace, cursor})
     "algorithm.scan": AuthenticityContract(

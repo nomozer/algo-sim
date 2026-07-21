@@ -62,6 +62,55 @@ describe("engine 8 thuật toán (bài mẫu)", () => {
   }
 });
 
+describe("selection_sort (M17 W1) — oracle độc lập + bất biến trace", () => {
+  const cfg = (array: number[], order: "asc" | "desc"): Parameters<typeof runAlgorithm>[0] => ({
+    status: "ok",
+    problem: { summary: "Sắp xếp chọn", input: "Dãy số", output: "Dãy đã sắp" },
+    algorithm_id: "selection_sort",
+    data: { array, labels: null, target: null, condition: null, order },
+    data_generated: false,
+    notes: null,
+  });
+
+  const CASES: { array: number[]; order: "asc" | "desc" }[] = [
+    { array: [9, 4, 7, 2, 6], order: "asc" },
+    { array: [5, 3, 5, 2, 3], order: "asc" }, // phần tử trùng
+    { array: [1, 2, 3, 4], order: "asc" }, // đã sắp sẵn — 0 lần đổi chỗ
+    { array: [3, 8, 1, 9, 5], order: "desc" },
+    { array: [2, 1], order: "asc" }, // biên nhỏ nhất cho phép
+  ];
+
+  for (const c of CASES) {
+    it(`[${c.array.join(",")}] ${c.order}: kết quả cuối khớp oracle sort()`, () => {
+      const trace = runAlgorithm(cfg(c.array, c.order));
+      const steps = trace.steps;
+      const last = steps[steps.length - 1];
+      // oracle độc lập
+      const expected = [...c.array].sort((x, y) => (c.order === "asc" ? x - y : y - x));
+      expect(last.snapshot.array).toEqual(expected);
+      // bất biến trace: index liên tục, ids là hoán vị, done tồn tại
+      steps.forEach((s, i) => expect(s.index).toBe(i));
+      for (const s of steps) expect(new Set(s.snapshot.ids).size).toBe(c.array.length);
+      expect(last.events.some((e) => e.type === "done")).toBe(true);
+      // toàn bộ phần tử được đánh dấu sorted ở bước cuối
+      expect(Object.keys(last.snapshot.marks)).toHaveLength(c.array.length);
+    });
+  }
+
+  it("trace mang đủ event cơ chế: set_range, compare, assign_var, swap, mark", () => {
+    const trace = runAlgorithm(cfg([9, 4, 7, 2, 6], "asc"));
+    const types = new Set(trace.steps.flatMap((s) => s.events.map((e) => e.type)));
+    for (const t of ["set_range", "compare", "assign_var", "swap", "mark", "done"]) {
+      expect(types.has(t as never), `thiếu event ${t}`).toBe(true);
+    }
+  });
+
+  it("dãy đã sắp: không có swap nào (chọn xong đứng nguyên)", () => {
+    const trace = runAlgorithm(cfg([1, 2, 3, 4], "asc"));
+    expect(trace.steps.some((s) => s.events.some((e) => e.type === "swap"))).toBe(false);
+  });
+});
+
 describe("fork what-if (R3.3)", () => {
   const sample = SAMPLES.find((s) => s.algorithmId === "bubble_sort")!;
   const k = 5;

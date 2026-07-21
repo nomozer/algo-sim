@@ -1,10 +1,11 @@
 """M14 — comparison_sort family (pilot).
 
-§C3/§D: family so-sánh; hai variant (bubble/insertion) resolve về hai runtime
-target concrete (algorithm.bubble_sort / algorithm.insertion_sort) — executor
-GIỮ NGUYÊN, không viết lại. Cơ chế family SỞ HỮU: adjacent_compare_swap
-(bubble), shift_into_sorted_prefix (insertion). Selection/quick KHÔNG thuộc
-owned → mechanism gate (Task 6) trả capability_gap.
+§C3/§D: family so-sánh; ba variant (bubble/insertion/selection — selection thêm
+ở M17 W1) resolve về ba runtime target concrete (algorithm.bubble_sort /
+algorithm.insertion_sort / algorithm.selection_sort). Cơ chế family SỞ HỮU:
+adjacent_compare_swap (bubble), shift_into_sorted_prefix (insertion),
+select_extreme_repeated (selection). Quick/other KHÔNG thuộc owned →
+mechanism gate (Task 6) trả capability_gap.
 
 Khung Task 2: variants + owned_mechanisms + version + token. Schema/validator
 (Task 5) và resolve (Task 7) điền sau — construct SORTING_SELECTOR sẽ được cập
@@ -24,9 +25,15 @@ SELECTOR_TOKEN = "algorithm.comparison_sort"
 # namespaced (nguồn `app.simulation.mechanisms`). Dùng cho mechanism gate
 # (Task 6, nay normalize qua canonical_mechanism) và cross-lock
 # variant.mechanism_id ⊆ owned.
+# M17 W1: + select_extreme_repeated (Selection Sort — executor mới, gap flip owned).
 MECH_ADJACENT_SWAP = "comparison_sort.adjacent_compare_swap"
 MECH_SHIFT_INSERT = "comparison_sort.shift_into_sorted_prefix"
-OWNED_MECHANISMS: tuple[str, ...] = (MECH_ADJACENT_SWAP, MECH_SHIFT_INSERT)
+MECH_SELECT_EXTREME = "comparison_sort.select_extreme_repeated"
+OWNED_MECHANISMS: tuple[str, ...] = (
+    MECH_ADJACENT_SWAP,
+    MECH_SHIFT_INSERT,
+    MECH_SELECT_EXTREME,
+)
 
 # ── prescribed_procedure (analyze signal, §E4/§O7) ────────────
 # Enum ĐÓNG mô tả CƠ CHẾ đề yêu cầu — KHÔNG free-text, KHÔNG tên thuật toán,
@@ -55,10 +62,12 @@ PRESCRIBED_PROCEDURES: tuple[str, ...] = (
 # (mechanisms.LEGACY_ALIASES) phải nối đúng cặp.
 assert _M.LEGACY_ALIASES[PROC_ADJACENT_SWAP] == MECH_ADJACENT_SWAP
 assert _M.LEGACY_ALIASES[PROC_SHIFT_INSERT] == MECH_SHIFT_INSERT
+assert _M.LEGACY_ALIASES[PROC_SELECT_EXTREME] == MECH_SELECT_EXTREME
 
 _VARIANTS: tuple[VariantSpec, ...] = (
     VariantSpec("bubble", "algorithm.bubble_sort", MECH_ADJACENT_SWAP),
     VariantSpec("insertion", "algorithm.insertion_sort", MECH_SHIFT_INSERT),
+    VariantSpec("selection", "algorithm.selection_sort", MECH_SELECT_EXTREME),
 )
 
 _VARIANT_IDS: tuple[str, ...] = tuple(v.variant_id for v in _VARIANTS)
@@ -84,12 +93,12 @@ _ALLOWED_KEYS = {"family_version", "variant", "array", "order", "labels", "notes
 SORTING_FAMILY_CONTRACT = f"""HỢP ĐỒNG CONFIG (SortingFamilySpec, family_version "{SORT_FAMILY_VERSION}"):
 Bạn CHỈ chọn biến thể + điền dữ liệu; engine tất định sở hữu diễn biến/kết quả.
 - family_version: đúng "{SORT_FAMILY_VERSION}".
-- variant: "bubble" (nổi bọt — đổi chỗ cặp KỀ) hoặc "insertion" (chèn — dời vào phần đã sắp). Chọn theo cơ chế ĐỀ YÊU CẦU; đề không ép cơ chế → chọn "bubble".
+- variant: "bubble" (nổi bọt — đổi chỗ cặp KỀ), "insertion" (chèn — dời vào phần đã sắp) hoặc "selection" (chọn — mỗi lượt TÌM phần tử cực trị của phần chưa sắp rồi đưa về đầu). Chọn theo cơ chế ĐỀ YÊU CẦU; đề không ép cơ chế → chọn "bubble".
 - array: dãy số CỦA ĐỀ (2–15 phần tử, đúng thứ tự đề cho, không bịa).
 - order: "asc" (tăng dần) hoặc "desc" (giảm dần) theo đề.
 - labels: nhãn từng phần tử NẾU đề gắn tên người/vật với giá trị (độ dài khớp array); không có → bỏ trống.
 - TUYỆT ĐỐI KHÔNG sinh steps/timeline/kết quả/trạng thái — engine tự chạy.
-- KHÔNG dùng cho selection sort / quick sort / merge sort (cơ chế ngoài phạm vi)."""
+- KHÔNG dùng cho quick sort / merge sort (cơ chế ngoài phạm vi)."""
 
 
 def _finite_number(v) -> bool:
@@ -169,9 +178,10 @@ SORTING_SELECTOR = FamilySelector(
     variants=_VARIANTS,
     description=(
         "sắp xếp một dãy số bằng THUẬT TOÁN SO SÁNH — nổi bọt (bubble, đổi chỗ cặp "
-        "kề) hoặc chèn (insertion, dời phần tử vào phần đã sắp). Dùng khi đề yêu cầu "
-        "SẮP XẾP một dãy. KHÔNG dùng cho selection sort / quick sort / merge sort — "
-        "các cơ chế đó chưa có engine tất định sở hữu (trả unsupported)."
+        "kề), chèn (insertion, dời phần tử vào phần đã sắp) hoặc chọn (selection, "
+        "mỗi lượt tìm phần tử cực trị của phần chưa sắp đưa về đầu). Dùng khi đề "
+        "yêu cầu SẮP XẾP một dãy. KHÔNG dùng cho quick sort / merge sort — các cơ "
+        "chế đó chưa có engine tất định sở hữu (trả unsupported)."
     ),
     config_schema=SORTING_FAMILY_SCHEMA,
     contract=SORTING_FAMILY_CONTRACT,

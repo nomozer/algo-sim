@@ -17,12 +17,13 @@ beforeEach(() => {
 });
 
 describe("registry", () => {
-  it("đăng ký đủ 9 mô phỏng domain algorithm (8 chuyên biệt + scan M12)", () => {
+  it("đăng ký đủ 10 mô phỏng domain algorithm (9 chuyên biệt + scan; +selection M17 W1)", () => {
     registerAlgorithmDomain();
     const metas = listSimulations();
-    expect(metas).toHaveLength(9);
+    expect(metas).toHaveLength(10);
     expect(metas.map((m) => m.id)).toContain("algorithm.find_max");
     expect(metas.map((m) => m.id)).toContain("algorithm.bubble_sort");
+    expect(metas.map((m) => m.id)).toContain("algorithm.selection_sort");
     expect(metas.map((m) => m.id)).toContain("algorithm.scan");
     expect(metas.every((m) => m.domain === "algorithm")).toBe(true);
     expect(metas.every((m) => m.interactionMode === "progressive")).toBe(true);

@@ -44,7 +44,8 @@ def test_array_bound_va_so_huu_han(arr):
 
 
 def test_variant_ngoai_enum_reject():
-    cfg, err = validate_family_spec(_spec(variant="selection"))
+    # M17 W1: "selection" đã vào enum — dùng "quick" (vẫn ngoài phạm vi) làm mẫu sai
+    cfg, err = validate_family_spec(_spec(variant="quick"))
     assert cfg is None and "variant" in err
 
 
@@ -66,4 +67,8 @@ def test_order_sai_reject():
 def test_schema_dong_dung_field():
     props = set(SORTING_FAMILY_SCHEMA["properties"])
     assert props == {"family_version", "variant", "array", "order", "labels", "notes"}
-    assert SORTING_FAMILY_SCHEMA["properties"]["variant"]["enum"] == ["bubble", "insertion"]
+    assert SORTING_FAMILY_SCHEMA["properties"]["variant"]["enum"] == [
+        "bubble",
+        "insertion",
+        "selection",  # M17 W1
+    ]

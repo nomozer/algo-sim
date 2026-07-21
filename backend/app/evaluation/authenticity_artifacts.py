@@ -106,6 +106,14 @@ def build_curriculum_coverage(records: list[AuditRecord]) -> dict:
 
 
 # ── 5+6. hai báo cáo markdown (tất định — không timestamp trong nội dung) ──
+def _near_miss_line(records: list[AuditRecord]) -> str:
+    """Dòng báo cáo near-miss DẪN XUẤT từ record thật (không hardcode số)."""
+    nm = [r for r in records if r.archetype == "near_miss"]
+    mechs = ", ".join(f"`{r.mechanism}`" for r in nm)
+    return (
+        f"3. **{sum(1 for r in nm if r.matched)}/{len(nm)} intentional gap** ({mechs})"
+        " bị chặn đúng mã `gate_mechanism_ownership`."
+    )
 def build_authenticity_report_md(records: list[AuditRecord]) -> str:
     m = build_authenticity_metrics(records)
     cls = classify_targets(records)
@@ -159,8 +167,7 @@ def build_authenticity_report_md(records: list[AuditRecord]) -> str:
         " trung thực (bằng chứng live M16: 24/24 analyze trung thực). Fix dài"
         " hạn = family `tree_traversal` (Wave 2); mọi siết gate thêm là"
         " production change cần user duyệt.",
-        "3. **4/4 intentional gap** (selection/quick/unspecified sort, cơ số ≠ 2)"
-        " bị chặn đúng mã `gate_mechanism_ownership`.",
+        _near_miss_line(records),
         "4. **Đối chứng representation** (vẽ sơ đồ khai báo) KHÔNG bị chặn oan.",
         "",
     ]

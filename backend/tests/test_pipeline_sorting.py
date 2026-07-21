@@ -81,16 +81,16 @@ def test_plain_sort_none_permissive(monkeypatch):
     assert env["status"] == "ok" and env["simulation_id"] == "algorithm.bubble_sort"
 
 
-def test_selection_sort_capability_gap_khong_simulate(monkeypatch):
-    # analyze phát select_extreme_repeated → mechanism gate tầng 1 → gap TRƯỚC simulate
-    fake, calls = _fake_gemini([_analysis("select_extreme_repeated"), _classify()])
+def test_selection_sort_resolve_ve_concrete_m17_w1(monkeypatch):
+    # M17 W1: select_extreme_repeated ĐÃ owned → qua gate, resolve variant selection
+    fake, calls = _fake_gemini([
+        _analysis("select_extreme_repeated"), _classify(), _spec("selection"),
+    ])
     monkeypatch.setattr(pipeline, "call_gemini", fake)
     env = asyncio.run(pipeline.run_pipeline("Sắp xếp chọn dãy.", "k"))
-    assert env["status"] == "unsupported"
-    assert env["failure_category"] == "capability_gap"
-    assert env["error_code"] == "gate_mechanism_ownership"
-    assert env.get("simulation_id") is None
-    assert len(calls) == 2  # KHÔNG gọi simulate
+    assert env["status"] == "ok"
+    assert env["simulation_id"] == "algorithm.selection_sort"
+    assert len(calls) == 3  # analyze + classify + 1 simulate
 
 
 def test_quick_sort_capability_gap(monkeypatch):
@@ -114,19 +114,18 @@ def test_variant_mismatch_retry(monkeypatch):
     assert len(calls) == 4  # analyze + classify + 2 lần simulate (retry)
 
 
-def test_selection_sort_misroute_generic_van_bi_gate_chan(monkeypatch):
-    # phòng thủ 2: selection-sort (cơ chế KHÔNG sở hữu) bị misroute về generic.
-    # M15 Task 6 (Global Constraint 15): prescribed thuộc họ comparison_sort ≠ họ
-    # của generic → recovery reclassify ĐÚNG 1 lượt (→ comparison_sort) TRƯỚC mọi
-    # route-dependent gate; trên FINAL route mechanism gate tầng 1 chặn
-    # select_extreme (unowned) → capability_gap. KẾT QUẢ (unsupported +
-    # capability_gap, KHÔNG dựng generic) GIỮ NGUYÊN — chỉ đường đi đổi
-    # (recovery→tier-1 thay vì computation gate; cần thêm 1 response reclassify).
+def test_quick_sort_misroute_generic_van_bi_gate_chan(monkeypatch):
+    # phòng thủ 2 (M17 W1: đổi trigger từ selection — nay owned — sang QUICK,
+    # vẫn intentional gap): quick sort bị misroute về generic. M15 Task 6:
+    # prescribed thuộc họ comparison_sort ≠ họ của generic → recovery reclassify
+    # ĐÚNG 1 lượt (→ comparison_sort) TRƯỚC mọi route-dependent gate; trên FINAL
+    # route mechanism gate tầng 1 chặn partition (unowned) → capability_gap.
+    # KHÔNG dựng generic.
     fake, calls = _fake_gemini([
-        _analysis("select_extreme_repeated", ownership="algorithmic"),
+        _analysis("partition_recursive", ownership="algorithmic"),
         _classify("generic.rule_scene"),
         _classify("algorithm.comparison_sort"),  # reclassify bounded 1 lượt
     ])
     monkeypatch.setattr(pipeline, "call_gemini", fake)
-    env = asyncio.run(pipeline.run_pipeline("Sắp xếp chọn.", "k"))
+    env = asyncio.run(pipeline.run_pipeline("Sắp xếp nhanh.", "k"))
     assert env["status"] == "unsupported" and env["failure_category"] == "capability_gap"

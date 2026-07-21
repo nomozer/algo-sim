@@ -56,6 +56,12 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     rationale:
       "Thứ tự phần tử quyết định số lần dời và vị trí chèn; đổi chỗ làm hệ quả đó hiện ra tất định trong nhánh thử nghiệm.",
   },
+  selection_sort: {
+    mode: "free",
+    hint: 'Kéo một cột thả lên cột khác để thử "nếu đổi chỗ thì sao?" — vị trí phần tử nhỏ nhất/lớn nhất của phần chưa sắp sẽ đổi theo.',
+    rationale:
+      "Thứ tự phần tử quyết định vị trí cực trị được CHỌN mỗi lượt và số lần đổi chỗ; engine chạy tiếp tất định trên dãy đã đổi nên hệ quả nhìn thấy ngay trong nhánh thử nghiệm.",
+  },
   linear_search: {
     mode: "framed",
     hint: "Kéo đổi chỗ để đưa giá trị cần tìm tới sớm hơn hay muộn hơn — số lần so sánh sẽ thay đổi thế nào?",

@@ -15,6 +15,7 @@ export const ALGORITHM_IDS = [
   "binary_search",
   "bubble_sort",
   "insertion_sort",
+  "selection_sort",
 ] as const;
 
 export type AlgorithmId = (typeof ALGORITHM_IDS)[number];
@@ -28,6 +29,7 @@ export const ALGORITHM_NAMES: Record<AlgorithmId, string> = {
   binary_search: "Tìm kiếm nhị phân",
   bubble_sort: "Sắp xếp nổi bọt",
   insertion_sort: "Sắp xếp chèn",
+  selection_sort: "Sắp xếp chọn",
 };
 
 export type ConditionOp = ">" | ">=" | "<" | "<=" | "==" | "!=";

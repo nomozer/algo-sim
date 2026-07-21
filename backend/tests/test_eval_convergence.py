@@ -85,15 +85,31 @@ def test_evaluate_item_di_qua_run_pipeline(monkeypatch):
     assert res.variant == "bubble"
 
 
-def test_evaluate_item_selection_near_miss_la_capability_gap(monkeypatch):
-    # analyze phát select_extreme → mechanism gate → capability_gap; nhóm unsupported
+def test_evaluate_item_partition_near_miss_la_capability_gap(monkeypatch):
+    # M17 W1: select_extreme ĐÃ owned (selection_sort) — near-miss chuyển sang
+    # partition_recursive (quick sort, vẫn intentional gap). analyze phát
+    # partition → mechanism gate → capability_gap; nhóm unsupported.
     monkeypatch.setattr(pipeline, "call_gemini",
-                        _fake_gemini([_analysis("select_extreme_repeated"), _classify("algorithm.comparison_sort")]))
-    item = EvalItem("t-selection", "Sắp xếp chọn.", "unsupported")
+                        _fake_gemini([_analysis("partition_recursive"), _classify("algorithm.comparison_sort")]))
+    item = EvalItem("t-quick", "Sắp xếp nhanh chia quanh mốc.", "unsupported")
     res = asyncio.run(harness.evaluate_item(item, "k"))
     assert res.classified_ok is True  # từ chối đúng
     assert res.mechanism_gate_fired is True
     assert res.final_simulation_id is None
+
+
+def test_evaluate_item_selection_resolve_ve_concrete(monkeypatch):
+    # M17 W1: selection nay là variant OWNED — token resolve về concrete id.
+    monkeypatch.setattr(pipeline, "call_gemini",
+                        _fake_gemini([_analysis("select_extreme_repeated"),
+                                      _classify("algorithm.comparison_sort"),
+                                      _sort_spec("selection")]))
+    item = EvalItem("t-selection-ok", "Sắp xếp chọn 5,2,9.", "specialized", "algorithm.selection_sort")
+    res = asyncio.run(harness.evaluate_item(item, "k"))
+    assert res.classified_ok and res.spec_valid
+    assert res.classify_simulation_id == "algorithm.comparison_sort"
+    assert res.final_simulation_id == "algorithm.selection_sort"
+    assert res.variant == "selection"
 
 
 # ── M15 Task 4: analyze_done mang cả raw lẫn canonical (khóa 5) ────

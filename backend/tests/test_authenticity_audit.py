@@ -64,9 +64,11 @@ def test_audit_hard_correctness(monkeypatch):
             f"route={r.final_route} err={r.pipeline_error}"
         )
 
-    # (b) near-miss: đủ 4, đúng mã gate_mechanism_ownership
+    # (b) near-miss: đúng MỘT case cho mỗi cơ chế near-miss khai trong contract
+    # (dẫn xuất — không pin số cứng, tránh churn khi wave flip gap→owned)
+    expected_nm = {nm_ for c in AUTHENTICITY_CONTRACTS.values() for nm_ in c.near_miss_mechanisms}
     nm = [r for r in records if r.archetype == "near_miss"]
-    assert len(nm) == 4
+    assert len(nm) == len(expected_nm) > 0
     for r in nm:
         assert r.envelope_error_code == "gate_mechanism_ownership", r.case_id
         assert r.failure_category == "capability_gap", r.case_id
@@ -108,12 +110,14 @@ def test_pin_adversarial_tree_probe_conditional_leak(monkeypatch):
 def test_classification_va_metrics(monkeypatch):
     records = _run(monkeypatch)
     cls = classify_targets(records)
-    assert len(cls) == 14
+    n_targets = len(ai_reachable_ids())
+    assert len(cls) == n_targets
     assert cls["generic.rule_scene"] == "PARTIAL"  # dual authority (boolean DAG + representation)
     assert all(v == "REAL" for sid, v in cls.items() if sid != "generic.rule_scene")
 
     m = audit_metrics(records, cls)
-    assert m["near_miss_gap_recall"] == {"numerator": 4, "denominator": 4}
+    n_nm = len({nm for c in AUTHENTICITY_CONTRACTS.values() for nm in c.near_miss_mechanisms})
+    assert m["near_miss_gap_recall"] == {"numerator": n_nm, "denominator": n_nm}
     assert m["false_refusal_on_ok_archetypes"] == 0
     integ = m["concrete_envelope_integrity"]
     assert integ["numerator"] == integ["denominator"] > 0
@@ -121,7 +125,7 @@ def test_classification_va_metrics(monkeypatch):
     assert parity["numerator"] == parity["denominator"] == len(records)
     assert m["generic_leak"]["unconditional_leaks"] == 0
     assert m["generic_leak"]["conditional_leaks_confirmed"] == 1  # probe pin ở trên
-    assert m["classification_histogram"] == {"REAL": 13, "PARTIAL": 1}
+    assert m["classification_histogram"] == {"REAL": n_targets - 1, "PARTIAL": 1}
 
     ledger = build_leak_ledger(records)
     verdicts = {e["case_id"]: e["verdict"] for e in ledger}

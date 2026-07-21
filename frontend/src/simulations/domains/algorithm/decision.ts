@@ -236,6 +236,38 @@ function insertionDecision(state: AlgorithmSimState): DecisionPoint | null {
   };
 }
 
+function selectionDecision(state: AlgorithmSimState): DecisionPoint | null {
+  const { cur, next } = steps(state);
+  if (!next) return null;
+  const cmp = cur.events.find((e) => e.type === "compare");
+  if (!cmp || cmp.type !== "compare") return null;
+  // Chỉ nhận bước so sánh của selection (có biến vị trí cực trị đang theo dõi).
+  const vt = num(cur.snapshot.vars["vi_tri_cuc_tri"]);
+  if (Number.isNaN(vt)) return null;
+
+  const vCur = cur.snapshot.array[cmp.i]; // cực trị hiện tại (tại minIdx)
+  const vNew = cur.snapshot.array[cmp.j]; // ứng viên đang xét
+  const updates = next.events.some(
+    (e) => e.type === "assign_var" && e.name === "vi_tri_cuc_tri",
+  );
+  const asc = (state.config.data.order ?? "asc") === "asc";
+  const extremeText = asc ? "nhỏ nhất" : "lớn nhất";
+  const word = asc ? "nhỏ hơn" : "lớn hơn";
+
+  return {
+    question:
+      `So sánh ${fmt(vNew)} với ${extremeText} hiện tại ${fmt(vCur)}. ` +
+      `Vị trí ${extremeText} có được cập nhật không?`,
+    options: YES_NO,
+    expectedId: updates ? "yes" : "no",
+    evidence: updates
+      ? `${fmt(vNew)} ${word} ${fmt(vCur)} nên vị trí ${extremeText} chuyển sang ô thứ ${cmp.j + 1}.`
+      : `${fmt(vNew)} không ${word} ${fmt(vCur)} nên vị trí ${extremeText} giữ nguyên.`,
+    consideration: `Đang xét ${fmt(vNew)} (vị trí ${cmp.j + 1}) — ${extremeText} hiện tại: ${fmt(vCur)}`,
+    expression: `${fmt(vNew)} ${word} ${fmt(vCur)} ?`,
+  };
+}
+
 /* ── API ──────────────────────────────────────────────────────────────────── */
 
 /** Điểm quyết định ở BƯỚC HIỆN TẠI, hoặc null nếu bước này không có gì để hỏi. */
@@ -257,6 +289,8 @@ export function decisionPointOf(state: AlgorithmSimState): DecisionPoint | null 
       return bubbleDecision(state);
     case "insertion_sort":
       return insertionDecision(state);
+    case "selection_sort":
+      return selectionDecision(state);
   }
 }
 

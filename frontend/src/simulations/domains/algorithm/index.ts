@@ -71,7 +71,11 @@ function validateAlgorithmConfig(
   }
 
   let order: "asc" | "desc" | null = null;
-  if (algorithmId === "bubble_sort" || algorithmId === "insertion_sort") {
+  if (
+    algorithmId === "bubble_sort" ||
+    algorithmId === "insertion_sort" ||
+    algorithmId === "selection_sort"
+  ) {
     if (data.order !== "asc" && data.order !== "desc") {
       return { ok: false, error: `"${algorithmId}" bắt buộc có "data.order" asc/desc.` };
     }

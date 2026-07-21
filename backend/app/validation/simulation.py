@@ -17,6 +17,7 @@ ALGORITHM_IDS = [
     "binary_search",
     "bubble_sort",
     "insertion_sort",
+    "selection_sort",
 ]
 
 ALGORITHM_NAMES_VI = {
@@ -28,6 +29,7 @@ ALGORITHM_NAMES_VI = {
     "binary_search": "Tìm kiếm nhị phân",
     "bubble_sort": "Sắp xếp nổi bọt",
     "insertion_sort": "Sắp xếp chèn",
+    "selection_sort": "Sắp xếp chọn",
 }
 
 CONDITION_OPS = [">", ">=", "<", "<=", "==", "!="]
@@ -109,7 +111,7 @@ def validate_algorithm_config(algorithm_id: str, raw) -> tuple[dict | None, str 
         condition = {"op": c["op"], "value": c["value"]}
 
     order = None
-    if algorithm_id in ("bubble_sort", "insertion_sort"):
+    if algorithm_id in ("bubble_sort", "insertion_sort", "selection_sort"):
         if data.get("order") not in ("asc", "desc"):
             return None, f'Mô phỏng "{algorithm_id}" bắt buộc có "data.order" là "asc" hoặc "desc".'
         order = data["order"]

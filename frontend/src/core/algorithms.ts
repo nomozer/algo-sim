@@ -441,6 +441,93 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
   return b.build();
 }
 
+/* ── selection_sort (M17 W1) ─────────────────────────────── */
+
+function runSelectionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
+  const b = new TraceBuilder(a.data.array, "engine", whatIf);
+  const order = a.data.order ?? "asc";
+  const orderText = order === "asc" ? "tăng dần" : "giảm dần";
+  const extremeText = order === "asc" ? "nhỏ nhất" : "lớn nhất";
+  const n = b.length;
+  let swaps = 0;
+
+  b.step(
+    [],
+    `Sắp xếp chọn ${orderText}: mỗi lượt TÌM phần tử ${extremeText} của phần chưa sắp rồi đưa về đầu phần đó.`,
+    false,
+    1,
+  );
+
+  for (let i = 0; i < n - 1; i++) {
+    let minIdx = i;
+    b.setVar("vi_tri_cuc_tri", i + 1);
+    b.step(
+      [
+        { type: "set_range", left: i, right: n - 1 },
+        { type: "assign_var", name: "vi_tri_cuc_tri", value: i + 1 },
+      ],
+      `Lượt ${i + 1}: xét phần chưa sắp từ vị trí ${i + 1} đến ${n}; tạm coi ${fmt(b.at(i))} là ${extremeText}.`,
+      false,
+      2,
+    );
+    for (let j = i + 1; j < n; j++) {
+      const better = order === "asc" ? b.at(j) < b.at(minIdx) : b.at(j) > b.at(minIdx);
+      // M9-S1: narration hỏi — việc cập nhật vị trí cực trị thuộc bước kế tiếp.
+      b.step(
+        [
+          {
+            type: "compare",
+            i: minIdx,
+            j,
+            result: b.at(minIdx) > b.at(j) ? ">" : b.at(minIdx) < b.at(j) ? "<" : "==",
+          },
+        ],
+        `So sánh ${fmt(b.at(j))} với ${extremeText} hiện tại ${fmt(b.at(minIdx))}: có ghi nhớ vị trí mới không?`,
+        true,
+        4,
+      );
+      if (better) {
+        minIdx = j;
+        b.setVar("vi_tri_cuc_tri", j + 1);
+        b.step(
+          [{ type: "assign_var", name: "vi_tri_cuc_tri", value: j + 1 }],
+          `${fmt(b.at(j))} ${order === "asc" ? "nhỏ hơn" : "lớn hơn"} — ghi nhớ vị trí ${extremeText} mới: ${j + 1}.`,
+          false,
+          4,
+        );
+      }
+    }
+    if (minIdx !== i) {
+      const chosen = b.at(minIdx);
+      b.swap(i, minIdx);
+      swaps++;
+      b.mark(i, "sorted");
+      b.step(
+        [
+          { type: "swap", i, j: minIdx },
+          { type: "mark", index: i, status: "sorted" },
+        ],
+        `Chọn xong lượt ${i + 1}: đưa ${fmt(chosen)} về vị trí ${i + 1} (đổi chỗ với ${fmt(b.at(minIdx))}). Ranh giới phần đã sắp dài thêm.`,
+        false,
+        5,
+      );
+    } else {
+      b.mark(i, "sorted");
+      b.step(
+        [{ type: "mark", index: i, status: "sorted" }],
+        `Chọn xong lượt ${i + 1}: ${fmt(b.at(i))} đã đứng đúng vị trí — không cần đổi chỗ.`,
+        false,
+        5,
+      );
+    }
+  }
+
+  b.mark(n - 1, "sorted");
+  const result = `Dãy đã sắp xếp ${orderText} xong sau ${n - 1} lượt chọn, ${swaps} lần đổi chỗ.`;
+  b.step([{ type: "done", result }], result, false, 6);
+  return b.build();
+}
+
 /* ── dispatch ────────────────────────────────────────────── */
 
 export function runAlgorithm(analysis: AnalysisOk, whatIf?: WhatIfSwap): Trace {
@@ -459,6 +546,8 @@ export function runAlgorithm(analysis: AnalysisOk, whatIf?: WhatIfSwap): Trace {
       return runBinarySearch(analysis, whatIf);
     case "bubble_sort":
       return runBubbleSort(analysis, whatIf);
+    case "selection_sort":
+      return runSelectionSort(analysis, whatIf);
     case "insertion_sort":
       return runInsertionSort(analysis, whatIf);
   }

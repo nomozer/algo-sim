@@ -15,8 +15,9 @@ from app.simulation.families import _selector_internal_violations
 VALID_FAMILY_IDS = {f.value for f in FamilyId}
 
 
-def test_catalog_van_14_runtime_target():
-    assert len(CATALOG) == 14
+def test_catalog_15_runtime_target_sau_m17_w1a():
+    # 14 (M15/M16) + algorithm.selection_sort (M17 W1.A)
+    assert len(CATALOG) == 15
 
 
 def test_moi_entry_co_metadata_descriptor_day_du():
@@ -103,8 +104,8 @@ def test_cross_lock_phat_hien_target_thieu_membership():
     assert any("thiếu membership" in v for v in violations)
 
 
-def test_config_contract_version_khai_du_14_entry():
-    assert len(CATALOG) == 14
+def test_config_contract_version_khai_du_moi_entry():
+    assert len(CATALOG) == 15
     for spec in CATALOG.values():
         assert spec.config_contract_version  # ≠ "" (K1 — shape + VALIDATION POLICY, §C2 rev2)
 

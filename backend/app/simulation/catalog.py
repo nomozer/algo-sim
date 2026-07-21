@@ -24,6 +24,7 @@ from app.simulation.families import (
 )
 from app.simulation.families.sorting import (
     MECH_ADJACENT_SWAP,
+    MECH_SELECT_EXTREME,
     MECH_SHIFT_INSERT,
     SORT_FAMILY_VERSION,
 )
@@ -67,6 +68,7 @@ _ALGO_DESCRIPTIONS = {
     "binary_search": "tìm một giá trị bằng cách CHIA ĐÔI vùng xét — tìm kiếm nhị phân (đề thường gợi ý 'tìm nhanh', 'chia đôi'). Dãy chưa sắp thứ tự VẪN chọn được: hệ tự sắp dãy trước và chú thích cho học sinh (không từ chối vì dãy chưa sắp)",
     "bubble_sort": "sắp xếp dãy bằng cách so sánh và đổi chỗ các cặp kề nhau (nổi bọt)",
     "insertion_sort": "sắp xếp dãy bằng cách rút từng phần tử chèn vào phần đã sắp (chèn)",
+    "selection_sort": "sắp xếp dãy bằng cách mỗi lượt CHỌN phần tử cực trị của phần chưa sắp đưa về đầu (chọn)",
 }
 
 # Schema structured output (định dạng Gemini) cho config domain algorithm
@@ -249,6 +251,24 @@ _ALGO_META: dict[str, dict] = {
         ),
         "anchor": "T11CS B21–22",
     },
+    # M17 W1 — Selection Sort (gap flip → owned). reachability KHÔNG có
+    # library_discoverable (tiền lệ algorithm.scan): chưa có mẫu offline công
+    # khai; AI-reachable qua selector token.
+    "selection_sort": {
+        "memberships": (
+            FamilyMembership(
+                FamilyId.COMPARISON_SORT, ResultAuthority.COMPUTATION,
+                variant_id="selection", family_spec_version=SORT_FAMILY_VERSION,
+                mechanism_id=MECH_SELECT_EXTREME,
+                owned_mechanisms=(MECH_SELECT_EXTREME,),
+            ),
+        ),
+        "anchor": "T11CS B21–22",
+        "reachability": (
+            ReachabilityLevel.REGISTERED,
+            ReachabilityLevel.AI_REACHABLE_PUBLIC,
+        ),
+    },
 }
 
 for _aid in ALGORITHM_IDS:
@@ -263,7 +283,7 @@ for _aid in ALGORITHM_IDS:
         validate=partial(validate_algorithm_config, _aid),
         make_title=_algo_title,
         family_memberships=_ALGO_META[_aid]["memberships"],
-        reachability=_R_FULL,
+        reachability=_ALGO_META[_aid].get("reachability", _R_FULL),
         curriculum_anchor=_ALGO_META[_aid]["anchor"],
         config_contract_version="algo-cfg-1",
     )

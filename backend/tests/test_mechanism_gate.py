@@ -23,9 +23,9 @@ def _an(proc):
 
 
 # ── Tầng 1: ownership ──────────────────────────────────────────
-def test_selection_sort_gap():
-    res = check_mechanism_ownership(_an(PROC_SELECT_EXTREME), SORTING_SELECTOR)
-    assert res is not None and res[0] is ErrorCode.GATE_MECHANISM_OWNERSHIP
+def test_selection_sort_owned_qua_gate_m17_w1():
+    # M17 W1: select_extreme_repeated flip GAP → OWNED (algorithm.selection_sort)
+    assert check_mechanism_ownership(_an(PROC_SELECT_EXTREME), SORTING_SELECTOR) is None
 
 
 def test_quick_sort_gap():
@@ -53,6 +53,13 @@ def test_owned_mechanism_qua_tang_1():
 def test_variant_khop_co_che_pass():
     assert check_variant_consistency(_an(PROC_ADJACENT_SWAP), SORTING_SELECTOR, "bubble") is None
     assert check_variant_consistency(_an(PROC_SHIFT_INSERT), SORTING_SELECTOR, "insertion") is None
+    assert check_variant_consistency(_an(PROC_SELECT_EXTREME), SORTING_SELECTOR, "selection") is None
+
+
+def test_variant_selection_lech_co_che_mismatch():
+    # đề đòi select_extreme nhưng LLM chọn bubble → mismatch tầng 2 → retry
+    res = check_variant_consistency(_an(PROC_SELECT_EXTREME), SORTING_SELECTOR, "bubble")
+    assert res is not None and res[0] is ErrorCode.MECHANISM_VARIANT_MISMATCH
 
 
 def test_variant_lech_co_che_mismatch():
