@@ -11,6 +11,10 @@ from __future__ import annotations
 import json
 
 from app.simulation.catalog import CATALOG, catalog_text, llm_choices
+from app.simulation.completeness_gate import (
+    check_represented_coverage,
+    check_requested_combination,
+)
 from app.simulation.computation_gate import check_computation_ownership
 from app.simulation.structure_gate import check_tree_structure_sufficiency
 from app.simulation.families import selector_for_token
@@ -99,6 +103,15 @@ ANALYZE_SCHEMA = {
         "prescribed_procedure": {
             "type": "STRING",
             "enum": list(analyze_exposed_values()),
+            "nullable": True,
+        },
+        # M17-RC1 §D — TẤT CẢ cơ chế đề yêu cầu (đề có thể hỏi NHIỀU thao tác).
+        # `prescribed_procedure` giữ nguyên vai trò "một cơ chế chính" cho các
+        # gate cũ; trường này bổ sung để phát hiện MẤT MÁT NGỮ NGHĨA khi đề hỏi
+        # nhiều mà spec chỉ dựng được một.
+        "requested_mechanisms": {
+            "type": "ARRAY",
+            "items": {"type": "STRING", "enum": list(analyze_exposed_values())},
             "nullable": True,
         },
         "notes": {"type": "STRING", "nullable": True},
@@ -627,6 +640,27 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
                 "analysis": analysis,
             }
 
+    # M17-RC1 §D PHA 1 — tập YÊU CẦU tự nó vượt chính sách family (vd đề hỏi cả
+    # 4 kiểu duyệt cây trong khi một lần chỉ dựng được một) → chặn TRƯỚC simulate,
+    # không tốn lượt LLM và không bao giờ trả lời nửa vời.
+    _families = {m.family_id.value for m in CATALOG[simulation_id].family_memberships}
+    combo_verdict = check_requested_combination(analysis, _families)
+    _emit(observer, "gate_checked", gate="completeness_requested",
+          fired=bool(combo_verdict),
+          reason_code=combo_verdict[0].value if combo_verdict else None)
+    if combo_verdict is not None:
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category="semantic_incomplete")
+        return {
+            "status": "unsupported",
+            "reason": combo_verdict[1],
+            "failure_category": "semantic_incomplete",
+            "error_code": combo_verdict[0].value,
+            "completeness": combo_verdict[2],
+            "representation_plan": plan,
+            "analysis": analysis,
+        }
+
     spec = CATALOG[simulation_id]
 
     roles = required_roles(analysis)
@@ -680,6 +714,27 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             f"Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: {error}). "
             "Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại."
         )
+
+    # M17-RC1 §D PHA 2 — spec ĐÃ VALIDATE có bỏ sót yêu cầu nào không? Chạy
+    # TRƯỚC khi phát envelope (tức trước executor FE). Bất biến: status=ok ⟹
+    # dropped_requirements rỗng — không bao giờ trả lời nửa vời rồi báo "xong".
+    _owned = {m for mb in spec.family_memberships for m in mb.owned_mechanisms}
+    coverage_verdict = check_represented_coverage(analysis, _families, _owned, config)
+    _emit(observer, "gate_checked", gate="completeness_represented",
+          fired=bool(coverage_verdict),
+          reason_code=coverage_verdict[0].value if coverage_verdict else None)
+    if coverage_verdict is not None:
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category="semantic_incomplete")
+        return {
+            "status": "unsupported",
+            "reason": coverage_verdict[1],
+            "failure_category": "semantic_incomplete",
+            "error_code": coverage_verdict[0].value,
+            "completeness": coverage_verdict[2],
+            "representation_plan": plan,
+            "analysis": analysis,
+        }
 
     # M7.13B: compose-new thành công → thử persist reusable pattern (best-effort;
     # extraction ngoài safe allowlist / round-trip lệch / cổng fail → không lưu).

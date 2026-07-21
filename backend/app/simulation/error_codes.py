@@ -29,3 +29,9 @@ class ErrorCode(str, Enum):
     # M17 W2A — đề đòi duyệt cây nhưng analyze KHÔNG thấy cấu trúc cây nào →
     # thiếu dữ kiện; refuse thay vì để LLM bịa cây (chống false-positive sim).
     STRUCTURE_INSUFFICIENT = "structure_insufficient"
+    # M17-RC1 §D — mất mát ngữ nghĩa: đề hỏi nhiều thao tác mà family chỉ biểu
+    # diễn được một (PHA 1), hoặc spec đã dựng bỏ sót yêu cầu (PHA 2).
+    # Mã ĐÓNG và TRUNG LẬP-FAMILY có chủ đích: chi tiết family/cơ chế nằm ở
+    # evidence + message, không sinh mã động (giữ enum đóng — M14 §H).
+    MULTIPLE_OPERATIONS_NOT_SUPPORTED = "multiple_operations_not_supported"
+    SEMANTIC_INCOMPLETE = "semantic_incomplete"

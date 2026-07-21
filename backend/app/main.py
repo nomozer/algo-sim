@@ -96,7 +96,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       trúc cây → unsupported, KHÔNG dựng cây mặc định). Menu classify đổi
 #       (thêm target) + đề duyệt cây TỪNG unsupported/generic nay route
 #       tree.traversal → invalidate cache cũ. MỘT bump cho coherent Wave 2A.
-CACHE_VERSION = "15"
+# "16": M17-RC1 §D — SEMANTIC COMPLETENESS GATE. analyze.md + ANALYZE_SCHEMA
+#       thêm `requested_mechanisms` (đề hỏi mấy thao tác). Cache cũ giữ analysis
+#       KHÔNG có trường này → gate không thấy gì để đối chiếu và cho qua: đúng
+#       cái đề "cả 4 kiểu duyệt cây" vừa bị bắt lại lọt như cũ. Đây là lý do
+#       BẮT BUỘC bump: hành vi từ chối phụ thuộc trường analyze mới.
+CACHE_VERSION = "16"
 
 
 class InputPayload(BaseModel):

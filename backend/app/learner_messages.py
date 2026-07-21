@@ -34,6 +34,11 @@ _MSG_INSUFFICIENT = (
     "các nút và quan hệ con trái/con phải). Hãy mô tả rõ hơn rồi thử lại — hệ "
     "không tự bịa dữ liệu thay bạn."
 )
+_MSG_INCOMPLETE = (
+    "Đề đang hỏi nhiều thao tác cùng lúc, nhưng mỗi lần mô phỏng chỉ trình bày "
+    "được một. Em hãy tách thành từng lần hỏi (giữ nguyên dữ liệu, mỗi lần chọn "
+    "một thao tác) để xem đầy đủ từng bước."
+)
 _MSG_PIPELINE_FAILED = (
     "AI chưa tạo được mô phỏng hợp lệ cho đề này sau nhiều lần thử. Bạn hãy "
     "diễn đạt lại đề rõ ràng hơn — nêu rõ dữ liệu vào và kết quả cần tìm — "
@@ -48,6 +53,11 @@ def learner_reason(envelope: dict) -> str:
         return _MSG_CAPABILITY_GAP
     if envelope.get("failure_category") == "insufficient_specification":
         return _MSG_INSUFFICIENT
+    if envelope.get("failure_category") == "semantic_incomplete":
+        # Thông điệp của gate ĐÃ thân thiện và nêu rõ cách tách đề — giữ nguyên
+        # thay vì thay bằng câu chung chung kém hữu ích hơn.
+        reason = envelope.get("reason")
+        return reason if isinstance(reason, str) and reason else _MSG_INCOMPLETE
     return _MSG_NOT_IN_CATALOG
 
 

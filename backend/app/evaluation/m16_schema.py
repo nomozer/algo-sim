@@ -29,6 +29,14 @@ M16_DATASET_VERSION = "m16-v1"
 # ĐÚNG 8 family này; family thêm sau (M17+ vd tree_traversal) KHÔNG thuộc phạm
 # vi M16 — mỗi wave có dataset/eval riêng. KHÔNG dẫn xuất từ live FamilyId (sẽ
 # trôi khi thêm family) — đây là bản ghi lịch sử của M16.
+# FROZEN SNAPSHOT: các CỔNG tồn tại tại thời điểm M16. `M16CaseRecord.gates`
+# chỉ ghi những cổng này — cổng thêm sau (M17: structure, completeness_*) KHÔNG
+# thuộc ảnh chụp M16, nếu ghi vào sẽ làm TRÔI artifact frozen dù kết quả mọi
+# case không đổi. Cùng nguyên tắc với M16_FAMILY_VALUES bên dưới.
+M16_GATE_NAMES: frozenset[str] = frozenset({
+    "computation", "mechanism", "route_mechanism",
+})
+
 M16_FAMILY_VALUES: tuple[str, ...] = (
     "single_pass_scan",
     "interval_elimination",

@@ -18,7 +18,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from app.evaluation.dataset import EvalItem
-from app.evaluation.m16_schema import M16Expectation
+from app.evaluation.m16_schema import M16_GATE_NAMES, M16Expectation
 from app.evaluation.observer import AttemptObserver
 from app.simulation.catalog import CATALOG
 from app.simulation.families import FAMILY_SELECTORS, selector_for_token
@@ -149,9 +149,14 @@ def build_m16_record(
         rc_result.get("simulation_id") if rc_result is not None and rc_result.get("status") == "ok" else None
     )
 
+    # CHỈ ghi cổng thuộc ảnh chụp M16 (M16_GATE_NAMES). Cổng thêm sau (M17
+    # structure/completeness) vẫn chạy trong pipeline và vẫn được audit M17 ghi
+    # nhận — nhưng không được đưa vào record M16, nếu không artifact FROZEN sẽ
+    # trôi dù không case nào đổi kết quả.
     gates = [
         {"gate": g.get("gate"), "fired": g.get("fired"), "reason_code": g.get("reason_code")}
         for g in obs.gate_events()
+        if g.get("gate") in M16_GATE_NAMES
     ]
     simulate_attempts = [
         {"n": a.get("n"), "ok": a.get("ok"), "error_code": a.get("error_code")}

@@ -34,6 +34,14 @@ CÁC TRƯỜNG TRÍCH XUẤT:
   - "tree_traversal.postorder": cây con TRÁI, rồi cây con PHẢI, rồi GỐC (duyệt sau / hậu thứ tự / postorder).
   - "tree_traversal.level_order": duyệt theo TỪNG TẦNG từ trên xuống, trái sang phải (theo mức / level-order).
   - Duyệt ĐỒ THỊ chung (đỉnh–cạnh, không phải cây có gốc/trái/phải) → KHÔNG đặt các giá trị này (để null).
+- requested_mechanisms: LIỆT KÊ ĐỦ **mọi** cơ chế đề yêu cầu (cùng bộ giá trị
+  với prescribed_procedure). Đề hỏi NHIỀU thao tác thì phải nêu ĐỦ, KHÔNG được
+  rút gọn còn một. Ví dụ: đề bảo "xác định thứ tự ghi nhận trong cả bốn quy
+  trình: gốc trước; trái-gốc-phải; chỉ ghi sau khi xong hai nhánh; theo từng
+  tầng" → requested_mechanisms = ["tree_traversal.preorder",
+  "tree_traversal.inorder", "tree_traversal.postorder",
+  "tree_traversal.level_order"]. Đề chỉ hỏi một thao tác → mảng một phần tử.
+  Không suy diễn thêm thao tác đề KHÔNG hỏi.
 - QUAN TRỌNG cho bài cây: liệt kê MỖI NÚT đề nêu vào "objects" kèm TÊN NÚT (vd
   "nút A", "nút B") và MỖI QUAN HỆ cha–con vào "relations" dưới dạng nêu RÕ HAI
   TÊN NÚT (vd "B là con trái của A"). Nếu đề KHÔNG cho nút/quan hệ cụ thể thì
