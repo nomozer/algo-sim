@@ -27,6 +27,7 @@ from app.ai.gemini import ApiBudget, BudgetExceeded  # noqa: E402
 from app.ai import pipeline  # noqa: E402
 from app.evaluation.observer import AttemptObserver  # noqa: E402
 from app.simulation.catalog import CATALOG  # noqa: E402
+from app.simulation.structure_gate import structure_evidence  # noqa: E402
 
 OUT = Path(__file__).resolve().parents[2] / "docs" / "evaluation" / "m17" / "wave2a" / "live_smoke.json"
 MAX_HTTP = 20
@@ -118,6 +119,17 @@ async def _run_case(case, api_key, budget):
     config = envelope.get("config") if isinstance(envelope, dict) else None
     variant = config.get("variant") if isinstance(config, dict) else None
 
+    # ── analyze evidence mà structure gate DÙNG (yêu cầu artifact) ──
+    analysis = envelope.get("analysis") if isinstance(envelope, dict) else None
+    analysis = analysis if isinstance(analysis, dict) else {}
+    evidence = structure_evidence(analysis)
+    struct_gates = [g for g in obs.gates() if g.get("gate") == "structure"]
+    gate_decision = (
+        ("FAIL" if struct_gates[0].get("fired") else "PASS") if struct_gates else "NOT_RUN"
+    )
+    gate_reason = struct_gates[0].get("reason_code") if struct_gates else None
+    simulation_created = status == "ok" and isinstance(config, dict) and bool(config)
+
     checks = {}
     if case["expect_status"] == "ok":
         checks["status_ok"] = status == "ok"
@@ -131,13 +143,25 @@ async def _run_case(case, api_key, budget):
             # thứ tự duyệt KHÔNG nằm trong LLM spec (engine FE tính)
             checks["order_not_in_spec"] = bool(keys) and keys.issubset(_TREE_ALLOWED)
             checks["no_forbidden_order_field"] = not (keys & _FORBIDDEN_TREE)
+            # A: structure gate PASS (KHÔNG chặn oan đề cây có cấu trúc thật)
+            checks["structure_gate_pass"] = gate_decision == "PASS"
+            checks["simulation_created"] = simulation_created
         if case["id"] == "w2a-crossfamily-graph-dfs":
             checks["not_tree"] = route != "tree.traversal"
-    else:  # insufficient → unsupported
+            # B: gate cây KHÔNG can thiệp nhánh graph
+            checks["tree_gate_not_involved"] = gate_decision == "NOT_RUN"
+    else:  # C: insufficient → deterministic structure gate chặn
         checks["status_unsupported"] = status == "unsupported"
         checks["no_route"] = route is None
         checks["no_generic_leak"] = route != "generic.rule_scene"
         checks["not_fabricated_tree"] = route != "tree.traversal"  # KHÔNG tự dựng cây
+        checks["structure_gate_fail"] = gate_decision == "FAIL"
+        checks["reason_code_structure_insufficient"] = gate_reason == "structure_insufficient"
+        checks["failure_category_insufficient"] = (
+            (envelope or {}).get("failure_category") == "insufficient_specification"
+        )
+        checks["no_simulation_created"] = not simulation_created
+        checks["executor_not_run"] = len(obs.simulate_attempts()) == 0
         checks["learner_msg_clean"] = _clean_learner(
             (envelope or {}).get("learner_reason") or (envelope or {}).get("reason")
         )
@@ -147,13 +171,24 @@ async def _run_case(case, api_key, budget):
         "expect": {k: case[k] for k in ("expect_status", "expect_route", "expect_variant", "expect_family")},
         "actual": {
             "status": status, "initial_route": classify.get("simulation_id") if classify else None,
-            "final_route": route, "family": _families(route), "variant": variant,
+            "final_route": route, "executor_selected": route, "family": _families(route),
+            "variant": variant, "simulation_created": simulation_created,
             "config_keys": sorted(config.keys()) if isinstance(config, dict) else None,
             "failure_category": (envelope or {}).get("failure_category") if isinstance(envelope, dict) else None,
+            "error_code": (envelope or {}).get("error_code") if isinstance(envelope, dict) else None,
             "reclassify_attempted": obs.reclassify_attempted() is not None,
             "simulate_attempts": len(obs.simulate_attempts()),
             "pipeline_error": pipeline_error, "http_calls": http_delta,
         },
+        # ── evidence analyze mà structure gate DÙNG (yêu cầu user) ──
+        "analyze_evidence": {
+            "objects": analysis.get("objects"),
+            "data": analysis.get("data"),
+            "relations": analysis.get("relations"),
+            "counts": evidence,
+        },
+        "structure_gate": {"decision": gate_decision, "reason_code": gate_reason},
+        "learner_reason": (envelope or {}).get("learner_reason") or (envelope or {}).get("reason"),
         "checks": checks, "passed": all(checks.values()),
     }
 
@@ -188,9 +223,12 @@ async def _main():
     print(f"\n=== M17 W2A LIVE SMOKE ({gemini.MODEL}) ===")
     for r in results:
         a = r["actual"]
+        g, ev = r["structure_gate"], r["analyze_evidence"]["counts"]
         print(f"[{'PASS' if r['passed'] else 'FAIL'}] {r['case_id']}: status={a['status']} "
               f"route={a['final_route']} variant={a['variant']} http={a['http_calls']} "
               f"reclass={a['reclassify_attempted']} sim={a['simulate_attempts']}")
+        print(f"        gate={g['decision']}({g['reason_code']}) sim_created={a['simulation_created']} "
+              f"evidence: rel={ev['relations']} obj={ev['concrete_objects']} data={ev['concrete_data']}")
         if not r["passed"]:
             print(f"        checks: {r['checks']}")
     b = payload["budget_final"]

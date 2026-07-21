@@ -2,14 +2,14 @@
   "schema_version": "1",
   "run_label": "wave2a-live-smoke",
   "run_meta": {
-    "git_commit": "9836d689ba648282a5935237ef32fa48043ac35f",
-    "generated_at": "2026-07-21T07:35:43.594062+00:00",
+    "git_commit": "0f35091f1822b24348efb173dcf48506eb299282",
+    "generated_at": "2026-07-21T13:05:58.233271+00:00",
     "model": "gemini-2.5-flash",
     "budget_cap_http": 20
   },
   "budget_final": {
-    "http_requests": 18,
-    "logical_calls": 18,
+    "http_requests": 16,
+    "logical_calls": 16,
     "retry_requests": 0,
     "transient_hits": 0
   },
@@ -28,10 +28,12 @@
         "status": "ok",
         "initial_route": "tree.traversal",
         "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
         "family": [
           "tree_traversal"
         ],
         "variant": "preorder",
+        "simulation_created": true,
         "config_keys": [
           "nodes",
           "notes",
@@ -40,11 +42,41 @@
           "variant"
         ],
         "failure_category": null,
+        "error_code": null,
         "reclassify_attempted": false,
         "simulate_attempts": 1,
         "pipeline_error": null,
         "http_calls": 3
       },
+      "analyze_evidence": {
+        "objects": [
+          "cây nhị phân",
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D",
+          "nút E"
+        ],
+        "data": [],
+        "relations": [
+          "A là gốc của cây",
+          "B là con trái của A",
+          "C là con phải của A",
+          "D là con trái của B",
+          "E là con phải của B"
+        ],
+        "counts": {
+          "relations": 5,
+          "concrete_objects": 5,
+          "concrete_data": 0,
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "learner_reason": null,
       "checks": {
         "status_ok": true,
         "route_match": true,
@@ -53,7 +85,9 @@
         "concrete_executor": true,
         "no_pipeline_error": true,
         "order_not_in_spec": true,
-        "no_forbidden_order_field": true
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
       },
       "passed": true
     },
@@ -67,37 +101,61 @@
         "expect_family": "tree_traversal"
       },
       "actual": {
-        "status": "ok",
-        "initial_route": "tree.traversal",
-        "final_route": "tree.traversal",
-        "family": [
-          "tree_traversal"
-        ],
-        "variant": "inorder",
-        "config_keys": [
-          "nodes",
-          "notes",
-          "rootId",
-          "specVersion",
-          "variant"
-        ],
-        "failure_category": null,
+        "status": "unsupported",
+        "initial_route": "generic.rule_scene",
+        "final_route": null,
+        "executor_selected": null,
+        "family": [],
+        "variant": null,
+        "simulation_created": false,
+        "config_keys": null,
+        "failure_category": "capability_gap",
+        "error_code": null,
         "reclassify_attempted": false,
-        "simulate_attempts": 1,
+        "simulate_attempts": 0,
         "pipeline_error": null,
-        "http_calls": 3
+        "http_calls": 2
       },
+      "analyze_evidence": {
+        "objects": [
+          "cây",
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D"
+        ],
+        "data": [],
+        "relations": [
+          "A là gốc của cây",
+          "B là con trái của A",
+          "C là con phải của A",
+          "D là con trái của B"
+        ],
+        "counts": {
+          "relations": 4,
+          "concrete_objects": 4,
+          "concrete_data": 0,
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "NOT_RUN",
+        "reason_code": null
+      },
+      "learner_reason": "Bài cần cơ chế chưa có engine tất định sở hữu (arbitrary_algorithm) — hệ từ chối trung thực thay vì dựng cảnh xấp xỉ.",
       "checks": {
-        "status_ok": true,
-        "route_match": true,
-        "family_match": true,
-        "variant_match": true,
-        "concrete_executor": true,
+        "status_ok": false,
+        "route_match": false,
+        "family_match": false,
+        "variant_match": false,
+        "concrete_executor": false,
         "no_pipeline_error": true,
-        "order_not_in_spec": true,
-        "no_forbidden_order_field": true
+        "order_not_in_spec": false,
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": false,
+        "simulation_created": false
       },
-      "passed": true
+      "passed": false
     },
     {
       "case_id": "w2a-postorder-en",
@@ -112,10 +170,12 @@
         "status": "ok",
         "initial_route": "tree.traversal",
         "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
         "family": [
           "tree_traversal"
         ],
         "variant": "postorder",
+        "simulation_created": true,
         "config_keys": [
           "nodes",
           "notes",
@@ -124,11 +184,39 @@
           "variant"
         ],
         "failure_category": null,
+        "error_code": null,
         "reclassify_attempted": false,
         "simulate_attempts": 1,
         "pipeline_error": null,
         "http_calls": 3
       },
+      "analyze_evidence": {
+        "objects": [
+          "cây nhị phân",
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D"
+        ],
+        "data": [],
+        "relations": [
+          "A là gốc",
+          "A có con trái B",
+          "B có con trái C",
+          "C có con trái D"
+        ],
+        "counts": {
+          "relations": 4,
+          "concrete_objects": 4,
+          "concrete_data": 0,
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "learner_reason": null,
       "checks": {
         "status_ok": true,
         "route_match": true,
@@ -137,7 +225,9 @@
         "concrete_executor": true,
         "no_pipeline_error": true,
         "order_not_in_spec": true,
-        "no_forbidden_order_field": true
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
       },
       "passed": true
     },
@@ -154,10 +244,12 @@
         "status": "ok",
         "initial_route": "tree.traversal",
         "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
         "family": [
           "tree_traversal"
         ],
         "variant": "level_order",
+        "simulation_created": true,
         "config_keys": [
           "nodes",
           "notes",
@@ -166,11 +258,45 @@
           "variant"
         ],
         "failure_category": null,
+        "error_code": null,
         "reclassify_attempted": false,
         "simulate_attempts": 1,
         "pipeline_error": null,
         "http_calls": 3
       },
+      "analyze_evidence": {
+        "objects": [
+          "cây",
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D",
+          "nút E",
+          "nút F",
+          "nút G"
+        ],
+        "data": [],
+        "relations": [
+          "A là gốc của cây",
+          "B là con của A",
+          "C là con của A",
+          "D là con của B",
+          "E là con của B",
+          "F là con của C",
+          "G là con của C"
+        ],
+        "counts": {
+          "relations": 7,
+          "concrete_objects": 7,
+          "concrete_data": 0,
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "learner_reason": null,
       "checks": {
         "status_ok": true,
         "route_match": true,
@@ -179,7 +305,9 @@
         "concrete_executor": true,
         "no_pipeline_error": true,
         "order_not_in_spec": true,
-        "no_forbidden_order_field": true
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
       },
       "passed": true
     },
@@ -196,10 +324,12 @@
         "status": "ok",
         "initial_route": "network.graph_traversal",
         "final_route": "network.graph_traversal",
+        "executor_selected": "network.graph_traversal",
         "family": [
           "graph_traversal"
         ],
         "variant": "dfs",
+        "simulation_created": true,
         "config_keys": [
           "directed",
           "edges",
@@ -210,11 +340,50 @@
           "variant"
         ],
         "failure_category": null,
+        "error_code": null,
         "reclassify_attempted": false,
         "simulate_attempts": 1,
         "pipeline_error": null,
         "http_calls": 3
       },
+      "analyze_evidence": {
+        "objects": [
+          "đồ thị",
+          "đỉnh A",
+          "đỉnh B",
+          "đỉnh C",
+          "đỉnh D",
+          "đỉnh E",
+          "cạnh A-B",
+          "cạnh A-C",
+          "cạnh B-D",
+          "cạnh C-E"
+        ],
+        "data": [
+          {
+            "description": "Các cạnh của đồ thị",
+            "labels": null,
+            "values": null
+          }
+        ],
+        "relations": [
+          "A nối với B",
+          "A nối với C",
+          "B nối với D",
+          "C nối với E"
+        ],
+        "counts": {
+          "relations": 4,
+          "concrete_objects": 10,
+          "concrete_data": 1,
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "NOT_RUN",
+        "reason_code": null
+      },
+      "learner_reason": null,
       "checks": {
         "status_ok": true,
         "route_match": true,
@@ -222,7 +391,8 @@
         "variant_match": true,
         "concrete_executor": true,
         "no_pipeline_error": true,
-        "not_tree": true
+        "not_tree": true,
+        "tree_gate_not_involved": true
       },
       "passed": true
     },
@@ -236,31 +406,59 @@
         "expect_family": null
       },
       "actual": {
-        "status": "ok",
-        "initial_route": "tree.traversal",
-        "final_route": "tree.traversal",
-        "family": [
-          "tree_traversal"
-        ],
-        "variant": "preorder",
-        "config_keys": [
-          "nodes",
-          "notes",
-          "rootId",
-          "specVersion",
-          "variant"
-        ],
-        "failure_category": null,
+        "status": "unsupported",
+        "initial_route": null,
+        "final_route": null,
+        "executor_selected": null,
+        "family": [],
+        "variant": null,
+        "simulation_created": false,
+        "config_keys": null,
+        "failure_category": "capability_gap",
+        "error_code": null,
         "reclassify_attempted": false,
-        "simulate_attempts": 1,
+        "simulate_attempts": 0,
         "pipeline_error": null,
-        "http_calls": 3
+        "http_calls": 2
       },
+      "analyze_evidence": {
+        "objects": [
+          "cây",
+          "nút (đỉnh) của cây",
+          "cạnh (liên kết) của cây"
+        ],
+        "data": [
+          {
+            "description": "Không có dữ liệu cây cụ thể được cung cấp trong đề bài.",
+            "labels": null,
+            "values": null
+          }
+        ],
+        "relations": [
+          "quan hệ cha-con giữa các nút trong cây"
+        ],
+        "counts": {
+          "relations": 1,
+          "concrete_objects": 2,
+          "concrete_data": 1,
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "NOT_RUN",
+        "reason_code": null
+      },
+      "learner_reason": "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để AI tự giải rồi dựng cảnh minh hoạ đáp án.",
       "checks": {
-        "status_unsupported": false,
-        "no_route": false,
+        "status_unsupported": true,
+        "no_route": true,
         "no_generic_leak": true,
-        "not_fabricated_tree": false,
+        "not_fabricated_tree": true,
+        "structure_gate_fail": false,
+        "reason_code_structure_insufficient": false,
+        "failure_category_insufficient": false,
+        "no_simulation_created": true,
+        "executor_not_run": true,
         "learner_msg_clean": true
       },
       "passed": false

@@ -59,6 +59,22 @@ def tree_structure_present(analysis: dict) -> bool:
     return False
 
 
+def structure_evidence(analysis: dict) -> dict:
+    """Bằng chứng ĐẾM ĐƯỢC mà gate dựa vào — phục vụ artifact/eval (máy-đọc).
+    Không đổi phán quyết; chỉ phơi bày cùng tín hiệu gate dùng."""
+    if not isinstance(analysis, dict):
+        return {"relations": 0, "concrete_objects": 0, "concrete_data": 0, "present": False}
+    relations = analysis.get("relations") or []
+    objects = analysis.get("objects") or []
+    data = analysis.get("data") or []
+    return {
+        "relations": len(relations) if isinstance(relations, list) else 0,
+        "concrete_objects": _concrete(objects if isinstance(objects, list) else [], is_str=True),
+        "concrete_data": _concrete(data if isinstance(data, list) else [], is_str=False),
+        "present": tree_structure_present(analysis),
+    }
+
+
 def check_tree_structure_sufficiency(analysis: dict) -> tuple[ErrorCode, str] | None:
     """Trả (code, message học-sinh-thân-thiện) khi THIẾU cấu trúc cây; None khi đủ.
     Chỉ gọi khi route cuối == tree.traversal."""
