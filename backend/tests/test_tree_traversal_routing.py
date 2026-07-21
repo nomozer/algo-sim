@@ -101,6 +101,45 @@ def test_insufficient_structure_gate_chan_khong_bia_cay(monkeypatch):
     assert env.get("simulation_id") is None  # KHÔNG dựng cây
 
 
+# ── consistency gate (M17 W2A): analyze nói cơ chế CÂY nhưng classify lạc
+# generic → recovery M15 (mechanism + ownership, KHÔNG keyword) ──
+def test_classify_lac_generic_duoc_reclassify_ve_tree(monkeypatch):
+    # analyze prescribed tree_traversal.inorder, classify lượt 1 = generic →
+    # mismatch họ → ĐÚNG 1 reclassify → tree.traversal → ok.
+    env = _run(monkeypatch, [
+        _analysis(roles={"prescribed_procedure": "tree_traversal.inorder"}),
+        _classify("generic.rule_scene"),
+        _classify("tree.traversal"),
+        _tree_spec(variant="inorder"),
+    ])
+    assert env["status"] == "ok" and env["simulation_id"] == "tree.traversal"
+
+
+def test_classify_van_generic_sau_reclassify_thi_fail_closed(monkeypatch):
+    # reclassify VẪN generic → fail-closed capability_gap, KHÔNG tạo generic sim
+    env = _run(monkeypatch, [
+        _analysis(roles={"prescribed_procedure": "tree_traversal.preorder"}),
+        _classify("generic.rule_scene"),
+        _classify("generic.rule_scene"),
+    ])
+    assert env["status"] == "unsupported"
+    assert env["failure_category"] == "capability_gap"
+    assert env["error_code"] == "route_mechanism_family_mismatch"
+    assert env.get("simulation_id") is None  # KHÔNG generic simulation
+
+
+def test_graph_dfs_khong_bi_keo_ve_tree(monkeypatch):
+    # analyze KHÔNG đặt cơ chế cây cho đồ thị chung → không mismatch, giữ graph
+    graph_cfg = json.dumps({
+        "nodes": [{"id": "A"}, {"id": "B"}], "edges": [["A", "B"]],
+        "start": "A", "variant": "dfs", "directed": False,
+    })
+    env = _run(monkeypatch, [
+        _analysis(), _classify("network.graph_traversal"), graph_cfg,
+    ])
+    assert env["status"] == "ok" and env["simulation_id"] == "network.graph_traversal"
+
+
 # ── cross-family: graph DFS → network.graph_traversal (KHÔNG tree) ──
 def test_graph_dfs_route_graph_khong_tree(monkeypatch):
     graph_cfg = json.dumps({

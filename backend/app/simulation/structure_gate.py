@@ -1,77 +1,112 @@
 """M17 W2A — insufficient-structure gate cho tree.traversal (chống LLM bịa cây).
 
-Vấn đề (phát hiện live W2A): prompt "duyệt cây preorder" KHÔNG cho cấu trúc cây,
-nhưng classify vẫn route tree.traversal và simulate BỊA nguyên một cây → chạy
-executor = false-positive simulation (vi phạm R0). classify.md 2f dặn từ chối
-nhưng LLM phớt lờ.
+Vấn đề (live W2A run 1): prompt "duyệt cây preorder" KHÔNG cho cấu trúc, nhưng
+classify route tree.traversal và simulate BỊA nguyên một cây → false-positive
+simulation (vi phạm R0).
 
-Phòng thủ DETERMINISTIC (given analyze output — KHÔNG đọc text đề, KHÔNG
-keyword-patch, cùng khuôn computation gate M13): chạy TRÊN route tree.traversal
-TRƯỚC simulate. Nếu analyze KHÔNG thấy CẤU TRÚC CÂY nào (không quan hệ, không
-node cụ thể) → refuse "thiếu dữ kiện", KHÔNG cho simulate bịa.
+Bản v1 (đếm số lượng object/relation) ĐÃ BỊ CHỨNG MINH KHÔNG ĐỦ ở live run 2:
+analyze cho đề trống vẫn trả relations=["quan hệ cha-con giữa các nút trong
+cây"] + objects=["nút (đỉnh) của cây", ...] → đếm ra rel=1/obj=2 → "có cấu
+trúc" → gate SẼ CHO QUA. Mô tả TRỪU TƯỢNG bị tính như cấu trúc CỤ THỂ.
 
-Bất đối xứng có chủ đích: CHỈ refuse khi TÍN HIỆU CẤU TRÚC HOÀN TOÀN VẮNG —
-đề duyệt cây thật (mô tả nút + quan hệ trái/phải) luôn có relations/objects/data
-cụ thể nên KHÔNG bị chặn oan; đề trống rỗng "duyệt cây preorder" mới bị chặn.
-Giới hạn: nếu analyze TỰ hallucination cấu trúc (bịa cả ở analyze) thì gate
-không thấy — đó là analyze-integrity (ghi backlog), ngoài phạm vi gate này.
+Bản v2 (đây) — TÍN HIỆU ĐỊNH DANH NÚT (grounded-ish):
+CHỈ tính là có cấu trúc khi TỒN TẠI MỘT item (relation/data/object) nêu **≥2
+ĐỊNH DANH NÚT phân biệt** — tức một QUAN HỆ giữa hai nút CÓ TÊN, vd "B là con
+trái của A", "A has left child B". Hệ quả:
+- "quan hệ cha-con giữa các nút trong cây" → 0 định danh → THIẾU (chặn đúng);
+- hai nhãn RỜI RẠC ở hai item khác nhau → KHÔNG đủ (đúng chỉ đạo: danh sách
+  hai nhãn không quan hệ ≠ cây);
+- đề cây thật (mọi case live 1–4) luôn có ≥1 quan hệ hai-định-danh → KHÔNG bị
+  chặn oan (đã đối chiếu output analyze THẬT).
+
+Deterministic given analyze output — KHÔNG đọc text đề, KHÔNG keyword-patch
+tên thuật toán (cùng khuôn computation gate M13).
+
+Giới hạn còn lại: nếu analyze TỰ bịa cả định danh cụ thể ("nút A", "B là con
+của A") cho đề trống thì gate không phân biệt được — cần provenance/source-span
+validation (backlog analyze-integrity).
 """
 from __future__ import annotations
 
+import re
+
 from app.simulation.error_codes import ErrorCode
 
-# Từ chung chỉ "cây" nói chung — KHÔNG tính là node cụ thể.
-_GENERIC_TREE_WORDS = {
-    "cây", "cay", "tree", "cây nhị phân", "cay nhi phan", "binary tree",
-    "cấu trúc cây", "cau truc cay", "node", "nút", "nut",
-}
+# Token định danh nút: NGẮN (≤2 ký tự ASCII alnum) và bắt đầu bằng chữ HOA
+# hoặc chữ số — "A", "B", "C1", "10". Từ tiếng Việt ("nút", "cây", "của") tách
+# ra thành mảnh chữ thường → không khớp; từ tiếng Anh dài ("has", "child",
+# "The") cũng không khớp.
+_TOKEN_RE = re.compile(r"[A-Za-z0-9]+")
+_MAX_ID_LEN = 2
 
 
-def _concrete(items: list, is_str: bool) -> int:
-    """Đếm phần tử CỤ THỂ (loại từ chung 'cây/tree')."""
-    n = 0
-    for it in items:
-        text = it if is_str else (it.get("description") if isinstance(it, dict) else None)
-        if not isinstance(text, str) or not text.strip():
+def _identifiers(text: str) -> set[str]:
+    out: set[str] = set()
+    for tok in _TOKEN_RE.findall(text or ""):
+        if len(tok) > _MAX_ID_LEN:
             continue
-        if text.strip().lower() in _GENERIC_TREE_WORDS:
+        head = tok[0]
+        if head.isdigit() or (head.isascii() and head.isupper()):
+            out.add(tok)
+    return out
+
+
+def _item_texts(analysis: dict) -> list[str]:
+    """Gom text của MỖI item analyze (relations là chỗ chính; quét cả data/objects
+    để không phụ thuộc field — normalization adapter).
+
+    QUAN TRỌNG: item dạng DICT được GỘP các giá trị chuỗi thành MỘT text. Analyze
+    có thể trả quan hệ dạng prose ("B là con trái của A") HOẶC có cấu trúc
+    ({"type":"left_child","from":"A","to":"B"}) — cả hai đều là MỘT quan hệ nêu
+    hai nút có tên, nên phải đọc như một item (không tách rời từng field, vì
+    tách ra thì mỗi mảnh chỉ còn một định danh)."""
+    texts: list[str] = []
+    for key in ("relations", "data", "objects"):
+        items = analysis.get(key) or []
+        if not isinstance(items, list):
             continue
-        n += 1
-    return n
+        for it in items:
+            if isinstance(it, str):
+                texts.append(it)
+            elif isinstance(it, dict):
+                joined = " ".join(v for v in it.values() if isinstance(v, str))
+                if joined:
+                    texts.append(joined)
+    return texts
+
+
+def linked_node_items(analysis: dict) -> list[dict]:
+    """Các item nêu ≥2 định danh nút phân biệt (bằng chứng QUAN HỆ có tên)."""
+    if not isinstance(analysis, dict):
+        return []
+    out = []
+    for text in _item_texts(analysis):
+        ids = _identifiers(text)
+        if len(ids) >= 2:
+            out.append({"text": text, "identifiers": sorted(ids)})
+    return out
 
 
 def tree_structure_present(analysis: dict) -> bool:
-    """Deterministic: analyze có nêu CẤU TRÚC cây (nút cụ thể / quan hệ) không?
-
-    Đề cây thật luôn thoả ÍT NHẤT một: có relations (quan hệ trái/phải), hoặc
-    ≥2 object cụ thể (các nút), hoặc ≥2 data item cụ thể. Đề trống → 0 cả ba."""
-    if not isinstance(analysis, dict):
-        return False
-    relations = analysis.get("relations") or []
-    objects = analysis.get("objects") or []
-    data = analysis.get("data") or []
-    if isinstance(relations, list) and len(relations) >= 1:
-        return True
-    if _concrete(objects if isinstance(objects, list) else [], is_str=True) >= 2:
-        return True
-    if _concrete(data if isinstance(data, list) else [], is_str=False) >= 2:
-        return True
-    return False
+    """Có cấu trúc cây ⟺ tồn tại ÍT NHẤT MỘT item nêu quan hệ giữa ≥2 nút CÓ TÊN."""
+    return len(linked_node_items(analysis)) >= 1
 
 
 def structure_evidence(analysis: dict) -> dict:
-    """Bằng chứng ĐẾM ĐƯỢC mà gate dựa vào — phục vụ artifact/eval (máy-đọc).
-    Không đổi phán quyết; chỉ phơi bày cùng tín hiệu gate dùng."""
+    """Bằng chứng máy-đọc mà gate dựa vào (artifact/eval). Không đổi phán quyết."""
     if not isinstance(analysis, dict):
-        return {"relations": 0, "concrete_objects": 0, "concrete_data": 0, "present": False}
+        return {"relations": 0, "linked_items": 0, "identifiers": [], "present": False}
     relations = analysis.get("relations") or []
-    objects = analysis.get("objects") or []
-    data = analysis.get("data") or []
+    linked = linked_node_items(analysis)
+    ids: set[str] = set()
+    for item in linked:
+        ids.update(item["identifiers"])
     return {
         "relations": len(relations) if isinstance(relations, list) else 0,
-        "concrete_objects": _concrete(objects if isinstance(objects, list) else [], is_str=True),
-        "concrete_data": _concrete(data if isinstance(data, list) else [], is_str=False),
-        "present": tree_structure_present(analysis),
+        "linked_items": len(linked),
+        "linked_examples": [i["text"] for i in linked[:3]],
+        "identifiers": sorted(ids),
+        "present": len(linked) >= 1,
     }
 
 
@@ -82,7 +117,8 @@ def check_tree_structure_sufficiency(analysis: dict) -> tuple[ErrorCode, str] | 
         return None
     return (
         ErrorCode.STRUCTURE_INSUFFICIENT,
-        "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể (các nút và "
-        "quan hệ con trái/con phải). Hãy mô tả rõ cây (ví dụ: gốc A, A có con "
-        "trái B và con phải C…) rồi thử lại — hệ không tự dựng cây thay bạn.",
+        "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể (các nút có tên "
+        "và quan hệ con trái/con phải giữa chúng). Hãy mô tả rõ cây (ví dụ: gốc "
+        "A, A có con trái B và con phải C…) rồi thử lại — hệ không tự dựng cây "
+        "thay bạn.",
     )

@@ -111,4 +111,9 @@ def analyze_exposed_values() -> tuple[str, ...]:
         *LEGACY_ALIASES.keys(),
         "positional_representation.binary_positional_weights",
         "positional_representation.non_binary_base",
+        # M17 W2A — phơi bày cơ chế duyệt cây để route-consistency (khóa 3 M15)
+        # bắt được misroute sang generic bằng MECHANISM + OWNERSHIP (không
+        # keyword): analyze nói tree_traversal.* mà classify trả generic →
+        # mismatch họ → 1 reclassify bounded → vẫn lệch thì fail-closed.
+        *FAMILY_MECHANISMS[FamilyId.TREE_TRAVERSAL],
     )

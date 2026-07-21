@@ -38,6 +38,11 @@ def test_enum_dong_dung_sau_gia_tri():
         "other_unspecified",
         "positional_representation.binary_positional_weights",
         "positional_representation.non_binary_base",
+        # M17 W2A — cơ chế duyệt cây (nuôi route-consistency gate)
+        "tree_traversal.preorder",
+        "tree_traversal.inorder",
+        "tree_traversal.postorder",
+        "tree_traversal.level_order",
     }
 
 

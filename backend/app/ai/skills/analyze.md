@@ -26,6 +26,19 @@ CÁC TRƯỜNG TRÍCH XUẤT:
   - "positional_representation.non_binary_base": đề yêu cầu cơ số KHÁC 2 (thập lục phân/16,
     bát phân/8, hay cơ số bất kỳ khác 2).
   - Bài không phải đổi cơ số → giữ nguyên quy tắc cũ (null / giá trị sắp xếp ở trên).
+- prescribed_procedure (bổ sung M17 — bài DUYỆT CÂY NHỊ PHÂN): CHỈ đặt khi đề
+  yêu cầu DUYỆT một cây nhị phân (có gốc và quan hệ con trái/con phải). Nhận
+  diện bằng THỨ TỰ THĂM được mô tả, KHÔNG bằng tên gọi:
+  - "tree_traversal.preorder": thăm GỐC trước, rồi cây con TRÁI, rồi cây con PHẢI (duyệt trước / tiền thứ tự / preorder).
+  - "tree_traversal.inorder": cây con TRÁI, rồi GỐC, rồi cây con PHẢI (duyệt giữa / trung thứ tự / inorder).
+  - "tree_traversal.postorder": cây con TRÁI, rồi cây con PHẢI, rồi GỐC (duyệt sau / hậu thứ tự / postorder).
+  - "tree_traversal.level_order": duyệt theo TỪNG TẦNG từ trên xuống, trái sang phải (theo mức / level-order).
+  - Duyệt ĐỒ THỊ chung (đỉnh–cạnh, không phải cây có gốc/trái/phải) → KHÔNG đặt các giá trị này (để null).
+- QUAN TRỌNG cho bài cây: liệt kê MỖI NÚT đề nêu vào "objects" kèm TÊN NÚT (vd
+  "nút A", "nút B") và MỖI QUAN HỆ cha–con vào "relations" dưới dạng nêu RÕ HAI
+  TÊN NÚT (vd "B là con trái của A"). Nếu đề KHÔNG cho nút/quan hệ cụ thể thì
+  ĐỂ TRỐNG — TUYỆT ĐỐI không mô tả cây chung chung ("các nút của cây", "quan hệ
+  cha-con giữa các nút") như thể đó là dữ liệu đề cho, và không tự bịa nút.
 
 SEMANTIC REQUIREMENTS — vai trò NGỮ NGHĨA đề cần, mỗi trường là danh sách tag chọn trong TAXONOMY: structural (BỐ CỤC/KHUNG CHỨA LỒNG NHAU — vùng trang, khung chứa nội dung phân cấp như trang web có header/thân/cột, tài liệu có mục lồng mục), textual (nội dung chữ DÀI: tiêu đề/đoạn văn), logical (đúng-sai/cổng logic), numeric (GIÁ TRỊ SỐ cần tính/hiển thị: tổng, đếm, giá trị ô), interactive (người dùng bật/tắt/kéo thay đổi), relational (quan hệ nút-cạnh/liên kết/điểm-đoạn), movement (đối tượng di chuyển trong không gian), temporal (diễn biến theo thời gian/HÌNH THÀNH TỪNG BƯỚC). Chỉ chọn tag ĐÚNG bản chất đề, không suy diễn thừa:
 - entity_roles: vai trò của các đối tượng chính.
