@@ -58,6 +58,7 @@ from app.validation.simulation import (
     validate_network_config,
     validate_scan_config,
     validate_traverse_config,
+    validate_tree_traversal_config,
 )
 
 # ── Domain algorithm ──────────────────────────────────────────
@@ -630,6 +631,82 @@ CATALOG["network.graph_traversal"] = SimSpec(
     curriculum_anchor="T11CS B17 · T12 CĐ2",
     known_gaps=("đường đi ngắn nhất có trọng số (Dijkstra) — future family",),
     config_contract_version="traverse-1.0",
+)
+
+
+# ── tree.traversal (M17 W2A) — duyệt cây nhị phân bounded ──────
+
+_TREE_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "specVersion": {"type": "STRING", "enum": ["tree-1.0"]},
+        "variant": {"type": "STRING", "enum": ["preorder", "inorder", "postorder", "level_order"]},
+        "rootId": {"type": "STRING"},
+        "nodes": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "id": {"type": "STRING"},
+                    "label": {"type": "STRING", "nullable": True},
+                    "left": {"type": "STRING", "nullable": True},
+                    "right": {"type": "STRING", "nullable": True},
+                },
+                "required": ["id"],
+            },
+        },
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["specVersion", "variant", "rootId", "nodes"],
+}
+
+_TREE_CONTRACT = """HỢP ĐỒNG CONFIG (tree.traversal — duyệt CÂY NHỊ PHÂN):
+- specVersion: đúng "tree-1.0".
+- variant: "preorder" (trước — gốc/trái/phải), "inorder" (giữa — trái/gốc/phải), "postorder" (sau — trái/phải/gốc), "level_order" (theo mức — BFS). Chọn ĐÚNG theo đề.
+- rootId: id node GỐC (không node nào trỏ tới nó).
+- nodes: 1–15 node {id, label?, left?, right?}. left/right là id con TRÁI/PHẢI hoặc bỏ trống. Cây nhị phân THẬT: mỗi node có tối đa 1 cha, không cycle, không rời rạc, sâu ≤5 tầng. Lấy ĐÚNG cấu trúc + nhãn đề cho, KHÔNG bịa node/cây mặc định.
+- KHÔNG sinh thứ tự duyệt / stack / queue / kết quả — engine tự duyệt tất định và dựng timeline.
+- CHỈ dùng cho DUYỆT cây nhị phân. KHÔNG dùng cho: chèn/tìm/xoá BST, cân bằng AVL, heap, cây biểu thức, cây n-nhánh, duyệt ĐỒ THỊ chung (→ network.graph_traversal)."""
+
+CATALOG["tree.traversal"] = SimSpec(
+    simulation_id="tree.traversal",
+    domain="tree",
+    visual_mode="2d",
+    description=(
+        "duyệt CÂY NHỊ PHÂN hữu hạn theo 4 thứ tự: preorder (trước — gốc/trái/"
+        "phải), inorder (giữa — trái/gốc/phải), postorder (sau — trái/phải/gốc), "
+        "level_order (theo mức/BFS) — engine dựng ngăn xếp/hàng đợi, thứ tự thăm, "
+        "timeline, kết quả. Dùng khi đề DUYỆT một cây nhị phân theo thứ tự trước/"
+        "giữa/sau/theo mức. KHÔNG dùng cho chèn/tìm/xoá BST, cân bằng AVL/đỏ-đen, "
+        "heap, cây biểu thức, cây n-nhánh, hay duyệt ĐỒ THỊ chung (đồ thị đỉnh-"
+        "cạnh, BFS/DFS tổng quát → network.graph_traversal)"
+    ),
+    config_schema=_TREE_SCHEMA,
+    contract=_TREE_CONTRACT,
+    validate=validate_tree_traversal_config,
+    make_title=lambda config, analysis: (
+        f"Duyệt cây nhị phân — {config.get('variant', '')}"
+    ),
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.TREE_TRAVERSAL, ResultAuthority.COMPUTATION,
+            owned_mechanisms=(
+                "tree_traversal.preorder",
+                "tree_traversal.inorder",
+                "tree_traversal.postorder",
+                "tree_traversal.level_order",
+            ),
+        ),
+    ),
+    reachability=(
+        ReachabilityLevel.REGISTERED,
+        ReachabilityLevel.AI_REACHABLE_PUBLIC,
+    ),
+    curriculum_anchor="T11CS B17 · T11 CĐ (cấu trúc dữ liệu cây)",
+    known_gaps=(
+        "BST/AVL/heap/cây biểu thức/cây n-nhánh — ngoài phạm vi duyệt cây nhị phân",
+    ),
+    config_contract_version="tree-1.0",
 )
 
 

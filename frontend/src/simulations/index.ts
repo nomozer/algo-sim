@@ -3,6 +3,7 @@ import { registerBinaryDomain } from "./domains/binary";
 import { registerGenericDomain } from "./domains/generic";
 import { registerLogicDomain } from "./domains/logic";
 import { registerNetworkDomain } from "./domains/network";
+import { registerTreeDomain } from "./domains/tree/tree-module";
 
 export * from "./types";
 export { getSimulation, listSimulations, registerSimulation } from "./registry";
@@ -21,5 +22,6 @@ export function registerAllSimulations(): void {
   registerLogicDomain();
   registerBinaryDomain();
   registerNetworkDomain();
+  registerTreeDomain(); // M17 W2A — duyệt cây nhị phân
   registerGenericDomain();
 }

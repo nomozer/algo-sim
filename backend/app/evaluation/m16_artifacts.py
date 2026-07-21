@@ -30,8 +30,12 @@ from app.evaluation.harness import evaluate_item
 from app.evaluation.m16_metrics import AggregateResult, MetricValue
 from app.evaluation.m16_offline_scripts import SCRIPTS, build_scripted_provider
 from app.evaluation.m16_record import M16CaseRecord
-from app.evaluation.m16_schema import M16Archetype, M16Expectation, frozen_dataset_fingerprint
-from app.simulation.descriptor import FamilyId
+from app.evaluation.m16_schema import (
+    M16_FAMILY_VALUES,
+    M16Archetype,
+    M16Expectation,
+    frozen_dataset_fingerprint,
+)
 from app.simulation.families import FAMILY_SELECTORS
 
 # Token selector (bề mặt LLM của một family — KHÔNG BAO GIỜ là envelope id).
@@ -93,7 +97,9 @@ def build_coverage_report() -> dict:
             "total_positive": len(subset),
         }
 
-    families = sorted(f.value for f in FamilyId)
+    # FROZEN: M16 phủ đúng 8 family tại thời điểm M16 (M16_FAMILY_VALUES) — KHÔNG
+    # dẫn xuất từ live FamilyId (thêm family M17+ sẽ làm trôi artifact frozen này).
+    families = sorted(M16_FAMILY_VALUES)
     per_family: dict[str, dict] = {}
     for fam in families:
         valid_boundary = sum(

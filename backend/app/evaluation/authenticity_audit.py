@@ -163,9 +163,11 @@ def classify_targets(records: list[AuditRecord]) -> dict[str, str]:
 # ── generic leak ledger ───────────────────────────────────────
 def leak_verdict(rec: AuditRecord) -> str:
     """Phán quyết cho case leak_control/leak_probe — từ structured record."""
-    leaked = rec.actual_status == "ok" and rec.final_route == "generic.rule_scene"
-    if leaked:
-        return "CONDITIONAL_LEAK_CONFIRMED" if rec.archetype == "leak_probe" else "LEAK"
+    if rec.actual_status == "ok":
+        if rec.final_route == "generic.rule_scene":
+            return "CONDITIONAL_LEAK_CONFIRMED" if rec.archetype == "leak_probe" else "LEAK"
+        # ok nhưng route CHUYÊN BIỆT (vd tree.traversal) → KHÔNG leak (đóng W2A)
+        return "ROUTED_SPECIALIZED"
     if rec.actual_status == "unsupported":
         return "BLOCKED_FAIL_CLOSED"
     return "BLOCKED_BY_VALIDATOR"  # simulate không qua validator (pipeline_error)

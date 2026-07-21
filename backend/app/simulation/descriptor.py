@@ -44,6 +44,7 @@ class FamilyId(str, Enum):
     GRAPH_TRAVERSAL = "graph_traversal"
     LAYERED_PDU_TRANSFORM = "layered_pdu_transform"
     STRUCTURAL_PROGRESSIVE_REPRESENTATION = "structural_progressive_representation"
+    TREE_TRAVERSAL = "tree_traversal"  # M17 W2A
 
 
 @dataclass(frozen=True)

@@ -21,6 +21,7 @@ export type Domain =
   | "binary"
   | "logic"
   | "network"
+  | "tree"
   | "database"
   | "web"
   | "geometry"

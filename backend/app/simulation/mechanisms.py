@@ -51,6 +51,14 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
         "structural_progressive_representation.reveal_sequence",
         "structural_progressive_representation.move_along_path",
     ),
+    # M17 W2A — duyệt cây nhị phân bounded (4 biến thể). Prefix = family_id
+    # (bắt buộc theo canonical convention: mechanism_family() phải khớp family).
+    FamilyId.TREE_TRAVERSAL: (
+        "tree_traversal.preorder",
+        "tree_traversal.inorder",
+        "tree_traversal.postorder",
+        "tree_traversal.level_order",
+    ),
 }
 
 # Khóa 2 — giá trị CỐ Ý không target nào sở hữu (gap-trigger, khai tường minh)
@@ -80,7 +88,8 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.GRAPH_TRAVERSAL,           # W4 (Task 14) — routing owned unweighted BFS only
     FamilyId.LAYERED_PDU_TRANSFORM,     # W4 (Task 14) — encap owned 4-layer encap/decap
     FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION,  # W5 (Task 15) — owned dẫn xuất manifest process_types()
-})  # đủ 8 == frozenset(FamilyId) — K1 lock kích hoạt ĐẦY ĐỦ (test_formalized_families_owned_khong_rong)
+    FamilyId.TREE_TRAVERSAL,             # M17 W2A — duyệt cây nhị phân
+})  # đủ == frozenset(FamilyId) — K1 lock kích hoạt ĐẦY ĐỦ (test_formalized_families_owned_khong_rong)
 
 
 def canonical_mechanism(raw: str | None) -> str | None:

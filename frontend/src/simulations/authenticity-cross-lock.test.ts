@@ -273,6 +273,38 @@ describe("M17 W0 — authenticity cross-lock: network", () => {
   });
 });
 
+describe("M17 W2A — authenticity cross-lock: tree.traversal", () => {
+  const ABC = [
+    { id: "A", label: "A", left: "B", right: "C" },
+    { id: "B", label: "B", left: "D", right: "E" },
+    { id: "C", label: "C", left: "F", right: "G" },
+    { id: "D", label: "D", left: null, right: null },
+    { id: "E", label: "E", left: null, right: null },
+    { id: "F", label: "F", left: null, right: null },
+    { id: "G", label: "G", left: null, right: null },
+  ];
+  it("state fields + event visit/completed + visitedOrder authoritative (preorder)", () => {
+    const state = initState("tree.traversal", {
+      specVersion: "tree-1.0", variant: "preorder", rootId: "A", nodes: ABC,
+    }) as unknown as { steps: { kind: string }[]; visitedOrder: string[]; frontierKind: string };
+    expectStateFields("tree.traversal", state as unknown as Record<string, unknown>);
+    const kinds = new Set(state.steps.map((s) => s.kind));
+    for (const evt of auth("tree.traversal").required_trace_events) {
+      expect(kinds.has(evt), `tree: thiếu event ${evt}`).toBe(true);
+    }
+    // preorder trên cây chuẩn — engine tính (authoritative)
+    expect(state.visitedOrder).toEqual(["A", "B", "D", "E", "C", "F", "G"]);
+    expect(state.frontierKind).toBe("stack");
+  });
+  it("level_order dùng queue (frontierKind), khác preorder", () => {
+    const state = initState("tree.traversal", {
+      specVersion: "tree-1.0", variant: "level_order", rootId: "A", nodes: ABC,
+    }) as unknown as { visitedOrder: string[]; frontierKind: string };
+    expect(state.frontierKind).toBe("queue");
+    expect(state.visitedOrder).toEqual(["A", "B", "C", "D", "E", "F", "G"]);
+  });
+});
+
 describe("M17 W0 — authenticity cross-lock: generic.rule_scene", () => {
   it("state fields trên mẫu offline; timeline reveal dựng bởi engine", () => {
     const state = initState("generic.rule_scene", sampleConfig("generic.rule_scene"));

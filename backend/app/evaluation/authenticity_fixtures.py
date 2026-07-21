@@ -79,6 +79,23 @@ def _traverse_cfg(nodes: list, edges: list, start: str, variant: str,
     return _j(cfg)
 
 
+def _tree_cfg(variant: str, root: str, nodes: list) -> str:
+    """Config tree.traversal (M17 W2A) — nodes = list [id, left|None, right|None]."""
+    return _j({
+        "specVersion": "tree-1.0",
+        "variant": variant,
+        "rootId": root,
+        "nodes": [{"id": i, "label": i, "left": l, "right": r} for (i, l, r) in nodes],
+    })
+
+
+# Cây chuẩn A(B(D,E), C(F,G)) tái dùng cho fixture tree.
+_TREE_ABC = [
+    ("A", "B", "C"), ("B", "D", "E"), ("C", "F", "G"),
+    ("D", None, None), ("E", None, None), ("F", None, None), ("G", None, None),
+]
+
+
 @dataclass(frozen=True)
 class TargetFixture:
     """Kịch bản audit cho MỘT target: archetype → (đề VI, CaseScript).
@@ -99,6 +116,9 @@ class ControlFixture:
     script: CaseScript
     mechanism: str | None = None
     expected_status: str = "unsupported"
+    # Route kỳ vọng khi expected_status=="ok"; None → mặc định generic.rule_scene
+    # (đối chứng representation). Case đóng regression tree đặt "tree.traversal".
+    expected_route: str | None = None
     note: str = ""
 
 
@@ -587,6 +607,45 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
             ),
         },
     ),
+    # M17 W2A — duyệt cây nhị phân (4 biến thể)
+    "tree.traversal": TargetFixture(
+        prompts={
+            "direct": "Duyệt cây nhị phân gốc A (A có con trái B, con phải C; B có con "
+                      "trái D, con phải E; C có con trái F, con phải G) theo thứ tự TRƯỚC (preorder).",
+            "paraphrase": "Cho cây nhị phân gốc A với B,C là con của A; D,E con của B; F,G con của "
+                          "C. Hãy duyệt theo thứ tự GIỮA (trái–gốc–phải).",
+            "changed_input": "Duyệt cây nhị phân gốc A (B,C con A; D,E con B; F,G con C) theo thứ "
+                             "tự SAU (hậu thứ tự, trái–phải–gốc).",
+            "boundary": "Duyệt cây nhị phân gốc A (B,C con A; D,E con B; F,G con C) THEO MỨC "
+                        "(từng tầng, level-order).",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Duyệt cây nhị phân theo thứ tự trước", ownership="provided",
+                          relation_roles=["relational"], process_roles=["temporal"]),
+                [_classify("tree.traversal")],
+                [_tree_cfg("preorder", "A", _TREE_ABC)],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Duyệt cây nhị phân theo thứ tự giữa", ownership="provided",
+                          relation_roles=["relational"], process_roles=["temporal"]),
+                [_classify("tree.traversal")],
+                [_tree_cfg("inorder", "A", _TREE_ABC)],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Duyệt cây nhị phân theo thứ tự sau", ownership="provided",
+                          relation_roles=["relational"], process_roles=["temporal"]),
+                [_classify("tree.traversal")],
+                [_tree_cfg("postorder", "A", _TREE_ABC)],
+            ),
+            "boundary": CaseScript(
+                _analysis(goal="Duyệt cây nhị phân theo mức", ownership="provided",
+                          relation_roles=["relational"], process_roles=["temporal"]),
+                [_classify("tree.traversal")],
+                [_tree_cfg("level_order", "A", _TREE_ABC)],
+            ),
+        },
+    ),
     "network.protocol_encapsulation": TargetFixture(
         prompts={
             "direct": "Mô phỏng quá trình đóng gói dữ liệu qua các tầng TCP/IP khi gửi một trang web.",
@@ -691,29 +750,8 @@ NEAR_MISS_FIXTURES: dict[str, ControlFixture] = {
 
 
 # ══════════════ leak / refusal control + regression duyệt cây ══════════════
-# Config adversarial: cây nhị phân bị "ép phẳng" thành điểm + đoạn nối + vật
-# di chuyển — ĐÚNG kiểu leak mà M17 mô tả (Điểm 1/Điểm 2/Đoạn nối/Vật di chuyển).
-_TREE_AS_POINTS = _j(
-    {
-        "dsl_version": "1.0",
-        "title": "Duyệt các điểm theo thứ tự",
-        "objects": [
-            {"id": "p1", "type": "node", "label": "Điểm 1"},
-            {"id": "p2", "type": "node", "label": "Điểm 2"},
-            {"id": "p3", "type": "node", "label": "Điểm 3"},
-            {"id": "p4", "type": "node", "label": "Điểm 4"},
-            {"id": "e12", "type": "edge", "from": "p1", "to": "p2"},
-            {"id": "e13", "type": "edge", "from": "p1", "to": "p3"},
-            {"id": "e24", "type": "edge", "from": "p2", "to": "p4"},
-            {"id": "vat", "type": "moving_entity", "label": "Vật di chuyển"},
-        ],
-        "rules": [],
-        "interactions": [],
-        "processes": [
-            {"type": "move_along_path", "entity": "vat", "path": ["p1", "p2", "p4", "p3"]}
-        ],
-    }
-)
+# (M17 W2A: _TREE_AS_POINTS đã gỡ — probe adversarial "ép cây thành điểm/đoạn/
+# vật di chuyển" nay ĐÓNG: prompt duyệt cây route vào tree.traversal.)
 
 CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
     ControlFixture(
@@ -726,35 +764,55 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
         ),
         note="Kết quả thuật toán không engine nào sở hữu → computation gate (bất biến #21).",
     ),
+    # M17 W2A — ĐÓNG regression duyệt cây: prompt duyệt cây NAY route vào
+    # specialized tree.traversal (KHÔNG còn generic/gap). Bằng chứng closure của
+    # CONDITIONAL_LEAK Wave 0.
     ControlFixture(
         case_id="aud-regression-tree-honest",
         kind="leak_control",
-        prompt="Mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (preorder) trên cây gốc A.",
+        prompt="Mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (preorder) trên cây gốc A (con trái B, con phải C).",
         script=CaseScript(
-            _analysis(goal="Duyệt cây nhị phân theo thứ tự trước", ownership="algorithmic"),
-            [_classify(_GENERIC)],
+            _analysis(goal="Duyệt cây nhị phân theo thứ tự trước", ownership="provided",
+                      relation_roles=["relational"], process_roles=["temporal"]),
+            [_classify("tree.traversal")],
+            [_tree_cfg("preorder", "A", [("A", "B", "C"), ("B", None, None), ("C", None, None)])],
         ),
-        note="REGRESSION M17: tree_traversal chưa có → phải capability_gap, không dựng điểm/đoạn nối.",
+        expected_status="ok",
+        expected_route="tree.traversal",
+        note="CLOSURE W2A: prompt duyệt cây route vào tree.traversal (KHÔNG generic, KHÔNG gap).",
     ),
+    # Prompt CÙNG cây Wave 0 (adversarial) nay với analyze TRUNG THỰC → route
+    # tree.traversal. Đóng CONDITIONAL_LEAK bằng bằng chứng: đúng prompt từng leak
+    # nay có nhà specialized. (Rủi ro analyze khai man vẫn là giới hạn analyze-
+    # honesty đã ghi Wave 0 — không thuộc phạm vi tree_traversal đóng.)
     ControlFixture(
         case_id="aud-regression-tree-adversarial",
-        kind="leak_probe",
+        kind="leak_control",
         prompt="Cho cây nhị phân gốc 1, con trái 2, con phải 3, nút 2 có con trái 4. Mô phỏng duyệt cây theo thứ tự trước.",
         script=CaseScript(
-            _analysis(
-                goal="Vật di chuyển qua các điểm của cây theo thứ tự duyệt",
-                ownership="provided", scene_construction="step_by_step",
-                relation_roles=["relational"], process_roles=["movement", "temporal"],
-            ),
-            [_classify(_GENERIC)],
-            [_TREE_AS_POINTS],
+            _analysis(goal="Duyệt cây nhị phân theo thứ tự trước", ownership="provided",
+                      relation_roles=["relational"], process_roles=["temporal"]),
+            [_classify("tree.traversal")],
+            [_tree_cfg("preorder", "1", [("1", "2", "3"), ("2", "4", None), ("3", None, None), ("4", None, None)])],
         ),
-        expected_status="probe",  # PROBE: ghi nhận hành vi thật, ledger phân loại
-        note=(
-            "ADVERSARIAL PROBE: analyze khai man ownership=provided (thứ tự duyệt "
-            "THẬT RA là kết quả thuật toán). Đo xem gate hiện tại có chặn được khi "
-            "tín hiệu cấu trúc bị khai sai — kết quả vào generic_leak_ledger."
+        expected_status="ok",
+        expected_route="tree.traversal",
+        note="CLOSURE W2A: đúng prompt từng CONDITIONAL_LEAK ở Wave 0 nay route tree.traversal.",
+    ),
+    # THIẾU CẤU TRÚC: đề đòi duyệt cây nhưng không cho node/quan hệ → KHÔNG tự
+    # dựng cây mặc định; unsupported trung thực (chưa đủ dữ kiện).
+    ControlFixture(
+        case_id="aud-regression-tree-insufficient",
+        kind="refusal_control",
+        prompt="Mô phỏng thuật toán duyệt cây theo thứ tự trước.",
+        script=CaseScript(
+            _analysis(goal="Duyệt cây theo thứ tự trước (không cho cấu trúc cây)", ownership="provided",
+                      relation_roles=["relational"]),
+            [_classify(None, status="unsupported",
+                       reason="Đề chưa cho cấu trúc cây cụ thể (các nút và quan hệ trái/phải) — chưa đủ dữ kiện để dựng cây.")],
         ),
+        expected_status="unsupported",
+        note="Thiếu cấu trúc cây → unsupported, KHÔNG tự dựng cây 7-node mặc định.",
     ),
     ControlFixture(
         case_id="aud-refusal-tcp-handshake",

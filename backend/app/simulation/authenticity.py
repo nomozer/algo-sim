@@ -149,6 +149,19 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
             "path_highlight", "narration_per_step",
         ),
     ),
+    # M17 W2A — duyệt cây nhị phân: stack (pre/in/post) hoặc queue (level);
+    # visitedOrder là kết quả authoritative. Event: visit + completed (chung);
+    # push/pop (DFS) vs enqueue/dequeue (level) phân biệt biến thể — module test
+    # kiểm per-variant (contract per-target giữ baseline chung).
+    "tree.traversal": AuthenticityContract(
+        required_state_fields=("config", "frontierKind", "steps", "visitedOrder", "cursor"),
+        required_trace_events=("visit", "completed"),
+        required_result_fields=("visitedOrder",),
+        renderer_semantic_requirements=(
+            "binary_tree_layout", "root_and_left_right_clear", "current_visited_distinct",
+            "stack_or_queue_panel_by_variant", "visited_order_strip", "narration_per_step",
+        ),
+    ),
     # network.protocol_encapsulation — 9 bước PDU với delta tường minh
     "network.protocol_encapsulation": AuthenticityContract(
         required_state_fields=("payloadLabel", "layers", "steps", "cursor"),

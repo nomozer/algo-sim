@@ -712,6 +712,60 @@
         "near_miss_mechanisms": []
       }
     },
+    "tree.traversal": {
+      "domain": "tree",
+      "executor_id": "tree.traversal",
+      "reachability": [
+        "registered",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T11CS B17 · T11 CĐ (cấu trúc dữ liệu cây)",
+      "known_gaps": [
+        "BST/AVL/heap/cây biểu thức/cây n-nhánh — ngoài phạm vi duyệt cây nhị phân"
+      ],
+      "family_memberships": [
+        {
+          "family_id": "tree_traversal",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "tree_traversal.preorder",
+            "tree_traversal.inorder",
+            "tree_traversal.postorder",
+            "tree_traversal.level_order"
+          ]
+        }
+      ],
+      "config_contract_version": "tree-1.0",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "frontierKind",
+          "steps",
+          "visitedOrder",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "visit",
+          "completed"
+        ],
+        "required_result_fields": [
+          "visitedOrder"
+        ],
+        "renderer_semantic_requirements": [
+          "binary_tree_layout",
+          "root_and_left_right_clear",
+          "current_visited_distinct",
+          "stack_or_queue_panel_by_variant",
+          "visited_order_strip",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
+    },
     "algorithm.scan": {
       "domain": "algorithm",
       "executor_id": "algorithm.scan",
@@ -915,6 +969,7 @@
     "binary.base_conversion",
     "network.packet_routing",
     "network.graph_traversal",
+    "tree.traversal",
     "algorithm.scan",
     "network.protocol_encapsulation",
     "generic.rule_scene",

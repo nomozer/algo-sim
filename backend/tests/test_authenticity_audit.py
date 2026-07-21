@@ -55,10 +55,8 @@ def test_audit_hard_correctness(monkeypatch):
     records = _run(monkeypatch)
     assert len(records) == len(build_audit_cases())
 
-    # (a) không case non-probe nào sai kỳ vọng, không pipeline error
+    # (a) mọi case khớp kỳ vọng, không pipeline error (M17 W2A: không còn leak_probe)
     for r in records:
-        if r.archetype == "leak_probe":
-            continue
         assert r.matched is True, (
             f"{r.case_id}: matched={r.matched} status={r.actual_status} "
             f"route={r.final_route} err={r.pipeline_error}"
@@ -73,14 +71,11 @@ def test_audit_hard_correctness(monkeypatch):
         assert r.envelope_error_code == "gate_mechanism_ownership", r.case_id
         assert r.failure_category == "capability_gap", r.case_id
 
-    # (c) leak control fail-closed: dijkstra + duyệt cây honest → computation gate
-    for cid in ("aud-leak-dijkstra", "aud-regression-tree-honest"):
-        r = next(x for x in records if x.case_id == cid)
-        assert r.actual_status == "unsupported", cid
-        assert r.failure_category == "capability_gap", cid
-        comp = [g for g in r.gates if g.get("gate") == "computation" and g.get("fired")]
-        assert comp, f"{cid}: computation gate không bắn"
-        assert r.simulate_attempts == 0, f"{cid}: simulate chạy dù gate chặn"
+    # (c) leak control dijkstra fail-closed → computation gate
+    r = next(x for x in records if x.case_id == "aud-leak-dijkstra")
+    assert r.actual_status == "unsupported" and r.failure_category == "capability_gap"
+    comp = [g for g in r.gates if g.get("gate") == "computation" and g.get("fired")]
+    assert comp and r.simulate_attempts == 0
 
     # (d) đối chứng chống chặn oan: representation khai báo → generic ok
     ctrl = next(x for x in records if x.case_id == "aud-control-representation-ok")
@@ -91,19 +86,21 @@ def test_audit_hard_correctness(monkeypatch):
     assert tcp.actual_status == "unsupported" and tcp.failure_category is None
 
 
-# ── PIN probe adversarial (phát hiện Wave 0 — xem docstring) ──
-def test_pin_adversarial_tree_probe_conditional_leak(monkeypatch):
+# ── ĐÓNG regression duyệt cây (Wave 0 CONDITIONAL_LEAK → tree.traversal) ──
+def test_tree_regression_dong_route_specialized(monkeypatch):
     records = _run(monkeypatch)
-    probe = next(r for r in records if r.case_id == "aud-regression-tree-adversarial")
-    assert probe.matched is None  # probe không chấm đúng/sai
-    # HÀNH VI HIỆN TẠI (pin có chủ đích): analyze khai man ownership=provided
-    # → computation gate không có tín hiệu cấu trúc để chặn → generic ok.
-    assert leak_verdict(probe) == "CONDITIONAL_LEAK_CONFIRMED"
-    # gate computation ĐÃ chạy và KHÔNG bắn (đúng thiết kế fail-closed theo
-    # tín hiệu cấu trúc — không phải bug gate, mà là giới hạn phụ thuộc
-    # analyze trung thực; ghi ledger + docs, fix dài hạn = tree_traversal W2)
-    comp = [g for g in probe.gates if g.get("gate") == "computation"]
-    assert comp and not comp[0].get("fired")
+    # honest + adversarial: đúng prompt từng leak/gap ở Wave 0 nay route
+    # tree.traversal (specialized) — KHÔNG generic, KHÔNG gap.
+    for cid in ("aud-regression-tree-honest", "aud-regression-tree-adversarial"):
+        r = next(x for x in records if x.case_id == cid)
+        assert r.actual_status == "ok", cid
+        assert r.final_route == "tree.traversal", cid
+        assert leak_verdict(r) == "ROUTED_SPECIALIZED", cid
+    # thiếu cấu trúc cây → unsupported (KHÔNG tự dựng cây mặc định)
+    ins = next(x for x in records if x.case_id == "aud-regression-tree-insufficient")
+    assert ins.actual_status == "unsupported" and ins.final_route is None
+    # CONDITIONAL_LEAK đã đóng: không còn leak_probe, 0 conditional leak
+    assert not any(r.archetype == "leak_probe" for r in records)
 
 
 # ── phân loại + metrics ──
@@ -124,15 +121,15 @@ def test_classification_va_metrics(monkeypatch):
     parity = m["production_parity"]
     assert parity["numerator"] == parity["denominator"] == len(records)
     assert m["generic_leak"]["unconditional_leaks"] == 0
-    assert m["generic_leak"]["conditional_leaks_confirmed"] == 1  # probe pin ở trên
+    assert m["generic_leak"]["conditional_leaks_confirmed"] == 0  # W2A: probe đã đóng
     assert m["classification_histogram"] == {"REAL": n_targets - 1, "PARTIAL": 1}
 
     ledger = build_leak_ledger(records)
     verdicts = {e["case_id"]: e["verdict"] for e in ledger}
     assert verdicts == {
         "aud-leak-dijkstra": "BLOCKED_FAIL_CLOSED",
-        "aud-regression-tree-honest": "BLOCKED_FAIL_CLOSED",
-        "aud-regression-tree-adversarial": "CONDITIONAL_LEAK_CONFIRMED",
+        "aud-regression-tree-honest": "ROUTED_SPECIALIZED",
+        "aud-regression-tree-adversarial": "ROUTED_SPECIALIZED",
     }
 
 

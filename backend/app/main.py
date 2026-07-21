@@ -90,7 +90,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       non_binary_base) → đề TỪNG bị unsupported (đổi hex, sắp xếp chọn, duyệt
 #       đồ thị BFS/DFS) nay mô phỏng được → phải invalidate cache cũ. MỘT bump
 #       cho toàn bộ coherent Wave 1 release (user duyệt scope, W1.E).
-CACHE_VERSION = "14"
+# "15": M17-Lite W2A — family MỚI tree_traversal (tree.traversal, duyệt cây nhị
+#       phân 4 biến thể) + classify.md 2e/2f (tree vs graph traversal; thiếu cấu
+#       trúc cây → unsupported, KHÔNG dựng cây mặc định). Menu classify đổi
+#       (thêm target) + đề duyệt cây TỪNG unsupported/generic nay route
+#       tree.traversal → invalidate cache cũ. MỘT bump cho coherent Wave 2A.
+CACHE_VERSION = "15"
 
 
 class InputPayload(BaseModel):

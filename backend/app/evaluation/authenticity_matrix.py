@@ -105,7 +105,9 @@ def build_audit_cases() -> list[AuditCase]:
                 prompt_vi=fx.prompt,
                 script=fx.script,
                 expected_status=fx.expected_status,
-                expected_route="generic.rule_scene" if fx.expected_status == "ok" else None,
+                expected_route=(
+                    fx.expected_route or "generic.rule_scene"
+                ) if fx.expected_status == "ok" else None,
                 mechanism=fx.mechanism,
                 note=fx.note,
             )

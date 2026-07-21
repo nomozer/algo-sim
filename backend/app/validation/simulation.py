@@ -264,6 +264,96 @@ def validate_base_conversion_config(raw) -> tuple[dict | None, str | None]:
     }, None
 
 
+# ── tree.traversal (M17 W2A) ──────────────────────────────────
+
+TREE_VARIANTS = ("preorder", "inorder", "postorder", "level_order")
+TREE_SPEC_VERSION = "tree-1.0"
+TREE_MAX_NODES = 15
+TREE_MAX_DEPTH = 5
+
+
+def validate_tree_traversal_config(raw) -> tuple[dict | None, str | None]:
+    """tree.traversal — duyệt cây nhị phân bounded. Thứ tự thăm/stack/queue/
+    kết quả do engine FE tính. Hai tầng: structural + semantic (cây thật)."""
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+    if raw.get("specVersion") != TREE_SPEC_VERSION:
+        return None, f'"specVersion" phải là "{TREE_SPEC_VERSION}".'
+    variant = raw.get("variant")
+    if variant not in TREE_VARIANTS:
+        return None, '"variant" phải là preorder/inorder/postorder/level_order.'
+    nodes_raw = raw.get("nodes")
+    if not isinstance(nodes_raw, list) or not (1 <= len(nodes_raw) <= TREE_MAX_NODES):
+        return None, f'"nodes" phải có 1–{TREE_MAX_NODES} node.'
+
+    ids: set[str] = set()
+    nodes = []
+    for it in nodes_raw:
+        if not isinstance(it, dict) or not isinstance(it.get("id"), str) or not it["id"]:
+            return None, "Mỗi node phải là object có id chuỗi."
+        if it["id"] in ids:
+            return None, f"Id node trùng: {it['id']}."
+        ids.add(it["id"])
+        label = it.get("label")
+        label = label if isinstance(label, str) and label else it["id"]
+        if len(label) > 24:
+            return None, f"Nhãn node {it['id']} quá dài."
+        left = it.get("left")
+        right = it.get("right")
+        if left is not None and not isinstance(left, str):
+            return None, f"left của {it['id']} phải là id hoặc rỗng."
+        if right is not None and not isinstance(right, str):
+            return None, f"right của {it['id']} phải là id hoặc rỗng."
+        nodes.append({"id": it["id"], "label": label, "left": left, "right": right})
+
+    root_id = raw.get("rootId")
+    if not isinstance(root_id, str) or root_id not in ids:
+        return None, '"rootId" phải là id một node có thật.'
+
+    by_id = {n["id"]: n for n in nodes}
+    parent_of: dict[str, str] = {}
+    for n in nodes:
+        for child in (n["left"], n["right"]):
+            if child is None:
+                continue
+            if child not in ids:
+                return None, f"Node {n['id']} tham chiếu con không tồn tại: {child}."
+            if child == n["id"]:
+                return None, f"Node {n['id']} tự trỏ tới chính nó."
+            if child in parent_of:
+                return None, f"Node {child} có NHIỀU cha ({parent_of[child]}, {n['id']}) — không phải cây."
+            parent_of[child] = n["id"]
+    if root_id in parent_of:
+        return None, f"rootId {root_id} lại là con của {parent_of[root_id]} — không phải gốc."
+
+    seen: set[str] = {root_id}
+    queue: list[tuple[str, int]] = [(root_id, 1)]
+    while queue:
+        nid, depth = queue.pop(0)
+        if depth > TREE_MAX_DEPTH:
+            return None, f"Cây sâu quá {TREE_MAX_DEPTH} tầng."
+        node = by_id[nid]
+        for child in (node["left"], node["right"]):
+            if child is not None and child not in seen:
+                seen.add(child)
+                queue.append((child, depth + 1))
+    if len(seen) != len(nodes):
+        orphan = sorted(n["id"] for n in nodes if n["id"] not in seen)
+        return None, f"Node không nối tới gốc (rời rạc): {', '.join(orphan)}."
+
+    notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
+    return {
+        "specVersion": TREE_SPEC_VERSION,
+        "variant": variant,
+        "rootId": root_id,
+        "nodes": nodes,
+        "notes": notes,
+    }, None
+
+
 # ── logic.boolean_dag (M17 W1) ────────────────────────────────
 
 DAG_OPS = ("AND", "OR", "NOT", "XOR")

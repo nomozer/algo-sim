@@ -17,6 +17,7 @@ from __future__ import annotations
 from app.evaluation.datasets import POOLS, check_admission, get_pool
 from app.evaluation.datasets.m16_catalog import M16_ITEMS, M16_REFERENCED_CASES
 from app.evaluation.m16_schema import (
+    M16_FAMILY_VALUES,
     M16Archetype,
     M16Expectation,
     check_m16_admission,
@@ -30,7 +31,10 @@ CS = FamilyId.COMPARISON_SORT.value
 PR = FamilyId.POSITIONAL_REPRESENTATION.value
 IE = FamilyId.INTERVAL_ELIMINATION.value
 SPR = FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION.value
-ALL_FAMILIES = {f.value for f in FamilyId}
+# FROZEN: M16 phủ đúng 8 family lúc M16 (M16_FAMILY_VALUES) — KHÔNG dẫn xuất từ
+# live FamilyId (M17+ thêm tree_traversal; family mới phủ ở dataset/eval của
+# wave đó, KHÔNG buộc M16 frozen phủ ngược).
+ALL_FAMILIES = set(M16_FAMILY_VALUES)
 
 MECHANISM_EXPOSED = {CS, PR}
 

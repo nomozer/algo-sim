@@ -25,6 +25,21 @@ from app.simulation.descriptor import FamilyId
 
 M16_DATASET_VERSION = "m16-v1"
 
+# FROZEN SNAPSHOT: 8 family tồn tại tại thời điểm M16 (đóng băng). M16 đánh giá
+# ĐÚNG 8 family này; family thêm sau (M17+ vd tree_traversal) KHÔNG thuộc phạm
+# vi M16 — mỗi wave có dataset/eval riêng. KHÔNG dẫn xuất từ live FamilyId (sẽ
+# trôi khi thêm family) — đây là bản ghi lịch sử của M16.
+M16_FAMILY_VALUES: tuple[str, ...] = (
+    "single_pass_scan",
+    "interval_elimination",
+    "comparison_sort",
+    "boolean_composition",
+    "positional_representation",
+    "graph_traversal",
+    "layered_pdu_transform",
+    "structural_progressive_representation",
+)
+
 # Hai family DUY NHẤT có tín hiệu analyze-exposed cho mechanism (M15 §claim
 # boundary: machine-readable ownership 8/8 family ≠ runtime prescription-
 # detection mọi family — chỉ comparison_sort + positional_representation).
