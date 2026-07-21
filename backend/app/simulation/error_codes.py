@@ -26,3 +26,6 @@ class ErrorCode(str, Enum):
     MECHANISM_VARIANT_MISMATCH = "mechanism_variant_mismatch"  # E4 tầng 2 → retry
     # M15 E2 nhánh 3 — analyze mechanism family ↔ classify target family mâu thuẫn
     ROUTE_MECHANISM_FAMILY_MISMATCH = "route_mechanism_family_mismatch"
+    # M17 W2A — đề đòi duyệt cây nhưng analyze KHÔNG thấy cấu trúc cây nào →
+    # thiếu dữ kiện; refuse thay vì để LLM bịa cây (chống false-positive sim).
+    STRUCTURE_INSUFFICIENT = "structure_insufficient"

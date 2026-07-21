@@ -28,11 +28,16 @@ def _fake_gemini(responses):
     return fake
 
 
-def _analysis(ownership="provided", roles=None):
+def _analysis(ownership="provided", roles=None, structured=True):
+    # structured=True: analyze THẤY cấu trúc cây (nút + quan hệ) → qua structure
+    # gate. structured=False: đề trống → gate chặn (insufficient).
     a = {
-        "objects": ["cây"], "data": [{"description": "cây"}], "relations": [], "processes": [],
-        "constraints": [], "goal": "Duyệt cây", "input_description": "Cây nhị phân",
-        "output_description": "Thứ tự duyệt", "result_ownership": ownership,
+        "objects": ["A", "B", "C"] if structured else ["cây"],
+        "data": [{"description": "cây"}],
+        "relations": [{"type": "left_child", "from": "A", "to": "B"}] if structured else [],
+        "processes": [], "constraints": [], "goal": "Duyệt cây",
+        "input_description": "Cây nhị phân", "output_description": "Thứ tự duyệt",
+        "result_ownership": ownership,
     }
     if roles:
         a.update(roles)
@@ -83,6 +88,17 @@ def test_tree_spec_hong_fail_closed(monkeypatch):
         assert env["status"] != "ok"
     except RuntimeError:
         pass  # 3 retry fail → RuntimeError (fail-closed) — chấp nhận
+
+
+# ── structure gate: tree route + analyze KHÔNG cấu trúc → insufficient ──
+def test_insufficient_structure_gate_chan_khong_bia_cay(monkeypatch):
+    # LLM route tree.traversal (như live) nhưng analyze thiếu cấu trúc → gate
+    # chặn TRƯỚC simulate → KHÔNG bịa cây (false-positive simulation).
+    env = _run(monkeypatch, [_analysis(structured=False), _classify("tree.traversal")])
+    assert env["status"] == "unsupported"
+    assert env["failure_category"] == "insufficient_specification"
+    assert env["error_code"] == "structure_insufficient"
+    assert env.get("simulation_id") is None  # KHÔNG dựng cây
 
 
 # ── cross-family: graph DFS → network.graph_traversal (KHÔNG tree) ──

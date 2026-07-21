@@ -12,6 +12,7 @@ import json
 
 from app.simulation.catalog import CATALOG, catalog_text, llm_choices
 from app.simulation.computation_gate import check_computation_ownership
+from app.simulation.structure_gate import check_tree_structure_sufficiency
 from app.simulation.families import selector_for_token
 from app.simulation.mechanism_gate import (
     ROUTE_MECHANISM_FAMILY_MISMATCH_MSG as _MISMATCH_MSG,
@@ -606,6 +607,25 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
         }
     else:
         _emit(observer, "gate_checked", gate="mechanism", fired=False, reason_code=None)
+
+    # M17 W2A — insufficient-structure gate cho tree.traversal (TRƯỚC simulate):
+    # đề đòi duyệt cây nhưng analyze không thấy cấu trúc cây nào → refuse thay vì
+    # để LLM bịa cây (false-positive simulation). Deterministic given analyze.
+    if simulation_id == "tree.traversal":
+        struct_verdict = check_tree_structure_sufficiency(analysis)
+        _emit(observer, "gate_checked", gate="structure", fired=bool(struct_verdict),
+              reason_code=struct_verdict[0].value if struct_verdict else None)
+        if struct_verdict is not None:
+            _emit(observer, "envelope", status="unsupported", simulation_id=None,
+                  failure_category="insufficient_specification")
+            return {
+                "status": "unsupported",
+                "reason": struct_verdict[1],
+                "failure_category": "insufficient_specification",
+                "error_code": struct_verdict[0].value,
+                "representation_plan": plan,
+                "analysis": analysis,
+            }
 
     spec = CATALOG[simulation_id]
 

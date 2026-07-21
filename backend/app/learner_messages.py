@@ -29,6 +29,11 @@ _MSG_NOT_IN_CATALOG = (
     "được mở rộng dần — bạn có thể thử một bài khác trong các chủ đề đang "
     "hỗ trợ."
 )
+_MSG_INSUFFICIENT = (
+    "Đề chưa cung cấp đủ dữ kiện để mô phỏng (ví dụ: cấu trúc cụ thể của cây — "
+    "các nút và quan hệ con trái/con phải). Hãy mô tả rõ hơn rồi thử lại — hệ "
+    "không tự bịa dữ liệu thay bạn."
+)
 _MSG_PIPELINE_FAILED = (
     "AI chưa tạo được mô phỏng hợp lệ cho đề này sau nhiều lần thử. Bạn hãy "
     "diễn đạt lại đề rõ ràng hơn — nêu rõ dữ liệu vào và kết quả cần tìm — "
@@ -41,6 +46,8 @@ def learner_reason(envelope: dict) -> str:
     ``failure_category`` (structured), không đọc text reason."""
     if envelope.get("failure_category") == "capability_gap":
         return _MSG_CAPABILITY_GAP
+    if envelope.get("failure_category") == "insufficient_specification":
+        return _MSG_INSUFFICIENT
     return _MSG_NOT_IN_CATALOG
 
 

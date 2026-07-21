@@ -94,6 +94,13 @@ _TREE_ABC = [
     ("A", "B", "C"), ("B", "D", "E"), ("C", "F", "G"),
     ("D", None, None), ("E", None, None), ("F", None, None), ("G", None, None),
 ]
+# analyze THẬT của đề cây có cấu trúc: nút cụ thể + quan hệ trái/phải → qua
+# structure gate (M17 W2A). Đề THIẾU cấu trúc thì KHÔNG có các trường này.
+_TREE_NODE_OBJECTS = ["A", "B", "C", "D", "E", "F", "G"]
+_TREE_RELATIONS = [
+    {"type": "left_child", "from": "A", "to": "B"},
+    {"type": "right_child", "from": "A", "to": "C"},
+]
 
 
 @dataclass(frozen=True)
@@ -622,25 +629,29 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
         scripts={
             "direct": CaseScript(
                 _analysis(goal="Duyệt cây nhị phân theo thứ tự trước", ownership="provided",
-                          relation_roles=["relational"], process_roles=["temporal"]),
+                          relation_roles=["relational"], process_roles=["temporal"],
+                          objects=_TREE_NODE_OBJECTS, relations=_TREE_RELATIONS),
                 [_classify("tree.traversal")],
                 [_tree_cfg("preorder", "A", _TREE_ABC)],
             ),
             "paraphrase": CaseScript(
                 _analysis(goal="Duyệt cây nhị phân theo thứ tự giữa", ownership="provided",
-                          relation_roles=["relational"], process_roles=["temporal"]),
+                          relation_roles=["relational"], process_roles=["temporal"],
+                          objects=_TREE_NODE_OBJECTS, relations=_TREE_RELATIONS),
                 [_classify("tree.traversal")],
                 [_tree_cfg("inorder", "A", _TREE_ABC)],
             ),
             "changed_input": CaseScript(
                 _analysis(goal="Duyệt cây nhị phân theo thứ tự sau", ownership="provided",
-                          relation_roles=["relational"], process_roles=["temporal"]),
+                          relation_roles=["relational"], process_roles=["temporal"],
+                          objects=_TREE_NODE_OBJECTS, relations=_TREE_RELATIONS),
                 [_classify("tree.traversal")],
                 [_tree_cfg("postorder", "A", _TREE_ABC)],
             ),
             "boundary": CaseScript(
                 _analysis(goal="Duyệt cây nhị phân theo mức", ownership="provided",
-                          relation_roles=["relational"], process_roles=["temporal"]),
+                          relation_roles=["relational"], process_roles=["temporal"],
+                          objects=_TREE_NODE_OBJECTS, relations=_TREE_RELATIONS),
                 [_classify("tree.traversal")],
                 [_tree_cfg("level_order", "A", _TREE_ABC)],
             ),
@@ -773,7 +784,8 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
         prompt="Mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (preorder) trên cây gốc A (con trái B, con phải C).",
         script=CaseScript(
             _analysis(goal="Duyệt cây nhị phân theo thứ tự trước", ownership="provided",
-                      relation_roles=["relational"], process_roles=["temporal"]),
+                      relation_roles=["relational"], process_roles=["temporal"],
+                      objects=["A", "B", "C"], relations=_TREE_RELATIONS),
             [_classify("tree.traversal")],
             [_tree_cfg("preorder", "A", [("A", "B", "C"), ("B", None, None), ("C", None, None)])],
         ),
@@ -791,7 +803,10 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
         prompt="Cho cây nhị phân gốc 1, con trái 2, con phải 3, nút 2 có con trái 4. Mô phỏng duyệt cây theo thứ tự trước.",
         script=CaseScript(
             _analysis(goal="Duyệt cây nhị phân theo thứ tự trước", ownership="provided",
-                      relation_roles=["relational"], process_roles=["temporal"]),
+                      relation_roles=["relational"], process_roles=["temporal"],
+                      objects=["1", "2", "3", "4"],
+                      relations=[{"type": "left_child", "from": "1", "to": "2"},
+                                 {"type": "right_child", "from": "1", "to": "3"}]),
             [_classify("tree.traversal")],
             [_tree_cfg("preorder", "1", [("1", "2", "3"), ("2", "4", None), ("3", None, None), ("4", None, None)])],
         ),
@@ -801,18 +816,22 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
     ),
     # THIẾU CẤU TRÚC: đề đòi duyệt cây nhưng không cho node/quan hệ → KHÔNG tự
     # dựng cây mặc định; unsupported trung thực (chưa đủ dữ kiện).
+    # STRUCTURE GATE (M17 W2A): classify VẪN route tree.traversal (LLM tưởng là
+    # bài duyệt cây) NHƯNG analyze KHÔNG thấy cấu trúc (không object/relation cụ
+    # thể) → structure gate chặn TRƯỚC simulate → unsupported. Đây test PHÒNG THỦ
+    # DETERMINISTIC, không phải classify tự từ chối (LLM đã chứng minh live là
+    # KHÔNG tự từ chối — bịa cây).
     ControlFixture(
         case_id="aud-regression-tree-insufficient",
         kind="refusal_control",
         prompt="Mô phỏng thuật toán duyệt cây theo thứ tự trước.",
         script=CaseScript(
-            _analysis(goal="Duyệt cây theo thứ tự trước (không cho cấu trúc cây)", ownership="provided",
-                      relation_roles=["relational"]),
-            [_classify(None, status="unsupported",
-                       reason="Đề chưa cho cấu trúc cây cụ thể (các nút và quan hệ trái/phải) — chưa đủ dữ kiện để dựng cây.")],
+            _analysis(goal="Duyệt cây theo thứ tự trước (không cho cấu trúc cây)",
+                      ownership="provided", relation_roles=["relational"]),
+            [_classify("tree.traversal")],  # LLM route tree — nhưng gate chặn vì thiếu cấu trúc
         ),
         expected_status="unsupported",
-        note="Thiếu cấu trúc cây → unsupported, KHÔNG tự dựng cây 7-node mặc định.",
+        note="Thiếu cấu trúc cây → structure gate chặn (insufficient_specification), KHÔNG dựng cây mặc định.",
     ),
     ControlFixture(
         case_id="aud-refusal-tcp-handshake",

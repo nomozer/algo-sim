@@ -71,11 +71,16 @@ def _analysis(
     interaction_needs: list[str] | None = None,
     visual_needs: list[str] | None = None,
     temporal_needs: list[str] | None = None,
+    objects: list[str] | None = None,
+    data: list[dict] | None = None,
+    relations: list[dict] | None = None,
 ) -> dict:
+    # objects/data/relations override (M17 W2A — cần cho structure gate: đề cây
+    # THẬT nêu nút + quan hệ; đề thiếu để trống). Mặc định giữ nguyên hành vi cũ.
     a: dict = {
-        "objects": ["đối tượng"],
-        "data": [{"description": "dữ liệu của đề"}],
-        "relations": [],
+        "objects": objects if objects is not None else ["đối tượng"],
+        "data": data if data is not None else [{"description": "dữ liệu của đề"}],
+        "relations": relations if relations is not None else [],
         "processes": [],
         "constraints": [],
         "goal": goal,
