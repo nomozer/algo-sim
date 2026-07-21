@@ -11,19 +11,27 @@ Probe **sinh từ registry chính sách** — thêm family/cơ chế thì probe 
 - ok mà còn dropped_requirements: **0** (phải là 0)
 - Kết luận: **PASS**
 
+> **Ranh giới của chính báo cáo này** (đo được ở RC1-C, không phải suy đoán).
+> Probe nạp THẲNG id cơ chế vào gate ⇒ chỉ chứng minh *cho trước analyze,
+> gate quyết đúng* — KHÔNG chứng minh *analyze nói được điều đó*. Chỉ
+> **3/9** family có cơ chế
+> nằm trong `analyze_exposed_values()`; family ngoài đó thì gate không bao
+> giờ nhận được dữ liệu ở đời thực. Bằng chứng: case `rc1c-scan-max-and-min`
+> (single_pass_scan) trả `ok` và bỏ im lặng một nửa yêu cầu.
+
 ## Chính sách theo family
 
-| Family | Cardinality | max | #cơ chế | Ghi chú |
-|---|---|---|---|---|
-| `tree_traversal` | single | 1 | 4 | Một lần duyệt = một thứ tự. Đề hỏi nhiều thứ tự → tách từng lần. |
-| `comparison_sort` | single | 1 | 5 | Một lần mô phỏng chạy một thuật toán sắp xếp. |
-| `graph_traversal` | single | 1 | 3 | BFS và DFS là hai lần duyệt khác nhau — chưa có chế độ so sánh. |
-| `positional_representation` | single | 1 | 2 | Một lần đổi = một cặp cơ số nguồn→đích. |
-| `interval_elimination` | single | 1 | 1 | — |
-| `single_pass_scan` | single | 1 | 5 | Một lượt quét cho một mục tiêu (max/min/đếm/tổng/tìm). |
-| `boolean_composition` | multiple | 8 | 3 | Một mạch CHỨA nhiều cổng — nhiều cơ chế trong một cảnh là bình thường. |
-| `layered_pdu_transform` | pipeline | 2 | 1 | Đóng gói → truyền → tháo gói là MỘT quy trình nối tiếp, không phải xung đột. |
-| `structural_progressive_representation` | multiple | 8 | 2 | Một cảnh generic có thể vừa hé lộ vừa di chuyển. |
+| Family | Cardinality | max | #cơ chế | analyze nói được? | Ghi chú |
+|---|---|---|---|---|---|
+| `tree_traversal` | single | 1 | 4 | có | Một lần duyệt = một thứ tự. Đề hỏi nhiều thứ tự → tách từng lần. |
+| `comparison_sort` | single | 1 | 5 | có | Một lần mô phỏng chạy một thuật toán sắp xếp. |
+| `graph_traversal` | single | 1 | 3 | **KHÔNG** | BFS và DFS là hai lần duyệt khác nhau — chưa có chế độ so sánh. |
+| `positional_representation` | single | 1 | 2 | có | Một lần đổi = một cặp cơ số nguồn→đích. |
+| `interval_elimination` | single | 1 | 1 | **KHÔNG** | — |
+| `single_pass_scan` | single | 1 | 5 | **KHÔNG** | Một lượt quét cho một mục tiêu (max/min/đếm/tổng/tìm). |
+| `boolean_composition` | multiple | 8 | 3 | **KHÔNG** | Một mạch CHỨA nhiều cổng — nhiều cơ chế trong một cảnh là bình thường. |
+| `layered_pdu_transform` | pipeline | 2 | 1 | **KHÔNG** | Đóng gói → truyền → tháo gói là MỘT quy trình nối tiếp, không phải xung đột. |
+| `structural_progressive_representation` | multiple | 8 | 2 | **KHÔNG** | Một cảnh generic có thể vừa hé lộ vừa di chuyển. |
 
 ## Probe
 

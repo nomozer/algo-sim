@@ -31,7 +31,12 @@ from app.simulation.completeness_gate import (  # noqa: E402
     check_requested_combination,
     completeness_report,
 )
-from app.simulation.mechanisms import FAMILY_MECHANISMS  # noqa: E402
+from app.simulation.mechanisms import (  # noqa: E402
+    FAMILY_MECHANISMS,
+    analyze_exposed_values,
+    canonical_mechanism,
+    mechanism_family,
+)
 from app.simulation.operation_policy import (  # noqa: E402
     FAMILY_OPERATION_POLICY,
     SINGLE,
@@ -40,6 +45,21 @@ from app.simulation.operation_policy import (  # noqa: E402
 
 BLOCKED = "BLOCKED"
 PASS = "PASS"
+
+
+def analyze_expressible_families() -> set[str]:
+    """Family mà analyze CÓ THỂ phát tín hiệu cơ chế.
+
+    RANH GIỚI của chính báo cáo này (RC1-C đo được): probe dưới đây nạp THẲNG id
+    cơ chế vào gate, nên chỉ chứng minh "cho trước analyze, gate quyết đúng" —
+    KHÔNG chứng minh "analyze nói được điều đó". Family ngoài tập này thì gate
+    KHÔNG BAO GIỜ nhận được dữ liệu ở đời thực (bằng chứng: case
+    rc1c-scan-max-and-min trả ok và bỏ im lặng một nửa)."""
+    return {
+        mechanism_family(canonical_mechanism(v))
+        for v in analyze_exposed_values()
+        if canonical_mechanism(v)
+    }
 
 
 def _analysis(mechs: list[str]) -> dict:
@@ -97,25 +117,33 @@ def _config_representing(family: str, mechanism: str) -> dict:
 
 def build_probes() -> list[dict]:
     probes: list[dict] = []
+    expressible = analyze_expressible_families()
     for fid, pol in FAMILY_OPERATION_POLICY.items():
         fam = fid.value
+        reachable = fam in expressible
         mechs = sorted(FAMILY_MECHANISMS.get(fid, ()))
         if not mechs:
             continue
         # E — một thao tác: KHÔNG BAO GIỜ được chặn (chống chặn oan).
-        probes.append(_probe(f"{fam}::single-operation", fam, mechs[:1], PASS))
+        p = _probe(f"{fam}::single-operation", fam, mechs[:1], PASS)
+        p["analyze_expressible"] = reachable
+        probes.append(p)
         if len(mechs) < 2:
             continue
         # A/C/D vs B — xin TẤT CẢ cơ chế của family.
         expect = BLOCKED if pol.cardinality == SINGLE else PASS
-        probes.append(_probe(f"{fam}::all-mechanisms", fam, mechs, expect))
+        p = _probe(f"{fam}::all-mechanisms", fam, mechs, expect)
+        p["analyze_expressible"] = reachable
+        probes.append(p)
     return probes
 
 
 def _policy_rows() -> list[dict]:
+    expressible = analyze_expressible_families()
     return [
         {
             "family_id": fid.value,
+            "analyze_expressible": fid.value in expressible,
             "operation_cardinality": pol.cardinality,
             "max_operations": pol.max_operations,
             "mechanism_count": len(FAMILY_MECHANISMS.get(fid, ())),
@@ -145,15 +173,24 @@ def build_report(payload: dict) -> str:
         f"- ok mà còn dropped_requirements: **{s['ok_with_dropped']}** (phải là 0)",
         f"- Kết luận: **{'PASS' if payload['ok'] else 'FAIL'}**",
         "",
+        "> **Ranh giới của chính báo cáo này** (đo được ở RC1-C, không phải suy đoán).",
+        "> Probe nạp THẲNG id cơ chế vào gate ⇒ chỉ chứng minh *cho trước analyze,",
+        "> gate quyết đúng* — KHÔNG chứng minh *analyze nói được điều đó*. Chỉ",
+        f"> **{s['families_analyze_expressible']}/{s['family_count']}** family có cơ chế",
+        "> nằm trong `analyze_exposed_values()`; family ngoài đó thì gate không bao",
+        "> giờ nhận được dữ liệu ở đời thực. Bằng chứng: case `rc1c-scan-max-and-min`",
+        "> (single_pass_scan) trả `ok` và bỏ im lặng một nửa yêu cầu.",
+        "",
         "## Chính sách theo family",
         "",
-        "| Family | Cardinality | max | #cơ chế | Ghi chú |",
-        "|---|---|---|---|---|",
+        "| Family | Cardinality | max | #cơ chế | analyze nói được? | Ghi chú |",
+        "|---|---|---|---|---|---|",
     ]
     for r in payload["policies"]:
         lines.append(
             f"| `{r['family_id']}` | {r['operation_cardinality']} | "
-            f"{r['max_operations']} | {r['mechanism_count']} | {r['note'] or '—'} |"
+            f"{r['max_operations']} | {r['mechanism_count']} | "
+            f"{'có' if r['analyze_expressible'] else '**KHÔNG**'} | {r['note'] or '—'} |"
         )
     lines += ["", "## Probe", "",
               "| Probe | Kỳ vọng | Thực tế | Pha chặn | error_code | dropped |",
@@ -193,6 +230,7 @@ def main() -> int:
         "invariant": "status=ok ⟹ dropped_requirements == []",
         "summary": {
             "family_count": len(FAMILY_OPERATION_POLICY),
+            "families_analyze_expressible": len(analyze_expressible_families()),
             "probe_count": len(probes),
             "matched": len(probes) - len(mismatched),
             "mismatched": len(mismatched),

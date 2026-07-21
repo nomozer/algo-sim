@@ -98,6 +98,7 @@
   "invariant": "status=ok ⟹ dropped_requirements == []",
   "summary": {
     "family_count": 9,
+    "families_analyze_expressible": 3,
     "probe_count": 16,
     "matched": 16,
     "mismatched": 0,
@@ -108,6 +109,7 @@
   "policies": [
     {
       "family_id": "tree_traversal",
+      "analyze_expressible": true,
       "operation_cardinality": "single",
       "max_operations": 1,
       "mechanism_count": 4,
@@ -124,6 +126,7 @@
     },
     {
       "family_id": "comparison_sort",
+      "analyze_expressible": true,
       "operation_cardinality": "single",
       "max_operations": 1,
       "mechanism_count": 5,
@@ -141,6 +144,7 @@
     },
     {
       "family_id": "graph_traversal",
+      "analyze_expressible": false,
       "operation_cardinality": "single",
       "max_operations": 1,
       "mechanism_count": 3,
@@ -156,6 +160,7 @@
     },
     {
       "family_id": "positional_representation",
+      "analyze_expressible": true,
       "operation_cardinality": "single",
       "max_operations": 1,
       "mechanism_count": 2,
@@ -170,6 +175,7 @@
     },
     {
       "family_id": "interval_elimination",
+      "analyze_expressible": false,
       "operation_cardinality": "single",
       "max_operations": 1,
       "mechanism_count": 1,
@@ -179,6 +185,7 @@
     },
     {
       "family_id": "single_pass_scan",
+      "analyze_expressible": false,
       "operation_cardinality": "single",
       "max_operations": 1,
       "mechanism_count": 5,
@@ -188,6 +195,7 @@
     },
     {
       "family_id": "boolean_composition",
+      "analyze_expressible": false,
       "operation_cardinality": "multiple",
       "max_operations": 8,
       "mechanism_count": 3,
@@ -197,6 +205,7 @@
     },
     {
       "family_id": "layered_pdu_transform",
+      "analyze_expressible": false,
       "operation_cardinality": "pipeline",
       "max_operations": 2,
       "mechanism_count": 1,
@@ -206,6 +215,7 @@
     },
     {
       "family_id": "structural_progressive_representation",
+      "analyze_expressible": false,
       "operation_cardinality": "multiple",
       "max_operations": 8,
       "mechanism_count": 2,
@@ -240,7 +250,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": true
     },
     {
       "probe_id": "tree_traversal::all-mechanisms",
@@ -286,7 +297,8 @@
       ],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "BLOCKED"
+      "completeness_decision": "BLOCKED",
+      "analyze_expressible": true
     },
     {
       "probe_id": "comparison_sort::single-operation",
@@ -313,7 +325,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": true
     },
     {
       "probe_id": "comparison_sort::all-mechanisms",
@@ -364,7 +377,8 @@
       ],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "BLOCKED"
+      "completeness_decision": "BLOCKED",
+      "analyze_expressible": true
     },
     {
       "probe_id": "graph_traversal::single-operation",
@@ -391,7 +405,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     },
     {
       "probe_id": "graph_traversal::all-mechanisms",
@@ -432,7 +447,8 @@
       ],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "BLOCKED"
+      "completeness_decision": "BLOCKED",
+      "analyze_expressible": false
     },
     {
       "probe_id": "positional_representation::single-operation",
@@ -459,7 +475,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": true
     },
     {
       "probe_id": "positional_representation::all-mechanisms",
@@ -495,7 +512,8 @@
       ],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "BLOCKED"
+      "completeness_decision": "BLOCKED",
+      "analyze_expressible": true
     },
     {
       "probe_id": "interval_elimination::single-operation",
@@ -522,7 +540,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     },
     {
       "probe_id": "single_pass_scan::single-operation",
@@ -549,7 +568,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     },
     {
       "probe_id": "single_pass_scan::all-mechanisms",
@@ -600,7 +620,8 @@
       ],
       "operation_cardinality": "single",
       "max_operations": 1,
-      "completeness_decision": "BLOCKED"
+      "completeness_decision": "BLOCKED",
+      "analyze_expressible": false
     },
     {
       "probe_id": "boolean_composition::single-operation",
@@ -627,7 +648,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "multiple",
       "max_operations": 8,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     },
     {
       "probe_id": "boolean_composition::all-mechanisms",
@@ -662,7 +684,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "multiple",
       "max_operations": 8,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     },
     {
       "probe_id": "layered_pdu_transform::single-operation",
@@ -689,7 +712,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "pipeline",
       "max_operations": 2,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     },
     {
       "probe_id": "structural_progressive_representation::single-operation",
@@ -716,7 +740,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "multiple",
       "max_operations": 8,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     },
     {
       "probe_id": "structural_progressive_representation::all-mechanisms",
@@ -747,7 +772,8 @@
       "unsupported_combinations": [],
       "operation_cardinality": "multiple",
       "max_operations": 8,
-      "completeness_decision": "PASS"
+      "completeness_decision": "PASS",
+      "analyze_expressible": false
     }
   ],
   "violations": {
