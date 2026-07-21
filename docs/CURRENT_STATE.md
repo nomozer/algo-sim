@@ -4,9 +4,32 @@ Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong**
 test). Không ghi việc đang định làm vào mục "đã xong".
 
 > **M17-Lite — Curriculum Capability Expansion & Simulation Authenticity: ĐANG
-> MỞ** (proposal duyệt `620a09a`, scope xem
-> `docs/superpowers/specs/2026-07-21-m17-lite-proposal.md`). **Wave 1 XONG
-> (offline)** — mở rộng 4 family hiện có bằng **4 target mới**, catalog
+> MỞ** (proposal duyệt `620a09a`). **Wave 2A XONG (offline)** — family MỚI
+> **`tree_traversal`** (target `tree.traversal`), duyệt cây nhị phân 4 biến thể
+> preorder/inorder/postorder/level_order. FE domain mới `tree/tree-module.tsx`:
+> executor KHUNG NGĂN XẾP mirror đệ quy (DFS pre/in/post) + HÀNG ĐỢI (level);
+> renderer cây phân tầng (layout in-order, panel stack/queue theo biến thể,
+> CẤM nhãn generic); oracle ĐỆ QUY ĐỘC LẬP 4 variant trên cây chuẩn + single/
+> skewed/incomplete/uneven/label-số + duplicate-label-stable-id (39 test). BE:
+> `FamilyId.TREE_TRAVERSAL` + mechanisms `tree_traversal.{preorder,inorder,
+> postorder,level_order}` (prefix=family_id theo canonical convention, KHÔNG
+> `binary_tree.*` — giữ `mechanism_family()` matching) + validator mirror
+> (multi-parent/cycle/disconnected/depth≤5) + catalog `tree-1.0` + classify.md
+> 2f (tree vs graph; thiếu cấu trúc → unsupported KHÔNG dựng cây mặc định) +
+> authenticity contract + routing/near-miss test (BST/AVL/heap/n-ary →
+> unsupported, KHÔNG leak). **ĐÓNG regression Wave 0:** tree honest+adversarial
+> nay route `tree.traversal` (ROUTED_SPECIALIZED) — **CONDITIONAL_LEAK = 0**;
+> case thiếu-cấu-trúc → unsupported. Audit W2A: 73 case, 0 leak, 18 REAL + 1
+> PARTIAL. Visual fixtures 6 case (renderer = **NEEDS_VISUAL_REVIEW** — SSR cấu
+> trúc đạt, chờ review browser). **M16 frozen bất khả xâm phạm:** pin
+> `M16_FAMILY_VALUES` (8) thay live `FamilyId` → thêm family M17 KHÔNG làm trôi
+> artifact/dataset frozen (content không đổi 1 byte). CACHE **14→15**. Catalog
+> **18→19 target / 9 family**. Offline sau W2A: pytest **755** (2 skip, 1
+> deselect) · vitest **528/39** · build sạch. **Live smoke Wave 2A: CHƯA chạy
+> — chờ user duyệt budget.** Wave 2B (relational_table_query) chưa mở.
+>
+> Trước đó **Wave 1 XONG (offline+live)** — mở rộng 4 family hiện có bằng **4
+> target mới**, catalog
 > **14 → 18**, `CACHE_VERSION` **13 → 14** (một bump coherent Wave 1). **(A)**
 > `algorithm.selection_sort` — variant thứ 3 của `comparison_sort` (gap
 > `select_extreme_repeated` flip OWNED); engine `runSelectionSort` (event
