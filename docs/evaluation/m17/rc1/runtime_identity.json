@@ -1,8 +1,8 @@
 {
   "source": {
-    "git_sha": "39f1571cc0526679b3bcc4bfa6dc5cf06b2be07b",
+    "git_sha": "d0ec06fbaa937c151940759335a625d26a6346ab",
     "build_timestamp": "unknown",
-    "cache_version": "15",
+    "cache_version": "16",
     "family_count": 9,
     "target_count": 19,
     "ai_reachable_target_count": 19,
@@ -94,9 +94,9 @@
     ]
   },
   "runtime": {
-    "git_sha": "39f1571cc0526679b3bcc4bfa6dc5cf06b2be07b",
-    "build_timestamp": "2026-07-21T14:45:56Z",
-    "cache_version": "15",
+    "git_sha": "d0ec06fbaa937c151940759335a625d26a6346ab",
+    "build_timestamp": "2026-07-21T18:17:11Z",
+    "cache_version": "16",
     "family_count": 9,
     "target_count": 19,
     "ai_reachable_target_count": 19,
