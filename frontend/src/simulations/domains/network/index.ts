@@ -5,6 +5,7 @@ import { bfsRoute, buildSteps, currentStep, hopDistance, neighborsOf, typeLabel 
 import type { ConfigResult, SimulationModule } from "../../types";
 import { NetworkInspector, NetworkWorkspace } from "./ui";
 import { makeEncapsulationModule } from "./encap";
+import { registerTraverseModule } from "./traverse-module";
 
 /**
  * M8: renderer 3D nạp LƯỜI (code-split) — Three.js (~600KB) chỉ tải khi người
@@ -230,4 +231,6 @@ export function registerNetworkDomain(): void {
   registerSimulation(makeNetworkModule());
   // M10: module THỨ HAI của domain network — đóng gói/mở gói TCP/IP (3D sư phạm).
   registerSimulation(makeEncapsulationModule());
+  // M17 W1: duyệt đồ thị BFS/DFS tổng quát (packet_routing = application variant).
+  registerTraverseModule();
 }

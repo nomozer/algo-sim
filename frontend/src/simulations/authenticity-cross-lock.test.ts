@@ -230,6 +230,31 @@ describe("M17 W0 — authenticity cross-lock: network", () => {
     for (const s of state.steps) expect(typeof s.packetAt).toBe("string");
   });
 
+  it("network.graph_traversal: visitedOrder + path + reachable đúng contract (M17 W1)", () => {
+    const state = initState("network.graph_traversal", {
+      nodes: [{ id: "A" }, { id: "B" }, { id: "C" }, { id: "D" }, { id: "E" }],
+      edges: [["A", "B"], ["A", "C"], ["B", "D"], ["C", "D"], ["D", "E"]],
+      directed: false,
+      start: "A",
+      goal: "E",
+      variant: "bfs",
+    }) as unknown as {
+      steps: { kind: string }[];
+      visitedOrder: string[];
+      path: string[] | null;
+      reachable: boolean | null;
+    };
+    expectStateFields("network.graph_traversal", state as unknown as Record<string, unknown>);
+    const kinds = new Set(state.steps.map((s) => s.kind));
+    for (const evt of auth("network.graph_traversal").required_trace_events) {
+      expect(kinds.has(evt), `traversal: thiếu event ${evt}`).toBe(true);
+    }
+    // BFS đường ngắn nhất A→E — engine tính (authoritative)
+    expect(state.reachable).toBe(true);
+    expect(state.path).toEqual(["A", "B", "D", "E"]);
+    expect(state.visitedOrder[0]).toBe("A");
+  });
+
   it("network.protocol_encapsulation: đủ 4 delta kind + PDU cuối", () => {
     const state = initState(
       "network.protocol_encapsulation",

@@ -15,9 +15,9 @@ from app.simulation.families import _selector_internal_violations
 VALID_FAMILY_IDS = {f.value for f in FamilyId}
 
 
-def test_catalog_17_runtime_target_sau_m17_w1():
-    # 14 (M15/M16) + selection_sort (W1.A) + base_conversion (W1.B) + boolean_dag (W1.C)
-    assert len(CATALOG) == 17
+def test_catalog_18_runtime_target_sau_m17_w1():
+    # 14 (M15/M16) + selection_sort + base_conversion + boolean_dag + graph_traversal
+    assert len(CATALOG) == 18
 
 
 def test_moi_entry_co_metadata_descriptor_day_du():
@@ -54,7 +54,8 @@ def test_llm_choices_an_sort_concrete_hien_selector_token():
     assert "algorithm.selection_sort" not in choices  # M17 W1: ẩn sau selector
     assert "binary.base_conversion" in choices  # M17 W1: choice độc lập
     assert "logic.boolean_dag" in choices  # W1.C choice doc lap
-    assert len(choices) == 15
+    assert "network.graph_traversal" in choices  # W1.D choice doc lap
+    assert len(choices) == 16
     assert len(choices) == len(set(choices))  # không trùng
 
 
@@ -108,7 +109,7 @@ def test_cross_lock_phat_hien_target_thieu_membership():
 
 
 def test_config_contract_version_khai_du_moi_entry():
-    assert len(CATALOG) == 17
+    assert len(CATALOG) == 18
     for spec in CATALOG.values():
         assert spec.config_contract_version  # ≠ "" (K1 — shape + VALIDATION POLICY, §C2 rev2)
 

@@ -64,6 +64,21 @@ def _booldag_cfg(inputs: list, gates: list, output: str) -> str:
     return _j({"inputs": inputs, "gates": gates, "output": output})
 
 
+def _traverse_cfg(nodes: list, edges: list, start: str, variant: str,
+                  goal: str | None = None, directed: bool = False) -> str:
+    """Config network.graph_traversal (M17 W1) — đúng schema validator BE."""
+    cfg: dict = {
+        "nodes": [{"id": n} for n in nodes],
+        "edges": edges,
+        "start": start,
+        "variant": variant,
+        "directed": directed,
+    }
+    if goal is not None:
+        cfg["goal"] = goal
+    return _j(cfg)
+
+
 @dataclass(frozen=True)
 class TargetFixture:
     """Kịch bản audit cho MỘT target: archetype → (đề VI, CaseScript).
@@ -520,6 +535,54 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                     [{"id": "cl", "type": "client"}, {"id": "r1", "type": "router"},
                      {"id": "r2", "type": "router"}, {"id": "srv", "type": "server"}],
                     [["cl", "r1"], ["cl", "r2"], ["r1", "srv"], ["r2", "srv"]], "cl", "srv",
+                )],
+            ),
+        },
+    ),
+    # M17 W1 — duyệt đồ thị BFS/DFS (packet_routing giữ là application variant)
+    "network.graph_traversal": TargetFixture(
+        prompts={
+            "direct": "Duyệt đồ thị 5 đỉnh A,B,C,D,E (A-B, A-C, B-D, C-D, D-E) theo chiều rộng (BFS) từ A.",
+            "paraphrase": "Đi thăm các đỉnh của đồ thị bắt đầu từ A, ưu tiên đi SÂU hết một nhánh rồi mới quay lại (DFS).",
+            "changed_input": "Tìm đường từ A đến E trong đồ thị (A-B, B-C, C-E, A-D) bằng BFS.",
+            "boundary": "Đồ thị hai phần rời: (A-B) và (X-Y). Duyệt BFS từ A tìm Y.",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Duyệt đồ thị theo BFS từ A", process_roles=["temporal"]),
+                [_classify("network.graph_traversal")],
+                [_traverse_cfg(
+                    ["A", "B", "C", "D", "E"],
+                    [["A", "B"], ["A", "C"], ["B", "D"], ["C", "D"], ["D", "E"]],
+                    "A", "bfs",
+                )],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Duyệt đồ thị theo chiều sâu từ A", process_roles=["temporal"]),
+                [_classify("network.graph_traversal")],
+                [_traverse_cfg(
+                    ["A", "B", "C", "D", "E"],
+                    [["A", "B"], ["A", "C"], ["B", "D"], ["C", "D"], ["D", "E"]],
+                    "A", "dfs",
+                )],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Tìm đường A→E bằng BFS", process_roles=["temporal"]),
+                [_classify("network.graph_traversal")],
+                [_traverse_cfg(
+                    ["A", "B", "C", "D", "E"],
+                    [["A", "B"], ["B", "C"], ["C", "E"], ["A", "D"]],
+                    "A", "bfs", goal="E",
+                )],
+            ),
+            # unreachable = kết quả hợp lệ (không phải lỗi)
+            "boundary": CaseScript(
+                _analysis(goal="Tìm Y từ A trong đồ thị rời", process_roles=["temporal"]),
+                [_classify("network.graph_traversal")],
+                [_traverse_cfg(
+                    ["A", "B", "X", "Y"],
+                    [["A", "B"], ["X", "Y"]],
+                    "A", "bfs", goal="Y",
                 )],
             ),
         },

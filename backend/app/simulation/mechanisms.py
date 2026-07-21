@@ -38,7 +38,12 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
         # M17 W1 — mạch nhiều cổng AND/OR/NOT/XOR bounded (logic.boolean_dag)
         "boolean_composition.bounded_gate_dag",
     ),
-    FamilyId.GRAPH_TRAVERSAL: ("graph_traversal.unweighted_hop_bfs",),
+    FamilyId.GRAPH_TRAVERSAL: (
+        "graph_traversal.unweighted_hop_bfs",
+        # M17 W1 — duyệt đồ thị tổng quát BFS/DFS (network.graph_traversal)
+        "graph_traversal.breadth_first",
+        "graph_traversal.depth_first",
+    ),
     FamilyId.LAYERED_PDU_TRANSFORM: (
         "layered_pdu_transform.encapsulate_decapsulate_4layer",
     ),

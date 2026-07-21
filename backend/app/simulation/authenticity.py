@@ -136,6 +136,19 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
         required_result_fields=("route",),
         renderer_semantic_requirements=("graph_topology", "packet_position_per_step", "narration_per_step"),
     ),
+    # M17 W1 — duyệt đồ thị BFS/DFS: frontier (queue/stack), thứ tự thăm,
+    # đường đi dựng lại; unreachable là result hợp lệ (reachable field).
+    "network.graph_traversal": AuthenticityContract(
+        required_state_fields=(
+            "config", "frontierKind", "steps", "visitedOrder", "path", "reachable", "cursor",
+        ),
+        required_trace_events=("visit", "result"),
+        required_result_fields=("visitedOrder", "path", "reachable"),
+        renderer_semantic_requirements=(
+            "graph_nodes_edges", "frontier_panel_queue_or_stack", "visited_order_strip",
+            "path_highlight", "narration_per_step",
+        ),
+    ),
     # network.protocol_encapsulation — 9 bước PDU với delta tường minh
     "network.protocol_encapsulation": AuthenticityContract(
         required_state_fields=("payloadLabel", "layers", "steps", "cursor"),

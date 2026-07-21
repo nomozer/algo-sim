@@ -57,6 +57,7 @@ from app.validation.simulation import (
     validate_logic_config,
     validate_network_config,
     validate_scan_config,
+    validate_traverse_config,
 )
 
 # ── Domain algorithm ──────────────────────────────────────────
@@ -557,6 +558,78 @@ CATALOG["network.packet_routing"] = SimSpec(
     curriculum_anchor="T10 CĐ2 · T12 CĐ2",
     known_gaps=("đường đi ngắn nhất có trọng số (Dijkstra)", "dựng topo từng bước"),
     config_contract_version="net-cfg-1",
+)
+
+
+# ── network.graph_traversal (M17 W1) — duyệt đồ thị BFS/DFS tổng quát ──
+
+_TRAVERSE_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "nodes": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "id": {"type": "STRING"},
+                    "label": {"type": "STRING", "nullable": True},
+                },
+                "required": ["id"],
+            },
+        },
+        "edges": {"type": "ARRAY", "items": {"type": "ARRAY", "items": {"type": "STRING"}}},
+        "directed": {"type": "BOOLEAN", "nullable": True},
+        "start": {"type": "STRING"},
+        "goal": {"type": "STRING", "nullable": True},
+        "variant": {"type": "STRING", "enum": ["bfs", "dfs"]},
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["nodes", "edges", "start", "variant"],
+}
+
+_TRAVERSE_CONTRACT = """HỢP ĐỒNG CONFIG (network.graph_traversal):
+- nodes: 2–10 nút {id, label?}.
+- edges: tối đa 20 cạnh [idA, idB] nối hai nút CÓ THẬT (không tự nối).
+- directed: true nếu đồ thị CÓ hướng (cạnh một chiều A→B); mặc định false (vô hướng).
+- start: id nút bắt đầu duyệt. goal: id nút đích (BỎ TRỐNG nếu chỉ duyệt toàn bộ, không tìm đường).
+- variant: "bfs" (theo chiều rộng — hàng đợi) hoặc "dfs" (theo chiều sâu — ngăn xếp) theo yêu cầu đề.
+- KHÔNG sinh thứ tự thăm / đường đi / kết quả — engine tự duyệt và dựng lại đường đi. Không-đến-được là kết quả hợp lệ.
+- KHÔNG dùng cho đường đi ngắn nhất CÓ TRỌNG SỐ (Dijkstra) — cơ chế đó chưa hỗ trợ."""
+
+CATALOG["network.graph_traversal"] = SimSpec(
+    simulation_id="network.graph_traversal",
+    domain="network",
+    visual_mode="2d",
+    description=(
+        "duyệt đồ thị TỔNG QUÁT bằng BFS (chiều rộng) hoặc DFS (chiều sâu) trên "
+        "đồ thị có/không hướng KHÔNG trọng số — mô phỏng frontier (hàng đợi/ngăn "
+        "xếp), thứ tự thăm, và tìm đường + dựng lại đường đi khi có đích (không "
+        "đến được là kết quả hợp lệ). Dùng cho bài duyệt đồ thị/cây bằng BFS/DFS "
+        "hoặc tìm đường KHÔNG trọng số. Bài định tuyến gói tin qua thiết bị mạng "
+        "cho sẵn → network.packet_routing; đường đi NGẮN NHẤT CÓ TRỌNG SỐ chưa hỗ trợ"
+    ),
+    config_schema=_TRAVERSE_SCHEMA,
+    contract=_TRAVERSE_CONTRACT,
+    validate=validate_traverse_config,
+    make_title=lambda config, analysis: (
+        f"Duyệt đồ thị {str(config.get('variant', '')).upper()}"
+    ),
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.GRAPH_TRAVERSAL, ResultAuthority.COMPUTATION,
+            owned_mechanisms=(
+                "graph_traversal.breadth_first",
+                "graph_traversal.depth_first",
+            ),
+        ),
+    ),
+    reachability=(
+        ReachabilityLevel.REGISTERED,
+        ReachabilityLevel.AI_REACHABLE_PUBLIC,
+    ),
+    curriculum_anchor="T11CS B17 · T12 CĐ2",
+    known_gaps=("đường đi ngắn nhất có trọng số (Dijkstra) — future family",),
+    config_contract_version="traverse-1.0",
 )
 
 

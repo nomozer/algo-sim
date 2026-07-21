@@ -373,6 +373,79 @@ def validate_boolean_dag_config(raw) -> tuple[dict | None, str | None]:
     return {"inputs": inputs, "gates": gates, "output": output, "notes": notes}, None
 
 
+# ── network.graph_traversal (M17 W1) ──────────────────────────
+
+TRAVERSE_VARIANTS = ("bfs", "dfs")
+TRAVERSE_MAX_NODES = 10
+TRAVERSE_MAX_EDGES = 20
+
+
+def validate_traverse_config(raw) -> tuple[dict | None, str | None]:
+    """network.graph_traversal — BFS/DFS trên đồ thị KHÔNG trọng số. Frontier,
+    thứ tự thăm, predecessor, đường đi, reachable — TẤT CẢ do engine FE tính.
+    Không-đến-được là KẾT QUẢ hợp lệ (không phải lỗi validate)."""
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+
+    nodes_raw = raw.get("nodes")
+    if not isinstance(nodes_raw, list) or not (2 <= len(nodes_raw) <= TRAVERSE_MAX_NODES):
+        return None, f'"nodes" phải có 2–{TRAVERSE_MAX_NODES} nút.'
+    ids: set[str] = set()
+    nodes = []
+    for it in nodes_raw:
+        if not isinstance(it, dict) or not isinstance(it.get("id"), str) or not it["id"]:
+            return None, "Mỗi nút phải là object có id chuỗi."
+        if it["id"] in ids:
+            return None, f"Id nút trùng: {it['id']}."
+        ids.add(it["id"])
+        label = it.get("label")
+        nodes.append({"id": it["id"], "label": label if isinstance(label, str) else None})
+
+    edges_raw = raw.get("edges")
+    if not isinstance(edges_raw, list) or len(edges_raw) > TRAVERSE_MAX_EDGES:
+        return None, f'"edges" phải là mảng tối đa {TRAVERSE_MAX_EDGES} cạnh.'
+    edges = []
+    for e in edges_raw:
+        if (
+            not isinstance(e, list)
+            or len(e) != 2
+            or not all(isinstance(x, str) for x in e)
+        ):
+            return None, "Mỗi cạnh phải là cặp [idA, idB]."
+        if e[0] not in ids or e[1] not in ids:
+            return None, f"Cạnh [{e[0]}, {e[1]}] tham chiếu nút không tồn tại."
+        if e[0] == e[1]:
+            return None, "Không nhận cạnh tự nối (self-loop)."
+        edges.append([e[0], e[1]])
+
+    start = raw.get("start")
+    if not isinstance(start, str) or start not in ids:
+        return None, '"start" phải là id một nút có thật.'
+    goal = raw.get("goal")
+    if goal is not None:
+        if not isinstance(goal, str) or goal not in ids:
+            return None, '"goal" (nếu có) phải là id một nút có thật.'
+        if goal == start:
+            return None, '"goal" phải khác "start".'
+    variant = raw.get("variant")
+    if variant not in TRAVERSE_VARIANTS:
+        return None, '"variant" phải là "bfs" hoặc "dfs".'
+
+    notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
+    return {
+        "nodes": nodes,
+        "edges": edges,
+        "directed": raw.get("directed") is True,
+        "start": start,
+        "goal": goal,
+        "variant": variant,
+        "notes": notes,
+    }, None
+
+
 # ── Domain network (M5) ───────────────────────────────────────
 
 _NODE_TYPES = {"client", "router", "server", "switch", "isp"}
