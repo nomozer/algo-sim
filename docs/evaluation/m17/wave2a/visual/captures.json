@@ -1,6 +1,6 @@
 {
   "app": "http://localhost:3000",
-  "generated_at": "2026-07-21T14:05:52.612Z",
+  "generated_at": "2026-07-21T14:32:33.480Z",
   "records": [
     {
       "fixture_id": "vr1-preorder-balanced",
@@ -419,6 +419,119 @@
               "X"
             ],
             "narration": "Duyệt xong. Thứ tự thăm: X."
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vr1-realworld-vietnamese-labels",
+      "variant": "preorder",
+      "title": "Mạng lưới trạm — nhãn tiếng Việt dài",
+      "total_steps": 34,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-realworld-vietnamese-labels-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "stepKind": "started",
+            "current": "hai-dang",
+            "frontier": [
+              "hai-dang"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự trước (gốc–trái–phải) từ gốc Hải Đăng. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 17,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-realworld-vietnamese-labels-mid.png",
+          "authoritative_state": {
+            "cursor": 17,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "stepKind": "push",
+            "current": "hoang-hon",
+            "frontier": [
+              "hai-dang",
+              "hoang-hon"
+            ],
+            "visitedSoFar": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong"
+            ],
+            "narration": "Đi xuống con PHẢI của Hải Đăng → Hoàng Hôn (đẩy vào ngăn xếp)."
+          }
+        },
+        {
+          "tag": "final",
+          "step": 33,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-realworld-vietnamese-labels-final.png",
+          "authoritative_state": {
+            "cursor": 33,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: Hải Đăng → Sương Mai → Thông Xanh → Suối Đá → Mây Trắng → Đá Vọng → Hoàng Hôn → Đồi Gió → Thác Bạc → Rừng Sâu → Trăng Khuyết."
           }
         }
       ]

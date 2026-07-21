@@ -53,6 +53,21 @@ const FIXTURES = [
   treeEnv("vr1-levelorder-multilevel", "Duyệt theo mức — nhiều tầng", "level_order", "A",
     [N("A", "B", "C"), N("B", "D", "E"), N("C", "F", "G"), N("D", "H"), N("E"), N("F"), N("G"), N("H")]),
   treeEnv("vr1-single-node", "Cây một nút — biên", "preorder", "X", [N("X")]),
+  // Fixture ĐỜI THỰC (đề "Mạng lưới truyền tin trong khu bảo tồn"): 11 nút,
+  // NHÃN TIẾNG VIỆT DÀI, sâu đúng 5 tầng (chạm biên). Kiểm nhãn có tràn nút không.
+  treeEnv("vr1-realworld-vietnamese-labels", "Mạng lưới trạm — nhãn tiếng Việt dài", "preorder", "hai-dang", [
+    { id: "hai-dang", label: "Hải Đăng", left: "suong-mai", right: "hoang-hon" },
+    { id: "suong-mai", label: "Sương Mai", left: "thong-xanh", right: "suoi-da" },
+    { id: "thong-xanh", label: "Thông Xanh", left: null, right: null },
+    { id: "suoi-da", label: "Suối Đá", left: "may-trang", right: null },
+    { id: "may-trang", label: "Mây Trắng", left: null, right: "da-vong" },
+    { id: "da-vong", label: "Đá Vọng", left: null, right: null },
+    { id: "hoang-hon", label: "Hoàng Hôn", left: null, right: "doi-gio" },
+    { id: "doi-gio", label: "Đồi Gió", left: "thac-bac", right: "rung-sau" },
+    { id: "thac-bac", label: "Thác Bạc", left: null, right: null },
+    { id: "rung-sau", label: "Rừng Sâu", left: "trang-khuyet", right: null },
+    { id: "trang-khuyet", label: "Trăng Khuyết", left: null, right: null },
+  ]),
 ];
 
 /* Fixture 6: thông điệp từ chối learner-facing (không phải envelope ok) */

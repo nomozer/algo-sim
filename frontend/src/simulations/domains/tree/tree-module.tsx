@@ -320,8 +320,33 @@ export function validateTreeTraversalConfig(raw: unknown): ConfigResult<TreeTrav
 
 /* ── renderer: layout cây (in-order x, depth y) ── */
 
-const RW = 460;
-const RH = 300;
+/**
+ * Khung vẽ CO GIÃN theo cây thật (M17-VR1 hồi quy): khung cố định 460×300 chỉ
+ * đủ cho nhãn 1–2 ký tự (A, B, C). Đề đời thực dùng tên tiếng Việt dài ("Trăng
+ * Khuyết", "Sương Mai") → nhãn tràn khỏi nút và chồng lên nhau. Nay bề rộng cấp
+ * theo SỐ NÚT (mỗi nút một làn đủ rộng) và chiều cao theo ĐỘ SÂU.
+ */
+const SLOT_W = 86;   // bề rộng một làn nút (đủ cho nhãn ~12 ký tự)
+const LEVEL_H = 78;  // khoảng cách giữa hai tầng
+/** Nhãn ngắn vẽ TRONG nút; nhãn dài vẽ DƯỚI nút (không bóp méo vòng tròn). */
+const INLINE_LABEL_MAX = 2;
+
+function layoutSize(config: TreeTraversalConfig): { w: number; h: number } {
+  const map = nodeMap(config);
+  let maxDepth = 0;
+  const walk = (id: string, d: number) => {
+    maxDepth = Math.max(maxDepth, d);
+    const n = map.get(id);
+    if (!n) return;
+    if (n.left) walk(n.left, d + 1);
+    if (n.right) walk(n.right, d + 1);
+  };
+  walk(config.rootId, 0);
+  return {
+    w: Math.max(360, config.nodes.length * SLOT_W),
+    h: Math.max(190, (maxDepth + 1) * LEVEL_H + 40),
+  };
+}
 
 function treeLayout(config: TreeTraversalConfig): Map<string, { x: number; y: number; depth: number }> {
   const map = nodeMap(config);
@@ -339,10 +364,11 @@ function treeLayout(config: TreeTraversalConfig): Map<string, { x: number; y: nu
   place(config.rootId, 0);
   const n = inorderIndex;
   const maxDepth = Math.max(1, ...depths);
+  const { w, h } = layoutSize(config);
   for (const [id, p] of pos) {
     pos.set(id, {
-      x: 30 + (p.x + 0.5) * ((RW - 60) / Math.max(1, n)),
-      y: 30 + p.y * ((RH - 60) / maxDepth),
+      x: 30 + (p.x + 0.5) * ((w - 60) / Math.max(1, n)),
+      y: 34 + p.y * ((h - 74) / maxDepth),
       depth: p.depth,
     });
   }
@@ -360,6 +386,7 @@ export function TreeWorkspace({ state }: Props) {
   const step = state.steps[at];
   const map = nodeMap(state.config);
   const pos = treeLayout(state.config);
+  const { w: RW, h: RH } = layoutSize(state.config);
   const visited = new Set(step.visitedSoFar);
   const activePath = new Set(step.activePath);
   const last = at === state.steps.length - 1;
@@ -399,7 +426,14 @@ export function TreeWorkspace({ state }: Props) {
                         fill={isCur ? "var(--accent-orange)" : isVisited ? "var(--accent-green)" : "var(--surface)"}
                         stroke={n.id === state.config.rootId ? "var(--primary)" : "var(--ink-faint)"}
                         strokeWidth={n.id === state.config.rootId ? 2.5 : 1.5} />
-                <text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={11}>{n.label}</text>
+                {/* Nhãn NGẮN nằm trong nút; nhãn DÀI (tên tiếng Việt) đặt DƯỚI
+                    nút để không tràn ra ngoài vòng tròn và đè nút bên cạnh. */}
+                {n.label.length <= INLINE_LABEL_MAX ? (
+                  <text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={11}>{n.label}</text>
+                ) : (
+                  <text x={p.x} y={p.y + 30} textAnchor="middle" fontSize={11}
+                        fill="var(--ink-secondary)">{n.label}</text>
+                )}
               </g>
             );
           })}

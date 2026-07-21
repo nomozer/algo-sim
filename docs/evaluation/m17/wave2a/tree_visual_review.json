@@ -3,8 +3,8 @@
   "run_label": "m17-vr1-browser-visual-review",
   "method": "Chrome headless qua CDP (tái dùng hạ tầng audit-layout.mjs), Vite dev; ảnh PNG được reviewer XEM trực tiếp — không dùng SSR làm bằng chứng.",
   "renderer_final_status": "REAL_VISUAL",
-  "fixtures_reviewed": 6,
-  "screenshots": 16,
+  "fixtures_reviewed": 7,
+  "screenshots": 19,
   "issues_found": [
     {
       "id": "VR1-1",
@@ -37,11 +37,21 @@
       "fix": "HomeView dùng chung UnsupportedNotice (một nguồn); thêm failure_category → tiêu đề 'CHƯA ĐỦ DỮ KIỆN' + gợi ý bổ sung dữ liệu.",
       "guard": "learner-error.test.tsx — 2 test tiêu đề theo failure_category.",
       "status": "FIXED"
+    },
+    {
+      "id": "VR1-4",
+      "severity": "BROKEN_VISUAL",
+      "scope": "tree.traversal renderer",
+      "title": "Nhãn tiếng Việt DÀI tràn khỏi nút và chồng lên nhau (khung vẽ cố định)",
+      "detail": "Review ban đầu chỉ dùng nhãn 1 ký tự (A–G) nên không lộ. Đề đời thực ('Mạng lưới truyền tin trong khu bảo tồn', 11 trạm tên tiếng Việt: 'Trăng Khuyết', 'Sương Mai') → nhãn vẽ TRONG vòng tròn r=16 trên khung cố định 460x300 → tràn ra ngoài, đè nút/cạnh bên cạnh, không đọc được. Engine VẪN đúng (thứ tự preorder chuẩn) — chỉ trình bày hỏng.",
+      "fix": "Khung vẽ CO GIÃN: rộng theo số nút (86px/làn), cao theo độ sâu (78px/tầng); nhãn >2 ký tự vẽ DƯỚI nút thay vì trong vòng tròn.",
+      "guard": "Fixture 'vr1-realworld-vietnamese-labels' (11 nút, nhãn tiếng Việt, sâu 5 tầng chạm biên) vào bộ chụp thường trực.",
+      "evidence_after": "docs/evaluation/m17/wave2a/visual/vr1-realworld-vietnamese-labels-mid.png",
+      "status": "FIXED"
     }
   ],
   "outstanding_visual_backlog": [
-    "Cây 1 nút để lại khoảng trắng lớn dưới khung (viewBox cố định) — thẩm mỹ, không chặn đọc hiểu.",
-    "Nhãn cạnh 'trái/phải' cỡ 9px: đọc được ở cây ≤8 nút đã kiểm; cây dày hơn cần đo lại khi mở rộng bound."
+    "Nhãn quá 12 ký tự trong cây >11 nút chưa đo — cần fixture mới nếu nới bound node."
   ],
   "records": [
     {
@@ -540,6 +550,129 @@
       },
       "status": "REAL_VISUAL",
       "reviewer_note": "Tiêu đề 'CHƯA ĐỦ DỮ KIỆN' (không nói sai là ngoài danh mục), nêu rõ thiếu gì và cho ví dụ cách mô tả cây; không lộ JSON/schema/id nội bộ."
+    },
+    {
+      "fixture_id": "vr1-realworld-vietnamese-labels",
+      "variant": "preorder",
+      "title": "Mạng lưới trạm — nhãn tiếng Việt dài (đề đời thực người dùng gửi)",
+      "total_steps": 34,
+      "captures": [
+        {
+          "tag": "initial",
+          "trace_step": 0,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-realworld-vietnamese-labels-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "stepKind": "started",
+            "current": "hai-dang",
+            "frontier": [
+              "hai-dang"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự trước (gốc–trái–phải) từ gốc Hải Đăng. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "trace_step": 17,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-realworld-vietnamese-labels-mid.png",
+          "authoritative_state": {
+            "cursor": 17,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "stepKind": "push",
+            "current": "hoang-hon",
+            "frontier": [
+              "hai-dang",
+              "hoang-hon"
+            ],
+            "visitedSoFar": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong"
+            ],
+            "narration": "Đi xuống con PHẢI của Hải Đăng → Hoàng Hôn (đẩy vào ngăn xếp)."
+          }
+        },
+        {
+          "tag": "final",
+          "trace_step": 33,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-realworld-vietnamese-labels-final.png",
+          "authoritative_state": {
+            "cursor": 33,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "hai-dang",
+              "suong-mai",
+              "thong-xanh",
+              "suoi-da",
+              "may-trang",
+              "da-vong",
+              "hoang-hon",
+              "doi-gio",
+              "thac-bac",
+              "rung-sau",
+              "trang-khuyet"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: Hải Đăng → Sương Mai → Thông Xanh → Suối Đá → Mây Trắng → Đá Vọng → Hoàng Hôn → Đồi Gió → Thác Bạc → Rừng Sâu → Trăng Khuyết."
+          }
+        }
+      ],
+      "checklist": {
+        "STRUCTURE_CLEAR": "PASS",
+        "STATE_CLEAR": "PASS",
+        "MECHANISM_CLEAR": "PASS",
+        "PANEL_CORRECT": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS"
+      },
+      "status": "REAL_VISUAL",
+      "reviewer_note": "11 trạm / 5 tầng (chạm biên depth) với tên tiếng Việt dài: nhãn dưới nút, không tràn/chồng; thứ tự preorder engine đúng (Hải Đăng → Sương Mai → Thông Xanh → Suối Đá → Mây Trắng → Đá Vọng); ngăn xếp khớp."
     }
   ]
 }

@@ -8,7 +8,12 @@
 > Runner: `frontend/scripts/capture-tree-visual.mjs` · dữ liệu thô:
 > `visual/captures.json` · máy-đọc: `tree_visual_review.json`.
 
-**6 fixture · 16 ảnh · 4 variant đều có initial/mid/final.**
+**7 fixture · 19 ảnh · 4 variant đều có initial/mid/final.**
+
+> **Bổ sung sau khi người dùng test thật:** fixture thứ 7
+> (`vr1-realworld-vietnamese-labels`) dựng đúng đề *"Mạng lưới truyền tin trong
+> khu bảo tồn"* — 11 trạm, **tên tiếng Việt dài**, sâu **5 tầng (chạm biên)**.
+> Nó lộ ra lỗi **VR1-4** mà 6 fixture chữ-cái-đơn không thấy.
 
 ## Kết luận: `REAL_VISUAL` — sau 3 sửa lỗi bounded
 
@@ -84,7 +89,22 @@ biên API → học sinh có thể thấy chuỗi như `arbitrary_algorithm`. Ng
   **viền + nền + chữ** bổ trợ ngoài màu; nút điều khiển (Tự chạy / tiến / lùi /
   Đặt lại) rõ, có phím tắt; thông điệp thiếu dữ kiện nêu rõ **cách cung cấp cây**.
 
+### VR1-4 · `BROKEN_VISUAL` → FIXED — nhãn tiếng Việt **tràn khỏi nút**
+
+Phát hiện khi người dùng test đề thật. Sáu fixture đầu dùng nhãn **1 ký tự**
+(A–G) nên vấn đề bị che. Đề đời thực có nhãn như **"Trăng Khuyết", "Sương
+Mai"** vẽ **trong** vòng tròn `r=16` trên khung **cố định 460×300** → chữ tràn
+ra ngoài, **đè nút và cạnh bên cạnh**, không đọc được.
+
+Engine **vẫn đúng** (thứ tự preorder chuẩn) — chỉ phần trình bày hỏng.
+
+- Sửa: khung vẽ **co giãn** (rộng theo số nút — 86px/làn; cao theo độ sâu —
+  78px/tầng); nhãn **>2 ký tự vẽ DƯỚI nút** thay vì trong vòng tròn.
+- Guard: fixture `vr1-realworld-vietnamese-labels` vào **bộ chụp thường trực**.
+- Phụ thu: cây 1 nút hết khoảng trắng thừa (chiều cao nay theo độ sâu) — xoá
+  luôn một mục backlog cũ.
+
 ## Backlog visual còn lại (không chặn)
 
-- Cây 1 nút để lại khoảng trắng lớn dưới khung (viewBox cố định) — thẩm mỹ.
-- Nhãn cạnh 9px đọc tốt ở cây ≤8 nút đã kiểm; cần đo lại nếu nới bound node.
+- Nhãn quá ~12 ký tự trong cây >11 nút chưa đo — cần fixture mới nếu nới giới
+  hạn số nút.
