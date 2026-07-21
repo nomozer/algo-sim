@@ -288,7 +288,7 @@ export function TraverseWorkspace({ state }: Props) {
               <line
                 key={i}
                 x1={pa.x} y1={pa.y} x2={pb.x} y2={pb.y}
-                stroke={onPath ? "var(--accent-green)" : "var(--border)"}
+                stroke={onPath ? "var(--accent-green)" : "var(--ink-faint)"}
                 strokeWidth={onPath ? 3 : 1.5}
               />
             );
@@ -303,7 +303,7 @@ export function TraverseWorkspace({ state }: Props) {
                 <circle
                   cx={p.x} cy={p.y} r={16}
                   fill={isCur ? "var(--accent-orange)" : isVisited ? "var(--accent-green)" : inFrontier ? "var(--primary)" : "var(--surface)"}
-                  stroke="var(--border)"
+                  stroke="var(--ink-faint)"
                 />
                 <text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={11}>
                   {n.label ?? n.id}

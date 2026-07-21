@@ -3,6 +3,7 @@ import { useAppStore } from "../state/store";
 import { ProblemInput } from "./ProblemInput";
 import { previewKindOf, SamplePreview } from "./SamplePreview";
 import { SessionCard } from "./SessionCard";
+import { UnsupportedNotice } from "./SimulationWorkspace";
 
 /**
  * HOME (M9-UX1 · dọn lại M9-UX5) — trạng thái vào app: MỘT hành động chính.
@@ -72,14 +73,14 @@ export function HomeView() {
 
       <div className="home-composer">
         <ProblemInput />
+        {/* (M17-VR1) DÙNG CHUNG UnsupportedNotice — trước đây trang chủ có bản
+            sao riêng render `unsupported.reason` (văn bản KỸ THUẬT), bỏ qua
+            `learner_reason` mà M17 W0 gắn ở biên API → học sinh thấy chuỗi như
+            "arbitrary_algorithm". Một nguồn duy nhất, không lệch nữa. */}
         {unsupported && (
-          <section className="card" role="status">
-            <span className="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span>
-            <p style={{ marginTop: "var(--sp-sm)" }}>{unsupported.reason}</p>
-            <p className="notes">
-              Danh mục mô phỏng sẽ được mở rộng dần — em có thể thử một bài mẫu bên dưới.
-            </p>
-          </section>
+          <div role="status">
+            <UnsupportedNotice unsupported={unsupported} />
+          </div>
         )}
       </div>
 

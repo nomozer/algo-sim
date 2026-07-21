@@ -1,0 +1,545 @@
+{
+  "schema_version": "1",
+  "run_label": "m17-vr1-browser-visual-review",
+  "method": "Chrome headless qua CDP (tái dùng hạ tầng audit-layout.mjs), Vite dev; ảnh PNG được reviewer XEM trực tiếp — không dùng SSR làm bằng chứng.",
+  "renderer_final_status": "REAL_VISUAL",
+  "fixtures_reviewed": 6,
+  "screenshots": 16,
+  "issues_found": [
+    {
+      "id": "VR1-1",
+      "severity": "BROKEN_VISUAL",
+      "scope": "tree.traversal + network.graph_traversal",
+      "title": "Phantom token var(--border) → toàn bộ cạnh cây/đồ thị VÔ HÌNH, nút chưa thăm mất viền",
+      "detail": "Token thật là --hairline; var(--border) không tồn tại nên stroke SVG không hợp lệ → vẽ none. Ảnh hưởng CẢ renderer graph_traversal của Wave 1.",
+      "fix": "stroke → var(--ink-faint); nhãn cạnh fill → var(--ink-muted); nhãn T/P → trái/phải.",
+      "guard": "tokens.test.ts mở rộng quét .tsx/.ts (trước chỉ quét .css nên lọt).",
+      "evidence_before": "docs/evaluation/m17/wave2a/visual/before/vr1-preorder-balanced-mid-BEFORE.png",
+      "evidence_after": "docs/evaluation/m17/wave2a/visual/vr1-preorder-balanced-mid.png",
+      "status": "FIXED"
+    },
+    {
+      "id": "VR1-2",
+      "severity": "PARTIAL_VISUAL",
+      "scope": "tree.traversal Inspector",
+      "title": "Lộ đáp án: panel hiện TOÀN BỘ thứ tự duyệt cuối ngay từ bước 0",
+      "detail": "Vi phạm 'traversal order progressive reveal' — học sinh mất cơ hội tự suy luận.",
+      "fix": "Inspector hiện 'Đã thăm k/n' theo bước; chỉ công bố thứ tự đầy đủ khi duyệt xong.",
+      "guard": "tree.test.tsx — test hiện-dần (bước 0 không chứa thứ tự cuối).",
+      "status": "FIXED"
+    },
+    {
+      "id": "VR1-3",
+      "severity": "PARTIAL_VISUAL",
+      "scope": "learner message (HomeView + Workspace)",
+      "title": "Trang chủ render bản sao riêng dùng reason KỸ THUẬT, bỏ qua learner_reason; tiêu đề 'NGOÀI DANH MỤC' sai bản chất cho case thiếu dữ kiện",
+      "detail": "M17 W0 gắn learner_reason ở biên API nhưng HomeView có notice trùng lặp đọc thẳng unsupported.reason → học sinh có thể thấy chuỗi kỹ thuật (vd 'arbitrary_algorithm'). Ngoài ra duyệt cây CÓ trong danh mục, chỉ thiếu dữ liệu.",
+      "fix": "HomeView dùng chung UnsupportedNotice (một nguồn); thêm failure_category → tiêu đề 'CHƯA ĐỦ DỮ KIỆN' + gợi ý bổ sung dữ liệu.",
+      "guard": "learner-error.test.tsx — 2 test tiêu đề theo failure_category.",
+      "status": "FIXED"
+    }
+  ],
+  "outstanding_visual_backlog": [
+    "Cây 1 nút để lại khoảng trắng lớn dưới khung (viewBox cố định) — thẩm mỹ, không chặn đọc hiểu.",
+    "Nhãn cạnh 'trái/phải' cỡ 9px: đọc được ở cây ≤8 nút đã kiểm; cây dày hơn cần đo lại khi mở rộng bound."
+  ],
+  "records": [
+    {
+      "fixture_id": "vr1-preorder-balanced",
+      "variant": "preorder",
+      "title": "Duyệt trước — cây cân bằng",
+      "total_steps": 22,
+      "captures": [
+        {
+          "tag": "initial",
+          "trace_step": 0,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-preorder-balanced-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự trước (gốc–trái–phải) từ gốc A. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "trace_step": 11,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-preorder-balanced-mid.png",
+          "authoritative_state": {
+            "cursor": 11,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "stepKind": "push",
+            "current": "C",
+            "frontier": [
+              "A",
+              "C"
+            ],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "D",
+              "E"
+            ],
+            "narration": "Đi xuống con PHẢI của A → C (đẩy vào ngăn xếp)."
+          }
+        },
+        {
+          "tag": "final",
+          "trace_step": 21,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-preorder-balanced-final.png",
+          "authoritative_state": {
+            "cursor": 21,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: A → B → D → E → C → F → G."
+          }
+        }
+      ],
+      "checklist": {
+        "STRUCTURE_CLEAR": "PASS",
+        "STATE_CLEAR": "PASS",
+        "MECHANISM_CLEAR": "PASS",
+        "PANEL_CORRECT": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS"
+      },
+      "status": "REAL_VISUAL",
+      "reviewer_note": "Gốc A viền primary phân biệt rõ; cạnh có nhãn trái/phải; đường active A→C cam đậm; ngăn xếp 'A, C' khớp trace; thấy rõ gốc→cây con trái→cây con phải."
+    },
+    {
+      "fixture_id": "vr1-inorder-incomplete",
+      "variant": "inorder",
+      "title": "Duyệt giữa — cây khuyết",
+      "total_steps": 13,
+      "captures": [
+        {
+          "tag": "initial",
+          "trace_step": 0,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-inorder-incomplete-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự giữa (trái–gốc–phải) từ gốc A. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "trace_step": 6,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-inorder-incomplete-mid.png",
+          "authoritative_state": {
+            "cursor": 6,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "stepKind": "pop",
+            "current": "B",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [
+              "D",
+              "B"
+            ],
+            "narration": "Xong nhánh của B — lấy ra khỏi ngăn xếp."
+          }
+        },
+        {
+          "tag": "final",
+          "trace_step": 12,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-inorder-incomplete-final.png",
+          "authoritative_state": {
+            "cursor": 12,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: D → B → A → C."
+          }
+        }
+      ],
+      "checklist": {
+        "STRUCTURE_CLEAR": "PASS",
+        "STATE_CLEAR": "PASS",
+        "MECHANISM_CLEAR": "PASS",
+        "PANEL_CORRECT": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS"
+      },
+      "status": "REAL_VISUAL",
+      "reviewer_note": "Nút khuyết (B chỉ có con trái) bố trí không mơ hồ; gốc A CHƯA thăm ở giữa chừng — đúng ngữ nghĩa inorder (trái→gốc→phải); panel 'Đã thăm 2/4: D → B' hiện dần."
+    },
+    {
+      "fixture_id": "vr1-postorder-skewed",
+      "variant": "postorder",
+      "title": "Duyệt sau — cây lệch trái",
+      "total_steps": 13,
+      "captures": [
+        {
+          "tag": "initial",
+          "trace_step": 0,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-postorder-skewed-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự sau (trái–phải–gốc) từ gốc A. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "trace_step": 6,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-postorder-skewed-mid.png",
+          "authoritative_state": {
+            "cursor": 6,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "stepKind": "visit",
+            "current": "C",
+            "frontier": [
+              "A",
+              "B",
+              "C"
+            ],
+            "visitedSoFar": [
+              "D",
+              "C"
+            ],
+            "narration": "Thăm C (thứ 2)."
+          }
+        },
+        {
+          "tag": "final",
+          "trace_step": 12,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-postorder-skewed-final.png",
+          "authoritative_state": {
+            "cursor": 12,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: D → C → B → A."
+          }
+        }
+      ],
+      "checklist": {
+        "STRUCTURE_CLEAR": "PASS",
+        "STATE_CLEAR": "PASS",
+        "MECHANISM_CLEAR": "PASS",
+        "PANEL_CORRECT": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS"
+      },
+      "status": "REAL_VISUAL",
+      "reviewer_note": "Cây lệch trái vẽ chéo, không chồng nút/nhãn; lá D thăm trước, gốc A còn trắng đến cuối — đúng ngữ nghĩa postorder (con trước, gốc sau)."
+    },
+    {
+      "fixture_id": "vr1-levelorder-multilevel",
+      "variant": "level_order",
+      "title": "Duyệt theo mức — nhiều tầng",
+      "total_steps": 17,
+      "captures": [
+        {
+          "tag": "initial",
+          "trace_step": 0,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-levelorder-multilevel-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "queue",
+            "visitedOrder": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt theo MỨC (BFS) từ gốc A. Đưa gốc vào hàng đợi."
+          }
+        },
+        {
+          "tag": "mid",
+          "trace_step": 8,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-levelorder-multilevel-mid.png",
+          "authoritative_state": {
+            "cursor": 8,
+            "frontierKind": "queue",
+            "visitedOrder": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "stepKind": "enqueue",
+            "current": "F",
+            "frontier": [
+              "D",
+              "E",
+              "F"
+            ],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "C"
+            ],
+            "narration": "Nạp con F của C vào hàng đợi."
+          }
+        },
+        {
+          "tag": "final",
+          "trace_step": 16,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-levelorder-multilevel-final.png",
+          "authoritative_state": {
+            "cursor": 16,
+            "frontierKind": "queue",
+            "visitedOrder": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: A → B → C → D → E → F → G → H."
+          }
+        }
+      ],
+      "checklist": {
+        "STRUCTURE_CLEAR": "PASS",
+        "STATE_CLEAR": "PASS",
+        "MECHANISM_CLEAR": "PASS",
+        "PANEL_CORRECT": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS"
+      },
+      "status": "REAL_VISUAL",
+      "reviewer_note": "4 tầng không bị co/tràn; panel là HÀNG ĐỢI (khác ngăn xếp của DFS) — 'Hàng đợi: D, E, F'; thăm theo tầng A / B,C / D,E,F,G / H."
+    },
+    {
+      "fixture_id": "vr1-single-node",
+      "variant": "preorder",
+      "title": "Cây một nút — biên",
+      "total_steps": 4,
+      "captures": [
+        {
+          "tag": "initial",
+          "trace_step": 0,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-single-node-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "X"
+            ],
+            "stepKind": "started",
+            "current": "X",
+            "frontier": [
+              "X"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự trước (gốc–trái–phải) từ gốc X. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "trace_step": 2,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-single-node-mid.png",
+          "authoritative_state": {
+            "cursor": 2,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "X"
+            ],
+            "stepKind": "pop",
+            "current": "X",
+            "frontier": [],
+            "visitedSoFar": [
+              "X"
+            ],
+            "narration": "Xong nhánh của X — lấy ra khỏi ngăn xếp."
+          }
+        },
+        {
+          "tag": "final",
+          "trace_step": 3,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-single-node-final.png",
+          "authoritative_state": {
+            "cursor": 3,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "X"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "X"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: X."
+          }
+        }
+      ],
+      "checklist": {
+        "STRUCTURE_CLEAR": "PASS",
+        "STATE_CLEAR": "PASS",
+        "MECHANISM_CLEAR": "PASS",
+        "PANEL_CORRECT": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS"
+      },
+      "status": "REAL_VISUAL",
+      "reviewer_note": "Biên 1 nút: ngăn xếp '(rỗng)', dải thứ tự chỉ hiện ở bước cuối. Khoảng trắng dưới khung do viewBox cố định — thẩm mỹ, không chặn (không chồng/cắt)."
+    },
+    {
+      "fixture_id": "vr1-insufficient-message",
+      "variant": null,
+      "title": "Thông điệp thiếu dữ kiện",
+      "total_steps": 0,
+      "captures": [
+        {
+          "tag": "refusal",
+          "trace_step": null,
+          "screenshot": "docs/evaluation/m17/wave2a/visual/vr1-insufficient-message.png",
+          "authoritative_state": {
+            "reason": "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể (các nút có tên và quan hệ con trái/con phải giữa chúng). Hãy mô tả rõ cây (ví dụ: gốc A, A có con trái B và con phải C…) rồi thử lại — hệ không tự dựng cây thay bạn."
+          }
+        }
+      ],
+      "checklist": {
+        "STRUCTURE_CLEAR": "PASS",
+        "STATE_CLEAR": "PASS",
+        "MECHANISM_CLEAR": "PASS",
+        "PANEL_CORRECT": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS"
+      },
+      "status": "REAL_VISUAL",
+      "reviewer_note": "Tiêu đề 'CHƯA ĐỦ DỮ KIỆN' (không nói sai là ngoài danh mục), nêu rõ thiếu gì và cho ví dụ cách mô tả cây; không lộ JSON/schema/id nội bộ."
+    }
+  ]
+}

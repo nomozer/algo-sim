@@ -52,16 +52,22 @@ const MODE_LABEL: Record<string, string> = {
 export function UnsupportedNotice({
   unsupported,
 }: {
-  unsupported: { reason: string; learner_reason?: string };
+  unsupported: { reason: string; learner_reason?: string; failure_category?: string };
 }) {
+  // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
+  // trợ, chỉ là em chưa cho đủ dữ liệu. Nói "ngoài danh mục" ở đây làm học sinh
+  // tưởng hệ không mô phỏng được dạng bài đó — sai và làm nản.
+  const insufficient = unsupported.failure_category === "insufficient_specification";
   return (
     <section className="card">
-      <span className="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span>
+      <span className="eyebrow">{insufficient ? "CHƯA ĐỦ DỮ KIỆN" : "NGOÀI DANH MỤC MÔ PHỎNG"}</span>
       <p style={{ marginTop: "var(--sp-sm)" }}>
         {unsupported.learner_reason ?? unsupported.reason}
       </p>
       <p className="notes">
-        Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...).
+        {insufficient
+          ? "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."
+          : "Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...)."}
       </p>
     </section>
   );

@@ -14,7 +14,11 @@ import { UnsupportedNotice } from "./SimulationWorkspace";
  * state khi renderToString — không test qua store.
  */
 
-function html(unsupported: { reason: string; learner_reason?: string }): string {
+function html(unsupported: {
+  reason: string;
+  learner_reason?: string;
+  failure_category?: string;
+}): string {
   return renderToString(<UnsupportedNotice unsupported={unsupported} />).replace(
     /<!--.*?-->/g,
     "",
@@ -37,6 +41,22 @@ describe("M17 W0 — UnsupportedNotice hiển thị thông điệp học sinh", 
   it("envelope cũ không có learner_reason → fallback reason (tương thích ngược)", () => {
     const out = html({ reason: "Bài này chưa có mô phỏng phù hợp trong danh mục." });
     expect(out).toContain("chưa có mô phỏng phù hợp");
+  });
+
+  it("(M17-VR1) thiếu dữ kiện → tiêu đề 'CHƯA ĐỦ DỮ KIỆN', KHÔNG nói ngoài danh mục", () => {
+    const out = html({
+      reason: "kỹ thuật",
+      learner_reason: "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể.",
+      failure_category: "insufficient_specification",
+    });
+    expect(out).toContain("CHƯA ĐỦ DỮ KIỆN");
+    expect(out).not.toContain("NGOÀI DANH MỤC");
+    expect(out).toContain("dạng bài này hệ có mô phỏng");
+  });
+
+  it("(M17-VR1) gap thật vẫn giữ tiêu đề ngoài danh mục", () => {
+    const out = html({ reason: "x", learner_reason: "y", failure_category: "capability_gap" });
+    expect(out).toContain("NGOÀI DANH MỤC MÔ PHỎNG");
   });
 
   it("field máy-đọc đi kèm envelope không bao giờ bị render", () => {

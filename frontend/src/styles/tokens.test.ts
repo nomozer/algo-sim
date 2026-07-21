@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -68,5 +69,42 @@ describe("(M9-UX5) token CSS — var() hỏng là lỗi IM LẶNG, phải chặn
   it("KHÔNG còn ai gọi --sp-2xl (token ma đã gây lệch bố cục)", () => {
     const used = usedTokens(globalCss);
     expect(used.has("--sp-2xl")).toBe(false);
+  });
+
+  /**
+   * M17-VR1 — LỖ HỔNG PHẠM VI ĐÃ CHÁY LẦN HAI. Test trên chỉ quét .css, nên
+   * `var(--token)` viết TRONG TSX (thuộc tính SVG `stroke`/`fill`, style inline)
+   * KHÔNG được canh. Hậu quả thật, phát hiện khi review browser M17-VR1:
+   *   - tree-module.tsx + traverse-module.tsx gọi `var(--border)` — token KHÔNG
+   *     tồn tại (tên thật `--hairline`) → stroke không hợp lệ → SVG vẽ NONE →
+   *     TOÀN BỘ CẠNH CÂY/ĐỒ THỊ VÔ HÌNH và nút chưa thăm mất viền;
+   *   - tree-module.tsx gọi `var(--text-muted)` (tên thật `--ink-muted`).
+   * Vitest không chạy CSS và SSR test chỉ so text → không test nào bắt được.
+   * Nay quét cả nguồn TSX/TS.
+   */
+  it("mọi var(--token) trong component TSX/TS đều được định nghĩa", () => {
+    const defined = new Set([...definedTokens(tokensCss), ...definedTokens(globalCss)]);
+    const srcDir = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+    const offenders: string[] = [];
+    const walk = (dir: string) => {
+      for (const name of readdirSync(dir)) {
+        const full = join(dir, name);
+        if (statSync(full).isDirectory()) walk(full);
+        // Bỏ file test: chúng NHẮC TÊN token ma trong chú thích để giải thích
+        // lịch sử (kể cả file này) — quét vào thì test tự bắt chính nó.
+        else if (/\.tsx?$/.test(name) && !/\.test\.tsx?$/.test(name)) {
+          for (const t of usedTokens(readFileSync(full, "utf-8"))) {
+            if (!defined.has(t) && !RUNTIME_VARS.has(t)) {
+              offenders.push(`${full.replace(srcDir, "")} → ${t}`);
+            }
+          }
+        }
+      }
+    };
+    walk(srcDir);
+    expect(
+      [...new Set(offenders)],
+      "token ma trong TSX (trình duyệt bỏ im lặng — vd stroke SVG thành none)",
+    ).toEqual([]);
   });
 });

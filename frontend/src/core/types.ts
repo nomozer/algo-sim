@@ -66,6 +66,10 @@ export interface AnalysisUnsupported {
   /** (M17 W0) Thông điệp THÂN THIỆN cho học sinh — server gắn ở biên API;
    * FE ưu tiên hiển thị nó thay cho `reason` kỹ thuật khi có. */
   learner_reason?: string;
+  /** (M17-VR1) Loại từ chối — CHỈ để chọn tiêu đề/gợi ý đúng bản chất:
+   * "insufficient_specification" = chủ đề CÓ hỗ trợ nhưng đề thiếu dữ kiện
+   * (nói "ngoài danh mục" là sai và làm học sinh hiểu nhầm). */
+  failure_category?: string;
 }
 
 export type AnalysisResult = AnalysisOk | AnalysisUnsupported;

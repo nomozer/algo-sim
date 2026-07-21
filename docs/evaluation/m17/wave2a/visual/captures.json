@@ -1,0 +1,443 @@
+{
+  "app": "http://localhost:3000",
+  "generated_at": "2026-07-21T14:05:52.612Z",
+  "records": [
+    {
+      "fixture_id": "vr1-preorder-balanced",
+      "variant": "preorder",
+      "title": "Duyệt trước — cây cân bằng",
+      "total_steps": 22,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-preorder-balanced-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự trước (gốc–trái–phải) từ gốc A. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 11,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-preorder-balanced-mid.png",
+          "authoritative_state": {
+            "cursor": 11,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "stepKind": "push",
+            "current": "C",
+            "frontier": [
+              "A",
+              "C"
+            ],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "D",
+              "E"
+            ],
+            "narration": "Đi xuống con PHẢI của A → C (đẩy vào ngăn xếp)."
+          }
+        },
+        {
+          "tag": "final",
+          "step": 21,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-preorder-balanced-final.png",
+          "authoritative_state": {
+            "cursor": 21,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "D",
+              "E",
+              "C",
+              "F",
+              "G"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: A → B → D → E → C → F → G."
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vr1-inorder-incomplete",
+      "variant": "inorder",
+      "title": "Duyệt giữa — cây khuyết",
+      "total_steps": 13,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-inorder-incomplete-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự giữa (trái–gốc–phải) từ gốc A. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 6,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-inorder-incomplete-mid.png",
+          "authoritative_state": {
+            "cursor": 6,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "stepKind": "pop",
+            "current": "B",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [
+              "D",
+              "B"
+            ],
+            "narration": "Xong nhánh của B — lấy ra khỏi ngăn xếp."
+          }
+        },
+        {
+          "tag": "final",
+          "step": 12,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-inorder-incomplete-final.png",
+          "authoritative_state": {
+            "cursor": 12,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "D",
+              "B",
+              "A",
+              "C"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: D → B → A → C."
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vr1-postorder-skewed",
+      "variant": "postorder",
+      "title": "Duyệt sau — cây lệch trái",
+      "total_steps": 13,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-postorder-skewed-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự sau (trái–phải–gốc) từ gốc A. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 6,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-postorder-skewed-mid.png",
+          "authoritative_state": {
+            "cursor": 6,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "stepKind": "visit",
+            "current": "C",
+            "frontier": [
+              "A",
+              "B",
+              "C"
+            ],
+            "visitedSoFar": [
+              "D",
+              "C"
+            ],
+            "narration": "Thăm C (thứ 2)."
+          }
+        },
+        {
+          "tag": "final",
+          "step": 12,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-postorder-skewed-final.png",
+          "authoritative_state": {
+            "cursor": 12,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "D",
+              "C",
+              "B",
+              "A"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: D → C → B → A."
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vr1-levelorder-multilevel",
+      "variant": "level_order",
+      "title": "Duyệt theo mức — nhiều tầng",
+      "total_steps": 17,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-levelorder-multilevel-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "queue",
+            "visitedOrder": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "stepKind": "started",
+            "current": "A",
+            "frontier": [
+              "A"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt theo MỨC (BFS) từ gốc A. Đưa gốc vào hàng đợi."
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 8,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-levelorder-multilevel-mid.png",
+          "authoritative_state": {
+            "cursor": 8,
+            "frontierKind": "queue",
+            "visitedOrder": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "stepKind": "enqueue",
+            "current": "F",
+            "frontier": [
+              "D",
+              "E",
+              "F"
+            ],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "C"
+            ],
+            "narration": "Nạp con F của C vào hàng đợi."
+          }
+        },
+        {
+          "tag": "final",
+          "step": 16,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-levelorder-multilevel-final.png",
+          "authoritative_state": {
+            "cursor": 16,
+            "frontierKind": "queue",
+            "visitedOrder": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: A → B → C → D → E → F → G → H."
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vr1-single-node",
+      "variant": "preorder",
+      "title": "Cây một nút — biên",
+      "total_steps": 4,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-single-node-initial.png",
+          "authoritative_state": {
+            "cursor": 0,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "X"
+            ],
+            "stepKind": "started",
+            "current": "X",
+            "frontier": [
+              "X"
+            ],
+            "visitedSoFar": [],
+            "narration": "Duyệt thứ tự trước (gốc–trái–phải) từ gốc X. Đưa gốc vào ngăn xếp."
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 2,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-single-node-mid.png",
+          "authoritative_state": {
+            "cursor": 2,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "X"
+            ],
+            "stepKind": "pop",
+            "current": "X",
+            "frontier": [],
+            "visitedSoFar": [
+              "X"
+            ],
+            "narration": "Xong nhánh của X — lấy ra khỏi ngăn xếp."
+          }
+        },
+        {
+          "tag": "final",
+          "step": 3,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-single-node-final.png",
+          "authoritative_state": {
+            "cursor": 3,
+            "frontierKind": "stack",
+            "visitedOrder": [
+              "X"
+            ],
+            "stepKind": "completed",
+            "current": null,
+            "frontier": [],
+            "visitedSoFar": [
+              "X"
+            ],
+            "narration": "Duyệt xong. Thứ tự thăm: X."
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vr1-insufficient-message",
+      "variant": null,
+      "title": "Thông điệp thiếu dữ kiện",
+      "total_steps": 0,
+      "captures": [
+        {
+          "tag": "refusal",
+          "step": null,
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/wave2a/visual/vr1-insufficient-message.png",
+          "authoritative_state": {
+            "reason": "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể (các nút có tên và quan hệ con trái/con phải giữa chúng). Hãy mô tả rõ cây (ví dụ: gốc A, A có con trái B và con phải C…) rồi thử lại — hệ không tự dựng cây thay bạn."
+          }
+        }
+      ]
+    }
+  ]
+}

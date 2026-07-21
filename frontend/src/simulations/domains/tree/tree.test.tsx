@@ -3,6 +3,7 @@ import { renderToString } from "react-dom/server";
 import {
   buildTreeTraversal,
   makeTreeTraversalModule,
+  TreeInspector,
   TreeWorkspace,
   validateTreeTraversalConfig,
   type TreeNode,
@@ -185,6 +186,23 @@ describe("module + renderer đọc sự thật engine", () => {
     // KHÔNG chứa nhãn generic
     expect(html).not.toContain("Điểm");
     expect(html).not.toContain("Vật di chuyển");
+  });
+
+  it("(M17-VR1) Inspector HIỆN DẦN — không lộ thứ tự cuối trước khi duyệt xong", () => {
+    const mod = makeTreeTraversalModule();
+    const v = mod.validateConfig({ specVersion: "tree-1.0", variant: "preorder", rootId: "A", nodes: BALANCED });
+    if (!v.ok) throw new Error(v.error);
+    const s0 = mod.init(v.config);
+    const render = (s: typeof s0) =>
+      renderToString(<TreeInspector config={v.config} state={s} busy={false} dispatch={() => {}} />)
+        .replace(/<!--.*?-->/g, "");
+    // bước 0: CHƯA được lộ đáp án cuối
+    const first = render(s0);
+    expect(first).not.toContain("A → B → D → E → C → F → G");
+    expect(first).toContain("Đã thăm 0/7");
+    // bước cuối: mới công bố thứ tự đầy đủ
+    const last = render({ ...s0, cursor: s0.steps.length - 1 });
+    expect(last).toContain("A → B → D → E → C → F → G");
   });
 
   it("timeline clamp đúng biên", () => {

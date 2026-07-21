@@ -382,10 +382,10 @@ export function TreeWorkspace({ state }: Props) {
             return (
               <g key={i}>
                 <line x1={a.x} y1={a.y} x2={b.x} y2={b.y}
-                      stroke={onPath ? "var(--accent-orange)" : "var(--border)"}
+                      stroke={onPath ? "var(--accent-orange)" : "var(--ink-faint)"}
                       strokeWidth={onPath ? 3 : 1.5} />
                 <text x={(a.x + b.x) / 2} y={(a.y + b.y) / 2 - 3} textAnchor="middle" fontSize={9}
-                      fill="var(--text-muted)">{e.side === "L" ? "T" : "P"}</text>
+                      fill="var(--ink-muted)">{e.side === "L" ? "trái" : "phải"}</text>
               </g>
             );
           })}
@@ -397,7 +397,7 @@ export function TreeWorkspace({ state }: Props) {
               <g key={n.id}>
                 <circle cx={p.x} cy={p.y} r={16}
                         fill={isCur ? "var(--accent-orange)" : isVisited ? "var(--accent-green)" : "var(--surface)"}
-                        stroke={n.id === state.config.rootId ? "var(--primary)" : "var(--border)"}
+                        stroke={n.id === state.config.rootId ? "var(--primary)" : "var(--ink-faint)"}
                         strokeWidth={n.id === state.config.rootId ? 2.5 : 1.5} />
                 <text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={11}>{n.label}</text>
               </g>
@@ -420,11 +420,25 @@ export function TreeWorkspace({ state }: Props) {
 
 export function TreeInspector({ state }: Props) {
   const map = nodeMap(state.config);
+  const at = clampCursor(state, state.cursor);
+  const step = state.steps[at];
+  const done = at === state.steps.length - 1;
+  const total = state.config.nodes.length;
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <p className="notes">Biến thể: {state.config.variant} ({state.frontierKind === "stack" ? "ngăn xếp – DFS" : "hàng đợi – BFS theo mức"})</p>
-      <p className="notes">Gốc: {labelOf(map, state.config.rootId)} · {state.config.nodes.length} node</p>
-      <p className="notes">Thứ tự thăm (engine): {state.visitedOrder.map((id) => labelOf(map, id)).join(" → ")}</p>
+      <p className="notes">Gốc: {labelOf(map, state.config.rootId)} · {total} node</p>
+      {/* HIỆN DẦN (M17-VR1): trước khi duyệt xong CHỈ nêu phần đã thăm — KHÔNG
+          lộ thứ tự cuối ngay từ bước 0 (học sinh mất cơ hội tự suy luận). */}
+      <p className="notes">
+        {done
+          ? `Thứ tự thăm (engine): ${state.visitedOrder.map((id) => labelOf(map, id)).join(" → ")}`
+          : `Đã thăm ${step.visitedSoFar.length}/${total}: ${
+              step.visitedSoFar.length
+                ? step.visitedSoFar.map((id) => labelOf(map, id)).join(" → ")
+                : "(chưa nút nào)"
+            }`}
+      </p>
     </div>
   );
 }
