@@ -1,0 +1,247 @@
+{
+  "schema_version": "1",
+  "run_label": "wave1-live-smoke",
+  "run_meta": {
+    "git_commit": "c12b59d2b37544a1910b63d88cbcc61c6873b59a",
+    "generated_at": "2026-07-21T06:36:14.081977+00:00",
+    "model": "gemini-2.5-flash",
+    "budget_cap_http": 20
+  },
+  "budget_final": {
+    "http_requests": 16,
+    "logical_calls": 16,
+    "retry_requests": 0,
+    "transient_hits": 0
+  },
+  "aborted_reason": null,
+  "cases": [
+    {
+      "case_id": "w1-selection-sort",
+      "prompt": "Sắp xếp dãy [7, 3, 9, 1] bằng cách mỗi lượt chọn phần tử nhỏ nhất còn lại và đưa nó về đầu phần chưa sắp xếp.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "algorithm.selection_sort",
+        "expect_family": "comparison_sort"
+      },
+      "note": "KHÔNG được route thành bubble/insertion.",
+      "actual": {
+        "status": "ok",
+        "initial_route": "algorithm.comparison_sort",
+        "final_route": "algorithm.selection_sort",
+        "family": [
+          "comparison_sort"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "config_keys": [
+          "algorithm_id",
+          "data",
+          "data_generated",
+          "notes",
+          "problem"
+        ],
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "gates_fired": [],
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w1-base-conversion-hex",
+      "prompt": "Chuyển số 3A hệ 16 sang hệ 2 và mô phỏng từng bước.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "binary.base_conversion",
+        "expect_family": "positional_representation"
+      },
+      "note": "Config KHÔNG chứa result/steps (đáp số do engine FE tính, không phải LLM).",
+      "actual": {
+        "status": "ok",
+        "initial_route": "binary.base_conversion",
+        "final_route": "binary.base_conversion",
+        "family": [
+          "positional_representation"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "config_keys": [
+          "inputValue",
+          "notes",
+          "sourceBase",
+          "strategy",
+          "targetBase"
+        ],
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "gates_fired": [],
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "config_no_llm_result": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w1-boolean-dag",
+      "prompt": "Mô phỏng mạch F = (A AND B) XOR (NOT C), với A=1, B=0, C=1 và tạo bảng chân trị.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "logic.boolean_dag",
+        "expect_family": "boolean_composition"
+      },
+      "note": "KHÔNG được hạ thành logic.and_gate đơn.",
+      "actual": {
+        "status": "ok",
+        "initial_route": "logic.boolean_dag",
+        "final_route": "logic.boolean_dag",
+        "family": [
+          "boolean_composition"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "config_keys": [
+          "gates",
+          "inputs",
+          "notes",
+          "output"
+        ],
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "gates_fired": [],
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w1-graph-traversal-dfs",
+      "prompt": "Duyệt đồ thị theo chiều sâu từ A, với các cạnh A-B, A-C, B-D, C-E; thứ tự láng giềng theo bảng chữ cái.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "network.graph_traversal",
+        "expect_family": "graph_traversal"
+      },
+      "note": "KHÔNG được route về network.packet_routing; variant phải là dfs.",
+      "actual": {
+        "status": "ok",
+        "initial_route": "network.graph_traversal",
+        "final_route": "network.graph_traversal",
+        "family": [
+          "graph_traversal"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "config_keys": [
+          "directed",
+          "edges",
+          "goal",
+          "nodes",
+          "notes",
+          "start",
+          "variant"
+        ],
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "gates_fired": [],
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "variant_dfs": true,
+        "not_packet_routing": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w1-nm-quicksort",
+      "prompt": "Sắp xếp [8, 3, 5, 1] bằng Quick Sort, mô phỏng quá trình partition đệ quy.",
+      "expect": {
+        "expect_status": "unsupported",
+        "expect_route": null,
+        "expect_family": null
+      },
+      "note": "Quick Sort (partition) vẫn intentional gap → capability_gap trung thực.",
+      "actual": {
+        "status": "unsupported",
+        "initial_route": null,
+        "final_route": null,
+        "family": [],
+        "failure_category": "capability_gap",
+        "error_code": null,
+        "config_keys": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 0,
+        "gates_fired": [
+          "computation"
+        ],
+        "pipeline_error": null,
+        "http_calls": 2
+      },
+      "checks": {
+        "status_unsupported": true,
+        "capability_gap": true,
+        "no_generic_leak": true,
+        "no_simulation": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w1-base-out-of-range",
+      "prompt": "Chuyển số 243 từ hệ 5 sang hệ 10 và mô phỏng từng bước.",
+      "expect": {
+        "expect_status": "unsupported",
+        "expect_route": null,
+        "expect_family": null
+      },
+      "note": "Cơ số 5 ngoài {2,8,10,16} → unsupported trung thực (không false-positive sim).",
+      "actual": {
+        "status": "unsupported",
+        "initial_route": null,
+        "final_route": null,
+        "family": [],
+        "failure_category": null,
+        "error_code": null,
+        "config_keys": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 0,
+        "gates_fired": [],
+        "pipeline_error": null,
+        "http_calls": 2
+      },
+      "checks": {
+        "status_unsupported": true,
+        "capability_gap": false,
+        "no_generic_leak": true,
+        "no_simulation": true
+      },
+      "passed": false
+    }
+  ]
+}
