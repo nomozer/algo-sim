@@ -3,7 +3,12 @@ dist/
 __pycache__/
 .venv/
 backend/.env
-backend/*.db
+# MỌI file SQLite ở BẤT KỲ đâu — trạng thái chạy, không bao giờ commit.
+# (Đã cháy: chạy script từ gốc repo đẻ ra ./algosim.db và nó bị commit nhầm.)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
 
 # Credential Google + tài liệu nguồn (SGK) / dữ liệu tri thức cục bộ — KHÔNG commit.
 # Root-anchored để KHÔNG bắt nhầm frontend/src/data (là code).
