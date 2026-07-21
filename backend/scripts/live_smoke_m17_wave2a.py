@@ -193,15 +193,54 @@ async def _run_case(case, api_key, budget):
     }
 
 
+def _stability_summary(results: list[dict]) -> dict:
+    """Phân bố route qua nhiều lần chạy CÙNG prompt (đo nondeterminism classify)."""
+    by_case: dict[str, dict] = {}
+    for r in results:
+        s = by_case.setdefault(r["case_id"], {
+            "runs": 0, "route_distribution": {}, "initial_route_distribution": {},
+            "reclassifications": 0, "generic_leak": 0, "false_positive_simulation": 0,
+        })
+        a = r["actual"]
+        s["runs"] += 1
+        s["route_distribution"][str(a["final_route"])] = (
+            s["route_distribution"].get(str(a["final_route"]), 0) + 1
+        )
+        s["initial_route_distribution"][str(a["initial_route"])] = (
+            s["initial_route_distribution"].get(str(a["initial_route"]), 0) + 1
+        )
+        if a["reclassify_attempted"]:
+            s["reclassifications"] += 1
+        if a["final_route"] == "generic.rule_scene" and a["status"] == "ok":
+            s["generic_leak"] += 1
+        # false-positive sim: tạo simulation cho case kỳ vọng KHÔNG có
+        if r["expect"]["expect_status"] != "ok" and a["simulation_created"]:
+            s["false_positive_simulation"] += 1
+    return by_case
+
+
 async def _main():
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         print("CHƯA có GEMINI_API_KEY."); return 1
-    budget = ApiBudget(max_api_calls=MAX_HTTP)
+    # --repeat N [--only <case_id>]: chạy lặp để ĐO ổn định route (nondeterminism)
+    repeat = 1
+    only = None
+    argv = sys.argv[1:]
+    if "--repeat" in argv:
+        repeat = max(1, int(argv[argv.index("--repeat") + 1]))
+    if "--only" in argv:
+        only = argv[argv.index("--only") + 1]
+    cap = MAX_HTTP
+    if "--max-http" in argv:
+        cap = max(1, int(argv[argv.index("--max-http") + 1]))
+
+    plan = [c for c in CASES if only is None or c["id"] == only] * repeat
+    budget = ApiBudget(max_api_calls=cap)
     gemini.set_budget(budget)
     results, aborted = [], None
     try:
-        for case in CASES:
+        for case in plan:
             try:
                 results.append(await _run_case(case, api_key, budget))
             except BudgetExceeded as err:
@@ -216,6 +255,7 @@ async def _main():
         "budget_final": {"http_requests": budget.http_requests, "logical_calls": budget.logical_calls,
                          "retry_requests": budget.retry_requests, "transient_hits": budget.transient_hits},
         "aborted_reason": aborted, "cases": results,
+        "stability": _stability_summary(results),
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -231,9 +271,15 @@ async def _main():
               f"evidence: rel={ev['relations']} obj={ev['concrete_objects']} data={ev['concrete_data']}")
         if not r["passed"]:
             print(f"        checks: {r['checks']}")
+    if repeat > 1:
+        print("\n=== STABILITY (lặp cùng prompt) ===")
+        for cid, s in payload["stability"].items():
+            print(f"  {cid}: runs={s['runs']} route={s['route_distribution']} "
+                  f"initial={s['initial_route_distribution']} reclass={s['reclassifications']} "
+                  f"leak={s['generic_leak']} fp_sim={s['false_positive_simulation']}")
     b = payload["budget_final"]
     n_pass = sum(1 for r in results if r["passed"])
-    print(f"\nTổng: {n_pass}/{len(results)} PASS · HTTP {b['http_requests']}/{MAX_HTTP} · "
+    print(f"\nTổng: {n_pass}/{len(results)} PASS · HTTP {b['http_requests']}/{cap} · "
           f"retry {b['retry_requests']} · transient {b['transient_hits']} · aborted={aborted}")
     print(f"Artifact: {OUT}")
     return 0 if (n_pass == len(CASES) and aborted is None) else 2
