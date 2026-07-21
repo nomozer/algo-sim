@@ -797,6 +797,17 @@ CATALOG["algorithm.scan"] = SimSpec(
     # scan KHÔNG có sample offline (discovery A) → không library_discoverable
     reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),
     curriculum_anchor="T10 CĐ5 · T11CS B17",
+    # M17-RC1 §C — BACKLOG NĂNG LỰC (user duyệt, KHÔNG triển khai trong RC1):
+    # `single_pass_scan.multi_accumulator`. Đề "tìm CẢ max lẫn min trong một
+    # lượt" cần MỘT lượt quét mang NHIỀU biến tích luỹ; ScanSpec hiện chỉ mang
+    # một. Hệ quả đo được (RC1-C, case rc1c-scan-max-and-min): đề như vậy hiện
+    # trả ok cho MỘT nửa và bỏ im lặng nửa còn lại — gate §D không bắt được vì
+    # `single_pass_scan.*` không nằm trong analyze_exposed_values() và max/min
+    # dùng CHUNG cơ chế `track_extreme` (taxonomy không phân biệt được chiều).
+    known_gaps=(
+        "một lượt quét nhiều biến tích luỹ (vd tìm cả max lẫn min) — "
+        "single_pass_scan.multi_accumulator, BACKLOG",
+    ),
     config_contract_version="scan-1.0",
 )
 

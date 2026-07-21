@@ -127,6 +127,14 @@ class ControlFixture:
     # (đối chứng representation). Case đóng regression tree đặt "tree.traversal".
     expected_route: str | None = None
     note: str = ""
+    # M17-RC1 §C — case control KHÔNG gắn với target nào qua `kind` (một
+    # refusal_control có thể là "thiếu dữ kiện" hoặc "biến thể ngoài năng lực").
+    # Hai trường METADATA thuần dưới đây khai TƯỜNG MINH nó chứng minh slot nào
+    # cho target nào, để ma trận §C khỏi phải đoán từ `kind`. Mặc định None ⇒
+    # case cũ không đổi hành vi, artifact W0/W1 không đổi (artifact chỉ
+    # serialize AuditRecord, không serialize fixture).
+    audit_slot: str | None = None
+    audit_target: str | None = None
 
 
 # ══════════════ fixture per-target (14 AI-reachable) ══════════════
@@ -774,6 +782,9 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
             [_classify(_GENERIC)],
         ),
         note="Kết quả thuật toán không engine nào sở hữu → computation gate (bất biến #21).",
+        # generic KHÔNG được nhận cơ chế chuyên biệt của family khác.
+        audit_slot="cross_family_near_miss",
+        audit_target=_GENERIC,
     ),
     # M17 W2A — ĐÓNG regression duyệt cây: prompt duyệt cây NAY route vào
     # specialized tree.traversal (KHÔNG còn generic/gap). Bằng chứng closure của
@@ -832,6 +843,8 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
         ),
         expected_status="unsupported",
         note="Thiếu cấu trúc cây → structure gate chặn (insufficient_specification), KHÔNG dựng cây mặc định.",
+        audit_slot="insufficient_input",
+        audit_target="tree.traversal",
     ),
     ControlFixture(
         case_id="aud-refusal-tcp-handshake",
@@ -843,6 +856,10 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
                        reason="Bắt tay ba bước / máy trạng thái giao thức vượt năng lực v1 — trả unsupported trung thực.")],
         ),
         note="Advanced-TCP từ chối trung thực ở classify (khoá cur-t12-tcp-advanced).",
+        # Bắt tay TCP là BIẾN THỂ ngoài năng lực của v1 encapsulation (không
+        # phải "thiếu dữ kiện") → chứng minh slot unsupported_variant.
+        audit_slot="unsupported_variant_or_parameter",
+        audit_target="network.protocol_encapsulation",
     ),
     ControlFixture(
         case_id="aud-control-representation-ok",
@@ -859,5 +876,7 @@ CONTROL_FIXTURES: tuple[ControlFixture, ...] = (
         ),
         expected_status="ok",
         note="ĐỐI CHỨNG chống chặn oan: biểu diễn khai báo thuần túy PHẢI được generic nhận.",
+        audit_slot="supported_canonical",
+        audit_target=_GENERIC,
     ),
 )

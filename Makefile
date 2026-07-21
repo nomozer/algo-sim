@@ -5,12 +5,14 @@
 PY := backend/.venv/Scripts/python.exe
 ARTIFACTS := docs/evaluation/m17/rc1
 
-.PHONY: runtime-doctor rebuild-backend catalog-matrix rc1-tier1 help
+.PHONY: runtime-doctor rebuild-backend catalog-matrix archetype-matrix completeness rc1-tier1 help
 
 help:
 	@echo "runtime-doctor   - So khop danh tinh source <-> container dang chay"
 	@echo "rebuild-backend  - Build lai backend KEM danh tinh (GIT_SHA/BUILD_TIME)"
-	@echo "catalog-matrix   - Sinh ma tran catalog tu registry (khong viet tay)"
+	@echo "catalog-matrix   - Sinh ma tran catalog + conformance tu registry"
+	@echo "archetype-matrix - RC1-C: coverage 8 slot x 19 target + gap + ledger"
+	@echo "completeness     - RC1-D: probe chinh sach so luong thao tac"
 	@echo "rc1-tier1        - Tier 1: toan bo suite offline (khong LLM live)"
 
 ## Phát hiện container chạy code cũ. Thoát != 0 khi lệch.
@@ -28,7 +30,19 @@ rebuild-backend:
 
 ## Ma trận catalog sinh TỪ REGISTRY (không hard-code danh sách target).
 catalog-matrix:
-	$(PY) backend/scripts/catalog_runtime_matrix.py --json $(ARTIFACTS)/catalog_runtime_matrix.json
+	$(PY) backend/scripts/catalog_runtime_matrix.py \
+	  --json $(ARTIFACTS)/catalog_runtime_matrix.json \
+	  --md $(ARTIFACTS)/catalog_conformance_report.md
+
+## RC1-C — coverage 8 archetype slot × 19 target (chạy 77 case qua run_pipeline).
+archetype-matrix:
+	$(PY) backend/scripts/rc1c_archetype_matrix.py --out $(ARTIFACTS)
+
+## RC1-D — probe chính sách số lượng thao tác (sinh từ registry chính sách).
+completeness:
+	$(PY) backend/scripts/semantic_completeness_report.py \
+	  --json $(ARTIFACTS)/semantic_completeness_report.json \
+	  --md $(ARTIFACTS)/semantic_completeness_report.md
 
 ## Tier 1 — deterministic, không gọi LLM, không tốn HTTP budget.
 rc1-tier1:

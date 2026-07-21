@@ -774,7 +774,9 @@
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 CĐ5 · T11CS B17",
-      "known_gaps": [],
+      "known_gaps": [
+        "một lượt quét nhiều biến tích luỹ (vd tìm cả max lẫn min) — single_pass_scan.multi_accumulator, BACKLOG"
+      ],
       "family_memberships": [
         {
           "family_id": "single_pass_scan",

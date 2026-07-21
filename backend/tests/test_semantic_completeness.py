@@ -231,6 +231,40 @@ def test_e2e_status_ok_luon_co_dropped_rong(monkeypatch):
     assert rep["dropped_requirements"] == []
 
 
+def _sort_spec(variant, array):
+    return json.dumps({"family_version": "sort-fam-1", "variant": variant,
+                       "array": list(array), "order": "asc"})
+
+
+def test_nhanh_SELECTOR_cung_qua_gate_completeness(monkeypatch):
+    """LỖ THẬT do RC1-C phát hiện: family comparison_sort route qua SELECTOR
+    TOKEN và nhánh đó `return` TRƯỚC chỗ gate §D được cắm → đề "nổi bọt RỒI
+    chèn" trả ok và bỏ im lặng một nửa. Đúng family có tín hiệu analyze giàu
+    nhất lại là family lọt cổng. Test này khoá cả hai pha trên nhánh selector."""
+    monkeypatch.setattr(pipeline, "call_gemini", _fake([
+        json.dumps(_an(requested=["adjacent_compare_swap", "shift_into_sorted_prefix"])),
+        _classify("algorithm.comparison_sort"),
+    ]))
+    env = asyncio.run(pipeline.run_pipeline("sắp xếp bằng nổi bọt rồi bằng chèn", "k"))
+    assert env["status"] == "unsupported"
+    assert env["error_code"] == "multiple_operations_not_supported"
+    assert env.get("simulation_id") is None
+    assert len(env["completeness"]["requested_in_family"]) == 2
+
+
+def test_nhanh_selector_mot_thuat_toan_khong_bi_chan_oan(monkeypatch):
+    """Chống chặn oan trên chính nhánh vừa siết: một thuật toán → vẫn ok và
+    envelope mang id CONCRETE (token không bao giờ leak)."""
+    monkeypatch.setattr(pipeline, "call_gemini", _fake([
+        json.dumps(_an(requested=["adjacent_compare_swap"])),
+        _classify("algorithm.comparison_sort"),
+        _sort_spec("bubble", [5, 2, 9, 1]),
+    ]))
+    env = asyncio.run(pipeline.run_pipeline("sắp xếp dãy bằng nổi bọt", "k"))
+    assert env["status"] == "ok"
+    assert env["simulation_id"] == "algorithm.bubble_sort"
+
+
 def test_probe_artifact_khop_hanh_vi_gate_that():
     """Artifact §D không được TỰ NHẬN PASS: chạy lại đúng bộ probe sinh từ
     registry và bắt buộc 0 lệch / 0 chặn oan / 0 'ok mà còn sót'. Thêm family

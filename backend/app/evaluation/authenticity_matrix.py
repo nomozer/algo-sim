@@ -39,6 +39,10 @@ class AuditCase:
     expected_route: str | None  # id CONCRETE kỳ vọng khi ok
     mechanism: str | None = None
     note: str = ""
+    # M17-RC1 §C — metadata quy kết slot/target cho case control (mặc định None,
+    # không đổi hành vi W0/W1). Xem ControlFixture.audit_slot.
+    audit_slot: str | None = None
+    audit_target: str | None = None
 
 
 def _slug(sim_id: str) -> str:
@@ -110,6 +114,8 @@ def build_audit_cases() -> list[AuditCase]:
                 ) if fx.expected_status == "ok" else None,
                 mechanism=fx.mechanism,
                 note=fx.note,
+                audit_slot=fx.audit_slot,
+                audit_target=fx.audit_target,
             )
         )
 

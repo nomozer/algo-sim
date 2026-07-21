@@ -364,7 +364,9 @@
       "authenticity_contract": true,
       "has_audit_fixture": true,
       "curriculum_anchor": "T10 CĐ5 · T11CS B17",
-      "known_gaps": []
+      "known_gaps": [
+        "một lượt quét nhiều biến tích luỹ (vd tìm cả max lẫn min) — single_pass_scan.multi_accumulator, BACKLOG"
+      ]
     },
     {
       "target_id": "algorithm.selection_sort",

@@ -567,6 +567,27 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
                 "representation_plan": plan,
                 "analysis": analysis,
             }
+        # M17-RC1 §D PHA 1 trên NHÁNH SELECTOR. Bỏ sót ở đây là lỗ THẬT (RC1-C
+        # phát hiện): family comparison_sort route qua token nên `_families` ở
+        # nhánh direct bên dưới không bao giờ chạy — đề "sắp xếp nổi bọt RỒI
+        # chèn" trả ok và bỏ im lặng một nửa. Đúng family duy nhất có tín hiệu
+        # analyze giàu nhất lại là family lọt cổng.
+        _sel_families = {selector.family_id.value}
+        combo = check_requested_combination(analysis, _sel_families)
+        _emit(observer, "gate_checked", gate="completeness_requested",
+              fired=bool(combo), reason_code=combo[0].value if combo else None)
+        if combo is not None:
+            _emit(observer, "envelope", status="unsupported", simulation_id=None,
+                  failure_category="semantic_incomplete")
+            return {
+                "status": "unsupported",
+                "reason": combo[1],
+                "failure_category": "semantic_incomplete",
+                "error_code": combo[0].value,
+                "completeness": combo[2],
+                "representation_plan": plan,
+                "analysis": analysis,
+            }
         family_config, ferr = await stage_simulate_family(text, analysis, selector, api_key, observer=observer)
         if family_config is None:
             raise RuntimeError(
@@ -584,6 +605,29 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             raise RuntimeError(
                 f"Config sau adapter không qua validator concrete ({concrete_id}): {verr}"
             )
+        # PHA 2 trên nhánh selector: đối chiếu với cái CONCRETE SPEC thực sự
+        # biểu diễn (variant đã resolve), dùng owned_mechanisms của target cụ
+        # thể — không phải của cả family.
+        _sel_owned = {
+            m for mb in concrete_spec.family_memberships for m in mb.owned_mechanisms
+        }
+        cov = check_represented_coverage(
+            analysis, _sel_families, _sel_owned, {"variant": family_config["variant"]}
+        )
+        _emit(observer, "gate_checked", gate="completeness_represented",
+              fired=bool(cov), reason_code=cov[0].value if cov else None)
+        if cov is not None:
+            _emit(observer, "envelope", status="unsupported", simulation_id=None,
+                  failure_category="semantic_incomplete")
+            return {
+                "status": "unsupported",
+                "reason": cov[1],
+                "failure_category": "semantic_incomplete",
+                "error_code": cov[0].value,
+                "completeness": cov[2],
+                "representation_plan": plan,
+                "analysis": analysis,
+            }
         _emit(observer, "envelope", status="ok", simulation_id=concrete_id, source="family_resolved")
         return {
             "status": "ok",
