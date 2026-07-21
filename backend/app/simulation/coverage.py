@@ -44,9 +44,9 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
     # ── Tier 1 (COVERAGE §3) ──────────────────────────────────
     KnowledgeUnit("sorting", "Sắp xếp so sánh", "T11CS B21–22",
                   CoverageStatus.SUPPORTED,
-                  "M14 pilot + M15 formalize (comparison_sort selector); live n=4 (M14) "
-                  "+ n=2 (M15 W1) — đếm case live chạm sorting gồm cả near-miss từ chối "
-                  "đúng; targeted acceptance, KHÔNG phải bằng chứng thống kê"),
+                  "M14 pilot + M15 formalize (comparison_sort selector); M17 W1 thêm "
+                  "biến thể selection (bubble/insertion/selection — quick vẫn gap); "
+                  "targeted acceptance, KHÔNG phải bằng chứng thống kê"),
     KnowledgeUnit("binary_search", "Tìm kiếm nhị phân", "T11CS B19",
                   CoverageStatus.SUPPORTED, "algorithm.binary_search"),
     KnowledgeUnit("single_pass_scan", "Quét dãy một lượt (tìm/đếm/tổng/tìm-đầu-tiên)",
@@ -54,13 +54,21 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
                   "algorithm.find_max/min/sum_if/count_if/linear_search + algorithm.scan"),
     KnowledgeUnit("loops_branch_variable", "Lặp / rẽ nhánh / biến", "T10 B17–21",
                   CoverageStatus.PARTIAL, "chỉ trong các thuật toán cố định, không phải code tự do"),
-    KnowledgeUnit("binary_system", "Hệ nhị phân (trọng số vị trí)", "T10 B4",
+    KnowledgeUnit("binary_system", "Hệ đếm & đổi cơ số (trọng số vị trí)", "T10 B4",
                   CoverageStatus.SUPPORTED,
-                  "binary.decimal_to_binary; cơ số ≠ 2 → capability_gap có control (M15 W1)"),
+                  "binary.decimal_to_binary (bit trọng số 8/4/2/1) + M17 W1 "
+                  "binary.base_conversion (đổi cơ số 2/8/10/16 kể cả hex/octal — "
+                  "cơ số ≠ 2 KHÔNG còn là gap)"),
     KnowledgeUnit("logic_data", "Dữ liệu lôgic / bảng chân trị", "T10 B5",
-                  CoverageStatus.SUPPORTED, "logic.and_gate + generic boolean composition"),
+                  CoverageStatus.SUPPORTED,
+                  "logic.and_gate (1 cổng) + M17 W1 logic.boolean_dag (mạch nhiều "
+                  "cổng AND/OR/NOT/XOR + bảng chân trị) + generic boolean composition"),
     KnowledgeUnit("packet_routing", "Định tuyến gói tin (BFS số chặng)", "T10 CĐ2 · T12 CĐ2",
                   CoverageStatus.SUPPORTED, "network.packet_routing"),
+    KnowledgeUnit("graph_traversal", "Duyệt đồ thị / tìm đường không trọng số (BFS/DFS)",
+                  "T11CS B17 · T12 CĐ2", CoverageStatus.SUPPORTED,
+                  "M17 W1 network.graph_traversal (BFS/DFS, có/không hướng, tìm đường "
+                  "+ unreachable); đường đi ngắn nhất CÓ TRỌNG SỐ (Dijkstra) vẫn gap"),
     KnowledgeUnit("info_system_dataflow", "Hệ thống thông tin / luồng dữ liệu có hướng",
                   "T11 B10 · T12CS B29", CoverageStatus.SUPPORTED, "generic.rule_scene + edge.directed"),
     # ── Tier 2 (COVERAGE §3) ──────────────────────────────────

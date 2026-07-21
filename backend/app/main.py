@@ -82,7 +82,15 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       classify của binary_search từng khoá "dãy ĐÃ SẮP" — mâu thuẫn policy
 #       normalize-not-refuse (CORRECTNESS §9) → đề chưa-sắp bị từ chối oan.
 #       Vá description + classify.md 2c → invalidate cache classify cũ.
-CACHE_VERSION = "13"
+# "14": M17-Lite W1 — MỞ RỘNG 4 family bằng 4 target mới (algorithm.selection_sort,
+#       binary.base_conversion, logic.boolean_dag, network.graph_traversal) +
+#       classify.md 2d/2e/4c cập nhật (hex/octal → base_conversion; BFS/DFS →
+#       graph_traversal đã hỗ trợ; mạch nhiều cổng/bảng chân trị → boolean_dag).
+#       Menu classify (catalog_text) đổi + hai gap flip owned (select_extreme,
+#       non_binary_base) → đề TỪNG bị unsupported (đổi hex, sắp xếp chọn, duyệt
+#       đồ thị BFS/DFS) nay mô phỏng được → phải invalidate cache cũ. MỘT bump
+#       cho toàn bộ coherent Wave 1 release (user duyệt scope, W1.E).
+CACHE_VERSION = "14"
 
 
 class InputPayload(BaseModel):
