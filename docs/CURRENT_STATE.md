@@ -41,8 +41,18 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > **5/5** và final route **5/5** = `tree.traversal`, variant inorder 5/5, 0
 > reclassify, 0 leak, 0 false-positive, 0 false refusal; n=5 là mẫu nhỏ, KHÔNG
 > tuyên bố ổn định tuyệt đối). Offline sau W2A: pytest **775** (2 skip, 1
-> deselect) · vitest **528/42** · build sạch. **Wave 2A CLOSE về
-> correctness/routing**; renderer vẫn **NEEDS_VISUAL_REVIEW**. Wave 2B
+> deselect) · vitest **532/42** · build sạch. **Wave 2A CLOSE về
+> correctness/routing**. **M17-VR1 (browser visual review, `bfd2dc3`):**
+> renderer **NEEDS_VISUAL_REVIEW → REAL_VISUAL** sau 3 fix bounded, review bằng
+> Chrome THẬT qua CDP (6 fixture / 16 ảnh, xem ảnh trực tiếp — SSR không dùng
+> làm bằng chứng). Ba lỗi chỉ browser mới thấy: **(1) BROKEN** `var(--border)`
+> là **token ma** → `stroke` SVG thành `none` → **toàn bộ cạnh cây vô hình**,
+> lan sang cả `network.graph_traversal` (W1); nguyên nhân gốc: `tokens.test.ts`
+> chỉ quét `.css` → **nay quét cả `.tsx/.ts`**. **(2)** Inspector lộ toàn bộ
+> thứ tự duyệt từ bước 0 → hiện dần. **(3)** `HomeView` có bản sao notice đọc
+> thẳng `reason` KỸ THUẬT, bỏ qua `learner_reason` của W0 → gộp về
+> `UnsupportedNotice` + tiêu đề "CHƯA ĐỦ DỮ KIỆN" cho
+> `insufficient_specification`. Wave 2B
 > (relational_table_query) chưa mở. **Backlog Analyze Integrity CÒN MỞ:**
 > provenance/source-span của từng object/relation chưa xác minh — analyze
 > hallucination CÓ ĐỊNH DANH vẫn có thể tạo false evidence; gate v2 chỉ chặn
