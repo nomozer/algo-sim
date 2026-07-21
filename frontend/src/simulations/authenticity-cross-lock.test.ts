@@ -165,6 +165,31 @@ describe("M17 W1 — authenticity cross-lock: binary.base_conversion", () => {
   });
 });
 
+describe("M17 W1 — authenticity cross-lock: logic.boolean_dag", () => {
+  it("state fields + event eval/result + truth table authoritative", () => {
+    const a = auth("logic.boolean_dag");
+    const state = initState("logic.boolean_dag", {
+      inputs: [
+        { id: "A", value: 1 },
+        { id: "B", value: 0 },
+      ],
+      gates: [{ id: "g", op: "XOR", inputs: ["A", "B"] }],
+      output: "g",
+    }) as unknown as {
+      steps: { kind: string }[];
+      truthTable: unknown[];
+      nodeOutputs: Record<string, number>;
+    };
+    expectStateFields("logic.boolean_dag", state as unknown as Record<string, unknown>);
+    const kinds = new Set(state.steps.map((s) => s.kind));
+    for (const evt of a.required_trace_events) {
+      expect(kinds.has(evt), `boolean_dag: thiếu event ${evt}`).toBe(true);
+    }
+    expect(state.truthTable).toHaveLength(4); // 2^2 hàng — engine sinh đủ
+    expect(state.nodeOutputs["g"]).toBe(1); // 1 XOR 0 = 1 — engine tính
+  });
+});
+
 describe("M17 W0 — authenticity cross-lock: logic / binary (exploratory)", () => {
   it("logic.and_gate: state fields + andOutput dẫn xuất tất định", () => {
     const state = initState("logic.and_gate", sampleConfig("logic.and_gate"));

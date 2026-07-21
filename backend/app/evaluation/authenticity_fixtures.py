@@ -59,6 +59,11 @@ def _baseconv_cfg(source: int, target: int, value: str) -> str:
     return _j({"sourceBase": source, "targetBase": target, "inputValue": value})
 
 
+def _booldag_cfg(inputs: list, gates: list, output: str) -> str:
+    """Config logic.boolean_dag (M17 W1) — đúng schema validator BE."""
+    return _j({"inputs": inputs, "gates": gates, "output": output})
+
+
 @dataclass(frozen=True)
 class TargetFixture:
     """Kịch bản audit cho MỘT target: archetype → (đề VI, CaseScript).
@@ -359,6 +364,63 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 _analysis(goal="Cổng AND với A=0, B=1"),
                 [_classify("logic.and_gate")],
                 [_logic_cfg(0, 1)],
+            ),
+        },
+    ),
+    # M17 W1 — mạch logic nhiều cổng (boolean DAG + truth table)
+    "logic.boolean_dag": TargetFixture(
+        prompts={
+            "direct": "Mạch logic: đèn sáng khi (A VÀ B) HOẶC (KHÔNG C). Mô phỏng mạch và bảng chân trị.",
+            "paraphrase": "Chuông reo khi đúng MỘT trong hai công tắc bật (XOR). Dựng mạch logic.",
+            "changed_input": "Cho biểu thức logic A ∧ ¬B. Lập bảng chân trị bằng mạch cổng.",
+            "boundary": "Mạch 4 đầu vào: (A VÀ B) HOẶC (C VÀ D) — bảng chân trị đủ 16 hàng.",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Mạch (A AND B) OR (NOT C)", ownership="rule_derivable",
+                          entity_roles=["logical"]),
+                [_classify("logic.boolean_dag")],
+                [_booldag_cfg(
+                    [{"id": "A", "value": 1}, {"id": "B", "value": 0}, {"id": "C", "value": 1}],
+                    [{"id": "g1", "op": "AND", "inputs": ["A", "B"]},
+                     {"id": "g2", "op": "NOT", "inputs": ["C"]},
+                     {"id": "g3", "op": "OR", "inputs": ["g1", "g2"]}],
+                    "g3",
+                )],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Chuông reo khi đúng một công tắc bật (XOR)", ownership="rule_derivable",
+                          entity_roles=["logical"]),
+                [_classify("logic.boolean_dag")],
+                [_booldag_cfg(
+                    [{"id": "x", "value": 0}, {"id": "y", "value": 0}],
+                    [{"id": "g", "op": "XOR", "inputs": ["x", "y"]}],
+                    "g",
+                )],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Bảng chân trị của A ∧ ¬B", ownership="rule_derivable",
+                          entity_roles=["logical"]),
+                [_classify("logic.boolean_dag")],
+                [_booldag_cfg(
+                    [{"id": "A", "value": 0}, {"id": "B", "value": 0}],
+                    [{"id": "n", "op": "NOT", "inputs": ["B"]},
+                     {"id": "g", "op": "AND", "inputs": ["A", "n"]}],
+                    "g",
+                )],
+            ),
+            "boundary": CaseScript(
+                _analysis(goal="Mạch 4 đầu vào — bảng chân trị 16 hàng", ownership="rule_derivable",
+                          entity_roles=["logical"]),
+                [_classify("logic.boolean_dag")],
+                [_booldag_cfg(
+                    [{"id": "A", "value": 0}, {"id": "B", "value": 0},
+                     {"id": "C", "value": 0}, {"id": "D", "value": 0}],
+                    [{"id": "g1", "op": "AND", "inputs": ["A", "B"]},
+                     {"id": "g2", "op": "AND", "inputs": ["C", "D"]},
+                     {"id": "g3", "op": "OR", "inputs": ["g1", "g2"]}],
+                    "g3",
+                )],
             ),
         },
     ),

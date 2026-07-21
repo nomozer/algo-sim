@@ -119,6 +119,16 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
             "division_or_weight_rows", "digit_assembly", "narration_per_step",
         ),
     ),
+    # M17 W1 — mạch nhiều cổng: hybrid (timeline đánh giá topo + toggle);
+    # truth table đủ 2^n hàng là kết quả authoritative của engine.
+    "logic.boolean_dag": AuthenticityContract(
+        required_state_fields=("config", "values", "evalOrder", "nodeOutputs", "steps", "truthTable", "cursor"),
+        required_trace_events=("eval", "result"),
+        required_result_fields=("nodeOutputs", "truthTable"),
+        renderer_semantic_requirements=(
+            "gate_table_with_engine_outputs", "truth_table_panel", "narration_per_step",
+        ),
+    ),
     # network.packet_routing — route BFS engine tính, KHÔNG từ LLM
     "network.packet_routing": AuthenticityContract(
         required_state_fields=("nodes", "links", "source", "destination", "route", "steps", "cursor"),

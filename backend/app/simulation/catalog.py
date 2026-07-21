@@ -52,6 +52,7 @@ from app.validation.simulation import (
     validate_algorithm_config,
     validate_base_conversion_config,
     validate_binary_config,
+    validate_boolean_dag_config,
     validate_encapsulation_config,
     validate_logic_config,
     validate_network_config,
@@ -327,6 +328,77 @@ CATALOG["logic.and_gate"] = SimSpec(
     reachability=_R_FULL,
     curriculum_anchor="T10 B5 · T10 B9",
     config_contract_version="logic-cfg-1",
+)
+
+
+# ── logic.boolean_dag (M17 W1) — mạch nhiều cổng + bảng chân trị ──
+
+_LOGIC_DAG_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "inputs": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "id": {"type": "STRING"},
+                    "label": {"type": "STRING", "nullable": True},
+                    "value": {"type": "INTEGER"},
+                },
+                "required": ["id", "value"],
+            },
+        },
+        "gates": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "id": {"type": "STRING"},
+                    "op": {"type": "STRING", "enum": ["AND", "OR", "NOT", "XOR"]},
+                    "inputs": {"type": "ARRAY", "items": {"type": "STRING"}},
+                },
+                "required": ["id", "op", "inputs"],
+            },
+        },
+        "output": {"type": "STRING"},
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["inputs", "gates", "output"],
+}
+
+_LOGIC_DAG_CONTRACT = """HỢP ĐỒNG CONFIG (logic.boolean_dag):
+- inputs: 1–4 đầu vào {id, label?, value 0/1}. Đề không cho giá trị → value 0.
+- gates: 1–8 cổng {id, op, inputs}. op ∈ {AND, OR, NOT, XOR}; NOT đúng 1 đầu vào, còn lại đúng 2. "inputs" là id của đầu vào hoặc cổng KHÁC (KHÔNG vòng — DAG).
+- output: id của cổng đầu ra (khai báo rõ). Mọi cổng phải góp vào đầu ra.
+- Biểu thức đề cho (vd A ∧ (B ∨ ¬C)) → dựng đúng cây cổng tương ứng.
+- KHÔNG sinh giá trị cổng / bảng chân trị / kết quả — engine tự đánh giá topo và sinh đủ bảng chân trị."""
+
+CATALOG["logic.boolean_dag"] = SimSpec(
+    simulation_id="logic.boolean_dag",
+    domain="logic",
+    visual_mode="2d",
+    description=(
+        "mạch logic NHIỀU cổng AND/OR/NOT/XOR nối nhau (tối đa 4 đầu vào, 8 cổng) "
+        "+ BẢNG CHÂN TRỊ do engine sinh — dùng khi đề cho mạch/biểu thức logic "
+        "nhiều phép (kể cả XOR) hoặc yêu cầu bảng chân trị. Một cổng AND hai đầu "
+        "vào đơn lẻ → logic.and_gate; cảnh đèn-công tắc tự dàn dựng → generic"
+    ),
+    config_schema=_LOGIC_DAG_SCHEMA,
+    contract=_LOGIC_DAG_CONTRACT,
+    validate=validate_boolean_dag_config,
+    make_title=lambda config, analysis: "Mạch logic nhiều cổng",
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.BOOLEAN_COMPOSITION, ResultAuthority.COMPUTATION,
+            owned_mechanisms=("boolean_composition.bounded_gate_dag",),
+        ),
+    ),
+    reachability=(
+        ReachabilityLevel.REGISTERED,
+        ReachabilityLevel.AI_REACHABLE_PUBLIC,
+    ),
+    curriculum_anchor="T10 B5 · T12CS B22–24",
+    config_contract_version="logic-dag-1.0",
 )
 
 

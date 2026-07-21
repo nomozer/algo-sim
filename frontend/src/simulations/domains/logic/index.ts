@@ -1,4 +1,5 @@
 import { registerSimulation } from "../../registry";
+import { registerBoolDagModule } from "./dag-module";
 import type { Bit, LogicConfig, LogicState } from "./model";
 import { AND_RULE, andOutput } from "./model";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
@@ -68,4 +69,5 @@ export function makeAndGateModule(): SimulationModule<LogicConfig, LogicState> {
 
 export function registerLogicDomain(): void {
   registerSimulation(makeAndGateModule());
+  registerBoolDagModule(); // M17 W1 — mạch nhiều cổng AND/OR/NOT/XOR + bảng chân trị
 }

@@ -35,6 +35,8 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
     FamilyId.BOOLEAN_COMPOSITION: (
         "boolean_composition.single_gate_truth_table",
         "boolean_composition.composed_rule_dag",
+        # M17 W1 — mạch nhiều cổng AND/OR/NOT/XOR bounded (logic.boolean_dag)
+        "boolean_composition.bounded_gate_dag",
     ),
     FamilyId.GRAPH_TRAVERSAL: ("graph_traversal.unweighted_hop_bfs",),
     FamilyId.LAYERED_PDU_TRANSFORM: (

@@ -264,6 +264,115 @@ def validate_base_conversion_config(raw) -> tuple[dict | None, str | None]:
     }, None
 
 
+# ── logic.boolean_dag (M17 W1) ────────────────────────────────
+
+DAG_OPS = ("AND", "OR", "NOT", "XOR")
+DAG_MAX_INPUTS = 4
+DAG_MAX_GATES = 8
+
+
+def validate_boolean_dag_config(raw) -> tuple[dict | None, str | None]:
+    """logic.boolean_dag — DAG cổng {AND,OR,NOT,XOR} bounded. Thứ tự đánh giá,
+    output từng cổng, bảng chân trị, kết quả — TẤT CẢ do engine FE tính."""
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+
+    inputs_raw = raw.get("inputs")
+    if not isinstance(inputs_raw, list) or not (1 <= len(inputs_raw) <= DAG_MAX_INPUTS):
+        return None, f'"inputs" phải có 1–{DAG_MAX_INPUTS} đầu vào.'
+    gates_raw = raw.get("gates")
+    if not isinstance(gates_raw, list) or not (1 <= len(gates_raw) <= DAG_MAX_GATES):
+        return None, f'"gates" phải có 1–{DAG_MAX_GATES} cổng.'
+
+    ids: set[str] = set()
+    inputs = []
+    for it in inputs_raw:
+        if not isinstance(it, dict) or not isinstance(it.get("id"), str) or not it["id"]:
+            return None, "Mỗi đầu vào phải là object có id chuỗi."
+        if it["id"] in ids:
+            return None, f"Id trùng: {it['id']}."
+        ids.add(it["id"])
+        if it.get("value") not in (0, 1) or isinstance(it.get("value"), bool):
+            return None, f'Đầu vào {it["id"]}: "value" phải là 0 hoặc 1.'
+        label = it.get("label")
+        inputs.append({
+            "id": it["id"],
+            "label": label if isinstance(label, str) else None,
+            "value": it["value"],
+        })
+
+    gates = []
+    for it in gates_raw:
+        if not isinstance(it, dict) or not isinstance(it.get("id"), str) or not it["id"]:
+            return None, "Mỗi cổng phải là object có id chuỗi."
+        if it["id"] in ids:
+            return None, f"Id trùng: {it['id']}."
+        ids.add(it["id"])
+        op = it.get("op")
+        if op not in DAG_OPS:
+            return None, f'Cổng {it["id"]}: "op" phải thuộc {{AND, OR, NOT, XOR}}.'
+        refs = it.get("inputs")
+        if not isinstance(refs, list) or not all(isinstance(x, str) for x in refs):
+            return None, f'Cổng {it["id"]}: "inputs" phải là mảng id.'
+        need = 1 if op == "NOT" else 2
+        if len(refs) != need:
+            return None, f'Cổng {it["id"]} ({op}) cần đúng {need} đầu vào.'
+        gates.append({"id": it["id"], "op": op, "inputs": list(refs)})
+
+    for g in gates:
+        for ref in g["inputs"]:
+            if ref not in ids:
+                return None, f"Cổng {g['id']} tham chiếu id không tồn tại: {ref}."
+
+    output = raw.get("output")
+    gate_ids = {g["id"] for g in gates}
+    if not isinstance(output, str) or output not in gate_ids:
+        return None, '"output" phải là id của MỘT cổng trong mạch.'
+
+    # cycle check (DFS ba màu) — đầu vào là lá
+    input_ids = {i["id"] for i in inputs}
+    gate_by_id = {g["id"]: g for g in gates}
+    done: set[str] = set()
+    visiting: set[str] = set()
+
+    def visit(nid: str) -> bool:
+        if nid in input_ids or nid in done:
+            return True
+        if nid in visiting:
+            return False
+        visiting.add(nid)
+        for ref in gate_by_id[nid]["inputs"]:
+            if not visit(ref):
+                return False
+        visiting.discard(nid)
+        done.add(nid)
+        return True
+
+    for g in gates:
+        if not visit(g["id"]):
+            return None, "Mạch chứa CYCLE — phải là DAG (không vòng)."
+
+    # mọi cổng phải góp vào output (không cổng rác lơ lửng)
+    used = {output}
+    stack = [output]
+    while stack:
+        nid = stack.pop()
+        if nid in gate_by_id:
+            for ref in gate_by_id[nid]["inputs"]:
+                if ref not in used:
+                    used.add(ref)
+                    stack.append(ref)
+    dangling = sorted(g["id"] for g in gates if g["id"] not in used)
+    if dangling:
+        return None, f"Cổng không góp vào đầu ra: {', '.join(dangling)}."
+
+    notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
+    return {"inputs": inputs, "gates": gates, "output": output, "notes": notes}, None
+
+
 # ── Domain network (M5) ───────────────────────────────────────
 
 _NODE_TYPES = {"client", "router", "server", "switch", "isp"}
