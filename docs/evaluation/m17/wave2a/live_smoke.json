@@ -1,0 +1,269 @@
+{
+  "schema_version": "1",
+  "run_label": "wave2a-live-smoke",
+  "run_meta": {
+    "git_commit": "9836d689ba648282a5935237ef32fa48043ac35f",
+    "generated_at": "2026-07-21T07:35:43.594062+00:00",
+    "model": "gemini-2.5-flash",
+    "budget_cap_http": 20
+  },
+  "budget_final": {
+    "http_requests": 18,
+    "logical_calls": 18,
+    "retry_requests": 0,
+    "transient_hits": 0
+  },
+  "aborted_reason": null,
+  "cases": [
+    {
+      "case_id": "w2a-preorder-vi",
+      "prompt": "Mô phỏng duyệt cây nhị phân theo thứ tự thăm gốc trước, sau đó duyệt toàn bộ cây con trái rồi cây con phải. Cây có A là gốc; A có con trái B, con phải C; B có hai con D và E.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "preorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "preorder",
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-inorder-incomplete",
+      "prompt": "Duyệt trung thứ tự cây có A là gốc, B là con trái và C là con phải; B chỉ có con trái D.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "inorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "inorder",
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-postorder-en",
+      "prompt": "Simulate postorder traversal for a binary tree where A is the root, A has left child B, B has left child C, and C has left child D.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "postorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "postorder",
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-levelorder-vi",
+      "prompt": "Mô phỏng duyệt cây theo từng tầng từ trên xuống, trái sang phải. Cây có A là gốc; A có B và C; B có D và E; C có F và G.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "level_order",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "level_order",
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-crossfamily-graph-dfs",
+      "prompt": "Duyệt đồ thị theo chiều sâu từ đỉnh A, với các cạnh A-B, A-C, B-D, C-E; thứ tự láng giềng theo bảng chữ cái.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "network.graph_traversal",
+        "expect_variant": "dfs",
+        "expect_family": "graph_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "network.graph_traversal",
+        "final_route": "network.graph_traversal",
+        "family": [
+          "graph_traversal"
+        ],
+        "variant": "dfs",
+        "config_keys": [
+          "directed",
+          "edges",
+          "goal",
+          "nodes",
+          "notes",
+          "start",
+          "variant"
+        ],
+        "failure_category": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "not_tree": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-insufficient",
+      "prompt": "Mô phỏng duyệt cây preorder.",
+      "expect": {
+        "expect_status": "unsupported",
+        "expect_route": null,
+        "expect_variant": null,
+        "expect_family": null
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "preorder",
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "checks": {
+        "status_unsupported": false,
+        "no_route": false,
+        "no_generic_leak": true,
+        "not_fabricated_tree": false,
+        "learner_msg_clean": true
+      },
+      "passed": false
+    }
+  ]
+}
