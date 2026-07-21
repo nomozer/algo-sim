@@ -27,7 +27,8 @@ from app.ai.gemini import ApiBudget, BudgetExceeded  # noqa: E402
 from app.ai import pipeline  # noqa: E402
 from app.evaluation.observer import AttemptObserver  # noqa: E402
 from app.simulation.catalog import CATALOG  # noqa: E402
-from app.simulation.structure_gate import structure_evidence  # noqa: E402
+from app.simulation.mechanisms import canonical_mechanism  # noqa: E402
+from app.simulation.structure_gate import linked_node_items, structure_evidence  # noqa: E402
 
 OUT = Path(__file__).resolve().parents[2] / "docs" / "evaluation" / "m17" / "wave2a" / "live_smoke.json"
 MAX_HTTP = 20
@@ -182,12 +183,19 @@ async def _run_case(case, api_key, budget):
         },
         # ── evidence analyze mà structure gate DÙNG (yêu cầu user) ──
         "analyze_evidence": {
+            "mechanism": analysis.get("prescribed_procedure"),
+            "mechanism_canonical": canonical_mechanism(analysis.get("prescribed_procedure")),
             "objects": analysis.get("objects"),
             "data": analysis.get("data"),
             "relations": analysis.get("relations"),
+            # item cấu trúc SAU normalization + định danh trích từ TỪNG item
+            "normalized_structural_items": linked_node_items(analysis),
             "counts": evidence,
         },
         "structure_gate": {"decision": gate_decision, "reason_code": gate_reason},
+        "reclassification_count": 1 if obs.reclassify_attempted() is not None else 0,
+        "generic_leak": status == "ok" and route == "generic.rule_scene",
+        "false_positive_simulation": case["expect_status"] != "ok" and simulation_created,
         "learner_reason": (envelope or {}).get("learner_reason") or (envelope or {}).get("reason"),
         "checks": checks, "passed": all(checks.values()),
     }
@@ -268,7 +276,8 @@ async def _main():
               f"route={a['final_route']} variant={a['variant']} http={a['http_calls']} "
               f"reclass={a['reclassify_attempted']} sim={a['simulate_attempts']}")
         print(f"        gate={g['decision']}({g['reason_code']}) sim_created={a['simulation_created']} "
-              f"evidence: rel={ev['relations']} obj={ev['concrete_objects']} data={ev['concrete_data']}")
+              f"mech={r['analyze_evidence']['mechanism']} reclass={r['reclassification_count']} "
+              f"evidence: rel={ev['relations']} linked={ev['linked_items']} ids={ev['identifiers']}")
         if not r["passed"]:
             print(f"        checks: {r['checks']}")
     if repeat > 1:

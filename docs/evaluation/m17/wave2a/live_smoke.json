@@ -2,14 +2,14 @@
   "schema_version": "1",
   "run_label": "wave2a-live-smoke",
   "run_meta": {
-    "git_commit": "0f35091f1822b24348efb173dcf48506eb299282",
-    "generated_at": "2026-07-21T13:05:58.233271+00:00",
+    "git_commit": "70c782e7b7e737b059293e3fb17ba8c9a3aa0446",
+    "generated_at": "2026-07-21T13:34:47.191983+00:00",
     "model": "gemini-2.5-flash",
     "budget_cap_http": 20
   },
   "budget_final": {
-    "http_requests": 16,
-    "logical_calls": 16,
+    "http_requests": 17,
+    "logical_calls": 17,
     "retry_requests": 0,
     "transient_hits": 0
   },
@@ -49,6 +49,8 @@
         "http_calls": 3
       },
       "analyze_evidence": {
+        "mechanism": "tree_traversal.preorder",
+        "mechanism_canonical": "tree_traversal.preorder",
         "objects": [
           "cây nhị phân",
           "nút A",
@@ -59,16 +61,57 @@
         ],
         "data": [],
         "relations": [
-          "A là gốc của cây",
+          "A là gốc",
           "B là con trái của A",
           "C là con phải của A",
           "D là con trái của B",
           "E là con phải của B"
         ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con phải của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          },
+          {
+            "text": "E là con phải của B",
+            "identifiers": [
+              "B",
+              "E"
+            ]
+          }
+        ],
         "counts": {
           "relations": 5,
-          "concrete_objects": 5,
-          "concrete_data": 0,
+          "linked_items": 4,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con phải của A",
+            "D là con trái của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
           "present": true
         }
       },
@@ -76,6 +119,9 @@
         "decision": "PASS",
         "reason_code": null
       },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
       "learner_reason": null,
       "checks": {
         "status_ok": true,
@@ -101,24 +147,33 @@
         "expect_family": "tree_traversal"
       },
       "actual": {
-        "status": "unsupported",
-        "initial_route": "generic.rule_scene",
-        "final_route": null,
-        "executor_selected": null,
-        "family": [],
-        "variant": null,
-        "simulation_created": false,
-        "config_keys": null,
-        "failure_category": "capability_gap",
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "inorder",
+        "simulation_created": true,
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
         "error_code": null,
         "reclassify_attempted": false,
-        "simulate_attempts": 0,
+        "simulate_attempts": 1,
         "pipeline_error": null,
-        "http_calls": 2
+        "http_calls": 3
       },
       "analyze_evidence": {
+        "mechanism": "tree_traversal.inorder",
+        "mechanism_canonical": "tree_traversal.inorder",
         "objects": [
-          "cây",
           "nút A",
           "nút B",
           "nút C",
@@ -126,36 +181,71 @@
         ],
         "data": [],
         "relations": [
-          "A là gốc của cây",
           "B là con trái của A",
           "C là con phải của A",
           "D là con trái của B"
         ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con phải của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          }
+        ],
         "counts": {
-          "relations": 4,
-          "concrete_objects": 4,
-          "concrete_data": 0,
+          "relations": 3,
+          "linked_items": 3,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con phải của A",
+            "D là con trái của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
           "present": true
         }
       },
       "structure_gate": {
-        "decision": "NOT_RUN",
+        "decision": "PASS",
         "reason_code": null
       },
-      "learner_reason": "Bài cần cơ chế chưa có engine tất định sở hữu (arbitrary_algorithm) — hệ từ chối trung thực thay vì dựng cảnh xấp xỉ.",
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "learner_reason": null,
       "checks": {
-        "status_ok": false,
-        "route_match": false,
-        "family_match": false,
-        "variant_match": false,
-        "concrete_executor": false,
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
         "no_pipeline_error": true,
-        "order_not_in_spec": false,
+        "order_not_in_spec": true,
         "no_forbidden_order_field": true,
-        "structure_gate_pass": false,
-        "simulation_created": false
+        "structure_gate_pass": true,
+        "simulation_created": true
       },
-      "passed": false
+      "passed": true
     },
     {
       "case_id": "w2a-postorder-en",
@@ -191,8 +281,9 @@
         "http_calls": 3
       },
       "analyze_evidence": {
+        "mechanism": "tree_traversal.postorder",
+        "mechanism_canonical": "tree_traversal.postorder",
         "objects": [
-          "cây nhị phân",
           "nút A",
           "nút B",
           "nút C",
@@ -201,14 +292,47 @@
         "data": [],
         "relations": [
           "A là gốc",
-          "A có con trái B",
-          "B có con trái C",
-          "C có con trái D"
+          "B là con trái của A",
+          "C là con trái của B",
+          "D là con trái của C"
+        ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con trái của B",
+            "identifiers": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của C",
+            "identifiers": [
+              "C",
+              "D"
+            ]
+          }
         ],
         "counts": {
           "relations": 4,
-          "concrete_objects": 4,
-          "concrete_data": 0,
+          "linked_items": 3,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con trái của B",
+            "D là con trái của C"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
           "present": true
         }
       },
@@ -216,6 +340,9 @@
         "decision": "PASS",
         "reason_code": null
       },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
       "learner_reason": null,
       "checks": {
         "status_ok": true,
@@ -265,8 +392,9 @@
         "http_calls": 3
       },
       "analyze_evidence": {
+        "mechanism": "tree_traversal.level_order",
+        "mechanism_canonical": "tree_traversal.level_order",
         "objects": [
-          "cây",
           "nút A",
           "nút B",
           "nút C",
@@ -277,7 +405,7 @@
         ],
         "data": [],
         "relations": [
-          "A là gốc của cây",
+          "A là gốc",
           "B là con của A",
           "C là con của A",
           "D là con của B",
@@ -285,10 +413,67 @@
           "F là con của C",
           "G là con của C"
         ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          },
+          {
+            "text": "E là con của B",
+            "identifiers": [
+              "B",
+              "E"
+            ]
+          },
+          {
+            "text": "F là con của C",
+            "identifiers": [
+              "C",
+              "F"
+            ]
+          },
+          {
+            "text": "G là con của C",
+            "identifiers": [
+              "C",
+              "G"
+            ]
+          }
+        ],
         "counts": {
           "relations": 7,
-          "concrete_objects": 7,
-          "concrete_data": 0,
+          "linked_items": 6,
+          "linked_examples": [
+            "B là con của A",
+            "C là con của A",
+            "D là con của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G"
+          ],
           "present": true
         }
       },
@@ -296,6 +481,9 @@
         "decision": "PASS",
         "reason_code": null
       },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
       "learner_reason": null,
       "checks": {
         "status_ok": true,
@@ -347,35 +535,68 @@
         "http_calls": 3
       },
       "analyze_evidence": {
+        "mechanism": null,
+        "mechanism_canonical": null,
         "objects": [
-          "đồ thị",
           "đỉnh A",
           "đỉnh B",
           "đỉnh C",
           "đỉnh D",
           "đỉnh E",
-          "cạnh A-B",
-          "cạnh A-C",
-          "cạnh B-D",
-          "cạnh C-E"
+          "đồ thị"
         ],
-        "data": [
-          {
-            "description": "Các cạnh của đồ thị",
-            "labels": null,
-            "values": null
-          }
-        ],
+        "data": [],
         "relations": [
-          "A nối với B",
-          "A nối với C",
-          "B nối với D",
-          "C nối với E"
+          "A-B là một cạnh",
+          "A-C là một cạnh",
+          "B-D là một cạnh",
+          "C-E là một cạnh"
+        ],
+        "normalized_structural_items": [
+          {
+            "text": "A-B là một cạnh",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "A-C là một cạnh",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "B-D là một cạnh",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          },
+          {
+            "text": "C-E là một cạnh",
+            "identifiers": [
+              "C",
+              "E"
+            ]
+          }
         ],
         "counts": {
           "relations": 4,
-          "concrete_objects": 10,
-          "concrete_data": 1,
+          "linked_items": 4,
+          "linked_examples": [
+            "A-B là một cạnh",
+            "A-C là một cạnh",
+            "B-D là một cạnh"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E"
+          ],
           "present": true
         }
       },
@@ -383,6 +604,9 @@
         "decision": "NOT_RUN",
         "reason_code": null
       },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
       "learner_reason": null,
       "checks": {
         "status_ok": true,
@@ -422,32 +646,31 @@
         "http_calls": 2
       },
       "analyze_evidence": {
+        "mechanism": "tree_traversal.preorder",
+        "mechanism_canonical": "tree_traversal.preorder",
         "objects": [
-          "cây",
-          "nút (đỉnh) của cây",
-          "cạnh (liên kết) của cây"
+          "các nút của cây"
         ],
-        "data": [
-          {
-            "description": "Không có dữ liệu cây cụ thể được cung cấp trong đề bài.",
-            "labels": null,
-            "values": null
-          }
-        ],
+        "data": [],
         "relations": [
-          "quan hệ cha-con giữa các nút trong cây"
+          "quan hệ cha-con giữa các nút"
         ],
+        "normalized_structural_items": [],
         "counts": {
           "relations": 1,
-          "concrete_objects": 2,
-          "concrete_data": 1,
-          "present": true
+          "linked_items": 0,
+          "linked_examples": [],
+          "identifiers": [],
+          "present": false
         }
       },
       "structure_gate": {
         "decision": "NOT_RUN",
         "reason_code": null
       },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
       "learner_reason": "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để AI tự giải rồi dựng cảnh minh hoạ đáp án.",
       "checks": {
         "status_unsupported": true,
@@ -463,5 +686,79 @@
       },
       "passed": false
     }
-  ]
+  ],
+  "stability": {
+    "w2a-preorder-vi": {
+      "runs": 1,
+      "route_distribution": {
+        "tree.traversal": 1
+      },
+      "initial_route_distribution": {
+        "tree.traversal": 1
+      },
+      "reclassifications": 0,
+      "generic_leak": 0,
+      "false_positive_simulation": 0
+    },
+    "w2a-inorder-incomplete": {
+      "runs": 1,
+      "route_distribution": {
+        "tree.traversal": 1
+      },
+      "initial_route_distribution": {
+        "tree.traversal": 1
+      },
+      "reclassifications": 0,
+      "generic_leak": 0,
+      "false_positive_simulation": 0
+    },
+    "w2a-postorder-en": {
+      "runs": 1,
+      "route_distribution": {
+        "tree.traversal": 1
+      },
+      "initial_route_distribution": {
+        "tree.traversal": 1
+      },
+      "reclassifications": 0,
+      "generic_leak": 0,
+      "false_positive_simulation": 0
+    },
+    "w2a-levelorder-vi": {
+      "runs": 1,
+      "route_distribution": {
+        "tree.traversal": 1
+      },
+      "initial_route_distribution": {
+        "tree.traversal": 1
+      },
+      "reclassifications": 0,
+      "generic_leak": 0,
+      "false_positive_simulation": 0
+    },
+    "w2a-crossfamily-graph-dfs": {
+      "runs": 1,
+      "route_distribution": {
+        "network.graph_traversal": 1
+      },
+      "initial_route_distribution": {
+        "network.graph_traversal": 1
+      },
+      "reclassifications": 0,
+      "generic_leak": 0,
+      "false_positive_simulation": 0
+    },
+    "w2a-insufficient": {
+      "runs": 1,
+      "route_distribution": {
+        "None": 1
+      },
+      "initial_route_distribution": {
+        "None": 1
+      },
+      "reclassifications": 0,
+      "generic_leak": 0,
+      "false_positive_simulation": 0
+    }
+  }
 }
