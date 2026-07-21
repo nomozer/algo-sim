@@ -101,6 +101,30 @@ def test_insufficient_structure_gate_chan_khong_bia_cay(monkeypatch):
     assert env.get("simulation_id") is None  # KHÔNG dựng cây
 
 
+# ── FORCED-ROUTE REGRESSION (M17 W2A, pha A): dùng ĐÚNG analyze evidence THẬT
+# của case insufficient live run 3. Live đó classify tự từ chối TRƯỚC nên gate
+# NOT_RUN (early safe refusal). Test này ÉP route sang tree.traversal để chứng
+# minh: nếu classify CÓ route tree thì structure gate v2 SẼ chặn đúng mã —
+# tức tầng phòng thủ 2 thật sự hoạt động, không chỉ "không cần chạy".
+def test_forced_route_insufficient_gate_fail_voi_analyze_live_that(monkeypatch):
+    live_analysis = json.dumps({
+        "objects": ["các nút của cây"],          # analyze THẬT (live pha A)
+        "data": [],
+        "relations": ["quan hệ cha-con giữa các nút"],
+        "processes": [], "constraints": [], "goal": "Mô phỏng duyệt cây preorder",
+        "input_description": "không nêu cấu trúc cây",
+        "output_description": "thứ tự duyệt",
+        "result_ownership": "provided",
+        "prescribed_procedure": "tree_traversal.preorder",
+    })
+    env = _run(monkeypatch, [live_analysis, _classify("tree.traversal")])
+    assert env["status"] == "unsupported"
+    assert env["failure_category"] == "insufficient_specification"
+    assert env["error_code"] == "structure_insufficient"
+    assert env.get("simulation_id") is None      # không dựng cây
+    assert env.get("config") is None             # không simulation envelope
+
+
 # ── consistency gate (M17 W2A): analyze nói cơ chế CÂY nhưng classify lạc
 # generic → recovery M15 (mechanism + ownership, KHÔNG keyword) ──
 def test_classify_lac_generic_duoc_reclassify_ve_tree(monkeypatch):

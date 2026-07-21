@@ -1,0 +1,583 @@
+{
+  "schema_version": "1",
+  "run_label": "wave2a-live-smoke",
+  "run_meta": {
+    "git_commit": "144df659be0542cebb8bc3e33ed55a858e617a5f",
+    "generated_at": "2026-07-21T13:43:11.033716+00:00",
+    "model": "gemini-2.5-flash",
+    "budget_cap_http": 20
+  },
+  "budget_final": {
+    "http_requests": 15,
+    "logical_calls": 15,
+    "retry_requests": 0,
+    "transient_hits": 0
+  },
+  "aborted_reason": null,
+  "cases": [
+    {
+      "case_id": "w2a-inorder-incomplete",
+      "prompt": "Duyệt trung thứ tự cây có A là gốc, B là con trái và C là con phải; B chỉ có con trái D.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "inorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "inorder",
+        "simulation_created": true,
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "analyze_evidence": {
+        "mechanism": "tree_traversal.inorder",
+        "mechanism_canonical": "tree_traversal.inorder",
+        "objects": [
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D"
+        ],
+        "data": [],
+        "relations": [
+          "B là con trái của A",
+          "C là con phải của A",
+          "D là con trái của B"
+        ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con phải của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          }
+        ],
+        "counts": {
+          "relations": 3,
+          "linked_items": 3,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con phải của A",
+            "D là con trái của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "learner_reason": null,
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-inorder-incomplete",
+      "prompt": "Duyệt trung thứ tự cây có A là gốc, B là con trái và C là con phải; B chỉ có con trái D.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "inorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "inorder",
+        "simulation_created": true,
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "analyze_evidence": {
+        "mechanism": "tree_traversal.inorder",
+        "mechanism_canonical": "tree_traversal.inorder",
+        "objects": [
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D"
+        ],
+        "data": [],
+        "relations": [
+          "B là con trái của A",
+          "C là con phải của A",
+          "D là con trái của B"
+        ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con phải của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          }
+        ],
+        "counts": {
+          "relations": 3,
+          "linked_items": 3,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con phải của A",
+            "D là con trái của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "learner_reason": null,
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-inorder-incomplete",
+      "prompt": "Duyệt trung thứ tự cây có A là gốc, B là con trái và C là con phải; B chỉ có con trái D.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "inorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "inorder",
+        "simulation_created": true,
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "analyze_evidence": {
+        "mechanism": "tree_traversal.inorder",
+        "mechanism_canonical": "tree_traversal.inorder",
+        "objects": [
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D"
+        ],
+        "data": [],
+        "relations": [
+          "B là con trái của A",
+          "C là con phải của A",
+          "D là con trái của B"
+        ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con phải của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          }
+        ],
+        "counts": {
+          "relations": 3,
+          "linked_items": 3,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con phải của A",
+            "D là con trái của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "learner_reason": null,
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-inorder-incomplete",
+      "prompt": "Duyệt trung thứ tự cây có A là gốc, B là con trái và C là con phải; B chỉ có con trái D.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "inorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "inorder",
+        "simulation_created": true,
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "analyze_evidence": {
+        "mechanism": "tree_traversal.inorder",
+        "mechanism_canonical": "tree_traversal.inorder",
+        "objects": [
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D"
+        ],
+        "data": [],
+        "relations": [
+          "B là con trái của A",
+          "C là con phải của A",
+          "D là con trái của B"
+        ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con phải của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          }
+        ],
+        "counts": {
+          "relations": 3,
+          "linked_items": 3,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con phải của A",
+            "D là con trái của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "learner_reason": null,
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
+      },
+      "passed": true
+    },
+    {
+      "case_id": "w2a-inorder-incomplete",
+      "prompt": "Duyệt trung thứ tự cây có A là gốc, B là con trái và C là con phải; B chỉ có con trái D.",
+      "expect": {
+        "expect_status": "ok",
+        "expect_route": "tree.traversal",
+        "expect_variant": "inorder",
+        "expect_family": "tree_traversal"
+      },
+      "actual": {
+        "status": "ok",
+        "initial_route": "tree.traversal",
+        "final_route": "tree.traversal",
+        "executor_selected": "tree.traversal",
+        "family": [
+          "tree_traversal"
+        ],
+        "variant": "inorder",
+        "simulation_created": true,
+        "config_keys": [
+          "nodes",
+          "notes",
+          "rootId",
+          "specVersion",
+          "variant"
+        ],
+        "failure_category": null,
+        "error_code": null,
+        "reclassify_attempted": false,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "http_calls": 3
+      },
+      "analyze_evidence": {
+        "mechanism": "tree_traversal.inorder",
+        "mechanism_canonical": "tree_traversal.inorder",
+        "objects": [
+          "nút A",
+          "nút B",
+          "nút C",
+          "nút D"
+        ],
+        "data": [],
+        "relations": [
+          "B là con trái của A",
+          "C là con phải của A",
+          "D là con trái của B"
+        ],
+        "normalized_structural_items": [
+          {
+            "text": "B là con trái của A",
+            "identifiers": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "text": "C là con phải của A",
+            "identifiers": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "text": "D là con trái của B",
+            "identifiers": [
+              "B",
+              "D"
+            ]
+          }
+        ],
+        "counts": {
+          "relations": 3,
+          "linked_items": 3,
+          "linked_examples": [
+            "B là con trái của A",
+            "C là con phải của A",
+            "D là con trái của B"
+          ],
+          "identifiers": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "present": true
+        }
+      },
+      "structure_gate": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "reclassification_count": 0,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "learner_reason": null,
+      "checks": {
+        "status_ok": true,
+        "route_match": true,
+        "family_match": true,
+        "variant_match": true,
+        "concrete_executor": true,
+        "no_pipeline_error": true,
+        "order_not_in_spec": true,
+        "no_forbidden_order_field": true,
+        "structure_gate_pass": true,
+        "simulation_created": true
+      },
+      "passed": true
+    }
+  ],
+  "stability": {
+    "w2a-inorder-incomplete": {
+      "runs": 5,
+      "route_distribution": {
+        "tree.traversal": 5
+      },
+      "initial_route_distribution": {
+        "tree.traversal": 5
+      },
+      "reclassifications": 0,
+      "generic_leak": 0,
+      "false_positive_simulation": 0
+    }
+  }
+}

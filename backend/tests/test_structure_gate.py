@@ -25,6 +25,11 @@ LIVE_INSUFFICIENT = {  # "Mô phỏng duyệt cây preorder." — đề TRỐNG
     "data": [{"description": "cây nhị phân"}],
     "relations": ["quan hệ cha-con giữa các nút trong cây"],
 }
+LIVE_INSUFFICIENT_RUN3 = {  # cùng prompt trống, live PHA A (run 3) — analyze khác chữ
+    "objects": ["các nút của cây"],
+    "data": [],
+    "relations": ["quan hệ cha-con giữa các nút"],
+}
 LIVE_PREORDER = {
     "objects": ["cây", "nút A", "nút B", "nút C", "nút D", "nút E"],
     "data": [],
@@ -54,6 +59,15 @@ def test_live_insufficient_bi_chan():
     assert not tree_structure_present(LIVE_INSUFFICIENT)
     v = check_tree_structure_sufficiency(LIVE_INSUFFICIENT)
     assert v is not None and v[0] is ErrorCode.STRUCTURE_INSUFFICIENT
+
+
+def test_live_insufficient_run3_bi_chan():
+    """Đề trống ở PHA A (run 3): analyze diễn đạt khác ('các nút của cây',
+    'quan hệ cha-con giữa các nút') nhưng vẫn 0 định danh → chặn."""
+    assert not tree_structure_present(LIVE_INSUFFICIENT_RUN3)
+    ev = structure_evidence(LIVE_INSUFFICIENT_RUN3)
+    assert ev["linked_items"] == 0 and ev["identifiers"] == [] and ev["present"] is False
+    assert check_tree_structure_sufficiency(LIVE_INSUFFICIENT_RUN3) is not None
 
 
 def test_live_insufficient_khong_co_item_hai_dinh_danh():

@@ -24,9 +24,29 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > trúc đạt, chờ review browser). **M16 frozen bất khả xâm phạm:** pin
 > `M16_FAMILY_VALUES` (8) thay live `FamilyId` → thêm family M17 KHÔNG làm trôi
 > artifact/dataset frozen (content không đổi 1 byte). CACHE **14→15**. Catalog
-> **18→19 target / 9 family**. Offline sau W2A: pytest **755** (2 skip, 1
-> deselect) · vitest **528/39** · build sạch. **Live smoke Wave 2A: CHƯA chạy
-> — chờ user duyệt budget.** Wave 2B (relational_table_query) chưa mở.
+> **18→19 target / 9 family**. **HAI PHÒNG THỦ THÊM sau live:** (a)
+> **structure gate v2** (`simulation/structure_gate.py`) — live run 1 cho thấy
+> LLM **bịa cây** cho đề thiếu cấu trúc (false-positive simulation); gate v1
+> (đếm số lượng) **bị chứng minh không đủ** ở run 2 (analyze mô tả trừu tượng
+> "quan hệ cha-con giữa các nút" đếm ra rel=1/obj=2 → cho qua); **v2 đòi MỘT
+> item nêu ≥2 ĐỊNH DANH NÚT phân biệt** (quan hệ giữa hai nút có tên) + adapter
+> gộp dict-relation; test dùng **analyze output THẬT** từ live. (b)
+> **consistency gate** — phơi bày `tree_traversal.*` vào analyze-exposed để
+> **tái dùng recovery M15 khoá 3** (mechanism + ownership, KHÔNG keyword):
+> classify lạc generic → 1 reclassify bounded → vẫn lệch thì fail-closed, KHÔNG
+> tạo generic simulation. **LIVE (3 run, 53 HTTP tổng):** run 3 **pha A 6/6
+> functional safety · 5/6 exact-path** (case insufficient = `EARLY_SAFE_REFUSAL`,
+> gate `NOT_RUN_BY_DESIGN`, evidence linked=0 — forced-route regression offline
+> chứng minh gate SẼ chặn đúng mã) + **pha B stability 5/5** (initial route
+> **5/5** và final route **5/5** = `tree.traversal`, variant inorder 5/5, 0
+> reclassify, 0 leak, 0 false-positive, 0 false refusal; n=5 là mẫu nhỏ, KHÔNG
+> tuyên bố ổn định tuyệt đối). Offline sau W2A: pytest **775** (2 skip, 1
+> deselect) · vitest **528/42** · build sạch. **Wave 2A CLOSE về
+> correctness/routing**; renderer vẫn **NEEDS_VISUAL_REVIEW**. Wave 2B
+> (relational_table_query) chưa mở. **Backlog Analyze Integrity CÒN MỞ:**
+> provenance/source-span của từng object/relation chưa xác minh — analyze
+> hallucination CÓ ĐỊNH DANH vẫn có thể tạo false evidence; gate v2 chỉ chặn
+> được dạng hallucination trừu tượng đã quan sát.
 >
 > Trước đó **Wave 1 XONG (offline+live)** — mở rộng 4 family hiện có bằng **4
 > target mới**, catalog

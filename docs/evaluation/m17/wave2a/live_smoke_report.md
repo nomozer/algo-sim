@@ -1,87 +1,108 @@
-# M17-Lite Wave 2A — Live Smoke + Gate Re-verification Report
+# M17-Lite Wave 2A — Live Verification Report (Pha A + Pha B)
 
-> Hai lần chạy live, cùng runner `scripts/live_smoke_m17_wave2a.py`, cùng 6
-> prompt user duyệt, `gemini-2.5-flash`, production `run_pipeline`.
-> **Run 1** (trước gate): 5/6 · 18/20 HTTP. **Run 2** (sau deterministic
-> structure gate): 4/6 · 16/20 HTTP · 0 retry · 0 transient · 0 reclassify.
-> Không sửa frozen M16/Wave 1, không chỉnh expectation.
+> Runner reproducible `backend/scripts/live_smoke_m17_wave2a.py`,
+> `gemini-2.5-flash`, production `run_pipeline`. Artifacts:
+> `live_smoke.json` (pha A, 6 case) · `live_stability.json` (pha B, 5 lần lặp).
+> Không sửa frozen M16/Wave 1, không chỉnh expectation để làm case pass.
 
-## Run 2 — kết quả theo case
+## Lịch sử ba lần chạy live (trung thực)
 
-| # | Case | Route | Gate | Kết quả |
-|---|---|---|---|---|
-| 1 | preorder (VI) | `tree.traversal` | **PASS** | ✅ ok, variant=preorder, sim tạo |
-| 2 | inorder (cây khuyết) | *(classify → generic)* | NOT_RUN | ❌ **unsupported — CHẶN OAN** |
-| 3 | postorder (EN) | `tree.traversal` | **PASS** | ✅ ok, variant=postorder |
-| 4 | level_order (VI) | `tree.traversal` | **PASS** | ✅ ok, variant=level_order |
-| 5 | cross-family graph DFS | `network.graph_traversal` | NOT_RUN | ✅ ok, variant=dfs, gate không can thiệp |
-| 6 | insufficient | *(classify → unsupported)* | NOT_RUN | ⚠️ unsupported ĐÚNG **nhưng không phải nhờ gate** |
+| Run | Bối cảnh | Kết quả |
+|---|---|---|
+| 1 | trước mọi gate | 5/6 · 18 HTTP — **insufficient: LLM BỊA CÂY** (false-positive simulation) |
+| 2 | structure gate **v1** (đếm số lượng) | 4/6 · 16 HTTP — gate **không đủ** (analyze mô tả trừu tượng đếm ra rel=1/obj=2 → sẽ cho qua); case inorder **chặn oan** do classify lạc generic |
+| 3 | gate **v2** (định danh nút) + consistency gate | **Pha A 5/6 · 20 HTTP** + **Pha B 5/5 · 15 HTTP** |
 
-## Phát hiện 1 — Structure gate KHÔNG chặn oan (thiết kế an toàn ✔)
+## Pha A — re-verify 6 case · **20/20 HTTP** (3 hỏng do bug print + 17 chạy lại) · 0 retry · 0 transient · 0 reclassify
 
-3/3 case cây có cấu trúc thật mà **tới được gate** đều **PASS** (evidence:
-rel=5/4/7, obj=5/4/7). Gate không can thiệp nhánh graph (NOT_RUN). Vậy **giả
-định "gate quá chặt" là SAI** — gate an toàn.
+| # | Case | Route | Variant | mech (analyze) | Gate | Evidence |
+|---|---|---|---|---|---|---|
+| 1 | preorder | `tree.traversal` | preorder | `tree_traversal.preorder` | PASS | linked=4, ids A–E |
+| 2 | inorder (cây khuyết) | `tree.traversal` | inorder | `tree_traversal.inorder` | PASS | linked=3, ids A–D |
+| 3 | postorder (EN) | `tree.traversal` | postorder | `tree_traversal.postorder` | PASS | linked=3, ids A–D |
+| 4 | level_order | `tree.traversal` | level_order | `tree_traversal.level_order` | PASS | linked=6, ids A–G |
+| 5 | graph DFS | `network.graph_traversal` | dfs | **None** | NOT_RUN | không bị kéo sang tree |
+| 6 | insufficient | — (unsupported) | — | `tree_traversal.preorder` | **NOT_RUN_BY_DESIGN** | **linked=0, ids=[]** |
 
-## Phát hiện 2 — Gate CHƯA bao giờ bắn, và bằng chứng cho thấy nó SẼ KHÔNG chặn được
+**Báo cáo hai lớp (layered-defense semantics đã duyệt):**
+- **Functional safety acceptance: 6/6** — không case nào bịa cây / tạo
+  simulation sai / rò generic / sai executor.
+- **Exact expected-path acceptance: 5/6** — case 6 đi đường A (early refusal)
+  thay vì đường B (routed-tree refusal).
+- **Case insufficient: `EARLY_SAFE_REFUSAL`** — analyze nhận diện đúng cơ chế
+  (`tree_traversal.preorder`), **classify tự từ chối** (`initial_route=None`),
+  computation gate M13 chặn → `capability_gap`. Executor không chạy, không
+  simulation envelope, không generic, không dựng cây, learner message sạch.
+- **`structure_gate: NOT_RUN_BY_DESIGN`** — gate là route-dependent; classify
+  đã từ chối an toàn TRƯỚC nên gate không cần chạy (không đổi thứ tự pipeline,
+  không ép gate chạy trước classify).
+- **Structure evidence: `linked=0, ids=[]`** — tín hiệu gate v2 **tính đúng
+  "không có cấu trúc"** cho chính analyze của case này (v1 cho ra rel=1/obj=2
+  → sẽ cho qua; lỗ hổng đã bịt).
+- **Offline forced-route regression** (`test_tree_traversal_routing.py::
+  test_forced_route_insufficient_gate_fail_voi_analyze_live_that`): ép route
+  sang `tree.traversal` với **đúng analyze evidence live** → gate **FAIL**,
+  `error_code=structure_insufficient`,
+  `failure_category=insufficient_specification`, không simulation. Tầng phòng
+  thủ 2 được chứng minh hoạt động, không chỉ "không cần chạy".
 
-Case 6 (`"Mô phỏng duyệt cây preorder."`) bị từ chối bởi **computation gate
-M13** (`result_ownership=algorithmic`), **không phải** structure gate
-(NOT_RUN — classify trả unsupported nên chưa tới route tree).
+**Thu hoạch phụ:** analyze.md mới có hiệu lực — analyze đặt đúng
+`tree_traversal.*` cho cây và **None** cho đồ thị chung (không kéo nhầm
+cross-family). Normalization không làm mất quan hệ cụ thể (định danh trích
+đúng từ từng item).
 
-**Nghiêm trọng:** analyze cho case 6 trả:
-- objects: `['cây', 'nút (đỉnh) của cây', 'cạnh (liên kết) của cây']`
-- relations: `['quan hệ cha-con giữa các nút trong cây']`
-- evidence đếm được: **rel=1, obj=2 → `tree_structure_present` = True**
+## Pha B — classify stability · 5 lần lặp case inorder · **15/15 HTTP** · 0 retry · 0 transient
 
-Nghĩa là **nếu classify có route sang `tree.traversal`, gate sẽ PASS** và LLM
-lại bịa cây như run 1. Gate đếm **mô tả TRỪU TƯỢNG** ("nút của cây", "quan hệ
-cha-con giữa các nút") như thể là **cấu trúc CỤ THỂ**. Đây đúng là lỗ hổng
-analyze-integrity đã dự báo — **deterministic guard hiện tại KHÔNG giải quyết
-được bài toán bịa cây**.
-
-Đối chiếu case 2 (cây thật): objects `['cây','nút A','nút B','nút C','nút D']`,
-relations `['A là gốc của cây','B là con trái của A','C là con phải của A','D
-là con trái của B']` — có **ĐỊNH DANH nút cụ thể (A/B/C/D)**. Đây là khác biệt
-phân biệt được: cụ-thể-có-định-danh vs trừu-tượng-không-định-danh.
-
-## Phát hiện 3 — classify KHÔNG ổn định (nguyên nhân chặn oan case 2)
-
-Case 2 **run 1: `tree.traversal` ok** → **run 2: `generic.rule_scene`** rồi bị
-computation gate chặn (`arbitrary_algorithm`) → unsupported. **Cùng prompt,
-cùng classify.md, khác kết quả** (temperature 0.2). Đây là **classify
-instability**, KHÔNG phải lỗi gate (gate NOT_RUN).
-
-Điểm tích cực: khi classify đi lạc sang generic, **computation gate M13 vẫn
-chặn đúng** → không có generic leak, không false-positive simulation. Phòng
-thủ nhiều tầng hoạt động.
-
-## Đối chiếu acceptance
-
-| Tiêu chí | Kết quả |
+| Chỉ số | Giá trị |
 |---|---|
-| A. 4/4 tree supported route+variant, không chặn oan | ❌ **3/4** (case 2 chặn oan tại classify) |
-| B. Cross-family graph DFS không ảnh hưởng | ✅ đạt |
-| C. Insufficient bị **structure gate** chặn đúng mã | ❌ gate NOT_RUN; từ chối bởi computation gate |
-| generic leak = 0 | ✅ 0 |
-| false-positive simulation = 0 | ✅ 0 (cả 2 run 2) |
-| executor không chạy khi insufficient | ✅ đạt |
-| learner message thân thiện | ✅ đạt |
+| repetitions | **5** |
+| `initial_route_distribution` | **{tree.traversal: 5}** |
+| `final_route_distribution` | **{tree.traversal: 5}** |
+| final variant inorder | **5/5** |
+| structure gate PASS | **5/5** (linked=3, ids A–D mỗi lần) |
+| deterministic tree executor | **5/5** (simulate_attempts=1) |
+| total reclassifications | **0** |
+| consistency fail-closed count | **0** |
+| generic leak | **0/5** |
+| false-positive simulation | **0/5** |
+| false refusal | **0/5** |
+| retry / transient | **0 / 0** |
 
-**Wave 2A KHÔNG CLOSE.** Hai vấn đề còn mở: (1) structure gate đếm mô tả trừu
-tượng là cấu trúc → không chặn được bịa cây; (2) classify không ổn định cho
-prompt cây.
+- **initial-route stability: 5/5** · **final-route stability: 5/5** — cả hai đều
+  đồng nhất, không che dao động bằng cách chỉ báo final.
+- **n = 5 là mẫu nhỏ**, không phải bằng chứng thống kê. Run 2 từng cho thấy
+  đúng prompt này lạc sang generic → **không tuyên bố classifier ổn định tuyệt
+  đối**; chỉ ghi: trong 5 lần đo sau khi phơi bày mechanism, initial route
+  không dao động.
+- **Consistency gate chưa kích hoạt live** (reclassifications=0) vì classify đi
+  thẳng tree — nó là lưới an toàn, đã chứng minh **offline** (reclassify về
+  tree; vẫn generic → fail-closed, không tạo generic simulation).
 
-## Budget accounting (run 2)
+## Budget tổng
 
-Tổng **16/20 HTTP** · per-case: 3/2/3/3/3/2 · retry **0** · reclassify **0** ·
-transient **0**. Còn lại 4 HTTP trong budget đã duyệt.
+| Pha | HTTP | retry | transient | reclassify |
+|---|---|---|---|---|
+| A (6 case) | 3 (bug print) + 17 = **20/20** | 0 | 0 | 0 |
+| B (5 lặp) | **15/15** | 0 | 0 | 0 |
+| **Tổng** | **35/35** | **0** | **0** | **0** |
 
-## Backlog analyze-integrity (user yêu cầu ghi)
+## Trạng thái Wave 2A
 
-> Structure gate hiện deterministic trên analyze output nhưng **chưa chứng minh
-> provenance** của từng object/relation. Analyze hallucination (mô tả trừu
-> tượng khái niệm cây) tạo **false evidence** — đã QUAN SÁT ĐƯỢC ở case 6 run 2
-> (rel=1/obj=2 từ mô tả chung, không có định danh nút nào). Cần **grounded
-> evidence / source-span validation** cho required user input: chỉ tính là cấu
-> trúc khi object/relation mang **định danh nút có nguồn gốc từ đề**.
+**CLOSE về correctness/routing.** Acceptance pha A (layered) và pha B đều đạt.
+- Renderer: **NEEDS_VISUAL_REVIEW** (chưa review trình duyệt) — xem
+  `visual_fixtures.md`.
+- Wave 2B (`relational_table_query`) **chưa mở**.
+
+## Backlog — Analyze Integrity (KHÔNG tuyên bố đã giải quyết)
+
+> Structure gate deterministic **trên analyze output**. **Provenance /
+> source-span của từng object/relation CHƯA được xác minh** — analyze
+> hallucination vẫn có thể tạo false structural evidence (ví dụ tự bịa "nút A",
+> "B là con của A" cho đề trống thì gate không phân biệt được). Gate v2 chỉ
+> nâng ngưỡng: đòi quan hệ giữa hai nút CÓ TÊN thay vì mô tả trừu tượng — đã
+> chặn được dạng hallucination quan sát thực tế (run 2, run 3), **chưa** chặn
+> được hallucination có định danh. Đây là **Analyze Integrity backlog**, còn
+> mở.
+
+Backlog khác (từ W1, còn mở): base ngoài {2,8,10,16} → `capability_gap`;
+heuristic PARTIAL của audit (dual-authority ≠ partial-authenticity).
