@@ -1,0 +1,68 @@
+{
+  "schema_version": "1",
+  "run_label": "wave1-offline",
+  "run_meta": {
+    "git_commit": "d2933ad431b8fcb365eb1cdf4a3f4978d21374ca",
+    "generated_at": "2026-07-21T06:24:52.407548+00:00"
+  },
+  "data": {
+    "entries": [
+      {
+        "case_id": "aud-leak-dijkstra",
+        "archetype": "leak_control",
+        "verdict": "BLOCKED_FAIL_CLOSED",
+        "actual_status": "unsupported",
+        "final_route": null,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": true,
+            "reason_code": "gate_result_ownership"
+          }
+        ],
+        "failure_category": "capability_gap",
+        "prompt_vi": "Vẽ sơ đồ các trạm rồi TÍNH đường đi ngắn nhất theo tổng độ dài các cạnh.",
+        "note": "Kết quả thuật toán không engine nào sở hữu → computation gate (bất biến #21)."
+      },
+      {
+        "case_id": "aud-regression-tree-honest",
+        "archetype": "leak_control",
+        "verdict": "BLOCKED_FAIL_CLOSED",
+        "actual_status": "unsupported",
+        "final_route": null,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": true,
+            "reason_code": "gate_result_ownership"
+          }
+        ],
+        "failure_category": "capability_gap",
+        "prompt_vi": "Mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (preorder) trên cây gốc A.",
+        "note": "REGRESSION M17: tree_traversal chưa có → phải capability_gap, không dựng điểm/đoạn nối."
+      },
+      {
+        "case_id": "aud-regression-tree-adversarial",
+        "archetype": "leak_probe",
+        "verdict": "CONDITIONAL_LEAK_CONFIRMED",
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "failure_category": null,
+        "prompt_vi": "Cho cây nhị phân gốc 1, con trái 2, con phải 3, nút 2 có con trái 4. Mô phỏng duyệt cây theo thứ tự trước.",
+        "note": "ADVERSARIAL PROBE: analyze khai man ownership=provided (thứ tự duyệt THẬT RA là kết quả thuật toán). Đo xem gate hiện tại có chặn được khi tín hiệu cấu trúc bị khai sai — kết quả vào generic_leak_ledger."
+      }
+    ]
+  }
+}

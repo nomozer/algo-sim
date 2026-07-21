@@ -14,6 +14,7 @@ Cách chạy:  cd backend && .venv/Scripts/python.exe scripts/generate_m17_wave0
 
 from __future__ import annotations
 
+import argparse
 import json
 import subprocess
 import sys
@@ -32,9 +33,11 @@ from app.evaluation.authenticity_artifacts import (  # noqa: E402
     run_offline_audit,
 )
 
-OUT_DIR = Path(__file__).resolve().parents[2] / "docs" / "evaluation" / "m17" / "wave0"
+_BASE = Path(__file__).resolve().parents[2] / "docs" / "evaluation" / "m17"
 SCHEMA_VERSION = "1"
-RUN_LABEL = "wave0-offline"
+# Mặc định WAVE 1 (trạng thái hiện tại). Wave 0 là bản ghi lịch sử FROZEN
+# (SHA-256 pin ở test_m17_wave0_artifacts.py) — KHÔNG sinh lại.
+DEFAULT_WAVE = "wave1"
 
 
 def _git_commit() -> str:
@@ -48,6 +51,18 @@ def _git_commit() -> str:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--wave", default=DEFAULT_WAVE,
+                        help="wave1 (mặc định, trạng thái hiện tại). Wave 0 FROZEN — không sinh lại.")
+    args = parser.parse_args()
+    if args.wave == "wave0":
+        raise SystemExit(
+            "Wave 0 là bản ghi LỊCH SỬ đã FROZEN (SHA-256 pin) — không sinh lại. "
+            "Dùng --wave wave1 cho trạng thái hiện tại."
+        )
+    out_dir = _BASE / args.wave
+    run_label = f"{args.wave}-offline"
+
     records = run_offline_audit()
     meta = {"git_commit": _git_commit(), "generated_at": datetime.now(timezone.utc).isoformat()}
     payloads = {
@@ -56,26 +71,26 @@ def main() -> None:
         "generic_leak_ledger.json": build_generic_leak_ledger_artifact(records),
         "curriculum_coverage.json": build_curriculum_coverage(records),
     }
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out_dir.mkdir(parents=True, exist_ok=True)
     for name, data in payloads.items():
         payload = {
             "schema_version": SCHEMA_VERSION,
-            "run_label": RUN_LABEL,
+            "run_label": run_label,
             "run_meta": meta,
             "data": data,
         }
-        (OUT_DIR / name).write_text(
+        (out_dir / name).write_text(
             json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
         )
-        print(f"Đã ghi {OUT_DIR / name}")
-    (OUT_DIR / "simulation_authenticity_report.md").write_text(
+        print(f"Đã ghi {out_dir / name}")
+    (out_dir / "simulation_authenticity_report.md").write_text(
         build_authenticity_report_md(records), encoding="utf-8"
     )
-    (OUT_DIR / "curriculum_gap_report.md").write_text(
+    (out_dir / "curriculum_gap_report.md").write_text(
         build_gap_report_md(records), encoding="utf-8"
     )
-    print(f"Đã ghi {OUT_DIR / 'simulation_authenticity_report.md'}")
-    print(f"Đã ghi {OUT_DIR / 'curriculum_gap_report.md'}")
+    print(f"Đã ghi {out_dir / 'simulation_authenticity_report.md'}")
+    print(f"Đã ghi {out_dir / 'curriculum_gap_report.md'}")
 
 
 if __name__ == "__main__":

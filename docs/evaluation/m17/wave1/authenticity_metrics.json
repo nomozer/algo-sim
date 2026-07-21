@@ -1,0 +1,75 @@
+{
+  "schema_version": "1",
+  "run_label": "wave1-offline",
+  "run_meta": {
+    "git_commit": "d2933ad431b8fcb365eb1cdf4a3f4978d21374ca",
+    "generated_at": "2026-07-21T06:24:52.407548+00:00"
+  },
+  "data": {
+    "total_cases": 68,
+    "by_archetype": {
+      "direct": {
+        "total": 18,
+        "matched": 18,
+        "probe": 0
+      },
+      "paraphrase": {
+        "total": 18,
+        "matched": 18,
+        "probe": 0
+      },
+      "changed_input": {
+        "total": 18,
+        "matched": 18,
+        "probe": 0
+      },
+      "boundary": {
+        "total": 7,
+        "matched": 7,
+        "probe": 0
+      },
+      "near_miss": {
+        "total": 2,
+        "matched": 2,
+        "probe": 0
+      },
+      "leak_control": {
+        "total": 2,
+        "matched": 2,
+        "probe": 0
+      },
+      "leak_probe": {
+        "total": 1,
+        "matched": 0,
+        "probe": 1
+      },
+      "refusal_control": {
+        "total": 2,
+        "matched": 2,
+        "probe": 0
+      }
+    },
+    "near_miss_gap_recall": {
+      "numerator": 2,
+      "denominator": 2
+    },
+    "false_refusal_on_ok_archetypes": 0,
+    "concrete_envelope_integrity": {
+      "numerator": 63,
+      "denominator": 63
+    },
+    "production_parity": {
+      "numerator": 68,
+      "denominator": 68
+    },
+    "generic_leak": {
+      "controls": 3,
+      "unconditional_leaks": 0,
+      "conditional_leaks_confirmed": 1
+    },
+    "classification_histogram": {
+      "REAL": 17,
+      "PARTIAL": 1
+    }
+  }
+}

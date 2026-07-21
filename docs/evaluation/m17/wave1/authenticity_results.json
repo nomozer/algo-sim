@@ -1,0 +1,1837 @@
+{
+  "schema_version": "1",
+  "run_label": "wave1-offline",
+  "run_meta": {
+    "git_commit": "d2933ad431b8fcb365eb1cdf4a3f4978d21374ca",
+    "generated_at": "2026-07-21T06:24:52.407548+00:00"
+  },
+  "data": {
+    "case_records": [
+      {
+        "case_id": "aud-algorithm-binary-search-direct",
+        "sim_id": "algorithm.binary_search",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.binary_search",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.binary_search",
+        "initial_route": "algorithm.binary_search",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Dãy đã sắp 3, 8, 15, 22, 30, 41, 55. Tìm 30 bằng tìm kiếm nhị phân."
+      },
+      {
+        "case_id": "aud-algorithm-binary-search-paraphrase",
+        "sim_id": "algorithm.binary_search",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.binary_search",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.binary_search",
+        "initial_route": "algorithm.binary_search",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Tìm 203 trong dãy tăng dần 101, 145, 178, 203, 256 bằng cách xét phần tử giữa."
+      },
+      {
+        "case_id": "aud-algorithm-binary-search-changed-input",
+        "sim_id": "algorithm.binary_search",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.binary_search",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.binary_search",
+        "initial_route": "algorithm.binary_search",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Dãy 2, 5, 9, 14, 21, 30 đã sắp xếp. Dùng chia đôi để tìm 17."
+      },
+      {
+        "case_id": "aud-algorithm-binary-search-boundary",
+        "sim_id": "algorithm.binary_search",
+        "archetype": "boundary",
+        "expected_status": "ok",
+        "expected_route": "algorithm.binary_search",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.binary_search",
+        "initial_route": "algorithm.binary_search",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy CHƯA sắp 27, 4, 51, 13, 38, 9. Tìm 38 bằng tìm kiếm nhị phân."
+      },
+      {
+        "case_id": "aud-algorithm-bubble-sort-direct",
+        "sim_id": "algorithm.bubble_sort",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.bubble_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.bubble_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp dãy 9, 4, 7, 2, 6 tăng dần bằng thuật toán nổi bọt."
+      },
+      {
+        "case_id": "aud-algorithm-bubble-sort-paraphrase",
+        "sim_id": "algorithm.bubble_sort",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.bubble_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.bubble_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp 8, 3, 6, 1 bằng cách so sánh và đổi chỗ hai phần tử kề nhau."
+      },
+      {
+        "case_id": "aud-algorithm-bubble-sort-changed-input",
+        "sim_id": "algorithm.bubble_sort",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.bubble_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.bubble_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Dùng nổi bọt sắp xếp dãy 5, 1, 4, 2, 8 theo thứ tự tăng."
+      },
+      {
+        "case_id": "aud-algorithm-bubble-sort-boundary",
+        "sim_id": "algorithm.bubble_sort",
+        "archetype": "boundary",
+        "expected_status": "ok",
+        "expected_route": "algorithm.bubble_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.bubble_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp dãy có phần tử trùng 5, 3, 5, 2, 3 bằng nổi bọt."
+      },
+      {
+        "case_id": "aud-algorithm-count-if-direct",
+        "sim_id": "algorithm.count_if",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.count_if",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.count_if",
+        "initial_route": "algorithm.count_if",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Điểm của lớp: 6, 8.5, 7, 9, 5.5, 8. Đếm số bạn đạt từ 8 trở lên."
+      },
+      {
+        "case_id": "aud-algorithm-count-if-paraphrase",
+        "sim_id": "algorithm.count_if",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.count_if",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.count_if",
+        "initial_route": "algorithm.count_if",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Nhiệt độ tủ ghi 3, 6, 2, 8, 5, 7. Bao nhiêu lần tủ vượt 4 độ?"
+      },
+      {
+        "case_id": "aud-algorithm-count-if-changed-input",
+        "sim_id": "algorithm.count_if",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.count_if",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.count_if",
+        "initial_route": "algorithm.count_if",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy 10, 3, 12, 7, 15, 2. Đếm các số nhỏ hơn 8."
+      },
+      {
+        "case_id": "aud-algorithm-find-max-direct",
+        "sim_id": "algorithm.find_max",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.find_max",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.find_max",
+        "initial_route": "algorithm.find_max",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy số 12, 7, 25, 9, 18. Tìm phần tử lớn nhất."
+      },
+      {
+        "case_id": "aud-algorithm-find-max-paraphrase",
+        "sim_id": "algorithm.find_max",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.find_max",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.find_max",
+        "initial_route": "algorithm.find_max",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Bốn bạn có chiều cao 165, 172, 158, 180 cm. Ai cao nhất?"
+      },
+      {
+        "case_id": "aud-algorithm-find-max-changed-input",
+        "sim_id": "algorithm.find_max",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.find_max",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.find_max",
+        "initial_route": "algorithm.find_max",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy 4, 9, 1, 16, 7, 3. Giá trị lớn nhất là bao nhiêu?"
+      },
+      {
+        "case_id": "aud-algorithm-find-min-direct",
+        "sim_id": "algorithm.find_min",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.find_min",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.find_min",
+        "initial_route": "algorithm.find_min",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy 45, 12, 78, 6, 33. Tìm phần tử nhỏ nhất."
+      },
+      {
+        "case_id": "aud-algorithm-find-min-paraphrase",
+        "sim_id": "algorithm.find_min",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.find_min",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.find_min",
+        "initial_route": "algorithm.find_min",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Nhiệt độ các ngày là 18, 15, 21, 12, 19 độ. Ngày nào lạnh nhất?"
+      },
+      {
+        "case_id": "aud-algorithm-find-min-changed-input",
+        "sim_id": "algorithm.find_min",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.find_min",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.find_min",
+        "initial_route": "algorithm.find_min",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy 7, 3, 11, 2, 9, 5. Số nhỏ nhất là số nào?"
+      },
+      {
+        "case_id": "aud-algorithm-insertion-sort-direct",
+        "sim_id": "algorithm.insertion_sort",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.insertion_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.insertion_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp dãy 7, 2, 9, 4, 5 bằng thuật toán sắp xếp chèn."
+      },
+      {
+        "case_id": "aud-algorithm-insertion-sort-paraphrase",
+        "sim_id": "algorithm.insertion_sort",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.insertion_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.insertion_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Chèn từng lá bài 6, 2, 8, 3, 5 vào phần đã sắp xếp bên trái."
+      },
+      {
+        "case_id": "aud-algorithm-insertion-sort-changed-input",
+        "sim_id": "algorithm.insertion_sort",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.insertion_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.insertion_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Dùng sắp xếp chèn cho dãy 10, 6, 3, 8, 1."
+      },
+      {
+        "case_id": "aud-algorithm-linear-search-direct",
+        "sim_id": "algorithm.linear_search",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.linear_search",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.linear_search",
+        "initial_route": "algorithm.linear_search",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho danh sách 305, 118, 227, 194, 260. Tìm xem 194 có trong danh sách không."
+      },
+      {
+        "case_id": "aud-algorithm-linear-search-paraphrase",
+        "sim_id": "algorithm.linear_search",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.linear_search",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.linear_search",
+        "initial_route": "algorithm.linear_search",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Duyệt lần lượt các mã 71, 34, 90, 12, 58 để tìm mã 90."
+      },
+      {
+        "case_id": "aud-algorithm-linear-search-changed-input",
+        "sim_id": "algorithm.linear_search",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.linear_search",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.linear_search",
+        "initial_route": "algorithm.linear_search",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Tìm số 42 trong dãy 15, 42, 8, 23, 4 bằng cách xét từng phần tử."
+      },
+      {
+        "case_id": "aud-algorithm-scan-direct",
+        "sim_id": "algorithm.scan",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.scan",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.scan",
+        "initial_route": "algorithm.scan",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Nhiệt độ 7 ngày: 31, 33, 30, 36, 32, 38, 29. Tìm ngày ĐẦU TIÊN vượt 35 độ."
+      },
+      {
+        "case_id": "aud-algorithm-scan-paraphrase",
+        "sim_id": "algorithm.scan",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.scan",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.scan",
+        "initial_route": "algorithm.scan",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Áp suất các bình: 12, 15, 11, 18, 14, 20. Dừng ở bình đầu tiên đạt từ 18 bar."
+      },
+      {
+        "case_id": "aud-algorithm-scan-changed-input",
+        "sim_id": "algorithm.scan",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.scan",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.scan",
+        "initial_route": "algorithm.scan",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy 5, 9, 4, 12, 7. Tìm phần tử đầu tiên lớn hơn 10."
+      },
+      {
+        "case_id": "aud-algorithm-selection-sort-direct",
+        "sim_id": "algorithm.selection_sort",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.selection_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.selection_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp dãy 9, 2, 7, 4 bằng thuật toán sắp xếp chọn (selection sort)."
+      },
+      {
+        "case_id": "aud-algorithm-selection-sort-paraphrase",
+        "sim_id": "algorithm.selection_sort",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.selection_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.selection_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp 6, 1, 8, 3, 5 bằng cách mỗi lượt tìm phần tử nhỏ nhất còn lại rồi đưa lên đầu."
+      },
+      {
+        "case_id": "aud-algorithm-selection-sort-changed-input",
+        "sim_id": "algorithm.selection_sort",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.selection_sort",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.selection_sort",
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Dùng sắp xếp chọn cho dãy 12, 5, 9, 3 theo thứ tự giảm dần."
+      },
+      {
+        "case_id": "aud-algorithm-sum-if-direct",
+        "sim_id": "algorithm.sum_if",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "algorithm.sum_if",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.sum_if",
+        "initial_route": "algorithm.sum_if",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy 6, 11, 4, 9, 15, 3. Tính tổng các số lớn hơn 5."
+      },
+      {
+        "case_id": "aud-algorithm-sum-if-paraphrase",
+        "sim_id": "algorithm.sum_if",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "algorithm.sum_if",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.sum_if",
+        "initial_route": "algorithm.sum_if",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Các khoản chi 20, 50, 10, 80, 35 nghìn. Cộng những khoản từ 30 nghìn trở lên."
+      },
+      {
+        "case_id": "aud-algorithm-sum-if-changed-input",
+        "sim_id": "algorithm.sum_if",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "algorithm.sum_if",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "algorithm.sum_if",
+        "initial_route": "algorithm.sum_if",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho dãy 2, 14, 8, 5, 20. Tổng các số lớn hơn 7 là bao nhiêu?"
+      },
+      {
+        "case_id": "aud-binary-base-conversion-direct",
+        "sim_id": "binary.base_conversion",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "binary.base_conversion",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.base_conversion",
+        "initial_route": "binary.base_conversion",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đổi số 2026 sang hệ thập lục phân."
+      },
+      {
+        "case_id": "aud-binary-base-conversion-paraphrase",
+        "sim_id": "binary.base_conversion",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "binary.base_conversion",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.base_conversion",
+        "initial_route": "binary.base_conversion",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Số bát phân 755 bằng bao nhiêu trong hệ thập phân?"
+      },
+      {
+        "case_id": "aud-binary-base-conversion-changed-input",
+        "sim_id": "binary.base_conversion",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "binary.base_conversion",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.base_conversion",
+        "initial_route": "binary.base_conversion",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đổi số thập lục phân 9C sang hệ nhị phân."
+      },
+      {
+        "case_id": "aud-binary-base-conversion-boundary",
+        "sim_id": "binary.base_conversion",
+        "archetype": "boundary",
+        "expected_status": "ok",
+        "expected_route": "binary.base_conversion",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.base_conversion",
+        "initial_route": "binary.base_conversion",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 2,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đổi 45 sang nhị phân (LLM khai nhầm cùng cơ số ở lượt đầu — validator từ chối, retry)."
+      },
+      {
+        "case_id": "aud-binary-decimal-to-binary-direct",
+        "sim_id": "binary.decimal_to_binary",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "binary.decimal_to_binary",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.decimal_to_binary",
+        "initial_route": "binary.decimal_to_binary",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Biểu diễn số 156 trong hệ nhị phân 8 bit."
+      },
+      {
+        "case_id": "aud-binary-decimal-to-binary-paraphrase",
+        "sim_id": "binary.decimal_to_binary",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "binary.decimal_to_binary",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.decimal_to_binary",
+        "initial_route": "binary.decimal_to_binary",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Bật các công tắc trọng số 128..1 để tổng bằng 89."
+      },
+      {
+        "case_id": "aud-binary-decimal-to-binary-changed-input",
+        "sim_id": "binary.decimal_to_binary",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "binary.decimal_to_binary",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.decimal_to_binary",
+        "initial_route": "binary.decimal_to_binary",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đổi số 37 sang nhị phân 8 bit."
+      },
+      {
+        "case_id": "aud-binary-decimal-to-binary-boundary",
+        "sim_id": "binary.decimal_to_binary",
+        "archetype": "boundary",
+        "expected_status": "ok",
+        "expected_route": "binary.decimal_to_binary",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "binary.decimal_to_binary",
+        "initial_route": "binary.decimal_to_binary",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 2,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Biểu diễn 300 trong 8 bit nhị phân (vượt phạm vi biểu diễn)."
+      },
+      {
+        "case_id": "aud-generic-rule-scene-direct",
+        "sim_id": "generic.rule_scene",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "generic.rule_scene",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Dựng tam giác ABC từng bước: vẽ AB, thêm C, nối AC và BC."
+      },
+      {
+        "case_id": "aud-generic-rule-scene-paraphrase",
+        "sim_id": "generic.rule_scene",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "generic.rule_scene",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Vẽ sơ đồ ba trạm theo mô tả, hiện dần từng trạm một."
+      },
+      {
+        "case_id": "aud-generic-rule-scene-changed-input",
+        "sim_id": "generic.rule_scene",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "generic.rule_scene",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Robot đi qua các trạm A→B→C→D→E, mỗi bước một trạm."
+      },
+      {
+        "case_id": "aud-generic-rule-scene-boundary",
+        "sim_id": "generic.rule_scene",
+        "archetype": "boundary",
+        "expected_status": "ok",
+        "expected_route": "generic.rule_scene",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đèn chỉ sáng khi CẢ BA công tắc cùng bật. Mô phỏng mạch."
+      },
+      {
+        "case_id": "aud-logic-and-gate-direct",
+        "sim_id": "logic.and_gate",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "logic.and_gate",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "logic.and_gate",
+        "initial_route": "logic.and_gate",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mô phỏng cổng AND hai đầu vào, cả hai đang bật."
+      },
+      {
+        "case_id": "aud-logic-and-gate-paraphrase",
+        "sim_id": "logic.and_gate",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "logic.and_gate",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "logic.and_gate",
+        "initial_route": "logic.and_gate",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đèn chỉ sáng khi cả hai công tắc cùng đóng — hiện tại một công tắc mở."
+      },
+      {
+        "case_id": "aud-logic-and-gate-changed-input",
+        "sim_id": "logic.and_gate",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "logic.and_gate",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "logic.and_gate",
+        "initial_route": "logic.and_gate",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cổng AND với đầu vào A tắt, B bật. Đầu ra là gì?"
+      },
+      {
+        "case_id": "aud-logic-boolean-dag-direct",
+        "sim_id": "logic.boolean_dag",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "logic.boolean_dag",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "logic.boolean_dag",
+        "initial_route": "logic.boolean_dag",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mạch logic: đèn sáng khi (A VÀ B) HOẶC (KHÔNG C). Mô phỏng mạch và bảng chân trị."
+      },
+      {
+        "case_id": "aud-logic-boolean-dag-paraphrase",
+        "sim_id": "logic.boolean_dag",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "logic.boolean_dag",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "logic.boolean_dag",
+        "initial_route": "logic.boolean_dag",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Chuông reo khi đúng MỘT trong hai công tắc bật (XOR). Dựng mạch logic."
+      },
+      {
+        "case_id": "aud-logic-boolean-dag-changed-input",
+        "sim_id": "logic.boolean_dag",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "logic.boolean_dag",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "logic.boolean_dag",
+        "initial_route": "logic.boolean_dag",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho biểu thức logic A ∧ ¬B. Lập bảng chân trị bằng mạch cổng."
+      },
+      {
+        "case_id": "aud-logic-boolean-dag-boundary",
+        "sim_id": "logic.boolean_dag",
+        "archetype": "boundary",
+        "expected_status": "ok",
+        "expected_route": "logic.boolean_dag",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "logic.boolean_dag",
+        "initial_route": "logic.boolean_dag",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mạch 4 đầu vào: (A VÀ B) HOẶC (C VÀ D) — bảng chân trị đủ 16 hàng."
+      },
+      {
+        "case_id": "aud-network-graph-traversal-direct",
+        "sim_id": "network.graph_traversal",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "network.graph_traversal",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.graph_traversal",
+        "initial_route": "network.graph_traversal",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Duyệt đồ thị 5 đỉnh A,B,C,D,E (A-B, A-C, B-D, C-D, D-E) theo chiều rộng (BFS) từ A."
+      },
+      {
+        "case_id": "aud-network-graph-traversal-paraphrase",
+        "sim_id": "network.graph_traversal",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "network.graph_traversal",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.graph_traversal",
+        "initial_route": "network.graph_traversal",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đi thăm các đỉnh của đồ thị bắt đầu từ A, ưu tiên đi SÂU hết một nhánh rồi mới quay lại (DFS)."
+      },
+      {
+        "case_id": "aud-network-graph-traversal-changed-input",
+        "sim_id": "network.graph_traversal",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "network.graph_traversal",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.graph_traversal",
+        "initial_route": "network.graph_traversal",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Tìm đường từ A đến E trong đồ thị (A-B, B-C, C-E, A-D) bằng BFS."
+      },
+      {
+        "case_id": "aud-network-graph-traversal-boundary",
+        "sim_id": "network.graph_traversal",
+        "archetype": "boundary",
+        "expected_status": "ok",
+        "expected_route": "network.graph_traversal",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.graph_traversal",
+        "initial_route": "network.graph_traversal",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Đồ thị hai phần rời: (A-B) và (X-Y). Duyệt BFS từ A tìm Y."
+      },
+      {
+        "case_id": "aud-network-packet-routing-direct",
+        "sim_id": "network.packet_routing",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "network.packet_routing",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.packet_routing",
+        "initial_route": "network.packet_routing",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Gói tin đi từ máy tính qua switch, router, ISP tới máy chủ. Mô phỏng đường đi."
+      },
+      {
+        "case_id": "aud-network-packet-routing-paraphrase",
+        "sim_id": "network.packet_routing",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "network.packet_routing",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.packet_routing",
+        "initial_route": "network.packet_routing",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Dữ liệu truyền lần lượt qua từng thiết bị mạng từ máy khách tới máy chủ."
+      },
+      {
+        "case_id": "aud-network-packet-routing-changed-input",
+        "sim_id": "network.packet_routing",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "network.packet_routing",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.packet_routing",
+        "initial_route": "network.packet_routing",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mạng có hai router song song giữa máy khách và máy chủ. Gói tin chọn đường nào?"
+      },
+      {
+        "case_id": "aud-network-protocol-encapsulation-direct",
+        "sim_id": "network.protocol_encapsulation",
+        "archetype": "direct",
+        "expected_status": "ok",
+        "expected_route": "network.protocol_encapsulation",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.protocol_encapsulation",
+        "initial_route": "network.protocol_encapsulation",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mô phỏng quá trình đóng gói dữ liệu qua các tầng TCP/IP khi gửi một trang web."
+      },
+      {
+        "case_id": "aud-network-protocol-encapsulation-paraphrase",
+        "sim_id": "network.protocol_encapsulation",
+        "archetype": "paraphrase",
+        "expected_status": "ok",
+        "expected_route": "network.protocol_encapsulation",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.protocol_encapsulation",
+        "initial_route": "network.protocol_encapsulation",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mỗi tầng mạng bọc thêm phần đầu vào tin nhắn trước khi truyền đi."
+      },
+      {
+        "case_id": "aud-network-protocol-encapsulation-changed-input",
+        "sim_id": "network.protocol_encapsulation",
+        "archetype": "changed_input",
+        "expected_status": "ok",
+        "expected_route": "network.protocol_encapsulation",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "network.protocol_encapsulation",
+        "initial_route": "network.protocol_encapsulation",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Máy nhận tháo từng lớp gói tin như thế nào? Mô phỏng quá trình mở gói."
+      },
+      {
+        "case_id": "aud-nm-sort-unspecified",
+        "sim_id": null,
+        "archetype": "near_miss",
+        "expected_status": "unsupported",
+        "expected_route": null,
+        "mechanism": "comparison_sort.other_unspecified",
+        "actual_status": "unsupported",
+        "final_route": null,
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": true,
+            "reason_code": "gate_mechanism_ownership"
+          }
+        ],
+        "envelope_error_code": "gate_mechanism_ownership",
+        "failure_category": "capability_gap",
+        "simulate_attempts": 0,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp dãy 5, 8, 1 bằng một thuật toán tự chọn hiệu quả nhất.",
+        "note": "Cơ chế không xác định — từ chối trung thực thay vì đoán biến thể."
+      },
+      {
+        "case_id": "aud-nm-quick-sort",
+        "sim_id": null,
+        "archetype": "near_miss",
+        "expected_status": "unsupported",
+        "expected_route": null,
+        "mechanism": "comparison_sort.partition_recursive",
+        "actual_status": "unsupported",
+        "final_route": null,
+        "initial_route": "algorithm.comparison_sort",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "mechanism",
+            "fired": true,
+            "reason_code": "gate_mechanism_ownership"
+          }
+        ],
+        "envelope_error_code": "gate_mechanism_ownership",
+        "failure_category": "capability_gap",
+        "simulate_attempts": 0,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Sắp xếp dãy 8, 3, 6, 1, 9 bằng cách chọn mốc rồi CHIA dãy quanh mốc và đệ quy (quick sort).",
+        "note": "Quick sort giữ gap (contract không biểu diễn partition) — không ép."
+      },
+      {
+        "case_id": "aud-leak-dijkstra",
+        "sim_id": null,
+        "archetype": "leak_control",
+        "expected_status": "unsupported",
+        "expected_route": null,
+        "mechanism": null,
+        "actual_status": "unsupported",
+        "final_route": null,
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": true,
+            "reason_code": "gate_result_ownership"
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": "capability_gap",
+        "simulate_attempts": 0,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Vẽ sơ đồ các trạm rồi TÍNH đường đi ngắn nhất theo tổng độ dài các cạnh.",
+        "note": "Kết quả thuật toán không engine nào sở hữu → computation gate (bất biến #21)."
+      },
+      {
+        "case_id": "aud-regression-tree-honest",
+        "sim_id": null,
+        "archetype": "leak_control",
+        "expected_status": "unsupported",
+        "expected_route": null,
+        "mechanism": null,
+        "actual_status": "unsupported",
+        "final_route": null,
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": true,
+            "reason_code": "gate_result_ownership"
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": "capability_gap",
+        "simulate_attempts": 0,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (preorder) trên cây gốc A.",
+        "note": "REGRESSION M17: tree_traversal chưa có → phải capability_gap, không dựng điểm/đoạn nối."
+      },
+      {
+        "case_id": "aud-regression-tree-adversarial",
+        "sim_id": null,
+        "archetype": "leak_probe",
+        "expected_status": "probe",
+        "expected_route": null,
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": null,
+        "via_production_pipeline": true,
+        "prompt_vi": "Cho cây nhị phân gốc 1, con trái 2, con phải 3, nút 2 có con trái 4. Mô phỏng duyệt cây theo thứ tự trước.",
+        "note": "ADVERSARIAL PROBE: analyze khai man ownership=provided (thứ tự duyệt THẬT RA là kết quả thuật toán). Đo xem gate hiện tại có chặn được khi tín hiệu cấu trúc bị khai sai — kết quả vào generic_leak_ledger."
+      },
+      {
+        "case_id": "aud-refusal-tcp-handshake",
+        "sim_id": null,
+        "archetype": "refusal_control",
+        "expected_status": "unsupported",
+        "expected_route": null,
+        "mechanism": null,
+        "actual_status": "unsupported",
+        "final_route": null,
+        "initial_route": null,
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 0,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Mô phỏng bắt tay ba bước TCP giữa máy khách và máy chủ.",
+        "note": "Advanced-TCP từ chối trung thực ở classify (khoá cur-t12-tcp-advanced)."
+      },
+      {
+        "case_id": "aud-control-representation-ok",
+        "sim_id": null,
+        "archetype": "refusal_control",
+        "expected_status": "ok",
+        "expected_route": "generic.rule_scene",
+        "mechanism": null,
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "initial_route": "generic.rule_scene",
+        "reclassify_attempted": false,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "envelope_error_code": null,
+        "failure_category": null,
+        "simulate_attempts": 1,
+        "pipeline_error": null,
+        "matched": true,
+        "via_production_pipeline": true,
+        "prompt_vi": "Vẽ sơ đồ ba trạm nối tiếp nhau, hiện dần từng trạm theo mô tả cho sẵn.",
+        "note": "ĐỐI CHỨNG chống chặn oan: biểu diễn khai báo thuần túy PHẢI được generic nhận."
+      }
+    ],
+    "target_classifications": {
+      "algorithm.binary_search": "REAL",
+      "algorithm.bubble_sort": "REAL",
+      "algorithm.count_if": "REAL",
+      "algorithm.find_max": "REAL",
+      "algorithm.find_min": "REAL",
+      "algorithm.insertion_sort": "REAL",
+      "algorithm.linear_search": "REAL",
+      "algorithm.scan": "REAL",
+      "algorithm.selection_sort": "REAL",
+      "algorithm.sum_if": "REAL",
+      "binary.base_conversion": "REAL",
+      "binary.decimal_to_binary": "REAL",
+      "generic.rule_scene": "PARTIAL",
+      "logic.and_gate": "REAL",
+      "logic.boolean_dag": "REAL",
+      "network.graph_traversal": "REAL",
+      "network.packet_routing": "REAL",
+      "network.protocol_encapsulation": "REAL"
+    }
+  }
+}

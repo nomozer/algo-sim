@@ -5,7 +5,33 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 
 > **M17-Lite — Curriculum Capability Expansion & Simulation Authenticity: ĐANG
 > MỞ** (proposal duyệt `620a09a`, scope xem
-> `docs/superpowers/specs/2026-07-21-m17-lite-proposal.md`). **Wave 0 XONG**
+> `docs/superpowers/specs/2026-07-21-m17-lite-proposal.md`). **Wave 1 XONG
+> (offline)** — mở rộng 4 family hiện có bằng **4 target mới**, catalog
+> **14 → 18**, `CACHE_VERSION` **13 → 14** (một bump coherent Wave 1). **(A)**
+> `algorithm.selection_sort` — variant thứ 3 của `comparison_sort` (gap
+> `select_extreme_repeated` flip OWNED); engine `runSelectionSort` (event
+> set_range/compare/assign_var/swap/mark/done, oracle `sort()` 5 case) +
+> decision point + what-if free. **(B)** `binary.base_conversion` — đổi cơ số
+> tổng quát {2,8,10,16} (gap `non_binary_base` flip OWNED); engine 3 chiến
+> lược (chia-lấy-dư / trọng-số-vị-trí / hai-giai-đoạn), oracle
+> `parseInt/toString` 12 cặp cơ số; cơ số ngoài {2,8,10,16} → unsupported.
+> **(C)** `logic.boolean_dag` — mạch nhiều cổng {AND,OR,NOT,XOR} + bảng chân
+> trị (mechanism MỚI `boolean_composition.bounded_gate_dag`); validator
+> fail-closed (cycle/arity/dangling), oracle đệ quy độc lập mọi gán trị.
+> **(D)** `network.graph_traversal` — BFS/DFS tổng quát (mechanism MỚI
+> `breadth_first`/`depth_first`; `packet_routing` GIỮ là application variant);
+> DFS mark-on-pop khớp đệ quy giáo khoa, oracle BFS/DFS độc lập, unreachable =
+> kết quả hợp lệ. **(E)** classify.md 2d/2e/4c + rule-2-logic cập nhật; audit
+> W1 rerun **68 case · 61/61 ok-archetype · near-miss 2/2 · 0 leak vô điều
+> kiện · 17 REAL + 1 PARTIAL**; expectation overlay (changelog, M16 frozen
+> KHÔNG đổi 1 byte); 6 artifact wave1 FROZEN pin. **INTENTIONAL_GAP còn 2**
+> (quicksort `partition_recursive`, Dijkstra weighted). Offline sau W1: pytest
+> **732** (2 skip, 1 deselect) · vitest **487/38** · build sạch. **Live smoke
+> Wave 1: CHƯA chạy —
+> chờ user duyệt budget** (targeted, classify surface đổi). Wave 2
+> (tree_traversal + relational_table_query) chưa mở.
+>
+> **Wave 0 XONG**
 > (authenticity audit + learner error mapping, đo lường + trình bày — 0
 > capability mới, 0 đổi routing/gate/prompt production, CACHE_VERSION giữ
 > "13"): **(1)** `simulation/authenticity.py` — authenticity contract máy-đọc
