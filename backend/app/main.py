@@ -36,6 +36,7 @@ from app.ai.edit import edit_simulation
 from app.ai.explain import explain_state
 from app.ingestion.input import IngestError, ingest_to_text
 from app.ai.pipeline import run_pipeline
+from app.learner_messages import attach_learner_reason, learner_error_message
 
 app = FastAPI(title="AlgoSim backend", version="0.3.0")
 
@@ -200,7 +201,12 @@ async def analyze(body: AnalyzeBody):
     try:
         envelope = await run_pipeline(text, api_key, pattern_store=DbPatternStore(CACHE_VERSION))
     except Exception as err:  # pipeline thất bại sau retry → báo người dùng
-        return JSONResponse(status_code=422, content={"error": str(err)})
+        # M17 W0 — học sinh thấy thông điệp thân thiện; chi tiết kỹ thuật đi
+        # field riêng (FE không render, dev đọc qua devtools/log).
+        return JSONResponse(
+            status_code=422,
+            content={"error": learner_error_message(), "error_detail": str(err)},
+        )
 
     # M7.8: CHỈ cache kết quả THÀNH CÔNG. Không cache unsupported để tránh kẹt
     # kết quả cũ khi năng lực classify/DSL được cải thiện (chống stale).
@@ -227,7 +233,9 @@ async def analyze(body: AnalyzeBody):
                 )
             )
             session.commit()
-    return envelope
+    # M17 W0 — lớp trình bày: envelope unsupported mang thêm learner_reason
+    # (bản sao tại biên API; envelope pipeline/eval không đổi — bất biến #22).
+    return attach_learner_reason(envelope)
 
 
 MAX_EDIT_CONFIG_BYTES = 32_768

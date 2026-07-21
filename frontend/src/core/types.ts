@@ -61,6 +61,9 @@ export interface AnalysisOk {
 export interface AnalysisUnsupported {
   status: "unsupported";
   reason: string;
+  /** (M17 W0) Thông điệp THÂN THIỆN cho học sinh — server gắn ở biên API;
+   * FE ưu tiên hiển thị nó thay cho `reason` kỹ thuật khi có. */
+  learner_reason?: string;
 }
 
 export type AnalysisResult = AnalysisOk | AnalysisUnsupported;

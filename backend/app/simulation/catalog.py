@@ -27,6 +27,7 @@ from app.simulation.families.sorting import (
     MECH_SHIFT_INSERT,
     SORT_FAMILY_VERSION,
 )
+from app.simulation.authenticity import authenticity_descriptor
 from app.simulation.mechanisms import FAMILY_MECHANISMS
 from app.simulation.dsl.validator import validate_generic_config
 from app.simulation.dsl.manifest import (
@@ -722,6 +723,8 @@ def capability_descriptors() -> dict:
             "known_gaps": list(spec.known_gaps),
             "family_memberships": [_member(m) for m in spec.family_memberships],
             "config_contract_version": spec.config_contract_version,
+            # M17-Lite W0 — authenticity contract (app/simulation/authenticity.py)
+            "authenticity": authenticity_descriptor(sim_id),
         }
         for sim_id, spec in CATALOG.items()
     }

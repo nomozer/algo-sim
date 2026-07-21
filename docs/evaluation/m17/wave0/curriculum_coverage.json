@@ -1,0 +1,425 @@
+{
+  "schema_version": "1",
+  "run_label": "wave0-offline",
+  "run_meta": {
+    "git_commit": "620a09a8b9b4e5da0590c81eb0058c8812e356fb",
+    "generated_at": "2026-07-21T00:51:15.242611+00:00"
+  },
+  "data": {
+    "knowledge_units": [
+      {
+        "unit_id": "sorting",
+        "label": "Sắp xếp so sánh",
+        "curriculum_anchor": "T11CS B21–22",
+        "status": "SUPPORTED",
+        "note": "M14 pilot + M15 formalize (comparison_sort selector); live n=4 (M14) + n=2 (M15 W1) — đếm case live chạm sorting gồm cả near-miss từ chối đúng; targeted acceptance, KHÔNG phải bằng chứng thống kê"
+      },
+      {
+        "unit_id": "binary_search",
+        "label": "Tìm kiếm nhị phân",
+        "curriculum_anchor": "T11CS B19",
+        "status": "SUPPORTED",
+        "note": "algorithm.binary_search"
+      },
+      {
+        "unit_id": "single_pass_scan",
+        "label": "Quét dãy một lượt (tìm/đếm/tổng/tìm-đầu-tiên)",
+        "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+        "status": "SUPPORTED",
+        "note": "algorithm.find_max/min/sum_if/count_if/linear_search + algorithm.scan"
+      },
+      {
+        "unit_id": "loops_branch_variable",
+        "label": "Lặp / rẽ nhánh / biến",
+        "curriculum_anchor": "T10 B17–21",
+        "status": "PARTIAL",
+        "note": "chỉ trong các thuật toán cố định, không phải code tự do"
+      },
+      {
+        "unit_id": "binary_system",
+        "label": "Hệ nhị phân (trọng số vị trí)",
+        "curriculum_anchor": "T10 B4",
+        "status": "SUPPORTED",
+        "note": "binary.decimal_to_binary; cơ số ≠ 2 → capability_gap có control (M15 W1)"
+      },
+      {
+        "unit_id": "logic_data",
+        "label": "Dữ liệu lôgic / bảng chân trị",
+        "curriculum_anchor": "T10 B5",
+        "status": "SUPPORTED",
+        "note": "logic.and_gate + generic boolean composition"
+      },
+      {
+        "unit_id": "packet_routing",
+        "label": "Định tuyến gói tin (BFS số chặng)",
+        "curriculum_anchor": "T10 CĐ2 · T12 CĐ2",
+        "status": "SUPPORTED",
+        "note": "network.packet_routing"
+      },
+      {
+        "unit_id": "info_system_dataflow",
+        "label": "Hệ thống thông tin / luồng dữ liệu có hướng",
+        "curriculum_anchor": "T11 B10 · T12CS B29",
+        "status": "SUPPORTED",
+        "note": "generic.rule_scene + edge.directed"
+      },
+      {
+        "unit_id": "network_layering",
+        "label": "Giao thức / phân tầng mạng (đóng-mở gói)",
+        "curriculum_anchor": "T12 B4 · 12CS B22–24",
+        "status": "SUPPORTED",
+        "note": "network.protocol_encapsulation (2D+3D); TCP/UDP branching cố ý ngoài v1"
+      },
+      {
+        "unit_id": "access_control",
+        "label": "Kiểm soát truy cập (quy tắc logic)",
+        "curriculum_anchor": "T10 B9 · T11 B15",
+        "status": "SUPPORTED",
+        "note": "tái dụng boolean"
+      },
+      {
+        "unit_id": "html_css",
+        "label": "HTML/CSS (quan hệ markup ↔ hiển thị)",
+        "curriculum_anchor": "T12 CĐ4",
+        "status": "PARTIAL",
+        "note": "structural + reveal; thiếu practice tự dựng"
+      },
+      {
+        "unit_id": "text_media_encoding",
+        "label": "Mã hoá văn bản/âm thanh/ảnh",
+        "curriculum_anchor": "T10 B3, B6",
+        "status": "PARTIAL",
+        "note": "một phần; cần table/grid"
+      },
+      {
+        "unit_id": "arrays_1d_2d",
+        "label": "Mảng 1D/2D (chỉ số ↔ giá trị)",
+        "curriculum_anchor": "T11CS B17",
+        "status": "PARTIAL",
+        "note": "1D ngầm trong trace; 2D chưa có"
+      },
+      {
+        "unit_id": "database_table_query",
+        "label": "CSDL: bảng, bản ghi, truy vấn",
+        "curriculum_anchor": "T11 CĐ4",
+        "status": "CAPABILITY_GAP",
+        "note": "chưa có table/grid — gap trung thực, ứng viên post-M8"
+      },
+      {
+        "unit_id": "os_process_fsm",
+        "label": "Hệ điều hành: tiến trình (máy trạng thái)",
+        "curriculum_anchor": "T11 B1–2",
+        "status": "CAPABILITY_GAP",
+        "note": "chưa có FSM"
+      },
+      {
+        "unit_id": "practice_activity",
+        "label": "Học sinh tự dựng/thao tác, engine kiểm được",
+        "curriculum_anchor": "cross",
+        "status": "PARTIAL",
+        "note": "substrate (PredictionCapability), chưa phải một mode đầy đủ"
+      },
+      {
+        "unit_id": "dijkstra_weighted_shortest_path",
+        "label": "Đường đi ngắn nhất CÓ TRỌNG SỐ (Dijkstra)",
+        "curriculum_anchor": "không có anchor SGK",
+        "status": "CAPABILITY_GAP",
+        "note": "COVERAGE §7b — ngoài phạm vi công khai; capability_gap là câu trả lời đúng dài hạn"
+      },
+      {
+        "unit_id": "digital_ethics_law_culture",
+        "label": "Đạo đức/pháp luật/văn hoá số, bản quyền",
+        "curriculum_anchor": "CĐ3 (mọi khối)",
+        "status": "OUT_OF_SCOPE",
+        "note": "không cơ chế ẩn động — static tốt hơn"
+      },
+      {
+        "unit_id": "career_orientation",
+        "label": "Hướng nghiệp",
+        "curriculum_anchor": "mọi khối",
+        "status": "OUT_OF_SCOPE",
+        "note": "không mô phỏng"
+      },
+      {
+        "unit_id": "software_skills",
+        "label": "Kĩ năng phần mềm (đồ hoạ/ảnh/video)",
+        "curriculum_anchor": "T10 CĐ4 · T11-ICT CĐ7",
+        "status": "OUT_OF_SCOPE",
+        "note": "chính phần mềm đó mới là 'mô phỏng'"
+      },
+      {
+        "unit_id": "info_concepts_devices",
+        "label": "Thông tin & xử lí thông tin; thiết bị số",
+        "curriculum_anchor": "T10 B1–2, B7",
+        "status": "OUT_OF_SCOPE",
+        "note": "khái niệm"
+      },
+      {
+        "unit_id": "hardware_network_lookup",
+        "label": "Bên trong máy tính / thiết bị mạng",
+        "curriculum_anchor": "T11 B4 · T12 B3",
+        "status": "OUT_OF_SCOPE",
+        "note": "sự kiện tra cứu — ảnh chú thích tốt hơn"
+      },
+      {
+        "unit_id": "cloud_email_social",
+        "label": "Lưu trữ đám mây, email, mạng xã hội",
+        "curriculum_anchor": "T11 B6–8",
+        "status": "OUT_OF_SCOPE",
+        "note": "thao tác công cụ"
+      },
+      {
+        "unit_id": "ai_ml_datascience_overview",
+        "label": "Tổng quan AI / Học máy / KHDL",
+        "curriculum_anchor": "T12 CĐ1 · 12CS CĐ7",
+        "status": "OUT_OF_SCOPE",
+        "note": "'mạng nơ-ron 3D xoay' là mô phỏng trang trí kinh điển"
+      }
+    ],
+    "targets": {
+      "algorithm.binary_search": {
+        "classification": "REAL",
+        "families": [
+          "interval_elimination"
+        ],
+        "curriculum_anchor": "T11CS B19",
+        "evidence_cases": [
+          "aud-algorithm-binary-search-direct",
+          "aud-algorithm-binary-search-paraphrase",
+          "aud-algorithm-binary-search-changed-input",
+          "aud-algorithm-binary-search-boundary"
+        ]
+      },
+      "algorithm.bubble_sort": {
+        "classification": "REAL",
+        "families": [
+          "comparison_sort"
+        ],
+        "curriculum_anchor": "T11CS B21–22",
+        "evidence_cases": [
+          "aud-algorithm-bubble-sort-direct",
+          "aud-algorithm-bubble-sort-paraphrase",
+          "aud-algorithm-bubble-sort-changed-input",
+          "aud-algorithm-bubble-sort-boundary"
+        ]
+      },
+      "algorithm.count_if": {
+        "classification": "REAL",
+        "families": [
+          "single_pass_scan"
+        ],
+        "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+        "evidence_cases": [
+          "aud-algorithm-count-if-direct",
+          "aud-algorithm-count-if-paraphrase",
+          "aud-algorithm-count-if-changed-input"
+        ]
+      },
+      "algorithm.find_max": {
+        "classification": "REAL",
+        "families": [
+          "single_pass_scan"
+        ],
+        "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+        "evidence_cases": [
+          "aud-algorithm-find-max-direct",
+          "aud-algorithm-find-max-paraphrase",
+          "aud-algorithm-find-max-changed-input"
+        ]
+      },
+      "algorithm.find_min": {
+        "classification": "REAL",
+        "families": [
+          "single_pass_scan"
+        ],
+        "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+        "evidence_cases": [
+          "aud-algorithm-find-min-direct",
+          "aud-algorithm-find-min-paraphrase",
+          "aud-algorithm-find-min-changed-input"
+        ]
+      },
+      "algorithm.insertion_sort": {
+        "classification": "REAL",
+        "families": [
+          "comparison_sort"
+        ],
+        "curriculum_anchor": "T11CS B21–22",
+        "evidence_cases": [
+          "aud-algorithm-insertion-sort-direct",
+          "aud-algorithm-insertion-sort-paraphrase",
+          "aud-algorithm-insertion-sort-changed-input"
+        ]
+      },
+      "algorithm.linear_search": {
+        "classification": "REAL",
+        "families": [
+          "single_pass_scan"
+        ],
+        "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+        "evidence_cases": [
+          "aud-algorithm-linear-search-direct",
+          "aud-algorithm-linear-search-paraphrase",
+          "aud-algorithm-linear-search-changed-input"
+        ]
+      },
+      "algorithm.scan": {
+        "classification": "REAL",
+        "families": [
+          "single_pass_scan"
+        ],
+        "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+        "evidence_cases": [
+          "aud-algorithm-scan-direct",
+          "aud-algorithm-scan-paraphrase",
+          "aud-algorithm-scan-changed-input"
+        ]
+      },
+      "algorithm.sum_if": {
+        "classification": "REAL",
+        "families": [
+          "single_pass_scan"
+        ],
+        "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+        "evidence_cases": [
+          "aud-algorithm-sum-if-direct",
+          "aud-algorithm-sum-if-paraphrase",
+          "aud-algorithm-sum-if-changed-input"
+        ]
+      },
+      "binary.decimal_to_binary": {
+        "classification": "REAL",
+        "families": [
+          "positional_representation"
+        ],
+        "curriculum_anchor": "T10 B4",
+        "evidence_cases": [
+          "aud-binary-decimal-to-binary-direct",
+          "aud-binary-decimal-to-binary-paraphrase",
+          "aud-binary-decimal-to-binary-changed-input",
+          "aud-binary-decimal-to-binary-boundary"
+        ]
+      },
+      "generic.rule_scene": {
+        "classification": "PARTIAL",
+        "families": [
+          "boolean_composition",
+          "structural_progressive_representation"
+        ],
+        "curriculum_anchor": "T11 B10 · T12CS B29 · T12 CĐ4",
+        "evidence_cases": [
+          "aud-generic-rule-scene-direct",
+          "aud-generic-rule-scene-paraphrase",
+          "aud-generic-rule-scene-changed-input",
+          "aud-generic-rule-scene-boundary"
+        ]
+      },
+      "logic.and_gate": {
+        "classification": "REAL",
+        "families": [
+          "boolean_composition"
+        ],
+        "curriculum_anchor": "T10 B5 · T10 B9",
+        "evidence_cases": [
+          "aud-logic-and-gate-direct",
+          "aud-logic-and-gate-paraphrase",
+          "aud-logic-and-gate-changed-input"
+        ]
+      },
+      "network.packet_routing": {
+        "classification": "REAL",
+        "families": [
+          "graph_traversal"
+        ],
+        "curriculum_anchor": "T10 CĐ2 · T12 CĐ2",
+        "evidence_cases": [
+          "aud-network-packet-routing-direct",
+          "aud-network-packet-routing-paraphrase",
+          "aud-network-packet-routing-changed-input"
+        ]
+      },
+      "network.protocol_encapsulation": {
+        "classification": "REAL",
+        "families": [
+          "layered_pdu_transform"
+        ],
+        "curriculum_anchor": "T12 B4 · 12CS B22–24",
+        "evidence_cases": [
+          "aud-network-protocol-encapsulation-direct",
+          "aud-network-protocol-encapsulation-paraphrase",
+          "aud-network-protocol-encapsulation-changed-input"
+        ]
+      }
+    },
+    "intentional_gap_verdicts": {
+      "comparison_sort.other_unspecified": {
+        "verdict": "HONEST_GAP",
+        "case_id": "aud-nm-sort-unspecified"
+      },
+      "comparison_sort.partition_recursive": {
+        "verdict": "HONEST_GAP",
+        "case_id": "aud-nm-quick-sort"
+      },
+      "comparison_sort.select_extreme_repeated": {
+        "verdict": "HONEST_GAP",
+        "case_id": "aud-nm-selection-sort"
+      },
+      "positional_representation.non_binary_base": {
+        "verdict": "HONEST_GAP",
+        "case_id": "aud-nm-hex-base"
+      }
+    },
+    "leak_observations": [
+      {
+        "case_id": "aud-leak-dijkstra",
+        "archetype": "leak_control",
+        "verdict": "BLOCKED_FAIL_CLOSED",
+        "actual_status": "unsupported",
+        "final_route": null,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": true,
+            "reason_code": "gate_result_ownership"
+          }
+        ],
+        "failure_category": "capability_gap"
+      },
+      {
+        "case_id": "aud-regression-tree-honest",
+        "archetype": "leak_control",
+        "verdict": "BLOCKED_FAIL_CLOSED",
+        "actual_status": "unsupported",
+        "final_route": null,
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": true,
+            "reason_code": "gate_result_ownership"
+          }
+        ],
+        "failure_category": "capability_gap"
+      },
+      {
+        "case_id": "aud-regression-tree-adversarial",
+        "archetype": "leak_probe",
+        "verdict": "CONDITIONAL_LEAK_CONFIRMED",
+        "actual_status": "ok",
+        "final_route": "generic.rule_scene",
+        "gates": [
+          {
+            "gate": "computation",
+            "fired": false,
+            "reason_code": null
+          },
+          {
+            "gate": "mechanism",
+            "fired": false,
+            "reason_code": null
+          }
+        ],
+        "failure_category": null
+      }
+    ]
+  }
+}

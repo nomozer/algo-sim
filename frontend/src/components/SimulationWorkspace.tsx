@@ -43,6 +43,31 @@ const MODE_LABEL: Record<string, string> = {
 };
 
 /**
+ * (M17 W0) Thông báo "ngoài danh mục" cho HỌC SINH — component THUẦN theo
+ * props (export để test SSR như VisualModeToggle). Ưu tiên `learner_reason`
+ * (server gắn ở biên API, không token kỹ thuật); `reason` kỹ thuật chỉ là
+ * fallback tương thích ngược cho envelope cũ. Không bao giờ render
+ * error_code / failure_category / JSON path.
+ */
+export function UnsupportedNotice({
+  unsupported,
+}: {
+  unsupported: { reason: string; learner_reason?: string };
+}) {
+  return (
+    <section className="card">
+      <span className="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span>
+      <p style={{ marginTop: "var(--sp-sm)" }}>
+        {unsupported.learner_reason ?? unsupported.reason}
+      </p>
+      <p className="notes">
+        Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...).
+      </p>
+    </section>
+  );
+}
+
+/**
  * Vùng trung tâm — host sân khấu mô phỏng (M2 #1). KHÔNG giả định simulation
  * là thuật toán (M2 #2): mọi thứ domain-specific render qua module.Workspace
  * lấy từ registry.
@@ -56,15 +81,7 @@ export function SimulationWorkspace() {
   const setVisualMode = useAppStore((s) => s.setVisualMode);
 
   if (unsupported) {
-    return (
-      <section className="card">
-        <span className="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span>
-        <p style={{ marginTop: "var(--sp-sm)" }}>{unsupported.reason}</p>
-        <p className="notes">
-          Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...).
-        </p>
-      </section>
-    );
+    return <UnsupportedNotice unsupported={unsupported} />;
   }
 
   if (!active) {

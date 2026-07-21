@@ -22,7 +22,29 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "compare",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "algorithm.find_min": {
       "domain": "algorithm",
@@ -46,7 +68,29 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "compare",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "algorithm.sum_if": {
       "domain": "algorithm",
@@ -70,7 +114,29 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "compare_value",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "algorithm.count_if": {
       "domain": "algorithm",
@@ -94,7 +160,29 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "compare_value",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "algorithm.linear_search": {
       "domain": "algorithm",
@@ -118,7 +206,29 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "compare_value",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "algorithm.binary_search": {
       "domain": "algorithm",
@@ -142,7 +252,29 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "set_range",
+          "compare_value",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "algorithm.bubble_sort": {
       "domain": "algorithm",
@@ -166,7 +298,34 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "compare",
+          "swap",
+          "mark",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": [
+          "comparison_sort.select_extreme_repeated",
+          "comparison_sort.partition_recursive",
+          "comparison_sort.other_unspecified"
+        ]
+      }
     },
     "algorithm.insertion_sort": {
       "domain": "algorithm",
@@ -190,7 +349,35 @@
           ]
         }
       ],
-      "config_contract_version": "algo-cfg-1"
+      "config_contract_version": "algo-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "compare",
+          "shift",
+          "insert",
+          "mark",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": [
+          "comparison_sort.select_extreme_repeated",
+          "comparison_sort.partition_recursive",
+          "comparison_sort.other_unspecified"
+        ]
+      }
     },
     "logic.and_gate": {
       "domain": "logic",
@@ -214,7 +401,23 @@
           ]
         }
       ],
-      "config_contract_version": "logic-cfg-1"
+      "config_contract_version": "logic-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "inputA",
+          "inputB"
+        ],
+        "required_trace_events": [],
+        "required_result_fields": [
+          "andOutput"
+        ],
+        "renderer_semantic_requirements": [
+          "gate_diagram",
+          "output_lamp_reflects_rule"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "binary.decimal_to_binary": {
       "domain": "binary",
@@ -238,7 +441,26 @@
           ]
         }
       ],
-      "config_contract_version": "binary-cfg-1"
+      "config_contract_version": "binary-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "bits",
+          "bitWidth"
+        ],
+        "required_trace_events": [],
+        "required_result_fields": [
+          "decimalOf",
+          "binaryString"
+        ],
+        "renderer_semantic_requirements": [
+          "place_values_row",
+          "bit_cells"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": [
+          "positional_representation.non_binary_base"
+        ]
+      }
     },
     "network.packet_routing": {
       "domain": "network",
@@ -265,7 +487,31 @@
           ]
         }
       ],
-      "config_contract_version": "net-cfg-1"
+      "config_contract_version": "net-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "nodes",
+          "links",
+          "source",
+          "destination",
+          "route",
+          "steps",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "packetAt"
+        ],
+        "required_result_fields": [
+          "route"
+        ],
+        "renderer_semantic_requirements": [
+          "graph_topology",
+          "packet_position_per_step",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "algorithm.scan": {
       "domain": "algorithm",
@@ -292,7 +538,29 @@
           ]
         }
       ],
-      "config_contract_version": "scan-1.0"
+      "config_contract_version": "scan-1.0",
+      "authenticity": {
+        "required_state_fields": [
+          "spec",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "compare_value",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "network.protocol_encapsulation": {
       "domain": "network",
@@ -322,7 +590,31 @@
           ]
         }
       ],
-      "config_contract_version": "encap-cfg-1"
+      "config_contract_version": "encap-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "payloadLabel",
+          "layers",
+          "steps",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "add",
+          "remove",
+          "transmit",
+          "deliver"
+        ],
+        "required_result_fields": [
+          "steps.final_pdu"
+        ],
+        "renderer_semantic_requirements": [
+          "layer_stacks_sender_receiver",
+          "pdu_segments",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     },
     "generic.rule_scene": {
       "domain": "generic",
@@ -357,7 +649,30 @@
           ]
         }
       ],
-      "config_contract_version": "dsl-1.0"
+      "config_contract_version": "dsl-1.0",
+      "authenticity": {
+        "required_state_fields": [
+          "spec",
+          "base",
+          "pos",
+          "timeline",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "reveal",
+          "move"
+        ],
+        "required_result_fields": [
+          "rule_derived_values"
+        ],
+        "renderer_semantic_requirements": [
+          "declared_objects_only",
+          "frame_visibility",
+          "entity_position_by_node_id"
+        ],
+        "generic_allowed": true,
+        "near_miss_mechanisms": []
+      }
     }
   },
   "family_selectors": {

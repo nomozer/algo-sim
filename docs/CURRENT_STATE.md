@@ -3,6 +3,32 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
+> **M17-Lite — Curriculum Capability Expansion & Simulation Authenticity: ĐANG
+> MỞ** (proposal duyệt `620a09a`, scope xem
+> `docs/superpowers/specs/2026-07-21-m17-lite-proposal.md`). **Wave 0 XONG**
+> (authenticity audit + learner error mapping, đo lường + trình bày — 0
+> capability mới, 0 đổi routing/gate/prompt production, CACHE_VERSION giữ
+> "13"): **(1)** `simulation/authenticity.py` — authenticity contract máy-đọc
+> cho 14/14 AI-reachable target (state/trace/result/renderer requirements +
+> `generic_allowed` + `near_miss_mechanisms`), nhúng vào
+> `capability-descriptors.json` (sync-lock) + cross-lock vitest chạy ENGINE
+> THẬT trên config thật. **(2)** audit matrix 56 case SINH TỪ REGISTRY
+> (`evaluation/authenticity_{fixtures,matrix,audit,artifacts}.py`) chạy qua
+> production `run_pipeline` (bất biến #22): 47/47 ok-archetype đúng route ·
+> 4/4 near-miss gap trung thực (`gate_mechanism_ownership`) · phân loại
+> **13 REAL + 1 PARTIAL** (generic dual-authority) · 0 BROKEN · 0 chặn oan.
+> **(3)** regression duyệt cây: honest analyze → fail-closed ✔; probe
+> adversarial (analyze khai man ownership) → **CONDITIONAL_LEAK_CONFIRMED**,
+> PIN bằng test — gate fail-closed theo tín hiệu cấu trúc, bảo chứng phụ
+> thuộc analyze trung thực (live M16 24/24 trung thực); fix dài hạn =
+> `tree_traversal` W2; mọi siết gate là production change cần user duyệt.
+> **(4)** learner error mapping (`app/learner_messages.py` + biên API +
+> `UnsupportedNotice` FE): học sinh không thấy token kỹ thuật/JSON path;
+> `reason` kỹ thuật + `error_detail` giữ cho dev. **(5)** 6 artifact
+> sync-locked `docs/evaluation/m17/wave0/`. Offline sau W0: pytest **682**
+> (2 skip, 1 deselect) · vitest **443/38** · build sạch. Wave 1 CHƯA mở —
+> chờ user duyệt báo cáo audit W0.
+
 Cập nhật lần cuối: sau **M16 — Comprehensive End-to-End LLM Evaluation
 (Task 1–7 + 5 fix review + live baseline, làm việc trên `main`, range
 `c93a7a4..1cc0123`)**. Audit A–H (`a650783`) · design (`0766c1f`) · plan
