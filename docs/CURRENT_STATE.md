@@ -26,10 +26,23 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > kiện · 17 REAL + 1 PARTIAL**; expectation overlay (changelog, M16 frozen
 > KHÔNG đổi 1 byte); 6 artifact wave1 FROZEN pin. **INTENTIONAL_GAP còn 2**
 > (quicksort `partition_recursive`, Dijkstra weighted). Offline sau W1: pytest
-> **732** (2 skip, 1 deselect) · vitest **487/38** · build sạch. **Live smoke
-> Wave 1: CHƯA chạy —
-> chờ user duyệt budget** (targeted, classify surface đổi). Wave 2
-> (tree_traversal + relational_table_query) chưa mở.
+> **732** (2 skip, 1 deselect) · vitest **487/38** · build sạch. **LIVE SMOKE
+> Wave 1 (user duyệt ≤6 case/≤20 HTTP, `gemini-2.5-flash`, production
+> `run_pipeline`): 16/20 HTTP · 0 retry · 0 transient · 0 reclassify** — 4/4
+> supported đúng trọn route+family+executor (selection_sort không bubble/
+> insertion · base_conversion hex 3A→2 với config KHÔNG chứa đáp số LLM ·
+> boolean_dag không hạ and_gate · graph_traversal **DFS** không về
+> packet_routing); generic leak **0**, false-positive sim **0**, false refusal
+> **0**; near-miss quicksort → `capability_gap` đúng. **Một lệch NON-BLOCKING
+> (user chấp nhận + backlog):** base ngoài {2,8,10,16} (base-5) ra plain
+> `unsupported` an toàn (0 false-sim, 0 leak, đúng phải từ chối) thay vì
+> `capability_gap` — classify từ chối thẳng; cơ chế `non_binary_base` vẫn
+> owned nên gap ở mức THAM SỐ không phải mechanism gate. **BACKLOG M17
+> (NON-BLOCKING):** cân nhắc để base ngoài {2,8,10,16} → `capability_gap`
+> (route base_conversion + validator phát gap) ở wave sau, vd khi làm coverage
+> dashboard W3. Runner reproducible `scripts/live_smoke_m17_wave1.py` +
+> artifact `live_smoke.json` + report. **Wave 1 COMPLETE (offline + live).**
+> Wave 2 (tree_traversal + relational_table_query) chưa mở — chờ duyệt.
 >
 > **Wave 0 XONG**
 > (authenticity audit + learner error mapping, đo lường + trình bày — 0

@@ -63,11 +63,14 @@ capability_gap vì thời điểm đó CHƯA có base_conversion → route gener
 route-mismatch. Nay base_conversion tồn tại nên classify từ chối sớm hơn, rẻ
 hơn, tag khác (plain). Frozen M16 KHÔNG đổi — overlay đã ghi.
 
-## Trạng thái close
+## Trạng thái close — QUYẾT ĐỊNH USER: chấp nhận + backlog
 
 - **Blocking conditions user nêu: 0 hit.** 4/4 supported đúng trọn, 0 generic
   leak, 0 false-positive sim, 0 false refusal.
 - **Lệch DUY NHẤT so acceptance chữ:** tag `capability_gap` trên 1/2 unsupported
   (base-5 ra plain unsupported an toàn).
-- Đây là quyết định của user (bar acceptance) → **chưa tự động close**; xem
-  câu hỏi ở cuối phiên.
+- **User CHẤP NHẬN** base-5 plain unsupported là từ chối trung thực hợp lệ →
+  **Wave 1 CLOSE (offline + live)**.
+- **BACKLOG (NON-BLOCKING):** cân nhắc để base ngoài {2,8,10,16} → `capability_gap`
+  (route base_conversion + validator phát gap thay vì classify-refusal / 422)
+  ở wave sau — vd khi làm coverage dashboard Wave 3. KHÔNG làm trong Wave 1.
