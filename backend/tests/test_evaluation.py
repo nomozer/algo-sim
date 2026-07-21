@@ -37,7 +37,8 @@ def _analysis(item_id: str) -> dict:
     # là boolean rule → "rule_derivable"). Thiếu field = gate fail-closed (đúng),
     # nên fixture nêu rõ để đo đúng hành vi, KHÔNG che gate.
     return {
-        "objects": [], "data": [], "relations": [], "processes": [], "constraints": [],
+        "objects": ["dãy"], "data": [{"description": "dãy", "values": [9, 4, 7, 2]}],
+        "relations": [], "processes": [], "constraints": [],
         "goal": f"ITEM:{item_id}", "input_description": "i", "output_description": "o", "notes": None,
         "result_ownership": "rule_derivable",
     }

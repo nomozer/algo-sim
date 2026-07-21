@@ -101,7 +101,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       KHÔNG có trường này → gate không thấy gì để đối chiếu và cho qua: đúng
 #       cái đề "cả 4 kiểu duyệt cây" vừa bị bắt lại lọt như cũ. Đây là lý do
 #       BẮT BUỘC bump: hành vi từ chối phụ thuộc trường analyze mới.
-CACHE_VERSION = "16"
+# "17": M17-RC1 §C1 — analyze thêm `requested_operations` (danh tính YÊU CẦU là
+#       OPERATION, không phải mechanism: find_max/find_min là hai việc dùng
+#       chung một cơ chế). Cache cũ giữ analysis KHÔNG có trường này → cổng
+#       completeness không thấy gì và cho qua: đề "tìm cả max lẫn min" lại trả
+#       ok rồi bỏ im lặng một nửa. Kèm frontend HISTORY_SCHEMA_VERSION 1→2 (bỏ
+#       envelope lưu trước cổng — có thể là mô phỏng nửa vời).
+CACHE_VERSION = "17"
 
 
 class InputPayload(BaseModel):

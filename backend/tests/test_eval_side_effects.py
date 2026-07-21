@@ -15,7 +15,8 @@ from app.persistence.db import SessionLocal, SimulationCache, SimulationPattern,
 
 def _analysis(oid, ownership="rule_derivable"):
     return json.dumps({
-        "objects": [], "data": [], "relations": [], "processes": [], "constraints": [],
+        "objects": ["dãy"], "data": [{"description": "dãy", "values": [9, 4, 7, 2]}],
+        "relations": [], "processes": [], "constraints": [],
         "goal": oid, "input_description": "i", "output_description": "o", "result_ownership": ownership,
     })
 

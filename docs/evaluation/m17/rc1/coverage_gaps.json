@@ -1,22 +1,12 @@
 {
   "schema_version": "1",
-  "gap_count": 66,
+  "gap_count": 44,
   "gaps": [
     {
       "target_id": "algorithm.binary_search",
       "family_id": [
         "interval_elimination"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.binary_search",
-      "family_id": [
-        "interval_elimination"
-      ],
       "slot": "unsupported_variant_or_parameter",
       "gap_kind": "missing_unsupported",
       "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
@@ -37,16 +27,6 @@
       "family_id": [
         "comparison_sort"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.bubble_sort",
-      "family_id": [
-        "comparison_sort"
-      ],
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
@@ -60,16 +40,6 @@
       "slot": "supported_boundary",
       "gap_kind": "missing_boundary",
       "reason": "chưa có fixture archetype supported_boundary cho target này",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.count_if",
-      "family_id": [
-        "single_pass_scan"
-      ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
       "blocking": false
     },
     {
@@ -107,16 +77,6 @@
       "family_id": [
         "single_pass_scan"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.find_max",
-      "family_id": [
-        "single_pass_scan"
-      ],
       "slot": "unsupported_variant_or_parameter",
       "gap_kind": "missing_unsupported",
       "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
@@ -140,16 +100,6 @@
       "slot": "supported_boundary",
       "gap_kind": "missing_boundary",
       "reason": "chưa có fixture archetype supported_boundary cho target này",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.find_min",
-      "family_id": [
-        "single_pass_scan"
-      ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
       "blocking": false
     },
     {
@@ -187,16 +137,6 @@
       "family_id": [
         "comparison_sort"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.insertion_sort",
-      "family_id": [
-        "comparison_sort"
-      ],
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
@@ -210,16 +150,6 @@
       "slot": "supported_boundary",
       "gap_kind": "missing_boundary",
       "reason": "chưa có fixture archetype supported_boundary cho target này",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.linear_search",
-      "family_id": [
-        "single_pass_scan"
-      ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
       "blocking": false
     },
     {
@@ -250,16 +180,6 @@
       "slot": "supported_boundary",
       "gap_kind": "missing_boundary",
       "reason": "chưa có fixture archetype supported_boundary cho target này",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.scan",
-      "family_id": [
-        "single_pass_scan"
-      ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['array', 'compare', 'marking', 'scan_version', 'seed', 'stop', 'update'] thì chưa có case kiểm chống bịa dữ liệu",
       "blocking": false
     },
     {
@@ -297,16 +217,6 @@
       "family_id": [
         "comparison_sort"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.selection_sort",
-      "family_id": [
-        "comparison_sort"
-      ],
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
@@ -327,16 +237,6 @@
       "family_id": [
         "single_pass_scan"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "algorithm.sum_if",
-      "family_id": [
-        "single_pass_scan"
-      ],
       "slot": "unsupported_variant_or_parameter",
       "gap_kind": "missing_unsupported",
       "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
@@ -357,16 +257,6 @@
       "family_id": [
         "positional_representation"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['inputValue', 'sourceBase', 'targetBase'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "binary.base_conversion",
-      "family_id": [
-        "positional_representation"
-      ],
       "slot": "unsupported_variant_or_parameter",
       "gap_kind": "missing_unsupported",
       "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
@@ -380,16 +270,6 @@
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
-      "blocking": false
-    },
-    {
-      "target_id": "binary.decimal_to_binary",
-      "family_id": [
-        "positional_representation"
-      ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['bitWidth', 'decimalValue'] thì chưa có case kiểm chống bịa dữ liệu",
       "blocking": false
     },
     {
@@ -418,31 +298,9 @@
         "boolean_composition",
         "structural_progressive_representation"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['objects', 'title'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "generic.rule_scene",
-      "family_id": [
-        "boolean_composition",
-        "structural_progressive_representation"
-      ],
       "slot": "unsupported_variant_or_parameter",
       "gap_kind": "missing_unsupported",
       "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
-      "blocking": false
-    },
-    {
-      "target_id": "generic.rule_scene",
-      "family_id": [
-        "boolean_composition",
-        "structural_progressive_representation"
-      ],
-      "slot": "semantic_completeness",
-      "gap_kind": "missing_audit_metadata",
-      "reason": "analyze KHÔNG phơi cơ chế của family boolean_composition (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu",
       "blocking": false
     },
     {
@@ -460,16 +318,6 @@
       "family_id": [
         "boolean_composition"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['inputA', 'inputB'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "logic.and_gate",
-      "family_id": [
-        "boolean_composition"
-      ],
       "slot": "unsupported_variant_or_parameter",
       "gap_kind": "missing_unsupported",
       "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
@@ -483,26 +331,6 @@
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
-      "blocking": false
-    },
-    {
-      "target_id": "logic.and_gate",
-      "family_id": [
-        "boolean_composition"
-      ],
-      "slot": "semantic_completeness",
-      "gap_kind": "missing_audit_metadata",
-      "reason": "analyze KHÔNG phơi cơ chế của family boolean_composition (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu",
-      "blocking": false
-    },
-    {
-      "target_id": "logic.boolean_dag",
-      "family_id": [
-        "boolean_composition"
-      ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['gates', 'inputs', 'output'] thì chưa có case kiểm chống bịa dữ liệu",
       "blocking": false
     },
     {
@@ -526,26 +354,6 @@
       "blocking": false
     },
     {
-      "target_id": "logic.boolean_dag",
-      "family_id": [
-        "boolean_composition"
-      ],
-      "slot": "semantic_completeness",
-      "gap_kind": "missing_audit_metadata",
-      "reason": "analyze KHÔNG phơi cơ chế của family boolean_composition (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu",
-      "blocking": false
-    },
-    {
-      "target_id": "network.graph_traversal",
-      "family_id": [
-        "graph_traversal"
-      ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['edges', 'nodes', 'start', 'variant'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
       "target_id": "network.graph_traversal",
       "family_id": [
         "graph_traversal"
@@ -563,16 +371,6 @@
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
-      "blocking": false
-    },
-    {
-      "target_id": "network.graph_traversal",
-      "family_id": [
-        "graph_traversal"
-      ],
-      "slot": "semantic_completeness",
-      "gap_kind": "missing_audit_metadata",
-      "reason": "analyze KHÔNG phơi cơ chế của family graph_traversal (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu",
       "blocking": false
     },
     {
@@ -590,16 +388,6 @@
       "family_id": [
         "graph_traversal"
       ],
-      "slot": "insufficient_input",
-      "gap_kind": "missing_insufficient",
-      "reason": "đề thiếu ['destination', 'links', 'nodes', 'source'] thì chưa có case kiểm chống bịa dữ liệu",
-      "blocking": false
-    },
-    {
-      "target_id": "network.packet_routing",
-      "family_id": [
-        "graph_traversal"
-      ],
       "slot": "unsupported_variant_or_parameter",
       "gap_kind": "missing_unsupported",
       "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
@@ -613,16 +401,6 @@
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
-      "blocking": false
-    },
-    {
-      "target_id": "network.packet_routing",
-      "family_id": [
-        "graph_traversal"
-      ],
-      "slot": "semantic_completeness",
-      "gap_kind": "missing_audit_metadata",
-      "reason": "analyze KHÔNG phơi cơ chế của family graph_traversal (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu",
       "blocking": false
     },
     {
@@ -651,8 +429,8 @@
         "layered_pdu_transform"
       ],
       "slot": "semantic_completeness",
-      "gap_kind": "missing_audit_metadata",
-      "reason": "analyze KHÔNG phơi cơ chế của family layered_pdu_transform (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu",
+      "gap_kind": "missing_semantic_completeness",
+      "reason": "family biểu đạt được nhưng chưa có fixture end-to-end",
       "blocking": false
     },
     {

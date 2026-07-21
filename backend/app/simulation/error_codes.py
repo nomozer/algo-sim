@@ -35,3 +35,8 @@ class ErrorCode(str, Enum):
     # evidence + message, không sinh mã động (giữ enum đóng — M14 §H).
     MULTIPLE_OPERATIONS_NOT_SUPPORTED = "multiple_operations_not_supported"
     SEMANTIC_INCOMPLETE = "semantic_incomplete"
+    # M17-RC1 §C2 — đề CHƯA CHO dữ kiện bắt buộc của target đã chọn (dãy số, số
+    # cần đổi, mạch logic, đối tượng cảnh…). Tổng quát hoá STRUCTURE_INSUFFICIENT
+    # (vốn chỉ dành cho cấu trúc nút–cạnh) ra mọi nhóm dữ kiện. Cùng ý nghĩa:
+    # KHÔNG để LLM bịa dữ liệu thay người học.
+    INPUT_INSUFFICIENT = "input_insufficient"

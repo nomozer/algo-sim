@@ -19,7 +19,18 @@ import type { SimulationEnvelope, VisualMode } from "../simulations/types";
  *   goToStep khôi phục đúng), visualMode.
  */
 
-export const HISTORY_SCHEMA_VERSION = 1;
+/**
+ * v2 (M17-RC1 §C1): envelope lưu TRƯỚC khi có cổng semantic-completeness có
+ * thể là mô phỏng TRẢ LỜI NỬA VỜI — vd đề hỏi cả bốn cách duyệt cây nhưng
+ * envelope chỉ dựng một, hoặc đề hỏi cả max lẫn min mà chỉ có max. Mở lại
+ * những entry đó là tái hiện đúng lỗi vừa đóng, dù bản thân đường mở lại là
+ * zero-AI và tất định (bất biến #17 không đổi).
+ *
+ * Vì vậy bump version = BỎ entry cũ, có chủ đích. Đánh đổi: học sinh mất lịch
+ * sử cục bộ đã lưu; đổi lại không có mô phỏng thiếu sót nào sống sót qua bản
+ * vá. Lịch sử là tiện ích cục bộ, không phải sổ gốc — chấp nhận được.
+ */
+export const HISTORY_SCHEMA_VERSION = 2;
 export const HISTORY_MAX_ITEMS = 30;
 const KEY = "algosim.history.v1";
 

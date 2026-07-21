@@ -52,7 +52,8 @@ FOUR_TRAVERSALS = [
 
 def _an(requested=None, prescribed=None, **extra):
     a = {
-        "objects": ["A", "B"], "data": [], "relations": ["B là con trái của A"],
+        "objects": ["A", "B"], "data": [{"description": "dãy", "values": [9, 4, 7, 2]}],
+        "relations": ["B là con trái của A"],
         "processes": [], "constraints": [], "goal": "Duyệt cây",
         "input_description": "cây", "output_description": "thứ tự",
         "result_ownership": "provided",

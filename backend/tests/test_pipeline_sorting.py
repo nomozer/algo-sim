@@ -27,7 +27,7 @@ def _fake_gemini(responses: list[str]):
 def _analysis(proc=None, goal="Sắp xếp dãy điểm", ownership="algorithmic"):
     a = {
         "objects": ["dãy số"],
-        "data": [{"description": "dãy điểm"}],
+        "data": [{"description": "dãy điểm", "values": [9, 4, 7, 2, 6]}],
         "relations": [],
         "processes": ["sắp xếp"],
         "constraints": [],

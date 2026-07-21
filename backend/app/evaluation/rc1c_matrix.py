@@ -25,11 +25,15 @@ from app.ai import pipeline
 from app.evaluation.authenticity_fixtures import build_scripted_provider
 from app.evaluation.authenticity_matrix import build_audit_cases
 from app.evaluation.observer import AttemptObserver
-from app.evaluation.rc1c_fixtures import COMPLETENESS_FIXTURES
+from app.evaluation.rc1c_fixtures import COMPLETENESS_FIXTURES, INSUFFICIENT_FIXTURES
 from app.simulation.authenticity import AUTHENTICITY_CONTRACTS
 from app.simulation.catalog import CATALOG
 from app.simulation.descriptor import ReachabilityLevel, ResultAuthority
 from app.simulation.families import FAMILY_SELECTORS
+from app.simulation.input_requirements import (
+    NOT_APPLICABLE as INPUT_NOT_APPLICABLE,
+    applicability_of,
+)
 from app.simulation.mechanisms import (
     FAMILY_MECHANISMS,
     analyze_exposed_values,
@@ -37,6 +41,11 @@ from app.simulation.mechanisms import (
     mechanism_family,
 )
 from app.simulation.operation_policy import FAMILY_OPERATION_POLICY, policy_for_family
+from app.simulation.operations import (
+    analyze_exposed_operations,
+    operation_family,
+    operations_for_family,
+)
 
 # ── vốn từ đóng ──────────────────────────────────────────────────
 SLOTS: tuple[str, ...] = (
@@ -85,22 +94,40 @@ def owned_of(sim_id: str) -> list[str]:
 
 
 def required_grounded_inputs(sim_id: str) -> list[str]:
-    """Dữ kiện mà SPEC ĐÃ VALIDATE bắt buộc phải có → đề phải cung cấp (hoặc
-    LLM phải bịa). Dẫn xuất từ `config_schema["required"]` — nguồn duy nhất,
-    không viết tay. Rỗng ⟹ target chạy được mà không cần dữ kiện nào từ đề."""
-    return sorted(CATALOG[sim_id].config_schema.get("required") or [])
+    """Nhóm dữ kiện ĐỀ phải cung cấp, theo HỢP ĐỒNG `input_requirements` (§C2).
+
+    Trước §C2 hàm này đọc `config_schema["required"]` — sai bản chất: schema
+    gộp cả trường kỹ thuật (`specVersion`, `variant`, `problem`) với dữ kiện
+    thật, nên không phân biệt được "đề phải cho" và "hệ tự điền"."""
+    from app.simulation.input_requirements import requirements_for
+
+    req = requirements_for(sim_id)
+    return sorted(k.value for k in req.required_grounded_inputs) if req else []
 
 
 def analyze_expressible_families() -> set[str]:
-    """Family mà analyze CÓ THỂ phát tín hiệu cơ chế (enum `requested_mechanisms`
-    / `prescribed_procedure`). Family ngoài tập này thì gate completeness KHÔNG
-    BAO GIỜ nhận được dữ liệu để đối chiếu — coverage phải phản ánh điều đó."""
+    """Family mà analyze CÓ THỂ phát tín hiệu yêu cầu.
+
+    HAI kênh: `requested_mechanisms` (chỉ 3 family — giới hạn M15) và §C1
+    `requested_operations` (mọi family). Trước §C1 chỉ có kênh mechanism, nên
+    6/9 family là COVERAGE_GAP `missing_audit_metadata`: gate không bao giờ
+    nhận được dữ liệu ở đời thực. Nay hợp cả hai."""
     fams: set[str] = set()
     for raw in analyze_exposed_values():
         canon = canonical_mechanism(raw)
         if canon:
             fams.add(mechanism_family(canon))
+    for op in analyze_exposed_operations():
+        fams.add(operation_family(op))
     return fams
+
+
+def mechanism_expressible_families() -> set[str]:
+    """CHỈ kênh mechanism — giữ để báo cáo ranh giới M15 cho trung thực."""
+    return {
+        mechanism_family(canonical_mechanism(v))
+        for v in analyze_exposed_values() if canonical_mechanism(v)
+    }
 
 
 # ── bản ghi một case chạy thật ───────────────────────────────────
@@ -286,6 +313,18 @@ def run_all_cases(set_provider) -> list[SlotCaseRecord]:
             env=env, obs=obs, pipeline_error=err,
         ))
 
+    for fx in INSUFFICIENT_FIXTURES:
+        fake, _ = build_scripted_provider(fx.script)
+        set_provider(fake)
+        env, obs, err = asyncio.run(_run(fx.prompt))
+        records.append(_record(
+            case_id=fx.case_id, slot="insufficient_input",
+            target_id=fx.target_id, family_id=fx.family_id,
+            expected_status="unsupported", expected_route=None,
+            expected_error_code=fx.expected_error_code,
+            env=env, obs=obs, pipeline_error=err,
+        ))
+
     for fx in COMPLETENESS_FIXTURES:
         fake, _ = build_scripted_provider(fx.script)
         set_provider(fake)
@@ -293,7 +332,7 @@ def run_all_cases(set_provider) -> list[SlotCaseRecord]:
         records.append(_record(
             case_id=fx.case_id, slot="semantic_completeness",
             target_id=None, family_id=fx.family_id,
-            expected_status=fx.expected_status, expected_route=None,
+            expected_status=fx.expected_status, expected_route=fx.expected_route,
             expected_error_code=fx.expected_error_code,
             env=env, obs=obs, pipeline_error=err,
         ))
@@ -362,24 +401,23 @@ def build_target_records(records: list[SlotCaseRecord]) -> list[dict]:
                     cases=cs, oracle="deterministic_engine_contract",
                 )
 
-        # 3 — insufficient_input
-        required = required_grounded_inputs(sid)
+        # 3 — insufficient_input: phân loại theo HỢP ĐỒNG dữ kiện (§C2), không
+        # suy từ config_schema (schema `required` gộp cả version/mô tả, không
+        # phân biệt được "dữ kiện đề phải cho" với "trường kỹ thuật").
+        status_app, na_reason = applicability_of(sid)
         cs = [c for c in records_for_target if c.slot == "insufficient_input"]
         if cs:
             slots["insufficient_input"] = _slot(
                 COVERED_PASS if all(c.matched for c in cs) else COVERED_FAIL,
-                cases=cs, oracle="structure_gate",
+                cases=cs, oracle="input_requirements_contract",
             )
-        elif not required:
-            slots["insufficient_input"] = _slot(
-                NOT_APPLICABLE,
-                reason="config_schema.required rỗng → target chạy được mà đề "
-                       "không phải cung cấp dữ kiện nào (không có gì để bịa)",
-            )
+        elif status_app == INPUT_NOT_APPLICABLE:
+            slots["insufficient_input"] = _slot(NOT_APPLICABLE, reason=na_reason)
         else:
             slots["insufficient_input"] = _slot(
                 COVERAGE_GAP, gap_kind="missing_insufficient",
-                reason=f"đề thiếu {required} thì chưa có case kiểm chống bịa dữ liệu",
+                reason=f"target APPLICABLE ({required_grounded_inputs(sid)}) nhưng "
+                       "chưa có case kiểm chống bịa dữ liệu",
             )
 
         # 4 — unsupported variant/parameter (near-miss CÙNG family)
@@ -465,7 +503,8 @@ def build_target_records(records: list[SlotCaseRecord]) -> list[dict]:
                 if v.concrete_simulation_id == sid
             ),
             "operation_cardinality": pol.cardinality,
-            "required_grounded_inputs": required,
+            "required_grounded_inputs": required_grounded_inputs(sid),
+            "input_applicability": status_app,
             "validator_id": getattr(CATALOG[sid].validate, "__name__", None)
             or getattr(getattr(CATALOG[sid].validate, "func", None), "__name__", None),
             "executor_id": CATALOG[sid].executor_id,
@@ -497,14 +536,14 @@ def _completeness_slot(fams: list[str], records, expressible: set[str]) -> dict:
             cases=cs, oracle="completeness_gate",
         )
     fam = fams[0] if fams else ""
-    fid = next((f for f in FAMILY_OPERATION_POLICY if f.value == fam), None)
-    mech_count = len(FAMILY_MECHANISMS.get(fid, ())) if fid else 0
+    op_count = len(operations_for_family(fam))
     pol = policy_for_family(fam)
-    if mech_count <= 1 and pol.cardinality == "single":
+    if op_count <= 1 and pol.cardinality == "single":
         return _slot(
             NOT_APPLICABLE,
-            reason=f"family {fam} chỉ có {mech_count} cơ chế và cardinality=single "
-                   "→ không tồn tại tổ hợp nhiều thao tác để kiểm",
+            reason=f"family {fam} chỉ có {op_count} operation chạy được và "
+                   "cardinality=single → KHÔNG tồn tại tổ hợp nhiều thao tác nào "
+                   "để đề có thể yêu cầu, nên slot này vô nghĩa với target đó",
         )
     if fam not in expressible:
         return _slot(

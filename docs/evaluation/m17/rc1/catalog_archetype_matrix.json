@@ -4,7 +4,7 @@
   "source_identity": {
     "git_sha": "unknown",
     "build_timestamp": "unknown",
-    "cache_version": "16",
+    "cache_version": "17",
     "family_count": 9,
     "target_count": 19,
     "ai_reachable_target_count": 19,
@@ -107,33 +107,39 @@
     "result_leakage"
   ],
   "analyze_expressible_families": [
+    "boolean_composition",
     "comparison_sort",
+    "graph_traversal",
+    "interval_elimination",
+    "layered_pdu_transform",
     "positional_representation",
+    "single_pass_scan",
+    "structural_progressive_representation",
     "tree_traversal"
   ],
   "metrics": {
     "target_count": 19,
     "family_count": 9,
     "total_archetype_slots": 152,
-    "covered_pass": 78,
-    "covered_fail": 6,
-    "coverage_gap": 66,
-    "not_applicable": 2,
-    "coverage_denominator": 150,
-    "coverage_ratio": 0.52,
+    "covered_pass": 105,
+    "covered_fail": 0,
+    "coverage_gap": 44,
+    "not_applicable": 3,
+    "coverage_denominator": 149,
+    "coverage_ratio": 0.7047,
     "targets_full_coverage": 0,
     "targets_partial_coverage": 19,
-    "targets_with_blocking_gap": 6,
-    "total_cases_executed": 77,
+    "targets_with_blocking_gap": 0,
+    "total_cases_executed": 98,
     "route_accuracy": {
-      "numerator": 68,
-      "denominator": 68,
+      "numerator": 71,
+      "denominator": 71,
       "scope": "server-side route handling given scripted analyze — KHÔNG phải độ chính xác classify của LLM thật"
     },
     "generic_leak_count": 0,
-    "false_positive_simulation_count": 1,
+    "false_positive_simulation_count": 0,
     "false_refusal_count": 0,
-    "semantic_loss_count": 1,
+    "semantic_loss_count": 0,
     "result_leakage_count": 0,
     "engine_REAL_count": 18,
     "engine_PARTIAL_count": 1,
@@ -151,9 +157,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.binary_search",
       "renderer_id": "algorithm",
@@ -205,23 +211,25 @@
           "reason": ""
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-binary-search"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -278,7 +286,7 @@
           "failure_category": null,
           "error_code": null,
           "gap_kind": null,
-          "reason": "family interval_elimination chỉ có 1 cơ chế và cardinality=single → không tồn tại tổ hợp nhiều thao tác để kiểm"
+          "reason": "family interval_elimination chỉ có 1 operation chạy được và cardinality=single → KHÔNG tồn tại tổ hợp nhiều thao tác nào để đề có thể yêu cầu, nên slot này vô nghĩa với target đó"
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -342,9 +350,9 @@
       ],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.bubble_sort",
       "renderer_id": "algorithm",
@@ -396,23 +404,25 @@
           "reason": ""
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-bubble-sort"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERED_PASS",
@@ -536,9 +546,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.count_if",
       "renderer_id": "algorithm",
@@ -588,23 +598,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-count-if"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -645,25 +657,26 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERED_FAIL",
+          "status": "COVERED_PASS",
           "fixture_id": [
-            "rc1c-scan-max-and-min"
+            "rc1c-scan-max-and-min",
+            "rc1c-scan-max-only"
           ],
           "oracle_id": "completeness_gate",
           "expected": "unsupported",
-          "actual": "ok",
-          "route": "algorithm.find_max",
+          "actual": "unsupported",
+          "route": null,
           "variant": null,
-          "executor": "algorithm.find_max",
+          "executor": null,
           "simulation_created": true,
           "generic_leak": false,
-          "false_positive_simulation": true,
+          "false_positive_simulation": false,
           "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
           "gap_kind": null,
-          "reason": "kỳ vọng unsupported, thực tế ok→algorithm.find_max"
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -724,9 +737,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.find_max",
       "renderer_id": "algorithm",
@@ -776,23 +789,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-find-max"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -833,25 +848,26 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERED_FAIL",
+          "status": "COVERED_PASS",
           "fixture_id": [
-            "rc1c-scan-max-and-min"
+            "rc1c-scan-max-and-min",
+            "rc1c-scan-max-only"
           ],
           "oracle_id": "completeness_gate",
           "expected": "unsupported",
-          "actual": "ok",
-          "route": "algorithm.find_max",
+          "actual": "unsupported",
+          "route": null,
           "variant": null,
-          "executor": "algorithm.find_max",
+          "executor": null,
           "simulation_created": true,
           "generic_leak": false,
-          "false_positive_simulation": true,
+          "false_positive_simulation": false,
           "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
           "gap_kind": null,
-          "reason": "kỳ vọng unsupported, thực tế ok→algorithm.find_max"
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -912,9 +928,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.find_min",
       "renderer_id": "algorithm",
@@ -964,23 +980,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-find-min"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -1021,25 +1039,26 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERED_FAIL",
+          "status": "COVERED_PASS",
           "fixture_id": [
-            "rc1c-scan-max-and-min"
+            "rc1c-scan-max-and-min",
+            "rc1c-scan-max-only"
           ],
           "oracle_id": "completeness_gate",
           "expected": "unsupported",
-          "actual": "ok",
-          "route": "algorithm.find_max",
+          "actual": "unsupported",
+          "route": null,
           "variant": null,
-          "executor": "algorithm.find_max",
+          "executor": null,
           "simulation_created": true,
           "generic_leak": false,
-          "false_positive_simulation": true,
+          "false_positive_simulation": false,
           "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
           "gap_kind": null,
-          "reason": "kỳ vọng unsupported, thực tế ok→algorithm.find_max"
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -1102,9 +1121,9 @@
       ],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.insertion_sort",
       "renderer_id": "algorithm",
@@ -1154,23 +1173,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-insertion-sort"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERED_PASS",
@@ -1293,9 +1314,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.linear_search",
       "renderer_id": "algorithm",
@@ -1345,23 +1366,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-linear-search"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -1402,25 +1425,26 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERED_FAIL",
+          "status": "COVERED_PASS",
           "fixture_id": [
-            "rc1c-scan-max-and-min"
+            "rc1c-scan-max-and-min",
+            "rc1c-scan-max-only"
           ],
           "oracle_id": "completeness_gate",
           "expected": "unsupported",
-          "actual": "ok",
-          "route": "algorithm.find_max",
+          "actual": "unsupported",
+          "route": null,
           "variant": null,
-          "executor": "algorithm.find_max",
+          "executor": null,
           "simulation_created": true,
           "generic_leak": false,
-          "false_positive_simulation": true,
+          "false_positive_simulation": false,
           "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
           "gap_kind": null,
-          "reason": "kỳ vọng unsupported, thực tế ok→algorithm.find_max"
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -1485,14 +1509,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "array",
-        "compare",
-        "marking",
-        "scan_version",
-        "seed",
-        "stop",
-        "update"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_scan_config",
       "executor_id": "algorithm.scan",
       "renderer_id": "algorithm",
@@ -1542,23 +1561,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-scan"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['array', 'compare', 'marking', 'scan_version', 'seed', 'stop', 'update'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -1599,25 +1620,26 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERED_FAIL",
+          "status": "COVERED_PASS",
           "fixture_id": [
-            "rc1c-scan-max-and-min"
+            "rc1c-scan-max-and-min",
+            "rc1c-scan-max-only"
           ],
           "oracle_id": "completeness_gate",
           "expected": "unsupported",
-          "actual": "ok",
-          "route": "algorithm.find_max",
+          "actual": "unsupported",
+          "route": null,
           "variant": null,
-          "executor": "algorithm.find_max",
+          "executor": null,
           "simulation_created": true,
           "generic_leak": false,
-          "false_positive_simulation": true,
+          "false_positive_simulation": false,
           "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
           "gap_kind": null,
-          "reason": "kỳ vọng unsupported, thực tế ok→algorithm.find_max"
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -1680,9 +1702,9 @@
       ],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.selection_sort",
       "renderer_id": "algorithm",
@@ -1732,23 +1754,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-selection-sort"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERED_PASS",
@@ -1871,9 +1895,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "data",
-        "problem"
+        "finite_sequence"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_algorithm_config",
       "executor_id": "algorithm.sum_if",
       "renderer_id": "algorithm",
@@ -1923,23 +1947,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-algorithm-sum-if"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['data', 'problem'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -1980,25 +2006,26 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERED_FAIL",
+          "status": "COVERED_PASS",
           "fixture_id": [
-            "rc1c-scan-max-and-min"
+            "rc1c-scan-max-and-min",
+            "rc1c-scan-max-only"
           ],
           "oracle_id": "completeness_gate",
           "expected": "unsupported",
-          "actual": "ok",
-          "route": "algorithm.find_max",
+          "actual": "unsupported",
+          "route": null,
           "variant": null,
-          "executor": "algorithm.find_max",
+          "executor": null,
           "simulation_created": true,
           "generic_leak": false,
-          "false_positive_simulation": true,
+          "false_positive_simulation": false,
           "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
           "gap_kind": null,
-          "reason": "kỳ vọng unsupported, thực tế ok→algorithm.find_max"
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -2060,10 +2087,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "inputValue",
-        "sourceBase",
-        "targetBase"
+        "conversion_parameters"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_base_conversion_config",
       "executor_id": "binary.base_conversion",
       "renderer_id": "binary",
@@ -2115,23 +2141,25 @@
           "reason": ""
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-binary-base-conversion"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['inputValue', 'sourceBase', 'targetBase'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -2252,9 +2280,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "bitWidth",
-        "decimalValue"
+        "numeric_value"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_binary_config",
       "executor_id": "binary.decimal_to_binary",
       "renderer_id": "binary",
@@ -2306,23 +2334,25 @@
           "reason": ""
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-binary-decimal-to-binary"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['bitWidth', 'decimalValue'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -2446,9 +2476,9 @@
       "supported_variants": [],
       "operation_cardinality": "multiple",
       "required_grounded_inputs": [
-        "objects",
-        "title"
+        "representation_objects"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_generic_config",
       "executor_id": "generic.rule_scene",
       "renderer_id": "generic",
@@ -2501,23 +2531,25 @@
           "reason": ""
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-generic-rule-scene"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['objects', 'title'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -2560,23 +2592,25 @@
           "reason": ""
         },
         "semantic_completeness": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
-          "route": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-boolean-multi-gate-allowed"
+          ],
+          "oracle_id": "completeness_gate",
+          "expected": "ok",
+          "actual": "ok",
+          "route": "logic.boolean_dag",
           "variant": null,
-          "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "executor": "logic.boolean_dag",
+          "simulation_created": true,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
           "failure_category": null,
           "error_code": null,
-          "gap_kind": "missing_audit_metadata",
-          "reason": "analyze KHÔNG phơi cơ chế của family boolean_composition (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu"
+          "gap_kind": null,
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -2639,10 +2673,8 @@
       ],
       "supported_variants": [],
       "operation_cardinality": "multiple",
-      "required_grounded_inputs": [
-        "inputA",
-        "inputB"
-      ],
+      "required_grounded_inputs": [],
+      "input_applicability": "NOT_APPLICABLE",
       "validator_id": "validate_logic_config",
       "executor_id": "logic.and_gate",
       "renderer_id": "logic",
@@ -2692,7 +2724,7 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
+          "status": "NOT_APPLICABLE",
           "fixture_id": null,
           "oracle_id": null,
           "expected": null,
@@ -2707,8 +2739,8 @@
           "dropped_requirements": [],
           "failure_category": null,
           "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['inputA', 'inputB'] thì chưa có case kiểm chống bịa dữ liệu"
+          "gap_kind": null,
+          "reason": "Module KHÁM PHÁ (exploratory, không timeline): hai đầu vào là TRẠNG THÁI BAN ĐẦU mà người học tự bật/tắt để quan sát bảng chân trị, không phải dữ kiện đề bắt buộc cung cấp. Đặt mặc định false/false không bịa dữ liệu của ai."
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -2749,23 +2781,25 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
-          "route": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-boolean-multi-gate-allowed"
+          ],
+          "oracle_id": "completeness_gate",
+          "expected": "ok",
+          "actual": "ok",
+          "route": "logic.boolean_dag",
           "variant": null,
-          "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "executor": "logic.boolean_dag",
+          "simulation_created": true,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
           "failure_category": null,
           "error_code": null,
-          "gap_kind": "missing_audit_metadata",
-          "reason": "analyze KHÔNG phơi cơ chế của family boolean_composition (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu"
+          "gap_kind": null,
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -2826,10 +2860,9 @@
       "supported_variants": [],
       "operation_cardinality": "multiple",
       "required_grounded_inputs": [
-        "gates",
-        "inputs",
-        "output"
+        "boolean_expression"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_boolean_dag_config",
       "executor_id": "logic.boolean_dag",
       "renderer_id": "logic",
@@ -2881,23 +2914,25 @@
           "reason": ""
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-logic-boolean-dag"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['gates', 'inputs', 'output'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -2938,23 +2973,25 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
-          "route": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-boolean-multi-gate-allowed"
+          ],
+          "oracle_id": "completeness_gate",
+          "expected": "ok",
+          "actual": "ok",
+          "route": "logic.boolean_dag",
           "variant": null,
-          "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "executor": "logic.boolean_dag",
+          "simulation_created": true,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
           "failure_category": null,
           "error_code": null,
-          "gap_kind": "missing_audit_metadata",
-          "reason": "analyze KHÔNG phơi cơ chế của family boolean_composition (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu"
+          "gap_kind": null,
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -3017,11 +3054,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "edges",
-        "nodes",
-        "start",
-        "variant"
+        "graph_structure"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_traverse_config",
       "executor_id": "network.graph_traversal",
       "renderer_id": "network",
@@ -3073,23 +3108,25 @@
           "reason": ""
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-network-graph-traversal"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['edges', 'nodes', 'start', 'variant'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "structure_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -3130,23 +3167,25 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-graph-bfs-and-dfs"
+          ],
+          "oracle_id": "completeness_gate",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_audit_metadata",
-          "reason": "analyze KHÔNG phơi cơ chế của family graph_traversal (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu"
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
+          "gap_kind": null,
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -3208,11 +3247,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "destination",
-        "links",
-        "nodes",
-        "source"
+        "graph_structure"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_network_config",
       "executor_id": "network.packet_routing",
       "renderer_id": "network",
@@ -3262,23 +3299,25 @@
           "reason": "chưa có fixture archetype supported_boundary cho target này"
         },
         "insufficient_input": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-network-packet-routing"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_insufficient",
-          "reason": "đề thiếu ['destination', 'links', 'nodes', 'source'] thì chưa có case kiểm chống bịa dữ liệu"
+          "failure_category": "insufficient_specification",
+          "error_code": "structure_insufficient",
+          "gap_kind": null,
+          "reason": ""
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERAGE_GAP",
@@ -3319,23 +3358,25 @@
           "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
         },
         "semantic_completeness": {
-          "status": "COVERAGE_GAP",
-          "fixture_id": null,
-          "oracle_id": null,
-          "expected": null,
-          "actual": null,
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-graph-bfs-and-dfs"
+          ],
+          "oracle_id": "completeness_gate",
+          "expected": "unsupported",
+          "actual": "unsupported",
           "route": null,
           "variant": null,
           "executor": null,
-          "simulation_created": null,
-          "generic_leak": null,
-          "false_positive_simulation": null,
-          "false_refusal": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": null,
-          "error_code": null,
-          "gap_kind": "missing_audit_metadata",
-          "reason": "analyze KHÔNG phơi cơ chế của family graph_traversal (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu"
+          "failure_category": "semantic_incomplete",
+          "error_code": "multiple_operations_not_supported",
+          "gap_kind": null,
+          "reason": ""
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -3396,6 +3437,7 @@
       "supported_variants": [],
       "operation_cardinality": "pipeline",
       "required_grounded_inputs": [],
+      "input_applicability": "NOT_APPLICABLE",
       "validator_id": "validate_encapsulation_config",
       "executor_id": "network.protocol_encapsulation",
       "renderer_id": "network",
@@ -3461,7 +3503,7 @@
           "failure_category": null,
           "error_code": null,
           "gap_kind": null,
-          "reason": "config_schema.required rỗng → target chạy được mà đề không phải cung cấp dữ kiện nào (không có gì để bịa)"
+          "reason": "config_schema.required RỖNG: toàn bộ 9 bước PDU và các tầng do ENGINE tất định sở hữu; nhãn payload chỉ là nhãn hiển thị tuỳ chọn. Không có dữ kiện nào của đề để bịa."
         },
         "unsupported_variant_or_parameter": {
           "status": "COVERED_PASS",
@@ -3519,8 +3561,8 @@
           "dropped_requirements": [],
           "failure_category": null,
           "error_code": null,
-          "gap_kind": "missing_audit_metadata",
-          "reason": "analyze KHÔNG phơi cơ chế của family layered_pdu_transform (analyze_exposed_values không chứa) → gate completeness không bao giờ nhận được dữ liệu để đối chiếu"
+          "gap_kind": "missing_semantic_completeness",
+          "reason": "family biểu đạt được nhưng chưa có fixture end-to-end"
         },
         "executor_authenticity": {
           "status": "COVERED_PASS",
@@ -3584,11 +3626,9 @@
       "supported_variants": [],
       "operation_cardinality": "single",
       "required_grounded_inputs": [
-        "nodes",
-        "rootId",
-        "specVersion",
-        "variant"
+        "tree_structure"
       ],
+      "input_applicability": "APPLICABLE",
       "validator_id": "validate_tree_traversal_config",
       "executor_id": "tree.traversal",
       "renderer_id": "tree",
@@ -3642,9 +3682,10 @@
         "insufficient_input": {
           "status": "COVERED_PASS",
           "fixture_id": [
-            "aud-regression-tree-insufficient"
+            "aud-regression-tree-insufficient",
+            "rc1c-insufficient-tree-traversal"
           ],
-          "oracle_id": "structure_gate",
+          "oracle_id": "input_requirements_contract",
           "expected": "unsupported",
           "actual": "unsupported",
           "route": null,
@@ -3704,21 +3745,22 @@
         "semantic_completeness": {
           "status": "COVERED_PASS",
           "fixture_id": [
+            "rc1c-tree-one-variant-only",
             "rc1c-tree-four-traversals"
           ],
           "oracle_id": "completeness_gate",
-          "expected": "unsupported",
-          "actual": "unsupported",
-          "route": null,
+          "expected": "ok",
+          "actual": "ok",
+          "route": "tree.traversal",
           "variant": null,
-          "executor": null,
-          "simulation_created": false,
+          "executor": "tree.traversal",
+          "simulation_created": true,
           "generic_leak": false,
           "false_positive_simulation": false,
           "false_refusal": false,
           "dropped_requirements": [],
-          "failure_category": "semantic_incomplete",
-          "error_code": "multiple_operations_not_supported",
+          "failure_category": null,
+          "error_code": null,
           "gap_kind": null,
           "reason": ""
         },
@@ -3802,6 +3844,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -3838,6 +3885,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -3882,6 +3934,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -3918,6 +3975,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -3962,6 +4024,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -3998,6 +4065,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4042,6 +4114,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4078,6 +4155,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4122,6 +4204,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4158,6 +4245,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4202,6 +4294,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4238,6 +4335,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4282,6 +4384,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4318,6 +4425,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4362,6 +4474,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4398,6 +4515,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4442,6 +4564,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4478,6 +4605,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4522,6 +4654,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4558,6 +4695,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4602,6 +4744,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4638,6 +4785,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4682,6 +4834,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4718,6 +4875,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4762,6 +4924,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4798,6 +4965,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4842,6 +5014,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4878,6 +5055,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -4922,6 +5104,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -4958,6 +5145,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5002,6 +5194,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5038,6 +5235,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5082,6 +5284,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5118,6 +5325,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5162,6 +5374,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5198,6 +5415,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5242,6 +5464,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5278,6 +5505,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5322,6 +5554,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5358,6 +5595,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5407,6 +5649,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5448,6 +5695,11 @@
         },
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5497,6 +5749,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5542,6 +5799,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5578,6 +5840,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5622,6 +5889,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5658,6 +5930,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5702,6 +5979,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5738,6 +6020,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5782,6 +6069,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5818,6 +6110,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5862,6 +6159,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5898,6 +6200,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -5942,6 +6249,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -5978,6 +6290,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6022,6 +6339,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -6058,6 +6380,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6102,6 +6429,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -6138,6 +6470,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6182,6 +6519,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -6218,6 +6560,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6262,7 +6609,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6307,7 +6654,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6352,7 +6699,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6397,7 +6744,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6532,7 +6879,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6577,7 +6924,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6622,7 +6969,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": true,
           "reason_code": "structure_insufficient"
         }
@@ -6692,6 +7039,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": false,
           "reason_code": null
@@ -6704,6 +7056,606 @@
       ]
     },
     {
+      "case_id": "rc1c-insufficient-algorithm-binary-search",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.binary_search",
+      "family_id": "interval_elimination",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-bubble-sort",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.bubble_sort",
+      "family_id": "comparison_sort",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-count-if",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.count_if",
+      "family_id": "single_pass_scan",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-find-max",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.find_max",
+      "family_id": "single_pass_scan",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-find-min",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.find_min",
+      "family_id": "single_pass_scan",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-insertion-sort",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.insertion_sort",
+      "family_id": "comparison_sort",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-linear-search",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.linear_search",
+      "family_id": "single_pass_scan",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-scan",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.scan",
+      "family_id": "single_pass_scan",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-selection-sort",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.selection_sort",
+      "family_id": "comparison_sort",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-algorithm-sum-if",
+      "slot": "insufficient_input",
+      "target_id": "algorithm.sum_if",
+      "family_id": "single_pass_scan",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-binary-base-conversion",
+      "slot": "insufficient_input",
+      "target_id": "binary.base_conversion",
+      "family_id": "positional_representation",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-binary-decimal-to-binary",
+      "slot": "insufficient_input",
+      "target_id": "binary.decimal_to_binary",
+      "family_id": "positional_representation",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-generic-rule-scene",
+      "slot": "insufficient_input",
+      "target_id": "generic.rule_scene",
+      "family_id": "boolean_composition",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "computation",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-logic-boolean-dag",
+      "slot": "insufficient_input",
+      "target_id": "logic.boolean_dag",
+      "family_id": "boolean_composition",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-network-graph-traversal",
+      "slot": "insufficient_input",
+      "target_id": "network.graph_traversal",
+      "family_id": "graph_traversal",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "structure_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "structure_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "structure_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-network-packet-routing",
+      "slot": "insufficient_input",
+      "target_id": "network.packet_routing",
+      "family_id": "graph_traversal",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "structure_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "structure_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "structure_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-tree-traversal",
+      "slot": "insufficient_input",
+      "target_id": "tree.traversal",
+      "family_id": "tree_traversal",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "structure_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "structure_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "structure_insufficient"
+        }
+      ]
+    },
+    {
       "case_id": "rc1c-scan-max-and-min",
       "slot": "semantic_completeness",
       "target_id": null,
@@ -6711,23 +7663,198 @@
       "expected_status": "unsupported",
       "expected_route": null,
       "expected_error_code": "multiple_operations_not_supported",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "semantic_incomplete",
+      "error_code": "multiple_operations_not_supported",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": true,
+          "reason_code": "multiple_operations_not_supported"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-graph-bfs-and-dfs",
+      "slot": "semantic_completeness",
+      "target_id": null,
+      "family_id": "graph_traversal",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "multiple_operations_not_supported",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "semantic_incomplete",
+      "error_code": "multiple_operations_not_supported",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": true,
+          "reason_code": "multiple_operations_not_supported"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-boolean-multi-gate-allowed",
+      "slot": "semantic_completeness",
+      "target_id": null,
+      "family_id": "boolean_composition",
+      "expected_status": "ok",
+      "expected_route": "logic.boolean_dag",
+      "expected_error_code": null,
+      "actual_status": "ok",
+      "route": "logic.boolean_dag",
+      "variant": null,
+      "executor": "logic.boolean_dag",
+      "simulation_created": true,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": null,
+      "error_code": null,
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_represented",
+          "fired": false,
+          "reason_code": null
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-scan-max-only",
+      "slot": "semantic_completeness",
+      "target_id": null,
+      "family_id": "single_pass_scan",
+      "expected_status": "ok",
+      "expected_route": "algorithm.find_max",
+      "expected_error_code": null,
       "actual_status": "ok",
       "route": "algorithm.find_max",
       "variant": null,
       "executor": "algorithm.find_max",
       "simulation_created": true,
       "generic_leak": false,
-      "false_positive_simulation": true,
+      "false_positive_simulation": false,
       "false_refusal": false,
       "dropped_requirements": [],
       "failure_category": null,
       "error_code": null,
       "leaked_result_fields": [],
-      "matched": false,
-      "reason": "kỳ vọng unsupported, thực tế ok→algorithm.find_max",
+      "matched": true,
+      "reason": "",
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_represented",
+          "fired": false,
+          "reason_code": null
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-tree-one-variant-only",
+      "slot": "semantic_completeness",
+      "target_id": null,
+      "family_id": "tree_traversal",
+      "expected_status": "ok",
+      "expected_route": "tree.traversal",
+      "expected_error_code": null,
+      "actual_status": "ok",
+      "route": "tree.traversal",
+      "variant": null,
+      "executor": "tree.traversal",
+      "simulation_created": true,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": null,
+      "error_code": null,
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6772,7 +7899,7 @@
           "reason_code": null
         },
         {
-          "gate": "structure",
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },
@@ -6812,6 +7939,11 @@
           "reason_code": null
         },
         {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
           "gate": "completeness_requested",
           "fired": true,
           "reason_code": "multiple_operations_not_supported"
@@ -6843,6 +7975,11 @@
       "gates": [
         {
           "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
           "fired": false,
           "reason_code": null
         },

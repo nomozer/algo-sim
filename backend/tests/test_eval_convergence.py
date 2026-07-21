@@ -22,7 +22,7 @@ def _fake_gemini(responses):
 
 def _analysis(proc=None):
     a = {
-        "objects": ["dãy"], "data": [{"description": "dãy"}], "relations": [],
+        "objects": ["dãy"], "data": [{"description": "dãy", "values": [9, 4, 7, 2, 6]}], "relations": [],
         "processes": ["sắp xếp"], "constraints": [], "goal": "Sắp xếp dãy",
         "input_description": "Dãy", "output_description": "Dãy đã sắp",
         "result_ownership": "algorithmic",

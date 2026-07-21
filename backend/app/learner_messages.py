@@ -52,7 +52,12 @@ def learner_reason(envelope: dict) -> str:
     if envelope.get("failure_category") == "capability_gap":
         return _MSG_CAPABILITY_GAP
     if envelope.get("failure_category") == "insufficient_specification":
-        return _MSG_INSUFFICIENT
+        # M17-RC1 §C2: cổng đủ-dữ-kiện đã sinh thông điệp RIÊNG theo target
+        # (`learner_prompt_template` — nêu đúng thứ đang thiếu: dãy số, số cần
+        # đổi, cấu trúc cây…). Giữ nguyên vì nó hữu ích hơn câu chung; câu
+        # chung chỉ dùng khi vì lý do nào đó không có.
+        reason = envelope.get("reason")
+        return reason if isinstance(reason, str) and reason else _MSG_INSUFFICIENT
     if envelope.get("failure_category") == "semantic_incomplete":
         # Thông điệp của gate ĐÃ thân thiện và nêu rõ cách tách đề — giữ nguyên
         # thay vì thay bằng câu chung chung kém hữu ích hơn.

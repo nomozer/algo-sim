@@ -16,7 +16,10 @@ from app.simulation.completeness_gate import (
     check_requested_combination,
 )
 from app.simulation.computation_gate import check_computation_ownership
-from app.simulation.structure_gate import check_tree_structure_sufficiency
+from app.simulation.sufficiency_gate import (
+    check_input_sufficiency,
+    check_input_sufficiency_for_targets,
+)
 from app.simulation.families import selector_for_token
 from app.simulation.mechanism_gate import (
     ROUTE_MECHANISM_FAMILY_MISMATCH_MSG as _MISMATCH_MSG,
@@ -25,6 +28,7 @@ from app.simulation.mechanism_gate import (
     check_variant_consistency,
 )
 from app.simulation.mechanisms import analyze_exposed_values, canonical_mechanism, mechanism_family
+from app.simulation.operations import analyze_exposed_operations
 from app.simulation.error_codes import ErrorCode
 
 
@@ -114,6 +118,17 @@ ANALYZE_SCHEMA = {
             "items": {"type": "STRING", "enum": list(analyze_exposed_values())},
             "nullable": True,
         },
+        # M17-RC1 §C1 — TẤT CẢ *mục tiêu* (operation) đề yêu cầu. Đây mới là
+        # danh tính đúng của yêu cầu: `find_max` và `find_min` là HAI operation
+        # dùng CHUNG mechanism `track_extreme`, nên định danh bằng mechanism
+        # (trường trên) gộp chúng thành một và bỏ im lặng một nửa. Enum phủ
+        # 9/9 family (mechanism chỉ phơi 3) nên gate nhận được dữ liệu ở MỌI
+        # family. Mọi giá trị đều có target/executor thật (dẫn xuất từ CATALOG).
+        "requested_operations": {
+            "type": "ARRAY",
+            "items": {"type": "STRING", "enum": list(analyze_exposed_operations())},
+            "nullable": True,
+        },
         "notes": {"type": "STRING", "nullable": True},
     },
     "required": [
@@ -128,6 +143,43 @@ ANALYZE_SCHEMA = {
         "result_ownership",
     ],
 }
+
+
+def _completeness_phase2(
+    analysis: dict, target_id: str, config: object, plan: object, observer,
+    *, variant: str | None = None,
+) -> dict | None:
+    """M17-RC1 §D PHA 2 / §C1 — spec ĐÃ CHỐT có bỏ sót yêu cầu nào không?
+
+    MỘT chỗ duy nhất, gọi từ **mọi** đường trả envelope ok (selector fast-path,
+    pattern reuse, composed). RC1-C đã bắt được đúng lỗi này một lần: nhánh
+    selector `return` trước chỗ gate được cắm nên family sorting lọt cổng. Gom
+    về một hàm để không đường nào lặng lẽ bỏ qua được nữa — test
+    `test_moi_duong_tra_ok_deu_qua_phase2` khoá bằng cách đếm call site.
+
+    Trả envelope unsupported khi thiếu sót; None khi đủ.
+    """
+    spec = CATALOG[target_id]
+    families = {m.family_id.value for m in spec.family_memberships}
+    owned = {m for mb in spec.family_memberships for m in mb.owned_mechanisms}
+    verdict = check_represented_coverage(
+        analysis, families, owned, config, target_id=target_id, variant=variant,
+    )
+    _emit(observer, "gate_checked", gate="completeness_represented",
+          fired=bool(verdict), reason_code=verdict[0].value if verdict else None)
+    if verdict is None:
+        return None
+    _emit(observer, "envelope", status="unsupported", simulation_id=None,
+          failure_category="semantic_incomplete")
+    return {
+        "status": "unsupported",
+        "reason": verdict[1],
+        "failure_category": "semantic_incomplete",
+        "error_code": verdict[0].value,
+        "completeness": verdict[2],
+        "representation_plan": plan,
+        "analysis": analysis,
+    }
 
 
 def _classify_schema() -> dict:
@@ -567,6 +619,26 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
                 "representation_plan": plan,
                 "analysis": analysis,
             }
+        # M17-RC1 §C2 — cổng đủ dữ kiện trên nhánh SELECTOR: target cụ thể chỉ
+        # biết sau resolve, nên kiểm theo GIAO các nhóm bắt buộc của mọi variant
+        # (không đòi thừa). Sorting: mọi biến thể đều cần một dãy số.
+        sel_targets = [v.concrete_simulation_id for v in selector.variants]
+        sel_suff = check_input_sufficiency_for_targets(analysis, sel_targets)
+        _emit(observer, "gate_checked", gate="input_sufficiency",
+              fired=bool(sel_suff), reason_code=sel_suff[0].value if sel_suff else None)
+        if sel_suff is not None:
+            _emit(observer, "envelope", status="unsupported", simulation_id=None,
+                  failure_category="insufficient_specification")
+            return {
+                "status": "unsupported",
+                "reason": sel_suff[1],
+                "failure_category": "insufficient_specification",
+                "error_code": sel_suff[0].value,
+                "input_sufficiency": sel_suff[2],
+                "representation_plan": plan,
+                "analysis": analysis,
+            }
+
         # M17-RC1 §D PHA 1 trên NHÁNH SELECTOR. Bỏ sót ở đây là lỗ THẬT (RC1-C
         # phát hiện): family comparison_sort route qua token nên `_families` ở
         # nhánh direct bên dưới không bao giờ chạy — đề "sắp xếp nổi bọt RỒI
@@ -606,28 +678,13 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
                 f"Config sau adapter không qua validator concrete ({concrete_id}): {verr}"
             )
         # PHA 2 trên nhánh selector: đối chiếu với cái CONCRETE SPEC thực sự
-        # biểu diễn (variant đã resolve), dùng owned_mechanisms của target cụ
-        # thể — không phải của cả family.
-        _sel_owned = {
-            m for mb in concrete_spec.family_memberships for m in mb.owned_mechanisms
-        }
-        cov = check_represented_coverage(
-            analysis, _sel_families, _sel_owned, {"variant": family_config["variant"]}
+        # biểu diễn (variant ĐÃ resolve, target CỤ THỂ — không phải cả family).
+        incomplete = _completeness_phase2(
+            analysis, concrete_id, validated, plan, observer,
+            variant=family_config["variant"],
         )
-        _emit(observer, "gate_checked", gate="completeness_represented",
-              fired=bool(cov), reason_code=cov[0].value if cov else None)
-        if cov is not None:
-            _emit(observer, "envelope", status="unsupported", simulation_id=None,
-                  failure_category="semantic_incomplete")
-            return {
-                "status": "unsupported",
-                "reason": cov[1],
-                "failure_category": "semantic_incomplete",
-                "error_code": cov[0].value,
-                "completeness": cov[2],
-                "representation_plan": plan,
-                "analysis": analysis,
-            }
+        if incomplete is not None:
+            return incomplete
         _emit(observer, "envelope", status="ok", simulation_id=concrete_id, source="family_resolved")
         return {
             "status": "ok",
@@ -665,24 +722,28 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
     else:
         _emit(observer, "gate_checked", gate="mechanism", fired=False, reason_code=None)
 
-    # M17 W2A — insufficient-structure gate cho tree.traversal (TRƯỚC simulate):
-    # đề đòi duyệt cây nhưng analyze không thấy cấu trúc cây nào → refuse thay vì
-    # để LLM bịa cây (false-positive simulation). Deterministic given analyze.
-    if simulation_id == "tree.traversal":
-        struct_verdict = check_tree_structure_sufficiency(analysis)
-        _emit(observer, "gate_checked", gate="structure", fired=bool(struct_verdict),
-              reason_code=struct_verdict[0].value if struct_verdict else None)
-        if struct_verdict is not None:
-            _emit(observer, "envelope", status="unsupported", simulation_id=None,
-                  failure_category="insufficient_specification")
-            return {
-                "status": "unsupported",
-                "reason": struct_verdict[1],
-                "failure_category": "insufficient_specification",
-                "error_code": struct_verdict[0].value,
-                "representation_plan": plan,
-                "analysis": analysis,
-            }
+    # M17-RC1 §C2 — CỔNG ĐỦ DỮ KIỆN DÙNG CHUNG (TRƯỚC simulate), thay cho gate
+    # riêng của tree ở W2A: đề chưa cho dữ kiện bắt buộc của target đã chọn →
+    # từ chối thay vì để LLM bịa (dãy số, số cần đổi, cấu trúc cây/đồ thị, mạch
+    # logic…). Một cổng, mọi target; khác biệt nằm ở HỢP ĐỒNG
+    # (`input_requirements`) + normalizer theo NHÓM dữ kiện, không phải ở code
+    # riêng cho từng target. Chỉ sau PASS mới được dựng spec.
+    suff_verdict = check_input_sufficiency(analysis, simulation_id)
+    _emit(observer, "gate_checked", gate="input_sufficiency",
+          fired=bool(suff_verdict),
+          reason_code=suff_verdict[0].value if suff_verdict else None)
+    if suff_verdict is not None:
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category="insufficient_specification")
+        return {
+            "status": "unsupported",
+            "reason": suff_verdict[1],
+            "failure_category": "insufficient_specification",
+            "error_code": suff_verdict[0].value,
+            "input_sufficiency": suff_verdict[2],
+            "representation_plan": plan,
+            "analysis": analysis,
+        }
 
     # M17-RC1 §D PHA 1 — tập YÊU CẦU tự nó vượt chính sách family (vd đề hỏi cả
     # 4 kiểu duyệt cây trong khi một lần chỉ dựng được một) → chặn TRƯỚC simulate,
@@ -717,6 +778,12 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             text, analysis, plan, roles, api_key, pattern_store
         )
         if config is not None:
+            # PHA 2 cũng chạy trên đường TÁI DÙNG PATTERN — đường này bỏ qua
+            # stage_simulate nên trước đây trả thẳng envelope ok. Config tái
+            # dùng vẫn phải đáp ứng ĐỦ yêu cầu của đề HIỆN TẠI.
+            incomplete = _completeness_phase2(analysis, simulation_id, config, plan, observer)
+            if incomplete is not None:
+                return incomplete
             _emit(observer, "envelope", status="ok", simulation_id=simulation_id, source="pattern_reuse")
             return {
                 "status": "ok",
@@ -762,23 +829,9 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
     # M17-RC1 §D PHA 2 — spec ĐÃ VALIDATE có bỏ sót yêu cầu nào không? Chạy
     # TRƯỚC khi phát envelope (tức trước executor FE). Bất biến: status=ok ⟹
     # dropped_requirements rỗng — không bao giờ trả lời nửa vời rồi báo "xong".
-    _owned = {m for mb in spec.family_memberships for m in mb.owned_mechanisms}
-    coverage_verdict = check_represented_coverage(analysis, _families, _owned, config)
-    _emit(observer, "gate_checked", gate="completeness_represented",
-          fired=bool(coverage_verdict),
-          reason_code=coverage_verdict[0].value if coverage_verdict else None)
-    if coverage_verdict is not None:
-        _emit(observer, "envelope", status="unsupported", simulation_id=None,
-              failure_category="semantic_incomplete")
-        return {
-            "status": "unsupported",
-            "reason": coverage_verdict[1],
-            "failure_category": "semantic_incomplete",
-            "error_code": coverage_verdict[0].value,
-            "completeness": coverage_verdict[2],
-            "representation_plan": plan,
-            "analysis": analysis,
-        }
+    incomplete = _completeness_phase2(analysis, simulation_id, config, plan, observer)
+    if incomplete is not None:
+        return incomplete
 
     # M7.13B: compose-new thành công → thử persist reusable pattern (best-effort;
     # extraction ngoài safe allowlist / round-trip lệch / cổng fail → không lưu).

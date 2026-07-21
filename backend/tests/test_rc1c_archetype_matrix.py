@@ -21,6 +21,7 @@ from app.evaluation.rc1c_matrix import (
     SlotCaseRecord,
     ai_reachable_ids,
     analyze_expressible_families,
+    mechanism_expressible_families,
     build_target_records,
     coverage_gaps,
     coverage_metrics,
@@ -77,9 +78,9 @@ def test_NOT_APPLICABLE_luon_kem_ly_do_dan_xuat():
             if s["status"] != NOT_APPLICABLE:
                 continue
             assert s["gap_kind"] is None, "N/A không phải gap"
-            assert ("config_schema.required rỗng" in s["reason"]
-                    or "cơ chế và cardinality=single" in s["reason"]), (
-                f"{t['target_id']}/{slot}: N/A không có căn cứ dẫn xuất")
+            assert len(s["reason"]) >= 40, (
+                f"{t['target_id']}/{slot}: N/A phải nêu căn cứ DẪN XUẤT TỪ HỢP "
+                f"ĐỒNG, không phải khẳng định suông — {s['reason']!r}")
 
 
 def test_mau_so_coverage_khong_chua_NOT_APPLICABLE():
@@ -90,9 +91,12 @@ def test_mau_so_coverage_khong_chua_NOT_APPLICABLE():
     assert m["not_applicable"] > 0  # có thật, và vẫn không lọt mẫu số
 
 
-def test_required_grounded_inputs_dan_xuat_tu_config_schema():
-    assert required_grounded_inputs("tree.traversal") == [
-        "nodes", "rootId", "specVersion", "variant"]
+def test_required_grounded_inputs_dan_xuat_tu_hop_dong():
+    """§C2 sửa nguồn: trước đây đọc `config_schema.required` — gộp cả trường kỹ
+    thuật (`specVersion`, `variant`) với dữ kiện thật, nên không trả lời được
+    câu "ĐỀ phải cho gì". Nay đọc hợp đồng `input_requirements`."""
+    assert required_grounded_inputs("tree.traversal") == ["tree_structure"]
+    assert required_grounded_inputs("algorithm.find_max") == ["finite_sequence"]
     # encapsulation KHÔNG cần dữ kiện nào từ đề → slot insufficient là N/A
     assert required_grounded_inputs("network.protocol_encapsulation") == []
 
@@ -126,12 +130,15 @@ def test_generic_khong_bao_gio_duoc_nang_len_REAL():
     assert t["engine_authenticity"] == "PARTIAL"
 
 
-def test_family_khong_bieu_dat_duoc_thi_semantic_completeness_la_GAP():
-    """Ranh giới thật: analyze chỉ phơi cơ chế của 3 family. Family ngoài đó
-    KHÔNG được tính COVERED chỉ vì probe cấp-gate xanh — gate không bao giờ
-    nhận được dữ liệu ở đời thực."""
-    expressible = analyze_expressible_families()
-    assert expressible == {
+def test_C1_dong_lo_hong_bieu_dat_cho_MOI_family():
+    """Trước §C1: analyze chỉ phơi cơ chế của 3 family ⇒ 6/9 family là
+    COVERAGE_GAP `missing_audit_metadata` (gate không bao giờ nhận được dữ liệu
+    ở đời thực). Sau §C1 kênh `requested_operations` phủ 9/9.
+
+    Kênh mechanism VẪN chỉ 3 family — giữ nguyên sự thật đó để không overclaim
+    rằng M15 đã mở rộng."""
+    assert analyze_expressible_families() == {f.value for f in FamilyId}
+    assert mechanism_expressible_families() == {
         FamilyId.COMPARISON_SORT.value,
         FamilyId.POSITIONAL_REPRESENTATION.value,
         FamilyId.TREE_TRAVERSAL.value,
@@ -139,8 +146,7 @@ def test_family_khong_bieu_dat_duoc_thi_semantic_completeness_la_GAP():
     t = next(t for t in build_target_records([])
              if t["target_id"] == "network.graph_traversal")
     slot = t["archetype_slots"]["semantic_completeness"]
-    assert slot["status"] == COVERAGE_GAP
-    assert slot["gap_kind"] == "missing_audit_metadata"
+    assert slot["gap_kind"] != "missing_audit_metadata"
 
 
 def test_gap_luon_xuat_hien_trong_coverage_gaps():

@@ -34,6 +34,20 @@ CÁC TRƯỜNG TRÍCH XUẤT:
   - "tree_traversal.postorder": cây con TRÁI, rồi cây con PHẢI, rồi GỐC (duyệt sau / hậu thứ tự / postorder).
   - "tree_traversal.level_order": duyệt theo TỪNG TẦNG từ trên xuống, trái sang phải (theo mức / level-order).
   - Duyệt ĐỒ THỊ chung (đỉnh–cạnh, không phải cây có gốc/trái/phải) → KHÔNG đặt các giá trị này (để null).
+- requested_operations: LIỆT KÊ ĐỦ **mọi VIỆC** (mục tiêu) đề yêu cầu — mỗi việc
+  một giá trị trong enum. **Mục tiêu ≠ cơ chế:** hai mục tiêu KHÁC NHAU có thể
+  dùng CHUNG một cơ chế, vẫn phải nêu ĐỦ CẢ HAI.
+  - "Tìm cả giá trị lớn nhất VÀ nhỏ nhất của dãy" → ["single_pass_scan:find_max",
+    "single_pass_scan:find_min"] — HAI giá trị, dù cả hai đều là quét một lượt.
+    Ghi một giá trị là BỎ SÓT yêu cầu của đề.
+  - "Trình bày cả bốn cách duyệt cây" → đủ bốn: "tree_traversal:preorder",
+    "tree_traversal:inorder", "tree_traversal:postorder", "tree_traversal:level_order".
+  - "Sắp xếp bằng nổi bọt rồi làm lại bằng chèn" → ["comparison_sort:bubble",
+    "comparison_sort:insertion"].
+  - "Duyệt đồ thị bằng cả BFS lẫn DFS" → ["graph_traversal:bfs", "graph_traversal:dfs"].
+  - Đề chỉ hỏi MỘT việc → đúng MỘT giá trị.
+  Không suy diễn thêm việc đề KHÔNG hỏi. KHÔNG tự chọn giúp khi đề hỏi nhiều —
+  máy chủ quyết định có mô phỏng được hay không.
 - requested_mechanisms: LIỆT KÊ ĐỦ **mọi** cơ chế đề yêu cầu (cùng bộ giá trị
   với prescribed_procedure). Đề hỏi NHIỀU thao tác thì phải nêu ĐỦ, KHÔNG được
   rút gọn còn một. Ví dụ: đề bảo "xác định thứ tự ghi nhận trong cả bốn quy

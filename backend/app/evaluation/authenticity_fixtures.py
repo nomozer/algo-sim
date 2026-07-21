@@ -137,6 +137,17 @@ class ControlFixture:
     audit_target: str | None = None
 
 
+# M17-RC1 §C2 — analyze THẬT của các đề này LUÔN liệt kê đỉnh/cạnh (hoặc đầu
+# vào/cổng), vì đề nêu rõ chúng. Stub cũ để objects=["đối tượng"], relations=[]
+# nên trông như đề KHÔNG cho cấu trúc → cổng đủ-dữ-kiện chặn oan 11 case.
+_DAG_OBJECTS = ["đầu vào A", "đầu vào B", "đầu vào C", "cổng AND", "cổng OR", "cổng NOT"]
+_DAG_REL = ["A và B vào cổng AND", "kết quả AND và NOT C vào cổng OR"]
+_GRAPH_OBJECTS = ["đỉnh A", "đỉnh B", "đỉnh C", "đỉnh D", "đỉnh E"]
+_GRAPH_REL = ["A nối B", "A nối C", "B nối D", "C nối D", "D nối E"]
+_NET_OBJECTS = ["máy tính", "switch", "router", "ISP", "máy chủ"]
+_NET_REL = ["máy tính nối switch", "switch nối router", "router nối ISP", "ISP nối máy chủ"]
+
+
 # ══════════════ fixture per-target (14 AI-reachable) ══════════════
 TARGET_FIXTURES: dict[str, TargetFixture] = {
     "algorithm.find_max": TargetFixture(
@@ -427,7 +438,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
         },
         scripts={
             "direct": CaseScript(
-                _analysis(goal="Mạch (A AND B) OR (NOT C)", ownership="rule_derivable",
+                _analysis(objects=_DAG_OBJECTS, relations=_DAG_REL, goal="Mạch (A AND B) OR (NOT C)", ownership="rule_derivable",
                           entity_roles=["logical"]),
                 [_classify("logic.boolean_dag")],
                 [_booldag_cfg(
@@ -439,7 +450,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 )],
             ),
             "paraphrase": CaseScript(
-                _analysis(goal="Chuông reo khi đúng một công tắc bật (XOR)", ownership="rule_derivable",
+                _analysis(objects=_DAG_OBJECTS, relations=_DAG_REL, goal="Chuông reo khi đúng một công tắc bật (XOR)", ownership="rule_derivable",
                           entity_roles=["logical"]),
                 [_classify("logic.boolean_dag")],
                 [_booldag_cfg(
@@ -449,7 +460,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 )],
             ),
             "changed_input": CaseScript(
-                _analysis(goal="Bảng chân trị của A ∧ ¬B", ownership="rule_derivable",
+                _analysis(objects=_DAG_OBJECTS, relations=_DAG_REL, goal="Bảng chân trị của A ∧ ¬B", ownership="rule_derivable",
                           entity_roles=["logical"]),
                 [_classify("logic.boolean_dag")],
                 [_booldag_cfg(
@@ -460,7 +471,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 )],
             ),
             "boundary": CaseScript(
-                _analysis(goal="Mạch 4 đầu vào — bảng chân trị 16 hàng", ownership="rule_derivable",
+                _analysis(objects=_DAG_OBJECTS, relations=_DAG_REL, goal="Mạch 4 đầu vào — bảng chân trị 16 hàng", ownership="rule_derivable",
                           entity_roles=["logical"]),
                 [_classify("logic.boolean_dag")],
                 [_booldag_cfg(
@@ -545,7 +556,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
         },
         scripts={
             "direct": CaseScript(
-                _analysis(goal="Đường đi gói tin qua các chặng"),
+                _analysis(objects=_NET_OBJECTS, relations=_NET_REL, goal="Đường đi gói tin qua các chặng"),
                 [_classify("network.packet_routing")],
                 [_net_cfg(
                     [{"id": "pc", "type": "client"}, {"id": "sw", "type": "switch"},
@@ -555,7 +566,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 )],
             ),
             "paraphrase": CaseScript(
-                _analysis(goal="Dữ liệu đi qua từng thiết bị"),
+                _analysis(objects=_NET_OBJECTS, relations=_NET_REL, goal="Dữ liệu đi qua từng thiết bị"),
                 [_classify("network.packet_routing")],
                 [_net_cfg(
                     [{"id": "cl", "type": "client"}, {"id": "r1", "type": "router"},
@@ -564,7 +575,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 )],
             ),
             "changed_input": CaseScript(
-                _analysis(goal="Chọn đường khi có hai router song song"),
+                _analysis(objects=_NET_OBJECTS, relations=_NET_REL, goal="Chọn đường khi có hai router song song"),
                 [_classify("network.packet_routing")],
                 [_net_cfg(
                     [{"id": "cl", "type": "client"}, {"id": "r1", "type": "router"},
@@ -584,7 +595,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
         },
         scripts={
             "direct": CaseScript(
-                _analysis(goal="Duyệt đồ thị theo BFS từ A", process_roles=["temporal"]),
+                _analysis(objects=_GRAPH_OBJECTS, relations=_GRAPH_REL, goal="Duyệt đồ thị theo BFS từ A", process_roles=["temporal"]),
                 [_classify("network.graph_traversal")],
                 [_traverse_cfg(
                     ["A", "B", "C", "D", "E"],
@@ -593,7 +604,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 )],
             ),
             "paraphrase": CaseScript(
-                _analysis(goal="Duyệt đồ thị theo chiều sâu từ A", process_roles=["temporal"]),
+                _analysis(objects=_GRAPH_OBJECTS, relations=_GRAPH_REL, goal="Duyệt đồ thị theo chiều sâu từ A", process_roles=["temporal"]),
                 [_classify("network.graph_traversal")],
                 [_traverse_cfg(
                     ["A", "B", "C", "D", "E"],
@@ -602,7 +613,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 )],
             ),
             "changed_input": CaseScript(
-                _analysis(goal="Tìm đường A→E bằng BFS", process_roles=["temporal"]),
+                _analysis(objects=_GRAPH_OBJECTS, relations=_GRAPH_REL, goal="Tìm đường A→E bằng BFS", process_roles=["temporal"]),
                 [_classify("network.graph_traversal")],
                 [_traverse_cfg(
                     ["A", "B", "C", "D", "E"],
@@ -612,7 +623,7 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
             ),
             # unreachable = kết quả hợp lệ (không phải lỗi)
             "boundary": CaseScript(
-                _analysis(goal="Tìm Y từ A trong đồ thị rời", process_roles=["temporal"]),
+                _analysis(objects=_GRAPH_OBJECTS, relations=_GRAPH_REL, goal="Tìm Y từ A trong đồ thị rời", process_roles=["temporal"]),
                 [_classify("network.graph_traversal")],
                 [_traverse_cfg(
                     ["A", "B", "X", "Y"],

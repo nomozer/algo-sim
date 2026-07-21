@@ -787,7 +787,10 @@ def test_classify_chon_generic_va_simulate_sinh_spec(monkeypatch):
 
 def test_simulate_generic_retry_khi_spec_sai(monkeypatch):
     # M13: cổng NOT — đầu ra tính TỪ công tắc cho sẵn bằng rule — rule_derivable.
-    analysis = {"objects": [], "data": [], "relations": [], "processes": [], "constraints": [],
+    # §C2: đề NÊU công tắc + đèn nên analyze phải liệt kê (objects rỗng = đề
+    # không cho gì → cổng đủ-dữ-kiện chặn, đúng thiết kế).
+    analysis = {"objects": ["công tắc a", "đèn y"], "data": [], "relations": [],
+                "processes": [], "constraints": [],
                 "goal": "g", "input_description": "i", "output_description": "o", "notes": None,
                 "result_ownership": "rule_derivable"}
     bad_spec = {"title": "x", "objects": [{"id": "a", "type": "hologram"}]}  # type lạ → reject

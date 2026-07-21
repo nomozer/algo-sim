@@ -186,6 +186,9 @@ def test_cong_hai_semantic_compat_bao_gap():
 
 TRIANGLE_ANALYSIS = {
     **BASE_ANALYSIS,
+    # §C2: đề NÊU TÊN A, B, C nên analyze phải liệt kê (stub cũ để rỗng,
+    # trái chính hợp đồng analyze.md → cổng đủ-dữ-kiện chặn oan).
+    "objects": ["điểm A", "điểm B", "điểm C"],
     "goal": "Dựng tam giác ABC từng bước",
     "entity_roles": ["relational"],
     "process_roles": ["temporal"],
@@ -231,7 +234,8 @@ def test_precision_guard_tam_giac_tuong_minh_khong_gap(monkeypatch):
 def test_precision_guard_web_structural_khong_gap(monkeypatch):
     """Boundary #8: web structural (structural+textual) vẫn OK như M7.12."""
     # M13: hiển thị cấu trúc trang web CHO SẴN — cảnh dựng/hiển thị, không tính toán.
-    analysis = {**BASE_ANALYSIS, "visual_needs": ["structural", "textual"], "result_ownership": "provided"}
+    analysis = {**BASE_ANALYSIS, "objects": ["trang web", "tiêu đề"],
+                "visual_needs": ["structural", "textual"], "result_ownership": "provided"}
     spec = {
         "dsl_version": "1.0", "title": "Trang web",
         "objects": [

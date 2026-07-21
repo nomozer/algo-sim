@@ -79,7 +79,14 @@ def _analysis(
     # THẬT nêu nút + quan hệ; đề thiếu để trống). Mặc định giữ nguyên hành vi cũ.
     a: dict = {
         "objects": objects if objects is not None else ["đối tượng"],
-        "data": data if data is not None else [{"description": "dữ liệu của đề"}],
+        # M17-RC1 §C2: mặc định phải mang SỐ LIỆU CỤ THỂ vì đó là hợp đồng
+        # analyze thật ("data: số liệu CỤ THỂ đề cho … Đề không cho số liệu cụ
+        # thể → để mảng RỖNG" — analyze.md). Stub cũ chỉ có description nên
+        # trông như đề KHÔNG cho gì, làm cổng đủ-dữ-kiện chặn oan hàng loạt.
+        # Case "đề thiếu dữ kiện" phải truyền data=[] TƯỜNG MINH.
+        "data": data if data is not None else [
+            {"description": "dữ liệu của đề", "values": [12, 7, 25, 9, 18]}
+        ],
         "relations": relations if relations is not None else [],
         "processes": [],
         "constraints": [],
@@ -107,6 +114,12 @@ def _analysis(
 
 def _classify(sim_id: str | None, status: str = "ok", reason: str | None = None) -> dict:
     return {"status": status, "simulation_id": sim_id, "reason": reason}
+
+
+# M17-RC1 §C2 — đề định tuyến NÊU RÕ thiết bị + đường nối, nên analyze thật
+# phải liệt kê; stub cũ để trống làm cổng đủ-dữ-kiện chặn oan 3 case m16.
+_NET_OBJECTS = ["máy khách", "switch", "router", "ISP", "máy chủ"]
+_NET_REL = ["máy khách nối switch", "switch nối router", "router nối ISP", "ISP nối máy chủ"]
 
 
 # ── config builders (đúng schema từng validator concrete) ─────
@@ -408,7 +421,7 @@ SCRIPTS: dict[str, CaseScript] = {
     ),
     # graph_traversal — packet_routing
     "m16-routing-explicit": CaseScript(
-        _analysis(goal="Đường đi gói tin qua các chặng"),
+        _analysis(objects=_NET_OBJECTS, relations=_NET_REL, goal="Đường đi gói tin qua các chặng"),
         [_classify("network.packet_routing")],
         [_net_cfg(
             [{"id": "pc", "type": "client"}, {"id": "sw", "type": "switch"},
@@ -417,7 +430,7 @@ SCRIPTS: dict[str, CaseScript] = {
         )],
     ),
     "m16-routing-paraphrase": CaseScript(
-        _analysis(goal="Dữ liệu đi qua từng thiết bị"),
+        _analysis(objects=_NET_OBJECTS, relations=_NET_REL, goal="Dữ liệu đi qua từng thiết bị"),
         [_classify("network.packet_routing")],
         [_net_cfg(
             [{"id": "cl", "type": "client"}, {"id": "r1", "type": "router"},
@@ -502,7 +515,7 @@ SCRIPTS: dict[str, CaseScript] = {
         [_binary_cfg(300, 8), _binary_cfg(255, 8)],
     ),
     "m16-vb-routing-multipath": CaseScript(
-        _analysis(goal="Chọn đường khi có hai router song song"),
+        _analysis(objects=_NET_OBJECTS, relations=_NET_REL, goal="Chọn đường khi có hai router song song"),
         [_classify("network.packet_routing")],
         [_net_cfg(
             [{"id": "cl", "type": "client"}, {"id": "r1", "type": "router"},

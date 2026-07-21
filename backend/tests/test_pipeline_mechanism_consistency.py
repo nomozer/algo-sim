@@ -48,7 +48,7 @@ def _mock(analysis_json: str, classify_seq: list[str], simulate_seq: list[str] |
 
 def _analysis(proc=None, ownership="algorithmic", goal="Sắp xếp dãy"):
     a = {
-        "objects": ["dãy"], "data": [{"description": "dãy"}], "relations": [],
+        "objects": ["dãy"], "data": [{"description": "dãy", "values": [9, 4, 7, 2, 6]}], "relations": [],
         "processes": ["x"], "constraints": [], "goal": goal,
         "input_description": "in", "output_description": "out",
         "result_ownership": ownership,

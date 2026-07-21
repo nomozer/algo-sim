@@ -29,8 +29,10 @@ from app.evaluation.authenticity_fixtures import (
     _algo_cfg,
     _analysis,
     _baseconv_cfg,
+    _booldag_cfg,
     _classify,
     _sort_spec,
+    _traverse_cfg,
     _tree_cfg,
 )
 from app.simulation.descriptor import FamilyId
@@ -48,14 +50,18 @@ class CompletenessFixture:
     script: CaseScript
     expected_status: str
     expected_error_code: str | None
-    requested_operations: tuple[str, ...]  # mô tả người đọc: đề hỏi mấy thao tác
+    requested_operations: tuple[str, ...]  # đề hỏi mấy VIỆC (operation id)
+    expected_route: str | None = None  # bắt buộc khi expected_status == "ok"
     note: str = ""
 
 
-def _an(goal: str, requested: list[str], **kw) -> dict:
-    """Analysis + `requested_mechanisms` (trường §D). Không sửa `_analysis`
-    dùng chung — chỉ cộng thêm trường ở đây."""
-    return {**_analysis(goal=goal, **kw), "requested_mechanisms": requested}
+def _an(goal: str, requested: list[str], operations: list[str] | None = None, **kw) -> dict:
+    """Analysis + `requested_mechanisms` (§D) + `requested_operations` (§C1).
+    Không sửa `_analysis` dùng chung — chỉ cộng thêm trường ở đây."""
+    a = {**_analysis(goal=goal, **kw), "requested_mechanisms": requested}
+    if operations is not None:
+        a["requested_operations"] = operations
+    return a
 
 
 # (id, left, right) — đúng shape `_tree_cfg` của fixture W2A.
@@ -73,22 +79,113 @@ _TREE_REL = [
 
 COMPLETENESS_FIXTURES: tuple[CompletenessFixture, ...] = (
     # ── single_pass_scan: max + min (user chỉ định) ──────────────────
-    # `requested_mechanisms` RỖNG vì single_pass_scan.* KHÔNG nằm trong
-    # analyze_exposed_values() — LLM không có giá trị enum nào để khai. Đây là
-    # HIỆN THỰC của bề mặt analyze, không phải fixture cẩu thả.
+    # §C1: `requested_mechanisms` VẪN rỗng (single_pass_scan.* không nằm trong
+    # analyze_exposed_values()) — nhưng `requested_operations` nói được HAI mục
+    # tiêu dù chúng dùng CHUNG mechanism `track_extreme`. Đúng chỗ §D thủng.
     CompletenessFixture(
         case_id="rc1c-scan-max-and-min",
         family_id=FamilyId.SINGLE_PASS_SCAN.value,
         prompt="Cho dãy số 4, 7, 2, 9, 5. Tìm cả giá trị lớn nhất và nhỏ nhất của dãy.",
         script=CaseScript(
-            _an("Tìm cả giá trị lớn nhất và nhỏ nhất", []),
+            _an("Tìm cả giá trị lớn nhất và nhỏ nhất", [],
+                ["single_pass_scan:find_max", "single_pass_scan:find_min"]),
             [_classify("algorithm.find_max")],
             [_algo_cfg([4, 7, 2, 9, 5], summary="Tìm giá trị lớn nhất")],
         ),
         expected_status="unsupported",
         expected_error_code=ErrorCode.MULTIPLE_OPERATIONS_NOT_SUPPORTED.value,
-        requested_operations=("tìm max", "tìm min"),
+        requested_operations=("single_pass_scan:find_max", "single_pass_scan:find_min"),
         note="Một lượt quét dựng được MỘT accumulator; đề hỏi hai.",
+    ),
+    # ── graph_traversal: BFS + DFS ──────────────────────────────────
+    CompletenessFixture(
+        case_id="rc1c-graph-bfs-and-dfs",
+        family_id=FamilyId.GRAPH_TRAVERSAL.value,
+        prompt=(
+            "Cho đồ thị các đỉnh A, B, C, D. Hãy duyệt bằng cả chiều rộng (BFS) "
+            "lẫn chiều sâu (DFS) từ đỉnh A để so sánh."
+        ),
+        script=CaseScript(
+            _an("Duyệt đồ thị bằng cả BFS lẫn DFS", [],
+                ["graph_traversal:bfs", "graph_traversal:dfs"],
+                objects=["đỉnh A", "đỉnh B", "đỉnh C", "đỉnh D"],
+                relations=["A nối B", "A nối C", "B nối D"]),
+            [_classify("network.graph_traversal")],
+            [_traverse_cfg(
+                ["A", "B", "C", "D"],
+                [["A", "B"], ["A", "C"], ["B", "D"]], "A", "bfs",
+            )],
+        ),
+        expected_status="unsupported",
+        expected_error_code=ErrorCode.MULTIPLE_OPERATIONS_NOT_SUPPORTED.value,
+        requested_operations=("graph_traversal:bfs", "graph_traversal:dfs"),
+        note="BFS và DFS là hai lần duyệt — chưa có chế độ so sánh song song.",
+    ),
+    # ── boolean_composition: family MULTIPLE — nhiều việc là HỢP LỆ ─
+    # Đối chứng quan trọng: cổng cardinality KHÔNG được chặn family khai
+    # `multiple`. Một mạch chứa nhiều cổng là chuyện bình thường.
+    CompletenessFixture(
+        case_id="rc1c-boolean-multi-gate-allowed",
+        family_id=FamilyId.BOOLEAN_COMPOSITION.value,
+        prompt=(
+            "Mạch logic: đèn sáng khi (A VÀ B) HOẶC (KHÔNG C). Mô phỏng mạch và "
+            "lập bảng chân trị."
+        ),
+        script=CaseScript(
+            _an("Mô phỏng mạch nhiều cổng", [],
+                ["boolean_composition:boolean_dag"],
+                objects=["đầu vào A", "đầu vào B", "đầu vào C", "cổng AND", "cổng OR"],
+                relations=["A và B vào cổng AND", "AND và NOT C vào cổng OR"]),
+            [_classify("logic.boolean_dag")],
+            [_booldag_cfg(
+                [{"id": "A", "value": 1}, {"id": "B", "value": 0}, {"id": "C", "value": 1}],
+                [{"id": "g1", "op": "AND", "inputs": ["A", "B"]},
+                 {"id": "g2", "op": "NOT", "inputs": ["C"]},
+                 {"id": "g3", "op": "OR", "inputs": ["g1", "g2"]}],
+                "g3",
+            )],
+        ),
+        expected_status="ok",
+        expected_error_code=None,
+        requested_operations=("boolean_composition:boolean_dag",),
+        expected_route="logic.boolean_dag",
+        note="Family MULTIPLE: nhiều cổng trong một cảnh KHÔNG phải xung đột.",
+    ),
+    # ── ĐỐI CHỨNG chống chặn oan: đề chỉ hỏi MỘT việc ───────────────
+    CompletenessFixture(
+        case_id="rc1c-scan-max-only",
+        family_id=FamilyId.SINGLE_PASS_SCAN.value,
+        prompt="Cho dãy số 4, 7, 2, 9, 5. Tìm giá trị lớn nhất của dãy.",
+        script=CaseScript(
+            _an("Tìm giá trị lớn nhất", [], ["single_pass_scan:find_max"]),
+            [_classify("algorithm.find_max")],
+            [_algo_cfg([4, 7, 2, 9, 5], summary="Tìm giá trị lớn nhất")],
+        ),
+        expected_status="ok",
+        expected_error_code=None,
+        requested_operations=("single_pass_scan:find_max",),
+        expected_route="algorithm.find_max",
+        note="MỘT operation → PHẢI chạy bình thường (chống chặn oan).",
+    ),
+    CompletenessFixture(
+        case_id="rc1c-tree-one-variant-only",
+        family_id=FamilyId.TREE_TRAVERSAL.value,
+        prompt=(
+            "Cho cây nhị phân gốc A, con trái B, con phải C, B có con trái D. "
+            "Hãy duyệt cây theo thứ tự giữa."
+        ),
+        script=CaseScript(
+            _an("Duyệt cây theo thứ tự giữa", ["tree_traversal.inorder"],
+                ["tree_traversal:inorder"],
+                objects=["nút A", "nút B", "nút C", "nút D"], relations=_TREE_REL),
+            [_classify("tree.traversal")],
+            [_tree_cfg("inorder", "A", _TREE_NODES)],
+        ),
+        expected_status="ok",
+        expected_error_code=None,
+        requested_operations=("tree_traversal:inorder",),
+        expected_route="tree.traversal",
+        note="MỘT variant → PHẢI chạy bình thường (chống chặn oan).",
     ),
     # ── tree_traversal: 4 kiểu duyệt (đề gốc ngoài đời) ─────────────
     CompletenessFixture(
@@ -150,6 +247,90 @@ COMPLETENESS_FIXTURES: tuple[CompletenessFixture, ...] = (
         requested_operations=("10→2", "10→16"),
     ),
 )
+
+# ══════════════ §C2 — fixture THIẾU DỮ KIỆN, SINH TỪ REGISTRY ══════════════
+@dataclass(frozen=True)
+class InsufficientFixture:
+    """Case "đề chưa cho dữ kiện bắt buộc" cho MỘT target APPLICABLE.
+
+    SINH TỪ HỢP ĐỒNG, không viết tay danh sách target: thêm target mới có
+    `required_grounded_inputs` ⇒ case tự xuất hiện; quên khai hợp đồng ⇒ target
+    rơi vào nhánh "chưa khai" và audit báo, không lặng lẽ bỏ qua.
+
+    Oracle KHÔNG phải executor production: kỳ vọng đọc thẳng từ hợp đồng
+    (`insufficiency_error_code`), và bằng chứng thiếu là các `InputKind` mà
+    normalizer không tìm thấy.
+    """
+
+    case_id: str
+    target_id: str
+    family_id: str
+    prompt: str
+    script: CaseScript
+    missing_inputs: tuple[str, ...]
+    expected_error_code: str
+
+
+def _empty_evidence_analysis(goal: str) -> dict:
+    """Analyze của đề KHÔNG cho dữ kiện: đúng hợp đồng analyze.md — "đề không
+    cho số liệu cụ thể → để mảng RỖNG". Không object/quan hệ/số nào."""
+    return {
+        **_analysis(goal=goal, objects=[], data=[], relations=[]),
+        "requested_operations": [],
+        "notes": "Đề chưa cung cấp dữ kiện cụ thể.",
+    }
+
+
+def _selector_token_for(sim_id: str) -> str | None:
+    from app.simulation.families import FAMILY_SELECTORS
+
+    for sel in FAMILY_SELECTORS.values():
+        if any(v.concrete_simulation_id == sim_id for v in sel.variants):
+            return sel.selector_token
+    return None
+
+
+def _build_insufficient_fixtures() -> tuple[InsufficientFixture, ...]:
+    from app.simulation.catalog import CATALOG
+    from app.simulation.descriptor import ReachabilityLevel
+    from app.simulation.input_requirements import APPLICABLE, INPUT_REQUIREMENTS, applicability_of
+    from app.simulation.operations import operation_labels, operations_of_target
+
+    out: list[InsufficientFixture] = []
+    for sid in sorted(INPUT_REQUIREMENTS):
+        spec = CATALOG.get(sid)
+        if spec is None or ReachabilityLevel.AI_REACHABLE_PUBLIC not in spec.reachability:
+            continue
+        status, _ = applicability_of(sid)
+        if status != APPLICABLE:
+            continue
+        req = INPUT_REQUIREMENTS[sid]
+        ops = operations_of_target(sid)
+        label = (operation_labels(ops) or ["mô phỏng bài này"])[0]
+        fam = sorted({m.family_id.value for m in spec.family_memberships})[0]
+        # Target nấp sau SELECTOR TOKEN (sorting) không phải là lựa chọn hợp lệ
+        # của classify — phải route qua token, đúng như production.
+        route = _selector_token_for(sid) or sid
+        out.append(InsufficientFixture(
+            case_id=f"rc1c-insufficient-{sid.replace('.', '-').replace('_', '-')}",
+            target_id=sid,
+            family_id=fam,
+            # Đề THẬT của học sinh khi quên dán dữ liệu: nêu việc cần làm,
+            # không nêu dữ kiện nào.
+            prompt=f"Hãy {label} cho bài trên lớp của em.",
+            script=CaseScript(
+                _empty_evidence_analysis(f"Hãy {label}"),
+                [_classify(route)],  # classify VẪN route đúng — cổng mới phải chặn
+                [],                 # KHÔNG kịch bản simulate: tới simulate là sai
+            ),
+            missing_inputs=tuple(k.value for k in req.required_grounded_inputs),
+            expected_error_code=req.insufficiency_error_code.value,
+        ))
+    return tuple(out)
+
+
+INSUFFICIENT_FIXTURES: tuple[InsufficientFixture, ...] = _build_insufficient_fixtures()
+
 
 COMPLETENESS_BY_FAMILY: dict[str, tuple[CompletenessFixture, ...]] = {}
 for _fx in COMPLETENESS_FIXTURES:
