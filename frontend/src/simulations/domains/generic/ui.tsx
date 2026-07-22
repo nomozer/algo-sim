@@ -92,6 +92,11 @@ function charsPerLine(width: number, fontSize: number): number {
 const FLOW_MARGIN = 16;
 const FLOW_GAP = 10;
 
+// M17-RC1 §E — nhãn dài hơn ngần này của hai đối tượng kề nhau sẽ đè lên nhau
+// khi chúng nằm cùng hàng ngang; so le đường cơ sở để vẫn đọc được cả hai.
+const LABEL_STAGGER_MIN_LEN = 8;
+const LABEL_STAGGER_DY = 16;
+
 export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props) {
   const values = valuesOf(spec, state.base);
   const frame = currentFrame(state);
@@ -356,6 +361,8 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     const popCls = current ? "gen-pop" : undefined;
     // M13 Task 11: nhãn CHÍNH không bao giờ là id kỹ thuật thô (xem displayLabel).
     const dl = displayLabel(spec, o.id);
+    // Thứ tự khai báo — ổn định, dùng để so le nhãn dài (§E).
+    const idx = spec.objects.findIndex((x) => x.id === o.id);
 
     switch (o.type) {
       case "switch": {
@@ -433,7 +440,14 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         const flipX = p.x + 11 > vb.x + vb.w - 46;
         const flipY = p.y - 9 < vb.y + 16;
         const labelX = flipX ? p.x - 11 : p.x + 11;
-        const labelY = flipY ? p.y + 24 : p.y - 9;
+        // M17-RC1 §E — nhãn DÀI của các đối tượng nằm cùng một hàng ngang sẽ
+        // đè lên nhau thành khối chữ không đọc được (audit trình duyệt thật
+        // bắt được ở cảnh "Sơ đồ trạm quan trắc"). So le nhãn dài theo thứ tự
+        // để hai nhãn kề nhau không dùng chung một đường cơ sở. Chỉ đổi TRÌNH
+        // BÀY — vị trí ngữ nghĩa (state.pos) không đụng tới.
+        const longLabel = String(dl ?? "").length > LABEL_STAGGER_MIN_LEN;
+        const stagger = longLabel && idx % 2 === 1 ? LABEL_STAGGER_DY : 0;
+        const labelY = (flipY ? p.y + 24 : p.y - 9) + stagger;
         const labelAnchor = flipX ? "end" : "start";
         if (isPoint(o)) {
           // ĐIỂM (hình học): marker tròn rõ + nhãn lệch khỏi marker

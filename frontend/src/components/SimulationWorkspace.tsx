@@ -113,11 +113,25 @@ export function SimulationWorkspace() {
   const modes = availableVisualModes(mod);
   const mode = effectiveVisualMode(mod, visualMode);
   const Stage = rendererFor(mod, mode) as ComponentType<WorkspaceProps>;
+  // M17-RC1 §E — nhãn miền hiển thị cho HỌC SINH, không phải id kỹ thuật.
+  // "GENERIC" vô nghĩa với người học (audit trình duyệt bắt được); các miền
+  // khác đổi sang tiếng Việt cho nhất quán. Không đổi `mod.domain`.
+  function domainBadge(domain: string): string {
+    const VI: Record<string, string> = {
+      generic: "MÔ PHỎNG THEO MÔ TẢ",
+      algorithm: "THUẬT TOÁN",
+      network: "MẠNG",
+      tree: "CÂY",
+      binary: "HỆ CƠ SỐ",
+      logic: "LOGIC",
+    };
+    return VI[domain] ?? domain.toUpperCase();
+  }
 
   return (
     <section className="card card-elevated workspace-card">
       <div className="workspace-header">
-        <span className="eyebrow">{mod.domain.toUpperCase()}</span>
+        <span className="eyebrow">{domainBadge(mod.domain)}</span>
         <h2 className="workspace-title">{active.envelope.title}</h2>
         <span className="hint">
           {mod.title} · {MODE_LABEL[mod.interactionMode]} ·{" "}

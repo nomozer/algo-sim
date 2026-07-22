@@ -1,0 +1,333 @@
+{
+  "schema_version": "1",
+  "run_label": "rc1-e-visual-stress",
+  "generated_at": "2026-07-22T04:20:49.267869+00:00",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "metrics": {
+    "renderer_count": 6,
+    "renderer_reviewed": 6,
+    "visual_fixture_count": 25,
+    "screenshot_count": 134,
+    "desktop_count": 67,
+    "narrow_viewport_count": 67,
+    "REAL_VISUAL": 0,
+    "PARTIAL_VISUAL": 6,
+    "BROKEN_VISUAL": 0,
+    "VISUAL_COVERAGE_GAP": 0,
+    "issues_found": 3,
+    "issues_fixed": 2,
+    "blocking_issues_remaining": 1
+  },
+  "renderers": [
+    {
+      "renderer_id": "algorithm",
+      "families": [
+        "comparison_sort",
+        "interval_elimination",
+        "single_pass_scan"
+      ],
+      "targets_in_registry": [
+        "algorithm.binary_search",
+        "algorithm.bubble_sort",
+        "algorithm.count_if",
+        "algorithm.find_max",
+        "algorithm.find_min",
+        "algorithm.insertion_sort",
+        "algorithm.linear_search",
+        "algorithm.scan",
+        "algorithm.selection_sort",
+        "algorithm.sum_if"
+      ],
+      "targets_covered_by_fixture": [
+        "algorithm.binary_search",
+        "algorithm.bubble_sort",
+        "algorithm.find_max"
+      ],
+      "canonical_fixtures": [
+        "algorithm-find-max"
+      ],
+      "boundary_fixtures": [
+        "algorithm-binary-search"
+      ],
+      "stress_fixtures": [
+        "algorithm-negative-decimal",
+        "algorithm-sort-labels"
+      ],
+      "refusal_fixtures": [
+        "refusal-sequence-insufficient"
+      ],
+      "viewport_coverage": [
+        "desktop",
+        "narrow"
+      ],
+      "screenshot_count": 26,
+      "review_status": "PARTIAL_VISUAL",
+      "criteria": {
+        "STRUCTURE_CLEAR": true,
+        "STATE_CLEAR": true,
+        "MECHANISM_CLEAR": true,
+        "PANEL_CORRECT": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": false,
+        "PROGRESSIVE_REVEAL_PASS": true
+      },
+      "reviewer_note": "Cột mảng, con trỏ bước, mã giả và tường thuật đồng bộ; số âm/thập phân và nhãn tên tiếng Việt hiển thị đúng; binary search thu hẹp khoảng rõ. HẠ ĐIỂM vì VIS-003."
+    },
+    {
+      "renderer_id": "binary",
+      "families": [
+        "positional_representation"
+      ],
+      "targets_in_registry": [
+        "binary.base_conversion",
+        "binary.decimal_to_binary"
+      ],
+      "targets_covered_by_fixture": [
+        "binary.base_conversion",
+        "binary.decimal_to_binary"
+      ],
+      "canonical_fixtures": [
+        "binary-decimal-to-binary"
+      ],
+      "boundary_fixtures": [],
+      "stress_fixtures": [
+        "binary-base-conversion-hex"
+      ],
+      "refusal_fixtures": [],
+      "viewport_coverage": [
+        "desktop",
+        "narrow"
+      ],
+      "screenshot_count": 8,
+      "review_status": "PARTIAL_VISUAL",
+      "criteria": {
+        "STRUCTURE_CLEAR": true,
+        "STATE_CLEAR": true,
+        "MECHANISM_CLEAR": true,
+        "PANEL_CORRECT": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": false,
+        "PROGRESSIVE_REVEAL_PASS": true
+      },
+      "reviewer_note": "Hàng trọng số/bit và bảng chia-lấy-dư rõ. HẠ ĐIỂM vì VIS-003."
+    },
+    {
+      "renderer_id": "generic",
+      "families": [
+        "boolean_composition",
+        "structural_progressive_representation"
+      ],
+      "targets_in_registry": [
+        "generic.rule_scene"
+      ],
+      "targets_covered_by_fixture": [
+        "generic.rule_scene"
+      ],
+      "canonical_fixtures": [
+        "generic-reveal-scene"
+      ],
+      "boundary_fixtures": [],
+      "stress_fixtures": [
+        "generic-vietnamese-labels"
+      ],
+      "refusal_fixtures": [],
+      "viewport_coverage": [
+        "desktop",
+        "narrow"
+      ],
+      "screenshot_count": 12,
+      "review_status": "PARTIAL_VISUAL",
+      "criteria": {
+        "STRUCTURE_CLEAR": true,
+        "STATE_CLEAR": true,
+        "MECHANISM_CLEAR": true,
+        "PANEL_CORRECT": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": false,
+        "RESPONSIVE_PASS": false,
+        "PROGRESSIVE_REVEAL_PASS": true
+      },
+      "reviewer_note": "Sau hai bản sửa: nhãn dài so le nên không còn dồn thành khối chữ không đọc được; badge kỹ thuật GENERIC đã thay bằng 'MÔ PHỎNG THEO MÔ TẢ'. VẪN CHẬT khi nhiều nhãn rất dài nằm cùng hàng ngang — đọc được nhưng sát nhau; không sửa thêm được nếu không đụng `state.pos` (§10 cấm sửa engine state). Engine authenticity GIỮ NGUYÊN PARTIAL — audit thị giác KHÔNG nâng hạng; tiêu đề không giả nhận diện thuật toán, phụ đề nói rõ 'Mô phỏng tổng quát (AI tự dựng)'."
+    },
+    {
+      "renderer_id": "logic",
+      "families": [
+        "boolean_composition"
+      ],
+      "targets_in_registry": [
+        "logic.and_gate",
+        "logic.boolean_dag"
+      ],
+      "targets_covered_by_fixture": [
+        "logic.and_gate",
+        "logic.boolean_dag"
+      ],
+      "canonical_fixtures": [
+        "logic-and-gate"
+      ],
+      "boundary_fixtures": [],
+      "stress_fixtures": [
+        "logic-boolean-dag"
+      ],
+      "refusal_fixtures": [],
+      "viewport_coverage": [
+        "desktop",
+        "narrow"
+      ],
+      "screenshot_count": 8,
+      "review_status": "PARTIAL_VISUAL",
+      "criteria": {
+        "STRUCTURE_CLEAR": true,
+        "STATE_CLEAR": true,
+        "MECHANISM_CLEAR": true,
+        "PANEL_CORRECT": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": false,
+        "PROGRESSIVE_REVEAL_PASS": true
+      },
+      "reviewer_note": "Cổng, dây nối và bảng chân trị rõ; and_gate là module khám phá (không timeline) nên chỉ có ảnh initial — đúng hợp đồng. HẠ ĐIỂM vì VIS-003."
+    },
+    {
+      "renderer_id": "network",
+      "families": [
+        "graph_traversal",
+        "layered_pdu_transform"
+      ],
+      "targets_in_registry": [
+        "network.graph_traversal",
+        "network.packet_routing",
+        "network.protocol_encapsulation"
+      ],
+      "targets_covered_by_fixture": [
+        "network.graph_traversal",
+        "network.packet_routing",
+        "network.protocol_encapsulation"
+      ],
+      "canonical_fixtures": [
+        "encap-canonical",
+        "graph-bfs-branching",
+        "graph-dfs-same-topology",
+        "routing-canonical"
+      ],
+      "boundary_fixtures": [
+        "graph-cycle",
+        "graph-unreachable"
+      ],
+      "stress_fixtures": [
+        "graph-directed-dense",
+        "graph-vietnamese-long-labels"
+      ],
+      "refusal_fixtures": [],
+      "viewport_coverage": [
+        "desktop",
+        "narrow"
+      ],
+      "screenshot_count": 48,
+      "review_status": "PARTIAL_VISUAL",
+      "criteria": {
+        "STRUCTURE_CLEAR": true,
+        "STATE_CLEAR": true,
+        "MECHANISM_CLEAR": true,
+        "PANEL_CORRECT": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": false,
+        "PROGRESSIVE_REVEAL_PASS": true
+      },
+      "reviewer_note": "Sau bản sửa nhãn: mọi cạnh hiện rõ (không tái phát phantom token), nhãn dài xuống dưới nút nên không còn bị nút cắt ngang, hàng đợi/ngăn xếp đúng biến thể, thứ tự thăm hiện dần, đích không tới được không bị dựng đường giả. HẠ ĐIỂM vì lỗi layout DÙNG CHUNG ở viewport hẹp (xem VIS-003), không phải lỗi của renderer này."
+    },
+    {
+      "renderer_id": "tree",
+      "families": [
+        "tree_traversal"
+      ],
+      "targets_in_registry": [
+        "tree.traversal"
+      ],
+      "targets_covered_by_fixture": [
+        "tree.traversal"
+      ],
+      "canonical_fixtures": [
+        "tree-balanced-short",
+        "tree-levelorder"
+      ],
+      "boundary_fixtures": [
+        "tree-single-node",
+        "tree-skewed-deep"
+      ],
+      "stress_fixtures": [
+        "tree-vietnamese-11-nodes"
+      ],
+      "refusal_fixtures": [
+        "refusal-tree-insufficient"
+      ],
+      "viewport_coverage": [
+        "desktop",
+        "narrow"
+      ],
+      "screenshot_count": 32,
+      "review_status": "PARTIAL_VISUAL",
+      "criteria": {
+        "STRUCTURE_CLEAR": true,
+        "STATE_CLEAR": true,
+        "MECHANISM_CLEAR": true,
+        "PANEL_CORRECT": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": false,
+        "PROGRESSIVE_REVEAL_PASS": true
+      },
+      "reviewer_note": "Regression bản sửa nhãn dài VR1 GIỮ NGUYÊN: cạnh trái/phải rõ, nhãn 11 nút tiếng Việt không chồng nút, canvas co giãn, ngăn xếp/hàng đợi đúng biến thể, thứ tự duyệt hiện dần. Cây một nút và cây lệch sâu đều đúng. HẠ ĐIỂM vì VIS-003 (layout hẹp dùng chung)."
+    }
+  ],
+  "failure_ledger": [
+    {
+      "id": "VIS-001",
+      "renderer": "network",
+      "severity": "BROKEN_VISUAL",
+      "found": "Nhãn tiếng Việt dài ĐÈ LÊN nút — chữ bị chính hình tròn cắt ngang.",
+      "evidence": "5 chồng lấn node-label đo trong Chrome, cả desktop lẫn hẹp; ảnh before: visual/before/graph-vietnamese-long-labels-*.png",
+      "root_cause": "`<text>` luôn căn giữa TRONG nút r=16 nên nhãn dài tràn hai bên.",
+      "fix": "Nhãn dài (>3 ký tự) vẽ DƯỚI nút, giữ id trong nút — cùng quy ước renderer cây; vòng bố cục co lại và canvas cao thêm để đủ chỗ.",
+      "scope": "traverse-module.tsx (chỉ trình bày; KHÔNG đụng engine state)",
+      "status": "FIXED"
+    },
+    {
+      "id": "VIS-002",
+      "renderer": "generic",
+      "severity": "BROKEN_VISUAL",
+      "found": "Nhãn dài của các đối tượng cùng hàng ngang dồn thành khối chữ không đọc được; badge hiển thị 'GENERIC' cho học sinh.",
+      "evidence": "1 chồng lấn label-label + thuật ngữ GENERIC ở 12/12 capture generic; ảnh before: visual/before/… (chụp trước bản sửa).",
+      "root_cause": "Mọi nhãn dùng chung một đường cơ sở; badge lấy thẳng `mod.domain.toUpperCase()`.",
+      "fix": "So le đường cơ sở cho nhãn dài (>8 ký tự) theo thứ tự khai báo; badge ánh xạ sang tiếng Việt ('MÔ PHỎNG THEO MÔ TẢ').",
+      "scope": "generic/ui.tsx + SimulationWorkspace.tsx (trình bày; engine state.pos KHÔNG đụng)",
+      "status": "FIXED"
+    },
+    {
+      "id": "VIS-003",
+      "renderer": "*(dùng chung)*",
+      "severity": "BROKEN_VISUAL",
+      "found": "Ở viewport hẹp (768px), panel bên phải KHÔNG xuống dòng mà giữ nguyên cột — workspace bị cắt: tiêu đề, canvas, panel trạng thái, tường thuật và nút 'Đặt lại' đều mất phần bên phải.",
+      "evidence": "visual/tree/tree-vietnamese-11-nodes-mid-narrow.png · visual/network/graph-vietnamese-long-labels-mid-narrow.png (và mọi renderer ở viewport hẹp).",
+      "root_cause": "Layout hai cột của app shell chưa có điểm ngắt responsive; đây là CSS DÙNG CHUNG, không thuộc renderer nào.",
+      "fix": null,
+      "scope": "app shell CSS — ảnh hưởng CẢ 6 renderer",
+      "status": "OPEN_BLOCKING",
+      "why_not_fixed": "Đúng điều kiện dừng §13: 'shared layout fix cần thay đổi kiến trúc lớn'. Sửa điểm ngắt responsive của app shell chạm mọi màn hình (kể cả Home/Library/History ngoài phạm vi §E) và theo §10 phải chụp lại TOÀN BỘ renderer. Báo trước, xin quyết định phạm vi."
+    }
+  ]
+}

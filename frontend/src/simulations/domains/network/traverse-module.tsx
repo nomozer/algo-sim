@@ -248,11 +248,24 @@ type Props = WorkspaceProps<TraverseConfig, TraverseState>;
 
 const W = 420;
 const H = 260;
+const NODE_R = 16;
 
-function circleLayout(nodes: TraverseNode[]): Map<string, { x: number; y: number }> {
+// M17-RC1 §E — nhãn DÀI hơn ngần này không vẽ lọt trong hình tròn r=16: chữ
+// tràn ra hai bên và bị chính nút cắt ngang (audit trình duyệt thật đo được 5
+// chồng lấn node-label ở fixture nhãn tiếng Việt). Nhãn dài vẽ BÊN DƯỚI nút,
+// giữ id trong nút để không mất danh tính — cùng quy ước với renderer cây.
+const INLINE_LABEL_MAX = 3;
+// Chừa chỗ cho nhãn dưới nút: bán kính vòng bố cục co lại, và canvas cao thêm.
+const LABEL_DY = NODE_R + 14;
+
+function hasLongLabel(nodes: TraverseNode[]): boolean {
+  return nodes.some((n) => (n.label ?? n.id).length > INLINE_LABEL_MAX);
+}
+
+function circleLayout(nodes: TraverseNode[], long = false): Map<string, { x: number; y: number }> {
   const cx = W / 2;
   const cy = H / 2;
-  const r = Math.min(W, H) / 2 - 34;
+  const r = Math.min(W, H) / 2 - (long ? 48 : 34);
   return new Map(
     nodes.map((n, i) => {
       const angle = (2 * Math.PI * i) / nodes.length - Math.PI / 2;
@@ -264,7 +277,8 @@ function circleLayout(nodes: TraverseNode[]): Map<string, { x: number; y: number
 export function TraverseWorkspace({ state }: Props) {
   const at = clampCursor(state, state.cursor);
   const step = state.steps[at];
-  const pos = circleLayout(state.config.nodes);
+  const long = hasLongLabel(state.config.nodes);
+  const pos = circleLayout(state.config.nodes, long);
   const visited = new Set(step.visitedSoFar);
   const current = step.kind === "visit" ? step.current : null;
   const last = at === state.steps.length - 1;
@@ -278,7 +292,8 @@ export function TraverseWorkspace({ state }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage">
-        <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", maxWidth: W }} role="img"
+        <svg viewBox={`0 0 ${W} ${long ? H + 28 : H}`}
+             style={{ width: "100%", maxWidth: long ? W + 120 : W }} role="img"
              aria-label="Đồ thị duyệt">
           {state.config.edges.map(([a, b], i) => {
             const pa = pos.get(a)!;
@@ -301,13 +316,21 @@ export function TraverseWorkspace({ state }: Props) {
             return (
               <g key={n.id}>
                 <circle
-                  cx={p.x} cy={p.y} r={16}
+                  cx={p.x} cy={p.y} r={NODE_R}
                   fill={isCur ? "var(--accent-orange)" : isVisited ? "var(--accent-green)" : inFrontier ? "var(--primary)" : "var(--surface)"}
                   stroke="var(--ink-faint)"
                 />
+                {/* Nhãn ngắn nằm TRONG nút; nhãn dài xuống DƯỚI nút để chữ
+                    không bị chính nút cắt ngang (M17-RC1 §E). */}
                 <text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={11}>
-                  {n.label ?? n.id}
+                  {long ? n.id : (n.label ?? n.id)}
                 </text>
+                {long && (n.label ?? n.id) !== n.id && (
+                  <text x={p.x} y={p.y + LABEL_DY} textAnchor="middle" fontSize={10}
+                        fill="var(--ink-muted)">
+                    {n.label}
+                  </text>
+                )}
               </g>
             );
           })}
