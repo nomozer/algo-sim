@@ -1,6 +1,6 @@
 {
   "source": {
-    "git_sha": "98c38d77af655895debf71534929dd111502616f",
+    "git_sha": "b977a94923ebb1b275d16d8b0a6beb6d2249c6a0",
     "build_timestamp": "unknown",
     "cache_version": "17",
     "family_count": 9,
@@ -94,8 +94,8 @@
     ]
   },
   "runtime": {
-    "git_sha": "3b373607bd62623fd47a4a91cc4e3bbe6b0f52e1",
-    "build_timestamp": "2026-07-22T03:56:31Z",
+    "git_sha": "b977a94923ebb1b275d16d8b0a6beb6d2249c6a0",
+    "build_timestamp": "2026-07-22T04:23:30Z",
     "cache_version": "17",
     "family_count": 9,
     "target_count": 19,
@@ -187,14 +187,6 @@
       "algorithm.comparison_sort"
     ]
   },
-  "findings": [
-    {
-      "category": "RUNTIME_STALE_IMAGE",
-      "detail": "Image được build từ commit khác với source hiện tại.",
-      "expected": "98c38d77af655895debf71534929dd111502616f",
-      "actual": "3b373607bd62623fd47a4a91cc4e3bbe6b0f52e1",
-      "fix": "docker compose up -d --build --force-recreate backend\n      (kèm danh tính build:  GIT_SHA=$(git rev-parse HEAD) BUILD_TIME=$(date -u +%FT%TZ) docker compose up -d --build --force-recreate backend)"
-    }
-  ],
-  "ok": false
+  "findings": [],
+  "ok": true
 }
