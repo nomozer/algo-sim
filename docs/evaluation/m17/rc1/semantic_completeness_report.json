@@ -239,7 +239,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "tree_traversal.inorder"
@@ -277,7 +280,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "tree_traversal.inorder",
@@ -326,7 +332,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "comparison_sort.adjacent_compare_swap"
@@ -365,7 +374,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "comparison_sort.adjacent_compare_swap",
@@ -418,7 +430,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "graph_traversal.breadth_first"
@@ -455,7 +470,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "graph_traversal.breadth_first",
@@ -500,7 +518,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "positional_representation.binary_positional_weights"
@@ -536,7 +557,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "positional_representation.binary_positional_weights",
@@ -577,7 +601,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "interval_elimination.halve_sorted_interval"
@@ -612,7 +639,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "single_pass_scan.accumulate_conditional"
@@ -651,7 +681,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "single_pass_scan.accumulate_conditional",
@@ -704,7 +737,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "boolean_composition.bounded_gate_dag"
@@ -741,7 +777,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "boolean_composition.bounded_gate_dag",
@@ -784,7 +823,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "layered_pdu_transform.encapsulate_decapsulate_4layer"
@@ -819,7 +861,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "structural_progressive_representation.move_along_path"
@@ -855,7 +900,10 @@
       ],
       "requested_operations": [],
       "normalized_requested_operations": [],
+      "requested_semantic_requirements": [],
       "represented_operations": [],
+      "represented_semantic_operations": [],
+      "dropped_semantic_requirements": [],
       "dropped_operations": [],
       "normalized_requested_requirements": [
         "structural_progressive_representation.move_along_path",

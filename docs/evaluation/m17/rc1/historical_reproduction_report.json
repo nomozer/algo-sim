@@ -8,7 +8,7 @@
     "missing_historical_generator",
     "unavailable_model_output"
   ],
-  "generated_at": "2026-07-22T03:40:58.896439+00:00",
+  "generated_at": "2026-07-22T03:57:34.783263+00:00",
   "waves": [
     {
       "wave_id": "wave0",
@@ -27,7 +27,7 @@
       "files": {
         "authenticity_metrics.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "0765d3e4768cb2b0613b9908836e009cc0b9fd6bc5b97871e08c022012583d9b",
+          "regenerated_sha256": "3f6ea4a52961341d8d73ca047809c858ce3a7b81c58d5ad145bfe8fa7cdbef02",
           "published_sha256": "f54f1371762723d21c58f203cd241ab6b1cb2e6651ea44eb6b782675b1ba7d10",
           "data_identical": true,
           "differing_top_level_keys": [
@@ -37,7 +37,7 @@
         },
         "authenticity_results.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "7a93eeb955c54c10ea6d61f7b4eaa2b35eeb80b95c0c8caf0584f9164fc0e196",
+          "regenerated_sha256": "b8ecc454214235194048ccc1aff7626afc84757b69553b679f7061b8fcba3390",
           "published_sha256": "5b9ed85420b06c2e0c672219c9a44c2078f421c1ff9c519535323461da130a26",
           "data_identical": true,
           "differing_top_level_keys": [
@@ -47,7 +47,7 @@
         },
         "curriculum_coverage.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "3539da501e30749d8265003cfcec13f8f579520847659b6fb5f85dc1dbfec7a0",
+          "regenerated_sha256": "cd5b833bfaa2f41f779c0246e597443c6b02df50e5f98cfbb5906d7e3814b99a",
           "published_sha256": "8b7b602abd912e8acd31dbca4bd0e0e1a9b5a0be7a43fd21de130a7092248e3f",
           "data_identical": true,
           "differing_top_level_keys": [
@@ -62,7 +62,7 @@
         },
         "generic_leak_ledger.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "cad38c9ee8cb37a3b977e41430bced7c7c2f72f0f5e148ee241bfb777c6ffe25",
+          "regenerated_sha256": "bb49bcb586216eb0c2f5f4f5adfb6b9ef242f119febf487a5f4975ab4c1faaa2",
           "published_sha256": "879ea24a0a94451f15c0591d7c25f1cc282790860542d58079bb79f7d6b6c300",
           "data_identical": true,
           "differing_top_level_keys": [
@@ -94,7 +94,7 @@
       "files": {
         "authenticity_metrics.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "84ade618c2ebbc55cffbf72297a066b5f5ef4ff3b69aa8e19db77daf07c64d33",
+          "regenerated_sha256": "9d84562afd82d02efcd95d8982d8bef6c3d6ca4e47a61d2c7fede1f1c57fe3d9",
           "published_sha256": "cb352cf23c3d2e15c567ba56f9bfea4ae2f1a789ffed637e035cfc3b87ced757",
           "data_identical": true,
           "differing_top_level_keys": [
@@ -104,7 +104,7 @@
         },
         "authenticity_results.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "0ff33b4bc888d6a82493feb58b55085d6e93e92fa76cbaaae29bb9b4bc3697d1",
+          "regenerated_sha256": "8c89736976119a5b3f9fb254f717a0fdfb5087dbf532008cf7459f0a0498194f",
           "published_sha256": "08f623221a0787add327df5edf3ac24a24f22a4c494235a759b0e50b0c93a219",
           "data_identical": true,
           "differing_top_level_keys": [
@@ -114,7 +114,7 @@
         },
         "curriculum_coverage.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "71a1b7e7490874921658fd0b1b410bd612ed24f915f873ac0d6779414b90c722",
+          "regenerated_sha256": "71ca3283fd927a9d804f953aef0f20c525cbf5287a6bdf3df63aa5c447f4bec0",
           "published_sha256": "8541ef7b292fe7dc1b11e7e02807ee95525ab9a9ce915e67fcaa1f4024475318",
           "data_identical": true,
           "differing_top_level_keys": [
@@ -129,7 +129,7 @@
         },
         "generic_leak_ledger.json": {
           "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
-          "regenerated_sha256": "4ce0bde43eba0c73d549e6e76c22cafff7155612f383fe862dc242bbc492baa2",
+          "regenerated_sha256": "e65b60ea1d956cc3387545f1110345b9f1f4f806daa00daf1d4dbac2f2947ca9",
           "published_sha256": "4ecc10be0cc2083256ccd4f5b294b8347f68701724100344950f075ada74bfb0",
           "data_identical": true,
           "differing_top_level_keys": [
