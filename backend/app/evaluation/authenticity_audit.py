@@ -23,7 +23,7 @@ import asyncio
 from dataclasses import asdict, dataclass, field
 
 from app.ai import pipeline
-from app.evaluation.authenticity_fixtures import build_scripted_provider
+from app.evaluation.authenticity_fixtures import CaseScript, build_scripted_provider
 from app.evaluation.authenticity_matrix import (
     AuditCase,
     ai_reachable_ids,
@@ -125,24 +125,59 @@ def _match(case: AuditCase, rec: AuditRecord) -> bool | None:
     return True
 
 
-def run_audit(set_provider) -> list[AuditRecord]:
-    """Chạy TOÀN BỘ matrix. ``set_provider(fake)`` cài fake ``call_gemini``
-    (test: monkeypatch.setattr; script: gán trực tiếp có try/finally)."""
+def run_audit(set_provider, snapshot=None) -> list[AuditRecord]:
+    """Chạy matrix. ``set_provider(fake)`` cài fake ``call_gemini``
+    (test: monkeypatch.setattr; script: gán trực tiếp có try/finally).
+
+    ``snapshot`` (M17-RC1 §R1): ẢNH CHỤP ĐẦU VÀO của một wave đã đóng băng.
+    Có snapshot ⇒ chỉ chạy đúng `case_ids` của wave đó và CHỈ ghi các cổng tồn
+    tại ở wave đó. Không có ⇒ chạy trạng thái HIỆN TẠI (registry sống).
+
+    Vì sao cần: generator lịch sử đọc registry sống thì thêm target/cổng mới sẽ
+    làm số của wave cũ TRÔI — bằng chứng đã công bố không tái lập được.
+    """
+    # §R1: wave đóng băng dựng case HOÀN TOÀN từ ảnh chụp — KHÔNG đụng fixture
+    # sống. Chính định nghĩa case cũng trôi (W2A viết lại aud-regression-tree-*
+    # cho classify sang tree.traversal), nên chỉ lọc theo case_id là chưa đủ.
+    if snapshot is not None:
+        cases = [
+            AuditCase(
+                case_id=c.case_id, sim_id=c.sim_id, archetype=c.archetype,
+                prompt_vi=c.prompt_vi, expected_status=c.expected_status,
+                expected_route=c.expected_route, mechanism=c.mechanism, note=c.note,
+                script=CaseScript(
+                    analysis=c.analysis,
+                    classify_seq=list(c.classify_seq),
+                    simulate_seq=list(c.simulate_seq),
+                ),
+            )
+            for c in snapshot.cases
+        ]
+    else:
+        cases = build_audit_cases()
+
     records: list[AuditRecord] = []
-    for case in build_audit_cases():
+    for case in cases:
         fake, _counts = build_scripted_provider(case.script)
         set_provider(fake)
-        records.append(asyncio.run(_run_one(case)))
+        rec = asyncio.run(_run_one(case))
+        if snapshot is not None:
+            rec.gates = [g for g in rec.gates if g.get("gate") in snapshot.gate_names]
+        records.append(rec)
     return records
 
 
 # ── phân loại 6 trạng thái per-target ─────────────────────────
-def classify_targets(records: list[AuditRecord]) -> dict[str, str]:
+def classify_targets(records: list[AuditRecord], target_ids=None) -> dict[str, str]:
     """Derive từ membership (không hard-code): computation+representation →
     PARTIAL; computation-only → REAL; representation-only →
-    REPRESENTATION_ONLY; bằng chứng audit hỏng → BROKEN."""
+    REPRESENTATION_ONLY; bằng chứng audit hỏng → BROKEN.
+
+    ``target_ids`` (§R1): danh sách target CỦA WAVE đã đóng băng. None ⇒ dùng
+    registry sống (trạng thái hiện tại). Không có tham số này thì sinh lại
+    artifact lịch sử sẽ đòi record cho target ra đời SAU wave đó."""
     out: dict[str, str] = {}
-    for sid in ai_reachable_ids():
+    for sid in (target_ids if target_ids is not None else ai_reachable_ids()):
         recs = [r for r in records if r.sim_id == sid]
         assert recs, f"{sid}: không có record audit nào (matrix hụt)"
         if any(r.matched is False for r in recs):

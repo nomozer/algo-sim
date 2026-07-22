@@ -1,0 +1,2772 @@
+{
+ "schema_version": "1",
+ "input_snapshot_id": "wave1@a7636556332d",
+ "wave_id": "wave1",
+ "generator_version": "m17-wave-artifacts-2",
+ "git_commit": "a7636556332d4ac77b5d7ca8c34893e0179f8d4c",
+ "generated_at": "2026-07-21T06:29:21.337521+00:00",
+ "gate_names": [
+  "computation",
+  "mechanism"
+ ],
+ "target_ids": [
+  "algorithm.binary_search",
+  "algorithm.bubble_sort",
+  "algorithm.count_if",
+  "algorithm.find_max",
+  "algorithm.find_min",
+  "algorithm.insertion_sort",
+  "algorithm.linear_search",
+  "algorithm.scan",
+  "algorithm.selection_sort",
+  "algorithm.sum_if",
+  "binary.base_conversion",
+  "binary.decimal_to_binary",
+  "generic.rule_scene",
+  "logic.and_gate",
+  "logic.boolean_dag",
+  "network.graph_traversal",
+  "network.packet_routing",
+  "network.protocol_encapsulation"
+ ],
+ "case_count": 68,
+ "target_count": 18,
+ "cases": [
+  {
+   "case_id": "aud-algorithm-binary-search-direct",
+   "sim_id": "algorithm.binary_search",
+   "archetype": "direct",
+   "prompt_vi": "Dãy đã sắp 3, 8, 15, 22, 30, 41, 55. Tìm 30 bằng tìm kiếm nhị phân.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.binary_search",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm 30 bằng chia đôi",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.binary_search",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm kiếm nhị phân\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [3, 8, 15, 22, 30, 41, 55], \"target\": 30}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-binary-search-paraphrase",
+   "sim_id": "algorithm.binary_search",
+   "archetype": "paraphrase",
+   "prompt_vi": "Tìm 203 trong dãy tăng dần 101, 145, 178, 203, 256 bằng cách xét phần tử giữa.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.binary_search",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm 203 bằng cách xét phần tử giữa",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.binary_search",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm kiếm nhị phân\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [101, 145, 178, 203, 256], \"target\": 203}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-binary-search-changed-input",
+   "sim_id": "algorithm.binary_search",
+   "archetype": "changed_input",
+   "prompt_vi": "Dãy 2, 5, 9, 14, 21, 30 đã sắp xếp. Dùng chia đôi để tìm 17.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.binary_search",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm 17 (vắng mặt) bằng chia đôi",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.binary_search",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm kiếm nhị phân\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [2, 5, 9, 14, 21, 30], \"target\": 17}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-binary-search-boundary",
+   "sim_id": "algorithm.binary_search",
+   "archetype": "boundary",
+   "prompt_vi": "Cho dãy CHƯA sắp 27, 4, 51, 13, 38, 9. Tìm 38 bằng tìm kiếm nhị phân.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.binary_search",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm 38 bằng chia đôi trên dãy chưa sắp",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.binary_search",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm kiếm nhị phân\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [27, 4, 51, 13, 38, 9], \"target\": 38}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-bubble-sort-direct",
+   "sim_id": "algorithm.bubble_sort",
+   "archetype": "direct",
+   "prompt_vi": "Sắp xếp dãy 9, 4, 7, 2, 6 tăng dần bằng thuật toán nổi bọt.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.bubble_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp tăng dần bằng nổi bọt",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "adjacent_compare_swap"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"bubble\", \"array\": [9, 4, 7, 2, 6], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-bubble-sort-paraphrase",
+   "sim_id": "algorithm.bubble_sort",
+   "archetype": "paraphrase",
+   "prompt_vi": "Sắp xếp 8, 3, 6, 1 bằng cách so sánh và đổi chỗ hai phần tử kề nhau.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.bubble_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp bằng đổi chỗ cặp kề",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "adjacent_compare_swap"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"bubble\", \"array\": [8, 3, 6, 1], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-bubble-sort-changed-input",
+   "sim_id": "algorithm.bubble_sort",
+   "archetype": "changed_input",
+   "prompt_vi": "Dùng nổi bọt sắp xếp dãy 5, 1, 4, 2, 8 theo thứ tự tăng.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.bubble_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp dãy khác bằng nổi bọt",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "adjacent_compare_swap"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"bubble\", \"array\": [5, 1, 4, 2, 8], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-bubble-sort-boundary",
+   "sim_id": "algorithm.bubble_sort",
+   "archetype": "boundary",
+   "prompt_vi": "Sắp xếp dãy có phần tử trùng 5, 3, 5, 2, 3 bằng nổi bọt.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.bubble_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp dãy có phần tử trùng",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "adjacent_compare_swap"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"bubble\", \"array\": [5, 3, 5, 2, 3], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-count-if-direct",
+   "sim_id": "algorithm.count_if",
+   "archetype": "direct",
+   "prompt_vi": "Điểm của lớp: 6, 8.5, 7, 9, 5.5, 8. Đếm số bạn đạt từ 8 trở lên.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.count_if",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đếm số bạn đạt từ 8 trở lên",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.count_if",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Đếm theo điều kiện\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [6, 8.5, 7, 9, 5.5, 8], \"condition\": {\"op\": \">=\", \"value\": 8}}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-count-if-paraphrase",
+   "sim_id": "algorithm.count_if",
+   "archetype": "paraphrase",
+   "prompt_vi": "Nhiệt độ tủ ghi 3, 6, 2, 8, 5, 7. Bao nhiêu lần tủ vượt 4 độ?",
+   "expected_status": "ok",
+   "expected_route": "algorithm.count_if",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đếm số lần tủ quá ấm",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.count_if",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Đếm theo điều kiện\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [3, 6, 2, 8, 5, 7], \"condition\": {\"op\": \">\", \"value\": 4}}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-count-if-changed-input",
+   "sim_id": "algorithm.count_if",
+   "archetype": "changed_input",
+   "prompt_vi": "Cho dãy 10, 3, 12, 7, 15, 2. Đếm các số nhỏ hơn 8.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.count_if",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đếm các số nhỏ hơn 8",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.count_if",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Đếm theo điều kiện\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [10, 3, 12, 7, 15, 2], \"condition\": {\"op\": \"<\", \"value\": 8}}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-find-max-direct",
+   "sim_id": "algorithm.find_max",
+   "archetype": "direct",
+   "prompt_vi": "Cho dãy số 12, 7, 25, 9, 18. Tìm phần tử lớn nhất.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.find_max",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm phần tử lớn nhất",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.find_max",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm giá trị lớn nhất\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [12, 7, 25, 9, 18]}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-find-max-paraphrase",
+   "sim_id": "algorithm.find_max",
+   "archetype": "paraphrase",
+   "prompt_vi": "Bốn bạn có chiều cao 165, 172, 158, 180 cm. Ai cao nhất?",
+   "expected_status": "ok",
+   "expected_route": "algorithm.find_max",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm người cao nhất",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.find_max",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm giá trị lớn nhất\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [165, 172, 158, 180]}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-find-max-changed-input",
+   "sim_id": "algorithm.find_max",
+   "archetype": "changed_input",
+   "prompt_vi": "Cho dãy 4, 9, 1, 16, 7, 3. Giá trị lớn nhất là bao nhiêu?",
+   "expected_status": "ok",
+   "expected_route": "algorithm.find_max",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm giá trị lớn nhất của dãy khác",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.find_max",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm giá trị lớn nhất\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [4, 9, 1, 16, 7, 3]}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-find-min-direct",
+   "sim_id": "algorithm.find_min",
+   "archetype": "direct",
+   "prompt_vi": "Cho dãy 45, 12, 78, 6, 33. Tìm phần tử nhỏ nhất.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.find_min",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm phần tử nhỏ nhất",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.find_min",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm giá trị nhỏ nhất\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [45, 12, 78, 6, 33]}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-find-min-paraphrase",
+   "sim_id": "algorithm.find_min",
+   "archetype": "paraphrase",
+   "prompt_vi": "Nhiệt độ các ngày là 18, 15, 21, 12, 19 độ. Ngày nào lạnh nhất?",
+   "expected_status": "ok",
+   "expected_route": "algorithm.find_min",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm ngày lạnh nhất",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.find_min",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm giá trị nhỏ nhất\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [18, 15, 21, 12, 19]}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-find-min-changed-input",
+   "sim_id": "algorithm.find_min",
+   "archetype": "changed_input",
+   "prompt_vi": "Cho dãy 7, 3, 11, 2, 9, 5. Số nhỏ nhất là số nào?",
+   "expected_status": "ok",
+   "expected_route": "algorithm.find_min",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm giá trị nhỏ nhất của dãy khác",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.find_min",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm giá trị nhỏ nhất\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [7, 3, 11, 2, 9, 5]}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-insertion-sort-direct",
+   "sim_id": "algorithm.insertion_sort",
+   "archetype": "direct",
+   "prompt_vi": "Sắp xếp dãy 7, 2, 9, 4, 5 bằng thuật toán sắp xếp chèn.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.insertion_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp tăng dần bằng chèn",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "shift_into_sorted_prefix"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"insertion\", \"array\": [7, 2, 9, 4, 5], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-insertion-sort-paraphrase",
+   "sim_id": "algorithm.insertion_sort",
+   "archetype": "paraphrase",
+   "prompt_vi": "Chèn từng lá bài 6, 2, 8, 3, 5 vào phần đã sắp xếp bên trái.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.insertion_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Chèn từng lá bài vào phần đã sắp",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "shift_into_sorted_prefix"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"insertion\", \"array\": [6, 2, 8, 3, 5], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-insertion-sort-changed-input",
+   "sim_id": "algorithm.insertion_sort",
+   "archetype": "changed_input",
+   "prompt_vi": "Dùng sắp xếp chèn cho dãy 10, 6, 3, 8, 1.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.insertion_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp chèn dãy khác",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "shift_into_sorted_prefix"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"insertion\", \"array\": [10, 6, 3, 8, 1], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-linear-search-direct",
+   "sim_id": "algorithm.linear_search",
+   "archetype": "direct",
+   "prompt_vi": "Cho danh sách 305, 118, 227, 194, 260. Tìm xem 194 có trong danh sách không.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.linear_search",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm 194 trong danh sách",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.linear_search",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm kiếm tuần tự\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [305, 118, 227, 194, 260], \"target\": 194}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-linear-search-paraphrase",
+   "sim_id": "algorithm.linear_search",
+   "archetype": "paraphrase",
+   "prompt_vi": "Duyệt lần lượt các mã 71, 34, 90, 12, 58 để tìm mã 90.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.linear_search",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm mã 90",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.linear_search",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm kiếm tuần tự\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [71, 34, 90, 12, 58], \"target\": 90}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-linear-search-changed-input",
+   "sim_id": "algorithm.linear_search",
+   "archetype": "changed_input",
+   "prompt_vi": "Tìm số 42 trong dãy 15, 42, 8, 23, 4 bằng cách xét từng phần tử.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.linear_search",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm 42 bằng duyệt tuần tự",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.linear_search",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tìm kiếm tuần tự\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [15, 42, 8, 23, 4], \"target\": 42}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-scan-direct",
+   "sim_id": "algorithm.scan",
+   "archetype": "direct",
+   "prompt_vi": "Nhiệt độ 7 ngày: 31, 33, 30, 36, 32, 38, 29. Tìm ngày ĐẦU TIÊN vượt 35 độ.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.scan",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm ngày đầu tiên vượt 35 độ",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.scan",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"scan_version\": \"1.0\", \"array\": [31, 33, 30, 36, 32, 38, 29], \"seed\": {\"from\": \"constant\", \"value\": 35, \"varName\": \"nguong\"}, \"compare\": {\"kind\": \"to_constant\", \"op\": \">\", \"value\": 35}, \"update\": {\"kind\": \"none\"}, \"marking\": \"match_highlight\", \"stop\": \"first_match\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-scan-paraphrase",
+   "sim_id": "algorithm.scan",
+   "archetype": "paraphrase",
+   "prompt_vi": "Áp suất các bình: 12, 15, 11, 18, 14, 20. Dừng ở bình đầu tiên đạt từ 18 bar.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.scan",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Dừng ở bình đầu tiên ≥ 18 bar",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.scan",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"scan_version\": \"1.0\", \"array\": [12, 15, 11, 18, 14, 20], \"seed\": {\"from\": \"constant\", \"value\": 18, \"varName\": \"nguong\"}, \"compare\": {\"kind\": \"to_constant\", \"op\": \">=\", \"value\": 18}, \"update\": {\"kind\": \"none\"}, \"marking\": \"match_highlight\", \"stop\": \"first_match\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-scan-changed-input",
+   "sim_id": "algorithm.scan",
+   "archetype": "changed_input",
+   "prompt_vi": "Cho dãy 5, 9, 4, 12, 7. Tìm phần tử đầu tiên lớn hơn 10.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.scan",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm phần tử đầu tiên lớn hơn 10",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.scan",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"scan_version\": \"1.0\", \"array\": [5, 9, 4, 12, 7], \"seed\": {\"from\": \"constant\", \"value\": 10, \"varName\": \"nguong\"}, \"compare\": {\"kind\": \"to_constant\", \"op\": \">\", \"value\": 10}, \"update\": {\"kind\": \"none\"}, \"marking\": \"match_highlight\", \"stop\": \"first_match\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-selection-sort-direct",
+   "sim_id": "algorithm.selection_sort",
+   "archetype": "direct",
+   "prompt_vi": "Sắp xếp dãy 9, 2, 7, 4 bằng thuật toán sắp xếp chọn (selection sort).",
+   "expected_status": "ok",
+   "expected_route": "algorithm.selection_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp bằng chọn cực trị lặp",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "select_extreme_repeated"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"selection\", \"array\": [9, 2, 7, 4], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-selection-sort-paraphrase",
+   "sim_id": "algorithm.selection_sort",
+   "archetype": "paraphrase",
+   "prompt_vi": "Sắp xếp 6, 1, 8, 3, 5 bằng cách mỗi lượt tìm phần tử nhỏ nhất còn lại rồi đưa lên đầu.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.selection_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Mỗi lượt tìm phần tử nhỏ nhất đưa lên đầu",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "select_extreme_repeated"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"selection\", \"array\": [6, 1, 8, 3, 5], \"order\": \"asc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-selection-sort-changed-input",
+   "sim_id": "algorithm.selection_sort",
+   "archetype": "changed_input",
+   "prompt_vi": "Dùng sắp xếp chọn cho dãy 12, 5, 9, 3 theo thứ tự giảm dần.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.selection_sort",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp chọn giảm dần",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "select_extreme_repeated"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"family_version\": \"sort-fam-1\", \"variant\": \"selection\", \"array\": [12, 5, 9, 3], \"order\": \"desc\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-sum-if-direct",
+   "sim_id": "algorithm.sum_if",
+   "archetype": "direct",
+   "prompt_vi": "Cho dãy 6, 11, 4, 9, 15, 3. Tính tổng các số lớn hơn 5.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.sum_if",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tính tổng các số lớn hơn 5",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.sum_if",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tổng theo điều kiện\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [6, 11, 4, 9, 15, 3], \"condition\": {\"op\": \">\", \"value\": 5}}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-sum-if-paraphrase",
+   "sim_id": "algorithm.sum_if",
+   "archetype": "paraphrase",
+   "prompt_vi": "Các khoản chi 20, 50, 10, 80, 35 nghìn. Cộng những khoản từ 30 nghìn trở lên.",
+   "expected_status": "ok",
+   "expected_route": "algorithm.sum_if",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Cộng dồn các khoản lớn",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.sum_if",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tổng theo điều kiện\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [20, 50, 10, 80, 35], \"condition\": {\"op\": \">=\", \"value\": 30}}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-algorithm-sum-if-changed-input",
+   "sim_id": "algorithm.sum_if",
+   "archetype": "changed_input",
+   "prompt_vi": "Cho dãy 2, 14, 8, 5, 20. Tổng các số lớn hơn 7 là bao nhiêu?",
+   "expected_status": "ok",
+   "expected_route": "algorithm.sum_if",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tổng các số lớn hơn 7",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.sum_if",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"problem\": {\"summary\": \"Tổng theo điều kiện\", \"input\": \"Dãy số\", \"output\": \"Kết quả\"}, \"data\": {\"array\": [2, 14, 8, 5, 20], \"condition\": {\"op\": \">\", \"value\": 7}}}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-base-conversion-direct",
+   "sim_id": "binary.base_conversion",
+   "archetype": "direct",
+   "prompt_vi": "Đổi số 2026 sang hệ thập lục phân.",
+   "expected_status": "ok",
+   "expected_route": "binary.base_conversion",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đổi 2026 sang thập lục phân",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "prescribed_procedure": "positional_representation.non_binary_base"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.base_conversion",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"sourceBase\": 10, \"targetBase\": 16, \"inputValue\": \"2026\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-base-conversion-paraphrase",
+   "sim_id": "binary.base_conversion",
+   "archetype": "paraphrase",
+   "prompt_vi": "Số bát phân 755 bằng bao nhiêu trong hệ thập phân?",
+   "expected_status": "ok",
+   "expected_route": "binary.base_conversion",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Giá trị thập phân của số bát phân 755",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "prescribed_procedure": "positional_representation.non_binary_base"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.base_conversion",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"sourceBase\": 8, \"targetBase\": 10, \"inputValue\": \"755\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-base-conversion-changed-input",
+   "sim_id": "binary.base_conversion",
+   "archetype": "changed_input",
+   "prompt_vi": "Đổi số thập lục phân 9C sang hệ nhị phân.",
+   "expected_status": "ok",
+   "expected_route": "binary.base_conversion",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đổi 9C (hex) sang nhị phân",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "prescribed_procedure": "positional_representation.non_binary_base"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.base_conversion",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"sourceBase\": 16, \"targetBase\": 2, \"inputValue\": \"9C\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-base-conversion-boundary",
+   "sim_id": "binary.base_conversion",
+   "archetype": "boundary",
+   "prompt_vi": "Đổi 45 sang nhị phân (LLM khai nhầm cùng cơ số ở lượt đầu — validator từ chối, retry).",
+   "expected_status": "ok",
+   "expected_route": "binary.base_conversion",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đổi 45 sang nhị phân",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "prescribed_procedure": "positional_representation.non_binary_base"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.base_conversion",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"sourceBase\": 10, \"targetBase\": 10, \"inputValue\": \"45\"}",
+     "{\"sourceBase\": 10, \"targetBase\": 2, \"inputValue\": \"45\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-decimal-to-binary-direct",
+   "sim_id": "binary.decimal_to_binary",
+   "archetype": "direct",
+   "prompt_vi": "Biểu diễn số 156 trong hệ nhị phân 8 bit.",
+   "expected_status": "ok",
+   "expected_route": "binary.decimal_to_binary",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Biểu diễn 156 nhị phân",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "positional_representation.binary_positional_weights"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.decimal_to_binary",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"decimalValue\": 156, \"bitWidth\": 8}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-decimal-to-binary-paraphrase",
+   "sim_id": "binary.decimal_to_binary",
+   "archetype": "paraphrase",
+   "prompt_vi": "Bật các công tắc trọng số 128..1 để tổng bằng 89.",
+   "expected_status": "ok",
+   "expected_route": "binary.decimal_to_binary",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Bật trọng số 128..1 cho tổng 89",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "positional_representation.binary_positional_weights"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.decimal_to_binary",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"decimalValue\": 89, \"bitWidth\": 8}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-decimal-to-binary-changed-input",
+   "sim_id": "binary.decimal_to_binary",
+   "archetype": "changed_input",
+   "prompt_vi": "Đổi số 37 sang nhị phân 8 bit.",
+   "expected_status": "ok",
+   "expected_route": "binary.decimal_to_binary",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đổi 37 sang nhị phân",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "positional_representation.binary_positional_weights"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.decimal_to_binary",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"decimalValue\": 37, \"bitWidth\": 8}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-binary-decimal-to-binary-boundary",
+   "sim_id": "binary.decimal_to_binary",
+   "archetype": "boundary",
+   "prompt_vi": "Biểu diễn 300 trong 8 bit nhị phân (vượt phạm vi biểu diễn).",
+   "expected_status": "ok",
+   "expected_route": "binary.decimal_to_binary",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Biểu diễn 300 nhị phân (vượt phạm vi)",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "prescribed_procedure": "positional_representation.binary_positional_weights"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "binary.decimal_to_binary",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"decimalValue\": 300, \"bitWidth\": 8}",
+     "{\"decimalValue\": 255, \"bitWidth\": 8}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-generic-rule-scene-direct",
+   "sim_id": "generic.rule_scene",
+   "archetype": "direct",
+   "prompt_vi": "Dựng tam giác ABC từng bước: vẽ AB, thêm C, nối AC và BC.",
+   "expected_status": "ok",
+   "expected_route": "generic.rule_scene",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Dựng tam giác ABC từng bước",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "scene_construction": "step_by_step",
+     "relation_roles": [
+      "relational"
+     ],
+     "process_roles": [
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"dsl_version\": \"1.0\", \"title\": \"Dựng tam giác ABC từng bước\", \"objects\": [{\"id\": \"A\", \"type\": \"node\", \"label\": \"A\"}, {\"id\": \"B\", \"type\": \"node\", \"label\": \"B\"}, {\"id\": \"C\", \"type\": \"node\", \"label\": \"C\"}, {\"id\": \"AB\", \"type\": \"edge\", \"from\": \"A\", \"to\": \"B\"}, {\"id\": \"AC\", \"type\": \"edge\", \"from\": \"A\", \"to\": \"C\"}, {\"id\": \"BC\", \"type\": \"edge\", \"from\": \"B\", \"to\": \"C\"}], \"rules\": [], \"interactions\": [], \"processes\": [{\"type\": \"reveal_sequence\", \"steps\": [{\"objects\": [\"A\", \"B\", \"AB\"], \"narration\": \"Vẽ đoạn AB\"}, {\"objects\": [\"C\"], \"narration\": \"Thêm điểm C\"}, {\"objects\": [\"AC\", \"BC\"], \"narration\": \"Nối AC và BC\"}]}]}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-generic-rule-scene-paraphrase",
+   "sim_id": "generic.rule_scene",
+   "archetype": "paraphrase",
+   "prompt_vi": "Vẽ sơ đồ ba trạm theo mô tả, hiện dần từng trạm một.",
+   "expected_status": "ok",
+   "expected_route": "generic.rule_scene",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Vẽ sơ đồ các trạm, hiện dần từng trạm",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "scene_construction": "step_by_step",
+     "relation_roles": [
+      "relational"
+     ],
+     "process_roles": [
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"dsl_version\": \"1.0\", \"title\": \"Vẽ sơ đồ các trạm theo mô tả\", \"objects\": [{\"id\": \"s1\", \"type\": \"node\", \"label\": \"Trạm 1\"}, {\"id\": \"s2\", \"type\": \"node\", \"label\": \"Trạm 2\"}, {\"id\": \"s3\", \"type\": \"node\", \"label\": \"Trạm 3\"}, {\"id\": \"e12\", \"type\": \"edge\", \"from\": \"s1\", \"to\": \"s2\"}, {\"id\": \"e23\", \"type\": \"edge\", \"from\": \"s2\", \"to\": \"s3\"}], \"rules\": [], \"interactions\": [], \"processes\": [{\"type\": \"reveal_sequence\", \"steps\": [{\"objects\": [\"s1\"]}, {\"objects\": [\"s2\", \"e12\"]}, {\"objects\": [\"s3\", \"e23\"]}]}]}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-generic-rule-scene-changed-input",
+   "sim_id": "generic.rule_scene",
+   "archetype": "changed_input",
+   "prompt_vi": "Robot đi qua các trạm A→B→C→D→E, mỗi bước một trạm.",
+   "expected_status": "ok",
+   "expected_route": "generic.rule_scene",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Robot đi qua các trạm",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "scene_construction": "step_by_step",
+     "process_roles": [
+      "movement",
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"dsl_version\": \"1.0\", \"title\": \"Robot đi qua các trạm A→B→C→D→E\", \"objects\": [{\"id\": \"A\", \"type\": \"node\", \"label\": \"A\"}, {\"id\": \"B\", \"type\": \"node\", \"label\": \"B\"}, {\"id\": \"C\", \"type\": \"node\", \"label\": \"C\"}, {\"id\": \"D\", \"type\": \"node\", \"label\": \"D\"}, {\"id\": \"E\", \"type\": \"node\", \"label\": \"E\"}, {\"id\": \"robot\", \"type\": \"moving_entity\", \"label\": \"Robot\"}], \"rules\": [], \"interactions\": [], \"processes\": [{\"type\": \"move_along_path\", \"entity\": \"robot\", \"path\": [\"A\", \"B\", \"C\", \"D\", \"E\"]}]}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-generic-rule-scene-boundary",
+   "sim_id": "generic.rule_scene",
+   "archetype": "boundary",
+   "prompt_vi": "Đèn chỉ sáng khi CẢ BA công tắc cùng bật. Mô phỏng mạch.",
+   "expected_status": "ok",
+   "expected_route": "generic.rule_scene",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đèn sáng khi cả BA công tắc bật",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "entity_roles": [
+      "logical"
+     ],
+     "interaction_needs": [
+      "interactive"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"dsl_version\": \"1.0\", \"title\": \"Mạch AND ba công tắc\", \"objects\": [{\"id\": \"a\", \"type\": \"switch\", \"label\": \"A\", \"value\": 0}, {\"id\": \"b\", \"type\": \"switch\", \"label\": \"B\", \"value\": 0}, {\"id\": \"c\", \"type\": \"switch\", \"label\": \"C\", \"value\": 0}, {\"id\": \"den\", \"type\": \"lamp\", \"label\": \"Đèn\"}], \"rules\": [{\"type\": \"boolean\", \"op\": \"and\", \"inputs\": [\"a\", \"b\", \"c\"], \"target\": \"den\"}], \"interactions\": [{\"type\": \"toggle\", \"target\": \"a\"}, {\"type\": \"toggle\", \"target\": \"b\"}, {\"type\": \"toggle\", \"target\": \"c\"}], \"processes\": []}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-logic-and-gate-direct",
+   "sim_id": "logic.and_gate",
+   "archetype": "direct",
+   "prompt_vi": "Mô phỏng cổng AND hai đầu vào, cả hai đang bật.",
+   "expected_status": "ok",
+   "expected_route": "logic.and_gate",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Cổng AND hai đầu vào",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "logic.and_gate",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"inputA\": 1, \"inputB\": 1}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-logic-and-gate-paraphrase",
+   "sim_id": "logic.and_gate",
+   "archetype": "paraphrase",
+   "prompt_vi": "Đèn chỉ sáng khi cả hai công tắc cùng đóng — hiện tại một công tắc mở.",
+   "expected_status": "ok",
+   "expected_route": "logic.and_gate",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đầu ra 1 chỉ khi cả hai vào 1",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "logic.and_gate",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"inputA\": 1, \"inputB\": 0}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-logic-and-gate-changed-input",
+   "sim_id": "logic.and_gate",
+   "archetype": "changed_input",
+   "prompt_vi": "Cổng AND với đầu vào A tắt, B bật. Đầu ra là gì?",
+   "expected_status": "ok",
+   "expected_route": "logic.and_gate",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Cổng AND với A=0, B=1",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "logic.and_gate",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"inputA\": 0, \"inputB\": 1}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-logic-boolean-dag-direct",
+   "sim_id": "logic.boolean_dag",
+   "archetype": "direct",
+   "prompt_vi": "Mạch logic: đèn sáng khi (A VÀ B) HOẶC (KHÔNG C). Mô phỏng mạch và bảng chân trị.",
+   "expected_status": "ok",
+   "expected_route": "logic.boolean_dag",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Mạch (A AND B) OR (NOT C)",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "entity_roles": [
+      "logical"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "logic.boolean_dag",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"inputs\": [{\"id\": \"A\", \"value\": 1}, {\"id\": \"B\", \"value\": 0}, {\"id\": \"C\", \"value\": 1}], \"gates\": [{\"id\": \"g1\", \"op\": \"AND\", \"inputs\": [\"A\", \"B\"]}, {\"id\": \"g2\", \"op\": \"NOT\", \"inputs\": [\"C\"]}, {\"id\": \"g3\", \"op\": \"OR\", \"inputs\": [\"g1\", \"g2\"]}], \"output\": \"g3\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-logic-boolean-dag-paraphrase",
+   "sim_id": "logic.boolean_dag",
+   "archetype": "paraphrase",
+   "prompt_vi": "Chuông reo khi đúng MỘT trong hai công tắc bật (XOR). Dựng mạch logic.",
+   "expected_status": "ok",
+   "expected_route": "logic.boolean_dag",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Chuông reo khi đúng một công tắc bật (XOR)",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "entity_roles": [
+      "logical"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "logic.boolean_dag",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"inputs\": [{\"id\": \"x\", \"value\": 0}, {\"id\": \"y\", \"value\": 0}], \"gates\": [{\"id\": \"g\", \"op\": \"XOR\", \"inputs\": [\"x\", \"y\"]}], \"output\": \"g\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-logic-boolean-dag-changed-input",
+   "sim_id": "logic.boolean_dag",
+   "archetype": "changed_input",
+   "prompt_vi": "Cho biểu thức logic A ∧ ¬B. Lập bảng chân trị bằng mạch cổng.",
+   "expected_status": "ok",
+   "expected_route": "logic.boolean_dag",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Bảng chân trị của A ∧ ¬B",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "entity_roles": [
+      "logical"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "logic.boolean_dag",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"inputs\": [{\"id\": \"A\", \"value\": 0}, {\"id\": \"B\", \"value\": 0}], \"gates\": [{\"id\": \"n\", \"op\": \"NOT\", \"inputs\": [\"B\"]}, {\"id\": \"g\", \"op\": \"AND\", \"inputs\": [\"A\", \"n\"]}], \"output\": \"g\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-logic-boolean-dag-boundary",
+   "sim_id": "logic.boolean_dag",
+   "archetype": "boundary",
+   "prompt_vi": "Mạch 4 đầu vào: (A VÀ B) HOẶC (C VÀ D) — bảng chân trị đủ 16 hàng.",
+   "expected_status": "ok",
+   "expected_route": "logic.boolean_dag",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Mạch 4 đầu vào — bảng chân trị 16 hàng",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable",
+     "entity_roles": [
+      "logical"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "logic.boolean_dag",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"inputs\": [{\"id\": \"A\", \"value\": 0}, {\"id\": \"B\", \"value\": 0}, {\"id\": \"C\", \"value\": 0}, {\"id\": \"D\", \"value\": 0}], \"gates\": [{\"id\": \"g1\", \"op\": \"AND\", \"inputs\": [\"A\", \"B\"]}, {\"id\": \"g2\", \"op\": \"AND\", \"inputs\": [\"C\", \"D\"]}, {\"id\": \"g3\", \"op\": \"OR\", \"inputs\": [\"g1\", \"g2\"]}], \"output\": \"g3\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-graph-traversal-direct",
+   "sim_id": "network.graph_traversal",
+   "archetype": "direct",
+   "prompt_vi": "Duyệt đồ thị 5 đỉnh A,B,C,D,E (A-B, A-C, B-D, C-D, D-E) theo chiều rộng (BFS) từ A.",
+   "expected_status": "ok",
+   "expected_route": "network.graph_traversal",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Duyệt đồ thị theo BFS từ A",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "process_roles": [
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.graph_traversal",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"nodes\": [{\"id\": \"A\"}, {\"id\": \"B\"}, {\"id\": \"C\"}, {\"id\": \"D\"}, {\"id\": \"E\"}], \"edges\": [[\"A\", \"B\"], [\"A\", \"C\"], [\"B\", \"D\"], [\"C\", \"D\"], [\"D\", \"E\"]], \"start\": \"A\", \"variant\": \"bfs\", \"directed\": false}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-graph-traversal-paraphrase",
+   "sim_id": "network.graph_traversal",
+   "archetype": "paraphrase",
+   "prompt_vi": "Đi thăm các đỉnh của đồ thị bắt đầu từ A, ưu tiên đi SÂU hết một nhánh rồi mới quay lại (DFS).",
+   "expected_status": "ok",
+   "expected_route": "network.graph_traversal",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Duyệt đồ thị theo chiều sâu từ A",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "process_roles": [
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.graph_traversal",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"nodes\": [{\"id\": \"A\"}, {\"id\": \"B\"}, {\"id\": \"C\"}, {\"id\": \"D\"}, {\"id\": \"E\"}], \"edges\": [[\"A\", \"B\"], [\"A\", \"C\"], [\"B\", \"D\"], [\"C\", \"D\"], [\"D\", \"E\"]], \"start\": \"A\", \"variant\": \"dfs\", \"directed\": false}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-graph-traversal-changed-input",
+   "sim_id": "network.graph_traversal",
+   "archetype": "changed_input",
+   "prompt_vi": "Tìm đường từ A đến E trong đồ thị (A-B, B-C, C-E, A-D) bằng BFS.",
+   "expected_status": "ok",
+   "expected_route": "network.graph_traversal",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm đường A→E bằng BFS",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "process_roles": [
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.graph_traversal",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"nodes\": [{\"id\": \"A\"}, {\"id\": \"B\"}, {\"id\": \"C\"}, {\"id\": \"D\"}, {\"id\": \"E\"}], \"edges\": [[\"A\", \"B\"], [\"B\", \"C\"], [\"C\", \"E\"], [\"A\", \"D\"]], \"start\": \"A\", \"variant\": \"bfs\", \"directed\": false, \"goal\": \"E\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-graph-traversal-boundary",
+   "sim_id": "network.graph_traversal",
+   "archetype": "boundary",
+   "prompt_vi": "Đồ thị hai phần rời: (A-B) và (X-Y). Duyệt BFS từ A tìm Y.",
+   "expected_status": "ok",
+   "expected_route": "network.graph_traversal",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tìm Y từ A trong đồ thị rời",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "process_roles": [
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.graph_traversal",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"nodes\": [{\"id\": \"A\"}, {\"id\": \"B\"}, {\"id\": \"X\"}, {\"id\": \"Y\"}], \"edges\": [[\"A\", \"B\"], [\"X\", \"Y\"]], \"start\": \"A\", \"variant\": \"bfs\", \"directed\": false, \"goal\": \"Y\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-packet-routing-direct",
+   "sim_id": "network.packet_routing",
+   "archetype": "direct",
+   "prompt_vi": "Gói tin đi từ máy tính qua switch, router, ISP tới máy chủ. Mô phỏng đường đi.",
+   "expected_status": "ok",
+   "expected_route": "network.packet_routing",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đường đi gói tin qua các chặng",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.packet_routing",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"nodes\": [{\"id\": \"pc\", \"type\": \"client\"}, {\"id\": \"sw\", \"type\": \"switch\"}, {\"id\": \"r1\", \"type\": \"router\"}, {\"id\": \"isp\", \"type\": \"isp\"}, {\"id\": \"srv\", \"type\": \"server\"}], \"links\": [[\"pc\", \"sw\"], [\"sw\", \"r1\"], [\"r1\", \"isp\"], [\"isp\", \"srv\"]], \"source\": \"pc\", \"destination\": \"srv\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-packet-routing-paraphrase",
+   "sim_id": "network.packet_routing",
+   "archetype": "paraphrase",
+   "prompt_vi": "Dữ liệu truyền lần lượt qua từng thiết bị mạng từ máy khách tới máy chủ.",
+   "expected_status": "ok",
+   "expected_route": "network.packet_routing",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Dữ liệu đi qua từng thiết bị",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.packet_routing",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"nodes\": [{\"id\": \"cl\", \"type\": \"client\"}, {\"id\": \"r1\", \"type\": \"router\"}, {\"id\": \"r2\", \"type\": \"router\"}, {\"id\": \"srv\", \"type\": \"server\"}], \"links\": [[\"cl\", \"r1\"], [\"r1\", \"r2\"], [\"r2\", \"srv\"]], \"source\": \"cl\", \"destination\": \"srv\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-packet-routing-changed-input",
+   "sim_id": "network.packet_routing",
+   "archetype": "changed_input",
+   "prompt_vi": "Mạng có hai router song song giữa máy khách và máy chủ. Gói tin chọn đường nào?",
+   "expected_status": "ok",
+   "expected_route": "network.packet_routing",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Chọn đường khi có hai router song song",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.packet_routing",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"nodes\": [{\"id\": \"cl\", \"type\": \"client\"}, {\"id\": \"r1\", \"type\": \"router\"}, {\"id\": \"r2\", \"type\": \"router\"}, {\"id\": \"srv\", \"type\": \"server\"}], \"links\": [[\"cl\", \"r1\"], [\"cl\", \"r2\"], [\"r1\", \"srv\"], [\"r2\", \"srv\"]], \"source\": \"cl\", \"destination\": \"srv\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-protocol-encapsulation-direct",
+   "sim_id": "network.protocol_encapsulation",
+   "archetype": "direct",
+   "prompt_vi": "Mô phỏng quá trình đóng gói dữ liệu qua các tầng TCP/IP khi gửi một trang web.",
+   "expected_status": "ok",
+   "expected_route": "network.protocol_encapsulation",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Đóng gói qua các tầng TCP/IP",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.protocol_encapsulation",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"payloadLabel\": \"Dữ liệu ứng dụng\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-protocol-encapsulation-paraphrase",
+   "sim_id": "network.protocol_encapsulation",
+   "archetype": "paraphrase",
+   "prompt_vi": "Mỗi tầng mạng bọc thêm phần đầu vào tin nhắn trước khi truyền đi.",
+   "expected_status": "ok",
+   "expected_route": "network.protocol_encapsulation",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Mỗi tầng bọc thêm thông tin",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.protocol_encapsulation",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"payloadLabel\": \"Tin nhắn\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-network-protocol-encapsulation-changed-input",
+   "sim_id": "network.protocol_encapsulation",
+   "archetype": "changed_input",
+   "prompt_vi": "Máy nhận tháo từng lớp gói tin như thế nào? Mô phỏng quá trình mở gói.",
+   "expected_status": "ok",
+   "expected_route": "network.protocol_encapsulation",
+   "mechanism": null,
+   "note": "",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Tháo gói ở máy nhận",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "network.protocol_encapsulation",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"payloadLabel\": \"Gói tin nhận\"}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-nm-sort-unspecified",
+   "sim_id": null,
+   "archetype": "near_miss",
+   "prompt_vi": "Sắp xếp dãy 5, 8, 1 bằng một thuật toán tự chọn hiệu quả nhất.",
+   "expected_status": "unsupported",
+   "expected_route": null,
+   "mechanism": "comparison_sort.other_unspecified",
+   "note": "Cơ chế không xác định — từ chối trung thực thay vì đoán biến thể.",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp bằng thuật toán không nêu cơ chế",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "algorithmic",
+     "prescribed_procedure": "other_unspecified"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": []
+   }
+  },
+  {
+   "case_id": "aud-nm-quick-sort",
+   "sim_id": null,
+   "archetype": "near_miss",
+   "prompt_vi": "Sắp xếp dãy 8, 3, 6, 1, 9 bằng cách chọn mốc rồi CHIA dãy quanh mốc và đệ quy (quick sort).",
+   "expected_status": "unsupported",
+   "expected_route": null,
+   "mechanism": "comparison_sort.partition_recursive",
+   "note": "Quick sort giữ gap (contract không biểu diễn partition) — không ép.",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Sắp xếp bằng chia quanh mốc + đệ quy",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "algorithmic",
+     "prescribed_procedure": "partition_recursive"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "algorithm.comparison_sort",
+      "reason": null
+     }
+    ],
+    "simulate_seq": []
+   }
+  },
+  {
+   "case_id": "aud-leak-dijkstra",
+   "sim_id": null,
+   "archetype": "leak_control",
+   "prompt_vi": "Vẽ sơ đồ các trạm rồi TÍNH đường đi ngắn nhất theo tổng độ dài các cạnh.",
+   "expected_status": "unsupported",
+   "expected_route": null,
+   "mechanism": null,
+   "note": "Kết quả thuật toán không engine nào sở hữu → computation gate (bất biến #21).",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Vẽ sơ đồ trạm rồi TÍNH đường ngắn nhất có trọng số",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "algorithmic"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": []
+   }
+  },
+  {
+   "case_id": "aud-regression-tree-honest",
+   "sim_id": null,
+   "archetype": "leak_control",
+   "prompt_vi": "Mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (preorder) trên cây gốc A.",
+   "expected_status": "unsupported",
+   "expected_route": null,
+   "mechanism": null,
+   "note": "REGRESSION M17: tree_traversal chưa có → phải capability_gap, không dựng điểm/đoạn nối.",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Duyệt cây nhị phân theo thứ tự trước",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "algorithmic"
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": []
+   }
+  },
+  {
+   "case_id": "aud-regression-tree-adversarial",
+   "sim_id": null,
+   "archetype": "leak_probe",
+   "prompt_vi": "Cho cây nhị phân gốc 1, con trái 2, con phải 3, nút 2 có con trái 4. Mô phỏng duyệt cây theo thứ tự trước.",
+   "expected_status": "probe",
+   "expected_route": null,
+   "mechanism": null,
+   "note": "ADVERSARIAL PROBE: analyze khai man ownership=provided (thứ tự duyệt THẬT RA là kết quả thuật toán). Đo xem gate hiện tại có chặn được khi tín hiệu cấu trúc bị khai sai — kết quả vào generic_leak_ledger.",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Vật di chuyển qua các điểm của cây theo thứ tự duyệt",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "scene_construction": "step_by_step",
+     "relation_roles": [
+      "relational"
+     ],
+     "process_roles": [
+      "movement",
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"dsl_version\": \"1.0\", \"title\": \"Duyệt các điểm theo thứ tự\", \"objects\": [{\"id\": \"p1\", \"type\": \"node\", \"label\": \"Điểm 1\"}, {\"id\": \"p2\", \"type\": \"node\", \"label\": \"Điểm 2\"}, {\"id\": \"p3\", \"type\": \"node\", \"label\": \"Điểm 3\"}, {\"id\": \"p4\", \"type\": \"node\", \"label\": \"Điểm 4\"}, {\"id\": \"e12\", \"type\": \"edge\", \"from\": \"p1\", \"to\": \"p2\"}, {\"id\": \"e13\", \"type\": \"edge\", \"from\": \"p1\", \"to\": \"p3\"}, {\"id\": \"e24\", \"type\": \"edge\", \"from\": \"p2\", \"to\": \"p4\"}, {\"id\": \"vat\", \"type\": \"moving_entity\", \"label\": \"Vật di chuyển\"}], \"rules\": [], \"interactions\": [], \"processes\": [{\"type\": \"move_along_path\", \"entity\": \"vat\", \"path\": [\"p1\", \"p2\", \"p4\", \"p3\"]}]}"
+    ]
+   }
+  },
+  {
+   "case_id": "aud-refusal-tcp-handshake",
+   "sim_id": null,
+   "archetype": "refusal_control",
+   "prompt_vi": "Mô phỏng bắt tay ba bước TCP giữa máy khách và máy chủ.",
+   "expected_status": "unsupported",
+   "expected_route": null,
+   "mechanism": null,
+   "note": "Advanced-TCP từ chối trung thực ở classify (khoá cur-t12-tcp-advanced).",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Bắt tay ba bước TCP",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "rule_derivable"
+    },
+    "classify_seq": [
+     {
+      "status": "unsupported",
+      "simulation_id": null,
+      "reason": "Bắt tay ba bước / máy trạng thái giao thức vượt năng lực v1 — trả unsupported trung thực."
+     }
+    ],
+    "simulate_seq": []
+   }
+  },
+  {
+   "case_id": "aud-control-representation-ok",
+   "sim_id": null,
+   "archetype": "refusal_control",
+   "prompt_vi": "Vẽ sơ đồ ba trạm nối tiếp nhau, hiện dần từng trạm theo mô tả cho sẵn.",
+   "expected_status": "ok",
+   "expected_route": "generic.rule_scene",
+   "mechanism": null,
+   "note": "ĐỐI CHỨNG chống chặn oan: biểu diễn khai báo thuần túy PHẢI được generic nhận.",
+   "script": {
+    "analysis": {
+     "objects": [
+      "đối tượng"
+     ],
+     "data": [
+      {
+       "description": "dữ liệu của đề"
+      }
+     ],
+     "relations": [],
+     "processes": [],
+     "constraints": [],
+     "goal": "Vẽ sơ đồ các trạm, hiện dần từng trạm",
+     "input_description": "đầu vào của đề",
+     "output_description": "kết quả mong muốn",
+     "result_ownership": "provided",
+     "scene_construction": "step_by_step",
+     "relation_roles": [
+      "relational"
+     ],
+     "process_roles": [
+      "temporal"
+     ]
+    },
+    "classify_seq": [
+     {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "reason": null
+     }
+    ],
+    "simulate_seq": [
+     "{\"dsl_version\": \"1.0\", \"title\": \"Vẽ sơ đồ các trạm theo mô tả\", \"objects\": [{\"id\": \"s1\", \"type\": \"node\", \"label\": \"Trạm 1\"}, {\"id\": \"s2\", \"type\": \"node\", \"label\": \"Trạm 2\"}, {\"id\": \"s3\", \"type\": \"node\", \"label\": \"Trạm 3\"}, {\"id\": \"e12\", \"type\": \"edge\", \"from\": \"s1\", \"to\": \"s2\"}, {\"id\": \"e23\", \"type\": \"edge\", \"from\": \"s2\", \"to\": \"s3\"}], \"rules\": [], \"interactions\": [], \"processes\": [{\"type\": \"reveal_sequence\", \"steps\": [{\"objects\": [\"s1\"]}, {\"objects\": [\"s2\", \"e12\"]}, {\"objects\": [\"s3\", \"e23\"]}]}]}"
+    ]
+   }
+  }
+ ],
+ "artifact_sha256": {
+  "authenticity_metrics.json": "cb352cf23c3d2e15c567ba56f9bfea4ae2f1a789ffed637e035cfc3b87ced757",
+  "authenticity_results.json": "08f623221a0787add327df5edf3ac24a24f22a4c494235a759b0e50b0c93a219",
+  "curriculum_coverage.json": "8541ef7b292fe7dc1b11e7e02807ee95525ab9a9ce915e67fcaa1f4024475318",
+  "curriculum_gap_report.md": "de78088b3df03f1a02cb92a99435e2c6f810859fe411baecb26d2d5716f157c3",
+  "generic_leak_ledger.json": "4ecc10be0cc2083256ccd4f5b294b8347f68701724100344950f075ada74bfb0",
+  "simulation_authenticity_report.md": "adeffe0fef0cb94262a39f26eb0cbbe629f3f456e411a36cbc8158b263191279"
+ }
+}

@@ -28,19 +28,31 @@ from app.simulation.catalog import CATALOG
 from app.simulation.coverage import coverage_rows
 
 
-def run_offline_audit() -> list[AuditRecord]:
+def _cases(snapshot):
+    """Case của WAVE (§R1 — prompt/note nguyên bản) hoặc registry sống."""
+    return build_audit_cases() if snapshot is None else snapshot.cases
+
+
+def _target_ids(snapshot):
+    """Target của WAVE (§R1) hoặc None ⇒ registry sống."""
+    return None if snapshot is None else list(snapshot.target_ids)
+
+
+def run_offline_audit(snapshot=None) -> list[AuditRecord]:
     """Chạy matrix offline — an toàn trong pytest (guard mạng conftest vẫn
-    bảo vệ: provider scripted chặn TRƯỚC network) lẫn ngoài pytest (CLI)."""
+    bảo vệ: provider scripted chặn TRƯỚC network) lẫn ngoài pytest (CLI).
+
+    ``snapshot`` (§R1): ảnh chụp đầu vào của một wave đã đóng băng."""
     original = pipeline.call_gemini
     try:
-        return run_audit(lambda fake: setattr(pipeline, "call_gemini", fake))
+        return run_audit(lambda fake: setattr(pipeline, "call_gemini", fake), snapshot)
     finally:
         pipeline.call_gemini = original
 
 
 # ── 1. authenticity_results.json ──────────────────────────────
-def build_authenticity_results(records: list[AuditRecord]) -> dict:
-    cases = build_audit_cases()
+def build_authenticity_results(records: list[AuditRecord], snapshot=None) -> dict:
+    cases = _cases(snapshot)
     notes = {c.case_id: c.note for c in cases if c.note}
     prompts = {c.case_id: c.prompt_vi for c in cases}
     rows = []
@@ -51,18 +63,18 @@ def build_authenticity_results(records: list[AuditRecord]) -> dict:
         rows.append(d)
     return {
         "case_records": rows,
-        "target_classifications": classify_targets(records),
+        "target_classifications": classify_targets(records, _target_ids(snapshot)),
     }
 
 
 # ── 2. authenticity_metrics.json ──────────────────────────────
-def build_authenticity_metrics(records: list[AuditRecord]) -> dict:
-    return audit_metrics(records, classify_targets(records))
+def build_authenticity_metrics(records: list[AuditRecord], snapshot=None) -> dict:
+    return audit_metrics(records, classify_targets(records, _target_ids(snapshot)))
 
 
 # ── 3. generic_leak_ledger.json ───────────────────────────────
-def build_generic_leak_ledger_artifact(records: list[AuditRecord]) -> dict:
-    cases = {c.case_id: c for c in build_audit_cases()}
+def build_generic_leak_ledger_artifact(records: list[AuditRecord], snapshot=None) -> dict:
+    cases = {c.case_id: c for c in _cases(snapshot)}
     entries = []
     for e in build_leak_ledger(records):
         c = cases.get(e["case_id"])
@@ -71,11 +83,11 @@ def build_generic_leak_ledger_artifact(records: list[AuditRecord]) -> dict:
 
 
 # ── 4. curriculum_coverage.json ───────────────────────────────
-def build_curriculum_coverage(records: list[AuditRecord]) -> dict:
+def build_curriculum_coverage(records: list[AuditRecord], snapshot=None) -> dict:
     """Nền coverage TỰ ĐỘNG (W0): knowledge units (coverage.py) + phân loại
     authenticity per-target + verdict per intentional-gap + quan sát leak.
     Dashboard đầy đủ (join unit↔target theo knowledge_unit_id) là việc W3."""
-    cls = classify_targets(records)
+    cls = classify_targets(records, _target_ids(snapshot))
     evidence: dict[str, list[str]] = {}
     for r in records:
         if r.sim_id is not None:
@@ -114,9 +126,9 @@ def _near_miss_line(records: list[AuditRecord]) -> str:
         f"3. **{sum(1 for r in nm if r.matched)}/{len(nm)} intentional gap** ({mechs})"
         " bị chặn đúng mã `gate_mechanism_ownership`."
     )
-def build_authenticity_report_md(records: list[AuditRecord]) -> str:
-    m = build_authenticity_metrics(records)
-    cls = classify_targets(records)
+def build_authenticity_report_md(records: list[AuditRecord], snapshot=None) -> str:
+    m = build_authenticity_metrics(records, snapshot)
+    cls = classify_targets(records, _target_ids(snapshot))
     lines = [
         "# Báo cáo Authenticity Audit — M17-Lite Wave 0 (offline)",
         "",
@@ -174,8 +186,8 @@ def build_authenticity_report_md(records: list[AuditRecord]) -> str:
     return "\n".join(lines)
 
 
-def build_gap_report_md(records: list[AuditRecord]) -> str:
-    cov = build_curriculum_coverage(records)
+def build_gap_report_md(records: list[AuditRecord], snapshot=None) -> str:
+    cov = build_curriculum_coverage(records, snapshot)
     lines = [
         "# Báo cáo Curriculum Gap — M17-Lite Wave 0",
         "",
