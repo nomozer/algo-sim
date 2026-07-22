@@ -1,0 +1,1006 @@
+{
+  "schema_version": "1",
+  "run_label": "rc1-l1-analyze-sufficiency",
+  "execution_environment": "local python 3.12.10 on Windows (KHÔNG qua container — Docker Desktop không chạy)",
+  "git_sha": "a274992b1f033fdbde2c4bb3d9e0274349284c1e",
+  "model": "gemini-2.5-flash",
+  "generated_at": "2026-07-22T03:30:35.946784+00:00",
+  "budget": {
+    "max_logical": 14,
+    "max_http": 16,
+    "max_retry_total": 1
+  },
+  "logical_calls": 14,
+  "http_used": 14,
+  "retries": 0,
+  "aborted": null,
+  "metrics": {
+    "valid_runs": 12,
+    "valid_sufficiency_pass": 12,
+    "valid_operation_match": 11,
+    "valid_concrete_data_preserved": 12,
+    "valid_generated_default_used": 0,
+    "insufficient_runs": 2,
+    "insufficient_sufficiency_fail": 2,
+    "insufficient_with_fabricated_evidence": [],
+    "unstable_cases": []
+  },
+  "verdict": "FAIL",
+  "runs": [
+    {
+      "case_id": "L1-V1-finite-sequence",
+      "repeat": 1,
+      "kind": "valid",
+      "prompt": "Cho dãy số 12, 7, 25, 9, 18. Tìm phần tử lớn nhất.",
+      "target": "algorithm.find_max",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"dãy số\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"Dãy số nguyên\",\n      \"labels\": null,\n      \"values\": [\n        12,\n        7,\n        25,\n        9,\n        18\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"processes\": [\n    \"Tìm phần tử lớn nhất\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Tìm phần tử lớn nhất.\",\n  \"input_description\": \"Một dãy số nguyên.\",\n  \"output_description\": \"Phần tử có giá trị lớn nhất trong dãy.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"numeric\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": null,\n  \"process_roles\": [],\n  \"relation_roles\": [],\n  \"requested_mechanisms\": [],\n  \"requested_operations\": [\n    \"single_pass_scan:find_max\"\n  ],\n  \"required_capabilities\": [\n    \"numeric\"\n  ],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [],\n  \"visual_needs\": [\n    \"numeric\"\n  ]\n}",
+      "normalized_objects": [
+        "dãy số"
+      ],
+      "normalized_data": [
+        {
+          "description": "Dãy số nguyên",
+          "labels": null,
+          "values": [
+            12,
+            7,
+            25,
+            9,
+            18
+          ]
+        }
+      ],
+      "normalized_relations": [],
+      "requested_operations": [
+        "single_pass_scan:find_max"
+      ],
+      "requested_mechanisms": [],
+      "numeric_tokens_found": [
+        "12",
+        "7",
+        "25",
+        "9",
+        "18"
+      ],
+      "evidence_normalizer_output": {
+        "target_id": "algorithm.find_max",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "finite_sequence"
+        ],
+        "satisfied": {
+          "finite_sequence": {
+            "source": "data.values",
+            "size": 5
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "finite_sequence"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [
+        "12",
+        "7",
+        "25",
+        "9",
+        "18"
+      ],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "single_pass_scan:find_max"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V1-finite-sequence",
+      "repeat": 2,
+      "kind": "valid",
+      "prompt": "Cho dãy số 12, 7, 25, 9, 18. Tìm phần tử lớn nhất.",
+      "target": "algorithm.find_max",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"dãy số\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"Dãy số\",\n      \"labels\": null,\n      \"values\": [\n        12,\n        7,\n        25,\n        9,\n        18\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"processes\": [\n    \"Tìm phần tử lớn nhất\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Tìm phần tử lớn nhất.\",\n  \"input_description\": \"Một dãy số nguyên.\",\n  \"output_description\": \"Phần tử có giá trị lớn nhất trong dãy.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"numeric\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": null,\n  \"process_roles\": [\n    \"numeric\"\n  ],\n  \"relation_roles\": [],\n  \"requested_mechanisms\": [],\n  \"requested_operations\": [\n    \"single_pass_scan:find_max\"\n  ],\n  \"required_capabilities\": [\n    \"numeric\"\n  ],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [],\n  \"visual_needs\": [\n    \"numeric\"\n  ]\n}",
+      "normalized_objects": [
+        "dãy số"
+      ],
+      "normalized_data": [
+        {
+          "description": "Dãy số",
+          "labels": null,
+          "values": [
+            12,
+            7,
+            25,
+            9,
+            18
+          ]
+        }
+      ],
+      "normalized_relations": [],
+      "requested_operations": [
+        "single_pass_scan:find_max"
+      ],
+      "requested_mechanisms": [],
+      "numeric_tokens_found": [
+        "12",
+        "7",
+        "25",
+        "9",
+        "18"
+      ],
+      "evidence_normalizer_output": {
+        "target_id": "algorithm.find_max",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "finite_sequence"
+        ],
+        "satisfied": {
+          "finite_sequence": {
+            "source": "data.values",
+            "size": 5
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "finite_sequence"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [
+        "12",
+        "7",
+        "25",
+        "9",
+        "18"
+      ],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "single_pass_scan:find_max"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V2-comparison-sort",
+      "repeat": 1,
+      "kind": "valid",
+      "prompt": "Sắp xếp dãy 9, 3, 7, 1, 5 theo thứ tự tăng dần bằng thuật toán sắp xếp chèn.",
+      "target": [
+        "algorithm.bubble_sort",
+        "algorithm.insertion_sort",
+        "algorithm.selection_sort"
+      ],
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"dãy số\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"dãy số ban đầu\",\n      \"labels\": null,\n      \"values\": [\n        9,\n        3,\n        7,\n        1,\n        5\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"processes\": [\n    \"sắp xếp dãy số\"\n  ],\n  \"constraints\": [\n    \"theo thứ tự tăng dần\"\n  ],\n  \"goal\": \"Sắp xếp dãy 9, 3, 7, 1, 5 theo thứ tự tăng dần bằng thuật toán sắp xếp chèn.\",\n  \"input_description\": \"Dãy số nguyên\",\n  \"output_description\": \"Dãy số đã được sắp xếp tăng dần\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"numeric\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": \"shift_into_sorted_prefix\",\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [],\n  \"requested_mechanisms\": [\n    \"shift_into_sorted_prefix\"\n  ],\n  \"requested_operations\": [\n    \"comparison_sort:insertion\"\n  ],\n  \"required_capabilities\": [\n    \"step_by_step_construction\",\n    \"numeric\"\n  ],\n  \"scene_construction\": \"step_by_step\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"numeric\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "dãy số"
+      ],
+      "normalized_data": [
+        {
+          "description": "dãy số ban đầu",
+          "labels": null,
+          "values": [
+            9,
+            3,
+            7,
+            1,
+            5
+          ]
+        }
+      ],
+      "normalized_relations": [],
+      "requested_operations": [
+        "comparison_sort:insertion"
+      ],
+      "requested_mechanisms": [
+        "comparison_sort.shift_into_sorted_prefix"
+      ],
+      "numeric_tokens_found": [
+        "9",
+        "3",
+        "7",
+        "1",
+        "5",
+        "9",
+        "3",
+        "7",
+        "1",
+        "5"
+      ],
+      "evidence_normalizer_output": {
+        "selector_variants": [
+          "algorithm.bubble_sort",
+          "algorithm.insertion_sort",
+          "algorithm.selection_sort"
+        ]
+      },
+      "required_input_fields": [
+        "finite_sequence"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [
+        "9",
+        "3",
+        "7",
+        "1",
+        "5"
+      ],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "comparison_sort:insertion"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V2-comparison-sort",
+      "repeat": 2,
+      "kind": "valid",
+      "prompt": "Sắp xếp dãy 9, 3, 7, 1, 5 theo thứ tự tăng dần bằng thuật toán sắp xếp chèn.",
+      "target": [
+        "algorithm.bubble_sort",
+        "algorithm.insertion_sort",
+        "algorithm.selection_sort"
+      ],
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"dãy số\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"dãy số cần sắp xếp\",\n      \"labels\": null,\n      \"values\": [\n        9,\n        3,\n        7,\n        1,\n        5\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"processes\": [\n    \"sắp xếp dãy số\"\n  ],\n  \"constraints\": [\n    \"thứ tự tăng dần\"\n  ],\n  \"goal\": \"Sắp xếp dãy số đã cho theo thứ tự tăng dần bằng thuật toán sắp xếp chèn.\",\n  \"input_description\": \"Một dãy số nguyên.\",\n  \"output_description\": \"Dãy số đã được sắp xếp tăng dần.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"numeric\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": \"shift_into_sorted_prefix\",\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [],\n  \"requested_mechanisms\": [\n    \"shift_into_sorted_prefix\"\n  ],\n  \"requested_operations\": [\n    \"comparison_sort:insertion\"\n  ],\n  \"required_capabilities\": [\n    \"step_by_step_construction\"\n  ],\n  \"scene_construction\": \"step_by_step\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"numeric\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "dãy số"
+      ],
+      "normalized_data": [
+        {
+          "description": "dãy số cần sắp xếp",
+          "labels": null,
+          "values": [
+            9,
+            3,
+            7,
+            1,
+            5
+          ]
+        }
+      ],
+      "normalized_relations": [],
+      "requested_operations": [
+        "comparison_sort:insertion"
+      ],
+      "requested_mechanisms": [
+        "comparison_sort.shift_into_sorted_prefix"
+      ],
+      "numeric_tokens_found": [
+        "9",
+        "3",
+        "7",
+        "1",
+        "5"
+      ],
+      "evidence_normalizer_output": {
+        "selector_variants": [
+          "algorithm.bubble_sort",
+          "algorithm.insertion_sort",
+          "algorithm.selection_sort"
+        ]
+      },
+      "required_input_fields": [
+        "finite_sequence"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [
+        "9",
+        "3",
+        "7",
+        "1",
+        "5"
+      ],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "comparison_sort:insertion"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V3-base-conversion",
+      "repeat": 1,
+      "kind": "valid",
+      "prompt": "Đổi số 156 ở hệ thập phân sang hệ nhị phân.",
+      "target": "binary.base_conversion",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"số 156\",\n    \"hệ thập phân\",\n    \"hệ nhị phân\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"Số cần đổi\",\n      \"labels\": null,\n      \"values\": [\n        156\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"processes\": [\n    \"Đổi số từ hệ thập phân sang hệ nhị phân\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Đổi số 156 ở hệ thập phân sang hệ nhị phân.\",\n  \"input_description\": \"Một số nguyên dương ở hệ thập phân.\",\n  \"output_description\": \"Biểu diễn của số đó ở hệ nhị phân.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"numeric\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": \"positional_representation.binary_positional_weights\",\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [],\n  \"requested_mechanisms\": [\n    \"positional_representation.binary_positional_weights\"\n  ],\n  \"requested_operations\": [\n    \"positional_representation:decimal_to_binary\"\n  ],\n  \"required_capabilities\": [\n    \"numeric\",\n    \"step_by_step_construction\"\n  ],\n  \"scene_construction\": \"step_by_step\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"numeric\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "số 156",
+        "hệ thập phân",
+        "hệ nhị phân"
+      ],
+      "normalized_data": [
+        {
+          "description": "Số cần đổi",
+          "labels": null,
+          "values": [
+            156
+          ]
+        }
+      ],
+      "normalized_relations": [],
+      "requested_operations": [
+        "positional_representation:decimal_to_binary"
+      ],
+      "requested_mechanisms": [
+        "positional_representation.binary_positional_weights"
+      ],
+      "numeric_tokens_found": [
+        "156",
+        "156",
+        "156"
+      ],
+      "evidence_normalizer_output": {
+        "target_id": "binary.base_conversion",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "conversion_parameters"
+        ],
+        "satisfied": {
+          "conversion_parameters": {
+            "source": "numeric_tokens",
+            "found": [
+              "156",
+              "156",
+              "156"
+            ]
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "conversion_parameters"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [
+        "156"
+      ],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "positional_representation:decimal_to_binary"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V3-base-conversion",
+      "repeat": 2,
+      "kind": "valid",
+      "prompt": "Đổi số 156 ở hệ thập phân sang hệ nhị phân.",
+      "target": "binary.base_conversion",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"số 156\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"Số cần đổi\",\n      \"labels\": null,\n      \"values\": [\n        156\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"processes\": [\n    \"Đổi số từ hệ thập phân sang hệ nhị phân\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Đổi số 156 ở hệ thập phân sang hệ nhị phân.\",\n  \"input_description\": \"Một số nguyên dương ở hệ thập phân.\",\n  \"output_description\": \"Biểu diễn của số đó ở hệ nhị phân.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"numeric\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": \"positional_representation.binary_positional_weights\",\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [],\n  \"requested_mechanisms\": [\n    \"positional_representation.binary_positional_weights\"\n  ],\n  \"requested_operations\": [\n    \"positional_representation:decimal_to_binary\"\n  ],\n  \"required_capabilities\": [\n    \"numeric\",\n    \"step_by_step_construction\"\n  ],\n  \"scene_construction\": \"step_by_step\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"numeric\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "số 156"
+      ],
+      "normalized_data": [
+        {
+          "description": "Số cần đổi",
+          "labels": null,
+          "values": [
+            156
+          ]
+        }
+      ],
+      "normalized_relations": [],
+      "requested_operations": [
+        "positional_representation:decimal_to_binary"
+      ],
+      "requested_mechanisms": [
+        "positional_representation.binary_positional_weights"
+      ],
+      "numeric_tokens_found": [
+        "156",
+        "156",
+        "156"
+      ],
+      "evidence_normalizer_output": {
+        "target_id": "binary.base_conversion",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "conversion_parameters"
+        ],
+        "satisfied": {
+          "conversion_parameters": {
+            "source": "numeric_tokens",
+            "found": [
+              "156",
+              "156",
+              "156"
+            ]
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "conversion_parameters"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [
+        "156"
+      ],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "positional_representation:decimal_to_binary"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V4-boolean-expression",
+      "repeat": 1,
+      "kind": "valid",
+      "prompt": "Mô phỏng biểu thức (A AND B) OR NOT C với A=true, B=false, C=true.",
+      "target": "logic.boolean_dag",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"biến A\",\n    \"biến B\",\n    \"biến C\",\n    \"biểu thức (A AND B) OR NOT C\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"Giá trị của biến A\",\n      \"labels\": [\"A\"],\n      \"values\": [1]\n    },\n    {\n      \"description\": \"Giá trị của biến B\",\n      \"labels\": [\"B\"],\n      \"values\": [0]\n    },\n    {\n      \"description\": \"Giá trị của biến C\",\n      \"labels\": [\"C\"],\n      \"values\": [1]\n    }\n  ],\n  \"relations\": [\n    \"phép toán AND giữa A và B\",\n    \"phép toán NOT của C\",\n    \"phép toán OR giữa (A AND B) và (NOT C)\"\n  ],\n  \"processes\": [\n    \"mô phỏng biểu thức\",\n    \"tính giá trị của biểu thức\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Xác định giá trị cuối cùng của biểu thức (A AND B) OR NOT C.\",\n  \"input_description\": \"Các giá trị logic của các biến A, B, C.\",\n  \"output_description\": \"Giá trị logic cuối cùng của biểu thức.\",\n  \"result_ownership\": \"rule_derivable\",\n  \"entity_roles\": [\n    \"logical\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": null,\n  \"process_roles\": [\n    \"logical\",\n    \"temporal\"\n  ],\n  \"relation_roles\": [\n    \"logical\"\n  ],\n  \"requested_mechanisms\": null,\n  \"requested_operations\": [\n    \"boolean_composition:rule_scene\"\n  ],\n  \"required_capabilities\": [\n    \"logic_rule\",\n    \"static_scene\"\n  ],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"logical\"\n  ]\n}",
+      "normalized_objects": [
+        "biến A",
+        "biến B",
+        "biến C",
+        "biểu thức (A AND B) OR NOT C"
+      ],
+      "normalized_data": [
+        {
+          "description": "Giá trị của biến A",
+          "labels": [
+            "A"
+          ],
+          "values": [
+            1
+          ]
+        },
+        {
+          "description": "Giá trị của biến B",
+          "labels": [
+            "B"
+          ],
+          "values": [
+            0
+          ]
+        },
+        {
+          "description": "Giá trị của biến C",
+          "labels": [
+            "C"
+          ],
+          "values": [
+            1
+          ]
+        }
+      ],
+      "normalized_relations": [
+        "phép toán AND giữa A và B",
+        "phép toán NOT của C",
+        "phép toán OR giữa (A AND B) và (NOT C)"
+      ],
+      "requested_operations": [
+        "boolean_composition:rule_scene"
+      ],
+      "requested_mechanisms": [],
+      "numeric_tokens_found": [
+        "1",
+        "0",
+        "1"
+      ],
+      "evidence_normalizer_output": {
+        "target_id": "logic.boolean_dag",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "boolean_expression"
+        ],
+        "satisfied": {
+          "boolean_expression": {
+            "source": "objects",
+            "objects": 4
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "boolean_expression"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": false,
+      "expected_operations": [
+        "boolean_composition:boolean_dag"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V4-boolean-expression",
+      "repeat": 2,
+      "kind": "valid",
+      "prompt": "Mô phỏng biểu thức (A AND B) OR NOT C với A=true, B=false, C=true.",
+      "target": "logic.boolean_dag",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"biến A\",\n    \"biến B\",\n    \"biến C\",\n    \"phép toán AND\",\n    \"phép toán OR\",\n    \"phép toán NOT\",\n    \"biểu thức (A AND B) OR NOT C\"\n  ],\n  \"data\": [\n    {\n      \"description\": \"Giá trị của biến A\",\n      \"labels\": [\"A\"],\n      \"values\": [1]\n    },\n    {\n      \"description\": \"Giá trị của biến B\",\n      \"labels\": [\"B\"],\n      \"values\": [0]\n    },\n    {\n      \"description\": \"Giá trị của biến C\",\n      \"labels\": [\"C\"],\n      \"values\": [1]\n    }\n  ],\n  \"relations\": [\n    \"A và B là đầu vào của phép AND\",\n    \"Kết quả của (A AND B) và C là đầu vào của phép NOT\",\n    \"Kết quả của (A AND B) và kết quả của NOT C là đầu vào của phép OR\"\n  ],\n  \"processes\": [\n    \"Tính giá trị của (A AND B)\",\n    \"Tính giá trị của NOT C\",\n    \"Tính giá trị của (kết quả A AND B) OR (kết quả NOT C)\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Mô phỏng biểu thức (A AND B) OR NOT C với các giá trị đã cho.\",\n  \"input_description\": \"Các giá trị boolean của các biến A, B, C và một biểu thức logic.\",\n  \"output_description\": \"Giá trị boolean cuối cùng của biểu thức.\",\n  \"result_ownership\": \"rule_derivable\",\n  \"entity_roles\": [\"logical\", \"numeric\"],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": null,\n  \"process_roles\": [\"logical\"],\n  \"relation_roles\": [\"logical\"],\n  \"requested_mechanisms\": [\"none\"],\n  \"requested_operations\": [\"boolean_composition:boolean_dag\"],\n  \"required_capabilities\": [\"logic_rule\", \"static_scene\"],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [],\n  \"visual_needs\": [\"logical\"]\n}",
+      "normalized_objects": [
+        "biến A",
+        "biến B",
+        "biến C",
+        "phép toán AND",
+        "phép toán OR",
+        "phép toán NOT",
+        "biểu thức (A AND B) OR NOT C"
+      ],
+      "normalized_data": [
+        {
+          "description": "Giá trị của biến A",
+          "labels": [
+            "A"
+          ],
+          "values": [
+            1
+          ]
+        },
+        {
+          "description": "Giá trị của biến B",
+          "labels": [
+            "B"
+          ],
+          "values": [
+            0
+          ]
+        },
+        {
+          "description": "Giá trị của biến C",
+          "labels": [
+            "C"
+          ],
+          "values": [
+            1
+          ]
+        }
+      ],
+      "normalized_relations": [
+        "A và B là đầu vào của phép AND",
+        "Kết quả của (A AND B) và C là đầu vào của phép NOT",
+        "Kết quả của (A AND B) và kết quả của NOT C là đầu vào của phép OR"
+      ],
+      "requested_operations": [
+        "boolean_composition:boolean_dag"
+      ],
+      "requested_mechanisms": [],
+      "numeric_tokens_found": [
+        "1",
+        "0",
+        "1"
+      ],
+      "evidence_normalizer_output": {
+        "target_id": "logic.boolean_dag",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "boolean_expression"
+        ],
+        "satisfied": {
+          "boolean_expression": {
+            "source": "objects",
+            "objects": 7
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "boolean_expression"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "boolean_composition:boolean_dag"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V5-graph-traversal",
+      "repeat": 1,
+      "kind": "valid",
+      "prompt": "Duyệt DFS từ đỉnh A trên đồ thị có các cạnh A-B, A-C, B-D, C-E; các đỉnh kề xét theo thứ tự bảng chữ cái.",
+      "target": "network.graph_traversal",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\"đỉnh A\", \"đỉnh B\", \"đỉnh C\", \"đỉnh D\", \"đỉnh E\"],\n  \"data\": [],\n  \"relations\": [\"cạnh A-B\", \"cạnh A-C\", \"cạnh B-D\", \"cạnh C-E\"],\n  \"processes\": [\"duyệt DFS\"],\n  \"constraints\": [\"bắt đầu từ đỉnh A\", \"các đỉnh kề xét theo thứ tự bảng chữ cái\"],\n  \"goal\": \"Duyệt DFS từ đỉnh A trên đồ thị.\",\n  \"input_description\": \"Một đồ thị với các đỉnh và cạnh được cho trước.\",\n  \"output_description\": \"Thứ tự các đỉnh được thăm trong quá trình duyệt DFS.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\"relational\"],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": null,\n  \"process_roles\": [\"temporal\"],\n  \"relation_roles\": [\"relational\"],\n  \"requested_mechanisms\": null,\n  \"requested_operations\": [\"graph_traversal:dfs\"],\n  \"required_capabilities\": [\"nodes_edges\"],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [\"temporal\"],\n  \"visual_needs\": [\"relational\", \"temporal\"]\n}",
+      "normalized_objects": [
+        "đỉnh A",
+        "đỉnh B",
+        "đỉnh C",
+        "đỉnh D",
+        "đỉnh E"
+      ],
+      "normalized_data": [],
+      "normalized_relations": [
+        "cạnh A-B",
+        "cạnh A-C",
+        "cạnh B-D",
+        "cạnh C-E"
+      ],
+      "requested_operations": [
+        "graph_traversal:dfs"
+      ],
+      "requested_mechanisms": [],
+      "numeric_tokens_found": [],
+      "evidence_normalizer_output": {
+        "target_id": "network.graph_traversal",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "graph_structure"
+        ],
+        "satisfied": {
+          "graph_structure": {
+            "source": "relations.named_pair",
+            "linked_items": 4
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "graph_structure"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "graph_traversal:dfs"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V5-graph-traversal",
+      "repeat": 2,
+      "kind": "valid",
+      "prompt": "Duyệt DFS từ đỉnh A trên đồ thị có các cạnh A-B, A-C, B-D, C-E; các đỉnh kề xét theo thứ tự bảng chữ cái.",
+      "target": "network.graph_traversal",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"đỉnh A\",\n    \"đỉnh B\",\n    \"đỉnh C\",\n    \"đỉnh D\",\n    \"đỉnh E\"\n  ],\n  \"data\": [],\n  \"relations\": [\n    \"cạnh A-B\",\n    \"cạnh A-C\",\n    \"cạnh B-D\",\n    \"cạnh C-E\"\n  ],\n  \"processes\": [\n    \"duyệt DFS\"\n  ],\n  \"constraints\": [\n    \"bắt đầu duyệt từ đỉnh A\",\n    \"các đỉnh kề xét theo thứ tự bảng chữ cái\"\n  ],\n  \"goal\": \"Duyệt DFS từ đỉnh A trên đồ thị.\",\n  \"input_description\": \"Một đồ thị với các đỉnh và cạnh được cho trước.\",\n  \"output_description\": \"Thứ tự các đỉnh được thăm trong quá trình duyệt DFS.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"relational\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": null,\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [\n    \"relational\"\n  ],\n  \"requested_mechanisms\": [],\n  \"requested_operations\": [\n    \"graph_traversal:dfs\"\n  ],\n  \"required_capabilities\": [\n    \"nodes_edges\"\n  ],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"relational\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "đỉnh A",
+        "đỉnh B",
+        "đỉnh C",
+        "đỉnh D",
+        "đỉnh E"
+      ],
+      "normalized_data": [],
+      "normalized_relations": [
+        "cạnh A-B",
+        "cạnh A-C",
+        "cạnh B-D",
+        "cạnh C-E"
+      ],
+      "requested_operations": [
+        "graph_traversal:dfs"
+      ],
+      "requested_mechanisms": [],
+      "numeric_tokens_found": [],
+      "evidence_normalizer_output": {
+        "target_id": "network.graph_traversal",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "graph_structure"
+        ],
+        "satisfied": {
+          "graph_structure": {
+            "source": "relations.named_pair",
+            "linked_items": 4
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "graph_structure"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "graph_traversal:dfs"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V6-tree-traversal",
+      "repeat": 1,
+      "kind": "valid",
+      "prompt": "Duyệt preorder cây có A là gốc; B là con trái của A; C là con phải của A; D là con trái của B.",
+      "target": "tree.traversal",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"nút A\",\n    \"nút B\",\n    \"nút C\",\n    \"nút D\"\n  ],\n  \"data\": [],\n  \"relations\": [\n    \"B là con trái của A\",\n    \"C là con phải của A\",\n    \"D là con trái của B\"\n  ],\n  \"processes\": [\n    \"Duyệt preorder cây\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Duyệt preorder cây.\",\n  \"input_description\": \"Cấu trúc cây nhị phân với các nút và quan hệ cha-con.\",\n  \"output_description\": \"Thứ tự các nút được thăm khi duyệt preorder.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"relational\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": \"tree_traversal.preorder\",\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [\n    \"relational\"\n  ],\n  \"requested_mechanisms\": [\n    \"tree_traversal.preorder\"\n  ],\n  \"requested_operations\": [\n    \"tree_traversal:preorder\"\n  ],\n  \"required_capabilities\": [\n    \"nodes_edges\",\n    \"step_by_step_construction\"\n  ],\n  \"scene_construction\": \"step_by_step\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"relational\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "nút A",
+        "nút B",
+        "nút C",
+        "nút D"
+      ],
+      "normalized_data": [],
+      "normalized_relations": [
+        "B là con trái của A",
+        "C là con phải của A",
+        "D là con trái của B"
+      ],
+      "requested_operations": [
+        "tree_traversal:preorder"
+      ],
+      "requested_mechanisms": [
+        "tree_traversal.preorder"
+      ],
+      "numeric_tokens_found": [],
+      "evidence_normalizer_output": {
+        "target_id": "tree.traversal",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "tree_structure"
+        ],
+        "satisfied": {
+          "tree_structure": {
+            "source": "relations.named_pair",
+            "linked_items": 3
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "tree_structure"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "tree_traversal:preorder"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-V6-tree-traversal",
+      "repeat": 2,
+      "kind": "valid",
+      "prompt": "Duyệt preorder cây có A là gốc; B là con trái của A; C là con phải của A; D là con trái của B.",
+      "target": "tree.traversal",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"nút A\",\n    \"nút B\",\n    \"nút C\",\n    \"nút D\",\n    \"cây\"\n  ],\n  \"data\": [],\n  \"relations\": [\n    \"B là con trái của A\",\n    \"C là con phải của A\",\n    \"D là con trái của B\"\n  ],\n  \"processes\": [\n    \"duyệt preorder\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Duyệt preorder cây.\",\n  \"input_description\": \"Cấu trúc cây nhị phân với các nút và quan hệ cha-con.\",\n  \"output_description\": \"Thứ tự các nút được thăm theo duyệt preorder.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"relational\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": null,\n  \"prescribed_procedure\": \"tree_traversal.preorder\",\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [\n    \"relational\"\n  ],\n  \"requested_mechanisms\": [\n    \"tree_traversal.preorder\"\n  ],\n  \"requested_operations\": [\n    \"tree_traversal:preorder\"\n  ],\n  \"required_capabilities\": [\n    \"nodes_edges\"\n  ],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"relational\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "nút A",
+        "nút B",
+        "nút C",
+        "nút D",
+        "cây"
+      ],
+      "normalized_data": [],
+      "normalized_relations": [
+        "B là con trái của A",
+        "C là con phải của A",
+        "D là con trái của B"
+      ],
+      "requested_operations": [
+        "tree_traversal:preorder"
+      ],
+      "requested_mechanisms": [
+        "tree_traversal.preorder"
+      ],
+      "numeric_tokens_found": [],
+      "evidence_normalizer_output": {
+        "target_id": "tree.traversal",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "tree_structure"
+        ],
+        "satisfied": {
+          "tree_structure": {
+            "source": "relations.named_pair",
+            "linked_items": 3
+          }
+        },
+        "missing": [],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "tree_structure"
+      ],
+      "missing_input_fields": [],
+      "sufficiency_decision": "PASS",
+      "reason_code": null,
+      "learner_message": null,
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "tree_traversal:preorder"
+      ],
+      "fabricated_evidence": true,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-I1-sequence-missing",
+      "repeat": 1,
+      "kind": "insufficient",
+      "prompt": "Mô phỏng tìm phần tử lớn nhất trong một dãy số.",
+      "target": "algorithm.find_max",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"dãy số\",\n    \"phần tử lớn nhất\"\n  ],\n  \"data\": [],\n  \"relations\": [],\n  \"processes\": [\n    \"tìm phần tử lớn nhất\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Mô phỏng quá trình tìm phần tử lớn nhất trong một dãy số.\",\n  \"input_description\": \"Một dãy số.\",\n  \"output_description\": \"Phần tử lớn nhất trong dãy số.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"numeric\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": \"Đề bài không cung cấp dãy số cụ thể.\",\n  \"prescribed_procedure\": null,\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [],\n  \"requested_mechanisms\": [],\n  \"requested_operations\": [\n    \"single_pass_scan:find_max\"\n  ],\n  \"required_capabilities\": [\n    \"numeric\"\n  ],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"numeric\"\n  ]\n}",
+      "normalized_objects": [
+        "dãy số",
+        "phần tử lớn nhất"
+      ],
+      "normalized_data": [],
+      "normalized_relations": [],
+      "requested_operations": [
+        "single_pass_scan:find_max"
+      ],
+      "requested_mechanisms": [],
+      "numeric_tokens_found": [],
+      "evidence_normalizer_output": {
+        "target_id": "algorithm.find_max",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "finite_sequence"
+        ],
+        "satisfied": {},
+        "missing": [
+          "finite_sequence"
+        ],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "finite_sequence"
+      ],
+      "missing_input_fields": [
+        "finite_sequence"
+      ],
+      "sufficiency_decision": "FAIL",
+      "reason_code": "input_insufficient",
+      "learner_message": "Đề chưa cho dãy số cụ thể để mô phỏng. Em hãy nêu rõ dãy (ví dụ: 12, 7, 25, 9) rồi thử lại — hệ không tự nghĩ ra số liệu thay em.",
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "single_pass_scan:find_max"
+      ],
+      "fabricated_evidence": false,
+      "generated_default_used": false
+    },
+    {
+      "case_id": "L1-I2-tree-missing",
+      "repeat": 1,
+      "kind": "insufficient",
+      "prompt": "Mô phỏng duyệt cây preorder.",
+      "target": "tree.traversal",
+      "http_used": 1,
+      "raw_analyze_response": "{\n  \"objects\": [\n    \"cây nhị phân\",\n    \"các nút của cây\"\n  ],\n  \"data\": [],\n  \"relations\": [\n    \"quan hệ cha-con giữa các nút\"\n  ],\n  \"processes\": [\n    \"duyệt cây preorder\"\n  ],\n  \"constraints\": [],\n  \"goal\": \"Mô phỏng duyệt cây preorder.\",\n  \"input_description\": \"Một cây nhị phân.\",\n  \"output_description\": \"Thứ tự các nút được thăm theo duyệt preorder.\",\n  \"result_ownership\": \"algorithmic\",\n  \"entity_roles\": [\n    \"relational\"\n  ],\n  \"interaction_needs\": [],\n  \"notes\": \"Đề bài không cung cấp cấu trúc cây cụ thể hay dữ liệu nút.\",\n  \"prescribed_procedure\": \"tree_traversal.preorder\",\n  \"process_roles\": [\n    \"temporal\"\n  ],\n  \"relation_roles\": [\n    \"relational\"\n  ],\n  \"requested_mechanisms\": [\n    \"tree_traversal.preorder\"\n  ],\n  \"requested_operations\": [\n    \"tree_traversal:preorder\"\n  ],\n  \"required_capabilities\": [\n    \"nodes_edges\",\n    \"temporal\"\n  ],\n  \"scene_construction\": \"prebuilt\",\n  \"temporal_needs\": [\n    \"temporal\"\n  ],\n  \"visual_needs\": [\n    \"relational\",\n    \"temporal\"\n  ]\n}",
+      "normalized_objects": [
+        "cây nhị phân",
+        "các nút của cây"
+      ],
+      "normalized_data": [],
+      "normalized_relations": [
+        "quan hệ cha-con giữa các nút"
+      ],
+      "requested_operations": [
+        "tree_traversal:preorder"
+      ],
+      "requested_mechanisms": [
+        "tree_traversal.preorder"
+      ],
+      "numeric_tokens_found": [],
+      "evidence_normalizer_output": {
+        "target_id": "tree.traversal",
+        "declared": true,
+        "applicability": "APPLICABLE",
+        "required": [
+          "tree_structure"
+        ],
+        "satisfied": {},
+        "missing": [
+          "tree_structure"
+        ],
+        "generated_defaults_allowed": false
+      },
+      "required_input_fields": [
+        "tree_structure"
+      ],
+      "missing_input_fields": [
+        "tree_structure"
+      ],
+      "sufficiency_decision": "FAIL",
+      "reason_code": "structure_insufficient",
+      "learner_message": "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể (các nút có tên và quan hệ con trái/con phải giữa chúng). Hãy mô tả rõ cây (ví dụ: gốc A, A có con trái B và con phải C…) rồi thử lại — hệ không tự dựng cây thay bạn.",
+      "expected_tokens": [],
+      "missing_expected_tokens": [],
+      "concrete_data_preserved": true,
+      "operation_match": true,
+      "expected_operations": [
+        "tree_traversal:preorder"
+      ],
+      "fabricated_evidence": false,
+      "generated_default_used": false
+    }
+  ],
+  "rescored_at": "2026-07-22T03:35:54.279832+00:00",
+  "rescore_note": "Chấm lại từ raw analyze ĐÃ LƯU (0 HTTP). Dữ liệu live không đổi. Sửa hai lỗi trong LUẬT ĐO của lần chấm đầu: (1) V3 đòi token '10'/'2' trong khi đề viết cơ số bằng chữ, và kỳ vọng operation base_conversion trong khi decimal_to_binary mới đúng; (2) cờ 'bịa dữ liệu' tính mọi objects/data/relations khác rỗng là bịa, nên gắn cờ oan cả hai đối chứng — nay chỉ tính DỮ KIỆN CÓ ĐỊNH DANH (giá trị/nhãn/quan hệ hai nút có tên)."
+}

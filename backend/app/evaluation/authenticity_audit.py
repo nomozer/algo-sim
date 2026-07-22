@@ -162,6 +162,9 @@ def run_audit(set_provider, snapshot=None) -> list[AuditRecord]:
         set_provider(fake)
         rec = asyncio.run(_run_one(case))
         if snapshot is not None:
+            # `raw_gates` KHÔNG phải field dataclass ⇒ `asdict` bỏ qua ⇒ artifact
+            # không đổi một byte. Nó chỉ để §E phân loại "vì sao case này đổi".
+            rec.raw_gates = list(rec.gates)
             rec.gates = [g for g in rec.gates if g.get("gate") in snapshot.gate_names]
         records.append(rec)
     return records

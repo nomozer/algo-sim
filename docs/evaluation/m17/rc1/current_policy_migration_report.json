@@ -1,0 +1,1845 @@
+{
+  "schema_version": "1",
+  "mode": "current_policy_replay",
+  "generated_at": "2026-07-22T03:42:25.586204+00:00",
+  "note": "Đầu vào lịch sử BẤT BIẾN + pipeline HIỆN TẠI. Kết quả được phép đổi. Artifact đã công bố KHÔNG bị sửa.",
+  "waves": [
+    {
+      "schema_version": "1",
+      "mode": "current_policy_replay",
+      "wave_id": "wave0",
+      "input_snapshot_id": "wave0@f1cdce0806bc",
+      "note": "Đầu vào lịch sử BẤT BIẾN chạy qua pipeline/cổng HIỆN TẠI. Kết quả ĐƯỢC PHÉP đổi — đây là báo cáo di trú, KHÔNG phải kiểm byte-identical. Không sửa artifact đã công bố.",
+      "case_count": 55,
+      "change_counts": {
+        "unchanged": 23,
+        "blocked_by_new_gate": 32,
+        "route_now_supported": 0,
+        "route_changed": 0,
+        "status_changed_other": 0
+      },
+      "changed_cases": [
+        {
+          "case_id": "aud-algorithm-binary-search-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-binary-search-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-binary-search-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-binary-search-boundary",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-boundary",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-count-if-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.count_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-count-if-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.count_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-count-if-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.count_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-max-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_max",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-max-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_max",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-max-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_max",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-min-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_min",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-min-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_min",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-min-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_min",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-insertion-sort-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.insertion_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-insertion-sort-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.insertion_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-insertion-sort-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.insertion_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-linear-search-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.linear_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-linear-search-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.linear_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-linear-search-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.linear_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-scan-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.scan",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-scan-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.scan",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-scan-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.scan",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-sum-if-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.sum_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-sum-if-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.sum_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-sum-if-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.sum_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-packet-routing-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.packet_routing",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-packet-routing-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.packet_routing",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-packet-routing-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.packet_routing",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        }
+      ],
+      "unexplained_changes": []
+    },
+    {
+      "schema_version": "1",
+      "mode": "current_policy_replay",
+      "wave_id": "wave1",
+      "input_snapshot_id": "wave1@a7636556332d",
+      "note": "Đầu vào lịch sử BẤT BIẾN chạy qua pipeline/cổng HIỆN TẠI. Kết quả ĐƯỢC PHÉP đổi — đây là báo cáo di trú, KHÔNG phải kiểm byte-identical. Không sửa artifact đã công bố.",
+      "case_count": 68,
+      "change_counts": {
+        "unchanged": 25,
+        "blocked_by_new_gate": 43,
+        "route_now_supported": 0,
+        "route_changed": 0,
+        "status_changed_other": 0
+      },
+      "changed_cases": [
+        {
+          "case_id": "aud-algorithm-binary-search-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-binary-search-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-binary-search-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-binary-search-boundary",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.binary_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-bubble-sort-boundary",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.bubble_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-count-if-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.count_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-count-if-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.count_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-count-if-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.count_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-max-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_max",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-max-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_max",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-max-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_max",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-min-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_min",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-min-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_min",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-find-min-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.find_min",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-insertion-sort-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.insertion_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-insertion-sort-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.insertion_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-insertion-sort-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.insertion_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-linear-search-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.linear_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-linear-search-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.linear_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-linear-search-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.linear_search",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-scan-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.scan",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-scan-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.scan",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-scan-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.scan",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-selection-sort-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.selection_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-selection-sort-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.selection_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-selection-sort-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.selection_sort",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-sum-if-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.sum_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-sum-if-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.sum_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-algorithm-sum-if-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "algorithm.sum_if",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-logic-boolean-dag-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "logic.boolean_dag",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-logic-boolean-dag-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "logic.boolean_dag",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-logic-boolean-dag-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "logic.boolean_dag",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-logic-boolean-dag-boundary",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "logic.boolean_dag",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "input_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-graph-traversal-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.graph_traversal",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-graph-traversal-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.graph_traversal",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-graph-traversal-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.graph_traversal",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-graph-traversal-boundary",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.graph_traversal",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-packet-routing-direct",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.packet_routing",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-packet-routing-paraphrase",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.packet_routing",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        },
+        {
+          "case_id": "aud-network-packet-routing-changed-input",
+          "old_expected_outcome": {
+            "status": "ok",
+            "route": "network.packet_routing",
+            "error_code": null,
+            "failure_category": null
+          },
+          "current_outcome": {
+            "status": "unsupported",
+            "route": null,
+            "error_code": "structure_insufficient",
+            "failure_category": "insufficient_specification"
+          },
+          "changed_gate_or_policy": [
+            {
+              "gate": "input_sufficiency",
+              "introduced_by": "M17-RC1 §C2"
+            }
+          ],
+          "change_kind": "blocked_by_new_gate",
+          "intentional": true,
+          "historical_fixture_violates_current_contract": true
+        }
+      ],
+      "unexplained_changes": []
+    }
+  ],
+  "unexplained_total": 0
+}

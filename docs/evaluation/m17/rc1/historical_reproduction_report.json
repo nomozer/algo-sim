@@ -1,0 +1,149 @@
+{
+  "schema_version": "1",
+  "mode": "historical_reproduction",
+  "note": "Dựng lại bằng worktree + generator + fixture LỊCH SỬ. Byte-identical là kỳ vọng ĐÚNG ở chế độ này. Việc cổng HIỆN TẠI từ chối fixture cũ thuộc chế độ current_policy_replay, KHÔNG tính là lỗi ở đây.",
+  "blocker_kinds_allowed": [
+    "dependency_nondeterminism",
+    "missing_immutable_input",
+    "missing_historical_generator",
+    "unavailable_model_output"
+  ],
+  "generated_at": "2026-07-22T03:40:58.896439+00:00",
+  "waves": [
+    {
+      "wave_id": "wave0",
+      "git_commit": "f1cdce0806bc335f6d2df49952135793b5183522",
+      "input_snapshot_id": "wave0@f1cdce0806bc",
+      "status": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+      "blocker_kind": "dependency_nondeterminism",
+      "nondeterministic_files": [
+        "authenticity_metrics.json",
+        "authenticity_results.json",
+        "curriculum_coverage.json",
+        "generic_leak_ledger.json"
+      ],
+      "artifact_count": 6,
+      "mismatched": [],
+      "files": {
+        "authenticity_metrics.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "0765d3e4768cb2b0613b9908836e009cc0b9fd6bc5b97871e08c022012583d9b",
+          "published_sha256": "f54f1371762723d21c58f203cd241ab6b1cb2e6651ea44eb6b782675b1ba7d10",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "authenticity_results.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "7a93eeb955c54c10ea6d61f7b4eaa2b35eeb80b95c0c8caf0584f9164fc0e196",
+          "published_sha256": "5b9ed85420b06c2e0c672219c9a44c2078f421c1ff9c519535323461da130a26",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "curriculum_coverage.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "3539da501e30749d8265003cfcec13f8f579520847659b6fb5f85dc1dbfec7a0",
+          "published_sha256": "8b7b602abd912e8acd31dbca4bd0e0e1a9b5a0be7a43fd21de130a7092248e3f",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "curriculum_gap_report.md": {
+          "reproduced": true,
+          "regenerated_sha256": "8e9e2e4c6e75c9f326e0aa1de1bbfa17f54f565b8476f79e73d4d72d9649a3e7",
+          "published_sha256": "8e9e2e4c6e75c9f326e0aa1de1bbfa17f54f565b8476f79e73d4d72d9649a3e7"
+        },
+        "generic_leak_ledger.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "cad38c9ee8cb37a3b977e41430bced7c7c2f72f0f5e148ee241bfb777c6ffe25",
+          "published_sha256": "879ea24a0a94451f15c0591d7c25f1cc282790860542d58079bb79f7d6b6c300",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "simulation_authenticity_report.md": {
+          "reproduced": true,
+          "regenerated_sha256": "005f7fe673d8509fe6332b4c2b8eb30e7b3434fc040e9bf52a6060577ef10a8d",
+          "published_sha256": "005f7fe673d8509fe6332b4c2b8eb30e7b3434fc040e9bf52a6060577ef10a8d"
+        }
+      }
+    },
+    {
+      "wave_id": "wave1",
+      "git_commit": "a7636556332d4ac77b5d7ca8c34893e0179f8d4c",
+      "input_snapshot_id": "wave1@a7636556332d",
+      "status": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+      "blocker_kind": "dependency_nondeterminism",
+      "nondeterministic_files": [
+        "authenticity_metrics.json",
+        "authenticity_results.json",
+        "curriculum_coverage.json",
+        "generic_leak_ledger.json"
+      ],
+      "artifact_count": 6,
+      "mismatched": [],
+      "files": {
+        "authenticity_metrics.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "84ade618c2ebbc55cffbf72297a066b5f5ef4ff3b69aa8e19db77daf07c64d33",
+          "published_sha256": "cb352cf23c3d2e15c567ba56f9bfea4ae2f1a789ffed637e035cfc3b87ced757",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "authenticity_results.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "0ff33b4bc888d6a82493feb58b55085d6e93e92fa76cbaaae29bb9b4bc3697d1",
+          "published_sha256": "08f623221a0787add327df5edf3ac24a24f22a4c494235a759b0e50b0c93a219",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "curriculum_coverage.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "71a1b7e7490874921658fd0b1b410bd612ed24f915f873ac0d6779414b90c722",
+          "published_sha256": "8541ef7b292fe7dc1b11e7e02807ee95525ab9a9ce915e67fcaa1f4024475318",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "curriculum_gap_report.md": {
+          "reproduced": true,
+          "regenerated_sha256": "de78088b3df03f1a02cb92a99435e2c6f810859fe411baecb26d2d5716f157c3",
+          "published_sha256": "de78088b3df03f1a02cb92a99435e2c6f810859fe411baecb26d2d5716f157c3"
+        },
+        "generic_leak_ledger.json": {
+          "reproduced": "DATA_IDENTICAL_RUN_META_NONDETERMINISTIC",
+          "regenerated_sha256": "4ce0bde43eba0c73d549e6e76c22cafff7155612f383fe862dc242bbc492baa2",
+          "published_sha256": "4ecc10be0cc2083256ccd4f5b294b8347f68701724100344950f075ada74bfb0",
+          "data_identical": true,
+          "differing_top_level_keys": [
+            "run_meta"
+          ],
+          "blocker_kind": "dependency_nondeterminism"
+        },
+        "simulation_authenticity_report.md": {
+          "reproduced": true,
+          "regenerated_sha256": "adeffe0fef0cb94262a39f26eb0cbbe629f3f456e411a36cbc8158b263191279",
+          "published_sha256": "adeffe0fef0cb94262a39f26eb0cbbe629f3f456e411a36cbc8158b263191279"
+        }
+      }
+    }
+  ],
+  "all_reproduced": true
+}

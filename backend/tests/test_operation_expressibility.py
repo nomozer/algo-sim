@@ -209,6 +209,42 @@ def test_e2e_nhanh_selector_pha2_dung_variant_da_resolve(monkeypatch):
     assert env["completeness"]["dropped_operations"] == ["comparison_sort:insertion"]
 
 
+@pytest.mark.xfail(
+    strict=True,
+    reason=(
+        "M17-RC1 §L1 phát hiện — DEFECT MỞ, chờ quyết định, KHÔNG tự vá. "
+        "Live chạy cùng một đề mạch logic hai lần: lần 1 analyze khai "
+        "`boolean_composition:rule_scene`, lần 2 khai `:boolean_dag`. Khi "
+        "classify route ĐÚNG tới logic.boolean_dag mà analyze lỡ khai operation "
+        "ANH EM cùng family (do target khác sở hữu), PHA 2 tính "
+        "dropped_operations=[rule_scene] → semantic_incomplete: TỪ CHỐI OAN một "
+        "đề hoàn toàn hợp lệ. Đã chứng minh bằng CHÍNH payload analyze thật của "
+        "L1-V4 #1. Phơi ra ở mọi family có nhiều target sở hữu operation khác "
+        "nhau: boolean_composition (3), single_pass_scan (6), graph_traversal "
+        "(2), positional_representation (2). strict=True để khi vá xong test "
+        "xanh thì pytest báo đỏ, buộc xoá marker."
+    ),
+)
+def test_operation_anh_em_cung_family_khong_duoc_lam_tu_choi_oan(monkeypatch):
+    """analyze khai operation anh em trong CÙNG family ⇏ đề bị từ chối."""
+    from app.evaluation.authenticity_fixtures import _booldag_cfg
+
+    env = _run(monkeypatch, [
+        _an("Mô phỏng mạch (A AND B) OR NOT C", ["boolean_composition:rule_scene"],
+            objects=["biến A", "biến B", "biến C", "phép AND", "phép OR"],
+            relations=["A và B vào phép AND", "NOT C vào phép OR"]),
+        _cls("logic.boolean_dag"),
+        _booldag_cfg([{"id": "A", "value": 1}, {"id": "B", "value": 0},
+                      {"id": "C", "value": 1}],
+                     [{"id": "g1", "op": "AND", "inputs": ["A", "B"]},
+                      {"id": "g2", "op": "NOT", "inputs": ["C"]},
+                      {"id": "g3", "op": "OR", "inputs": ["g1", "g2"]}], "g3"),
+    ], "Mô phỏng biểu thức (A AND B) OR NOT C với A=true, B=false, C=true.")
+    assert env["status"] == "ok", (
+        f"từ chối oan: {env.get('error_code')} · "
+        f"dropped={(env.get('completeness') or {}).get('dropped_operations')}")
+
+
 # ── MỌI đường trả envelope ok phải qua PHA 2 ─────────────────────
 def test_moi_duong_tra_ok_deu_qua_phase2():
     """Khoá cấu trúc: đếm call site `_completeness_phase2` phải BẰNG số đường
