@@ -4,7 +4,7 @@
   "source_identity": {
     "git_sha": "unknown",
     "build_timestamp": "unknown",
-    "cache_version": "16",
+    "cache_version": "17",
     "family_count": 9,
     "target_count": 19,
     "ai_reachable_target_count": 19,
@@ -237,6 +237,10 @@
       "requested_requirements": [
         "tree_traversal.inorder"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "tree_traversal.inorder"
       ],
@@ -244,6 +248,9 @@
         "tree_traversal.inorder"
       ],
       "represented_requirements": [
+        "tree_traversal.inorder"
+      ],
+      "represented_mechanisms": [
         "tree_traversal.inorder"
       ],
       "dropped_requirements": [],
@@ -268,6 +275,10 @@
         "tree_traversal.postorder",
         "tree_traversal.preorder"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "tree_traversal.inorder",
         "tree_traversal.level_order",
@@ -281,6 +292,7 @@
         "tree_traversal.preorder"
       ],
       "represented_requirements": [],
+      "represented_mechanisms": [],
       "dropped_requirements": [
         "tree_traversal.inorder",
         "tree_traversal.level_order",
@@ -312,6 +324,10 @@
       "requested_requirements": [
         "comparison_sort.adjacent_compare_swap"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "comparison_sort.adjacent_compare_swap"
       ],
@@ -319,6 +335,9 @@
         "comparison_sort.adjacent_compare_swap"
       ],
       "represented_requirements": [
+        "comparison_sort.adjacent_compare_swap"
+      ],
+      "represented_mechanisms": [
         "comparison_sort.adjacent_compare_swap"
       ],
       "dropped_requirements": [],
@@ -344,6 +363,10 @@
         "comparison_sort.select_extreme_repeated",
         "comparison_sort.shift_into_sorted_prefix"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "comparison_sort.adjacent_compare_swap",
         "comparison_sort.other_unspecified",
@@ -359,6 +382,7 @@
         "comparison_sort.shift_into_sorted_prefix"
       ],
       "represented_requirements": [],
+      "represented_mechanisms": [],
       "dropped_requirements": [
         "comparison_sort.adjacent_compare_swap",
         "comparison_sort.other_unspecified",
@@ -392,6 +416,10 @@
       "requested_requirements": [
         "graph_traversal.breadth_first"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "graph_traversal.breadth_first"
       ],
@@ -399,6 +427,9 @@
         "graph_traversal.breadth_first"
       ],
       "represented_requirements": [
+        "graph_traversal.breadth_first"
+      ],
+      "represented_mechanisms": [
         "graph_traversal.breadth_first"
       ],
       "dropped_requirements": [],
@@ -422,6 +453,10 @@
         "graph_traversal.depth_first",
         "graph_traversal.unweighted_hop_bfs"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "graph_traversal.breadth_first",
         "graph_traversal.depth_first",
@@ -433,6 +468,7 @@
         "graph_traversal.unweighted_hop_bfs"
       ],
       "represented_requirements": [],
+      "represented_mechanisms": [],
       "dropped_requirements": [
         "graph_traversal.breadth_first",
         "graph_traversal.depth_first",
@@ -462,6 +498,10 @@
       "requested_requirements": [
         "positional_representation.binary_positional_weights"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "positional_representation.binary_positional_weights"
       ],
@@ -469,6 +509,9 @@
         "positional_representation.binary_positional_weights"
       ],
       "represented_requirements": [
+        "positional_representation.binary_positional_weights"
+      ],
+      "represented_mechanisms": [
         "positional_representation.binary_positional_weights"
       ],
       "dropped_requirements": [],
@@ -491,6 +534,10 @@
         "positional_representation.binary_positional_weights",
         "positional_representation.non_binary_base"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "positional_representation.binary_positional_weights",
         "positional_representation.non_binary_base"
@@ -500,6 +547,7 @@
         "positional_representation.non_binary_base"
       ],
       "represented_requirements": [],
+      "represented_mechanisms": [],
       "dropped_requirements": [
         "positional_representation.binary_positional_weights",
         "positional_representation.non_binary_base"
@@ -527,6 +575,10 @@
       "requested_requirements": [
         "interval_elimination.halve_sorted_interval"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "interval_elimination.halve_sorted_interval"
       ],
@@ -534,6 +586,9 @@
         "interval_elimination.halve_sorted_interval"
       ],
       "represented_requirements": [
+        "interval_elimination.halve_sorted_interval"
+      ],
+      "represented_mechanisms": [
         "interval_elimination.halve_sorted_interval"
       ],
       "dropped_requirements": [],
@@ -555,6 +610,10 @@
       "requested_requirements": [
         "single_pass_scan.accumulate_conditional"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "single_pass_scan.accumulate_conditional"
       ],
@@ -562,6 +621,9 @@
         "single_pass_scan.accumulate_conditional"
       ],
       "represented_requirements": [
+        "single_pass_scan.accumulate_conditional"
+      ],
+      "represented_mechanisms": [
         "single_pass_scan.accumulate_conditional"
       ],
       "dropped_requirements": [],
@@ -587,6 +649,10 @@
         "single_pass_scan.find_equal_early_stop",
         "single_pass_scan.track_extreme"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "single_pass_scan.accumulate_conditional",
         "single_pass_scan.configured_single_pass",
@@ -602,6 +668,7 @@
         "single_pass_scan.track_extreme"
       ],
       "represented_requirements": [],
+      "represented_mechanisms": [],
       "dropped_requirements": [
         "single_pass_scan.accumulate_conditional",
         "single_pass_scan.configured_single_pass",
@@ -635,6 +702,10 @@
       "requested_requirements": [
         "boolean_composition.bounded_gate_dag"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "boolean_composition.bounded_gate_dag"
       ],
@@ -642,6 +713,9 @@
         "boolean_composition.bounded_gate_dag"
       ],
       "represented_requirements": [
+        "boolean_composition.bounded_gate_dag"
+      ],
+      "represented_mechanisms": [
         "boolean_composition.bounded_gate_dag"
       ],
       "dropped_requirements": [],
@@ -665,6 +739,10 @@
         "boolean_composition.composed_rule_dag",
         "boolean_composition.single_gate_truth_table"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "boolean_composition.bounded_gate_dag",
         "boolean_composition.composed_rule_dag",
@@ -676,6 +754,11 @@
         "boolean_composition.single_gate_truth_table"
       ],
       "represented_requirements": [
+        "boolean_composition.bounded_gate_dag",
+        "boolean_composition.composed_rule_dag",
+        "boolean_composition.single_gate_truth_table"
+      ],
+      "represented_mechanisms": [
         "boolean_composition.bounded_gate_dag",
         "boolean_composition.composed_rule_dag",
         "boolean_composition.single_gate_truth_table"
@@ -699,6 +782,10 @@
       "requested_requirements": [
         "layered_pdu_transform.encapsulate_decapsulate_4layer"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "layered_pdu_transform.encapsulate_decapsulate_4layer"
       ],
@@ -706,6 +793,9 @@
         "layered_pdu_transform.encapsulate_decapsulate_4layer"
       ],
       "represented_requirements": [
+        "layered_pdu_transform.encapsulate_decapsulate_4layer"
+      ],
+      "represented_mechanisms": [
         "layered_pdu_transform.encapsulate_decapsulate_4layer"
       ],
       "dropped_requirements": [],
@@ -727,6 +817,10 @@
       "requested_requirements": [
         "structural_progressive_representation.move_along_path"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "structural_progressive_representation.move_along_path"
       ],
@@ -734,6 +828,9 @@
         "structural_progressive_representation.move_along_path"
       ],
       "represented_requirements": [
+        "structural_progressive_representation.move_along_path"
+      ],
+      "represented_mechanisms": [
         "structural_progressive_representation.move_along_path"
       ],
       "dropped_requirements": [],
@@ -756,6 +853,10 @@
         "structural_progressive_representation.move_along_path",
         "structural_progressive_representation.reveal_sequence"
       ],
+      "requested_operations": [],
+      "normalized_requested_operations": [],
+      "represented_operations": [],
+      "dropped_operations": [],
       "normalized_requested_requirements": [
         "structural_progressive_representation.move_along_path",
         "structural_progressive_representation.reveal_sequence"
@@ -765,6 +866,10 @@
         "structural_progressive_representation.reveal_sequence"
       ],
       "represented_requirements": [
+        "structural_progressive_representation.move_along_path",
+        "structural_progressive_representation.reveal_sequence"
+      ],
+      "represented_mechanisms": [
         "structural_progressive_representation.move_along_path",
         "structural_progressive_representation.reveal_sequence"
       ],
