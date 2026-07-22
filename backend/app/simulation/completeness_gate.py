@@ -36,10 +36,13 @@ from app.simulation.operation_policy import (
 )
 from app.simulation.operations import (
     OPERATIONS,
+    canonical_requirements,
     operation_family,
     operation_labels,
     operations_for_family,
     operations_of_target,
+    satisfies_semantic_operations,
+    semantic_label,
 )
 
 
@@ -89,6 +92,16 @@ def _ops_scope(operations: list[str], families: set[str]) -> list[str]:
     return [o for o in operations if operation_family(o) in families]
 
 
+def requested_semantic(analysis: dict, families: set[str]):
+    """§C1.1 — YÊU CẦU SEMANTIC chuẩn hoá trong phạm vi family của route cuối.
+
+    Đây là bước sửa lỗi V4: gợi ý target thô (`rule_scene` vs `boolean_dag`)
+    được quy về CÙNG một `boolean.evaluate_expression`, còn `find_max` và
+    `find_min` vẫn là HAI yêu cầu vì khác `operation_id`."""
+    return canonical_requirements(
+        _ops_scope(normalized_requested_operations(analysis), families))
+
+
 def _mech_scope(requested: list[str], families: set[str]) -> list[str]:
     """Chỉ xét cơ chế THUỘC family của route cuối — cơ chế khác họ đã do
     route-consistency gate (M15 khoá 3) xử lý, không lấn sân."""
@@ -119,12 +132,15 @@ def check_requested_combination(
         pol = policy_for_family(fam)
         fam_ops = [o for o in ops if operation_family(o) == fam]
         fam_mechs = [m for m in mechs if mechanism_family(m) == fam]
+        # §C1.1: đếm YÊU CẦU SEMANTIC, không đếm gợi ý target. Ba target logic
+        # cùng đáp ứng một `boolean.evaluate_expression` ⇒ MỘT yêu cầu.
+        fam_reqs = canonical_requirements(fam_ops)
 
         # kênh OPERATION (chính)
-        if len(fam_ops) > max(pol.max_operations, 1) or (
-            pol.cardinality == SINGLE and len(fam_ops) > 1
+        if len(fam_reqs) > max(pol.max_operations, 1) or (
+            pol.cardinality == SINGLE and len(fam_reqs) > 1
         ):
-            labels = operation_labels(fam_ops)
+            labels = [semantic_label(r) for r in fam_reqs]
             return (
                 ErrorCode.MULTIPLE_OPERATIONS_NOT_SUPPORTED,
                 _learner_message(labels, pol.note),
@@ -133,11 +149,12 @@ def check_requested_combination(
                     "operation_cardinality": pol.cardinality,
                     "max_operations": pol.max_operations,
                     "requested_operations": fam_ops,
+                    "requested_semantic_requirements": [r.as_dict() for r in fam_reqs],
                     "requested_operation_labels": labels,
                     "supported_operations": operations_for_family(fam),
                     "requested_in_family": fam_mechs,
-                    "unsupported_combinations": [fam_ops],
-                    "detected_by": "operation",
+                    "unsupported_combinations": [[r.label_key() for r in fam_reqs]],
+                    "detected_by": "semantic_operation",
                     "policy_note": pol.note,
                 },
             )
@@ -197,18 +214,37 @@ def check_represented_coverage(
         v = config.get("variant")
         variant = v if isinstance(v, str) else None
 
+    # §C1.1 — so ở TẦNG SEMANTIC. Route chọn implementation; nó KHÔNG được xoá
+    # yêu cầu của người dùng, nhưng cũng không bị phạt khi analyze gợi ý một
+    # target ANH EM cùng đáp ứng đúng yêu cầu đó.
     req_ops = _ops_scope(normalized_requested_operations(analysis), families)
+    req_sem = canonical_requirements(req_ops)
+    rep_sem = satisfies_semantic_operations(target_id, variant) if target_id else []
+    dropped_sem = [r for r in req_sem if r not in rep_sem]
     rep_ops = represented_operations(target_id, variant)
-    dropped_ops = sorted(set(req_ops) - set(rep_ops))
 
     req_mech = _mech_scope(normalized_requested(analysis), families)
     rep_mech = represented_mechanisms(analysis, families, owned, config) if config is not None else []
     dropped_mech = sorted(set(req_mech) - set(rep_mech)) if req_mech else []
 
-    if not dropped_ops and not dropped_mech:
+    evidence = {
+        "requested_operations": req_ops,
+        "requested_semantic_requirements": [r.as_dict() for r in req_sem],
+        "represented_operations": rep_ops,
+        "represented_semantic_operations": [r.as_dict() for r in rep_sem],
+        "represented_semantic_variants": sorted(
+            {r.variant_id for r in rep_sem if r.variant_id}),
+        "dropped_semantic_requirements": [r.as_dict() for r in dropped_sem],
+        "dropped_operations": [r.label_key() for r in dropped_sem],
+        "dropped_operation_labels": [semantic_label(r) for r in dropped_sem],
+        "requested_in_family": req_mech,
+        "represented": rep_mech,
+        "dropped_requirements": dropped_mech,
+    }
+    if not dropped_sem and not dropped_mech:
         return None
 
-    labels = operation_labels(dropped_ops) or dropped_mech
+    labels = [semantic_label(r) for r in dropped_sem] or dropped_mech
     return (
         ErrorCode.SEMANTIC_INCOMPLETE,
         (
@@ -217,15 +253,7 @@ def check_represented_coverage(
             "Hệ không trả lời nửa vời: em hãy tách đề thành từng yêu cầu riêng "
             "để xem đủ."
         ),
-        {
-            "requested_operations": req_ops,
-            "represented_operations": rep_ops,
-            "dropped_operations": dropped_ops,
-            "dropped_operation_labels": operation_labels(dropped_ops),
-            "requested_in_family": req_mech,
-            "represented": rep_mech,
-            "dropped_requirements": dropped_mech,
-        },
+        evidence,
     )
 
 
@@ -239,6 +267,8 @@ def completeness_report(
         variant = v if isinstance(v, str) else None
 
     req_ops = _ops_scope(normalized_requested_operations(analysis), families)
+    req_sem = canonical_requirements(req_ops)
+    rep_sem = satisfies_semantic_operations(target_id, variant) if target_id else []
     rep_ops = represented_operations(target_id, variant)
     requested = normalized_requested(analysis)
     in_scope = _mech_scope(requested, families)
@@ -252,8 +282,12 @@ def completeness_report(
         if isinstance(analysis, dict) else None,
         "requested_operations": req_ops,
         "normalized_requested_operations": req_ops,
+        "requested_semantic_requirements": [r.as_dict() for r in req_sem],
         "represented_operations": rep_ops,
-        "dropped_operations": sorted(set(req_ops) - set(rep_ops)),
+        "represented_semantic_operations": [r.as_dict() for r in rep_sem],
+        "dropped_semantic_requirements": [
+            r.as_dict() for r in req_sem if r not in rep_sem],
+        "dropped_operations": [r.label_key() for r in req_sem if r not in rep_sem],
         "normalized_requested_requirements": requested,
         "requested_in_family": in_scope,
         "represented_requirements": represented,

@@ -194,7 +194,7 @@ def test_e2e_variant_lech_yeu_cau_bi_pha2_chan(monkeypatch):
     ], "Duyệt cây gốc A theo thứ tự giữa")
     assert env["status"] == "unsupported"
     assert env["error_code"] == "semantic_incomplete"
-    assert env["completeness"]["dropped_operations"] == ["tree_traversal:inorder"]
+    assert env["completeness"]["dropped_operations"] == ["tree.traverse/inorder"]
 
 
 def test_e2e_nhanh_selector_pha2_dung_variant_da_resolve(monkeypatch):
@@ -206,27 +206,20 @@ def test_e2e_nhanh_selector_pha2_dung_variant_da_resolve(monkeypatch):
     ], "Sắp xếp dãy 5 2 9 1 bằng thuật toán chèn")
     assert env["status"] == "unsupported"
     assert env["error_code"] == "semantic_incomplete"
-    assert env["completeness"]["dropped_operations"] == ["comparison_sort:insertion"]
+    assert env["completeness"]["dropped_operations"] == ["sequence.sort/insertion"]
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "M17-RC1 §L1 phát hiện — DEFECT MỞ, chờ quyết định, KHÔNG tự vá. "
-        "Live chạy cùng một đề mạch logic hai lần: lần 1 analyze khai "
-        "`boolean_composition:rule_scene`, lần 2 khai `:boolean_dag`. Khi "
-        "classify route ĐÚNG tới logic.boolean_dag mà analyze lỡ khai operation "
-        "ANH EM cùng family (do target khác sở hữu), PHA 2 tính "
-        "dropped_operations=[rule_scene] → semantic_incomplete: TỪ CHỐI OAN một "
-        "đề hoàn toàn hợp lệ. Đã chứng minh bằng CHÍNH payload analyze thật của "
-        "L1-V4 #1. Phơi ra ở mọi family có nhiều target sở hữu operation khác "
-        "nhau: boolean_composition (3), single_pass_scan (6), graph_traversal "
-        "(2), positional_representation (2). strict=True để khi vá xong test "
-        "xanh thì pytest báo đỏ, buộc xoá marker."
-    ),
-)
 def test_operation_anh_em_cung_family_khong_duoc_lam_tu_choi_oan(monkeypatch):
-    """analyze khai operation anh em trong CÙNG family ⇏ đề bị từ chối."""
+    """§C1.1 — analyze khai operation ANH EM trong CÙNG family ⇏ từ chối oan.
+
+    Live L1-V4 chạy cùng một đề hai lần: lần 1 analyze khai
+    `boolean_composition:rule_scene`, lần 2 khai `:boolean_dag`. Trước §C1.1,
+    route đúng tới logic.boolean_dag lại bị tính dropped=[rule_scene] →
+    semantic_incomplete. Nay cả ba target logic quy về CÙNG một yêu cầu
+    `boolean.evaluate_expression` nên gợi ý dao động không còn đổi phán quyết.
+
+    Route chọn IMPLEMENTATION; nó không xoá yêu cầu, và cũng không bị phạt vì
+    analyze trỏ một target anh em cùng đáp ứng yêu cầu đó."""
     from app.evaluation.authenticity_fixtures import _booldag_cfg
 
     env = _run(monkeypatch, [

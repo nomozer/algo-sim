@@ -37,6 +37,7 @@ from app.simulation.completeness_gate import (  # noqa: E402
     normalized_requested_operations,
 )
 from app.simulation.input_requirements import requirements_for  # noqa: E402
+from app.simulation.operations import canonical_requirements  # noqa: E402
 from app.simulation.structure_gate import linked_node_items  # noqa: E402
 from app.simulation.sufficiency_gate import (  # noqa: E402
     _numeric_tokens,
@@ -178,6 +179,8 @@ def _observe(case: dict, analysis: dict, raw: str) -> dict:
         req = requirements_for(case["target"])
 
     ops = normalized_requested_operations(analysis)
+    canon = canonical_requirements(ops)
+    expected_canon = canonical_requirements(case["expect_operations"])
     missing_tokens = [t for t in case["expect_tokens"] if t not in tokens]
     labelled = [
         d for d in (analysis.get("data") or [])
@@ -202,7 +205,14 @@ def _observe(case: dict, analysis: dict, raw: str) -> dict:
         "expected_tokens": case["expect_tokens"],
         "missing_expected_tokens": missing_tokens,
         "concrete_data_preserved": not missing_tokens,
-        "operation_match": sorted(ops) == sorted(case["expect_operations"]),
+        # §C1.1 — chấm ở TẦNG SEMANTIC, không ở tầng gợi ý target thô. Live V4
+        # cho thấy analyze dao động giữa hai target anh em cho cùng một đề;
+        # điều cần đúng là YÊU CẦU, không phải target hint. Gợi ý thô vẫn được
+        # lưu nguyên ở `requested_operations` để đối chiếu.
+        "canonical_requested_requirements": [r.as_dict() for r in canon],
+        "canonical_expected_requirements": [r.as_dict() for r in expected_canon],
+        "operation_match": canon == expected_canon,
+        "raw_operation_match": sorted(ops) == sorted(case["expect_operations"]),
         "expected_operations": case["expect_operations"],
         # Dữ kiện CÓ ĐỊNH DANH: giá trị số / nhãn phần tử / quan hệ giữa hai nút
         # có tên. Ở case thiếu dữ kiện, bất kỳ thứ nào xuất hiện = analyze BỊA.
@@ -365,7 +375,11 @@ def _rescore(run_json: Path, out: Path, label: str) -> int:
                    "operation base_conversion trong khi decimal_to_binary mới "
                    "đúng; (2) cờ 'bịa dữ liệu' tính mọi objects/data/relations "
                    "khác rỗng là bịa, nên gắn cờ oan cả hai đối chứng — nay chỉ "
-                   "tính DỮ KIỆN CÓ ĐỊNH DANH (giá trị/nhãn/quan hệ hai nút có tên)."
+                   "tính DỮ KIỆN CÓ ĐỊNH DANH (giá trị/nhãn/quan hệ hai nút có "
+                   "tên). (3) §C1.1: chấm operation ở TẦNG SEMANTIC thay vì tầng "
+                   "gợi ý target thô — V4 dao động rule_scene/boolean_dag đều quy "
+                   "về boolean.evaluate_expression. Gợi ý thô vẫn lưu nguyên ở "
+                   "`requested_operations` và `raw_operation_match` để đối chiếu."
                )}
     _write(payload, out)
     print(f"Chấm lại {len(rows)} lượt (0 HTTP) · KẾT LUẬN: {payload['verdict']}")

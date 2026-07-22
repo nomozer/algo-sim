@@ -56,6 +56,132 @@ def operation_family(operation_id: str) -> str:
     return operation_id.split(_OP_SEP, 1)[0]
 
 
+# ══════════════ §C1.1 — SEMANTIC OPERATION ══════════════
+# Bài học từ live L1-V4: `(target, variant)` TRỘN hai khái niệm khác nhau —
+# NGƯỜI DÙNG MUỐN LÀM GÌ (semantic operation) và AI THỰC HIỆN (implementation
+# target). Cùng một đề mạch logic, analyze lúc gợi ý `rule_scene` lúc gợi ý
+# `boolean_dag`; đó là target hint dao động TRONG CÙNG family, không phải hai
+# yêu cầu độc lập. Coi chúng là hai yêu cầu ⇒ TỪ CHỐI OAN đề hợp lệ.
+#
+# Nguyên tắc: **route được quyền chọn implementation, KHÔNG được quyền viết lại
+# hay xoá yêu cầu semantic của người dùng.** Vì vậy so sánh completeness diễn ra
+# ở tầng semantic, còn target chỉ khai nó *satisfy* được semantic nào.
+
+
+@dataclass(frozen=True)
+class SemanticRequirement:
+    """Danh tính semantic của MỘT yêu cầu. Chỉ gộp khi TRÙNG HOÀN TOÀN."""
+
+    operation_id: str          # "tree.traverse", "scan.find_max"
+    variant_id: str | None = None   # "preorder", "bfs", "bubble", "10->2"
+    goal_id: str | None = None      # dành cho yêu cầu cùng operation khác mục tiêu
+
+    def as_dict(self) -> dict:
+        return {"semantic_operation_id": self.operation_id,
+                "semantic_variant_id": self.variant_id,
+                "semantic_goal_id": self.goal_id}
+
+    def label_key(self) -> str:
+        v = f"/{self.variant_id}" if self.variant_id else ""
+        return f"{self.operation_id}{v}"
+
+
+# Ánh xạ operation CỤ THỂ → yêu cầu SEMANTIC. Dữ liệu thuần; thêm target/variant
+# mới mà quên khai ⇒ test khoá đỏ (không lặng lẽ dùng target id làm operation id).
+SEMANTIC_OPERATION_MAP: dict[str, SemanticRequirement] = {
+    # scan — MỖI mục tiêu là MỘT operation riêng, dù dùng chung cơ chế
+    # `track_extreme`. Đây chính là ca max+min: KHÔNG BAO GIỜ được gộp.
+    "single_pass_scan:find_max": SemanticRequirement("scan.find_max"),
+    "single_pass_scan:find_min": SemanticRequirement("scan.find_min"),
+    "single_pass_scan:sum_if": SemanticRequirement("scan.sum_conditional"),
+    "single_pass_scan:count_if": SemanticRequirement("scan.count_conditional"),
+    "single_pass_scan:linear_search": SemanticRequirement("scan.find_equal"),
+    "single_pass_scan:scan": SemanticRequirement("scan.configured_pass"),
+    # tìm kiếm nhị phân
+    "interval_elimination:binary_search": SemanticRequirement("sequence.binary_search"),
+    # sắp xếp — CÙNG operation, KHÁC variant ⇒ không gộp
+    "comparison_sort:bubble": SemanticRequirement("sequence.sort", "bubble"),
+    "comparison_sort:insertion": SemanticRequirement("sequence.sort", "insertion"),
+    "comparison_sort:selection": SemanticRequirement("sequence.sort", "selection"),
+    # đổi cơ số — decimal_to_binary là ĐÚNG MỘT phép 10→2; base_conversion là
+    # cùng operation nhưng CHƯA nêu cặp cơ số (kém cụ thể hơn ⇒ bị hấp thụ).
+    "positional_representation:decimal_to_binary":
+        SemanticRequirement("number.convert_base", "10->2"),
+    "positional_representation:base_conversion":
+        SemanticRequirement("number.convert_base"),
+    # duyệt cây — CÙNG operation, KHÁC variant ⇒ không gộp
+    "tree_traversal:preorder": SemanticRequirement("tree.traverse", "preorder"),
+    "tree_traversal:inorder": SemanticRequirement("tree.traverse", "inorder"),
+    "tree_traversal:postorder": SemanticRequirement("tree.traverse", "postorder"),
+    "tree_traversal:level_order": SemanticRequirement("tree.traverse", "level_order"),
+    # duyệt đồ thị — CÙNG operation, KHÁC variant ⇒ không gộp
+    "graph_traversal:bfs": SemanticRequirement("graph.traverse", "bfs"),
+    "graph_traversal:dfs": SemanticRequirement("graph.traverse", "dfs"),
+    # định tuyến gói tin KHÁC duyệt đồ thị (mục tiêu khác, kết quả khác)
+    "graph_traversal:packet_routing": SemanticRequirement("network.route_packet"),
+    # mạch logic — BA target khác nhau cùng đáp ứng MỘT yêu cầu "tính biểu thức
+    # logic". Đây là chỗ live V4 dao động, và là chỗ ĐƯỢC PHÉP gộp.
+    "boolean_composition:and_gate": SemanticRequirement("boolean.evaluate_expression"),
+    "boolean_composition:boolean_dag": SemanticRequirement("boolean.evaluate_expression"),
+    "boolean_composition:rule_scene": SemanticRequirement("boolean.evaluate_expression"),
+    # đóng gói PDU
+    "layered_pdu_transform:protocol_encapsulation":
+        SemanticRequirement("network.encapsulate_pdu"),
+    # cảnh biểu diễn hiện dần (KHÁC family với rule_scene logic ở trên)
+    "structural_progressive_representation:rule_scene":
+        SemanticRequirement("scene.represent_progressive"),
+}
+
+
+def semantic_of(operation_id: str) -> SemanticRequirement | None:
+    return SEMANTIC_OPERATION_MAP.get(operation_id)
+
+
+def canonical_requirements(operation_ids) -> list[SemanticRequirement]:
+    """Gợi ý target/mechanism thô → YÊU CẦU SEMANTIC chuẩn hoá.
+
+    Hai luật gộp, cả hai đều bảo toàn ý người dùng:
+    1. TRÙNG HOÀN TOÀN danh tính semantic → một yêu cầu (vd rule_scene và
+       boolean_dag đều là `boolean.evaluate_expression`);
+    2. HẤP THỤ KÉM-CỤ-THỂ: yêu cầu không nêu variant bị hấp thụ bởi yêu cầu
+       CÙNG operation CÓ variant (vd "đổi cơ số" + "đổi 10→2" = một việc).
+
+    KHÔNG BAO GIỜ gộp khi khác `operation_id` (max vs min) hoặc khác
+    `variant_id` (bfs vs dfs, bubble vs insertion, preorder vs inorder).
+    """
+    reqs: list[SemanticRequirement] = []
+    for op in operation_ids:
+        r = SEMANTIC_OPERATION_MAP.get(op)
+        if r is not None and r not in reqs:
+            reqs.append(r)
+    with_variant = {r.operation_id for r in reqs if r.variant_id}
+    kept = [r for r in reqs if r.variant_id or r.operation_id not in with_variant]
+    return sorted(kept, key=lambda r: (r.operation_id, r.variant_id or "", r.goal_id or ""))
+
+
+def satisfies_semantic_operations(target_id: str, variant: str | None = None) -> list[SemanticRequirement]:
+    """Yêu cầu semantic mà TARGET (kèm variant đã resolve) đáp ứng được.
+
+    Target khai qua chính operation nó sở hữu — không có bảng thứ hai để lệch."""
+    return sorted(
+        {
+            r for op in operations_of_target(target_id, variant)
+            if (r := SEMANTIC_OPERATION_MAP.get(op)) is not None
+        },
+        key=lambda r: (r.operation_id, r.variant_id or "", r.goal_id or ""),
+    )
+
+
+def semantic_label(req: SemanticRequirement) -> str:
+    """Nhãn tiếng Việt cho học sinh — lấy từ operation cụ thể đầu tiên khớp."""
+    for op, r in SEMANTIC_OPERATION_MAP.items():
+        if r == req:
+            spec = OPERATIONS().get(op)
+            if spec is not None:
+                return spec.label_vi
+    return req.label_key()
+
+
 # Nhãn tiếng Việt cho học sinh — dữ liệu NỘI DUNG, không suy được từ registry
 # (make_title cần config). Thiếu nhãn cho một operation ⇒ test khoá đỏ, không
 # lặng lẽ hiện id kỹ thuật cho học sinh.
@@ -201,8 +327,14 @@ def family_of_operations(operation_ids) -> set[str]:
 
 __all__ = [
     "OPERATIONS",
+    "SEMANTIC_OPERATION_MAP",
     "OperationSpec",
+    "SemanticRequirement",
     "analyze_exposed_operations",
+    "canonical_requirements",
+    "satisfies_semantic_operations",
+    "semantic_label",
+    "semantic_of",
     "family_of_operations",
     "operation_family",
     "operation_labels",
@@ -213,8 +345,15 @@ __all__ = [
 
 def _sanity() -> list[str]:
     """Vi phạm cấu trúc (test khoá gọi): mọi operation phải có target thật,
-    có nhãn, và id không đụng namespace mechanism."""
+    có nhãn, có ánh xạ semantic, và id không đụng namespace mechanism."""
     errs = []
+    for op in OPERATIONS():
+        if op not in SEMANTIC_OPERATION_MAP:
+            errs.append(f"{op}: thiếu ánh xạ semantic (target id KHÔNG được tự "
+                        "động thành operation id)")
+    for op in SEMANTIC_OPERATION_MAP:
+        if op not in OPERATIONS():
+            errs.append(f"{op}: ánh xạ semantic trỏ operation không tồn tại")
     for op, s in OPERATIONS().items():
         if s.family_id not in {f.value for f in FamilyId}:
             errs.append(f"{op}: family lạ {s.family_id}")

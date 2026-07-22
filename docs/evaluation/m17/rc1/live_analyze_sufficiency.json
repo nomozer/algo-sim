@@ -17,7 +17,7 @@
   "metrics": {
     "valid_runs": 12,
     "valid_sufficiency_pass": 12,
-    "valid_operation_match": 11,
+    "valid_operation_match": 12,
     "valid_concrete_data_preserved": 12,
     "valid_generated_default_used": 0,
     "insufficient_runs": 2,
@@ -25,7 +25,7 @@
     "insufficient_with_fabricated_evidence": [],
     "unstable_cases": []
   },
-  "verdict": "FAIL",
+  "verdict": "PASS",
   "runs": [
     {
       "case_id": "L1-V1-finite-sequence",
@@ -95,7 +95,22 @@
       ],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "scan.find_max",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "scan.find_max",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "single_pass_scan:find_max"
       ],
@@ -170,7 +185,22 @@
       ],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "scan.find_max",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "scan.find_max",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "single_pass_scan:find_max"
       ],
@@ -247,7 +277,22 @@
       ],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "sequence.sort",
+          "semantic_variant_id": "insertion",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "sequence.sort",
+          "semantic_variant_id": "insertion",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "comparison_sort:insertion"
       ],
@@ -319,7 +364,22 @@
       ],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "sequence.sort",
+          "semantic_variant_id": "insertion",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "sequence.sort",
+          "semantic_variant_id": "insertion",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "comparison_sort:insertion"
       ],
@@ -392,7 +452,22 @@
       ],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "number.convert_base",
+          "semantic_variant_id": "10->2",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "number.convert_base",
+          "semantic_variant_id": "10->2",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "positional_representation:decimal_to_binary"
       ],
@@ -463,7 +538,22 @@
       ],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "number.convert_base",
+          "semantic_variant_id": "10->2",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "number.convert_base",
+          "semantic_variant_id": "10->2",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "positional_representation:decimal_to_binary"
       ],
@@ -553,7 +643,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
-      "operation_match": false,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "boolean.evaluate_expression",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "boolean.evaluate_expression",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
+      "operation_match": true,
+      "raw_operation_match": false,
       "expected_operations": [
         "boolean_composition:boolean_dag"
       ],
@@ -646,7 +751,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "boolean.evaluate_expression",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "boolean.evaluate_expression",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "boolean_composition:boolean_dag"
       ],
@@ -706,7 +826,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "graph.traverse",
+          "semantic_variant_id": "dfs",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "graph.traverse",
+          "semantic_variant_id": "dfs",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "graph_traversal:dfs"
       ],
@@ -766,7 +901,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "graph.traverse",
+          "semantic_variant_id": "dfs",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "graph.traverse",
+          "semantic_variant_id": "dfs",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "graph_traversal:dfs"
       ],
@@ -826,7 +976,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "tree.traverse",
+          "semantic_variant_id": "preorder",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "tree.traverse",
+          "semantic_variant_id": "preorder",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "tree_traversal:preorder"
       ],
@@ -887,7 +1052,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "tree.traverse",
+          "semantic_variant_id": "preorder",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "tree.traverse",
+          "semantic_variant_id": "preorder",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "tree_traversal:preorder"
       ],
@@ -938,7 +1118,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "scan.find_max",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "scan.find_max",
+          "semantic_variant_id": null,
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "single_pass_scan:find_max"
       ],
@@ -993,7 +1188,22 @@
       "expected_tokens": [],
       "missing_expected_tokens": [],
       "concrete_data_preserved": true,
+      "canonical_requested_requirements": [
+        {
+          "semantic_operation_id": "tree.traverse",
+          "semantic_variant_id": "preorder",
+          "semantic_goal_id": null
+        }
+      ],
+      "canonical_expected_requirements": [
+        {
+          "semantic_operation_id": "tree.traverse",
+          "semantic_variant_id": "preorder",
+          "semantic_goal_id": null
+        }
+      ],
       "operation_match": true,
+      "raw_operation_match": true,
       "expected_operations": [
         "tree_traversal:preorder"
       ],
@@ -1001,6 +1211,6 @@
       "generated_default_used": false
     }
   ],
-  "rescored_at": "2026-07-22T03:35:54.279832+00:00",
-  "rescore_note": "Chấm lại từ raw analyze ĐÃ LƯU (0 HTTP). Dữ liệu live không đổi. Sửa hai lỗi trong LUẬT ĐO của lần chấm đầu: (1) V3 đòi token '10'/'2' trong khi đề viết cơ số bằng chữ, và kỳ vọng operation base_conversion trong khi decimal_to_binary mới đúng; (2) cờ 'bịa dữ liệu' tính mọi objects/data/relations khác rỗng là bịa, nên gắn cờ oan cả hai đối chứng — nay chỉ tính DỮ KIỆN CÓ ĐỊNH DANH (giá trị/nhãn/quan hệ hai nút có tên)."
+  "rescored_at": "2026-07-22T03:55:04.680745+00:00",
+  "rescore_note": "Chấm lại từ raw analyze ĐÃ LƯU (0 HTTP). Dữ liệu live không đổi. Sửa hai lỗi trong LUẬT ĐO của lần chấm đầu: (1) V3 đòi token '10'/'2' trong khi đề viết cơ số bằng chữ, và kỳ vọng operation base_conversion trong khi decimal_to_binary mới đúng; (2) cờ 'bịa dữ liệu' tính mọi objects/data/relations khác rỗng là bịa, nên gắn cờ oan cả hai đối chứng — nay chỉ tính DỮ KIỆN CÓ ĐỊNH DANH (giá trị/nhãn/quan hệ hai nút có tên). (3) §C1.1: chấm operation ở TẦNG SEMANTIC thay vì tầng gợi ý target thô — V4 dao động rule_scene/boolean_dag đều quy về boolean.evaluate_expression. Gợi ý thô vẫn lưu nguyên ở `requested_operations` và `raw_operation_match` để đối chiếu."
 }
