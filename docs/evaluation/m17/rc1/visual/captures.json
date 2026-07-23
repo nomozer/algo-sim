@@ -1,6 +1,6 @@
 {
   "app": "http://localhost:3000",
-  "generated_at": "2026-07-22T04:17:52.083Z",
+  "generated_at": "2026-07-23T07:02:30.412Z",
   "viewports": [
     {
       "id": "desktop",
@@ -63,8 +63,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 257,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 567,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -117,8 +138,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 257,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 567,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -171,8 +213,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 257,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 567,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -216,17 +279,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 257,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -236,7 +320,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 355
+            "text_length": 232
           }
         },
         {
@@ -270,17 +354,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 257,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -290,7 +395,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 370
+            "text_length": 247
           }
         },
         {
@@ -324,17 +429,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 257,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -344,7 +470,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 369
+            "text_length": 246
           }
         }
       ]
@@ -397,8 +523,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 220,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 531,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -451,8 +598,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 220,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 531,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -505,8 +673,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 220,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 531,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -550,17 +739,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 220,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -570,7 +780,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 350
+            "text_length": 227
           }
         },
         {
@@ -604,17 +814,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 220,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -624,7 +855,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 363
+            "text_length": 240
           }
         },
         {
@@ -658,17 +889,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 220,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -678,7 +930,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 365
+            "text_length": 242
           }
         }
       ]
@@ -729,8 +981,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 513,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -781,8 +1054,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 513,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -833,8 +1127,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 515,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -876,17 +1191,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -896,7 +1232,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 339
+            "text_length": 224
           }
         },
         {
@@ -928,17 +1264,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -948,7 +1305,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 347
+            "text_length": 232
           }
         },
         {
@@ -980,17 +1337,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1000,7 +1378,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 337
+            "text_length": 222
           }
         }
       ]
@@ -1049,8 +1427,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 188,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 513,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1099,8 +1498,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 188,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 513,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1149,8 +1569,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 188,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 524,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1190,17 +1631,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 11,
+              "edge_elements": 9,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 188,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1210,7 +1672,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 405
+            "text_length": 240
           }
         },
         {
@@ -1240,17 +1702,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 11,
+              "edge_elements": 9,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 188,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1260,7 +1743,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 397
+            "text_length": 232
           }
         },
         {
@@ -1290,17 +1773,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 11,
+              "edge_elements": 9,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 188,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1310,7 +1814,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 416
+            "text_length": 251
           }
         }
       ]
@@ -1362,8 +1866,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 525,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1415,8 +1940,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 525,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1468,8 +2014,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 525,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1512,17 +2079,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 9
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1532,7 +2120,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 433
+            "text_length": 314
           }
         },
         {
@@ -1565,17 +2153,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 9
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1585,7 +2194,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 447
+            "text_length": 328
           }
         },
         {
@@ -1618,17 +2227,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 9
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1638,7 +2268,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 439
+            "text_length": 320
           }
         }
       ]
@@ -1692,8 +2322,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 207,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 518,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1747,8 +2398,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 207,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 518,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1802,8 +2474,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 207,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 518,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1848,17 +2541,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 18,
+              "edge_elements": 16,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 207,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1868,7 +2582,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 356
+            "text_length": 229
           }
         },
         {
@@ -1903,17 +2617,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 18,
+              "edge_elements": 16,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 207,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1923,7 +2658,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 375
+            "text_length": 248
           }
         },
         {
@@ -1958,17 +2693,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 18,
+              "edge_elements": 16,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 207,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -1978,7 +2734,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 379
+            "text_length": 252
           }
         }
       ]
@@ -2027,8 +2783,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 168,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 779,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2077,8 +2854,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 168,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 747,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2127,8 +2925,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 168,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 588,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2168,17 +2987,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 15,
+              "edge_elements": 13,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 16
+              "unresolved_var": 12
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 168,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2188,7 +3028,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 474
+            "text_length": 365
           }
         },
         {
@@ -2218,17 +3058,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 15,
+              "edge_elements": 13,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 16
+              "unresolved_var": 12
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 168,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2238,7 +3099,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 503
+            "text_length": 394
           }
         },
         {
@@ -2268,17 +3129,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 16
+              "unresolved_var": 12
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 168,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2288,7 +3170,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 336
+            "text_length": 226
           }
         }
       ]
@@ -2330,8 +3212,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 145,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 718,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2373,8 +3276,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 145,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 718,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2416,8 +3340,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 145,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 677,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2450,17 +3395,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 11,
+              "edge_elements": 9,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 7
+              "unresolved_var": 3
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 145,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2470,7 +3436,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 616
+            "text_length": 494
           }
         },
         {
@@ -2493,20 +3459,41 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 11,
+              "edge_elements": 9,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 11
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [
                 "INPUT",
                 "INPUT"
               ],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 145,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2516,7 +3503,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 690
+            "text_length": 551
           }
         },
         {
@@ -2539,17 +3526,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 7
+              "unresolved_var": 3
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 145,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2559,7 +3567,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 483
+            "text_length": 360
           }
         }
       ]
@@ -2611,8 +3619,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 286,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 808,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2664,8 +3693,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 286,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 808,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2717,8 +3767,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 286,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 808,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2761,17 +3832,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 15,
+              "edge_elements": 13,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 10
+              "unresolved_var": 8
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 286,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2781,7 +3873,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 433
+            "text_length": 321
           }
         },
         {
@@ -2814,17 +3906,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 15,
+              "edge_elements": 13,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 10
+              "unresolved_var": 8
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 286,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2834,7 +3947,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 424
+            "text_length": 313
           }
         },
         {
@@ -2867,17 +3980,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 15,
+              "edge_elements": 13,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 10
+              "unresolved_var": 8
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 286,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2887,7 +4021,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 513
+            "text_length": 381
           }
         }
       ]
@@ -2933,8 +4067,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 124,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 646,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -2980,8 +4135,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 124,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 646,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3027,8 +4203,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 124,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 646,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3065,17 +4262,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 124,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3085,7 +4303,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 375
+            "text_length": 263
           }
         },
         {
@@ -3112,17 +4330,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 124,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3132,7 +4371,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 336
+            "text_length": 237
           }
         },
         {
@@ -3159,17 +4398,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 124,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3179,7 +4439,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 358
+            "text_length": 250
           }
         }
       ]
@@ -3229,8 +4489,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 164,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 685,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3280,8 +4561,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 164,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 685,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3331,8 +4633,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 164,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 685,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3373,17 +4696,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 8
+              "unresolved_var": 6
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 164,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3393,7 +4737,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 409
+            "text_length": 296
           }
         },
         {
@@ -3424,17 +4768,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 8
+              "unresolved_var": 6
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 164,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3444,7 +4809,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 381
+            "text_length": 277
           }
         },
         {
@@ -3475,19 +4840,40 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 8
+              "unresolved_var": 6
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [
                 "INPUT"
               ],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 164,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3497,7 +4883,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 460
+            "text_length": 335
           }
         }
       ]
@@ -3553,8 +4939,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 280,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 801,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3610,8 +5017,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 280,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 801,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3667,8 +5095,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 280,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 1016,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3715,17 +5164,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 19,
+              "edge_elements": 17,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 25
+              "unresolved_var": 23
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 280,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3735,7 +5205,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 566
+            "text_length": 445
           }
         },
         {
@@ -3772,17 +5242,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 19,
+              "edge_elements": 17,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 25
+              "unresolved_var": 23
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 280,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3792,7 +5283,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 677
+            "text_length": 505
           }
         },
         {
@@ -3829,17 +5320,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 19,
+              "edge_elements": 17,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 25
+              "unresolved_var": 23
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 280,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3849,7 +5361,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 1027
+            "text_length": 788
           }
         }
       ]
@@ -3900,8 +5412,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 163,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 685,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -3952,8 +5485,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 163,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 685,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4004,8 +5558,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 163,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 685,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4047,17 +5622,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 9
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 163,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4067,7 +5663,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 412
+            "text_length": 288
           }
         },
         {
@@ -4099,17 +5695,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 9
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 163,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4119,7 +5736,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 385
+            "text_length": 270
           }
         },
         {
@@ -4151,17 +5768,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 9
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 163,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4171,7 +5809,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 493
+            "text_length": 353
           }
         }
       ]
@@ -4239,8 +5877,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 311,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 770,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4308,8 +5967,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 311,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 770,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4377,8 +6057,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 311,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 770,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4437,17 +6138,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 12,
+              "edge_elements": 10,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 14
+              "unresolved_var": 6
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 311,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4457,7 +6179,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 424
+            "text_length": 216
           }
         },
         {
@@ -4506,17 +6228,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 12,
+              "edge_elements": 10,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 15
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 311,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4526,7 +6269,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 441
+            "text_length": 224
           }
         },
         {
@@ -4575,17 +6318,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 14
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 311,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4595,7 +6359,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 436
+            "text_length": 229
           }
         }
       ]
@@ -4659,8 +6423,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 673,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4724,8 +6509,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 673,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4789,8 +6595,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 673,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4845,17 +6672,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 12,
+              "edge_elements": 10,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 14
+              "unresolved_var": 6
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4865,7 +6713,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 496
+            "text_length": 250
           }
         },
         {
@@ -4910,17 +6758,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 14
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4930,7 +6799,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 516
+            "text_length": 276
           }
         },
         {
@@ -4975,17 +6844,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 14
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -4995,7 +6885,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 516
+            "text_length": 276
           }
         }
       ]
@@ -5032,8 +6922,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 194,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 560,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5070,8 +6981,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 194,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 560,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5108,8 +7040,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 194,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 517,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5137,17 +7090,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 10,
+              "edge_elements": 8,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 21
+              "unresolved_var": 13
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 194,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5157,7 +7131,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 644
+            "text_length": 341
           }
         },
         {
@@ -5175,17 +7149,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 12,
+              "edge_elements": 10,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 21
+              "unresolved_var": 13
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 194,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5195,7 +7190,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 669
+            "text_length": 366
           }
         },
         {
@@ -5213,17 +7208,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 12,
+              "edge_elements": 10,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 20
+              "unresolved_var": 12
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 194,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5233,7 +7249,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 610
+            "text_length": 307
           }
         }
       ]
@@ -5270,8 +7286,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 307,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 629,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5308,8 +7345,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 307,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 629,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5346,8 +7404,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 307,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 629,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5375,17 +7454,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 10,
+              "edge_elements": 8,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 21
+              "unresolved_var": 13
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 307,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5395,7 +7495,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 692
+            "text_length": 366
           }
         },
         {
@@ -5413,20 +7513,41 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 15,
+              "edge_elements": 13,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 23
+              "unresolved_var": 15
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [
                 "INPUT",
                 "INPUT"
               ],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 307,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5436,7 +7557,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 878
+            "text_length": 552
           }
         },
         {
@@ -5454,17 +7575,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 12,
+              "edge_elements": 10,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 20
+              "unresolved_var": 12
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 307,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5474,7 +7616,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 664
+            "text_length": 339
           }
         }
       ]
@@ -5511,8 +7653,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 554,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5549,8 +7712,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 628,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5587,8 +7771,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 564,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5616,17 +7821,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 10,
+              "edge_elements": 8,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 27
+              "unresolved_var": 17
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5636,7 +7862,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 787
+            "text_length": 375
           }
         },
         {
@@ -5654,17 +7880,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 13,
+              "edge_elements": 11,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 30
+              "unresolved_var": 18
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5674,7 +7921,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 882
+            "text_length": 463
           }
         },
         {
@@ -5692,17 +7939,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 10,
+              "edge_elements": 8,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 28
+              "unresolved_var": 16
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 189,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5712,7 +7980,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 740
+            "text_length": 321
           }
         }
       ]
@@ -5749,8 +8017,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 219,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 606,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5787,8 +8076,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 219,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 606,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5825,8 +8135,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 219,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 530,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5854,17 +8185,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 20
+              "unresolved_var": 17
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 219,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5874,7 +8226,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 791
+            "text_length": 389
           }
         },
         {
@@ -5892,19 +8244,40 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 14,
+              "edge_elements": 12,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 25
+              "unresolved_var": 19
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [
                 "INPUT"
               ],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 219,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5914,7 +8287,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 917
+            "text_length": 508
           }
         },
         {
@@ -5932,17 +8305,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 10,
+              "edge_elements": 8,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 23
+              "unresolved_var": 17
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 219,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -5952,7 +8346,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 700
+            "text_length": 291
           }
         }
       ]
@@ -5999,8 +8393,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 226,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 583,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6038,17 +8453,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 4,
+              "edge_elements": 2,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 26
+              "unresolved_var": 22
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 226,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 583,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6058,7 +8494,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 422
+            "text_length": 265
           }
         }
       ]
@@ -6102,8 +8538,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 288,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 618,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6147,8 +8604,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 288,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 618,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6192,8 +8670,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 288,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 618,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6228,17 +8727,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 288,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6248,7 +8768,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 359
+            "text_length": 216
           }
         },
         {
@@ -6273,17 +8793,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 288,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6293,7 +8834,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 469
+            "text_length": 326
           }
         },
         {
@@ -6318,17 +8859,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 4
+              "unresolved_var": 2
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 288,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6338,7 +8900,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 441
+            "text_length": 298
           }
         }
       ]
@@ -6374,8 +8936,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 107,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 762,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6402,17 +8985,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 8,
+              "edge_elements": 6,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 12
+              "unresolved_var": 7
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 107,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6422,7 +9026,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 349
+            "text_length": 243
           }
         }
       ]
@@ -6477,8 +9081,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 273,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 697,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6533,8 +9158,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 273,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 697,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6589,8 +9235,29 @@
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 273,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 697,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6636,17 +9303,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 5
+              "unresolved_var": 3
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 273,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6656,7 +9344,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 453
+            "text_length": 311
           }
         },
         {
@@ -6692,17 +9380,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 5
+              "unresolved_var": 3
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 273,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6712,7 +9421,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 406
+            "text_length": 264
           }
         },
         {
@@ -6748,17 +9457,38 @@
               "h": 900
             },
             "css_svg": {
-              "edge_elements": 9,
+              "edge_elements": 7,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 5
+              "unresolved_var": 3
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 273,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6768,7 +9498,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 405
+            "text_length": 263
           }
         }
       ]
@@ -6798,14 +9528,26 @@
               "edge_elements": 14,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 28
+              "unresolved_var": 29
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
-              "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [
+                "Mạch (A AND B) OR NOT CLôgic ·"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6815,7 +9557,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 780
+            "text_length": 852
           }
         },
         {
@@ -6835,17 +9577,27 @@
               "edge_elements": 14,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 28
+              "unresolved_var": 29
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [
                 "Xem tất cả (23)",
                 "Mạch (A AND B) OR NOT CLôgic ·"
               ],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6855,7 +9607,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 780
+            "text_length": 852
           }
         }
       ]
@@ -6885,14 +9637,26 @@
               "edge_elements": 14,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 28
+              "unresolved_var": 29
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
-              "controls_off_viewport": [],
-              "covered_by_overlay": []
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [
+                "Mạch (A AND B) OR NOT CLôgic ·"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6902,7 +9666,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 687
+            "text_length": 759
           }
         },
         {
@@ -6922,17 +9686,27 @@
               "edge_elements": 14,
               "invisible_strokes": 0,
               "invisible_stroke_samples": [],
-              "unresolved_var": 28
+              "unresolved_var": 29
             },
             "geometry": {
               "nan_or_infinity": 0,
               "zero_size_elements": 0,
               "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
               "controls_off_viewport": [
                 "Xem tất cả (23)",
                 "Mạch (A AND B) OR NOT CLôgic ·"
               ],
-              "covered_by_overlay": []
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
             },
             "overlap": {
               "threshold_ratio": 0.25,
@@ -6942,7 +9716,7 @@
             "terminology": {
               "banned_found": []
             },
-            "text_length": 687
+            "text_length": 759
           }
         }
       ]

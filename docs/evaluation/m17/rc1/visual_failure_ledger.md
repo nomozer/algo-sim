@@ -1,6 +1,6 @@
 # M17-RC1 §E — Failure ledger thị giác
 
-Tìm **3** · sửa **2** · còn chặn **1**
+Tìm **4** · sửa **2** · còn chặn **0**
 
 ## VIS-001 — network · BROKEN_VISUAL · **FIXED**
 
@@ -18,12 +18,21 @@ Tìm **3** · sửa **2** · còn chặn **1**
 - **Bản sửa:** So le đường cơ sở cho nhãn dài (>8 ký tự) theo thứ tự khai báo; badge ánh xạ sang tiếng Việt ('MÔ PHỎNG THEO MÔ TẢ').
 - **Phạm vi:** generic/ui.tsx + SimulationWorkspace.tsx (trình bày; engine state.pos KHÔNG đụng)
 
-## VIS-003 — *(dùng chung)* · BROKEN_VISUAL · **OPEN_BLOCKING**
+## VIS-003 — *(dùng chung)* · NOT_A_DEFECT · **NOT_A_DEFECT_MEASUREMENT_ARTEFACT**
 
-- **Hiện tượng:** Ở viewport hẹp (768px), panel bên phải KHÔNG xuống dòng mà giữ nguyên cột — workspace bị cắt: tiêu đề, canvas, panel trạng thái, tường thuật và nút 'Đặt lại' đều mất phần bên phải.
-- **Bằng chứng:** visual/tree/tree-vietnamese-11-nodes-mid-narrow.png · visual/network/graph-vietnamese-long-labels-mid-narrow.png (và mọi renderer ở viewport hẹp).
-- **Nguyên nhân:** Layout hai cột của app shell chưa có điểm ngắt responsive; đây là CSS DÙNG CHUNG, không thuộc renderer nào.
-- **Bản sửa:** — (chưa sửa)
-- **Phạm vi:** app shell CSS — ảnh hưởng CẢ 6 renderer
-- **Vì sao chưa sửa:** Đúng điều kiện dừng §13: 'shared layout fix cần thay đổi kiến trúc lớn'. Sửa điểm ngắt responsive của app shell chạm mọi màn hình (kể cả Home/Library/History ngoài phạm vi §E) và theo §10 phải chụp lại TOÀN BỘ renderer. Báo trước, xin quyết định phạm vi.
+- **Hiện tượng:** NGHI NGỜ ban đầu: ở viewport 768px, panel phải không xuống dòng nên workspace bị cắt (tiêu đề, canvas, panel, tường thuật, nút 'Đặt lại').
+- **Bằng chứng:** Chẩn đoán DOM THẬT (diagnose-responsive.mjs) trên CẢ 4 route dùng chung app shell, hai viewport: scrollWidth 758 ≤ clientWidth 768 · 0 nút bị cắt · 0 nội dung bị tổ tiên cắt · 0 min-width cứng vượt viewport. before/VIS-003/ và after/VIS-003/ cho cùng kết quả.
+- **Nguyên nhân:** LỖI TRONG PHÉP ĐO CỦA TÔI, không phải lỗi sản phẩm: script audit đổi viewport SAU khi trang đã dựng ở 1440px, nên ảnh ra khung 768 nhưng bố cục vẫn của 1440 — trông y hệt bị cắt. App shell THỰC SỰ có responsive đúng.
+- **Bản sửa:** Sửa PHÉP ĐO: đặt viewport TRƯỚC rồi mới nạp trang (viewport thành vòng ngoài); bổ sung assertion page_overflow_x, clipped_content (bị tổ tiên cắt), rigid_min_width và key_elements vào audit. KHÔNG đổi một dòng CSS/layout production nào.
+- **Phạm vi:** frontend/scripts/visual-stress-audit.mjs (chỉ công cụ đo)
+- **Vì sao chưa sửa:** Không có gì để sửa trong sản phẩm. Ghi lại đầy đủ thay vì xoá, vì đây là cảnh báo về chính phương pháp audit: ảnh chụp có thể phản ánh sai hiện thực nếu quy trình đo sai, và tôi đã suýt sửa app shell theo một lỗi không tồn tại.
+
+## VIS-004 — generic · PARTIAL_VISUAL · **FIXED_PARTIAL**
+
+- **Hiện tượng:** Ba nhãn tiếng Việt dài trên cùng một đường ngang vẫn sát nhau sau bản so le HAI hàng của VIS-002.
+- **Bằng chứng:** visual/generic/generic-vietnamese-labels-*-*.png (trước bản so le ba hàng).
+- **Nguyên nhân:** So le hai hàng ⇒ với ba đối tượng, hai trong số đó vẫn dùng chung một đường cơ sở.
+- **Bản sửa:** Nâng lên BA hàng so le và đẩy nhãn RA XA điểm (lên trên khi nhãn ở trên, xuống dưới khi đã lật) nên chữ không chồng marker. Trình bày thuần — `state.pos` không đụng.
+- **Phạm vi:** generic/ui.tsx
+- **Vì sao chưa sửa:** Vẫn giữ PARTIAL_VISUAL theo §8: nhãn CỰC dài với số đối tượng nhiều hơn số hàng so le thì vẫn chật. Không che nút/trạng thái, không làm sai cơ chế ⇒ không chặn.
 

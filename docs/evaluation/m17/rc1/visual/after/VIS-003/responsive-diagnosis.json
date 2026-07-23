@@ -1,0 +1,406 @@
+{
+  "app": "http://localhost:3000",
+  "generated_at": "2026-07-23T07:00:41.915Z",
+  "results": [
+    {
+      "route": "workspace",
+      "viewport": {
+        "clientWidth": 1440,
+        "scrollWidth": 1430,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/workspace-desktop.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 258,
+          "right": 438,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 206,
+          "right": 908,
+          "width": 702,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 181,
+          "right": 933,
+          "width": 752,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 157,
+          "right": 1273,
+          "width": 1116,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 12,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    },
+    {
+      "route": "home",
+      "viewport": {
+        "clientWidth": 1440,
+        "scrollWidth": 1430,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/home-desktop.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 258,
+          "right": 438,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 206,
+          "right": 908,
+          "width": 702,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 181,
+          "right": 933,
+          "width": 752,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 157,
+          "right": 1273,
+          "width": 1116,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 12,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    },
+    {
+      "route": "library",
+      "viewport": {
+        "clientWidth": 1440,
+        "scrollWidth": 1430,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/library-desktop.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 258,
+          "right": 438,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 206,
+          "right": 908,
+          "width": 702,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 181,
+          "right": 933,
+          "width": 752,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 157,
+          "right": 1273,
+          "width": 1116,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 12,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    },
+    {
+      "route": "history",
+      "viewport": {
+        "clientWidth": 1440,
+        "scrollWidth": 1430,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/history-desktop.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 258,
+          "right": 438,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 206,
+          "right": 908,
+          "width": 702,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 181,
+          "right": 933,
+          "width": 752,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 157,
+          "right": 1273,
+          "width": 1116,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 12,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    },
+    {
+      "route": "workspace",
+      "viewport": {
+        "clientWidth": 768,
+        "scrollWidth": 758,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/workspace-narrow.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 101,
+          "right": 281,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 49,
+          "right": 709,
+          "width": 660,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 24,
+          "right": 734,
+          "width": 710,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 0,
+          "right": 758,
+          "width": 758,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 11,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    },
+    {
+      "route": "home",
+      "viewport": {
+        "clientWidth": 768,
+        "scrollWidth": 758,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/home-narrow.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 101,
+          "right": 281,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 49,
+          "right": 709,
+          "width": 660,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 24,
+          "right": 734,
+          "width": 710,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 0,
+          "right": 758,
+          "width": 758,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 11,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    },
+    {
+      "route": "library",
+      "viewport": {
+        "clientWidth": 768,
+        "scrollWidth": 758,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/library-narrow.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 101,
+          "right": 281,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 49,
+          "right": 709,
+          "width": 660,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 24,
+          "right": 734,
+          "width": 710,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 0,
+          "right": 758,
+          "width": 758,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 11,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    },
+    {
+      "route": "history",
+      "viewport": {
+        "clientWidth": 768,
+        "scrollWidth": 758,
+        "page_overflow_x": false
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/after/VIS-003/history-narrow.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 101,
+          "right": 281,
+          "width": 180,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 49,
+          "right": 709,
+          "width": 660,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 24,
+          "right": 734,
+          "width": 710,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 0,
+          "right": 758,
+          "width": 758,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 11,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": []
+    }
+  ]
+}

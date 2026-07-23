@@ -474,12 +474,63 @@ const AUDIT_JS = `(() => {
   const zeroSize = [...root.querySelectorAll('svg circle, svg rect, svg text')]
     .filter((el) => { const r = el.getBoundingClientRect();
       return getComputedStyle(el).display !== 'none' && (r.width === 0 || r.height === 0); }).length;
-  const vw = window.innerWidth, vh = window.innerHeight;
-  const bodyOverflowX = document.documentElement.scrollWidth > vw + 1;
+  const de = document.documentElement;
+  const vw = de.clientWidth, vh = window.innerHeight;
+  /* §7 — tràn ngang Ở MỨC TRANG. Đây mới là thứ VIS-003 phải chứng minh. */
+  const pageOverflowX = de.scrollWidth > vw + 1;
+  const bodyOverflowX = pageOverflowX;
   const offViewport = [...root.querySelectorAll('button, [role="button"], input, select')]
     .filter(vis).filter((el) => { const r = el.getBoundingClientRect();
       return r.right < 0 || r.left > vw || r.bottom < 0 || r.top > vh; })
     .map((el) => (el.textContent || el.tagName).trim().slice(0, 30));
+
+  /* §7 — BỊ TỔ TIÊN CẮT: phần tử nằm trong khung nhìn nhưng tràn khỏi vùng
+     hiển thị của một tổ tiên overflow ẩn/cuộn. Kiểm "ngoài viewport" KHÔNG bắt
+     được dạng này, nên bản assertion đầu của tôi bỏ lọt. */
+  const clippedBy = (el) => {
+    const r = el.getBoundingClientRect();
+    for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) {
+      const cs = getComputedStyle(p);
+      if (!/hidden|clip/.test(cs.overflowX)) continue;   // auto/scroll = cuộn được, hợp lệ
+      const pr = p.getBoundingClientRect();
+      if (r.right > pr.right + 1 || r.left < pr.left - 1) {
+        return { by: p.tagName.toLowerCase(), overflow_x: cs.overflowX,
+                 spill_right: Math.round(r.right - pr.right) };
+      }
+    }
+    return null;
+  };
+  const clippedContent = [...root.querySelectorAll(
+      '.workspace-title, .sim-stage, .notes, .hint, svg, button')]
+    .filter(vis)
+    .map((el) => ({ tag: el.tagName.toLowerCase(),
+                    text: (el.textContent || '').trim().slice(0, 34), clip: clippedBy(el) }))
+    .filter((x) => x.clip).slice(0, 8);
+
+  /* §7 — min-width CỨNG vượt viewport (nguyên nhân kinh điển làm bung layout) */
+  const rigidMinWidth = [...root.querySelectorAll('*')].filter(vis).filter((el) => {
+    const mw = getComputedStyle(el).minWidth;
+    return mw && mw.endsWith('px') && parseFloat(mw) > vw;
+  }).length;
+
+  /* §7 — phần tử học sinh PHẢI thấy: tiêu đề, canvas, và nút "Đặt lại" */
+  const named = (sel) => {
+    const el = root.querySelector(sel);
+    if (!el) return null;
+    const r = el.getBoundingClientRect();
+    return { w: Math.round(r.w || r.width), inside: r.right <= vw + 1 && r.left >= -1,
+             clipped: !!clippedBy(el) };
+  };
+  const resetBtn = [...root.querySelectorAll('button')]
+    .find((b) => /Đặt lại/.test(b.textContent || ''));
+  const keyElements = {
+    title: named('.workspace-title'),
+    canvas: named('.sim-stage'),
+    reset_button: resetBtn
+      ? { inside: resetBtn.getBoundingClientRect().right <= vw + 1,
+          clipped: !!clippedBy(resetBtn) }
+      : null,
+  };
 
   /* C. CHỒNG LẤN — ngưỡng MÁY-ĐỌC, có lý do:
      chỉ tính khi giao > 25% diện tích phần tử NHỎ HƠN. Giao nhỏ (viền chạm
@@ -552,8 +603,11 @@ const AUDIT_JS = `(() => {
     css_svg: { edge_elements: edgeEls.length, invisible_strokes: strokeIssues.length,
                invisible_stroke_samples: strokeIssues.slice(0, 4), unresolved_var: unresolvedVar },
     geometry: { nan_or_infinity: nanGeom, zero_size_elements: zeroSize,
-                body_overflow_x: bodyOverflowX, controls_off_viewport: offViewport,
-                covered_by_overlay: covered },
+                body_overflow_x: bodyOverflowX, page_overflow_x: pageOverflowX,
+                client_width: vw, scroll_width: de.scrollWidth,
+                controls_off_viewport: offViewport, covered_by_overlay: covered,
+                clipped_content: clippedContent, rigid_min_width: rigidMinWidth,
+                key_elements: keyElements },
     overlap: { threshold_ratio: OVERLAP_RATIO, count: overlaps.length, items: overlaps.slice(0, 6) },
     terminology: { banned_found: banned },
     text_length: text.length,
@@ -561,64 +615,75 @@ const AUDIT_JS = `(() => {
 })()`;
 
 /* ══════════════ CHẠY ══════════════ */
-await send("Page.navigate", { url: APP });
-await sleep(2500);
-
 const selected = ONLY ? FIXTURES.filter((f) => f.renderer === ONLY) : FIXTURES;
 const selectedRefusals = ONLY ? REFUSALS.filter((f) => f.renderer === ONLY) : REFUSALS;
-const records = [];
 
-for (const fx of selected) {
-  await loadEnvelope(fx.envelope);
-  await sleep(650);
-  const total = (await stepCount()) || 1;
-  const marks = total > 1
-    ? [["initial", 0], ["mid", Math.max(1, Math.floor(total / 2))], ["final", total - 1]]
-    : [["initial", 0]];
-  const captures = [];
-  for (const vp of VIEWPORTS) {
-    await setViewport(vp);
-    await sleep(350);
+/* VIEWPORT LÀ VÒNG NGOÀI, và NẠP LẠI TRANG sau khi đổi kích thước.
+   Bản đầu đổi viewport SAU khi trang đã dựng ở 1440 → ảnh ra khung 768 nhưng
+   bố cục vẫn của 1440, trông như bị cắt. Đó là ARTEFACT CỦA PHÉP ĐO: chẩn đoán
+   DOM (§E1 §2, diagnose-responsive.mjs) đo được 0 phần tử bị cắt ở mọi route.
+   Đặt kích thước TRƯỚC rồi mới nạp thì bố cục phản ánh đúng viewport. */
+const byFixture = new Map();   // fixture_id → captures[] (gộp qua các viewport)
+
+for (const vp of VIEWPORTS) {
+  await setViewport(vp);
+  await send("Page.navigate", { url: APP });
+  await sleep(2400);
+
+  for (const fx of selected) {
+    await loadEnvelope(fx.envelope);
+    await sleep(650);
+    const total = (await stepCount()) || 1;
+    const marks = total > 1
+      ? [["initial", 0], ["mid", Math.max(1, Math.floor(total / 2))], ["final", total - 1]]
+      : [["initial", 0]];
+    if (!byFixture.has(fx.id)) byFixture.set(fx.id, { fx, total, captures: [] });
+    const slot = byFixture.get(fx.id);
+
     for (const [tag, n] of marks) {
       await goToStep(n);
       await sleep(400);
       const state = JSON.parse(await engineState());
       const audit = await evaluate(AUDIT_JS);
       const path = await shot(fx.renderer, `${fx.id}-${tag}-${vp.id}`);
-      captures.push({ tag, step: n, viewport: vp.id, screenshot: path,
-                      authoritative_state: state, assertions: audit });
+      slot.captures.push({ tag, step: n, viewport: vp.id, screenshot: path,
+                           authoritative_state: state, assertions: audit });
       const flags = [
         audit.css_svg.invisible_strokes && `stroke vô hình ${audit.css_svg.invisible_strokes}`,
         audit.geometry.nan_or_infinity && `NaN ${audit.geometry.nan_or_infinity}`,
+        audit.geometry.page_overflow_x && "tràn ngang trang",
+        audit.geometry.clipped_content.length && `nội dung bị cắt ${audit.geometry.clipped_content.length}`,
         audit.overlap.count && `chồng lấn ${audit.overlap.count}`,
-        audit.geometry.covered_by_overlay.length && `bị che ${audit.geometry.covered_by_overlay.length}`,
         audit.terminology.banned_found.length && `thuật ngữ ${audit.terminology.banned_found}`,
       ].filter(Boolean);
       console.log(`  ${fx.id} ${tag}/${vp.id} (b${n}/${total - 1})` +
                   (flags.length ? `  ⚠ ${flags.join(" · ")}` : "  ok"));
     }
   }
-  records.push({ fixture_id: fx.id, renderer_id: fx.renderer, target_id: fx.target,
-                 fixture_kind: fx.kind, title: fx.title, total_steps: total, captures });
-}
 
-for (const rf of selectedRefusals) {
-  await loadUnsupported(rf.reason);
-  await sleep(600);
-  const captures = [];
-  for (const vp of VIEWPORTS) {
-    await setViewport(vp);
-    await sleep(300);
+  for (const rf of selectedRefusals) {
+    await loadUnsupported(rf.reason);
+    await sleep(600);
+    if (!byFixture.has(rf.id)) byFixture.set(rf.id, { fx: rf, total: 0, captures: [] });
+    const slot = byFixture.get(rf.id);
     const audit = await evaluate(AUDIT_JS);
     const path = await shot(rf.renderer, `${rf.id}-refusal-${vp.id}`);
-    captures.push({ tag: "refusal", step: null, viewport: vp.id, screenshot: path,
-                    authoritative_state: { reason: rf.reason }, assertions: audit });
-    console.log(`  ${rf.id} refusal/${vp.id}` +
-                (audit.terminology.banned_found.length ? `  ⚠ ${audit.terminology.banned_found}` : "  ok"));
+    slot.captures.push({ tag: "refusal", step: null, viewport: vp.id, screenshot: path,
+                         authoritative_state: { reason: rf.reason }, assertions: audit });
+    const flags = [
+      audit.geometry.page_overflow_x && "tràn ngang trang",
+      audit.geometry.clipped_content.length && `nội dung bị cắt ${audit.geometry.clipped_content.length}`,
+      audit.terminology.banned_found.length && `thuật ngữ ${audit.terminology.banned_found}`,
+    ].filter(Boolean);
+    console.log(`  ${rf.id} refusal/${vp.id}` + (flags.length ? `  ⚠ ${flags.join(" · ")}` : "  ok"));
   }
-  records.push({ fixture_id: rf.id, renderer_id: rf.renderer, target_id: null,
-                 fixture_kind: "refusal", title: "Thông điệp từ chối", total_steps: 0, captures });
 }
+
+const records = [...byFixture.values()].map(({ fx, total, captures }) => ({
+  fixture_id: fx.id, renderer_id: fx.renderer, target_id: fx.target ?? null,
+  fixture_kind: fx.kind ?? "refusal", title: fx.title ?? "Thông điệp từ chối",
+  total_steps: total, captures,
+}));
 
 const shots = records.reduce((n, r) => n + r.captures.length, 0);
 writeFileSync(join(OUT_DIR, "captures.json"),

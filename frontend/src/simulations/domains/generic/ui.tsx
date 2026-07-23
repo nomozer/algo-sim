@@ -96,6 +96,7 @@ const FLOW_GAP = 10;
 // khi chúng nằm cùng hàng ngang; so le đường cơ sở để vẫn đọc được cả hai.
 const LABEL_STAGGER_MIN_LEN = 8;
 const LABEL_STAGGER_DY = 16;
+const LABEL_STAGGER_ROWS = 3;
 
 export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props) {
   const values = valuesOf(spec, state.base);
@@ -445,8 +446,13 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         // bắt được ở cảnh "Sơ đồ trạm quan trắc"). So le nhãn dài theo thứ tự
         // để hai nhãn kề nhau không dùng chung một đường cơ sở. Chỉ đổi TRÌNH
         // BÀY — vị trí ngữ nghĩa (state.pos) không đụng tới.
+        // BA hàng so le (không phải hai): với ba đối tượng nhãn dài cùng nằm
+        // trên một đường ngang, so le hai hàng vẫn để hai nhãn chung hàng đè
+        // nhau. Đẩy RA XA điểm (lên trên khi nhãn ở trên, xuống dưới khi đã
+        // flip) nên chữ không bao giờ chồng lên chính marker.
         const longLabel = String(dl ?? "").length > LABEL_STAGGER_MIN_LEN;
-        const stagger = longLabel && idx % 2 === 1 ? LABEL_STAGGER_DY : 0;
+        const row = longLabel ? idx % LABEL_STAGGER_ROWS : 0;
+        const stagger = row * LABEL_STAGGER_DY * (flipY ? 1 : -1);
         const labelY = (flipY ? p.y + 24 : p.y - 9) + stagger;
         const labelAnchor = flipX ? "end" : "start";
         if (isPoint(o)) {

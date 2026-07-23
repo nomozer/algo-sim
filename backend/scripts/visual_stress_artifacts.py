@@ -26,89 +26,75 @@ STATUSES = ("REAL_VISUAL", "PARTIAL_VISUAL", "BROKEN_VISUAL", "VISUAL_COVERAGE_G
 
 # Phán quyết của NGƯỜI REVIEW sau khi xem toàn bộ PNG (§9). Ghi kèm lý do —
 # không chấm REAL_VISUAL chỉ vì assertion xanh.
-REVIEW: dict[str, dict] = {
+REVIEW: dict[str, dict] = {}
+
+_FULL_PASS = {
+    "STRUCTURE_CLEAR": True, "STATE_CLEAR": True, "MECHANISM_CLEAR": True,
+    "PANEL_CORRECT": True, "TERMINOLOGY_CORRECT": True, "LAYOUT_PASS": True,
+    "RESPONSIVE_PASS": True, "PROGRESSIVE_REVEAL_PASS": True,
+}
+
+REVIEW.update({
     "network": {
-        "status": "PARTIAL_VISUAL",
-        "criteria": {
-            "STRUCTURE_CLEAR": True, "STATE_CLEAR": True, "MECHANISM_CLEAR": True,
-            "PANEL_CORRECT": True, "TERMINOLOGY_CORRECT": True, "LAYOUT_PASS": True,
-            "RESPONSIVE_PASS": False, "PROGRESSIVE_REVEAL_PASS": True,
-        },
+        "status": "REAL_VISUAL", "criteria": dict(_FULL_PASS),
         "note": (
-            "Sau bản sửa nhãn: mọi cạnh hiện rõ (không tái phát phantom token), "
-            "nhãn dài xuống dưới nút nên không còn bị nút cắt ngang, hàng đợi/"
-            "ngăn xếp đúng biến thể, thứ tự thăm hiện dần, đích không tới được "
-            "không bị dựng đường giả. HẠ ĐIỂM vì lỗi layout DÙNG CHUNG ở viewport "
-            "hẹp (xem VIS-003), không phải lỗi của renderer này."
+            "Mọi cạnh hiện rõ ở CẢ hai viewport (không tái phát phantom token — "
+            "kiểm computed stroke thật trong Chrome). Sau VIS-001: nhãn tiếng Việt "
+            "dài nằm DƯỚI nút, không còn bị nút cắt ngang. BFS dùng hàng đợi, DFS "
+            "dùng ngăn xếp, cùng topology cho thấy khác biệt rõ; đồ thị có chu "
+            "trình không lặp vô hạn; đích không tới được KHÔNG bị dựng đường giả; "
+            "đồ thị có hướng và đồ thị dày vẫn đọc được; kết quả hiện dần."
         ),
     },
     "tree": {
-        "status": "PARTIAL_VISUAL",
-        "criteria": {
-            "STRUCTURE_CLEAR": True, "STATE_CLEAR": True, "MECHANISM_CLEAR": True,
-            "PANEL_CORRECT": True, "TERMINOLOGY_CORRECT": True, "LAYOUT_PASS": True,
-            "RESPONSIVE_PASS": False, "PROGRESSIVE_REVEAL_PASS": True,
-        },
+        "status": "REAL_VISUAL", "criteria": dict(_FULL_PASS),
         "note": (
             "Regression bản sửa nhãn dài VR1 GIỮ NGUYÊN: cạnh trái/phải rõ, nhãn "
             "11 nút tiếng Việt không chồng nút, canvas co giãn, ngăn xếp/hàng đợi "
-            "đúng biến thể, thứ tự duyệt hiện dần. Cây một nút và cây lệch sâu "
-            "đều đúng. HẠ ĐIỂM vì VIS-003 (layout hẹp dùng chung)."
+            "đúng biến thể, thứ tự duyệt hiện dần, đường đang đi nổi bật. Cây một "
+            "nút và cây lệch sâu đều đúng. Viewport hẹp đầy đủ, không cắt."
         ),
     },
     "generic": {
         "status": "PARTIAL_VISUAL",
-        "criteria": {
-            "STRUCTURE_CLEAR": True, "STATE_CLEAR": True, "MECHANISM_CLEAR": True,
-            "PANEL_CORRECT": True, "TERMINOLOGY_CORRECT": True, "LAYOUT_PASS": False,
-            "RESPONSIVE_PASS": False, "PROGRESSIVE_REVEAL_PASS": True,
-        },
+        "criteria": {**_FULL_PASS, "LAYOUT_PASS": False},
         "note": (
-            "Sau hai bản sửa: nhãn dài so le nên không còn dồn thành khối chữ "
-            "không đọc được; badge kỹ thuật GENERIC đã thay bằng 'MÔ PHỎNG THEO "
-            "MÔ TẢ'. VẪN CHẬT khi nhiều nhãn rất dài nằm cùng hàng ngang — đọc "
-            "được nhưng sát nhau; không sửa thêm được nếu không đụng `state.pos` "
-            "(§10 cấm sửa engine state). Engine authenticity GIỮ NGUYÊN PARTIAL — "
-            "audit thị giác KHÔNG nâng hạng; tiêu đề không giả nhận diện thuật "
-            "toán, phụ đề nói rõ 'Mô phỏng tổng quát (AI tự dựng)'."
+            "Sau VIS-002 + bản so le BA hàng: ba nhãn dài trên cùng một đường "
+            "ngang đã tách rời và đọc được; badge kỹ thuật GENERIC thay bằng 'MÔ "
+            "PHỎNG THEO MÔ TẢ'. GIỮ PARTIAL vì §8: với nhãn CỰC dài và NHIỀU đối "
+            "tượng hơn số hàng so le, bố cục vẫn có thể chật — không sửa thêm "
+            "được nếu không đụng `state.pos` (§1 cấm sửa engine state). Hạn chế "
+            "này KHÔNG che nút/trạng thái và KHÔNG làm sai cơ chế. Engine "
+            "authenticity GIỮ NGUYÊN PARTIAL — audit thị giác không nâng hạng; "
+            "tiêu đề không giả nhận diện thuật toán, phụ đề ghi rõ 'Mô phỏng tổng "
+            "quát (AI tự dựng)'."
         ),
     },
     "algorithm": {
-        "status": "PARTIAL_VISUAL",
-        "criteria": {
-            "STRUCTURE_CLEAR": True, "STATE_CLEAR": True, "MECHANISM_CLEAR": True,
-            "PANEL_CORRECT": True, "TERMINOLOGY_CORRECT": True, "LAYOUT_PASS": True,
-            "RESPONSIVE_PASS": False, "PROGRESSIVE_REVEAL_PASS": True,
-        },
+        "status": "REAL_VISUAL", "criteria": dict(_FULL_PASS),
         "note": (
-            "Cột mảng, con trỏ bước, mã giả và tường thuật đồng bộ; số âm/thập "
-            "phân và nhãn tên tiếng Việt hiển thị đúng; binary search thu hẹp "
-            "khoảng rõ. HẠ ĐIỂM vì VIS-003."
+            "Cột mảng, con trỏ bước, mã giả và tường thuật đồng bộ engine; số âm "
+            "và thập phân hiển thị đúng; nhãn tên tiếng Việt không tràn; binary "
+            "search thu hẹp khoảng rõ; kết quả chỉ hiện ở bước cuối."
         ),
     },
     "binary": {
-        "status": "PARTIAL_VISUAL",
-        "criteria": {
-            "STRUCTURE_CLEAR": True, "STATE_CLEAR": True, "MECHANISM_CLEAR": True,
-            "PANEL_CORRECT": True, "TERMINOLOGY_CORRECT": True, "LAYOUT_PASS": True,
-            "RESPONSIVE_PASS": False, "PROGRESSIVE_REVEAL_PASS": True,
-        },
-        "note": "Hàng trọng số/bit và bảng chia-lấy-dư rõ. HẠ ĐIỂM vì VIS-003.",
-    },
-    "logic": {
-        "status": "PARTIAL_VISUAL",
-        "criteria": {
-            "STRUCTURE_CLEAR": True, "STATE_CLEAR": True, "MECHANISM_CLEAR": True,
-            "PANEL_CORRECT": True, "TERMINOLOGY_CORRECT": True, "LAYOUT_PASS": True,
-            "RESPONSIVE_PASS": False, "PROGRESSIVE_REVEAL_PASS": True,
-        },
+        "status": "REAL_VISUAL", "criteria": dict(_FULL_PASS),
         "note": (
-            "Cổng, dây nối và bảng chân trị rõ; and_gate là module khám phá "
-            "(không timeline) nên chỉ có ảnh initial — đúng hợp đồng. HẠ ĐIỂM vì "
-            "VIS-003."
+            "Hàng trọng số và ô bit rõ; bảng chia-lấy-dư của đổi cơ số tổng quát "
+            "đọc được ở cả hai viewport; giá trị lớn (2026₁₀ → hex) không tràn."
         ),
     },
-}
+    "logic": {
+        "status": "REAL_VISUAL", "criteria": dict(_FULL_PASS),
+        "note": (
+            "Cổng, dây nối và bảng chân trị rõ; mạch ba cổng lồng nhau đọc được. "
+            "and_gate là module KHÁM PHÁ (không timeline) nên chỉ có ảnh initial "
+            "— đúng hợp đồng, không phải thiếu ảnh."
+        ),
+    },
+})
+
 
 LEDGER = [
     {
@@ -137,23 +123,49 @@ LEDGER = [
         "status": "FIXED",
     },
     {
-        "id": "VIS-003", "renderer": "*(dùng chung)*", "severity": "BROKEN_VISUAL",
-        "found": "Ở viewport hẹp (768px), panel bên phải KHÔNG xuống dòng mà giữ "
-                 "nguyên cột — workspace bị cắt: tiêu đề, canvas, panel trạng "
-                 "thái, tường thuật và nút 'Đặt lại' đều mất phần bên phải.",
-        "evidence": "visual/tree/tree-vietnamese-11-nodes-mid-narrow.png · "
-                    "visual/network/graph-vietnamese-long-labels-mid-narrow.png "
-                    "(và mọi renderer ở viewport hẹp).",
-        "root_cause": "Layout hai cột của app shell chưa có điểm ngắt responsive; "
-                      "đây là CSS DÙNG CHUNG, không thuộc renderer nào.",
-        "fix": None,
-        "scope": "app shell CSS — ảnh hưởng CẢ 6 renderer",
-        "status": "OPEN_BLOCKING",
+        "id": "VIS-003", "renderer": "*(dùng chung)*", "severity": "NOT_A_DEFECT",
+        "found": "NGHI NGỜ ban đầu: ở viewport 768px, panel phải không xuống dòng "
+                 "nên workspace bị cắt (tiêu đề, canvas, panel, tường thuật, nút "
+                 "'Đặt lại').",
+        "evidence": "Chẩn đoán DOM THẬT (diagnose-responsive.mjs) trên CẢ 4 route "
+                    "dùng chung app shell, hai viewport: scrollWidth 758 ≤ "
+                    "clientWidth 768 · 0 nút bị cắt · 0 nội dung bị tổ tiên cắt · "
+                    "0 min-width cứng vượt viewport. before/VIS-003/ và "
+                    "after/VIS-003/ cho cùng kết quả.",
+        "root_cause": "LỖI TRONG PHÉP ĐO CỦA TÔI, không phải lỗi sản phẩm: script "
+                      "audit đổi viewport SAU khi trang đã dựng ở 1440px, nên ảnh "
+                      "ra khung 768 nhưng bố cục vẫn của 1440 — trông y hệt bị cắt. "
+                      "App shell THỰC SỰ có responsive đúng.",
+        "fix": "Sửa PHÉP ĐO: đặt viewport TRƯỚC rồi mới nạp trang (viewport thành "
+               "vòng ngoài); bổ sung assertion page_overflow_x, clipped_content "
+               "(bị tổ tiên cắt), rigid_min_width và key_elements vào audit. "
+               "KHÔNG đổi một dòng CSS/layout production nào.",
+        "scope": "frontend/scripts/visual-stress-audit.mjs (chỉ công cụ đo)",
+        "status": "NOT_A_DEFECT_MEASUREMENT_ARTEFACT",
         "why_not_fixed": (
-            "Đúng điều kiện dừng §13: 'shared layout fix cần thay đổi kiến trúc "
-            "lớn'. Sửa điểm ngắt responsive của app shell chạm mọi màn hình (kể "
-            "cả Home/Library/History ngoài phạm vi §E) và theo §10 phải chụp lại "
-            "TOÀN BỘ renderer. Báo trước, xin quyết định phạm vi."
+            "Không có gì để sửa trong sản phẩm. Ghi lại đầy đủ thay vì xoá, vì đây "
+            "là cảnh báo về chính phương pháp audit: ảnh chụp có thể phản ánh sai "
+            "hiện thực nếu quy trình đo sai, và tôi đã suýt sửa app shell theo một "
+            "lỗi không tồn tại."
+        ),
+    },
+    {
+        "id": "VIS-004", "renderer": "generic", "severity": "PARTIAL_VISUAL",
+        "found": "Ba nhãn tiếng Việt dài trên cùng một đường ngang vẫn sát nhau sau "
+                 "bản so le HAI hàng của VIS-002.",
+        "evidence": "visual/generic/generic-vietnamese-labels-*-*.png (trước bản so "
+                    "le ba hàng).",
+        "root_cause": "So le hai hàng ⇒ với ba đối tượng, hai trong số đó vẫn dùng "
+                      "chung một đường cơ sở.",
+        "fix": "Nâng lên BA hàng so le và đẩy nhãn RA XA điểm (lên trên khi nhãn ở "
+               "trên, xuống dưới khi đã lật) nên chữ không chồng marker. Trình bày "
+               "thuần — `state.pos` không đụng.",
+        "scope": "generic/ui.tsx",
+        "status": "FIXED_PARTIAL",
+        "why_not_fixed": (
+            "Vẫn giữ PARTIAL_VISUAL theo §8: nhãn CỰC dài với số đối tượng nhiều "
+            "hơn số hàng so le thì vẫn chật. Không che nút/trạng thái, không làm "
+            "sai cơ chế ⇒ không chặn."
         ),
     },
 ]

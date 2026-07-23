@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "generated_at": "2026-07-22T04:20:49.266863+00:00",
+  "generated_at": "2026-07-23T07:05:26.747817+00:00",
   "note": "Renderer DẪN XUẤT từ registry (ai_reachable). Phán quyết do người xem ảnh chấm — assertion tự động không tự nâng REAL_VISUAL.",
   "renderers": [
     {
@@ -45,7 +45,7 @@
         "narrow"
       ],
       "screenshot_count": 26,
-      "review_status": "PARTIAL_VISUAL",
+      "review_status": "REAL_VISUAL",
       "criteria": {
         "STRUCTURE_CLEAR": true,
         "STATE_CLEAR": true,
@@ -53,10 +53,10 @@
         "PANEL_CORRECT": true,
         "TERMINOLOGY_CORRECT": true,
         "LAYOUT_PASS": true,
-        "RESPONSIVE_PASS": false,
+        "RESPONSIVE_PASS": true,
         "PROGRESSIVE_REVEAL_PASS": true
       },
-      "reviewer_note": "Cột mảng, con trỏ bước, mã giả và tường thuật đồng bộ; số âm/thập phân và nhãn tên tiếng Việt hiển thị đúng; binary search thu hẹp khoảng rõ. HẠ ĐIỂM vì VIS-003."
+      "reviewer_note": "Cột mảng, con trỏ bước, mã giả và tường thuật đồng bộ engine; số âm và thập phân hiển thị đúng; nhãn tên tiếng Việt không tràn; binary search thu hẹp khoảng rõ; kết quả chỉ hiện ở bước cuối."
     },
     {
       "renderer_id": "binary",
@@ -84,7 +84,7 @@
         "narrow"
       ],
       "screenshot_count": 8,
-      "review_status": "PARTIAL_VISUAL",
+      "review_status": "REAL_VISUAL",
       "criteria": {
         "STRUCTURE_CLEAR": true,
         "STATE_CLEAR": true,
@@ -92,10 +92,10 @@
         "PANEL_CORRECT": true,
         "TERMINOLOGY_CORRECT": true,
         "LAYOUT_PASS": true,
-        "RESPONSIVE_PASS": false,
+        "RESPONSIVE_PASS": true,
         "PROGRESSIVE_REVEAL_PASS": true
       },
-      "reviewer_note": "Hàng trọng số/bit và bảng chia-lấy-dư rõ. HẠ ĐIỂM vì VIS-003."
+      "reviewer_note": "Hàng trọng số và ô bit rõ; bảng chia-lấy-dư của đổi cơ số tổng quát đọc được ở cả hai viewport; giá trị lớn (2026₁₀ → hex) không tràn."
     },
     {
       "renderer_id": "generic",
@@ -130,10 +130,10 @@
         "PANEL_CORRECT": true,
         "TERMINOLOGY_CORRECT": true,
         "LAYOUT_PASS": false,
-        "RESPONSIVE_PASS": false,
+        "RESPONSIVE_PASS": true,
         "PROGRESSIVE_REVEAL_PASS": true
       },
-      "reviewer_note": "Sau hai bản sửa: nhãn dài so le nên không còn dồn thành khối chữ không đọc được; badge kỹ thuật GENERIC đã thay bằng 'MÔ PHỎNG THEO MÔ TẢ'. VẪN CHẬT khi nhiều nhãn rất dài nằm cùng hàng ngang — đọc được nhưng sát nhau; không sửa thêm được nếu không đụng `state.pos` (§10 cấm sửa engine state). Engine authenticity GIỮ NGUYÊN PARTIAL — audit thị giác KHÔNG nâng hạng; tiêu đề không giả nhận diện thuật toán, phụ đề nói rõ 'Mô phỏng tổng quát (AI tự dựng)'."
+      "reviewer_note": "Sau VIS-002 + bản so le BA hàng: ba nhãn dài trên cùng một đường ngang đã tách rời và đọc được; badge kỹ thuật GENERIC thay bằng 'MÔ PHỎNG THEO MÔ TẢ'. GIỮ PARTIAL vì §8: với nhãn CỰC dài và NHIỀU đối tượng hơn số hàng so le, bố cục vẫn có thể chật — không sửa thêm được nếu không đụng `state.pos` (§1 cấm sửa engine state). Hạn chế này KHÔNG che nút/trạng thái và KHÔNG làm sai cơ chế. Engine authenticity GIỮ NGUYÊN PARTIAL — audit thị giác không nâng hạng; tiêu đề không giả nhận diện thuật toán, phụ đề ghi rõ 'Mô phỏng tổng quát (AI tự dựng)'."
     },
     {
       "renderer_id": "logic",
@@ -161,7 +161,7 @@
         "narrow"
       ],
       "screenshot_count": 8,
-      "review_status": "PARTIAL_VISUAL",
+      "review_status": "REAL_VISUAL",
       "criteria": {
         "STRUCTURE_CLEAR": true,
         "STATE_CLEAR": true,
@@ -169,10 +169,10 @@
         "PANEL_CORRECT": true,
         "TERMINOLOGY_CORRECT": true,
         "LAYOUT_PASS": true,
-        "RESPONSIVE_PASS": false,
+        "RESPONSIVE_PASS": true,
         "PROGRESSIVE_REVEAL_PASS": true
       },
-      "reviewer_note": "Cổng, dây nối và bảng chân trị rõ; and_gate là module khám phá (không timeline) nên chỉ có ảnh initial — đúng hợp đồng. HẠ ĐIỂM vì VIS-003."
+      "reviewer_note": "Cổng, dây nối và bảng chân trị rõ; mạch ba cổng lồng nhau đọc được. and_gate là module KHÁM PHÁ (không timeline) nên chỉ có ảnh initial — đúng hợp đồng, không phải thiếu ảnh."
     },
     {
       "renderer_id": "network",
@@ -210,7 +210,7 @@
         "narrow"
       ],
       "screenshot_count": 48,
-      "review_status": "PARTIAL_VISUAL",
+      "review_status": "REAL_VISUAL",
       "criteria": {
         "STRUCTURE_CLEAR": true,
         "STATE_CLEAR": true,
@@ -218,10 +218,10 @@
         "PANEL_CORRECT": true,
         "TERMINOLOGY_CORRECT": true,
         "LAYOUT_PASS": true,
-        "RESPONSIVE_PASS": false,
+        "RESPONSIVE_PASS": true,
         "PROGRESSIVE_REVEAL_PASS": true
       },
-      "reviewer_note": "Sau bản sửa nhãn: mọi cạnh hiện rõ (không tái phát phantom token), nhãn dài xuống dưới nút nên không còn bị nút cắt ngang, hàng đợi/ngăn xếp đúng biến thể, thứ tự thăm hiện dần, đích không tới được không bị dựng đường giả. HẠ ĐIỂM vì lỗi layout DÙNG CHUNG ở viewport hẹp (xem VIS-003), không phải lỗi của renderer này."
+      "reviewer_note": "Mọi cạnh hiện rõ ở CẢ hai viewport (không tái phát phantom token — kiểm computed stroke thật trong Chrome). Sau VIS-001: nhãn tiếng Việt dài nằm DƯỚI nút, không còn bị nút cắt ngang. BFS dùng hàng đợi, DFS dùng ngăn xếp, cùng topology cho thấy khác biệt rõ; đồ thị có chu trình không lặp vô hạn; đích không tới được KHÔNG bị dựng đường giả; đồ thị có hướng và đồ thị dày vẫn đọc được; kết quả hiện dần."
     },
     {
       "renderer_id": "tree",
@@ -253,7 +253,7 @@
         "narrow"
       ],
       "screenshot_count": 32,
-      "review_status": "PARTIAL_VISUAL",
+      "review_status": "REAL_VISUAL",
       "criteria": {
         "STRUCTURE_CLEAR": true,
         "STATE_CLEAR": true,
@@ -261,10 +261,10 @@
         "PANEL_CORRECT": true,
         "TERMINOLOGY_CORRECT": true,
         "LAYOUT_PASS": true,
-        "RESPONSIVE_PASS": false,
+        "RESPONSIVE_PASS": true,
         "PROGRESSIVE_REVEAL_PASS": true
       },
-      "reviewer_note": "Regression bản sửa nhãn dài VR1 GIỮ NGUYÊN: cạnh trái/phải rõ, nhãn 11 nút tiếng Việt không chồng nút, canvas co giãn, ngăn xếp/hàng đợi đúng biến thể, thứ tự duyệt hiện dần. Cây một nút và cây lệch sâu đều đúng. HẠ ĐIỂM vì VIS-003 (layout hẹp dùng chung)."
+      "reviewer_note": "Regression bản sửa nhãn dài VR1 GIỮ NGUYÊN: cạnh trái/phải rõ, nhãn 11 nút tiếng Việt không chồng nút, canvas co giãn, ngăn xếp/hàng đợi đúng biến thể, thứ tự duyệt hiện dần, đường đang đi nổi bật. Cây một nút và cây lệch sâu đều đúng. Viewport hẹp đầy đủ, không cắt."
     }
   ]
 }
