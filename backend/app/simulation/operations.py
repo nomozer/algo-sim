@@ -149,6 +149,52 @@ def semantic_of(operation_id: str) -> SemanticRequirement | None:
     return SEMANTIC_OPERATION_MAP.get(operation_id)
 
 
+def requirements_from_structured(analysis: dict) -> list[SemanticRequirement]:
+    """M17 W2B-S1 — đọc `requested_requirements` (có mục tiêu) → yêu cầu semantic
+    KÈM `goal_id` là chữ ký tất định. Trường lạ/operation lạ bị bỏ qua."""
+    from app.simulation.goal_signature import canonical_goal_signature
+
+    if not isinstance(analysis, dict):
+        return []
+    raw = analysis.get("requested_requirements")
+    if not isinstance(raw, list):
+        return []
+    out: list[SemanticRequirement] = []
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        base = SEMANTIC_OPERATION_MAP.get(item.get("operation"))
+        if base is None:
+            continue
+        req = SemanticRequirement(base.operation_id, base.variant_id,
+                                  canonical_goal_signature(item))
+        if req not in out:
+            out.append(req)
+    return out
+
+
+def query_keys_of(analysis: dict, families: set[str]) -> list[str | None]:
+    """Định danh các TRUY VẤN ĐỘC LẬP mà đề yêu cầu, trong phạm vi family."""
+    from app.simulation.goal_signature import query_key
+
+    if not isinstance(analysis, dict):
+        return []
+    raw = analysis.get("requested_requirements")
+    if not isinstance(raw, list):
+        return []
+    keys: list[str | None] = []
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        base = SEMANTIC_OPERATION_MAP.get(item.get("operation"))
+        if base is None or operation_family(item["operation"]) not in families:
+            continue
+        k = query_key(item, item.get("query_group"))
+        if k not in keys:
+            keys.append(k)
+    return keys
+
+
 def canonical_requirements(operation_ids) -> list[SemanticRequirement]:
     """Gợi ý target/mechanism thô → YÊU CẦU SEMANTIC chuẩn hoá.
 

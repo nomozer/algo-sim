@@ -174,29 +174,86 @@ def test_fx8_sai_toan_tu_bi_validator_chan(monkeypatch):
 
 
 # ── 10. HAI truy vấn độc lập → phải từ chối trung thực ────────────
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "M17 W2B CHƯA ĐÓNG — hai truy vấn ĐỘC LẬP cùng loại (đếm tổ A và đếm tổ "
-        "B) canonicalize về CÙNG `table.aggregate/count` nên bị GỘP thành một, "
-        "hệ trả ok cho một nửa. `SemanticRequirement.goal_id` đã có sẵn chỗ để "
-        "phân biệt nhưng CHƯA có đường nào từ analyze điền vào (registry hiện "
-        "map operation→goal_id=None). Cần: analyze khai goal cho từng yêu cầu + "
-        "bump CACHE. strict=True để khi nối dây xong test xanh thì pytest báo "
-        "đỏ, buộc xoá marker."
-    ),
-)
+def _req(op, **goal):
+    return {"operation": f"relational_table_query:{op}", **goal}
+
+
+def _an_req(goal_text, reqs):
+    a = {**_analysis(objects=_TB_OBJECTS, data=_TB_DATA, goal=goal_text),
+         "requested_operations": sorted({r["operation"] for r in reqs}),
+         "requested_requirements": reqs}
+    return json.dumps(a, ensure_ascii=False)
+
+
 def test_fx10_hai_truy_van_doc_lap_phai_tu_choi(monkeypatch):
+    """W2B-S1: hai phép đếm trên HAI điều kiện khác nhau là HAI truy vấn.
+    Chạy cái nào cũng là bỏ im lặng cái kia ⇒ từ chối trung thực."""
     env = _run(monkeypatch, [
-        _an("Đếm học sinh tổ A và đếm học sinh tổ B",
-            ["relational_table_query:count", "relational_table_query:count"]),
+        _an_req("Đếm học sinh tổ A và đếm học sinh tổ B", [
+            _req("count", filter_column="to", filter_op="=", filter_value="A"),
+            _req("count", filter_column="to", filter_op="=", filter_value="B"),
+        ]),
+        json.dumps(_classify(TARGET)),
+    ], "Cho bảng điểm, đếm số bạn tổ A và đếm số bạn tổ B.")
+    assert env["status"] == "unsupported"
+    assert env["error_code"] == "multiple_operations_not_supported"
+    assert env.get("simulation_id") is None and env.get("config") is None
+    c = env["completeness"]
+    assert c["independent_goal_count"] == 2
+    assert len(set(c["independent_goal_keys"])) == 2, "hai mục tiêu phải KHÁC chữ ký"
+    assert "tách" in env["reason"]
+    for banned in ("{", "}", "filter=", "table.aggregate"):
+        assert banned not in env["reason"], f"thông điệp lộ id kỹ thuật: {env['reason']}"
+
+
+def test_fx10b_cung_mot_COUNT_dien_dat_hai_lan_thi_gop(monkeypatch):
+    """Đối chứng chống chặn oan: CÙNG một phép đếm nói hai cách tương đương
+    (">"/"lớn hơn", 6 và 6.0) ⇒ MỘT truy vấn ⇒ vẫn chạy."""
+    env = _run(monkeypatch, [
+        _an_req("Đếm học sinh điểm trên 6", [
+            _req("count", filter_column="diem", filter_op=">", filter_value=6),
+            _req("count", filter_column=" Diem ", filter_op="lon_hon", filter_value=6.0),
+        ]),
         json.dumps(_classify(TARGET)),
         _table_cfg(_TB_SCHEMA, _TB_ROWS,
-                   filter={"op": "=", "column": "to", "value": "A"},
+                   filter={"op": ">", "column": "diem", "value": 6},
                    aggregate={"func": "count"}),
-    ], "Cho bảng điểm, đếm số bạn tổ A và đếm số bạn tổ B.")
-    assert env["status"] == "unsupported", "hai truy vấn độc lập không được trả ok"
-    assert env.get("simulation_id") is None
+    ])
+    _ok(env)
+    assert env.get("completeness") is None
+
+
+def test_fx10c_COUNT_va_SUM_cung_dieu_kien_van_la_hai_truy_van(monkeypatch):
+    """Spec mang ĐÚNG MỘT hàm tổng hợp ⇒ đếm + tính tổng là hai yêu cầu."""
+    env = _run(monkeypatch, [
+        _an_req("Đếm tổ A và tính tổng điểm tổ A", [
+            _req("count", filter_column="to", filter_op="=", filter_value="A"),
+            _req("sum", filter_column="to", filter_op="=", filter_value="A",
+                 aggregate_func="sum", aggregate_column="diem"),
+        ]),
+        json.dumps(_classify(TARGET)),
+    ], "Đếm số bạn tổ A và tính tổng điểm tổ A.")
+    assert env["status"] == "unsupported"
+    assert env["error_code"] == "multiple_operations_not_supported"
+
+
+def test_fx10d_pipeline_mot_truy_van_khong_bi_chan_oan(monkeypatch):
+    """Bốn tầng CÙNG một truy vấn (cùng query_group) ⇒ KHÔNG chặn."""
+    g = {"query_group": 0, "filter_column": "diem", "filter_op": ">=",
+         "filter_value": 6}
+    env = _run(monkeypatch, [
+        _an_req("Lọc, chọn cột, sắp xếp, lấy 2 dòng", [
+            _req("filter", **g), _req("projection", **g),
+            _req("sort", **g), _req("limit", **g),
+        ]),
+        json.dumps(_classify(TARGET)),
+        _table_cfg(_TB_SCHEMA, _TB_ROWS,
+                   filter={"op": ">=", "column": "diem", "value": 6},
+                   projection=["ten", "diem"],
+                   sort={"column": "diem", "direction": "desc"}, limit=2),
+    ])
+    _ok(env)
+    assert env.get("completeness") is None
 
 
 # ── không leak sang generic ở BẤT KỲ nhánh nào ────────────────────

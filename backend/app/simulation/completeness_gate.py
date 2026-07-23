@@ -37,6 +37,8 @@ from app.simulation.operation_policy import (
 from app.simulation.operations import (
     OPERATIONS,
     canonical_requirements,
+    query_keys_of,
+    requirements_from_structured,
     operation_family,
     operation_labels,
     operations_for_family,
@@ -92,6 +94,17 @@ def _ops_scope(operations: list[str], families: set[str]) -> list[str]:
     return [o for o in operations if operation_family(o) in families]
 
 
+def _req_family(req) -> str | None:
+    """Family của một SemanticRequirement — tra ngược qua registry (không đoán
+    chữ từ `operation_id`)."""
+    from app.simulation.operations import SEMANTIC_OPERATION_MAP
+
+    for op, r in SEMANTIC_OPERATION_MAP.items():
+        if r.operation_id == req.operation_id and r.variant_id == req.variant_id:
+            return operation_family(op)
+    return None
+
+
 def requested_semantic(analysis: dict, families: set[str]):
     """§C1.1 — YÊU CẦU SEMANTIC chuẩn hoá trong phạm vi family của route cuối.
 
@@ -127,6 +140,39 @@ def check_requested_combination(
     """Trả (code, message học-sinh, evidence) khi vi phạm; None khi hợp lệ."""
     ops = _ops_scope(normalized_requested_operations(analysis), families)
     mechs = _mech_scope(normalized_requested(analysis), families)
+
+    # M17 W2B-S1 — TRUY VẤN ĐỘC LẬP. Một spec mô tả ĐÚNG MỘT yêu cầu; đề hỏi hai
+    # mục tiêu khác nhau (vd "đếm tổ A" và "đếm tổ B") thì chạy cái nào cũng là
+    # bỏ im lặng cái kia. Kiểm TRƯỚC luật cardinality vì đây là lý do từ chối
+    # đúng bản chất hơn ("hai truy vấn", không phải "nhiều thao tác").
+    for fam in sorted(families):
+        pol = policy_for_family(fam)
+        keys = query_keys_of(analysis, {fam})
+        if len(keys) > pol.max_independent_goals:
+            reqs = [r for r in requirements_from_structured(analysis)
+                    if _req_family(r) == fam]
+            labels = [semantic_label(r) for r in reqs] or [str(k) for k in keys]
+            return (
+                ErrorCode.MULTIPLE_OPERATIONS_NOT_SUPPORTED,
+                (
+                    f"Đề đang hỏi {len(keys)} truy vấn độc lập, nhưng mỗi lần mô "
+                    "phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi "
+                    "(giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước."
+                ),
+                {
+                    "family_id": fam,
+                    "operation_cardinality": pol.cardinality,
+                    "max_independent_goals": pol.max_independent_goals,
+                    "independent_goal_count": len(keys),
+                    "independent_goal_keys": [k for k in keys if k is not None],
+                    "requested_operations": [o for o in ops if operation_family(o) == fam],
+                    "requested_semantic_requirements": [r.as_dict() for r in reqs],
+                    "requested_operation_labels": labels,
+                    "unsupported_combinations": [[str(k) for k in keys]],
+                    "detected_by": "independent_goal",
+                    "policy_note": pol.note,
+                },
+            )
 
     for fam in sorted(families):
         pol = policy_for_family(fam)

@@ -38,6 +38,11 @@ class OperationPolicy:
     max_operations: int = 1
     supported_combinations: tuple[frozenset[str], ...] = ()
     mutually_exclusive: tuple[frozenset[str], ...] = ()
+    # M17 W2B-S1 — số TRUY VẤN/MỤC TIÊU ĐỘC LẬP một lần mô phỏng dựng được.
+    # Mặc định 1: mọi spec hiện có mô tả ĐÚNG MỘT yêu cầu. Family nào chưa khai
+    # mục tiêu có cấu trúc thì mọi yêu cầu có goal=None ⇒ luôn 1 nhóm ⇒ luật này
+    # không bao giờ kích hoạt (tương thích ngược).
+    max_independent_goals: int = 1
     note: str = ""
 
     def exclusive_conflict(self, requested: set[str]) -> list[list[str]]:

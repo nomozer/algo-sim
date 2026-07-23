@@ -3,7 +3,7 @@
 Ma trận **sinh từ registry** (`CATALOG` + `FAMILY_SELECTORS` +
 `AUTHENTICITY_CONTRACTS` + fixture audit) — KHÔNG viết tay danh sách target.
 
-- Target AI-reachable: **19**
+- Target AI-reachable: **20**
 - Vi phạm conformance: **0**
 - Vi phạm ownership: **0**
 - Lệch source↔runtime: **0**
@@ -23,6 +23,7 @@ Ma trận **sinh từ registry** (`CATALOG` + `FAMILY_SELECTORS` +
 | `algorithm.sum_if` | single_pass_scan | — | `validate_algorithm_config` | `algorithm.sum_if` | algorithm | 0 | ✓ |
 | `binary.base_conversion` | positional_representation | — | `validate_base_conversion_config` | `binary.base_conversion` | binary | 2 | ✓ |
 | `binary.decimal_to_binary` | positional_representation | — | `validate_binary_config` | `binary.decimal_to_binary` | binary | 1 | ✓ |
+| `database.relational_table_query` | relational_table_query | — | `validate_table_query_config` | `database.relational_table_query` | database | 0 | ✓ |
 | `generic.rule_scene` | boolean_composition, structural_progressive_representation | — | `validate_generic_config` | `generic.rule_scene` | generic | 0 | ✓ |
 | `logic.and_gate` | boolean_composition | — | `validate_logic_config` | `logic.and_gate` | logic | 0 | ✓ |
 | `logic.boolean_dag` | boolean_composition | — | `validate_boolean_dag_config` | `logic.boolean_dag` | logic | 0 | ✓ |

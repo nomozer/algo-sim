@@ -48,6 +48,17 @@ CÁC TRƯỜNG TRÍCH XUẤT:
   - Đề chỉ hỏi MỘT việc → đúng MỘT giá trị.
   Không suy diễn thêm việc đề KHÔNG hỏi. KHÔNG tự chọn giúp khi đề hỏi nhiều —
   máy chủ quyết định có mô phỏng được hay không.
+- requested_requirements: với đề TRUY VẤN BẢNG, khai TỪNG yêu cầu kèm MỤC TIÊU
+  của nó, mỗi mục một phần tử {operation, query_group?, filter_column?,
+  filter_op?, filter_value?, aggregate_func?, aggregate_column?,
+  projection_columns?, sort_column?, sort_direction?, limit?}.
+  - CÁC TẦNG CỦA CÙNG MỘT truy vấn (lọc → chọn cột → sắp xếp → lấy n → tính
+    tổng hợp) dùng CÙNG một query_group (ví dụ 0) và cùng mô tả điều kiện.
+  - HAI TRUY VẤN ĐỘC LẬP dùng query_group KHÁC NHAU. Ví dụ "đếm tổ A và đếm tổ
+    B" → hai phần tử: {operation:"relational_table_query:count", query_group:0,
+    filter_column:"to", filter_op:"=", filter_value:"A"} và {…, query_group:1,
+    filter_value:"B"}. KHÔNG gộp thành một — gộp là bỏ mất một yêu cầu của đề.
+  - CHỈ ghi trường đề THẬT SỰ nêu. KHÔNG tự điền cột, điều kiện hay giá trị mẫu.
 - requested_mechanisms: LIỆT KÊ ĐỦ **mọi** cơ chế đề yêu cầu (cùng bộ giá trị
   với prescribed_procedure). Đề hỏi NHIỀU thao tác thì phải nêu ĐỦ, KHÔNG được
   rút gọn còn một. Ví dụ: đề bảo "xác định thứ tự ghi nhận trong cả bốn quy

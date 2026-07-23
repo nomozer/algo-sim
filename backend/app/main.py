@@ -112,7 +112,11 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       classify.md 2g (bảng vs dãy số đơn lẻ; JOIN/subquery/mutation →
 #       unsupported). Đề truy vấn bảng TỪNG bị unsupported/generic nay mô phỏng
 #       được → phải invalidate cache cũ.
-CACHE_VERSION = "18"
+# "19": M17 W2B-S1 — analyze thêm `requested_requirements` (yêu cầu KÈM MỤC
+#       TIÊU có cấu trúc). Cache cũ giữ analysis KHÔNG có trường này → cổng
+#       không phân biệt được "đếm tổ A" với "đếm tổ B", gộp thành một và trả ok
+#       cho một nửa. History KHÔNG bump: hợp đồng envelope đã lưu không đổi.
+CACHE_VERSION = "19"
 
 
 class InputPayload(BaseModel):

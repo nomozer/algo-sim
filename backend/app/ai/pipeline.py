@@ -129,6 +129,34 @@ ANALYZE_SCHEMA = {
             "items": {"type": "STRING", "enum": list(analyze_exposed_operations())},
             "nullable": True,
         },
+        # M17 W2B-S1 — YÊU CẦU CÓ CẤU TRÚC kèm MỤC TIÊU. `requested_operations`
+        # ở trên chỉ nói "làm việc gì"; trường này nói thêm "trên mục tiêu nào",
+        # để hai phép đếm trên hai điều kiện khác nhau KHÔNG bị gộp thành một
+        # (fixture #10 — mất mát ngữ nghĩa đo được). Mục tiêu khai bằng TRƯỜNG
+        # CÓ CẤU TRÚC, KHÔNG phải id tự do do LLM tự đặt.
+        "requested_requirements": {
+            "type": "ARRAY",
+            "nullable": True,
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "operation": {"type": "STRING",
+                                  "enum": list(analyze_exposed_operations())},
+                    "query_group": {"type": "INTEGER", "nullable": True},
+                    "filter_column": {"type": "STRING", "nullable": True},
+                    "filter_op": {"type": "STRING", "nullable": True},
+                    "filter_value": {"type": "STRING", "nullable": True},
+                    "aggregate_func": {"type": "STRING", "nullable": True},
+                    "aggregate_column": {"type": "STRING", "nullable": True},
+                    "projection_columns": {"type": "ARRAY", "items": {"type": "STRING"},
+                                           "nullable": True},
+                    "sort_column": {"type": "STRING", "nullable": True},
+                    "sort_direction": {"type": "STRING", "nullable": True},
+                    "limit": {"type": "INTEGER", "nullable": True},
+                },
+                "required": ["operation"],
+            },
+        },
         "notes": {"type": "STRING", "nullable": True},
     },
     "required": [

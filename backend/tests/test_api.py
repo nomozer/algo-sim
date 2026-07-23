@@ -227,7 +227,7 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     dưới luật mới."""
     from app.main import _cache_lookup
 
-    assert main_module.CACHE_VERSION == "18"  # M17 W2B (bump 17→18, family thứ 10)
+    assert main_module.CACHE_VERSION == "19"  # M17 W2B-S1 (bump 18→19, requested_requirements)
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
