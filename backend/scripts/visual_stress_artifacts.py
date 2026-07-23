@@ -142,6 +142,16 @@ LEDGER = [
                "KHÔNG đổi một dòng CSS/layout production nào.",
         "scope": "frontend/scripts/visual-stress-audit.mjs (chỉ công cụ đo)",
         "status": "NOT_A_DEFECT_MEASUREMENT_ARTEFACT",
+        "findings": [
+            "audit runner TRƯỚC ĐÂY đổi viewport SAU khi trang đã dựng ở 1440px",
+            "vì vậy ảnh 768px KHÔNG phản ánh layout responsive thật",
+            "chẩn đoán DOM chứng minh: không page overflow, không clipping, "
+            "không rigid min-width (cả 4 route × 2 viewport, before và after)",
+            "production CSS/layout KHÔNG cần sửa",
+            "runner đã sửa thành viewport-before-navigation + reload",
+            "đã bổ sung assertion responsive (page_overflow_x, clipped_content, "
+            "rigid_min_width, key_elements)",
+        ],
         "why_not_fixed": (
             "Không có gì để sửa trong sản phẩm. Ghi lại đầy đủ thay vì xoá, vì đây "
             "là cảnh báo về chính phương pháp audit: ảnh chụp có thể phản ánh sai "
@@ -228,6 +238,34 @@ def main() -> int:
     narrow = shots - desktop
     blocking = [x for x in LEDGER if x["status"].startswith("OPEN")]
 
+    # §11 — PROVENANCE RUNTIME. Tuyệt đối KHÔNG ghi kết quả doctor cũ thành một
+    # lần xác minh MỚI tại HEAD này: nói "đã xác minh" khi chưa chạy là bịa bằng
+    # chứng. Ghi đúng ba việc: đã xác minh Ở ĐÂU, vì sao không chạy lại, và vì
+    # sao kết quả cũ vẫn còn hiệu lực (backend/catalog không đổi trong range).
+    runtime_provenance = {
+        "verified_at_commit": "e9ec370",
+        "verified_result": "PASS",
+        "verified_identity": {
+            "sha": "b977a94923eb", "cache_version": "17",
+            "family_count": 9, "target_count": 19, "catalog_hash": "0adecafd0d49",
+        },
+        "revalidated_at_this_head": False,
+        "this_head": "fa9c21d (RC1-E1)",
+        "why_not_revalidated": (
+            "Docker Desktop không khả dụng khi đóng RC1-E — không có runtime "
+            "response nào để đối chiếu."
+        ),
+        "why_previous_result_still_applies": (
+            "backend/app và catalog KHÔNG đổi một dòng trong range RC1-E "
+            "(e9ec370..fa9c21d): `git diff -- backend/app` rỗng. Toàn bộ thay đổi "
+            "là frontend + script đo + artifact."
+        ),
+        "claim_boundary": (
+            "Đây là runtime parity ĐÃ XÁC MINH TẠI BASELINE TRƯỚC checkpoint, "
+            "KHÔNG phải một lần xác minh mới tại HEAD fa9c21d."
+        ),
+    }
+
     metrics = {
         "renderer_count": len(rows),
         "renderer_reviewed": sum(1 for r in rows if r["review_status"] != "VISUAL_COVERAGE_GAP"),
@@ -240,7 +278,7 @@ def main() -> int:
         "BROKEN_VISUAL": counts["BROKEN_VISUAL"],
         "VISUAL_COVERAGE_GAP": counts["VISUAL_COVERAGE_GAP"],
         "issues_found": len(LEDGER),
-        "issues_fixed": sum(1 for x in LEDGER if x["status"] == "FIXED"),
+        "issues_fixed": sum(1 for x in LEDGER if x["status"].startswith("FIXED")),
         "blocking_issues_remaining": len(blocking),
     }
 
@@ -254,6 +292,7 @@ def main() -> int:
         {"schema_version": "1", "run_label": "rc1-e-visual-stress",
          "generated_at": datetime.now(timezone.utc).isoformat(),
          "viewports": captures["viewports"], "metrics": metrics,
+         "runtime_provenance": runtime_provenance,
          "renderers": rows, "failure_ledger": LEDGER}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
 
@@ -272,6 +311,19 @@ def main() -> int:
         f"BROKEN **{metrics['BROKEN_VISUAL']}** · GAP **{metrics['VISUAL_COVERAGE_GAP']}**",
         f"- Lỗi: tìm **{metrics['issues_found']}** · sửa **{metrics['issues_fixed']}** · "
         f"còn chặn **{metrics['blocking_issues_remaining']}**",
+        "",
+        "### Provenance runtime",
+        "",
+        f"- Đã xác minh tại **{runtime_provenance['verified_at_commit']}**: "
+        f"**{runtime_provenance['verified_result']}** "
+        f"(`sha={runtime_provenance['verified_identity']['sha']}` · "
+        f"cache={runtime_provenance['verified_identity']['cache_version']} · "
+        f"family={runtime_provenance['verified_identity']['family_count']} · "
+        f"target={runtime_provenance['verified_identity']['target_count']})",
+        f"- Chạy lại tại HEAD này (`{runtime_provenance['this_head']}`): "
+        f"**KHÔNG** — {runtime_provenance['why_not_revalidated']}",
+        f"- Vì sao vẫn hiệu lực: {runtime_provenance['why_previous_result_still_applies']}",
+        f"- **Ranh giới:** {runtime_provenance['claim_boundary']}",
         "",
         "| Renderer | Family | Target | canonical/boundary/stress | Ảnh | Trạng thái |",
         "|---|---|---|---|---|---|",

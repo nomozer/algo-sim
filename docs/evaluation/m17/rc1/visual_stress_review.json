@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
   "run_label": "rc1-e-visual-stress",
-  "generated_at": "2026-07-23T07:05:26.749322+00:00",
+  "generated_at": "2026-07-23T07:50:23.524108+00:00",
   "viewports": [
     {
       "id": "desktop",
@@ -26,8 +26,24 @@
     "BROKEN_VISUAL": 0,
     "VISUAL_COVERAGE_GAP": 0,
     "issues_found": 4,
-    "issues_fixed": 2,
+    "issues_fixed": 3,
     "blocking_issues_remaining": 0
+  },
+  "runtime_provenance": {
+    "verified_at_commit": "e9ec370",
+    "verified_result": "PASS",
+    "verified_identity": {
+      "sha": "b977a94923eb",
+      "cache_version": "17",
+      "family_count": 9,
+      "target_count": 19,
+      "catalog_hash": "0adecafd0d49"
+    },
+    "revalidated_at_this_head": false,
+    "this_head": "fa9c21d (RC1-E1)",
+    "why_not_revalidated": "Docker Desktop không khả dụng khi đóng RC1-E — không có runtime response nào để đối chiếu.",
+    "why_previous_result_still_applies": "backend/app và catalog KHÔNG đổi một dòng trong range RC1-E (e9ec370..fa9c21d): `git diff -- backend/app` rỗng. Toàn bộ thay đổi là frontend + script đo + artifact.",
+    "claim_boundary": "Đây là runtime parity ĐÃ XÁC MINH TẠI BASELINE TRƯỚC checkpoint, KHÔNG phải một lần xác minh mới tại HEAD fa9c21d."
   },
   "renderers": [
     {
@@ -327,6 +343,14 @@
       "fix": "Sửa PHÉP ĐO: đặt viewport TRƯỚC rồi mới nạp trang (viewport thành vòng ngoài); bổ sung assertion page_overflow_x, clipped_content (bị tổ tiên cắt), rigid_min_width và key_elements vào audit. KHÔNG đổi một dòng CSS/layout production nào.",
       "scope": "frontend/scripts/visual-stress-audit.mjs (chỉ công cụ đo)",
       "status": "NOT_A_DEFECT_MEASUREMENT_ARTEFACT",
+      "findings": [
+        "audit runner TRƯỚC ĐÂY đổi viewport SAU khi trang đã dựng ở 1440px",
+        "vì vậy ảnh 768px KHÔNG phản ánh layout responsive thật",
+        "chẩn đoán DOM chứng minh: không page overflow, không clipping, không rigid min-width (cả 4 route × 2 viewport, before và after)",
+        "production CSS/layout KHÔNG cần sửa",
+        "runner đã sửa thành viewport-before-navigation + reload",
+        "đã bổ sung assertion responsive (page_overflow_x, clipped_content, rigid_min_width, key_elements)"
+      ],
       "why_not_fixed": "Không có gì để sửa trong sản phẩm. Ghi lại đầy đủ thay vì xoá, vì đây là cảnh báo về chính phương pháp audit: ảnh chụp có thể phản ánh sai hiện thực nếu quy trình đo sai, và tôi đã suýt sửa app shell theo một lỗi không tồn tại."
     },
     {

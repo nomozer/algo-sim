@@ -1,6 +1,6 @@
 # M17-RC1 §E — Failure ledger thị giác
 
-Tìm **4** · sửa **2** · còn chặn **0**
+Tìm **4** · sửa **3** · còn chặn **0**
 
 ## VIS-001 — network · BROKEN_VISUAL · **FIXED**
 

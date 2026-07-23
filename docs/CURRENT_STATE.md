@@ -3,6 +3,52 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
+> **M17-RC1 — Catalog Runtime Conformance & Browser Stress Audit: XONG**
+> (`c388606..fa9c21d`). Checkpoint **đo lường + siết cổng**, KHÔNG mở family mới
+> (vẫn 9 family / 19 target). **§A** `runtime_identity.py` + `runtime_doctor.py`
+> — bắt container chạy code CŨ (đúng lỗi user gặp thật: container còn CACHE "7"
+> thời M10 nên không có `tree.traversal`); Dockerfile/compose nhận `GIT_SHA`/
+> `BUILD_TIME`. **§B** `catalog_conformance.py` — ma trận sinh TỪ REGISTRY, 19
+> target 0 vi phạm. **§D+§C1.1 SEMANTIC COMPLETENESS**: bất biến **`status=ok`
+> ⟹ không yêu cầu nào bị bỏ sót**. Đề hỏi nhiều việc mà family chỉ dựng được
+> một → từ chối trung thực (ca gốc: "cả 4 kiểu duyệt cây"). Định danh yêu cầu
+> là **operation** (mục tiêu) chứ KHÔNG phải mechanism (cơ chế) — `find_max` và
+> `find_min` dùng chung `track_extreme` nhưng là HAI việc; `operations.py` dẫn
+> xuất 24 operation từ `(target, variant)`, phủ **9/9 family** (mechanism chỉ
+> phơi 3). §C1.1 thêm tầng **semantic**: ba target logic cùng đáp ứng một
+> `boolean.evaluate_expression` nên analyze gợi ý dao động không còn gây từ
+> chối oan — route chọn *implementation*, KHÔNG được xoá *yêu cầu*. **§C2 CỔNG
+> ĐỦ DỮ KIỆN DÙNG CHUNG** (`input_requirements.py` + `sufficiency_gate.py`):
+> tổng quát hoá structure-gate của tree ra **17/19 target APPLICABLE** (2
+> NOT_APPLICABLE có lý do dẫn xuất từ hợp đồng); MỘT cổng + normalizer theo
+> **nhóm dữ kiện**, KHÔNG gate riêng từng target (test khoá bằng glob). **§C**
+> ma trận archetype 8 slot × 19 target: **105 PASS / 0 FAIL / 44 GAP / 3 N-A**,
+> 98 case qua production `run_pipeline`, generic-leak 0 · false-positive-sim 0 ·
+> false-refusal 0 · semantic-loss 0 · result-leak 0. **§R1+§E** tách HAI chế độ
+> replay: `historical_reproduction` (worktree + generator lịch sử → W0/W1
+> DATA_IDENTICAL, chỉ `run_meta` nondeterministic) vs `current_policy_replay`
+> (đầu vào lịch sử + pipeline hiện tại → migration report, 0 thay đổi không
+> giải thích được). **§L1 live** (14 lượt analyze, 14/16 HTTP, 0 retry): analyze
+> THẬT cung cấp grounded evidence ổn định — sufficiency **12/12 PASS**, dữ liệu
+> cụ thể còn nguyên 12/12, hai đối chứng thiếu dữ kiện **FAIL 2/2 và KHÔNG bịa**
+> ⇒ giữ §C2 nguyên, stub lịch sử là *superseded fixture contract*. **§E+§E1
+> AUDIT THỊ GIÁC** 6 renderer / 25 fixture / **134 ảnh** Chrome thật, 2 viewport:
+> **5 REAL_VISUAL + 1 PARTIAL (generic)**, 0 BROKEN. Ba lỗi trình bày đã sửa
+> (nhãn dài đè nút ở graph; nhãn chồng + badge `GENERIC` ở generic; so le 3
+> hàng) — **chỉ lớp trình bày, engine state không đụng**. CACHE **15→17** (hai
+> bump: `requested_mechanisms`, rồi `requested_operations`) + frontend
+> `HISTORY_SCHEMA_VERSION` **1→2** (envelope lưu TRƯỚC cổng có thể là mô phỏng
+> nửa vời). Offline tại close: pytest **891** · vitest **536/43** · build sạch.
+> **Ba điều trung thực phải giữ khi trích dẫn:** (1) **VIS-003 là ARTEFACT PHÉP
+> ĐO, không phải lỗi sản phẩm** — runner cũ đổi viewport SAU khi trang dựng ở
+> 1440px nên ảnh 768px không phản ánh layout thật; chẩn đoán DOM chứng minh
+> không overflow/clipping/rigid-min-width; production CSS **không** sửa gì.
+> (2) Runtime parity **xác minh tại `e9ec370`** (PASS), **KHÔNG** chạy lại tại
+> HEAD `fa9c21d` vì Docker không khả dụng — `backend/app` không đổi trong range
+> nên kết quả cũ còn hiệu lực, nhưng đây **không** phải một lần xác minh mới.
+> (3) generic giữ **PARTIAL** cả visual lẫn engine authenticity — audit thị giác
+> KHÔNG nâng hạng. **Wave 2B chưa mở.**
+>
 > **M17-Lite — Curriculum Capability Expansion & Simulation Authenticity: ĐANG
 > MỞ** (proposal duyệt `620a09a`). **Wave 2A XONG (offline)** — family MỚI
 > **`tree_traversal`** (target `tree.traversal`), duyệt cây nhị phân 4 biến thể

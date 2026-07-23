@@ -7,7 +7,14 @@ BROKEN do **người xem ảnh** chấm — assertion xanh KHÔNG tự thành RE
 - Renderer: **6** (đã review 6) · fixture **25**
 - Ảnh: **134** (desktop 67 · hẹp 67)
 - REAL **5** · PARTIAL **1** · BROKEN **0** · GAP **0**
-- Lỗi: tìm **4** · sửa **2** · còn chặn **0**
+- Lỗi: tìm **4** · sửa **3** · còn chặn **0**
+
+### Provenance runtime
+
+- Đã xác minh tại **e9ec370**: **PASS** (`sha=b977a94923eb` · cache=17 · family=9 · target=19)
+- Chạy lại tại HEAD này (`fa9c21d (RC1-E1)`): **KHÔNG** — Docker Desktop không khả dụng khi đóng RC1-E — không có runtime response nào để đối chiếu.
+- Vì sao vẫn hiệu lực: backend/app và catalog KHÔNG đổi một dòng trong range RC1-E (e9ec370..fa9c21d): `git diff -- backend/app` rỗng. Toàn bộ thay đổi là frontend + script đo + artifact.
+- **Ranh giới:** Đây là runtime parity ĐÃ XÁC MINH TẠI BASELINE TRƯỚC checkpoint, KHÔNG phải một lần xác minh mới tại HEAD fa9c21d.
 
 | Renderer | Family | Target | canonical/boundary/stress | Ảnh | Trạng thái |
 |---|---|---|---|---|---|
