@@ -766,6 +766,69 @@
         "near_miss_mechanisms": []
       }
     },
+    "database.relational_table_query": {
+      "domain": "database",
+      "executor_id": "database.relational_table_query",
+      "reachability": [
+        "registered",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T11 CĐ CSDL (bảng, truy vấn cơ bản)",
+      "known_gaps": [
+        "JOIN nhiều bảng · truy vấn lồng · thêm/sửa/xoá dữ liệu · SQL tự do · GROUP BY nhiều nhóm · kết nối CSDL thật — ngoài phạm vi v1",
+        "phần tích luỹ (đếm/tổng/cực trị) TRÙNG cơ chế với single_pass_scan; cái mới ở đây là KHUNG QUAN HỆ (lược đồ, kiểu cột, vị từ trên bản ghi, phép chiếu, sắp xếp ổn định)"
+      ],
+      "family_memberships": [
+        {
+          "family_id": "relational_table_query",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "relational_table_query.row_predicate_filter",
+            "relational_table_query.column_projection",
+            "relational_table_query.stable_sort_by_key",
+            "relational_table_query.bounded_limit",
+            "relational_table_query.aggregate_accumulate"
+          ]
+        }
+      ],
+      "config_contract_version": "table-1.0",
+      "authenticity": {
+        "required_state_fields": [
+          "config",
+          "steps",
+          "filteredIndices",
+          "orderedIndices",
+          "resultRows",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "read_row",
+          "keep",
+          "drop",
+          "result"
+        ],
+        "required_result_fields": [
+          "resultRows",
+          "aggregateResult"
+        ],
+        "renderer_semantic_requirements": [
+          "source_table_with_header",
+          "current_row_distinct",
+          "predicate_true_false_per_row",
+          "kept_vs_dropped_distinct",
+          "projected_columns_visible",
+          "sort_before_after",
+          "accumulator_panel",
+          "progressive_result",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
+    },
     "algorithm.scan": {
       "domain": "algorithm",
       "executor_id": "algorithm.scan",
@@ -972,6 +1035,7 @@
     "network.packet_routing",
     "network.graph_traversal",
     "tree.traversal",
+    "database.relational_table_query",
     "algorithm.scan",
     "network.protocol_encapsulation",
     "generic.rule_scene",

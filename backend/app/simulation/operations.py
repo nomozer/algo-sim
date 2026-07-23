@@ -130,6 +130,18 @@ SEMANTIC_OPERATION_MAP: dict[str, SemanticRequirement] = {
     # cảnh biểu diễn hiện dần (KHÁC family với rule_scene logic ở trên)
     "structural_progressive_representation:rule_scene":
         SemanticRequirement("scene.represent_progressive"),
+    # W2B — CÁC TẦNG của một truy vấn là các operation KHÁC NHAU (không gộp);
+    # năm hàm tổng hợp cùng operation `table.aggregate` nhưng KHÁC variant nên
+    # "đếm" và "tính tổng" vẫn là hai yêu cầu riêng.
+    "relational_table_query:filter": SemanticRequirement("table.filter_rows"),
+    "relational_table_query:projection": SemanticRequirement("table.project_columns"),
+    "relational_table_query:sort": SemanticRequirement("table.sort_rows"),
+    "relational_table_query:limit": SemanticRequirement("table.limit_rows"),
+    "relational_table_query:count": SemanticRequirement("table.aggregate", "count"),
+    "relational_table_query:sum": SemanticRequirement("table.aggregate", "sum"),
+    "relational_table_query:avg": SemanticRequirement("table.aggregate", "avg"),
+    "relational_table_query:min": SemanticRequirement("table.aggregate", "min"),
+    "relational_table_query:max": SemanticRequirement("table.aggregate", "max"),
 }
 
 
@@ -210,12 +222,32 @@ _LABELS: dict[str, str] = {
     "boolean_composition:rule_scene": "cảnh suy diễn theo luật logic",
     "layered_pdu_transform:protocol_encapsulation": "đóng gói dữ liệu qua các tầng mạng",
     "structural_progressive_representation:rule_scene": "cảnh biểu diễn hiện dần",
+    # W2B — mỗi tầng của MỘT truy vấn bảng
+    "relational_table_query:filter": "lọc dòng theo điều kiện",
+    "relational_table_query:projection": "chọn cột cần hiển thị",
+    "relational_table_query:sort": "sắp xếp bảng",
+    "relational_table_query:limit": "lấy số dòng đầu",
+    "relational_table_query:count": "đếm số dòng",
+    "relational_table_query:sum": "tính tổng một cột",
+    "relational_table_query:avg": "tính trung bình một cột",
+    "relational_table_query:min": "tìm giá trị nhỏ nhất của cột",
+    "relational_table_query:max": "tìm giá trị lớn nhất của cột",
 }
 
 
 def _local_name(target_id: str) -> str:
     """Tên cục bộ của target (`algorithm.find_max` → `find_max`)."""
     return target_id.split(".", 1)[1]
+
+
+# Target mà operation KHÔNG suy được từ `variant` (không có variant enum, không
+# nấp sau selector). W2B: một truy vấn bảng gồm NHIỀU TẦNG nối tiếp — mỗi tầng
+# là một operation, và đó chính là lý do family này có cardinality `pipeline`.
+EXPLICIT_TARGET_OPERATIONS: dict[str, tuple[str, ...]] = {
+    "database.relational_table_query": (
+        "filter", "projection", "sort", "limit", "count", "sum", "avg", "min", "max",
+    ),
+}
 
 
 def _build() -> dict[str, OperationSpec]:
@@ -246,7 +278,10 @@ def _build() -> dict[str, OperationSpec]:
             owned = sorted(mb.owned_mechanisms)
             sel_vs = [v for (f, v) in selector_variants.get(sid, []) if f == fam]
 
-            if enum_variants:      # tree / graph: variant nằm trong config
+            explicit = EXPLICIT_TARGET_OPERATIONS.get(sid)
+            if explicit:           # target khai tường minh (W2B: tầng pipeline)
+                variants = [(None, name) for name in explicit]
+            elif enum_variants:    # tree / graph: variant nằm trong config
                 variants = [(v, None) for v in enum_variants]
             elif sel_vs:           # sorting: variant nằm ở selector
                 variants = [(v, None) for v in sel_vs]

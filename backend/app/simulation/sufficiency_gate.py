@@ -152,6 +152,24 @@ def _has_packet_or_layer(analysis: dict) -> tuple[bool, dict]:
     return True, {"source": "engine_owned"}
 
 
+def _has_table(analysis: dict) -> tuple[bool, dict]:
+    """Bảng = NHIỀU CỘT và NHIỀU DÒNG. Một dãy số đơn lẻ KHÔNG phải bảng.
+    Bằng chứng chấp nhận: ≥2 mục `data` có nhãn/giá trị, hoặc một mục data có
+    `labels` ≥2 (tên cột) kèm `values`, hoặc ≥2 object nêu tên cột."""
+    items = _data_items(analysis)
+    labelled = [d for d in items if d.get("labels") or d.get("values")]
+    if len(labelled) >= 2:
+        return True, {"source": "data.multi_series", "series": len(labelled)}
+    for d in items:
+        labels = d.get("labels")
+        if isinstance(labels, list) and len(labels) >= 2 and d.get("values"):
+            return True, {"source": "data.labels+values", "columns": len(labels)}
+    objects = _str_list(analysis, "objects")
+    if len(objects) >= 2 and _numeric_tokens(analysis):
+        return True, {"source": "objects+numeric", "objects": len(objects)}
+    return False, {"source": None, "data_items": len(items)}
+
+
 EVIDENCE_NORMALIZERS = {
     InputKind.FINITE_SEQUENCE: _has_finite_sequence,
     InputKind.NUMERIC_VALUE: _has_numeric_value,
@@ -161,6 +179,7 @@ EVIDENCE_NORMALIZERS = {
     InputKind.CONVERSION_PARAMETERS: _has_conversion_parameters,
     InputKind.PACKET_OR_LAYER_DESCRIPTION: _has_packet_or_layer,
     InputKind.REPRESENTATION_OBJECTS: _has_representation_objects,
+    InputKind.TABLE_SCHEMA_AND_ROWS: _has_table,
 }
 
 

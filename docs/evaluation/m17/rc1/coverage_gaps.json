@@ -1,6 +1,6 @@
 {
   "schema_version": "1",
-  "gap_count": 44,
+  "gap_count": 47,
   "gaps": [
     {
       "target_id": "algorithm.binary_search",
@@ -290,6 +290,36 @@
       "slot": "cross_family_near_miss",
       "gap_kind": "missing_cross_family",
       "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
+      "blocking": false
+    },
+    {
+      "target_id": "database.relational_table_query",
+      "family_id": [
+        "relational_table_query"
+      ],
+      "slot": "unsupported_variant_or_parameter",
+      "gap_kind": "missing_unsupported",
+      "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)",
+      "blocking": false
+    },
+    {
+      "target_id": "database.relational_table_query",
+      "family_id": [
+        "relational_table_query"
+      ],
+      "slot": "cross_family_near_miss",
+      "gap_kind": "missing_cross_family",
+      "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác",
+      "blocking": false
+    },
+    {
+      "target_id": "database.relational_table_query",
+      "family_id": [
+        "relational_table_query"
+      ],
+      "slot": "semantic_completeness",
+      "gap_kind": "missing_semantic_completeness",
+      "reason": "family biểu đạt được nhưng chưa có fixture end-to-end",
       "blocking": false
     },
     {

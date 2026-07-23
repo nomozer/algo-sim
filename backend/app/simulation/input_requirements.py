@@ -35,6 +35,7 @@ class InputKind(str, Enum):
     CONVERSION_PARAMETERS = "conversion_parameters"
     PACKET_OR_LAYER_DESCRIPTION = "packet_or_layer_description"
     REPRESENTATION_OBJECTS = "representation_objects"
+    TABLE_SCHEMA_AND_ROWS = "table_schema_and_rows"   # W2B
 
 
 APPLICABLE = "APPLICABLE"
@@ -154,6 +155,17 @@ INPUT_REQUIREMENTS: dict[str, InputRequirements] = {
         learner_prompt_template=(
             "Đề chưa nêu đối tượng cụ thể nào để dựng cảnh mô phỏng. Em hãy mô tả "
             "các đối tượng rồi thử lại."
+        ),
+    ),
+    # ── W2B: bảng phải do ĐỀ cho, tuyệt đối không tự dựng bảng mẫu ──
+    "database.relational_table_query": InputRequirements(
+        required_grounded_inputs=(InputKind.TABLE_SCHEMA_AND_ROWS,),
+        accepted_evidence_types=("data.values", "data.labels", "objects.named_columns"),
+        insufficiency_error_code=ErrorCode.INPUT_INSUFFICIENT,
+        learner_prompt_template=(
+            "Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). "
+            "Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng "
+            "An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em."
         ),
     ),
     # ── NOT_APPLICABLE: lý do DẪN XUẤT TỪ HỢP ĐỒNG, không phải né tránh ──

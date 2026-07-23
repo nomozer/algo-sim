@@ -1,6 +1,6 @@
 # M17-RC1 §C — Failure ledger
 
-Case chạy: **98** · không khớp kỳ vọng: **0**
+Case chạy: **103** · không khớp kỳ vọng: **0**
 
 Không có case lệch kỳ vọng.
 

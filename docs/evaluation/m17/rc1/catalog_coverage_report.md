@@ -10,11 +10,11 @@ qua **production `run_pipeline`** (bất biến #22) với provider kịch bản
 
 ## Số tổng
 
-- Target: **19** · family: **9**
-- Slot: **152** = ✓ 105 · ✗ 0 · ○ 44 · – 3
-- Coverage = pass / (pass+fail+gap) = **105/149** = **0.7047** (NOT_APPLICABLE KHÔNG nằm trong mẫu số)
-- Target phủ đủ: **0** · phủ một phần: **19** · có gap chặn: **0**
-- Case đã chạy: **98** · route đúng: **71/71**
+- Target: **20** · family: **10**
+- Slot: **160** = ✓ 110 · ✗ 0 · ○ 47 · – 3
+- Coverage = pass / (pass+fail+gap) = **110/157** = **0.7006** (NOT_APPLICABLE KHÔNG nằm trong mẫu số)
+- Target phủ đủ: **0** · phủ một phần: **20** · có gap chặn: **0**
+- Case đã chạy: **103** · route đúng: **75/75**
 
 ### Chỉ số an toàn (mọi số phải là 0)
 
@@ -26,7 +26,7 @@ qua **production `run_pipeline`** (bất biến #22) với provider kịch bản
 | semantic_loss | **0** |
 | result_leakage | **0** |
 
-Engine authenticity: REAL **18** · PARTIAL **1** · BROKEN **0**
+Engine authenticity: REAL **19** · PARTIAL **1** · BROKEN **0**
 
 ## Ma trận
 
@@ -46,6 +46,7 @@ Ký hiệu: ✓ COVERED_PASS · ✗ COVERED_FAIL · ○ COVERAGE_GAP · – NOT_
 | `algorithm.sum_if` | single_pass_scan | ✓ | ○ | ✓ | ○ | ○ | ✓ | ✓ | ✓ | REAL | NEEDS_VISUAL_REVIEW |
 | `binary.base_conversion` | positional_representation | ✓ | ✓ | ✓ | ○ | ○ | ✓ | ✓ | ✓ | REAL | NEEDS_VISUAL_REVIEW |
 | `binary.decimal_to_binary` | positional_representation | ✓ | ✓ | ✓ | ○ | ○ | ✓ | ✓ | ✓ | REAL | NEEDS_VISUAL_REVIEW |
+| `database.relational_table_query` | relational_table_query | ✓ | ✓ | ✓ | ○ | ○ | ○ | ✓ | ✓ | REAL | NEEDS_VISUAL_REVIEW |
 | `generic.rule_scene` | boolean_composition, structural_progressive_representation | ✓ | ✓ | ✓ | ○ | ✓ | ✓ | ✓ | ✓ | PARTIAL | NEEDS_VISUAL_REVIEW |
 | `logic.and_gate` | boolean_composition | ✓ | ○ | – | ○ | ○ | ✓ | ✓ | ✓ | REAL | NEEDS_VISUAL_REVIEW |
 | `logic.boolean_dag` | boolean_composition | ✓ | ✓ | ✓ | ○ | ○ | ✓ | ✓ | ✓ | REAL | NEEDS_VISUAL_REVIEW |
@@ -89,6 +90,9 @@ Cột theo thứ tự: supp… = `supported_canonical` · supp… = `supported_b
 | `binary.base_conversion` | cross_family_near_miss | `missing_cross_family` | không | chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác |
 | `binary.decimal_to_binary` | unsupported_variant_or_parameter | `missing_unsupported` | không | family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này) |
 | `binary.decimal_to_binary` | cross_family_near_miss | `missing_cross_family` | không | chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác |
+| `database.relational_table_query` | unsupported_variant_or_parameter | `missing_unsupported` | không | family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này) |
+| `database.relational_table_query` | cross_family_near_miss | `missing_cross_family` | không | chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác |
+| `database.relational_table_query` | semantic_completeness | `missing_semantic_completeness` | không | family biểu đạt được nhưng chưa có fixture end-to-end |
 | `generic.rule_scene` | unsupported_variant_or_parameter | `missing_unsupported` | không | family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này) |
 | `logic.and_gate` | supported_boundary | `missing_boundary` | không | chưa có fixture archetype supported_boundary cho target này |
 | `logic.and_gate` | unsupported_variant_or_parameter | `missing_unsupported` | không | family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này) |

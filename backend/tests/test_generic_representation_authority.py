@@ -45,7 +45,7 @@ def test_hai_membership_generic_authority_khac_nhau():
     assert auths["structural_progressive_representation"] == ResultAuthority.REPRESENTATION
 
 
-def test_formalized_families_du_8():
+def test_formalized_families_du_moi_family():
     from app.simulation.descriptor import FamilyId
     from app.simulation.mechanisms import FORMALIZED_FAMILIES
 

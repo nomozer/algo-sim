@@ -162,6 +162,23 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
             "stack_or_queue_panel_by_variant", "visited_order_strip", "narration_per_step",
         ),
     ),
+    # M17 W2B — truy vấn bảng: engine sở hữu tập đã lọc, thứ tự sắp xếp và giá
+    # trị tổng hợp; LLM chỉ đưa lược đồ + các dòng + yêu cầu.
+    "database.relational_table_query": AuthenticityContract(
+        required_state_fields=("config", "steps", "filteredIndices", "orderedIndices",
+                               "resultRows", "cursor"),
+        required_trace_events=("read_row", "keep", "drop", "result"),
+        # `aggregateResult` (đáp án engine tính) — KHÔNG phải `aggregate` trong
+        # config (yêu cầu người dùng nêu). Hai tên phải khác nhau để oracle soi
+        # rò rỉ phân biệt được.
+        required_result_fields=("resultRows", "aggregateResult"),
+        renderer_semantic_requirements=(
+            "source_table_with_header", "current_row_distinct",
+            "predicate_true_false_per_row", "kept_vs_dropped_distinct",
+            "projected_columns_visible", "sort_before_after",
+            "accumulator_panel", "progressive_result", "narration_per_step",
+        ),
+    ),
     # network.protocol_encapsulation — 9 bước PDU với delta tường minh
     "network.protocol_encapsulation": AuthenticityContract(
         required_state_fields=("payloadLabel", "layers", "steps", "cursor"),

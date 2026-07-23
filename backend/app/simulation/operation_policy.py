@@ -91,6 +91,13 @@ FAMILY_OPERATION_POLICY: dict[FamilyId, OperationPolicy] = {
         cardinality=PIPELINE, max_operations=2,
         note="Đóng gói → truyền → tháo gói là MỘT quy trình nối tiếp, không phải xung đột.",
     ),
+    # W2B — MỘT truy vấn = nhiều tầng NỐI TIẾP (lọc → chiếu → sắp → lấy n →
+    # tổng hợp). Nhiều tầng KHÔNG phải xung đột; đó là bản chất của truy vấn.
+    FamilyId.RELATIONAL_TABLE_QUERY: OperationPolicy(
+        cardinality=PIPELINE, max_operations=5,
+        note="Lọc → chọn cột → sắp xếp → lấy n dòng → tính tổng hợp là MỘT quy "
+             "trình nối tiếp trên cùng một bảng.",
+    ),
     FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION: OperationPolicy(
         cardinality=MULTIPLE, max_operations=8,
         note="Một cảnh generic có thể vừa hé lộ vừa di chuyển.",

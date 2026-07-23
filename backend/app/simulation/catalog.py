@@ -46,6 +46,19 @@ from app.simulation.scan_engine import (
     STOPS as SCAN_STOPS,
     UPDATE_KINDS as SCAN_UPDATES,
 )
+from app.simulation.table_query_engine import (
+    AGGREGATE_FUNCS as _TQ_AGGREGATE_FUNCS,
+    COLUMN_TYPES as _TQ_COLUMN_TYPES,
+    COMPARE_OPS as _TQ_COMPARE_OPS,
+    LOGIC_OPS as _TQ_LOGIC_OPS,
+    MAX_COLUMNS as _TQ_MAX_COLUMNS,
+    MAX_PREDICATE_DEPTH as _TQ_MAX_PREDICATE_DEPTH,
+    MAX_PREDICATES as _TQ_MAX_PREDICATES,
+    MAX_ROWS as _TQ_MAX_ROWS,
+    SORT_DIRECTIONS as _TQ_SORT_DIRECTIONS,
+    SPEC_VERSION as _TQ_SPEC_VERSION,
+)
+from app.validation.table_query import validate_table_query_config
 from app.validation.simulation import (
     ALGORITHM_IDS,
     ALGORITHM_NAMES_VI,
@@ -660,6 +673,84 @@ _TREE_SCHEMA = {
     "required": ["specVersion", "variant", "rootId", "nodes"],
 }
 
+_PREDICATE_LEAF = {
+    "type": "OBJECT",
+    "properties": {
+        "op": {"type": "STRING", "enum": list(_TQ_COMPARE_OPS)},
+        "column": {"type": "STRING"},
+        # Gemini structured output không có union type — nhận CHUỖI rồi validator
+        # ép về kiểu cột đã khai (một chỗ ép, không đoán rải rác).
+        "value": {"type": "STRING"},
+    },
+    "required": ["op", "column", "value"],
+}
+_TABLE_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "specVersion": {"type": "STRING", "enum": [_TQ_SPEC_VERSION]},
+        "schema": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "name": {"type": "STRING"},
+                    "type": {"type": "STRING", "enum": list(_TQ_COLUMN_TYPES)},
+                    "label": {"type": "STRING", "nullable": True},
+                },
+                "required": ["name", "type"],
+            },
+        },
+        # Mỗi dòng là mảng ô THEO ĐÚNG THỨ TỰ cột trong schema — mảng-của-mảng
+        # tránh được giới hạn "object không có khoá động" của structured output.
+        "rows": {"type": "ARRAY", "items": {"type": "ARRAY", "items": {"type": "STRING"}}},
+        "filter": {
+            "type": "OBJECT",
+            "properties": {
+                "op": {"type": "STRING", "enum": list(_TQ_COMPARE_OPS) + list(_TQ_LOGIC_OPS)},
+                "column": {"type": "STRING", "nullable": True},
+                "value": {"type": "STRING", "nullable": True},
+                "clauses": {"type": "ARRAY", "items": _PREDICATE_LEAF, "nullable": True},
+            },
+            "required": ["op"],
+            "nullable": True,
+        },
+        "projection": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
+        "sort": {
+            "type": "OBJECT",
+            "properties": {
+                "column": {"type": "STRING"},
+                "direction": {"type": "STRING", "enum": list(_TQ_SORT_DIRECTIONS)},
+            },
+            "required": ["column"],
+            "nullable": True,
+        },
+        "limit": {"type": "INTEGER", "nullable": True},
+        "aggregate": {
+            "type": "OBJECT",
+            "properties": {
+                "func": {"type": "STRING", "enum": list(_TQ_AGGREGATE_FUNCS)},
+                "column": {"type": "STRING", "nullable": True},
+            },
+            "required": ["func"],
+            "nullable": True,
+        },
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["specVersion", "schema", "rows"],
+}
+
+_TABLE_CONTRACT = f"""HỢP ĐỒNG CONFIG (database.relational_table_query — TRUY VẤN BẢNG):
+- specVersion: đúng "{_TQ_SPEC_VERSION}".
+- schema: 1–{_TQ_MAX_COLUMNS} cột {{name, type, label?}}. type ∈ {', '.join(_TQ_COLUMN_TYPES)}. Lấy ĐÚNG tên cột đề cho.
+- rows: 1–{_TQ_MAX_ROWS} dòng. MỖI dòng là MẢNG ô theo ĐÚNG thứ tự cột của schema, mọi ô ghi dạng CHUỖI (số vẫn ghi "8.5"); ô đề không cho thì để chuỗi rỗng. CHÉP ĐÚNG dữ liệu đề cho — TUYỆT ĐỐI không bịa thêm dòng, không tạo bảng mẫu.
+- filter (tuỳ chọn): một so sánh {{op, column, value}} hoặc một phép {{op:"and"|"or", clauses:[…]}} với ≤{_TQ_MAX_PREDICATES} so sánh, lồng ≤{_TQ_MAX_PREDICATE_DEPTH} tầng. op so sánh ∈ {', '.join(_TQ_COMPARE_OPS)}; toán tử phải hợp kiểu cột (">" chỉ cho số).
+- projection (tuỳ chọn): danh sách cột cần hiển thị.
+- sort (tuỳ chọn): MỘT khoá {{column, direction}} — sắp xếp ổn định do engine làm.
+- limit (tuỳ chọn): số nguyên ≥1, KHÔNG lớn hơn số dòng.
+- aggregate (tuỳ chọn): MỘT hàm {{func, column?}}. func ∈ {', '.join(_TQ_AGGREGATE_FUNCS)}. sum/avg cần cột kiểu số; count có thể không cột.
+- KHÔNG sinh: dòng kết quả, tập đã lọc, kết quả sắp xếp, giá trị tổng hợp, hay phán quyết giữ/loại từng dòng — engine tính tất định và dựng timeline.
+- CHỈ dùng cho truy vấn MỘT bảng. KHÔNG dùng cho: JOIN nhiều bảng, truy vấn lồng, thêm/sửa/xoá dữ liệu, SQL tự do, GROUP BY nhiều nhóm, kết nối CSDL thật."""
+
 _TREE_CONTRACT = """HỢP ĐỒNG CONFIG (tree.traversal — duyệt CÂY NHỊ PHÂN):
 - specVersion: đúng "tree-1.0".
 - variant: "preorder" (trước — gốc/trái/phải), "inorder" (giữa — trái/gốc/phải), "postorder" (sau — trái/phải/gốc), "level_order" (theo mức — BFS). Chọn ĐÚNG theo đề.
@@ -707,6 +798,59 @@ CATALOG["tree.traversal"] = SimSpec(
         "BST/AVL/heap/cây biểu thức/cây n-nhánh — ngoài phạm vi duyệt cây nhị phân",
     ),
     config_contract_version="tree-1.0",
+)
+
+
+CATALOG["database.relational_table_query"] = SimSpec(
+    simulation_id="database.relational_table_query",
+    domain="database",
+    visual_mode="2d",
+    description=(
+        "truy vấn MỘT BẢNG dữ liệu hữu hạn cho sẵn (bảng có lược đồ: tên cột + "
+        "kiểu text/số/đúng-sai): LỌC dòng theo điều kiện, CHỌN cột cần hiển thị, "
+        "SẮP XẾP ổn định theo một cột, LẤY n dòng đầu, và TÍNH đếm/tổng/trung "
+        "bình/nhỏ nhất/lớn nhất — engine duyệt từng dòng, tự quyết giữ hay loại, "
+        "tự tích luỹ và dựng timeline. Dùng khi đề CHO SẴN một bảng (danh sách "
+        "học sinh, sản phẩm, nhân viên…) rồi hỏi lọc/sắp xếp/thống kê trên bảng "
+        "đó. KHÔNG dùng cho: ghép nhiều bảng (JOIN), truy vấn lồng, thêm/sửa/xoá "
+        "dữ liệu, SQL tự do, gom nhóm nhiều nhóm (GROUP BY), kết nối CSDL thật, "
+        "hay đề chỉ có một DÃY SỐ đơn lẻ không phải bảng (→ dùng bài quét dãy)"
+    ),
+    config_schema=_TABLE_SCHEMA,
+    contract=_TABLE_CONTRACT,
+    validate=validate_table_query_config,
+    make_title=lambda config, analysis: "Truy vấn bảng dữ liệu",
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.RELATIONAL_TABLE_QUERY, ResultAuthority.COMPUTATION,
+            owned_mechanisms=(
+                "relational_table_query.row_predicate_filter",
+                "relational_table_query.column_projection",
+                "relational_table_query.stable_sort_by_key",
+                "relational_table_query.bounded_limit",
+                "relational_table_query.aggregate_accumulate",
+            ),
+        ),
+    ),
+    # W2B ĐANG DỞ: engine + validator + hợp đồng đã xong và có oracle chứng
+    # minh, NHƯNG module frontend (mirror validator + renderer) CHƯA có. Giữ ở
+    # mức REGISTERED — KHÔNG mở cho LLM — vì cross-lock FE đòi mỗi target
+    # AI-reachable phải có module render thật; route tới target không vẽ được
+    # là trả cho học sinh một màn hình hỏng. Lật sang AI_REACHABLE_PUBLIC ngay
+    # khi renderer xong.
+    reachability=(
+        ReachabilityLevel.REGISTERED,
+        ReachabilityLevel.AI_REACHABLE_PUBLIC,
+    ),
+    curriculum_anchor="T11 CĐ CSDL (bảng, truy vấn cơ bản)",
+    known_gaps=(
+        "JOIN nhiều bảng · truy vấn lồng · thêm/sửa/xoá dữ liệu · SQL tự do · "
+        "GROUP BY nhiều nhóm · kết nối CSDL thật — ngoài phạm vi v1",
+        "phần tích luỹ (đếm/tổng/cực trị) TRÙNG cơ chế với single_pass_scan; "
+        "cái mới ở đây là KHUNG QUAN HỆ (lược đồ, kiểu cột, vị từ trên bản ghi, "
+        "phép chiếu, sắp xếp ổn định)",
+    ),
+    config_contract_version="table-1.0",
 )
 
 

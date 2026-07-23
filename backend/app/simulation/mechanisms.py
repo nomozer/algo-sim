@@ -25,6 +25,18 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
         "positional_representation.non_binary_base",
     ),
     FamilyId.INTERVAL_ELIMINATION: ("interval_elimination.halve_sorted_interval",),
+    # M17 W2B — truy vấn BẢNG QUAN HỆ hữu hạn. Cơ chế ẩn ở đây KHÁC
+    # single_pass_scan ở KHUNG QUAN HỆ (lược đồ, kiểu cột, vị từ trên BẢN GHI,
+    # phép chiếu, sắp xếp ỔN ĐỊNH), dù phần tích luỹ (đếm/tổng/cực trị) trùng
+    # cơ chế với quét-một-lượt — ghi rõ chỗ trùng thay vì nhận là năng lực mới
+    # hoàn toàn (xem docs/COVERAGE.md).
+    FamilyId.RELATIONAL_TABLE_QUERY: (
+        "relational_table_query.row_predicate_filter",
+        "relational_table_query.column_projection",
+        "relational_table_query.stable_sort_by_key",
+        "relational_table_query.bounded_limit",
+        "relational_table_query.aggregate_accumulate",
+    ),
     FamilyId.SINGLE_PASS_SCAN: (
         "single_pass_scan.track_extreme",
         "single_pass_scan.accumulate_conditional",
@@ -89,6 +101,7 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.LAYERED_PDU_TRANSFORM,     # W4 (Task 14) — encap owned 4-layer encap/decap
     FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION,  # W5 (Task 15) — owned dẫn xuất manifest process_types()
     FamilyId.TREE_TRAVERSAL,             # M17 W2A — duyệt cây nhị phân
+    FamilyId.RELATIONAL_TABLE_QUERY,     # M17 W2B — truy vấn bảng quan hệ
 })  # đủ == frozenset(FamilyId) — K1 lock kích hoạt ĐẦY ĐỦ (test_formalized_families_owned_khong_rong)
 
 

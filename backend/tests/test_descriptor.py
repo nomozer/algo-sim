@@ -27,8 +27,8 @@ def test_reachability_dong_bon_muc():
     }
 
 
-def test_family_taxonomy_dong_dung_chin_family():
-    # M17 W2A: +tree_traversal (family thứ 9)
+def test_family_taxonomy_dong_dung_muoi_family():
+    # M17 W2A: +tree_traversal (thứ 9) · W2B: +relational_table_query (thứ 10)
     assert {f.value for f in FamilyId} == {
         "single_pass_scan",
         "interval_elimination",
@@ -39,6 +39,7 @@ def test_family_taxonomy_dong_dung_chin_family():
         "layered_pdu_transform",
         "structural_progressive_representation",
         "tree_traversal",
+        "relational_table_query",
     }
 
 

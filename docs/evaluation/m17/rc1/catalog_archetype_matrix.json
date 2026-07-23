@@ -4,11 +4,11 @@
   "source_identity": {
     "git_sha": "unknown",
     "build_timestamp": "unknown",
-    "cache_version": "17",
-    "family_count": 9,
-    "target_count": 19,
-    "ai_reachable_target_count": 19,
-    "stable_catalog_hash": "0adecafd0d49fae07034ce8fe5d7911b43ba8dc19f6c76a235317bc2fa0bd901",
+    "cache_version": "18",
+    "family_count": 10,
+    "target_count": 20,
+    "ai_reachable_target_count": 20,
+    "stable_catalog_hash": "48b6d50e3da7cb345124384eaf6cc5d5121d4cfb1436a1f8dc624f70092cc66b",
     "registered_target_ids": [
       "algorithm.binary_search",
       "algorithm.bubble_sort",
@@ -22,6 +22,7 @@
       "algorithm.sum_if",
       "binary.base_conversion",
       "binary.decimal_to_binary",
+      "database.relational_table_query",
       "generic.rule_scene",
       "logic.and_gate",
       "logic.boolean_dag",
@@ -43,6 +44,7 @@
       "algorithm.sum_if",
       "binary.base_conversion",
       "binary.decimal_to_binary",
+      "database.relational_table_query",
       "generic.rule_scene",
       "logic.and_gate",
       "logic.boolean_dag",
@@ -64,6 +66,7 @@
       "algorithm.sum_if",
       "binary.base_conversion",
       "binary.decimal_to_binary",
+      "database.relational_table_query",
       "generic.rule_scene",
       "logic.and_gate",
       "logic.boolean_dag",
@@ -75,6 +78,7 @@
     "registered_renderer_ids": [
       "algorithm",
       "binary",
+      "database",
       "generic",
       "logic",
       "network",
@@ -87,6 +91,7 @@
       "interval_elimination",
       "layered_pdu_transform",
       "positional_representation",
+      "relational_table_query",
       "single_pass_scan",
       "structural_progressive_representation",
       "tree_traversal"
@@ -113,27 +118,28 @@
     "interval_elimination",
     "layered_pdu_transform",
     "positional_representation",
+    "relational_table_query",
     "single_pass_scan",
     "structural_progressive_representation",
     "tree_traversal"
   ],
   "metrics": {
-    "target_count": 19,
-    "family_count": 9,
-    "total_archetype_slots": 152,
-    "covered_pass": 105,
+    "target_count": 20,
+    "family_count": 10,
+    "total_archetype_slots": 160,
+    "covered_pass": 110,
     "covered_fail": 0,
-    "coverage_gap": 44,
+    "coverage_gap": 47,
     "not_applicable": 3,
-    "coverage_denominator": 149,
-    "coverage_ratio": 0.7047,
+    "coverage_denominator": 157,
+    "coverage_ratio": 0.7006,
     "targets_full_coverage": 0,
-    "targets_partial_coverage": 19,
+    "targets_partial_coverage": 20,
     "targets_with_blocking_gap": 0,
-    "total_cases_executed": 98,
+    "total_cases_executed": 103,
     "route_accuracy": {
-      "numerator": 71,
-      "denominator": 71,
+      "numerator": 75,
+      "denominator": 75,
       "scope": "server-side route handling given scripted analyze — KHÔNG phải độ chính xác classify của LLM thật"
     },
     "generic_leak_count": 0,
@@ -141,7 +147,7 @@
     "false_refusal_count": 0,
     "semantic_loss_count": 0,
     "result_leakage_count": 0,
-    "engine_REAL_count": 18,
+    "engine_REAL_count": 19,
     "engine_PARTIAL_count": 1,
     "engine_BROKEN_count": 0
   },
@@ -2450,6 +2456,201 @@
           "route": "binary.decimal_to_binary",
           "variant": null,
           "executor": "binary.decimal_to_binary",
+          "simulation_created": true,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
+          "dropped_requirements": [],
+          "failure_category": null,
+          "error_code": null,
+          "gap_kind": null,
+          "reason": ""
+        }
+      }
+    },
+    {
+      "family_id": [
+        "relational_table_query"
+      ],
+      "target_id": "database.relational_table_query",
+      "owned_mechanisms": [
+        "relational_table_query.aggregate_accumulate",
+        "relational_table_query.bounded_limit",
+        "relational_table_query.column_projection",
+        "relational_table_query.row_predicate_filter",
+        "relational_table_query.stable_sort_by_key"
+      ],
+      "supported_variants": [],
+      "operation_cardinality": "pipeline",
+      "required_grounded_inputs": [
+        "table_schema_and_rows"
+      ],
+      "input_applicability": "APPLICABLE",
+      "validator_id": "validate_table_query_config",
+      "executor_id": "database.relational_table_query",
+      "renderer_id": "database",
+      "engine_authenticity": "REAL",
+      "visual_authenticity": "NEEDS_VISUAL_REVIEW",
+      "archetype_slots": {
+        "supported_canonical": {
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "aud-database-relational-table-query-direct",
+            "aud-database-relational-table-query-paraphrase",
+            "aud-database-relational-table-query-changed-input"
+          ],
+          "oracle_id": "deterministic_engine_contract",
+          "expected": "ok",
+          "actual": "ok",
+          "route": "database.relational_table_query",
+          "variant": null,
+          "executor": "database.relational_table_query",
+          "simulation_created": true,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
+          "dropped_requirements": [],
+          "failure_category": null,
+          "error_code": null,
+          "gap_kind": null,
+          "reason": ""
+        },
+        "supported_boundary": {
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "aud-database-relational-table-query-boundary"
+          ],
+          "oracle_id": "deterministic_engine_contract",
+          "expected": "ok",
+          "actual": "ok",
+          "route": "database.relational_table_query",
+          "variant": null,
+          "executor": "database.relational_table_query",
+          "simulation_created": true,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
+          "dropped_requirements": [],
+          "failure_category": null,
+          "error_code": null,
+          "gap_kind": null,
+          "reason": ""
+        },
+        "insufficient_input": {
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "rc1c-insufficient-database-relational-table-query"
+          ],
+          "oracle_id": "input_requirements_contract",
+          "expected": "unsupported",
+          "actual": "unsupported",
+          "route": null,
+          "variant": null,
+          "executor": null,
+          "simulation_created": false,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
+          "dropped_requirements": [],
+          "failure_category": "insufficient_specification",
+          "error_code": "input_insufficient",
+          "gap_kind": null,
+          "reason": ""
+        },
+        "unsupported_variant_or_parameter": {
+          "status": "COVERAGE_GAP",
+          "fixture_id": null,
+          "oracle_id": null,
+          "expected": null,
+          "actual": null,
+          "route": null,
+          "variant": null,
+          "executor": null,
+          "simulation_created": null,
+          "generic_leak": null,
+          "false_positive_simulation": null,
+          "false_refusal": null,
+          "dropped_requirements": [],
+          "failure_category": null,
+          "error_code": null,
+          "gap_kind": "missing_unsupported",
+          "reason": "family chưa có near-miss fixture cấp cơ chế (INTENTIONAL_GAP_MECHANISMS không phủ family này)"
+        },
+        "cross_family_near_miss": {
+          "status": "COVERAGE_GAP",
+          "fixture_id": null,
+          "oracle_id": null,
+          "expected": null,
+          "actual": null,
+          "route": null,
+          "variant": null,
+          "executor": null,
+          "simulation_created": null,
+          "generic_leak": null,
+          "false_positive_simulation": null,
+          "false_refusal": null,
+          "dropped_requirements": [],
+          "failure_category": null,
+          "error_code": null,
+          "gap_kind": "missing_cross_family",
+          "reason": "chưa có case kiểm target này KHÔNG chiếm nhầm đề của family khác"
+        },
+        "semantic_completeness": {
+          "status": "COVERAGE_GAP",
+          "fixture_id": null,
+          "oracle_id": null,
+          "expected": null,
+          "actual": null,
+          "route": null,
+          "variant": null,
+          "executor": null,
+          "simulation_created": null,
+          "generic_leak": null,
+          "false_positive_simulation": null,
+          "false_refusal": null,
+          "dropped_requirements": [],
+          "failure_category": null,
+          "error_code": null,
+          "gap_kind": "missing_semantic_completeness",
+          "reason": "family biểu đạt được nhưng chưa có fixture end-to-end"
+        },
+        "executor_authenticity": {
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "aud-database-relational-table-query-direct",
+            "aud-database-relational-table-query-paraphrase",
+            "aud-database-relational-table-query-changed-input"
+          ],
+          "oracle_id": "authenticity_contract",
+          "expected": "ok",
+          "actual": "ok",
+          "route": "database.relational_table_query",
+          "variant": null,
+          "executor": "database.relational_table_query",
+          "simulation_created": true,
+          "generic_leak": false,
+          "false_positive_simulation": false,
+          "false_refusal": false,
+          "dropped_requirements": [],
+          "failure_category": null,
+          "error_code": null,
+          "gap_kind": null,
+          "reason": "engine_authenticity=REAL"
+        },
+        "result_leakage": {
+          "status": "COVERED_PASS",
+          "fixture_id": [
+            "aud-database-relational-table-query-direct",
+            "aud-database-relational-table-query-paraphrase",
+            "aud-database-relational-table-query-changed-input",
+            "aud-database-relational-table-query-boundary"
+          ],
+          "oracle_id": "authenticity_contract.required_result_fields",
+          "expected": "ok",
+          "actual": "ok",
+          "route": "database.relational_table_query",
+          "variant": null,
+          "executor": "database.relational_table_query",
           "simulation_created": true,
           "generic_leak": false,
           "false_positive_simulation": false,
@@ -5616,6 +5817,186 @@
       ]
     },
     {
+      "case_id": "aud-database-relational-table-query-direct",
+      "slot": "supported_canonical",
+      "target_id": "database.relational_table_query",
+      "family_id": "relational_table_query",
+      "expected_status": "ok",
+      "expected_route": "database.relational_table_query",
+      "expected_error_code": null,
+      "actual_status": "ok",
+      "route": "database.relational_table_query",
+      "variant": null,
+      "executor": "database.relational_table_query",
+      "simulation_created": true,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": null,
+      "error_code": null,
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_represented",
+          "fired": false,
+          "reason_code": null
+        }
+      ]
+    },
+    {
+      "case_id": "aud-database-relational-table-query-paraphrase",
+      "slot": "supported_canonical",
+      "target_id": "database.relational_table_query",
+      "family_id": "relational_table_query",
+      "expected_status": "ok",
+      "expected_route": "database.relational_table_query",
+      "expected_error_code": null,
+      "actual_status": "ok",
+      "route": "database.relational_table_query",
+      "variant": null,
+      "executor": "database.relational_table_query",
+      "simulation_created": true,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": null,
+      "error_code": null,
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_represented",
+          "fired": false,
+          "reason_code": null
+        }
+      ]
+    },
+    {
+      "case_id": "aud-database-relational-table-query-changed-input",
+      "slot": "supported_canonical",
+      "target_id": "database.relational_table_query",
+      "family_id": "relational_table_query",
+      "expected_status": "ok",
+      "expected_route": "database.relational_table_query",
+      "expected_error_code": null,
+      "actual_status": "ok",
+      "route": "database.relational_table_query",
+      "variant": null,
+      "executor": "database.relational_table_query",
+      "simulation_created": true,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": null,
+      "error_code": null,
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_represented",
+          "fired": false,
+          "reason_code": null
+        }
+      ]
+    },
+    {
+      "case_id": "aud-database-relational-table-query-boundary",
+      "slot": "supported_boundary",
+      "target_id": "database.relational_table_query",
+      "family_id": "relational_table_query",
+      "expected_status": "ok",
+      "expected_route": "database.relational_table_query",
+      "expected_error_code": null,
+      "actual_status": "ok",
+      "route": "database.relational_table_query",
+      "variant": null,
+      "executor": "database.relational_table_query",
+      "simulation_created": true,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": null,
+      "error_code": null,
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_requested",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "completeness_represented",
+          "fired": false,
+          "reason_code": null
+        }
+      ]
+    },
+    {
       "case_id": "aud-generic-rule-scene-direct",
       "slot": "supported_canonical",
       "target_id": "generic.rule_scene",
@@ -7445,6 +7826,41 @@
       "slot": "insufficient_input",
       "target_id": "binary.decimal_to_binary",
       "family_id": "positional_representation",
+      "expected_status": "unsupported",
+      "expected_route": null,
+      "expected_error_code": "input_insufficient",
+      "actual_status": "unsupported",
+      "route": null,
+      "variant": null,
+      "executor": null,
+      "simulation_created": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "dropped_requirements": [],
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "leaked_result_fields": [],
+      "matched": true,
+      "reason": "",
+      "gates": [
+        {
+          "gate": "mechanism",
+          "fired": false,
+          "reason_code": null
+        },
+        {
+          "gate": "input_sufficiency",
+          "fired": true,
+          "reason_code": "input_insufficient"
+        }
+      ]
+    },
+    {
+      "case_id": "rc1c-insufficient-database-relational-table-query",
+      "slot": "insufficient_input",
+      "target_id": "database.relational_table_query",
+      "family_id": "relational_table_query",
       "expected_status": "unsupported",
       "expected_route": null,
       "expected_error_code": "input_insufficient",

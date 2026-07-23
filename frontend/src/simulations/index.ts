@@ -1,5 +1,6 @@
 import { registerAlgorithmDomain } from "./domains/algorithm";
 import { registerBinaryDomain } from "./domains/binary";
+import { registerDatabaseDomain } from "./domains/database/table-module";
 import { registerGenericDomain } from "./domains/generic";
 import { registerLogicDomain } from "./domains/logic";
 import { registerNetworkDomain } from "./domains/network";
@@ -23,5 +24,6 @@ export function registerAllSimulations(): void {
   registerBinaryDomain();
   registerNetworkDomain();
   registerTreeDomain(); // M17 W2A — duyệt cây nhị phân
+  registerDatabaseDomain(); // M17 W2B — truy vấn bảng quan hệ
   registerGenericDomain();
 }

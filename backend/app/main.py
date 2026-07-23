@@ -107,7 +107,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       completeness không thấy gì và cho qua: đề "tìm cả max lẫn min" lại trả
 #       ok rồi bỏ im lặng một nửa. Kèm frontend HISTORY_SCHEMA_VERSION 1→2 (bỏ
 #       envelope lưu trước cổng — có thể là mô phỏng nửa vời).
-CACHE_VERSION = "17"
+# "18": M17 W2B — family THỨ 10 `relational_table_query` + target
+#       `database.relational_table_query`. Menu classify đổi (thêm lựa chọn) +
+#       classify.md 2g (bảng vs dãy số đơn lẻ; JOIN/subquery/mutation →
+#       unsupported). Đề truy vấn bảng TỪNG bị unsupported/generic nay mô phỏng
+#       được → phải invalidate cache cũ.
+CACHE_VERSION = "18"
 
 
 class InputPayload(BaseModel):

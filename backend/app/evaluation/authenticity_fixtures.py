@@ -79,6 +79,13 @@ def _traverse_cfg(nodes: list, edges: list, start: str, variant: str,
     return _j(cfg)
 
 
+def _table_cfg(schema, rows, **q) -> str:
+    """Config database.relational_table_query (M17 W2B) — đúng schema validator."""
+    cfg = {"specVersion": "table-1.0", "schema": schema, "rows": rows}
+    cfg.update({k: v for k, v in q.items() if v is not None})
+    return _j(cfg)
+
+
 def _tree_cfg(variant: str, root: str, nodes: list) -> str:
     """Config tree.traversal (M17 W2A) — nodes = list [id, left|None, right|None]."""
     return _j({
@@ -148,8 +155,63 @@ _NET_OBJECTS = ["máy tính", "switch", "router", "ISP", "máy chủ"]
 _NET_REL = ["máy tính nối switch", "switch nối router", "router nối ISP", "ISP nối máy chủ"]
 
 
+# M17 W2B — bảng học sinh dùng chung cho fixture truy vấn bảng.
+_TB_SCHEMA = [
+    {"name": "ten", "type": "text"}, {"name": "diem", "type": "number"},
+    {"name": "to", "type": "text"},
+]
+_TB_ROWS = [
+    {"ten": "An", "diem": 8.5, "to": "A"}, {"ten": "Bình", "diem": 6.0, "to": "B"},
+    {"ten": "Chi", "diem": 9.0, "to": "A"}, {"ten": "Dũng", "diem": 6.0, "to": "C"},
+    {"ten": "Hà", "diem": 7.25, "to": "B"},
+]
+_TB_OBJECTS = ["bảng điểm học sinh", "cột Tên", "cột Điểm", "cột Tổ"]
+_TB_DATA = [
+    {"description": "điểm các bạn", "values": [8.5, 6.0, 9.0, 6.0, 7.25],
+     "labels": ["An", "Bình", "Chi", "Dũng", "Hà"]},
+    {"description": "tổ của các bạn", "labels": ["A", "B", "A", "C", "B"]},
+]
+
+
 # ══════════════ fixture per-target (14 AI-reachable) ══════════════
 TARGET_FIXTURES: dict[str, TargetFixture] = {
+    "database.relational_table_query": TargetFixture(
+        prompts={
+            "direct": "Bảng điểm: An 8.5 tổ A, Bình 6.0 tổ B, Chi 9.0 tổ A, Dũng 6.0 tổ C, Hà 7.25 tổ B. Lọc ra những bạn có điểm trên 7 và hiển thị tên cùng điểm.",
+            "paraphrase": "Cho danh sách nhân viên với cột Tên, Điểm, Tổ như trên. Hãy sắp xếp giảm dần theo điểm rồi lấy 3 người đầu.",
+            "changed_input": "Với bảng điểm đó, có bao nhiêu bạn thuộc tổ A?",
+            "boundary": "Với bảng điểm đó, điểm trung bình của các bạn có điểm từ 7 trở lên là bao nhiêu?",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(objects=_TB_OBJECTS, data=_TB_DATA, goal="Lọc học sinh điểm trên 7"),
+                [_classify("database.relational_table_query")],
+                [_table_cfg(_TB_SCHEMA, _TB_ROWS,
+                            filter={"op": ">", "column": "diem", "value": 7},
+                            projection=["ten", "diem"])],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(objects=_TB_OBJECTS, data=_TB_DATA, goal="Sắp xếp giảm dần lấy 3 đầu"),
+                [_classify("database.relational_table_query")],
+                [_table_cfg(_TB_SCHEMA, _TB_ROWS,
+                            sort={"column": "diem", "direction": "desc"}, limit=3)],
+            ),
+            "changed_input": CaseScript(
+                _analysis(objects=_TB_OBJECTS, data=_TB_DATA, goal="Đếm học sinh tổ A"),
+                [_classify("database.relational_table_query")],
+                [_table_cfg(_TB_SCHEMA, _TB_ROWS,
+                            filter={"op": "=", "column": "to", "value": "A"},
+                            aggregate={"func": "count"})],
+            ),
+            "boundary": CaseScript(
+                _analysis(objects=_TB_OBJECTS, data=_TB_DATA, goal="Điểm trung bình nhóm ≥7"),
+                [_classify("database.relational_table_query")],
+                [_table_cfg(_TB_SCHEMA, _TB_ROWS,
+                            filter={"op": ">=", "column": "diem", "value": 7},
+                            aggregate={"func": "avg", "column": "diem"})],
+            ),
+        },
+    ),
     "algorithm.find_max": TargetFixture(
         prompts={
             "direct": "Cho dãy số 12, 7, 25, 9, 18. Tìm phần tử lớn nhất.",

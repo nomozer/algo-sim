@@ -45,9 +45,9 @@ const descriptors = descriptorsJson as unknown as {
 beforeAll(() => registerAllSimulations());
 
 describe("M14 §C4 — descriptor ↔ registry cross-lock", () => {
-  it("mọi runtime target là module FE đã đăng ký (song ánh 1:1, 19 sau M17 W2A)", () => {
+  it("mọi runtime target là module FE đã đăng ký (song ánh 1:1, 20 sau M17 W2B)", () => {
     const ids = Object.keys(descriptors.runtime_targets);
-    expect(ids.length).toBe(19);
+    expect(ids.length).toBe(20);
     for (const id of ids) expect(getSimulation(id), `thiếu module ${id}`).toBeDefined();
     // song ánh: số module đăng ký == số runtime target
     expect(listSimulations().length).toBe(ids.length);

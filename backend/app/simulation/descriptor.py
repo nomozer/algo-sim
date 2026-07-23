@@ -45,6 +45,7 @@ class FamilyId(str, Enum):
     LAYERED_PDU_TRANSFORM = "layered_pdu_transform"
     STRUCTURAL_PROGRESSIVE_REPRESENTATION = "structural_progressive_representation"
     TREE_TRAVERSAL = "tree_traversal"  # M17 W2A
+    RELATIONAL_TABLE_QUERY = "relational_table_query"  # M17 W2B
 
 
 @dataclass(frozen=True)
