@@ -1,0 +1,531 @@
+{
+  "run_meta": {
+    "wave": "M17 W2B-LIVE",
+    "generated_at": "2026-07-24T09:57:50.466642+00:00",
+    "model": "gemini-2.5-flash",
+    "execution_environment": "local_python",
+    "git_sha": "88618ac865a873c40fc00925c7c2458a45e5816f",
+    "cache_version": "19",
+    "family_count": 10,
+    "target_count": 20,
+    "stable_catalog_hash": "48b6d50e3da7cb345124384eaf6cc5d5121d4cfb1436a1f8dc624f70092cc66b",
+    "budget": {
+      "max_cases": 6,
+      "max_http": 20,
+      "max_attempts_per_call": 2
+    },
+    "note": "run_pipeline production (invariant #22) gọi trực tiếp trong process local; danh tính container xác minh RIÊNG bằng runtime_doctor. Không tuyên bố container parity ngoài kết quả doctor."
+  },
+  "summary": {
+    "cases_run": 6,
+    "cases_passed": 3,
+    "supported_run": 4,
+    "supported_passed": 2,
+    "negative_run": 2,
+    "negative_passed": 1,
+    "total_http": 18,
+    "total_logical": 18,
+    "retry": 0,
+    "transient": 0,
+    "reclassification": 0,
+    "routing_accuracy": 0.8333,
+    "grounding_accuracy": 0.75,
+    "generic_leak": 0,
+    "false_positive_simulation": 0,
+    "false_refusal": 0,
+    "result_leakage": 0,
+    "stop_reason": null,
+    "all_passed": false
+  },
+  "cases": [
+    {
+      "case_id": "L1",
+      "kind": "supported",
+      "prompt": "Cho bảng dữ liệu sau:\n\nTên | Tổ | Điểm\nAn | A | 7.5\nBình | B | 8.0\nChi | A | 9.25\nDũng | B | 6.75\nHà | A | 8.5\nLan | B | 9.0\n\nGiữ các học sinh có điểm từ 8 trở lên và chỉ hiển thị Tên, Điểm.",
+      "http": 3,
+      "logical_calls": 3,
+      "retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "algorithmic",
+      "analyze_prescribed": null,
+      "initial_route": "database.relational_table_query",
+      "final_route": "database.relational_table_query",
+      "reclassification": 0,
+      "simulate_attempts": 1,
+      "status": "ok",
+      "failure_category": null,
+      "pipeline_error": null,
+      "learner_reason": null,
+      "grounding": {
+        "source_columns": 3,
+        "spec_columns": 3,
+        "source_rows": 6,
+        "spec_rows": 6,
+        "added_columns": [],
+        "dropped_columns": [],
+        "added_rows": 0,
+        "dropped_rows": 0,
+        "type_mismatches": [],
+        "modified_cells": [],
+        "empty_to_zero": [],
+        "unicode_changes": [],
+        "cells_compared": 18,
+        "row_preservation": true,
+        "column_preservation": true,
+        "grounding_perfect": true
+      },
+      "leakage": [],
+      "operations": {
+        "filter": true,
+        "projection": [
+          "Tên",
+          "Điểm"
+        ],
+        "sort": null,
+        "limit": null,
+        "aggregate": null
+      },
+      "expected_operations": {
+        "filter": true,
+        "projection": [
+          "Tên",
+          "Điểm"
+        ],
+        "sort": null,
+        "limit": null,
+        "aggregate": null
+      },
+      "expected_final": {
+        "rows": [
+          {
+            "Tên": "Bình",
+            "Điểm": 8.0
+          },
+          {
+            "Tên": "Chi",
+            "Điểm": 9.25
+          },
+          {
+            "Tên": "Hà",
+            "Điểm": 8.5
+          },
+          {
+            "Tên": "Lan",
+            "Điểm": 9.0
+          }
+        ],
+        "aggregate": null
+      },
+      "actual_final": {
+        "rows": [
+          {
+            "Tên": "Bình",
+            "Điểm": 8.0
+          },
+          {
+            "Tên": "Chi",
+            "Điểm": 9.25
+          },
+          {
+            "Tên": "Hà",
+            "Điểm": 8.5
+          },
+          {
+            "Tên": "Lan",
+            "Điểm": 9.0
+          }
+        ],
+        "aggregate": null
+      },
+      "oracle_agreement": true,
+      "result_leakage": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "passed": true,
+      "problems": []
+    },
+    {
+      "case_id": "L2",
+      "kind": "supported",
+      "prompt": "Cho bảng dữ liệu sau:\n\nSTT | Tên | Điểm\n1 | An | 8.5\n2 | Bình | 9.0\n3 | Chi | 8.5\n4 | Dũng | 7.0\n5 | Hà | 9.0\n6 | Lan | 8.5\n\nSắp xếp giảm dần theo Điểm.",
+      "http": 3,
+      "logical_calls": 3,
+      "retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "algorithmic",
+      "analyze_prescribed": null,
+      "initial_route": "database.relational_table_query",
+      "final_route": "database.relational_table_query",
+      "reclassification": 0,
+      "simulate_attempts": 1,
+      "status": "ok",
+      "failure_category": null,
+      "pipeline_error": null,
+      "learner_reason": null,
+      "grounding": {
+        "source_columns": 3,
+        "spec_columns": 3,
+        "source_rows": 6,
+        "spec_rows": 6,
+        "added_columns": [],
+        "dropped_columns": [],
+        "added_rows": 0,
+        "dropped_rows": 0,
+        "type_mismatches": [],
+        "modified_cells": [],
+        "empty_to_zero": [],
+        "unicode_changes": [],
+        "cells_compared": 18,
+        "row_preservation": true,
+        "column_preservation": true,
+        "grounding_perfect": true
+      },
+      "leakage": [],
+      "operations": {
+        "filter": false,
+        "projection": null,
+        "sort": [
+          "Điểm",
+          "desc"
+        ],
+        "limit": null,
+        "aggregate": null
+      },
+      "expected_operations": {
+        "filter": null,
+        "projection": null,
+        "sort": [
+          "Điểm",
+          "desc"
+        ],
+        "limit": null,
+        "aggregate": null
+      },
+      "expected_final": {
+        "rows": [
+          {
+            "STT": 2,
+            "Tên": "Bình",
+            "Điểm": 9.0
+          },
+          {
+            "STT": 5,
+            "Tên": "Hà",
+            "Điểm": 9.0
+          },
+          {
+            "STT": 1,
+            "Tên": "An",
+            "Điểm": 8.5
+          },
+          {
+            "STT": 3,
+            "Tên": "Chi",
+            "Điểm": 8.5
+          },
+          {
+            "STT": 6,
+            "Tên": "Lan",
+            "Điểm": 8.5
+          },
+          {
+            "STT": 4,
+            "Tên": "Dũng",
+            "Điểm": 7.0
+          }
+        ],
+        "aggregate": null
+      },
+      "actual_final": {
+        "rows": [
+          {
+            "STT": 2,
+            "Tên": "Bình",
+            "Điểm": 9.0
+          },
+          {
+            "STT": 5,
+            "Tên": "Hà",
+            "Điểm": 9.0
+          },
+          {
+            "STT": 1,
+            "Tên": "An",
+            "Điểm": 8.5
+          },
+          {
+            "STT": 3,
+            "Tên": "Chi",
+            "Điểm": 8.5
+          },
+          {
+            "STT": 6,
+            "Tên": "Lan",
+            "Điểm": 8.5
+          },
+          {
+            "STT": 4,
+            "Tên": "Dũng",
+            "Điểm": 7.0
+          }
+        ],
+        "aggregate": null
+      },
+      "oracle_agreement": true,
+      "result_leakage": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "passed": true,
+      "problems": []
+    },
+    {
+      "case_id": "L3",
+      "kind": "supported",
+      "prompt": "Cho bảng dữ liệu sau:\n\nHọc sinh | Điểm kiểm tra\nAn | 8\nBình | trống\nChi | 9.5\nDũng | 7\nHà | trống\nLan | 8.5\n\nTính điểm trung bình của các ô có dữ liệu.",
+      "http": 5,
+      "logical_calls": 5,
+      "retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "algorithmic",
+      "analyze_prescribed": null,
+      "initial_route": "database.relational_table_query",
+      "final_route": null,
+      "reclassification": 0,
+      "simulate_attempts": 3,
+      "status": "error",
+      "failure_category": null,
+      "pipeline_error": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: Dòng 2, cột 'Điểm kiểm tra': \"trống\" không phải số.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
+      "learner_reason": null,
+      "grounding": null,
+      "leakage": [],
+      "operations": null,
+      "expected_operations": {
+        "filter": null,
+        "projection": null,
+        "sort": null,
+        "limit": null,
+        "aggregate": [
+          "avg",
+          "Điểm kiểm tra"
+        ]
+      },
+      "expected_final": {
+        "rows": [
+          {
+            "Học sinh": "An",
+            "Điểm kiểm tra": 8
+          },
+          {
+            "Học sinh": "Bình",
+            "Điểm kiểm tra": null
+          },
+          {
+            "Học sinh": "Chi",
+            "Điểm kiểm tra": 9.5
+          },
+          {
+            "Học sinh": "Dũng",
+            "Điểm kiểm tra": 7
+          },
+          {
+            "Học sinh": "Hà",
+            "Điểm kiểm tra": null
+          },
+          {
+            "Học sinh": "Lan",
+            "Điểm kiểm tra": 8.5
+          }
+        ],
+        "aggregate": {
+          "value": 8.25,
+          "counted": 4
+        }
+      },
+      "actual_final": null,
+      "oracle_agreement": null,
+      "result_leakage": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "passed": false,
+      "problems": [
+        "status=error (mong ok)",
+        "route=None",
+        "không có config hợp lệ để audit"
+      ]
+    },
+    {
+      "case_id": "L4",
+      "kind": "supported",
+      "prompt": "Cho bảng dữ liệu sau:\n\nTên | Tổ | Điểm | Số buổi vắng\nAn | A | 9.0 | 1\nBình | B | 8.5 | 0\nChi | A | 6.0 | 2\nDũng | A | 9.0 | 0\nHà | B | 7.5 | 3\nLan | A | 7.5 | 1\nMinh | A | 6.0 | 0\nNga | B | 9.5 | 2\n\nTrong tổ A, chỉ hiển thị Tên và Điểm, sắp xếp Điểm giảm dần, lấy 3 học sinh đầu, rồi tính điểm trung bình của 3 học sinh đó.",
+      "http": 3,
+      "logical_calls": 3,
+      "retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "algorithmic",
+      "analyze_prescribed": null,
+      "initial_route": "database.relational_table_query",
+      "final_route": "database.relational_table_query",
+      "reclassification": 0,
+      "simulate_attempts": 1,
+      "status": "ok",
+      "failure_category": null,
+      "pipeline_error": null,
+      "learner_reason": null,
+      "grounding": {
+        "source_columns": 4,
+        "spec_columns": 4,
+        "source_rows": 8,
+        "spec_rows": 8,
+        "added_columns": [],
+        "dropped_columns": [],
+        "added_rows": 0,
+        "dropped_rows": 0,
+        "type_mismatches": [],
+        "modified_cells": [],
+        "empty_to_zero": [],
+        "unicode_changes": [],
+        "cells_compared": 32,
+        "row_preservation": true,
+        "column_preservation": true,
+        "grounding_perfect": true
+      },
+      "leakage": [],
+      "operations": {
+        "filter": true,
+        "projection": [
+          "Tên",
+          "Điểm"
+        ],
+        "sort": [
+          "Điểm",
+          "desc"
+        ],
+        "limit": null,
+        "aggregate": null
+      },
+      "expected_operations": {
+        "filter": true,
+        "projection": [
+          "Tên",
+          "Điểm"
+        ],
+        "sort": [
+          "Điểm",
+          "desc"
+        ],
+        "limit": 3,
+        "aggregate": [
+          "avg",
+          "Điểm"
+        ]
+      },
+      "expected_final": {
+        "rows": [
+          {
+            "Tên": "An",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Dũng",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Lan",
+            "Điểm": 7.5
+          }
+        ],
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        }
+      },
+      "actual_final": {
+        "rows": [
+          {
+            "Tên": "An",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Dũng",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Lan",
+            "Điểm": 7.5
+          },
+          {
+            "Tên": "Chi",
+            "Điểm": 6.0
+          },
+          {
+            "Tên": "Minh",
+            "Điểm": 6.0
+          }
+        ],
+        "aggregate": null
+      },
+      "oracle_agreement": true,
+      "result_leakage": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "passed": false,
+      "problems": [
+        "engine final ≠ expected (operation/spec sai)"
+      ]
+    },
+    {
+      "case_id": "L5",
+      "kind": "refusal",
+      "prompt": "Lọc các học sinh có điểm từ 8 trở lên và sắp xếp giảm dần.",
+      "http": 2,
+      "logical_calls": 2,
+      "retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "algorithmic",
+      "analyze_prescribed": null,
+      "initial_route": "database.relational_table_query",
+      "final_route": null,
+      "reclassification": 0,
+      "simulate_attempts": 0,
+      "status": "unsupported",
+      "failure_category": "semantic_incomplete",
+      "pipeline_error": null,
+      "learner_reason": "Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước.",
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "passed": false,
+      "problems": [
+        "failure_category=semantic_incomplete (mong insufficient_specification)"
+      ]
+    },
+    {
+      "case_id": "L6",
+      "kind": "refusal",
+      "prompt": "Cho bảng dữ liệu sau:\n\nTên | Tổ\nAn | A\nBình | B\nChi | A\nDũng | B\nHà | A\n\nĐếm số học sinh tổ A và đếm số học sinh tổ B.",
+      "http": 2,
+      "logical_calls": 2,
+      "retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "rule_derivable",
+      "analyze_prescribed": null,
+      "initial_route": "database.relational_table_query",
+      "final_route": null,
+      "reclassification": 0,
+      "simulate_attempts": 0,
+      "status": "unsupported",
+      "failure_category": "semantic_incomplete",
+      "pipeline_error": null,
+      "learner_reason": "Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước.",
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "passed": true,
+      "problems": []
+    }
+  ]
+}

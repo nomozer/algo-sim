@@ -1,0 +1,81 @@
+{
+  "run_meta": {
+    "wave": "M17 W2B-LIVE",
+    "generated_at": "2026-07-24T09:57:50.466642+00:00",
+    "model": "gemini-2.5-flash",
+    "execution_environment": "local_python",
+    "git_sha": "88618ac865a873c40fc00925c7c2458a45e5816f",
+    "cache_version": "19",
+    "family_count": 10,
+    "target_count": 20,
+    "stable_catalog_hash": "48b6d50e3da7cb345124384eaf6cc5d5121d4cfb1436a1f8dc624f70092cc66b",
+    "budget": {
+      "max_cases": 6,
+      "max_http": 20,
+      "max_attempts_per_call": 2
+    },
+    "note": "run_pipeline production (invariant #22) gọi trực tiếp trong process local; danh tính container xác minh RIÊNG bằng runtime_doctor. Không tuyên bố container parity ngoài kết quả doctor."
+  },
+  "matrix": {
+    "L1": {
+      "source_columns": 3,
+      "spec_columns": 3,
+      "source_rows": 6,
+      "spec_rows": 6,
+      "added_columns": [],
+      "dropped_columns": [],
+      "added_rows": 0,
+      "dropped_rows": 0,
+      "type_mismatches": [],
+      "modified_cells": [],
+      "empty_to_zero": [],
+      "unicode_changes": [],
+      "cells_compared": 18,
+      "row_preservation": true,
+      "column_preservation": true,
+      "grounding_perfect": true
+    },
+    "L2": {
+      "source_columns": 3,
+      "spec_columns": 3,
+      "source_rows": 6,
+      "spec_rows": 6,
+      "added_columns": [],
+      "dropped_columns": [],
+      "added_rows": 0,
+      "dropped_rows": 0,
+      "type_mismatches": [],
+      "modified_cells": [],
+      "empty_to_zero": [],
+      "unicode_changes": [],
+      "cells_compared": 18,
+      "row_preservation": true,
+      "column_preservation": true,
+      "grounding_perfect": true
+    },
+    "L3": null,
+    "L4": {
+      "source_columns": 4,
+      "spec_columns": 4,
+      "source_rows": 8,
+      "spec_rows": 8,
+      "added_columns": [],
+      "dropped_columns": [],
+      "added_rows": 0,
+      "dropped_rows": 0,
+      "type_mismatches": [],
+      "modified_cells": [],
+      "empty_to_zero": [],
+      "unicode_changes": [],
+      "cells_compared": 32,
+      "row_preservation": true,
+      "column_preservation": true,
+      "grounding_perfect": true
+    }
+  },
+  "acceptance": {
+    "row_preservation": 0.75,
+    "column_preservation": 0.75,
+    "grounding_perfect": 0.75
+  }
+}
