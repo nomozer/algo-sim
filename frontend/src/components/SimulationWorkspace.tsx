@@ -58,17 +58,26 @@ export function UnsupportedNotice({
   // trợ, chỉ là em chưa cho đủ dữ liệu. Nói "ngoài danh mục" ở đây làm học sinh
   // tưởng hệ không mô phỏng được dạng bài đó — sai và làm nản.
   const insufficient = unsupported.failure_category === "insufficient_specification";
+  // (M17 W2B-VR) Đề hỏi NHIỀU việc/nhiều truy vấn cùng lúc khác hẳn "thiếu dữ
+  // kiện" và "ngoài danh mục": chủ đề được hỗ trợ, dữ liệu đủ, chỉ là mỗi lần
+  // mô phỏng trình bày được một yêu cầu. Nói "ngoài danh mục" ở đây làm học
+  // sinh tưởng hệ không làm được — sai.
+  const incomplete = unsupported.failure_category === "semantic_incomplete";
+  const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
+    : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
+    : "NGOÀI DANH MỤC MÔ PHỎNG";
+  const hint = insufficient
+    ? "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."
+    : incomplete
+    ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
+    : "Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...).";
   return (
     <section className="card">
-      <span className="eyebrow">{insufficient ? "CHƯA ĐỦ DỮ KIỆN" : "NGOÀI DANH MỤC MÔ PHỎNG"}</span>
+      <span className="eyebrow">{eyebrow}</span>
       <p style={{ marginTop: "var(--sp-sm)" }}>
         {unsupported.learner_reason ?? unsupported.reason}
       </p>
-      <p className="notes">
-        {insufficient
-          ? "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."
-          : "Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...)."}
-      </p>
+      <p className="notes">{hint}</p>
     </section>
   );
 }
@@ -124,6 +133,7 @@ export function SimulationWorkspace() {
       tree: "CÂY",
       binary: "HỆ CƠ SỐ",
       logic: "LOGIC",
+      database: "TRUY VẤN BẢNG",
     };
     return VI[domain] ?? domain.toUpperCase();
   }

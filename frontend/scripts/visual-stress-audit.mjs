@@ -50,6 +50,83 @@ const VN = {
   d: "Trạm Suối Đá Vọng", e: "Trạm Mây Trắng Đỉnh Trời",
 };
 
+
+/* ══════════════ W2B-VR — fixture truy vấn bảng ══════════════
+ * Config đúng shape validator; engine tự tính mọi phán quyết/thứ tự/tích luỹ.
+ */
+const TB = (schema, rows, q = {}) => ({ specVersion: "table-1.0", schema, rows, ...q });
+const COL = (name, type, label = null) => ({ name, type, label });
+
+/* 8 học sinh; Bình và Dũng CÙNG 8.0 để quan sát sắp xếp ổn định. */
+const HS_SCHEMA = [COL("ten", "text", "Họ và tên"), COL("to", "text", "Tổ"),
+                   COL("diem", "number", "Điểm")];
+const HS_ROWS = [
+  { ten: "Nguyễn An", to: "A", diem: 8.5 },
+  { ten: "Trần Bình", to: "B", diem: 8.0 },
+  { ten: "Lê Chi", to: "A", diem: 9.25 },
+  { ten: "Phạm Dũng", to: "B", diem: 8.0 },
+  { ten: "Đỗ Hà", to: "A", diem: 6.5 },
+  { ten: "Vũ Khánh", to: "C", diem: 7.75 },
+  { ten: "Bùi Linh", to: "B", diem: 9.0 },
+  { ten: "Hoàng My", to: "C", diem: 5.5 },
+];
+/* Cột điểm có Ô TRỐNG — kiểm ô trống KHÔNG bị coi là 0. */
+const KT_SCHEMA = [COL("ten", "text", "Họ và tên"), COL("diem_kt", "number", "Điểm kiểm tra")];
+const KT_ROWS = [
+  { ten: "Nguyễn An", diem_kt: 8 }, { ten: "Trần Bình", diem_kt: null },
+  { ten: "Lê Chi", diem_kt: 10 }, { ten: "Phạm Dũng", diem_kt: null },
+  { ten: "Đỗ Hà", diem_kt: 6 },
+];
+/* Gần biên: 12 dòng × 8 cột, nhãn dài, Unicode, số âm/thập phân, ô trống. */
+const WIDE_SCHEMA = [
+  COL("ho_ten", "text", "Họ và tên đầy đủ của học sinh"),
+  COL("lop", "text", "Lớp"), COL("to", "text", "Tổ"),
+  COL("diem_tb", "number", "Điểm trung bình học kỳ"),
+  COL("chenh_lech", "number", "Chênh lệch so với trung bình lớp"),
+  COL("ghi_chu", "text", "Ghi chú của giáo viên chủ nhiệm"),
+  COL("noi_tru", "boolean", "Ở nội trú"),
+  COL("so_buoi_vang", "number", "Số buổi vắng"),
+];
+const WIDE_ROWS = Array.from({ length: 12 }, (_, i) => ({
+  ho_ten: ["Nguyễn Thị Ánh Tuyết", "Trần Quốc Bảo Long", "Lê Hoàng Phương Chi",
+           "Phạm Đình Dũng Kiệt", "Đỗ Thị Thu Hà", "Vũ Khánh Duy Anh",
+           "Bùi Thị Mỹ Linh", "Hoàng Minh Nhật My", "Đặng Văn Sơn Tùng",
+           "Ngô Bảo Trâm Anh", "Lý Gia Huy Hoàng", "Chu Thị Kim Ngân"][i],
+  lop: "11A" + ((i % 3) + 1), to: ["A", "B", "C"][i % 3],
+  diem_tb: [8.5, 8.0, 9.25, 8.0, 6.5, 7.75, 9.0, 5.5, 7.25, 6.75, 8.25, 7.0][i],
+  chenh_lech: [0.75, 0.25, 1.5, 0.25, -1.25, 0, 1.25, -2.25, -0.5, -1, 0.5, -0.75][i],
+  ghi_chu: i % 4 === 0 ? "Tiến bộ rõ rệt trong học kỳ vừa qua" : (i % 4 === 2 ? "" : null),
+  noi_tru: i % 2 === 0, so_buoi_vang: [0, 2, 1, 0, 3, 1, 0, 5, 2, 1, 0, 4][i],
+}));
+
+const dbEnv = (title, cfg) => env("database.relational_table_query", "database", title, cfg);
+const dbFx = (id, kind, title, cfg) => ({
+  id, renderer: "database", target: "database.relational_table_query",
+  kind, title, envelope: dbEnv(title, cfg),
+});
+
+const DB_FIXTURES = [
+  dbFx("vrdb1-filter-projection", "canonical", "Lọc điểm ≥8 và chỉ hiện tên, điểm",
+    TB(HS_SCHEMA, HS_ROWS, { filter: { op: ">=", column: "diem", value: 8 },
+                             projection: ["ten", "diem"] })),
+  dbFx("vrdb2-stable-sort-desc", "canonical", "Lọc tổ B rồi sắp xếp điểm giảm dần",
+    TB(HS_SCHEMA, HS_ROWS, { filter: { op: "=", column: "to", value: "B" },
+                             sort: { column: "diem", direction: "desc" } })),
+  dbFx("vrdb3-count-after-filter", "canonical", "Đếm số học sinh tổ A",
+    TB(HS_SCHEMA, HS_ROWS, { filter: { op: "=", column: "to", value: "A" },
+                             aggregate: { func: "count" } })),
+  dbFx("vrdb4-avg-empty-cells", "boundary", "Điểm kiểm tra trung bình (có ô trống)",
+    TB(KT_SCHEMA, KT_ROWS, { aggregate: { func: "avg", column: "diem_kt" } })),
+  dbFx("vrdb5-combined-pipeline", "canonical", "Lọc → chọn cột → sắp xếp → lấy 3 → trung bình",
+    TB(HS_SCHEMA, HS_ROWS, { filter: { op: ">=", column: "diem", value: 7 },
+                             projection: ["ten", "to", "diem"],
+                             sort: { column: "diem", direction: "desc" }, limit: 3,
+                             aggregate: { func: "avg", column: "diem" } })),
+  dbFx("vrdb6-boundary-wide", "stress", "Bảng gần biên: 12 dòng × 8 cột, nhãn dài",
+    TB(WIDE_SCHEMA, WIDE_ROWS, { filter: { op: ">=", column: "diem_tb", value: 7 },
+                                 sort: { column: "chenh_lech", direction: "desc" } })),
+];
+
 const FIXTURES = [
   /* ── A. network — RỦI RO CAO NHẤT (từng phantom token → cạnh vô hình) ── */
   {
@@ -126,6 +203,10 @@ const FIXTURES = [
       payloadLabel: "Dữ liệu ứng dụng", appProtocol: null, notes: null,
     }),
   },
+
+
+  /* ── W2B-VR: database.relational_table_query — 10 fixture bắt buộc ── */
+  ...DB_FIXTURES,
 
   /* ── B. tree — regression sau bản sửa nhãn dài ── */
   {
@@ -294,6 +375,20 @@ const FIXTURES = [
 /* Thông điệp từ chối learner-facing (không phải envelope ok) */
 const REFUSALS = [
   {
+    id: "vrdb8-missing-table", renderer: "database",
+    reason: "Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em.",
+  },
+  {
+    id: "vrdb9-join-unsupported", renderer: "database",
+    failure_category: "capability_gap",
+    reason: "Bài này cần ghép dữ liệu từ nhiều bảng, mà hệ hiện chỉ mô phỏng truy vấn trên MỘT bảng. Em có thể thử một câu hỏi chỉ dùng một bảng: lọc, sắp xếp, hoặc thống kê trên bảng đã cho.",
+  },
+  {
+    id: "vrdb10-two-queries", renderer: "database",
+    failure_category: "semantic_incomplete",
+    reason: "Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước.",
+  },
+  {
     id: "refusal-tree-insufficient", renderer: "tree",
     reason: "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể (các nút có tên và quan hệ con trái/con phải giữa chúng). Hãy mô tả rõ cây (ví dụ: gốc A, A có con trái B và con phải C…) rồi thử lại — hệ không tự dựng cây thay bạn.",
   },
@@ -378,12 +473,13 @@ const loadEnvelope = (envelope) => evaluate(`(async () => {
   return true;
 })()`);
 
-const loadUnsupported = (reason) => evaluate(`(async () => {
+const loadUnsupported = (reason, category = "insufficient_specification") =>
+  evaluate(`(async () => {
   const m = await import('/src/state/store.ts');
   m.useAppStore.getState().loadUnsupported({
     status: 'unsupported', reason: ${JSON.stringify(reason)},
     learner_reason: ${JSON.stringify(reason)},
-    failure_category: 'insufficient_specification',
+    failure_category: ${JSON.stringify(category)},
   });
   return true;
 })()`);
@@ -595,7 +691,12 @@ const AUDIT_JS = `(() => {
   /* F. THUẬT NGỮ — không để lộ id kỹ thuật / từ vựng generic cho học sinh */
   const text = (root.innerText || '');
   const BANNED = ['GENERIC','JSON','schema','rule_scene','simulation_id','dsl_version',
-                  'undefined','NaN','[object Object]','specVersion','capability_gap'];
+                  'undefined','NaN','[object Object]','specVersion','capability_gap',
+                  // W2B-VR: id cột kỹ thuật snake_case KHÔNG được lộ cho học sinh
+                  // (phải dùng nhãn "Điểm kiểm tra" thay id "diem_kt").
+                  'diem_kt','aggregateResult','table-1.0','table_schema','goal_id',
+                  'query_group','filter_op','table.aggregate',
+                  'ho_ten','diem_tb','chenh_lech','ghi_chu','noi_tru','so_buoi_vang'];
   const banned = BANNED.filter((w) => text.includes(w));
 
   return {
@@ -662,7 +763,7 @@ for (const vp of VIEWPORTS) {
   }
 
   for (const rf of selectedRefusals) {
-    await loadUnsupported(rf.reason);
+    await loadUnsupported(rf.reason, rf.failure_category ?? "insufficient_specification");
     await sleep(600);
     if (!byFixture.has(rf.id)) byFixture.set(rf.id, { fx: rf, total: 0, captures: [] });
     const slot = byFixture.get(rf.id);

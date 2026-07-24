@@ -1,4 +1,5 @@
 import { registerSimulation } from "../../registry";
+import { IconCheck, IconCross, IconPlay } from "../../../components/icons";
 import type { SimulationModule, WorkspaceProps } from "../../types";
 
 /**
@@ -198,8 +199,15 @@ const explain = (why: Record<string, unknown>[]): string =>
 const AGG_VI: Record<string, string> = {
   count: "Đếm", sum: "Tổng", avg: "Trung bình", min: "Nhỏ nhất", max: "Lớn nhất",
 };
-const aggLabel = (a: { func: string; column?: string | null }): string =>
-  AGG_VI[a.func] + (a.column ? ` của ${a.column}` : " số dòng");
+// `schema` tuỳ chọn: có thì hiển thị NHÃN cột cho học sinh (không lộ id
+// `diem_kt`). Engine gọi không truyền schema (narration engine không hiển thị,
+// chỉ để explain/debug); renderer luôn truyền schema.
+const aggLabel = (a: { func: string; column?: string | null },
+                  schema?: TableColumn[]): string => {
+  const col = a.column
+    ? (schema?.find((c) => c.name === a.column)?.label ?? a.column) : null;
+  return AGG_VI[a.func] + (col ? ` của ${col}` : " số dòng");
+};
 
 /** Khoá sắp xếp toàn phần — null luôn xuống cuối (mirror `_sort_key`). */
 const sortRank = (v: Cell): [number, number | string] =>
@@ -317,12 +325,87 @@ export function runTableQuery(config: TableConfig): Omit<TableState, "config" | 
 /* ── renderer ─────────────────────────────────────────────────────── */
 const clamp = (s: TableState, n: number) => Math.max(0, Math.min(n, s.steps.length - 1));
 
+/** Nhãn học sinh cho một cột — KHÔNG bao giờ để lộ id kỹ thuật (`diem_kt`). */
+const labelOf = (schema: TableColumn[], name: string): string =>
+  schema.find((c) => c.name === name)?.label ?? name;
+
+/** Giai đoạn nào của pipeline đã đi qua tính tới bước `at` — đọc từ trace,
+ *  không tự suy. Dùng để hé lộ dần: projection chỉ mờ cột SAU khi tới bước
+ *  chiếu; thứ tự sắp xếp chỉ hiện SAU bước sắp xếp. */
+function stagesReached(state: TableState, at: number) {
+  const seen = (kind: string) =>
+    state.steps.slice(0, at + 1).some((s) => s.kind === kind);
+  return {
+    filtered: seen("filtered_set"),
+    projected: seen("projection"),
+    sorted: seen("sort"),
+    limited: seen("limit"),
+    aggregated: seen("accumulate") || seen("result"),
+  };
+}
+
+/** Tường thuật learner-facing dựng TỪ structured detail + NHÃN cột — engine
+ *  trace giữ nguyên, đây chỉ là lớp trình bày (không hiển thị id kỹ thuật). */
+function narrate(step: TableStep, schema: TableColumn[],
+                 aggregate: TableConfig["aggregate"]): string {
+  const L = (c: unknown) => labelOf(schema, String(c));
+  const d = step.detail;
+  if (step.kind === "evaluate" || step.kind === "keep" || step.kind === "drop") {
+    const reasons = (d.reasons as Record<string, unknown>[]) ?? [];
+    const parts = reasons
+      .filter((r) => r.kind === "compare")
+      .map((r) => `${L(r.column)} = ${fmt(r.actual as Cell)} ${
+        { "=": "bằng", "!=": "khác", ">": "lớn hơn", ">=": "≥", "<": "nhỏ hơn",
+          "<=": "≤", contains: "chứa" }[r.op as string] ?? r.op
+      } ${fmt(r.value as Cell)} → ${r.result ? "đúng" : "sai"}`);
+    const verdict = step.kind === "keep" ? " ⇒ GIỮ LẠI"
+      : step.kind === "drop" ? " ⇒ LOẠI" : "";
+    const idx = step.row_index != null ? `Hàng ${step.row_index + 1}: ` : "";
+    return idx + (parts.join("; ") || "không có điều kiện") + verdict;
+  }
+  if (step.kind === "accumulate") {
+    const idx = step.row_index != null ? `Hàng ${step.row_index + 1}: ` : "";
+    if (d.skipped) return `${idx}ô ${L(aggregate?.column)} còn trống → bỏ qua, không tính là 0.`;
+    if (aggregate?.func === "count") return `${idx}đếm thêm 1 → ${String(d.count)}.`;
+    return `${idx}${L(aggregate?.column)} = ${fmt(d.value as Cell)} → giá trị tích luỹ ${
+      fmt(d.accumulator as Cell)} (đã tính ${String(d.count)} hàng).`;
+  }
+  if (step.kind === "sort") {
+    return `Sắp xếp theo ${L(d.column)} ${d.direction === "desc" ? "giảm dần" : "tăng dần"
+      } — hai hàng bằng nhau giữ nguyên thứ tự cũ (sắp xếp ổn định).`;
+  }
+  if (step.kind === "projection") {
+    const cols = (d.columns as string[]) ?? [];
+    return `Chỉ giữ lại cột: ${cols.map(L).join(", ")}.`;
+  }
+  if (step.kind === "read_row") {
+    const row = (d.row as Record<string, Cell>) ?? {};
+    return `Đọc hàng ${(step.row_index ?? 0) + 1}: ` +
+      schema.slice(0, 3).map((c) => `${c.label ?? c.name} = ${fmt(row[c.name] ?? null)}`).join(", ") +
+      (schema.length > 3 ? "…" : "");
+  }
+  // filtered_set/limit/result — narration engine không chứa id cột
+  return step.narration;
+}
+
+// Trạng thái hàng — icon là component SVG (guard ui-hygiene cấm ký tự Unicode
+// làm icon); phân biệt KHÔNG chỉ bằng màu (§7): có nhãn chữ + hình + viền.
+const STATUS = {
+  current: { label: "Đang xét", Icon: IconPlay, bg: "var(--accent-orange)", fg: "#fff" },
+  keep: { label: "Giữ", Icon: IconCheck, bg: "var(--accent-green)", fg: "#fff" },
+  drop: { label: "Loại", Icon: IconCross, bg: "var(--surface)", fg: "var(--ink-muted)" },
+  cutoff: { label: "Không lấy", Icon: null, bg: "var(--surface)", fg: "var(--ink-muted)" },
+} as const;
+
 export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState>) {
   const at = clamp(state, state.cursor);
   const step = state.steps[at];
-  const cols = state.config.schema.map((c) => c.name);
+  const schema = state.config.schema;
+  const cols = schema.map((c) => c.name);
   const projected = new Set(state.projectedColumns);
-  // Chỉ hé lộ phán quyết của những dòng ĐÃ ĐI QUA — không lộ kết quả từ bước 0.
+  const stage = stagesReached(state, at);
+
+  // Phán quyết của các hàng ĐÃ ĐI QUA (không lộ kết quả từ bước 0).
   const decided = new Map<number, boolean>();
   for (let i = 0; i <= at; i++) {
     const s = state.steps[i];
@@ -332,44 +415,93 @@ export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState
   }
   const isFinal = at === state.steps.length - 1;
 
+  // Thứ tự HIỂN THỊ hàng: chỉ đổi theo thứ tự sắp xếp SAU khi đã tới bước sắp
+  // xếp — trước đó giữ thứ tự gốc để lọc quan sát được trên bảng nguồn. Lấy
+  // TỪ TRACE (engine đã sắp), renderer không tự sắp.
+  const sortStep = state.steps.find((s) => s.kind === "sort");
+  const limitStep = state.steps.find((s) => s.kind === "limit");
+  const cutoff = new Set<number>();
+  let order = cols.length ? state.config.rows.map((_, i) => i) : [];
+  if (stage.sorted && sortStep) {
+    order = [...(sortStep.detail.after as number[])];
+    if (stage.limited && limitStep) {
+      const after = new Set(limitStep.detail.after as number[]);
+      for (const i of limitStep.detail.before as number[]) if (!after.has(i)) cutoff.add(i);
+      order = [...(limitStep.detail.before as number[])]; // vẫn hiện hàng bị cắt, có nhãn
+    }
+  }
+
+  const statusOf = (i: number): keyof typeof STATUS | null => {
+    if (step.row_index === i && step.kind !== "result") return "current";
+    if (cutoff.has(i)) return "cutoff";
+    const v = decided.get(i);
+    return v === true ? "keep" : v === false ? "drop" : null;
+  };
+
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage" style={{ overflowX: "auto" }}>
-        <table className="tq-table" style={{ borderCollapse: "collapse", width: "100%" }}>
+        <table className="tq-table" style={{ borderCollapse: "collapse", width: "100%", minWidth: "min-content" }}>
           <thead>
             <tr>
-              <th style={{ textAlign: "right", padding: "4px 8px", color: "var(--ink-muted)" }}>#</th>
-              {cols.map((c) => (
-                <th key={c} style={{
-                  textAlign: "left", padding: "4px 10px",
-                  borderBottom: "1px solid var(--hairline)",
-                  opacity: projected.has(c) ? 1 : 0.4,
-                  fontWeight: projected.has(c) ? 700 : 400,
-                }}>
-                  {state.config.schema.find((s) => s.name === c)?.label ?? c}
-                </th>
-              ))}
+              <th style={{ textAlign: "left", padding: "4px 8px", color: "var(--ink-muted)", whiteSpace: "nowrap" }}>
+                Trạng thái
+              </th>
+              {cols.map((c) => {
+                // Cột không được chọn CHỈ mờ SAU khi đã qua bước chọn cột.
+                const dim = stage.projected && !projected.has(c);
+                return (
+                  <th key={c} style={{
+                    textAlign: "left", padding: "4px 10px", whiteSpace: "nowrap",
+                    borderBottom: "1px solid var(--hairline)",
+                    opacity: dim ? 0.35 : 1, fontWeight: dim ? 400 : 700,
+                    textDecoration: dim ? "line-through" : "none",
+                  }}>
+                    {labelOf(schema, c)}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody>
-            {state.config.rows.map((row, i) => {
-              const current = step.row_index === i;
-              const verdict = decided.get(i);
-              const bg = current ? "var(--accent-orange)"
-                : verdict === true ? "var(--accent-green)"
-                : verdict === false ? "var(--surface)" : "transparent";
+            {order.map((i) => {
+              const row = state.config.rows[i];
+              const st = statusOf(i);
+              const badge = st ? STATUS[st] : null;
               return (
                 <tr key={i} style={{
-                  background: bg,
-                  opacity: verdict === false && !current ? 0.45 : 1,
-                  textDecoration: verdict === false ? "line-through" : "none",
+                  background: st === "current" ? "color-mix(in srgb, var(--accent-orange) 22%, transparent)"
+                    : st === "keep" ? "color-mix(in srgb, var(--accent-green) 18%, transparent)" : "transparent",
+                  opacity: st === "drop" || st === "cutoff" ? 0.5 : 1,
                 }}>
-                  <td style={{ textAlign: "right", padding: "3px 8px", color: "var(--ink-muted)" }}>{i + 1}</td>
-                  {cols.map((c) => (
-                    <td key={c} style={{ padding: "3px 10px", opacity: projected.has(c) ? 1 : 0.35 }}>
-                      {fmt(row[c] ?? null)}
-                    </td>
-                  ))}
+                  <td style={{ padding: "3px 8px", whiteSpace: "nowrap" }}>
+                    {badge && (
+                      <span style={{
+                        display: "inline-flex", alignItems: "center", gap: 4,
+                        padding: "1px 8px", borderRadius: 10,
+                        fontSize: 12, fontWeight: 600, background: badge.bg, color: badge.fg,
+                        border: st === "drop" || st === "cutoff" ? "1px solid var(--hairline)" : "none",
+                      }}>
+                        {badge.Icon && <badge.Icon size={12} />}
+                        {badge.label}
+                      </span>
+                    )}
+                  </td>
+                  {cols.map((c) => {
+                    const dim = stage.projected && !projected.has(c);
+                    const empty = row[c] === null || row[c] === undefined;
+                    return (
+                      <td key={c} style={{
+                        padding: "3px 10px", whiteSpace: "nowrap",
+                        opacity: dim ? 0.3 : 1,
+                        textDecoration: st === "drop" ? "line-through" : "none",
+                        fontStyle: empty ? "italic" : "normal",
+                        color: empty ? "var(--ink-muted)" : "inherit",
+                      }}>
+                        {empty ? "— trống —" : fmt(row[c])}
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}
@@ -377,18 +509,24 @@ export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState
         </table>
       </div>
 
-      {state.config.aggregate && (
+      {/* Panel tích luỹ CHỈ ở bước accumulate — không hiện ở bước result
+          (result không có accumulator → sẽ hiện "(trống)" gây hiểu nhầm). */}
+      {state.config.aggregate && step.kind === "accumulate" && (
         <p className="notes">
-          {aggLabel(state.config.aggregate)} — đang cộng dồn:{" "}
-          {fmt((step.detail.accumulator as Cell) ?? null)}
-          {step.detail.count != null && ` (đã tính ${String(step.detail.count)} dòng)`}
+          {aggLabel(state.config.aggregate, schema)} — đang cộng dồn:{" "}
+          <strong>{fmt((step.detail.accumulator as Cell) ?? null)}</strong>
+          {step.detail.count != null && ` (đã tính ${String(step.detail.count)} hàng hợp lệ)`}
         </p>
       )}
-      <p className="notes">{step.narration}</p>
-      {isFinal && state.aggregateResult && (
+      {/* Bước cuối: chỉ MỘT dòng kết quả mạnh; bước khác: tường thuật learner. */}
+      {isFinal ? (
         <p className="notes"><strong>
-          {aggLabel(state.config.aggregate!)} = {fmt(state.aggregateResult.value)}
+          {state.aggregateResult
+            ? `${aggLabel(state.config.aggregate!, schema)} = ${fmt(state.aggregateResult.value)}`
+            : `Kết quả: ${state.resultRows.length} hàng.`}
         </strong></p>
+      ) : (
+        <p className="notes">{narrate(step, schema, state.config.aggregate)}</p>
       )}
     </div>
   );
@@ -404,7 +542,7 @@ export function TableInspector({ state }: WorkspaceProps<TableConfig, TableState
       </p>
       {state.config.sort && (
         <p className="notes">
-          Sắp xếp: {state.config.sort.column}{" "}
+          Sắp xếp: {labelOf(state.config.schema, state.config.sort.column)}{" "}
           {state.config.sort.direction === "desc" ? "giảm dần" : "tăng dần"} (ổn định)
         </p>
       )}
@@ -412,7 +550,8 @@ export function TableInspector({ state }: WorkspaceProps<TableConfig, TableState
       {isFinal ? (
         <p className="notes">
           Kết quả: {state.resultRows.length} dòng
-          {state.aggregateResult && ` · ${aggLabel(state.config.aggregate!)} = ${fmt(state.aggregateResult.value)}`}
+          {state.aggregateResult &&
+            ` · ${aggLabel(state.config.aggregate!, state.config.schema)} = ${fmt(state.aggregateResult.value)}`}
         </p>
       ) : (
         <p className="notes">Kết quả hiện dần theo từng bước…</p>

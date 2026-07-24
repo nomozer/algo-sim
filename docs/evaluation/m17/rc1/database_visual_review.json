@@ -1,0 +1,248 @@
+{
+  "schema_version": "1",
+  "run_label": "w2b-vr-database-visual",
+  "generated_at": "2026-07-24T05:38:29.795532+00:00",
+  "renderer_id": "database",
+  "target_id": "database.relational_table_query",
+  "note": "Chụp Chrome thật qua CDP (không SSR). Phán quyết do người xem toàn bộ PNG chấm; assertion tự động không tự nâng REAL_VISUAL.",
+  "metrics": {
+    "fixtures": 9,
+    "screenshots": 42,
+    "desktop_screenshots": 21,
+    "narrow_screenshots": 21,
+    "issues_found": 7,
+    "issues_fixed": 7,
+    "blockers_remaining": 0,
+    "REAL_VISUAL": 9,
+    "PARTIAL_VISUAL": 0,
+    "BROKEN_VISUAL": 0,
+    "VISUAL_COVERAGE_GAP": 0
+  },
+  "fixtures": [
+    {
+      "fixture_id": "vrdb1-filter-projection",
+      "title": "Lọc điểm ≥8 và chỉ hiện tên, điểm",
+      "kind": "canonical",
+      "screenshots": 6,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": true,
+        "CURRENT_STATE_CLEAR": true,
+        "FILTER_MECHANISM_CLEAR": true,
+        "PROJECTION_CLEAR": true,
+        "SORT_MECHANISM_CLEAR": true,
+        "AGGREGATE_CLEAR": true,
+        "PROGRESSIVE_REVEAL_PASS": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": true
+      },
+      "reviewer_note": "Bảng nguồn hiện đủ 8 hàng; hàng đang xét (▶ Đang xét) và giữ (✓ Giữ) phân biệt bằng icon+chữ+màu, không chỉ màu; cột không chọn CHỈ mờ SAU bước chọn cột; kết quả hiện dần.",
+      "is_refusal": false
+    },
+    {
+      "fixture_id": "vrdb2-stable-sort-desc",
+      "title": "Lọc tổ B rồi sắp xếp điểm giảm dần",
+      "kind": "canonical",
+      "screenshots": 6,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": true,
+        "CURRENT_STATE_CLEAR": true,
+        "FILTER_MECHANISM_CLEAR": true,
+        "PROJECTION_CLEAR": true,
+        "SORT_MECHANISM_CLEAR": true,
+        "AGGREGATE_CLEAR": true,
+        "PROGRESSIVE_REVEAL_PASS": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": true
+      },
+      "reviewer_note": "Lọc tổ B còn 3 hàng; sau sắp xếp giảm dần Bùi Linh 9 trước, Trần Bình và Phạm Dũng CÙNG 8 giữ NGUYÊN thứ tự gốc (Bình trước Dũng) — sắp xếp ổn định quan sát được; Inspector ghi 'Sắp xếp: Điểm giảm dần (ổn định)'.",
+      "is_refusal": false
+    },
+    {
+      "fixture_id": "vrdb3-count-after-filter",
+      "title": "Đếm số học sinh tổ A",
+      "kind": "canonical",
+      "screenshots": 6,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": true,
+        "CURRENT_STATE_CLEAR": true,
+        "FILTER_MECHANISM_CLEAR": true,
+        "PROJECTION_CLEAR": "N/A",
+        "SORT_MECHANISM_CLEAR": "N/A",
+        "AGGREGATE_CLEAR": true,
+        "PROGRESSIVE_REVEAL_PASS": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": true
+      },
+      "reviewer_note": "Lọc tổ A (3 hàng giữ, còn lại ✕ Loại gạch ngang mờ); accumulator đếm 1→2→3 hiện dần ở giai đoạn tích luỹ; COUNT cuối KHÔNG lộ ở bước đọc hàng.",
+      "is_refusal": false
+    },
+    {
+      "fixture_id": "vrdb4-avg-empty-cells",
+      "title": "Điểm kiểm tra trung bình (có ô trống)",
+      "kind": "boundary",
+      "screenshots": 6,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": true,
+        "CURRENT_STATE_CLEAR": true,
+        "FILTER_MECHANISM_CLEAR": "N/A",
+        "PROJECTION_CLEAR": "N/A",
+        "SORT_MECHANISM_CLEAR": "N/A",
+        "AGGREGATE_CLEAR": true,
+        "PROGRESSIVE_REVEAL_PASS": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": true
+      },
+      "reviewer_note": "Ô trống hiện '— trống —' in nghiêng, PHÂN BIỆT rõ với 0; bước tích luỹ nêu 'ô Điểm kiểm tra còn trống → bỏ qua, không tính là 0'; AVG = 8 (=(8+10+6)/3 trên 3 hàng hợp lệ), KHÔNG phải (8+0+10+0+6)/5.",
+      "is_refusal": false
+    },
+    {
+      "fixture_id": "vrdb5-combined-pipeline",
+      "title": "Lọc → chọn cột → sắp xếp → lấy 3 → trung bình",
+      "kind": "canonical",
+      "screenshots": 6,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": true,
+        "CURRENT_STATE_CLEAR": true,
+        "FILTER_MECHANISM_CLEAR": true,
+        "PROJECTION_CLEAR": true,
+        "SORT_MECHANISM_CLEAR": true,
+        "AGGREGATE_CLEAR": true,
+        "PROGRESSIVE_REVEAL_PASS": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": true
+      },
+      "reviewer_note": "Năm tầng trong MỘT truy vấn: 3 hàng '✓ Giữ' đầu, 3 hàng '— Không lấy' (limit cắt) mờ — phân biệt rõ với 'Loại' của lọc; AVG = 8.9167 dùng nhãn 'Điểm'; hiểu được đây là một pipeline.",
+      "is_refusal": false
+    },
+    {
+      "fixture_id": "vrdb6-boundary-wide",
+      "title": "Bảng gần biên: 12 dòng × 8 cột, nhãn dài",
+      "kind": "stress",
+      "screenshots": 6,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": true,
+        "CURRENT_STATE_CLEAR": true,
+        "FILTER_MECHANISM_CLEAR": true,
+        "PROJECTION_CLEAR": true,
+        "SORT_MECHANISM_CLEAR": true,
+        "AGGREGATE_CLEAR": "N/A",
+        "PROGRESSIVE_REVEAL_PASS": true,
+        "TERMINOLOGY_CORRECT": true,
+        "LAYOUT_PASS": true,
+        "RESPONSIVE_PASS": true
+      },
+      "reviewer_note": "12 hàng × 8 cột, nhãn tiếng Việt dài, số âm/thập phân, ô trống. Ở 768px bảng CUỘN NGANG trong khung riêng, trang KHÔNG tràn ngang; căn cột đúng; lọc + sắp xếp theo cột chênh lệch (số âm) quan sát được.",
+      "is_refusal": false
+    },
+    {
+      "fixture_id": "vrdb8-missing-table",
+      "title": "Thông điệp từ chối",
+      "kind": "refusal",
+      "screenshots": 2,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": "N/A",
+        "CURRENT_STATE_CLEAR": "N/A",
+        "FILTER_MECHANISM_CLEAR": "N/A",
+        "PROJECTION_CLEAR": "N/A",
+        "SORT_MECHANISM_CLEAR": "N/A",
+        "AGGREGATE_CLEAR": "N/A",
+        "PROGRESSIVE_REVEAL_PASS": "N/A",
+        "TERMINOLOGY_CORRECT": "N/A",
+        "LAYOUT_PASS": "N/A",
+        "RESPONSIVE_PASS": "N/A"
+      },
+      "reviewer_note": "Thông báo 'CHƯA ĐỦ DỮ KIỆN' đúng bản chất; hướng dẫn cung cấp cột và các hàng; KHÔNG dựng bảng mẫu; không lộ JSON/schema/mã lỗi.",
+      "is_refusal": true
+    },
+    {
+      "fixture_id": "vrdb9-join-unsupported",
+      "title": "Thông điệp từ chối",
+      "kind": "refusal",
+      "screenshots": 2,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": "N/A",
+        "CURRENT_STATE_CLEAR": "N/A",
+        "FILTER_MECHANISM_CLEAR": "N/A",
+        "PROJECTION_CLEAR": "N/A",
+        "SORT_MECHANISM_CLEAR": "N/A",
+        "AGGREGATE_CLEAR": "N/A",
+        "PROGRESSIVE_REVEAL_PASS": "N/A",
+        "TERMINOLOGY_CORRECT": "N/A",
+        "LAYOUT_PASS": "N/A",
+        "RESPONSIVE_PASS": "N/A"
+      },
+      "reviewer_note": "Thông báo 'NGOÀI DANH MỤC MÔ PHỎNG'; nói rõ chỉ hỗ trợ MỘT bảng; không generic fallback; không hiện lỗi SQL kỹ thuật.",
+      "is_refusal": true
+    },
+    {
+      "fixture_id": "vrdb10-two-queries",
+      "title": "Thông điệp từ chối",
+      "kind": "refusal",
+      "screenshots": 2,
+      "viewports": [
+        "desktop",
+        "narrow"
+      ],
+      "review_status": "REAL_VISUAL",
+      "criteria": {
+        "TABLE_STRUCTURE_CLEAR": "N/A",
+        "CURRENT_STATE_CLEAR": "N/A",
+        "FILTER_MECHANISM_CLEAR": "N/A",
+        "PROJECTION_CLEAR": "N/A",
+        "SORT_MECHANISM_CLEAR": "N/A",
+        "AGGREGATE_CLEAR": "N/A",
+        "PROGRESSIVE_REVEAL_PASS": "N/A",
+        "TERMINOLOGY_CORRECT": "N/A",
+        "LAYOUT_PASS": "N/A",
+        "RESPONSIVE_PASS": "N/A"
+      },
+      "reviewer_note": "Thông báo 'TÁCH THÀNH TỪNG YÊU CẦU' (không phải 'NGOÀI DANH MỤC' hay 'CHƯA ĐỦ DỮ KIỆN'); yêu cầu tách thành hai truy vấn; KHÔNG lộ chữ ký goal / id kỹ thuật; không âm thầm chạy một COUNT.",
+      "is_refusal": true
+    }
+  ]
+}

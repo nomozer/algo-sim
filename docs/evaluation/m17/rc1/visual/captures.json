@@ -9720,6 +9720,2697 @@
           }
         }
       ]
+    },
+    {
+      "fixture_id": "vrdb1-filter-projection",
+      "renderer_id": "database",
+      "target_id": "database.relational_table_query",
+      "fixture_kind": "canonical",
+      "title": "Lọc điểm ≥8 và chỉ hiện tên, điểm",
+      "total_steps": 27,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb1-filter-projection-initial-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 27,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 10
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 340,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 697,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 451
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 13,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb1-filter-projection-mid-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 13,
+            "step_total": 27,
+            "current_step": {
+              "kind": "evaluate",
+              "narration": "Xét điều kiện trên dòng 5: diem=6.5 >= 8 → sai"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 18
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 340,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 697,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 443
+          }
+        },
+        {
+          "tag": "final",
+          "step": 26,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb1-filter-projection-final-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 26,
+            "step_total": 27,
+            "current_step": {
+              "kind": "result",
+              "narration": "Kết quả: 5 dòng."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 17,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 21
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 340,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 697,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 424
+          }
+        },
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb1-filter-projection-initial-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 27,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 8,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 8
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 340,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 366
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 13,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb1-filter-projection-mid-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 13,
+            "step_total": 27,
+            "current_step": {
+              "kind": "evaluate",
+              "narration": "Xét điều kiện trên dòng 5: diem=6.5 >= 8 → sai"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 12,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 16
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 340,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 358
+          }
+        },
+        {
+          "tag": "final",
+          "step": 26,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb1-filter-projection-final-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 26,
+            "step_total": 27,
+            "current_step": {
+              "kind": "result",
+              "narration": "Kết quả: 5 dòng."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 15,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 19
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 340,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 356
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb2-stable-sort-desc",
+      "renderer_id": "database",
+      "target_id": "database.relational_table_query",
+      "fixture_kind": "canonical",
+      "title": "Lọc tổ B rồi sắp xếp điểm giảm dần",
+      "total_steps": 28,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb2-stable-sort-desc-initial-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 28,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 10
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 356,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 712,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 486
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 14,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb2-stable-sort-desc-mid-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 14,
+            "step_total": 28,
+            "current_step": {
+              "kind": "drop",
+              "narration": "Dòng 5 KHÔNG thoả → loại."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 16
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 356,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 712,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 486
+          }
+        },
+        {
+          "tag": "final",
+          "step": 27,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb2-stable-sort-desc-final-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 27,
+            "step_total": 28,
+            "current_step": {
+              "kind": "result",
+              "narration": "Kết quả: 3 dòng."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 12,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 14
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 356,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 712,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 358
+          }
+        },
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb2-stable-sort-desc-initial-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 28,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 8,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 8
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 356,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 367
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 14,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb2-stable-sort-desc-mid-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 14,
+            "step_total": 28,
+            "current_step": {
+              "kind": "drop",
+              "narration": "Dòng 5 KHÔNG thoả → loại."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 12,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 14
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 356,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 367
+          }
+        },
+        {
+          "tag": "final",
+          "step": 27,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb2-stable-sort-desc-final-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 27,
+            "step_total": 28,
+            "current_step": {
+              "kind": "result",
+              "narration": "Kết quả: 3 dòng."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 12
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 356,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 256
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb3-count-after-filter",
+      "renderer_id": "database",
+      "target_id": "database.relational_table_query",
+      "fixture_kind": "canonical",
+      "title": "Đếm số học sinh tổ A",
+      "total_steps": 30,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb3-count-after-filter-initial-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 30,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 10
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 571,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 438
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 15,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb3-count-after-filter-mid-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 15,
+            "step_total": 30,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 6: ten=Vũ Khánh, to=C, diem=7.75"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 15,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 18
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 571,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 461
+          }
+        },
+        {
+          "tag": "final",
+          "step": 29,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb3-count-after-filter-final-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 29,
+            "step_total": 30,
+            "current_step": {
+              "kind": "result",
+              "narration": "Đếm số dòng = 3"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 17,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 19
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 571,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 430
+          }
+        },
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb3-count-after-filter-initial-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 30,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 8,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 8
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 353
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 15,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb3-count-after-filter-mid-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 15,
+            "step_total": 30,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 6: ten=Vũ Khánh, to=C, diem=7.75"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 13,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 16
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 376
+          }
+        },
+        {
+          "tag": "final",
+          "step": 29,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb3-count-after-filter-final-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 29,
+            "step_total": 30,
+            "current_step": {
+              "kind": "result",
+              "narration": "Đếm số dòng = 3"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 15,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 17
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 214,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 344
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb4-avg-empty-cells",
+      "renderer_id": "database",
+      "target_id": "database.relational_table_query",
+      "fixture_kind": "boundary",
+      "title": "Điểm kiểm tra trung bình (có ô trống)",
+      "total_steps": 18,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb4-avg-empty-cells-initial-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 18,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, diem_kt=8"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 11
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 383,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 740,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 413
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 9,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb4-avg-empty-cells-mid-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 9,
+            "step_total": 18,
+            "current_step": {
+              "kind": "keep",
+              "narration": "Không có điều kiện lọc → giữ dòng 5."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 19
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 383,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 740,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 414
+          }
+        },
+        {
+          "tag": "final",
+          "step": 17,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb4-avg-empty-cells-final-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 17,
+            "step_total": 18,
+            "current_step": {
+              "kind": "result",
+              "narration": "Trung bình của diem_kt = 8"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 19
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 383,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 740,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 423
+          }
+        },
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb4-avg-empty-cells-initial-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 18,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, diem_kt=8"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 8,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 9
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 383,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 328
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 9,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb4-avg-empty-cells-mid-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 9,
+            "step_total": 18,
+            "current_step": {
+              "kind": "keep",
+              "narration": "Không có điều kiện lọc → giữ dòng 5."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 12,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 17
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 383,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 329
+          }
+        },
+        {
+          "tag": "final",
+          "step": 17,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb4-avg-empty-cells-final-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 17,
+            "step_total": 18,
+            "current_step": {
+              "kind": "result",
+              "narration": "Trung bình của diem_kt = 8"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 12,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 17
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 383,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 320
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb5-combined-pipeline",
+      "renderer_id": "database",
+      "target_id": "database.relational_table_query",
+      "fixture_kind": "canonical",
+      "title": "Lọc → chọn cột → sắp xếp → lấy 3 → trung bình",
+      "total_steps": 32,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb5-combined-pipeline-initial-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 32,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 10
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 475,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 832,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 497
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 16,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb5-combined-pipeline-mid-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 16,
+            "step_total": 32,
+            "current_step": {
+              "kind": "evaluate",
+              "narration": "Xét điều kiện trên dòng 6: diem=7.75 >= 7 → đúng"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 15,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 19
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 475,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 832,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 496
+          }
+        },
+        {
+          "tag": "final",
+          "step": 31,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb5-combined-pipeline-final-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 31,
+            "step_total": 32,
+            "current_step": {
+              "kind": "result",
+              "narration": "Trung bình của diem = 8.9167"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 12,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 17
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 475,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 832,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 488
+          }
+        },
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb5-combined-pipeline-initial-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 32,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ten=Nguyễn An, to=A, diem=8.5"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 8,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 8
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 475,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 378
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 16,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb5-combined-pipeline-mid-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 16,
+            "step_total": 32,
+            "current_step": {
+              "kind": "evaluate",
+              "narration": "Xét điều kiện trên dòng 6: diem=7.75 >= 7 → đúng"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 13,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 17
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 475,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 377
+          }
+        },
+        {
+          "tag": "final",
+          "step": 31,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb5-combined-pipeline-final-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 31,
+            "step_total": 32,
+            "current_step": {
+              "kind": "result",
+              "narration": "Trung bình của diem = 8.9167"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 15
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 475,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 355
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb6-boundary-wide",
+      "renderer_id": "database",
+      "target_id": "database.relational_table_query",
+      "fixture_kind": "stress",
+      "title": "Bảng gần biên: 12 dòng × 8 cột, nhãn dài",
+      "total_steps": 40,
+      "captures": [
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb6-boundary-wide-initial-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 40,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ho_ten=Nguyễn Thị Ánh Tuyết, lop=11A1, to=A…"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 10,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 21
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 417,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 1016,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 1222
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 20,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb6-boundary-wide-mid-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 20,
+            "step_total": 40,
+            "current_step": {
+              "kind": "keep",
+              "narration": "Dòng 7 THOẢ điều kiện → giữ lại."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 16,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 32
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 417,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 1016,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 1218
+          }
+        },
+        {
+          "tag": "final",
+          "step": 39,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb6-boundary-wide-final-desktop.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 39,
+            "step_total": 40,
+            "current_step": {
+              "kind": "result",
+              "narration": "Kết quả: 9 dòng."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 18,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 35
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 417,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 1016,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 987
+          }
+        },
+        {
+          "tag": "initial",
+          "step": 0,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb6-boundary-wide-initial-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 0,
+            "step_total": 40,
+            "current_step": {
+              "kind": "read_row",
+              "narration": "Đọc dòng 1: ho_ten=Nguyễn Thị Ánh Tuyết, lop=11A1, to=A…"
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 8,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 19
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 417,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 1074
+          }
+        },
+        {
+          "tag": "mid",
+          "step": 20,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb6-boundary-wide-mid-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 20,
+            "step_total": 40,
+            "current_step": {
+              "kind": "keep",
+              "narration": "Dòng 7 THOẢ điều kiện → giữ lại."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 30
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 417,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 1070
+          }
+        },
+        {
+          "tag": "final",
+          "step": 39,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb6-boundary-wide-final-narrow.png",
+          "authoritative_state": {
+            "moduleId": "database.relational_table_query",
+            "cursor": 39,
+            "step_total": 40,
+            "current_step": {
+              "kind": "result",
+              "narration": "Kết quả: 9 dòng."
+            }
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 16,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 33
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": {
+                  "w": 417,
+                  "inside": true,
+                  "clipped": false
+                },
+                "canvas": {
+                  "w": 660,
+                  "inside": true,
+                  "clipped": false
+                },
+                "reset_button": {
+                  "inside": true,
+                  "clipped": false
+                }
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 856
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb8-missing-table",
+      "renderer_id": "database",
+      "target_id": null,
+      "fixture_kind": "refusal",
+      "title": "Thông điệp từ chối",
+      "total_steps": 0,
+      "captures": [
+        {
+          "tag": "refusal",
+          "step": null,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb8-missing-table-refusal-desktop.png",
+          "authoritative_state": {
+            "reason": "Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em."
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 29
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [
+                "Bảng gần biên: 12 dòng × 8 cột"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 835
+          }
+        },
+        {
+          "tag": "refusal",
+          "step": null,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb8-missing-table-refusal-narrow.png",
+          "authoritative_state": {
+            "reason": "Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em."
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 29
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [
+                "Xem tất cả (6)",
+                "Bảng gần biên: 12 dòng × 8 cột"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 836
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb9-join-unsupported",
+      "renderer_id": "database",
+      "target_id": null,
+      "fixture_kind": "refusal",
+      "title": "Thông điệp từ chối",
+      "total_steps": 0,
+      "captures": [
+        {
+          "tag": "refusal",
+          "step": null,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb9-join-unsupported-refusal-desktop.png",
+          "authoritative_state": {
+            "reason": "Bài này cần ghép dữ liệu từ nhiều bảng, mà hệ hiện chỉ mô phỏng truy vấn trên MỘT bảng. Em có thể thử một câu hỏi chỉ dùng một bảng: lọc, sắp xếp, hoặc thống kê trên bảng đã cho."
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 29
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [
+                "Bảng gần biên: 12 dòng × 8 cột"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 836
+          }
+        },
+        {
+          "tag": "refusal",
+          "step": null,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb9-join-unsupported-refusal-narrow.png",
+          "authoritative_state": {
+            "reason": "Bài này cần ghép dữ liệu từ nhiều bảng, mà hệ hiện chỉ mô phỏng truy vấn trên MỘT bảng. Em có thể thử một câu hỏi chỉ dùng một bảng: lọc, sắp xếp, hoặc thống kê trên bảng đã cho."
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 29
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [
+                "Xem tất cả (6)",
+                "Bảng gần biên: 12 dòng × 8 cột"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 837
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "vrdb10-two-queries",
+      "renderer_id": "database",
+      "target_id": null,
+      "fixture_kind": "refusal",
+      "title": "Thông điệp từ chối",
+      "total_steps": 0,
+      "captures": [
+        {
+          "tag": "refusal",
+          "step": null,
+          "viewport": "desktop",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb10-two-queries-refusal-desktop.png",
+          "authoritative_state": {
+            "reason": "Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước."
+          },
+          "assertions": {
+            "viewport": {
+              "w": 1440,
+              "h": 1000
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 29
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 1440,
+              "scroll_width": 1430,
+              "controls_off_viewport": [
+                "Bảng gần biên: 12 dòng × 8 cột"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 836
+          }
+        },
+        {
+          "tag": "refusal",
+          "step": null,
+          "viewport": "narrow",
+          "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/rc1/visual/database/vrdb10-two-queries-refusal-narrow.png",
+          "authoritative_state": {
+            "reason": "Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước."
+          },
+          "assertions": {
+            "viewport": {
+              "w": 768,
+              "h": 900
+            },
+            "css_svg": {
+              "edge_elements": 14,
+              "invisible_strokes": 0,
+              "invisible_stroke_samples": [],
+              "unresolved_var": 29
+            },
+            "geometry": {
+              "nan_or_infinity": 0,
+              "zero_size_elements": 0,
+              "body_overflow_x": false,
+              "page_overflow_x": false,
+              "client_width": 768,
+              "scroll_width": 758,
+              "controls_off_viewport": [
+                "Xem tất cả (6)",
+                "Bảng gần biên: 12 dòng × 8 cột"
+              ],
+              "covered_by_overlay": [],
+              "clipped_content": [],
+              "rigid_min_width": 0,
+              "key_elements": {
+                "title": null,
+                "canvas": null,
+                "reset_button": null
+              }
+            },
+            "overlap": {
+              "threshold_ratio": 0.25,
+              "count": 0,
+              "items": []
+            },
+            "terminology": {
+              "banned_found": []
+            },
+            "text_length": 837
+          }
+        }
+      ]
     }
   ]
 }
