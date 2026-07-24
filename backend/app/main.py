@@ -116,7 +116,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       TIÊU có cấu trúc). Cache cũ giữ analysis KHÔNG có trường này → cổng
 #       không phân biệt được "đếm tổ A" với "đếm tổ B", gộp thành một và trả ok
 #       cho một nửa. History KHÔNG bump: hợp đồng envelope đã lưu không đổi.
-CACHE_VERSION = "19"
+CACHE_VERSION = "20"
 
 
 class InputPayload(BaseModel):

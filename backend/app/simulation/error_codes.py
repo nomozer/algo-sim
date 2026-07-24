@@ -35,6 +35,14 @@ class ErrorCode(str, Enum):
     # evidence + message, không sinh mã động (giữ enum đóng — M14 §H).
     MULTIPLE_OPERATIONS_NOT_SUPPORTED = "multiple_operations_not_supported"
     SEMANTIC_INCOMPLETE = "semantic_incomplete"
+    # M17 W2B-PATCH §A — đề hỏi MỘT quy trình nhiều bước (hợp lệ!) nhưng spec
+    # dựng ra bỏ bước hoặc dựng sai tham số bước. PHẢI tách khỏi
+    # MULTIPLE_OPERATIONS_NOT_SUPPORTED: hai ca cùng `failure_category`
+    # "semantic_incomplete" nhưng lời khuyên cho học sinh NGƯỢC NHAU — ca kia là
+    # "tách đề ra", ca này tách cũng vô ích (đề đã là một truy vấn). Review thị
+    # giác W2B-PATCH bắt được đúng lỗi này: notice gắn nhầm tiêu đề "TÁCH THÀNH
+    # TỪNG YÊU CẦU" cho ca thiếu bước.
+    PIPELINE_STAGE_INCOMPLETE = "pipeline_stage_incomplete"
     # M17-RC1 §C2 — đề CHƯA CHO dữ kiện bắt buộc của target đã chọn (dãy số, số
     # cần đổi, mạch logic, đối tượng cảnh…). Tổng quát hoá STRUCTURE_INSUFFICIENT
     # (vốn chỉ dành cho cấu trúc nút–cạnh) ra mọi nhóm dữ kiện. Cùng ý nghĩa:

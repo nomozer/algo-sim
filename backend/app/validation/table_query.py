@@ -18,11 +18,14 @@ from app.simulation.table_query_engine import (
     AGGREGATE_FUNCS,
     COLUMN_TYPES,
     COMPARE_OPS,
+    EMPTY_CELL_MARKERS,
     LOGIC_OPS,
+    MARKER_NULLABLE_TYPES,
     MAX_COLUMNS,
     MAX_PREDICATE_DEPTH,
     MAX_PREDICATES,
     MAX_ROWS,
+    MISSING_VALUE_MARKERS,
     OPS_BY_TYPE,
     SORT_DIRECTIONS,
     SPEC_VERSION,
@@ -33,6 +36,32 @@ _IDENT_MAX = 40
 
 def _err(msg: str) -> tuple[None, str]:
     return None, msg
+
+
+# ── W2B-PATCH §C — BIÊN CHUẨN HOÁ Ô THIẾU DỮ LIỆU ────────────────
+# Thứ tự BẮT BUỘC: ô thô → chuẩn hoá theo lược đồ → ép kiểu → validate.
+# Executor không bao giờ phải hiểu chữ "trống"; nó chỉ thấy None hoặc giá trị
+# đã đúng kiểu. Chuẩn hoá KHÔNG được nuốt dữ liệu hợp lệ, nên nó chỉ nhận đúng
+# tập marker đã khai và chỉ ở cột chấp nhận null.
+_EMPTY = frozenset(EMPTY_CELL_MARKERS)
+_MARKERS = frozenset(MISSING_VALUE_MARKERS)
+
+
+def _marker_kind(raw: Any, kind: str, nullable: bool | None) -> str | None:
+    """Ô này có phải "thiếu dữ liệu" không? Trả lý do máy-đọc hoặc None.
+
+    `nullable`: True = cột khai nhận null (marker chữ hợp lệ kể cả cột chữ);
+    False = cột khai KHÔNG nhận null (ô trống là LỖI); None = chưa khai."""
+    if not isinstance(raw, str):
+        return None
+    norm = " ".join(raw.split()).strip()
+    if norm in _EMPTY:
+        return "empty_cell"
+    if norm.casefold() in _MARKERS:
+        if nullable is None:
+            return "missing_value_marker" if kind in MARKER_NULLABLE_TYPES else None
+        return "missing_value_marker"
+    return None
 
 
 def _coerce(value: Any, kind: str) -> tuple[Any, str | None]:
@@ -115,6 +144,8 @@ def validate_table_query_config(raw: object) -> tuple[dict | None, str | None]:
     if len(schema) > MAX_COLUMNS:
         return _err(f"Bảng quá {MAX_COLUMNS} cột — ngoài phạm vi hỗ trợ.")
     types: dict[str, str] = {}
+    # None = cột chưa khai (dùng mặc định theo kiểu); True/False = khai tường minh.
+    nullables: dict[str, bool | None] = {}
     norm_schema = []
     for col in schema:
         if not isinstance(col, dict):
@@ -129,9 +160,14 @@ def validate_table_query_config(raw: object) -> tuple[dict | None, str | None]:
         if kind not in COLUMN_TYPES:
             return _err(f"Cột {name!r} khai kiểu không hỗ trợ: {kind!r} "
                         f"(chỉ có {', '.join(COLUMN_TYPES)}).")
+        nullable = col.get("nullable")
+        if nullable is not None and not isinstance(nullable, bool):
+            return _err(f"Cột {name!r} khai `nullable` không phải đúng/sai.")
         types[name] = kind
+        nullables[name] = nullable
         norm_schema.append({"name": name, "type": kind,
-                            "label": col.get("label") if isinstance(col.get("label"), str) else None})
+                            "label": col.get("label") if isinstance(col.get("label"), str) else None,
+                            "nullable": nullable})
 
     # ── các dòng ──
     rows = raw.get("rows")
@@ -141,15 +177,18 @@ def validate_table_query_config(raw: object) -> tuple[dict | None, str | None]:
         return _err(f"Bảng quá {MAX_ROWS} dòng — ngoài phạm vi hỗ trợ.")
     col_order = [c["name"] for c in norm_schema]
     norm_rows = []
+    normalizations: list[dict] = []
     for i, row in enumerate(rows):
         # Schema Gemini gửi MỖI DÒNG là mảng ô theo thứ tự cột (structured
         # output không có khoá động). Quy về dict ngay tại đây — một chỗ đổi
         # dạng duy nhất; phần còn lại của validator/engine chỉ biết dict.
+        # Ô rỗng KHÔNG bị đổi ở đây: mọi việc "ô này có dữ liệu không" dồn về
+        # ĐÚNG MỘT biên chuẩn hoá bên dưới (W2B-PATCH §C).
         if isinstance(row, list):
             if len(row) > len(col_order):
                 return _err(f"Dòng {i + 1} có {len(row)} ô nhưng lược đồ chỉ "
                             f"{len(col_order)} cột.")
-            row = {col_order[j]: (v if v != "" else None) for j, v in enumerate(row)}
+            row = {col_order[j]: v for j, v in enumerate(row)}
         if not isinstance(row, dict):
             return _err(f"Dòng {i + 1} phải là một đối tượng hoặc mảng ô.")
         unknown = set(row) - set(types)
@@ -158,7 +197,22 @@ def validate_table_query_config(raw: object) -> tuple[dict | None, str | None]:
                         f"{', '.join(sorted(unknown))}.")
         norm: dict[str, Any] = {}
         for name, kind in types.items():
-            value, err = _coerce(row.get(name), kind)
+            cell = row.get(name)
+            reason = _marker_kind(cell, kind, nullables[name])
+            if reason is not None:
+                if nullables[name] is False:
+                    return _err(f"Dòng {i + 1}, cột {name!r}: cột khai KHÔNG "
+                                f"nhận ô trống nhưng ô này không có dữ liệu.")
+                normalizations.append({
+                    "row": i + 1, "column": name, "column_type": kind,
+                    "original": cell, "normalized": None, "reason": reason,
+                })
+                norm[name] = None
+                continue
+            if cell is None and nullables[name] is False:
+                return _err(f"Dòng {i + 1}, cột {name!r}: cột khai KHÔNG nhận "
+                            f"ô trống nhưng ô này không có dữ liệu.")
+            value, err = _coerce(cell, kind)
             if err:
                 return _err(f"Dòng {i + 1}, cột {name!r}: {err}.")
             norm[name] = value
@@ -233,6 +287,9 @@ def validate_table_query_config(raw: object) -> tuple[dict | None, str | None]:
         "specVersion": SPEC_VERSION,
         "schema": norm_schema,
         "rows": norm_rows,
+        # Bằng chứng chuẩn hoá — máy-đọc, để người soi biết ô nào đã đổi và VÌ
+        # SAO. Do VALIDATOR sinh (LLM không gửi trường này).
+        "normalizations": normalizations,
         "filter": norm_filter,
         "projection": norm_projection,
         "sort": norm_sort,

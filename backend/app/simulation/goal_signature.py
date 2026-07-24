@@ -131,6 +131,12 @@ def canonical_goal_signature(goal: object) -> str | None:
     return ";".join(sorted(parts)) if parts else None
 
 
+# Bề mặt CÔNG KHAI của hai phép chuẩn hoá trên — gate tầng pipeline (§A) phải
+# đọc tên cột/chiều sắp xếp bằng ĐÚNG luật này, không viết lại lần thứ hai.
+normalize_identifier = _norm_ident
+normalize_direction = _norm_direction
+
+
 def query_key(requirement_goal: object, declared_group: object = None) -> str | None:
     """Định danh TRUY VẤN mà một yêu cầu thuộc về.
 
@@ -144,4 +150,5 @@ def query_key(requirement_goal: object, declared_group: object = None) -> str | 
     return canonical_goal_signature(requirement_goal)
 
 
-__all__ = ["GOAL_FIELDS", "canonical_goal_signature", "query_key"]
+__all__ = ["GOAL_FIELDS", "canonical_goal_signature", "normalize_direction",
+           "normalize_identifier", "query_key"]

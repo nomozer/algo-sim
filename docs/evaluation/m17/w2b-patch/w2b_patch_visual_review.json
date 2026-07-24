@@ -1,0 +1,133 @@
+{
+  "wave": "M17 W2B-PATCH §E — review thị giác CÓ MỤC TIÊU",
+  "generated_at": "2026-07-24T17:17:59.082854+00:00",
+  "renderer": "database + learner notice",
+  "criteria": [
+    "EMPTY_MARKER_DISTINCT_FROM_ZERO",
+    "PIPELINE_STAGES_VISIBLE",
+    "PROGRESSIVE_REVEAL_PASS",
+    "REFUSAL_TITLE_MATCHES_CAUSE",
+    "LAYOUT_PASS",
+    "RESPONSIVE_PASS"
+  ],
+  "scope_note": "CHỈ chụp lại phần bản vá động tới (ô trống, pipeline nhiều tầng, ba thông điệp từ chối). 42 ảnh toàn danh mục của RC1 §E KHÔNG chạy lại vì cấu trúc renderer các family khác không đổi.",
+  "measurement_note": "Viewport đặt TRƯỚC khi trang dựng, nạp lại trang cho từng viewport — KHÔNG lặp lại artefact phép đo VIS-003 của RC1 §E1.",
+  "reading_note": "`engine.result_rows`/`engine.aggregate` trong captures.json là trạng thái engine ĐÃ TÍNH SẴN (engine tất định tính một lần khi init), KHÔNG phải bằng chứng 'đã hiển thị'. Việc hé lộ dần được kiểm bằng MẮT trên ảnh initial/mid/final.",
+  "images_total": 18,
+  "verdict": "REAL_VISUAL",
+  "fixtures": [
+    {
+      "fixture": "wp1-L3-avg-empty-markers",
+      "finding": "L3",
+      "status": "REAL_VISUAL",
+      "human_note": "Hai ô thiếu dữ liệu hiện '— trống —' in nghiêng, PHÂN BIỆT rõ với số 0 (bảng không có ô 0 nào); Inspector và bước cuối cùng ghi 'Trung bình của Điểm kiểm tra = 8.25' — đúng 4 ô có dữ liệu (8+9.5+7+8.5)/4, KHÔNG phải (…)/6. Cả hai viewport giống nhau, không tràn ngang.",
+      "defect_found_during_review": false,
+      "automated_support": {
+        "no_horizontal_overflow": true,
+        "no_clipped_elements": true,
+        "no_phantom_stroke_none": true,
+        "viewports": [
+          "desktop",
+          "narrow"
+        ],
+        "images": 6
+      },
+      "png": [
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-desktop-final.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-desktop-initial.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-desktop-mid.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-narrow-final.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-narrow-initial.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-narrow-mid.png"
+      ]
+    },
+    {
+      "fixture": "wp2-L4-five-stage-pipeline",
+      "finding": "L4",
+      "status": "REAL_VISUAL",
+      "human_note": "Chỉ báo quy trình hiện ĐỦ 5 bước có đánh số (1. Lọc → 2. Chọn cột → 3. Sắp xếp giảm dần → 4. Lấy 3 dòng → 5. Tính trung bình). Ở bước 1/32 KHÔNG bước nào được đánh dấu và Inspector ghi 'Kết quả hiện dần theo từng bước…' (không lộ đáp án); ở bước 32/32 cả 5 bước có dấu ✓, còn đúng 3 dòng An/Dũng/Lan, hai dòng bị cắt mang nhãn 'Không lấy', kết quả 'Trung bình của Điểm = 8.5'. Cột không chọn bị gạch ngang + mờ. Ở 768px chỉ báo tự xuống dòng, bảng không tràn trang.",
+      "defect_found_during_review": false,
+      "automated_support": {
+        "no_horizontal_overflow": true,
+        "no_clipped_elements": true,
+        "no_phantom_stroke_none": true,
+        "viewports": [
+          "desktop",
+          "narrow"
+        ],
+        "images": 6
+      },
+      "png": [
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-desktop-final.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-desktop-initial.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-desktop-mid.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-narrow-final.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-narrow-initial.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-narrow-mid.png"
+      ]
+    },
+    {
+      "fixture": "wp3-L5-missing-table",
+      "finding": "L5",
+      "status": "REAL_VISUAL",
+      "human_note": "Tiêu đề 'CHƯA ĐỦ DỮ KIỆN'; nội dung đòi CUNG CẤP BẢNG kèm ví dụ cụ thể; gợi ý 'Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại'. KHÔNG còn câu xui tách truy vấn — đúng bản chất lỗi.",
+      "defect_found_during_review": false,
+      "automated_support": {
+        "no_horizontal_overflow": true,
+        "no_clipped_elements": true,
+        "no_phantom_stroke_none": true,
+        "viewports": [
+          "desktop",
+          "narrow"
+        ],
+        "images": 2
+      },
+      "png": [
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp3-L5-missing-table-desktop.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp3-L5-missing-table-narrow.png"
+      ]
+    },
+    {
+      "fixture": "wp4-L6-two-queries",
+      "finding": "L6",
+      "status": "REAL_VISUAL",
+      "human_note": "Tiêu đề 'TÁCH THÀNH TỪNG YÊU CẦU' + gợi ý 'Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu)' — GIỮ NGUYÊN như trước bản vá, đúng cho ca bảng ĐÃ có mà đề hỏi hai truy vấn độc lập.",
+      "defect_found_during_review": false,
+      "automated_support": {
+        "no_horizontal_overflow": true,
+        "no_clipped_elements": true,
+        "no_phantom_stroke_none": true,
+        "viewports": [
+          "desktop",
+          "narrow"
+        ],
+        "images": 2
+      },
+      "png": [
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp4-L6-two-queries-desktop.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp4-L6-two-queries-narrow.png"
+      ]
+    },
+    {
+      "fixture": "wp5-stage-shortfall",
+      "finding": "L4",
+      "status": "REAL_VISUAL",
+      "human_note": "LỖI CHỈ REVIEW ẢNH MỚI THẤY (unit + SSR đều xanh): lần chụp đầu, thông điệp 'chưa dựng được 2 bước' lại đội tiêu đề 'TÁCH THÀNH TỪNG YÊU CẦU' và gợi ý 'Mỗi lần hỏi một yêu cầu' — lời khuyên SAI, vì đề vốn là MỘT truy vấn nhiều bước, tách ra không giúp gì. Nguyên nhân gốc: notice chọn tiêu đề chỉ theo `failure_category`, mà `semantic_incomplete` nay gộp hai ca cần lời khuyên ngược nhau. Đã sửa: thêm mã `PIPELINE_STAGE_INCOMPLETE`, notice đọc `error_code` trước. Ảnh sau khi sửa: tiêu đề 'CHƯA DỰNG ĐỦ CÁC BƯỚC', gợi ý 'Nêu rõ từng bước cần làm rồi gửi lại'.",
+      "defect_found_during_review": true,
+      "automated_support": {
+        "no_horizontal_overflow": true,
+        "no_clipped_elements": true,
+        "no_phantom_stroke_none": true,
+        "viewports": [
+          "desktop",
+          "narrow"
+        ],
+        "images": 2
+      },
+      "png": [
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp5-stage-shortfall-desktop.png",
+        "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp5-stage-shortfall-narrow.png"
+      ]
+    }
+  ]
+}

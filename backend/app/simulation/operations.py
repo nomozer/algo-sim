@@ -174,7 +174,20 @@ def requirements_from_structured(analysis: dict) -> list[SemanticRequirement]:
 
 
 def query_keys_of(analysis: dict, families: set[str]) -> list[str | None]:
-    """Định danh các TRUY VẤN ĐỘC LẬP mà đề yêu cầu, trong phạm vi family."""
+    """Định danh các TRUY VẤN ĐỘC LẬP mà đề yêu cầu, trong phạm vi family.
+
+    W2B-PATCH §B — sửa lỗi đếm đã gây CHẶN OAN live: "lọc điểm ≥8 rồi sắp xếp
+    giảm dần" là MỘT truy vấn hai TẦNG, nhưng mỗi tầng có chữ ký mục tiêu riêng
+    (`filter=…` vs `sort=…`) nên bị đếm thành hai truy vấn độc lập.
+
+    Luật đếm DẪN XUẤT TỪ HỢP ĐỒNG SPEC, không phải heuristic: một spec mang
+    NHIỀU NHẤT MỘT tầng mỗi loại (một filter, một sort, một aggregate…). Vậy:
+
+    - analyze CÓ khai `query_group` → tin lời khai đó (hành vi cũ, nguyên vẹn);
+    - KHÔNG khai → số truy vấn độc lập = số chữ ký khác nhau NHIỀU NHẤT trong
+      cùng MỘT loại tầng. Hai tầng khác loại ⇒ vẫn một truy vấn; hai phép đếm
+      trên hai điều kiện khác nhau ⇒ vẫn là hai truy vấn (cùng loại `aggregate`).
+    """
     from app.simulation.goal_signature import query_key
 
     if not isinstance(analysis, dict):
@@ -182,17 +195,34 @@ def query_keys_of(analysis: dict, families: set[str]) -> list[str | None]:
     raw = analysis.get("requested_requirements")
     if not isinstance(raw, list):
         return []
-    keys: list[str | None] = []
+
+    scoped: list[tuple[str, object, str | None]] = []
     for item in raw:
         if not isinstance(item, dict):
             continue
         base = SEMANTIC_OPERATION_MAP.get(item.get("operation"))
         if base is None or operation_family(item["operation"]) not in families:
             continue
-        k = query_key(item, item.get("query_group"))
-        if k not in keys:
-            keys.append(k)
-    return keys
+        scoped.append((base.operation_id, item.get("query_group"),
+                       query_key(item, item.get("query_group"))))
+    if not scoped:
+        return []
+
+    if any(group is not None for _, group, _ in scoped):
+        keys: list[str | None] = []
+        for _, _, k in scoped:
+            if k not in keys:
+                keys.append(k)
+        return keys
+
+    per_stage: dict[str, list[str | None]] = {}
+    for stage_id, _, k in scoped:
+        bucket = per_stage.setdefault(stage_id, [])
+        if k not in bucket:
+            bucket.append(k)
+    # Tầng nào bị yêu cầu nhiều mục tiêu khác nhau nhất thì đó là số truy vấn.
+    widest = max(per_stage.values(), key=len)
+    return list(widest)
 
 
 def canonical_requirements(operation_ids) -> list[SemanticRequirement]:

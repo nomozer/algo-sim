@@ -154,8 +154,14 @@ def _has_packet_or_layer(analysis: dict) -> tuple[bool, dict]:
 
 def _has_table(analysis: dict) -> tuple[bool, dict]:
     """Bảng = NHIỀU CỘT và NHIỀU DÒNG. Một dãy số đơn lẻ KHÔNG phải bảng.
-    Bằng chứng chấp nhận: ≥2 mục `data` có nhãn/giá trị, hoặc một mục data có
-    `labels` ≥2 (tên cột) kèm `values`, hoặc ≥2 object nêu tên cột."""
+
+    W2B-PATCH §B: bằng chứng phải có **nội dung ô thật** (`values`/`labels`),
+    không chỉ có danh từ. Luật cũ ("≥2 object + có con số nào đó") cho qua cả đề
+    KHÔNG HỀ có bảng — live L5 "lọc học sinh điểm từ 8 trở lên" lọt cổng chỉ vì
+    nêu hai danh từ và ngưỡng 8, rồi bị từ chối ở cổng sau với LÝ DO SAI.
+
+    Ngưỡng vẫn thấp có chủ đích: chỉ cần MỘT mục data có nội dung thật kèm dấu
+    hiệu nhiều cột là qua — đề mơ hồ còn validator và các cổng sau chặn tiếp."""
     items = _data_items(analysis)
     labelled = [d for d in items if d.get("labels") or d.get("values")]
     if len(labelled) >= 2:
@@ -164,10 +170,13 @@ def _has_table(analysis: dict) -> tuple[bool, dict]:
         labels = d.get("labels")
         if isinstance(labels, list) and len(labels) >= 2 and d.get("values"):
             return True, {"source": "data.labels+values", "columns": len(labels)}
+    # analyze điền `data` sơ sài nhưng VẪN có nội dung ô thật + nêu ≥2 cột.
     objects = _str_list(analysis, "objects")
-    if len(objects) >= 2 and _numeric_tokens(analysis):
-        return True, {"source": "objects+numeric", "objects": len(objects)}
-    return False, {"source": None, "data_items": len(items)}
+    if len(objects) >= 2 and labelled:
+        return True, {"source": "objects+data_content", "objects": len(objects),
+                      "series": len(labelled)}
+    return False, {"source": None, "data_items": len(items),
+                   "data_items_with_content": len(labelled)}
 
 
 EVIDENCE_NORMALIZERS = {

@@ -25,8 +25,36 @@ export const AGGREGATE_FUNCS = ["count", "sum", "avg", "min", "max"] as const;
 export const MAX_ROWS = 30;
 export const MAX_COLUMNS = 8;
 
+/**
+ * W2B-PATCH §C — marker ô thiếu dữ liệu. MIRROR của
+ * `table_query_engine.MISSING_VALUE_MARKERS`; đổi một bên thì phải đổi bên kia
+ * (test parity khoá con số kết quả ở cả hai phía).
+ *
+ * Ô rỗng là thiếu dữ liệu ở MỌI kiểu cột; CHỮ mô tả sự thiếu chỉ áp cho cột
+ * nhận null (số/đúng-sai mặc định, hoặc cột khai `nullable: true`) — ở cột chữ
+ * thì "trống" có thể là dữ liệu thật.
+ */
+export const MISSING_VALUE_MARKERS = ["trống", "—", "–", "n/a", "null"] as const;
+export const MARKER_NULLABLE_TYPES = ["number", "boolean"] as const;
+/** Thứ tự tầng CỐ ĐỊNH của engine — aggregate tính SAU limit. */
+export const PIPELINE_STAGE_ORDER = ["filter", "projection", "sort", "limit", "aggregate"] as const;
+
 type Cell = string | number | boolean | null;
-export interface TableColumn { name: string; type: string; label?: string | null }
+export interface TableColumn {
+  name: string;
+  type: string;
+  label?: string | null;
+  /** undefined/null = mặc định theo kiểu; false = cột KHÔNG nhận ô trống. */
+  nullable?: boolean | null;
+}
+export interface CellNormalization {
+  row: number;
+  column: string;
+  column_type: string;
+  original: unknown;
+  normalized: null;
+  reason: string;
+}
 export interface Predicate {
   op: string;
   column?: string;
@@ -42,6 +70,7 @@ export interface TableConfig {
   sort: { column: string; direction: string } | null;
   limit: number | null;
   aggregate: { func: string; column?: string | null } | null;
+  normalizations: CellNormalization[];
   notes?: string | null;
 }
 export interface TableStep {
@@ -61,6 +90,46 @@ export interface TableState {
   cursor: number;
 }
 
+/* ── W2B-PATCH §C — BIÊN chuẩn hoá ô thiếu dữ liệu (mirror backend) ──
+ * Thứ tự BẮT BUỘC: ô thô → chuẩn hoá theo lược đồ → ép kiểu → validate.
+ * Engine bên dưới CHỈ thấy null hoặc giá trị đã đúng kiểu — nó không bao giờ
+ * phải hiểu chữ "trống" (trước bản vá, chuỗi đó lọt vào và AVG đếm luôn cả ô
+ * trống ⇒ kết quả sai câm).                                                */
+function markerReason(cell: unknown, type: string, nullable?: boolean | null): string | null {
+  if (typeof cell !== "string") return null;
+  const norm = cell.trim().replace(/\s+/g, " ");
+  if (norm === "") return "empty_cell";
+  const isMarker = (MISSING_VALUE_MARKERS as readonly string[]).includes(norm.toLowerCase());
+  if (!isMarker) return null;
+  if (nullable === null || nullable === undefined)
+    return (MARKER_NULLABLE_TYPES as readonly string[]).includes(type) ? "missing_value_marker" : null;
+  return "missing_value_marker";
+}
+
+/** Ép MỘT ô về kiểu cột. Không ép được → lỗi (không đoán bừa, không hoá 0). */
+function coerceCell(cell: unknown, type: string): { value: Cell } | { error: string } {
+  if (cell === null || cell === undefined) return { value: null };
+  if (type === "number") {
+    if (typeof cell === "boolean") return { error: "giá trị đúng/sai không dùng cho cột kiểu số" };
+    if (typeof cell === "number") return { value: cell };
+    if (typeof cell === "string") {
+      const n = Number(cell);
+      return Number.isFinite(n) && cell.trim() !== ""
+        ? { value: n }
+        : { error: `"${cell}" không phải số` };
+    }
+    return { error: "ô này không phải số" };
+  }
+  if (type === "boolean") {
+    if (typeof cell === "boolean") return { value: cell };
+    if (typeof cell === "string" && ["true", "false", "đúng", "sai"].includes(cell.toLowerCase()))
+      return { value: ["true", "đúng"].includes(cell.toLowerCase()) };
+    if (cell === 0 || cell === 1) return { value: Boolean(cell) };
+    return { error: "ô này không phải giá trị đúng/sai" };
+  }
+  return { value: typeof cell === "string" ? cell : String(cell) };
+}
+
 /* ── validator MIRROR (hai tầng: BE đã kiểm, FE kiểm lại) ─────────── */
 export function validateTableConfig(
   raw: unknown,
@@ -73,21 +142,50 @@ export function validateTableConfig(
   if (!Array.isArray(schema) || schema.length === 0) return fail("Thiếu lược đồ bảng.");
   if (schema.length > MAX_COLUMNS) return fail(`Bảng quá ${MAX_COLUMNS} cột.`);
   const types = new Map<string, string>();
+  const nullables = new Map<string, boolean | null | undefined>();
   for (const c of schema as TableColumn[]) {
     if (!c || typeof c.name !== "string" || !c.name) return fail("Có cột thiếu tên.");
     if (types.has(c.name)) return fail(`Tên cột bị lặp: ${c.name}.`);
     if (!COLUMN_TYPES.includes(c.type as never)) return fail(`Cột ${c.name} sai kiểu.`);
+    if (c.nullable !== undefined && c.nullable !== null && typeof c.nullable !== "boolean")
+      return fail(`Cột ${c.name} khai nullable không phải đúng/sai.`);
     types.set(c.name, c.type);
+    nullables.set(c.name, c.nullable);
   }
 
   const rows = r.rows;
   if (!Array.isArray(rows) || rows.length === 0) return fail("Bảng chưa có dòng dữ liệu nào.");
   if (rows.length > MAX_ROWS) return fail(`Bảng quá ${MAX_ROWS} dòng.`);
-  for (const row of rows) {
+  const normalizations: CellNormalization[] = [];
+  const normRows: Record<string, Cell>[] = [];
+  for (const [i, row] of (rows as unknown[]).entries()) {
     if (!row || typeof row !== "object") return fail("Dòng dữ liệu không hợp lệ.");
-    for (const key of Object.keys(row)) {
+    const src = row as Record<string, unknown>;
+    for (const key of Object.keys(src)) {
       if (!types.has(key)) return fail(`Dòng có cột lạ: ${key}.`);
     }
+    const out: Record<string, Cell> = {};
+    for (const [name, type] of types) {
+      const cell = src[name];
+      const nullable = nullables.get(name);
+      const reason = markerReason(cell, type, nullable);
+      if (reason !== null) {
+        if (nullable === false)
+          return fail(`Dòng ${i + 1}, cột ${name}: cột này không nhận ô trống.`);
+        normalizations.push({
+          row: i + 1, column: name, column_type: type,
+          original: cell, normalized: null, reason,
+        });
+        out[name] = null;
+        continue;
+      }
+      if ((cell === null || cell === undefined) && nullable === false)
+        return fail(`Dòng ${i + 1}, cột ${name}: cột này không nhận ô trống.`);
+      const c = coerceCell(cell, type);
+      if ("error" in c) return fail(`Dòng ${i + 1}, cột ${name}: ${c.error}.`);
+      out[name] = c.value;
+    }
+    normRows.push(out);
   }
 
   const checkPred = (p: unknown, depth: number): string | null => {
@@ -143,7 +241,8 @@ export function validateTableConfig(
     config: {
       specVersion: TABLE_SPEC_VERSION,
       schema: schema as TableColumn[],
-      rows: rows as Record<string, Cell>[],
+      rows: normRows,
+      normalizations,
       filter: (r.filter as Predicate) ?? null,
       projection: (r.projection as string[]) ?? null,
       sort: (r.sort as TableState["config"]["sort"]) ?? null,
@@ -397,6 +496,38 @@ const STATUS = {
   cutoff: { label: "Không lấy", Icon: null, bg: "var(--surface)", fg: "var(--ink-muted)" },
 } as const;
 
+/**
+ * W2B-PATCH §E — CHỈ BÁO TẦNG: truy vấn này gồm những bước nào, đang ở bước
+ * nào. Danh sách bước DẪN XUẤT TỪ CHÍNH CONFIG (`PIPELINE_STAGE_ORDER`), nên
+ * nó không bao giờ vẽ ra bước mà truy vấn không có — và một spec bỏ sót bước
+ * sẽ hiện ra ngay trước mắt thay vì lặng lẽ biến mất.
+ */
+function stageChips(config: TableConfig, reached: ReturnType<typeof stagesReached>) {
+  const present: { key: string; label: string; done: boolean }[] = [];
+  if (config.filter) present.push({ key: "filter", label: "Lọc", done: reached.filtered });
+  if (config.projection?.length)
+    present.push({ key: "projection", label: "Chọn cột", done: reached.projected });
+  if (config.sort)
+    present.push({
+      key: "sort",
+      label: `Sắp xếp ${config.sort.direction === "desc" ? "giảm dần" : "tăng dần"}`,
+      done: reached.sorted,
+    });
+  if (config.limit != null)
+    present.push({ key: "limit", label: `Lấy ${config.limit} dòng`, done: reached.limited });
+  if (config.aggregate)
+    present.push({
+      key: "aggregate",
+      label: `Tính ${
+        { count: "số dòng", sum: "tổng", avg: "trung bình", min: "nhỏ nhất", max: "lớn nhất" }[
+          config.aggregate.func
+        ] ?? config.aggregate.func
+      }`,
+      done: reached.aggregated,
+    });
+  return present;
+}
+
 export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState>) {
   const at = clamp(state, state.cursor);
   const step = state.steps[at];
@@ -438,8 +569,32 @@ export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState
     return v === true ? "keep" : v === false ? "drop" : null;
   };
 
+  const chips = stageChips(state.config, stage);
+
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
+      {chips.length > 1 && (
+        <ol className="tq-stages" style={{
+          display: "flex", flexWrap: "wrap", gap: "var(--sp-xs)",
+          listStyle: "none", margin: 0, padding: 0,
+        }}>
+          {chips.map((c, i) => (
+            <li key={c.key} data-stage={c.key} data-stage-done={String(c.done)}
+                style={{
+                  display: "flex", alignItems: "center", gap: "var(--sp-xs)",
+                  padding: "2px 10px", borderRadius: "999px", whiteSpace: "nowrap",
+                  border: `1px solid ${c.done ? "var(--accent-green)" : "var(--hairline)"}`,
+                  color: c.done ? "var(--ink)" : "var(--ink-muted)",
+                  fontWeight: c.done ? 600 : 400,
+                }}>
+              {/* Số thứ tự làm chỉ dấu thứ hai — không phân biệt chỉ bằng màu. */}
+              <span aria-hidden="true">{i + 1}.</span>
+              {c.label}
+              {c.done && <IconCheck />}
+            </li>
+          ))}
+        </ol>
+      )}
       <div className="sim-stage" style={{ overflowX: "auto" }}>
         <table className="tq-table" style={{ borderCollapse: "collapse", width: "100%", minWidth: "min-content" }}>
           <thead>

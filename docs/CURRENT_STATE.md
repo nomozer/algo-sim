@@ -98,8 +98,61 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > thứ tự duyệt từ bước 0 → hiện dần. **(3)** `HomeView` có bản sao notice đọc
 > thẳng `reason` KỸ THUẬT, bỏ qua `learner_reason` của W0 → gộp về
 > `UnsupportedNotice` + tiêu đề "CHƯA ĐỦ DỮ KIỆN" cho
-> `insufficient_specification`. Wave 2B
-> (relational_table_query) chưa mở. **Backlog Analyze Integrity CÒN MỞ:**
+> `insufficient_specification`.
+>
+> **Wave 2B — `database.relational_table_query`: ĐANG MỞ, CHƯA CLOSE.** Family
+> thứ 10 / target thứ 20 (`f0acbc2`), goal-aware completeness (`82a90e5`),
+> review thị giác REAL_VISUAL 9/9 (`88618ac`), live grounding (`0afcb37`):
+> **3/6 case đạt · grounding perfect 3/3 trên case sinh được spec · 18 HTTP ·
+> 0 retry · 0 reclassify · generic-leak 0 · false-positive-sim 0**. Ba finding
+> live đã được đóng bằng **W2B-PATCH** (chưa chạy lại live):
+> **(L4) ĐỦ TẦNG PIPELINE** — completeness PHA 2 từng so ở tầng TARGET (target
+> khai đáp ứng cả 9 operation ⇒ mọi spec đều "đủ") nên spec bỏ 2 tầng cuối vẫn
+> trả `ok`; nay `simulation/pipeline_stages.py` so `requested` × **tầng spec ĐÃ
+> VALIDATE thực sự dựng được** (`stages_of`, đọc thẳng cấu trúc, KHÔNG đọc
+> narration) + so tham số chắc chắn (limit/hàm tổng hợp/chiều sắp xếp; tên cột
+> KHÔNG so để khỏi chặn oan). Hai lớp: thiếu tầng báo ĐÍCH DANH ngược cho lượt
+> simulate sau (đề hợp lệ vẫn chạy được), cạn lượt thì PHA 2 từ chối
+> fail-closed. Thứ tự tầng công bố MỘT NGUỒN `filter→projection→sort→limit→
+> aggregate` (aggregate SAU limit), khoá bằng SỐ (AVG 8.5 ≠ 7.5) chứ không bằng
+> lời. *Giới hạn trung thực: analyze không có trường diễn đạt thứ tự khác, nên
+> hệ KHÔNG phát hiện được yêu cầu đảo thứ tự — chấp nhận được vì engine chỉ có
+> một thứ tự và các thứ tự khác đều là truy vấn lồng, vốn đã bị từ chối ở
+> classify; hệ không bao giờ ÂM THẦM đảo thứ tự rồi trả `ok`.*
+> **(L5) THỨ TỰ LÝ DO TỪ CHỐI** — hai khuyết tật độc lập: (a) `_has_table` nhận
+> "≥2 object + có con số" là đã có bảng nên đề KHÔNG có bảng vẫn lọt cổng rồi bị
+> báo sai bản chất ("tách hai truy vấn"); nay đòi **nội dung ô thật**
+> (`values`/`labels`); (b) lọc và sắp xếp là hai TẦNG của MỘT truy vấn nhưng bị
+> đếm thành hai truy vấn độc lập ⇒ **CHẶN OAN đề hợp lệ CÓ bảng** (chưa lộ ở
+> live vì case L5 chết trước ở chỗ thiếu bảng); luật đếm mới dẫn xuất từ HỢP
+> ĐỒNG SPEC (một spec mang ≤1 tầng mỗi loại ⇒ số truy vấn = số chữ ký khác nhau
+> nhiều nhất TRONG CÙNG một loại tầng), `query_group` do analyze khai vẫn được
+> tin như cũ.
+> **(L3) MARKER Ô TRỐNG THEO LƯỢC ĐỒ** — MỘT biên duy nhất (ô thô → chuẩn hoá
+> → ép kiểu → validate): ô rỗng là thiếu ở mọi kiểu cột; chữ "trống"/"—"/"N/A"/
+> "null" chỉ là thiếu ở cột **số/đúng-sai** (hoặc cột khai `nullable: true`);
+> cột chữ GIỮ literal; `0`/`"0"`/`false`/"không" KHÔNG bao giờ là ô trống; chữ
+> sai kiểu vẫn fail-closed; `nullable: false` + ô trống → từ chối. Mỗi ô đổi để
+> lại bằng chứng trong `config.normalizations`. **Mirror FE là lỗ THẬT đã bịt:**
+> validator FE trước đây không ép kiểu ô nào nên chuỗi "trống" lọt vào engine FE
+> và AVG đếm cả ô trống (`counted=6` thay vì `4` — sai câm), mà đường mở-lại-từ-
+> lịch-sử (bất biến #17) đi THẲNG vào engine FE.
+> **Lỗi chỉ REVIEW ẢNH mới thấy (unit + SSR đều xanh):** thông điệp "chưa dựng
+> được 2 bước" lại đội tiêu đề "TÁCH THÀNH TỪNG YÊU CẦU" — lời khuyên SAI vì đề
+> vốn là MỘT truy vấn nhiều bước; nguyên nhân gốc là notice chọn tiêu đề chỉ
+> theo `failure_category`, mà `semantic_incomplete` nay gộp hai ca cần lời
+> khuyên NGƯỢC NHAU. Thêm mã `PIPELINE_STAGE_INCOMPLETE`, notice đọc
+> `error_code` trước; `failure_category` GIỮ NGUYÊN để không làm trôi taxonomy.
+> `CACHE_VERSION` **19→20**; `config_contract_version` bảng **table-1.0→1.1**
+> (luật validate đổi) trong khi `specVersion` trên dây GIỮ "table-1.0" vì thay
+> đổi chỉ THÊM trường tuỳ chọn — config cũ trong lịch sử vẫn hợp lệ. Offline sau
+> patch: pytest **996** (2 skip, 1 deselect) · vitest **596/46** · build sạch ·
+> catalog conformance 20 target 0 vi phạm · review thị giác **REAL_VISUAL 5/5**
+> (18 ảnh Chrome thật, 2 viewport). Artifact: `docs/evaluation/m17/w2b-patch/`.
+> **LIVE CHƯA CHẠY LẠI — chờ duyệt ngân sách riêng (đề xuất 4 case / ≤14 HTTP).
+> Wave 2B vẫn CHƯA CLOSE.** Wave 2C KHÔNG mở.
+>
+> **Backlog Analyze Integrity CÒN MỞ:**
 > provenance/source-span của từng object/relation chưa xác minh — analyze
 > hallucination CÓ ĐỊNH DANH vẫn có thể tạo false evidence; gate v2 chỉ chặn
 > được dạng hallucination trừu tượng đã quan sát.

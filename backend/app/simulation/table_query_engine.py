@@ -43,6 +43,31 @@ LOGIC_OPS: tuple[str, ...] = ("and", "or")
 SORT_DIRECTIONS: tuple[str, ...] = ("asc", "desc")
 AGGREGATE_FUNCS: tuple[str, ...] = ("count", "sum", "avg", "min", "max")
 
+# ── W2B-PATCH §C — MARKER Ô THIẾU DỮ LIỆU (chính sách khai báo) ──
+# Bảng thật có ô trống, và đề tiếng Việt thường VIẾT CHỮ thay vì để trống.
+# Chuẩn hoá các marker này về `None` ở ĐÚNG MỘT BIÊN (validator), TRƯỚC khi ép
+# kiểu — executor chỉ nhận `None` hoặc giá trị đã đúng kiểu.
+#
+# Hai nhóm TÁCH BẠCH, vì rủi ro khác nhau:
+# - `EMPTY_CELL_MARKERS`: ô rỗng thật sự → thiếu dữ liệu ở MỌI kiểu cột;
+# - `MISSING_VALUE_MARKERS`: CHỮ mô tả sự thiếu → chỉ áp cho cột nhận null
+#   (number/boolean theo mặc định, hoặc cột khai `nullable: true`), vì ở cột
+#   chữ thì "trống" có thể là DỮ LIỆU THẬT, không phải marker.
+#
+# TUYỆT ĐỐI không nhận vào đây: "0", 0, false, "không" — đó là giá trị có nghĩa.
+EMPTY_CELL_MARKERS: tuple[str, ...] = ("",)
+MISSING_VALUE_MARKERS: tuple[str, ...] = ("trống", "—", "–", "n/a", "null")
+# Kiểu cột mặc định CHO PHÉP marker chữ (cột chữ phải khai `nullable: true`).
+MARKER_NULLABLE_TYPES: tuple[str, ...] = ("number", "boolean")
+
+# ── W2B-PATCH §A — THỨ TỰ TẦNG AUTHORITATIVE (một nguồn) ──
+# Engine áp dụng đúng thứ tự này; `aggregate` tính TRÊN KẾT QUẢ SAU `limit`.
+# Công bố ở đây để hợp đồng prompt, gate completeness và test khoá cùng đọc một
+# chỗ — không ai được suy diễn thứ tự từ output.
+PIPELINE_STAGE_ORDER: tuple[str, ...] = (
+    "filter", "projection", "sort", "limit", "aggregate",
+)
+
 # ── giới hạn (bounds) ──
 MAX_ROWS = 30
 MAX_COLUMNS = 8
@@ -297,9 +322,26 @@ def _accumulate(aggregate: dict, rows: list[dict], ordered: list[int],
     return {"func": func, "column": col, "value": value, "counted": count}
 
 
+def stages_of(config: dict) -> dict[str, bool]:
+    """Tầng mà MỘT config ĐÃ VALIDATE thực sự biểu diễn (W2B-PATCH §A).
+
+    Đọc THẲNG cấu trúc spec — không đọc `notes`, không đọc narration. Dùng cho
+    gate completeness: `status=ok` chỉ hợp lệ khi mọi tầng đề yêu cầu có mặt."""
+    if not isinstance(config, dict):
+        return {s: False for s in PIPELINE_STAGE_ORDER}
+    return {
+        "filter": config.get("filter") is not None,
+        "projection": bool(config.get("projection")),
+        "sort": config.get("sort") is not None,
+        "limit": config.get("limit") is not None,
+        "aggregate": config.get("aggregate") is not None,
+    }
+
+
 __all__ = [
-    "AGGREGATE_FUNCS", "COLUMN_TYPES", "COMPARE_OPS", "LOGIC_OPS",
-    "MAX_COLUMNS", "MAX_PREDICATES", "MAX_PREDICATE_DEPTH", "MAX_ROWS",
-    "OPS_BY_TYPE", "SORT_DIRECTIONS", "SPEC_VERSION",
-    "run_table_query",
+    "AGGREGATE_FUNCS", "COLUMN_TYPES", "COMPARE_OPS", "EMPTY_CELL_MARKERS",
+    "LOGIC_OPS", "MARKER_NULLABLE_TYPES", "MAX_COLUMNS", "MAX_PREDICATES",
+    "MAX_PREDICATE_DEPTH", "MAX_ROWS", "MISSING_VALUE_MARKERS", "OPS_BY_TYPE",
+    "PIPELINE_STAGE_ORDER", "SORT_DIRECTIONS", "SPEC_VERSION",
+    "run_table_query", "stages_of",
 ]

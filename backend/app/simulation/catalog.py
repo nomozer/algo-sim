@@ -55,6 +55,8 @@ from app.simulation.table_query_engine import (
     MAX_PREDICATE_DEPTH as _TQ_MAX_PREDICATE_DEPTH,
     MAX_PREDICATES as _TQ_MAX_PREDICATES,
     MAX_ROWS as _TQ_MAX_ROWS,
+    MISSING_VALUE_MARKERS as _TQ_MISSING_MARKERS,
+    PIPELINE_STAGE_ORDER as _TQ_STAGE_ORDER,
     SORT_DIRECTIONS as _TQ_SORT_DIRECTIONS,
     SPEC_VERSION as _TQ_SPEC_VERSION,
 )
@@ -696,6 +698,10 @@ _TABLE_SCHEMA = {
                     "name": {"type": "STRING"},
                     "type": {"type": "STRING", "enum": list(_TQ_COLUMN_TYPES)},
                     "label": {"type": "STRING", "nullable": True},
+                    # W2B-PATCH §C — cột này có được phép có ô trống không.
+                    # Bỏ trống = mặc định theo kiểu (số/đúng-sai nhận ô trống,
+                    # cột chữ giữ nguyên literal).
+                    "nullable": {"type": "BOOLEAN", "nullable": True},
                 },
                 "required": ["name", "type"],
             },
@@ -741,13 +747,15 @@ _TABLE_SCHEMA = {
 
 _TABLE_CONTRACT = f"""HỢP ĐỒNG CONFIG (database.relational_table_query — TRUY VẤN BẢNG):
 - specVersion: đúng "{_TQ_SPEC_VERSION}".
-- schema: 1–{_TQ_MAX_COLUMNS} cột {{name, type, label?}}. type ∈ {', '.join(_TQ_COLUMN_TYPES)}. Lấy ĐÚNG tên cột đề cho.
-- rows: 1–{_TQ_MAX_ROWS} dòng. MỖI dòng là MẢNG ô theo ĐÚNG thứ tự cột của schema, mọi ô ghi dạng CHUỖI (số vẫn ghi "8.5"); ô đề không cho thì để chuỗi rỗng. CHÉP ĐÚNG dữ liệu đề cho — TUYỆT ĐỐI không bịa thêm dòng, không tạo bảng mẫu.
+- schema: 1–{_TQ_MAX_COLUMNS} cột {{name, type, label?, nullable?}}. type ∈ {', '.join(_TQ_COLUMN_TYPES)}. Lấy ĐÚNG tên cột đề cho. nullable: bỏ trống là đủ (cột số/đúng-sai mặc định nhận ô trống); chỉ đặt false khi đề nói rõ cột đó BẮT BUỘC có dữ liệu.
+- rows: 1–{_TQ_MAX_ROWS} dòng. MỖI dòng là MẢNG ô theo ĐÚNG thứ tự cột của schema, mọi ô ghi dạng CHUỖI (số vẫn ghi "8.5"). Ô đề KHÔNG cho dữ liệu: để chuỗi rỗng, hoặc chép nguyên chữ đề dùng ({', '.join(_TQ_MISSING_MARKERS)}) — hệ tự hiểu là ô trống, KHÔNG được thay bằng 0. CHÉP ĐÚNG dữ liệu đề cho — TUYỆT ĐỐI không bịa thêm dòng, không tạo bảng mẫu.
 - filter (tuỳ chọn): một so sánh {{op, column, value}} hoặc một phép {{op:"and"|"or", clauses:[…]}} với ≤{_TQ_MAX_PREDICATES} so sánh, lồng ≤{_TQ_MAX_PREDICATE_DEPTH} tầng. op so sánh ∈ {', '.join(_TQ_COMPARE_OPS)}; toán tử phải hợp kiểu cột (">" chỉ cho số).
 - projection (tuỳ chọn): danh sách cột cần hiển thị.
 - sort (tuỳ chọn): MỘT khoá {{column, direction}} — sắp xếp ổn định do engine làm.
 - limit (tuỳ chọn): số nguyên ≥1, KHÔNG lớn hơn số dòng.
 - aggregate (tuỳ chọn): MỘT hàm {{func, column?}}. func ∈ {', '.join(_TQ_AGGREGATE_FUNCS)}. sum/avg cần cột kiểu số; count có thể không cột.
+- THỨ TỰ CHẠY CỐ ĐỊNH (engine sở hữu, không đổi được): {' → '.join(_TQ_STAGE_ORDER)}. Nghĩa là aggregate tính TRÊN các dòng CÒN LẠI SAU limit. Đề cần thứ tự khác (vd lọc theo một giá trị phải tính từ chính bảng đó) là TRUY VẤN LỒNG — ngoài phạm vi, phải từ chối chứ không đổi thứ tự.
+- ĐỦ TẦNG: đề hỏi bao nhiêu tầng thì spec phải có đủ bấy nhiêu. Hỏi "lấy 3 bạn đầu rồi tính trung bình" mà bỏ limit hoặc bỏ aggregate là trả lời thiếu — hệ sẽ từ chối, không nhận spec nửa vời.
 - KHÔNG sinh: dòng kết quả, tập đã lọc, kết quả sắp xếp, giá trị tổng hợp, hay phán quyết giữ/loại từng dòng — engine tính tất định và dựng timeline.
 - CHỈ dùng cho truy vấn MỘT bảng. KHÔNG dùng cho: JOIN nhiều bảng, truy vấn lồng, thêm/sửa/xoá dữ liệu, SQL tự do, GROUP BY nhiều nhóm, kết nối CSDL thật."""
 
@@ -850,7 +858,12 @@ CATALOG["database.relational_table_query"] = SimSpec(
         "cái mới ở đây là KHUNG QUAN HỆ (lược đồ, kiểu cột, vị từ trên bản ghi, "
         "phép chiếu, sắp xếp ổn định)",
     ),
-    config_contract_version="table-1.0",
+    # W2B-PATCH: LUẬT VALIDATE đổi (chuẩn hoá marker ô trống, cột khai
+    # `nullable`, đòi đủ tầng pipeline) nên version HỢP ĐỒNG lên 1.1. Version
+    # trên dây (`specVersion` trong config) GIỮ "table-1.0" vì thay đổi chỉ
+    # THÊM trường tuỳ chọn — mọi config cũ đã lưu trong lịch sử vẫn hợp lệ
+    # (bất biến #17: mở lại từ lịch sử không được vỡ).
+    config_contract_version="table-1.1",
 )
 
 

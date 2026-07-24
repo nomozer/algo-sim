@@ -34,6 +34,7 @@ from app.simulation.operation_policy import (
     mechanism_for_variant,
     policy_for_family,
 )
+from app.simulation.pipeline_stages import stage_coverage, stage_labels
 from app.simulation.operations import (
     OPERATIONS,
     canonical_requirements,
@@ -273,6 +274,10 @@ def check_represented_coverage(
     rep_mech = represented_mechanisms(analysis, families, owned, config) if config is not None else []
     dropped_mech = sorted(set(req_mech) - set(rep_mech)) if req_mech else []
 
+    # W2B-PATCH §A — kênh TẦNG: với family kiểu pipeline, "đủ family" KHÔNG đủ.
+    # So cái spec ĐÃ VALIDATE dựng được với cái đề hỏi, từng tầng một.
+    stages = stage_coverage(analysis, families, config) if config is not None else None
+
     evidence = {
         "requested_operations": req_ops,
         "requested_semantic_requirements": [r.as_dict() for r in req_sem],
@@ -287,6 +292,15 @@ def check_represented_coverage(
         "represented": rep_mech,
         "dropped_requirements": dropped_mech,
     }
+    if stages is not None:
+        evidence.update(stages)
+
+    # Kênh TẦNG chạy TRƯỚC: khi đề hỏi một quy trình nhiều bước, "thiếu bước
+    # nào" là chẩn đoán đúng bản chất hơn "thiếu yêu cầu nào".
+    if stages is not None and stages["completeness_decision"] == "incomplete":
+        return (ErrorCode.PIPELINE_STAGE_INCOMPLETE,
+                _stage_message(stages), evidence)
+
     if not dropped_sem and not dropped_mech:
         return None
 
@@ -300,6 +314,29 @@ def check_represented_coverage(
             "để xem đủ."
         ),
         evidence,
+    )
+
+
+def _stage_message(stages: dict) -> str:
+    """Thông điệp học sinh cho ca THIẾU BƯỚC — chỉ nhãn tiếng Việt, không id.
+
+    KHÔNG xui "tách đề ra": quy trình nhiều bước là hợp lệ, lỗi nằm ở chỗ hệ
+    chưa dựng đủ bước chứ không phải đề hỏi quá nhiều."""
+    fam = stages["family_id"]
+    dropped = stage_labels(stages["dropped_pipeline_stages"], fam)
+    wrong = stages["mismatched_stage_parameters"]
+    parts: list[str] = []
+    if dropped:
+        parts.append(f"chưa dựng được {len(dropped)} bước ({'; '.join(dropped)})")
+    if wrong:
+        listed = "; ".join(
+            f"{m['parameter']} đề nêu {m['requested']} nhưng dựng thành {m['represented']}"
+            for m in wrong)
+        parts.append(f"dựng sai {len(wrong)} bước ({listed})")
+    return (
+        "Mô phỏng dựng ra chưa trả lời đủ đề: " + ", và ".join(parts) + ". "
+        "Hệ không trả lời nửa vời. Em thử hỏi lại và nêu rõ từng bước cần làm "
+        "(ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì)."
     )
 
 

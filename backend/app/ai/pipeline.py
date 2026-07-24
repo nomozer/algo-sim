@@ -16,6 +16,7 @@ from app.simulation.completeness_gate import (
     check_requested_combination,
 )
 from app.simulation.computation_gate import check_computation_ownership
+from app.simulation.pipeline_stages import stage_shortfall_message
 from app.simulation.sufficiency_gate import (
     check_input_sufficiency,
     check_input_sufficiency_for_targets,
@@ -318,6 +319,7 @@ async def stage_simulate(
         base += f"\n\n{scene_mode_guidance(scene_mode)}"
     prompt = base
     last_error = "không rõ"
+    stage_incomplete: dict | None = None
 
     for _attempt in range(3):
         raw = await call_gemini(api_key, load_skill("simulate"), prompt, spec.config_schema, 0.1)
@@ -355,6 +357,22 @@ async def stage_simulate(
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
 
+        # M17 W2B-PATCH §A: đề hỏi một QUY TRÌNH nhiều bước mà spec bỏ bước —
+        # đây là lỗi SỬA ĐƯỢC, nên báo đích danh bước còn thiếu rồi cho làm
+        # lại, thay vì từ chối ngay một đề vốn hợp lệ. Hết lượt vẫn thiếu thì
+        # cổng completeness PHA 2 chặn fail-closed (hai lớp, không lớp nào thừa).
+        stage_error = stage_shortfall_message(analysis, simulation_id, config)
+        if stage_error:
+            last_error = stage_error
+            # Giữ lại spec HỢP LỆ VỀ CẤU TRÚC nhưng thiếu bước: hết lượt thì
+            # trả nó về để cổng completeness PHA 2 từ chối bằng THÔNG ĐIỆP HỌC
+            # SINH + bằng chứng máy-đọc — thay vì ném RuntimeError kỹ thuật.
+            stage_incomplete = config
+            _emit(observer, "simulate_attempt", n=_attempt, ok=False,
+                  error_code=ErrorCode.SEMANTIC_INCOMPLETE.value, message=last_error)
+            prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+            continue
+
         # M7.11: kiểm SEMANTIC COMPAT cho generic — spec phải cover vai trò đề cần
         if required_semantic_roles and simulation_id == "generic.rule_scene":
             compat = check_semantic_compatibility(required_semantic_roles, config)
@@ -373,6 +391,10 @@ async def stage_simulate(
         _emit(observer, "simulate_attempt", n=_attempt, ok=True, error_code=None, message="")
         return config, None
 
+    if stage_incomplete is not None:
+        # Cạn lượt vì THIẾU BƯỚC (không phải spec hỏng): đây là ca "từ chối
+        # trung thực", và PHA 2 là nơi DUY NHẤT soạn thông điệp đó.
+        return stage_incomplete, None
     return None, last_error
 
 

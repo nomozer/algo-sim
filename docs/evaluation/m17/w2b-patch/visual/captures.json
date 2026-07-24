@@ -1,0 +1,692 @@
+{
+  "wave": "M17 W2B-PATCH §E",
+  "generated_at": "2026-07-24T17:14:50.549Z",
+  "note": "Viewport đặt TRƯỚC khi trang dựng và nạp lại trang cho từng viewport — không lặp lại artefact phép đo VIS-003 của RC1 §E1. Phán quyết REAL/PARTIAL/BROKEN do NGƯỜI xem PNG chấm, assertion chỉ hỗ trợ.",
+  "app": "http://localhost:3000",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "records": [
+    {
+      "fixture": "wp1-L3-avg-empty-markers",
+      "finding": "L3",
+      "viewport": "desktop",
+      "phase": "initial",
+      "step": 0,
+      "step_total": 21,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-desktop-initial.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 0,
+        "step_total": 21,
+        "current_kind": "read_row",
+        "result_rows": 6,
+        "aggregate": {
+          "value": 8.25,
+          "counted": 4
+        },
+        "normalizations": 0,
+        "empty_cells": 2,
+        "zero_cells": 0
+      },
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": true,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Điểm kiểm tra trung bình (có ô trống) Truy vấn bảng dữ liệu · từng bước · 2D Trạng thái Học sinh Điểm kiểm tra Đang xét An 8 Bình — trống — Chi 9.5 Dũng 7 Hà — trống — Lan 8.5 Đọc hàng 1: Học sinh = An, Điểm kiểm tra = 8 QUAN SÁT Bảng: 6 dòng · 2 cột Kết quả hiện dần theo từng bước… Hỏi AI về bước này Tự chạy Đặt lại Bước 1 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ô trống hiện '— trống —' (KHÔNG phải 0); accumulator bỏ qua ô trống; AVG = 8.25 trên 4 ô"
+    },
+    {
+      "fixture": "wp1-L3-avg-empty-markers",
+      "finding": "L3",
+      "viewport": "desktop",
+      "phase": "mid",
+      "step": 10,
+      "step_total": 21,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-desktop-mid.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 10,
+        "step_total": 21,
+        "current_kind": "read_row",
+        "result_rows": 6,
+        "aggregate": {
+          "value": 8.25,
+          "counted": 4
+        },
+        "normalizations": 0,
+        "empty_cells": 2,
+        "zero_cells": 0
+      },
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": true,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Điểm kiểm tra trung bình (có ô trống) Truy vấn bảng dữ liệu · từng bước · 2D Trạng thái Học sinh Điểm kiểm tra Giữ An 8 Giữ Bình — trống — Giữ Chi 9.5 Giữ Dũng 7 Giữ Hà — trống — Đang xét Lan 8.5 Đọc hàng 6: Học sinh = Lan, Điểm kiểm tra = 8.5 QUAN SÁT Bảng: 6 dòng · 2 cột Kết quả hiện dần theo từng bước… Hỏi AI về bước này Tự chạy Đặt lại Bước 11 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ô trống hiện '— trống —' (KHÔNG phải 0); accumulator bỏ qua ô trống; AVG = 8.25 trên 4 ô"
+    },
+    {
+      "fixture": "wp1-L3-avg-empty-markers",
+      "finding": "L3",
+      "viewport": "desktop",
+      "phase": "final",
+      "step": 20,
+      "step_total": 21,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-desktop-final.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 20,
+        "step_total": 21,
+        "current_kind": "result",
+        "result_rows": 6,
+        "aggregate": {
+          "value": 8.25,
+          "counted": 4
+        },
+        "normalizations": 0,
+        "empty_cells": 2,
+        "zero_cells": 0
+      },
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": true,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Điểm kiểm tra trung bình (có ô trống) Truy vấn bảng dữ liệu · từng bước · 2D Trạng thái Học sinh Điểm kiểm tra Giữ An 8 Giữ Bình — trống — Giữ Chi 9.5 Giữ Dũng 7 Giữ Hà — trống — Giữ Lan 8.5 Trung bình của Điểm kiểm tra = 8.25 QUAN SÁT Bảng: 6 dòng · 2 cột Kết quả: 6 dòng · Trung bình của Điểm kiểm tra = 8.25 Hỏi AI về bước này Tự chạy Đặt lại Bước 21 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ô trống hiện '— trống —' (KHÔNG phải 0); accumulator bỏ qua ô trống; AVG = 8.25 trên 4 ô"
+    },
+    {
+      "fixture": "wp2-L4-five-stage-pipeline",
+      "finding": "L4",
+      "viewport": "desktop",
+      "phase": "initial",
+      "step": 0,
+      "step_total": 32,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-desktop-initial.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 0,
+        "step_total": 32,
+        "current_kind": "read_row",
+        "result_rows": 3,
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        },
+        "normalizations": 0,
+        "empty_cells": 0,
+        "zero_cells": 3
+      },
+      "audit": {
+        "stage_chips": [
+          {
+            "stage": "filter",
+            "done": false,
+            "text": "1.\nLọc"
+          },
+          {
+            "stage": "projection",
+            "done": false,
+            "text": "2.\nChọn cột"
+          },
+          {
+            "stage": "sort",
+            "done": false,
+            "text": "3.\nSắp xếp giảm dần"
+          },
+          {
+            "stage": "limit",
+            "done": false,
+            "text": "4.\nLấy 3 dòng"
+          },
+          {
+            "stage": "aggregate",
+            "done": false,
+            "text": "5.\nTính trung bình"
+          }
+        ],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình Truy vấn bảng dữ liệu · từng bước · 2D 1. Lọc 2. Chọn cột 3. Sắp xếp giảm dần 4. Lấy 3 dòng 5. Tính trung bình Trạng thái Tên Tổ Điểm Số buổi vắng Đang xét An A 9 1 Bình B 8.5 0 Chi A 6 2 Dũng A 9 0 Hà B 7.5 3 Lan A 7.5 1 Minh A 6 0 Nga B 9.5 2 Đọc hàng 1: Tên = An, Tổ = A, Điểm = 9… QUAN SÁT Bảng: 8 dòng · 4 cột Sắp xếp: Điểm giảm dần (ổn định) Kết quả hiện dần theo từng bước… Hỏi AI về bước này Tự chạy Đặt lại Bước 1 / 32 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "chỉ báo 5 bước đủ và đánh dấu dần; kết quả 3 dòng An/Dũng/Lan; AVG 8.5 CHỈ ở bước cuối"
+    },
+    {
+      "fixture": "wp2-L4-five-stage-pipeline",
+      "finding": "L4",
+      "viewport": "desktop",
+      "phase": "mid",
+      "step": 15,
+      "step_total": 32,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-desktop-mid.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 15,
+        "step_total": 32,
+        "current_kind": "read_row",
+        "result_rows": 3,
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        },
+        "normalizations": 0,
+        "empty_cells": 0,
+        "zero_cells": 3
+      },
+      "audit": {
+        "stage_chips": [
+          {
+            "stage": "filter",
+            "done": false,
+            "text": "1.\nLọc"
+          },
+          {
+            "stage": "projection",
+            "done": false,
+            "text": "2.\nChọn cột"
+          },
+          {
+            "stage": "sort",
+            "done": false,
+            "text": "3.\nSắp xếp giảm dần"
+          },
+          {
+            "stage": "limit",
+            "done": false,
+            "text": "4.\nLấy 3 dòng"
+          },
+          {
+            "stage": "aggregate",
+            "done": false,
+            "text": "5.\nTính trung bình"
+          }
+        ],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình Truy vấn bảng dữ liệu · từng bước · 2D 1. Lọc 2. Chọn cột 3. Sắp xếp giảm dần 4. Lấy 3 dòng 5. Tính trung bình Trạng thái Tên Tổ Điểm Số buổi vắng Giữ An A 9 1 Loại Bình B 8.5 0 Giữ Chi A 6 2 Giữ Dũng A 9 0 Loại Hà B 7.5 3 Đang xét Lan A 7.5 1 Minh A 6 0 Nga B 9.5 2 Đọc hàng 6: Tên = Lan, Tổ = A, Điểm = 7.5… QUAN SÁT Bảng: 8 dòng · 4 cột Sắp xếp: Điểm giảm dần (ổn định) Kết quả hiện dần theo từng bước… Hỏi AI về bước này Tự chạy Đặt lại Bước 16 / 32 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "chỉ báo 5 bước đủ và đánh dấu dần; kết quả 3 dòng An/Dũng/Lan; AVG 8.5 CHỈ ở bước cuối"
+    },
+    {
+      "fixture": "wp2-L4-five-stage-pipeline",
+      "finding": "L4",
+      "viewport": "desktop",
+      "phase": "final",
+      "step": 31,
+      "step_total": 32,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-desktop-final.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 31,
+        "step_total": 32,
+        "current_kind": "result",
+        "result_rows": 3,
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        },
+        "normalizations": 0,
+        "empty_cells": 0,
+        "zero_cells": 3
+      },
+      "audit": {
+        "stage_chips": [
+          {
+            "stage": "filter",
+            "done": true,
+            "text": "1.\nLọc"
+          },
+          {
+            "stage": "projection",
+            "done": true,
+            "text": "2.\nChọn cột"
+          },
+          {
+            "stage": "sort",
+            "done": true,
+            "text": "3.\nSắp xếp giảm dần"
+          },
+          {
+            "stage": "limit",
+            "done": true,
+            "text": "4.\nLấy 3 dòng"
+          },
+          {
+            "stage": "aggregate",
+            "done": true,
+            "text": "5.\nTính trung bình"
+          }
+        ],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình Truy vấn bảng dữ liệu · từng bước · 2D 1. Lọc 2. Chọn cột 3. Sắp xếp giảm dần 4. Lấy 3 dòng 5. Tính trung bình Trạng thái Tên Tổ Điểm Số buổi vắng Giữ An A 9 1 Giữ Dũng A 9 0 Giữ Lan A 7.5 1 Không lấy Chi A 6 2 Không lấy Minh A 6 0 Trung bình của Điểm = 8.5 QUAN SÁT Bảng: 8 dòng · 4 cột Sắp xếp: Điểm giảm dần (ổn định) Kết quả: 3 dòng · Trung bình của Điểm = 8.5 Hỏi AI về bước này Tự chạy Đặt lại Bước 32 / 32 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "chỉ báo 5 bước đủ và đánh dấu dần; kết quả 3 dòng An/Dũng/Lan; AVG 8.5 CHỈ ở bước cuối"
+    },
+    {
+      "fixture": "wp3-L5-missing-table",
+      "finding": "L5",
+      "viewport": "desktop",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp3-L5-missing-table-desktop.png",
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "reason": "Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em.",
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới CHƯA ĐỦ DỮ KIỆN Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em. Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng. Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (2) Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình CSDL · bước 32 / 32 · vừa xong Tiếp tục"
+      },
+      "expect": "tiêu đề 'CHƯA ĐỦ DỮ KIỆN'; đòi CUNG CẤP BẢNG; TUYỆT ĐỐI không xui tách hai truy vấn"
+    },
+    {
+      "fixture": "wp4-L6-two-queries",
+      "finding": "L6",
+      "viewport": "desktop",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp4-L6-two-queries-desktop.png",
+      "failure_category": "semantic_incomplete",
+      "error_code": "multiple_operations_not_supported",
+      "reason": "Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước.",
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới TÁCH THÀNH TỪNG YÊU CẦU Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước. Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó. Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (2) Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình CSDL · bước 32 / 32 · vừa xong Tiếp tục"
+      },
+      "expect": "yêu cầu TÁCH THÀNH TỪNG YÊU CẦU (đúng bản chất khi bảng ĐÃ có)"
+    },
+    {
+      "fixture": "wp5-stage-shortfall",
+      "finding": "L4",
+      "viewport": "desktop",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp5-stage-shortfall-desktop.png",
+      "failure_category": "semantic_incomplete",
+      "error_code": "pipeline_stage_incomplete",
+      "reason": "Mô phỏng dựng ra chưa trả lời đủ đề: chưa dựng được 2 bước (lấy số dòng đầu; tính trung bình một cột). Hệ không trả lời nửa vời. Em thử hỏi lại và nêu rõ từng bước cần làm (ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì).",
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới CHƯA DỰNG ĐỦ CÁC BƯỚC Mô phỏng dựng ra chưa trả lời đủ đề: chưa dựng được 2 bước (lấy số dòng đầu; tính trung bình một cột). Hệ không trả lời nửa vời. Em thử hỏi lại và nêu rõ từng bước cần làm (ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì). Nêu rõ từng bước cần làm rồi gửi lại — dạng bài nhiều bước này hệ có mô phỏng. Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (2) Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình CSDL · bước 32 / 32 · vừa xong Tiếp tục"
+      },
+      "expect": "thông điệp MỚI của bản vá: nói thiếu BƯỚC nào, KHÔNG xui tách đề"
+    },
+    {
+      "fixture": "wp1-L3-avg-empty-markers",
+      "finding": "L3",
+      "viewport": "narrow",
+      "phase": "initial",
+      "step": 0,
+      "step_total": 21,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-narrow-initial.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 0,
+        "step_total": 21,
+        "current_kind": "read_row",
+        "result_rows": 6,
+        "aggregate": {
+          "value": 8.25,
+          "counted": 4
+        },
+        "normalizations": 0,
+        "empty_cells": 2,
+        "zero_cells": 0
+      },
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": true,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Điểm kiểm tra trung bình (có ô trống) Truy vấn bảng dữ liệu · từng bước · 2D Trạng thái Học sinh Điểm kiểm tra Đang xét An 8 Bình — trống — Chi 9.5 Dũng 7 Hà — trống — Lan 8.5 Đọc hàng 1: Học sinh = An, Điểm kiểm tra = 8 Tự chạy Đặt lại Bước 1 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ô trống hiện '— trống —' (KHÔNG phải 0); accumulator bỏ qua ô trống; AVG = 8.25 trên 4 ô"
+    },
+    {
+      "fixture": "wp1-L3-avg-empty-markers",
+      "finding": "L3",
+      "viewport": "narrow",
+      "phase": "mid",
+      "step": 10,
+      "step_total": 21,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-narrow-mid.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 10,
+        "step_total": 21,
+        "current_kind": "read_row",
+        "result_rows": 6,
+        "aggregate": {
+          "value": 8.25,
+          "counted": 4
+        },
+        "normalizations": 0,
+        "empty_cells": 2,
+        "zero_cells": 0
+      },
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": true,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Điểm kiểm tra trung bình (có ô trống) Truy vấn bảng dữ liệu · từng bước · 2D Trạng thái Học sinh Điểm kiểm tra Giữ An 8 Giữ Bình — trống — Giữ Chi 9.5 Giữ Dũng 7 Giữ Hà — trống — Đang xét Lan 8.5 Đọc hàng 6: Học sinh = Lan, Điểm kiểm tra = 8.5 Tự chạy Đặt lại Bước 11 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ô trống hiện '— trống —' (KHÔNG phải 0); accumulator bỏ qua ô trống; AVG = 8.25 trên 4 ô"
+    },
+    {
+      "fixture": "wp1-L3-avg-empty-markers",
+      "finding": "L3",
+      "viewport": "narrow",
+      "phase": "final",
+      "step": 20,
+      "step_total": 21,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp1-L3-avg-empty-markers-narrow-final.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 20,
+        "step_total": 21,
+        "current_kind": "result",
+        "result_rows": 6,
+        "aggregate": {
+          "value": 8.25,
+          "counted": 4
+        },
+        "normalizations": 0,
+        "empty_cells": 2,
+        "zero_cells": 0
+      },
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": true,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Điểm kiểm tra trung bình (có ô trống) Truy vấn bảng dữ liệu · từng bước · 2D Trạng thái Học sinh Điểm kiểm tra Giữ An 8 Giữ Bình — trống — Giữ Chi 9.5 Giữ Dũng 7 Giữ Hà — trống — Giữ Lan 8.5 Trung bình của Điểm kiểm tra = 8.25 Tự chạy Đặt lại Bước 21 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ô trống hiện '— trống —' (KHÔNG phải 0); accumulator bỏ qua ô trống; AVG = 8.25 trên 4 ô"
+    },
+    {
+      "fixture": "wp2-L4-five-stage-pipeline",
+      "finding": "L4",
+      "viewport": "narrow",
+      "phase": "initial",
+      "step": 0,
+      "step_total": 32,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-narrow-initial.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 0,
+        "step_total": 32,
+        "current_kind": "read_row",
+        "result_rows": 3,
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        },
+        "normalizations": 0,
+        "empty_cells": 0,
+        "zero_cells": 3
+      },
+      "audit": {
+        "stage_chips": [
+          {
+            "stage": "filter",
+            "done": false,
+            "text": "1.\nLọc"
+          },
+          {
+            "stage": "projection",
+            "done": false,
+            "text": "2.\nChọn cột"
+          },
+          {
+            "stage": "sort",
+            "done": false,
+            "text": "3.\nSắp xếp giảm dần"
+          },
+          {
+            "stage": "limit",
+            "done": false,
+            "text": "4.\nLấy 3 dòng"
+          },
+          {
+            "stage": "aggregate",
+            "done": false,
+            "text": "5.\nTính trung bình"
+          }
+        ],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình Truy vấn bảng dữ liệu · từng bước · 2D 1. Lọc 2. Chọn cột 3. Sắp xếp giảm dần 4. Lấy 3 dòng 5. Tính trung bình Trạng thái Tên Tổ Điểm Số buổi vắng Đang xét An A 9 1 Bình B 8.5 0 Chi A 6 2 Dũng A 9 0 Hà B 7.5 3 Lan A 7.5 1 Minh A 6 0 Nga B 9.5 2 Đọc hàng 1: Tên = An, Tổ = A, Điểm = 9… Tự chạy Đặt lại Bước 1 / 32 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "chỉ báo 5 bước đủ và đánh dấu dần; kết quả 3 dòng An/Dũng/Lan; AVG 8.5 CHỈ ở bước cuối"
+    },
+    {
+      "fixture": "wp2-L4-five-stage-pipeline",
+      "finding": "L4",
+      "viewport": "narrow",
+      "phase": "mid",
+      "step": 15,
+      "step_total": 32,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-narrow-mid.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 15,
+        "step_total": 32,
+        "current_kind": "read_row",
+        "result_rows": 3,
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        },
+        "normalizations": 0,
+        "empty_cells": 0,
+        "zero_cells": 3
+      },
+      "audit": {
+        "stage_chips": [
+          {
+            "stage": "filter",
+            "done": false,
+            "text": "1.\nLọc"
+          },
+          {
+            "stage": "projection",
+            "done": false,
+            "text": "2.\nChọn cột"
+          },
+          {
+            "stage": "sort",
+            "done": false,
+            "text": "3.\nSắp xếp giảm dần"
+          },
+          {
+            "stage": "limit",
+            "done": false,
+            "text": "4.\nLấy 3 dòng"
+          },
+          {
+            "stage": "aggregate",
+            "done": false,
+            "text": "5.\nTính trung bình"
+          }
+        ],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình Truy vấn bảng dữ liệu · từng bước · 2D 1. Lọc 2. Chọn cột 3. Sắp xếp giảm dần 4. Lấy 3 dòng 5. Tính trung bình Trạng thái Tên Tổ Điểm Số buổi vắng Giữ An A 9 1 Loại Bình B 8.5 0 Giữ Chi A 6 2 Giữ Dũng A 9 0 Loại Hà B 7.5 3 Đang xét Lan A 7.5 1 Minh A 6 0 Nga B 9.5 2 Đọc hàng 6: Tên = Lan, Tổ = A, Điểm = 7.5… Tự chạy Đặt lại Bước 16 / 32 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "chỉ báo 5 bước đủ và đánh dấu dần; kết quả 3 dòng An/Dũng/Lan; AVG 8.5 CHỈ ở bước cuối"
+    },
+    {
+      "fixture": "wp2-L4-five-stage-pipeline",
+      "finding": "L4",
+      "viewport": "narrow",
+      "phase": "final",
+      "step": 31,
+      "step_total": 32,
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp2-L4-five-stage-pipeline-narrow-final.png",
+      "engine": {
+        "moduleId": "database.relational_table_query",
+        "cursor": 31,
+        "step_total": 32,
+        "current_kind": "result",
+        "result_rows": 3,
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        },
+        "normalizations": 0,
+        "empty_cells": 0,
+        "zero_cells": 3
+      },
+      "audit": {
+        "stage_chips": [
+          {
+            "stage": "filter",
+            "done": true,
+            "text": "1.\nLọc"
+          },
+          {
+            "stage": "projection",
+            "done": true,
+            "text": "2.\nChọn cột"
+          },
+          {
+            "stage": "sort",
+            "done": true,
+            "text": "3.\nSắp xếp giảm dần"
+          },
+          {
+            "stage": "limit",
+            "done": true,
+            "text": "4.\nLấy 3 dòng"
+          },
+          {
+            "stage": "aggregate",
+            "done": true,
+            "text": "5.\nTính trung bình"
+          }
+        ],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "TRUY VẤN BẢNG Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình Truy vấn bảng dữ liệu · từng bước · 2D 1. Lọc 2. Chọn cột 3. Sắp xếp giảm dần 4. Lấy 3 dòng 5. Tính trung bình Trạng thái Tên Tổ Điểm Số buổi vắng Giữ An A 9 1 Giữ Dũng A 9 0 Giữ Lan A 7.5 1 Không lấy Chi A 6 2 Không lấy Minh A 6 0 Trung bình của Điểm = 8.5 Tự chạy Đặt lại Bước 32 / 32 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "chỉ báo 5 bước đủ và đánh dấu dần; kết quả 3 dòng An/Dũng/Lan; AVG 8.5 CHỈ ở bước cuối"
+    },
+    {
+      "fixture": "wp3-L5-missing-table",
+      "finding": "L5",
+      "viewport": "narrow",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp3-L5-missing-table-narrow.png",
+      "failure_category": "insufficient_specification",
+      "error_code": "input_insufficient",
+      "reason": "Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em.",
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới CHƯA ĐỦ DỮ KIỆN Đề chưa cho bảng dữ liệu cụ thể (tên các cột và các dòng dữ liệu). Em hãy chép rõ bảng vào đề — ví dụ: cột Tên, Điểm, Tổ; rồi từng dòng An 8.5 A, Bình 6.0 B… — hệ không tự tạo bảng thay em. Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng. Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (2) Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình CSDL · bước 32 / 32 · vừa xong Tiếp tục"
+      },
+      "expect": "tiêu đề 'CHƯA ĐỦ DỮ KIỆN'; đòi CUNG CẤP BẢNG; TUYỆT ĐỐI không xui tách hai truy vấn"
+    },
+    {
+      "fixture": "wp4-L6-two-queries",
+      "finding": "L6",
+      "viewport": "narrow",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp4-L6-two-queries-narrow.png",
+      "failure_category": "semantic_incomplete",
+      "error_code": "multiple_operations_not_supported",
+      "reason": "Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước.",
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới TÁCH THÀNH TỪNG YÊU CẦU Đề đang hỏi 2 truy vấn độc lập, nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Em hãy tách thành từng lần hỏi (giữ nguyên bảng, mỗi lần một yêu cầu) để xem đầy đủ từng bước. Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó. Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (2) Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình CSDL · bước 32 / 32 · vừa xong Tiếp tục"
+      },
+      "expect": "yêu cầu TÁCH THÀNH TỪNG YÊU CẦU (đúng bản chất khi bảng ĐÃ có)"
+    },
+    {
+      "fixture": "wp5-stage-shortfall",
+      "finding": "L4",
+      "viewport": "narrow",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w2b-patch/visual/wp5-stage-shortfall-narrow.png",
+      "failure_category": "semantic_incomplete",
+      "error_code": "pipeline_stage_incomplete",
+      "reason": "Mô phỏng dựng ra chưa trả lời đủ đề: chưa dựng được 2 bước (lấy số dòng đầu; tính trung bình một cột). Hệ không trả lời nửa vời. Em thử hỏi lại và nêu rõ từng bước cần làm (ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì).",
+      "audit": {
+        "stage_chips": [],
+        "shows_empty_marker": false,
+        "shows_zero_for_empty": false,
+        "phantom_stroke_none": 0,
+        "page_overflows_horizontally": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới CHƯA DỰNG ĐỦ CÁC BƯỚC Mô phỏng dựng ra chưa trả lời đủ đề: chưa dựng được 2 bước (lấy số dòng đầu; tính trung bình một cột). Hệ không trả lời nửa vời. Em thử hỏi lại và nêu rõ từng bước cần làm (ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì). Nêu rõ từng bước cần làm rồi gửi lại — dạng bài nhiều bước này hệ có mô phỏng. Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (2) Tổ A → chọn cột → sắp giảm dần → lấy 3 → trung bình CSDL · bước 32 / 32 · vừa xong Tiếp tục"
+      },
+      "expect": "thông điệp MỚI của bản vá: nói thiếu BƯỚC nào, KHÔNG xui tách đề"
+    }
+  ]
+}

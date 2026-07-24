@@ -52,7 +52,14 @@ const MODE_LABEL: Record<string, string> = {
 export function UnsupportedNotice({
   unsupported,
 }: {
-  unsupported: { reason: string; learner_reason?: string; failure_category?: string };
+  unsupported: {
+    reason: string;
+    learner_reason?: string;
+    failure_category?: string;
+    /** (M17 W2B-PATCH) Mã chi tiết — dùng khi một `failure_category` gộp nhiều
+     *  ca cần lời khuyên KHÁC NHAU. Không hiển thị cho học sinh. */
+    error_code?: string;
+  };
 }) {
   // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
   // trợ, chỉ là em chưa cho đủ dữ liệu. Nói "ngoài danh mục" ở đây làm học sinh
@@ -63,11 +70,20 @@ export function UnsupportedNotice({
   // mô phỏng trình bày được một yêu cầu. Nói "ngoài danh mục" ở đây làm học
   // sinh tưởng hệ không làm được — sai.
   const incomplete = unsupported.failure_category === "semantic_incomplete";
+  // (M17 W2B-PATCH) Trong CÙNG `semantic_incomplete` có HAI ca ngược nhau về
+  // lời khuyên, nên tiêu đề/gợi ý phải đọc `error_code` (chi tiết hơn) trước:
+  // - hỏi nhiều truy vấn độc lập → tách đề ra là ĐÚNG;
+  // - đề MỘT truy vấn nhiều bước mà hệ dựng thiếu bước → tách ra VÔ ÍCH, phải
+  //   nói rõ là chưa dựng đủ bước. Lỗi này do review ẢNH bắt được.
+  const stageShortfall = unsupported.error_code === "pipeline_stage_incomplete";
   const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
+    : stageShortfall ? "CHƯA DỰNG ĐỦ CÁC BƯỚC"
     : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
     : "NGOÀI DANH MỤC MÔ PHỎNG";
   const hint = insufficient
     ? "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."
+    : stageShortfall
+    ? "Nêu rõ từng bước cần làm rồi gửi lại — dạng bài nhiều bước này hệ có mô phỏng."
     : incomplete
     ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
     : "Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...).";

@@ -794,7 +794,7 @@
           ]
         }
       ],
-      "config_contract_version": "table-1.0",
+      "config_contract_version": "table-1.1",
       "authenticity": {
         "required_state_fields": [
           "config",

@@ -70,6 +70,11 @@ export interface AnalysisUnsupported {
    * "insufficient_specification" = chủ đề CÓ hỗ trợ nhưng đề thiếu dữ kiện
    * (nói "ngoài danh mục" là sai và làm học sinh hiểu nhầm). */
   failure_category?: string;
+  /** (M17 W2B-PATCH) Mã lỗi chi tiết — chỉ để chọn tiêu đề/gợi ý khi một
+   * `failure_category` gộp nhiều ca cần lời khuyên khác nhau (vd
+   * "pipeline_stage_incomplete" vs "multiple_operations_not_supported" đều là
+   * `semantic_incomplete`). KHÔNG BAO GIỜ hiển thị mã này cho học sinh. */
+  error_code?: string;
 }
 
 export type AnalysisResult = AnalysisOk | AnalysisUnsupported;
