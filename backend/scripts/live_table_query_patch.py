@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""M17 W2B-PATCH LIVE — kiểm chứng lại 3 finding đã vá, trên LLM THẬT.
+"""M17 W2B-PATCH2 LIVE — kiểm chứng lại 3 finding đã vá, trên LLM THẬT.
 
 KHÔNG phải routing smoke. Bốn case, ngân sách chặt, kỳ vọng KHÓA TRƯỚC khi thấy
 bất kỳ output live nào:
@@ -20,7 +20,7 @@ KHÔNG đổi prompt/expected/tolerance sau khi thấy kết quả.
     # CHẠY THẬT (bắt buộc opt-in):
     ALLOW_LIVE_AI=1 PYTHONIOENCODING=utf-8 \
       python scripts/live_table_query_patch.py --live \
-      --out ../docs/evaluation/m17/w2b-patch
+      --out ../docs/evaluation/m17/w2b-patch2
 """
 
 from __future__ import annotations
@@ -168,7 +168,8 @@ P4 = Case(
     note="ĐỐI CHỨNG không hồi quy — giữ nguyên hành vi đã đạt ở run 0afcb37.",
 )
 
-CASES = [P1, P2, P3, P4]
+# §3 — P2 (five-stage pipeline) CHẠY ĐẦU TIÊN: P2 không đạt thì dừng cả run.
+CASES = [P2, P1, P3, P4]
 
 
 # ════════════════════════════════════════════════════════════════════════
@@ -299,6 +300,67 @@ def _ops_from_config(config: dict) -> dict:
     }
 
 
+def _stages_from_reqs(requested_requirements) -> list[str]:
+    """Tầng mà analyze YÊU CẦU (từ requested_requirements) — theo thứ tự pipeline."""
+    from app.simulation.pipeline_stages import requested_stages, _TABLE
+    return requested_stages({"requested_requirements": requested_requirements}, _TABLE)
+
+
+def _manifest_fidelity(case: "Case", az: dict, config, obs) -> dict:
+    """§7 P2 — đối chiếu TRUNG THỰC manifest ↔ prompt ↔ analyze ↔ candidate.
+
+    Nguồn: analyze THẬT (observer), manifest DỰNG LẠI TẤT ĐỊNH từ chính analyze
+    đó, và event `stage_merge` do pipeline phát (candidate_stage_set TRƯỚC merge,
+    inserted/corrected). Đây là bằng chứng máy-đọc, không suy diễn."""
+    from app.simulation.table_pipeline_manifest import build_required_pipeline
+
+    reqs = az.get("requested_requirements")
+    pipeline = build_required_pipeline({"requested_requirements": reqs})
+    manifest_stages = [s.kind for s in pipeline.ordered_stages] if pipeline else []
+    manifest_grounded = {s.kind: s.grounded for s in (pipeline.ordered_stages if pipeline else [])}
+    manifest_unresolved = {s.kind: list(s.unresolved_fields)
+                           for s in (pipeline.ordered_stages if pipeline else [])
+                           if s.unresolved_fields}
+    manifest_params = {s.kind: dict(s.params)
+                       for s in (pipeline.ordered_stages if pipeline else [])}
+
+    merges = [d for (et, d) in obs.events if et == "stage_merge"]
+    last = merges[-1] if merges else {}
+    mlog = last.get("log") or {}
+    raw_stage_set = mlog.get("candidate_stage_set", [])
+    merged_stages = _stage_list(config) if isinstance(config, dict) else []
+
+    prompt_stages = list(case.expected_stages)
+    analyze_stages = _stages_from_reqs(reqs)
+    unexpected = [s for s in merged_stages if s not in prompt_stages]
+    missing = [s for s in prompt_stages if s not in merged_stages]
+
+    fidelity = (set(manifest_stages) == set(prompt_stages)
+                and set(merged_stages) == set(prompt_stages)
+                and not unexpected and not missing)
+    return {
+        "prompt_requested_stages": prompt_stages,
+        "analyze_requested_stages": analyze_stages,
+        "manifest_stages": manifest_stages,
+        "manifest_stage_grounded": manifest_grounded,
+        "manifest_unresolved_fields": manifest_unresolved,
+        "manifest_parameters": manifest_params,
+        "raw_candidate_stage_set": raw_stage_set,
+        "merged_candidate_stages": merged_stages,
+        "inserted_stages": mlog.get("inserted_stages", []),
+        "corrected_parameters": mlog.get("corrected_stages", []),
+        "confirmed_stages": mlog.get("confirmed_stages", []),
+        "deterministic_merge_applied": bool(mlog.get("merge_applied")),
+        "unexpected_stages": unexpected,
+        "missing_stages": missing,
+        "manifest_fidelity_pass": fidelity,
+        # LƯU Ý trung thực: full raw candidate config KHÔNG được persist (cần
+        # một emit production; không thêm để giữ nguyên baseline 9f717df). Ở đây
+        # dùng candidate_stage_set từ merge log — đủ cho manifest fidelity.
+        "raw_candidate_full_config_persisted": False,
+    }
+
+
 def _plan_of(config: dict, wants_rows: bool) -> dict:
     """Kế hoạch (ở KHÔNG GIAN ID cột) cho equivalence policy — filter/projection/
     sort/limit/aggregate raw từ config, kèm cờ mục tiêu có phải trả rows không."""
@@ -392,6 +454,14 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
     az = obs.analyze() or {}
     cz = obs.classify() or {}
     sim_attempts = obs.simulate_attempts()
+    merge_events = [d for (et, d) in obs.events if et == "stage_merge"]
+    merges_applied = [m for m in merge_events if m.get("applied")]
+    # raw LLM candidate (TRƯỚC merge) của lượt ĐẦU đã đủ tầng chưa?
+    first_merge = merge_events[0] if merge_events else {}
+    first_raw_stages = (first_merge.get("log") or {}).get("candidate_stage_set", [])
+    raw_first_ok = bool(case.expected_stages) and set(case.expected_stages).issubset(
+        set(first_raw_stages)) if first_merge else None
+    merged_first_ok = bool(sim_attempts) and sim_attempts[0].get("ok") is True
     status = (env or {}).get("status") if env else ("error" if err else None)
     route = (env or {}).get("simulation_id")
     config = (env or {}).get("config") if env else None
@@ -410,7 +480,11 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
         "final_route": route,
         "reclassification": 1 if obs.reclassify_attempted() else 0,
         "simulate_attempts": len(sim_attempts),
-        "valid_spec_first_attempt": (bool(sim_attempts) and sim_attempts[0].get("ok") is True),
+        # §8 — báo RIÊNG raw vs merged; KHÔNG gọi raw thiếu tầng là "valid first".
+        "valid_raw_candidate_first_attempt": raw_first_ok,
+        "valid_merged_candidate_first_attempt": merged_first_ok,
+        "deterministic_merge_applied": bool(merges_applied),
+        "deterministic_merge_count": len(merges_applied),
         "simulate_attempt_detail": [
             {"n": a.get("n"), "ok": a.get("ok"), "error_code": a.get("error_code"),
              "message": (a.get("message") or "")[:400]} for a in sim_attempts],
@@ -431,7 +505,7 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
         if route != TARGET:
             passed = False
             problems.append(f"route={route}")
-        gm = leak = ops = final = stages = None
+        gm = leak = ops = final = stages = manifest = None
         dropped_stages = []
         if isinstance(config, dict) and route == TARGET:
             gm = grounding_matrix(case, config)
@@ -439,7 +513,11 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
             ops = _ops_from_config(config)
             final = _final_from_engine(config)
             stages = _stage_list(config)
+            manifest = _manifest_fidelity(case, az, config, obs)
             dropped_stages = [s for s in case.expected_stages if s not in stages]
+            if manifest["unexpected_stages"]:
+                passed = False
+                problems.append(f"tầng KHÔNG yêu cầu: {manifest['unexpected_stages']}")
             if not gm["grounding_perfect"]:
                 passed = False
                 problems.append("grounding không hoàn hảo")
@@ -470,6 +548,7 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
             "requested_stages_expected": list(case.expected_stages),
             "represented_stages": stages,
             "dropped_pipeline_stages": dropped_stages,
+            "manifest_fidelity": manifest,
             "completeness_evidence": (env or {}).get("completeness"),
             "expected_final": case.expected_final, "actual_final": final,
             "plan_equivalence": equivalence,
@@ -561,8 +640,11 @@ def _summ(records, total, stop_reason):
         "http_retry": total["retry"], "transient": total["transient"],
         "reclassification": sum(r["reclassification"] for r in records),
         "cache_hits": sum(1 for r in records if r.get("cache_hit")),
-        "valid_spec_first_attempt": _rate(
-            sum(1 for r in sup if r["valid_spec_first_attempt"]), len(sup)),
+        "valid_raw_candidate_first_attempt": _rate(
+            sum(1 for r in sup if r.get("valid_raw_candidate_first_attempt")), len(sup)),
+        "valid_merged_candidate_first_attempt": _rate(
+            sum(1 for r in sup if r.get("valid_merged_candidate_first_attempt")), len(sup)),
+        "deterministic_merge_count": sum(r.get("deterministic_merge_count", 0) for r in records),
         "simulate_attempts_per_case": {r["case_id"]: r["simulate_attempts"]
                                        for r in records},
         "grounding_perfect": _rate(
@@ -588,7 +670,7 @@ def _write_artifacts(out_dir, records, total, stop_reason, ident, sha,
     out_dir.mkdir(parents=True, exist_ok=True)
     summ = _summ(records, total, stop_reason)
     run_meta = {
-        "wave": "M17 W2B-PATCH LIVE",
+        "wave": "M17 W2B-PATCH2 LIVE",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "model": "gemini-2.5-flash", "execution_environment": "local_python",
         "git_sha": sha, "cache_version": ident["cache_version"],
@@ -600,19 +682,19 @@ def _write_artifacts(out_dir, records, total, stop_reason, ident, sha,
             "production run_pipeline (bất biến #22), pattern_store=None nên KHÔNG "
             "có đường cache/pattern-reuse: mỗi case đi FRESH analyze → classify → "
             "simulate. Danh tính container xác minh RIÊNG bằng runtime_doctor "
-            "(runtime_identity_w2b_patch.json) — PASS trước khi chạy live."),
+            "(runtime_identity_w2b_patch2.json) — PASS trước khi chạy live."),
         "retry_note": (
             "`http_retry` = retry ở TẦNG HTTP (transient). `simulate_attempts` = "
             "lượt sinh spec của product semantics — HAI thứ KHÁC NHAU, báo riêng."),
     }
-    (out_dir / "live_table_query_patch.json").write_text(
+    (out_dir / "live_table_query_patch2.json").write_text(
         json.dumps({"run_meta": run_meta, "summary": summ, "cases": records},
                    ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     matrix = {r["case_id"]: r.get("grounding") for r in records
               if r["kind"] == "supported"}
     present = {k: v for k, v in matrix.items() if v}
-    (out_dir / "live_table_patch_grounding_matrix.json").write_text(
+    (out_dir / "live_table_patch2_grounding_matrix.json").write_text(
         json.dumps({"run_meta": run_meta, "matrix": matrix, "acceptance": {
             "grounding_perfect": _rate(
                 sum(1 for m in present.values() if m["grounding_perfect"]), len(present)),
@@ -628,13 +710,24 @@ def _write_artifacts(out_dir, records, total, stop_reason, ident, sha,
             "type_mismatches": summ["type_mismatches"],
         }}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    # §7 — ma trận MANIFEST FIDELITY (P2 và mọi supported table case).
+    mfx = {r["case_id"]: r.get("manifest_fidelity") for r in records
+           if r["kind"] == "supported" and r.get("manifest_fidelity")}
+    (out_dir / "live_table_patch2_manifest_matrix.json").write_text(
+        json.dumps({"run_meta": run_meta, "matrix": mfx, "acceptance": {
+            "manifest_fidelity_pass": _rate(
+                sum(1 for m in mfx.values() if m["manifest_fidelity_pass"]), len(mfx)),
+            "unexpected_stages_total": sum(len(m["unexpected_stages"]) for m in mfx.values()),
+            "missing_stages_total": sum(len(m["missing_stages"]) for m in mfx.values()),
+        }}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
     _write_report_md(out_dir, run_meta, summ, records)
     _write_ledger_md(out_dir, records, stop_reason)
 
 
 def _write_report_md(out_dir, meta, summ, records):
     L = [
-        "# M17 W2B-PATCH LIVE — kiểm chứng lại 3 finding đã vá", "",
+        "# M17 W2B-PATCH2 LIVE — kiểm chứng lại 3 finding đã vá", "",
         f"- Model **{meta['model']}** · env **{meta['execution_environment']}** · "
         f"SHA `{meta['git_sha'][:12]}` · cache **{meta['cache_version']}** · "
         f"family **{meta['family_count']}** · target **{meta['target_count']}** · "
@@ -645,7 +738,9 @@ def _write_report_md(out_dir, meta, summ, records):
         f"- HTTP **{summ['total_http']}**/{meta['budget']['max_http']} · "
         f"http-retry **{summ['http_retry']}** · transient **{summ['transient']}** · "
         f"reclassify **{summ['reclassification']}** · cache-hit **{summ['cache_hits']}**",
-        f"- valid-spec-first-attempt **{summ['valid_spec_first_attempt']}** · "
+        f"- valid-RAW-candidate-first **{summ['valid_raw_candidate_first_attempt']}** · "
+        f"valid-MERGED-candidate-first **{summ['valid_merged_candidate_first_attempt']}** · "
+        f"deterministic-merge **{summ['deterministic_merge_count']}** · "
         f"simulate attempts {summ['simulate_attempts_per_case']}",
         f"- grounding **{summ['grounding_perfect']}** · empty→0 "
         f"**{summ['empty_to_zero']}** · modified cells **{summ['modified_cells']}** · "
@@ -680,10 +775,20 @@ def _write_report_md(out_dir, meta, summ, records):
         L.append(f"- prompt: `{r['prompt'].splitlines()[-1]}`")
         L.append(f"- route: initial=`{r['initial_route']}` → final=`{r['final_route']}` "
                  f"· reclassify={r['reclassification']} · simulate_attempts="
-                 f"{r['simulate_attempts']} · valid-spec-first="
-                 f"{r['valid_spec_first_attempt']} · cache_hit={r['cache_hit']}")
+                 f"{r['simulate_attempts']} · valid-raw-first="
+                 f"{r.get('valid_raw_candidate_first_attempt')} · valid-merged-first="
+                 f"{r.get('valid_merged_candidate_first_attempt')} · merge="
+                 f"{r.get('deterministic_merge_count', 0)} · cache_hit={r['cache_hit']}")
         L.append(f"- analyze: result_ownership={r['analyze_result_ownership']!r} · "
                  f"requested_operations={r['analyze_requested_operations']}")
+        mf = r.get("manifest_fidelity")
+        if mf:
+            L.append(f"- manifest: prompt={mf['prompt_requested_stages']} · analyze="
+                     f"{mf['analyze_requested_stages']} · manifest={mf['manifest_stages']} · "
+                     f"raw={mf['raw_candidate_stage_set']} → merged="
+                     f"{mf['merged_candidate_stages']} · inserted={mf['inserted_stages']} · "
+                     f"corrected={mf['corrected_parameters']} · fidelity="
+                     f"{mf['manifest_fidelity_pass']}")
         if r["simulate_attempts"] > 1:
             L.append("- **PHẢN HỒI GIỮA CÁC LƯỢT SIMULATE:**")
             for a in r["simulate_attempt_detail"]:
@@ -713,13 +818,13 @@ def _write_report_md(out_dir, meta, summ, records):
         if r["problems"]:
             L.append(f"- **VẤN ĐỀ:** {r['problems']}")
         L.append("")
-    (out_dir / "live_table_query_patch_report.md").write_text(
+    (out_dir / "live_table_query_patch2_report.md").write_text(
         "\n".join(L) + "\n", encoding="utf-8")
 
 
 def _write_ledger_md(out_dir, records, stop_reason):
     fails = [r for r in records if not r["passed"]]
-    L = ["# M17 W2B-PATCH LIVE — Failure ledger", "",
+    L = ["# M17 W2B-PATCH2 LIVE — Failure ledger", "",
          f"STOP: **{stop_reason or 'không'}** · case KHÔNG đạt: **{len(fails)}**", ""]
     if not fails:
         L.append("Không case nào thất bại. Ba finding L3/L4/L5 đã được kiểm chứng "
@@ -739,19 +844,21 @@ def _write_ledger_md(out_dir, records, stop_reason):
             if r.get("dropped_pipeline_stages"):
                 L.append(f"- thiếu tầng: {r['dropped_pipeline_stages']}")
             L.append("")
-    (out_dir / "live_table_patch_failure_ledger.md").write_text(
+    (out_dir / "live_table_patch2_failure_ledger.md").write_text(
         "\n".join(L) + "\n", encoding="utf-8")
 
 
 def _print_summary(records, total, stop_reason):
     s = _summ(records, total, stop_reason)
-    print("\n=== M17 W2B-PATCH LIVE ===")
+    print("\n=== M17 W2B-PATCH2 LIVE ===")
     print(f"strict {s['strict_cases']} · supported {s['supported_passed']}/"
           f"{s['supported_run']} · negative {s['negative_passed']}/{s['negative_run']}")
     print(f"HTTP {s['total_http']} · http-retry {s['http_retry']} · transient "
           f"{s['transient']} · reclassify {s['reclassification']} · cache-hit "
           f"{s['cache_hits']}")
-    print(f"valid-spec-first {s['valid_spec_first_attempt']} · simulate attempts "
+    print(f"valid-raw-first {s['valid_raw_candidate_first_attempt']} · "
+          f"valid-merged-first {s['valid_merged_candidate_first_attempt']} · "
+          f"merge {s['deterministic_merge_count']} · attempts "
           f"{s['simulate_attempts_per_case']}")
     print(f"grounding {s['grounding_perfect']} · empty→0 {s['empty_to_zero']} · "
           f"generic-leak {s['generic_leak']} · fp-sim "

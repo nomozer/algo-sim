@@ -1,0 +1,347 @@
+{
+  "run_meta": {
+    "wave": "M17 W2B-PATCH2 LIVE",
+    "generated_at": "2026-07-25T07:25:47.972785+00:00",
+    "model": "gemini-2.5-flash",
+    "execution_environment": "local_python",
+    "git_sha": "9f717df8aca8d8e9352ed766cad08a328a3f6da8",
+    "cache_version": "21",
+    "family_count": 10,
+    "target_count": 20,
+    "stable_catalog_hash": "4f2a93ec2be37c3f9ee987986fcb454e64f7c9ca655095034641928b4be74cf7",
+    "budget": {
+      "max_cases": 4,
+      "max_http": 14,
+      "max_http_retry": 1,
+      "max_attempts_per_call": 2
+    },
+    "execution_note": "production run_pipeline (bất biến #22), pattern_store=None nên KHÔNG có đường cache/pattern-reuse: mỗi case đi FRESH analyze → classify → simulate. Danh tính container xác minh RIÊNG bằng runtime_doctor (runtime_identity_w2b_patch2.json) — PASS trước khi chạy live.",
+    "retry_note": "`http_retry` = retry ở TẦNG HTTP (transient). `simulate_attempts` = lượt sinh spec của product semantics — HAI thứ KHÁC NHAU, báo riêng."
+  },
+  "summary": {
+    "cases_run": 1,
+    "cases_passed": 0,
+    "strict_cases": "0/1",
+    "supported_run": 1,
+    "supported_passed": 0,
+    "negative_run": 0,
+    "negative_passed": 0,
+    "total_http": 5,
+    "total_logical": 5,
+    "http_retry": 0,
+    "transient": 0,
+    "reclassification": 0,
+    "cache_hits": 0,
+    "valid_raw_candidate_first_attempt": 0.0,
+    "valid_merged_candidate_first_attempt": 0.0,
+    "deterministic_merge_count": 0,
+    "simulate_attempts_per_case": {
+      "P2": 3
+    },
+    "grounding_perfect": null,
+    "modified_cells": 0,
+    "empty_to_zero": 0,
+    "type_mismatches": 0,
+    "generic_leak": 0,
+    "false_positive_simulation": 0,
+    "false_refusal": 1,
+    "result_leakage": 0,
+    "semantic_loss": 0,
+    "stop_reason": "P2: supported case status='unsupported' (mong 'ok')",
+    "all_passed": false
+  },
+  "cases": [
+    {
+      "case_id": "P2",
+      "finding": "L4",
+      "kind": "supported",
+      "prompt": "Cho bảng dữ liệu sau:\n\nTên | Tổ | Điểm | Số buổi vắng\nAn | A | 9.0 | 1\nBình | B | 8.5 | 0\nChi | A | 6.0 | 2\nDũng | A | 9.0 | 0\nHà | B | 7.5 | 3\nLan | A | 7.5 | 1\nMinh | A | 6.0 | 0\nNga | B | 9.5 | 2\n\nTrong tổ A, chỉ hiển thị Tên và Điểm, sắp xếp Điểm giảm dần, lấy 3 học sinh đầu, rồi tính điểm trung bình của 3 học sinh đó.",
+      "note": "NĂM tầng; aggregate SAU limit. Tổ A 5 hs → sort desc [An9,Dũng9,Lan7.5,Chi6,Minh6] → limit3 → avg=8.5.",
+      "http": 5,
+      "logical_calls": 5,
+      "http_retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "algorithmic",
+      "analyze_prescribed": null,
+      "analyze_requested_operations": [
+        "relational_table_query:filter",
+        "relational_table_query:projection",
+        "relational_table_query:sort",
+        "relational_table_query:limit",
+        "relational_table_query:avg"
+      ],
+      "analyze_requested_requirements": [
+        {
+          "operation": "relational_table_query:filter",
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:projection",
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:sort",
+          "query_group": 0,
+          "sort_column": "Điểm",
+          "sort_direction": "desc"
+        },
+        {
+          "operation": "relational_table_query:limit",
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:avg",
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        }
+      ],
+      "initial_route": "database.relational_table_query",
+      "final_route": null,
+      "reclassification": 0,
+      "simulate_attempts": 3,
+      "valid_raw_candidate_first_attempt": false,
+      "valid_merged_candidate_first_attempt": false,
+      "deterministic_merge_applied": false,
+      "deterministic_merge_count": 0,
+      "simulate_attempt_detail": [
+        {
+          "n": 0,
+          "ok": false,
+          "error_code": "semantic_incomplete",
+          "message": "Đề yêu cầu một QUY TRÌNH gồm các bước: filter, projection, sort, limit, aggregate (chạy đúng thứ tự filter → projection → sort → limit → aggregate). Spec vừa gửi THIẾU các trường: limit, aggregate. Hãy điền đủ, KHÔNG bỏ bước nào."
+        },
+        {
+          "n": 1,
+          "ok": false,
+          "error_code": "semantic_incomplete",
+          "message": "Đề yêu cầu một QUY TRÌNH gồm các bước: filter, projection, sort, limit, aggregate (chạy đúng thứ tự filter → projection → sort → limit → aggregate). Spec vừa gửi THIẾU các trường: limit, aggregate. Hãy điền đủ, KHÔNG bỏ bước nào."
+        },
+        {
+          "n": 2,
+          "ok": false,
+          "error_code": "semantic_incomplete",
+          "message": "Đề yêu cầu một QUY TRÌNH gồm các bước: filter, projection, sort, limit, aggregate (chạy đúng thứ tự filter → projection → sort → limit → aggregate). Spec vừa gửi THIẾU các trường: limit, aggregate. Hãy điền đủ, KHÔNG bỏ bước nào."
+        }
+      ],
+      "cache_hit": false,
+      "cache_source": "none",
+      "status": "unsupported",
+      "failure_category": "semantic_incomplete",
+      "error_code": "pipeline_stage_incomplete",
+      "pipeline_error": null,
+      "learner_reason": "Mô phỏng dựng ra chưa trả lời đủ đề: chưa dựng được 2 bước (lấy số dòng đầu; tính trung bình một cột). Hệ không trả lời nửa vời. Em thử hỏi lại và nêu rõ từng bước cần làm (ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì).",
+      "simulation_created": false,
+      "grounding": null,
+      "leakage": [],
+      "operations": null,
+      "expected_operations": {
+        "filter": true,
+        "projection": [
+          "Tên",
+          "Điểm"
+        ],
+        "sort": [
+          "Điểm",
+          "desc"
+        ],
+        "limit": 3,
+        "aggregate": [
+          "avg",
+          "Điểm"
+        ]
+      },
+      "requested_stages_expected": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "represented_stages": null,
+      "dropped_pipeline_stages": [],
+      "manifest_fidelity": null,
+      "completeness_evidence": {
+        "requested_operations": [
+          "relational_table_query:avg",
+          "relational_table_query:filter",
+          "relational_table_query:limit",
+          "relational_table_query:projection",
+          "relational_table_query:sort"
+        ],
+        "requested_semantic_requirements": [
+          {
+            "semantic_operation_id": "table.aggregate",
+            "semantic_variant_id": "avg",
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.filter_rows",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.limit_rows",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.project_columns",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.sort_rows",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          }
+        ],
+        "represented_operations": [
+          "relational_table_query:avg",
+          "relational_table_query:count",
+          "relational_table_query:filter",
+          "relational_table_query:limit",
+          "relational_table_query:max",
+          "relational_table_query:min",
+          "relational_table_query:projection",
+          "relational_table_query:sort",
+          "relational_table_query:sum"
+        ],
+        "represented_semantic_operations": [
+          {
+            "semantic_operation_id": "table.aggregate",
+            "semantic_variant_id": "avg",
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.aggregate",
+            "semantic_variant_id": "count",
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.aggregate",
+            "semantic_variant_id": "max",
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.aggregate",
+            "semantic_variant_id": "min",
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.aggregate",
+            "semantic_variant_id": "sum",
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.filter_rows",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.limit_rows",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.project_columns",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          },
+          {
+            "semantic_operation_id": "table.sort_rows",
+            "semantic_variant_id": null,
+            "semantic_goal_id": null
+          }
+        ],
+        "represented_semantic_variants": [
+          "avg",
+          "count",
+          "max",
+          "min",
+          "sum"
+        ],
+        "dropped_semantic_requirements": [],
+        "dropped_operations": [],
+        "dropped_operation_labels": [],
+        "requested_in_family": [],
+        "represented": [
+          "relational_table_query.aggregate_accumulate",
+          "relational_table_query.bounded_limit",
+          "relational_table_query.column_projection",
+          "relational_table_query.row_predicate_filter",
+          "relational_table_query.stable_sort_by_key"
+        ],
+        "dropped_requirements": [],
+        "family_id": "relational_table_query",
+        "authoritative_stage_order": [
+          "filter",
+          "projection",
+          "sort",
+          "limit",
+          "aggregate"
+        ],
+        "requested_pipeline": [
+          "filter",
+          "projection",
+          "sort",
+          "limit",
+          "aggregate"
+        ],
+        "represented_pipeline": [
+          "filter",
+          "projection",
+          "sort"
+        ],
+        "dropped_pipeline_stages": [
+          "limit",
+          "aggregate"
+        ],
+        "mismatched_stage_parameters": [],
+        "unverified_parameters": [
+          "sort_column"
+        ],
+        "completeness_decision": "incomplete"
+      },
+      "expected_final": {
+        "rows": [
+          {
+            "Tên": "An",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Dũng",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Lan",
+            "Điểm": 7.5
+          }
+        ],
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        }
+      },
+      "actual_final": null,
+      "plan_equivalence": null,
+      "final_accept_rule": null,
+      "result_leakage": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": true,
+      "passed": false,
+      "problems": [
+        "status=unsupported (mong ok)",
+        "route=None",
+        "không có config hợp lệ để audit"
+      ]
+    }
+  ]
+}

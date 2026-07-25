@@ -1,0 +1,27 @@
+{
+  "run_meta": {
+    "wave": "M17 W2B-PATCH2 LIVE",
+    "generated_at": "2026-07-25T07:25:47.972785+00:00",
+    "model": "gemini-2.5-flash",
+    "execution_environment": "local_python",
+    "git_sha": "9f717df8aca8d8e9352ed766cad08a328a3f6da8",
+    "cache_version": "21",
+    "family_count": 10,
+    "target_count": 20,
+    "stable_catalog_hash": "4f2a93ec2be37c3f9ee987986fcb454e64f7c9ca655095034641928b4be74cf7",
+    "budget": {
+      "max_cases": 4,
+      "max_http": 14,
+      "max_http_retry": 1,
+      "max_attempts_per_call": 2
+    },
+    "execution_note": "production run_pipeline (bất biến #22), pattern_store=None nên KHÔNG có đường cache/pattern-reuse: mỗi case đi FRESH analyze → classify → simulate. Danh tính container xác minh RIÊNG bằng runtime_doctor (runtime_identity_w2b_patch2.json) — PASS trước khi chạy live.",
+    "retry_note": "`http_retry` = retry ở TẦNG HTTP (transient). `simulate_attempts` = lượt sinh spec của product semantics — HAI thứ KHÁC NHAU, báo riêng."
+  },
+  "matrix": {},
+  "acceptance": {
+    "manifest_fidelity_pass": null,
+    "unexpected_stages_total": 0,
+    "missing_stages_total": 0
+  }
+}
