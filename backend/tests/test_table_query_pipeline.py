@@ -238,13 +238,17 @@ def test_fx10c_COUNT_va_SUM_cung_dieu_kien_van_la_hai_truy_van(monkeypatch):
 
 
 def test_fx10d_pipeline_mot_truy_van_khong_bi_chan_oan(monkeypatch):
-    """Bốn tầng CÙNG một truy vấn (cùng query_group) ⇒ KHÔNG chặn."""
-    g = {"query_group": 0, "filter_column": "diem", "filter_op": ">=",
-         "filter_value": 6}
+    """Bốn tầng CÙNG một truy vấn (cùng query_group) ⇒ KHÔNG chặn.
+
+    (W2B-PATCH3) Mỗi tầng khai ĐỦ tham số grounded ⇒ analyze complete, KHÔNG
+    kích hoạt bounded repair — test đo đúng việc query-grouping, không lẫn params."""
+    q = {"query_group": 0}
     env = _run(monkeypatch, [
         _an_req("Lọc, chọn cột, sắp xếp, lấy 2 dòng", [
-            _req("filter", **g), _req("projection", **g),
-            _req("sort", **g), _req("limit", **g),
+            _req("filter", **q, filter_column="diem", filter_op=">=", filter_value=6),
+            _req("projection", **q, projection_columns=["ten", "diem"]),
+            _req("sort", **q, sort_column="diem", sort_direction="desc"),
+            _req("limit", **q, limit=2),
         ]),
         json.dumps(_classify(TARGET)),
         _table_cfg(_TB_SCHEMA, _TB_ROWS,

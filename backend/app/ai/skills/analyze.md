@@ -58,7 +58,24 @@ CÁC TRƯỜNG TRÍCH XUẤT:
     B" → hai phần tử: {operation:"relational_table_query:count", query_group:0,
     filter_column:"to", filter_op:"=", filter_value:"A"} và {…, query_group:1,
     filter_value:"B"}. KHÔNG gộp thành một — gộp là bỏ mất một yêu cầu của đề.
-  - CHỈ ghi trường đề THẬT SỰ nêu. KHÔNG tự điền cột, điều kiện hay giá trị mẫu.
+  - **THAM SỐ BẮT BUỘC CỦA TỪNG TẦNG (điền ĐỦ khi đề nêu — đừng chỉ ghi
+    operation rồi bỏ trống tham số):**
+    - tầng `filter`: BẮT BUỘC `filter_column`, `filter_op`, và `filter_value`
+      (trừ khi toán tử là "is null"/"is not null"). "trong tổ A" →
+      filter_column="Tổ", filter_op="=", filter_value="A".
+    - tầng `projection`: BẮT BUỘC `projection_columns` (danh sách ≥1 cột). "chỉ
+      hiển thị Tên và Điểm" → projection_columns=["Tên","Điểm"].
+    - tầng `sort`: BẮT BUỘC `sort_column` (+ `sort_direction` asc/desc). "sắp
+      xếp Điểm giảm dần" → sort_column="Điểm", sort_direction="desc".
+    - tầng `limit`: BẮT BUỘC `limit` là số nguyên ≥1. "lấy 3 học sinh đầu" →
+      limit=3.
+    - tầng tổng hợp (`avg`/`sum`/`min`/`max`): BẮT BUỘC `aggregate_column`.
+      "tính điểm trung bình" → aggregate_func="avg", aggregate_column="Điểm".
+      `count` toàn bảng → count_mode="star"; đếm theo cột → aggregate_column.
+    Nêu ĐỦ 5 tầng khi đề là "lọc → chọn cột → sắp xếp → lấy n → tính trung
+    bình", MỖI tầng kèm tham số của nó.
+  - CHỈ ghi trường đề THẬT SỰ nêu. KHÔNG tự điền cột, điều kiện hay giá trị mẫu
+    khi đề KHÔNG nêu — thiếu thì để trống, máy chủ sẽ hỏi lại có kiểm soát.
 - requested_mechanisms: LIỆT KÊ ĐỦ **mọi** cơ chế đề yêu cầu (cùng bộ giá trị
   với prescribed_procedure). Đề hỏi NHIỀU thao tác thì phải nêu ĐỦ, KHÔNG được
   rút gọn còn một. Ví dụ: đề bảo "xác định thứ tự ghi nhận trong cả bốn quy

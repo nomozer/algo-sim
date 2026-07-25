@@ -15,6 +15,10 @@ from app.simulation.completeness_gate import (
     check_represented_coverage,
     check_requested_combination,
 )
+from app.simulation.analyze_table_params import (
+    patch_requirements,
+    validate_table_parameters,
+)
 from app.simulation.computation_gate import check_computation_ownership
 from app.simulation.pipeline_stages import stage_shortfall_message
 from app.simulation.table_pipeline_manifest import (
@@ -157,6 +161,9 @@ ANALYZE_SCHEMA = {
                     "filter_value": {"type": "STRING", "nullable": True},
                     "aggregate_func": {"type": "STRING", "nullable": True},
                     "aggregate_column": {"type": "STRING", "nullable": True},
+                    # W2B-PATCH3 §B — phân biệt COUNT(*) và COUNT(cột).
+                    "count_mode": {"type": "STRING", "enum": ["star", "column"],
+                                   "nullable": True},
                     "projection_columns": {"type": "ARRAY", "items": {"type": "STRING"},
                                            "nullable": True},
                     "sort_column": {"type": "STRING", "nullable": True},
@@ -269,6 +276,72 @@ async def stage_analyze(text: str, api_key: str) -> dict:
         api_key, "analyze", user, ANALYZE_SCHEMA, 0.1, 1,
         "Lần trước không phải JSON hợp lệ. Trả về đúng một đối tượng JSON theo schema.",
     )
+
+
+# W2B-PATCH3 §E — schema repair chỉ trả `requested_requirements` (dùng lại đúng
+# item shape của ANALYZE_SCHEMA — một nguồn).
+_REPAIR_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {"requested_requirements": ANALYZE_SCHEMA["properties"]["requested_requirements"]},
+    "required": ["requested_requirements"],
+}
+
+_STAGE_PARAM_LABEL = {
+    "filter_column": "cột lọc", "filter_op": "toán tử lọc", "filter_value": "giá trị lọc",
+    "projection_columns": "danh sách cột hiển thị", "sort_column": "cột sắp xếp",
+    "limit": "số dòng cần lấy", "aggregate_func": "hàm tổng hợp",
+    "aggregate_column": "cột để tính tổng hợp",
+}
+
+
+async def stage_repair_table_params(
+    text: str, analysis: dict, report: dict, api_key: str
+) -> list | None:
+    """§E — BOUNDED repair (đúng MỘT lượt): gửi requested_requirements cũ + danh
+    sách tham số THIẾU đích danh + tiêu đề cột đề cho + đề gốc, yêu cầu chỉ ĐIỀN
+    field thiếu khi đề nêu rõ. Trả requested_requirements repair, hoặc None.
+
+    KHÔNG dùng prose chung; KHÔNG regenerate toàn bộ analyze."""
+    missing = report.get("missing_parameters_by_stage", {})
+    lines = []
+    for stage, fields in missing.items():
+        human = ", ".join(_STAGE_PARAM_LABEL.get(f, f) for f in fields)
+        lines.append(f"- tầng {stage}: còn thiếu {human}")
+    headers = _column_headers_from_analysis(analysis)
+    user = (
+        f'Đề gốc:\n"""\n{text}\n"""\n\n'
+        f"Các cột bảng đề cho: {', '.join(headers) if headers else '(suy từ đề)'}\n\n"
+        "Bạn đã nhận ra các thao tác cần làm, nhưng MỘT SỐ THAM SỐ BẮT BUỘC còn "
+        "thiếu:\n" + "\n".join(lines) + "\n\n"
+        "requested_requirements hiện tại:\n"
+        f"{json.dumps(analysis.get('requested_requirements'), ensure_ascii=False)}\n\n"
+        "Hãy trả lại requested_requirements ĐÃ HOÀN THIỆN: GIỮ NGUYÊN mọi field đã "
+        "có, chỉ ĐIỀN các tham số còn thiếu, và CHỈ khi đề nêu rõ (ví dụ 'lấy 3 "
+        "học sinh đầu' → limit=3; 'trung bình Điểm' → aggregate_column=Điểm). "
+        "TUYỆT ĐỐI KHÔNG đoán khi đề không nêu, KHÔNG tính kết quả, KHÔNG thêm "
+        "dòng/giá trị tổng hợp cuối."
+    )
+    try:
+        result = await _call_json(
+            api_key, "analyze", user, _REPAIR_SCHEMA, 0.0, 0,
+            "Trả về đúng một đối tượng JSON theo schema.",
+        )
+    except RuntimeError:
+        return None
+    reqs = result.get("requested_requirements")
+    return reqs if isinstance(reqs, list) else None
+
+
+def _column_headers_from_analysis(analysis: dict) -> list[str]:
+    """Tiêu đề cột suy từ evidence analyze (objects 'cột X') — gợi ý cho repair,
+    KHÔNG phải schema quyền uy."""
+    out: list[str] = []
+    objs = analysis.get("objects") if isinstance(analysis, dict) else None
+    if isinstance(objs, list):
+        for o in objs:
+            if isinstance(o, str) and o.strip().lower().startswith("cột "):
+                out.append(o.strip()[4:].strip())
+    return out
 
 
 async def stage_classify(
@@ -632,6 +705,36 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
           canonical_prescribed=canonical_mechanism(analysis.get("prescribed_procedure")) if isinstance(analysis, dict) else None,
           requested_operations=analysis.get("requested_operations") if isinstance(analysis, dict) else None,
           requested_requirements=analysis.get("requested_requirements") if isinstance(analysis, dict) else None)
+
+    # W2B-PATCH3 §C/§E — HOÀN CHỈNH THAM SỐ TẦNG: analyze có thể nhận đủ 5
+    # operation nhưng để trống tham số bắt buộc (live P2). Kiểm tất định + MỘT
+    # lượt repair bounded để điền tham số grounded, TRƯỚC classify/manifest.
+    # Vẫn thiếu → để nguyên: manifest chỉ ground được phần có, cổng fail-closed
+    # dưới dòng lo phần còn lại (KHÔNG bịa từ prose).
+    param_report = validate_table_parameters(analysis)
+    _emit(observer, "analyze_param_check",
+          decision=param_report["analyze_parameter_decision"],
+          requested_stages=param_report["requested_stages"],
+          incomplete_stages=param_report["incomplete_stages"],
+          missing_parameters=param_report["missing_parameters_by_stage"])
+    if param_report["analyze_parameter_decision"] == "incomplete":
+        incomplete_before = list(param_report["incomplete_stages"])
+        repaired = await stage_repair_table_params(text, analysis, param_report, api_key)
+        after = param_report
+        if repaired is not None:
+            patched = patch_requirements(analysis.get("requested_requirements"), repaired)
+            candidate = {**analysis, "requested_requirements": patched}
+            after = validate_table_parameters(candidate)
+            # Chỉ nhận bản patch nếu nó THỰC SỰ giảm số tầng thiếu (không làm tệ hơn).
+            if len(after["incomplete_stages"]) < len(incomplete_before):
+                analysis = candidate
+        _emit(observer, "analyze_param_repair",
+              attempted=True,
+              succeeded=after["analyze_parameter_decision"] == "complete",
+              incomplete_before=incomplete_before,
+              incomplete_after=after["incomplete_stages"],
+              repaired_requirements=analysis.get("requested_requirements")
+              if isinstance(analysis, dict) else None)
 
     # M7.11: Representation Plan TẤT ĐỊNH (analysis → semantic requirements → plan).
     plan = build_representation_plan(analysis)

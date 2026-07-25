@@ -227,10 +227,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     dưới luật mới."""
     from app.main import _cache_lookup
 
-    # M17 W2B-PATCH2 (bump 20→21): prompt simulate nay mang MANIFEST TẦNG máy-đọc
-    # + merge tất định bù tầng. Đầu vào sinh spec đổi ⇒ envelope cache cũ (có thể
-    # là spec 3-tang chưa merge) phải MISS để sinh lại dưới cơ chế mới.
-    assert main_module.CACHE_VERSION == "21"
+    # M17 W2B-PATCH3 (bump 21→22): analyze prompt/schema (count_mode, tham số
+    # tầng bắt buộc) + validator hoàn chỉnh tham số + bounded repair. Hợp đồng
+    # analyze đổi ⇒ envelope cache cũ phải MISS để phân tích lại.
+    assert main_module.CACHE_VERSION == "22"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

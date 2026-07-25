@@ -462,6 +462,11 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
     raw_first_ok = bool(case.expected_stages) and set(case.expected_stages).issubset(
         set(first_raw_stages)) if first_merge else None
     merged_first_ok = bool(sim_attempts) and sim_attempts[0].get("ok") is True
+    # §I — ANALYZE PARAMETER GROUNDING (PATCH3): check + bounded repair.
+    param_check = next((d for (et, d) in obs.events if et == "analyze_param_check"), {})
+    param_repair = next((d for (et, d) in obs.events if et == "analyze_param_repair"), {})
+    analyze_first_ok = (param_check.get("decision") == "complete"
+                        if param_check else None)
     status = (env or {}).get("status") if env else ("error" if err else None)
     route = (env or {}).get("simulation_id")
     config = (env or {}).get("config") if env else None
@@ -480,6 +485,13 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
         "final_route": route,
         "reclassification": 1 if obs.reclassify_attempted() else 0,
         "simulate_attempts": len(sim_attempts),
+        # §I PATCH3 — analyze parameter grounding (KHÔNG gộp vào simulate attempts).
+        "valid_analyze_parameters_first_attempt": analyze_first_ok,
+        "analyze_repair_attempted": bool(param_repair.get("attempted")),
+        "analyze_repair_succeeded": bool(param_repair.get("succeeded")),
+        "incomplete_stages_before_repair": param_check.get("incomplete_stages", []),
+        "incomplete_stages_after_repair": param_repair.get("incomplete_after",
+                                                           param_check.get("incomplete_stages", [])),
         # §8 — báo RIÊNG raw vs merged; KHÔNG gọi raw thiếu tầng là "valid first".
         "valid_raw_candidate_first_attempt": raw_first_ok,
         "valid_merged_candidate_first_attempt": merged_first_ok,

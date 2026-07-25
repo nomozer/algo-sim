@@ -191,8 +191,48 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > generic/pattern-reuse bất biến. Offline sau PATCH2: pytest **1044** (2 skip, 1
 > deselect; +48 test: manifest 19 · production merge 6 · plan-equivalence 13 ·
 > live-policy 11, trừ các test PATCH1 superseded) · vitest **596/46** (FE không
-> đổi → KHÔNG recapture visual) · build sạch · conformance 20/0. **LIVE
-> CHƯA CHẠY LẠI — chờ duyệt.** Wave 2B vẫn CHƯA CLOSE. Wave 2C KHÔNG mở.
+> đổi → KHÔNG recapture visual) · build sạch · conformance 20/0.
+>
+> **W2B-PATCH2 LIVE (`9f717df` impl, `4d9e8ac` artifact):** runtime doctor PASS
+> (sha/cache 21/family 10/target 20/hash khớp). 4 case, P2 chạy đầu. **strict
+> 0/1 · P2 FAIL · run DỪNG tại P2** (đúng stop condition; §I stop-check nay bắt
+> đúng: status='unsupported' → dừng, lỗ hổng cũ chỉ bắt 'error'). merge=0.
+> **NGUYÊN NHÂN GỐC (đo được):** analyze THẬT phát `requested_requirements` đủ 5
+> operation NHƯNG để trống THAM SỐ 4/5 tầng — chỉ `sort` có tham số
+> (sort_column/direction); filter/projection/limit/aggregate đều null. Manifest
+> chỉ ground được `sort` → merge KHÔNG bịa (đúng §E) → LLM simulate 3-tầng cả 3
+> lượt → fail-closed. Cơ chế đúng, GIẢ ĐỊNH ĐẦU VÀO sai: offline PATCH2 điền tay
+> tham số nên xanh — live model không điền. Hai lớp phòng thủ giữ (semantic-loss
+> 0, fp-sim 0, generic-leak 0, result-leak 0). Chi tiết `W2B_PATCH2_LIVE_
+> ROOTCAUSE.md`. **KHÔNG sửa production trong run.**
+>
+> **Wave 2B-PATCH3 — Analyze Parameter Grounding (offline XONG, `9f717df`
+> onward):** vá đúng root defect PATCH2 live tại TẦNG ANALYZE. **§A:** analyze
+> KHÔNG được phát "operation được yêu cầu nhưng tham số bắt buộc null" rồi cho đi
+> tiếp — một stage chỉ grounded khi đủ tham số. **§C VALIDATOR TẤT ĐỊNH**
+> (`simulation/analyze_table_params.py`) chạy sau analyze, trước classify/
+> manifest: báo requested/grounded/incomplete stages + missing/invalid params +
+> unknown column refs + decision. Trên EXACT live P2 payload (`4d9e8ac`, KHÔNG
+> hand-populate): incomplete = [filter, projection, limit, aggregate], grounded
+> = [sort]. Luật §B: filter cần column+op+value (trừ null-op), projection cần
+> columns≥1, sort cần column, limit cần int≥1, aggregate cần func+column (trừ
+> COUNT(*)); count_mode='star'+column = mâu thuẫn → invalid; chỉ áp table, family
+> khác not_applicable. **§E BOUNDED REPAIR (đúng MỘT lượt):** gửi tham số thiếu
+> đích danh + tiêu đề cột + đề gốc, yêu cầu chỉ điền field thiếu khi đề nêu rõ,
+> KHÔNG đoán/tính kết quả; `patch_requirements` TẤT ĐỊNH chỉ điền field còn
+> thiếu, KHÔNG ghi đè field hợp lệ (sort giữ nguyên), KHÔNG thêm stage mới, chỉ
+> nhận field trong tập đóng (không chèn kết quả); bản patch chỉ nhận nếu giảm số
+> tầng thiếu. **§F:** repair đủ → manifest 5 tầng → merge PATCH2 → EXACT live P2
+> nay CHẠY (AVG 8.5/3); vẫn thiếu → fail-closed (learner message KHÔNG đổi →
+> không recapture visual). **§I:** observer passive phát `analyze_param_check` +
+> `analyze_param_repair` (before/after + repaired_requirements); metrics báo
+> RIÊNG, không gộp simulate attempts. `CACHE_VERSION` **21→22** (analyze prompt/
+> schema count_mode + tham số tầng + validator + repair); `config_contract_
+> version` GIỮ table-1.1, `HISTORY_SCHEMA_VERSION` GIỮ 2. analyze.md siết yêu cầu
+> điền tham số từng tầng. Offline sau PATCH3: pytest **1071** (2 skip, 1 deselect;
+> +27: validator 17 + repair 10) · vitest **596/46** (FE không đổi) · build sạch ·
+> conformance 20/0 · descriptors không trôi. **LIVE CHƯA CHẠY LẠI — chờ duyệt.**
+> Wave 2B vẫn CHƯA CLOSE. Wave 2C KHÔNG mở.
 >
 > **Backlog Analyze Integrity CÒN MỞ:**
 > provenance/source-span của từng object/relation chưa xác minh — analyze
