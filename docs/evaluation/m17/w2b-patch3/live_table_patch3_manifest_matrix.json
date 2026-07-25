@@ -1,0 +1,112 @@
+{
+  "run_meta": {
+    "wave": "M17 W2B-PATCH3 LIVE",
+    "generated_at": "2026-07-25T10:34:03.380998+00:00",
+    "model": "gemini-2.5-flash",
+    "execution_environment": "local_python",
+    "git_sha": "0513740a2d7450d293e6373cb34f02fec903a787",
+    "cache_version": "22",
+    "family_count": 10,
+    "target_count": 20,
+    "stable_catalog_hash": "4f2a93ec2be37c3f9ee987986fcb454e64f7c9ca655095034641928b4be74cf7",
+    "budget": {
+      "max_cases": 4,
+      "max_http": 14,
+      "max_http_retry": 1,
+      "max_attempts_per_call": 2
+    },
+    "execution_note": "production run_pipeline (bất biến #22), pattern_store=None nên KHÔNG có đường cache/pattern-reuse: mỗi case đi FRESH analyze → classify → simulate. Danh tính container xác minh RIÊNG bằng runtime_doctor (runtime_identity_w2b_patch3.json) — PASS trước khi chạy live.",
+    "retry_note": "`http_retry` = retry ở TẦNG HTTP (transient). `simulate_attempts` = lượt sinh spec của product semantics — HAI thứ KHÁC NHAU, báo riêng."
+  },
+  "matrix": {
+    "P2": {
+      "prompt_requested_stages": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "analyze_requested_stages": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "manifest_stages": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "manifest_complete": true,
+      "manifest_stage_grounded": {
+        "filter": true,
+        "projection": true,
+        "sort": true,
+        "limit": true,
+        "aggregate": true
+      },
+      "manifest_unresolved_fields": {},
+      "manifest_parameters": {
+        "filter": {
+          "column": "Tổ",
+          "op": "=",
+          "value": "A"
+        },
+        "projection": {
+          "columns": [
+            "Tên",
+            "Điểm"
+          ]
+        },
+        "sort": {
+          "column": "Điểm",
+          "direction": "desc"
+        },
+        "limit": {
+          "count": 3
+        },
+        "aggregate": {
+          "func": "avg",
+          "column": "Điểm"
+        }
+      },
+      "raw_candidate_stage_set": [
+        "filter",
+        "projection",
+        "sort"
+      ],
+      "merged_candidate_stages": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "inserted_stages": [
+        "limit",
+        "aggregate"
+      ],
+      "corrected_parameters": [],
+      "confirmed_stages": [
+        "filter",
+        "projection",
+        "sort"
+      ],
+      "deterministic_merge_applied": true,
+      "unexpected_stages": [],
+      "missing_stages": [],
+      "manifest_fidelity_pass": true,
+      "raw_candidate_full_config_persisted": false
+    }
+  },
+  "acceptance": {
+    "manifest_fidelity_pass": 1.0,
+    "manifest_complete": 1.0,
+    "unexpected_stages_total": 0,
+    "missing_stages_total": 0
+  }
+}

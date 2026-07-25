@@ -1,0 +1,527 @@
+{
+  "run_meta": {
+    "wave": "M17 W2B-PATCH3 LIVE",
+    "generated_at": "2026-07-25T10:34:03.380998+00:00",
+    "model": "gemini-2.5-flash",
+    "execution_environment": "local_python",
+    "git_sha": "0513740a2d7450d293e6373cb34f02fec903a787",
+    "cache_version": "22",
+    "family_count": 10,
+    "target_count": 20,
+    "stable_catalog_hash": "4f2a93ec2be37c3f9ee987986fcb454e64f7c9ca655095034641928b4be74cf7",
+    "budget": {
+      "max_cases": 4,
+      "max_http": 14,
+      "max_http_retry": 1,
+      "max_attempts_per_call": 2
+    },
+    "execution_note": "production run_pipeline (bất biến #22), pattern_store=None nên KHÔNG có đường cache/pattern-reuse: mỗi case đi FRESH analyze → classify → simulate. Danh tính container xác minh RIÊNG bằng runtime_doctor (runtime_identity_w2b_patch3.json) — PASS trước khi chạy live.",
+    "retry_note": "`http_retry` = retry ở TẦNG HTTP (transient). `simulate_attempts` = lượt sinh spec của product semantics — HAI thứ KHÁC NHAU, báo riêng."
+  },
+  "summary": {
+    "cases_run": 1,
+    "cases_passed": 0,
+    "strict_cases": "0/1",
+    "supported_run": 1,
+    "supported_passed": 0,
+    "negative_run": 0,
+    "negative_passed": 0,
+    "total_http": 3,
+    "total_logical": 3,
+    "http_retry": 0,
+    "transient": 0,
+    "reclassification": 0,
+    "cache_hits": 0,
+    "valid_raw_candidate_first_attempt": 0.0,
+    "valid_merged_candidate_first_attempt": 1.0,
+    "deterministic_merge_count": 1,
+    "simulate_attempts_per_case": {
+      "P2": 1
+    },
+    "grounding_perfect": 0.0,
+    "modified_cells": 0,
+    "empty_to_zero": 0,
+    "type_mismatches": 0,
+    "generic_leak": 0,
+    "false_positive_simulation": 0,
+    "false_refusal": 0,
+    "result_leakage": 0,
+    "semantic_loss": 0,
+    "stop_reason": "P2: schema mất/thêm cột",
+    "all_passed": false
+  },
+  "cases": [
+    {
+      "case_id": "P2",
+      "finding": "L4",
+      "kind": "supported",
+      "prompt": "Cho bảng dữ liệu sau:\n\nTên | Tổ | Điểm | Số buổi vắng\nAn | A | 9.0 | 1\nBình | B | 8.5 | 0\nChi | A | 6.0 | 2\nDũng | A | 9.0 | 0\nHà | B | 7.5 | 3\nLan | A | 7.5 | 1\nMinh | A | 6.0 | 0\nNga | B | 9.5 | 2\n\nTrong tổ A, chỉ hiển thị Tên và Điểm, sắp xếp Điểm giảm dần, lấy 3 học sinh đầu, rồi tính điểm trung bình của 3 học sinh đó.",
+      "note": "NĂM tầng; aggregate SAU limit. Tổ A 5 hs → sort desc [An9,Dũng9,Lan7.5,Chi6,Minh6] → limit3 → avg=8.5.",
+      "http": 3,
+      "logical_calls": 3,
+      "http_retry": 0,
+      "transient": 0,
+      "analyze_result_ownership": "algorithmic",
+      "analyze_prescribed": null,
+      "analyze_requested_operations": [
+        "relational_table_query:filter",
+        "relational_table_query:projection",
+        "relational_table_query:sort",
+        "relational_table_query:limit",
+        "relational_table_query:avg"
+      ],
+      "analyze_requested_requirements": [
+        {
+          "operation": "relational_table_query:filter",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": "Tổ",
+          "filter_op": "=",
+          "filter_value": "A",
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:projection",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": null,
+          "projection_columns": [
+            "Tên",
+            "Điểm"
+          ],
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:sort",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": "Điểm",
+          "sort_direction": "desc"
+        },
+        {
+          "operation": "relational_table_query:limit",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": 3,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:avg",
+          "aggregate_column": "Điểm",
+          "aggregate_func": "avg",
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        }
+      ],
+      "initial_route": "database.relational_table_query",
+      "final_route": "database.relational_table_query",
+      "reclassification": 0,
+      "simulate_attempts": 1,
+      "valid_analyze_parameters_first_attempt": true,
+      "analyze_repair_attempted": false,
+      "analyze_repair_succeeded": false,
+      "incomplete_stages_before_repair": [],
+      "incomplete_stages_after_repair": [],
+      "analyze_repair_matrix": {
+        "requested_requirements_first_attempt": [
+          {
+            "operation": "relational_table_query:filter",
+            "aggregate_column": null,
+            "aggregate_func": null,
+            "count_mode": null,
+            "filter_column": "Tổ",
+            "filter_op": "=",
+            "filter_value": "A",
+            "limit": null,
+            "projection_columns": null,
+            "query_group": 0,
+            "sort_column": null,
+            "sort_direction": null
+          },
+          {
+            "operation": "relational_table_query:projection",
+            "aggregate_column": null,
+            "aggregate_func": null,
+            "count_mode": null,
+            "filter_column": null,
+            "filter_op": null,
+            "filter_value": null,
+            "limit": null,
+            "projection_columns": [
+              "Tên",
+              "Điểm"
+            ],
+            "query_group": 0,
+            "sort_column": null,
+            "sort_direction": null
+          },
+          {
+            "operation": "relational_table_query:sort",
+            "aggregate_column": null,
+            "aggregate_func": null,
+            "count_mode": null,
+            "filter_column": null,
+            "filter_op": null,
+            "filter_value": null,
+            "limit": null,
+            "projection_columns": null,
+            "query_group": 0,
+            "sort_column": "Điểm",
+            "sort_direction": "desc"
+          },
+          {
+            "operation": "relational_table_query:limit",
+            "aggregate_column": null,
+            "aggregate_func": null,
+            "count_mode": null,
+            "filter_column": null,
+            "filter_op": null,
+            "filter_value": null,
+            "limit": 3,
+            "projection_columns": null,
+            "query_group": 0,
+            "sort_column": null,
+            "sort_direction": null
+          },
+          {
+            "operation": "relational_table_query:avg",
+            "aggregate_column": "Điểm",
+            "aggregate_func": "avg",
+            "count_mode": null,
+            "filter_column": null,
+            "filter_op": null,
+            "filter_value": null,
+            "limit": null,
+            "projection_columns": null,
+            "query_group": 0,
+            "sort_column": null,
+            "sort_direction": null
+          }
+        ],
+        "validation_decision": "complete",
+        "grounded_before": [
+          "filter",
+          "projection",
+          "sort",
+          "limit",
+          "aggregate"
+        ],
+        "incomplete_before": [],
+        "missing_parameters_by_stage": {},
+        "repair_attempted": false,
+        "repair_succeeded": false,
+        "repaired_requirements": null,
+        "incomplete_after": []
+      },
+      "valid_raw_candidate_first_attempt": false,
+      "valid_merged_candidate_first_attempt": true,
+      "deterministic_merge_applied": true,
+      "deterministic_merge_count": 1,
+      "simulate_attempt_detail": [
+        {
+          "n": 0,
+          "ok": true,
+          "error_code": null,
+          "message": ""
+        }
+      ],
+      "cache_hit": false,
+      "cache_source": "none",
+      "status": "ok",
+      "failure_category": null,
+      "error_code": null,
+      "pipeline_error": null,
+      "learner_reason": null,
+      "simulation_created": true,
+      "grounding": {
+        "source_columns": 4,
+        "spec_columns": 4,
+        "source_rows": 8,
+        "spec_rows": 8,
+        "added_columns": [
+          "Tên học sinh",
+          "Điểm số"
+        ],
+        "dropped_columns": [
+          "Tên",
+          "Điểm"
+        ],
+        "added_rows": 0,
+        "dropped_rows": 0,
+        "type_mismatches": [],
+        "modified_cells": [],
+        "empty_to_zero": [],
+        "unicode_changes": [],
+        "cells_compared": 16,
+        "source_row_order_preserved": true,
+        "row_preservation": true,
+        "column_preservation": false,
+        "grounding_perfect": false
+      },
+      "leakage": [],
+      "operations": {
+        "filter": true,
+        "projection": [
+          "Tên học sinh",
+          "Điểm số"
+        ],
+        "sort": [
+          "Điểm số",
+          "desc"
+        ],
+        "limit": 3,
+        "aggregate": [
+          "avg",
+          "Điểm số"
+        ]
+      },
+      "expected_operations": {
+        "filter": true,
+        "projection": [
+          "Tên",
+          "Điểm"
+        ],
+        "sort": [
+          "Điểm",
+          "desc"
+        ],
+        "limit": 3,
+        "aggregate": [
+          "avg",
+          "Điểm"
+        ]
+      },
+      "requested_stages_expected": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "represented_stages": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "dropped_pipeline_stages": [],
+      "manifest_fidelity": {
+        "prompt_requested_stages": [
+          "filter",
+          "projection",
+          "sort",
+          "limit",
+          "aggregate"
+        ],
+        "analyze_requested_stages": [
+          "filter",
+          "projection",
+          "sort",
+          "limit",
+          "aggregate"
+        ],
+        "manifest_stages": [
+          "filter",
+          "projection",
+          "sort",
+          "limit",
+          "aggregate"
+        ],
+        "manifest_complete": true,
+        "manifest_stage_grounded": {
+          "filter": true,
+          "projection": true,
+          "sort": true,
+          "limit": true,
+          "aggregate": true
+        },
+        "manifest_unresolved_fields": {},
+        "manifest_parameters": {
+          "filter": {
+            "column": "Tổ",
+            "op": "=",
+            "value": "A"
+          },
+          "projection": {
+            "columns": [
+              "Tên",
+              "Điểm"
+            ]
+          },
+          "sort": {
+            "column": "Điểm",
+            "direction": "desc"
+          },
+          "limit": {
+            "count": 3
+          },
+          "aggregate": {
+            "func": "avg",
+            "column": "Điểm"
+          }
+        },
+        "raw_candidate_stage_set": [
+          "filter",
+          "projection",
+          "sort"
+        ],
+        "merged_candidate_stages": [
+          "filter",
+          "projection",
+          "sort",
+          "limit",
+          "aggregate"
+        ],
+        "inserted_stages": [
+          "limit",
+          "aggregate"
+        ],
+        "corrected_parameters": [],
+        "confirmed_stages": [
+          "filter",
+          "projection",
+          "sort"
+        ],
+        "deterministic_merge_applied": true,
+        "unexpected_stages": [],
+        "missing_stages": [],
+        "manifest_fidelity_pass": true,
+        "raw_candidate_full_config_persisted": false
+      },
+      "completeness_evidence": null,
+      "expected_final": {
+        "rows": [
+          {
+            "Tên": "An",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Dũng",
+            "Điểm": 9.0
+          },
+          {
+            "Tên": "Lan",
+            "Điểm": 7.5
+          }
+        ],
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        }
+      },
+      "actual_final": {
+        "rows": [
+          {
+            "Tên học sinh": "An",
+            "Điểm số": 9.0
+          },
+          {
+            "Tên học sinh": "Dũng",
+            "Điểm số": 9.0
+          },
+          {
+            "Tên học sinh": "Lan",
+            "Điểm số": 7.5
+          }
+        ],
+        "aggregate": {
+          "value": 8.5,
+          "counted": 3
+        }
+      },
+      "plan_equivalence": {
+        "requested_plan": {
+          "filter": {
+            "op": "=",
+            "column": "to",
+            "value": "A"
+          },
+          "projection": [
+            "ten",
+            "diem"
+          ],
+          "sort": {
+            "column": "diem",
+            "direction": "desc"
+          },
+          "limit": 3,
+          "aggregate": {
+            "func": "avg",
+            "column": "diem"
+          },
+          "wants_rows": false
+        },
+        "represented_plan": {
+          "filter": {
+            "op": "=",
+            "column": "Tổ",
+            "value": "A"
+          },
+          "projection": [
+            "Tên",
+            "Điểm"
+          ],
+          "sort": {
+            "column": "Điểm",
+            "direction": "desc"
+          },
+          "limit": 3,
+          "aggregate": {
+            "func": "avg",
+            "column": "Điểm"
+          },
+          "wants_rows": false
+        },
+        "structural_difference": {
+          "extra_stages": [],
+          "dropped_stages": []
+        },
+        "equivalent": false,
+        "rule": null
+      },
+      "final_accept_rule": null,
+      "result_leakage": false,
+      "generic_leak": false,
+      "false_positive_simulation": false,
+      "false_refusal": false,
+      "passed": false,
+      "problems": [
+        "grounding không hoàn hảo",
+        "engine final ≠ expected (operation/spec sai)"
+      ]
+    }
+  ]
+}

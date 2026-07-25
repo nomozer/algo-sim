@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""M17 W2B-PATCH2 LIVE — kiểm chứng lại 3 finding đã vá, trên LLM THẬT.
+"""M17 W2B-PATCH3 LIVE — kiểm chứng lại 3 finding đã vá, trên LLM THẬT.
 
 KHÔNG phải routing smoke. Bốn case, ngân sách chặt, kỳ vọng KHÓA TRƯỚC khi thấy
 bất kỳ output live nào:
@@ -20,7 +20,7 @@ KHÔNG đổi prompt/expected/tolerance sau khi thấy kết quả.
     # CHẠY THẬT (bắt buộc opt-in):
     ALLOW_LIVE_AI=1 PYTHONIOENCODING=utf-8 \
       python scripts/live_table_query_patch.py --live \
-      --out ../docs/evaluation/m17/w2b-patch2
+      --out ../docs/evaluation/m17/w2b-patch3
 """
 
 from __future__ import annotations
@@ -309,12 +309,15 @@ def _stages_from_reqs(requested_requirements) -> list[str]:
 def _manifest_fidelity(case: "Case", az: dict, config, obs) -> dict:
     """§7 P2 — đối chiếu TRUNG THỰC manifest ↔ prompt ↔ analyze ↔ candidate.
 
-    Nguồn: analyze THẬT (observer), manifest DỰNG LẠI TẤT ĐỊNH từ chính analyze
-    đó, và event `stage_merge` do pipeline phát (candidate_stage_set TRƯỚC merge,
-    inserted/corrected). Đây là bằng chứng máy-đọc, không suy diễn."""
+    Nguồn: requirements HIỆU LỰC (SAU repair nếu có — đúng cái manifest THẬT dùng),
+    manifest DỰNG LẠI TẤT ĐỊNH từ đó, và event `stage_merge` (candidate_stage_set
+    TRƯỚC merge, inserted/corrected). Bằng chứng máy-đọc, không suy diễn."""
     from app.simulation.table_pipeline_manifest import build_required_pipeline
 
-    reqs = az.get("requested_requirements")
+    # requirements HIỆU LỰC: sau bounded repair (nếu repair thành công), else raw.
+    repair = next((d for (et, d) in obs.events if et == "analyze_param_repair"), None)
+    reqs = (repair.get("repaired_requirements") if repair
+            else None) or az.get("requested_requirements")
     pipeline = build_required_pipeline({"requested_requirements": reqs})
     manifest_stages = [s.kind for s in pipeline.ordered_stages] if pipeline else []
     manifest_grounded = {s.kind: s.grounded for s in (pipeline.ordered_stages if pipeline else [])}
@@ -335,13 +338,18 @@ def _manifest_fidelity(case: "Case", az: dict, config, obs) -> dict:
     unexpected = [s for s in merged_stages if s not in prompt_stages]
     missing = [s for s in prompt_stages if s not in merged_stages]
 
-    fidelity = (set(manifest_stages) == set(prompt_stages)
+    # §3 — manifest ĐỦ TẦNG: đủ 5 (khớp prompt) VÀ mọi tầng grounded, unresolved rỗng.
+    manifest_complete = (set(manifest_stages) == set(prompt_stages)
+                         and all(manifest_grounded.values())
+                         and not manifest_unresolved)
+    fidelity = (manifest_complete
                 and set(merged_stages) == set(prompt_stages)
                 and not unexpected and not missing)
     return {
         "prompt_requested_stages": prompt_stages,
         "analyze_requested_stages": analyze_stages,
         "manifest_stages": manifest_stages,
+        "manifest_complete": manifest_complete,
         "manifest_stage_grounded": manifest_grounded,
         "manifest_unresolved_fields": manifest_unresolved,
         "manifest_parameters": manifest_params,
@@ -439,6 +447,10 @@ async def run_live(out_dir: Path, max_http: int, max_attempts: int) -> int:
         if sc:
             stop_reason = f"{case.cid}: {sc}"
             break
+        # §2/§3 — PHASE A (P2) trần 5 HTTP; P2 xong mà >5 → dừng, không mở Phase B.
+        if case.cid == "P2" and delta["http"] > 5:
+            stop_reason = f"P2: Phase A vượt 5 HTTP (dùng {delta['http']})"
+            break
         if budget.retry_requests > 1:
             stop_reason = f"{case.cid}: retry HTTP vượt 1 ({budget.retry_requests})"
             break
@@ -467,6 +479,20 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
     param_repair = next((d for (et, d) in obs.events if et == "analyze_param_repair"), {})
     analyze_first_ok = (param_check.get("decision") == "complete"
                         if param_check else None)
+    # §8 — ma trận analyze-repair: bằng chứng đầy đủ (raw first + repaired).
+    analyze_repair_matrix = {
+        "requested_requirements_first_attempt": az.get("requested_requirements"),
+        "validation_decision": param_check.get("decision"),
+        "grounded_before": [s for s in (param_check.get("requested_stages") or [])
+                            if s not in (param_check.get("incomplete_stages") or [])],
+        "incomplete_before": param_check.get("incomplete_stages", []),
+        "missing_parameters_by_stage": param_check.get("missing_parameters", {}),
+        "repair_attempted": bool(param_repair.get("attempted")),
+        "repair_succeeded": bool(param_repair.get("succeeded")),
+        "repaired_requirements": param_repair.get("repaired_requirements"),
+        "incomplete_after": param_repair.get("incomplete_after",
+                                             param_check.get("incomplete_stages", [])),
+    } if param_check else None
     status = (env or {}).get("status") if env else ("error" if err else None)
     route = (env or {}).get("simulation_id")
     config = (env or {}).get("config") if env else None
@@ -492,6 +518,7 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
         "incomplete_stages_before_repair": param_check.get("incomplete_stages", []),
         "incomplete_stages_after_repair": param_repair.get("incomplete_after",
                                                            param_check.get("incomplete_stages", [])),
+        "analyze_repair_matrix": analyze_repair_matrix,
         # §8 — báo RIÊNG raw vs merged; KHÔNG gọi raw thiếu tầng là "valid first".
         "valid_raw_candidate_first_attempt": raw_first_ok,
         "valid_merged_candidate_first_attempt": merged_first_ok,
@@ -682,7 +709,7 @@ def _write_artifacts(out_dir, records, total, stop_reason, ident, sha,
     out_dir.mkdir(parents=True, exist_ok=True)
     summ = _summ(records, total, stop_reason)
     run_meta = {
-        "wave": "M17 W2B-PATCH2 LIVE",
+        "wave": "M17 W2B-PATCH3 LIVE",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "model": "gemini-2.5-flash", "execution_environment": "local_python",
         "git_sha": sha, "cache_version": ident["cache_version"],
@@ -694,19 +721,19 @@ def _write_artifacts(out_dir, records, total, stop_reason, ident, sha,
             "production run_pipeline (bất biến #22), pattern_store=None nên KHÔNG "
             "có đường cache/pattern-reuse: mỗi case đi FRESH analyze → classify → "
             "simulate. Danh tính container xác minh RIÊNG bằng runtime_doctor "
-            "(runtime_identity_w2b_patch2.json) — PASS trước khi chạy live."),
+            "(runtime_identity_w2b_patch3.json) — PASS trước khi chạy live."),
         "retry_note": (
             "`http_retry` = retry ở TẦNG HTTP (transient). `simulate_attempts` = "
             "lượt sinh spec của product semantics — HAI thứ KHÁC NHAU, báo riêng."),
     }
-    (out_dir / "live_table_query_patch2.json").write_text(
+    (out_dir / "live_table_query_patch3.json").write_text(
         json.dumps({"run_meta": run_meta, "summary": summ, "cases": records},
                    ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     matrix = {r["case_id"]: r.get("grounding") for r in records
               if r["kind"] == "supported"}
     present = {k: v for k, v in matrix.items() if v}
-    (out_dir / "live_table_patch2_grounding_matrix.json").write_text(
+    (out_dir / "live_table_patch3_grounding_matrix.json").write_text(
         json.dumps({"run_meta": run_meta, "matrix": matrix, "acceptance": {
             "grounding_perfect": _rate(
                 sum(1 for m in present.values() if m["grounding_perfect"]), len(present)),
@@ -725,12 +752,26 @@ def _write_artifacts(out_dir, records, total, stop_reason, ident, sha,
     # §7 — ma trận MANIFEST FIDELITY (P2 và mọi supported table case).
     mfx = {r["case_id"]: r.get("manifest_fidelity") for r in records
            if r["kind"] == "supported" and r.get("manifest_fidelity")}
-    (out_dir / "live_table_patch2_manifest_matrix.json").write_text(
+    (out_dir / "live_table_patch3_manifest_matrix.json").write_text(
         json.dumps({"run_meta": run_meta, "matrix": mfx, "acceptance": {
             "manifest_fidelity_pass": _rate(
                 sum(1 for m in mfx.values() if m["manifest_fidelity_pass"]), len(mfx)),
+            "manifest_complete": _rate(
+                sum(1 for m in mfx.values() if m.get("manifest_complete")), len(mfx)),
             "unexpected_stages_total": sum(len(m["unexpected_stages"]) for m in mfx.values()),
             "missing_stages_total": sum(len(m["missing_stages"]) for m in mfx.values()),
+        }}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    # §8 PATCH3 — ma trận ANALYZE REPAIR (bằng chứng grounding tham số tầng).
+    arx = {r["case_id"]: r.get("analyze_repair_matrix") for r in records
+           if r["kind"] == "supported" and r.get("analyze_repair_matrix")}
+    (out_dir / "live_table_patch3_analyze_repair_matrix.json").write_text(
+        json.dumps({"run_meta": run_meta, "matrix": arx, "acceptance": {
+            "valid_analyze_parameters_first_attempt": _rate(
+                sum(1 for m in arx.values() if m["validation_decision"] == "complete"), len(arx)),
+            "repair_attempted_total": sum(1 for m in arx.values() if m["repair_attempted"]),
+            "repair_succeeded_total": sum(1 for m in arx.values() if m["repair_succeeded"]),
+            "incomplete_after_repair_total": sum(len(m["incomplete_after"]) for m in arx.values()),
         }}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     _write_report_md(out_dir, run_meta, summ, records)
@@ -739,7 +780,7 @@ def _write_artifacts(out_dir, records, total, stop_reason, ident, sha,
 
 def _write_report_md(out_dir, meta, summ, records):
     L = [
-        "# M17 W2B-PATCH2 LIVE — kiểm chứng lại 3 finding đã vá", "",
+        "# M17 W2B-PATCH3 LIVE — kiểm chứng lại 3 finding đã vá", "",
         f"- Model **{meta['model']}** · env **{meta['execution_environment']}** · "
         f"SHA `{meta['git_sha'][:12]}` · cache **{meta['cache_version']}** · "
         f"family **{meta['family_count']}** · target **{meta['target_count']}** · "
@@ -793,10 +834,19 @@ def _write_report_md(out_dir, meta, summ, records):
                  f"{r.get('deterministic_merge_count', 0)} · cache_hit={r['cache_hit']}")
         L.append(f"- analyze: result_ownership={r['analyze_result_ownership']!r} · "
                  f"requested_operations={r['analyze_requested_operations']}")
+        arm = r.get("analyze_repair_matrix")
+        if arm:
+            L.append(f"- analyze-params: first-attempt-valid="
+                     f"{r.get('valid_analyze_parameters_first_attempt')} · "
+                     f"incomplete_before={arm['incomplete_before']} · missing="
+                     f"{arm['missing_parameters_by_stage']} · repair_attempted="
+                     f"{arm['repair_attempted']} · repair_succeeded="
+                     f"{arm['repair_succeeded']} · incomplete_after={arm['incomplete_after']}")
         mf = r.get("manifest_fidelity")
         if mf:
             L.append(f"- manifest: prompt={mf['prompt_requested_stages']} · analyze="
                      f"{mf['analyze_requested_stages']} · manifest={mf['manifest_stages']} · "
+                     f"complete={mf.get('manifest_complete')} · "
                      f"raw={mf['raw_candidate_stage_set']} → merged="
                      f"{mf['merged_candidate_stages']} · inserted={mf['inserted_stages']} · "
                      f"corrected={mf['corrected_parameters']} · fidelity="
@@ -830,13 +880,13 @@ def _write_report_md(out_dir, meta, summ, records):
         if r["problems"]:
             L.append(f"- **VẤN ĐỀ:** {r['problems']}")
         L.append("")
-    (out_dir / "live_table_query_patch2_report.md").write_text(
+    (out_dir / "live_table_query_patch3_report.md").write_text(
         "\n".join(L) + "\n", encoding="utf-8")
 
 
 def _write_ledger_md(out_dir, records, stop_reason):
     fails = [r for r in records if not r["passed"]]
-    L = ["# M17 W2B-PATCH2 LIVE — Failure ledger", "",
+    L = ["# M17 W2B-PATCH3 LIVE — Failure ledger", "",
          f"STOP: **{stop_reason or 'không'}** · case KHÔNG đạt: **{len(fails)}**", ""]
     if not fails:
         L.append("Không case nào thất bại. Ba finding L3/L4/L5 đã được kiểm chứng "
@@ -856,13 +906,13 @@ def _write_ledger_md(out_dir, records, stop_reason):
             if r.get("dropped_pipeline_stages"):
                 L.append(f"- thiếu tầng: {r['dropped_pipeline_stages']}")
             L.append("")
-    (out_dir / "live_table_patch2_failure_ledger.md").write_text(
+    (out_dir / "live_table_patch3_failure_ledger.md").write_text(
         "\n".join(L) + "\n", encoding="utf-8")
 
 
 def _print_summary(records, total, stop_reason):
     s = _summ(records, total, stop_reason)
-    print("\n=== M17 W2B-PATCH2 LIVE ===")
+    print("\n=== M17 W2B-PATCH3 LIVE ===")
     print(f"strict {s['strict_cases']} · supported {s['supported_passed']}/"
           f"{s['supported_run']} · negative {s['negative_passed']}/{s['negative_run']}")
     print(f"HTTP {s['total_http']} · http-retry {s['http_retry']} · transient "

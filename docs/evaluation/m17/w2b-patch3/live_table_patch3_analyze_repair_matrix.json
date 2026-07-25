@@ -1,0 +1,120 @@
+{
+  "run_meta": {
+    "wave": "M17 W2B-PATCH3 LIVE",
+    "generated_at": "2026-07-25T10:34:03.380998+00:00",
+    "model": "gemini-2.5-flash",
+    "execution_environment": "local_python",
+    "git_sha": "0513740a2d7450d293e6373cb34f02fec903a787",
+    "cache_version": "22",
+    "family_count": 10,
+    "target_count": 20,
+    "stable_catalog_hash": "4f2a93ec2be37c3f9ee987986fcb454e64f7c9ca655095034641928b4be74cf7",
+    "budget": {
+      "max_cases": 4,
+      "max_http": 14,
+      "max_http_retry": 1,
+      "max_attempts_per_call": 2
+    },
+    "execution_note": "production run_pipeline (bất biến #22), pattern_store=None nên KHÔNG có đường cache/pattern-reuse: mỗi case đi FRESH analyze → classify → simulate. Danh tính container xác minh RIÊNG bằng runtime_doctor (runtime_identity_w2b_patch3.json) — PASS trước khi chạy live.",
+    "retry_note": "`http_retry` = retry ở TẦNG HTTP (transient). `simulate_attempts` = lượt sinh spec của product semantics — HAI thứ KHÁC NHAU, báo riêng."
+  },
+  "matrix": {
+    "P2": {
+      "requested_requirements_first_attempt": [
+        {
+          "operation": "relational_table_query:filter",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": "Tổ",
+          "filter_op": "=",
+          "filter_value": "A",
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:projection",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": null,
+          "projection_columns": [
+            "Tên",
+            "Điểm"
+          ],
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:sort",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": "Điểm",
+          "sort_direction": "desc"
+        },
+        {
+          "operation": "relational_table_query:limit",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": 3,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        },
+        {
+          "operation": "relational_table_query:avg",
+          "aggregate_column": "Điểm",
+          "aggregate_func": "avg",
+          "count_mode": null,
+          "filter_column": null,
+          "filter_op": null,
+          "filter_value": null,
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        }
+      ],
+      "validation_decision": "complete",
+      "grounded_before": [
+        "filter",
+        "projection",
+        "sort",
+        "limit",
+        "aggregate"
+      ],
+      "incomplete_before": [],
+      "missing_parameters_by_stage": {},
+      "repair_attempted": false,
+      "repair_succeeded": false,
+      "repaired_requirements": null,
+      "incomplete_after": []
+    }
+  },
+  "acceptance": {
+    "valid_analyze_parameters_first_attempt": 1.0,
+    "repair_attempted_total": 0,
+    "repair_succeeded_total": 0,
+    "incomplete_after_repair_total": 0
+  }
+}
