@@ -16,6 +16,19 @@ const VAR_LABELS: Record<string, string> = {
   gia_tri_chen: "giá trị chèn",
 };
 
+/**
+ * W2C-VR4 — biến luận lý hiển thị bằng TIẾNG VIỆT ("đúng"/"sai"), khớp với mã
+ * giả và thuyết minh. Trước đó chip hiện `true`/`false` trong khi cùng màn hình
+ * mã giả viết "đúng"/"sai" — hai chữ khác nhau cho cùng một giá trị.
+ * Chỉ luồng điều khiển hữu hạn đưa boolean vào `vars`, nên đổi ở đây không làm
+ * trôi cách hiển thị của các domain khác (chúng chỉ dùng số/chuỗi).
+ */
+export function formatVarValue(value: number | string | boolean | null): string {
+  if (typeof value === "boolean") return value ? "đúng" : "sai";
+  if (typeof value === "number") return fmt(value);
+  return String(value ?? "—");
+}
+
 /** Hộp giá trị các biến của thuật toán — nháy sáng biến vừa được gán. */
 export function VarsView({ step }: { step: Step }) {
   const entries = Object.entries(step.snapshot.vars);
@@ -48,7 +61,7 @@ export function VarsView({ step }: { step: Step }) {
               {VAR_LABELS[name] ?? name}
             </span>
             <span style={{ fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>
-              {typeof value === "number" ? fmt(value) : String(value ?? "—")}
+              {formatVarValue(value)}
             </span>
           </div>
         );

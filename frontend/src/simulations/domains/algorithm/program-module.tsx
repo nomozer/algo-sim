@@ -1,5 +1,5 @@
 import { PseudocodeView } from "../../../components/PseudocodeView";
-import { VarsView } from "../../../components/VarsView";
+import { VarsView, formatVarValue } from "../../../components/VarsView";
 import { IconCheck } from "../../../components/icons";
 import {
   programLines,
@@ -107,7 +107,11 @@ export function ProgramWorkspace({ state }: Props) {
         </div>
       )}
 
-      <div className="narration-bar">{step.narration}</div>
+      {/* W2C-VR3: bước cuối, thuyết minh TRÙNG y hệt băng kết quả — hiện hai
+          lần cùng một câu làm học sinh tưởng là hai thông tin khác nhau. */}
+      {!(last && done && step.narration === done) && (
+        <div className="narration-bar">{step.narration}</div>
+      )}
 
       {last && done && (
         <div className="result-banner">
@@ -118,13 +122,38 @@ export function ProgramWorkspace({ state }: Props) {
   );
 }
 
+/**
+ * Giá trị các biến NGAY TRƯỚC bước hiện tại — đọc từ dữ liệu có thẩm quyền:
+ * snapshot của bước liền trước, hoặc (ở bước đầu) chính `variables` ban đầu của
+ * spec đã validate. KHÔNG suy diễn, KHÔNG tự chạy lại gì.
+ */
+function varsBefore(state: ProgramSimState, cursor: number): Record<string, unknown> {
+  if (cursor > 0) return state.trace.steps[cursor - 1].snapshot.vars;
+  const initial: Record<string, unknown> = {};
+  for (const v of state.spec.variables) {
+    initial[v.name] = v.type === "integer" ? v.int_value : v.bool_value;
+  }
+  return initial;
+}
+
 export function ProgramInspector({ state }: Props) {
   const cursor = clampCursor(state, state.cursor);
   const step = state.trace.steps[cursor];
   const { changed } = readStep(step);
+  const before = varsBefore(state, cursor);
+
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <VarsView step={step} />
+      {/* W2C-VR2: thấy được TRƯỚC → SAU. Chương trình một câu lệnh trước đây chỉ
+          hiện giá trị sau, nên phép tính không quan sát được — học sinh mở lên
+          đã thấy đáp án mà không thấy nó từ đâu ra. */}
+      {changed.map((name) => (
+        <div key={name}>
+          {`${name}: ${formatVarValue(before[name] as never)} → ` +
+            `${formatVarValue(step.snapshot.vars[name])}`}
+        </div>
+      ))}
       {changed.length > 0 && <div>{`Biến vừa đổi: ${changed.join(", ")}`}</div>}
     </div>
   );

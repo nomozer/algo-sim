@@ -685,7 +685,11 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
       ? `Chương trình kết thúc. ${finalVars}.`
       : `Chương trình chưa kết thúc trong giới hạn mô phỏng (${PROGRAM_LIMITS.maxExecutionSteps} bước). ` +
         "Hệ dừng lại thay vì chạy mãi — em hãy kiểm tra điều kiện lặp xem nó có bao giờ sai không.";
-  b.step([{ type: "done", result }], result, false, layout.lines.length);
+  // W2C-VR1: bước kết thúc KHÔNG trỏ vào dòng nào. Trước đây nó trỏ vào dòng
+  // CUỐI của mã giả, mà dòng cuối thường là nhánh KHÔNG chạy (ảnh vr-cf4 final:
+  // highlight `x ← 0` trong khi x = 1) — học sinh đọc thành "nhánh đó đã chạy".
+  // Không có câu lệnh nào đang thực hiện ⇒ không highlight gì.
+  b.step([{ type: "done", result }], result, false);
 
   return { trace: b.build(), completion, outputs };
 }

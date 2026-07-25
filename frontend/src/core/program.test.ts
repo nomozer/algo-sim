@@ -224,12 +224,35 @@ describe("mã giả và Step.line KHÔNG trôi khỏi nhau", () => {
       const spec = parse(raw);
       const { lines } = programLines(spec);
       const { trace } = runProgram(spec);
-      for (const step of trace.steps) {
+      for (const step of trace.steps.slice(0, -1)) {
         expect(step.line).toBeDefined();
         expect(step.line!).toBeGreaterThanOrEqual(1);
         expect(step.line!).toBeLessThanOrEqual(lines.length);
       }
     }
+  });
+
+  it("W2C-VR1 — bước KẾT THÚC không highlight dòng nào", () => {
+    // Trước bản vá, bước done trỏ vào dòng CUỐI của mã giả; ở CF-4 dòng cuối là
+    // nhánh `x ← 0` KHÔNG hề chạy, nên ảnh cho thấy nhánh sai "đang thực hiện".
+    for (const raw of [CF1, CF2, CF3, CF4]) {
+      const { trace } = runProgram(parse(raw));
+      const last = trace.steps[trace.steps.length - 1];
+      expect(last.events.some((e) => e.type === "done")).toBe(true);
+      expect(last.line).toBeUndefined();
+    }
+  });
+
+  it("W2C-VR1 — dòng được highlight LUÔN là câu lệnh vừa chạy", () => {
+    const spec = parse(CF4);
+    const { lineOf } = programLines(spec);
+    const { trace } = runProgram(spec);
+    const executed = new Set(
+      trace.steps.filter((s) => s.line !== undefined).map((s) => s.line),
+    );
+    // CF-4 đi nhánh THÌ ⇒ dòng của nhánh NGƯỢC LẠI không bao giờ được highlight
+    expect(executed.has(lineOf.s_else)).toBe(false);
+    expect(executed.has(lineOf.s_then)).toBe(true);
   });
 
   it("mã giả sinh TỪ statements[] — đổi chương trình thì đổi theo", () => {
