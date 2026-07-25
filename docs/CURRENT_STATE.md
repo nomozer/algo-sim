@@ -3,6 +3,53 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
+> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (2026-07-25)
+>
+> | | |
+> |---|---|
+> | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
+> | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
+> | `CACHE_VERSION` | **20** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
+> | Family / Target | **10 / 20** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+> | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
+>
+> ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
+>
+> | Vai trò | File canonical |
+> |---|---|
+> | Agent bootstrap + PRE-FLIGHT | **`docs/RULES.md` §1–2** |
+> | Scope guard (phân loại + luật dừng) | **`docs/RULES.md` §3** |
+> | Current state (file này) | **`docs/CURRENT_STATE.md`** |
+> | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
+>
+> ### Phạm vi W2B
+>
+> | | Trạng thái |
+> |---|---|
+> | **Product Wave 2B** | **NOT CLOSED** |
+> | **PATCH2 / PATCH3 / PATCH4** | **REMOVED FROM MAINLINE** · **PRESERVED ONLY IN ARCHIVE** · **WILL NOT BE MERGED BACK INTO MAIN** |
+>
+> - PATCH2/PATCH3 là deep production hardening (stage-preserving spec generation;
+>   analyze parameter grounding + bounded repair) — hữu ích nhưng **vượt quá phạm
+>   vi cần thiết**, làm lệch trọng tâm khỏi mô phỏng giáo dục 2D/3D, và không tạo
+>   giá trị học tập tương ứng độ phức tạp. **PATCH4 chưa triển khai và sẽ không
+>   triển khai.** Wave 2C **không mở**. Archive **không bao giờ merge lại**.
+> - **`database.relational_table_query` — độ mạnh claim đúng:** truy vấn bảng
+>   **đơn giản** (1–2 tầng) **VERIFIED** (live L1 lọc+chọn-cột, L2 sắp-xếp-ổn-định,
+>   L6 từ-chối-nhiều-mục-tiêu — `docs/evaluation/m17/rc1/live_table_query_report.md`);
+>   pipeline **nhiều tầng bằng ngôn ngữ tự nhiên** là **PARTIAL / EXPERIMENTAL** —
+>   **chưa** được chứng minh ổn định end-to-end với production LLM.
+> - Ba hành vi do PATCH1 vá (đề thiếu bảng → từ chối đúng lý do; ô trống không
+>   thành 0; pipeline thiếu tầng không trả `ok`) được khoá **offline + review ảnh
+>   Chrome thật**, và có **xác minh live ngay trong mainline** tại `f2b28e2`
+>   (strict 1/3 — P3 đạt; P1/P2 không đạt nhưng **không bịa dữ liệu**).
+> - Chi tiết, bằng chứng từng claim và future work:
+>   [`docs/evaluation/m17/W2B_THESIS_SCOPE_DECISION.md`](evaluation/m17/W2B_THESIS_SCOPE_DECISION.md).
+>
+> Các mục lịch sử bên dưới **giữ nguyên**, kể cả các lượt live thất bại — hệ từ
+> chối trung thực khi chưa đủ khả năng là **dữ liệu**, không phải điều cần giấu.
+
 > **M17-RC1 — Catalog Runtime Conformance & Browser Stress Audit: XONG**
 > (`c388606..fa9c21d`). Checkpoint **đo lường + siết cổng**, KHÔNG mở family mới
 > (vẫn 9 family / 19 target). **§A** `runtime_identity.py` + `runtime_doctor.py`
@@ -149,8 +196,22 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > patch: pytest **996** (2 skip, 1 deselect) · vitest **596/46** · build sạch ·
 > catalog conformance 20 target 0 vi phạm · review thị giác **REAL_VISUAL 5/5**
 > (18 ảnh Chrome thật, 2 viewport). Artifact: `docs/evaluation/m17/w2b-patch/`.
-> **LIVE CHƯA CHẠY LẠI — chờ duyệt ngân sách riêng (đề xuất 4 case / ≤14 HTTP).
-> Wave 2B vẫn CHƯA CLOSE.** Wave 2C KHÔNG mở.
+> **Wave 2B vẫn CHƯA CLOSE.** Wave 2C KHÔNG mở.
+>
+> *Cập nhật 2026-07-25 (quyết định phạm vi):* lượt live rerun của PATCH1 **đã
+> chạy** tại `f2b28e2` — **nay là HEAD baseline của `main`**, artifact nằm ngay
+> trong mainline (`docs/evaluation/m17/w2b-patch/`). Kết quả **strict 1/3**, dừng
+> vì chạm trần ngân sách **14/14 HTTP** nên ca thứ tư không kịp chạy. Ca **P3
+> ĐẠT** (thiếu bảng → `insufficient_specification`, không xui tách truy vấn —
+> đúng finding L5 đã vá). Hai ca không đạt: **P1** spec thừa một tầng `filter`
+> làm rơi 2 dòng hiển thị, *nhưng* `empty→0 = 0` và `AVG 8.25 / counted 4`
+> **đúng**; **P2** (năm tầng) hệ **từ chối** thay vì trả `ok` với spec thiếu
+> tầng. Ở cả hai: `fp-sim 0`, `result-leak 0`, `generic-leak 0`,
+> `semantic-loss 0` — **hệ không bịa dữ liệu**.
+>
+> Các lượt vá tiếp theo (PATCH2/PATCH3) **đã bị loại khỏi tuyến chính** và chỉ
+> còn ở `archive/m17-w2b-deep-hardening`; **không merge lại**. Xem
+> [`W2B_THESIS_SCOPE_DECISION.md`](evaluation/m17/W2B_THESIS_SCOPE_DECISION.md).
 >
 > **Backlog Analyze Integrity CÒN MỞ:**
 > provenance/source-span của từng object/relation chưa xác minh — analyze
@@ -390,10 +451,11 @@ scan HOÃN có chủ đích.
 
 | | |
 |---|---|
-| pytest | **372 pass, 1 deselected** (đo lại tại Task 13, nhánh `m13-semantic-soundness`, `.venv/Scripts/python -m pytest`; 0 API call thật — guard là bằng chứng; +37 so với 335 do M13 Task 1–12b: contract-lock/sync-lock, validator operand coherence, runtime fail-closed, computation_gate 2 kênh, patch fail-closed, fixture regression lock) |
-| vitest | **390 pass** (đo lại tại Task 13, nhánh `m13-semantic-soundness`, `npm test`; 0 network call; +31 so với 359 do M13: mirror validator/runtime/displayLabel/regression lock phía frontend) |
+| pytest | **996 pass, 2 skipped, 1 deselected** (đo lại 2026-07-25 tại baseline `main` = `f2b28e2`, `.venv/Scripts/python.exe -m pytest -q`; 0 API call thật — guard là bằng chứng) |
+| vitest | **596 pass / 46 file** (đo lại 2026-07-25 tại cùng baseline, `npx vitest run`; 0 network call) |
+| catalog conformance | **20 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-25) |
 | audit bố cục | `npm run audit:layout` — **4/4 route sạch** (đo lại tại Task 13: vẫn 4/4 — M13 chỉ đổi nguồn text nhãn, không đổi CSS/layout; Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả ở M9-UX7) |
-| build | `tsc -b && vite build` sạch (đo lại tại Task 13) — bundle chính ~307KB; chunk Three.js 544KB + `ui3d` 5.4KB + `encap-ui3d` 4.7KB **đều code-split**, chỉ tải khi bấm 3D |
+| build | `tsc -b && vite build` sạch (đo lại 2026-07-25) — bundle chính ~357KB; chunk Three.js 544KB **code-split**, chỉ tải khi bấm 3D |
 | nghiệm thu M10 | CDP browser thật (SwiftShader WebGL) — **15/15**: 2D đóng gói→truyền→mở gói→giao đúng payload; dự đoán sai → phản hồi tất định; 3D canvas dựng thật + caption; parity 2D↔3D; **0 gọi /api/analyze\|edit\|explain** |
 | Docker | `docker compose up -d --build` OK (backend :8000 + Postgres) |
 | Live smoke gần nhất (M7.14T) | 8/8 OK · 22 HTTP request · 0 retry · 0 transient · `gap_gate_recall = 1.0` · không false positive |
