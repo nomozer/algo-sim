@@ -94,6 +94,21 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
         required_result_fields=("done.result",),
         renderer_semantic_requirements=_ALGO_RENDER,
     ),
+    # M17 W2C — luồng điều khiển hữu hạn (ProgramSimState = {spec, trace, cursor}).
+    # Engine sở hữu môi trường biến, kết quả điều kiện, nhánh được chọn và số
+    # lượt lặp; renderer CHỈ đọc. `completion` phân biệt chạy xong với chạm giới
+    # hạn — trình bày "chưa kết thúc" là kết quả THẬT, không phải lỗi giấu đi.
+    "algorithm.bounded_control_flow": AuthenticityContract(
+        required_state_fields=("spec", "trace", "cursor"),
+        required_trace_events=("assign_var", "evaluate_condition", "enter_branch", "done"),
+        required_result_fields=("done.result",),
+        renderer_semantic_requirements=(
+            "pseudocode_derived_from_statements", "current_line_highlighted",
+            "variable_values_per_step", "changed_variable_distinct",
+            "condition_result_true_false", "chosen_branch_visible",
+            "loop_iteration_counter", "narration_per_step",
+        ),
+    ),
     # logic — exploratory, không timeline; output là hàm dẫn xuất andOutput
     "logic.and_gate": AuthenticityContract(
         required_state_fields=("inputA", "inputB"),

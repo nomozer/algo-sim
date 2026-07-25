@@ -43,6 +43,11 @@ def test_enum_dong_dung_sau_gia_tri():
         "tree_traversal.inorder",
         "tree_traversal.postorder",
         "tree_traversal.level_order",
+        # M17 W2C — cơ chế luồng điều khiển hữu hạn (cùng lý do: nuôi
+        # route-consistency gate, KHÔNG keyword-match đề bài)
+        "bounded_control_flow.assignment",
+        "bounded_control_flow.conditional_branch",
+        "bounded_control_flow.bounded_loop",
     }
 
 

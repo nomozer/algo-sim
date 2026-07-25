@@ -173,6 +173,111 @@ _TB_DATA = [
 ]
 
 
+# M17 W2C — chương trình hữu hạn. analyze THẬT của đề "cho x = 3, tính y = x*2+1"
+# luôn nêu tên biến (objects) và giá trị ban đầu (data.values); fixture phản ánh
+# đúng thế để cổng đủ-dữ-kiện không chặn oan.
+_PG_OBJECTS = ["biến x", "biến y"]
+_PG_DATA = [{"description": "giá trị ban đầu và hằng số trong chương trình",
+             "values": [3, 2, 1]}]
+
+
+def _program_cfg_assign() -> str:
+    """x = 3 ; y = x * 2 + 1  →  y = 7."""
+    return _j({
+        "program_version": "program-1.0",
+        "variables": [
+            {"name": "x", "type": "integer", "int_value": 3, "bool_value": None},
+            {"name": "y", "type": "integer", "int_value": 0, "bool_value": None},
+        ],
+        "expressions": [
+            {"id": "e_x", "kind": "var", "name": "x"},
+            {"id": "e_2", "kind": "int", "int_value": 2},
+            {"id": "e_1", "kind": "int", "int_value": 1},
+            {"id": "e_mul", "kind": "binary", "op": "*", "left": "e_x", "right": "e_2"},
+            {"id": "e_sum", "kind": "binary", "op": "+", "left": "e_mul", "right": "e_1"},
+        ],
+        "statements": [
+            {"id": "s1", "kind": "assign", "target": "y", "value": "e_sum"},
+        ],
+        "main": ["s1"],
+    })
+
+
+def _program_cfg_branch() -> str:
+    """x = -2 ; nếu x > 0 thì y = 1 ngược lại y = -1  →  y = -1."""
+    return _j({
+        "program_version": "program-1.0",
+        "variables": [
+            {"name": "x", "type": "integer", "int_value": -2, "bool_value": None},
+            {"name": "y", "type": "integer", "int_value": 0, "bool_value": None},
+        ],
+        "expressions": [
+            {"id": "e_x", "kind": "var", "name": "x"},
+            {"id": "e_0", "kind": "int", "int_value": 0},
+            {"id": "e_gt", "kind": "compare", "op": ">", "left": "e_x", "right": "e_0"},
+            {"id": "e_p1", "kind": "int", "int_value": 1},
+            {"id": "e_m1", "kind": "int", "int_value": -1},
+        ],
+        "statements": [
+            {"id": "s_then", "kind": "assign", "target": "y", "value": "e_p1"},
+            {"id": "s_else", "kind": "assign", "target": "y", "value": "e_m1"},
+            {"id": "s_if", "kind": "if", "condition": "e_gt",
+             "then_body": ["s_then"], "else_body": ["s_else"]},
+        ],
+        "main": ["s_if"],
+    })
+
+
+def _program_cfg_loop() -> str:
+    """x = 1 ; trong khi x < 5 thì x = x + 1  →  x = 5, lặp 4 lượt."""
+    return _j({
+        "program_version": "program-1.0",
+        "variables": [
+            {"name": "x", "type": "integer", "int_value": 1, "bool_value": None},
+        ],
+        "expressions": [
+            {"id": "e_x", "kind": "var", "name": "x"},
+            {"id": "e_5", "kind": "int", "int_value": 5},
+            {"id": "e_lt", "kind": "compare", "op": "<", "left": "e_x", "right": "e_5"},
+            {"id": "e_1", "kind": "int", "int_value": 1},
+            {"id": "e_inc", "kind": "binary", "op": "+", "left": "e_x", "right": "e_1"},
+        ],
+        "statements": [
+            {"id": "s_body", "kind": "assign", "target": "x", "value": "e_inc"},
+            {"id": "s_while", "kind": "while", "condition": "e_lt",
+             "body": ["s_body"], "max_iterations": 10},
+        ],
+        "main": ["s_while"],
+    })
+
+
+def _program_cfg_boolean() -> str:
+    """a = true, b = false ; nếu a and not b thì x = 1 ngược lại x = 0  →  x = 1."""
+    return _j({
+        "program_version": "program-1.0",
+        "variables": [
+            {"name": "a", "type": "boolean", "int_value": None, "bool_value": True},
+            {"name": "b", "type": "boolean", "int_value": None, "bool_value": False},
+            {"name": "x", "type": "integer", "int_value": 0, "bool_value": None},
+        ],
+        "expressions": [
+            {"id": "e_a", "kind": "var", "name": "a"},
+            {"id": "e_b", "kind": "var", "name": "b"},
+            {"id": "e_nb", "kind": "unary", "op": "not", "operand": "e_b"},
+            {"id": "e_and", "kind": "logic", "op": "and", "left": "e_a", "right": "e_nb"},
+            {"id": "e_1", "kind": "int", "int_value": 1},
+            {"id": "e_0", "kind": "int", "int_value": 0},
+        ],
+        "statements": [
+            {"id": "s_then", "kind": "assign", "target": "x", "value": "e_1"},
+            {"id": "s_else", "kind": "assign", "target": "x", "value": "e_0"},
+            {"id": "s_if", "kind": "if", "condition": "e_and",
+             "then_body": ["s_then"], "else_body": ["s_else"]},
+        ],
+        "main": ["s_if"],
+    })
+
+
 # ══════════════ fixture per-target (14 AI-reachable) ══════════════
 TARGET_FIXTURES: dict[str, TargetFixture] = {
     "database.relational_table_query": TargetFixture(
@@ -735,6 +840,44 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                           objects=_TREE_NODE_OBJECTS, relations=_TREE_RELATIONS),
                 [_classify("tree.traversal")],
                 [_tree_cfg("level_order", "A", _TREE_ABC)],
+            ),
+        },
+    ),
+    # M17 W2C — luồng điều khiển hữu hạn (gán / rẽ nhánh / lặp có biên)
+    "algorithm.bounded_control_flow": TargetFixture(
+        prompts={
+            "direct": "Cho x = 3. Tính y = x * 2 + 1. Chạy từng bước và cho biết y bằng bao nhiêu.",
+            "paraphrase": "Ban đầu x = -2. Nếu x > 0 thì gán y = 1, ngược lại gán y = -1. "
+                          "Hãy chạy từng bước xem nhánh nào được thực hiện.",
+            "changed_input": "Cho x = 1. Trong khi x < 5 thì tăng x thêm 1. "
+                             "Vòng lặp chạy mấy lượt và x cuối cùng bằng bao nhiêu?",
+            "boundary": "Cho a = true, b = false. Nếu a và không b thì x = 1, ngược lại x = 0. "
+                        "Chạy từng bước cho biết x bằng mấy.",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Chạy từng bước đoạn chương trình gán", ownership="provided",
+                          objects=_PG_OBJECTS, data=_PG_DATA),
+                [_classify("algorithm.bounded_control_flow")],
+                [_program_cfg_assign()],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Chạy từng bước đoạn chương trình rẽ nhánh", ownership="provided",
+                          objects=_PG_OBJECTS, data=_PG_DATA),
+                [_classify("algorithm.bounded_control_flow")],
+                [_program_cfg_branch()],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Chạy từng bước vòng lặp while", ownership="provided",
+                          objects=_PG_OBJECTS, data=_PG_DATA),
+                [_classify("algorithm.bounded_control_flow")],
+                [_program_cfg_loop()],
+            ),
+            "boundary": CaseScript(
+                _analysis(goal="Chạy từng bước điều kiện logic", ownership="provided",
+                          objects=_PG_OBJECTS, data=_PG_DATA),
+                [_classify("algorithm.bounded_control_flow")],
+                [_program_cfg_boolean()],
             ),
         },
     ),

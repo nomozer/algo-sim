@@ -36,6 +36,10 @@ class InputKind(str, Enum):
     PACKET_OR_LAYER_DESCRIPTION = "packet_or_layer_description"
     REPRESENTATION_OBJECTS = "representation_objects"
     TABLE_SCHEMA_AND_ROWS = "table_schema_and_rows"   # W2B
+    # W2C — chương trình hữu hạn: KHÔNG nhóm nào sẵn có biểu diễn được "biến ban
+    # đầu + câu lệnh/điều kiện" (không phải dãy, không phải số lẻ, không phải
+    # cây/đồ thị/bảng/mạch logic), nên đây là nhóm dữ kiện mới THẬT SỰ cần.
+    PROGRAM_STATEMENTS = "program_statements"          # W2C
 
 
 APPLICABLE = "APPLICABLE"
@@ -109,6 +113,18 @@ INPUT_REQUIREMENTS: dict[str, InputRequirements] = {
         ),
     ),
     # ── tree / graph: cần CẤU TRÚC có tên nút ──
+    # ── W2C: cần CHƯƠNG TRÌNH cụ thể (biến ban đầu + câu lệnh) ──
+    "algorithm.bounded_control_flow": InputRequirements(
+        required_grounded_inputs=(InputKind.PROGRAM_STATEMENTS,),
+        accepted_evidence_types=("objects.named_variables", "data.initial_values"),
+        insufficiency_error_code=ErrorCode.INPUT_INSUFFICIENT,
+        learner_prompt_template=(
+            "Đề chưa cho đoạn chương trình cụ thể để chạy thử. Em hãy nêu rõ: "
+            "giá trị ban đầu của các biến (ví dụ x = 1), điều kiện (ví dụ x < 5), "
+            "và các câu lệnh trong thân (ví dụ x = x + 1) — hệ không tự nghĩ ra "
+            "chương trình thay em."
+        ),
+    ),
     "tree.traversal": InputRequirements(
         required_grounded_inputs=(InputKind.TREE_STRUCTURE,),
         accepted_evidence_types=_NODE_EVIDENCE,

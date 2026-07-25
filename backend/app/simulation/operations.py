@@ -142,6 +142,12 @@ SEMANTIC_OPERATION_MAP: dict[str, SemanticRequirement] = {
     "relational_table_query:avg": SemanticRequirement("table.aggregate", "avg"),
     "relational_table_query:min": SemanticRequirement("table.aggregate", "min"),
     "relational_table_query:max": SemanticRequirement("table.aggregate", "max"),
+    # W2C — cấu trúc điều khiển: mỗi loại câu lệnh là một yêu cầu riêng, KHÔNG
+    # gộp (đề hỏi "gán rồi rẽ nhánh" mà spec chỉ có gán là ĐÃ BỎ SÓT).
+    "bounded_control_flow:assignment": SemanticRequirement("program.assign"),
+    "bounded_control_flow:conditional": SemanticRequirement("program.branch"),
+    "bounded_control_flow:loop": SemanticRequirement("program.loop"),
+    "bounded_control_flow:output": SemanticRequirement("program.output"),
 }
 
 
@@ -308,6 +314,11 @@ _LABELS: dict[str, str] = {
     "relational_table_query:avg": "tính trung bình một cột",
     "relational_table_query:min": "tìm giá trị nhỏ nhất của cột",
     "relational_table_query:max": "tìm giá trị lớn nhất của cột",
+    # W2C — các cấu trúc điều khiển của một chương trình hữu hạn
+    "bounded_control_flow:assignment": "gán giá trị cho biến",
+    "bounded_control_flow:conditional": "rẽ nhánh theo điều kiện",
+    "bounded_control_flow:loop": "lặp có biên",
+    "bounded_control_flow:output": "hiển thị giá trị",
 }
 
 
@@ -323,6 +334,9 @@ EXPLICIT_TARGET_OPERATIONS: dict[str, tuple[str, ...]] = {
     "database.relational_table_query": (
         "filter", "projection", "sort", "limit", "count", "sum", "avg", "min", "max",
     ),
+    # W2C: một chương trình gồm NHIỀU cấu trúc nối tiếp (gán → rẽ nhánh → lặp);
+    # mỗi cấu trúc là một operation, nên family này cũng có cardinality `pipeline`.
+    "algorithm.bounded_control_flow": ("assignment", "conditional", "loop", "output"),
 }
 
 

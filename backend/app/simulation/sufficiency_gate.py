@@ -179,6 +179,33 @@ def _has_table(analysis: dict) -> tuple[bool, dict]:
                    "data_items_with_content": len(labelled)}
 
 
+_BOOL_WORDS = ("true", "false", "đúng", "sai")
+
+
+def _has_program_statements(analysis: dict) -> tuple[bool, dict]:
+    """Chương trình = ĐỐI TƯỢNG CÓ TÊN (biến) + GIÁ TRỊ CỤ THỂ.
+
+    Đề "Mô phỏng vòng lặp while." nêu đúng một danh từ và KHÔNG có giá trị nào →
+    trượt cổng, hệ đòi dữ kiện thay vì tự bịa ra một chương trình mẫu (đúng bài
+    học W2A: LLM từng bịa nguyên một cây khi đề thiếu cấu trúc).
+
+    Ngưỡng thấp có chủ đích như `_has_table`: qua cổng này rồi thì validator ngữ
+    pháp và cổng đủ-ngữ-nghĩa vẫn chặn tiếp — cổng này chỉ trả lời "đề CÓ cho
+    chương trình hay không", không phải "chương trình có hợp lệ hay không"."""
+    objects = _str_list(analysis, "objects")
+    tokens = _numeric_tokens(analysis)
+    blob = " ".join(
+        [*objects, *_str_list(analysis, "relations"), *_str_list(analysis, "constraints")]
+    ).lower()
+    has_bool_literal = any(w in blob.split() for w in _BOOL_WORDS)
+    has_value = bool(tokens) or has_bool_literal
+    if objects and has_value:
+        return True, {"source": "objects+initial_values", "objects": len(objects),
+                      "numeric_tokens": tokens[:5], "boolean_literal": has_bool_literal}
+    return False, {"source": None, "objects": len(objects),
+                   "numeric_tokens": len(tokens), "boolean_literal": has_bool_literal}
+
+
 EVIDENCE_NORMALIZERS = {
     InputKind.FINITE_SEQUENCE: _has_finite_sequence,
     InputKind.NUMERIC_VALUE: _has_numeric_value,
@@ -189,6 +216,7 @@ EVIDENCE_NORMALIZERS = {
     InputKind.PACKET_OR_LAYER_DESCRIPTION: _has_packet_or_layer,
     InputKind.REPRESENTATION_OBJECTS: _has_representation_objects,
     InputKind.TABLE_SCHEMA_AND_ROWS: _has_table,
+    InputKind.PROGRAM_STATEMENTS: _has_program_statements,
 }
 
 

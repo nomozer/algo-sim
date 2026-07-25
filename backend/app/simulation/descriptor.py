@@ -46,6 +46,7 @@ class FamilyId(str, Enum):
     STRUCTURAL_PROGRESSIVE_REPRESENTATION = "structural_progressive_representation"
     TREE_TRAVERSAL = "tree_traversal"  # M17 W2A
     RELATIONAL_TABLE_QUERY = "relational_table_query"  # M17 W2B
+    BOUNDED_CONTROL_FLOW = "bounded_control_flow"  # M17 W2C
 
 
 @dataclass(frozen=True)

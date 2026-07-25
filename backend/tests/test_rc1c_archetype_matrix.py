@@ -135,13 +135,15 @@ def test_C1_dong_lo_hong_bieu_dat_cho_MOI_family():
     COVERAGE_GAP `missing_audit_metadata` (gate không bao giờ nhận được dữ liệu
     ở đời thực). Sau §C1 kênh `requested_operations` phủ 9/9.
 
-    Kênh mechanism VẪN chỉ 3 family — giữ nguyên sự thật đó để không overclaim
-    rằng M15 đã mở rộng."""
+    Kênh mechanism CHỈ phủ các family có cơ chế được phơi vào analyze — giữ
+    nguyên sự thật đó để không overclaim rằng M15 đã mở rộng. W2C thêm
+    bounded_control_flow vì cơ chế của nó ĐƯỢC phơi (nuôi route-consistency)."""
     assert analyze_expressible_families() == {f.value for f in FamilyId}
     assert mechanism_expressible_families() == {
         FamilyId.COMPARISON_SORT.value,
         FamilyId.POSITIONAL_REPRESENTATION.value,
         FamilyId.TREE_TRAVERSAL.value,
+        FamilyId.BOUNDED_CONTROL_FLOW.value,
     }
     t = next(t for t in build_target_records([])
              if t["target_id"] == "network.graph_traversal")

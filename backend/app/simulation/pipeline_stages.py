@@ -25,9 +25,11 @@ from __future__ import annotations
 from app.simulation.descriptor import FamilyId
 from app.simulation.goal_signature import normalize_direction, normalize_identifier
 from app.simulation.operations import SEMANTIC_OPERATION_MAP, operation_family
+from app.simulation.program_spec import structures_present
 from app.simulation.table_query_engine import PIPELINE_STAGE_ORDER, stages_of
 
 _TABLE = FamilyId.RELATIONAL_TABLE_QUERY.value
+_PROGRAM = FamilyId.BOUNDED_CONTROL_FLOW.value
 
 # Danh tính SEMANTIC của yêu cầu → TẦNG của spec. Năm hàm tổng hợp cùng quy về
 # `table.aggregate` vì spec chỉ mang MỘT hàm tổng hợp — đúng như hợp đồng.
@@ -39,13 +41,39 @@ STAGE_OF_SEMANTIC_OPERATION: dict[str, dict[str, str]] = {
         "table.limit_rows": "limit",
         "table.aggregate": "aggregate",
     },
+    # W2C — "tầng" ở đây là CẤU TRÚC ĐIỀU KHIỂN có mặt trong chương trình.
+    _PROGRAM: {
+        "program.assign": "assign",
+        "program.branch": "branch",
+        "program.loop": "loop",
+        "program.output": "output",
+    },
 }
 
 # Thứ tự CÔNG BỐ của từng family (một nguồn: chính hằng của engine).
-STAGE_ORDER: dict[str, tuple[str, ...]] = {_TABLE: PIPELINE_STAGE_ORDER}
+PROGRAM_STRUCTURE_ORDER: tuple[str, ...] = ("assign", "branch", "loop", "output")
+STAGE_ORDER: dict[str, tuple[str, ...]] = {
+    _TABLE: PIPELINE_STAGE_ORDER,
+    _PROGRAM: PROGRAM_STRUCTURE_ORDER,
+}
+
+# Thứ tự có phải RÀNG BUỘC NGỮ NGHĨA không?
+# - bảng: CÓ — lọc → chiếu → sắp → lấy n → tổng hợp là thứ tự chạy thật.
+# - chương trình: KHÔNG — thứ tự chạy do chính `main`/`statements` quyết định;
+#   ở đây chỉ dùng để LIỆT KÊ cho ổn định. Nói "chạy đúng thứ tự assign → branch"
+#   là SAI về ngữ nghĩa nên thông điệp phải khác.
+STAGE_ORDER_AUTHORITATIVE: dict[str, bool] = {_TABLE: True, _PROGRAM: False}
+
+# Gợi ý CỤ THỂ cho học sinh khi thiếu bước — mỗi family một ví dụ đúng lĩnh vực
+# (ví dụ của bảng dán vào đề chương trình sẽ vô nghĩa).
+LEARNER_HINT: dict[str, str] = {
+    _TABLE: "ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì",
+    _PROGRAM: "ví dụ: biến ban đầu bằng bao nhiêu, điều kiện là gì, "
+              "trong nhánh/thân vòng lặp làm gì",
+}
 
 # Tầng mà spec ĐÃ VALIDATE biểu diễn — đọc thẳng cấu trúc.
-STAGE_EXTRACTORS = {_TABLE: stages_of}
+STAGE_EXTRACTORS = {_TABLE: stages_of, _PROGRAM: structures_present}
 
 
 def family_with_stages(families: set[str]) -> str | None:
@@ -220,11 +248,15 @@ def stage_shortfall_message(analysis: dict, target_id: str, config: object) -> s
     if cov is None or cov["completeness_decision"] == "complete":
         return None
 
-    parts = [
-        "Đề yêu cầu một QUY TRÌNH gồm các bước: "
-        + ", ".join(cov["requested_pipeline"])
-        + f" (chạy đúng thứ tự {' → '.join(cov['authoritative_stage_order'])})."
-    ]
+    if STAGE_ORDER_AUTHORITATIVE.get(cov["family_id"], True):
+        head = ("Đề yêu cầu một QUY TRÌNH gồm các bước: "
+                + ", ".join(cov["requested_pipeline"])
+                + f" (chạy đúng thứ tự {' → '.join(cov['authoritative_stage_order'])}).")
+    else:
+        head = ("Đề yêu cầu chương trình có ĐỦ các cấu trúc: "
+                + ", ".join(cov["requested_pipeline"])
+                + " (thứ tự chạy do chính chương trình quyết định).")
+    parts = [head]
     if cov["dropped_pipeline_stages"]:
         parts.append(
             "Spec vừa gửi THIẾU các trường: "

@@ -60,6 +60,17 @@ from app.simulation.table_query_engine import (
     SORT_DIRECTIONS as _TQ_SORT_DIRECTIONS,
     SPEC_VERSION as _TQ_SPEC_VERSION,
 )
+from app.simulation.program_spec import (
+    INT_MAX as _PG_INT_MAX,
+    INT_MIN as _PG_INT_MIN,
+    LIMITS as _PG_LIMITS,
+    SPEC_VERSION as _PG_SPEC_VERSION,
+    VALUE_TYPES as _PG_VALUE_TYPES,
+    all_operators as _pg_all_operators,
+    expression_kind_enum as _pg_expression_kinds,
+    statement_kind_enum as _pg_statement_kinds,
+)
+from app.validation.program import validate_program_config
 from app.validation.table_query import validate_table_query_config
 from app.validation.simulation import (
     ALGORITHM_IDS,
@@ -966,6 +977,126 @@ CATALOG["algorithm.scan"] = SimSpec(
         "single_pass_scan.multi_accumulator, BACKLOG",
     ),
     config_contract_version="scan-1.0",
+)
+
+
+# ── algorithm.bounded_control_flow (M17 W2C) — luồng điều khiển hữu hạn ──
+#
+# Cấu trúc PHẲNG + tham chiếu id (đúng tiền lệ `logic.boolean_dag`): structured
+# output của Gemini KHÔNG biểu diễn được schema đệ quy, nên câu lệnh lồng nhau
+# diễn đạt bằng danh sách id, không bằng object lồng object.
+# Mọi enum DẪN XUẤT từ `simulation/program_spec.py` (anti-pattern #1).
+
+_PROGRAM_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "program_version": {"type": "STRING", "nullable": True},
+        "variables": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "name": {"type": "STRING"},
+                    "type": {"type": "STRING", "enum": list(_PG_VALUE_TYPES)},
+                    "int_value": {"type": "INTEGER", "nullable": True},
+                    "bool_value": {"type": "BOOLEAN", "nullable": True},
+                },
+                "required": ["name", "type"],
+            },
+        },
+        "expressions": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "id": {"type": "STRING"},
+                    "kind": {"type": "STRING", "enum": _pg_expression_kinds()},
+                    "int_value": {"type": "INTEGER", "nullable": True},
+                    "bool_value": {"type": "BOOLEAN", "nullable": True},
+                    "name": {"type": "STRING", "nullable": True},
+                    "op": {"type": "STRING", "enum": _pg_all_operators(), "nullable": True},
+                    "left": {"type": "STRING", "nullable": True},
+                    "right": {"type": "STRING", "nullable": True},
+                    "operand": {"type": "STRING", "nullable": True},
+                },
+                "required": ["id", "kind"],
+            },
+        },
+        "statements": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "id": {"type": "STRING"},
+                    "kind": {"type": "STRING", "enum": _pg_statement_kinds()},
+                    "target": {"type": "STRING", "nullable": True},
+                    "value": {"type": "STRING", "nullable": True},
+                    "condition": {"type": "STRING", "nullable": True},
+                    "then_body": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
+                    "else_body": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
+                    "body": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
+                    "max_iterations": {"type": "INTEGER", "nullable": True},
+                },
+                "required": ["id", "kind"],
+            },
+        },
+        "main": {"type": "ARRAY", "items": {"type": "STRING"}},
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["variables", "expressions", "statements", "main"],
+}
+
+_PROGRAM_CONTRACT = f"""HỢP ĐỒNG CONFIG (algorithm.bounded_control_flow — CHẠY TỪNG BƯỚC MỘT ĐOẠN CHƯƠNG TRÌNH):
+- program_version: "{_PG_SPEC_VERSION}".
+- variables: 1–{_PG_LIMITS['max_variables']} biến ban đầu {{name, type, int_value|bool_value}}. type ∈ {list(_PG_VALUE_TYPES)}. Biến số nguyên điền int_value (trong {_PG_INT_MIN}..{_PG_INT_MAX}) và ĐỂ TRỐNG bool_value; biến đúng/sai làm ngược lại. KHÔNG tự đổi kiểu: 1 KHÔNG phải true, "5" KHÔNG phải 5.
+- expressions: bảng PHẲNG các biểu thức {{id, kind, ...}}. kind ∈ {_pg_expression_kinds()}:
+  · int → int_value · bool → bool_value · var → name (phải có trong variables)
+  · unary → op ∈ ["-", "not"] + operand (id) · binary → op ∈ ["+","-","*","//","%"] + left,right (id)
+  · compare → op ∈ ["==","!=","<","<=",">",">="] + left,right · logic → op ∈ ["and","or"] + left,right
+  Lồng tối đa {_PG_LIMITS['max_expression_depth']} tầng, KHÔNG được tham chiếu vòng.
+- statements: bảng PHẲNG các câu lệnh {{id, kind, ...}}. kind ∈ {_pg_statement_kinds()}:
+  · assign → target (tên biến) + value (id biểu thức)
+  · if → condition (id, phải cho ra đúng/sai) + then_body (danh sách id câu lệnh, ≥1) + else_body (có thể rỗng)
+  · while → condition (id) + body (≥1) + max_iterations (1..{_PG_LIMITS['max_while_iterations']}) — BẮT BUỘC khai số lượt tối đa
+  · output → value (id biểu thức)
+- main: danh sách id câu lệnh mức ngoài cùng, THEO THỨ TỰ CHẠY. Mỗi câu lệnh chỉ thuộc ĐÚNG MỘT khối (main hoặc then_body/else_body/body của một câu lệnh khác).
+- Giới hạn: ≤ {_PG_LIMITS['max_statement_nodes']} câu lệnh, lồng ≤ {_PG_LIMITS['max_nesting_depth']} tầng.
+- KHÔNG hỗ trợ (đề cần thì trả unsupported): hàm, đệ quy, danh sách/mảng, chuỗi, số thực, nhập từ bàn phím, đọc/ghi tệp, break/continue, try/except, import, lớp/đối tượng.
+- TUYỆT ĐỐI KHÔNG sinh: môi trường biến sau từng bước, kết quả điều kiện, số lượt lặp thực tế, giá trị hiển thị, kết quả cuối, trace hay timeline — engine tất định tự chạy và tự dựng toàn bộ diễn biến."""
+
+CATALOG["algorithm.bounded_control_flow"] = SimSpec(
+    simulation_id="algorithm.bounded_control_flow",
+    domain="algorithm",
+    visual_mode="2d",
+    description=(
+        "chạy TỪNG BƯỚC một đoạn chương trình HỮU HẠN do đề cho sẵn — engine "
+        "thực hiện lần lượt các câu lệnh gán, rẽ nhánh if/else và vòng lặp while "
+        "có biên, cho thấy câu lệnh đang chạy, biểu thức được tính, điều kiện "
+        "đúng hay sai, nhánh nào được chọn, biến đổi giá trị ra sao qua từng "
+        "lượt. Dùng khi đề CHO SẴN đoạn chương trình/thuật toán bằng lời có biến "
+        "ban đầu + câu lệnh cụ thể và hỏi 'chạy từng bước', 'giá trị cuối cùng "
+        "là bao nhiêu', 'lặp mấy lần', 'nhánh nào chạy'. KHÔNG dùng cho: bài có "
+        "DÃY SỐ cho sẵn cần duyệt (→ các bài quét/sắp xếp/tìm kiếm chuyên biệt), "
+        "hàm/thủ tục, đệ quy, danh sách/mảng/chuỗi, số thực, nhập xuất dữ liệu, "
+        "hay yêu cầu chạy mã Python tự do"
+    ),
+    config_schema=_PROGRAM_SCHEMA,
+    contract=_PROGRAM_CONTRACT,
+    validate=validate_program_config,
+    make_title=lambda config, analysis: "Chạy từng bước đoạn chương trình",
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.BOUNDED_CONTROL_FLOW, ResultAuthority.COMPUTATION,
+            owned_mechanisms=FAMILY_MECHANISMS[FamilyId.BOUNDED_CONTROL_FLOW],
+        ),
+    ),
+    reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),
+    curriculum_anchor="T10 B16–B19 (cấu trúc rẽ nhánh, lặp) · T11CS CĐ",
+    known_gaps=(
+        "hàm/thủ tục và đệ quy — ngoài phạm vi luồng điều khiển hữu hạn",
+        "danh sách/mảng, chuỗi, số thực, nhập xuất — chưa có trong ngữ pháp v1",
+    ),
+    config_contract_version="program-1.0",
 )
 
 

@@ -107,6 +107,12 @@ FAMILY_OPERATION_POLICY: dict[FamilyId, OperationPolicy] = {
         cardinality=MULTIPLE, max_operations=8,
         note="Một cảnh generic có thể vừa hé lộ vừa di chuyển.",
     ),
+    # W2C — MỘT chương trình = nhiều câu lệnh NỐI TIẾP (gán → rẽ nhánh → lặp →
+    # hiển thị). Đó là bản chất của lập trình cấu trúc, không phải xung đột.
+    FamilyId.BOUNDED_CONTROL_FLOW: OperationPolicy(
+        cardinality=PIPELINE, max_operations=4,
+        note="Gán → rẽ nhánh → lặp → hiển thị là MỘT chương trình chạy nối tiếp.",
+    ),
 }
 
 DEFAULT_POLICY = OperationPolicy(cardinality=SINGLE, max_operations=1)

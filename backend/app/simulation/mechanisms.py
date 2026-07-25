@@ -71,6 +71,13 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
         "tree_traversal.postorder",
         "tree_traversal.level_order",
     ),
+    # M17 W2C — luồng điều khiển hữu hạn. Ba cơ chế ẩn của lập trình cấu trúc:
+    # gán giá trị, rẽ nhánh theo điều kiện, lặp có biên. Prefix = family_id.
+    FamilyId.BOUNDED_CONTROL_FLOW: (
+        "bounded_control_flow.assignment",
+        "bounded_control_flow.conditional_branch",
+        "bounded_control_flow.bounded_loop",
+    ),
 }
 
 # Khóa 2 — giá trị CỐ Ý không target nào sở hữu (gap-trigger, khai tường minh)
@@ -102,6 +109,7 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION,  # W5 (Task 15) — owned dẫn xuất manifest process_types()
     FamilyId.TREE_TRAVERSAL,             # M17 W2A — duyệt cây nhị phân
     FamilyId.RELATIONAL_TABLE_QUERY,     # M17 W2B — truy vấn bảng quan hệ
+    FamilyId.BOUNDED_CONTROL_FLOW,       # M17 W2C — luồng điều khiển hữu hạn
 })  # đủ == frozenset(FamilyId) — K1 lock kích hoạt ĐẦY ĐỦ (test_formalized_families_owned_khong_rong)
 
 
@@ -129,4 +137,7 @@ def analyze_exposed_values() -> tuple[str, ...]:
         # keyword): analyze nói tree_traversal.* mà classify trả generic →
         # mismatch họ → 1 reclassify bounded → vẫn lệch thì fail-closed.
         *FAMILY_MECHANISMS[FamilyId.TREE_TRAVERSAL],
+        # M17 W2C — cùng lý do: đề "chạy từng bước đoạn chương trình có if/while"
+        # mà classify trả generic → mismatch họ → 1 reclassify bounded → fail-closed.
+        *FAMILY_MECHANISMS[FamilyId.BOUNDED_CONTROL_FLOW],
     )

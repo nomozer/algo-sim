@@ -34,7 +34,7 @@ from app.simulation.operation_policy import (
     mechanism_for_variant,
     policy_for_family,
 )
-from app.simulation.pipeline_stages import stage_coverage, stage_labels
+from app.simulation.pipeline_stages import LEARNER_HINT, stage_coverage, stage_labels
 from app.simulation.operations import (
     OPERATIONS,
     canonical_requirements,
@@ -333,10 +333,14 @@ def _stage_message(stages: dict) -> str:
             f"{m['parameter']} đề nêu {m['requested']} nhưng dựng thành {m['represented']}"
             for m in wrong)
         parts.append(f"dựng sai {len(wrong)} bước ({listed})")
+    # Gợi ý phải ĐÚNG LĨNH VỰC: ví dụ của truy vấn bảng dán vào đề chương trình
+    # thì học sinh làm theo cũng không gỡ được (đúng bài học L5 — lời khuyên sai
+    # bản chất còn tệ hơn không khuyên).
+    hint = LEARNER_HINT.get(fam, "ví dụ: cần làm gì ở từng bước")
     return (
         "Mô phỏng dựng ra chưa trả lời đủ đề: " + ", và ".join(parts) + ". "
         "Hệ không trả lời nửa vời. Em thử hỏi lại và nêu rõ từng bước cần làm "
-        "(ví dụ: lọc gì, sắp xếp theo cột nào, lấy mấy dòng, tính gì)."
+        f"({hint})."
     )
 
 
