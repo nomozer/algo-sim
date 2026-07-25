@@ -9,9 +9,9 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **20** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **21** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
-> | Family / Target | **10 / 20** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+> | Family / Target | **11 / 21** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
@@ -22,6 +22,47 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Scope guard (phân loại + luật dừng) | **`docs/RULES.md` §3** |
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
+>
+> ### Wave 2C — luồng điều khiển hữu hạn (XONG offline)
+>
+> Family thứ **11** `bounded_control_flow` / target thứ **21**
+> `algorithm.bounded_control_flow`: chạy TỪNG BƯỚC một đoạn chương trình hữu
+> hạn (gán · if/else · while có biên · hiển thị). Học sinh thấy câu lệnh đang
+> chạy, biểu thức được tính, điều kiện đúng/sai, nhánh được chọn, biến đổi giá
+> trị, số lượt lặp. **KHÔNG phải trình thông dịch Python**: không hàm, đệ quy,
+> mảng, chuỗi, số thực, nhập xuất, break/continue, eval/exec, sandbox.
+>
+> - **Ngữ pháp ĐÓNG + giới hạn MỘT NGUỒN** (`simulation/program_spec.py`): ≤12
+>   câu lệnh · lồng ≤2 · ≤8 biến · biểu thức ≤4 tầng · ≤200 bước · while ≤50
+>   lượt. Cấu trúc spec là **danh sách phẳng + tham chiếu id** (đúng tiền lệ
+>   `logic.boolean_dag`) vì structured output của Gemini KHÔNG biểu diễn được
+>   schema đệ quy.
+> - **Validator fail-closed** (`validation/program.py`): loại câu lệnh/biểu thức
+>   ngoài ngữ pháp, biến chưa khai báo, sai kiểu, chia 0 tĩnh, điều kiện không
+>   phải đúng/sai, while thiếu biên, tham chiếu vòng, câu lệnh mồ côi/dùng hai
+>   khối, spec mang kết quả. **KHÔNG coercion**: `"5"`≠`5`, `true`≠`1`, `1`≠`true`.
+> - **Vòng lặp KHÔNG BAO GIỜ treo**: chạm biên → dừng và nói thật *"Chương
+>   trình chưa kết thúc trong giới hạn mô phỏng"*, KHÔNG trình bày như đã chạy xong.
+> - **Đủ ngữ nghĩa**: `pipeline_stages.py` được MỞ RỘNG (không tạo module song
+>   song) để đọc cấu trúc spec đã validate — đề hỏi gán + rẽ nhánh mà spec chỉ
+>   có gán thì KHÔNG trả `ok`. Thứ tự ở family này **không** authoritative (thứ
+>   tự chạy do chính chương trình quyết định) và gợi ý học sinh theo đúng lĩnh vực.
+> - **Đủ dữ kiện**: InputKind mới `program_statements` + normalizer dùng chung —
+>   "Mô phỏng vòng lặp while." (không giá trị nào) → `insufficient_specification`,
+>   hệ **không bịa** chương trình mẫu.
+> - FE: `core/program.ts` (interpreter tất định, dùng lại `TraceBuilder`/
+>   `Step.line`/`Snapshot.vars`) + `domains/algorithm/program-module.tsx` (dùng
+>   lại `PseudocodeView`/`VarsView`, **2D-only** — chiều sâu 3D không mã hoá
+>   biến nào của chương trình nên làm 3D sẽ là chiều sâu giả, bất biến #18).
+>   **Mã giả DẪN XUẤT từ `statements[]`** và interpreter gắn `Step.line` từ
+>   CHÍNH bản đồ đó — highlight không thể trôi.
+> - `CACHE_VERSION` **20→21** (thêm family/target AI-reachable + enum analyze).
+>   `HISTORY_SCHEMA_VERSION` **giữ 2**. `scan-1.0` và hợp đồng bảng **không đụng**.
+> - Offline: pytest **1047** (2 skip, 1 deselect) · vitest **626/48** · build
+>   sạch · conformance 21/0 · descriptors không trôi.
+> - **CHƯA làm (không claim):** review thị giác Chrome thật · live LLM ·
+>   prediction/what-if · `for` đếm (hoãn có chủ đích, ưu tiên `while` trước).
+>   ⚠️ `classify.md` đã đổi ⇒ **phải restart backend** trước bất kỳ lượt live nào.
 >
 > ### Phạm vi W2B
 >
@@ -451,9 +492,9 @@ scan HOÃN có chủ đích.
 
 | | |
 |---|---|
-| pytest | **996 pass, 2 skipped, 1 deselected** (đo lại 2026-07-25 tại baseline `main` = `f2b28e2`, `.venv/Scripts/python.exe -m pytest -q`; 0 API call thật — guard là bằng chứng) |
-| vitest | **596 pass / 46 file** (đo lại 2026-07-25 tại cùng baseline, `npx vitest run`; 0 network call) |
-| catalog conformance | **20 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-25) |
+| pytest | **1047 pass, 2 skipped, 1 deselected** (đo lại 2026-07-26 sau W2C; 0 API call thật — guard là bằng chứng) |
+| vitest | **626 pass / 48 file** (đo lại 2026-07-26 sau W2C; 0 network call) |
+| catalog conformance | **21 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-26) |
 | audit bố cục | `npm run audit:layout` — **4/4 route sạch** (đo lại tại Task 13: vẫn 4/4 — M13 chỉ đổi nguồn text nhãn, không đổi CSS/layout; Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả ở M9-UX7) |
 | build | `tsc -b && vite build` sạch (đo lại 2026-07-25) — bundle chính ~357KB; chunk Three.js 544KB **code-split**, chỉ tải khi bấm 3D |
 | nghiệm thu M10 | CDP browser thật (SwiftShader WebGL) — **15/15**: 2D đóng gói→truyền→mở gói→giao đúng payload; dự đoán sai → phản hồi tất định; 3D canvas dựng thật + caption; parity 2D↔3D; **0 gọi /api/analyze\|edit\|explain** |

@@ -16,9 +16,9 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 |---|---|---|
 | Active mainline | `main` | `git branch --show-current` |
 | Baseline | `f2b28e2` (PATCH1 impl `8bd2324` + live evidence) | `git rev-parse HEAD` |
-| `CACHE_VERSION` | **20** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+| `CACHE_VERSION` | **21** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 | `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
-| Family / Target | **10 / 20** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+| Family / Target | **11 / 21** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8` | `git rev-parse archive/m17-w2b-deep-hardening` |
 
 Danh tính runtime (so source ↔ container) do `backend/app/runtime_identity.py` +
@@ -315,6 +315,27 @@ port tồn tại để validator server-side + harness chấm HÀNH VI (semantic
 Gemini trong catalog DẪN XUẤT từ đây, khoá bằng
 `test_scan_routing::test_scan_schema_enum_dan_xuat_tu_scan_engine`).
 Tests: `test_scan_engine.py`, `test_scan_routing.py`.
+
+### `simulation/program_spec.py` (M17 W2C) · Change impact: targeted live
+**NGUỒN DUY NHẤT** của ngữ pháp + giới hạn luồng điều khiển hữu hạn. Exports:
+`SPEC_VERSION` ("program-1.0"), `VALUE_TYPES`, `STATEMENT_KINDS`,
+`EXPRESSION_KINDS`, `ARITHMETIC_OPS`/`COMPARE_OPS`/`LOGIC_OPS`/`UNARY_OPS`,
+`LIMITS` (7 giới hạn cứng), `INT_MIN`/`INT_MAX`, `COMPLETION_*`,
+`FORBIDDEN_SPEC_KEYS`, `structures_present(config)`, `statement_kind_enum()`,
+`expression_kind_enum()`, `all_operators()`.
+Consumers: `catalog.py` (schema Gemini DẪN XUẤT — anti-pattern #1),
+`validation/program.py`, `pipeline_stages.py`. Mirror TS: `frontend/src/core/program.ts`
+(`PROGRAM_LIMITS` — đổi một bên PHẢI đổi bên kia).
+Tests: `test_program_spec.py`. Notes: ĐÂY KHÔNG PHẢI trình thông dịch Python;
+thêm loại câu lệnh/biểu thức = mở rộng ngữ pháp ⇒ phải qua scope guard §3.
+
+### `validation/program.py` (M17 W2C) · Change impact: offline
+Validator FAIL-CLOSED cho `algorithm.bounded_control_flow`. Exports:
+`validate_program_config(raw) → (config|None, error|None)`.
+Bắt: kind ngoài ngữ pháp · biến chưa khai báo · sai kiểu (KHÔNG coercion) ·
+chia/mod cho 0 tĩnh · điều kiện không phải boolean · while thiếu `max_iterations` ·
+biểu thức lồng vòng/quá sâu · câu lệnh mồ côi hoặc thuộc hai khối · spec mang
+kết quả (R0). Deps: `program_spec`. Tests: `test_program_spec.py`.
 
 ### `simulation/catalog.py` · Change impact: targeted live
 Bản chiếu registry phía backend: `SimSpec` (description/schema/contract/validator/
@@ -839,6 +860,32 @@ duyệt/không thỏa được mark `eliminated`; export thêm `OP_TEXT`.
 `TraceBuilder` (M12) = **substrate thực thi tái dụng** cho MỌI engine trace
 (cùng union `TraceEvent`); 8 engine specialized là 8 driver mệnh lệnh ~15 dòng
 trên cùng substrate, KHÔNG phải 8 module rời.
+
+### `core/program.ts` (M17 W2C) · offline
+**Interpreter luồng điều khiển hữu hạn**, engine-owned — MIRROR của
+`program_spec.py` + `validation/program.py`. Exports: `PROGRAM_VERSION`,
+`PROGRAM_LIMITS`, kiểu `ProgramSpec`/`ProgramStatement`/`ProgramExpression`/
+`ProgramVariable`/`CompletionState`, `validateProgramSpec(raw)`,
+`programLines(spec) → {lines, lineOf}`, `renderExpression(spec, id)`,
+`runProgram(spec) → {trace, completion, outputs}`.
+Interpreter sở hữu TOÀN BỘ: môi trường biến, thứ tự chạy, kết quả điều kiện,
+nhánh được chọn, số lượt lặp, biên dừng. **MỘT NGUỒN cho mã giả**: `programLines`
+vừa sinh dòng hiển thị vừa trả `lineOf` mà interpreter dùng để gắn `Step.line`
+⇒ highlight không thể trôi khỏi câu lệnh đang chạy.
+Dùng lại `TraceBuilder`/`Step`/`Snapshot.vars` (không có trace builder thứ hai).
+Chạm biên → `completion="limit_reached"` + câu "chưa kết thúc", KHÔNG treo.
+Tests: `program.test.ts`. Consumer: `domains/algorithm/program-module.tsx`.
+
+### `simulations/domains/algorithm/program-module.tsx` (M17 W2C) · offline
+Adapter MỎNG quanh `core/program.ts` (cùng khuôn `scan-module.tsx`). Exports:
+`makeProgramModule()`, `ProgramWorkspace`, `ProgramInspector`, `ProgramSimState`
+({spec, trace, cursor, completion}). Đăng ký ở `registerAlgorithmDomain()`.
+Dùng lại `PseudocodeView` + `VarsView` — KHÔNG tạo UI primitive mới. **2D-only**:
+Z không mã hoá biến nào của chương trình nên 3D sẽ là chiều sâu giả (bất biến #18).
+Renderer đọc `evaluate_condition`/`enter_branch`/`loop_iteration`/`output` từ
+sự kiện bước — **không tự đánh giá lại** biểu thức (test khoá bằng bước "bịa").
+Output hiện DẦN theo cursor; kết quả cuối chỉ hiện ở bước cuối.
+Tests: `program-module.test.tsx`.
 
 ### `core/scan.ts` (M12) · offline
 **Declarative Bounded Scan** — MỘT interpreter tất định, engine-owned, cho họ

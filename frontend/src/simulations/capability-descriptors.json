@@ -880,6 +880,62 @@
         "near_miss_mechanisms": []
       }
     },
+    "algorithm.bounded_control_flow": {
+      "domain": "algorithm",
+      "executor_id": "algorithm.bounded_control_flow",
+      "reachability": [
+        "registered",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 B16–B19 (cấu trúc rẽ nhánh, lặp) · T11CS CĐ",
+      "known_gaps": [
+        "hàm/thủ tục và đệ quy — ngoài phạm vi luồng điều khiển hữu hạn",
+        "danh sách/mảng, chuỗi, số thực, nhập xuất — chưa có trong ngữ pháp v1"
+      ],
+      "family_memberships": [
+        {
+          "family_id": "bounded_control_flow",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "bounded_control_flow.assignment",
+            "bounded_control_flow.conditional_branch",
+            "bounded_control_flow.bounded_loop"
+          ]
+        }
+      ],
+      "config_contract_version": "program-1.0",
+      "authenticity": {
+        "required_state_fields": [
+          "spec",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "evaluate_condition",
+          "enter_branch",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "pseudocode_derived_from_statements",
+          "current_line_highlighted",
+          "variable_values_per_step",
+          "changed_variable_distinct",
+          "condition_result_true_false",
+          "chosen_branch_visible",
+          "loop_iteration_counter",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
+    },
     "network.protocol_encapsulation": {
       "domain": "network",
       "executor_id": "network.protocol_encapsulation",
@@ -1037,6 +1093,7 @@
     "tree.traversal",
     "database.relational_table_query",
     "algorithm.scan",
+    "algorithm.bounded_control_flow",
     "network.protocol_encapsulation",
     "generic.rule_scene",
     "algorithm.comparison_sort"
