@@ -17,10 +17,11 @@ beforeEach(() => {
 });
 
 describe("registry", () => {
-  it("đăng ký đủ 10 mô phỏng domain algorithm (9 chuyên biệt + scan; +selection M17 W1)", () => {
+  it("đăng ký đủ 11 mô phỏng domain algorithm (9 chuyên biệt + scan + bounded_control_flow)", () => {
     registerAlgorithmDomain();
     const metas = listSimulations();
-    expect(metas).toHaveLength(10);
+    expect(metas).toHaveLength(11);
+    expect(metas.map((m) => m.id)).toContain("algorithm.bounded_control_flow");
     expect(metas.map((m) => m.id)).toContain("algorithm.find_max");
     expect(metas.map((m) => m.id)).toContain("algorithm.bubble_sort");
     expect(metas.map((m) => m.id)).toContain("algorithm.selection_sort");

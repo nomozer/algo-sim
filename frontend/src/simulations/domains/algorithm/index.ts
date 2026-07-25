@@ -7,6 +7,7 @@ import { decisionPointOf } from "./decision";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
+import { makeProgramModule } from "./program-module";
 
 /**
  * Domain "algorithm" — adapter mỏng quanh engine tất định hiện có
@@ -228,4 +229,5 @@ export function registerAlgorithmDomain(): void {
     registerSimulation(makeAlgorithmModule(id));
   }
   registerSimulation(makeScanModule());
+  registerSimulation(makeProgramModule());
 }

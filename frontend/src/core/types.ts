@@ -97,6 +97,13 @@ export type TraceEvent =
   | { type: "assign_var"; name: string; value: number | string | boolean | null }
   | { type: "set_range"; left: number; right: number }
   | { type: "mark"; index: number; status: Mark }
+  /* M17 W2C — luồng điều khiển hữu hạn. Engine phát KẾT QUẢ điều kiện và
+   * NHÁNH ĐƯỢC CHỌN thành dữ liệu, để renderer chỉ việc đọc: renderer không
+   * bao giờ được tự đánh giá lại biểu thức (bất biến renderer-không-sở-hữu). */
+  | { type: "evaluate_condition"; expression: string; result: boolean }
+  | { type: "enter_branch"; branch: "then" | "else" | "loop_body" | "loop_exit" }
+  | { type: "loop_iteration"; statementId: string; iteration: number }
+  | { type: "output"; text: string }
   | { type: "done"; result: string };
 
 export interface Snapshot {
