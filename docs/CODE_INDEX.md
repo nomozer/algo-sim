@@ -1,8 +1,101 @@
-# CODE_INDEX.md — Chỉ mục module quan trọng
+# CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
 Mục đích: biết **cái gì đã tồn tại và ở đâu** trước khi viết mới (chống trùng
 helper, chống hard-code vòng qua abstraction sẵn có). **Không chép thân hàm.**
 Helper private nhỏ được bỏ qua có chủ ý.
+
+Đây là **file canonical cho vai trò project index / architecture memory**, dùng
+kèm `docs/ARCHITECTURE_MAP.md` (kiến trúc, bảng sở hữu, hướng phụ thuộc, bất
+biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES.md` §2b.
+
+---
+
+## 0. Danh tính kho mã (kiểm lại bằng lệnh, đừng tin trí nhớ)
+
+| Hạng mục | Giá trị | Kiểm bằng |
+|---|---|---|
+| Active mainline | `main` | `git branch --show-current` |
+| Baseline | `f2b28e2` (PATCH1 impl `8bd2324` + live evidence) | `git rev-parse HEAD` |
+| `CACHE_VERSION` | **20** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+| `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
+| Family / Target | **10 / 20** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+| Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8` | `git rev-parse archive/m17-w2b-deep-hardening` |
+
+Danh tính runtime (so source ↔ container) do `backend/app/runtime_identity.py` +
+`backend/scripts/runtime_doctor.py` lo — endpoint `GET /api/diagnostics/runtime`.
+
+## 0b. Điểm vào (entry point) — đã xác minh tồn tại ở baseline này
+
+| Vai trò | Vị trí |
+|---|---|
+| HTTP surface | `backend/app/main.py` — `/api/analyze`, `/api/edit`, `/api/explain`, `/api/manifest`, `/api/health`, `/api/diagnostics/runtime` |
+| Production pipeline | `ai/pipeline.py::run_pipeline(text, api_key, pattern_store=None, observer=None)` |
+| Ba stage LLM | `stage_analyze` · `stage_classify` · `stage_simulate` (+ `stage_adapt`, `stage_simulate_family`) |
+| Route recovery | `classify_with_one_route_recovery` — ≤1 lượt, TRƯỚC mọi cổng phụ thuộc route |
+| Validation dispatch | **không có hàm dispatch trung tâm** — mỗi `SimSpec.validate` trỏ tới validator riêng trong `app/validation/` (`validate_algorithm_config`, `validate_logic_config`, `validate_binary_config`, `validate_base_conversion_config`, `validate_tree_traversal_config`, `validate_table_query_config`, `validate_generic_config`, `validate_network_config`, `validate_encapsulation_config`, `validate_traverse_config`, `validate_scan_config`, `validate_boolean_dag_config`) |
+| Registry (BE) | `simulation/catalog.py::CATALOG: dict[str, SimSpec]` |
+| Registry (FE) | `simulations/registry.ts` — `registerSimulation` / `getSimulation` / `listSimulations`; nạp qua `simulations/index.ts::registerAllSimulations()` gọi ở `main.tsx` **trước** render |
+| Executor dispatch (FE) | `state/store.ts` gọi `getSimulation(id).init/apply/timeline` — store **domain-blind** |
+| Renderer dispatch | `simulations/renderer.ts` — `rendererFor`, `availableVisualModes`, `effectiveVisualMode` (dẫn xuất từ hợp đồng module, **không** switch theo `simulation_id`) |
+| Lịch sử zero-AI | `state/history.ts` — `HISTORY_SCHEMA_VERSION`, `createHistoryStore`, `historyStore` |
+
+## 0c. Trừu tượng DÙNG CHUNG — bắt buộc reuse, cấm viết bản thứ hai
+
+| Trách nhiệm | Module | Ghi chú |
+|---|---|---|
+| Cổng đủ dữ kiện | `simulation/sufficiency_gate.py` + `input_requirements.py` | MỘT cổng cho MỌI target; normalizer theo **nhóm dữ kiện**, không theo target. Cấm `*_sufficiency_gate.py` riêng |
+| Cổng đủ ngữ nghĩa | `simulation/completeness_gate.py` | `check_requested_combination` (trước simulate) + `check_represented_coverage` (sau) |
+| Kênh tầng pipeline | `simulation/pipeline_stages.py` | `stage_coverage`, `requested_stages`, `represented_stages` — đăng ký theo FAMILY, family không khai ⇒ rỗng |
+| Cổng cơ chế / tính toán | `mechanism_gate.py` · `computation_gate.py` · `structure_gate.py` | |
+| Danh tính cơ chế | `simulation/mechanisms.py::canonical_mechanism` | **BIÊN ALIAS DUY NHẤT** — cấm normalize ở chỗ khác |
+| Danh tính thao tác | `simulation/operations.py::OPERATIONS` | id dạng `family:operation` (dấu hai chấm) |
+| Taxonomy family | `simulation/descriptor.py::FamilyId` (10) | closed enum |
+| Bề mặt family cho LLM | `simulation/families/` | selector token ≠ SimSpec ≠ envelope id |
+| Hợp đồng DSL | `simulation/dsl/manifest.py` | mọi enum/allowlist/prompt contract **dẫn xuất** từ đây |
+| Thông điệp học sinh | `app/learner_messages.py` | KHÔNG để lộ token kỹ thuật; FE render qua MỘT `UnsupportedNotice` |
+| Ma trận conformance | `app/catalog_conformance.py` + `scripts/catalog_runtime_matrix.py` | sinh **từ registry**, không hard-code danh sách target |
+| Observer đánh giá | `evaluation/observer.py` | THỤ ĐỘNG — `None` ⇒ production không đổi một bit (bất biến #22) |
+
+## 0d. Luồng chính (đọc kỹ trước khi thêm nhánh mới)
+
+1. **Fresh request** — `/api/analyze` → `run_pipeline` → analyze → representation plan → classify → (≤1 route recovery) → **4 cổng** (computation · mechanism · input-sufficiency · completeness) → simulate (≤3 lượt) → `ValidatedSimulationEnvelope`.
+2. **Bounded retry** — chỉ ở `stage_simulate`, lý do từ chối được nhồi ngược vào prompt; **không** phải retry HTTP.
+3. **Cache hit** — chỉ cache analyze **thành công**, khoá theo text đã chuẩn hoá + `CACHE_VERSION`.
+4. **History reopen** — `store.reopenFromHistory` → thẳng vào engine tất định, **0 gọi AI** (bất biến #17).
+5. **Refusal** — bất kỳ cổng nào chặn → `unsupported` + `failure_category` + learner message; **không** dựng cảnh minh hoạ.
+6. **Rendering** — engine state (ngữ nghĩa thuần, **không** toạ độ pixel) → renderer 2D/3D dùng chung state.
+
+## 0e. Luật phụ thuộc (không được đảo — chi tiết ở ARCHITECTURE_MAP §4)
+
+- LLM **không** sở hữu kết quả cuối; renderer **không** tính lại kết quả.
+- Engine **không** phụ thuộc frontend; validator **không** phụ thuộc renderer.
+- Hợp đồng dùng chung **không** phụ thuộc ngược vào implementation của family.
+- `generic` **không** nhận `result_authority` kiểu algorithmic.
+- Cấm circular import; family **không** import ngược orchestration nếu không cần.
+
+## 0f. Giới hạn đã biết (trung thực)
+
+- `database.relational_table_query`: truy vấn đơn giản **VERIFIED**; pipeline
+  nhiều tầng bằng NL **PARTIAL / EXPERIMENTAL** (`W2B_THESIS_SCOPE_DECISION.md`).
+- Deep hardening PATCH2/PATCH3 **chỉ có trong archive**, không merge lại.
+- Backlog Analyze Integrity còn mở: chưa có provenance/source-span cho từng
+  object/relation.
+- Coverage gap khai báo trung thực ở `simulation/coverage.py` + `docs/COVERAGE.md`.
+
+## 0g. Chính sách cập nhật file này
+
+**Phải cập nhật khi:** thêm/xoá family hoặc target · thêm contract/schema · đổi
+entry point · thêm module lớn · đổi dependency quan trọng · đổi source of truth ·
+đổi `CACHE_VERSION`/`HISTORY_SCHEMA_VERSION` · di chuyển file kiến trúc chính.
+
+**Không cần cập nhật khi:** đổi tên biến local · thêm helper private nhỏ · sửa
+CSS nhỏ · thêm một test lẻ.
+
+> Quy mô hiện tại: **manual tracked index là đủ** — registry/target/family đã có
+> generator tất định (`scripts/catalog_runtime_matrix.py`), không dựng thêm
+> generator index/call-graph mới.
+
+---
 
 **Change impact** (theo `CORRECTNESS.md §7`) — sửa file này thì cần kiểm gì:
 - `offline` — pytest/vitest/build là đủ.
