@@ -103,33 +103,35 @@ _FULL = dict(filter={"op": "=", "column": "to", "value": "A"},
              aggregate={"func": "avg", "column": "diem"})
 
 
-# ── 1. THIẾU TẦNG → không được trả ok ─────────────────────────────
-def test_L4_spec_thieu_limit_va_aggregate_bi_chan(monkeypatch):
-    """Đúng spec mà live sinh ra: ba tầng đầu, thiếu limit + aggregate.
+# ── 1. THIẾU TẦNG (analyze grounds đủ) → MERGE bù, KHÔNG từ chối (W2B-PATCH2 §A) ──
+def test_L4_spec_thieu_limit_va_aggregate_duoc_merge_bu(monkeypatch):
+    """Đúng spec live P2: ba tầng đầu, thiếu limit + aggregate. analyze grounds
+    đủ 5 tầng ⇒ merge tất định bù limit+aggregate ⇒ CHẠY, không từ chối.
 
-    LLM được báo lại và vẫn gửi y hệt cả 3 lượt ⇒ từ chối trung thực."""
+    (Trước PATCH2: từ chối trung thực. PATCH2 §A: request hợp lệ trong hợp đồng
+    phải có đường sinh spec đủ tầng — cổng fail-closed chỉ là chốt cuối.)"""
     thieu = _table_cfg(_L4_SCHEMA, _L4_ROWS,
                        filter=_FULL["filter"], projection=_FULL["projection"],
                        sort=_FULL["sort"])
-    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET))] + [thieu] * 3)
+    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET)), thieu])
 
-    assert env["status"] != "ok", "spec thiếu tầng KHÔNG được trả ok"
-    assert env["failure_category"] == "semantic_incomplete"
-    assert env.get("simulation_id") is None and env.get("config") is None
-    c = env["completeness"]
-    assert c["dropped_pipeline_stages"] == ["limit", "aggregate"]
-    assert c["requested_pipeline"] == ["filter", "projection", "sort", "limit", "aggregate"]
-    assert c["represented_pipeline"] == ["filter", "projection", "sort"]
-    assert c["completeness_decision"] == "incomplete"
-    for banned in ("{", "}", "None", "aggregate"):
-        assert banned not in env["reason"], env["reason"]
+    assert env["status"] == "ok", env.get("reason")
+    assert env["simulation_id"] == TARGET
+    cfg = env["config"]
+    assert cfg["limit"] == 3
+    assert cfg["aggregate"] == {"func": "avg", "column": "diem"}
+    out = run_table_query(cfg)
+    assert out["aggregateResult"]["value"] == pytest.approx(8.5)
+    assert out["aggregateResult"]["counted"] == 3
 
 
 def test_L4_khong_bao_gio_leak_sang_generic(monkeypatch):
+    """Dù merge bù tầng, route LUÔN ở database (không bao giờ leak generic)."""
     thieu = _table_cfg(_L4_SCHEMA, _L4_ROWS, filter=_FULL["filter"])
-    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET))] + [thieu] * 3)
+    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET)), thieu])
     assert env.get("simulation_id") != "generic.rule_scene"
-    assert env["status"] == "unsupported"
+    assert env["simulation_id"] == TARGET
+    assert env["status"] == "ok"
 
 
 # ── 2. ĐỦ NĂM TẦNG → chạy, engine sở hữu kết quả ─────────────────
@@ -150,36 +152,38 @@ def test_L4_du_nam_tang_thi_chay_va_ra_dung_ket_qua(monkeypatch):
         assert leaked not in env["config"], "đáp án không được nằm trong spec"
 
 
-# ── 3. SAI THAM SỐ TẦNG → cũng là trả lời sai đề ─────────────────
-def test_L4_limit_sai_so_bi_bat(monkeypatch):
-    """Đề xin 3 dòng đầu, spec cắt 5 dòng — có đủ tầng nhưng SAI yêu cầu."""
+# ── 3. SAI THAM SỐ TẦNG (analyze grounds đúng) → MERGE sửa về manifest ────
+def test_L4_limit_sai_so_duoc_merge_sua(monkeypatch):
+    """Đề xin 3 dòng đầu, LLM cắt 5 — merge SỬA limit về 3 theo manifest."""
     sai = _table_cfg(_L4_SCHEMA, _L4_ROWS, **{**_FULL, "limit": 5})
-    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET))] + [sai] * 3)
+    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET)), sai])
 
-    assert env["status"] != "ok"
-    mism = env["completeness"]["mismatched_stage_parameters"]
-    assert [m["stage"] for m in mism] == ["limit"]
-    assert mism[0]["requested"] == 3 and mism[0]["represented"] == 5
+    assert env["status"] == "ok", env.get("reason")
+    assert env["config"]["limit"] == 3
+    out = run_table_query(env["config"])
+    assert out["aggregateResult"]["counted"] == 3
+    assert out["aggregateResult"]["value"] == pytest.approx(8.5)
 
 
-def test_L4_ham_tong_hop_sai_bi_bat(monkeypatch):
+def test_L4_ham_tong_hop_sai_duoc_merge_sua(monkeypatch):
+    """LLM để SUM, manifest yêu cầu AVG — merge sửa về avg."""
     sai = _table_cfg(_L4_SCHEMA, _L4_ROWS,
                      **{**_FULL, "aggregate": {"func": "sum", "column": "diem"}})
-    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET))] + [sai] * 3)
-    assert env["status"] != "ok"
-    mism = env["completeness"]["mismatched_stage_parameters"]
-    assert [m["stage"] for m in mism] == ["aggregate"]
-    assert mism[0]["requested"] == "avg" and mism[0]["represented"] == "sum"
+    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET)), sai])
+    assert env["status"] == "ok", env.get("reason")
+    assert env["config"]["aggregate"]["func"] == "avg"
+    out = run_table_query(env["config"])
+    assert out["aggregateResult"]["value"] == pytest.approx(8.5)
 
 
-# ── SỬA ĐƯỢC THÌ SỬA: thiếu tầng phải quay lại simulate, không từ chối ngay ──
-def test_L4_thieu_tang_duoc_bao_lai_va_lan_hai_dung_thi_chay(monkeypatch):
-    """§A.4 — mục tiêu cuối là đề HỢP LỆ chạy được đủ, không phải từ chối cho
-    xong. Thiếu tầng là lỗi SỬA ĐƯỢC: báo lại cho lượt simulate sau."""
+# ── MERGE TẤT ĐỊNH: thiếu tầng (grounded) được bù NGAY, không cần retry LLM ──
+def test_L4_thieu_tang_duoc_merge_ngay_luot_dau(monkeypatch):
+    """§A — merge tất định bù tầng grounded ngay lượt đầu; KHÔNG còn phụ thuộc
+    LLM sửa qua retry (bài học live: retry mù không cứu được gì)."""
     thieu = _table_cfg(_L4_SCHEMA, _L4_ROWS, filter=_FULL["filter"],
                        projection=_FULL["projection"], sort=_FULL["sort"])
-    du = _table_cfg(_L4_SCHEMA, _L4_ROWS, **_FULL)
-    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET)), thieu, du])
+    # CHỈ một response simulate: merge phải hoàn tất mà không cần lượt hai.
+    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET)), thieu])
 
     assert env["status"] == "ok", env.get("reason")
     out = run_table_query(env["config"])
@@ -187,24 +191,11 @@ def test_L4_thieu_tang_duoc_bao_lai_va_lan_hai_dung_thi_chay(monkeypatch):
     assert out["aggregateResult"]["counted"] == 3
 
 
-def test_L4_bao_lai_van_thieu_thi_tu_choi_trung_thuc(monkeypatch):
-    """Hết lượt mà vẫn thiếu → từ chối trung thực, KHÔNG nhận spec nửa vời."""
-    thieu = _table_cfg(_L4_SCHEMA, _L4_ROWS, filter=_FULL["filter"],
-                       projection=_FULL["projection"], sort=_FULL["sort"])
-    env = _run(monkeypatch, [_an_l4(), json.dumps(_classify(TARGET)),
-                             thieu, thieu, thieu])
-    assert env["status"] == "unsupported"
-    assert env["failure_category"] == "semantic_incomplete"
-    assert env.get("config") is None
-
-
-def test_loi_bao_lai_neu_dich_danh_tung_buoc_thieu(monkeypatch):
-    """Thông điệp gửi lại LLM phải nói RÕ thiếu bước nào — nói chung chung thì
-    lượt sau cũng sai y hệt (bài học từ live: retry mù không cứu được gì)."""
+def test_L4_manifest_hint_liet_ke_du_5_tang_trong_prompt(monkeypatch):
+    """§C — prompt simulate mang manifest máy-đọc đủ 5 tầng để LLM điền đúng."""
     prompts: list[str] = []
     thieu = _table_cfg(_L4_SCHEMA, _L4_ROWS, filter=_FULL["filter"])
-    du = _table_cfg(_L4_SCHEMA, _L4_ROWS, **_FULL)
-    responses = [_an_l4(), json.dumps(_classify(TARGET)), thieu, du]
+    responses = [_an_l4(), json.dumps(_classify(TARGET)), thieu]
 
     async def spy(api_key, system_prompt, user_text, response_schema=None,
                   temperature=0.2, image=None):
@@ -214,9 +205,30 @@ def test_loi_bao_lai_neu_dich_danh_tung_buoc_thieu(monkeypatch):
     monkeypatch.setattr(pipeline, "call_gemini", spy)
     env = asyncio.run(pipeline.run_pipeline(_L4_ASK, "khoa-gia"))
     assert env["status"] == "ok"
-    retry_prompt = prompts[-1]
-    assert "projection" in retry_prompt and "sort" in retry_prompt
-    assert "limit" in retry_prompt and "aggregate" in retry_prompt
+    sim_prompt = next(p for p in prompts if "simulation_id đã chọn" in p)
+    for stage in ("filter", "projection", "sort", "limit", "aggregate"):
+        assert stage in sim_prompt
+
+
+def test_L4_khong_ground_duoc_thi_van_fail_closed(monkeypatch):
+    """Chốt cuối GIỮ NGUYÊN: manifest nêu tầng theo cột KHÔNG có trong schema →
+    merge không resolve được → không bịa → completeness từ chối fail-closed."""
+    reqs = [
+        {"operation": "relational_table_query:filter", "query_group": 1,
+         "filter_column": "Tổ", "filter_op": "=", "filter_value": "A"},
+        {"operation": "relational_table_query:sort", "query_group": 1,
+         "sort_column": "Xếp hạng ẩn", "sort_direction": "desc"},  # cột không có
+    ]
+    an = json.dumps({
+        **_analysis(objects=_L4_OBJECTS, data=_L4_DATA, goal="Lọc tổ A, sắp theo xếp hạng"),
+        "requested_operations": sorted({r["operation"] for r in reqs}),
+        "requested_requirements": reqs}, ensure_ascii=False)
+    only_filter = _table_cfg(_L4_SCHEMA, _L4_ROWS, filter=_FULL["filter"])
+    env = _run(monkeypatch, [an, json.dumps(_classify(TARGET))] + [only_filter] * 3,
+               "Lọc tổ A rồi sắp theo xếp hạng ẩn.")
+    assert env["status"] == "unsupported"
+    assert env["failure_category"] == "semantic_incomplete"
+    assert env.get("config") is None
 
 
 # ── ĐỐI CHỨNG chặn oan: đề ít tầng thì spec ít tầng vẫn hợp lệ ────

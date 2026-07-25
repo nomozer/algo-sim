@@ -227,10 +227,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     dưới luật mới."""
     from app.main import _cache_lookup
 
-    # M17 W2B-PATCH (bump 19→20): hợp đồng simulate của truy vấn bảng đổi LUẬT
-    # (marker ô trống, cột nullable, đòi ĐỦ TẦNG pipeline). Envelope cache sinh
-    # dưới luật cũ có thể là spec THIẾU TẦNG — phải MISS để phân tích lại.
-    assert main_module.CACHE_VERSION == "20"
+    # M17 W2B-PATCH2 (bump 20→21): prompt simulate nay mang MANIFEST TẦNG máy-đọc
+    # + merge tất định bù tầng. Đầu vào sinh spec đổi ⇒ envelope cache cũ (có thể
+    # là spec 3-tang chưa merge) phải MISS để sinh lại dưới cơ chế mới.
+    assert main_module.CACHE_VERSION == "21"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

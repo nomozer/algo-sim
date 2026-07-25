@@ -149,8 +149,50 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > patch: pytest **996** (2 skip, 1 deselect) · vitest **596/46** · build sạch ·
 > catalog conformance 20 target 0 vi phạm · review thị giác **REAL_VISUAL 5/5**
 > (18 ảnh Chrome thật, 2 viewport). Artifact: `docs/evaluation/m17/w2b-patch/`.
-> **LIVE CHƯA CHẠY LẠI — chờ duyệt ngân sách riêng (đề xuất 4 case / ≤14 HTTP).
-> Wave 2B vẫn CHƯA CLOSE.** Wave 2C KHÔNG mở.
+>
+> **W2B-PATCH LIVE (`8bd2324` impl, `f2b28e2` artifact):** runtime doctor PASS
+> (sha/cache 20/family 10/target 20/hash khớp). 4 case, 14/14 HTTP, 0 retry,
+> 0 transient, KHÔNG sửa production trong run. **strict 1/3:** **P3 (L5) ĐẠT**
+> (thiếu bảng → insufficient_specification, đòi bảng, KHÔNG xui tách) — L5 XÁC
+> MINH LIVE. **P1 (L3):** cơ chế L3 XÁC MINH (empty→0=0, marker→null, AVG
+> 8.25/4 đúng) nhưng strict FAIL vì LLM thêm tầng `filter` non-null oracle
+> không có. **P2 (L4):** cổng fail-closed đúng (semantic-loss 0, fp-sim 0) —
+> spec 3-tầng bị TỪ CHỐI chứ không tra ok — nhưng gemini-2.5-flash gửi lại spec
+> 3-tầng cả 3 lượt dù báo đích danh, nên đề HỢP LỆ kết thúc bằng từ chối. P4 (L1)
+> KHÔNG chạy (hết budget). Artifact riêng `live_table_query_patch.*`.
+>
+> **Wave 2B-PATCH2 — Stage-Preserving Spec Generation (offline XONG, `8bd2324`
+> onward):** vá đúng hai nguyên nhân gốc live. **QUYẾT ĐỊNH SẢN PHẨM (§A):**
+> target đã KHAI hỗ trợ pipeline 5 tầng thì request hợp lệ PHẢI có đường sinh
+> spec đủ tầng kiểm-chứng-được; fail-closed chỉ là chốt cuối, KHÔNG thay cho khả
+> năng sinh spec. **(P2/L4) MANIFEST TẦNG TẤT ĐỊNH + MERGE**
+> (`simulation/table_pipeline_manifest.py`): từ analyze CÓ CẤU TRÚC
+> (`requested_requirements`) dựng `RequiredTablePipeline` (tầng theo thứ tự +
+> tham số canonical + grounded/unresolved, KHÔNG chứa kết quả), nhồi manifest
+> máy-đọc vào prompt simulate, rồi MERGE tất định sau khi LLM sinh: tầng grounded
+> THIẾU → chèn từ manifest; tham số LỆCH → sửa về manifest (ghi log); cột không
+> có trong schema / tầng chưa đủ tham số → KHÔNG bịa (giữ fail-closed §E). LLM
+> KHÔNG còn là nguồn DUY NHẤT quyết định tầng tồn tại. Ca live P2 (spec 3-tầng)
+> nay merge thành 5-tầng, AVG 8.5/3, TRONG MỘT lượt simulate. **Lỗ đo observer
+> đã lộ ra sự thật:** artifact live báo `requested_requirements=null` chỉ vì
+> event `analyze_done` KHÔNG lưu trường đó — analyze THẬT có điền (thông điệp
+> retry liệt kê đủ 5 tầng chứng minh); observer nay lưu cả `requested_operations/
+> requirements` + candidate spec (thụ động, #22). **(P1/L3) TƯƠNG ĐƯƠNG NGỮ
+> NGHĨA HẸP** (`evaluation/table_plan_equivalence.py`, lớp ĐÁNH GIÁ — KHÔNG đổi
+> production): `aggregate null-ignore` ⇔ `filter(cột agg IS NOT NULL) + aggregate`
+> CHỈ khi tầng thừa duy nhất là non-null check trên chính cột tổng hợp, mục tiêu
+> vô hướng, giá trị+counted khớp — KHÔNG nới thành tolerance chung (8 test âm).
+> **(§I) RUNNER STOP-CHECK:** supported case status ≠ "ok" (error/unsupported/
+> semantic_incomplete/None) đều DỪNG — vá lỗ hổng cũ chỉ bắt "error" khiến P2
+> lọt tới P4. `CACHE_VERSION` **20→21** (prompt sinh spec đổi: mang manifest);
+> `config_contract_version` GIỮ **table-1.1** và `HISTORY_SCHEMA_VERSION` KHÔNG
+> đổi (shape envelope lưu không đổi — merge là việc lúc SINH, không thêm trường
+> lưu). Merge KHÓA vào đúng `database.relational_table_query` → selector/recovery/
+> generic/pattern-reuse bất biến. Offline sau PATCH2: pytest **1044** (2 skip, 1
+> deselect; +48 test: manifest 19 · production merge 6 · plan-equivalence 13 ·
+> live-policy 11, trừ các test PATCH1 superseded) · vitest **596/46** (FE không
+> đổi → KHÔNG recapture visual) · build sạch · conformance 20/0. **LIVE
+> CHƯA CHẠY LẠI — chờ duyệt.** Wave 2B vẫn CHƯA CLOSE. Wave 2C KHÔNG mở.
 >
 > **Backlog Analyze Integrity CÒN MỞ:**
 > provenance/source-span của từng object/relation chưa xác minh — analyze

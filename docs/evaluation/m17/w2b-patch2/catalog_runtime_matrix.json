@@ -1,0 +1,811 @@
+{
+  "schema_version": "1",
+  "run_label": "rc1-catalog-conformance",
+  "source_identity": {
+    "git_sha": "unknown",
+    "build_timestamp": "unknown",
+    "cache_version": "21",
+    "family_count": 10,
+    "target_count": 20,
+    "ai_reachable_target_count": 20,
+    "stable_catalog_hash": "4f2a93ec2be37c3f9ee987986fcb454e64f7c9ca655095034641928b4be74cf7",
+    "registered_target_ids": [
+      "algorithm.binary_search",
+      "algorithm.bubble_sort",
+      "algorithm.count_if",
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.insertion_sort",
+      "algorithm.linear_search",
+      "algorithm.scan",
+      "algorithm.selection_sort",
+      "algorithm.sum_if",
+      "binary.base_conversion",
+      "binary.decimal_to_binary",
+      "database.relational_table_query",
+      "generic.rule_scene",
+      "logic.and_gate",
+      "logic.boolean_dag",
+      "network.graph_traversal",
+      "network.packet_routing",
+      "network.protocol_encapsulation",
+      "tree.traversal"
+    ],
+    "registered_ai_reachable_ids": [
+      "algorithm.binary_search",
+      "algorithm.bubble_sort",
+      "algorithm.count_if",
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.insertion_sort",
+      "algorithm.linear_search",
+      "algorithm.scan",
+      "algorithm.selection_sort",
+      "algorithm.sum_if",
+      "binary.base_conversion",
+      "binary.decimal_to_binary",
+      "database.relational_table_query",
+      "generic.rule_scene",
+      "logic.and_gate",
+      "logic.boolean_dag",
+      "network.graph_traversal",
+      "network.packet_routing",
+      "network.protocol_encapsulation",
+      "tree.traversal"
+    ],
+    "registered_executor_ids": [
+      "algorithm.binary_search",
+      "algorithm.bubble_sort",
+      "algorithm.count_if",
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.insertion_sort",
+      "algorithm.linear_search",
+      "algorithm.scan",
+      "algorithm.selection_sort",
+      "algorithm.sum_if",
+      "binary.base_conversion",
+      "binary.decimal_to_binary",
+      "database.relational_table_query",
+      "generic.rule_scene",
+      "logic.and_gate",
+      "logic.boolean_dag",
+      "network.graph_traversal",
+      "network.packet_routing",
+      "network.protocol_encapsulation",
+      "tree.traversal"
+    ],
+    "registered_renderer_ids": [
+      "algorithm",
+      "binary",
+      "database",
+      "generic",
+      "logic",
+      "network",
+      "tree"
+    ],
+    "family_ids": [
+      "boolean_composition",
+      "comparison_sort",
+      "graph_traversal",
+      "interval_elimination",
+      "layered_pdu_transform",
+      "positional_representation",
+      "relational_table_query",
+      "single_pass_scan",
+      "structural_progressive_representation",
+      "tree_traversal"
+    ],
+    "selector_tokens": [
+      "algorithm.comparison_sort"
+    ]
+  },
+  "target_count": 20,
+  "matrix": [
+    {
+      "target_id": "algorithm.binary_search",
+      "family_ids": [
+        "interval_elimination"
+      ],
+      "owned_mechanisms": [
+        "interval_elimination.halve_sorted_interval"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.binary_search",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "compare_value",
+        "done",
+        "set_range"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11CS B19",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.bubble_sort",
+      "family_ids": [
+        "comparison_sort"
+      ],
+      "owned_mechanisms": [
+        "comparison_sort.adjacent_compare_swap"
+      ],
+      "supported_variants": [
+        "bubble"
+      ],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.bubble_sort",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [
+        "comparison_sort.adjacent_compare_swap"
+      ],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "compare",
+        "done",
+        "mark",
+        "swap"
+      ],
+      "near_miss_mechanisms": [
+        "comparison_sort.other_unspecified",
+        "comparison_sort.partition_recursive"
+      ],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11CS B21–22",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.count_if",
+      "family_ids": [
+        "single_pass_scan"
+      ],
+      "owned_mechanisms": [
+        "single_pass_scan.count_conditional"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.count_if",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "assign_var",
+        "compare_value",
+        "done"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.find_max",
+      "family_ids": [
+        "single_pass_scan"
+      ],
+      "owned_mechanisms": [
+        "single_pass_scan.track_extreme"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.find_max",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "assign_var",
+        "compare",
+        "done"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.find_min",
+      "family_ids": [
+        "single_pass_scan"
+      ],
+      "owned_mechanisms": [
+        "single_pass_scan.track_extreme"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.find_min",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "assign_var",
+        "compare",
+        "done"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.insertion_sort",
+      "family_ids": [
+        "comparison_sort"
+      ],
+      "owned_mechanisms": [
+        "comparison_sort.shift_into_sorted_prefix"
+      ],
+      "supported_variants": [
+        "insertion"
+      ],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.insertion_sort",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [
+        "comparison_sort.shift_into_sorted_prefix"
+      ],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "compare",
+        "done",
+        "insert",
+        "mark",
+        "shift"
+      ],
+      "near_miss_mechanisms": [
+        "comparison_sort.other_unspecified",
+        "comparison_sort.partition_recursive"
+      ],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11CS B21–22",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.linear_search",
+      "family_ids": [
+        "single_pass_scan"
+      ],
+      "owned_mechanisms": [
+        "single_pass_scan.find_equal_early_stop"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.linear_search",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "assign_var",
+        "compare_value",
+        "done"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.scan",
+      "family_ids": [
+        "single_pass_scan"
+      ],
+      "owned_mechanisms": [
+        "single_pass_scan.accumulate_conditional",
+        "single_pass_scan.configured_single_pass",
+        "single_pass_scan.count_conditional",
+        "single_pass_scan.find_equal_early_stop",
+        "single_pass_scan.track_extreme"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_scan_config",
+      "executor_id": "algorithm.scan",
+      "renderer_id": "algorithm",
+      "config_contract_version": "scan-1.0",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "cursor",
+        "spec",
+        "trace"
+      ],
+      "required_trace_events": [
+        "assign_var",
+        "compare_value",
+        "done"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": [
+        "một lượt quét nhiều biến tích luỹ (vd tìm cả max lẫn min) — single_pass_scan.multi_accumulator, BACKLOG"
+      ]
+    },
+    {
+      "target_id": "algorithm.selection_sort",
+      "family_ids": [
+        "comparison_sort"
+      ],
+      "owned_mechanisms": [
+        "comparison_sort.select_extreme_repeated"
+      ],
+      "supported_variants": [
+        "selection"
+      ],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.selection_sort",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [
+        "comparison_sort.select_extreme_repeated"
+      ],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "assign_var",
+        "compare",
+        "done",
+        "mark",
+        "set_range",
+        "swap"
+      ],
+      "near_miss_mechanisms": [
+        "comparison_sort.other_unspecified",
+        "comparison_sort.partition_recursive"
+      ],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11CS B21–22",
+      "known_gaps": []
+    },
+    {
+      "target_id": "algorithm.sum_if",
+      "family_ids": [
+        "single_pass_scan"
+      ],
+      "owned_mechanisms": [
+        "single_pass_scan.accumulate_conditional"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_algorithm_config",
+      "executor_id": "algorithm.sum_if",
+      "renderer_id": "algorithm",
+      "config_contract_version": "algo-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "trace"
+      ],
+      "required_trace_events": [
+        "assign_var",
+        "compare_value",
+        "done"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "known_gaps": []
+    },
+    {
+      "target_id": "binary.base_conversion",
+      "family_ids": [
+        "positional_representation"
+      ],
+      "owned_mechanisms": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.non_binary_base"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_base_conversion_config",
+      "executor_id": "binary.base_conversion",
+      "renderer_id": "binary",
+      "config_contract_version": "baseconv-1.0",
+      "analyze_exposed_mechanisms": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.non_binary_base"
+      ],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "decimalValue",
+        "result",
+        "steps"
+      ],
+      "required_trace_events": [
+        "divide",
+        "result",
+        "weight"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 B4",
+      "known_gaps": []
+    },
+    {
+      "target_id": "binary.decimal_to_binary",
+      "family_ids": [
+        "positional_representation"
+      ],
+      "owned_mechanisms": [
+        "positional_representation.binary_positional_weights"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_binary_config",
+      "executor_id": "binary.decimal_to_binary",
+      "renderer_id": "binary",
+      "config_contract_version": "binary-cfg-1",
+      "analyze_exposed_mechanisms": [
+        "positional_representation.binary_positional_weights"
+      ],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "bitWidth",
+        "bits"
+      ],
+      "required_trace_events": [],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 B4",
+      "known_gaps": []
+    },
+    {
+      "target_id": "database.relational_table_query",
+      "family_ids": [
+        "relational_table_query"
+      ],
+      "owned_mechanisms": [
+        "relational_table_query.aggregate_accumulate",
+        "relational_table_query.bounded_limit",
+        "relational_table_query.column_projection",
+        "relational_table_query.row_predicate_filter",
+        "relational_table_query.stable_sort_by_key"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_table_query_config",
+      "executor_id": "database.relational_table_query",
+      "renderer_id": "database",
+      "config_contract_version": "table-1.1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "filteredIndices",
+        "orderedIndices",
+        "resultRows",
+        "steps"
+      ],
+      "required_trace_events": [
+        "drop",
+        "keep",
+        "read_row",
+        "result"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11 CĐ CSDL (bảng, truy vấn cơ bản)",
+      "known_gaps": [
+        "JOIN nhiều bảng · truy vấn lồng · thêm/sửa/xoá dữ liệu · SQL tự do · GROUP BY nhiều nhóm · kết nối CSDL thật — ngoài phạm vi v1",
+        "phần tích luỹ (đếm/tổng/cực trị) TRÙNG cơ chế với single_pass_scan; cái mới ở đây là KHUNG QUAN HỆ (lược đồ, kiểu cột, vị từ trên bản ghi, phép chiếu, sắp xếp ổn định)"
+      ]
+    },
+    {
+      "target_id": "generic.rule_scene",
+      "family_ids": [
+        "boolean_composition",
+        "structural_progressive_representation"
+      ],
+      "owned_mechanisms": [
+        "boolean_composition.composed_rule_dag",
+        "structural_progressive_representation.move_along_path",
+        "structural_progressive_representation.reveal_sequence"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_generic_config",
+      "executor_id": "generic.rule_scene",
+      "renderer_id": "generic",
+      "config_contract_version": "dsl-1.0",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "base",
+        "cursor",
+        "pos",
+        "spec",
+        "timeline"
+      ],
+      "required_trace_events": [
+        "move",
+        "reveal"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11 B10 · T12CS B29 · T12 CĐ4",
+      "known_gaps": []
+    },
+    {
+      "target_id": "logic.and_gate",
+      "family_ids": [
+        "boolean_composition"
+      ],
+      "owned_mechanisms": [
+        "boolean_composition.single_gate_truth_table"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_logic_config",
+      "executor_id": "logic.and_gate",
+      "renderer_id": "logic",
+      "config_contract_version": "logic-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "inputA",
+        "inputB"
+      ],
+      "required_trace_events": [],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 B5 · T10 B9",
+      "known_gaps": []
+    },
+    {
+      "target_id": "logic.boolean_dag",
+      "family_ids": [
+        "boolean_composition"
+      ],
+      "owned_mechanisms": [
+        "boolean_composition.bounded_gate_dag"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_boolean_dag_config",
+      "executor_id": "logic.boolean_dag",
+      "renderer_id": "logic",
+      "config_contract_version": "logic-dag-1.0",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "evalOrder",
+        "nodeOutputs",
+        "steps",
+        "truthTable",
+        "values"
+      ],
+      "required_trace_events": [
+        "eval",
+        "result"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 B5 · T12CS B22–24",
+      "known_gaps": []
+    },
+    {
+      "target_id": "network.graph_traversal",
+      "family_ids": [
+        "graph_traversal"
+      ],
+      "owned_mechanisms": [
+        "graph_traversal.breadth_first",
+        "graph_traversal.depth_first"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_traverse_config",
+      "executor_id": "network.graph_traversal",
+      "renderer_id": "network",
+      "config_contract_version": "traverse-1.0",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "frontierKind",
+        "path",
+        "reachable",
+        "steps",
+        "visitedOrder"
+      ],
+      "required_trace_events": [
+        "result",
+        "visit"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11CS B17 · T12 CĐ2",
+      "known_gaps": [
+        "đường đi ngắn nhất có trọng số (Dijkstra) — future family"
+      ]
+    },
+    {
+      "target_id": "network.packet_routing",
+      "family_ids": [
+        "graph_traversal"
+      ],
+      "owned_mechanisms": [
+        "graph_traversal.unweighted_hop_bfs"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_network_config",
+      "executor_id": "network.packet_routing",
+      "renderer_id": "network",
+      "config_contract_version": "net-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "cursor",
+        "destination",
+        "links",
+        "nodes",
+        "route",
+        "source",
+        "steps"
+      ],
+      "required_trace_events": [
+        "packetAt"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T10 CĐ2 · T12 CĐ2",
+      "known_gaps": [
+        "đường đi ngắn nhất có trọng số (Dijkstra)",
+        "dựng topo từng bước"
+      ]
+    },
+    {
+      "target_id": "network.protocol_encapsulation",
+      "family_ids": [
+        "layered_pdu_transform"
+      ],
+      "owned_mechanisms": [
+        "layered_pdu_transform.encapsulate_decapsulate_4layer"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_encapsulation_config",
+      "executor_id": "network.protocol_encapsulation",
+      "renderer_id": "network",
+      "config_contract_version": "encap-cfg-1",
+      "analyze_exposed_mechanisms": [],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "cursor",
+        "layers",
+        "payloadLabel",
+        "steps"
+      ],
+      "required_trace_events": [
+        "add",
+        "deliver",
+        "remove",
+        "transmit"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T12 B4 · 12CS B22–24",
+      "known_gaps": [
+        "bắt tay TCP ba bước",
+        "phân mảnh",
+        "retransmission",
+        "congestion",
+        "DNS"
+      ]
+    },
+    {
+      "target_id": "tree.traversal",
+      "family_ids": [
+        "tree_traversal"
+      ],
+      "owned_mechanisms": [
+        "tree_traversal.inorder",
+        "tree_traversal.level_order",
+        "tree_traversal.postorder",
+        "tree_traversal.preorder"
+      ],
+      "supported_variants": [],
+      "validator_id": "validate_tree_traversal_config",
+      "executor_id": "tree.traversal",
+      "renderer_id": "tree",
+      "config_contract_version": "tree-1.0",
+      "analyze_exposed_mechanisms": [
+        "tree_traversal.inorder",
+        "tree_traversal.level_order",
+        "tree_traversal.postorder",
+        "tree_traversal.preorder"
+      ],
+      "classify_exposed": true,
+      "required_grounded_inputs": [
+        "config",
+        "cursor",
+        "frontierKind",
+        "steps",
+        "visitedOrder"
+      ],
+      "required_trace_events": [
+        "completed",
+        "visit"
+      ],
+      "near_miss_mechanisms": [],
+      "authenticity_contract": true,
+      "has_audit_fixture": true,
+      "curriculum_anchor": "T11CS B17 · T11 CĐ (cấu trúc dữ liệu cây)",
+      "known_gaps": [
+        "BST/AVL/heap/cây biểu thức/cây n-nhánh — ngoài phạm vi duyệt cây nhị phân"
+      ]
+    }
+  ],
+  "violations": {
+    "target_conformance": [],
+    "mechanism_ownership": [],
+    "source_runtime_parity": []
+  },
+  "ok": true
+}

@@ -37,6 +37,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+from app.evaluation.table_plan_equivalence import (  # noqa: E402
+    final_result_accepted,
+    supported_stop_reason,
+)
 from app.simulation.table_query_engine import (  # noqa: E402
     PIPELINE_STAGE_ORDER,
     run_table_query,
@@ -70,7 +74,7 @@ def _norm(s) -> str:
 class Case:
     def __init__(self, cid, finding, kind, columns, rows, ask, *, query=None,
                  expected_ops=None, expected_stages=(), refusal_category=None,
-                 note=""):
+                 wants_rows=False, note=""):
         self.cid = cid
         self.finding = finding
         self.kind = kind                      # "supported" | "refusal"
@@ -81,6 +85,9 @@ class Case:
         self.expected_ops = expected_ops or {}
         self.expected_stages = tuple(expected_stages)
         self.refusal_category = refusal_category
+        # §F — mục tiêu CÓ trả danh sách hàng không? Vô hướng (avg/count) = False;
+        # đề "giữ các bạn… hiển thị…" = True (tập hàng chính là kết quả).
+        self.wants_rows = wants_rows
         self.expected_final = None            # khoá bằng oracle ở lock_expected()
         self.note = note
 
@@ -157,6 +164,7 @@ P4 = Case(
     expected_ops={"filter": True, "projection": ["Tên", "Điểm"], "sort": None,
                   "limit": None, "aggregate": None},
     expected_stages=("filter", "projection"),
+    wants_rows=True,  # kết quả là DANH SÁCH hàng → rows phải khớp đúng, không nới
     note="ĐỐI CHỨNG không hồi quy — giữ nguyên hành vi đã đạt ở run 0afcb37.",
 )
 
@@ -288,6 +296,19 @@ def _ops_from_config(config: dict) -> dict:
         "sort": (label.get(s["column"], s["column"]), s["direction"]) if s else None,
         "limit": config.get("limit"),
         "aggregate": (a["func"], label.get(a.get("column"), a.get("column"))) if a else None,
+    }
+
+
+def _plan_of(config: dict, wants_rows: bool) -> dict:
+    """Kế hoạch (ở KHÔNG GIAN ID cột) cho equivalence policy — filter/projection/
+    sort/limit/aggregate raw từ config, kèm cờ mục tiêu có phải trả rows không."""
+    return {
+        "filter": config.get("filter"),
+        "projection": config.get("projection"),
+        "sort": config.get("sort"),
+        "limit": config.get("limit"),
+        "aggregate": config.get("aggregate"),
+        "wants_rows": wants_rows,
     }
 
 
@@ -428,12 +449,21 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
             if dropped_stages:
                 passed = False
                 problems.append(f"thiếu tầng: {dropped_stages}")
-            if final != case.expected_final:
+            # §F — kế hoạch có thể KHÁC (vd LLM thêm non-null filter trên cột
+            # tổng hợp) mà vẫn cùng kết quả vô hướng ⇒ dùng equivalence policy
+            # HẸP thay vì so rows cứng. Bằng chứng đầy đủ ghi vào rec.
+            accept = final_result_accepted(
+                case.expected_final, final,
+                _plan_of(case.oracle_config(), case.wants_rows),
+                _plan_of(config, case.wants_rows))
+            equivalence = accept["equivalence"]
+            if not accept["accepted"]:
                 passed = False
                 problems.append("engine final ≠ expected (operation/spec sai)")
         else:
             passed = False
             problems.append("không có config hợp lệ để audit")
+            accept = equivalence = None
         rec.update({
             "grounding": gm, "leakage": leak or [], "operations": ops,
             "expected_operations": case.expected_ops,
@@ -442,6 +472,8 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
             "dropped_pipeline_stages": dropped_stages,
             "completeness_evidence": (env or {}).get("completeness"),
             "expected_final": case.expected_final, "actual_final": final,
+            "plan_equivalence": equivalence,
+            "final_accept_rule": accept["rule"] if accept else None,
             "result_leakage": bool(leak),
             "generic_leak": route == "generic.rule_scene",
             "false_positive_simulation": False,
@@ -477,7 +509,11 @@ def _record_case(case: Case, env: dict | None, err: str | None, obs, delta: dict
 
 
 def _stop_check(case: Case, rec: dict) -> str | None:
-    """STOP CONDITIONS — dừng NGAY, không sửa production code."""
+    """STOP CONDITIONS — dừng NGAY, không sửa production code.
+
+    §I: với supported case, MỌI status ≠ "ok" đều dừng (lỗ hổng cũ chỉ bắt
+    "error" nên P2 trả "unsupported" đã lọt qua tới P4). Các stop chi tiết hơn
+    (empty→0, sửa cell, mất cột) kiểm TRƯỚC để cho lý do rõ hơn khi status vẫn ok."""
     if rec["final_route"] == "generic.rule_scene":
         return "route sang generic"
     if case.kind == "supported":
@@ -489,12 +525,11 @@ def _stop_check(case: Case, rec: dict) -> str | None:
                 return "supported case mất/thêm/sửa cell"
             if gm["added_columns"] or gm["dropped_columns"]:
                 return "schema mất/thêm cột"
-        if rec.get("result_leakage"):
-            return "candidate spec chứa kết quả cuối"
-        if rec["status"] == "ok" and rec.get("dropped_pipeline_stages"):
-            return "status=ok nhưng THIẾU TẦNG"
-        if rec["status"] == "error":
-            return "cạn lượt simulate (retries exhaust)"
+        return supported_stop_reason(
+            rec["status"],
+            grounding_perfect=(gm["grounding_perfect"] if gm else None),
+            result_leakage=rec.get("result_leakage", False),
+            dropped_stages=rec.get("dropped_pipeline_stages") or [])
     else:
         if rec["status"] == "ok":
             return "đề thiếu bảng nhưng hệ tự dựng mô phỏng"

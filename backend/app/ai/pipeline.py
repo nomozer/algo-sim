@@ -17,6 +17,14 @@ from app.simulation.completeness_gate import (
 )
 from app.simulation.computation_gate import check_computation_ownership
 from app.simulation.pipeline_stages import stage_shortfall_message
+from app.simulation.table_pipeline_manifest import (
+    build_required_pipeline,
+    manifest_prompt_hint,
+    merge_required_stages,
+)
+
+# Target bảng quan hệ — nơi manifest tầng tất định áp dụng (W2B-PATCH2).
+TABLE_QUERY_TARGET = "database.relational_table_query"
 from app.simulation.sufficiency_gate import (
     check_input_sufficiency,
     check_input_sufficiency_for_targets,
@@ -310,11 +318,21 @@ async def stage_simulate(
     # M7.13A: scene_mode từ Representation Plan là NGUỒN QUYẾT ĐỊNH chế độ cảnh
     # — truyền vào prompt để LLM không tự ép reveal cho cảnh tĩnh (và ngược lại).
     scene_mode = (plan or {}).get("scene_mode") if simulation_id == "generic.rule_scene" else None
+    # M17 W2B-PATCH2 §B/§C — target bảng khai hỗ trợ pipeline 5 tầng ⇒ dựng
+    # MANIFEST tất định từ analyze có cấu trúc, để (a) nhồi vào prompt cho LLM
+    # điền đúng ngay, và (b) MERGE bù tầng grounded sau khi LLM sinh (LLM không
+    # là nguồn DUY NHẤT quyết định tầng tồn tại). None cho mọi target khác.
+    required_pipeline = (
+        build_required_pipeline(analysis) if simulation_id == TABLE_QUERY_TARGET else None
+    )
     base = (
         f'Đầu vào gốc:\n"""\n{text}\n"""\n\n'
         f"Kết quả phân tích:\n{json.dumps(analysis, ensure_ascii=False)}\n\n"
         f"simulation_id đã chọn: {simulation_id}\n\n{spec.contract}"
     )
+    hint = manifest_prompt_hint(required_pipeline)
+    if hint:
+        base += f"\n\n{hint}"
     if scene_mode:
         base += f"\n\n{scene_mode_guidance(scene_mode)}"
     prompt = base
@@ -336,6 +354,26 @@ async def stage_simulate(
             _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=ErrorCode.STRUCTURAL_INVALID.value, message=last_error)
             prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
             continue
+
+        # M17 W2B-PATCH2 §C/§D — MERGE TẤT ĐỊNH: bù các tầng grounded manifest
+        # yêu cầu nhưng LLM bỏ (đúng ca live P2), và sửa tham số tầng lệch về
+        # manifest. Chạy TRÊN config ĐÃ VALIDATE (schema đã có → resolve nhãn→id
+        # được), rồi RE-VALIDATE bản merge (tầng bù phải hợp lệ cấu trúc). Tầng
+        # KHÔNG grounded / cột không có trong schema → KHÔNG bịa (giữ fail-closed).
+        if required_pipeline is not None:
+            merged, merge_log = merge_required_stages(config, required_pipeline)
+            if merge_log["merge_applied"]:
+                mconfig, merror = spec.validate(merged)
+                if mconfig is None:
+                    # Bản merge không validate được (hiếm: cột resolve ra shape
+                    # engine từ chối) → giữ config gốc, để stage-shortfall xử.
+                    _emit(observer, "stage_merge", applied=False,
+                          error=merror, log=merge_log)
+                else:
+                    config = mconfig
+                    _emit(observer, "stage_merge", applied=True, log=merge_log)
+            else:
+                _emit(observer, "stage_merge", applied=False, log=merge_log)
 
         # M7.13A: spec ↔ scene_mode phải nhất quán (tất định, check trước semantic)
         if scene_mode:
@@ -388,7 +426,10 @@ async def stage_simulate(
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
                 continue
 
-        _emit(observer, "simulate_attempt", n=_attempt, ok=True, error_code=None, message="")
+        # W2B-PATCH2: lưu candidate ĐÃ CHỐT (sau merge) — lỗ đo #2 đã làm mất
+        # spec thô live P2, phải tái dựng thủ công. Thụ động (#22).
+        _emit(observer, "simulate_attempt", n=_attempt, ok=True, error_code=None,
+              message="", candidate=config if isinstance(config, dict) else None)
         return config, None
 
     if stage_incomplete is not None:
@@ -582,10 +623,15 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
     này, bất biến #22).
     """
     analysis = await stage_analyze(text, api_key)
+    # W2B-PATCH2: phơi CẢ `requested_operations`/`requested_requirements` để
+    # observer không còn báo None nhầm (lỗ đo đã làm hiểu sai live P2 — analyze
+    # THẬT có điền, nhưng event cũ không lưu). Thụ động, không đổi hành vi (#22).
     _emit(observer, "analyze_done",
           result_ownership=analysis.get("result_ownership") if isinstance(analysis, dict) else None,
           prescribed_procedure=analysis.get("prescribed_procedure") if isinstance(analysis, dict) else None,
-          canonical_prescribed=canonical_mechanism(analysis.get("prescribed_procedure")) if isinstance(analysis, dict) else None)
+          canonical_prescribed=canonical_mechanism(analysis.get("prescribed_procedure")) if isinstance(analysis, dict) else None,
+          requested_operations=analysis.get("requested_operations") if isinstance(analysis, dict) else None,
+          requested_requirements=analysis.get("requested_requirements") if isinstance(analysis, dict) else None)
 
     # M7.11: Representation Plan TẤT ĐỊNH (analysis → semantic requirements → plan).
     plan = build_representation_plan(analysis)
