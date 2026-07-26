@@ -206,10 +206,14 @@
       "authenticity": "REAL_SIMULATION",
       "interaction": "PREDICTION_OR_WHAT_IF",
       "visual": "2D_AND_3D",
+      "visual_per_target": {
+        "network.packet_routing": "2D_AND_3D",
+        "network.graph_traversal": "2D"
+      },
       "evidence": [
         "frontend/src/simulations/domains/network/index.ts:134 — predict() declared",
         "BFS/DFS maintain a real frontier and visited set; the route emerges from traversal",
-        "3D IS A SECOND VIEW OF THE SAME AUTHORITATIVE STATE: ui3d.tsx:171 Network3DWorkspace({ state }) reads currentStep(state), state.nodes, state.route — it does not own a parallel scene",
+        "3D IS A SECOND VIEW OF THE SAME AUTHORITATIVE STATE: ui3d.tsx:171 Network3DWorkspace({ state }) reads currentStep(state), state.nodes, state.route — it does not own a parallel scene. NOTE (errata): this 3D renderer belongs to network.packet_routing (registered at network/index.ts:94), NOT to network.graph_traversal, which is 2D-only (traverse-module.tsx:377)",
         "ui3d.tsx:25 — camera/orbit state lives in closure/ref and NEVER enters the store, so the 3D view cannot corrupt the timeline",
         "render-parity.test.tsx enforces 2D/3D agreement"
       ],
@@ -282,7 +286,20 @@
     "three_d_coverage": {
       "targets_with_3d": 2,
       "targets_total": 22,
-      "ratio": 0.09
+      "ratio": 0.09,
+      "targets": ["network.packet_routing", "network.protocol_encapsulation"]
     }
-  }
+  },
+  "errata": [
+    {
+      "id": "E1",
+      "date": "2026-07-27",
+      "found_during": "M17 SIMULATION AUTHENTICITY CORRECTION (P0 implementation)",
+      "wrong": "the audit narrative named network.graph_traversal as one of the two 3D targets",
+      "right": "the two 3D targets are network.packet_routing and network.protocol_encapsulation; network.graph_traversal is 2D-only (traverse-module.tsx:377)",
+      "cause": "ui3d.tsx reads state.route / state.nodes, which is packet_routing state; the file sits next to the traversal module and was misattributed",
+      "impact": "none on any count or classification — the 3D total was and remains 2/22; only the identity of one target was wrong. The cross_cutting.truth_source line (network/index.ts:100, network/encap.ts:42) was already correct, because index.ts:100 IS packet_routing.",
+      "action": "corrected in this file; P0 tests lock the real ids on both sides"
+    }
+  ]
 }

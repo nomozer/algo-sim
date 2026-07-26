@@ -295,3 +295,40 @@ Chi tiết ở [correction_priority.md](correction_priority.md). Tóm tắt:
 **Khuyến nghị bao trùm: không thêm family thứ 12 trước khi đóng P0 và P1.**
 Thêm family làm tăng *bề rộng*; hai việc trên sửa *độ tin cậy*. Với luận văn, một
 sản phẩm 11 family nói đúng về chính nó mạnh hơn 12 family có một chỗ nói quá.
+
+---
+
+## ERRATA (bổ sung sau — không sửa kết luận)
+
+### E1 — nhầm danh tính một target 3D · phát hiện 2026-07-27
+
+**Sai:** §5.4 và §8 gọi `network.graph_traversal` là một trong hai target 3D.
+
+**Đúng:** hai target 3D là **`network.packet_routing`** (`network/index.ts:94`
+khai id, `:100` khai `["2d","3d"]`) và **`network.protocol_encapsulation`**
+(`encap.ts:42`). `network.graph_traversal` **chỉ 2D** (`traverse-module.tsx:377`).
+
+**Nguyên nhân:** `ui3d.tsx` đọc `state.route` / `state.nodes` — đó là state của
+**packet_routing**. File nằm cạnh module traversal nên bị quy nhầm chủ.
+
+**Ảnh hưởng:** **không đổi con số nào.** Tổng 3D vẫn **2/22**; mọi phân loại ba
+trục giữ nguyên. Chỉ danh tính một target sai. Dòng `truth_source` ở §9
+(`network/index.ts:100`, `network/encap.ts:42`) vốn **đã đúng** — vì
+`index.ts:100` chính là packet_routing.
+
+**Xử lý:** đã sửa trong `simulation_authenticity_matrix.json`; test P0 khoá đúng
+hai id thật ở **cả hai phía**, nên sai sót này không thể tái diễn âm thầm.
+
+Thân audit ở trên **giữ nguyên** như bằng chứng tại baseline `3846e5b`.
+
+---
+
+## TRẠNG THÁI SỬA (cập nhật sau checkpoint CORRECTION)
+
+| Mục | Trạng thái |
+|---|---|
+| **P0** visual mode | **XONG** — `SimSpec.visual_modes` thành nguồn (danh sách đóng); `visual_mode` là property **dẫn xuất** nên không thể khai tay mâu thuẫn; descriptor mang `visual_modes`; parity FE↔BE khoá ở `capability-descriptors.test.ts`. **20 chỉ-2D · 2 có 3D.** |
+| **P1b** claim alignment | **XONG** — `CODE_INDEX §0h` + danh tính `CURRENT_STATE`: **10 computation / 1 representation**, cấm đếm phẳng. |
+| **P1a** W3 cơ chế | xem `docs/evaluation/m17/w3-sim/` |
+| **P2** tương tác | chưa mở |
+| **P3** hai cách chặn kết quả-trong-config | chưa mở |

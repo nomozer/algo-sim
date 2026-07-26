@@ -19,6 +19,8 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 | `CACHE_VERSION` | **23** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 | `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
 | Family / Target | **11 / 22** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+| ↳ computation / representation | **10 / 1** — xem §0h | `result_authority` trên `FamilyMembership` |
+| Trình bày 2D / 2D+3D | **20 / 2** | `SimSpec.visual_modes`; parity `capability-descriptors.test.ts` |
 | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8` | `git rev-parse archive/m17-w2b-deep-hardening` |
 
 Danh tính runtime (so source ↔ container) do `backend/app/runtime_identity.py` +
@@ -94,6 +96,32 @@ CSS nhỏ · thêm một test lẻ.
 > Quy mô hiện tại: **manual tracked index là đủ** — registry/target/family đã có
 > generator tất định (`scripts/catalog_runtime_matrix.py`), không dựng thêm
 > generator index/call-graph mới.
+
+## 0h. Mô phỏng cơ chế ≠ biểu diễn tiến triển (M17 P1b)
+
+Kho mã có **11 family**, nhưng chúng **không cùng một loại**. `FamilyMembership.
+result_authority` đã phân biệt sẵn từ M14 — mục này chỉ ghi lại để không ai đếm
+phẳng:
+
+| Loại | Số | Nghĩa |
+|---|---|---|
+| `computation` | **10** | engine **chạy cơ chế miền** và dẫn ra kết quả (sort, scan, traversal, đổi cơ số, DAG, pipeline truy vấn, luồng điều khiển…) |
+| `representation` | **1** | `structural_progressive_representation` — engine dựng **frame biểu diễn**, không thực thi thuật toán |
+
+Family `representation` duy nhất là `generic.rule_scene`:
+`RevealStep { objects, narration? }` chỉ khai **object nào bắt đầu xuất hiện**;
+`move_along_path` nội suy trên đường **đã khai sẵn**. Không có hệ quả miền giữa
+hai bước.
+
+**Cách nói đúng:** *"11 family năng lực, gồm 10 family mô phỏng cơ chế tính toán
+và một family biểu diễn tiến triển."*
+
+**Không viết:** "11 family đều là mô phỏng thuật toán" · "22 target đều là mô
+phỏng cơ chế" · "`generic.rule_scene` thực thi thuật toán".
+
+`generic.rule_scene` **không phải lỗi** — code đúng, renderer đúng, target giữ
+nguyên. Nó là **biểu diễn hỗ trợ**, chỉ không được dùng làm bằng chứng chính cho
+"mô phỏng thuật toán". Bằng chứng: `docs/evaluation/m17/simulation-authenticity/`.
 
 ---
 

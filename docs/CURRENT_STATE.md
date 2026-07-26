@@ -12,6 +12,8 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | `CACHE_VERSION` | **23** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Family / Target | **11 / 22** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+> | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **1 biểu diễn tiến triển** (`representation` — `structural_progressive_representation`). **Không** đếm phẳng cả 11 là "mô phỏng thuật toán" |
+> | Trình bày 2D / 3D | **20 chỉ 2D · 2 có 2D+3D** (`network.packet_routing`, `network.protocol_encapsulation`) — nguồn: `SimSpec.visual_modes`, parity khoá ở `capability-descriptors.test.ts` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
