@@ -157,3 +157,43 @@ def test_de_hoi_dung_cac_cau_truc_spec_dung_du_thi_ok(monkeypatch):
                monkeypatch)
     assert env["status"] == "ok", env
     assert env["simulation_id"] == TARGET
+
+
+# ── W2C-C1 §L3 — nhãn từ chối phải đúng bản chất ────────────────
+
+def test_L3_classify_tu_choi_de_thieu_du_kien_van_co_nhan_insufficient(monkeypatch):
+    """Live W2C: classify tự từ chối TRƯỚC cổng đủ-dữ-kiện ⇒ envelope không có
+    `failure_category` ⇒ FE mất tiêu đề "CHƯA ĐỦ DỮ KIỆN" và học sinh đọc thành
+    "ngoài danh mục", trong khi dạng bài này hệ CÓ mô phỏng."""
+    analysis = _analysis(goal="Mô phỏng vòng lặp while",
+                         objects=["vòng lặp while"], data=[],
+                         prescribed="bounded_control_flow.bounded_loop")
+    script = CaseScript(analysis, [{"status": "unsupported",
+                                    "reason": "Đề chưa cho chương trình cụ thể."}],
+                        [_program_cfg_loop()])
+    env = _run(script, monkeypatch, "Hãy mô phỏng một vòng lặp while.")
+    assert env["status"] == "unsupported"
+    assert env.get("failure_category") == "insufficient_specification"
+    assert env.get("simulation_id") is None
+
+
+def test_L3_de_NGOAI_danh_muc_KHONG_bi_gan_nham_thieu_du_kien(monkeypatch):
+    """Đề có đủ dữ kiện nhưng ngoài năng lực ⇒ KHÔNG được gắn 'thiếu dữ kiện'."""
+    analysis = _program_analysis(goal="Mô phỏng hàm đệ quy tính giai thừa")
+    script = CaseScript(analysis, [{"status": "unsupported",
+                                    "reason": "Chưa hỗ trợ hàm và đệ quy."}],
+                        [_program_cfg_loop()])
+    env = _run(script, monkeypatch, "Mô phỏng hàm đệ quy tính giai thừa n!")
+    assert env["status"] == "unsupported"
+    assert env.get("failure_category") != "insufficient_specification"
+
+
+def test_L3_khong_suy_duoc_thi_de_TRONG_chu_khong_doan(monkeypatch):
+    """Analyze không khai cơ chế ⇒ không có căn cứ ⇒ KHÔNG gắn nhãn bừa."""
+    analysis = _analysis(goal="Vẽ đồ thị hàm số bậc hai", objects=["parabol"], data=[])
+    script = CaseScript(analysis, [{"status": "unsupported",
+                                    "reason": "Bài này chưa có mô phỏng phù hợp."}],
+                        [_program_cfg_loop()])
+    env = _run(script, monkeypatch, "Vẽ đồ thị hàm số y = x^2 nhé")
+    assert env["status"] == "unsupported"
+    assert env.get("failure_category") is None

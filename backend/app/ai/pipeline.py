@@ -509,6 +509,35 @@ async def try_pattern_reuse(
 
 # ── M15 Task 6: route-consistency recovery (bounded, TRƯỚC route-dependent gate) ──
 
+def _refusal_category(analysis: dict) -> str | None:
+    """W2C-C1 §L3 — bản chất lời từ chối của classify, suy TẤT ĐỊNH.
+
+    `classify` từ chối trước mọi cổng nên envelope không mang `failure_category`,
+    và FE mất tiêu đề đúng. Ở đây dùng LẠI cổng đủ-dữ-kiện dùng chung: nếu cơ
+    chế mà CHÍNH analyze khai thuộc một family CÓ target trong danh mục, mà mọi
+    target đó đều thiếu dữ kiện bắt buộc, thì đây là **thiếu dữ kiện** chứ không
+    phải "ngoài danh mục".
+
+    Không keyword-match đề bài, không thêm stage, không sửa classify. Không suy
+    được ⇒ trả None (để trống còn hơn gắn nhãn sai)."""
+    from app.simulation.catalog import CATALOG
+    from app.simulation.descriptor import ReachabilityLevel
+
+    canonical = canonical_mechanism(analysis.get("prescribed_procedure"))
+    if not canonical:
+        return None
+    family = mechanism_family(canonical)
+    targets = [
+        sid for sid, spec in CATALOG.items()
+        if ReachabilityLevel.AI_REACHABLE_PUBLIC in spec.reachability
+        and any(m.family_id.value == family for m in spec.family_memberships)
+    ]
+    if not targets:
+        return None
+    verdict = check_input_sufficiency_for_targets(analysis, targets)
+    return "insufficient_specification" if verdict is not None else None
+
+
 def _family_mismatch(analysis: dict, sim_id: str) -> tuple[ErrorCode, str] | None:
     """CHỈ nhánh 3 (family mismatch) — cho cả selector token lẫn direct entry.
     Ownership (nhánh 2) là route-dependent gate, chạy SAU trên FINAL route
@@ -640,13 +669,26 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             return env
 
     if classification.get("status") != "ok":
-        _emit(observer, "envelope", status="unsupported", simulation_id=None, failure_category=None)
-        return {
+        # W2C-C1 §L3 — GIỮ ĐÚNG BẢN CHẤT LỜI TỪ CHỐI.
+        # Live W2C: classify tự từ chối đề "mô phỏng một vòng lặp while" TRƯỚC
+        # khi cổng đủ-dữ-kiện kịp chạy, nên envelope không có `failure_category`
+        # và FE mất tiêu đề "CHƯA ĐỦ DỮ KIỆN" — học sinh đọc thành "ngoài danh
+        # mục" trong khi dạng bài này hệ CÓ mô phỏng, chỉ thiếu dữ kiện.
+        # Suy ra nhãn bằng CHÍNH hạ tầng đủ-dữ-kiện dùng chung, trên family mà
+        # analyze tự khai — KHÔNG khớp từ khoá đề, KHÔNG thêm stage, KHÔNG sửa
+        # classify. Không suy được thì để trống (thà không nhãn còn hơn nhãn sai).
+        category = _refusal_category(analysis)
+        _emit(observer, "envelope", status="unsupported", simulation_id=None,
+              failure_category=category)
+        env = {
             "status": "unsupported",
             "reason": classification.get("reason")
             or "Bài này chưa có mô phỏng phù hợp trong danh mục.",
             "representation_plan": plan,
         }
+        if category:
+            env["failure_category"] = category
+        return env
 
     simulation_id = classification["simulation_id"]
 

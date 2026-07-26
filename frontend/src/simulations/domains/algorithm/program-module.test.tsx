@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 
 import { runProgram, validateProgramSpec, type ProgramSpec } from "../../../core/program";
+import { UnsupportedNotice } from "../../../components/SimulationWorkspace";
 import { ProgramInspector, ProgramWorkspace, makeProgramModule } from "./program-module";
 import type { ProgramSimState } from "./program-module";
 
@@ -194,5 +195,33 @@ describe("getExplainContext — ảnh chụp state THẬT", () => {
     expect(ctx.condition).toContain("x > 0");
     expect(ctx.branch).toBe("else");
     expect(ctx.total_steps).toBe(state.trace.steps.length);
+  });
+});
+
+describe("W2C-C1 §L3 — tiêu đề từ chối đúng bản chất", () => {
+  const notice = (failure_category?: string) =>
+    renderToString(
+      <UnsupportedNotice
+        unsupported={{
+          status: "unsupported",
+          reason: "Đề chưa cho đoạn chương trình cụ thể.",
+          learner_reason: "Đề chưa cho đoạn chương trình cụ thể để chạy thử.",
+          ...(failure_category ? { failure_category } : {}),
+        }}
+      />,
+    );
+
+  it("thiếu dữ kiện ⇒ tiêu đề CHƯA ĐỦ DỮ KIỆN", () => {
+    expect(notice("insufficient_specification")).toContain("CHƯA ĐỦ DỮ KIỆN");
+  });
+
+  it("ngoài danh mục ⇒ KHÔNG bị gắn nhầm CHƯA ĐỦ DỮ KIỆN", () => {
+    const html = notice();
+    expect(html).not.toContain("CHƯA ĐỦ DỮ KIỆN");
+    expect(html).toContain("NGOÀI DANH MỤC");
+  });
+
+  it("không lộ enum kỹ thuật cho học sinh", () => {
+    expect(notice("insufficient_specification")).not.toContain("insufficient_specification");
   });
 });
