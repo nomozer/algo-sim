@@ -9,9 +9,9 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **22** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **23** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
-> | Family / Target | **11 / 21** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+> | Family / Target | **11 / 22** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
@@ -22,6 +22,39 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Scope guard (phân loại + luật dừng) | **`docs/RULES.md` §3** |
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
+>
+> ### Wave 3 — mã hoá ký tự (XONG offline)
+>
+> Target thứ **22** `binary.character_encoding` trong family **cũ**
+> `positional_representation` — **KHÔNG** tạo family thứ 12. Cơ chế mới duy nhất:
+> `character_code_mapping`. Học sinh xem từng bước: **ký tự → mã (ASCII / Unicode
+> code point) → thập phân → nhị phân**.
+>
+> - **Ranh giới kiến trúc:** backend **chỉ kiểm định** (hợp đồng, kiểu, phạm vi
+>   code point, cổng đủ-dữ-kiện) — **không engine, không chuyển nhị phân, không
+>   trace**. Frontend sở hữu thực thi và **dùng lại `toBase()` của
+>   `base_conversion`** ⇒ **không có bộ chuyển đổi thứ hai** (khoá bằng test).
+> - **Chain:** `character_code_mapping → non_binary_base`. KHÔNG dùng
+>   `binary_positional_weights`: `decimal_to_binary` chặn cứng 0–255 / 8 bit,
+>   trong khi BMP cần tới 65535 = đúng `CONV_MAX_VALUE` của base_conversion.
+> - **Hợp đồng nhỏ nhất dự án từng có:** chỉ `text` + `encoding`.
+> - **Unicode theo CODE POINT ở cả hai tầng:** Python lặp theo code point; FE
+>   dùng `Array.from` + `codePointAt`. Nếu FE dùng `text.length`/`charCodeAt` thì
+>   😀 thành **hai** ký tự BMP "hợp lệ" trong khi BE từ chối — sai câm, mà đường
+>   mở-lại-từ-lịch-sử (bất biến #17) đi thẳng vào engine FE. Có test khoá đúng
+>   chênh lệch đó.
+> - precomposed `U+1EBF` giữ **một** code point; decomposed giữ **ba** —
+>   **không normalize**. Fixture dùng escape sequence để editor không tự ghép.
+> - **Giới hạn (không được claim quá):** chỉ BMP (≤ U+FFFF); **emoji, ký tự ngoài
+>   BMP, dãy byte UTF-8/UTF-16, Base64, nén, mã hoá bảo mật, mã hoá ảnh/âm thanh
+>   đều NGOÀI phạm vi**. Quy ước nhị phân **không đệm số 0** — lấy từ chính
+>   `toBase()`, không tự đặt convention mới.
+> - **Learner action hiện chỉ là điều khiển timeline** (Previous/Next/Reset).
+>   Chưa có prediction/what-if ⇒ đây là năng lực **quan sát**, chưa phải tương tác.
+> - Chưa khai `library_discoverable` (chưa có đề mẫu công khai).
+> - `CACHE_VERSION` **22→23** · family **11** · target **21→22**.
+> - **CHƯA làm (không claim):** review thị giác Chrome · live LLM. Offline PASS
+>   **không** phải bằng chứng đường NL → spec.
 >
 > ### Wave 2C — luồng điều khiển hữu hạn (XONG offline)
 >
@@ -502,9 +535,9 @@ scan HOÃN có chủ đích.
 
 | | |
 |---|---|
-| pytest | **1065 pass, 2 skipped, 1 deselected** (đo lại 2026-07-26 sau W2C-C1; 0 API call thật — guard là bằng chứng) |
-| vitest | **638 pass / 48 file** (đo lại 2026-07-26 sau W2C-C1; 0 network call) |
-| catalog conformance | **21 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-26) |
+| pytest | **1106 pass, 2 skipped, 1 deselected** (đo lại 2026-07-26 sau W3; 0 API call thật — guard là bằng chứng) |
+| vitest | **661 pass / 49 file** (đo lại 2026-07-26 sau W3; 0 network call) |
+| catalog conformance | **22 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-26) |
 | audit bố cục | `npm run audit:layout` — **4/4 route sạch** (đo lại tại Task 13: vẫn 4/4 — M13 chỉ đổi nguồn text nhãn, không đổi CSS/layout; Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả ở M9-UX7) |
 | build | `tsc -b && vite build` sạch (đo lại 2026-07-25) — bundle chính ~357KB; chunk Three.js 544KB **code-split**, chỉ tải khi bấm 3D |
 | nghiệm thu M10 | CDP browser thật (SwiftShader WebGL) — **15/15**: 2D đóng gói→truyền→mở gói→giao đúng payload; dự đoán sai → phản hồi tất định; 3D canvas dựng thật + caption; parity 2D↔3D; **0 gọi /api/analyze\|edit\|explain** |

@@ -53,7 +53,11 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
                   "T10 CĐ5 · T11CS B17", CoverageStatus.SUPPORTED,
                   "algorithm.find_max/min/sum_if/count_if/linear_search + algorithm.scan"),
     KnowledgeUnit("loops_branch_variable", "Lặp / rẽ nhánh / biến", "T10 B17–21",
-                  CoverageStatus.PARTIAL, "chỉ trong các thuật toán cố định, không phải code tự do"),
+                  CoverageStatus.PARTIAL,
+                  "algorithm.bounded_control_flow (M17 W2C): engine tất định và "
+                  "renderer đã kiểm chứng cho gán/if-else/while có biên trên NGỮ PHÁP "
+                  "ĐÓNG. Tích hợp ngôn ngữ tự nhiên PARTIAL. KHÔNG chạy code Python "
+                  "tự do; hàm/đệ quy ngoài phạm vi"),
     KnowledgeUnit("binary_system", "Hệ đếm & đổi cơ số (trọng số vị trí)", "T10 B4",
                   CoverageStatus.SUPPORTED,
                   "binary.decimal_to_binary (bit trọng số 8/4/2/1) + M17 W1 "
@@ -80,11 +84,19 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
     KnowledgeUnit("html_css", "HTML/CSS (quan hệ markup ↔ hiển thị)", "T12 CĐ4",
                   CoverageStatus.PARTIAL, "structural + reveal; thiếu practice tự dựng"),
     KnowledgeUnit("text_media_encoding", "Mã hoá văn bản/âm thanh/ảnh", "T10 B3, B6",
-                  CoverageStatus.PARTIAL, "một phần; cần table/grid"),
+                  CoverageStatus.PARTIAL,
+                  "binary.character_encoding (M17 W3): ký tự → mã (ASCII / Unicode "
+                  "code point trong BMP) → nhị phân, từng bước. Mã hoá ảnh/âm thanh "
+                  "và dãy byte UTF-8 vẫn ngoài phạm vi"),
     KnowledgeUnit("arrays_1d_2d", "Mảng 1D/2D (chỉ số ↔ giá trị)", "T11CS B17",
                   CoverageStatus.PARTIAL, "1D ngầm trong trace; 2D chưa có"),
+    # W2B đã ship `database.relational_table_query` — mục này từng ghi "chưa có
+    # table/grid" và trở nên LỖI THỜI (khai dè dặt hơn năng lực thật).
     KnowledgeUnit("database_table_query", "CSDL: bảng, bản ghi, truy vấn", "T11 CĐ4",
-                  CoverageStatus.CAPABILITY_GAP, "chưa có table/grid — gap trung thực, ứng viên post-M8"),
+                  CoverageStatus.PARTIAL,
+                  "database.relational_table_query (M17 W2B): truy vấn bảng đơn giản "
+                  "VERIFIED (live lọc+chọn cột, sắp xếp ổn định); pipeline nhiều tầng "
+                  "bằng ngôn ngữ tự nhiên PARTIAL/EXPERIMENTAL. Wave 2B NOT CLOSED"),
     KnowledgeUnit("os_process_fsm", "Hệ điều hành: tiến trình (máy trạng thái)", "T11 B1–2",
                   CoverageStatus.CAPABILITY_GAP, "chưa có FSM"),
     KnowledgeUnit("practice_activity", "Học sinh tự dựng/thao tác, engine kiểm được", "cross",

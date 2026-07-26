@@ -16,9 +16,9 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 |---|---|---|
 | Active mainline | `main` | `git branch --show-current` |
 | Baseline | `f2b28e2` (PATCH1 impl `8bd2324` + live evidence) | `git rev-parse HEAD` |
-| `CACHE_VERSION` | **22** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+| `CACHE_VERSION` | **23** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 | `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
-| Family / Target | **11 / 21** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+| Family / Target | **11 / 22** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8` | `git rev-parse archive/m17-w2b-deep-hardening` |
 
 Danh tính runtime (so source ↔ container) do `backend/app/runtime_identity.py` +
@@ -315,6 +315,35 @@ port tồn tại để validator server-side + harness chấm HÀNH VI (semantic
 Gemini trong catalog DẪN XUẤT từ đây, khoá bằng
 `test_scan_routing::test_scan_schema_enum_dan_xuat_tu_scan_engine`).
 Tests: `test_scan_engine.py`, `test_scan_routing.py`.
+
+### `simulation/character_encoding.py` (M17 W3) · Change impact: targeted live
+NGUỒN DUY NHẤT của từ vựng + giới hạn mã hoá ký tự. Exports: `SPEC_VERSION`
+("charenc-1.0"), `ENCODINGS` (ascii | unicode_codepoint), `MAX_TEXT_CODE_POINTS`
+(12), `ASCII_MAX`, `BMP_MAX` (65535 — trùng `CONV_MAX_VALUE`), `SURROGATE_MIN/MAX`,
+`FORBIDDEN_SPEC_KEYS`, `encoding_enum()`, `code_point_out_of_range()` (một nguồn
+cho cả kiểm định lẫn thông điệp từ chối).
+Consumers: `catalog.py` (schema DẪN XUẤT), `validation/character_encoding.py`.
+Notes: **backend KHÔNG có engine mã hoá và KHÔNG có bộ chuyển số sang nhị phân** —
+`ord()` chỉ dùng kiểm khoảng. Thực thi nằm ở FE.
+
+### `validation/character_encoding.py` (M17 W3) · Change impact: offline
+Validator FAIL-CLOSED: `validate_character_encoding_config(raw) → (config|None, error|None)`.
+Bắt: encoding ngoài enum · text không phải chuỗi (số 7 ≠ ký tự '7') · rỗng · quá
+12 **code point** · ngoài ASCII ở chế độ ascii · ngoài BMP · surrogate · trường
+thừa · spec mang kết quả (R0). KHÔNG coercion, KHÔNG thay ký tự bằng `e`/`?`.
+Tests: `test_character_encoding.py` (gồm test khoá "backend không có engine").
+
+### `core`/`domains/binary/encoding-module.tsx` (M17 W3) · offline
+**Engine tất định + module** của `binary.character_encoding`. Exports:
+`CHAR_ENC_VERSION`, `CHAR_ENCODINGS`, `codePointsOf`, `validateCharEncodingSpec`,
+`runCharacterEncoding(spec) → {trace, rows}`, `committedRowCount`, `partialRow`,
+`makeCharEncodingModule`, `CharEncodingWorkspace`, `CharEncodingInspector`.
+**Nhị phân lấy từ `toBase()` của `convert-module.tsx`** — không có converter thứ
+hai, không tự đặt quy ước đệm. Duyệt **theo code point** (`Array.from` +
+`codePointAt`), KHÔNG dùng `text.length`/`charCodeAt` (nếu dùng thì emoji thành
+hai ký tự BMP "hợp lệ" ⇒ lệch backend). 4 phase mỗi ký tự (chọn → tra mã → đổi
+nhị phân → chốt hàng) nuôi progressive reveal. Đăng ký ở `registerBinaryDomain()`.
+Tests: `encoding-module.test.tsx`.
 
 ### `simulation/program_spec.py` (M17 W2C) · Change impact: targeted live
 **NGUỒN DUY NHẤT** của ngữ pháp + giới hạn luồng điều khiển hữu hạn. Exports:

@@ -40,8 +40,11 @@ def test_gap_va_out_of_scope_duoc_khai_trung_thuc():
     by_id = {u.unit_id: u for u in KNOWLEDGE_UNITS}
     # §7b: Dijkstra trọng số là CAPABILITY_GAP (câu trả lời đúng dài hạn), không SUPPORTED
     assert by_id["dijkstra_weighted_shortest_path"].status is CoverageStatus.CAPABILITY_GAP
-    # CSDL bảng/truy vấn chưa có → gap trung thực, không được tô SUPPORTED
-    assert by_id["database_table_query"].status is CoverageStatus.CAPABILITY_GAP
+    # CSDL bảng/truy vấn: W2B ĐÃ ship target thật nên không còn là CAPABILITY_GAP,
+    # nhưng cũng KHÔNG được tô SUPPORTED — pipeline nhiều tầng bằng ngôn ngữ tự
+    # nhiên vẫn PARTIAL/EXPERIMENTAL và Wave 2B chưa CLOSE.
+    assert by_id["database_table_query"].status is CoverageStatus.PARTIAL
+    assert "NOT CLOSED" in by_id["database_table_query"].note
     # §7 trang trí → OUT_OF_SCOPE
     assert by_id["ai_ml_datascience_overview"].status is CoverageStatus.OUT_OF_SCOPE
 
