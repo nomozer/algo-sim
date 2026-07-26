@@ -2,15 +2,22 @@ import { TraceBuilder } from "../../../core/trace-builder";
 import type { Step, Trace, TraceEvent } from "../../../core/types";
 import { IconCheck } from "../../../components/icons";
 import type { ConfigResult, SimulationModule, WorkspaceProps } from "../../types";
-import { CONV_MAX_VALUE, toBase } from "./convert-module";
+import { CONV_MAX_VALUE, divideSteps } from "./base-conversion";
+import type { ConvStep, DivideStep } from "./base-conversion";
 
 /**
  * M17 W3 — MÃ HOÁ KÝ TỰ: ký tự → mã → nhị phân. Engine tất định, engine-owned.
  *
  * RANH GIỚI KIẾN TRÚC (quyết định W3): backend CHỈ kiểm định hợp đồng; toàn bộ
  * việc chạy nằm ở đây. Và ở đây **KHÔNG có bộ chuyển đổi thứ hai** — mã số được
- * đổi sang nhị phân bằng CHÍNH `toBase()` của `base_conversion`
- * (`convert-module.tsx`), nên quy ước hiển thị (không đệm số 0) là MỘT nguồn.
+ * đổi sang nhị phân bằng CHÍNH cơ chế CHIA LẤY DƯ của `base_conversion`
+ * (`divideSteps()` ở `./base-conversion`), nên quy ước hiển thị (không đệm số 0)
+ * là MỘT nguồn.
+ *
+ * M17 P1a — trước đây chỗ này gọi thẳng `toBase()`, tức là chỉ mượn KẾT QUẢ:
+ * học sinh thấy `65 → 1000001` như một tuyên bố, không thấy vì sao. Nay engine
+ * chạy từng phép chia thật và dãy bit được DẪN RA từ chuỗi số dư. `toBase()`
+ * chỉ còn dùng trong test hồi quy để xác nhận hai đường cho cùng kết quả.
  *
  * Vì sao không dùng `decimal_to_binary`: nó chặn cứng ở 0–255 / 8 bit, trong khi
  * BMP cần tới 65535 — đúng bằng `CONV_MAX_VALUE` của base_conversion.
@@ -49,7 +56,45 @@ export interface EncodedRow {
   binary: string;
 }
 
-export type EncodingPhase = "select_character" | "map_to_code" | "convert_to_binary" | "commit_row";
+export type EncodingPhase =
+  | "select_character"
+  | "map_to_code"
+  | "begin_conversion"
+  | "divide_step"
+  | "read_remainders"
+  | "convert_compact"
+  | "commit_row"
+  | "complete";
+
+/** Trạng thái MỘT phép chia — engine sinh, renderer chỉ đọc. */
+export interface DivisionState {
+  /** Số bị chia của bước này (65, rồi 32, rồi 16…). */
+  value: number;
+  base: number;
+  quotient: number;
+  remainder: number;
+  digit: string;
+  /** Thứ tự phép chia trong chuỗi, 0-based. */
+  stepIndex: number;
+  /** Các số dư đã thu được, THEO THỨ TỰ SINH (chưa đảo). */
+  collected: string[];
+}
+
+/**
+ * Metadata mỗi bước — song ánh 1:1 với `trace.steps`. Renderer tra theo cursor
+ * thay vì làm SỐ HỌC trên cursor. Bản cũ dùng `floor((cursor+1)/4)` vì mỗi ký tự
+ * cố định 4 phase; nay số bước chia thay đổi theo giá trị mã nên số học đó sai.
+ */
+export interface EncStepMeta {
+  /** -1 ở bước tổng kết. */
+  charIndex: number;
+  phase: EncodingPhase;
+  /** Ký tự này có bung chi tiết phép chia không (§10: ký tự đầu tiên). */
+  detailed: boolean;
+  division?: DivisionState;
+  /** Số hàng ĐÃ CHỐT tính đến hết bước này. */
+  committed: number;
+}
 
 export interface CharEncodingState {
   spec: CharEncodingSpec;
@@ -57,6 +102,8 @@ export interface CharEncodingState {
   cursor: number;
   /** Bảng ĐẦY ĐỦ — renderer chỉ được hiện phần đã commit tới cursor. */
   rows: EncodedRow[];
+  /** Song ánh với `trace.steps` — nguồn của progressive reveal. */
+  meta: EncStepMeta[];
 }
 
 export type CharEncodingValidation =
@@ -147,64 +194,128 @@ export function validateCharEncodingSpec(raw: unknown): CharEncodingValidation {
 export interface CharEncodingRun {
   trace: Trace;
   rows: EncodedRow[];
+  meta: EncStepMeta[];
+}
+
+/**
+ * Chính sách BUNG CHI TIẾT (M17 P1a §10) — ký tự ĐẦU TIÊN mở đầy đủ chuỗi chia
+ * lấy dư; các ký tự sau trình bày rút gọn. Đây là quyết định TRÌNH BÀY: mọi ký
+ * tự đều đi qua **cùng một** `divideSteps()`, nên không có đường engine thứ hai
+ * và không thể lệch kết quả giữa hai chế độ. Lý do rút gọn: 12 code point × ~13
+ * phép chia sẽ cho timeline vài trăm bước, học sinh không đọc nổi.
+ */
+function isDetailed(charIndex: number): boolean {
+  return charIndex === 0;
 }
 
 export function runCharacterEncoding(spec: CharEncodingSpec): CharEncodingRun {
   const chars = Array.from(spec.text);
   const b = new TraceBuilder([]);
   const rows: EncodedRow[] = [];
+  const meta: EncStepMeta[] = [];
+  let committed = 0;
 
-  const step = (events: TraceEvent[], narration: string, line?: number) =>
-    b.step(events, narration, false, line);
+  const emit = (
+    events: TraceEvent[],
+    narration: string,
+    charIndex: number,
+    phase: EncodingPhase,
+    extra: { division?: DivisionState; detailed?: boolean } = {},
+  ) => {
+    b.step(events, narration, false, charIndex >= 0 ? charIndex + 1 : undefined);
+    meta.push({
+      charIndex,
+      phase,
+      detailed: extra.detailed ?? (charIndex >= 0 && isDetailed(charIndex)),
+      ...(extra.division ? { division: extra.division } : {}),
+      committed,
+    });
+  };
 
   chars.forEach((ch, i) => {
     const cp = ch.codePointAt(0) as number;
     const label = visibleLabel(ch, cp);
     const pos = i + 1;
+    const detailed = isDetailed(i);
 
     // 1) chọn ký tự — CHƯA có mã, CHƯA có nhị phân
-    step([], `Xét ký tự thứ ${pos}: ${label}.`, pos);
+    emit([], `Xét ký tự thứ ${pos}: ${label}.`, i, "select_character");
 
     // 2) tra mã — có mã, VẪN chưa có nhị phân
     b.setVar(`mã ${label}`, cp);
-    step([{ type: "assign_var", name: `mã ${label}`, value: cp }],
-         `Tra bảng mã: ${label} có mã ${cp}.`, pos);
+    emit([{ type: "assign_var", name: `mã ${label}`, value: cp }],
+         `Tra bảng mã: ${label} có mã ${cp}.`, i, "map_to_code");
 
-    // 3) đổi sang nhị phân — DÙNG LẠI toBase() của base_conversion
-    const binary = toBase(cp, 2);
-    step([{ type: "assign_var", name: `nhị phân ${label}`, value: binary }],
-         `Đổi mã ${cp} sang nhị phân: ${binary}.`, pos);
+    // 3) ĐỔI CƠ SỐ — dùng lại CHÍNH cơ chế chia lấy dư của base_conversion.
+    //    `divideSteps` đẩy từng phép chia vào `convSteps` và trả kết quả DẪN RA
+    //    TỪ CHUỖI SỐ DƯ. Không gọi `toBase()` ở runtime: một nguồn duy nhất.
+    const convSteps: ConvStep[] = [];
+    const binary = divideSteps(cp, 2, convSteps);
+    const divides = convSteps.filter((s): s is DivideStep => s.kind === "divide");
+
+    if (detailed) {
+      emit([], `Đổi mã ${cp} sang nhị phân: CHIA LIÊN TIẾP cho 2 và ghi lại số dư.`,
+           i, "begin_conversion");
+
+      const collected: string[] = [];
+      divides.forEach((d, k) => {
+        collected.push(d.digit);
+        emit([{ type: "assign_var", name: "số dư thu được", value: collected.join(" ") }],
+             d.narration, i, "divide_step",
+             { division: { value: d.value, base: d.base, quotient: d.quotient,
+                           remainder: d.remainder, digit: d.digit,
+                           stepIndex: k, collected: [...collected] } });
+      });
+
+      const doc = [...collected].reverse().join("");
+      b.setVar(`nhị phân ${label}`, binary);
+      emit([{ type: "assign_var", name: `nhị phân ${label}`, value: binary }],
+           `Đọc các số dư NGƯỢC từ dưới lên: ${doc} → mã ${cp} trong nhị phân là ${binary}.`,
+           i, "read_remainders");
+    } else {
+      b.setVar(`nhị phân ${label}`, binary);
+      emit([{ type: "assign_var", name: `nhị phân ${label}`, value: binary }],
+           `Mã ${cp}: áp dụng CÙNG quy tắc chia lấy dư cho 2 qua ${divides.length} ` +
+           `phép chia → ${binary}.`,
+           i, "convert_compact");
+    }
 
     // 4) chốt hàng
     rows.push({ index: i, char: ch, label, codePoint: cp, decimal: cp, binary });
-    step([], `Hoàn thành ký tự ${label}.`, pos);
+    committed = rows.length;
+    emit([], `Hoàn thành ký tự ${label}.`, i, "commit_row");
   });
 
   const summary = `Đã mã hoá ${chars.length} ký tự theo bảng mã ` +
     `${spec.encoding === "ascii" ? "ASCII" : "Unicode code point"}.`;
-  b.step([{ type: "done", result: summary }], summary, false);
+  emit([{ type: "done", result: summary }], summary, -1, "complete", { detailed: false });
 
-  return { trace: b.build(), rows };
+  return { trace: b.build(), rows, meta };
 }
 
-/** Số hàng ĐÃ CHỐT tính tới bước hiện tại — nguồn của progressive reveal. */
+/** Metadata của bước hiện tại — renderer KHÔNG tự suy từ cursor. */
+export function metaAt(state: CharEncodingState): EncStepMeta {
+  const i = Math.max(0, Math.min(state.cursor, state.meta.length - 1));
+  return state.meta[i];
+}
+
+/** Số hàng ĐÃ CHỐT tính tới bước hiện tại — engine ghi sẵn, không tính lại. */
 export function committedRowCount(state: CharEncodingState): number {
-  const perChar = 4;                       // 4 phase mỗi ký tự
-  return Math.min(state.rows.length, Math.floor((state.cursor + 1) / perChar));
+  return Math.min(state.rows.length, metaAt(state).committed);
 }
 
-/** Hàng đang xử lý dở (đã tra mã / đã đổi nhị phân nhưng chưa chốt). */
+/** Hàng đang xử lý dở — hé lộ đúng theo phase, không sớm hơn. */
 export function partialRow(state: CharEncodingState): Partial<EncodedRow> | null {
-  const perChar = 4;
-  const done = committedRowCount(state);
-  if (done >= state.rows.length) return null;
-  const phase = (state.cursor + 1) % perChar;      // 1=select, 2=map, 3=convert
-  if (phase === 0) return null;
-  const row = state.rows[done];
-  if (phase === 1) return { index: row.index, char: row.char, label: row.label };
-  if (phase === 2) return { index: row.index, char: row.char, label: row.label,
-                            codePoint: row.codePoint, decimal: row.decimal };
-  return { ...row };
+  const m = metaAt(state);
+  if (m.charIndex < 0 || m.phase === "commit_row") return null;
+  const row = state.rows[m.charIndex];
+  if (!row) return null;
+  const base = { index: row.index, char: row.char, label: row.label };
+  if (m.phase === "select_character") return base;
+  // mã đã tra xong; dãy bit chỉ lộ SAU khi cơ chế chạy hết
+  const withCode = { ...base, codePoint: row.codePoint, decimal: row.decimal };
+  if (m.phase === "read_remainders" || m.phase === "convert_compact") return { ...row };
+  return withCode;
 }
 
 /* ── module ─────────────────────────────────────────────────── */
@@ -222,6 +333,64 @@ const ENCODING_LABEL: Record<CharEncoding, string> = {
 
 function stepOf(state: CharEncodingState): Step {
   return state.trace.steps[clampCursor(state, state.cursor)];
+}
+
+/**
+ * Các phép chia ĐÃ DIỄN RA của ký tự đang xét, tính tới cursor — đọc thẳng từ
+ * `state.meta` do engine sinh. Renderer KHÔNG chia, KHÔNG lấy dư, KHÔNG gọi
+ * `divideSteps`/`toBase`/`toString(2)`: nếu trace nói `65 : 2 = 30 dư 5` thì
+ * màn hình phải hiện đúng như vậy (có test trace bịa khoá điều này).
+ */
+export function divisionsSoFar(state: CharEncodingState, upTo: number): DivisionState[] {
+  const m = state.meta[Math.max(0, Math.min(upTo, state.meta.length - 1))];
+  if (!m || m.charIndex < 0) return [];
+  return state.meta
+    .slice(0, upTo + 1)
+    .filter((x) => x.charIndex === m.charIndex && x.division)
+    .map((x) => x.division as DivisionState);
+}
+
+/** Bảng chia lấy dư — chỉ hiện khi cơ chế đang chạy cho ký tự chi tiết. */
+function DivisionPanel({ state, cursor }: { state: CharEncodingState; cursor: number }) {
+  const m = state.meta[cursor];
+  const active = m.phase === "begin_conversion" || m.phase === "divide_step" ||
+                 m.phase === "read_remainders";
+  if (!active) return null;
+  const rows = divisionsSoFar(state, cursor);
+  const row = state.rows[m.charIndex];
+  const collected = rows.length ? rows[rows.length - 1].collected : [];
+  const finished = m.phase === "read_remainders";
+
+  return (
+    <div className="sim-stage">
+      <div>
+        {`Đổi mã của ${displayChar(row)} sang nhị phân — chia liên tiếp cho 2, giữ lại số dư:`}
+      </div>
+      <table className="truth-table">
+        <thead>
+          <tr><th>Số bị chia</th><th>: 2</th><th>Thương</th><th>Số dư</th></tr>
+        </thead>
+        <tbody>
+          {rows.map((d) => (
+            <tr key={d.stepIndex} className={d.stepIndex === rows.length - 1 ? "is-current" : undefined}>
+              <td>{d.value}</td><td>{d.base}</td><td>{d.quotient}</td><td>{d.digit}</td>
+            </tr>
+          ))}
+          {rows.length === 0 && (
+            <tr className="is-current"><td>{row.decimal}</td><td>2</td><td>…</td><td>…</td></tr>
+          )}
+        </tbody>
+      </table>
+      <div>
+        {`Số dư đã thu (từ trên xuống): ${collected.length ? collected.join(" ") : "…"}`}
+      </div>
+      <div>
+        {finished
+          ? `Đọc NGƯỢC từ dưới lên: ${[...collected].reverse().join("")} → nhị phân là ${row.binary}.`
+          : "Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân."}
+      </div>
+    </div>
+  );
 }
 
 export function CharEncodingWorkspace({ state }: Props) {
@@ -273,6 +442,8 @@ export function CharEncodingWorkspace({ state }: Props) {
         </table>
       </div>
 
+      <DivisionPanel state={{ ...state, cursor }} cursor={cursor} />
+
       {/* W3-VR1: bước cuối, thuyết minh TRÙNG y hệt băng kết quả — hiện hai lần
           cùng một câu làm học sinh tưởng là hai thông tin khác nhau. Cùng lớp
           lỗi đã gặp ở W2C-VR3. */}
@@ -319,7 +490,7 @@ export function makeCharEncodingModule(): SimulationModule<CharEncodingSpec, Cha
 
     init: (spec) => {
       const run = runCharacterEncoding(spec);
-      return { spec, trace: run.trace, cursor: 0, rows: run.rows };
+      return { spec, trace: run.trace, cursor: 0, rows: run.rows, meta: run.meta };
     },
 
     apply: (state) => state,
