@@ -1,0 +1,88 @@
+{
+  "wave": "M17 W3-SIM",
+  "target": "binary.character_encoding",
+  "family": "positional_representation",
+  "date": "2026-07-27",
+  "branch": "main",
+  "classification": "CORE",
+  "authenticity_before": "PARTIAL_SIMULATION",
+  "authenticity_after": "REAL_SIMULATION",
+  "interaction_level": "TIMELINE_CONTROL",
+  "visual": "2D",
+  "reuse": {
+    "mechanism": "divideSteps() of base_conversion",
+    "extracted_to": "frontend/src/simulations/domains/binary/base-conversion.ts",
+    "extraction_kind": "move, not copy — convert-module.tsx re-exports the same function objects",
+    "second_converter": false,
+    "second_converter_evidence": "test compares function REFERENCES (conv.divideSteps === shared.divideSteps) and scans the binary directory for any other 'function divideSteps'",
+    "toBase_at_runtime": false,
+    "toBase_usage": "regression tests only",
+    "base_conversion_behaviour_changed": false,
+    "base_conversion_tests_passing": 41
+  },
+  "state_model": {
+    "meta_alignment": "1:1 with trace.steps",
+    "fields": ["charIndex", "phase", "detailed", "division", "committed"],
+    "division_fields": ["value", "base", "quotient", "remainder", "digit", "stepIndex", "collected"],
+    "phases_detailed": ["select_character", "map_to_code", "begin_conversion", "divide_step", "read_remainders", "commit_row"],
+    "phases_compact": ["select_character", "map_to_code", "convert_compact", "commit_row"],
+    "terminal_phase": "complete",
+    "removed": "floor((cursor + 1) / 4) — cursor arithmetic broke once the number of division steps became value-dependent"
+  },
+  "mechanism_evidence": [
+    { "fixture": "SIM-ENC-1", "char": "A", "code_point": 65, "divisions": 7,
+      "chain": [65, 32, 16, 8, 4, 2, 1], "remainders": "1000001",
+      "binary": "1000001", "derived_from": "remainder sequence read in reverse",
+      "timeline_steps": 13 },
+    { "fixture": "SIM-ENC-2", "char": "ế", "code_point": 7871,
+      "first_division": "7871 : 2 = 3935 dư 1", "exceeds_decimal_to_binary_cap_255": true },
+    { "fixture": "SIM-ENC-3", "text": "Tin", "first_char_detailed": true,
+      "later_chars_compact": true, "timeline_steps": 21,
+      "compact_narration": "Mã 105: áp dụng CÙNG quy tắc chia lấy dư cho 2 qua 7 phép chia → 1101001." }
+  ],
+  "multi_character_policy": {
+    "detailed_chars": "first only",
+    "engine_path": "identical for all characters (same divideSteps call)",
+    "result_drift": false,
+    "renderer_states_the_shortcut": true,
+    "limitation": "full division detail is expanded ONLY for the first character; do not claim every division of a long string is shown"
+  },
+  "renderer_authority": {
+    "reads_trace_only": true,
+    "forbidden_calls_absent": ["divideSteps(", "toBase(", "toString(2)", "codePointAt("],
+    "forged_trace_test": "meta.division forged to 65 : 2 = 30 dư 5 — the table must show 30/5, never the real 32/1",
+    "progressive_reveal": "binary absent from DOM until read_remainders / convert_compact"
+  },
+  "contract_unchanged": {
+    "spec": "CharacterEncodingSpec { spec_version, text, encoding }",
+    "validator": true, "input_kind": true, "ascii_bmp_range": true,
+    "text_limit_code_points": [1, 12],
+    "emoji_surrogate_refusal": true, "normalization_behaviour": true
+  },
+  "chrome_review": {
+    "real_browser": true, "ai_generated_images": false,
+    "images_new": 12, "desktop": 11, "narrow_768": 1,
+    "harness": "frontend/scripts/capture-w3-encoding.mjs (reused; capture marks now resolved BY PHASE NAME, not hard-coded indices)",
+    "emoji_refusal": "reused from docs/evaluation/m17/w3/ — refusal UI unchanged, not recaptured",
+    "leaked_tech_tokens": 0, "clipped_elements": 0, "horizontal_overflow": false,
+    "verdicts": { "REAL_SIMULATION": 3, "PARTIAL": 0, "BROKEN_OR_MISLEADING": 0 }
+  },
+  "defects_found_by_looking_at_images": [
+    { "id": "W3-SIM-VR1", "kind": "presentation",
+      "what": "the division panel restated the conclusion that the narration bar already gave, word for word",
+      "class": "same defect class as W3-VR1 and W2C-VR3 — third occurrence",
+      "fix": "panel now only contrasts the two reading directions; the conclusion lives in one place",
+      "regression_test": true }
+  ],
+  "accepted_limitations": [
+    "'A' = 65 = 1000001 is a palindrome, so the two reading directions look identical for this value; 'T' (84) demonstrates the reversal clearly. Coincidence of the value, not a defect.",
+    "learner action remains timeline control — no prediction/what-if",
+    "domain chip still reads 'HỆ CƠ SỐ' (inherited W3-VR limitation)"
+  ],
+  "not_claimed": ["UTF-8 bytes", "full Unicode", "emoji", "every division of a long string expanded",
+                  "prediction/what-if", "3D", "live LLM verified"],
+  "counts": { "family_count": 11, "target_count": 22,
+              "CACHE_VERSION": 23, "HISTORY_SCHEMA_VERSION": 2 },
+  "part_b_status": "BLOCKED_NO_DOCX",
+  "live_llm": "NOT RUN"
+}

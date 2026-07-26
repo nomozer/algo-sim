@@ -97,6 +97,20 @@ CSS nhỏ · thêm một test lẻ.
 > generator tất định (`scripts/catalog_runtime_matrix.py`), không dựng thêm
 > generator index/call-graph mới.
 
+## 0i. Đổi cơ số — MỘT nguồn (M17 P1a)
+
+`frontend/src/simulations/domains/binary/base-conversion.ts` — phần **thuần tất
+định** của đổi cơ số: `toBase`, `divideSteps`, `weightSteps`, `buildConvSteps`,
+`parseInBase`, `digitsValid`, `canonicalDigits`, `strategyOf`, `BASE_NAME`,
+`CONV_BASES`, `CONV_MAX_VALUE` + kiểu `ConvBase`/`ConvStep`/`DivideStep`.
+
+- **Không** React / renderer / store / registry / target id;
+- `convert-module.tsx` **re-export** ⇒ mọi import cũ (`./convert-module`) giữ nguyên;
+- `encoding-module.tsx` dùng `divideSteps()` — **không** có converter thứ hai
+  (test so **tham chiếu hàm**, và quét thư mục tìm bản cài trùng).
+
+Trước khi viết bất kỳ phép đổi cơ số nào: **dùng file này**, đừng cài lại.
+
 ## 0h. Mô phỏng cơ chế ≠ biểu diễn tiến triển (M17 P1b)
 
 Kho mã có **11 family**, nhưng chúng **không cùng một loại**. `FamilyMembership.

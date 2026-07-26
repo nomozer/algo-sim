@@ -329,6 +329,6 @@ Thân audit ở trên **giữ nguyên** như bằng chứng tại baseline `3846
 |---|---|
 | **P0** visual mode | **XONG** — `SimSpec.visual_modes` thành nguồn (danh sách đóng); `visual_mode` là property **dẫn xuất** nên không thể khai tay mâu thuẫn; descriptor mang `visual_modes`; parity FE↔BE khoá ở `capability-descriptors.test.ts`. **20 chỉ-2D · 2 có 3D.** |
 | **P1b** claim alignment | **XONG** — `CODE_INDEX §0h` + danh tính `CURRENT_STATE`: **10 computation / 1 representation**, cấm đếm phẳng. |
-| **P1a** W3 cơ chế | xem `docs/evaluation/m17/w3-sim/` |
+| **P1a** W3 cơ chế | **XONG** — `binary.character_encoding` nay chạy CHÍNH `divideSteps()` của `base_conversion`; nhị phân **dẫn ra từ chuỗi số dư**, không còn gọi `toBase()` ở runtime. **PARTIAL_SIMULATION → REAL_SIMULATION**. Bằng chứng: `docs/evaluation/m17/w3-sim/`. |
 | **P2** tương tác | chưa mở |
 | **P3** hai cách chặn kết quả-trong-config | chưa mở |

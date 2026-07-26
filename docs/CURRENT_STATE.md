@@ -53,6 +53,27 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   `toBase()`, không tự đặt convention mới.
 > - **Learner action hiện chỉ là điều khiển timeline** (Previous/Next/Reset).
 >   Chưa có prediction/what-if ⇒ đây là năng lực **quan sát**, chưa phải tương tác.
+>
+> #### W3-SIM — nâng lên REAL_SIMULATION (2026-07-27)
+>
+> Audit authenticity xếp W3 là **PARTIAL_SIMULATION**: engine gọi thẳng
+> `toBase()` và **công bố** dãy bit, trong khi `divideSteps()` đã chạy sẵn ở
+> chính module nó import. Nay W3 chạy **CHÍNH cơ chế chia lấy dư** đó:
+>
+> - phần thuần của đổi cơ số tách ra `binary/base-conversion.ts` (không React);
+>   `convert-module.tsx` re-export ⇒ **một nguồn**, `base_conversion` không đổi
+>   hành vi (41 test xanh);
+> - `toBase()` **không còn** ở runtime W3 — kết quả **dẫn ra từ chuỗi số dư**;
+> - `EncStepMeta` song ánh 1:1 với `trace.steps` (charIndex/phase/division/
+>   committed). **Bỏ `floor((cursor+1)/4)`** — số bước chia nay phụ thuộc giá trị
+>   mã nên số học trên cursor sai;
+> - **ký tự đầu bung đầy đủ**, ký tự sau rút gọn và **nói rõ** "cùng quy tắc" —
+>   cùng một `divideSteps`, không lệch kết quả;
+> - Chrome **12 ảnh**, 1 lỗi lặp thuyết minh (W3-SIM-VR1, cùng lớp W3-VR1/
+>   W2C-VR3 — **lần thứ ba**) đã vá + test hồi quy.
+>
+> **REAL_SIMULATION · TIMELINE_CONTROL · 2D.** Vẫn **chưa live LLM**.
+> Bằng chứng: `docs/evaluation/m17/w3-sim/`.
 > - Chưa khai `library_discoverable` (chưa có đề mẫu công khai).
 > - `CACHE_VERSION` **22→23** · family **11** · target **21→22**.
 > - **Review thị giác Chrome: XONG** (`w3/character_encoding_visual_review.md`) —

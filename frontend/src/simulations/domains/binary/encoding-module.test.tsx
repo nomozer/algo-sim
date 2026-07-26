@@ -468,3 +468,21 @@ describe("E. renderer chỉ đọc trace — không tự chia", () => {
     }
   });
 });
+
+describe("W3-SIM-VR — lỗi chỉ review ảnh mới thấy", () => {
+  it("VR1: bước đọc ngược KHÔNG lặp kết luận của băng thuyết minh", () => {
+    const st = stateOf(spec({ text: "A" }));
+    const html = workspace({ ...st, cursor: at(st, "read_remainders") });
+    const ket = "nhị phân là 1000001";
+    expect(html.split(ket).length - 1).toBeLessThanOrEqual(1);
+  });
+
+  it("VR1: vẫn ĐỐI CHIẾU được hai chiều đọc", () => {
+    const st = stateOf(spec({ text: "T" }));   // 84 → 1010100, KHÔNG đối xứng
+    const html = workspace({ ...st, cursor: at(st, "read_remainders") });
+    expect(html).toContain("từ trên xuống");
+    expect(html).toContain("từ DƯỚI LÊN");
+    expect(html).toContain("0 0 1 0 1 0 1");   // thứ tự sinh
+    expect(html).toContain("1 0 1 0 1 0 0");   // đọc ngược = 1010100
+  });
+});

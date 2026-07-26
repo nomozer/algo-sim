@@ -1,0 +1,706 @@
+{
+  "wave": "M17 W3-SIM",
+  "target": "binary.character_encoding",
+  "generated_at": "2026-07-26T18:17:47.766Z",
+  "note": "Viewport đặt TRƯỚC khi trang dựng, nạp lại trang cho từng viewport (VIS-003). Spec đi qua CHÍNH validateCharEncodingSpec + runCharacterEncoding của sản phẩm; nhị phân DẪN RA từ chuỗi số dư của divideSteps() (base_conversion). Phán quyết REAL/PARTIAL/BROKEN do NGƯỜI xem PNG.",
+  "app": "http://localhost:3000",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "records": [
+    {
+      "fixture_id": "sim-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "initial",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc1-ascii-one-char-desktop-initial.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 0,
+        "step_total": 13,
+        "phase": "select_character",
+        "char_index": 0,
+        "detailed": true,
+        "division": null,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "Xét ký tự thứ 1: A."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'A' … … …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' … … … Xét ký tự thứ 1: A. QUAN SÁT Ký tự đang xét: 'A' Hỏi AI về bước này Tự chạy Đặt lại Bước 1 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "thấy PHÉP CHIA thật: 65:2=32 dư 1, rồi 32:2=16 dư 0…; dãy bit chỉ xuất hiện SAU khi đọc ngược số dư"
+    },
+    {
+      "fixture_id": "sim-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "first_division",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc1-ascii-one-char-desktop-first_division.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 3,
+        "step_total": 13,
+        "phase": "divide_step",
+        "char_index": 0,
+        "detailed": true,
+        "division": {
+          "value": 65,
+          "base": 2,
+          "quotient": 32,
+          "remainder": 1,
+          "digit": "1",
+          "stepIndex": 0,
+          "collected": [
+            "1"
+          ]
+        },
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "65 : 2 = 32 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả."
+      },
+      "audit": {
+        "row_count_dom": 2,
+        "current_row_count": 2,
+        "current_row_text": "1 'A' U+0041 65 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 … Đổi mã của 'A' sang nhị phân — chia liên tiếp cho 2, giữ lại số dư: Số bị chia : 2 Thương Số dư 65 2 32 1 Số dư đã thu (từ trên xuống): 1 Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân. 65 : 2 = 32 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Hỏi AI về bước này Tự chạy Đặt lại Bước 4 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "thấy PHÉP CHIA thật: 65:2=32 dư 1, rồi 32:2=16 dư 0…; dãy bit chỉ xuất hiện SAU khi đọc ngược số dư"
+    },
+    {
+      "fixture_id": "sim-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "middle_division",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc1-ascii-one-char-desktop-middle_division.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 6,
+        "step_total": 13,
+        "phase": "divide_step",
+        "char_index": 0,
+        "detailed": true,
+        "division": {
+          "value": 8,
+          "base": 2,
+          "quotient": 4,
+          "remainder": 0,
+          "digit": "0",
+          "stepIndex": 3,
+          "collected": [
+            "1",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "8 : 2 = 4 dư 0 → chữ số 0. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả."
+      },
+      "audit": {
+        "row_count_dom": 5,
+        "current_row_count": 2,
+        "current_row_text": "1 'A' U+0041 65 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 … Đổi mã của 'A' sang nhị phân — chia liên tiếp cho 2, giữ lại số dư: Số bị chia : 2 Thương Số dư 65 2 32 1 32 2 16 0 16 2 8 0 8 2 4 0 Số dư đã thu (từ trên xuống): 1 0 0 0 Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân. 8 : 2 = 4 dư 0 → chữ số 0. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Hỏi AI về bước này Tự chạy Đặt lại Bước 7 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "thấy PHÉP CHIA thật: 65:2=32 dư 1, rồi 32:2=16 dư 0…; dãy bit chỉ xuất hiện SAU khi đọc ngược số dư"
+    },
+    {
+      "fixture_id": "sim-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "read_remainders",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc1-ascii-one-char-desktop-read_remainders.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 10,
+        "step_total": 13,
+        "phase": "read_remainders",
+        "char_index": 0,
+        "detailed": true,
+        "division": null,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "Đọc các số dư NGƯỢC từ dưới lên: 1000001 → mã 65 trong nhị phân là 1000001."
+      },
+      "audit": {
+        "row_count_dom": 8,
+        "current_row_count": 2,
+        "current_row_text": "1 'A' U+0041 65 1000001",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 1000001 Đổi mã của 'A' sang nhị phân — chia liên tiếp cho 2, giữ lại số dư: Số bị chia : 2 Thương Số dư 65 2 32 1 32 2 16 0 16 2 8 0 8 2 4 0 4 2 2 0 2 2 1 0 1 2 0 1 Số dư đã thu (từ trên xuống): 1 0 0 0 0 0 1 Đọc ngược lại, từ DƯỚI LÊN: 1 0 0 0 0 0 1 Đọc các số dư NGƯỢC từ dưới lên: 1000001 → mã 65 trong nhị phân là 1000001. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Dãy bit: 1000001 Hỏi AI về bước này Tự chạy Đặt lại Bước 11 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "thấy PHÉP CHIA thật: 65:2=32 dư 1, rồi 32:2=16 dư 0…; dãy bit chỉ xuất hiện SAU khi đọc ngược số dư"
+    },
+    {
+      "fixture_id": "sim-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc1-ascii-one-char-desktop-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 12,
+        "step_total": 13,
+        "phase": "complete",
+        "char_index": -1,
+        "detailed": false,
+        "division": null,
+        "committed_rows": 1,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "Đã mã hoá 1 ký tự theo bảng mã ASCII."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 1000001 Đã mã hoá 1 ký tự theo bảng mã ASCII. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Dãy bit: 1000001 Hỏi AI về bước này Tự chạy Đặt lại Bước 13 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "thấy PHÉP CHIA thật: 65:2=32 dư 1, rồi 32:2=16 dư 0…; dãy bit chỉ xuất hiện SAU khi đọc ngược số dư"
+    },
+    {
+      "fixture_id": "sim-enc2-unicode-bmp",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "mapped_code_point",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc2-unicode-bmp-desktop-mapped_code_point.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "ế",
+        "encoding": "unicode_codepoint",
+        "cursor": 1,
+        "step_total": 19,
+        "phase": "map_to_code",
+        "char_index": 0,
+        "detailed": true,
+        "division": null,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "ế",
+            "label": "ế",
+            "cp": 7871,
+            "dec": 7871,
+            "bin": "1111010111111"
+          }
+        ],
+        "narration": "Tra bảng mã: ế có mã 7871."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'ế' U+1EBF 7871 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “ế” · Bảng mã: Unicode code point Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'ế' U+1EBF 7871 … Tra bảng mã: ế có mã 7871. QUAN SÁT Ký tự đang xét: 'ế' Mã thập phân: 7871 Hỏi AI về bước này Tự chạy Đặt lại Bước 2 / 19 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ế → U+1EBF → 7871; chuỗi chia bắt đầu từ 7871 (vượt xa trần 255 của decimal_to_binary)"
+    },
+    {
+      "fixture_id": "sim-enc2-unicode-bmp",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "division_over_255",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc2-unicode-bmp-desktop-division_over_255.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "ế",
+        "encoding": "unicode_codepoint",
+        "cursor": 3,
+        "step_total": 19,
+        "phase": "divide_step",
+        "char_index": 0,
+        "detailed": true,
+        "division": {
+          "value": 7871,
+          "base": 2,
+          "quotient": 3935,
+          "remainder": 1,
+          "digit": "1",
+          "stepIndex": 0,
+          "collected": [
+            "1"
+          ]
+        },
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "ế",
+            "label": "ế",
+            "cp": 7871,
+            "dec": 7871,
+            "bin": "1111010111111"
+          }
+        ],
+        "narration": "7871 : 2 = 3935 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả."
+      },
+      "audit": {
+        "row_count_dom": 2,
+        "current_row_count": 2,
+        "current_row_text": "1 'ế' U+1EBF 7871 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “ế” · Bảng mã: Unicode code point Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'ế' U+1EBF 7871 … Đổi mã của 'ế' sang nhị phân — chia liên tiếp cho 2, giữ lại số dư: Số bị chia : 2 Thương Số dư 7871 2 3935 1 Số dư đã thu (từ trên xuống): 1 Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân. 7871 : 2 = 3935 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả. QUAN SÁT Ký tự đang xét: 'ế' Mã thập phân: 7871 Hỏi AI về bước này Tự chạy Đặt lại Bước 4 / 19 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ế → U+1EBF → 7871; chuỗi chia bắt đầu từ 7871 (vượt xa trần 255 của decimal_to_binary)"
+    },
+    {
+      "fixture_id": "sim-enc2-unicode-bmp",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc2-unicode-bmp-desktop-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "ế",
+        "encoding": "unicode_codepoint",
+        "cursor": 18,
+        "step_total": 19,
+        "phase": "complete",
+        "char_index": -1,
+        "detailed": false,
+        "division": null,
+        "committed_rows": 1,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "ế",
+            "label": "ế",
+            "cp": 7871,
+            "dec": 7871,
+            "bin": "1111010111111"
+          }
+        ],
+        "narration": "Đã mã hoá 1 ký tự theo bảng mã Unicode code point."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “ế” · Bảng mã: Unicode code point Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'ế' U+1EBF 7871 1111010111111 Đã mã hoá 1 ký tự theo bảng mã Unicode code point. QUAN SÁT Ký tự đang xét: 'ế' Mã thập phân: 7871 Dãy bit: 1111010111111 Hỏi AI về bước này Tự chạy Đặt lại Bước 19 / 19 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ế → U+1EBF → 7871; chuỗi chia bắt đầu từ 7871 (vượt xa trần 255 của decimal_to_binary)"
+    },
+    {
+      "fixture_id": "sim-enc3-multi-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "first_char_detail",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc3-multi-char-desktop-first_char_detail.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 5,
+        "step_total": 21,
+        "phase": "divide_step",
+        "char_index": 0,
+        "detailed": true,
+        "division": {
+          "value": 21,
+          "base": 2,
+          "quotient": 10,
+          "remainder": 1,
+          "digit": "1",
+          "stepIndex": 2,
+          "collected": [
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "committed_rows": 0,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "21 : 2 = 10 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả."
+      },
+      "audit": {
+        "row_count_dom": 4,
+        "current_row_count": 2,
+        "current_row_text": "1 'T' U+0054 84 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' U+0054 84 … Đổi mã của 'T' sang nhị phân — chia liên tiếp cho 2, giữ lại số dư: Số bị chia : 2 Thương Số dư 84 2 42 0 42 2 21 0 21 2 10 1 Số dư đã thu (từ trên xuống): 0 0 1 Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân. 21 : 2 = 10 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả. QUAN SÁT Ký tự đang xét: 'T' Mã thập phân: 84 Hỏi AI về bước này Tự chạy Đặt lại Bước 6 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ký tự ĐẦU bung đầy đủ chuỗi chia; ký tự sau rút gọn và NÓI RÕ 'áp dụng CÙNG quy tắc chia lấy dư'"
+    },
+    {
+      "fixture_id": "sim-enc3-multi-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "compact_second_char",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc3-multi-char-desktop-compact_second_char.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 14,
+        "step_total": 21,
+        "phase": "convert_compact",
+        "char_index": 1,
+        "detailed": false,
+        "division": null,
+        "committed_rows": 1,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Mã 105: áp dụng CÙNG quy tắc chia lấy dư cho 2 qua 7 phép chia → 1101001."
+      },
+      "audit": {
+        "row_count_dom": 2,
+        "current_row_count": 1,
+        "current_row_text": "2 'i' U+0069 105 1101001",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' U+0054 84 1010100 2 'i' U+0069 105 1101001 Mã 105: áp dụng CÙNG quy tắc chia lấy dư cho 2 qua 7 phép chia → 1101001. QUAN SÁT Ký tự đang xét: 'i' Mã thập phân: 105 Dãy bit: 1101001 Hỏi AI về bước này Tự chạy Đặt lại Bước 15 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ký tự ĐẦU bung đầy đủ chuỗi chia; ký tự sau rút gọn và NÓI RÕ 'áp dụng CÙNG quy tắc chia lấy dư'"
+    },
+    {
+      "fixture_id": "sim-enc3-multi-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc3-multi-char-desktop-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 20,
+        "step_total": 21,
+        "phase": "complete",
+        "char_index": -1,
+        "detailed": false,
+        "division": null,
+        "committed_rows": 3,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Đã mã hoá 3 ký tự theo bảng mã ASCII."
+      },
+      "audit": {
+        "row_count_dom": 3,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' U+0054 84 1010100 2 'i' U+0069 105 1101001 3 'n' U+006E 110 1101110 Đã mã hoá 3 ký tự theo bảng mã ASCII. QUAN SÁT Ký tự đang xét: 'n' Mã thập phân: 110 Dãy bit: 1101110 Hỏi AI về bước này Tự chạy Đặt lại Bước 21 / 21 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "ký tự ĐẦU bung đầy đủ chuỗi chia; ký tự sau rút gọn và NÓI RÕ 'áp dụng CÙNG quy tắc chia lấy dư'"
+    },
+    {
+      "fixture_id": "sim-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "narrow",
+      "phase": "first_division",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3-sim/visual/character-encoding/sim-enc1-ascii-one-char-narrow-first_division.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 3,
+        "step_total": 13,
+        "phase": "divide_step",
+        "char_index": 0,
+        "detailed": true,
+        "division": {
+          "value": 65,
+          "base": 2,
+          "quotient": 32,
+          "remainder": 1,
+          "digit": "1",
+          "stepIndex": 0,
+          "collected": [
+            "1"
+          ]
+        },
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "65 : 2 = 32 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả."
+      },
+      "audit": {
+        "row_count_dom": 2,
+        "current_row_count": 2,
+        "current_row_text": "1 'A' U+0041 65 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 … Đổi mã của 'A' sang nhị phân — chia liên tiếp cho 2, giữ lại số dư: Số bị chia : 2 Thương Số dư 65 2 32 1 Số dư đã thu (từ trên xuống): 1 Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân. 65 : 2 = 32 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả. Tự chạy Đặt lại Bước 4 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "thấy PHÉP CHIA thật: 65:2=32 dư 1, rồi 32:2=16 dư 0…; dãy bit chỉ xuất hiện SAU khi đọc ngược số dư"
+    }
+  ]
+}

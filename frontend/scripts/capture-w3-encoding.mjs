@@ -22,7 +22,7 @@ const args = process.argv.slice(2);
 const argOf = (n, d) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : d; };
 const APP = `http://localhost:${argOf("--port", "3000")}`;
 const CDP_PORT = 9345;
-const OUT_DIR = resolve(argOf("--out", "../docs/evaluation/m17/w3/visual/character-encoding"));
+const OUT_DIR = resolve(argOf("--out", "../docs/evaluation/m17/w3-sim/visual/character-encoding"));
 
 const TARGET = "binary.character_encoding";
 const VIEWPORTS = [
@@ -37,42 +37,58 @@ const env = (title, config) => ({
 const spec = (text, encoding) =>
   ({ spec_version: "charenc-1.0", text, encoding });
 
-/* 4 phase mỗi ký tự: select(0) → map(1) → convert(2) → commit(3). */
+/*
+ * M17 W3-SIM — mốc chụp giải theo TÊN PHASE, không phải chỉ số cứng. Bản cũ ghi
+ * `["convert_to_binary", 2]`: đúng khi mỗi ký tự cố định 4 phase, sai ngay khi
+ * số bước chia thay đổi theo giá trị mã. Nay hỏi engine "phase này ở bước nào".
+ */
 const FIXTURES = [
   {
-    id: "vr-enc1-ascii-one-char",
+    id: "sim-enc1-ascii-one-char",
     envelope: env("Mã hoá ký tự", spec("A", "ascii")),
+    narrow: true,
+    marks: [
+      ["initial", { phase: "select_character" }],
+      ["first_division", { phase: "divide_step", nth: 0 }],
+      ["middle_division", { phase: "divide_step", nth: 3 }],
+      ["read_remainders", { phase: "read_remainders" }],
+      ["final", { last: true }],
+    ],
+    expect: "thấy PHÉP CHIA thật: 65:2=32 dư 1, rồi 32:2=16 dư 0…; dãy bit chỉ "
+          + "xuất hiện SAU khi đọc ngược số dư",
+  },
+  {
+    id: "sim-enc2-unicode-bmp",
+    envelope: env("Mã hoá ký tự", spec("ế", "unicode_codepoint")),
     narrow: false,
-    marks: [["initial", 0], ["map_to_code", 1], ["convert_to_binary", 2], ["final", -1]],
-    expect: "initial KHÔNG lộ 65/nhị phân; 65 chỉ sau tra mã; bit chỉ sau đổi cơ số",
+    marks: [
+      ["mapped_code_point", { phase: "map_to_code" }],
+      ["division_over_255", { phase: "divide_step", nth: 0 }],
+      ["final", { last: true }],
+    ],
+    expect: "ế → U+1EBF → 7871; chuỗi chia bắt đầu từ 7871 (vượt xa trần 255 "
+          + "của decimal_to_binary)",
   },
   {
-    id: "vr-enc2-ascii-string",
+    id: "sim-enc3-multi-char",
     envelope: env("Mã hoá ký tự", spec("Tin", "ascii")),
-    narrow: true,
-    marks: [["initial", 0], ["mid_second_char", 5], ["final", -1]],
-    expect: "T,i,n đúng thứ tự; hàng chưa xử lý KHÔNG có kết quả thật; bảng đủ chỉ ở cuối",
-  },
-  {
-    id: "vr-enc3-unicode-precomposed",
-    envelope: env("Mã hoá ký tự", spec("\u1EBF", "unicode_codepoint")),
-    narrow: true,
-    marks: [["initial", 0], ["map_to_code", 1], ["final", -1]],
-    expect: "hiện đúng 'ế', MỘT code point U+1EBF, decimal 7871, không bỏ dấu",
+    narrow: false,
+    marks: [
+      ["first_char_detail", { phase: "divide_step", nth: 2 }],
+      ["compact_second_char", { phase: "convert_compact" }],
+      ["final", { last: true }],
+    ],
+    expect: "ký tự ĐẦU bung đầy đủ chuỗi chia; ký tự sau rút gọn và NÓI RÕ "
+          + "'áp dụng CÙNG quy tắc chia lấy dư'",
   },
 ];
 
-/* Emoji: production TỪ CHỐI nên đây là notice, không phải mô phỏng. */
-const REFUSALS = [
-  {
-    id: "vr-enc4-emoji-refusal", narrow: true,
-    category: "capability_gap", code: null,
-    reason: "Ký tự '\u{1F600}' không mã hoá được. Mô phỏng hiện chỉ hỗ trợ ký tự "
-          + "Unicode trong vùng cơ bản (BMP, mã tối đa 65535), chưa hỗ trợ emoji "
-          + "hay ký tự nằm ngoài vùng này.",
-    expect: "KHÔNG dựng mô phỏng, KHÔNG hiện hai hàng surrogate, không lộ token kỹ thuật",
-  },
-];
+/*
+ * Emoji refusal: UI từ chối KHÔNG đổi trong W3-SIM ⇒ dùng lại bằng chứng
+ * `docs/evaluation/m17/w3/visual/character-encoding/vr-enc4-emoji-refusal-*.png`.
+ * Chụp lại chỉ để tăng số lượng là lãng phí (§13).
+ */
+const REFUSALS = [];
 
 /* ══════════════ CDP ══════════════ */
 const CHROME = [
@@ -183,22 +199,41 @@ const engineFacts = () => evaluate(`(async () => {
                          'x'.replace('x','x'));
   const st = s.useAppStore.getState().active;
   const t = st.state;
-  const perChar = 4;
-  const committed = Math.min(t.rows.length, Math.floor((t.cursor + 1) / perChar));
+  const m = t.meta[Math.max(0, Math.min(t.cursor, t.meta.length - 1))];
   return JSON.stringify({
     target_id: st.moduleId,
     text: t.spec.text,
     encoding: t.spec.encoding,
     cursor: t.cursor,
     step_total: t.trace.steps.length,
-    phase_index: (t.cursor + 1) % perChar,
-    current_char_index: Math.min(committed, t.rows.length - 1),
-    committed_rows: committed,
+    phase: m.phase,
+    char_index: m.charIndex,
+    detailed: m.detailed,
+    division: m.division ?? null,
+    committed_rows: m.committed,
     rows_total: t.rows.length,
     rows: t.rows.map((r) => ({ char: r.char, label: r.label, cp: r.codePoint,
                                dec: r.decimal, bin: r.binary })),
     narration: t.trace.steps[t.cursor].narration,
   });
+})()`);
+
+/**
+ * Giải mốc chụp thành CHỈ SỐ BƯỚC bằng cách hỏi chính `state.meta` của engine.
+ * Không đoán, không số học trên cursor — nếu phase không tồn tại thì báo lỗi to
+ * chứ không âm thầm chụp nhầm bước.
+ */
+const resolveMark = (mark) => evaluate(`(async () => {
+  const s = await import('/src/state/store.ts');
+  const t = s.useAppStore.getState().active.state;
+  const spec = ${JSON.stringify(mark)};
+  if (spec.last) return String(t.trace.steps.length - 1);
+  const hits = t.meta
+    .map((m, i) => ({ m, i }))
+    .filter((x) => x.m.phase === spec.phase);
+  if (!hits.length) return 'ERR:không có phase ' + spec.phase;
+  const pick = hits[Math.min(spec.nth ?? 0, hits.length - 1)];
+  return String(pick.i);
 })()`);
 
 /* ĐO TRONG TRÌNH DUYỆT THẬT — hợp đồng thị giác §7 + responsive §8. */
@@ -224,7 +259,8 @@ const AUDIT_JS = `(() => {
   }
   const TECH = ['CharacterEncodingSpec', 'binary.character_encoding', 'InputKind',
                 'TEXT_AND_ENCODING', 'charenc-1.0', 'spec_version', 'code_point',
-                'select_character', 'map_to_code', 'convert_to_binary', 'commit_row',
+                'select_character', 'map_to_code', 'begin_conversion', 'divide_step',
+                'read_remainders', 'convert_compact', 'commit_row', 'charIndex',
                 'capability_gap', 'undefined', 'null', 'NaN'];
   return JSON.stringify({
     row_count_dom: rows.length,
@@ -266,11 +302,14 @@ for (const vp of VIEWPORTS) {
     await loadEnvelope(fx.envelope);
     await sleep(400);
     const total = await stepTotal();
-    // ENC-3 ở narrow chỉ cần ảnh cuối (bốn fixture chính đã đủ bằng chứng)
-    const marks = (vp.id === "narrow" && fx.id === "vr-enc3-unicode-precomposed")
-      ? [["final", -1]] : fx.marks;
-    for (const [phase, raw] of marks) {
-      const idx = raw < 0 ? total - 1 : Math.min(raw, total - 1);
+    // 768px chỉ cần MỘT ảnh: panel chia là thứ duy nhất có nguy cơ tràn (§13)
+    const marks = vp.id === "narrow"
+      ? fx.marks.filter(([name]) => name === "first_division")
+      : fx.marks;
+    for (const [phase, mark] of marks) {
+      const raw = await resolveMark(mark);
+      if (raw.startsWith("ERR:")) throw new Error(`${fx.id}/${phase}: ${raw.slice(4)}`);
+      const idx = Math.min(Number(raw), total - 1);
       await goToStep(idx);
       await sleep(300);
       const png = await shot(`${fx.id}-${vp.id}-${phase}`);
@@ -301,13 +340,13 @@ for (const vp of VIEWPORTS) {
 
 writeFileSync(join(resolve(OUT_DIR, ".."), "captures.json"),
   JSON.stringify({
-    wave: "M17 W3-VR",
+    wave: "M17 W3-SIM",
     target: TARGET,
     generated_at: new Date().toISOString(),
     note: "Viewport đặt TRƯỚC khi trang dựng, nạp lại trang cho từng viewport "
         + "(VIS-003). Spec đi qua CHÍNH validateCharEncodingSpec + "
-        + "runCharacterEncoding của sản phẩm; nhị phân do toBase() của "
-        + "base_conversion sinh. Phán quyết REAL/PARTIAL/BROKEN do NGƯỜI xem PNG.",
+        + "runCharacterEncoding của sản phẩm; nhị phân DẪN RA từ chuỗi số dư "
+        + "của divideSteps() (base_conversion). Phán quyết REAL/PARTIAL/BROKEN do NGƯỜI xem PNG.",
     app: APP, viewports: VIEWPORTS, records,
   }, null, 2) + "\n", "utf8");
 

@@ -384,9 +384,12 @@ function DivisionPanel({ state, cursor }: { state: CharEncodingState; cursor: nu
       <div>
         {`Số dư đã thu (từ trên xuống): ${collected.length ? collected.join(" ") : "…"}`}
       </div>
+      {/* W3-SIM-VR1 — chỉ ĐỐI CHIẾU hai chiều đọc. Bản đầu viết
+          "…→ nhị phân là 1000001." trong khi băng thuyết minh nói y hệt câu đó:
+          cùng lớp lỗi lặp đã gặp ở W3-VR1/W2C-VR3. Kết luận để một chỗ. */}
       <div>
         {finished
-          ? `Đọc NGƯỢC từ dưới lên: ${[...collected].reverse().join("")} → nhị phân là ${row.binary}.`
+          ? `Đọc ngược lại, từ DƯỚI LÊN: ${[...collected].reverse().join(" ")}`
           : "Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân."}
       </div>
     </div>
