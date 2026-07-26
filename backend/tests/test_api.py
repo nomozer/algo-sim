@@ -233,7 +233,7 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # M17 W2C (bump 20→21): thêm family/target AI-reachable
     # `algorithm.bounded_control_flow` + enum analyze mới ⇒ chính sách classify
     # đổi, envelope cache dưới luật cũ phải MISS để đề được định tuyến lại.
-    assert main_module.CACHE_VERSION == "22"
+    assert main_module.CACHE_VERSION == "23"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

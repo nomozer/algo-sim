@@ -23,6 +23,11 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
     FamilyId.POSITIONAL_REPRESENTATION: (
         "positional_representation.binary_positional_weights",
         "positional_representation.non_binary_base",
+        # M17 W3 — tra BẢNG MÃ ký tự ↔ số. Chuỗi năng lực:
+        # character_code_mapping → non_binary_base (đổi mã số sang nhị phân).
+        # KHÔNG dùng binary_positional_weights: nó gắn với decimal_to_binary vốn
+        # chặn ở 0–255 / 8 bit, không chở nổi BMP (tới 65535).
+        "positional_representation.character_code_mapping",
     ),
     FamilyId.INTERVAL_ELIMINATION: ("interval_elimination.halve_sorted_interval",),
     # M17 W2B — truy vấn BẢNG QUAN HỆ hữu hạn. Cơ chế ẩn ở đây KHÁC

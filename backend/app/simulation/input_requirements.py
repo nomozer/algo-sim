@@ -40,6 +40,10 @@ class InputKind(str, Enum):
     # đầu + câu lệnh/điều kiện" (không phải dãy, không phải số lẻ, không phải
     # cây/đồ thị/bảng/mạch logic), nên đây là nhóm dữ kiện mới THẬT SỰ cần.
     PROGRAM_STATEMENTS = "program_statements"          # W2C
+    # W3 — mã hoá ký tự cần HAI thứ đi kèm nhau: chuỗi cần mã hoá VÀ bảng mã.
+    # Không nhóm nào sẵn có biểu diễn được (CONVERSION_PARAMETERS là cơ số,
+    # NUMERIC_VALUE là một con số) nên đây là nhóm dữ kiện mới THẬT SỰ cần.
+    TEXT_AND_ENCODING = "text_and_encoding"            # W3
 
 
 APPLICABLE = "APPLICABLE"
@@ -123,6 +127,17 @@ INPUT_REQUIREMENTS: dict[str, InputRequirements] = {
             "giá trị ban đầu của các biến (ví dụ x = 1), điều kiện (ví dụ x < 5), "
             "và các câu lệnh trong thân (ví dụ x = x + 1) — hệ không tự nghĩ ra "
             "chương trình thay em."
+        ),
+    ),
+    # ── W3: cần CHUỖI cần mã hoá + BẢNG MÃ ──
+    "binary.character_encoding": InputRequirements(
+        required_grounded_inputs=(InputKind.TEXT_AND_ENCODING,),
+        accepted_evidence_types=("objects.quoted_characters", "constraints.encoding_name"),
+        insufficiency_error_code=ErrorCode.INPUT_INSUFFICIENT,
+        learner_prompt_template=(
+            "Đề chưa nói rõ cần mã hoá ký tự nào và theo bảng mã nào. Em hãy nêu "
+            "cụ thể ký tự hoặc chuỗi (ví dụ: chữ A) và chọn bảng mã — ASCII hay "
+            "Unicode code point — rồi thử lại; hệ không tự chọn thay em."
         ),
     ),
     "tree.traversal": InputRequirements(

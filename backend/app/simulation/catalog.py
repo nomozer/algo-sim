@@ -60,6 +60,13 @@ from app.simulation.table_query_engine import (
     SORT_DIRECTIONS as _TQ_SORT_DIRECTIONS,
     SPEC_VERSION as _TQ_SPEC_VERSION,
 )
+from app.simulation.character_encoding import (
+    ASCII_MAX as _CE_ASCII_MAX,
+    BMP_MAX as _CE_BMP_MAX,
+    MAX_TEXT_CODE_POINTS as _CE_MAX_CP,
+    SPEC_VERSION as _CE_SPEC_VERSION,
+    encoding_enum as _ce_encodings,
+)
 from app.simulation.program_spec import (
     ARITHMETIC_OPS as _PG_ARITH,
     COMPARE_OPS as _PG_COMPARE,
@@ -72,6 +79,7 @@ from app.simulation.program_spec import (
     VALUE_TYPES as _PG_VALUE_TYPES,
     statement_kind_enum as _pg_statement_kinds,
 )
+from app.validation.character_encoding import validate_character_encoding_config
 from app.validation.program import validate_program_config
 from app.validation.table_query import validate_table_query_config
 from app.validation.simulation import (
@@ -1127,6 +1135,75 @@ CATALOG["algorithm.bounded_control_flow"] = SimSpec(
         "danh sách/mảng, chuỗi, số thực, nhập xuất — chưa có trong ngữ pháp v1",
     ),
     config_contract_version="program-2.0",
+)
+
+
+
+# ── binary.character_encoding (M17 W3) — ký tự → mã → nhị phân ──
+#
+# Schema NHỎ NHẤT dự án từng có: một chuỗi + một enum. Engine tất định nằm ở
+# FRONTEND (`domains/binary/encoding-module.tsx`) và dùng LẠI `toBase()` của
+# `base_conversion`; backend chỉ kiểm định. Vì thế config KHÔNG mang mã, không
+# mang nhị phân, không mang bảng kết quả.
+
+_CHAR_ENC_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "spec_version": {"type": "STRING", "nullable": True},
+        "text": {"type": "STRING"},
+        "encoding": {"type": "STRING", "enum": _ce_encodings()},
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["text", "encoding"],
+}
+
+_CHAR_ENC_CONTRACT = f"""HỢP ĐỒNG CONFIG (binary.character_encoding — MÃ HOÁ KÝ TỰ):
+- spec_version: "{_CE_SPEC_VERSION}".
+- text: chuỗi ký tự LẤY ĐÚNG TỪ ĐỀ, 1–{_CE_MAX_CP} ký tự. Chép nguyên văn, KHÔNG bỏ dấu tiếng Việt, KHÔNG đổi hoa/thường, KHÔNG thay ký tự lạ bằng "?" hay ký tự gần giống.
+  · Đề hỏi mã của CHỮ SỐ thì text là ký tự đó trong dấu nháy, ví dụ đề "mã ASCII của chữ số 7" → text = "7" (KHÔNG phải số 7).
+- encoding: {_ce_encodings()}.
+  · "ascii" — chỉ dùng khi mọi ký tự có mã 0..{_CE_ASCII_MAX} (chữ Latin không dấu, chữ số, dấu câu).
+  · "unicode_codepoint" — dùng cho ký tự tiếng Việt có dấu và các ký tự Unicode khác, mã tối đa {_CE_BMP_MAX}.
+  · Đề KHÔNG nói rõ bảng mã nào thì ĐỪNG TỰ CHỌN — trả unsupported để hệ hỏi lại.
+- KHÔNG hỗ trợ (đề cần thì trả unsupported): emoji và ký tự ngoài vùng cơ bản (mã > {_CE_BMP_MAX}), dãy byte UTF-8/UTF-16, Base64, nén, mã hoá bảo mật, mã hoá ảnh/âm thanh, phông chữ.
+- TUYỆT ĐỐI KHÔNG sinh: code point, giá trị thập phân, dãy bit, bảng kết quả, số bước hay trace — engine tất định tự tra mã và tự đổi sang nhị phân."""
+
+CATALOG["binary.character_encoding"] = SimSpec(
+    simulation_id="binary.character_encoding",
+    domain="binary",
+    visual_mode="2d",
+    description=(
+        "mã hoá ký tự — mô phỏng TỪNG BƯỚC việc tra mã của mỗi ký tự trong một "
+        "chuỗi ngắn rồi đổi mã đó sang nhị phân: ký tự → mã ký tự (ASCII hoặc "
+        "Unicode code point) → giá trị thập phân → dãy bit. Dùng khi đề hỏi 'mã "
+        "ASCII của chữ A là bao nhiêu', 'mã Unicode của ký tự ế', 'biểu diễn nhị "
+        "phân của ký tự', hay vì sao máy tính lưu chữ bằng số. KHÔNG dùng khi đề "
+        "cho sẵn MỘT CON SỐ và chỉ hỏi đổi số đó sang nhị phân (→ đổi số thập "
+        "phân sang nhị phân) hoặc sang hệ khác (→ đổi cơ số). KHÔNG hỗ trợ emoji, "
+        "dãy byte UTF-8, Base64, nén hay mã hoá bảo mật"
+    ),
+    config_schema=_CHAR_ENC_SCHEMA,
+    contract=_CHAR_ENC_CONTRACT,
+    validate=validate_character_encoding_config,
+    make_title=lambda config, analysis: "Mã hoá ký tự",
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.POSITIONAL_REPRESENTATION, ResultAuthority.COMPUTATION,
+            # Sở hữu ĐÚNG cơ chế mới; việc đổi mã số sang nhị phân vẫn thuộc
+            # `non_binary_base` của base_conversion — KHÔNG giành quyền sở hữu.
+            owned_mechanisms=("positional_representation.character_code_mapping",),
+        ),
+    ),
+    # Chưa có đề mẫu công khai trong Thư viện ⇒ KHÔNG khai library_discoverable
+    # (đúng tiền lệ algorithm.scan / bounded_control_flow: không quảng bá một
+    # affordance chưa tồn tại). Thêm mẫu là việc nhỏ, để checkpoint sau.
+    reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),
+    curriculum_anchor="T10 B3 · T10 B6 (mã hoá văn bản)",
+    known_gaps=(
+        "emoji và ký tự ngoài BMP (mã > 65535) — ngoài phạm vi v1",
+        "dãy byte UTF-8/UTF-16, Base64, nén, mã hoá bảo mật — ngoài phạm vi",
+    ),
+    config_contract_version="charenc-1.0",
 )
 
 

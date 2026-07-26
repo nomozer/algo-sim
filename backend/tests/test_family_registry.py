@@ -17,8 +17,8 @@ VALID_FAMILY_IDS = {f.value for f in FamilyId}
 
 def test_catalog_20_runtime_target_sau_m17_w2b():
     # 14 (M15/M16) + 4 (W1) + tree.traversal (W2A) + database.relational_table_query
-    # (W2B) + algorithm.bounded_control_flow (W2C)
-    assert len(CATALOG) == 21
+    # (W2B) + algorithm.bounded_control_flow (W2C) + binary.character_encoding (W3)
+    assert len(CATALOG) == 22
 
 
 def test_moi_entry_co_metadata_descriptor_day_du():
@@ -58,7 +58,8 @@ def test_llm_choices_an_sort_concrete_hien_selector_token():
     assert "network.graph_traversal" in choices  # W1.D choice doc lap
     assert "tree.traversal" in choices  # W2A choice doc lap
     assert "algorithm.bounded_control_flow" in choices  # W2C choice doc lap
-    assert len(choices) == 19  # +algorithm.bounded_control_flow (W2C)
+    assert "binary.character_encoding" in choices  # W3 choice doc lap
+    assert len(choices) == 20  # +binary.character_encoding (W3)
     assert len(choices) == len(set(choices))  # không trùng
 
 
@@ -112,7 +113,7 @@ def test_cross_lock_phat_hien_target_thieu_membership():
 
 
 def test_config_contract_version_khai_du_moi_entry():
-    assert len(CATALOG) == 21
+    assert len(CATALOG) == 22
     for spec in CATALOG.values():
         assert spec.config_contract_version  # ≠ "" (K1 — shape + VALIDATION POLICY, §C2 rev2)
 

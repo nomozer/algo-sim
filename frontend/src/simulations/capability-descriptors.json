@@ -936,6 +936,57 @@
         "near_miss_mechanisms": []
       }
     },
+    "binary.character_encoding": {
+      "domain": "binary",
+      "executor_id": "binary.character_encoding",
+      "reachability": [
+        "registered",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 B3 · T10 B6 (mã hoá văn bản)",
+      "known_gaps": [
+        "emoji và ký tự ngoài BMP (mã > 65535) — ngoài phạm vi v1",
+        "dãy byte UTF-8/UTF-16, Base64, nén, mã hoá bảo mật — ngoài phạm vi"
+      ],
+      "family_memberships": [
+        {
+          "family_id": "positional_representation",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "positional_representation.character_code_mapping"
+          ]
+        }
+      ],
+      "config_contract_version": "charenc-1.0",
+      "authenticity": {
+        "required_state_fields": [
+          "spec",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "done"
+        ],
+        "required_result_fields": [
+          "rows"
+        ],
+        "renderer_semantic_requirements": [
+          "input_text_visible",
+          "encoding_mode_visible",
+          "current_character_distinct",
+          "code_point_after_mapping_only",
+          "binary_after_conversion_only",
+          "completed_rows_distinct",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
+    },
     "network.protocol_encapsulation": {
       "domain": "network",
       "executor_id": "network.protocol_encapsulation",
@@ -1094,6 +1145,7 @@
     "database.relational_table_query",
     "algorithm.scan",
     "algorithm.bounded_control_flow",
+    "binary.character_encoding",
     "network.protocol_encapsulation",
     "generic.rule_scene",
     "algorithm.comparison_sort"

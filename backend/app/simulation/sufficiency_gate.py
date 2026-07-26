@@ -206,6 +206,38 @@ def _has_program_statements(analysis: dict) -> tuple[bool, dict]:
                    "numeric_tokens": len(tokens), "boolean_literal": has_bool_literal}
 
 
+_ENCODING_WORDS = ("ascii", "unicode", "utf", "mã hoá", "mã hóa", "bảng mã",
+                   "code point", "codepoint")
+# Ký tự cụ thể thường được đề/analyze đặt trong dấu nháy: ký tự 'A', chữ "ế".
+_QUOTED_RE = re.compile(r"['\"“”‘’]([^'\"“”‘’]{1,12})['\"“”‘’]")
+
+
+def _has_text_and_encoding(analysis: dict) -> tuple[bool, dict]:
+    """Mã hoá ký tự cần ĐỦ HAI: ký tự/chuỗi CỤ THỂ và bảng mã.
+
+    Đề "Hãy mô phỏng mã hoá ký tự." nêu chủ đề nhưng KHÔNG nêu ký tự nào — hệ
+    phải đòi thay vì tự chọn 'A' và tự chọn ASCII (đúng bài học W2A: LLM từng
+    bịa nguyên một cây khi đề thiếu cấu trúc).
+
+    Bằng chứng "có ký tự" phải là ký tự ĐƯỢC TRÍCH DẪN (nháy) hoặc nội dung ô
+    thật trong `data` — KHÔNG nhận một danh từ chung ngắn, vì "mã hoá ký tự"
+    cũng ngắn mà chẳng nêu ký tự nào."""
+    objects = _str_list(analysis, "objects")
+    blob = " ".join(
+        [*objects, *_str_list(analysis, "constraints"), *_str_list(analysis, "relations"),
+         str(analysis.get("goal") or "")]
+    ).lower()
+    has_encoding = any(w in blob for w in _ENCODING_WORDS)
+    quoted = _QUOTED_RE.findall(" ".join([*objects, str(analysis.get("goal") or "")]))
+    has_char = bool(quoted) or bool(
+        [d for d in _data_items(analysis) if d.get("values") or d.get("labels")])
+    if has_char and has_encoding:
+        return True, {"source": "quoted_character+encoding_word",
+                      "quoted": quoted[:3], "encoding_mentioned": True}
+    return False, {"source": None, "objects": len(objects),
+                   "encoding_mentioned": has_encoding, "quoted_characters": quoted[:3]}
+
+
 EVIDENCE_NORMALIZERS = {
     InputKind.FINITE_SEQUENCE: _has_finite_sequence,
     InputKind.NUMERIC_VALUE: _has_numeric_value,
@@ -217,6 +249,7 @@ EVIDENCE_NORMALIZERS = {
     InputKind.REPRESENTATION_OBJECTS: _has_representation_objects,
     InputKind.TABLE_SCHEMA_AND_ROWS: _has_table,
     InputKind.PROGRAM_STATEMENTS: _has_program_statements,
+    InputKind.TEXT_AND_ENCODING: _has_text_and_encoding,
 }
 
 

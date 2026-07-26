@@ -270,6 +270,17 @@ def _program_cfg_boolean() -> str:
     )
 
 
+# M17 W3 — mã hoá ký tự. analyze THẬT của đề "mã ASCII của chữ A" nêu ký tự
+# trong dấu nháy và tên bảng mã; fixture phản ánh đúng thế để cổng đủ-dữ-kiện
+# không chặn oan.
+_CE_OBJECTS = ["ký tự 'A'", "bảng mã ASCII"]
+
+
+def _charenc_cfg(text: str, encoding: str) -> str:
+    """Config binary.character_encoding — đúng schema validator BE."""
+    return _j({"spec_version": "charenc-1.0", "text": text, "encoding": encoding})
+
+
 # ══════════════ fixture per-target (14 AI-reachable) ══════════════
 TARGET_FIXTURES: dict[str, TargetFixture] = {
     "database.relational_table_query": TargetFixture(
@@ -870,6 +881,45 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                           objects=_PG_OBJECTS, data=_PG_DATA),
                 [_classify("algorithm.bounded_control_flow")],
                 [_program_cfg_boolean()],
+            ),
+        },
+    ),
+    "binary.character_encoding": TargetFixture(
+        prompts={
+            "direct": "Mã ASCII của ký tự 'A' là bao nhiêu? Hãy mô phỏng từng bước "
+                      "từ ký tự sang mã số rồi sang nhị phân.",
+            "paraphrase": "Máy tính lưu chữ bằng số như thế nào? Lấy chuỗi \"Tin\" "
+                          "và cho xem mã ASCII cùng dãy bit của từng ký tự.",
+            "changed_input": "Cho biết mã ASCII của ký tự chữ số '7' và biểu diễn "
+                             "nhị phân của mã đó.",
+            "boundary": "Ký tự tiếng Việt 'ế' có mã Unicode code point là bao nhiêu? "
+                        "Hãy đổi mã đó sang nhị phân.",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Tra mã ASCII của một ký tự", ownership="provided",
+                          objects=_CE_OBJECTS),
+                [_classify("binary.character_encoding")],
+                [_charenc_cfg("A", "ascii")],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Mã ASCII của từng ký tự trong chuỗi", ownership="provided",
+                          objects=_CE_OBJECTS),
+                [_classify("binary.character_encoding")],
+                [_charenc_cfg("Tin", "ascii")],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Mã ASCII của ký tự chữ số '7'", ownership="provided",
+                          objects=["ký tự '7'", "bảng mã ASCII"]),
+                [_classify("binary.character_encoding")],
+                [_charenc_cfg("7", "ascii")],
+            ),
+            "boundary": CaseScript(
+                _analysis(goal="Unicode code point của ký tự tiếng Việt",
+                          ownership="provided",
+                          objects=["ký tự 'ế'", "bảng mã Unicode"]),
+                [_classify("binary.character_encoding")],
+                [_charenc_cfg("\u1ebf", "unicode_codepoint")],
             ),
         },
     ),

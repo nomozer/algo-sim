@@ -164,6 +164,18 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
             "path_highlight", "narration_per_step",
         ),
     ),
+    # M17 W3 — mã hoá ký tự: engine FE sở hữu bảng kết quả; mỗi hàng chỉ hoàn
+    # thành sau bước chuyển đổi (progressive), không dựng sẵn bảng cuối.
+    "binary.character_encoding": AuthenticityContract(
+        required_state_fields=("spec", "trace", "cursor"),
+        required_trace_events=("assign_var", "done"),
+        required_result_fields=("rows",),
+        renderer_semantic_requirements=(
+            "input_text_visible", "encoding_mode_visible", "current_character_distinct",
+            "code_point_after_mapping_only", "binary_after_conversion_only",
+            "completed_rows_distinct", "narration_per_step",
+        ),
+    ),
     # M17 W2A — duyệt cây nhị phân: stack (pre/in/post) hoặc queue (level);
     # visitedOrder là kết quả authoritative. Event: visit + completed (chung);
     # push/pop (DFS) vs enqueue/dequeue (level) phân biệt biến thể — module test

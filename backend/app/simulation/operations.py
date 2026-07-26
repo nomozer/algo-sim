@@ -109,6 +109,9 @@ SEMANTIC_OPERATION_MAP: dict[str, SemanticRequirement] = {
         SemanticRequirement("number.convert_base", "10->2"),
     "positional_representation:base_conversion":
         SemanticRequirement("number.convert_base"),
+    # W3 — mã hoá ký tự: tra mã rồi biểu diễn mã đó theo cơ số
+    "positional_representation:character_encoding":
+        SemanticRequirement("text.encode_characters"),
     # duyệt cây — CÙNG operation, KHÁC variant ⇒ không gộp
     "tree_traversal:preorder": SemanticRequirement("tree.traverse", "preorder"),
     "tree_traversal:inorder": SemanticRequirement("tree.traverse", "inorder"),
@@ -292,6 +295,7 @@ _LABELS: dict[str, str] = {
     "comparison_sort:selection": "sắp xếp chọn",
     "positional_representation:decimal_to_binary": "đổi số thập phân sang nhị phân",
     "positional_representation:base_conversion": "đổi cơ số tổng quát",
+    "positional_representation:character_encoding": "tra mã ký tự rồi đổi sang nhị phân",
     "tree_traversal:preorder": "duyệt cây theo thứ tự trước",
     "tree_traversal:inorder": "duyệt cây theo thứ tự giữa",
     "tree_traversal:postorder": "duyệt cây theo thứ tự sau",
