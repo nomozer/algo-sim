@@ -1,18 +1,18 @@
 {
   "wave": "M17 W2C-LIVE",
   "target": "algorithm.bounded_control_flow",
-  "generated_at": "2026-07-26T06:30:39.486558+00:00",
-  "git_sha": "2d17405dcc003f24e1d586ef1c8e0e045b6710b5",
+  "generated_at": "2026-07-26T09:37:51.458648+00:00",
+  "git_sha": "238a8a05199b03eb53d84b1ac7257877b9cbd50b",
   "model": "gemini-2.5-flash",
   "provider": "google-gemini",
   "runner_process_identity": {
     "git_sha": "unknown",
     "build_timestamp": "unknown",
-    "cache_version": "21",
+    "cache_version": "22",
     "family_count": 11,
     "target_count": 21,
     "ai_reachable_target_count": 21,
-    "stable_catalog_hash": "0940d65f5ca866937ef8206caf4e950473b24a3652969df85be42fb3a4676e33",
+    "stable_catalog_hash": "fa9204c77f56a0cdd115c8b548b122e0df084f7db660ed26373a2b7235987d84",
     "registered_target_ids": [
       "algorithm.binary_search",
       "algorithm.bounded_control_flow",
@@ -127,12 +127,12 @@
     {
       "id": "live-cf1-assign-branch",
       "prompt": "Cho x = -2. Nếu x lớn hơn 0 thì gán y bằng 1, ngược lại gán y bằng -1. Hãy mô phỏng chương trình từng bước.",
-      "timestamp": "2026-07-26T06:29:52.113056+00:00",
+      "timestamp": "2026-07-26T09:37:00.273197+00:00",
       "model": "gemini-2.5-flash",
       "provider": "google-gemini",
       "http_requests": 5,
       "pipeline_status": null,
-      "pipeline_error": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
+      "pipeline_error": "",
       "route": null,
       "family": [],
       "generic_fallback": false,
@@ -146,19 +146,13 @@
           "n": 0,
           "ok": false,
           "error_code": "structural_invalid",
-          "message": "Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên."
+          "message": "Câu lệnh không nằm trong chương trình: s3."
         },
         {
           "n": 1,
           "ok": false,
           "error_code": "structural_invalid",
-          "message": "Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên."
-        },
-        {
-          "n": 2,
-          "ok": false,
-          "error_code": "structural_invalid",
-          "message": "Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên."
+          "message": "Câu lệnh không nằm trong chương trình: s3."
         }
       ],
       "spec_summary": null,
@@ -176,12 +170,12 @@
     {
       "id": "live-cf2-bounded-while",
       "prompt": "Ban đầu x bằng 1. Trong khi x nhỏ hơn 5, mỗi lượt tăng x thêm 1. Hãy mô phỏng sự thay đổi của x qua từng vòng lặp.",
-      "timestamp": "2026-07-26T06:30:31.619022+00:00",
+      "timestamp": "2026-07-26T09:37:39.951513+00:00",
       "model": "gemini-2.5-flash",
       "provider": "google-gemini",
       "http_requests": 5,
       "pipeline_status": null,
-      "pipeline_error": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
+      "pipeline_error": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: Vòng lặp 'loop_x_less_5' phải có ít nhất một câu lệnh trong thân.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
       "route": null,
       "family": [],
       "generic_fallback": false,
@@ -195,19 +189,19 @@
           "n": 0,
           "ok": false,
           "error_code": "structural_invalid",
-          "message": "Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con."
+          "message": "Vòng lặp 'main_loop' phải có ít nhất một câu lệnh trong thân."
         },
         {
           "n": 1,
           "ok": false,
           "error_code": "structural_invalid",
-          "message": "Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con."
+          "message": "Vòng lặp 'main_loop' phải có ít nhất một câu lệnh trong thân."
         },
         {
           "n": 2,
           "ok": false,
           "error_code": "structural_invalid",
-          "message": "Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con."
+          "message": "Vòng lặp 'loop_x_less_5' phải có ít nhất một câu lệnh trong thân."
         }
       ],
       "spec_summary": null,
@@ -225,7 +219,7 @@
     {
       "id": "live-cf3-insufficient",
       "prompt": "Hãy mô phỏng một vòng lặp while.",
-      "timestamp": "2026-07-26T06:30:39.283033+00:00",
+      "timestamp": "2026-07-26T09:37:51.305650+00:00",
       "model": "gemini-2.5-flash",
       "provider": "google-gemini",
       "http_requests": 2,
@@ -237,7 +231,7 @@
       "failure_category": null,
       "error_code": null,
       "executor_invoked": false,
-      "learner_message": "Đề bài yêu cầu mô phỏng vòng lặp while nhưng không cung cấp giá trị ban đầu của biến, điều kiện lặp và các câu lệnh cụ thể trong thân vòng lặp. Hệ thống không thể tự động tạo ra một chương trình mẫu để mô phỏng.",
+      "learner_message": "Đề bài yêu cầu mô phỏng vòng lặp while nhưng không cung cấp giá trị ban đầu, điều kiện lặp và thân vòng lặp cụ thể. Hệ thống không thể tự bịa ra một chương trình mẫu để mô phỏng.",
       "learner_message_leaks_tech": false,
       "simulate_attempts": [],
       "spec_summary": null,

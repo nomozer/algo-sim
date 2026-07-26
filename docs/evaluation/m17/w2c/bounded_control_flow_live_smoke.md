@@ -1,123 +1,108 @@
 # M17 W2C-LIVE — Live smoke `algorithm.bounded_control_flow`
 
-**Ngày:** 2026-07-26 · **Nhánh:** `main` · **HEAD:** `2d17405` ·
-**Phân loại task:** SUPPORTING
+Hai lượt live đã chạy. **Lượt 2 (W2C-C1) là lượt hiện hành.**
 
-## Kết luận
+---
+
+## Lượt 2 — sau W2C-C1 (2026-07-26, HEAD `238a8a0`)
 
 > ## `W2C_LIVE_INCOMPLETE`
 >
-> Chạm trần **12/12 HTTP** trước khi chạy được case thứ tư. Theo §4 → **dừng,
-> KHÔNG nâng ngân sách**. **Wave 2C KHÔNG được đóng.**
+> Chạm trần **12/12 HTTP** trước khi chạy được case thứ tư. Theo §4/§14 → **dừng,
+> KHÔNG nâng ngân sách, KHÔNG chạy lần hai.** **Wave 2C KHÔNG được đóng.**
 
-**Không có unsafe acceptance, không rò kết quả, không rơi về generic, không mất
-ngữ nghĩa.** Hai case hợp lệ **không sinh được spec** và hệ **từ chối trung
-thực** thay vì dựng mô phỏng sai — đó là `FAIL_SAFE`, không phải PASS.
-
-## Runtime identity (§3)
+### Runtime identity (§14)
 
 | | |
 |---|---|
-| runtime doctor | **PASS** — `ok: true`, `findings: []` |
-| `CACHE_VERSION` | 21 (source ≡ runtime) |
-| family / target | 11 / 21 (source ≡ runtime) |
-| `stable_catalog_hash` | `0940d65f5ca8` — **source ≡ runtime** |
-| `algorithm.bounded_control_flow` | có trong `registered_target_ids` **và** `registered_ai_reachable_ids` |
-| `classify.md` mới | **đã nạp** — quy tắc `2h` có mặt, `4b` đã thu hẹp |
-| Model | **`gemini-2.5-flash`** (cấu hình repo, không hard-code mới) |
+| runtime doctor | **PASS** — `ok: true`, `findings: []` (`runtime_identity_w2c_c1.json`) |
+| `CACHE_VERSION` | **22** (source ≡ runtime) · family/target **11 / 21** |
+| catalog fingerprint | source ≡ runtime |
+| `classify.md` | đã nạp bản mới (quy tắc `2h` có mặt) |
+| Model | `gemini-2.5-flash` |
 
-**Ghi trung thực:** Docker **không khả dụng** ⇒ **không xác minh được container
-parity**. Backend là tiến trình uvicorn **mới khởi động** từ cây mã sạch tại
-`2d17405`. `git_sha` runtime báo `unknown` (biến môi trường không truyền được vào
-tiến trình con) — doctor vẫn PASS vì **catalog fingerprint khớp tuyệt đối**, đó
-mới là bằng chứng danh tính mạnh.
+> **Doctor đã bắt được một ca stale thật:** lượt khởi động đầu, một tiến trình
+> uvicorn từ checkpoint trước còn giữ cổng 8000 nên bản mới không lên được;
+> doctor báo `CACHE_VERSION_MISMATCH` (runtime 21 ≠ source 22) và
+> `CATALOG_HASH_MISMATCH`. Đã dọn tiến trình cũ, khởi động lại, doctor PASS rồi
+> mới chạy live. **Không dùng kết quả từ tiến trình cũ.**
+>
+> Docker **không khả dụng** ⇒ **không claim container parity**.
 
-## Bốn case
+### Kết quả
 
-| Case | HTTP | status | route | Phán quyết |
-|---|---|---|---|---|
-| LIVE-CF-1 gán + if/else | 5 | *(từ chối)* | — | **FAIL_SAFE** |
-| LIVE-CF-2 while có biên | 5 | *(từ chối)* | — | **FAIL_SAFE** |
-| LIVE-CF-3 thiếu dữ kiện | 2 | `unsupported` | — | **từ chối ĐÚNG** (assertion nghiêm ngặt báo FAIL — xem dưới) |
-| LIVE-CF-4 hàm/đệ quy | 0 | — | — | **KHÔNG CHẠY** (cạn ngân sách) |
+| Case | HTTP | Kết quả | Lỗi validator (lặp lại mọi lượt) |
+|---|---|---|---|
+| CF-1 gán + if/else | 5 | **FAIL_SAFE** | `Câu lệnh không nằm trong chương trình: s3.` |
+| CF-2 while có biên | 5 | **FAIL_SAFE** | `Vòng lặp 'main_loop' phải có ít nhất một câu lệnh trong thân.` |
+| CF-3 thiếu dữ kiện | 2 | **từ chối ĐÚNG** (assertion nhãn báo FAIL) | — |
+| CF-4 hàm/đệ quy | 0 | **KHÔNG CHẠY** (cạn ngân sách) | — |
 
-**HTTP: 12/12.** Ngoài ra một lượt chạy trước đó đã tiêu **8 lần thử kết nối
-THẤT BẠI** (egress bị chặn tạm thời, `getaddrinfo` lỗi) — **không lần nào tới
-được API**, không thu được bằng chứng nào.
+**An toàn giữ nguyên:** unsafe acceptance **0** · generic leak **0** · result leak
+**0** · semantic loss **0**.
 
-## LIVE-CF-1 / CF-2 — vì sao FAIL_SAFE (đây là phần đáng giá nhất)
+### L1 và L2 ĐÃ ĐẠT MỤC TIÊU — lỗi dịch sang tầng khác
 
-Cả hai đều **được định tuyến đúng** (đi tới tận `simulate`), nhưng Gemini không
-dựng nổi `ProgramSpec` hợp lệ trong **3/3 lượt**, cùng một lỗi lặp lại:
+Hai lỗi gốc của lượt 1 **biến mất hoàn toàn**:
 
-**CF-1** — `Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên.` ×3
+- ~~`Biến 'y' khai kiểu số nguyên nên cần 'int_value'`~~ → **hết**. Gemini nay
+  khai được biến chưa khởi tạo, không phải bịa giá trị đề không cho.
+- ~~`Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id`~~ → **hết**.
+  Biểu thức inline được điền đúng.
 
-> Đề *"Nếu x lớn hơn 0 thì gán y bằng 1, ngược lại gán y bằng -1"* **không hề
-> nói y ban đầu bằng mấy**. Hợp đồng lại bắt **mọi biến phải có giá trị ban
-> đầu**. Model rơi vào thế kẹt: hoặc bịa một giá trị đề không cho, hoặc để
-> trống và bị validator chặn. Nó chọn để trống — và bị chặn.
+Lỗi mới **cùng MỘT lớp, khác đối tượng**: model dựng câu lệnh trong
+`statements[]` nhưng **không nối được vào cấu trúc khối** —
+CF-1 để câu lệnh `s3` mồ côi (không nằm trong `main` hay khối nào),
+CF-2 để `body: []` trong khi câu lệnh thân đã tồn tại.
 
-**CF-2** — `Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con.` ×3
+> Nói thẳng: L2 gỡ gánh nặng "bảng + tham chiếu id" cho **biểu thức**, nhưng
+> **câu lệnh vẫn dùng đúng cơ chế đó** (`main`, `then_body`, `else_body`,
+> `body` đều là danh sách id). Đây chính là gánh nặng biểu diễn còn lại, và nó
+> là **thiết kế hợp đồng**, không phải thứ vá bằng retry.
 
-> Bảng biểu thức **phẳng + tham chiếu id** (chọn có chủ đích vì structured
-> output của Gemini KHÔNG biểu diễn được schema đệ quy) hoá ra **khó cho model
-> điền đúng**: nó đặt id mô tả rất tự nhiên nhưng quên nối `left`/`right` sang
-> id con.
+### L3 đúng thiết kế nhưng KHÔNG kích hoạt ở ca live này
 
-Điều hệ thống **làm đúng**: không nhận spec sai, không bịa, không hạ về generic,
-không trả `ok` nửa vời. Nhưng học sinh gõ đúng hai đề rất phổ thông này thì
-**chưa xem được mô phỏng**.
+CF-3 vẫn `failure_category = None`. Lý do đo được: `_refusal_category` suy nhãn
+từ `prescribed_procedure` mà **analyze không khai cơ chế** cho đề này, nên không
+có căn cứ → theo đúng luật đã đặt, hệ **để trống thay vì đoán**.
 
-## LIVE-CF-3 — từ chối đúng, nhưng thiếu nhãn phân loại
+Bản vá vẫn đúng và có test khoá cả hai chiều (BE 3 test, FE 3 test); nó phủ ca
+analyze CÓ khai cơ chế. Ca live này rơi ngoài vùng phủ đó. **Không nới luật để
+ép đạt** — nới ra là quay lại gán nhãn theo phỏng đoán.
 
-Thông điệp học sinh **thật sự tốt**, đòi đủ ba thứ và nói rõ không tự bịa:
+Thông điệp học sinh vẫn **tốt và đúng bản chất**:
 
-> *"Đề bài yêu cầu mô phỏng vòng lặp while nhưng không cung cấp giá trị ban đầu
-> của biến, điều kiện lặp và các câu lệnh cụ thể trong thân vòng lặp. Hệ thống
-> không thể tự động tạo ra một chương trình mẫu để mô phỏng."*
+> *"Đề bài yêu cầu mô phỏng vòng lặp while nhưng không cung cấp giá trị ban đầu,
+> điều kiện lặp và thân vòng lặp cụ thể. Hệ thống không thể tự bịa ra một chương
+> trình…"*
 
-Không bịa biến/điều kiện/thân, không có spec, không chạy executor, không generic,
-không lộ token kỹ thuật.
-
-**Nhưng** `failure_category = None`: `classify` tự từ chối (2 HTTP: analyze +
-classify) **trước khi** cổng đủ-dữ-kiện kịp chạy, nên không ai gắn nhãn
-`insufficient_specification`. Hệ quả: FE sẽ hiện tiêu đề từ chối chung thay vì
-**"CHƯA ĐỦ DỮ KIỆN"** — đúng thứ mà W2C-VR đã chụp ảnh xác nhận là hiện đúng khi
-nhãn có mặt. Assertion nghiêm ngặt của runner vì thế báo `FAIL`, dù **mọi thuộc
-tính an toàn đều đạt**.
-
-## Ba phát hiện — phân loại theo §9, KHÔNG tự vá
+### Phát hiện còn mở (phân loại §9 — KHÔNG tự vá)
 
 | # | Phát hiện | Phân loại |
 |---|---|---|
-| L1 | Hợp đồng bắt **mọi biến** có giá trị ban đầu, nhưng đề tự nhiên không nêu giá trị đầu của biến kết quả (`y`) | **Contract/grammar limitation** (lộ ra nhờ live) |
-| L2 | Bảng biểu thức **phẳng + id** khó cho model điền đúng — quên nối `left`/`right` | **Model variability + contract ergonomics** |
-| L3 | `classify` tự từ chối ⇒ envelope **không có** `failure_category` ⇒ FE mất tiêu đề "CHƯA ĐỦ DỮ KIỆN" | **Runtime/configuration defect** (nhỏ, chỉ ảnh hưởng nhãn) |
+| C1-1 | Câu lệnh vẫn nối khối bằng **danh sách id** (`main`/`then_body`/`body`); model để câu lệnh mồ côi hoặc `body` rỗng | **Contract ergonomics** — cùng lớp với L2, chưa xử lý |
+| C1-2 | `_refusal_category` không phủ ca analyze **không khai cơ chế** | **Vùng phủ hẹp** của bản vá L3 |
 
-Không mở patch wave, không thêm repair/merge/retry, không sửa prompt giữa chừng,
-không chạy lại đến khi đẹp. Chờ quyết định riêng.
+---
 
-## Chỉ số
+## Lượt 1 — trước W2C-C1 (HEAD `2d17405`) — LƯU LÀM ĐỐI CHỨNG
 
-| | |
-|---|---|
-| Case chạy | 3/4 |
-| PASS | 0 · FAIL_SAFE **2** · FAIL (assertion nhãn) **1** · không chạy **1** |
-| unsafe acceptance | **0** |
-| generic leak | **0** |
-| result leak | **0** |
-| semantic loss | **0** |
-| HTTP | **12/12** (+8 lần thử kết nối thất bại ở lượt trước, 0 tới được API) |
+`W2C_LIVE_INCOMPLETE`, 12/12 HTTP, 3/4 case. CF-1 hỏng ×3 vì
+`Biến 'y' … cần 'int_value'`; CF-2 hỏng ×3 vì `e4_compare_x_lt_5 cần left/right`.
+Chính hai lỗi này là đầu vào của checkpoint C1. An toàn khi đó cũng đã đạt:
+unsafe acceptance 0 · generic leak 0 · result leak 0 · semantic loss 0.
+
+---
 
 ## Trạng thái Wave 2C
 
-- Offline deterministic execution: **verified** (pytest 1047 · vitest 628).
+- Offline deterministic execution: **verified** (pytest 1065 · vitest 638).
 - Chrome visual review: **completed** (7 REAL_VISUAL · 1 PARTIAL · 0 BROKEN).
-- Live Vietnamese NL smoke: **INCOMPLETE — chưa đạt**.
+- Live Vietnamese NL smoke: **INCOMPLETE — chưa đạt** (2 lượt).
 
-⇒ **Wave 2C KHÔNG CLOSED.** Không được claim "live fully verified". Claim đúng
-độ mạnh hiện có: *engine tất định + renderer đã kiểm chứng; đường LLM → spec cho
-đề tiếng Việt tự nhiên CHƯA thông, và khi không thông thì hệ từ chối an toàn.*
+⇒ **Wave 2C KHÔNG CLOSED.** Claim đúng độ mạnh: *engine tất định và renderer đã
+kiểm chứng; tích hợp ngôn ngữ tự nhiên **PARTIAL**; hệ **từ chối an toàn** khi
+không dựng nổi spec.* Không được viết "live fully verified".
 
 VR-O1 giữ nguyên limitation: chương trình một câu lệnh chưa có trạng thái
-tiền-thực-thi; **không sửa `TraceBuilder`** trong checkpoint này.
+tiền-thực-thi; **không sửa `TraceBuilder`**.

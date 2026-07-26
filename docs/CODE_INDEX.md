@@ -16,7 +16,7 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 |---|---|---|
 | Active mainline | `main` | `git branch --show-current` |
 | Baseline | `f2b28e2` (PATCH1 impl `8bd2324` + live evidence) | `git rev-parse HEAD` |
-| `CACHE_VERSION` | **21** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+| `CACHE_VERSION` | **22** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 | `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
 | Family / Target | **11 / 21** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8` | `git rev-parse archive/m17-w2b-deep-hardening` |
@@ -323,6 +323,10 @@ Tests: `test_scan_engine.py`, `test_scan_routing.py`.
 `LIMITS` (7 giới hạn cứng), `INT_MIN`/`INT_MAX`, `COMPLETION_*`,
 `FORBIDDEN_SPEC_KEYS`, `structures_present(config)`, `statement_kind_enum()`,
 `expression_kind_enum()`, `all_operators()`.
+`normalize_inline_program(statements)` (W2C-C1 §L2) — biểu thức INLINE của LLM →
+bảng biểu thức NỘI BỘ + câu lệnh tham chiếu id; TẤT ĐỊNH (id `_e1.._en` theo thứ
+tự duyệt), KHÔNG đoán ý/bù toán tử/sửa tên biến. Sai ngữ pháp → `NormalizeError`.
+Đây là chuẩn hoá CẤU TRÚC, KHÔNG phải repair.
 Consumers: `catalog.py` (schema Gemini DẪN XUẤT — anti-pattern #1),
 `validation/program.py`, `pipeline_stages.py`. Mirror TS: `frontend/src/core/program.ts`
 (`PROGRAM_LIMITS` — đổi một bên PHẢI đổi bên kia).
@@ -334,6 +338,8 @@ Validator FAIL-CLOSED cho `algorithm.bounded_control_flow`. Exports:
 `validate_program_config(raw) → (config|None, error|None)`.
 Bắt: kind ngoài ngữ pháp · biến chưa khai báo · sai kiểu (KHÔNG coercion) ·
 chia/mod cho 0 tĩnh · điều kiện không phải boolean · while thiếu `max_iterations` ·
+**definite-assignment** (W2C-C1 §L1: đọc biến chưa chắc có giá trị → từ chối;
+if/else = GIAO hai nhánh, if-không-else và while KHÔNG mở rộng) ·
 biểu thức lồng vòng/quá sâu · câu lệnh mồ côi hoặc thuộc hai khối · spec mang
 kết quả (R0). Deps: `program_spec`. Tests: `test_program_spec.py`.
 

@@ -9,7 +9,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **21** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **22** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Family / Target | **11 / 21** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
@@ -56,6 +56,16 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   biến nào của chương trình nên làm 3D sẽ là chiều sâu giả, bất biến #18).
 >   **Mã giả DẪN XUẤT từ `statements[]`** và interpreter gắn `Step.line` từ
 >   CHÍNH bản đồ đó — highlight không thể trôi.
+> - **W2C-C1 (contract alignment, `238a8a0`)** — đóng hai root cause do live bắt:
+>   **L1** biến được **khai báo mà chưa khởi tạo** (hệ KHÔNG bịa 0/false) + lượt
+>   **definite-assignment** (if/else = GIAO hai nhánh; if-không-else và while
+>   KHÔNG mở rộng); **L2** bề mặt LLM đổi sang **biểu thức INLINE, nông, phi đệ
+>   quy** (bỏ bảng `expressions[]` + tham chiếu id) kèm **normalizer TẤT ĐỊNH**
+>   sang biểu diễn nội bộ; **L3** giữ nhãn `insufficient_specification` cho ca
+>   classify tự từ chối. Contract `program-1.0 → program-2.0`,
+>   `CACHE_VERSION` **21→22**. Live rerun (lượt 2): L1/L2 **hết lỗi cũ**, lỗi
+>   dịch sang **nối khối bằng id câu lệnh** (mồ côi / `body` rỗng) — còn mở,
+>   xem `w2c/bounded_control_flow_live_smoke.md`.
 > - `CACHE_VERSION` **20→21** (thêm family/target AI-reachable + enum analyze).
 >   `HISTORY_SCHEMA_VERSION` **giữ 2**. `scan-1.0` và hợp đồng bảng **không đụng**.
 > - Offline: pytest **1047** (2 skip, 1 deselect) · vitest **626/48** · build
@@ -492,8 +502,8 @@ scan HOÃN có chủ đích.
 
 | | |
 |---|---|
-| pytest | **1047 pass, 2 skipped, 1 deselected** (đo lại 2026-07-26 sau W2C; 0 API call thật — guard là bằng chứng) |
-| vitest | **626 pass / 48 file** (đo lại 2026-07-26 sau W2C; 0 network call) |
+| pytest | **1065 pass, 2 skipped, 1 deselected** (đo lại 2026-07-26 sau W2C-C1; 0 API call thật — guard là bằng chứng) |
+| vitest | **638 pass / 48 file** (đo lại 2026-07-26 sau W2C-C1; 0 network call) |
 | catalog conformance | **21 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-26) |
 | audit bố cục | `npm run audit:layout` — **4/4 route sạch** (đo lại tại Task 13: vẫn 4/4 — M13 chỉ đổi nguồn text nhãn, không đổi CSS/layout; Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả ở M9-UX7) |
 | build | `tsc -b && vite build` sạch (đo lại 2026-07-25) — bundle chính ~357KB; chunk Three.js 544KB **code-split**, chỉ tải khi bấm 3D |
