@@ -168,6 +168,10 @@ def _algo_title(config: dict, analysis: dict) -> str:
     return goal if isinstance(goal, str) and goal else "Mô phỏng thuật toán"
 
 
+VISUAL_MODES: tuple[str, ...] = ("2d", "3d")
+"""Từ vựng ĐÓNG cho chế độ trình bày (M17 P0). Thêm chế độ = thêm ở đây (một nguồn)."""
+
+
 class SimSpec:
     """Đặc tả một mô phỏng RUNTIME trong danh mục backend (§C0: runtime target).
 
@@ -181,7 +185,7 @@ class SimSpec:
         self,
         simulation_id: str,
         domain: str,
-        visual_mode: str,
+        visual_modes: tuple[str, ...],
         description: str,
         config_schema: dict,
         contract: str,
@@ -197,7 +201,20 @@ class SimSpec:
     ) -> None:
         self.simulation_id = simulation_id
         self.domain = domain
-        self.visual_mode = visual_mode
+        # M17 P0 — chế độ trình bày là DANH SÁCH ĐÓNG, không phải một chuỗi.
+        # Audit authenticity phát hiện: khai cứng "2d" cho cả 22 entry khiến bảng
+        # năng lực sinh tự động báo 3D = 0/22, tự phản chứng tên đề tài "2D/3D".
+        # Danh sách này là NGUỒN; `visual_mode` (payload API) dẫn xuất từ nó, nên
+        # không thể tồn tại một entry vừa khai 3d vừa khai scalar "2d" mâu thuẫn.
+        # Parity FE↔BE khóa ở `capability-descriptors.test.ts`.
+        unknown = [m for m in visual_modes if m not in VISUAL_MODES]
+        if unknown:
+            raise ValueError(f"{simulation_id}: chế độ trình bày lạ {unknown}")
+        if not visual_modes or visual_modes[0] != "2d":
+            raise ValueError(f"{simulation_id}: visual_modes phải bắt đầu bằng '2d'")
+        if len(set(visual_modes)) != len(visual_modes):
+            raise ValueError(f"{simulation_id}: visual_modes trùng lặp")
+        self.visual_modes = tuple(visual_modes)
         self.description = description
         self.config_schema = config_schema
         self.contract = contract
@@ -213,6 +230,19 @@ class SimSpec:
         # §C2 rev2). Mặc định "" cho entry chưa khai; lock (test_family_registry)
         # buộc khai đủ cho 14 entry.
         self.config_contract_version = config_contract_version
+
+    @property
+    def visual_mode(self) -> str:
+        """Chế độ MẶC ĐỊNH cho payload API — luôn dẫn xuất, không bao giờ khai tay.
+
+        Giữ nguyên hình dạng payload cũ (`"2d"`) để không đổi hợp đồng API; khả
+        năng 3D nằm ở `visual_modes` và đi ra descriptor. Frontend chọn chế độ
+        render từ hợp đồng module (`effectiveVisualMode`), không từ trường này.
+        """
+        return self.visual_modes[0]
+
+    def supports_3d(self) -> bool:
+        return "3d" in self.visual_modes
 
 
 CATALOG: dict[str, SimSpec] = {}
@@ -316,7 +346,7 @@ for _aid in ALGORITHM_IDS:
     CATALOG[_sim_id] = SimSpec(
         simulation_id=_sim_id,
         domain="algorithm",
-        visual_mode="2d",
+        visual_modes=("2d",),
         description=f"{ALGORITHM_NAMES_VI[_aid]} — {_ALGO_DESCRIPTIONS[_aid]}",
         config_schema=_ALGO_CONFIG_SCHEMA,
         contract=_ALGO_CONTRACT,
@@ -351,7 +381,7 @@ _LOGIC_AND_CONTRACT = """HỢP ĐỒNG CONFIG (logic.and_gate):
 CATALOG["logic.and_gate"] = SimSpec(
     simulation_id="logic.and_gate",
     domain="logic",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description="cổng logic AND — mô phỏng hai đầu vào bật/tắt và đầu ra; AND chỉ ra 1 khi cả hai đầu vào đều là 1",
     config_schema=_LOGIC_AND_SCHEMA,
     contract=_LOGIC_AND_CONTRACT,
@@ -414,7 +444,7 @@ _LOGIC_DAG_CONTRACT = """HỢP ĐỒNG CONFIG (logic.boolean_dag):
 CATALOG["logic.boolean_dag"] = SimSpec(
     simulation_id="logic.boolean_dag",
     domain="logic",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "mạch logic NHIỀU cổng AND/OR/NOT/XOR nối nhau (tối đa 4 đầu vào, 8 cổng) "
         "+ BẢNG CHÂN TRỊ do engine sinh — dùng khi đề cho mạch/biểu thức logic "
@@ -460,7 +490,7 @@ _BINARY_CONTRACT = """HỢP ĐỒNG CONFIG (binary.decimal_to_binary):
 CATALOG["binary.decimal_to_binary"] = SimSpec(
     simulation_id="binary.decimal_to_binary",
     domain="binary",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description="đổi số thập phân sang nhị phân — mô phỏng các bit trọng số 8/4/2/1 bật/tắt và giá trị thập phân tương ứng",
     config_schema=_BINARY_SCHEMA,
     contract=_BINARY_CONTRACT,
@@ -505,7 +535,7 @@ _BASECONV_CONTRACT = """HỢP ĐỒNG CONFIG (binary.base_conversion):
 CATALOG["binary.base_conversion"] = SimSpec(
     simulation_id="binary.base_conversion",
     domain="binary",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "đổi một số giữa các hệ cơ số 2, 8, 10, 16 (nhị phân/bát phân/thập phân/"
         "thập lục phân) — engine tất định dựng trace chia-lấy-dư, trọng số vị trí "
@@ -579,7 +609,9 @@ _NETWORK_CONTRACT = """HỢP ĐỒNG CONFIG (network.packet_routing):
 CATALOG["network.packet_routing"] = SimSpec(
     simulation_id="network.packet_routing",
     domain="network",
-    visual_mode="2d",
+    # 3D THẬT: renderer `network/ui3d.tsx` đọc CHÍNH state authoritative
+    # (currentStep/nodes/route); camera sống trong ref, không vào store.
+    visual_modes=("2d", "3d"),
     description="định tuyến gói tin trên MỘT MẠNG CHO SẴN đầy đủ — mô phỏng gói tin đi từng chặng từ máy nguồn qua các router tới máy đích. CHỈ dùng khi topology có sẵn ngay; KHÔNG dựng mạng từng bước (không tạo từng thiết bị/liên kết dần). Cơ chế ẩn là ĐƯỜNG ĐI qua các NÚT thiết bị; bài hỏi dữ liệu được ĐÓNG GÓI/THÁO GÓI qua các TẦNG giao thức (thêm/gỡ TCP, IP, header) → network.protocol_encapsulation",
     config_schema=_NETWORK_SCHEMA,
     contract=_NETWORK_CONTRACT,
@@ -636,7 +668,7 @@ _TRAVERSE_CONTRACT = """HỢP ĐỒNG CONFIG (network.graph_traversal):
 CATALOG["network.graph_traversal"] = SimSpec(
     simulation_id="network.graph_traversal",
     domain="network",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "duyệt đồ thị TỔNG QUÁT bằng BFS (chiều rộng) hoặc DFS (chiều sâu) trên "
         "đồ thị có/không hướng KHÔNG trọng số — mô phỏng frontier (hàng đợi/ngăn "
@@ -791,7 +823,7 @@ _TREE_CONTRACT = """HỢP ĐỒNG CONFIG (tree.traversal — duyệt CÂY NHỊ 
 CATALOG["tree.traversal"] = SimSpec(
     simulation_id="tree.traversal",
     domain="tree",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "duyệt CÂY NHỊ PHÂN hữu hạn theo 4 thứ tự: preorder (trước — gốc/trái/"
         "phải), inorder (giữa — trái/gốc/phải), postorder (sau — trái/phải/gốc), "
@@ -833,7 +865,7 @@ CATALOG["tree.traversal"] = SimSpec(
 CATALOG["database.relational_table_query"] = SimSpec(
     simulation_id="database.relational_table_query",
     domain="database",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "truy vấn MỘT BẢNG dữ liệu hữu hạn cho sẵn (bảng có lược đồ: tên cột + "
         "kiểu text/số/đúng-sai): LỌC dòng theo điều kiện, CHỌN cột cần hiển thị, "
@@ -950,7 +982,7 @@ Ví dụ (đề "tìm số ĐẦU TIÊN nhỏ hơn 50 trong dãy"): seed {{"from
 CATALOG["algorithm.scan"] = SimSpec(
     simulation_id="algorithm.scan",
     domain="algorithm",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "quét dãy số MỘT LƯỢT theo cấu hình khai báo — CHỈ cho biến thể single-pass mà "
         "các bài chuyên biệt không khớp, điển hình: tìm phần tử ĐẦU TIÊN thỏa BẤT đẳng thức "
@@ -1105,7 +1137,7 @@ _PROGRAM_CONTRACT = f"""HỢP ĐỒNG CONFIG (algorithm.bounded_control_flow —
 CATALOG["algorithm.bounded_control_flow"] = SimSpec(
     simulation_id="algorithm.bounded_control_flow",
     domain="algorithm",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "chạy TỪNG BƯỚC một đoạn chương trình HỮU HẠN do đề cho sẵn — engine "
         "thực hiện lần lượt các câu lệnh gán, rẽ nhánh if/else và vòng lặp while "
@@ -1171,7 +1203,7 @@ _CHAR_ENC_CONTRACT = f"""HỢP ĐỒNG CONFIG (binary.character_encoding — MÃ
 CATALOG["binary.character_encoding"] = SimSpec(
     simulation_id="binary.character_encoding",
     domain="binary",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description=(
         "mã hoá ký tự — mô phỏng TỪNG BƯỚC việc tra mã của mỗi ký tự trong một "
         "chuỗi ngắn rồi đổi mã đó sang nhị phân: ký tự → mã ký tự (ASCII hoặc "
@@ -1227,7 +1259,9 @@ _ENCAP_CONTRACT = """HỢP ĐỒNG CONFIG (network.protocol_encapsulation):
 CATALOG["network.protocol_encapsulation"] = SimSpec(
     simulation_id="network.protocol_encapsulation",
     domain="network",
-    visual_mode="2d",
+    # 3D THẬT và có NGHĨA MIỀN: `encap-ui3d.layerDepth()` đặt trục Z = chỉ số
+    # tầng giao thức, nên "đi xuống các tầng" là chuyển động thật, không ẩn dụ.
+    visual_modes=("2d", "3d"),
     description="đóng gói dữ liệu qua các tầng giao thức TCP/IP — dữ liệu từ tầng ứng dụng được THÊM DẦN thông tin giao thức (TCP, IP, thông tin liên kết) khi đi xuống từng tầng ở máy gửi, truyền đi, rồi được GỠ DẦN (tháo gói) ở máy nhận. Dùng khi cơ chế ẩn là BIẾN ĐỔI PDU qua từng TẦNG. Bài hỏi ĐƯỜNG ĐI của gói tin qua các thiết bị (router/switch/ISP) → network.packet_routing. KHÔNG hỗ trợ chi tiết bắt tay TCP ba bước, số sequence/ACK, phân mảnh, retransmission, congestion control, DNS — các đề đó vượt năng lực v1, trả unsupported",
     config_schema=_ENCAP_SCHEMA,
     contract=_ENCAP_CONTRACT,
@@ -1362,7 +1396,7 @@ _GENERIC_CONTRACT = manifest_contract_text()
 CATALOG["generic.rule_scene"] = SimSpec(
     simulation_id="generic.rule_scene",
     domain="generic",
-    visual_mode="2d",
+    visual_modes=("2d",),
     description="mô phỏng TỔNG QUÁT do AI tự dựng từ đối tượng/quy tắc/tương tác — dùng khi bài KHÔNG khớp mô phỏng chuyên biệt nào ở trên nhưng vẫn mô tả được bằng các nút, công tắc, đèn, ô giá trị, quy tắc logic/tổng có trọng số, hoặc thực thể di chuyển theo đường",
     config_schema=_GENERIC_SCHEMA,
     contract=_GENERIC_CONTRACT,
@@ -1431,6 +1465,9 @@ def capability_descriptors() -> dict:
         sim_id: {
             "domain": spec.domain,
             "executor_id": spec.executor_id,
+            # M17 P0 — khả năng trình bày ĐI RA descriptor để frontend cross-lock
+            # được (capability-descriptors.test.ts). Không có bảng viết tay thứ hai.
+            "visual_modes": list(spec.visual_modes),
             "reachability": [r.value for r in spec.reachability],
             "curriculum_anchor": spec.curriculum_anchor,
             "known_gaps": list(spec.known_gaps),

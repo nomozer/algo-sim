@@ -279,7 +279,7 @@ def test_metric_13_reclassification_rate_loai_internal_fixture_route():
     fake_spec = SimSpec(
         simulation_id=fixture_id,
         domain="algorithm",
-        visual_mode="2d",
+        visual_modes=("2d",),
         description="",
         config_schema={},
         contract="",
@@ -405,7 +405,7 @@ def test_product_case_filter_ap_dung_cho_nhieu_metric_khong_chi_13():
     fake_spec = SimSpec(
         simulation_id=fixture_id,
         domain="algorithm",
-        visual_mode="2d",
+        visual_modes=("2d",),
         description="",
         config_schema={},
         contract="",

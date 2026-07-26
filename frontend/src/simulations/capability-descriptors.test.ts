@@ -25,6 +25,7 @@ interface Membership {
 interface Target {
   domain: string;
   executor_id: string;
+  visual_modes: string[];
   reachability: string[];
   curriculum_anchor: string;
   known_gaps: string[];
@@ -86,6 +87,51 @@ describe("M14 §C4 — descriptor ↔ registry cross-lock", () => {
     expect(descriptors.runtime_targets["algorithm.scan"].reachability).not.toContain(
       "library_discoverable",
     );
+  });
+});
+
+/**
+ * M17 P0 — PARITY 2D/3D giữa descriptor backend và hợp đồng module frontend.
+ *
+ * Audit authenticity: backend khai cứng `visual_mode = "2d"` cho cả 22 target,
+ * kể cả hai target thật sự render 3D ⇒ bảng năng lực sinh tự động báo 3D = 0/22
+ * và tự phản chứng tên đề tài "2D/3D". Backend nay khai `visual_modes` (danh
+ * sách đóng) và test này khóa nó vào SỰ THẬT frontend: thêm renderer 3D mà quên
+ * backend — hoặc ngược lại — đều làm test đỏ, nên không phía nào đi lẻ được.
+ */
+describe("M17 P0 — visual modes: một nguồn, hai phía khớp", () => {
+  const TARGETS_3D = ["network.packet_routing", "network.protocol_encapsulation"];
+
+  it("descriptor khớp ĐÚNG supportedVisualModes của module thật", () => {
+    for (const [id, t] of Object.entries(descriptors.runtime_targets)) {
+      const mod = getSimulation(id);
+      expect(mod, `thiếu module ${id}`).toBeDefined();
+      expect([...t.visual_modes], `lệch parity ở ${id}`).toEqual([...mod!.supportedVisualModes]);
+    }
+  });
+
+  it("đúng hai target hỗ trợ 3D — và đúng hai target đó", () => {
+    const co3d = Object.entries(descriptors.runtime_targets)
+      .filter(([, t]) => t.visual_modes.includes("3d"))
+      .map(([id]) => id)
+      .sort();
+    expect(co3d).toEqual(TARGETS_3D);
+    // network.graph_traversal CHỈ 2D — audit Part A ban đầu ghi nhầm nó là 3D.
+    expect(co3d).not.toContain("network.graph_traversal");
+  });
+
+  it("20 target còn lại chỉ 2D, không bị khai vống", () => {
+    const chi2d = Object.values(descriptors.runtime_targets)
+      .filter((t) => !t.visual_modes.includes("3d"));
+    expect(chi2d.length).toBe(20);
+    for (const t of chi2d) expect(t.visual_modes).toEqual(["2d"]);
+  });
+
+  it("mọi chế độ thuộc từ vựng đóng và luôn bắt đầu bằng 2d", () => {
+    for (const [id, t] of Object.entries(descriptors.runtime_targets)) {
+      expect(t.visual_modes[0], id).toBe("2d");
+      for (const m of t.visual_modes) expect(["2d", "3d"], id).toContain(m);
+    }
   });
 });
 

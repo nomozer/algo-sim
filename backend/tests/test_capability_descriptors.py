@@ -67,3 +67,66 @@ def test_formalized_families_owned_khong_rong():
         for mem in spec.family_memberships:
             if mem.family_id in FORMALIZED_FAMILIES:
                 assert mem.owned_mechanisms, f"{spec.simulation_id}/{mem.family_id.value}"
+
+
+# ── M17 P0 — khả năng 2D/3D là MỘT nguồn ────────────────────────────────
+#
+# Audit authenticity phát hiện: catalog khai cứng visual_mode="2d" cho cả 22
+# entry, kể cả hai target thật sự render 3D ⇒ bảng năng lực sinh tự động báo
+# 3D = 0/22 và tự phản chứng tên đề tài "2D/3D". Nay `visual_modes` là nguồn,
+# `visual_mode` (payload API) dẫn xuất. Parity phía FE: capability-descriptors.test.ts.
+
+TARGETS_3D = {"network.packet_routing", "network.protocol_encapsulation"}
+
+
+def test_dung_hai_target_ho_tro_3d():
+    from app.simulation.catalog import CATALOG
+    assert {k for k, s in CATALOG.items() if s.supports_3d()} == TARGETS_3D
+
+
+def test_target_chi_2d_khong_bi_khai_3d():
+    from app.simulation.catalog import CATALOG
+    for sim_id, spec in CATALOG.items():
+        if sim_id not in TARGETS_3D:
+            assert spec.visual_modes == ("2d",), sim_id
+
+
+def test_visual_mode_payload_luon_dan_xuat_khong_khai_tay():
+    """Không thể tồn tại entry vừa khai 3d vừa có scalar mâu thuẫn."""
+    from app.simulation.catalog import CATALOG
+    for spec in CATALOG.values():
+        assert spec.visual_mode == spec.visual_modes[0] == "2d"
+
+
+def test_visual_modes_thuoc_tu_vung_dong():
+    from app.simulation.catalog import CATALOG, VISUAL_MODES
+    for spec in CATALOG.values():
+        assert set(spec.visual_modes) <= set(VISUAL_MODES), spec.simulation_id
+
+
+def test_che_do_la_tu_vung_dong_khong_phai_chuoi_tuy_y():
+    """Khai một chế độ lạ phải VỠ NGAY lúc dựng, không âm thầm đi ra descriptor."""
+    import pytest
+    from app.simulation.catalog import CATALOG, SimSpec
+    mau = CATALOG["binary.decimal_to_binary"]
+    for xau in [("2d", "4d"), ("3d",), (), ("2d", "2d")]:
+        with pytest.raises(ValueError):
+            SimSpec(
+                simulation_id="thu.nghiem",
+                domain="binary",
+                visual_modes=xau,
+                description=mau.description,
+                config_schema=mau.config_schema,
+                contract=mau.contract,
+                validate=mau.validate,
+                make_title=mau.make_title,
+            )
+
+
+def test_descriptor_mang_dung_visual_modes():
+    """Bảng năng lực sinh tự động phải báo 2/22, không phải 0/22."""
+    d = capability_descriptors()["runtime_targets"]
+    assert len(d) == 22
+    co_3d = {k for k, t in d.items() if "3d" in t["visual_modes"]}
+    assert co_3d == TARGETS_3D
+    assert sum(1 for t in d.values() if t["visual_modes"] == ["2d"]) == 20

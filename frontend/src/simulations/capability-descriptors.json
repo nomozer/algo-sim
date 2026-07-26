@@ -3,6 +3,9 @@
     "algorithm.find_max": {
       "domain": "algorithm",
       "executor_id": "algorithm.find_max",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -49,6 +52,9 @@
     "algorithm.find_min": {
       "domain": "algorithm",
       "executor_id": "algorithm.find_min",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -95,6 +101,9 @@
     "algorithm.sum_if": {
       "domain": "algorithm",
       "executor_id": "algorithm.sum_if",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -141,6 +150,9 @@
     "algorithm.count_if": {
       "domain": "algorithm",
       "executor_id": "algorithm.count_if",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -187,6 +199,9 @@
     "algorithm.linear_search": {
       "domain": "algorithm",
       "executor_id": "algorithm.linear_search",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -233,6 +248,9 @@
     "algorithm.binary_search": {
       "domain": "algorithm",
       "executor_id": "algorithm.binary_search",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -279,6 +297,9 @@
     "algorithm.bubble_sort": {
       "domain": "algorithm",
       "executor_id": "algorithm.bubble_sort",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -329,6 +350,9 @@
     "algorithm.insertion_sort": {
       "domain": "algorithm",
       "executor_id": "algorithm.insertion_sort",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -380,6 +404,9 @@
     "algorithm.selection_sort": {
       "domain": "algorithm",
       "executor_id": "algorithm.selection_sort",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -431,6 +458,9 @@
     "logic.and_gate": {
       "domain": "logic",
       "executor_id": "logic.and_gate",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -471,6 +501,9 @@
     "logic.boolean_dag": {
       "domain": "logic",
       "executor_id": "logic.boolean_dag",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -520,6 +553,9 @@
     "binary.decimal_to_binary": {
       "domain": "binary",
       "executor_id": "binary.decimal_to_binary",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -561,6 +597,9 @@
     "binary.base_conversion": {
       "domain": "binary",
       "executor_id": "binary.base_conversion",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -609,6 +648,10 @@
     "network.packet_routing": {
       "domain": "network",
       "executor_id": "network.packet_routing",
+      "visual_modes": [
+        "2d",
+        "3d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -660,6 +703,9 @@
     "network.graph_traversal": {
       "domain": "network",
       "executor_id": "network.graph_traversal",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -715,6 +761,9 @@
     "tree.traversal": {
       "domain": "tree",
       "executor_id": "tree.traversal",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -769,6 +818,9 @@
     "database.relational_table_query": {
       "domain": "database",
       "executor_id": "database.relational_table_query",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -832,6 +884,9 @@
     "algorithm.scan": {
       "domain": "algorithm",
       "executor_id": "algorithm.scan",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -883,6 +938,9 @@
     "algorithm.bounded_control_flow": {
       "domain": "algorithm",
       "executor_id": "algorithm.bounded_control_flow",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -939,6 +997,9 @@
     "binary.character_encoding": {
       "domain": "binary",
       "executor_id": "binary.character_encoding",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "ai_reachable_public"
@@ -990,6 +1051,10 @@
     "network.protocol_encapsulation": {
       "domain": "network",
       "executor_id": "network.protocol_encapsulation",
+      "visual_modes": [
+        "2d",
+        "3d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
@@ -1044,6 +1109,9 @@
     "generic.rule_scene": {
       "domain": "generic",
       "executor_id": "generic.rule_scene",
+      "visual_modes": [
+        "2d"
+      ],
       "reachability": [
         "registered",
         "library_discoverable",
