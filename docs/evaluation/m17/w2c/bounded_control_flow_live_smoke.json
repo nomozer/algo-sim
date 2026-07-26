@@ -1,0 +1,253 @@
+{
+  "wave": "M17 W2C-LIVE",
+  "target": "algorithm.bounded_control_flow",
+  "generated_at": "2026-07-26T06:30:39.486558+00:00",
+  "git_sha": "2d17405dcc003f24e1d586ef1c8e0e045b6710b5",
+  "model": "gemini-2.5-flash",
+  "provider": "google-gemini",
+  "runner_process_identity": {
+    "git_sha": "unknown",
+    "build_timestamp": "unknown",
+    "cache_version": "21",
+    "family_count": 11,
+    "target_count": 21,
+    "ai_reachable_target_count": 21,
+    "stable_catalog_hash": "0940d65f5ca866937ef8206caf4e950473b24a3652969df85be42fb3a4676e33",
+    "registered_target_ids": [
+      "algorithm.binary_search",
+      "algorithm.bounded_control_flow",
+      "algorithm.bubble_sort",
+      "algorithm.count_if",
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.insertion_sort",
+      "algorithm.linear_search",
+      "algorithm.scan",
+      "algorithm.selection_sort",
+      "algorithm.sum_if",
+      "binary.base_conversion",
+      "binary.decimal_to_binary",
+      "database.relational_table_query",
+      "generic.rule_scene",
+      "logic.and_gate",
+      "logic.boolean_dag",
+      "network.graph_traversal",
+      "network.packet_routing",
+      "network.protocol_encapsulation",
+      "tree.traversal"
+    ],
+    "registered_ai_reachable_ids": [
+      "algorithm.binary_search",
+      "algorithm.bounded_control_flow",
+      "algorithm.bubble_sort",
+      "algorithm.count_if",
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.insertion_sort",
+      "algorithm.linear_search",
+      "algorithm.scan",
+      "algorithm.selection_sort",
+      "algorithm.sum_if",
+      "binary.base_conversion",
+      "binary.decimal_to_binary",
+      "database.relational_table_query",
+      "generic.rule_scene",
+      "logic.and_gate",
+      "logic.boolean_dag",
+      "network.graph_traversal",
+      "network.packet_routing",
+      "network.protocol_encapsulation",
+      "tree.traversal"
+    ],
+    "registered_executor_ids": [
+      "algorithm.binary_search",
+      "algorithm.bounded_control_flow",
+      "algorithm.bubble_sort",
+      "algorithm.count_if",
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.insertion_sort",
+      "algorithm.linear_search",
+      "algorithm.scan",
+      "algorithm.selection_sort",
+      "algorithm.sum_if",
+      "binary.base_conversion",
+      "binary.decimal_to_binary",
+      "database.relational_table_query",
+      "generic.rule_scene",
+      "logic.and_gate",
+      "logic.boolean_dag",
+      "network.graph_traversal",
+      "network.packet_routing",
+      "network.protocol_encapsulation",
+      "tree.traversal"
+    ],
+    "registered_renderer_ids": [
+      "algorithm",
+      "binary",
+      "database",
+      "generic",
+      "logic",
+      "network",
+      "tree"
+    ],
+    "family_ids": [
+      "boolean_composition",
+      "bounded_control_flow",
+      "comparison_sort",
+      "graph_traversal",
+      "interval_elimination",
+      "layered_pdu_transform",
+      "positional_representation",
+      "relational_table_query",
+      "single_pass_scan",
+      "structural_progressive_representation",
+      "tree_traversal"
+    ],
+    "selector_tokens": [
+      "algorithm.comparison_sort"
+    ]
+  },
+  "http_budget": 12,
+  "http_used": 12,
+  "aborted": "BUDGET: chạm trần 12 HTTP — dừng, KHÔNG nâng budget. (Đã chạm trần 12 API call — dừng để không đốt thêm quota.)",
+  "metrics": {
+    "cases": 3,
+    "pass": 0,
+    "fail_safe": 2,
+    "fail": 1,
+    "unsafe_acceptance": 0,
+    "generic_leak": 0,
+    "result_leak": 0,
+    "semantic_loss": 0
+  },
+  "classification": "W2C_LIVE_INCOMPLETE",
+  "note": "Engine tất định của luồng điều khiển nằm ở FRONTEND (core/program.ts) nên envelope backend KHÔNG có trace: live smoke kiểm ĐỊNH TUYẾN + SPEC HỢP LỆ + KHÔNG RÒ KẾT QUẢ; đáp số đối chiếu bằng ORACLE ĐỘC LẬP trong harness. Chạy đúng từng bước đã chứng minh offline.",
+  "cases": [
+    {
+      "id": "live-cf1-assign-branch",
+      "prompt": "Cho x = -2. Nếu x lớn hơn 0 thì gán y bằng 1, ngược lại gán y bằng -1. Hãy mô phỏng chương trình từng bước.",
+      "timestamp": "2026-07-26T06:29:52.113056+00:00",
+      "model": "gemini-2.5-flash",
+      "provider": "google-gemini",
+      "http_requests": 5,
+      "pipeline_status": null,
+      "pipeline_error": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
+      "route": null,
+      "family": [],
+      "generic_fallback": false,
+      "failure_category": null,
+      "error_code": null,
+      "executor_invoked": false,
+      "learner_message": null,
+      "learner_message_leaks_tech": false,
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": false,
+          "error_code": "structural_invalid",
+          "message": "Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên."
+        },
+        {
+          "n": 1,
+          "ok": false,
+          "error_code": "structural_invalid",
+          "message": "Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên."
+        },
+        {
+          "n": 2,
+          "ok": false,
+          "error_code": "structural_invalid",
+          "message": "Biến 'y' khai kiểu số nguyên nên cần 'int_value' là số nguyên."
+        }
+      ],
+      "spec_summary": null,
+      "validator_pass": null,
+      "result_leak_keys": [],
+      "missing_structures": [
+        "assign",
+        "branch"
+      ],
+      "verdict": "FAIL_SAFE",
+      "verdict_reasons": [
+        "status=None (mong ok)"
+      ]
+    },
+    {
+      "id": "live-cf2-bounded-while",
+      "prompt": "Ban đầu x bằng 1. Trong khi x nhỏ hơn 5, mỗi lượt tăng x thêm 1. Hãy mô phỏng sự thay đổi của x qua từng vòng lặp.",
+      "timestamp": "2026-07-26T06:30:31.619022+00:00",
+      "model": "gemini-2.5-flash",
+      "provider": "google-gemini",
+      "http_requests": 5,
+      "pipeline_status": null,
+      "pipeline_error": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
+      "route": null,
+      "family": [],
+      "generic_fallback": false,
+      "failure_category": null,
+      "error_code": null,
+      "executor_invoked": false,
+      "learner_message": null,
+      "learner_message_leaks_tech": false,
+      "simulate_attempts": [
+        {
+          "n": 0,
+          "ok": false,
+          "error_code": "structural_invalid",
+          "message": "Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con."
+        },
+        {
+          "n": 1,
+          "ok": false,
+          "error_code": "structural_invalid",
+          "message": "Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con."
+        },
+        {
+          "n": 2,
+          "ok": false,
+          "error_code": "structural_invalid",
+          "message": "Biểu thức 'e4_compare_x_lt_5' cần 'left' và 'right' là id của biểu thức con."
+        }
+      ],
+      "spec_summary": null,
+      "validator_pass": null,
+      "result_leak_keys": [],
+      "missing_structures": [
+        "assign",
+        "loop"
+      ],
+      "verdict": "FAIL_SAFE",
+      "verdict_reasons": [
+        "status=None (mong ok)"
+      ]
+    },
+    {
+      "id": "live-cf3-insufficient",
+      "prompt": "Hãy mô phỏng một vòng lặp while.",
+      "timestamp": "2026-07-26T06:30:39.283033+00:00",
+      "model": "gemini-2.5-flash",
+      "provider": "google-gemini",
+      "http_requests": 2,
+      "pipeline_status": "unsupported",
+      "pipeline_error": null,
+      "route": null,
+      "family": [],
+      "generic_fallback": false,
+      "failure_category": null,
+      "error_code": null,
+      "executor_invoked": false,
+      "learner_message": "Đề bài yêu cầu mô phỏng vòng lặp while nhưng không cung cấp giá trị ban đầu của biến, điều kiện lặp và các câu lệnh cụ thể trong thân vòng lặp. Hệ thống không thể tự động tạo ra một chương trình mẫu để mô phỏng.",
+      "learner_message_leaks_tech": false,
+      "simulate_attempts": [],
+      "spec_summary": null,
+      "validator_pass": null,
+      "result_leak_keys": [],
+      "missing_structures": [],
+      "verdict": "FAIL",
+      "verdict_reasons": [
+        "failure_category=None"
+      ]
+    }
+  ]
+}
