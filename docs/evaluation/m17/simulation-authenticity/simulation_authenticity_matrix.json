@@ -1,0 +1,288 @@
+{
+  "audit": "SIMULATION AUTHENTICITY AUDIT — PART A: PRODUCT EVIDENCE",
+  "date": "2026-07-27",
+  "branch": "main",
+  "head": "3846e5b",
+  "part_b_status": "BLOCKED_NO_DOCX",
+  "method": "static reading of production source + reuse of existing visual artifacts; no production change, no new capture, no live LLM",
+  "baseline": {
+    "families": 11,
+    "targets": 22,
+    "cache_version": 23,
+    "history_schema_version": 2,
+    "pytest": "1106 passed",
+    "vitest": "664 passed / 49 files"
+  },
+  "axes": {
+    "authenticity": ["REAL_SIMULATION", "PARTIAL_SIMULATION", "PROGRESSIVE_VISUALIZATION", "BROKEN_OR_MISLEADING", "INSUFFICIENT_EVIDENCE"],
+    "interaction": ["OBSERVATION_ONLY", "TIMELINE_CONTROL", "MECHANISM_ACTION", "PREDICTION_OR_WHAT_IF"],
+    "visual": ["2D", "3D", "2D_AND_3D", "NO_MEANINGFUL_VISUAL"]
+  },
+  "summary": {
+    "targets_examined": 15,
+    "targets_total": 22,
+    "families_covered": 11,
+    "authenticity": {
+      "REAL_SIMULATION": 13,
+      "PARTIAL_SIMULATION": 1,
+      "PROGRESSIVE_VISUALIZATION": 1,
+      "BROKEN_OR_MISLEADING": 0,
+      "INSUFFICIENT_EVIDENCE": 0
+    },
+    "interaction": {
+      "PREDICTION_OR_WHAT_IF": 6,
+      "MECHANISM_ACTION": 3,
+      "TIMELINE_CONTROL": 6,
+      "OBSERVATION_ONLY": 0
+    },
+    "visual": {
+      "2D": 13,
+      "2D_AND_3D": 2,
+      "3D": 0,
+      "NO_MEANINGFUL_VISUAL": 0
+    }
+  },
+  "families": [
+    {
+      "family_id": "single_pass_scan",
+      "result_authority": "computation",
+      "targets_total": 6,
+      "targets_examined": ["algorithm.find_max", "algorithm.scan"],
+      "mechanisms": ["track_extreme", "accumulate_conditional", "count_conditional", "find_equal_early_stop", "configured_single_pass"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "PREDICTION_OR_WHAT_IF",
+      "visual": "2D",
+      "evidence": [
+        "frontend/src/simulations/domains/algorithm/index.ts:120 — apply() mutates authoritative state",
+        "frontend/src/simulations/domains/algorithm/index.ts:155 — predict() declared: learner commits an answer before the engine reveals it",
+        "engine iterates the array element by element; comparison + early stop are executed, not announced"
+      ],
+      "red_flags": [],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/algorithm/"
+    },
+    {
+      "family_id": "comparison_sort",
+      "result_authority": "computation",
+      "targets_total": 3,
+      "targets_examined": ["algorithm.bubble_sort", "algorithm.insertion_sort"],
+      "mechanisms": ["adjacent_compare_swap", "shift_into_sorted_prefix", "select_extreme_repeated"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "PREDICTION_OR_WHAT_IF",
+      "visual": "2D",
+      "evidence": [
+        "each variant owns a DISTINCT mechanism id — the three sorts are not one engine with three labels",
+        "swap / shift are applied to the array state and visible between consecutive snapshots",
+        "shares algorithm/index.ts predict+apply surface"
+      ],
+      "red_flags": [],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/algorithm/"
+    },
+    {
+      "family_id": "interval_elimination",
+      "result_authority": "computation",
+      "targets_total": 1,
+      "targets_examined": ["algorithm.binary_search"],
+      "mechanisms": ["halve_sorted_interval"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "PREDICTION_OR_WHAT_IF",
+      "visual": "2D",
+      "evidence": [
+        "lo/hi/mid are recomputed per step; the eliminated half is a real state transition, not a styling change"
+      ],
+      "red_flags": [],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/algorithm/"
+    },
+    {
+      "family_id": "bounded_control_flow",
+      "result_authority": "computation",
+      "targets_total": 1,
+      "targets_examined": ["algorithm.bounded_control_flow"],
+      "mechanisms": ["assignment", "conditional_branch", "bounded_loop"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "TIMELINE_CONTROL",
+      "visual": "2D",
+      "evidence": [
+        "frontend/src/core/program.ts — runProgram() is a genuine interpreter: evaluates conditions, takes branches, counts loop iterations, enforces max_execution_steps",
+        "Step.line is a real program counter; Snapshot.vars is real variable state",
+        "definite-assignment analysis (if/else intersection) is executed, not tabulated"
+      ],
+      "red_flags": [
+        "frontend/src/simulations/domains/algorithm/program-module.tsx:189 — apply: (state) => state; learner cannot act on the machine, only scrub the timeline"
+      ],
+      "visual_artifacts": "docs/evaluation/m17/w2c/ (32 PNG)"
+    },
+    {
+      "family_id": "positional_representation",
+      "result_authority": "computation",
+      "targets_total": 3,
+      "targets_examined": ["binary.base_conversion", "binary.character_encoding"],
+      "mechanisms": ["binary_positional_weights", "non_binary_base", "character_code_mapping"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "MECHANISM_ACTION",
+      "visual": "2D",
+      "per_target": [
+        {
+          "target": "binary.base_conversion",
+          "authenticity": "REAL_SIMULATION",
+          "interaction": "TIMELINE_CONTROL",
+          "evidence": [
+            "frontend/src/simulations/domains/binary/convert-module.tsx:168 buildConvSteps() -> divideSteps() narrates every division: '${v} : ${base} = ${quotient} dư ${remainder} → chữ số ${digit}' plus 'Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả.'",
+            "weightSteps() derives positional weights term by term",
+            "the learner sees HOW the number is converted, not just the converted number"
+          ],
+          "red_flags": ["convert-module.tsx:389 — apply: (state) => state"]
+        },
+        {
+          "target": "binary.decimal_to_binary",
+          "authenticity": "REAL_SIMULATION",
+          "interaction": "MECHANISM_ACTION",
+          "evidence": ["frontend/src/simulations/domains/binary/index.ts:50 — apply() mutates authoritative state"],
+          "red_flags": []
+        },
+        {
+          "target": "binary.character_encoding",
+          "authenticity": "PARTIAL_SIMULATION",
+          "interaction": "TIMELINE_CONTROL",
+          "evidence": [
+            "REAL: per-character traversal is genuine and code-point correct (Array.from / codePointAt, not .length) — encoding-module.test.tsx proves decomposed 'ế' yields 3 rows",
+            "REAL: progressive reveal is state, not CSS — at step 0 the DOM does not contain 65 or the bit string (W3-VR evidence)",
+            "REAL: renderer computes nothing — forged-trace test ('A' carrying code 999) shows 999",
+            "GAP: the decimal→binary sub-step calls toBase(cp, 2) directly and BYPASSES buildConvSteps/divideSteps that live in the very module it imports from; the bit string is ANNOUNCED as a finished value"
+          ],
+          "red_flags": [
+            "conversion mechanism not exercised: 'Đổi mã 65 sang nhị phân: 1000001' is a result statement, while base_conversion in the same file family can show the division chain",
+            "encoding-module.tsx:325 — apply: (state) => state"
+          ],
+          "visual_artifacts": "docs/evaluation/m17/w3/ (16 PNG), character_encoding_visual_review.md"
+        }
+      ],
+      "red_flags": ["see per_target binary.character_encoding"],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/binary/ (incl. base-conversion-hex-mid), docs/evaluation/m17/w3/"
+    },
+    {
+      "family_id": "boolean_composition",
+      "result_authority": "computation",
+      "targets_total": 3,
+      "targets_examined": ["logic.and_gate", "logic.boolean_dag"],
+      "mechanisms": ["single_gate_truth_table", "bounded_gate_dag", "composed_rule_dag"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "MECHANISM_ACTION",
+      "visual": "2D",
+      "evidence": [
+        "frontend/src/simulations/domains/logic/index.ts:47 — apply() mutates state: the learner toggles inputs and the gate re-evaluates",
+        "frontend/src/simulations/domains/logic/dag-module.tsx:370 — apply() mutates state; DAG is evaluated in dependency order, downstream nodes change as a consequence",
+        "this is the strongest interaction surface in the product: cause set by the learner, effect computed by the engine"
+      ],
+      "red_flags": [],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/logic/"
+    },
+    {
+      "family_id": "structural_progressive_representation",
+      "result_authority": "representation",
+      "targets_total": 1,
+      "targets_examined": ["generic.rule_scene"],
+      "mechanisms": ["move_along_path", "reveal_sequence"],
+      "authenticity": "PROGRESSIVE_VISUALIZATION",
+      "interaction": "MECHANISM_ACTION",
+      "visual": "2D",
+      "evidence": [
+        "frontend/src/simulations/domains/generic/model.ts:108 — RevealStep { objects: string[]; narration?: string }: a step ONLY declares which objects start to exist",
+        "state is hidden -> revealed, with no domain consequence between steps",
+        "the registry itself already says so: result_authority = REPRESENTATION, unlike the other 10 families which are COMPUTATION",
+        "move_along_path is interpolation along a declared path, not a derived trajectory"
+      ],
+      "red_flags": [
+        "matches §12 exactly (hidden/revealed/completed with no domain consequence) — must NOT be quoted as a simulation of an algorithm",
+        "generic/index.ts:50 apply() mutates state, so the interaction surface is richer than the underlying model"
+      ],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/generic/ (incl. reveal-scene-mid)"
+    },
+    {
+      "family_id": "graph_traversal",
+      "result_authority": "computation",
+      "targets_total": 2,
+      "targets_examined": ["network.graph_traversal", "network.packet_routing"],
+      "mechanisms": ["breadth_first", "depth_first", "unweighted_hop_bfs"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "PREDICTION_OR_WHAT_IF",
+      "visual": "2D_AND_3D",
+      "evidence": [
+        "frontend/src/simulations/domains/network/index.ts:134 — predict() declared",
+        "BFS/DFS maintain a real frontier and visited set; the route emerges from traversal",
+        "3D IS A SECOND VIEW OF THE SAME AUTHORITATIVE STATE: ui3d.tsx:171 Network3DWorkspace({ state }) reads currentStep(state), state.nodes, state.route — it does not own a parallel scene",
+        "ui3d.tsx:25 — camera/orbit state lives in closure/ref and NEVER enters the store, so the 3D view cannot corrupt the timeline",
+        "render-parity.test.tsx enforces 2D/3D agreement"
+      ],
+      "red_flags": ["network/index.ts:112 — apply: (state) => state, so the what-if is a prediction commitment, not a graph edit"],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/network/"
+    },
+    {
+      "family_id": "layered_pdu_transform",
+      "result_authority": "computation",
+      "targets_total": 1,
+      "targets_examined": ["network.protocol_encapsulation"],
+      "mechanisms": ["encapsulate_decapsulate_4layer"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "PREDICTION_OR_WHAT_IF",
+      "visual": "2D_AND_3D",
+      "evidence": [
+        "frontend/src/simulations/domains/network/encap.ts:64 — predict() declared",
+        "headers are really added going down and really removed coming up; PDU content differs per layer",
+        "THE Z AXIS CARRIES DOMAIN MEANING: encap-ui3d.tsx:26 layerDepth(layer) = -LAYERS.indexOf(layer) * LAYER_GAP — depth IS the protocol layer, so 3D is not decoration",
+        "encap-ui3d.tsx:308 — the active layer slab changes opacity from the authoritative step, not from local UI state",
+        "encap-render3d.test.tsx guards the 3D path"
+      ],
+      "red_flags": ["network/encap.ts:51 — apply: (state) => state"],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/network/"
+    },
+    {
+      "family_id": "relational_table_query",
+      "result_authority": "computation",
+      "targets_total": 1,
+      "targets_examined": ["database.relational_table_query"],
+      "mechanisms": ["row_predicate_filter", "column_projection", "stable_sort_by_key", "bounded_limit", "aggregate_accumulate"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "TIMELINE_CONTROL",
+      "visual": "2D",
+      "evidence": [
+        "five distinct mechanisms run as a real pipeline; pipeline_stages is a genuine stage channel, and each stage narrows/reshapes the row set",
+        "stable sort and aggregation are executed on the data, not declared"
+      ],
+      "red_flags": ["database/table-module.tsx:728 — apply: (state) => state; the richest data model in the product has the poorest interaction surface"],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/database/, rc1/database_visual_review.md"
+    },
+    {
+      "family_id": "tree_traversal",
+      "result_authority": "computation",
+      "targets_total": 1,
+      "targets_examined": ["tree.traversal"],
+      "mechanisms": ["preorder", "inorder", "postorder", "level_order"],
+      "authenticity": "REAL_SIMULATION",
+      "interaction": "TIMELINE_CONTROL",
+      "visual": "2D",
+      "evidence": [
+        "four traversal orders are four real walks producing different visit sequences on the same tree",
+        "tree.test.tsx contains a forged-trace guard"
+      ],
+      "red_flags": [],
+      "visual_artifacts": "docs/evaluation/m17/rc1/visual/tree/"
+    }
+  ],
+  "cross_cutting": {
+    "r0_invariant_holds": true,
+    "r0_evidence": [
+      "8 modules carry forged-trace guards (algorithm/program, binary/convert, binary/encoding, database/table x2, network/encap-render3d, network/render-parity, tree)",
+      "FORBIDDEN_SPEC_KEYS blocks results-in-config for the two newest families (character_encoding.py:38, program_spec.py:96); older families rely on strict schemas instead — two different defences for one rule"
+    ],
+    "visual_mode_field_is_misleading": {
+      "finding": "backend CATALOG declares visual_mode = '2d' for ALL 22 targets, including the two that genuinely render 3D",
+      "truth_source": "frontend module supportedVisualModes — only network/index.ts:100 and network/encap.ts:42 declare ['2d','3d']",
+      "impact": "any thesis figure or table generated from the backend field would UNDERSTATE 3D coverage as zero"
+    },
+    "three_d_coverage": {
+      "targets_with_3d": 2,
+      "targets_total": 22,
+      "ratio": 0.09
+    }
+  }
+}
