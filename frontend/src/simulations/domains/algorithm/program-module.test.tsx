@@ -203,7 +203,6 @@ describe("W2C-C1 §L3 — tiêu đề từ chối đúng bản chất", () => {
     renderToString(
       <UnsupportedNotice
         unsupported={{
-          status: "unsupported",
           reason: "Đề chưa cho đoạn chương trình cụ thể.",
           learner_reason: "Đề chưa cho đoạn chương trình cụ thể để chạy thử.",
           ...(failure_category ? { failure_category } : {}),
