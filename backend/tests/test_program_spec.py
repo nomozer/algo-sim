@@ -1,320 +1,465 @@
 # -*- coding: utf-8 -*-
-"""M17 W2C — hợp đồng `ProgramSpec` + validator FAIL-CLOSED.
+"""M17 W2C(+C1) — hợp đồng `ProgramSpec` + validator FAIL-CLOSED.
 
-Bất biến khoá ở đây:
+Bất biến khoá:
 - ngữ pháp ĐÓNG (không hàm/đệ quy/mảng/chuỗi/float/IO/break);
+- **§L1** khai báo ≠ khởi tạo; đọc biến chưa chắc có giá trị là TỪ CHỐI;
+  hệ KHÔNG bịa 0/false/null làm mặc định;
+- **§L2** bề mặt LLM là biểu thức INLINE, nông, phi đệ quy — không bảng biểu
+  thức, không tự đặt id, không tham chiếu chéo; normalizer TẤT ĐỊNH;
 - KHÔNG coercion ("5"≠5, true≠1, 1≠true);
-- while BẮT BUỘC có biên;
-- giới hạn đọc từ MỘT nguồn (`program_spec.LIMITS`), không magic number;
-- spec KHÔNG được mang kết quả/diễn biến (R0).
+- while BẮT BUỘC có biên; giới hạn đọc từ MỘT nguồn (`program_spec.LIMITS`);
+- spec KHÔNG mang kết quả/diễn biến (R0).
 """
 from __future__ import annotations
 
 import pytest
 
 from app.simulation.program_spec import (
-    EXPRESSION_KINDS,
     LIMITS,
+    OPERAND_KINDS,
     SPEC_VERSION,
     STATEMENT_KINDS,
-    all_operators,
-    expression_kind_enum,
+    NormalizeError,
+    normalize_inline_program,
     statement_kind_enum,
 )
 from app.validation.program import validate_program_config
 
 
-def _spec(**over) -> dict:
-    """x = 3 ; y = x*2 + 1 (hợp lệ) — base cho các ca biến tấu."""
-    base = {
+# ── dựng spec bằng bề mặt INLINE ────────────────────────────────
+def iv(n):
+    return {"kind": "int", "int_value": n}
+
+
+def bv(b):
+    return {"kind": "bool", "bool_value": b}
+
+
+def var(n):
+    return {"kind": "var", "name": n}
+
+
+def val(left, op=None, right=None):
+    v = {"left": left}
+    if op is not None:
+        v["op"], v["right"] = op, right
+    return v
+
+
+def atom(left, op=None, right=None, negated=False):
+    a = {"left": left}
+    if op is not None:
+        a["op"], a["right"] = op, right
+    if negated:
+        a["negated"] = True
+    return a
+
+
+def cond(atoms, op=None):
+    c = {"atoms": atoms}
+    if op is not None:
+        c["op"] = op
+    return c
+
+
+def prog(variables, statements, main, **over):
+    spec = {"program_version": SPEC_VERSION, "variables": variables,
+            "statements": statements, "main": main}
+    spec.update(over)
+    return spec
+
+
+def ok(spec):
+    cfg, err = validate_program_config(spec)
+    assert cfg is not None, f"đáng lẽ hợp lệ nhưng bị từ chối: {err}"
+    return cfg
+
+
+def rejected(spec) -> str:
+    cfg, err = validate_program_config(spec)
+    assert cfg is None, "đáng lẽ bị từ chối nhưng lại qua"
+    return err
+
+
+# base: x = 3 ; y = x + 1
+def base(**over):
+    spec = {
         "program_version": SPEC_VERSION,
-        "variables": [
-            {"name": "x", "type": "integer", "int_value": 3},
-            {"name": "y", "type": "integer", "int_value": 0},
-        ],
-        "expressions": [
-            {"id": "e_x", "kind": "var", "name": "x"},
-            {"id": "e_2", "kind": "int", "int_value": 2},
-            {"id": "e_1", "kind": "int", "int_value": 1},
-            {"id": "e_mul", "kind": "binary", "op": "*", "left": "e_x", "right": "e_2"},
-            {"id": "e_sum", "kind": "binary", "op": "+", "left": "e_mul", "right": "e_1"},
-        ],
-        "statements": [{"id": "s1", "kind": "assign", "target": "y", "value": "e_sum"}],
+        "variables": [{"name": "x", "type": "integer", "int_value": 3},
+                      {"name": "y", "type": "integer"}],
+        "statements": [{"id": "s1", "kind": "assign", "target": "y",
+                        "value": val(var("x"), "+", iv(1))}],
         "main": ["s1"],
     }
-    base.update(over)
-    return base
+    spec.update(over)
+    return spec
 
 
-# ── ngữ pháp đóng ───────────────────────────────────────────────
+# ══════════════ ngữ pháp đóng ══════════════
 
-def test_ngu_phap_dong_dung_bon_cau_lenh_va_bay_bieu_thuc():
-    """Ngữ pháp là HỢP ĐỒNG: nới thêm loại câu lệnh/biểu thức phải sửa ở đây —
-    không lặng lẽ trượt thành trình thông dịch tổng quát."""
+def test_ngu_phap_dong_dung_bon_cau_lenh():
     assert set(STATEMENT_KINDS) == {"assign", "if", "while", "output"}
-    assert set(EXPRESSION_KINDS) == {"int", "bool", "var", "unary", "binary", "compare", "logic"}
+    assert set(OPERAND_KINDS) == {"int", "bool", "var"}
 
 
-def test_schema_enum_dan_xuat_tu_program_spec():
-    """Anti-pattern #1: enum của schema Gemini phải DẪN XUẤT, không viết tay."""
+def test_schema_gemini_dan_xuat_va_KHONG_con_bang_bieu_thuc():
+    """§L2: LLM không còn phải tự dựng bảng biểu thức rồi tham chiếu bằng id."""
     from app.simulation.catalog import CATALOG
 
-    props = CATALOG["algorithm.bounded_control_flow"].config_schema["properties"]
+    schema = CATALOG["algorithm.bounded_control_flow"].config_schema
+    props = schema["properties"]
+    assert "expressions" not in props, "bề mặt LLM vẫn còn bảng biểu thức"
     assert props["statements"]["items"]["properties"]["kind"]["enum"] == statement_kind_enum()
-    assert props["expressions"]["items"]["properties"]["kind"]["enum"] == expression_kind_enum()
-    assert props["expressions"]["items"]["properties"]["op"]["enum"] == all_operators()
+    # biểu thức nằm INLINE trong câu lệnh
+    val_schema = props["statements"]["items"]["properties"]["value"]
+    assert val_schema["properties"]["left"]["properties"]["kind"]["enum"] == list(OPERAND_KINDS)
 
 
 @pytest.mark.parametrize("kind", ["function", "for", "break", "continue", "call", "return"])
 def test_cau_lenh_ngoai_ngu_phap_bi_tu_choi(kind):
-    cfg, err = validate_program_config(_spec(
-        statements=[{"id": "s1", "kind": kind, "target": "y", "value": "e_sum"}]))
-    assert cfg is None and "không hỗ trợ" in err
+    err = rejected(base(statements=[{"id": "s1", "kind": kind, "target": "y",
+                                     "value": val(iv(1))}]))
+    assert "không hỗ trợ" in err
 
 
-@pytest.mark.parametrize("kind", ["call", "index", "slice", "lambda", "attribute"])
-def test_bieu_thuc_ngoai_ngu_phap_bi_tu_choi(kind):
-    spec = _spec()
-    spec["expressions"].append({"id": "e_bad", "kind": kind})
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "không hỗ trợ" in err
+@pytest.mark.parametrize("op", ["**", "and", "sqrt", "<<"])
+def test_toan_tu_so_hoc_ngoai_ngu_phap_bi_tu_choi(op):
+    err = rejected(base(statements=[
+        {"id": "s1", "kind": "assign", "target": "y", "value": val(var("x"), op, iv(1))}]))
+    assert "không hỗ trợ" in err
 
 
-# ── không coercion ──────────────────────────────────────────────
+@pytest.mark.parametrize("kind", ["call", "index", "lambda", "attribute"])
+def test_toan_hang_ngoai_ngu_phap_bi_tu_choi(kind):
+    err = rejected(base(statements=[
+        {"id": "s1", "kind": "assign", "target": "y", "value": val({"kind": kind})}]))
+    assert "không hỗ trợ" in err
+
+
+# ══════════════ §L1 — khai báo ≠ khởi tạo ══════════════
+
+def test_L1_bien_khai_bao_khong_co_gia_tri_ban_dau_la_HOP_LE():
+    """Đề "nếu x>0 thì y=1 ngược lại y=-1" KHÔNG nói y ban đầu bằng mấy."""
+    cfg = ok(prog(
+        [{"name": "x", "type": "integer", "int_value": -2},
+         {"name": "y", "type": "integer"}],
+        [{"id": "t", "kind": "assign", "target": "y", "value": val(iv(1))},
+         {"id": "e", "kind": "assign", "target": "y", "value": val(iv(-1))},
+         {"id": "s", "kind": "if", "condition": cond([atom(val(var("x")), ">", val(iv(0)))]),
+          "then_body": ["t"], "else_body": ["e"]}],
+        ["s"]))
+    y = next(v for v in cfg["variables"] if v["name"] == "y")
+    assert y["initialized"] is False
+    # KHÔNG bịa giá trị mặc định
+    assert y["int_value"] is None and y["bool_value"] is None
+
+
+def test_L1_gan_truoc_roi_doc_la_hop_le():
+    ok(prog(
+        [{"name": "y", "type": "integer"}, {"name": "z", "type": "integer"}],
+        [{"id": "a", "kind": "assign", "target": "y", "value": val(iv(5))},
+         {"id": "b", "kind": "assign", "target": "z", "value": val(var("y"), "+", iv(1))}],
+        ["a", "b"]))
+
+
+def test_L1_doc_bien_chua_gan_bi_TU_CHOI():
+    err = rejected(prog(
+        [{"name": "y", "type": "integer"}, {"name": "z", "type": "integer"}],
+        [{"id": "b", "kind": "assign", "target": "z", "value": val(var("y"), "+", iv(1))}],
+        ["b"]))
+    assert "chưa chắc chắn có giá trị" in err
+
+
+def test_L1_ca_hai_nhanh_deu_gan_thi_y_CHAC_CHAN_co_gia_tri():
+    ok(prog(
+        [{"name": "x", "type": "integer", "int_value": 1},
+         {"name": "y", "type": "integer"}],
+        [{"id": "t", "kind": "assign", "target": "y", "value": val(iv(1))},
+         {"id": "e", "kind": "assign", "target": "y", "value": val(iv(0))},
+         {"id": "s", "kind": "if", "condition": cond([atom(val(var("x")), ">", val(iv(0)))]),
+          "then_body": ["t"], "else_body": ["e"]},
+         {"id": "u", "kind": "output", "value": val(var("y"))}],
+        ["s", "u"]))
+
+
+def test_L1_chi_nhanh_then_gan_thi_CHUA_chac_chan():
+    """Nhánh then có thể KHÔNG chạy — không được coi là đã khởi tạo."""
+    err = rejected(prog(
+        [{"name": "x", "type": "integer", "int_value": 1},
+         {"name": "y", "type": "integer"}],
+        [{"id": "t", "kind": "assign", "target": "y", "value": val(iv(1))},
+         {"id": "s", "kind": "if", "condition": cond([atom(val(var("x")), ">", val(iv(0)))]),
+          "then_body": ["t"], "else_body": []},
+         {"id": "u", "kind": "output", "value": val(var("y"))}],
+        ["s", "u"]))
+    assert "chưa chắc chắn có giá trị" in err
+
+
+def test_L1_gan_trong_while_KHONG_du_de_coi_la_da_khoi_tao():
+    """Vòng lặp có thể chạy 0 lượt."""
+    err = rejected(prog(
+        [{"name": "x", "type": "integer", "int_value": 9},
+         {"name": "y", "type": "integer"}],
+        [{"id": "b", "kind": "assign", "target": "y", "value": val(iv(1))},
+         {"id": "w", "kind": "while", "condition": cond([atom(val(var("x")), "<", val(iv(5)))]),
+          "body": ["b"], "max_iterations": 5},
+         {"id": "u", "kind": "output", "value": val(var("y"))}],
+        ["w", "u"]))
+    assert "chưa chắc chắn có giá trị" in err
+
+
+def test_L1_doc_bien_chua_gan_NGAY_TRONG_dieu_kien_bi_tu_choi():
+    err = rejected(prog(
+        [{"name": "y", "type": "integer"}, {"name": "z", "type": "integer", "int_value": 0}],
+        [{"id": "t", "kind": "assign", "target": "z", "value": val(iv(1))},
+         {"id": "s", "kind": "if", "condition": cond([atom(val(var("y")), ">", val(iv(0)))]),
+          "then_body": ["t"]}],
+        ["s"]))
+    assert "chưa chắc chắn có giá trị" in err
+
+
+def test_L1_khong_tu_sinh_gia_tri_mac_dinh():
+    cfg = ok(base())
+    y = next(v for v in cfg["variables"] if v["name"] == "y")
+    assert y["int_value"] is None, "hệ đã bịa giá trị ban đầu cho biến chưa khởi tạo"
+
+
+# ══════════════ §L2 — biểu thức inline ══════════════
+
+def test_L2_so_sanh_inline_normalize_dung():
+    exprs, stmts = normalize_inline_program([
+        {"id": "s", "kind": "while", "body": ["b"], "max_iterations": 3,
+         "condition": cond([atom(val(var("x")), "<", val(iv(5)))])}])
+    kinds = [e["kind"] for e in exprs]
+    assert "compare" in kinds and "var" in kinds and "int" in kinds
+    assert stmts[0]["condition"] == exprs[-1]["id"]
+
+
+def test_L2_so_hoc_inline_normalize_dung():
+    exprs, stmts = normalize_inline_program([
+        {"id": "s", "kind": "assign", "target": "x", "value": val(var("x"), "+", iv(1))}])
+    top = next(e for e in exprs if e["kind"] == "binary")
+    assert top["op"] == "+"
+    assert stmts[0]["value"] == top["id"]
+
+
+def test_L2_a_AND_NOT_b_normalize_dung():
+    exprs, _ = normalize_inline_program([
+        {"id": "s", "kind": "if", "then_body": ["t"],
+         "condition": cond([atom(val(var("a"))), atom(val(var("b")), negated=True)], op="and")}])
+    assert any(e["kind"] == "unary" and e["op"] == "not" for e in exprs)
+    assert any(e["kind"] == "logic" and e["op"] == "and" for e in exprs)
+
+
+def test_L2_bien_la_bi_tu_choi():
+    err = rejected(base(statements=[
+        {"id": "s1", "kind": "assign", "target": "y", "value": val(var("khong_co"))}]))
+    assert "chưa được khai báo" in err
+
+
+def test_L2_normalization_TAT_DINH():
+    """Cùng input ⇒ cùng output, kể cả id sinh ra."""
+    raw = [{"id": "s", "kind": "assign", "target": "y", "value": val(var("x"), "*", iv(2))}]
+    a = normalize_inline_program(raw)
+    b = normalize_inline_program(raw)
+    assert a == b
+
+
+def test_L2_KHONG_con_tham_chieu_cheo_id_o_be_mat():
+    """Spec kiểu cũ (statements trỏ vào bảng expressions bằng chuỗi id) KHÔNG
+    còn được chấp nhận — một bề mặt duy nhất, không hai hợp đồng cạnh tranh."""
+    old = prog(
+        [{"name": "x", "type": "integer", "int_value": 1}],
+        [{"id": "s1", "kind": "assign", "target": "x", "value": "e_1"}],
+        ["s1"], expressions=[{"id": "e_1", "kind": "int", "int_value": 2}])
+    assert validate_program_config(old)[0] is None
+
+
+def test_L2_nhom_logic_qua_nhieu_ve_bi_tu_choi():
+    n = LIMITS["max_condition_atoms"] + 1
+    err = rejected(prog(
+        [{"name": "a", "type": "boolean", "bool_value": True},
+         {"name": "x", "type": "integer", "int_value": 0}],
+        [{"id": "t", "kind": "assign", "target": "x", "value": val(iv(1))},
+         {"id": "s", "kind": "if", "then_body": ["t"],
+          "condition": cond([atom(val(var("a")))] * n, op="and")}],
+        ["s"]))
+    assert str(LIMITS["max_condition_atoms"]) in err
+
+
+def test_L2_nhieu_ve_ma_thieu_toan_tu_logic_bi_tu_choi():
+    err = rejected(prog(
+        [{"name": "a", "type": "boolean", "bool_value": True},
+         {"name": "x", "type": "integer", "int_value": 0}],
+        [{"id": "t", "kind": "assign", "target": "x", "value": val(iv(1))},
+         {"id": "s", "kind": "if", "then_body": ["t"],
+          "condition": cond([atom(val(var("a"))), atom(val(var("a")))])}],
+        ["s"]))
+    assert "toán tử" in err
+
+
+def test_L2_normalizer_KHONG_bu_toan_tu_thieu():
+    with pytest.raises(NormalizeError):
+        normalize_inline_program([
+            {"id": "s", "kind": "assign", "target": "y",
+             "value": {"left": iv(1), "right": iv(2)}}])   # có right mà thiếu op
+
+
+# ══════════════ không coercion ══════════════
 
 def test_chuoi_khong_thanh_so():
-    cfg, err = validate_program_config(_spec(
-        variables=[{"name": "x", "type": "integer", "int_value": "5"}]))
-    assert cfg is None and "số nguyên" in err
+    err = rejected(base(variables=[{"name": "x", "type": "integer", "int_value": "5"},
+                                   {"name": "y", "type": "integer"}]))
+    assert "số nguyên" in err
 
 
 def test_true_khong_thanh_1_va_1_khong_thanh_true():
-    cfg, err = validate_program_config(_spec(
-        variables=[{"name": "x", "type": "integer", "int_value": True}]))
-    assert cfg is None, "True là bool — không được nhận làm số nguyên"
-
-    cfg, err = validate_program_config(_spec(
-        variables=[{"name": "x", "type": "boolean", "bool_value": 1}]))
-    assert cfg is None, "1 không được nhận làm giá trị đúng/sai"
+    assert validate_program_config(base(variables=[
+        {"name": "x", "type": "integer", "int_value": True},
+        {"name": "y", "type": "integer"}]))[0] is None
+    assert validate_program_config(base(variables=[
+        {"name": "x", "type": "boolean", "bool_value": 1},
+        {"name": "y", "type": "integer"}]))[0] is None
 
 
 def test_gan_sai_kieu_bi_tu_choi():
-    spec = _spec(variables=[
-        {"name": "x", "type": "integer", "int_value": 3},
-        {"name": "y", "type": "boolean", "bool_value": False},
-    ])
-    cfg, err = validate_program_config(spec)  # y là boolean nhưng gán biểu thức số
-    assert cfg is None and "không tự đổi kiểu" in err
+    err = rejected(prog(
+        [{"name": "x", "type": "integer", "int_value": 3},
+         {"name": "b", "type": "boolean"}],
+        [{"id": "s1", "kind": "assign", "target": "b", "value": val(var("x"))}],
+        ["s1"]))
+    assert "không tự đổi kiểu" in err
 
 
 def test_so_sanh_bang_hai_kieu_khac_nhau_bi_tu_choi():
-    spec = _spec()
-    spec["variables"].append({"name": "b", "type": "boolean", "bool_value": True})
-    spec["expressions"] += [
-        {"id": "e_b", "kind": "var", "name": "b"},
-        {"id": "e_eq", "kind": "compare", "op": "==", "left": "e_x", "right": "e_b"},
-    ]
-    spec["statements"] = [
-        {"id": "s_in", "kind": "assign", "target": "y", "value": "e_1"},
-        {"id": "s1", "kind": "if", "condition": "e_eq", "then_body": ["s_in"]},
-    ]
-    spec["main"] = ["s1"]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "cùng kiểu" in err
+    err = rejected(prog(
+        [{"name": "x", "type": "integer", "int_value": 1},
+         {"name": "b", "type": "boolean", "bool_value": True},
+         {"name": "y", "type": "integer"}],
+        [{"id": "t", "kind": "assign", "target": "y", "value": val(iv(1))},
+         {"id": "s", "kind": "if", "then_body": ["t"],
+          "condition": cond([atom(val(var("x")), "==", val(var("b")))])}],
+        ["s"]))
+    assert "cùng kiểu" in err
 
 
 def test_phep_cong_tren_boolean_bi_tu_choi():
-    spec = _spec()
-    spec["variables"].append({"name": "b", "type": "boolean", "bool_value": True})
-    spec["expressions"] += [
-        {"id": "e_b", "kind": "var", "name": "b"},
-        {"id": "e_add", "kind": "binary", "op": "+", "left": "e_b", "right": "e_1"},
-    ]
-    spec["statements"] = [{"id": "s1", "kind": "assign", "target": "y", "value": "e_add"}]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "số nguyên" in err
+    err = rejected(prog(
+        [{"name": "b", "type": "boolean", "bool_value": True},
+         {"name": "y", "type": "integer"}],
+        [{"id": "s1", "kind": "assign", "target": "y", "value": val(var("b"), "+", iv(1))}],
+        ["s1"]))
+    assert "số nguyên" in err
 
-
-# ── biến chưa khai báo ──────────────────────────────────────────
-
-def test_dung_bien_chua_khai_bao_bi_tu_choi():
-    spec = _spec()
-    spec["expressions"].append({"id": "e_z", "kind": "var", "name": "z"})
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "chưa được khai báo" in err
-
-
-def test_gan_cho_bien_chua_khai_bao_bi_tu_choi():
-    cfg, err = validate_program_config(_spec(
-        statements=[{"id": "s1", "kind": "assign", "target": "z", "value": "e_sum"}]))
-    assert cfg is None and "chưa khai báo" in err
-
-
-def test_bien_khai_bao_trung_bi_tu_choi():
-    cfg, err = validate_program_config(_spec(variables=[
-        {"name": "x", "type": "integer", "int_value": 1},
-        {"name": "x", "type": "integer", "int_value": 2},
-    ]))
-    assert cfg is None and "hai lần" in err
-
-
-# ── điều kiện phải là boolean ───────────────────────────────────
 
 @pytest.mark.parametrize("kind", ["if", "while"])
 def test_dieu_kien_khong_phai_boolean_bi_tu_choi(kind):
-    spec = _spec()
-    body = {"id": "s_in", "kind": "assign", "target": "y", "value": "e_1"}
-    head = {"id": "s1", "kind": kind, "condition": "e_x"}  # e_x là số nguyên
-    head.update({"then_body": ["s_in"]} if kind == "if"
-                else {"body": ["s_in"], "max_iterations": 5})
-    spec["statements"] = [body, head]
-    spec["main"] = ["s1"]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "đúng/sai" in err
+    head = {"id": "s", "kind": kind, "condition": cond([atom(val(var("x")))])}
+    head.update({"then_body": ["t"]} if kind == "if"
+                else {"body": ["t"], "max_iterations": 5})
+    err = rejected(prog(
+        [{"name": "x", "type": "integer", "int_value": 1},
+         {"name": "y", "type": "integer"}],
+        [{"id": "t", "kind": "assign", "target": "y", "value": val(iv(1))}, head],
+        ["s"]))
+    assert "đúng/sai" in err
 
 
-# ── while phải có biên ──────────────────────────────────────────
+# ══════════════ while có biên ══════════════
 
-def _while_spec(max_iterations) -> dict:
-    spec = _spec()
-    spec["expressions"] += [
-        {"id": "e_5", "kind": "int", "int_value": 5},
-        {"id": "e_lt", "kind": "compare", "op": "<", "left": "e_x", "right": "e_5"},
-        {"id": "e_inc", "kind": "binary", "op": "+", "left": "e_x", "right": "e_1"},
-    ]
-    w = {"id": "s_w", "kind": "while", "condition": "e_lt", "body": ["s_b"]}
+def _while_spec(max_iterations):
+    w = {"id": "w", "kind": "while",
+         "condition": cond([atom(val(var("x")), "<", val(iv(5)))]), "body": ["b"]}
     if max_iterations is not None:
         w["max_iterations"] = max_iterations
-    spec["statements"] = [
-        {"id": "s_b", "kind": "assign", "target": "x", "value": "e_inc"}, w,
-    ]
-    spec["main"] = ["s_w"]
-    return spec
+    return prog([{"name": "x", "type": "integer", "int_value": 1}],
+                [{"id": "b", "kind": "assign", "target": "x",
+                  "value": val(var("x"), "+", iv(1))}, w], ["w"])
 
 
 def test_while_thieu_bien_bi_tu_choi():
-    cfg, err = validate_program_config(_while_spec(None))
-    assert cfg is None and "max_iterations" in err
+    assert "max_iterations" in rejected(_while_spec(None))
 
 
 def test_while_vuot_tran_hop_dong_bi_tu_choi():
-    cfg, err = validate_program_config(_while_spec(LIMITS["max_while_iterations"] + 1))
-    assert cfg is None and str(LIMITS["max_while_iterations"]) in err
+    err = rejected(_while_spec(LIMITS["max_while_iterations"] + 1))
+    assert str(LIMITS["max_while_iterations"]) in err
 
 
 def test_while_co_bien_hop_le_thi_qua():
-    cfg, err = validate_program_config(_while_spec(10))
-    assert err is None and cfg["statements"][1]["max_iterations"] == 10
+    cfg = ok(_while_spec(10))
+    assert next(s for s in cfg["statements"] if s["kind"] == "while")["max_iterations"] == 10
 
 
-# ── giới hạn đọc từ MỘT nguồn ───────────────────────────────────
+# ══════════════ giới hạn một nguồn ══════════════
 
 def test_qua_nhieu_bien():
     n = LIMITS["max_variables"] + 1
-    cfg, err = validate_program_config(_spec(
-        variables=[{"name": f"v{i}", "type": "integer", "int_value": 0} for i in range(n)]))
-    assert cfg is None and str(LIMITS["max_variables"]) in err
+    err = rejected(base(variables=[{"name": f"v{i}", "type": "integer", "int_value": 0}
+                                   for i in range(n)]))
+    assert str(LIMITS["max_variables"]) in err
 
 
 def test_qua_nhieu_cau_lenh():
     n = LIMITS["max_statement_nodes"] + 1
-    spec = _spec(
-        statements=[{"id": f"s{i}", "kind": "assign", "target": "y", "value": "e_1"}
+    err = rejected(base(
+        statements=[{"id": f"s{i}", "kind": "assign", "target": "y", "value": val(iv(1))}
                     for i in range(n)],
-        main=[f"s{i}" for i in range(n)])
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and str(LIMITS["max_statement_nodes"]) in err
-
-
-def test_bieu_thuc_lon_hon_gioi_han_do_sau():
-    spec = _spec()
-    prev = "e_1"
-    for i in range(LIMITS["max_expression_depth"] + 1):
-        spec["expressions"].append(
-            {"id": f"d{i}", "kind": "binary", "op": "+", "left": prev, "right": "e_1"})
-        prev = f"d{i}"
-    spec["statements"] = [{"id": "s1", "kind": "assign", "target": "y", "value": prev}]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and str(LIMITS["max_expression_depth"]) in err
+        main=[f"s{i}" for i in range(n)]))
+    assert str(LIMITS["max_statement_nodes"]) in err
 
 
 def test_long_qua_sau_bi_tu_choi():
-    """Lồng if trong if trong if = 3 tầng > giới hạn 2."""
-    spec = _spec()
-    spec["expressions"].append(
-        {"id": "e_t", "kind": "bool", "bool_value": True})
-    spec["statements"] = [
-        {"id": "s_leaf", "kind": "assign", "target": "y", "value": "e_1"},
-        {"id": "s_l3", "kind": "if", "condition": "e_t", "then_body": ["s_leaf"]},
-        {"id": "s_l2", "kind": "if", "condition": "e_t", "then_body": ["s_l3"]},
-        {"id": "s_l1", "kind": "if", "condition": "e_t", "then_body": ["s_l2"]},
-    ]
-    spec["main"] = ["s_l1"]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and str(LIMITS["max_nesting_depth"]) in err
+    c = cond([atom(val(bv(True)))])
+    err = rejected(prog(
+        [{"name": "y", "type": "integer"}],
+        [{"id": "leaf", "kind": "assign", "target": "y", "value": val(iv(1))},
+         {"id": "l3", "kind": "if", "condition": c, "then_body": ["leaf"]},
+         {"id": "l2", "kind": "if", "condition": c, "then_body": ["l3"]},
+         {"id": "l1", "kind": "if", "condition": c, "then_body": ["l2"]}],
+        ["l1"]))
+    assert str(LIMITS["max_nesting_depth"]) in err
 
 
-def test_chia_cho_khong_tinh_duoc_tinh_thi_bi_bat():
-    spec = _spec()
-    spec["expressions"] += [
-        {"id": "e_0", "kind": "int", "int_value": 0},
-        {"id": "e_div", "kind": "binary", "op": "//", "left": "e_x", "right": "e_0"},
-    ]
-    spec["statements"] = [{"id": "s1", "kind": "assign", "target": "y", "value": "e_div"}]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "chia cho 0" in err
+def test_chia_cho_khong_bi_bat():
+    err = rejected(base(statements=[
+        {"id": "s1", "kind": "assign", "target": "y", "value": val(var("x"), "//", iv(0))}]))
+    assert "chia cho 0" in err
 
 
-# ── cấu trúc tham chiếu ─────────────────────────────────────────
-
-def test_bieu_thuc_vong_bi_tu_choi():
-    spec = _spec()
-    spec["expressions"] += [
-        {"id": "c1", "kind": "binary", "op": "+", "left": "c2", "right": "e_1"},
-        {"id": "c2", "kind": "binary", "op": "+", "left": "c1", "right": "e_1"},
-    ]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "vòng" in err
-
+# ══════════════ cấu trúc tham chiếu câu lệnh ══════════════
 
 def test_cau_lenh_thuoc_hai_khoi_bi_tu_choi():
-    spec = _spec()
-    spec["expressions"].append({"id": "e_t", "kind": "bool", "bool_value": True})
-    spec["statements"] = [
-        {"id": "s_leaf", "kind": "assign", "target": "y", "value": "e_1"},
-        {"id": "s_a", "kind": "if", "condition": "e_t", "then_body": ["s_leaf"]},
-        {"id": "s_b", "kind": "if", "condition": "e_t", "then_body": ["s_leaf"]},
-    ]
-    spec["main"] = ["s_a", "s_b"]
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "chỉ thuộc một khối" in err
+    c = cond([atom(val(bv(True)))])
+    err = rejected(prog(
+        [{"name": "y", "type": "integer"}],
+        [{"id": "leaf", "kind": "assign", "target": "y", "value": val(iv(1))},
+         {"id": "a", "kind": "if", "condition": c, "then_body": ["leaf"]},
+         {"id": "b", "kind": "if", "condition": c, "then_body": ["leaf"]}],
+        ["a", "b"]))
+    assert "chỉ thuộc một khối" in err
 
 
 def test_cau_lenh_mo_coi_bi_tu_choi():
-    spec = _spec()
-    spec["statements"].append(
-        {"id": "s_orphan", "kind": "assign", "target": "y", "value": "e_1"})
-    cfg, err = validate_program_config(spec)
-    assert cfg is None and "không nằm trong chương trình" in err
+    err = rejected(base(statements=[
+        {"id": "s1", "kind": "assign", "target": "y", "value": val(iv(1))},
+        {"id": "mo_coi", "kind": "assign", "target": "y", "value": val(iv(2))}]))
+    assert "không nằm trong chương trình" in err
 
 
-# ── R0: spec không mang kết quả ─────────────────────────────────
+# ══════════════ R0 ══════════════
 
 @pytest.mark.parametrize("key", ["trace", "steps", "final_environment", "result", "iterations"])
 def test_spec_mang_ket_qua_bi_tu_choi(key):
-    """R0: LLM chỉ mô tả CHƯƠNG TRÌNH; diễn biến và kết quả là của engine."""
-    cfg, err = validate_program_config(_spec(**{key: [{"x": 3}]}))
-    assert cfg is None and "KHÔNG được chứa kết quả" in err
+    err = rejected(base(**{key: [{"x": 3}]}))
+    assert "KHÔNG được chứa kết quả" in err
 
-
-# ── ca hợp lệ ───────────────────────────────────────────────────
 
 def test_ca_hop_le_tra_config_sach():
-    cfg, err = validate_program_config(_spec())
-    assert err is None
+    cfg = ok(base())
     assert cfg["program_version"] == SPEC_VERSION
-    assert [s["id"] for s in cfg["statements"]] == ["s1"]
     assert cfg["main"] == ["s1"]
-    # trường chuẩn hoá đầy đủ để executor không phải đoán
-    assert cfg["variables"][0] == {"name": "x", "type": "integer",
-                                   "int_value": 3, "bool_value": None}
+    # biểu thức nội bộ được SINH RA (implementation detail), không do LLM đưa vào
+    assert all(e["id"].startswith("_e") for e in cfg["expressions"])
+    assert cfg["variables"][0]["initialized"] is True

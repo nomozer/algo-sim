@@ -16,40 +16,35 @@ import type { ProgramSimState } from "./program-module";
  * - mã giả + biến + điều kiện/lượt lặp đều có mặt.
  */
 
+const iv = (n: number) => ({ kind: "int", int_value: n });
+const vr = (n: string) => ({ kind: "var", name: n });
+const val = (left: unknown, op?: string, right?: unknown) =>
+  (op === undefined ? { left } : { left, op, right });
+const at = (left: unknown, op?: string, right?: unknown) => ({ left, op, right });
+const cd = (atoms: unknown[]) => ({ atoms });
+
 const CF2_RAW = {
-  program_version: "program-1.0",
+  program_version: "program-2.0",
   variables: [
-    { name: "x", type: "integer", int_value: -2, bool_value: null },
-    { name: "y", type: "integer", int_value: 0, bool_value: null },
-  ],
-  expressions: [
-    { id: "e_x", kind: "var", name: "x" },
-    { id: "e_0", kind: "int", int_value: 0 },
-    { id: "e_gt", kind: "compare", op: ">", left: "e_x", right: "e_0" },
-    { id: "e_p1", kind: "int", int_value: 1 },
-    { id: "e_m1", kind: "int", int_value: -1 },
+    { name: "x", type: "integer", int_value: -2 },
+    { name: "y", type: "integer" },
   ],
   statements: [
-    { id: "s_then", kind: "assign", target: "y", value: "e_p1" },
-    { id: "s_else", kind: "assign", target: "y", value: "e_m1" },
-    { id: "s_if", kind: "if", condition: "e_gt", then_body: ["s_then"], else_body: ["s_else"] },
+    { id: "s_then", kind: "assign", target: "y", value: val(iv(1)) },
+    { id: "s_else", kind: "assign", target: "y", value: val(iv(-1)) },
+    { id: "s_if", kind: "if", condition: cd([at(val(vr("x")), ">", val(iv(0)))]),
+      then_body: ["s_then"], else_body: ["s_else"] },
   ],
   main: ["s_if"],
 };
 
 const CF3_RAW = {
-  program_version: "program-1.0",
-  variables: [{ name: "x", type: "integer", int_value: 1, bool_value: null }],
-  expressions: [
-    { id: "e_x", kind: "var", name: "x" },
-    { id: "e_5", kind: "int", int_value: 5 },
-    { id: "e_lt", kind: "compare", op: "<", left: "e_x", right: "e_5" },
-    { id: "e_1", kind: "int", int_value: 1 },
-    { id: "e_inc", kind: "binary", op: "+", left: "e_x", right: "e_1" },
-  ],
+  program_version: "program-2.0",
+  variables: [{ name: "x", type: "integer", int_value: 1 }],
   statements: [
-    { id: "s_body", kind: "assign", target: "x", value: "e_inc" },
-    { id: "s_while", kind: "while", condition: "e_lt", body: ["s_body"], max_iterations: 10 },
+    { id: "s_body", kind: "assign", target: "x", value: val(vr("x"), "+", iv(1)) },
+    { id: "s_while", kind: "while", condition: cd([at(val(vr("x")), "<", val(iv(5)))]),
+      body: ["s_body"], max_iterations: 10 },
   ],
   main: ["s_while"],
 };

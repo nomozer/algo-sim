@@ -98,7 +98,7 @@ def test_spec_hop_le_ra_envelope_ok_dung_target(cfg_builder, monkeypatch):
     assert env["status"] == "ok", env
     assert env["simulation_id"] == TARGET
     cfg = env["config"]
-    assert cfg["program_version"] == "program-1.0"
+    assert cfg["program_version"] == "program-2.0"
     # R0 — config KHÔNG mang diễn biến/kết quả
     for banned in ("trace", "steps", "final_environment", "result", "iterations"):
         assert banned not in cfg

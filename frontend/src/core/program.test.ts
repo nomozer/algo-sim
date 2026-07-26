@@ -25,84 +25,73 @@ function parse(raw: unknown): ProgramSpec {
   return v.spec;
 }
 
-/** CF-1: x = 3 ; y = x * 2 + 1 */
+/* Dựng spec bằng bề mặt INLINE (W2C-C1 §L2 — không còn bảng expressions). */
+const iv = (n: number) => ({ kind: "int", int_value: n });
+const bo = (b: boolean) => ({ kind: "bool", bool_value: b });
+const vr = (n: string) => ({ kind: "var", name: n });
+const val = (left: unknown, op?: string, right?: unknown) =>
+  (op === undefined ? { left } : { left, op, right });
+const at = (left: unknown, op?: string, right?: unknown, negated = false) => ({
+  left, ...(op === undefined ? {} : { op, right }), ...(negated ? { negated: true } : {}),
+});
+const cd = (atoms: unknown[], op?: string) => (op === undefined ? { atoms } : { op, atoms });
+/** CF-1: x = 3 ; tich = x*2 ; y = tich + 1 → y = 7 (nhiều tầng ⇒ câu lệnh trung gian). */
 const CF1 = {
-  program_version: "program-1.0",
+  program_version: "program-2.0",
   variables: [
-    { name: "x", type: "integer", int_value: 3, bool_value: null },
-    { name: "y", type: "integer", int_value: 0, bool_value: null },
-  ],
-  expressions: [
-    { id: "e_x", kind: "var", name: "x" },
-    { id: "e_2", kind: "int", int_value: 2 },
-    { id: "e_1", kind: "int", int_value: 1 },
-    { id: "e_mul", kind: "binary", op: "*", left: "e_x", right: "e_2" },
-    { id: "e_sum", kind: "binary", op: "+", left: "e_mul", right: "e_1" },
-  ],
-  statements: [{ id: "s1", kind: "assign", target: "y", value: "e_sum" }],
-  main: ["s1"],
-};
-
-/** CF-2: x = -2 ; nếu x > 0 thì y = 1 ngược lại y = -1 */
-const CF2 = {
-  program_version: "program-1.0",
-  variables: [
-    { name: "x", type: "integer", int_value: -2, bool_value: null },
-    { name: "y", type: "integer", int_value: 0, bool_value: null },
-  ],
-  expressions: [
-    { id: "e_x", kind: "var", name: "x" },
-    { id: "e_0", kind: "int", int_value: 0 },
-    { id: "e_gt", kind: "compare", op: ">", left: "e_x", right: "e_0" },
-    { id: "e_p1", kind: "int", int_value: 1 },
-    { id: "e_m1", kind: "int", int_value: -1 },
+    { name: "x", type: "integer", int_value: 3 },
+    { name: "tich", type: "integer" },
+    { name: "y", type: "integer" },
   ],
   statements: [
-    { id: "s_then", kind: "assign", target: "y", value: "e_p1" },
-    { id: "s_else", kind: "assign", target: "y", value: "e_m1" },
-    { id: "s_if", kind: "if", condition: "e_gt", then_body: ["s_then"], else_body: ["s_else"] },
+    { id: "s1", kind: "assign", target: "tich", value: val(vr("x"), "*", iv(2)) },
+    { id: "s2", kind: "assign", target: "y", value: val(vr("tich"), "+", iv(1)) },
+  ],
+  main: ["s1", "s2"],
+};
+
+/** CF-2: x = -2 ; nếu x > 0 thì y = 1 ngược lại y = -1. `y` CHƯA khởi tạo. */
+const CF2 = {
+  program_version: "program-2.0",
+  variables: [
+    { name: "x", type: "integer", int_value: -2 },
+    { name: "y", type: "integer" },
+  ],
+  statements: [
+    { id: "s_then", kind: "assign", target: "y", value: val(iv(1)) },
+    { id: "s_else", kind: "assign", target: "y", value: val(iv(-1)) },
+    { id: "s_if", kind: "if", condition: cd([at(val(vr("x")), ">", val(iv(0)))]),
+      then_body: ["s_then"], else_body: ["s_else"] },
   ],
   main: ["s_if"],
 };
 
-/** CF-3: x = 1 ; trong khi x < 5 thì x = x + 1 */
+/** CF-3: x = 1 ; trong khi x < 5 thì x = x + 1. */
 const CF3 = {
-  program_version: "program-1.0",
-  variables: [{ name: "x", type: "integer", int_value: 1, bool_value: null }],
-  expressions: [
-    { id: "e_x", kind: "var", name: "x" },
-    { id: "e_5", kind: "int", int_value: 5 },
-    { id: "e_lt", kind: "compare", op: "<", left: "e_x", right: "e_5" },
-    { id: "e_1", kind: "int", int_value: 1 },
-    { id: "e_inc", kind: "binary", op: "+", left: "e_x", right: "e_1" },
-  ],
+  program_version: "program-2.0",
+  variables: [{ name: "x", type: "integer", int_value: 1 }],
   statements: [
-    { id: "s_body", kind: "assign", target: "x", value: "e_inc" },
-    { id: "s_while", kind: "while", condition: "e_lt", body: ["s_body"], max_iterations: 10 },
+    { id: "s_body", kind: "assign", target: "x", value: val(vr("x"), "+", iv(1)) },
+    { id: "s_while", kind: "while", condition: cd([at(val(vr("x")), "<", val(iv(5)))]),
+      body: ["s_body"], max_iterations: 10 },
   ],
   main: ["s_while"],
 };
 
-/** CF-4: a = true, b = false ; nếu a và không b thì x = 1 ngược lại x = 0 */
+/** CF-4: a = true, b = false ; nếu a và không b thì x = 1 ngược lại x = 0. */
 const CF4 = {
-  program_version: "program-1.0",
+  program_version: "program-2.0",
   variables: [
-    { name: "a", type: "boolean", int_value: null, bool_value: true },
-    { name: "b", type: "boolean", int_value: null, bool_value: false },
-    { name: "x", type: "integer", int_value: 0, bool_value: null },
-  ],
-  expressions: [
-    { id: "e_a", kind: "var", name: "a" },
-    { id: "e_b", kind: "var", name: "b" },
-    { id: "e_nb", kind: "unary", op: "not", operand: "e_b" },
-    { id: "e_and", kind: "logic", op: "and", left: "e_a", right: "e_nb" },
-    { id: "e_1", kind: "int", int_value: 1 },
-    { id: "e_0", kind: "int", int_value: 0 },
+    { name: "a", type: "boolean", bool_value: true },
+    { name: "b", type: "boolean", bool_value: false },
+    { name: "x", type: "integer" },
   ],
   statements: [
-    { id: "s_then", kind: "assign", target: "x", value: "e_1" },
-    { id: "s_else", kind: "assign", target: "x", value: "e_0" },
-    { id: "s_if", kind: "if", condition: "e_and", then_body: ["s_then"], else_body: ["s_else"] },
+    { id: "s_then", kind: "assign", target: "x", value: val(iv(1)) },
+    { id: "s_else", kind: "assign", target: "x", value: val(iv(0)) },
+    { id: "s_if", kind: "if",
+      condition: cd([at(val(vr("a"))), at(val(vr("b")), undefined, undefined, true)], "and"),
+      then_body: ["s_then"], else_body: ["s_else"] },
   ],
   main: ["s_if"],
 };
@@ -190,19 +179,14 @@ describe("CF-4 — điều kiện logic", () => {
 
 describe("vòng lặp KHÔNG BAO GIỜ treo", () => {
   const infinite = {
-    ...CF3,
-    expressions: [
-      { id: "e_x", kind: "var", name: "x" },
-      { id: "e_5", kind: "int", int_value: 5 },
-      { id: "e_lt", kind: "compare", op: "<", left: "e_x", right: "e_5" },
-      { id: "e_1", kind: "int", int_value: 1 },
-      { id: "e_inc", kind: "binary", op: "+", left: "e_x", right: "e_1" },
-      { id: "e_t", kind: "bool", bool_value: true },
-    ],
+    program_version: "program-2.0",
+    variables: [{ name: "x", type: "integer", int_value: 1 }],
     statements: [
-      { id: "s_body", kind: "assign", target: "x", value: "e_inc" },
-      { id: "s_while", kind: "while", condition: "e_t", body: ["s_body"], max_iterations: 5 },
+      { id: "s_body", kind: "assign", target: "x", value: val(vr("x"), "+", iv(1)) },
+      { id: "s_while", kind: "while", condition: cd([at(val(bo(true)))]),
+        body: ["s_body"], max_iterations: 5 },
     ],
+    main: ["s_while"],
   };
 
   it("chạm biên thì DỪNG và báo chưa kết thúc — không giả vờ chạy xong", () => {
@@ -287,13 +271,13 @@ describe("validator mirror — fail-closed", () => {
     expect(
       validateProgramSpec({
         ...CF1,
-        variables: [{ name: "x", type: "integer", int_value: "5", bool_value: null }],
+        variables: [{ name: "x", type: "integer", int_value: "5" }],
       }).ok,
     ).toBe(false);
     expect(
       validateProgramSpec({
         ...CF1,
-        variables: [{ name: "x", type: "boolean", int_value: null, bool_value: 1 }],
+        variables: [{ name: "x", type: "boolean", bool_value: 1 }],
       }).ok,
     ).toBe(false);
   });
@@ -302,8 +286,9 @@ describe("validator mirror — fail-closed", () => {
     const noBound = {
       ...CF3,
       statements: [
-        { id: "s_body", kind: "assign", target: "x", value: "e_inc" },
-        { id: "s_while", kind: "while", condition: "e_lt", body: ["s_body"] },
+        { id: "s_body", kind: "assign", target: "x", value: val(vr("x"), "+", iv(1)) },
+        { id: "s_while", kind: "while", condition: cd([at(val(vr("x")), "<", val(iv(5)))]),
+          body: ["s_body"] },
       ],
     };
     expect(validateProgramSpec(noBound).ok).toBe(false);
@@ -313,8 +298,8 @@ describe("validator mirror — fail-closed", () => {
     const bad = {
       ...CF2,
       statements: [
-        { id: "s_then", kind: "assign", target: "y", value: "e_p1" },
-        { id: "s_if", kind: "if", condition: "e_x", then_body: ["s_then"] },
+        { id: "s_then", kind: "assign", target: "y", value: val(iv(1)) },
+        { id: "s_if", kind: "if", condition: cd([at(val(vr("x")))]), then_body: ["s_then"] },
       ],
       main: ["s_if"],
     };
@@ -330,8 +315,81 @@ describe("validator mirror — fail-closed", () => {
     expect(PROGRAM_LIMITS.maxStatementNodes).toBe(12);
     expect(PROGRAM_LIMITS.maxNestingDepth).toBe(2);
     expect(PROGRAM_LIMITS.maxVariables).toBe(8);
-    expect(PROGRAM_LIMITS.maxExpressionDepth).toBe(4);
+    expect(PROGRAM_LIMITS.maxExpressionDepth).toBe(6);
+    expect(PROGRAM_LIMITS.maxConditionAtoms).toBe(3);
     expect(PROGRAM_LIMITS.maxExecutionSteps).toBe(200);
     expect(PROGRAM_LIMITS.maxWhileIterations).toBe(50);
+  });
+});
+
+describe("W2C-C1 §L1 — khai báo ≠ khởi tạo (mirror backend)", () => {
+  it("biến khai báo mà chưa có giá trị là HỢP LỆ và KHÔNG bị bịa giá trị", () => {
+    const spec = parse(CF2);
+    const y = spec.variables.find((v) => v.name === "y")!;
+    expect(y.initialized).toBe(false);
+    expect(y.int_value).toBeNull();
+  });
+
+  it("biến chưa khởi tạo KHÔNG xuất hiện trong vars ở bước đầu", () => {
+    const { trace } = runProgram(parse(CF2));
+    expect(Object.keys(trace.steps[0].snapshot.vars)).not.toContain("y");
+    expect(Object.keys(trace.steps[0].snapshot.vars)).toContain("x");
+  });
+
+  it("đọc biến chưa chắc có giá trị bị TỪ CHỐI", () => {
+    const bad = {
+      program_version: "program-2.0",
+      variables: [{ name: "y", type: "integer" }, { name: "z", type: "integer" }],
+      statements: [
+        { id: "b", kind: "assign", target: "z", value: val(vr("y"), "+", iv(1)) },
+      ],
+      main: ["b"],
+    };
+    const v = validateProgramSpec(bad);
+    expect(v.ok).toBe(false);
+    if (!v.ok) expect(v.error).toContain("chưa chắc chắn có giá trị");
+  });
+
+  it("chỉ nhánh then gán thì CHƯA chắc chắn", () => {
+    const bad = {
+      program_version: "program-2.0",
+      variables: [{ name: "x", type: "integer", int_value: 1 }, { name: "y", type: "integer" }],
+      statements: [
+        { id: "t", kind: "assign", target: "y", value: val(iv(1)) },
+        { id: "s", kind: "if", condition: cd([at(val(vr("x")), ">", val(iv(0)))]),
+          then_body: ["t"] },
+        { id: "u", kind: "output", value: val(vr("y")) },
+      ],
+      main: ["s", "u"],
+    };
+    expect(validateProgramSpec(bad).ok).toBe(false);
+  });
+});
+
+describe("W2C-C1 §L2 — biểu thức inline (mirror backend)", () => {
+  it("spec kiểu CŨ (tham chiếu id) không còn được chấp nhận", () => {
+    const old = {
+      program_version: "program-2.0",
+      variables: [{ name: "x", type: "integer", int_value: 1 }],
+      expressions: [{ id: "e1", kind: "int", int_value: 2 }],
+      statements: [{ id: "s1", kind: "assign", target: "x", value: "e1" }],
+      main: ["s1"],
+    };
+    expect(validateProgramSpec(old).ok).toBe(false);
+  });
+
+  it("normalize TẤT ĐỊNH — cùng input cùng biểu diễn nội bộ", () => {
+    const a = parse(CF3);
+    const b = parse(CF3);
+    expect(a.expressions).toEqual(b.expressions);
+  });
+
+  it("toán tử ngoài ngữ pháp bị từ chối", () => {
+    const bad = { ...CF3, statements: [
+      { id: "s_body", kind: "assign", target: "x", value: val(vr("x"), "**", iv(2)) },
+      { id: "s_while", kind: "while", condition: cd([at(val(vr("x")), "<", val(iv(5)))]),
+        body: ["s_body"], max_iterations: 3 },
+    ] };
+    expect(validateProgramSpec(bad).ok).toBe(false);
   });
 });

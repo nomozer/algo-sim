@@ -181,101 +181,93 @@ _PG_DATA = [{"description": "giá trị ban đầu và hằng số trong chươn
              "values": [3, 2, 1]}]
 
 
+# W2C-C1: bề mặt LLM là biểu thức INLINE (không còn bảng expressions + id).
+def _pv(n):   return {"kind": "int", "int_value": n}
+def _pb(b):   return {"kind": "bool", "bool_value": b}
+def _pvar(n): return {"kind": "var", "name": n}
+def _val(left, op=None, right=None):
+    v = {"left": left}
+    if op is not None:
+        v["op"] = op
+        v["right"] = right
+    return v
+def _cond(atoms, op=None):
+    c = {"atoms": atoms}
+    if op is not None:
+        c["op"] = op
+    return c
+def _atom(left, op=None, right=None, negated=False):
+    a = {"left": left}
+    if op is not None:
+        a["op"] = op
+        a["right"] = right
+    if negated:
+        a["negated"] = True
+    return a
+def _prog(variables, statements, main):
+    return _j({"program_version": "program-2.0", "variables": variables,
+               "statements": statements, "main": main})
+
+
 def _program_cfg_assign() -> str:
-    """x = 3 ; y = x * 2 + 1  →  y = 7."""
-    return _j({
-        "program_version": "program-1.0",
-        "variables": [
-            {"name": "x", "type": "integer", "int_value": 3, "bool_value": None},
-            {"name": "y", "type": "integer", "int_value": 0, "bool_value": None},
-        ],
-        "expressions": [
-            {"id": "e_x", "kind": "var", "name": "x"},
-            {"id": "e_2", "kind": "int", "int_value": 2},
-            {"id": "e_1", "kind": "int", "int_value": 1},
-            {"id": "e_mul", "kind": "binary", "op": "*", "left": "e_x", "right": "e_2"},
-            {"id": "e_sum", "kind": "binary", "op": "+", "left": "e_mul", "right": "e_1"},
-        ],
-        "statements": [
-            {"id": "s1", "kind": "assign", "target": "y", "value": "e_sum"},
-        ],
-        "main": ["s1"],
-    })
+    """x = 3 ; tich = x*2 ; y = tich + 1  →  y = 7.
+
+    Biểu thức nhiều tầng tách thành CÂU LỆNH TRUNG GIAN — đúng luật C1 §L2 (giữ
+    ngữ pháp đóng thay vì mở AST đệ quy)."""
+    return _prog(
+        [{"name": "x", "type": "integer", "int_value": 3},
+         {"name": "tich", "type": "integer"},
+         {"name": "y", "type": "integer"}],
+        [{"id": "s1", "kind": "assign", "target": "tich",
+          "value": _val(_pvar("x"), "*", _pv(2))},
+         {"id": "s2", "kind": "assign", "target": "y",
+          "value": _val(_pvar("tich"), "+", _pv(1))}],
+        ["s1", "s2"],
+    )
 
 
 def _program_cfg_branch() -> str:
-    """x = -2 ; nếu x > 0 thì y = 1 ngược lại y = -1  →  y = -1."""
-    return _j({
-        "program_version": "program-1.0",
-        "variables": [
-            {"name": "x", "type": "integer", "int_value": -2, "bool_value": None},
-            {"name": "y", "type": "integer", "int_value": 0, "bool_value": None},
-        ],
-        "expressions": [
-            {"id": "e_x", "kind": "var", "name": "x"},
-            {"id": "e_0", "kind": "int", "int_value": 0},
-            {"id": "e_gt", "kind": "compare", "op": ">", "left": "e_x", "right": "e_0"},
-            {"id": "e_p1", "kind": "int", "int_value": 1},
-            {"id": "e_m1", "kind": "int", "int_value": -1},
-        ],
-        "statements": [
-            {"id": "s_then", "kind": "assign", "target": "y", "value": "e_p1"},
-            {"id": "s_else", "kind": "assign", "target": "y", "value": "e_m1"},
-            {"id": "s_if", "kind": "if", "condition": "e_gt",
-             "then_body": ["s_then"], "else_body": ["s_else"]},
-        ],
-        "main": ["s_if"],
-    })
+    """x = -2 ; nếu x > 0 thì y = 1 ngược lại y = -1  →  y = -1.
+    `y` KHAI BÁO mà CHƯA khởi tạo — đề không hề nói y ban đầu bằng mấy."""
+    return _prog(
+        [{"name": "x", "type": "integer", "int_value": -2},
+         {"name": "y", "type": "integer"}],
+        [{"id": "s_then", "kind": "assign", "target": "y", "value": _val(_pv(1))},
+         {"id": "s_else", "kind": "assign", "target": "y", "value": _val(_pv(-1))},
+         {"id": "s_if", "kind": "if",
+          "condition": _cond([_atom(_val(_pvar("x")), ">", _val(_pv(0)))]),
+          "then_body": ["s_then"], "else_body": ["s_else"]}],
+        ["s_if"],
+    )
 
 
 def _program_cfg_loop() -> str:
     """x = 1 ; trong khi x < 5 thì x = x + 1  →  x = 5, lặp 4 lượt."""
-    return _j({
-        "program_version": "program-1.0",
-        "variables": [
-            {"name": "x", "type": "integer", "int_value": 1, "bool_value": None},
-        ],
-        "expressions": [
-            {"id": "e_x", "kind": "var", "name": "x"},
-            {"id": "e_5", "kind": "int", "int_value": 5},
-            {"id": "e_lt", "kind": "compare", "op": "<", "left": "e_x", "right": "e_5"},
-            {"id": "e_1", "kind": "int", "int_value": 1},
-            {"id": "e_inc", "kind": "binary", "op": "+", "left": "e_x", "right": "e_1"},
-        ],
-        "statements": [
-            {"id": "s_body", "kind": "assign", "target": "x", "value": "e_inc"},
-            {"id": "s_while", "kind": "while", "condition": "e_lt",
-             "body": ["s_body"], "max_iterations": 10},
-        ],
-        "main": ["s_while"],
-    })
+    return _prog(
+        [{"name": "x", "type": "integer", "int_value": 1}],
+        [{"id": "s_body", "kind": "assign", "target": "x",
+          "value": _val(_pvar("x"), "+", _pv(1))},
+         {"id": "s_while", "kind": "while",
+          "condition": _cond([_atom(_val(_pvar("x")), "<", _val(_pv(5)))]),
+          "body": ["s_body"], "max_iterations": 10}],
+        ["s_while"],
+    )
 
 
 def _program_cfg_boolean() -> str:
-    """a = true, b = false ; nếu a and not b thì x = 1 ngược lại x = 0  →  x = 1."""
-    return _j({
-        "program_version": "program-1.0",
-        "variables": [
-            {"name": "a", "type": "boolean", "int_value": None, "bool_value": True},
-            {"name": "b", "type": "boolean", "int_value": None, "bool_value": False},
-            {"name": "x", "type": "integer", "int_value": 0, "bool_value": None},
-        ],
-        "expressions": [
-            {"id": "e_a", "kind": "var", "name": "a"},
-            {"id": "e_b", "kind": "var", "name": "b"},
-            {"id": "e_nb", "kind": "unary", "op": "not", "operand": "e_b"},
-            {"id": "e_and", "kind": "logic", "op": "and", "left": "e_a", "right": "e_nb"},
-            {"id": "e_1", "kind": "int", "int_value": 1},
-            {"id": "e_0", "kind": "int", "int_value": 0},
-        ],
-        "statements": [
-            {"id": "s_then", "kind": "assign", "target": "x", "value": "e_1"},
-            {"id": "s_else", "kind": "assign", "target": "x", "value": "e_0"},
-            {"id": "s_if", "kind": "if", "condition": "e_and",
-             "then_body": ["s_then"], "else_body": ["s_else"]},
-        ],
-        "main": ["s_if"],
-    })
+    """a = true, b = false ; nếu a và không b thì x = 1 ngược lại x = 0  →  x = 1."""
+    return _prog(
+        [{"name": "a", "type": "boolean", "bool_value": True},
+         {"name": "b", "type": "boolean", "bool_value": False},
+         {"name": "x", "type": "integer"}],
+        [{"id": "s_then", "kind": "assign", "target": "x", "value": _val(_pv(1))},
+         {"id": "s_else", "kind": "assign", "target": "x", "value": _val(_pv(0))},
+         {"id": "s_if", "kind": "if",
+          "condition": _cond([_atom(_val(_pvar("a"))),
+                              _atom(_val(_pvar("b")), negated=True)], op="and"),
+          "then_body": ["s_then"], "else_body": ["s_else"]}],
+        ["s_if"],
+    )
 
 
 # ══════════════ fixture per-target (14 AI-reachable) ══════════════

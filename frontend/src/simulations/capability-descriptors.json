@@ -906,7 +906,7 @@
           ]
         }
       ],
-      "config_contract_version": "program-1.0",
+      "config_contract_version": "program-2.0",
       "authenticity": {
         "required_state_fields": [
           "spec",

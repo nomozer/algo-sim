@@ -142,9 +142,17 @@ export function ProgramInspector({ state }: Props) {
   const { changed } = readStep(step);
   const before = varsBefore(state, cursor);
 
+  // W2C-C1 §L1: biến ĐÃ KHAI BÁO mà CHƯA có giá trị không nằm trong
+  // `Snapshot.vars`. Nói thẳng "chưa có giá trị" thay vì im lặng (học sinh cần
+  // biết biến tồn tại) và tuyệt đối KHÔNG hiện 0/null như một kết quả tính.
+  const notYet = state.spec.variables
+    .filter((v) => !(v.name in step.snapshot.vars))
+    .map((v) => v.name);
+
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <VarsView step={step} />
+      {notYet.length > 0 && <div>{`Chưa có giá trị: ${notYet.join(", ")}`}</div>}
       {/* W2C-VR2: thấy được TRƯỚC → SAU. Chương trình một câu lệnh trước đây chỉ
           hiện giá trị sau, nên phép tính không quan sát được — học sinh mở lên
           đã thấy đáp án mà không thấy nó từ đâu ra. */}

@@ -20,14 +20,15 @@ import type { Trace, TraceEvent } from "./types";
  * đó — highlight không thể trôi khỏi câu lệnh đang chạy.
  */
 
-export const PROGRAM_VERSION = "program-1.0";
+export const PROGRAM_VERSION = "program-2.0";
 
 /** MIRROR `program_spec.LIMITS` — sửa một bên phải sửa bên kia. */
 export const PROGRAM_LIMITS = {
   maxStatementNodes: 12,
   maxNestingDepth: 2,
   maxVariables: 8,
-  maxExpressionDepth: 4,
+  maxExpressionDepth: 6,
+  maxConditionAtoms: 3,
   maxExecutionSteps: 200,
   maxWhileIterations: 50,
   maxOutputEntries: 30,
@@ -53,6 +54,31 @@ export interface ProgramVariable {
   type: ValueType;
   int_value: number | null;
   bool_value: boolean | null;
+  /** W2C-C1 §L1: KHAI BÁO ≠ KHỞI TẠO. false ⇒ chưa có giá trị (KHÔNG phải 0/false). */
+  initialized: boolean;
+}
+
+/* ── W2C-C1 §L2 — bề mặt LLM: biểu thức INLINE, nông, PHI ĐỆ QUY ── */
+export interface Operand {
+  kind: "int" | "bool" | "var";
+  int_value?: number | null;
+  bool_value?: boolean | null;
+  name?: string | null;
+}
+export interface InlineValue {
+  left: Operand;
+  op?: string | null;
+  right?: Operand | null;
+}
+export interface InlineAtom {
+  left: InlineValue;
+  op?: string | null;
+  right?: InlineValue | null;
+  negated?: boolean | null;
+}
+export interface InlineCondition {
+  op?: string | null;
+  atoms: InlineAtom[];
 }
 
 export interface ProgramExpression {
@@ -106,6 +132,134 @@ function fail(error: string): ProgramValidation {
   return { ok: false, error };
 }
 
+/* ── §L2 — normalizer TẤT ĐỊNH: inline (bề mặt LLM) → nội bộ ─────
+ * MIRROR `program_spec.normalize_inline_program`. Không đoán ý, không bù toán
+ * tử thiếu, không sửa tên biến, không giá trị mặc định. Id sinh theo thứ tự
+ * duyệt nên cùng input ⇒ cùng output. */
+
+class NormalizeError extends Error {}
+
+function normalizeInlineProgram(rawStatements: unknown): {
+  expressions: ProgramExpression[];
+  statements: ProgramStatement[];
+} {
+  if (!Array.isArray(rawStatements)) throw new NormalizeError("'statements' phải là danh sách.");
+  const expressions: ProgramExpression[] = [];
+  const seen = new Map<string, string>();
+
+  const emit = (node: Omit<ProgramExpression, "id">): string => {
+    const key = JSON.stringify(node);
+    const hit = seen.get(key);
+    if (hit) return hit;
+    const id = `_e${expressions.length + 1}`;
+    expressions.push({ id, ...node });
+    seen.set(key, id);
+    return id;
+  };
+
+  const operand = (raw: unknown, where: string): string => {
+    const o = raw as Operand | undefined;
+    if (!o || typeof o !== "object") throw new NormalizeError(`${where}: toán hạng phải là đối tượng.`);
+    if (o.kind === "int") {
+      if (!isInt(o.int_value)) throw new NormalizeError(`${where}: hằng số nguyên thiếu 'int_value'.`);
+      if (o.int_value! < INT_MIN || o.int_value! > INT_MAX) {
+        throw new NormalizeError(`${where}: hằng số ngoài khoảng cho phép.`);
+      }
+      return emit({ kind: "int", int_value: o.int_value });
+    }
+    if (o.kind === "bool") {
+      if (!isBool(o.bool_value)) throw new NormalizeError(`${where}: hằng đúng/sai thiếu 'bool_value'.`);
+      return emit({ kind: "bool", bool_value: o.bool_value });
+    }
+    if (o.kind === "var") {
+      if (typeof o.name !== "string" || !o.name.trim()) {
+        throw new NormalizeError(`${where}: tham chiếu biến thiếu 'name'.`);
+      }
+      return emit({ kind: "var", name: o.name });
+    }
+    throw new NormalizeError(`${where}: loại toán hạng không hỗ trợ: ${String((o as Operand).kind)}.`);
+  };
+
+  const value = (raw: unknown, where: string): string => {
+    const v = raw as InlineValue | undefined;
+    if (!v || typeof v !== "object") throw new NormalizeError(`${where}: biểu thức giá trị phải là đối tượng.`);
+    const left = operand(v.left, where);
+    if (v.op == null || v.op === "") {
+      if (v.right != null) throw new NormalizeError(`${where}: có 'right' thì phải có toán tử.`);
+      return left;
+    }
+    if (!(ARITHMETIC_OPS as readonly string[]).includes(v.op)) {
+      throw new NormalizeError(`${where}: toán tử số học không hỗ trợ: ${v.op}.`);
+    }
+    return emit({ kind: "binary", op: v.op, left, right: operand(v.right, where) });
+  };
+
+  const atomNode = (raw: unknown, where: string): string => {
+    const a = raw as InlineAtom | undefined;
+    if (!a || typeof a !== "object") throw new NormalizeError(`${where}: vế điều kiện phải là đối tượng.`);
+    const left = value(a.left, where);
+    let node = left;
+    if (a.op != null && a.op !== "") {
+      if (!(COMPARE_OPS as readonly string[]).includes(a.op)) {
+        throw new NormalizeError(`${where}: toán tử so sánh không hỗ trợ: ${a.op}.`);
+      }
+      node = emit({ kind: "compare", op: a.op, left, right: value(a.right, where) });
+    }
+    if (a.negated === true) node = emit({ kind: "unary", op: "not", operand: node });
+    return node;
+  };
+
+  const condition = (raw: unknown, where: string): string => {
+    const c = raw as InlineCondition | undefined;
+    if (!c || typeof c !== "object" || !Array.isArray(c.atoms) || c.atoms.length === 0) {
+      throw new NormalizeError(`${where}: điều kiện cần ít nhất một vế trong 'atoms'.`);
+    }
+    if (c.atoms.length > PROGRAM_LIMITS.maxConditionAtoms) {
+      throw new NormalizeError(
+        `${where}: điều kiện có ${c.atoms.length} vế, tối đa ${PROGRAM_LIMITS.maxConditionAtoms}.`,
+      );
+    }
+    if (c.atoms.length === 1) return atomNode(c.atoms[0], where);
+    if (c.op == null || !(LOGIC_OPS as readonly string[]).includes(c.op)) {
+      throw new NormalizeError(`${where}: nhiều vế thì cần toán tử and/or.`);
+    }
+    let node = atomNode(c.atoms[0], where);
+    for (const extra of c.atoms.slice(1)) {
+      node = emit({ kind: "logic", op: c.op, left: node, right: atomNode(extra, where) });
+    }
+    return node;
+  };
+
+  const statements: ProgramStatement[] = [];
+  for (const raw of rawStatements as Record<string, unknown>[]) {
+    if (!raw || typeof raw !== "object") throw new NormalizeError("Mỗi câu lệnh phải là đối tượng.");
+    const id = raw.id as string;
+    const kind = raw.kind as StatementKind;
+    const where = `câu lệnh '${id}'`;
+    const st: ProgramStatement = { id, kind, then_body: [], else_body: [], body: [] };
+    if (kind === "assign") {
+      st.target = raw.target as string;
+      st.value = value(raw.value, where);
+    } else if (kind === "output") {
+      st.value = value(raw.value, where);
+    } else if (kind === "if") {
+      st.condition = condition(raw.condition, where);
+      st.then_body = (raw.then_body as string[]) ?? [];
+      st.else_body = (raw.else_body as string[]) ?? [];
+    } else if (kind === "while") {
+      st.condition = condition(raw.condition, where);
+      st.body = (raw.body as string[]) ?? [];
+      st.max_iterations = (raw.max_iterations as number) ?? null;
+    } else {
+      throw new NormalizeError(
+        `Loại câu lệnh không hỗ trợ: ${String(kind)} — không có hàm, đệ quy, break/continue.`,
+      );
+    }
+    statements.push(st);
+  }
+  return { expressions, statements };
+}
+
 /* ── validator (mirror backend) ─────────────────────────────── */
 
 export function validateProgramSpec(raw: unknown): ProgramValidation {
@@ -120,9 +274,9 @@ export function validateProgramSpec(raw: unknown): ProgramValidation {
   const version = (r.program_version as string) || PROGRAM_VERSION;
   if (version !== PROGRAM_VERSION) return fail(`program_version phải là '${PROGRAM_VERSION}'.`);
 
-  // biến
+  // ── §L1: biến — KHAI BÁO ≠ KHỞI TẠO ──
   const rawVars = r.variables;
-  if (!Array.isArray(rawVars) || rawVars.length === 0) return fail("Cần ít nhất một biến ban đầu.");
+  if (!Array.isArray(rawVars) || rawVars.length === 0) return fail("Cần ít nhất một biến.");
   if (rawVars.length > PROGRAM_LIMITS.maxVariables) {
     return fail(`Tối đa ${PROGRAM_LIMITS.maxVariables} biến.`);
   }
@@ -134,159 +288,63 @@ export function validateProgramSpec(raw: unknown): ProgramValidation {
     if (varTypes.has(name)) return fail(`Biến '${name}' được khai báo hai lần.`);
     const type = item.type;
     if (type !== "integer" && type !== "boolean") return fail(`Kiểu của biến '${name}' không hợp lệ.`);
-    if (type === "integer") {
-      if (!isInt(item.int_value)) return fail(`Biến '${name}' cần 'int_value' là số nguyên.`);
-      if (item.int_value < INT_MIN || item.int_value > INT_MAX) {
-        return fail(`Giá trị của '${name}' ngoài khoảng cho phép.`);
-      }
-      variables.push({ name, type, int_value: item.int_value, bool_value: null });
+    const iv = item.int_value ?? null;
+    const bv = item.bool_value ?? null;
+    if (iv === null && bv === null) {
+      // Khai báo mà CHƯA khởi tạo — hệ KHÔNG bịa 0/false thay đề.
+      variables.push({ name, type, int_value: null, bool_value: null, initialized: false });
+    } else if (type === "integer") {
+      if (!isInt(iv)) return fail(`Biến '${name}' cần 'int_value' là số nguyên.`);
+      if (iv < INT_MIN || iv > INT_MAX) return fail(`Giá trị của '${name}' ngoài khoảng cho phép.`);
+      variables.push({ name, type, int_value: iv, bool_value: null, initialized: true });
     } else {
-      if (!isBool(item.bool_value)) return fail(`Biến '${name}' cần 'bool_value' là true/false.`);
-      variables.push({ name, type, int_value: null, bool_value: item.bool_value });
+      if (!isBool(bv)) return fail(`Biến '${name}' cần 'bool_value' là true/false.`);
+      variables.push({ name, type, int_value: null, bool_value: bv, initialized: true });
     }
     varTypes.set(name, type);
   }
 
-  // biểu thức
-  const rawExprs = Array.isArray(r.expressions) ? (r.expressions as Record<string, unknown>[]) : [];
-  const expressions: ProgramExpression[] = [];
-  const exprById = new Map<string, ProgramExpression>();
-  for (const item of rawExprs) {
-    const id = item?.id;
-    if (typeof id !== "string" || !id.trim()) return fail("Mỗi biểu thức phải có 'id'.");
-    if (exprById.has(id)) return fail(`Biểu thức trùng id: '${id}'.`);
-    const kind = item.kind as ExpressionKind;
-    const node: ProgramExpression = { id, kind };
-    switch (kind) {
-      case "int":
-        if (!isInt(item.int_value)) return fail(`Biểu thức '${id}' cần 'int_value' là số nguyên.`);
-        node.int_value = item.int_value;
-        break;
-      case "bool":
-        if (!isBool(item.bool_value)) return fail(`Biểu thức '${id}' cần 'bool_value'.`);
-        node.bool_value = item.bool_value;
-        break;
-      case "var":
-        if (typeof item.name !== "string" || !varTypes.has(item.name)) {
-          return fail(`Biểu thức '${id}' dùng biến chưa được khai báo.`);
-        }
-        node.name = item.name;
-        break;
-      case "unary":
-        if (!UNARY_OPS.includes(item.op as never)) return fail(`Toán tử một ngôi không hỗ trợ ở '${id}'.`);
-        if (typeof item.operand !== "string") return fail(`Biểu thức '${id}' cần 'operand'.`);
-        node.op = item.op as string;
-        node.operand = item.operand;
-        break;
-      case "binary":
-      case "compare":
-      case "logic": {
-        const allowed: readonly string[] =
-          kind === "binary" ? ARITHMETIC_OPS : kind === "compare" ? COMPARE_OPS : LOGIC_OPS;
-        if (typeof item.op !== "string" || !allowed.includes(item.op)) {
-          return fail(`Toán tử không dùng được với loại '${kind}' ở '${id}'.`);
-        }
-        if (typeof item.left !== "string" || typeof item.right !== "string") {
-          return fail(`Biểu thức '${id}' cần 'left' và 'right'.`);
-        }
-        node.op = item.op;
-        node.left = item.left;
-        node.right = item.right;
-        break;
-      }
-      default:
-        return fail(`Loại biểu thức không hỗ trợ: ${String(kind)}.`);
-    }
-    expressions.push(node);
-    exprById.set(id, node);
+  // ── §L2: biểu thức INLINE → biểu diễn nội bộ (TẤT ĐỊNH) ──
+  let normalized: { expressions: ProgramExpression[]; statements: ProgramStatement[] };
+  try {
+    normalized = normalizeInlineProgram(r.statements);
+  } catch (e) {
+    return fail((e as Error).message);
   }
+  const expressions = normalized.expressions;
+  const exprById = new Map(expressions.map((e) => [e.id, e]));
   for (const node of expressions) {
-    for (const ref of [node.operand, node.left, node.right]) {
-      if (ref != null && !exprById.has(ref)) return fail(`Biểu thức '${node.id}' tham chiếu '${ref}' không tồn tại.`);
+    if (node.kind === "var" && !varTypes.has(node.name!)) {
+      return fail(`Chương trình dùng biến '${node.name}' chưa được khai báo.`);
     }
   }
 
-  // độ sâu + vòng
-  const depth = new Map<string, number>();
-  const visiting = new Set<string>();
-  const walkDepth = (id: string): number | null => {
-    const cached = depth.get(id);
-    if (cached !== undefined) return cached;
-    if (visiting.has(id)) return null;
-    visiting.add(id);
-    const node = exprById.get(id)!;
-    let best = 0;
-    for (const child of [node.operand, node.left, node.right]) {
-      if (child == null) continue;
-      const d = walkDepth(child);
-      if (d === null) return null;
-      best = Math.max(best, d);
-    }
-    visiting.delete(id);
-    depth.set(id, best + 1);
-    return best + 1;
-  };
-  for (const node of expressions) {
-    const d = walkDepth(node.id);
-    if (d === null) return fail(`Biểu thức '${node.id}' tham chiếu vòng.`);
-    if (d > PROGRAM_LIMITS.maxExpressionDepth) {
-      return fail(`Biểu thức '${node.id}' lồng quá ${PROGRAM_LIMITS.maxExpressionDepth} tầng.`);
-    }
-  }
-
-  // câu lệnh
-  const rawStmts = r.statements;
-  if (!Array.isArray(rawStmts) || rawStmts.length === 0) return fail("Cần ít nhất một câu lệnh.");
+  // ── câu lệnh ──
+  const rawStmts = normalized.statements;
+  if (rawStmts.length === 0) return fail("Cần ít nhất một câu lệnh.");
   if (rawStmts.length > PROGRAM_LIMITS.maxStatementNodes) {
     return fail(`Tối đa ${PROGRAM_LIMITS.maxStatementNodes} câu lệnh.`);
   }
   const statements: ProgramStatement[] = [];
   const stmtById = new Map<string, ProgramStatement>();
-  for (const item of rawStmts as Record<string, unknown>[]) {
-    const id = item?.id;
-    if (typeof id !== "string" || !id.trim()) return fail("Mỗi câu lệnh phải có 'id'.");
-    if (stmtById.has(id)) return fail(`Câu lệnh trùng id: '${id}'.`);
-    const kind = item.kind as StatementKind;
-    const node: ProgramStatement = { id, kind, then_body: [], else_body: [], body: [] };
-    if (kind === "assign") {
-      if (typeof item.target !== "string" || !varTypes.has(item.target)) {
-        return fail(`Câu lệnh '${id}' gán cho biến chưa khai báo.`);
-      }
-      if (typeof item.value !== "string" || !exprById.has(item.value)) {
-        return fail(`Câu lệnh '${id}' cần 'value' là id biểu thức.`);
-      }
-      node.target = item.target;
-      node.value = item.value;
-    } else if (kind === "output") {
-      if (typeof item.value !== "string" || !exprById.has(item.value)) {
-        return fail(`Câu lệnh '${id}' cần 'value' là id biểu thức.`);
-      }
-      node.value = item.value;
-    } else if (kind === "if" || kind === "while") {
-      if (typeof item.condition !== "string" || !exprById.has(item.condition)) {
-        return fail(`Câu lệnh '${id}' cần 'condition' là id biểu thức.`);
-      }
-      node.condition = item.condition;
-      if (kind === "if") {
-        node.then_body = Array.isArray(item.then_body) ? (item.then_body as string[]) : [];
-        node.else_body = Array.isArray(item.else_body) ? (item.else_body as string[]) : [];
-        if (node.then_body.length === 0) return fail(`Rẽ nhánh '${id}' phải có nhánh đúng.`);
-      } else {
-        node.body = Array.isArray(item.body) ? (item.body as string[]) : [];
-        if (node.body.length === 0) return fail(`Vòng lặp '${id}' phải có thân.`);
-        if (!isInt(item.max_iterations) || item.max_iterations < 1) {
-          return fail(`Vòng lặp '${id}' phải khai 'max_iterations'.`);
-        }
-        if (item.max_iterations > PROGRAM_LIMITS.maxWhileIterations) {
-          return fail(`'max_iterations' của '${id}' vượt ${PROGRAM_LIMITS.maxWhileIterations}.`);
-        }
-        node.max_iterations = item.max_iterations;
-      }
-    } else {
-      return fail(`Loại câu lệnh không hỗ trợ: ${String(kind)}.`);
+  for (const st of rawStmts) {
+    if (typeof st.id !== "string" || !st.id.trim()) return fail("Mỗi câu lệnh phải có 'id'.");
+    if (stmtById.has(st.id)) return fail(`Câu lệnh trùng id: '${st.id}'.`);
+    if (st.kind === "assign" && (typeof st.target !== "string" || !varTypes.has(st.target))) {
+      return fail(`Câu lệnh '${st.id}' gán cho biến chưa khai báo.`);
     }
-    statements.push(node);
-    stmtById.set(id, node);
+    if (st.kind === "if" && (st.then_body ?? []).length === 0) {
+      return fail(`Rẽ nhánh '${st.id}' phải có nhánh đúng.`);
+    }
+    if (st.kind === "while") {
+      if ((st.body ?? []).length === 0) return fail(`Vòng lặp '${st.id}' phải có thân.`);
+      if (!isInt(st.max_iterations)) return fail(`Vòng lặp '${st.id}' phải khai 'max_iterations'.`);
+      if (st.max_iterations! < 1 || st.max_iterations! > PROGRAM_LIMITS.maxWhileIterations) {
+        return fail(`'max_iterations' của '${st.id}' vượt ${PROGRAM_LIMITS.maxWhileIterations}.`);
+      }
+    }
+    statements.push(st);
+    stmtById.set(st.id, st);
   }
 
   const main = r.main;
@@ -307,7 +365,6 @@ export function validateProgramSpec(raw: unknown): ProgramValidation {
     if (!used.has(st.id)) return fail(`Câu lệnh '${st.id}' không nằm trong chương trình.`);
   }
 
-  // độ sâu lồng
   const nestingError = (ids: string[], level: number): string | null => {
     for (const id of ids) {
       const st = stmtById.get(id)!;
@@ -401,6 +458,53 @@ export function validateProgramSpec(raw: unknown): ProgramValidation {
       }
     }
   }
+
+
+  // ── §L1: DEFINITE ASSIGNMENT — đọc biến chưa chắc có giá trị là TỪ CHỐI ──
+  const readsOf = (eid: string): string[] => {
+    const n = exprById.get(eid)!;
+    if (n.kind === "var") return [n.name!];
+    const out: string[] = [];
+    for (const k of ["operand", "left", "right"] as const) {
+      const child = n[k];
+      if (child != null) out.push(...readsOf(child));
+    }
+    return out;
+  };
+  let daError: string | null = null;
+  const checkRead = (eid: string, init: Set<string>, where: string) => {
+    if (daError) return;
+    const missing = readsOf(eid).filter((v) => !init.has(v));
+    if (missing.length > 0) {
+      daError = `${where} đọc biến ${missing.join(", ")} khi biến đó chưa chắc chắn có giá trị.`;
+    }
+  };
+  const walkDA = (ids: string[], init: Set<string>): Set<string> => {
+    let cur = new Set(init);
+    for (const id of ids) {
+      if (daError) return cur;
+      const st = stmtById.get(id)!;
+      if (st.kind === "assign") {
+        checkRead(st.value!, cur, `Câu lệnh gán '${id}'`);
+        cur.add(st.target!);
+      } else if (st.kind === "output") {
+        checkRead(st.value!, cur, `Câu lệnh hiển thị '${id}'`);
+      } else if (st.kind === "if") {
+        checkRead(st.condition!, cur, `Điều kiện của '${id}'`);
+        const afterThen = walkDA(st.then_body ?? [], cur);
+        if ((st.else_body ?? []).length > 0) {
+          const afterElse = walkDA(st.else_body ?? [], cur);
+          cur = new Set([...afterThen].filter((v) => afterElse.has(v)));
+        }
+      } else {
+        checkRead(st.condition!, cur, `Điều kiện của vòng lặp '${id}'`);
+        walkDA(st.body ?? [], cur);   // while có thể chạy 0 lượt ⇒ KHÔNG mở rộng
+      }
+    }
+    return cur;
+  };
+  walkDA(main as string[], new Set(variables.filter((v) => v.initialized).map((v) => v.name)));
+  if (daError) return fail(daError);
 
   return {
     ok: true,
@@ -514,9 +618,13 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
 
   const b = new TraceBuilder([]);
   const env = new Map<string, Value>();
+  // §L1: CHỈ nạp biến đã khởi tạo. Biến khai báo mà chưa có giá trị KHÔNG xuất
+  // hiện trong `Snapshot.vars` — renderer không được hiểu nhầm là có giá trị thật.
   for (const v of spec.variables) {
-    env.set(v.name, v.type === "integer" ? (v.int_value as number) : (v.bool_value as boolean));
-    b.setVar(v.name, v.type === "integer" ? (v.int_value as number) : (v.bool_value as boolean));
+    if (!v.initialized) continue;
+    const seed = v.type === "integer" ? (v.int_value as number) : (v.bool_value as boolean);
+    env.set(v.name, seed);
+    b.setVar(v.name, seed);
   }
 
   const outputs: string[] = [];
@@ -530,8 +638,14 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
         return n.int_value as number;
       case "bool":
         return n.bool_value as boolean;
-      case "var":
+      case "var": {
+        // Lưới an toàn runtime: spec sai lọt qua validator vẫn KHÔNG được đọc
+        // biến chưa có giá trị (thà dừng còn hơn tính bằng undefined).
+        if (!env.has(n.name!)) {
+          throw new Error(`Biến '${n.name}' chưa có giá trị tại bước này.`);
+        }
         return env.get(n.name!)!;
+      }
       case "unary": {
         const v = evalExpr(n.operand!);
         return n.op === "not" ? !(v as boolean) : -(v as number);
@@ -678,7 +792,9 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
   runBlock(spec.main);
 
   const finalVars = spec.variables
-    .map((v) => `${v.name} = ${fmtValue(env.get(v.name)!)}`)
+    .map((v) => (env.has(v.name)
+      ? `${v.name} = ${fmtValue(env.get(v.name)!)}`
+      : `${v.name} chưa có giá trị`))
     .join(", ");
   const result =
     completion === "completed"
