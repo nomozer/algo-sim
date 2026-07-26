@@ -53,8 +53,17 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   Chưa có prediction/what-if ⇒ đây là năng lực **quan sát**, chưa phải tương tác.
 > - Chưa khai `library_discoverable` (chưa có đề mẫu công khai).
 > - `CACHE_VERSION` **22→23** · family **11** · target **21→22**.
-> - **CHƯA làm (không claim):** review thị giác Chrome · live LLM. Offline PASS
->   **không** phải bằng chứng đường NL → spec.
+> - **Review thị giác Chrome: XONG** (`w3/character_encoding_visual_review.md`) —
+>   4 fixture · **16 ảnh** (desktop 11 · 768px 5) · **REAL_VISUAL 4/4 · BROKEN 0**
+>   · 2 lỗi trình bày phát hiện và đã vá (thuyết minh lặp ở bước cuối; ký tự chữ
+>   số `'7'` in trần dễ đọc thành **số** 7 → nay bọc nháy). Chứng minh bằng ảnh:
+>   bảng hiện DẦN thật (DOM bước đầu không chứa 65/dãy bit), `ế` → U+1EBF → 7871
+>   → `1111010111111` không đệm, emoji bị từ chối sạch không hiện hai hàng
+>   surrogate, 768px không tràn.
+> - **CHƯA làm (không claim):** **live LLM**. Offline + visual PASS **không** phải
+>   bằng chứng đường NL → spec.
+> - Giới hạn nhận: chip domain hiện "HỆ CƠ SỐ" (nhãn domain `binary`, đổi sẽ ảnh
+>   hưởng cả hai target đổi số — ngoài phạm vi VR).
 >
 > ### Wave 2C — luồng điều khiển hữu hạn (XONG offline)
 >
@@ -536,7 +545,7 @@ scan HOÃN có chủ đích.
 | | |
 |---|---|
 | pytest | **1106 pass, 2 skipped, 1 deselected** (đo lại 2026-07-26 sau W3; 0 API call thật — guard là bằng chứng) |
-| vitest | **661 pass / 49 file** (đo lại 2026-07-26 sau W3; 0 network call) |
+| vitest | **664 pass / 49 file** (đo lại 2026-07-26 sau W3-VR; 0 network call) |
 | catalog conformance | **22 target · conformance 0 · ownership 0 · parity 0 · PASS** (`scripts/catalog_runtime_matrix.py`, 2026-07-26) |
 | audit bố cục | `npm run audit:layout` — **4/4 route sạch** (đo lại tại Task 13: vẫn 4/4 — M13 chỉ đổi nguồn text nhãn, không đổi CSS/layout; Chrome thật, CDP; đã chứng minh bằng tiêm lỗi giả ở M9-UX7) |
 | build | `tsc -b && vite build` sạch (đo lại 2026-07-25) — bundle chính ~357KB; chunk Three.js 544KB **code-split**, chỉ tải khi bấm 3D |

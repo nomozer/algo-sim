@@ -1,0 +1,915 @@
+{
+  "wave": "M17 W3-VR — Character Encoding Browser Visual Review",
+  "target": "binary.character_encoding",
+  "head_before": "4ab1262",
+  "generated_at": "2026-07-26T15:45:08.494Z",
+  "method": "Chrome that qua CDP; viewport dat TRUOC khi trang dung; fixture di qua CHINH validateCharEncodingSpec + runCharacterEncoding; nhi phan do toBase() cua base_conversion sinh. Nguoi xem toan bo PNG cham.",
+  "metrics": {
+    "fixtures_reviewed": 4,
+    "screenshots": 16,
+    "desktop_screenshots": 11,
+    "narrow_screenshots": 5,
+    "issues_found": 2,
+    "issues_fixed": 2,
+    "blockers_remaining": 0,
+    "REAL_VISUAL": 4,
+    "PARTIAL_VISUAL": 0,
+    "BROKEN_VISUAL": 0,
+    "assertion_issues_after_fix": []
+  },
+  "fixture_status": {
+    "vr-enc1-ascii-one-char": {
+      "status": "REAL_VISUAL",
+      "criteria": {
+        "CHARACTER_CLEAR": "PASS",
+        "CURRENT_ROW_CLEAR": "PASS",
+        "CODE_POINT_CLEAR": "PASS",
+        "DECIMAL_CLEAR": "PASS",
+        "BINARY_CLEAR": "PASS",
+        "PROGRESSIVE_REVEAL_PASS": "PASS",
+        "TIMELINE_CONTROL_PASS": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS",
+        "RESPONSIVE_PASS": "N/A",
+        "REFUSAL_CLEAR": "N/A"
+      },
+      "note": "initial chi hien 'A' + ba o '…'; 65 xuat hien SAU buoc tra ma; day bit SAU buoc doi co so. Dung 4 pha."
+    },
+    "vr-enc2-ascii-string": {
+      "status": "REAL_VISUAL",
+      "criteria": {
+        "CHARACTER_CLEAR": "PASS",
+        "CURRENT_ROW_CLEAR": "PASS",
+        "CODE_POINT_CLEAR": "PASS",
+        "DECIMAL_CLEAR": "PASS",
+        "BINARY_CLEAR": "PASS",
+        "PROGRESSIVE_REVEAL_PASS": "PASS",
+        "TIMELINE_CONTROL_PASS": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS",
+        "RESPONSIVE_PASS": "PASS",
+        "REFUSAL_CLEAR": "N/A"
+      },
+      "note": "T(84)/i(105)/n(110) dung thu tu va dung gia tri; hang chua xu ly khong co ket qua that; bang du 3 hang chi o buoc cuoi."
+    },
+    "vr-enc3-unicode-precomposed": {
+      "status": "REAL_VISUAL",
+      "criteria": {
+        "CHARACTER_CLEAR": "PASS",
+        "CURRENT_ROW_CLEAR": "PASS",
+        "CODE_POINT_CLEAR": "PASS",
+        "DECIMAL_CLEAR": "PASS",
+        "BINARY_CLEAR": "PASS",
+        "PROGRESSIVE_REVEAL_PASS": "PASS",
+        "TIMELINE_CONTROL_PASS": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS",
+        "RESPONSIVE_PASS": "PASS",
+        "REFUSAL_CLEAR": "N/A"
+      },
+      "note": "'e' co dau hien dung, MOT code point U+1EBF, thap phan 7871, nhi phan 1111010111111 khong dem — khop toBase(7871,2). Khong bo dau, khong ky tu thay the."
+    },
+    "vr-enc4-emoji-refusal": {
+      "status": "REAL_VISUAL",
+      "criteria": {
+        "REFUSAL_CLEAR": "PASS",
+        "TERMINOLOGY_CORRECT": "PASS",
+        "LAYOUT_PASS": "PASS",
+        "RESPONSIVE_PASS": "PASS",
+        "CHARACTER_CLEAR": "N/A",
+        "CURRENT_ROW_CLEAR": "N/A",
+        "CODE_POINT_CLEAR": "N/A",
+        "DECIMAL_CLEAR": "N/A",
+        "BINARY_CLEAR": "N/A",
+        "PROGRESSIVE_REVEAL_PASS": "N/A",
+        "TIMELINE_CONTROL_PASS": "N/A"
+      },
+      "note": "KHONG mount mo phong, KHONG hai hang surrogate. Tieu de 'NGOAI DANH MUC MO PHONG' dung ban chat (capability_gap, khong phai thieu du kien). Thong diep noi ro chi ho tro BMP <= 65535."
+    }
+  },
+  "issues": [
+    {
+      "id": "W3-VR1",
+      "severity": "minor",
+      "fixture": "tat ca, buoc cuoi",
+      "symptom": "Bang thuyet minh va bang ket qua hien CUNG MOT cau.",
+      "cause": "Renderer luon ve ca hai o buoc cuoi.",
+      "fix": "An bang thuyet minh khi trung khit cau ket qua.",
+      "note": "CUNG LOP loi da gap o W2C-VR3 — module moi viet lai tu dau nen khong mang theo ban va."
+    },
+    {
+      "id": "W3-VR2",
+      "severity": "minor",
+      "fixture": "ky tu chu so",
+      "symptom": "O 'Ky tu' hien 7 tran, canh cot 'Thap phan 55' rat de doc thanh SO 7.",
+      "cause": "Renderer in thang label.",
+      "fix": "displayChar(): ky tu in duoc thi boc nhay ('7'); ky tu co nhan mo ta (dau cach) giu nguyen nhan.",
+      "note": "Dung diem nham ma bai hoc nay ton tai de sua."
+    }
+  ],
+  "limitations": [
+    "Chip domain hien 'HE CO SO' (nhan cua domain binary) cho mot bai ma hoa ky tu — dung ve mat dang ky, hoi lech ve mat ngu nghia. Doi nhan domain anh huong ca binary.decimal_to_binary/base_conversion nen NGOAI pham vi VR nay.",
+    "Learner action chi la dieu khien timeline; chua co prediction/what-if.",
+    "Panel ben phai (Quan sat) o 768px nam sau nut toggle cua app shell — hanh vi CHUNG moi domain."
+  ],
+  "records": [
+    {
+      "fixture_id": "vr-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "initial",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc1-ascii-one-char-desktop-initial.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 0,
+        "step_total": 5,
+        "phase_index": 1,
+        "current_char_index": 0,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "Xét ký tự thứ 1: A."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'A' … … …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' … … … Xét ký tự thứ 1: A. QUAN SÁT Ký tự đang xét: 'A' Hỏi AI về bước này Tự chạy Đặt lại Bước 1 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "initial KHÔNG lộ 65/nhị phân; 65 chỉ sau tra mã; bit chỉ sau đổi cơ số"
+    },
+    {
+      "fixture_id": "vr-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "map_to_code",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc1-ascii-one-char-desktop-map_to_code.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 1,
+        "step_total": 5,
+        "phase_index": 2,
+        "current_char_index": 0,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "Tra bảng mã: A có mã 65."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'A' U+0041 65 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 … Tra bảng mã: A có mã 65. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Hỏi AI về bước này Tự chạy Đặt lại Bước 2 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "initial KHÔNG lộ 65/nhị phân; 65 chỉ sau tra mã; bit chỉ sau đổi cơ số"
+    },
+    {
+      "fixture_id": "vr-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "convert_to_binary",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc1-ascii-one-char-desktop-convert_to_binary.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 2,
+        "step_total": 5,
+        "phase_index": 3,
+        "current_char_index": 0,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "Đổi mã 65 sang nhị phân: 1000001."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'A' U+0041 65 1000001",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 1000001 Đổi mã 65 sang nhị phân: 1000001. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Dãy bit: 1000001 Hỏi AI về bước này Tự chạy Đặt lại Bước 3 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "initial KHÔNG lộ 65/nhị phân; 65 chỉ sau tra mã; bit chỉ sau đổi cơ số"
+    },
+    {
+      "fixture_id": "vr-enc1-ascii-one-char",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc1-ascii-one-char-desktop-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "A",
+        "encoding": "ascii",
+        "cursor": 4,
+        "step_total": 5,
+        "phase_index": 1,
+        "current_char_index": 0,
+        "committed_rows": 1,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "A",
+            "label": "A",
+            "cp": 65,
+            "dec": 65,
+            "bin": "1000001"
+          }
+        ],
+        "narration": "Đã mã hoá 1 ký tự theo bảng mã ASCII."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 1000001 Đã mã hoá 1 ký tự theo bảng mã ASCII. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Dãy bit: 1000001 Hỏi AI về bước này Tự chạy Đặt lại Bước 5 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "initial KHÔNG lộ 65/nhị phân; 65 chỉ sau tra mã; bit chỉ sau đổi cơ số"
+    },
+    {
+      "fixture_id": "vr-enc2-ascii-string",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "initial",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc2-ascii-string-desktop-initial.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 0,
+        "step_total": 13,
+        "phase_index": 1,
+        "current_char_index": 0,
+        "committed_rows": 0,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Xét ký tự thứ 1: T."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'T' … … …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' … … … Xét ký tự thứ 1: T. QUAN SÁT Ký tự đang xét: 'T' Hỏi AI về bước này Tự chạy Đặt lại Bước 1 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "T,i,n đúng thứ tự; hàng chưa xử lý KHÔNG có kết quả thật; bảng đủ chỉ ở cuối"
+    },
+    {
+      "fixture_id": "vr-enc2-ascii-string",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "mid_second_char",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc2-ascii-string-desktop-mid_second_char.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 5,
+        "step_total": 13,
+        "phase_index": 2,
+        "current_char_index": 1,
+        "committed_rows": 1,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Tra bảng mã: i có mã 105."
+      },
+      "audit": {
+        "row_count_dom": 2,
+        "current_row_count": 1,
+        "current_row_text": "2 'i' U+0069 105 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' U+0054 84 1010100 2 'i' U+0069 105 … Tra bảng mã: i có mã 105. QUAN SÁT Ký tự đang xét: 'i' Mã thập phân: 105 Hỏi AI về bước này Tự chạy Đặt lại Bước 6 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "T,i,n đúng thứ tự; hàng chưa xử lý KHÔNG có kết quả thật; bảng đủ chỉ ở cuối"
+    },
+    {
+      "fixture_id": "vr-enc2-ascii-string",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc2-ascii-string-desktop-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 12,
+        "step_total": 13,
+        "phase_index": 1,
+        "current_char_index": 2,
+        "committed_rows": 3,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Đã mã hoá 3 ký tự theo bảng mã ASCII."
+      },
+      "audit": {
+        "row_count_dom": 3,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' U+0054 84 1010100 2 'i' U+0069 105 1101001 3 'n' U+006E 110 1101110 Đã mã hoá 3 ký tự theo bảng mã ASCII. QUAN SÁT Ký tự đang xét: 'n' Mã thập phân: 110 Dãy bit: 1101110 Hỏi AI về bước này Tự chạy Đặt lại Bước 13 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "T,i,n đúng thứ tự; hàng chưa xử lý KHÔNG có kết quả thật; bảng đủ chỉ ở cuối"
+    },
+    {
+      "fixture_id": "vr-enc3-unicode-precomposed",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "initial",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc3-unicode-precomposed-desktop-initial.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "ế",
+        "encoding": "unicode_codepoint",
+        "cursor": 0,
+        "step_total": 5,
+        "phase_index": 1,
+        "current_char_index": 0,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "ế",
+            "label": "ế",
+            "cp": 7871,
+            "dec": 7871,
+            "bin": "1111010111111"
+          }
+        ],
+        "narration": "Xét ký tự thứ 1: ế."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'ế' … … …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “ế” · Bảng mã: Unicode code point Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'ế' … … … Xét ký tự thứ 1: ế. QUAN SÁT Ký tự đang xét: 'ế' Hỏi AI về bước này Tự chạy Đặt lại Bước 1 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "hiện đúng 'ế', MỘT code point U+1EBF, decimal 7871, không bỏ dấu"
+    },
+    {
+      "fixture_id": "vr-enc3-unicode-precomposed",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "map_to_code",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc3-unicode-precomposed-desktop-map_to_code.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "ế",
+        "encoding": "unicode_codepoint",
+        "cursor": 1,
+        "step_total": 5,
+        "phase_index": 2,
+        "current_char_index": 0,
+        "committed_rows": 0,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "ế",
+            "label": "ế",
+            "cp": 7871,
+            "dec": 7871,
+            "bin": "1111010111111"
+          }
+        ],
+        "narration": "Tra bảng mã: ế có mã 7871."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'ế' U+1EBF 7871 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “ế” · Bảng mã: Unicode code point Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'ế' U+1EBF 7871 … Tra bảng mã: ế có mã 7871. QUAN SÁT Ký tự đang xét: 'ế' Mã thập phân: 7871 Hỏi AI về bước này Tự chạy Đặt lại Bước 2 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "hiện đúng 'ế', MỘT code point U+1EBF, decimal 7871, không bỏ dấu"
+    },
+    {
+      "fixture_id": "vr-enc3-unicode-precomposed",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc3-unicode-precomposed-desktop-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "ế",
+        "encoding": "unicode_codepoint",
+        "cursor": 4,
+        "step_total": 5,
+        "phase_index": 1,
+        "current_char_index": 0,
+        "committed_rows": 1,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "ế",
+            "label": "ế",
+            "cp": 7871,
+            "dec": 7871,
+            "bin": "1111010111111"
+          }
+        ],
+        "narration": "Đã mã hoá 1 ký tự theo bảng mã Unicode code point."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “ế” · Bảng mã: Unicode code point Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'ế' U+1EBF 7871 1111010111111 Đã mã hoá 1 ký tự theo bảng mã Unicode code point. QUAN SÁT Ký tự đang xét: 'ế' Mã thập phân: 7871 Dãy bit: 1111010111111 Hỏi AI về bước này Tự chạy Đặt lại Bước 5 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "hiện đúng 'ế', MỘT code point U+1EBF, decimal 7871, không bỏ dấu"
+    },
+    {
+      "fixture_id": "vr-enc4-emoji-refusal",
+      "target_id": "binary.character_encoding",
+      "viewport": "desktop",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc4-emoji-refusal-desktop.png",
+      "failure_category": "capability_gap",
+      "reason": "Ký tự '😀' không mã hoá được. Mô phỏng hiện chỉ hỗ trợ ký tự Unicode trong vùng cơ bản (BMP, mã tối đa 65535), chưa hỗ trợ emoji hay ký tự nằm ngoài vùng này.",
+      "audit": {
+        "row_count_dom": 0,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": false,
+        "shows_completion": false,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "NGOÀI DANH MỤC MÔ PHỎNG",
+        "simulation_mounted": false,
+        "leaked_tech_tokens": [],
+        "controls_total": 0,
+        "controls_visible": 0,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới NGOÀI DANH MỤC MÔ PHỎNG Ký tự '😀' không mã hoá được. Mô phỏng hiện chỉ hỗ trợ ký tự Unicode trong vùng cơ bản (BMP, mã tối đa 65535), chưa hỗ trợ emoji hay ký tự nằm ngoài vùng này. Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...). Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (3) Mã hoá ký tự Nhị phân · bước 5 / 5 · vừa xong Tiếp tục"
+      },
+      "expect": "KHÔNG dựng mô phỏng, KHÔNG hiện hai hàng surrogate, không lộ token kỹ thuật"
+    },
+    {
+      "fixture_id": "vr-enc2-ascii-string",
+      "target_id": "binary.character_encoding",
+      "viewport": "narrow",
+      "phase": "initial",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc2-ascii-string-narrow-initial.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 0,
+        "step_total": 13,
+        "phase_index": 1,
+        "current_char_index": 0,
+        "committed_rows": 0,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Xét ký tự thứ 1: T."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 1,
+        "current_row_text": "1 'T' … … …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' … … … Xét ký tự thứ 1: T. Tự chạy Đặt lại Bước 1 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "T,i,n đúng thứ tự; hàng chưa xử lý KHÔNG có kết quả thật; bảng đủ chỉ ở cuối"
+    },
+    {
+      "fixture_id": "vr-enc2-ascii-string",
+      "target_id": "binary.character_encoding",
+      "viewport": "narrow",
+      "phase": "mid_second_char",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc2-ascii-string-narrow-mid_second_char.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 5,
+        "step_total": 13,
+        "phase_index": 2,
+        "current_char_index": 1,
+        "committed_rows": 1,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Tra bảng mã: i có mã 105."
+      },
+      "audit": {
+        "row_count_dom": 2,
+        "current_row_count": 1,
+        "current_row_text": "2 'i' U+0069 105 …",
+        "table_present": true,
+        "shows_completion": false,
+        "shows_placeholder": true,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' U+0054 84 1010100 2 'i' U+0069 105 … Tra bảng mã: i có mã 105. Tự chạy Đặt lại Bước 6 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "T,i,n đúng thứ tự; hàng chưa xử lý KHÔNG có kết quả thật; bảng đủ chỉ ở cuối"
+    },
+    {
+      "fixture_id": "vr-enc2-ascii-string",
+      "target_id": "binary.character_encoding",
+      "viewport": "narrow",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc2-ascii-string-narrow-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "Tin",
+        "encoding": "ascii",
+        "cursor": 12,
+        "step_total": 13,
+        "phase_index": 1,
+        "current_char_index": 2,
+        "committed_rows": 3,
+        "rows_total": 3,
+        "rows": [
+          {
+            "char": "T",
+            "label": "T",
+            "cp": 84,
+            "dec": 84,
+            "bin": "1010100"
+          },
+          {
+            "char": "i",
+            "label": "i",
+            "cp": 105,
+            "dec": 105,
+            "bin": "1101001"
+          },
+          {
+            "char": "n",
+            "label": "n",
+            "cp": 110,
+            "dec": 110,
+            "bin": "1101110"
+          }
+        ],
+        "narration": "Đã mã hoá 3 ký tự theo bảng mã ASCII."
+      },
+      "audit": {
+        "row_count_dom": 3,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'T' U+0054 84 1010100 2 'i' U+0069 105 1101001 3 'n' U+006E 110 1101110 Đã mã hoá 3 ký tự theo bảng mã ASCII. Tự chạy Đặt lại Bước 13 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "T,i,n đúng thứ tự; hàng chưa xử lý KHÔNG có kết quả thật; bảng đủ chỉ ở cuối"
+    },
+    {
+      "fixture_id": "vr-enc3-unicode-precomposed",
+      "target_id": "binary.character_encoding",
+      "viewport": "narrow",
+      "phase": "final",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc3-unicode-precomposed-narrow-final.png",
+      "engine": {
+        "target_id": "binary.character_encoding",
+        "text": "ế",
+        "encoding": "unicode_codepoint",
+        "cursor": 4,
+        "step_total": 5,
+        "phase_index": 1,
+        "current_char_index": 0,
+        "committed_rows": 1,
+        "rows_total": 1,
+        "rows": [
+          {
+            "char": "ế",
+            "label": "ế",
+            "cp": 7871,
+            "dec": 7871,
+            "bin": "1111010111111"
+          }
+        ],
+        "narration": "Đã mã hoá 1 ký tự theo bảng mã Unicode code point."
+      },
+      "audit": {
+        "row_count_dom": 1,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": true,
+        "shows_completion": true,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "HỆ CƠ SỐ",
+        "simulation_mounted": true,
+        "leaked_tech_tokens": [],
+        "controls_total": 6,
+        "controls_visible": 6,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “ế” · Bảng mã: Unicode code point Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'ế' U+1EBF 7871 1111010111111 Đã mã hoá 1 ký tự theo bảng mã Unicode code point. Tự chạy Đặt lại Bước 5 / 5 Tốc độ ← → tiến/lùi · Space tự chạy"
+      },
+      "expect": "hiện đúng 'ế', MỘT code point U+1EBF, decimal 7871, không bỏ dấu"
+    },
+    {
+      "fixture_id": "vr-enc4-emoji-refusal",
+      "target_id": "binary.character_encoding",
+      "viewport": "narrow",
+      "phase": "notice",
+      "png": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w3/visual/character-encoding/vr-enc4-emoji-refusal-narrow.png",
+      "failure_category": "capability_gap",
+      "reason": "Ký tự '😀' không mã hoá được. Mô phỏng hiện chỉ hỗ trợ ký tự Unicode trong vùng cơ bản (BMP, mã tối đa 65535), chưa hỗ trợ emoji hay ký tự nằm ngoài vùng này.",
+      "audit": {
+        "row_count_dom": 0,
+        "current_row_count": 0,
+        "current_row_text": null,
+        "table_present": false,
+        "shows_completion": false,
+        "shows_placeholder": false,
+        "notice_present": true,
+        "notice_eyebrow": "NGOÀI DANH MỤC MÔ PHỎNG",
+        "simulation_mounted": false,
+        "leaked_tech_tokens": [],
+        "controls_total": 0,
+        "controls_visible": 0,
+        "page_overflows_horizontally": false,
+        "table_overflows_viewport": false,
+        "clipped_elements": 0,
+        "text_sample": "Em muốn khám phá bài toán nào? ● Máy chủ phân tích chưa chạy — vẫn dùng được các mô phỏng mẫu bên dưới NGOÀI DANH MỤC MÔ PHỎNG Ký tự '😀' không mã hoá được. Mô phỏng hiện chỉ hỗ trợ ký tự Unicode trong vùng cơ bản (BMP, mã tối đa 65535), chưa hỗ trợ emoji hay ký tự nằm ngoài vùng này. Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...). Gợi ý khám phá Xem thư viện Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn Thuật toán trái giữa phải Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần Thuật toán Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt Thuật toán 1 8 1 4 0 2 1 1 Đổi 13 sang nhị phân Nhị phân Đường đi của gói tin Mạng AND Cổng logic AND Lôgic Tiếp tục học Xem tất cả (3) Mã hoá ký tự Nhị phân · bước 5 / 5 · vừa xong Tiếp tục"
+      },
+      "expect": "KHÔNG dựng mô phỏng, KHÔNG hiện hai hàng surrogate, không lộ token kỹ thuật"
+    }
+  ]
+}
