@@ -63,6 +63,17 @@ export type CharEncodingValidation =
   | { ok: true; spec: CharEncodingSpec }
   | { ok: false; error: string };
 
+/**
+ * W3-VR2 — hiển thị ô "Ký tự" sao cho KHÔNG lẫn với con số.
+ * Ký tự `'7'` in trần cạnh cột "Thập phân 55" đọc rất dễ thành *số* 7 — đúng
+ * điểm nhầm mà bài học này tồn tại để sửa. Ký tự in được thì bọc nháy; ký tự đã
+ * có nhãn mô tả (dấu cách…) giữ nguyên nhãn. Đây là TRÌNH BÀY thuần: cả `char`
+ * lẫn `label` đều lấy từ trace, renderer không suy diễn gì thêm.
+ */
+export function displayChar(row: { char: string; label: string }): string {
+  return row.label === row.char ? `'${row.char}'` : row.label;
+}
+
 /** Nhãn learner-facing cho ký tự không nhìn thấy được. */
 function visibleLabel(ch: string, cp: number): string {
   if (ch === " ") return "dấu cách";
@@ -239,7 +250,7 @@ export function CharEncodingWorkspace({ state }: Props) {
             {state.rows.slice(0, shown).map((row) => (
               <tr key={row.index}>
                 <td>{row.index + 1}</td>
-                <td>{row.label}</td>
+                <td>{displayChar(row)}</td>
                 <td>{`U+${row.codePoint.toString(16).toUpperCase().padStart(4, "0")}`}</td>
                 <td>{row.decimal}</td>
                 <td>{row.binary}</td>
@@ -248,7 +259,7 @@ export function CharEncodingWorkspace({ state }: Props) {
             {partial && (
               <tr className="is-current">
                 <td>{(partial.index ?? 0) + 1}</td>
-                <td>{partial.label}</td>
+                <td>{displayChar({ char: partial.char ?? "", label: partial.label ?? "" })}</td>
                 <td>
                   {partial.codePoint === undefined
                     ? "…"
@@ -262,7 +273,12 @@ export function CharEncodingWorkspace({ state }: Props) {
         </table>
       </div>
 
-      <div className="narration-bar">{step.narration}</div>
+      {/* W3-VR1: bước cuối, thuyết minh TRÙNG y hệt băng kết quả — hiện hai lần
+          cùng một câu làm học sinh tưởng là hai thông tin khác nhau. Cùng lớp
+          lỗi đã gặp ở W2C-VR3. */}
+      {!(last && done && done.type === "done" && step.narration === done.result) && (
+        <div className="narration-bar">{step.narration}</div>
+      )}
 
       {last && done && done.type === "done" && (
         <div className="result-banner">
@@ -281,7 +297,7 @@ export function CharEncodingInspector({ state }: Props) {
   if (!current) return null;
   return (
     <div className="stack" style={{ gap: "var(--sp-xs)" }}>
-      <div>{`Ký tự đang xét: ${current.label}`}</div>
+      <div>{`Ký tự đang xét: ${displayChar({ char: current.char ?? "", label: current.label ?? "" })}`}</div>
       {current.decimal !== undefined && <div>{`Mã thập phân: ${current.decimal}`}</div>}
       {current.binary !== undefined && <div>{`Dãy bit: ${current.binary}`}</div>}
     </div>

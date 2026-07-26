@@ -7,6 +7,7 @@ import {
   CharEncodingWorkspace,
   codePointsOf,
   committedRowCount,
+  displayChar,
   makeCharEncodingModule,
   runCharacterEncoding,
   validateCharEncodingSpec,
@@ -231,5 +232,29 @@ describe("module hợp đồng", () => {
       <CharEncodingInspector state={st} config={st.spec} busy={false} dispatch={noop} />,
     );
     expect(html).toContain("65");
+  });
+});
+
+describe("W3-VR — lỗi chỉ review ảnh mới thấy", () => {
+  it("VR1: bước cuối KHÔNG lặp thuyết minh trùng băng kết quả", () => {
+    const st = stateOf(spec({ text: "A" }));
+    const html = workspace({ ...st, cursor: st.trace.steps.length - 1 });
+    const marker = "Đã mã hoá 1 ký tự";
+    const hits = html.split(marker).length - 1;
+    expect(hits).toBe(1);
+  });
+
+  it("VR2: ký tự '7' hiện có dấu nháy — không lẫn với SỐ 7", () => {
+    const st = stateOf(spec({ text: "7" }));
+    const html = workspace({ ...st, cursor: st.trace.steps.length - 1 });
+    expect(html).toContain("&#x27;7&#x27;");   // '7' đã escape trong SSR
+    const { rows } = runCharacterEncoding(parse(spec({ text: "7" })));
+    expect(displayChar(rows[0])).toBe("'7'");
+    expect(rows[0].decimal).toBe(55);
+  });
+
+  it("VR2: ký tự có nhãn mô tả KHÔNG bị bọc nháy", () => {
+    const { rows } = runCharacterEncoding(parse(spec({ text: " " })));
+    expect(displayChar(rows[0])).toBe("dấu cách");
   });
 });
