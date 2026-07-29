@@ -1,0 +1,154 @@
+{
+  "wave": "M17 W3-LIVE-C1 §12/§13",
+  "target": "binary.character_encoding",
+  "generated_at": "2026-07-29T03:46:23.956Z",
+  "source_artifact": "docs/evaluation/m17/w3-live-c1/character_encoding_live_rerun.json",
+  "live_git_sha": "f8f3790d9343a1e7f23b78b2602a1a5aeee50d53",
+  "model": "gemini-2.5-flash",
+  "llm_calls_in_this_step": 0,
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "screenshots": 3,
+  "cases_run": [
+    "E2E-ENC-1"
+  ],
+  "cases_not_measured": [
+    {
+      "e2e_id": "E2E-ENC-2",
+      "from_case": "LIVE-ENC-3",
+      "reason": "live không có candidate được chấp nhận; CẤM dựng config bằng tay"
+    }
+  ],
+  "classification": "REPRESENTATIVE_E2E_VERIFIED",
+  "results": [
+    {
+      "e2e_id": "E2E-ENC-1",
+      "from_case": "LIVE-ENC-1",
+      "from_run": 1,
+      "prompt": "Mô phỏng mã ASCII của ký tự A.",
+      "live_validated_candidate": {
+        "spec_version": "charenc-1.0",
+        "text": "A",
+        "encoding": "ascii"
+      },
+      "live_candidate_sha256": "0217f627de318132981dc66f6d642b592c8dccc8adeb32428ef66b6bec05c429",
+      "browser_loaded_spec": {
+        "spec_version": "charenc-1.0",
+        "text": "A",
+        "encoding": "ascii"
+      },
+      "browser_loaded_sha256": "0217f627de318132981dc66f6d642b592c8dccc8adeb32428ef66b6bec05c429",
+      "checks": {
+        "hash_match": true,
+        "target_runtime_dung": true,
+        "khong_phai_generic": true,
+        "initial_chua_co_binary": true,
+        "mid_co_phep_chia_that": true,
+        "final_binary_do_engine_sinh": true,
+        "text_giu_nguyen": true
+      },
+      "verdict": "PASS",
+      "phases": [
+        {
+          "label": "initial",
+          "step": 0,
+          "png": "E2E-ENC-1-initial.png",
+          "engine": {
+            "target_id": "binary.character_encoding",
+            "loaded_spec": {
+              "spec_version": "charenc-1.0",
+              "text": "A",
+              "encoding": "ascii"
+            },
+            "cursor": 0,
+            "step_total": 13,
+            "phase": "select_character",
+            "division": null,
+            "committed_rows": 0,
+            "rows": [
+              {
+                "char": "A",
+                "cp": 65,
+                "dec": 65,
+                "bin": "1000001"
+              }
+            ],
+            "narration": "Xét ký tự thứ 1: A."
+          },
+          "dom_has_final_binary": false,
+          "dom_excerpt": "AlgoSim Trang chủ Thư viện Lịch sử Quan sát HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' … … … Xét ký tự thứ 1: A. QUAN SÁT Ký tự đang xét: 'A' Hỏi AI về bước này Tự chạy Đặt lại Bước 1 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+        },
+        {
+          "label": "mechanism_mid",
+          "step": 3,
+          "png": "E2E-ENC-1-mechanism_mid.png",
+          "engine": {
+            "target_id": "binary.character_encoding",
+            "loaded_spec": {
+              "spec_version": "charenc-1.0",
+              "text": "A",
+              "encoding": "ascii"
+            },
+            "cursor": 3,
+            "step_total": 13,
+            "phase": "divide_step",
+            "division": {
+              "value": 65,
+              "base": 2,
+              "quotient": 32,
+              "remainder": 1,
+              "digit": "1",
+              "stepIndex": 0,
+              "collected": [
+                "1"
+              ]
+            },
+            "committed_rows": 0,
+            "rows": [
+              {
+                "char": "A",
+                "cp": 65,
+                "dec": 65,
+                "bin": "1000001"
+              }
+            ],
+            "narration": "65 : 2 = 32 dư 1 → chữ số 1. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả."
+          },
+          "dom_has_final_binary": false,
+          "dom_excerpt": "AlgoSim Trang chủ Thư viện Lịch sử Quan sát HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 … Đổi mã của 'A' sang nhị phân — chia liên tiếp cho 2, giữ lại số dư: Số bị chia : 2 Thương Số dư 65 2 32 1 Số dư đã thu (từ trên xuống): 1 Đọc NGƯỢC các số dư từ dưới lên sẽ ra dãy nhị phân. 65 : 2 = "
+        },
+        {
+          "label": "final",
+          "step": 12,
+          "png": "E2E-ENC-1-final.png",
+          "engine": {
+            "target_id": "binary.character_encoding",
+            "loaded_spec": {
+              "spec_version": "charenc-1.0",
+              "text": "A",
+              "encoding": "ascii"
+            },
+            "cursor": 12,
+            "step_total": 13,
+            "phase": "complete",
+            "division": null,
+            "committed_rows": 1,
+            "rows": [
+              {
+                "char": "A",
+                "cp": 65,
+                "dec": 65,
+                "bin": "1000001"
+              }
+            ],
+            "narration": "Đã mã hoá 1 ký tự theo bảng mã ASCII."
+          },
+          "dom_has_final_binary": true,
+          "dom_excerpt": "AlgoSim Trang chủ Thư viện Lịch sử Quan sát HỆ CƠ SỐ Mã hoá ký tự Mã hoá ký tự · từng bước · 2D Chuỗi cần mã hoá: “A” · Bảng mã: ASCII Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 1000001 Đã mã hoá 1 ký tự theo bảng mã ASCII. QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Dãy bit: 1000001 Hỏi AI về bước này Tự chạy Đặt lại Bước 13 / 13 Tốc độ ← → tiến/lùi · Space tự chạy"
+        }
+      ]
+    }
+  ]
+}

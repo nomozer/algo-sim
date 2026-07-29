@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-07-29T03:46:23.956Z",
+  "screenshots": 3,
+  "cases": [
+    {
+      "e2e_id": "E2E-ENC-1",
+      "phases": [
+        "E2E-ENC-1-initial.png",
+        "E2E-ENC-1-mechanism_mid.png",
+        "E2E-ENC-1-final.png"
+      ]
+    }
+  ]
+}
