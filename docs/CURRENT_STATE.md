@@ -72,8 +72,9 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > - Chrome **12 ảnh**, 1 lỗi lặp thuyết minh (W3-SIM-VR1, cùng lớp W3-VR1/
 >   W2C-VR3 — **lần thứ ba**) đã vá + test hồi quy.
 >
-> **REAL_SIMULATION · TIMELINE_CONTROL · 2D.** Vẫn **chưa live LLM**.
-> Bằng chứng: `docs/evaluation/m17/w3-sim/`.
+> **REAL_SIMULATION · TIMELINE_CONTROL · 2D.** Live NL integration: **PARTIAL**.
+> Bằng chứng: `docs/evaluation/m17/w3-sim/` (offline) ·
+> `docs/evaluation/m17/w3-live/` (live).
 > - Chưa khai `library_discoverable` (chưa có đề mẫu công khai).
 > - `CACHE_VERSION` **22→23** · family **11** · target **21→22**.
 > - **Review thị giác Chrome: XONG** (`w3/character_encoding_visual_review.md`) —
@@ -83,10 +84,36 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   bảng hiện DẦN thật (DOM bước đầu không chứa 65/dãy bit), `ế` → U+1EBF → 7871
 >   → `1111010111111` không đệm, emoji bị từ chối sạch không hiện hai hàng
 >   surrogate, 768px không tràn.
-> - **CHƯA làm (không claim):** **live LLM**. Offline + visual PASS **không** phải
->   bằng chứng đường NL → spec.
 > - Giới hạn nhận: chip domain hiện "HỆ CƠ SỐ" (nhãn domain `binary`, đổi sẽ ảnh
 >   hưởng cả hai target đổi số — ngoài phạm vi VR).
+>
+> #### W3-LIVE — smoke NL → spec (2026-07-29): **PARTIAL**
+>
+> 6 case × 2 lượt · `gemini-2.5-flash` · 27/45 HTTP · 0 transient · IN-PROCESS
+> (Docker không chạy ⇒ artifact **không nói gì** về container).
+> Bằng chứng: `docs/evaluation/m17/w3-live/`.
+>
+> - **7/12 PASS · 5/12 thất bại AN TOÀN · mọi trục an toàn = 0**
+>   (`semantic_loss` · `fabricated_input` · `result_leakage` · `generic_leak` ·
+>   `unsafe_acceptance` · `wrong_target_acceptance`).
+> - **Phân loại đúng 6/6**: classify chọn `binary.character_encoding` mọi lượt;
+>   ranh giới ký tự↔số sạch (`"Đổi số 65 sang nhị phân"` → `decimal_to_binary`
+>   2/2). Thiếu dữ kiện và emoji ngoài BMP đều từ chối an toàn 2/2.
+> - **BLOCKER (chưa sửa — cần quyết định phạm vi):** 5/6 lượt của ba case được hỗ
+>   trợ bị chặn ở cổng cơ chế — `capability_gap` / `gate_mechanism_ownership`.
+>   `check_mechanism_consistency_for_target` chỉ kiểm **sở hữu ĐƠN**, trong khi
+>   taxonomy khai năng lực này là **CHUỖI** `character_code_mapping →
+>   non_binary_base`; target cố ý chỉ sở hữu mắt xích đầu. Đề nêu mắt xích thứ
+>   hai ("chuyển mã sang nhị phân") ⇒ gate fail-closed. Lượt PASS duy nhất rơi
+>   vào nhánh permissive (`prescribed = none`) ⇒ **MODEL_VARIABILITY** trên đúng
+>   một trường analyze.
+> - **Hệ quả phải nêu thẳng:** ở baseline này `binary.character_encoding` gần như
+>   **không tiếp cận được end-to-end bằng NL**, dù offline VERIFIED + REAL_VISUAL
+>   + REAL_SIMULATION.
+> - **CHƯA làm (không claim):** engine handoff — engine W3 ở FE, harness FE duy
+>   nhất chạy Chrome (checkpoint cấm) ⇒ `NOT_EXECUTED`; bằng chứng engine là
+>   **kế thừa** offline, không đo ở lượt live này. Ký tự tiếng Việt `U+1EBF`
+>   **chưa đo được** (ENC-3 bị chặn trước khi có candidate).
 >
 > ### Wave 2C — luồng điều khiển hữu hạn (XONG offline)
 >
