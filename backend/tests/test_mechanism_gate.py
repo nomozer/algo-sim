@@ -123,3 +123,79 @@ def test_owned_hop_le_di_tiep():
     r = check({"prescribed_procedure": "positional_representation.binary_positional_weights"},
               CATALOG["binary.decimal_to_binary"])
     assert r is None
+
+
+# ── M17 W3-LIVE-C1: mã hoá ký tự ─────────────────────────────────
+# Root cause ĐO ĐƯỢC (probe live, 3 HTTP): analyze phát `None` (ENC-1/ENC-2) hoặc
+# `binary_positional_weights` (ENC-3) — KHÔNG BAO GIỜ phát cơ chế mà W3 sở hữu,
+# vì `character_code_mapping` chưa từng nằm trong enum analyze. Cách sửa là NỐI
+# cơ chế vào enum (mechanisms.analyze_exposed_values), KHÔNG nới cổng.
+
+W3 = "binary.character_encoding"
+MECH_CHAR_MAP = "positional_representation.character_code_mapping"
+MECH_NON_BINARY = "positional_representation.non_binary_base"
+MECH_BIN_WEIGHTS = "positional_representation.binary_positional_weights"
+
+
+def test_w3_co_che_so_huu_qua_gate():
+    """Cơ chế W3 THẬT SỰ sở hữu phải đi tiếp — nay analyze phát được nó."""
+    assert check({"prescribed_procedure": MECH_CHAR_MAP}, CATALOG[W3]) is None
+
+
+def test_w3_khong_so_huu_co_che_doi_co_so_van_gap():
+    """FAIL-CLOSED giữ nguyên: W3 KHÔNG được cấp quyền lên hai cơ chế đổi cơ số.
+
+    `binary_positional_weights` chính là giá trị đo được đang chặn W3 ở live —
+    nó VẪN phải gap: cơ chế đó gắn với `decimal_to_binary` (chặn cứng 0–255/8
+    bit) nên không chở nổi BMP tới 65535."""
+    for mech in (MECH_BIN_WEIGHTS, MECH_NON_BINARY):
+        r = check({"prescribed_procedure": mech}, CATALOG[W3])
+        assert r is not None and r[0] == ErrorCode.GATE_MECHANISM_OWNERSHIP, mech
+
+
+def test_w3_owned_metadata_khong_chua_co_che_doi_co_so():
+    """Không cấp ownership giả: metadata W3 chỉ có ĐÚNG cơ chế tra bảng mã."""
+    owned = {m for mem in CATALOG[W3].family_memberships for m in mem.owned_mechanisms}
+    assert owned == {MECH_CHAR_MAP}
+    assert MECH_NON_BINARY not in owned
+    assert MECH_BIN_WEIGHTS not in owned
+
+
+def test_w3_co_che_khac_ho_la_family_mismatch():
+    for mech in ("relational_table_query.row_predicate_filter",
+                 "structural_progressive_representation.reveal_sequence",
+                 "tree_traversal.preorder"):
+        r = check({"prescribed_procedure": mech}, CATALOG[W3])
+        assert r is not None and r[0] == ErrorCode.ROUTE_MECHANISM_FAMILY_MISMATCH, mech
+
+
+def test_w3_co_che_khong_ton_tai_fail_closed():
+    for mech in ("positional_representation.khong_ton_tai", "hoan_toan_bia", ""):
+        assert check({"prescribed_procedure": mech}, CATALOG[W3]) is not None, mech
+
+
+def test_target_khac_khong_doi_hanh_vi():
+    """Regression: nối enum KHÔNG được đụng target đã có."""
+    assert check({"prescribed_procedure": MECH_NON_BINARY},
+                 CATALOG["binary.base_conversion"]) is None
+    assert check({"prescribed_procedure": MECH_BIN_WEIGHTS},
+                 CATALOG["binary.base_conversion"]) is None
+    assert check({"prescribed_procedure": "bounded_control_flow.bounded_loop"},
+                 CATALOG["algorithm.bounded_control_flow"]) is None
+    assert check({"prescribed_procedure": "relational_table_query.row_predicate_filter"},
+                 CATALOG["database.relational_table_query"]) is None
+    # W3 KHÔNG được nuốt cơ chế của hàng xóm cùng họ
+    r = check({"prescribed_procedure": MECH_CHAR_MAP}, CATALOG["binary.decimal_to_binary"])
+    assert r is not None and r[0] == ErrorCode.GATE_MECHANISM_OWNERSHIP
+
+
+def test_gate_khong_hard_code_target_id():
+    """§5.13 — cấm special case theo tên target/tiền tố/từ khoá trong cổng."""
+    from pathlib import Path
+
+    import app.simulation.mechanism_gate as gate_mod
+
+    src = Path(gate_mod.__file__).read_text(encoding="utf-8")
+    for banned in ("binary.character_encoding", "character_encoding", "binary.",
+                   "decimal_to_binary", "base_conversion"):
+        assert banned not in src, banned

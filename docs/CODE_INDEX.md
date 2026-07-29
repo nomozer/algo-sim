@@ -16,7 +16,7 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 |---|---|---|
 | Active mainline | `main` | `git branch --show-current` |
 | Baseline | `f2b28e2` (PATCH1 impl `8bd2324` + live evidence) | `git rev-parse HEAD` |
-| `CACHE_VERSION` | **23** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+| `CACHE_VERSION` | **24** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 | `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
 | Family / Target | **11 / 22** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 | ↳ computation / representation | **10 / 1** — xem §0h | `result_authority` trên `FamilyMembership` |

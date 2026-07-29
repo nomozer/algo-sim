@@ -38,6 +38,12 @@ def test_enum_dong_dung_sau_gia_tri():
         "other_unspecified",
         "positional_representation.binary_positional_weights",
         "positional_representation.non_binary_base",
+        # M17 W3-LIVE-C1 — cơ chế tra BẢNG MÃ ký tự. Trước đây họ positional
+        # được liệt kê bằng string VIẾT TAY nên giá trị này bị bỏ sót khi W3
+        # thêm nó vào FAMILY_MECHANISMS: analyze KHÔNG THỂ phát ra cơ chế mà
+        # `binary.character_encoding` sở hữu ⇒ mechanism gate luôn gap. Enum nay
+        # splat thẳng từ taxonomy (anti-pattern #1).
+        "positional_representation.character_code_mapping",
         # M17 W2A — cơ chế duyệt cây (nuôi route-consistency gate)
         "tree_traversal.preorder",
         "tree_traversal.inorder",

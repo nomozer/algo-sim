@@ -131,12 +131,21 @@ def mechanism_family(canonical: str) -> str:
 
 def analyze_exposed_values() -> tuple[str, ...]:
     """Nguồn enum `prescribed_procedure` của ANALYZE_SCHEMA (dẫn xuất — anti-pattern #1).
-    M15: legacy sorting GIỮ NGUYÊN (rev2 điểm 2) + none + positional namespaced."""
+    M15: legacy sorting GIỮ NGUYÊN (rev2 điểm 2) + none + positional namespaced.
+
+    M17 W3-LIVE-C1: họ positional TỪNG được liệt kê bằng hai string VIẾT TAY, nên
+    khi W3 thêm `character_code_mapping` vào `FAMILY_MECHANISMS` thì enum analyze
+    KHÔNG đi theo — đúng anti-pattern #1 (tiền lệ `_GENERIC_SCHEMA` thiếu `drag`:
+    Gemini KHÔNG THỂ phát ra giá trị dù prompt cho phép). Hệ quả đo được: cơ chế
+    DUY NHẤT mà `binary.character_encoding` sở hữu là bất khả phát, nên nhánh
+    direct-ownership của mechanism gate KHÔNG BAO GIỜ thoả mãn được và target chỉ
+    lọt khi analyze tình cờ trả "none"; khi analyze ép cơ chế nó chọn hàng xóm gần
+    nhất còn lại (`binary_positional_weights`) → `capability_gap`.
+    Nay SPLAT thẳng từ taxonomy: thêm cơ chế positional mới là enum tự theo."""
     return (
         NO_PRESCRIPTION,
         *LEGACY_ALIASES.keys(),
-        "positional_representation.binary_positional_weights",
-        "positional_representation.non_binary_base",
+        *FAMILY_MECHANISMS[FamilyId.POSITIONAL_REPRESENTATION],
         # M17 W2A — phơi bày cơ chế duyệt cây để route-consistency (khóa 3 M15)
         # bắt được misroute sang generic bằng MECHANISM + OWNERSHIP (không
         # keyword): analyze nói tree_traversal.* mà classify trả generic →
