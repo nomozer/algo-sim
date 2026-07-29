@@ -1,0 +1,664 @@
+{
+  "checkpoint": "M17 W3-LIVE-C2-PREFLIGHT",
+  "mode": "READ_ONLY — không sửa production, không gọi LLM, không chạy Chrome",
+  "generated_at": "2026-07-29T07:20:34.697931+00:00",
+  "git_sha": "f85c0b8739dff7674784acfa8417bf0e95775dde",
+  "field_contract": {
+    "field": "analysis.prescribed_procedure",
+    "type": "STRING, nullable, KHÔNG nằm trong required",
+    "enum_source": "mechanisms.analyze_exposed_values()",
+    "enum_size": 16,
+    "semantics_per_analyze_md": "CHỈ đặt khi đề ÉP một cách làm CỤ THỂ; mặc định null",
+    "generated_at_code": "ai/pipeline.py::ANALYZE_SCHEMA (dòng ~108)",
+    "normalized_at": "mechanisms.canonical_mechanism (biên alias DUY NHẤT)",
+    "consumed_by": [
+      "ai/pipeline.py::_family_mismatch (route family consistency)",
+      "ai/pipeline.py::_recovery_insufficiency_hint (gợi ý, không quyết định)",
+      "mechanism_gate.check_mechanism_ownership (nhánh selector)",
+      "mechanism_gate.check_mechanism_consistency_for_target (nhánh direct)",
+      "completeness_gate.normalized_requested (gộp với requested_mechanisms)",
+      "evaluation/observer (telemetry)"
+    ],
+    "NOT_used_for": [
+      "chọn engine/executor",
+      "ghi vào candidate spec",
+      "hiển thị cho người học",
+      "quyết định đúng/sai runtime"
+    ],
+    "classification": "A=routing/consistency signal (+ một phần B qua completeness); KHÔNG phải C=runtime dependency, KHÔNG phải D=ownership"
+  },
+  "sibling_field": {
+    "field": "analysis.requested_mechanisms",
+    "semantics_per_analyze_md": "LIỆT KÊ ĐỦ mọi cơ chế đề yêu cầu",
+    "consumed_by": [
+      "completeness_gate.normalized_requested (phát hiện mất mát ngữ nghĩa)"
+    ]
+  },
+  "ownership_is_exclusive": false,
+  "shared_ownership_precedents": {
+    "positional_representation.binary_positional_weights": [
+      "binary.decimal_to_binary",
+      "binary.base_conversion"
+    ],
+    "single_pass_scan.accumulate_conditional": [
+      "algorithm.sum_if",
+      "algorithm.scan"
+    ],
+    "single_pass_scan.count_conditional": [
+      "algorithm.count_if",
+      "algorithm.scan"
+    ],
+    "single_pass_scan.find_equal_early_stop": [
+      "algorithm.linear_search",
+      "algorithm.scan"
+    ],
+    "single_pass_scan.track_extreme": [
+      "algorithm.find_max",
+      "algorithm.find_min",
+      "algorithm.scan"
+    ]
+  },
+  "machine_readable_composition_exists": false,
+  "composition_evidence": "Chuỗi character_code_mapping → non_binary_base CHỈ tồn tại dưới dạng COMMENT (mechanisms.py:26-29, character_encoding.py:16) và prose trong CURRENT_STATE. Không có cấu trúc dữ liệu nào biểu diễn quan hệ giữa hai mechanism.",
+  "mechanisms": {
+    "comparison_sort.adjacent_compare_swap": {
+      "family": "comparison_sort",
+      "owners": [
+        "algorithm.bubble_sort"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "comparison_sort.shift_into_sorted_prefix": {
+      "family": "comparison_sort",
+      "owners": [
+        "algorithm.insertion_sort"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "comparison_sort.select_extreme_repeated": {
+      "family": "comparison_sort",
+      "owners": [
+        "algorithm.selection_sort"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "comparison_sort.partition_recursive": {
+      "family": "comparison_sort",
+      "owners": [],
+      "owner_count": 0,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": true
+    },
+    "comparison_sort.other_unspecified": {
+      "family": "comparison_sort",
+      "owners": [],
+      "owner_count": 0,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": true
+    },
+    "positional_representation.binary_positional_weights": {
+      "family": "positional_representation",
+      "owners": [
+        "binary.base_conversion",
+        "binary.decimal_to_binary"
+      ],
+      "owner_count": 2,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "positional_representation.non_binary_base": {
+      "family": "positional_representation",
+      "owners": [
+        "binary.base_conversion"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "positional_representation.character_code_mapping": {
+      "family": "positional_representation",
+      "owners": [
+        "binary.character_encoding"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "interval_elimination.halve_sorted_interval": {
+      "family": "interval_elimination",
+      "owners": [
+        "algorithm.binary_search"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "relational_table_query.row_predicate_filter": {
+      "family": "relational_table_query",
+      "owners": [
+        "database.relational_table_query"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "relational_table_query.column_projection": {
+      "family": "relational_table_query",
+      "owners": [
+        "database.relational_table_query"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "relational_table_query.stable_sort_by_key": {
+      "family": "relational_table_query",
+      "owners": [
+        "database.relational_table_query"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "relational_table_query.bounded_limit": {
+      "family": "relational_table_query",
+      "owners": [
+        "database.relational_table_query"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "relational_table_query.aggregate_accumulate": {
+      "family": "relational_table_query",
+      "owners": [
+        "database.relational_table_query"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "single_pass_scan.track_extreme": {
+      "family": "single_pass_scan",
+      "owners": [
+        "algorithm.find_max",
+        "algorithm.find_min",
+        "algorithm.scan"
+      ],
+      "owner_count": 3,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "single_pass_scan.accumulate_conditional": {
+      "family": "single_pass_scan",
+      "owners": [
+        "algorithm.scan",
+        "algorithm.sum_if"
+      ],
+      "owner_count": 2,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "single_pass_scan.count_conditional": {
+      "family": "single_pass_scan",
+      "owners": [
+        "algorithm.count_if",
+        "algorithm.scan"
+      ],
+      "owner_count": 2,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "single_pass_scan.find_equal_early_stop": {
+      "family": "single_pass_scan",
+      "owners": [
+        "algorithm.linear_search",
+        "algorithm.scan"
+      ],
+      "owner_count": 2,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "single_pass_scan.configured_single_pass": {
+      "family": "single_pass_scan",
+      "owners": [
+        "algorithm.scan"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "boolean_composition.single_gate_truth_table": {
+      "family": "boolean_composition",
+      "owners": [
+        "logic.and_gate"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "boolean_composition.composed_rule_dag": {
+      "family": "boolean_composition",
+      "owners": [
+        "generic.rule_scene"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "boolean_composition.bounded_gate_dag": {
+      "family": "boolean_composition",
+      "owners": [
+        "logic.boolean_dag"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "graph_traversal.unweighted_hop_bfs": {
+      "family": "graph_traversal",
+      "owners": [
+        "network.packet_routing"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "graph_traversal.breadth_first": {
+      "family": "graph_traversal",
+      "owners": [
+        "network.graph_traversal"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "graph_traversal.depth_first": {
+      "family": "graph_traversal",
+      "owners": [
+        "network.graph_traversal"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "layered_pdu_transform.encapsulate_decapsulate_4layer": {
+      "family": "layered_pdu_transform",
+      "owners": [
+        "network.protocol_encapsulation"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "structural_progressive_representation.reveal_sequence": {
+      "family": "structural_progressive_representation",
+      "owners": [
+        "generic.rule_scene"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "structural_progressive_representation.move_along_path": {
+      "family": "structural_progressive_representation",
+      "owners": [
+        "generic.rule_scene"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": false,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "tree_traversal.preorder": {
+      "family": "tree_traversal",
+      "owners": [
+        "tree.traversal"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "tree_traversal.inorder": {
+      "family": "tree_traversal",
+      "owners": [
+        "tree.traversal"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "tree_traversal.postorder": {
+      "family": "tree_traversal",
+      "owners": [
+        "tree.traversal"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "tree_traversal.level_order": {
+      "family": "tree_traversal",
+      "owners": [
+        "tree.traversal"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": true,
+      "intentional_gap": false
+    },
+    "bounded_control_flow.assignment": {
+      "family": "bounded_control_flow",
+      "owners": [
+        "algorithm.bounded_control_flow"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "bounded_control_flow.conditional_branch": {
+      "family": "bounded_control_flow",
+      "owners": [
+        "algorithm.bounded_control_flow"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    },
+    "bounded_control_flow.bounded_loop": {
+      "family": "bounded_control_flow",
+      "owners": [
+        "algorithm.bounded_control_flow"
+      ],
+      "owner_count": 1,
+      "analyze_exposed": true,
+      "has_analyze_md_instruction": false,
+      "intentional_gap": false
+    }
+  },
+  "targets": {
+    "binary.character_encoding": {
+      "families": [
+        "positional_representation"
+      ],
+      "direct_owned_mechanisms": [
+        "positional_representation.character_code_mapping"
+      ],
+      "family_taxonomy_mechanisms": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.character_code_mapping",
+        "positional_representation.non_binary_base"
+      ],
+      "analyze_can_prescribe_in_this_family": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.character_code_mapping",
+        "positional_representation.non_binary_base"
+      ],
+      "owned_of_exposed": "1/3",
+      "exposed_but_NOT_owned": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.non_binary_base"
+      ],
+      "gate_is_load_bearing": true,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    },
+    "binary.base_conversion": {
+      "families": [
+        "positional_representation"
+      ],
+      "direct_owned_mechanisms": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.non_binary_base"
+      ],
+      "family_taxonomy_mechanisms": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.character_code_mapping",
+        "positional_representation.non_binary_base"
+      ],
+      "analyze_can_prescribe_in_this_family": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.character_code_mapping",
+        "positional_representation.non_binary_base"
+      ],
+      "owned_of_exposed": "2/3",
+      "exposed_but_NOT_owned": [
+        "positional_representation.character_code_mapping"
+      ],
+      "gate_is_load_bearing": true,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {
+        "positional_representation.binary_positional_weights": [
+          "binary.decimal_to_binary",
+          "binary.base_conversion"
+        ]
+      }
+    },
+    "binary.decimal_to_binary": {
+      "families": [
+        "positional_representation"
+      ],
+      "direct_owned_mechanisms": [
+        "positional_representation.binary_positional_weights"
+      ],
+      "family_taxonomy_mechanisms": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.character_code_mapping",
+        "positional_representation.non_binary_base"
+      ],
+      "analyze_can_prescribe_in_this_family": [
+        "positional_representation.binary_positional_weights",
+        "positional_representation.character_code_mapping",
+        "positional_representation.non_binary_base"
+      ],
+      "owned_of_exposed": "1/3",
+      "exposed_but_NOT_owned": [
+        "positional_representation.character_code_mapping",
+        "positional_representation.non_binary_base"
+      ],
+      "gate_is_load_bearing": true,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {
+        "positional_representation.binary_positional_weights": [
+          "binary.decimal_to_binary",
+          "binary.base_conversion"
+        ]
+      }
+    },
+    "database.relational_table_query": {
+      "families": [
+        "relational_table_query"
+      ],
+      "direct_owned_mechanisms": [
+        "relational_table_query.aggregate_accumulate",
+        "relational_table_query.bounded_limit",
+        "relational_table_query.column_projection",
+        "relational_table_query.row_predicate_filter",
+        "relational_table_query.stable_sort_by_key"
+      ],
+      "family_taxonomy_mechanisms": [
+        "relational_table_query.aggregate_accumulate",
+        "relational_table_query.bounded_limit",
+        "relational_table_query.column_projection",
+        "relational_table_query.row_predicate_filter",
+        "relational_table_query.stable_sort_by_key"
+      ],
+      "analyze_can_prescribe_in_this_family": [],
+      "owned_of_exposed": "0/0",
+      "exposed_but_NOT_owned": [],
+      "gate_is_load_bearing": false,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    },
+    "algorithm.bounded_control_flow": {
+      "families": [
+        "bounded_control_flow"
+      ],
+      "direct_owned_mechanisms": [
+        "bounded_control_flow.assignment",
+        "bounded_control_flow.bounded_loop",
+        "bounded_control_flow.conditional_branch"
+      ],
+      "family_taxonomy_mechanisms": [
+        "bounded_control_flow.assignment",
+        "bounded_control_flow.bounded_loop",
+        "bounded_control_flow.conditional_branch"
+      ],
+      "analyze_can_prescribe_in_this_family": [
+        "bounded_control_flow.assignment",
+        "bounded_control_flow.bounded_loop",
+        "bounded_control_flow.conditional_branch"
+      ],
+      "owned_of_exposed": "3/3",
+      "exposed_but_NOT_owned": [],
+      "gate_is_load_bearing": true,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    },
+    "network.protocol_encapsulation": {
+      "families": [
+        "layered_pdu_transform"
+      ],
+      "direct_owned_mechanisms": [
+        "layered_pdu_transform.encapsulate_decapsulate_4layer"
+      ],
+      "family_taxonomy_mechanisms": [
+        "layered_pdu_transform.encapsulate_decapsulate_4layer"
+      ],
+      "analyze_can_prescribe_in_this_family": [],
+      "owned_of_exposed": "0/0",
+      "exposed_but_NOT_owned": [],
+      "gate_is_load_bearing": false,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    },
+    "network.packet_routing": {
+      "families": [
+        "graph_traversal"
+      ],
+      "direct_owned_mechanisms": [
+        "graph_traversal.unweighted_hop_bfs"
+      ],
+      "family_taxonomy_mechanisms": [
+        "graph_traversal.breadth_first",
+        "graph_traversal.depth_first",
+        "graph_traversal.unweighted_hop_bfs"
+      ],
+      "analyze_can_prescribe_in_this_family": [],
+      "owned_of_exposed": "0/0",
+      "exposed_but_NOT_owned": [],
+      "gate_is_load_bearing": false,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    },
+    "logic.boolean_dag": {
+      "families": [
+        "boolean_composition"
+      ],
+      "direct_owned_mechanisms": [
+        "boolean_composition.bounded_gate_dag"
+      ],
+      "family_taxonomy_mechanisms": [
+        "boolean_composition.bounded_gate_dag",
+        "boolean_composition.composed_rule_dag",
+        "boolean_composition.single_gate_truth_table"
+      ],
+      "analyze_can_prescribe_in_this_family": [],
+      "owned_of_exposed": "0/0",
+      "exposed_but_NOT_owned": [],
+      "gate_is_load_bearing": false,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    },
+    "generic.rule_scene": {
+      "families": [
+        "boolean_composition",
+        "structural_progressive_representation"
+      ],
+      "direct_owned_mechanisms": [
+        "boolean_composition.composed_rule_dag",
+        "structural_progressive_representation.move_along_path",
+        "structural_progressive_representation.reveal_sequence"
+      ],
+      "family_taxonomy_mechanisms": [
+        "boolean_composition.bounded_gate_dag",
+        "boolean_composition.composed_rule_dag",
+        "boolean_composition.single_gate_truth_table",
+        "structural_progressive_representation.move_along_path",
+        "structural_progressive_representation.reveal_sequence"
+      ],
+      "analyze_can_prescribe_in_this_family": [],
+      "owned_of_exposed": "0/0",
+      "exposed_but_NOT_owned": [],
+      "gate_is_load_bearing": false,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    },
+    "tree.traversal": {
+      "families": [
+        "tree_traversal"
+      ],
+      "direct_owned_mechanisms": [
+        "tree_traversal.inorder",
+        "tree_traversal.level_order",
+        "tree_traversal.postorder",
+        "tree_traversal.preorder"
+      ],
+      "family_taxonomy_mechanisms": [
+        "tree_traversal.inorder",
+        "tree_traversal.level_order",
+        "tree_traversal.postorder",
+        "tree_traversal.preorder"
+      ],
+      "analyze_can_prescribe_in_this_family": [
+        "tree_traversal.inorder",
+        "tree_traversal.level_order",
+        "tree_traversal.postorder",
+        "tree_traversal.preorder"
+      ],
+      "owned_of_exposed": "4/4",
+      "exposed_but_NOT_owned": [],
+      "gate_is_load_bearing": true,
+      "passes_when_prescribed_null": true,
+      "shared_ownership": {}
+    }
+  }
+}
