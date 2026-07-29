@@ -75,3 +75,81 @@ def test_enum_giu_legacy_sorting_va_co_positional():
     from app.ai.pipeline import ANALYZE_SCHEMA
     e = ANALYZE_SCHEMA["properties"]["prescribed_procedure"]["enum"]
     assert "adjacent_compare_swap" in e and "positional_representation.non_binary_base" in e
+
+
+# ── M17 W3-LIVE-C2 — GUIDANCE LOCK ───────────────────────────────
+# Phơi một giá trị ra enum mà KHÔNG dạy analyze khi nào phát nó là lỗi đã cắn
+# HAI lần: `_GENERIC_SCHEMA` thiếu `drag` (Gemini không thể phát dù prompt cho
+# phép), và `character_code_mapping` bị bỏ quên khiến cơ chế DUY NHẤT của
+# `binary.character_encoding` bất khả phát ⇒ mechanism gate không bao giờ thoả
+# mãn. Lock này biến "im lặng nhiều wave" thành ĐỎ ngay.
+#
+# `analyze.md` VẪN là source of truth của hướng dẫn — test chỉ đọc, không dựng
+# registry guidance song song, không parse Markdown tổng quát, không phụ thuộc
+# prompt fixture nào.
+
+def _analyze_skill_text() -> str:
+    """Đọc qua CHÍNH loader production — không tự mở đường đọc file thứ hai."""
+    from app.ai.gemini import load_skill
+    return load_skill("analyze")
+
+
+def _uncovered_exposed_values() -> list[str]:
+    from app.simulation.mechanisms import analyze_exposed_values, canonical_mechanism
+    text = _analyze_skill_text()
+    missing = []
+    for raw in analyze_exposed_values():
+        if canonical_mechanism(raw) is None:
+            continue                      # "none" — trạng thái vắng tín hiệu
+        if raw not in text:
+            missing.append(raw)
+        # Giá trị namespaced phải xuất hiện ĐỦ ĐỊNH DANH, không chỉ phần đuôi:
+        # trùng đuôi giữa hai family sẽ làm lock mất hiệu lực.
+    return missing
+
+
+def test_moi_gia_tri_exposed_deu_co_huong_dan_trong_analyze_md():
+    """Khoá chính: enum ⊆ hướng dẫn. Thêm cơ chế exposed mà quên dạy ⇒ ĐỎ."""
+    missing = _uncovered_exposed_values()
+    assert missing == [], (
+        "Các giá trị được phơi cho analyze nhưng KHÔNG có hướng dẫn trong "
+        f"analyze.md: {missing}. Phơi mà không dạy = LLM không thể phát ra."
+    )
+
+
+def test_guidance_phu_ho_positional_va_bounded_control_flow():
+    """Sáu giá trị W3-LIVE-C2 nhắm tới — nêu đích danh để hồi quy đọc được."""
+    text = _analyze_skill_text()
+    for mech in (
+        "positional_representation.character_code_mapping",
+        "positional_representation.binary_positional_weights",
+        "positional_representation.non_binary_base",
+        "bounded_control_flow.assignment",
+        "bounded_control_flow.conditional_branch",
+        "bounded_control_flow.bounded_loop",
+    ):
+        assert mech in text, f"analyze.md thiếu hướng dẫn cho {mech}"
+
+
+def test_guidance_positional_quyet_theo_HINH_DANG_DAU_VAO_khong_theo_target():
+    """Luật phải nói về đầu vào ký tự ↔ số, và KHÔNG được nhắc tên target."""
+    text = _analyze_skill_text()
+    assert "KÝ TỰ" in text and "SỐ" in text
+    for target_id in ("binary.character_encoding", "binary.decimal_to_binary",
+                      "binary.base_conversion", "generic.rule_scene"):
+        assert target_id not in text, f"analyze.md không được nhắc target id: {target_id}"
+
+
+def test_lock_chi_rang_buoc_gia_tri_EXPOSED():
+    """Cơ chế KHÔNG phơi cho analyze thì analyze.md không cần nhắc — lock không
+    được lan sang toàn taxonomy (vd họ relational_table_query, layered_pdu)."""
+    from app.simulation.mechanisms import FAMILY_MECHANISMS, analyze_exposed_values
+    exposed = set(analyze_exposed_values())
+    all_mechs = {m for ms in FAMILY_MECHANISMS.values() for m in ms}
+    unexposed = all_mechs - exposed
+    assert unexposed, "phải còn cơ chế không phơi — nếu không, test này vô nghĩa"
+    text = _analyze_skill_text()
+    # KHÔNG assert chúng vắng mặt (analyze.md có thể nhắc vì lý do khác);
+    # chỉ khẳng định chúng KHÔNG nằm trong tập bị lock.
+    assert not (unexposed & set(_uncovered_exposed_values()))
+    assert isinstance(text, str) and text

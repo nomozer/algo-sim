@@ -238,7 +238,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `positional_representation.character_code_mapping`. Refusal vốn KHÔNG được
     # cache, nhưng envelope OK sinh dưới enum cũ có thể mang target kém phù hợp
     # (mã hoá ký tự từng chỉ lọt khi analyze tình cờ trả "none") ⇒ phải MISS.
-    assert main_module.CACHE_VERSION == "24"
+    # M17 W3-LIVE-C2 (bump 24→25): `analyze.md` thêm luật phát cho họ positional
+    # (quyết theo HÌNH DẠNG ĐẦU VÀO: ký tự ↔ số) và cho bounded_control_flow.
+    # Chính sách analyze đổi ⇒ envelope OK sinh dưới luật cũ có thể mang target
+    # kém phù hợp (đề mã hoá ký tự từng bị định tuyến theo cơ chế đổi cơ số).
+    assert main_module.CACHE_VERSION == "25"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

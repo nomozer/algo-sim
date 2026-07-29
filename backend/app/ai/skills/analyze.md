@@ -19,13 +19,33 @@ CÁC TRƯỜNG TRÍCH XUẤT:
   - "partition_recursive": CHIA dãy quanh một mốc rồi sắp mỗi phần một cách ĐỆ QUY, hoặc TRỘN các nửa đã sắp.
   - "other_unspecified": đề ép một cách sắp xếp cụ thể nhưng KHÔNG khớp mô tả thao tác nào ở trên.
   - Đề CHỈ nói "sắp xếp" / "xếp theo thứ tự" mà KHÔNG ép cách làm → để null (KHÔNG đặt "none" trừ khi bạn muốn nói rõ "không ép cơ chế"; null cũng được xử như không ép). Bài KHÔNG phải sắp xếp → luôn null. TUYỆT ĐỐI không mô tả kết quả/các bước ở trường này — chỉ nêu LOẠI thao tác.
-- prescribed_procedure (bổ sung M15 — bài ĐỔI CƠ SỐ/biểu diễn vị trí): CHỈ đặt khi
-  đề là bài đổi một số sang hệ đếm khác / biểu diễn theo trọng số vị trí.
-  - "positional_representation.binary_positional_weights": đổi/biểu diễn sang HỆ NHỊ PHÂN
-    (cơ số 2) — các bit trọng số 8/4/2/1.
-  - "positional_representation.non_binary_base": đề yêu cầu cơ số KHÁC 2 (thập lục phân/16,
-    bát phân/8, hay cơ số bất kỳ khác 2).
-  - Bài không phải đổi cơ số → giữ nguyên quy tắc cũ (null / giá trị sắp xếp ở trên).
+- prescribed_procedure (bổ sung M15/M17 — bài MÃ HOÁ KÝ TỰ hoặc ĐỔI CƠ SỐ/biểu
+  diễn vị trí): quyết định theo **HÌNH DẠNG ĐẦU VÀO NGỮ NGHĨA** của đề, KHÔNG
+  theo từ khoá lẻ ("mã", "nhị phân", "bit" xuất hiện ở cả ba trường hợp dưới).
+  Hỏi trước một câu: **thứ đề đưa vào là KÝ TỰ hay đã là một SỐ?**
+  - "positional_representation.character_code_mapping": đầu vào là **KÝ TỰ hoặc
+    CHUỖI KÝ TỰ** và đề hỏi mã của nó — mã ASCII, Unicode code point, "mã của ký
+    tự", hay vì sao máy tính lưu chữ bằng số.
+    · Đề nói THÊM "chuyển mã đó sang nhị phân" / "biểu diễn mã đó bằng bit" thì
+      **VẪN giữ giá trị này** — KHÔNG đổi sang binary_positional_weights hay
+      non_binary_base. Lý do: đầu vào ngữ nghĩa vẫn là ký tự, và bước định tuyến
+      chính là ánh xạ ký tự → mã; phần đổi mã sang nhị phân nằm trong hợp đồng
+      của chính năng lực mã hoá ký tự và do engine tất định lo.
+  - "positional_representation.binary_positional_weights": đầu vào **ĐÃ LÀ MỘT
+    SỐ** và đề yêu cầu biểu diễn/đổi sang HỆ NHỊ PHÂN (cơ số 2) — các bit trọng
+    số 8/4/2/1.
+  - "positional_representation.non_binary_base": đầu vào **ĐÃ LÀ MỘT SỐ** và đề
+    yêu cầu cơ số KHÁC 2 (thập lục phân/16, bát phân/8, hay cơ số bất kỳ khác 2).
+  - RANH GIỚI KÝ TỰ CHỮ SỐ: một ký tự chữ số (ví dụ ký tự '7' đặt trong dấu nháy,
+    hoặc đề nói rõ "ký tự"/"chuỗi") vẫn là **KÝ TỰ**; còn một con số dùng để đổi
+    hệ (ví dụ đổi số 7 sang nhị phân) là **SỐ**. Đừng quyết chỉ vì token trông
+    giống chữ số — đọc xem đề gọi nó là ký tự hay là số.
+  - KHÔNG xác định được đầu vào là ký tự hay số → **để null**, đừng đoán, đừng
+    bịa dữ kiện; cổng đủ-dữ-kiện và kiểm định sẽ xử lý.
+  - Bài không thuộc ba trường hợp trên → giữ nguyên quy tắc cũ (null / giá trị
+    sắp xếp ở trên).
+  - TUYỆT ĐỐI không đưa code point, giá trị thập phân hay dãy bit vào bất kỳ
+    trường nào — engine tự tra mã và tự đổi.
 - prescribed_procedure (bổ sung M17 — bài DUYỆT CÂY NHỊ PHÂN): CHỈ đặt khi đề
   yêu cầu DUYỆT một cây nhị phân (có gốc và quan hệ con trái/con phải). Nhận
   diện bằng THỨ TỰ THĂM được mô tả, KHÔNG bằng tên gọi:
@@ -34,6 +54,20 @@ CÁC TRƯỜNG TRÍCH XUẤT:
   - "tree_traversal.postorder": cây con TRÁI, rồi cây con PHẢI, rồi GỐC (duyệt sau / hậu thứ tự / postorder).
   - "tree_traversal.level_order": duyệt theo TỪNG TẦNG từ trên xuống, trái sang phải (theo mức / level-order).
   - Duyệt ĐỒ THỊ chung (đỉnh–cạnh, không phải cây có gốc/trái/phải) → KHÔNG đặt các giá trị này (để null).
+- prescribed_procedure (bổ sung M17 — bài CHẠY TỪNG BƯỚC MỘT ĐOẠN CHƯƠNG TRÌNH):
+  CHỈ đặt khi đề ÉP rõ một cấu trúc điều khiển là CÁCH LÀM CHÍNH. Nhận diện bằng
+  THAO TÁC được mô tả, KHÔNG bằng tên gọi:
+  - "bounded_control_flow.assignment": trọng tâm là GÁN/CẬP NHẬT giá trị của biến
+    (gán giá trị, đổi biến bằng một biểu thức).
+  - "bounded_control_flow.conditional_branch": trọng tâm là RẼ NHÁNH theo điều
+    kiện (nếu…thì…, ngược lại…, chọn nhánh dựa trên một điều kiện).
+  - "bounded_control_flow.bounded_loop": trọng tâm là LẶP CÓ GIỚI HẠN (lặp một số
+    lần hữu hạn, hoặc lặp trong khi một điều kiện còn đúng và điều kiện đó chắc
+    chắn kết thúc).
+  - Đề có NHIỀU cấu trúc: trường này là MỘT giá trị, nên chỉ chọn khi có một cấu
+    trúc là trọng tâm rõ ràng. Nếu các cấu trúc ngang nhau, không cái nào là
+    chính → **để null**; đừng chọn bừa một cái chỉ để trường khác null. Liệt kê
+    ĐỦ ở requested_mechanisms theo quy tắc bên dưới.
 - requested_operations: LIỆT KÊ ĐỦ **mọi VIỆC** (mục tiêu) đề yêu cầu — mỗi việc
   một giá trị trong enum. **Mục tiêu ≠ cơ chế:** hai mục tiêu KHÁC NHAU có thể
   dùng CHUNG một cơ chế, vẫn phải nêu ĐỦ CẢ HAI.
