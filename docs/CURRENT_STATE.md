@@ -9,7 +9,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **23** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **24** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Family / Target | **11 / 22** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **1 biểu diễn tiến triển** (`representation` — `structural_progressive_representation`). **Không** đếm phẳng cả 11 là "mô phỏng thuật toán" |
@@ -114,6 +114,44 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   nhất chạy Chrome (checkpoint cấm) ⇒ `NOT_EXECUTED`; bằng chứng engine là
 >   **kế thừa** offline, không đo ở lượt live này. Ký tự tiếng Việt `U+1EBF`
 >   **chưa đo được** (ENC-3 bị chặn trước khi có candidate).
+>
+> #### W3-LIVE-C1 — sửa cổng cơ chế + E2E đại diện (2026-07-29)
+>
+> Bằng chứng: `docs/evaluation/m17/w3-live-c1/`. Artifact baseline `w3-live/`
+> **giữ nguyên** để so sánh.
+>
+> - **Root cause GIẢ ĐỊNH của checkpoint là SAI, đã đo bằng probe live (3 HTTP):**
+>   analyze phát `binary_positional_weights` (ENC-3) hoặc `null` (ENC-1/2) —
+>   **không** phải `non_binary_base`. Thiết kế "chain-aware gate" sẽ vô hiệu.
+> - **Root cause THẬT — tái phát anti-pattern #1:** họ positional trong
+>   `analyze_exposed_values()` được liệt kê bằng string VIẾT TAY, nên khi W3 thêm
+>   `character_code_mapping` vào `FAMILY_MECHANISMS` thì enum analyze không đi
+>   theo ⇒ **cơ chế duy nhất W3 sở hữu là bất khả phát** ⇒ nhánh direct-ownership
+>   không bao giờ thoả mãn (đúng bệnh `_GENERIC_SCHEMA` thiếu `drag`).
+> - **Sửa:** splat `FAMILY_MECHANISMS[POSITIONAL_REPRESENTATION]` vào enum
+>   (**+1 giá trị**). `mechanism_gate.py` **không đổi một dòng** — cổng vẫn là
+>   phép thử sở hữu đơn, fail-closed. Không cấp ownership giả, không hard-code
+>   target id, không đụng analyze/classify prompt, spec, validator.
+> - `CACHE_VERSION` **23→24** (chính sách định tuyến đổi — cùng tiền lệ W2C
+>   20→21). `HISTORY_SCHEMA_VERSION` giữ **2**. family **11** · target **22**.
+> - **W3 live natural-language integration = PARTIAL** (7/12 → **9/12 PASS**;
+>   `mechanism_gate_failure` 5 → **2**; mọi trục an toàn vẫn **0**; 29/45 HTTP).
+>   ENC-1/ENC-2 nay có candidate hợp lệ; ENC-1 run2 trượt ở cổng ĐỦ DỮ KIỆN
+>   (không phải cổng cơ chế) do model variability.
+> - **Giới hạn còn lại:** ENC-3 vẫn bị chặn ĐÚNG LUẬT — đề nói "chuyển mã sang
+>   nhị phân" nên analyze chọn `binary_positional_weights`, cơ chế của
+>   `decimal_to_binary` vốn chặn 0–255/8 bit nên không chở nổi code point 7871.
+>   ⇒ **`U+1EBF` CHƯA đo được ở đường live.** Sửa tiếp phải chạm `analyze.md`
+>   hoặc ngữ nghĩa cổng — cả hai là stop condition, **chưa mở**.
+> - **Representative live-to-browser handoff = VERIFIED** cho `E2E-ENC-1`:
+>   candidate live nạp qua chính `store.loadEnvelope`, **hash artifact ↔ hash spec
+>   engine trùng khít** (`0217f627de31…`), 13 bước, mốc giữa có phép chia thật
+>   `65 : 2 = 32 dư 1`, DOM bước đầu chưa có `1000001`. 3 ảnh · 0 LLM call.
+>   `E2E-ENC-2` (Unicode) = **NOT_MEASURED** — không dựng config bằng tay.
+> - **pedagogical alignment = EVIDENCED cho case W3 đại diện · learner impact =
+>   NOT EVALUATED.** Interaction giữ `TIMELINE_CONTROL`, không nâng hàng loạt.
+> - Container Docker đang chạy nhưng **STALE** (`cache=22 · family=10 ·
+>   target=20`) — live chạy IN-PROCESS, artifact **không** nói gì về container.
 >
 > ### Wave 2C — luồng điều khiển hữu hạn (XONG offline)
 >

@@ -47,6 +47,10 @@ from app.ai.gemini import ApiBudget, BudgetExceeded, MODEL, load_skill  # noqa: 
 from app.evaluation.observer import AttemptObserver  # noqa: E402
 from app.runtime_identity import runtime_identity  # noqa: E402
 from app.simulation.catalog import CATALOG  # noqa: E402
+from app.simulation.mechanisms import (  # noqa: E402
+    analyze_exposed_values,
+    canonical_mechanism,
+)
 from app.simulation.character_encoding import (  # noqa: E402
     ENCODINGS,
     FORBIDDEN_SPEC_KEYS,
@@ -55,9 +59,22 @@ from app.simulation.character_encoding import (  # noqa: E402
 from app.validation.character_encoding import validate_character_encoding_config  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
+# Ghi ĐÈ artifact baseline là điều CẤM (W3-LIVE PARTIAL phải giữ nguyên để so
+# sánh). Rerun của W3-LIVE-C1 truyền `--out-dir docs/evaluation/m17/w3-live-c1`.
 OUT_DIR = ROOT / "docs" / "evaluation" / "m17" / "w3-live"
 OUT_JSON = OUT_DIR / "character_encoding_live_smoke.json"
 OUT_JSONL = OUT_DIR / "responses.jsonl"
+
+
+def _set_out_dir(rel: str | None) -> None:
+    global OUT_DIR, OUT_JSON, OUT_JSONL
+    if not rel:
+        return
+    OUT_DIR = ROOT / rel
+    stem = ("character_encoding_live_rerun"
+            if OUT_DIR.name.endswith("-c1") else "character_encoding_live_smoke")
+    OUT_JSON = OUT_DIR / f"{stem}.json"
+    OUT_JSONL = OUT_DIR / "responses.jsonl"
 
 TARGET = "binary.character_encoding"
 DEC2BIN = "binary.decimal_to_binary"
@@ -283,6 +300,10 @@ async def _run_once(case: dict, run_id: int, api_key: str, budget: ApiBudget) ->
         "transient_hits": budget.transient_hits,
         "stage_temperatures": rec_raw.stage_temperatures(),
         "pipeline_error": err,
+        # ── analyze (W3-LIVE-C1: bằng chứng CƠ CHẾ, thiếu ở lượt baseline) ──
+        "analyze_prescribed_raw": (obs.analyze() or {}).get("prescribed_procedure"),
+        "analyze_prescribed_canonical": (obs.analyze() or {}).get("canonical_prescribed"),
+        "analyze_result_ownership": (obs.analyze() or {}).get("result_ownership"),
         # ── raw (TRƯỚC validator) ──
         "raw_classify_target": (obs.classify() or {}).get("simulation_id"),
         "raw_classify_status": (obs.classify() or {}).get("status"),
@@ -342,9 +363,13 @@ def _judge(case: dict, rec: dict) -> None:
         "unsafe_acceptance": False,
         "wrong_target_acceptance": False,
         "safe_failure": False,
+        # W3-LIVE-C1 §10 — case ĐƯỢC HỖ TRỢ bị chính mechanism gate chặn.
+        "mechanism_gate_failure": False,
     }
     why: list[str] = []
     status, route = rec["final_status"], rec["final_route"]
+    if case["expect_status"] == "ok" and rec.get("error_code") == "gate_mechanism_ownership":
+        flags["mechanism_gate_failure"] = True
 
     # Lỗi hạ tầng: KHÔNG BAO GIỜ thành bằng chứng sản phẩm.
     if status is None and _is_infra_error(rec["pipeline_error"]):
@@ -441,7 +466,7 @@ def _summarize(records: list[dict], runs: int, aborted) -> tuple[str, list[str],
     agg = {k: sum(1 for r in records if r["flags"][k])
            for k in ("semantic_loss", "fabricated_input", "result_leakage",
                      "generic_leak", "unsafe_acceptance", "wrong_target_acceptance",
-                     "safe_failure")}
+                     "safe_failure", "mechanism_gate_failure")}
     hard_fail = (agg["unsafe_acceptance"] or agg["generic_leak"]
                  or agg["result_leakage"] or agg["fabricated_input"]
                  or agg["wrong_target_acceptance"] or "FAIL" in verdicts)
@@ -511,11 +536,73 @@ def _rescore() -> int:
     return 0
 
 
+async def _probe_analyze() -> int:
+    """W3-LIVE-C1 §2 — CHẨN ĐOÁN: analyze thật sự phát `prescribed_procedure` nào
+    cho ba case bị chặn? Gọi THẲNG `stage_analyze` (1 HTTP/case), KHÔNG chạy
+    classify/simulate — root cause phải được ĐO, không suy.
+
+    Cần đo vì `analyze_exposed_values()` KHÔNG chứa `character_code_mapping`:
+    enum đóng chỉ cho phép `binary_positional_weights` / `non_binary_base` /
+    `none`, nên cơ chế mà target sở hữu là BẤT KHẢ PHÁT."""
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        print("CHƯA có GEMINI_API_KEY.")
+        return 1
+    reachable, net_err = _network_reachable()
+    if not reachable:
+        print(f"BỊ CHẶN: không có mạng ({net_err}).")
+        return 2
+
+    budget = ApiBudget(max_api_calls=6, max_attempts=2)
+    gemini.set_budget(budget)
+    rows = []
+    try:
+        for case in CASES[:3]:               # ENC-1, ENC-2, ENC-3
+            before = budget.http_requests
+            analysis = await pipeline.stage_analyze(case["prompt"], api_key)
+            raw = analysis.get("prescribed_procedure")
+            row = {
+                "case_id": case["id"],
+                "prompt": case["prompt"],
+                "prescribed_procedure_raw": raw,
+                "prescribed_canonical": canonical_mechanism(raw),
+                "requested_mechanisms": analysis.get("requested_mechanisms"),
+                "result_ownership": analysis.get("result_ownership"),
+                "http_requests": budget.http_requests - before,
+            }
+            rows.append(row)
+            print(f"{case['id']}: prescribed={row['prescribed_canonical']!r} "
+                  f"requested={row['requested_mechanisms']} "
+                  f"ownership={row['result_ownership']}", flush=True)
+    except BudgetExceeded as e:
+        print(f"BUDGET: {e}")
+    finally:
+        gemini.set_budget(None)
+
+    payload = {
+        "probe": "W3-LIVE-C1 §2 analyze root-cause",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "git_sha": _git_sha(), "provider": "google-gemini", "model": MODEL,
+        "analyze_temperature": 0.1,
+        "http_used": budget.http_requests,
+        "analyze_exposed_positional": [
+            v for v in analyze_exposed_values() if v.startswith("positional_representation.")
+        ],
+        "w3_owned_mechanisms": ["positional_representation.character_code_mapping"],
+        "rows": rows,
+    }
+    print("\n" + json.dumps(payload, ensure_ascii=False, indent=2))
+    return 0
+
+
 async def _main(argv) -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--max-http", type=int, default=MAX_HTTP)
     p.add_argument("--runs", type=int, default=RUNS)
+    p.add_argument("--out-dir", default=None,
+                   help="thư mục artifact (mặc định w3-live; rerun C1 truyền w3-live-c1)")
     args = p.parse_args(argv)
+    _set_out_dir(args.out_dir)
 
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
@@ -609,6 +696,11 @@ def main() -> int:
     # Chấm lại KHÔNG gọi API ⇒ không cần opt-in live.
     if "--rescore" in sys.argv[1:]:
         return _rescore()
+    if "--probe-analyze" in sys.argv[1:]:
+        if os.getenv("ALLOW_LIVE_AI") != "1":
+            print("TỪ CHỐI: probe gọi API thật, cần ALLOW_LIVE_AI=1.")
+            return 1
+        return asyncio.run(_probe_analyze())
     if os.getenv("ALLOW_LIVE_AI") != "1":
         print("TỪ CHỐI: cần ALLOW_LIVE_AI=1.")
         return 1
