@@ -9,7 +9,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **24** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **25** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Family / Target | **11 / 22** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **1 biểu diễn tiến triển** (`representation` — `structural_progressive_representation`). **Không** đếm phẳng cả 11 là "mô phỏng thuật toán" |
@@ -152,6 +152,39 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   NOT EVALUATED.** Interaction giữ `TIMELINE_CONTROL`, không nâng hàng loạt.
 > - Container Docker đang chạy nhưng **STALE** (`cache=22 · family=10 ·
 >   target=20`) — live chạy IN-PROCESS, artifact **không** nói gì về container.
+>
+> #### W3-LIVE-C2 — luật phát cơ chế cho họ positional (2026-07-29): **PARTIAL — CLOSED**
+>
+> Bằng chứng: `docs/evaluation/m17/w3-live-c2/` (+ preflight read-only ở
+> `w3-live-c2-preflight/`). Artifact `w3-live/`, `w3-live-c1/` **giữ nguyên**.
+>
+> - **Khiếm khuyết nhắm tới ĐÃ ĐÓNG:** `mechanism_gate_failure` **5 → 2 → 0**.
+>   `prescribed_procedure = character_code_mapping` ở **6/6** lượt ENC-1/2/3
+>   (trước là `binary_positional_weights`). `prescribed_mechanism_error` = 0 ·
+>   `classification_error` = 0 · `spec_synthesis_error` = 0.
+> - **Sửa gì:** `analyze.md` thêm luật phát cho họ positional quyết theo **HÌNH
+>   DẠNG ĐẦU VÀO** (ký tự ↔ số) + luật cho 3 giá trị `bounded_control_flow.*`
+>   vốn cũng bị phơi mà không được dạy. **GUIDANCE LOCK**: mọi giá trị trong
+>   `analyze_exposed_values()` phải có hướng dẫn trong `analyze.md` (uncovered
+>   **4 → 0**), đã **chứng minh bằng tiêm lỗi giả**. `CACHE_VERSION` **24→25**.
+> - **KHÔNG đụng:** `mechanism_gate.py`, taxonomy, catalog ownership,
+>   `CharacterEncodingSpec`, validator, `classify.md`, pipeline schema, engine,
+>   renderer, `base-conversion.ts`, E2E adapter. Production diff = **2 file**
+>   (`analyze.md`, `CACHE_VERSION`).
+> - **W3 live NL integration = PARTIAL — CLOSED.** 8/12 PASS · 4 FAIL_SAFE · mọi
+>   trục an toàn **0** · 28/45 HTTP. PASS giảm 1 so với C1 **không phải hồi quy**:
+>   lượt đó vốn do analyze may mắn phơi đủ dữ kiện, không do cơ chế.
+> - **Thất bại còn lại đã DỊCH XUỐNG HẠ NGUỒN, đều an toàn:** ENC-1 (2/2) và
+>   ENC-3 run2 trượt cổng **đủ dữ kiện** (analyze không phơi `quoted_characters`/
+>   `encoding_name`); ENC-3 run1 trượt cổng **đủ ngữ nghĩa** — dương tính giả
+>   `multiple_operations_not_supported` do analyze tách một quy trình thành hai
+>   việc. Cả hai ngoài phạm vi C2.
+> - **`U+1EBF` VẪN chưa đo được ở đường live** ⇒ **E2E-ENC-2 KHÔNG chạy** (§15:
+>   không dựng config tay, không lấy candidate C1, không sửa adapter). **0 ảnh.**
+>   E2E ASCII của C1 vẫn nguyên giá trị.
+> - **C2 one-round policy COMPLETED · hard stop APPLIED · KHÔNG mở C3 · không có
+>   correction wave tiếp theo.** Interaction giữ `TIMELINE_CONTROL`, không nâng.
+>   `learner impact = NOT_EVALUATED`. Part B vẫn `BLOCKED_NO_DOCX`.
 >
 > ### Wave 2C — luồng điều khiển hữu hạn (XONG offline)
 >
