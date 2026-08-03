@@ -397,3 +397,68 @@ describe("đường canonical vẫn fail-closed", () => {
     expect(reject((c) => { c.expressions = {}; })).toMatch(/phải là danh sách/);
   });
 });
+
+/**
+ * VISIBILITY — thuyết minh bước xét điều kiện phải mang GIÁ TRỊ hiện tại.
+ *
+ * Audit tương tác 2026-08-03: ở 768×900 panel Quan sát đóng mặc định, nên bước
+ * xét điều kiện là chỗ DUY NHẤT học sinh không thấy giá trị biến — đúng lúc câu
+ * hỏi là "x còn ≤ 14 không?". Bước GÁN vốn đã nêu ("x ← x + 3 = 5.").
+ *
+ * Chỉ đổi CHỮ. Engine/state/timeline/bố cục/tương tác không đụng: dãy trace và
+ * số bước phải y nguyên (khoá ở test dưới cùng).
+ */
+describe("thuyết minh bước điều kiện nêu giá trị hiện tại", () => {
+  const mod = makeProgramModule();
+  const run = () => {
+    const v = mod.validateConfig(wireFixture.config as unknown);
+    if (!v.ok) throw new Error(v.error);
+    return mod.init(v.config) as ProgramSimState;
+  };
+  /** Các bước có sự kiện xét điều kiện — chính là bước cần sửa. */
+  const condSteps = (st: ProgramSimState) =>
+    st.trace.steps.filter((s) => s.events.some((e) => e.type === "evaluate_condition"));
+
+  it("bước điều kiện ĐẦU nêu x = 2 và phép so sánh đầy đủ", () => {
+    const first = condSteps(run())[0];
+    expect(first.narration).toContain("x = 2");
+    expect(first.narration).toContain("2 <= 14");
+    expect(first.narration).toContain("ĐÚNG");
+    expect(first.narration).toMatch(/vào thân vòng lặp/);
+  });
+
+  it("bước điều kiện GIỮA nêu đúng giá trị tại thời điểm đó", () => {
+    const cs = condSteps(run());
+    // lượt 1..5 xét x = 2,5,8,11,14 rồi lượt thoát xét x = 17
+    expect(cs.map((s) => s.narration.match(/x = (-?\d+)/)![1]))
+      .toEqual(["2", "5", "8", "11", "14", "17"]);
+    expect(cs[3].narration).toContain("11 <= 14");
+  });
+
+  it("bước điều kiện CUỐI nêu x = 17, điều kiện SAI và lý do thoát", () => {
+    const last = condSteps(run()).at(-1)!;
+    expect(last.narration).toContain("x = 17");
+    expect(last.narration).toContain("17 <= 14");
+    expect(last.narration).toContain("SAI");
+    expect(last.narration).toContain("thoát vòng lặp sau 5 lượt");
+  });
+
+  it("thuyết minh KHỚP snapshot engine ở mọi bước điều kiện", () => {
+    for (const s of condSteps(run())) {
+      const shown = s.narration.match(/x = (-?\d+)/)![1];
+      expect(Number(shown)).toBe(s.snapshot.vars.x);   // chữ không được lệch state
+    }
+  });
+
+  it("không lộ id biểu thức nội bộ trong thuyết minh", () => {
+    for (const s of run().trace.steps) expect(s.narration).not.toMatch(/_e\d/);
+  });
+
+  it("KHÔNG đổi engine: số bước và dãy x giữ nguyên", () => {
+    const st = run();
+    expect(st.trace.steps.length).toBe(12);
+    expect(st.completion).toBe("completed");
+    expect(st.trace.steps.map((s) => s.snapshot.vars.x)
+      .filter((x, i, a) => x !== a[i - 1])).toEqual([2, 5, 8, 11, 14, 17]);
+  });
+});

@@ -663,7 +663,19 @@ export function validateProgramSpec(raw: unknown): ProgramValidation {
 
 const INDENT = "   ";
 
-export function renderExpression(spec: ProgramSpec, id: string): string {
+/**
+ * `env` TUỲ CHỌN — có thì tên biến được THAY bằng giá trị hiện tại.
+ *
+ * Dùng cho thuyết minh bước xét điều kiện: học sinh cần thấy "17 <= 14 → SAI"
+ * chứ không chỉ "x <= 14 → SAI", nhất là ở màn hẹp khi panel biến đang đóng.
+ * Vẫn là MỘT bộ dựng chữ duy nhất — không tạo renderer thứ hai; không có env
+ * thì hành vi cũ giữ nguyên từng ký tự.
+ */
+export function renderExpression(
+  spec: ProgramSpec,
+  id: string,
+  env?: ReadonlyMap<string, number | boolean>,
+): string {
   const by = new Map(spec.expressions.map((e) => [e.id, e]));
   const walk = (eid: string): string => {
     const n = by.get(eid);
@@ -673,8 +685,10 @@ export function renderExpression(spec: ProgramSpec, id: string): string {
         return String(n.int_value);
       case "bool":
         return n.bool_value ? "đúng" : "sai";
-      case "var":
-        return n.name!;
+      case "var": {
+        const v = env?.get(n.name!);
+        return v === undefined ? n.name! : fmtValue(v);
+      }
       case "unary":
         return n.op === "not" ? `không (${walk(n.operand!)})` : `-${walk(n.operand!)}`;
       case "logic":
@@ -768,6 +782,41 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
   }
 
   const outputs: string[] = [];
+
+  /**
+   * Thuyết minh bước xét điều kiện: "x = 17: 17 <= 14".
+   *
+   * Ở màn hẹp panel Quan sát đóng mặc định, nên bước xét điều kiện là chỗ DUY
+   * NHẤT học sinh không thấy giá trị biến — đúng lúc câu hỏi là "x còn ≤ 14
+   * không?". Ghép tên+giá trị các biến ĐƯỢC ĐỌC trong điều kiện, rồi để
+   * `renderExpression` thay giá trị vào chính biểu thức.
+   *
+   * Dùng `byExpr`/`env` SẴN CÓ — không thêm state, không dựng cấu trúc mới.
+   * Phải gọi ĐÚNG LÚC đánh giá: giá trị đổi sau mỗi lượt lặp.
+   */
+  const conditionWithValues = (condId: string): string => {
+    const seen = new Set<string>();
+    const order: string[] = [];
+    const walk = (eid: string) => {
+      const n = byExpr.get(eid);
+      if (!n) return;
+      if (n.kind === "var") {
+        if (!seen.has(n.name!)) { seen.add(n.name!); order.push(n.name!); }
+        return;
+      }
+      for (const k of ["operand", "left", "right"] as const) {
+        const child = n[k];
+        if (child != null) walk(child);
+      }
+    };
+    walk(condId);
+    const vals = order
+      .filter((name) => env.has(name))
+      .map((name) => `${name} = ${fmtValue(env.get(name)!)}`)
+      .join(", ");
+    const substituted = renderExpression(spec, condId, env);
+    return vals ? `${vals}: ${substituted}` : substituted;
+  };
   let steps = 0;
   let completion: CompletionState = "completed";
 
@@ -872,7 +921,8 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
             { type: "evaluate_condition", expression: text, result },
             { type: "enter_branch", branch },
           ],
-          `Xét điều kiện ${text} → ${result ? "ĐÚNG" : "SAI"}, chạy nhánh ${result ? "thì" : "ngược lại"}.`,
+          `Xét điều kiện ${conditionWithValues(st.condition!)} → ${
+            result ? "ĐÚNG" : "SAI"}, chạy nhánh ${result ? "thì" : "ngược lại"}.`,
           line,
           true,
         );
@@ -888,13 +938,16 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
             return;
           }
           const result = evalExpr(st.condition!) as boolean;
+          // Chốt NGAY tại lúc đánh giá — giá trị đổi sau mỗi lượt, và thân vòng
+          // lặp bên dưới sẽ ghi đè `env`.
+          const cond = conditionWithValues(st.condition!);
           if (!result) {
             step(
               [
                 { type: "evaluate_condition", expression: text, result: false },
                 { type: "enter_branch", branch: "loop_exit" },
               ],
-              `Xét ${text} → SAI, thoát vòng lặp sau ${iteration} lượt.`,
+              `Xét ${cond} → SAI, thoát vòng lặp sau ${iteration} lượt.`,
               line,
               true,
             );
@@ -918,7 +971,7 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
               { type: "enter_branch", branch: "loop_body" },
               { type: "loop_iteration", statementId: st.id, iteration },
             ],
-            `Xét ${text} → ĐÚNG, vào thân vòng lặp (lượt ${iteration}).`,
+            `Xét ${cond} → ĐÚNG, vào thân vòng lặp (lượt ${iteration}).`,
             line,
             true,
           );
