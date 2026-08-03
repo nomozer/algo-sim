@@ -179,6 +179,88 @@ describe("guard 10 — không dùng var() token không tồn tại", () => {
   });
 });
 
+// 11. limit KHÔNG kèm sort — hàng bị cắt phải nhìn thấy được ----------------
+/**
+ * Lỗi thật (audit độc lập 2026-08-03): nhánh `limit` của renderer từng nằm LỒNG
+ * trong `if (stage.sorted && sortStep)`, nên truy vấn có `limit` mà KHÔNG có
+ * `sort` thì `cutoff` rỗng ⇒ mọi hàng qua lọc đều mang nhãn "Giữ", kể cả hàng
+ * engine đã cắt. Màn hình nói 5 hàng "Giữ" trong khi chính nó ghi "Kết quả: 3
+ * hàng" — giao diện nói NGƯỢC engine.
+ *
+ * Vì sao guard cũ không bắt: MỌI test có `limit` (ở đây, `table.test.tsx`,
+ * `table-missing-values.test.tsx`, `test_table_query_engine.py`) đều kèm `sort`,
+ * nên nhánh này chưa từng được thực thi.
+ */
+describe("guard 11 — limit không có sort: hàng bị cắt vẫn phải phân biệt được", () => {
+  const L_SCHEMA = [
+    { name: "ten", type: "text", label: "Họ và tên" },
+    { name: "to", type: "text", label: "Tổ" },
+    { name: "diem", type: "number", label: "Điểm" },
+  ];
+  // 6 hàng: 5 hàng tổ A qua lọc, limit 3 ⇒ engine cắt đúng 2 hàng cuối.
+  const L_ROWS = [
+    { ten: "An", to: "A", diem: 9 }, { ten: "Bình", to: "B", diem: 8.5 },
+    { ten: "Chi", to: "A", diem: 6 }, { ten: "Dũng", to: "A", diem: 9 },
+    { ten: "Lan", to: "A", diem: 7.5 }, { ten: "Minh", to: "A", diem: 6 },
+  ];
+  const lcfg = () => {
+    const v = validateTableConfig({
+      specVersion: "table-1.0", schema: L_SCHEMA, rows: L_ROWS,
+      filter: { op: "=", column: "to", value: "A" },
+      limit: 3,              // ← CỐ Ý không khai `sort`
+    });
+    if (!v.ok) throw new Error(v.error);
+    return v.config;
+  };
+  const count = (h: string, re: RegExp) => (h.match(re) ?? []).length;
+
+  it("engine cắt thật: 5 hàng qua lọc → 3 hàng kết quả", () => {
+    const st = mod.init(lcfg());
+    expect(st.filteredIndices.length).toBe(5);
+    expect(st.orderedIndices.length).toBe(3);
+    expect(st.resultRows.length).toBe(3);
+    expect(st.steps.some((s) => s.kind === "limit")).toBe(true);
+    expect(st.steps.some((s) => s.kind === "sort")).toBe(false); // tiền đề của ca
+  });
+
+  it("bước cuối: số hàng 'Giữ' trên UI KHỚP resultRows của engine", () => {
+    const c = lcfg();
+    const st = mod.init(c);
+    const h = html(c, last(c));
+    // Đây chính là bất biến bị vi phạm: UI từng hiện 5 'Giữ' cho 3 resultRows.
+    expect(count(h, /Giữ<\/span>/g)).toBe(st.resultRows.length);
+  });
+
+  it("bước cuối: hai hàng bị limit cắt mang nhãn learner-facing 'Không lấy'", () => {
+    const c = lcfg();
+    const h = html(c, last(c));
+    expect(h).toContain("Không lấy");
+    expect(count(h, /Không lấy<\/span>/g)).toBe(2);
+  });
+
+  it("bước cuối: thuyết minh kết quả không mâu thuẫn với bảng", () => {
+    const c = lcfg();
+    const h = html(c, last(c));
+    expect(h).toContain("Kết quả: 3 hàng.");
+    expect(count(h, /Giữ<\/span>/g)).toBe(3);
+  });
+
+  it("trước khi tới bước limit, chưa hàng nào bị đánh 'Không lấy'", () => {
+    const c = lcfg();
+    const st = mod.init(c);
+    const limitAt = st.steps.findIndex((s) => s.kind === "limit");
+    expect(limitAt).toBeGreaterThan(0);
+    expect(html(c, limitAt - 1)).not.toContain("Không lấy");
+  });
+
+  it("không lộ id kỹ thuật trong ca này", () => {
+    const h = html(lcfg(), last(lcfg()));
+    for (const banned of ["ten", "diem", "orderedIndices", "table-1.0"]) {
+      expect(h).not.toContain(`>${banned}<`);
+    }
+  });
+});
+
 // ── FAULT INJECTION: chứng minh guard biết kêu ─────────────────────────────
 describe("fault injection — guard phải ĐỎ khi lỗi được áp", () => {
   it("(sanity) các guard trên xanh trên renderer THẬT — nếu phá, chúng phải đỏ", () => {

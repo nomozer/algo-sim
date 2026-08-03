@@ -549,17 +549,22 @@ export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState
   // Thứ tự HIỂN THỊ hàng: chỉ đổi theo thứ tự sắp xếp SAU khi đã tới bước sắp
   // xếp — trước đó giữ thứ tự gốc để lọc quan sát được trên bảng nguồn. Lấy
   // TỪ TRACE (engine đã sắp), renderer không tự sắp.
+  //
+  // HAI TẦNG ĐỘC LẬP: `limit` KHÔNG được nằm trong nhánh của `sort`. Truy vấn
+  // hợp lệ có thể có limit mà không có sort ("liệt kê 3 bạn tổ A"); khi nhánh
+  // limit còn lồng trong `if (stage.sorted)` thì `cutoff` rỗng ⇒ hàng engine đã
+  // cắt vẫn mang nhãn "Giữ" ⇒ màn hình nói NGƯỢC engine (guard 11).
   const sortStep = state.steps.find((s) => s.kind === "sort");
   const limitStep = state.steps.find((s) => s.kind === "limit");
   const cutoff = new Set<number>();
   let order = cols.length ? state.config.rows.map((_, i) => i) : [];
   if (stage.sorted && sortStep) {
     order = [...(sortStep.detail.after as number[])];
-    if (stage.limited && limitStep) {
-      const after = new Set(limitStep.detail.after as number[]);
-      for (const i of limitStep.detail.before as number[]) if (!after.has(i)) cutoff.add(i);
-      order = [...(limitStep.detail.before as number[])]; // vẫn hiện hàng bị cắt, có nhãn
-    }
+  }
+  if (stage.limited && limitStep) {
+    const after = new Set(limitStep.detail.after as number[]);
+    for (const i of limitStep.detail.before as number[]) if (!after.has(i)) cutoff.add(i);
+    order = [...(limitStep.detail.before as number[])]; // vẫn hiện hàng bị cắt, có nhãn
   }
 
   const statusOf = (i: number): keyof typeof STATUS | null => {
