@@ -457,4 +457,142 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "với decision/prediction theo cơ chế (M9-S1) giàu hơn."
         ),
     ),
+
+    # ── M17: NEO MỤC TIÊU cho các family/target ship sau M16 ──────────────
+    # Audit pedagogical alignment (2026-08-03) chỉ ra: `tree_traversal`,
+    # `relational_table_query`, `bounded_control_flow` có năng lực + test nhưng
+    # KHÔNG case nào khai `learning_objective`; `logic.boolean_dag` và
+    # `binary.character_encoding` GROUNDED ở mức FAMILY nhưng 0 ở mức TARGET.
+    # Đây là lỗ SIÊU DỮ LIỆU, vá bằng cổng `check_admission` sẵn có — KHÔNG thêm
+    # family/target, KHÔNG hệ metadata thứ hai. `curriculum_area` giữ ký hiệu chủ
+    # đề của pool này; neo bài lấy từ `SimSpec.curriculum_anchor` trong catalog.
+    EvalItem(
+        id="cur-t11cs-tree-inorder",
+        text=(
+            "Cho cây nhị phân gốc A, con trái của A là B, con phải của A là C; "
+            "B có con trái D và con phải E. Hãy duyệt cây theo thứ tự giữa (inorder)."
+        ),
+        group="specialized",
+        expect_simulation_id="tree.traversal",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T11CS.CD6",
+        curriculum_topic="Cấu trúc dữ liệu cây — duyệt cây nhị phân (Bài 17)",
+        capability_family="tree_traversal",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Giải thích được ngăn xếp thay đổi thế nào ở mỗi bước duyệt cây theo "
+            "chiều sâu, và vì sao thứ tự giữa cho ra dãy khác thứ tự trước trên "
+            "CÙNG một cây."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: THỨ TỰ THĂM sinh ra từ kỉ luật đẩy/lấy của ngăn xếp, không "
+            "phải từ hình dáng cây. Hình vẽ cây trong sách cho thấy cấu trúc nhưng "
+            "giấu mất ngăn xếp; ở đây học sinh thấy ngăn xếp dày lên rồi rút đi "
+            "từng bước, nên phân biệt được bốn biến thể mà không cần học thuộc."
+        ),
+    ),
+    EvalItem(
+        id="cur-t11-table-filter-limit",
+        text=(
+            "Cho bảng điểm: An tổ A 9,0; Bình tổ B 8,5; Chi tổ A 6,0; Dũng tổ A 9,0; "
+            "Lan tổ A 7,5; Minh tổ A 6,0. Hãy lọc các bạn tổ A, sắp xếp theo điểm "
+            "giảm dần rồi lấy 3 bạn đầu."
+        ),
+        group="specialized",
+        expect_simulation_id="database.relational_table_query",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T11.CD4",
+        curriculum_topic="Hệ cơ sở dữ liệu — bảng và truy vấn cơ bản",
+        capability_family="relational_table_query",
+        complexity="L3",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Xác định được vì sao một dòng dữ liệu được giữ, bị loại hay không "
+            "được lấy qua từng giai đoạn của truy vấn, và nêu được thứ tự các "
+            "giai đoạn đó."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: truy vấn là một CHUỖI TẦNG chứ không phải một phép duy "
+            "nhất — lọc thu nhỏ tập dòng, chọn cột thu hẹp bề ngang, sắp xếp đổi "
+            "thứ tự, giới hạn cắt phần đuôi. Kết quả in ra một lần che hết bốn "
+            "biến đổi này; chạy từng bước cho thấy cùng một bảng biến dạng dần và "
+            "vì sao đổi thứ tự tầng thì đổi đáp án."
+        ),
+    ),
+    EvalItem(
+        id="cur-t10-program-branch-loop",
+        text=(
+            "Cho đoạn chương trình: s = 0; i = 1; trong khi i <= 4 thì s = s + i "
+            "và i = i + 1; nếu s > 5 thì in 'lớn' ngược lại in 'nhỏ'. "
+            "Hãy chạy từng bước và cho biết kết quả in ra."
+        ),
+        group="specialized",
+        expect_simulation_id="algorithm.bounded_control_flow",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T10.CD5",
+        curriculum_topic="Cấu trúc rẽ nhánh và lặp (Bài 16–19)",
+        capability_family="bounded_control_flow",
+        complexity="L3",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Dự đoán được nhánh lệnh nào được thực hiện từ giá trị của điều kiện, "
+            "và chỉ ra được giá trị của biến sau mỗi lượt lặp."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: ĐIỀU KIỆN được tính TRƯỚC rồi mới quyết nhánh, và biến "
+            "mang giá trị khác nhau ở mỗi lượt. Học sinh đọc code trên giấy thường "
+            "gộp cả vòng lặp thành một kết quả và bỏ qua lượt trung gian; chạy "
+            "từng câu lệnh làm lộ đúng chỗ hiểu sai đó. Chương trình HỮU HẠN, "
+            "chạm biên thì dừng và nói thật — không giả vờ đã chạy xong."
+        ),
+    ),
+    EvalItem(
+        id="cur-t10-dag-truth-table",
+        text=(
+            "Cho mạch logic: đầu ra bằng (A AND B) OR (NOT C). Hãy mô phỏng mạch "
+            "và lập bảng chân trị của nó."
+        ),
+        group="specialized",
+        expect_simulation_id="logic.boolean_dag",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T10.CD1",
+        curriculum_topic="Dữ liệu lôgic — mạch nhiều phép và bảng chân trị (Bài 5)",
+        capability_family="boolean_composition",
+        complexity="L2",
+        result_mode="interactive_visualization",
+        learning_objective=(
+            "Phân biệt được THỨ TỰ đánh giá các cổng với GIÁ TRỊ của từng cổng, và "
+            "dự đoán được đầu ra đổi ra sao khi bật/tắt một đầu vào."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: giá trị lan truyền theo thứ tự phụ thuộc, cổng sau phải "
+            "chờ cổng trước. Bảng chân trị in sẵn trong sách cho quan hệ tổng quát "
+            "nhưng giấu tiến trình; bật một đầu vào rồi xem cổng nào đổi theo cho "
+            "thấy quan hệ nhân quả từng mắt xích — thứ mà học thuộc bảng không có."
+        ),
+    ),
+    EvalItem(
+        id="cur-t10-char-encoding-ascii",
+        text="Mã ASCII của các ký tự trong chuỗi 'Tin' là gì và biểu diễn nhị phân của chúng ra sao?",
+        group="specialized",
+        expect_simulation_id="binary.character_encoding",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T10.CD1",
+        curriculum_topic="Số hoá văn bản — mã hoá ký tự (Bài 3 · Bài 6)",
+        capability_family="positional_representation",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Chỉ ra được một ký tự trở thành dãy bit qua những bước nào, và giải "
+            "thích vì sao dãy số dư phải đọc ngược từ dưới lên."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: chữ được lưu bằng SỐ, và bước từ số sang bit là phép chia "
+            "lấy dư lặp lại. Bảng ASCII tra cứu chỉ cho cặp ký tự↔số và giấu mất "
+            "phép chia; ở đây từng lượt chia hiện ra nên dãy bit là KẾT QUẢ DẪN "
+            "XUẤT chứ không phải con số được công bố sẵn. Phạm vi ASCII/BMP — "
+            "không tuyên bố gì về byte UTF-8."
+        ),
+    ),
 ]
