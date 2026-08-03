@@ -308,9 +308,18 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
 }
 
 export function BoolDagInspector({ state }: Props) {
+  // HÉ LỘ DẦN (DESIGN_BRIEF §3.3): cột "Ra" của bảng chân trị chứa sẵn đáp án
+  // của MỌI tổ hợp — kể cả tổ hợp đang chạy. In nó từ bước 0 thì sân khấu giấu
+  // đầu ra bằng "?" cũng vô nghĩa. Mở ở BƯỚC CUỐI, dùng lại đúng idiom "?" của
+  // bảng cổng. Dẫn xuất thuần từ cursor — không thêm state trình bày.
+  const at = clampCursor(state, state.cursor);
+  const revealed = at === state.steps.length - 1;
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <p className="notes">Bảng chân trị (engine sinh đủ {state.truthTable.length} hàng):</p>
+      {!revealed && (
+        <p className="notes">Cột “Ra” mở ở bước cuối — em thử tự suy luận trước.</p>
+      )}
       <table className="data-table">
         <thead>
           <tr>
@@ -326,7 +335,7 @@ export function BoolDagInspector({ state }: Props) {
               {state.config.inputs.map((inp) => (
                 <td key={inp.id}>{row.assignment[inp.id]}</td>
               ))}
-              <td>{row.finalOutput}</td>
+              <td>{revealed ? row.finalOutput : "?"}</td>
             </tr>
           ))}
         </tbody>

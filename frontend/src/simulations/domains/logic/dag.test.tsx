@@ -206,3 +206,88 @@ describe("module: toggle tất định + timeline + inspector đọc sự thật
     expect(html).toContain("8 hàng");
   });
 });
+
+/**
+ * Audit độc lập 2026-08-03 — HÉ LỘ DẦN (DESIGN_BRIEF §3.3).
+ *
+ * Sân khấu đã giấu đầu ra từng cổng bằng "?", nhưng panel Quan sát in NGUYÊN
+ * cột "Ra" của cả 8 hàng chân trị ngay từ bước 0 — trong đó có hàng ứng với
+ * chính bộ đầu vào đang chạy. Học sinh mất cơ hội tự suy luận. Cùng lớp lỗi đã
+ * được coi là defect thật và đã sửa ở inspector cây (M17-VR1 #2).
+ *
+ * Cách sửa nhỏ nhất: cột "Ra" dùng lại ĐÚNG idiom "?" của bảng cổng và chỉ mở ở
+ * BƯỚC CUỐI. Dẫn xuất thuần từ `cursor` + `steps` — không thêm state trình bày,
+ * không đụng engine, `truthTable` chuẩn giữ nguyên.
+ */
+describe("bảng chân trị không lộ đáp án trước bước cuối", () => {
+  const mod = makeBoolDagModule();
+  const setup = (cursor: number) => {
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const base = mod.init(v.config);
+    const state = { ...base, cursor };
+    return {
+      state,
+      last: base.steps.length - 1,
+      html: renderToString(
+        <BoolDagInspector config={v.config} state={state} busy={false} dispatch={() => {}} />,
+      ).replace(/<!--.*?-->/g, ""),
+    };
+  };
+  /** Ô của cột "Ra" — lấy ô CUỐI mỗi hàng <tr> trong <tbody>. */
+  const outputCells = (html: string): string[] => {
+    const body = html.slice(html.indexOf("<tbody>"));
+    return [...body.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((m) => {
+      const tds = [...m[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map((t) => t[1].trim());
+      return tds[tds.length - 1] ?? "";
+    });
+  };
+
+  it("engine vẫn sinh đủ bảng chân trị chuẩn (không đụng ngữ nghĩa)", () => {
+    const { state } = setup(0);
+    expect(state.truthTable).toHaveLength(8);
+    // A=1,B=0,C=1 → g1=0, g2=NOT 1=0, g3=OR(0,0)=0
+    const row = state.truthTable.find(
+      (r) => r.assignment.A === 1 && r.assignment.B === 0 && r.assignment.C === 1,
+    )!;
+    expect(row.finalOutput).toBe(0);
+  });
+
+  it("bước 0: KHÔNG hàng nào lộ giá trị đầu ra", () => {
+    const { html } = setup(0);
+    const cells = outputCells(html);
+    expect(cells).toHaveLength(8);
+    expect(cells.every((c) => c === "?")).toBe(true);
+  });
+
+  it("bước 0: các cột ĐẦU VÀO vẫn hiện đủ để học sinh suy luận", () => {
+    const { html } = setup(0);
+    const body = html.slice(html.indexOf("<tbody>"));
+    const rows = [...body.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)];
+    expect(rows).toHaveLength(8);
+    // mỗi hàng vẫn có đủ 3 ô đầu vào + 1 ô đầu ra
+    for (const r of rows) {
+      expect([...r[1].matchAll(/<td[^>]*>/g)]).toHaveLength(4);
+    }
+    // và tổ hợp đầu vào phải đa dạng, không bị che
+    expect(body).toMatch(/>0</);
+    expect(body).toMatch(/>1</);
+  });
+
+  it("bước giữa (đã đánh giá vài cổng) vẫn chưa mở cột Ra", () => {
+    const { html } = setup(2);
+    expect(outputCells(html).every((c) => c === "?")).toBe(true);
+  });
+
+  it("bước CUỐI: cột Ra mở đủ 8 hàng, khớp truthTable của engine", () => {
+    const { state, html } = setup(99); // clamp về bước cuối
+    const cells = outputCells(html);
+    expect(cells).toEqual(state.truthTable.map((r) => String(r.finalOutput)));
+    expect(cells.some((c) => c === "?")).toBe(false);
+  });
+
+  it("trạng thái ẩn/hiện KHÔNG chỉ bằng màu — dùng ký tự '?' đọc được", () => {
+    const { html } = setup(0);
+    expect(html).toContain("?");
+  });
+});
