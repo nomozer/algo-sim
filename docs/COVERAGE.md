@@ -360,7 +360,7 @@ sử bằng **bản sao** (`dataclasses.replace`), **không** sửa `DATASET`.
 | `xd-order-workflow` | L3 | **tái sử dụng** node+edge+moving_entity **ngoài miền mạng** (S2) |
 | `c-geo-complex` | L4 | **từ chối trung thực** bài "nhìn có vẻ vẽ được" → `capability_gap` |
 | `m11-nested-canonical` | L2 | (M11) LLM compose **CHUỖI rule qua trung gian** — `A ∧ (B ∨ C)` = 2 rule nối, không module mới; khác hẳn `b-xor` (một rule phẳng) |
-| `m11-loop-gap` | L4 | (M11) **vòng lặp biến tự do bị từ chối trung thực** (gate fired) — LLM không được tự tính dãy 2→5→8… nhét vào reveal (R0) |
+| `m11-loop-gap` | L3 | **vòng lặp có biến trạng thái + điều kiện dừng cụ thể** do `algorithm.bounded_control_flow` THỰC THI (W2C/M17). Ranh giới đôi vẫn giữ: `algorithm.scan` không được nuốt (scan duyệt DÃY CHO SẴN), và generic representation không được phát lại dãy 2→5→8… do LLM tự tính (R0) |
 
 **Không** nhồi biến thể OR/NOT/XOR — chúng chứng minh lặp lại đúng một năng lực.
 (M11: `m11-nested-access`/`-not`/`-paraphrase` là case REGRESSION/robustness cho

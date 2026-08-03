@@ -237,6 +237,31 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   prediction/what-if · `for` đếm (hoãn có chủ đích, ưu tiên `while` trước).
 >   ⚠️ `classify.md` đã đổi ⇒ **phải restart backend** trước bất kỳ lượt live nào.
 >
+> #### `algorithm.bounded_control_flow` — bốn mức bằng chứng (2026-08-03)
+>
+> Tách bạch, **không gộp thành một câu**:
+>
+> | Mức | Trạng thái |
+> |---|---|
+> | ENGINE | **VERIFIED** — trace `2→5→8→11→14→17`, `completion=completed`, khớp oracle độc lập |
+> | HANDOFF backend→frontend | **VERIFIED** (`c6f4c5d`) — envelope đã chuẩn hoá nay frontend tiêu thụ được; trước đó backend `ok` mà trình duyệt từ chối |
+> | THỊ GIÁC + TƯƠNG TÁC (bằng **fixture**) | **VERIFIED** — Chrome thật 1440×1000 và 768×900, click/kéo/phím thật trên Tiến·Lùi·Tự chạy·Dừng·thanh tua·Đặt lại |
+> | **NL LIVE end-to-end** | **NOT_VERIFIED** — xem dưới |
+>
+> Live smoke (`gemini-2.5-flash`, IN-PROCESS, 3 lượt, **12/12 HTTP**, 0 retry
+> transient): **0/3 pass**. Một lượt ghi được phán quyết đầy đủ — analyze phát
+> đúng `bounded_control_flow.bounded_loop`, classify chọn đúng
+> `algorithm.bounded_control_flow`, mechanism gate **không** chặn — nhưng simulate
+> hỏng **cả 3 lần** với `structural_invalid`: *"Vòng lặp … phải có ít nhất một câu
+> lệnh trong thân."* Hai lượt còn lại bị trần ngân sách cắt trước khi kết luận.
+>
+> Đây **đúng khiếm khuyết W2C đã ghi ở trên là "còn mở"** — LLM không nối được
+> khối lệnh bằng id (`body` rỗng). Phạm vi rộng hơn một case benchmark, nên
+> **không** vá bằng prompt trong lượt này. `m11-loop-gap` vì thế được sửa theo
+> **năng lực** (engine sở hữu cơ chế) chứ không theo độ tin cậy của đường NL.
+> Container Docker lúc đo là **STALE** (thiếu `bounded_control_flow`); lượt live
+> chạy IN-PROCESS nên số liệu **không** nói gì về container.
+>
 > ### Phạm vi W2B
 >
 > | | Trạng thái |
