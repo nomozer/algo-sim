@@ -384,29 +384,43 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "Cho biến x = 2. Mỗi vòng lặp x tăng thêm 3. Vòng lặp dừng khi x lớn hơn "
             "14. Hãy mô phỏng quá trình thay đổi của x qua từng vòng lặp."
         ),
-        group="unsupported",
-        # M12: kiêm case ranh giới cho scan — vòng lặp BIẾN TỰ DO (không dãy số)
-        # phải TIẾP TỤC bị từ chối, không bị ép vào algorithm.scan.
+        group="specialized",
+        expect_simulation_id="algorithm.bounded_control_flow",
+        # RANH GIỚI ĐÔI, vẫn còn giá trị sau khi case đổi phán quyết:
+        #  · `algorithm.scan` KHÔNG được nuốt bài này — scan duyệt DÃY CHO SẴN,
+        #    còn đây là biến trạng thái tự do (tag `m12_scan` giữ vai trò đối chứng);
+        #  · generic DSL KHÔNG được dựng lại dãy 2→5→8→11→14→17 bằng reveal —
+        #    bài đã có engine chuyên biệt sở hữu cơ chế (quy tắc ưu tiên chuyên biệt).
+        # Từ W2C (M17), `algorithm.bounded_control_flow` sở hữu cơ chế này: engine
+        # tất định chạy từng câu lệnh và tự dẫn xuất số lượt + trace + kết quả.
         tags=("boundary", "m11_compose", "m12_scan"),
         curriculum_area="T10.CD5",
-        curriculum_topic="Câu lệnh lặp trong lập trình (mô phỏng thực thi vòng lặp ngoài năng lực v1)",
-        capability_family="control_flow_loop",
-        complexity="L4",
-        result_mode="unsupported",
-        learning_objective="(Ngoài phạm vi v1 — case ranh giới kiểm tính trung thực năng lực.)",
+        curriculum_topic="Câu lệnh lặp trong lập trình — vòng lặp có biên (Bài 16–19)",
+        capability_family="bounded_control_flow",
+        complexity="L3",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Chỉ ra được giá trị của biến sau mỗi lượt lặp và giải thích vì sao "
+            "vòng lặp dừng khi điều kiện tiếp tục không còn đúng."
+        ),
         pedagogical_rationale=(
-            "Cơ chế được hỏi là VÒNG LẶP CÓ TRẠNG THÁI với điều kiện dừng theo ngưỡng — "
-            "đúng hai gap-role numeric_threshold + arbitrary_algorithm mà manifest cố ý "
-            "không cover. LLM tự tính dãy 2→5→8→11→14→17 rồi nhét vào reveal_sequence "
-            "sẽ là LLM sở hữu tiến trình canonical (vi phạm R0) — phải unsupported "
-            "trung thực, không render ảnh tĩnh giả."
+            "Cơ chế ẩn: TRẠNG THÁI của biến đổi qua từng lượt, và điều kiện được "
+            "ĐÁNH GIÁ LẠI trước mỗi lượt — nên số vòng không đọc ra được từ đề mà "
+            "phải chạy mới biết. Học sinh đọc đề trên giấy thường nhảy thẳng tới "
+            "giá trị cuối và bỏ qua các lượt trung gian; chạy từng bước làm lộ đúng "
+            "chỗ hiểu sai đó. ENGINE tất định — không phải LLM — dẫn xuất số lượt, "
+            "trace và kết quả: spec chỉ mô tả chương trình (biến + câu lệnh), và "
+            "validator chặn mọi spec mang sẵn kết quả (R0). Vòng lặp bắt buộc có "
+            "biên: chạm giới hạn thì dừng và nói thật, không trình bày như đã xong."
         ),
     ),
 
     # ── M12: định tuyến scan khai báo (tag "m12_scan") ──
     # Suite 4 case: flagship first-above-threshold (scan) + đối chứng linear
     # (so BẰNG → chuyên biệt thắng) + 2 case sẵn có gắn thêm tag (cur-t10-count:
-    # đếm duyệt hết → count_if; m11-loop-gap: biến tự do → vẫn unsupported).
+    # đếm duyệt hết → count_if; m11-loop-gap: biến tự do → KHÔNG thuộc scan, nay
+    # do `algorithm.bounded_control_flow` sở hữu — vai trò đối chứng giữ nguyên,
+    # chỉ đổi đích đến, xem chú thích tại chính case đó).
     # Đây là case DEVELOPMENT/REGRESSION — không trình bày như held-out.
     EvalItem(
         id="m12-scan-first-above",
