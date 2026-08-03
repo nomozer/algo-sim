@@ -1,0 +1,133 @@
+{
+  "_comment": "SINH TỪ backend validate_program_config — KHÔNG sửa tay. Đây là hình dạng config THẬT mà ValidatedSimulationEnvelope mang sang frontend (canonical wire format: bảng expressions + tham chiếu id). Khoá hai chiều: backend/tests/test_program_wire_contract.py giữ backend không trôi khỏi file này; program-module.test.tsx chứng minh frontend tiêu thụ được nó.",
+  "_source_candidate": {
+    "program_version": "program-2.0",
+    "variables": [
+      {
+        "name": "x",
+        "type": "integer",
+        "int_value": 2
+      }
+    ],
+    "statements": [
+      {
+        "id": "s_while",
+        "kind": "while",
+        "condition": {
+          "atoms": [
+            {
+              "left": {
+                "left": {
+                  "kind": "var",
+                  "name": "x"
+                }
+              },
+              "op": "<=",
+              "right": {
+                "left": {
+                  "kind": "int",
+                  "int_value": 14
+                }
+              }
+            }
+          ]
+        },
+        "body": [
+          "s_body"
+        ],
+        "max_iterations": 10
+      },
+      {
+        "id": "s_body",
+        "kind": "assign",
+        "target": "x",
+        "value": {
+          "left": {
+            "kind": "var",
+            "name": "x"
+          },
+          "op": "+",
+          "right": {
+            "kind": "int",
+            "int_value": 3
+          }
+        }
+      }
+    ],
+    "main": [
+      "s_while"
+    ]
+  },
+  "config": {
+    "program_version": "program-2.0",
+    "variables": [
+      {
+        "name": "x",
+        "type": "integer",
+        "int_value": 2,
+        "bool_value": null,
+        "initialized": true
+      }
+    ],
+    "expressions": [
+      {
+        "id": "_e1",
+        "kind": "var",
+        "name": "x"
+      },
+      {
+        "id": "_e2",
+        "kind": "int",
+        "int_value": 14
+      },
+      {
+        "id": "_e3",
+        "kind": "compare",
+        "op": "<=",
+        "left": "_e1",
+        "right": "_e2"
+      },
+      {
+        "id": "_e4",
+        "kind": "int",
+        "int_value": 3
+      },
+      {
+        "id": "_e5",
+        "kind": "binary",
+        "op": "+",
+        "left": "_e1",
+        "right": "_e4"
+      }
+    ],
+    "statements": [
+      {
+        "id": "s_while",
+        "kind": "while",
+        "target": null,
+        "value": null,
+        "condition": "_e3",
+        "then_body": [],
+        "else_body": [],
+        "body": [
+          "s_body"
+        ],
+        "max_iterations": 10
+      },
+      {
+        "id": "s_body",
+        "kind": "assign",
+        "target": "x",
+        "value": "_e5",
+        "condition": null,
+        "then_body": [],
+        "else_body": [],
+        "body": [],
+        "max_iterations": null
+      }
+    ],
+    "main": [
+      "s_while"
+    ]
+  }
+}

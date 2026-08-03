@@ -39,7 +39,12 @@ export const INT_MAX = 10000;
 
 export type ValueType = "integer" | "boolean";
 export type StatementKind = "assign" | "if" | "while" | "output";
-export type ExpressionKind = "int" | "bool" | "var" | "unary" | "binary" | "compare" | "logic";
+// Hằng RUNTIME + kiểu dẫn xuất TỪ NÓ — biên nhận dạng canonical cần kiểm `kind`
+// lúc chạy, và derive kiểu từ hằng thì hai thứ không thể trôi khỏi nhau.
+export const EXPRESSION_KINDS = [
+  "int", "bool", "var", "unary", "binary", "compare", "logic",
+] as const;
+export type ExpressionKind = (typeof EXPRESSION_KINDS)[number];
 
 export const ARITHMETIC_OPS = ["+", "-", "*", "//", "%"] as const;
 export const COMPARE_OPS = ["==", "!=", "<", "<=", ">", ">="] as const;
@@ -260,6 +265,129 @@ function normalizeInlineProgram(rawStatements: unknown): {
   return { expressions, statements };
 }
 
+/* ── BIÊN NHẬN dạng CANONICAL (đã chuẩn hoá) ──────────────────
+ * Backend `validate_program_config` phát ra bảng `expressions[]` + câu lệnh
+ * tham chiếu id; đó là dạng dây dẫn của envelope và cũng là dạng lịch sử lưu.
+ * Hàm này KHÔNG chuẩn hoá lại (sẽ đánh số id lần hai) — nó KIỂM ĐỊNH bảng rồi
+ * dùng nguyên văn.
+ *
+ * Vì sao phải kiểm dù backend đã kiểm: đây là tầng 2 của validator hai tầng.
+ * Bảng tới từ dây dẫn/localStorage có thể treo id hoặc có CHU TRÌNH, mà cả
+ * `typeOf` lẫn `readsOf` bên dưới đều đệ quy và dùng `exprById.get(id)!` —
+ * treo thì ném TypeError, chu trình thì tràn ngăn xếp. Fail-closed ở đây để
+ * chúng không bao giờ thấy bảng hỏng. Hỗ trợ hai bề mặt KHÔNG được làm
+ * validator dễ dãi hơn.
+ */
+function adoptNormalizedProgram(
+  r: Record<string, unknown>,
+): { expressions: ProgramExpression[]; statements: ProgramStatement[] } | { error: string } {
+  const rawExprs = r.expressions;
+  if (!Array.isArray(rawExprs)) return { error: "'expressions' phải là danh sách." };
+  if (!Array.isArray(r.statements)) return { error: "'statements' phải là danh sách." };
+
+  const byId = new Map<string, ProgramExpression>();
+  for (const raw of rawExprs as Record<string, unknown>[]) {
+    if (!raw || typeof raw !== "object") return { error: "Mỗi biểu thức phải là một đối tượng." };
+    const id = raw.id;
+    if (typeof id !== "string" || !id.trim()) return { error: "Mỗi biểu thức phải có 'id'." };
+    if (byId.has(id)) return { error: `Biểu thức trùng id: '${id}'.` };
+    const kind = raw.kind;
+    if (!(EXPRESSION_KINDS as readonly string[]).includes(kind as string)) {
+      return { error: `Loại biểu thức không hỗ trợ: ${String(kind)}.` };
+    }
+    const k = kind as ExpressionKind;
+    const op = raw.op;
+    if (k === "int" && !isInt(raw.int_value)) {
+      return { error: `Biểu thức '${id}' thiếu 'int_value' là số nguyên.` };
+    }
+    if (k === "int" && ((raw.int_value as number) < INT_MIN || (raw.int_value as number) > INT_MAX)) {
+      return { error: `Hằng số ở '${id}' ngoài khoảng cho phép.` };
+    }
+    if (k === "bool" && !isBool(raw.bool_value)) {
+      return { error: `Biểu thức '${id}' thiếu 'bool_value' là true/false.` };
+    }
+    if (k === "var" && (typeof raw.name !== "string" || !raw.name)) {
+      return { error: `Biểu thức '${id}' thiếu tên biến.` };
+    }
+    const opOk =
+      k === "unary" ? (UNARY_OPS as readonly string[]).includes(op as string)
+      : k === "binary" ? (ARITHMETIC_OPS as readonly string[]).includes(op as string)
+      : k === "compare" ? (COMPARE_OPS as readonly string[]).includes(op as string)
+      : k === "logic" ? (LOGIC_OPS as readonly string[]).includes(op as string)
+      : true;
+    if (!opOk) return { error: `Toán tử không hợp lệ ở biểu thức '${id}': ${String(op)}.` };
+    byId.set(id, raw as unknown as ProgramExpression);
+  }
+
+  // con của một nút — cùng bộ trường mà `typeOf`/`readsOf` sẽ đi theo
+  const childrenOf = (n: ProgramExpression): string[] => {
+    const out: string[] = [];
+    for (const key of ["operand", "left", "right"] as const) {
+      const child = n[key];
+      if (child != null) out.push(child);
+    }
+    return out;
+  };
+
+  for (const [id, node] of byId) {
+    const need =
+      node.kind === "unary" ? ["operand"]
+      : ["binary", "compare", "logic"].includes(node.kind) ? ["left", "right"]
+      : [];
+    for (const key of need) {
+      const ref = (node as unknown as Record<string, unknown>)[key];
+      if (typeof ref !== "string" || !byId.has(ref)) {
+        return { error: `Biểu thức '${id}' tham chiếu tới '${String(ref)}' không tồn tại.` };
+      }
+    }
+  }
+
+  // CHU TRÌNH + ĐỘ SÂU trong một lượt duyệt (0=trắng, 1=đang duyệt, 2=xong).
+  const mark = new Map<string, number>();
+  const depthOf = new Map<string, number>();
+  const visit = (id: string): string | null => {
+    const state = mark.get(id) ?? 0;
+    if (state === 1) return `Biểu thức '${id}' tham chiếu vòng tròn.`;
+    if (state === 2) return null;
+    mark.set(id, 1);
+    let deepest = 0;
+    for (const child of childrenOf(byId.get(id)!)) {
+      const err = visit(child);
+      if (err) return err;
+      deepest = Math.max(deepest, depthOf.get(child) ?? 0);
+    }
+    mark.set(id, 2);
+    const d = deepest + 1;
+    depthOf.set(id, d);
+    if (d > PROGRAM_LIMITS.maxExpressionDepth) {
+      return `Biểu thức '${id}' lồng quá ${PROGRAM_LIMITS.maxExpressionDepth} tầng.`;
+    }
+    return null;
+  };
+  for (const id of byId.keys()) {
+    const err = visit(id);
+    if (err) return { error: err };
+  }
+
+  // Câu lệnh: phải là đối tượng, và mọi tham chiếu biểu thức phải có thật —
+  // `typeOf` bên dưới dùng non-null assertion nên id treo sẽ ném, không fail sạch.
+  const statements: ProgramStatement[] = [];
+  for (const raw of r.statements as Record<string, unknown>[]) {
+    if (!raw || typeof raw !== "object") return { error: "Mỗi câu lệnh phải là một đối tượng." };
+    for (const key of ["value", "condition"] as const) {
+      const ref = raw[key];
+      if (ref != null && (typeof ref !== "string" || !byId.has(ref))) {
+        return {
+          error: `Câu lệnh '${String(raw.id)}' tham chiếu biểu thức '${String(ref)}' không tồn tại.`,
+        };
+      }
+    }
+    statements.push(raw as unknown as ProgramStatement);
+  }
+
+  return { expressions: rawExprs as ProgramExpression[], statements };
+}
+
 /* ── validator (mirror backend) ─────────────────────────────── */
 
 export function validateProgramSpec(raw: unknown): ProgramValidation {
@@ -304,12 +432,24 @@ export function validateProgramSpec(raw: unknown): ProgramValidation {
     varTypes.set(name, type);
   }
 
-  // ── §L2: biểu thức INLINE → biểu diễn nội bộ (TẤT ĐỊNH) ──
+  // ── BIÊN NHẬN: hai bề mặt vào, MỘT biểu diễn ra ──
+  // CANONICAL (dạng dây dẫn của `ValidatedSimulationEnvelope`) = đã chuẩn hoá:
+  // bảng `expressions[]` + câu lệnh tham chiếu bằng id. Đây là thứ backend phát
+  // ra sau `validate_program_config`, và là thứ lịch sử lưu lại.
+  // INLINE = bề mặt ỨNG VIÊN (LLM sinh, fixture test) — chuẩn hoá ĐÚNG MỘT LẦN
+  // tại đây rồi đi tiếp cùng một đường.
+  // Đã chuẩn hoá thì KHÔNG chuẩn hoá lại (id sẽ bị đánh số lần hai).
   let normalized: { expressions: ProgramExpression[]; statements: ProgramStatement[] };
-  try {
-    normalized = normalizeInlineProgram(r.statements);
-  } catch (e) {
-    return fail((e as Error).message);
+  if (r.expressions !== undefined) {
+    const adopted = adoptNormalizedProgram(r);
+    if ("error" in adopted) return fail(adopted.error);
+    normalized = adopted;
+  } else {
+    try {
+      normalized = normalizeInlineProgram(r.statements);
+    } catch (e) {
+      return fail((e as Error).message);
+    }
   }
   const expressions = normalized.expressions;
   const exprById = new Map(expressions.map((e) => [e.id, e]));

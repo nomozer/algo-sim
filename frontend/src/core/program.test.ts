@@ -367,15 +367,52 @@ describe("W2C-C1 §L1 — khai báo ≠ khởi tạo (mirror backend)", () => {
 });
 
 describe("W2C-C1 §L2 — biểu thức inline (mirror backend)", () => {
-  it("spec kiểu CŨ (tham chiếu id) không còn được chấp nhận", () => {
-    const old = {
+  /**
+   * SỬA Ý ĐỊNH (audit 2026-08-03 — contract drift).
+   *
+   * Test này trước đây khoá "spec kiểu CŨ (tham chiếu id) không còn được chấp
+   * nhận". Ý định gốc của W2C-C1 §L2 là **bề mặt ỨNG VIÊN của LLM** chuyển sang
+   * inline — và bảo đảm đó vẫn nguyên, nhưng nó thuộc về BACKEND, nơi LLM thật
+   * sự nộp bài (`backend/tests/test_program_wire_contract.py` khoá lại).
+   *
+   * Frontend thì KHÔNG nhận candidate của LLM — nó nhận
+   * `ValidatedSimulationEnvelope`, mà envelope mang đúng dạng đã chuẩn hoá
+   * (bảng `expressions[]` + tham chiếu id). Khoá frontend từ chối dạng đó chính
+   * là khoá nó từ chối mọi envelope backend phát ra — đó là lỗi mà audit tìm ra.
+   *
+   * Luật đúng ở biên frontend: tham chiếu id được chấp nhận KHI VÀ CHỈ KHI đi
+   * kèm một bảng biểu thức HỢP LỆ.
+   */
+  it("tham chiếu id được chấp nhận khi có bảng biểu thức hợp lệ (dạng dây dẫn)", () => {
+    const wire = {
       program_version: "program-2.0",
       variables: [{ name: "x", type: "integer", int_value: 1 }],
       expressions: [{ id: "e1", kind: "int", int_value: 2 }],
       statements: [{ id: "s1", kind: "assign", target: "x", value: "e1" }],
       main: ["s1"],
     };
-    expect(validateProgramSpec(old).ok).toBe(false);
+    expect(validateProgramSpec(wire).ok).toBe(true);
+  });
+
+  it("tham chiếu id mà KHÔNG có bảng biểu thức thì vẫn bị từ chối", () => {
+    const orphan = {
+      program_version: "program-2.0",
+      variables: [{ name: "x", type: "integer", int_value: 1 }],
+      statements: [{ id: "s1", kind: "assign", target: "x", value: "e1" }],
+      main: ["s1"],
+    };
+    expect(validateProgramSpec(orphan).ok).toBe(false);
+  });
+
+  it("bảng biểu thức có nhưng tham chiếu treo thì vẫn bị từ chối", () => {
+    const dangling = {
+      program_version: "program-2.0",
+      variables: [{ name: "x", type: "integer", int_value: 1 }],
+      expressions: [{ id: "e1", kind: "int", int_value: 2 }],
+      statements: [{ id: "s1", kind: "assign", target: "x", value: "e404" }],
+      main: ["s1"],
+    };
+    expect(validateProgramSpec(dangling).ok).toBe(false);
   });
 
   it("normalize TẤT ĐỊNH — cùng input cùng biểu diễn nội bộ", () => {
