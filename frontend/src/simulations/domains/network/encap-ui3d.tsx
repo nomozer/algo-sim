@@ -246,8 +246,23 @@ export function Encap3DWorkspace({ state }: Props) {
 
     // Camera nghiêng-CẠNH (không phải nhìn từ trên xuống): lộ trục Z = tầng để
     // thấy PDU đi XUỐNG qua các phiến khi đóng gói, không bị bóp dẹp.
-    const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-    camera.position.set(12, 7.5, 13);
+    //
+    // Audit độc lập 2026-08-03: ở góc cũ `fov 50` + vị trí (12, 7.5, 13), bốn
+    // NHÃN TẦNG (đặt ở x = -9.2, tức phía xa camera nhất) bị bóp nhỏ và CHỤM
+    // vào điểm tụ tới mức không đọc được. Thủ phạm là MÉO PHỐI CẢNH, không phải
+    // khoảng cách: fov rộng làm tầng sâu co lại nhanh hơn tầng gần.
+    // Sửa: hạ fov (50 → 26, gần phép chiếu trục đo hơn nên bốn tầng giữ cỡ
+    // tương đương) và nâng điểm nhìn. Tham số chọn bằng PHÉP CHIẾU chứ không
+    // bằng mắt — chiếu bốn nhãn (sprite 3.6×0.9 tại x = -9.2) về pixel trên
+    // khung canvas 740×330, kiểm cả BỀ RỘNG sprite chứ không chỉ tâm:
+    //   (12, 7.5, 13) fov 50 → nhãn cao  9.6px, cách nhau dọc  9px → chồng, mù
+    //   ( 2, 12,  19) fov 26 → nhãn cao 19.1px, cách nhau dọc 33px → đọc được
+    // Vẫn là góc nghiêng-CẠNH nên PDU vẫn thấy đi XUỐNG qua các phiến. THUẦN
+    // RENDERER (camera/closure): không đụng state, không đổi timeline, không
+    // thêm toạ độ trình bày vào engine. `home` clone từ đây nên nút "Góc nhìn"
+    // tự đi theo — không có nguồn thứ hai.
+    const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
+    camera.position.set(2, 12, 19);
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(0, -0.3, -6);
     controls.enablePan = false;
