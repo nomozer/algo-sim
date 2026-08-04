@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./index";
-import { AlgorithmWorkspace } from "./ui";
+import { AlgorithmWorkspace, insertionHold } from "./ui";
 import type { AlgorithmSimState } from "./model";
 import { activeTrace } from "./model";
 import type { AlgorithmId } from "../../../core/types";
@@ -91,3 +91,119 @@ describe("(19) dải nhân quả — khớp sự kiện trace hiện tại", () 
     expect(h).toContain("max");
   });
 });
+
+/**
+ * (INSERT-HOLD) SẮP XẾP CHÈN — quân bài đang cầm, ô trống, và dịch phải.
+ *
+ * Lỗi audit bắt được: sân khấu hiện dãy `[3, 7, 7, 9, 8, 2]` — số `7` hai lần và
+ * giá trị đang chèn (`4`) biến mất. Engine KHÔNG sai: `vars.gia_tri_chen` giữ
+ * quân bài, và `snapshot.ids` giữ định danh của nó ĐÚNG tại ô trống. Renderer
+ * trước đây chỉ đọc `array` nên vẽ ra bản sao còn sót.
+ *
+ * Các test dưới đây khoá: số phần tử LOGIC luôn đúng, không có số nào bị nhân
+ * bản trên màn hình, quân bài luôn nhìn thấy được, và ô trống lùi dần sang trái.
+ */
+describe("(INSERT-HOLD) sắp xếp chèn: đang giữ · ô trống · dịch phải", () => {
+  const DATA = { array: [7, 3, 9, 4, 8, 2], order: "asc" };
+  const mod = makeAlgorithmModule("insertion_sort");
+  const cfg = (() => {
+    const r = mod.validateConfig({
+      problem: {}, algorithm_id: "insertion_sort", data: DATA,
+      data_generated: false, notes: null,
+    });
+    if (!r.ok) throw new Error(r.error);
+    return r.config;
+  })();
+  const base = mod.init(cfg) as AlgorithmSimState;
+  const steps = activeTrace(base).steps;
+  const stateFor = (c: number) => mod.timeline!.goToStep(base, c) as AlgorithmSimState;
+  const at = (c: number) =>
+    renderToString(
+      <AlgorithmWorkspace
+        config={cfg}
+        state={mod.timeline!.goToStep(base, c) as AlgorithmSimState}
+        busy={false}
+        dispatch={() => {}}
+      />,
+    ).replace(/<!--.*?-->/g, "");
+
+  /** Bước đang trong một lượt chèn (đã rút quân bài, chưa chèn xong). */
+  const holdingSteps = steps
+    .map((s, i) => ({ s, i }))
+    .filter(({ s }) =>
+      typeof s.snapshot.vars["gia_tri_chen"] === "number" &&
+      !s.events.some((e) => e.type === "insert"));
+
+  it("có ít nhất một bước đang giữ quân bài (fixture đủ để kiểm)", () => {
+    expect(holdingSteps.length).toBeGreaterThan(3);
+  });
+
+  it("mọi bước đang giữ: quân bài hiện ở khu 'Đang giữ' và nói rõ đã rút khỏi dãy", () => {
+    for (const { i } of holdingSteps) {
+      const h = at(i);
+      expect(h, `bước ${i} thiếu khay đang giữ`).toContain("hold-tray");
+      expect(h, `bước ${i} thiếu chữ "Đang giữ"`).toContain("Đang giữ");
+      expect(h, `bước ${i} không nói ô trống`).toContain("ô trống ở vị trí");
+    }
+  });
+
+  it("mọi bước đang giữ: dãy có ĐÚNG MỘT ô trống, vẽ bằng nét đứt + chữ", () => {
+    for (const { i } of holdingSteps) {
+      const h = at(i);
+      expect((h.match(/>trống</g) ?? []).length, `bước ${i}`).toBe(1);
+      expect(h).toContain("stroke-dasharray");
+    }
+  });
+
+  it("KHÔNG bước nào hiện một giá trị bị nhân bản trên sân khấu", () => {
+    for (const { s, i } of holdingSteps) {
+      const gapId = s.snapshot.ids;
+      // giá trị THẬT đang nằm trong dãy = mọi ô trừ ô trống
+      const gap = insertionHold(stateFor(i), i)!.gapIndex;
+      const shown = s.snapshot.array.filter((_, idx) => idx !== gap);
+      const key = s.snapshot.vars["gia_tri_chen"] as number;
+      // tổng số phần tử logic = ô có giá trị + quân bài đang cầm
+      expect(shown.length + 1, `bước ${i} sai số phần tử`).toBe(s.snapshot.array.length);
+      // multiset [dãy hiện + quân bài] luôn bằng multiset ban đầu
+      const got = [...shown, key].sort((a, b) => a - b);
+      expect(got, `bước ${i} multiset lệch`).toEqual([...DATA.array].sort((a, b) => a - b));
+      expect(gapId.length).toBe(DATA.array.length);
+    }
+  });
+
+  it("ô trống LÙI DẦN sang trái trong một lượt (đúng chiều dịch phải)", () => {
+    // lấy lượt chèn đầu tiên có ít nhất hai bước dịch
+    const rounds: number[][] = [];
+    let cur: number[] = [];
+    steps.forEach((s, i) => {
+      if (s.events.some((e) => e.type === "assign_var" && e.name === "gia_tri_chen")) {
+        if (cur.length) rounds.push(cur);
+        cur = [];
+      }
+      const h = insertionHold(stateFor(i), i);
+      if (h) cur.push(h.gapIndex);
+    });
+    if (cur.length) rounds.push(cur);
+    const multi = rounds.find((r) => new Set(r).size >= 2);
+    expect(multi, "fixture không có lượt nào dịch ≥2 lần").toBeDefined();
+    const uniq = [...new Set(multi!)];
+    for (let k = 1; k < uniq.length; k += 1) {
+      expect(uniq[k], "ô trống phải lùi sang TRÁI").toBeLessThan(uniq[k - 1]);
+    }
+  });
+
+  it("bước CHÈN: không còn khay giữ, không còn ô trống", () => {
+    const insertStep = steps.findIndex((s) => s.events.some((e) => e.type === "insert"));
+    const h = at(insertStep);
+    expect(h).not.toContain("hold-tray");
+    expect(h).not.toContain(">trống<");
+  });
+
+  it("kết quả cuối đúng và dãy đủ phần tử", () => {
+    const lastStep = steps[steps.length - 1];
+    expect(lastStep.snapshot.array).toEqual([...DATA.array].sort((a, b) => a - b));
+    expect(lastStep.snapshot.array.length).toBe(DATA.array.length);
+  });
+});
+
+

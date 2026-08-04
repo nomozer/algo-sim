@@ -30,6 +30,67 @@ import {
  *   `decision.ts` với ô dự đoán nên các biểu diễn không lệch nhau.
  */
 
+/* ── SẮP XẾP CHÈN: GIÁ TRỊ ĐANG GIỮ + Ô TRỐNG (INSERT-HOLD) ──────────────
+ *
+ * Vì sao có khối này: audit cơ chế bắt được sân khấu hiện dãy `[3, 7, 7, 9, 8, 2]`
+ * — số `7` xuất hiện HAI lần và giá trị đang chèn (`4`) biến mất khỏi dãy. Với
+ * học sinh, đó đọc thành "thuật toán nhân bản phần tử rồi làm mất một phần tử".
+ *
+ * Sự thật của engine thì không như vậy, và engine ĐÃ ghi đủ:
+ * - `vars.gia_tri_chen` = quân bài đang cầm trên tay;
+ * - `snapshot.ids` là HOÁN VỊ định danh, và `setIdAt(j, keyId)` giữ định danh
+ *   của quân bài đang cầm ĐÚNG tại Ô TRỐNG. Vị trí đó vẫn còn giá trị cũ trong
+ *   `array` (bản sao còn sót của phần tử vừa dời sang phải) — nên nếu renderer
+ *   chỉ đọc `array` thì thấy số lặp lại.
+ *
+ * Nên đây KHÔNG phải sửa engine: chỉ là renderer bắt đầu đọc `ids` — thứ engine
+ * đã duy trì sẵn — để vẽ ô trống, và vẽ quân bài đang cầm ra khu vực riêng.
+ */
+interface InsertionHold {
+  /** Giá trị đang cầm (đã rút khỏi dãy). */
+  key: number;
+  /** Vị trí ô trống trong dãy — chỗ giá trị vừa bị rút ra / vừa dời khỏi. */
+  gapIndex: number;
+}
+
+export function insertionHold(state: AlgorithmSimState, cursor: number): InsertionHold | null {
+  const trace = activeTrace(state);
+  const step = trace.steps[cursor];
+  if (!step) return null;
+  // Bước CHÈN: quân bài đã đáp xuống → không còn cầm, không còn ô trống.
+  if (step.events.some((e) => e.type === "insert")) return null;
+
+  const key = step.snapshot.vars["gia_tri_chen"];
+  if (typeof key !== "number") return null;
+
+  // Đầu lượt: bước gần nhất có `assign_var gia_tri_chen`.
+  let start = -1;
+  for (let i = cursor; i >= 0; i -= 1) {
+    if (trace.steps[i].events.some((e) => e.type === "assign_var" && e.name === "gia_tri_chen")) {
+      start = i;
+      break;
+    }
+  }
+  if (start < 0) return null;
+
+  // Vị trí rút quân bài: engine gửi kèm trong sự kiện của lượt này —
+  // `compare.j` là chỉ số gốc của quân bài, `insert.index` dùng khi không phải dời.
+  let pickIndex: number | null = null;
+  for (let i = start; i < trace.steps.length; i += 1) {
+    for (const ev of trace.steps[i].events) {
+      if (ev.type === "compare") { pickIndex = ev.j; break; }
+      if (ev.type === "insert") { pickIndex = ev.index; break; }
+    }
+    if (pickIndex !== null) break;
+  }
+  if (pickIndex === null) return null;
+
+  const keyId = trace.steps[start].snapshot.ids[pickIndex];
+  const gapIndex = step.snapshot.ids.indexOf(keyId);
+  if (gapIndex < 0) return null;
+  return { key, gapIndex };
+}
+
 type Props = WorkspaceProps<AlgorithmConfig, AlgorithmSimState>;
 
 export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
@@ -49,6 +110,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
 
   const decision = decisionPointOf(state);
   const consequence = decision ? null : consequenceOf(state);
+  const hold = insertionHold(state, clampStep(state, state.cursor));
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -69,12 +131,30 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       )}
 
       <div className="sim-stage">
+        {/* INSERT-HOLD: quân bài đang cầm nằm NGOÀI dãy, đúng như thao tác thật —
+            và ô nó để lại trong dãy là ô TRỐNG, không phải một số lặp lại. */}
+        {hold && (
+          <div className="hold-tray">
+            <span className="hold-label">Đang giữ</span>
+            <span className="hold-value">{fmt(hold.key)}</span>
+            <span className="hold-note">đã rút khỏi dãy — ô trống ở vị trí {hold.gapIndex}</span>
+          </div>
+        )}
         <ArrayView
           step={step}
           labels={config.data.labels}
           interactive={canDrag}
           onSwap={(i, j) => dispatch({ type: "whatif_swap", i, j })}
+          gapIndex={hold?.gapIndex ?? null}
         />
+        {hold && (
+          <p className="stage-legend">
+            <span><i className="dot is-current" /> đang so sánh</span>
+            <span><i className="dot is-done" /> phần đã sắp</span>
+            <span><i className="dot is-gap" /> ô trống</span>
+            <span><i className="dot is-idle" /> chưa sắp</span>
+          </p>
+        )}
       </div>
 
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8). */}

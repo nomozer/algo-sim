@@ -73,9 +73,19 @@ interface ArrayViewProps {
   /** Cho phép kéo thả what-if (R3.3a: chỉ khi đang dừng, nguồn engine, chưa ở nhánh). */
   interactive?: boolean;
   onSwap?: (i: number, j: number) => void;
+  /**
+   * Vị trí Ô TRỐNG — chỗ một phần tử vừa bị rút ra khỏi dãy (sắp xếp chèn).
+   * `snapshot.array` tại vị trí này vẫn còn BẢN SAO của phần tử vừa dời sang
+   * phải; vẽ nguyên nó ra thì học sinh thấy một số xuất hiện hai lần và tưởng
+   * thuật toán nhân bản phần tử. Ô trống vẽ bằng KHUNG NÉT ĐỨT + chữ, không chỉ
+   * bằng màu. `null` = không có ô trống (mọi target khác không đổi gì).
+   */
+  gapIndex?: number | null;
 }
 
-export function ArrayView({ step, labels, interactive = false, onSwap }: ArrayViewProps) {
+export function ArrayView({
+  step, labels, interactive = false, onSwap, gapIndex = null,
+}: ArrayViewProps) {
   const arr = step.snapshot.array;
   const ids = step.snapshot.ids;
   const n = arr.length;
@@ -145,8 +155,26 @@ export function ArrayView({ step, labels, interactive = false, onSwap }: ArrayVi
         const dimmed = step.snapshot.marks[i] === "eliminated";
         const isDragged = drag?.from === i;
         const isTarget = drag?.target === i;
+        const isGap = gapIndex === i;
         const tx = colX(i) + (isDragged ? drag.dx : 0);
         const ty = isDragged ? drag.dy : 0;
+
+        // Ô TRỐNG: không vẽ cột giá trị (giá trị ở đây là bản sao còn sót),
+        // chỉ vẽ khung nét đứt + chữ "trống" — khác HÌNH DẠNG, không chỉ khác màu.
+        if (isGap) {
+          return (
+            <g key={ids[i]} style={{ transform: `translate(${colX(i)}px, 0px)`,
+                                     transition: "transform 0.35s ease" }}>
+              <rect x={0} y={TOP_PAD} width={COL_W} height={CHART_H} rx={5}
+                    fill="none" stroke="var(--ink-muted)" strokeWidth={2} strokeDasharray="6 5" />
+              <text x={COL_W / 2} y={TOP_PAD + CHART_H / 2} textAnchor="middle"
+                    fontSize={12} fill="var(--ink-muted)">trống</text>
+              <text x={COL_W / 2} y={TOP_PAD + CHART_H + (labels ? 42 : 26)} textAnchor="middle"
+                    fontSize={11} fill="var(--ink-faint)">{i}</text>
+            </g>
+          );
+        }
+
         return (
           <g
             key={ids[i]}

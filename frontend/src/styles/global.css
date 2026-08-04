@@ -1126,6 +1126,40 @@ html {
   font-weight: 600;
 }
 
+/* ── Khay "đang giữ" của sắp xếp chèn (INSERT-HOLD) ──────────────────────
+   Quân bài đã rút ra phải NHÌN THẤY ở ngoài dãy, nếu không học sinh chỉ thấy
+   nó "biến mất". Cam = giá trị đang giữ tạm, theo quy ước trạng thái ở trên. */
+.hold-tray {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  margin: var(--sp-sm) 0 0 var(--sp-sm);
+  padding: 6px var(--sp-sm);
+  border: 2px dashed var(--accent-orange);
+  border-radius: var(--rounded-md);
+  background: var(--surface);
+}
+
+.hold-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--accent-orange);
+}
+
+.hold-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hold-note {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
 /* ── boolean_dag: NODE ĐẦU VÀO LÀ CONTROL ────────────────────────────────
    A/B/C từng xuất hiện hai lần (node để xem + hàng nút để bấm). Nay chỉ còn
    node, nên node phải TRÔNG như bấm được: con trỏ, hover, và vòng focus rõ cho
