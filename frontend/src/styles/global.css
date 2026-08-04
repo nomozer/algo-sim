@@ -340,28 +340,35 @@ html {
   gap: var(--sp-sm);
 }
 
+/* POLISH-4 — nhóm cách nhau rõ hơn để Thư viện đọc thành TỪNG NHÓM, không
+   thành một tấm thảm thẻ. */
 .starter-group {
-  margin-bottom: var(--sp-lg);
+  margin-bottom: var(--sp-xl);
 }
 
+/* Tiêu đề nhóm đậm hơn và tối hơn — trước đây nhạt ngang chữ phụ nên ranh giới
+   giữa các nhóm gần như không thấy. */
 .starter-group-title {
   display: flex;
   align-items: center;
   gap: var(--sp-xs);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: var(--ink-muted);
-  margin: 0 0 var(--sp-xs);
+  color: var(--ink-secondary);
+  margin: 0 0 var(--sp-sm);
 }
 
+/* POLISH-4 — CHIỀU CAO THẺ ĐỒNG NHẤT: tiêu đề dài/ngắn khác nhau từng làm các
+   thẻ trong một hàng cao thấp so le. */
 .starter-card {
   text-align: left;
   background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
   cursor: pointer;
+  min-height: 76px;
   transition: border-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
 }
 
@@ -789,11 +796,48 @@ html {
   flex-wrap: wrap;
 }
 
+/* POLISH-3 — nhóm điều hướng bước đứng liền khối, tách khỏi các nhóm khác. */
+.control-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.control-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--hairline);
+  margin: 0 var(--sp-xs);
+}
+
 .step-indicator {
   font-size: 14px;
-  color: var(--ink-muted);
+  font-weight: 600;
+  color: var(--ink-secondary);
   font-variant-numeric: tabular-nums;
   margin-left: var(--sp-xs);
+}
+
+/* Gợi ý phím tắt là thông tin PHỤ — đẩy về cuối và làm nhạt để nó không tranh
+   chỗ với tiến độ/tốc độ. */
+.control-hint {
+  margin-left: var(--sp-sm);
+}
+
+/* POLISH-3 — DISABLED PHẢI ĐỌC ĐƯỢC.
+   Nút bước hết đường đi (ở bước đầu/cuối) là trạng thái BÌNH THƯỜNG, gặp liên
+   tục — làm mờ 40% thì vừa khó đọc vừa trông như hỏng. Xám trung tính, giữ độ
+   tương phản, đổi con trỏ để nói "không bấm được lúc này". Cùng luật với
+   `.btn-primary:disabled` (khoá bởi ui-hygiene.test.ts). */
+.btn-icon:disabled {
+  background: var(--canvas-soft);
+  color: var(--ink-faint);
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.btn-icon:disabled:active {
+  transform: none;
 }
 
 .speed-control {
@@ -816,10 +860,14 @@ html {
   align-items: center;
 }
 
+/* POLISH-1 — SÀN, KHÔNG PHẢI TRẦN: sân khấu không bị bẹp khi nội dung ít, nhưng
+   chiều cao vẫn do NỘI DUNG MODULE quyết định (không ép chiều cao cố định lớn —
+   đó chính là thứ đẻ ra mảng trắng chết). */
 .sim-stage {
   background: var(--surface);
   border-radius: var(--rounded-md);
   width: 100%;
+  min-height: 180px;
   overflow-x: auto;
 }
 
@@ -881,11 +929,12 @@ html {
 }
 
 /* (SHELL-N) BA VAI TRÒ KHÁC NHAU, TRƯỚC ĐÂY DÙNG CHUNG MỘT LỚP.
-   `.narration-bar` = TƯỜNG THUẬT bước hiện tại (khe của shell).
+   `.narration-bar` = TƯỜNG THUẬT bước hiện tại (khe của shell, ở trên).
    `.feedback-bar`  = phản hồi cho THAO TÁC vừa rồi (rule engine sinh — dữ liệu
                       kết quả, không phải chat; bất biến #12).
    `.stage-affordance` = HƯỚNG DẪN THAO TÁC ("bấm cái này để…"), module sở hữu
-                      vì nó gắn với chỗ bấm, không phải với bước. */
+                      vì nó gắn với chỗ bấm, không phải với bước.
+   Tách lớp để cái nào ở đâu là rõ ràng, thay vì cả ba mượn một tên. */
 .feedback-bar {
   background: #f6effd;
   border-left: 3px solid var(--accent-purple-deep);
@@ -1080,6 +1129,18 @@ html {
   min-height: 0;
 }
 
+/* POLISH-2 — panel Quan sát chia SECTION rõ: nhãn "QUAN SÁT" là đầu mục có
+   đường kẻ dưới, phần AI đã tự có đường kẻ trên (`.ai-section`). Trước đây nội
+   dung module và mục AI trôi liền một mạch. */
+.panel-right > .stack > .eyebrow {
+  margin-bottom: 2px;
+}
+
+.panel-right .ai-section {
+  margin-top: auto;
+  padding-top: var(--sp-md);
+}
+
 .panel-controls {
   grid-area: controls;
   background: var(--surface);
@@ -1104,15 +1165,17 @@ html {
      Ở desktop, `.app-layout` cao đúng một màn (`calc(100vh - 57px)`) nên
      `panel-controls` là hàng lưới GHIM ĐÁY. Ở đây `height: auto` (đúng, vì nội
      dung màn hẹp phải cuộn được) làm nó mất tính chất đó và TRÔI theo chiều cao
-     nội dung. Đo được: khi ô dự đoán hiện ra, `bubble_sort` đẩy thanh điều khiển
-     xuống 99px DƯỚI nếp gấp ở 768×900, `protocol_encapsulation` 21px ở bước 5 —
-     nút chính tự dịch chuyển dưới ngón tay người học.
-     `sticky` giữ nguyên luồng cuộn (khác `fixed`: không cần bù padding) mà vẫn
-     dán thanh vào đáy màn hình. */
+     nội dung. Đo được ở lượt audit baseline: khi ô dự đoán hiện ra,
+     `bubble_sort` đẩy thanh điều khiển xuống 99px DƯỚI nếp gấp ở 768×900, và
+     `protocol_encapsulation` 21px ở bước 5 — tức là nó RA VÀO nếp gấp theo từng
+     bước, nút chính tự dịch chuyển dưới ngón tay người học.
+     `sticky` giữ nguyên luồng cuộn của nội dung (khác `fixed`: không cần bù
+     padding, không che phần cuối sân khấu) mà vẫn dán thanh vào đáy màn hình. */
   .panel-controls {
     position: sticky;
     bottom: 0;
-    /* CAO HƠN drawer (40): drawer Quan sát trượt RA SAU thanh điều khiển. */
+    /* CAO HƠN drawer (40): drawer Quan sát trượt RA SAU thanh điều khiển thay vì
+       đè lên nó — yêu cầu "observer drawer không che controls". */
     z-index: 50;
     box-shadow: var(--shadow-elevated);
   }
@@ -1131,20 +1194,33 @@ html {
   }
 }
 
+/* POLISH-1 — KHOẢNG TRẮNG CHẾT.
+   `flex: 1` kéo thẻ workspace cao bằng CẢ cột, nên module ít nội dung
+   (boolean_dag: 3 chip + bảng 3 dòng) để lại một mảng trắng chiếm gần nửa màn
+   hình BÊN TRONG thẻ — trông như giao diện hỏng chứ không như thẻ ngắn.
+   Nay: nội dung quyết định chiều cao, có sàn để thẻ không bị bẹp. */
 .workspace-card {
-  flex: 1;
+  flex: 0 1 auto;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   gap: var(--sp-md);
 }
 
+/* POLISH-2 — PHÂN CẤP: tiêu đề đứng riêng một dòng, mô tả ngắn xuống dòng dưới
+   và nhẹ hơn hẳn, badge miền nhỏ để không cạnh tranh với tiêu đề. */
 .workspace-header {
   display: flex;
   align-items: baseline;
-  gap: var(--sp-sm);
+  gap: var(--sp-xs) var(--sp-sm);
   flex-wrap: wrap;
   border-bottom: 1px solid var(--hairline);
   padding-bottom: var(--sp-sm);
+}
+
+/* Mô tả ngắn (tên module · chế độ · 2D/3D) xuống HẲN dòng dưới tiêu đề. */
+.workspace-header .hint {
+  flex-basis: 100%;
 }
 
 /* M8: toggle 2D/3D — chỉ xuất hiện khi module có ≥2 renderer thật. */
@@ -1200,10 +1276,19 @@ html {
 }
 
 
+/* POLISH-2 — tiêu đề mô phỏng là thứ RÕ NHẤT trong thẻ. */
 .workspace-title {
-  font-size: 22px;
+  font-size: 24px;
+  line-height: 1.25;
   font-weight: 700;
   letter-spacing: -0.25px;
+}
+
+/* Badge miền: nhỏ hơn eyebrow thường, chỉ là nhãn phân loại — không cạnh tranh
+   với tiêu đề (POLISH-2). */
+.workspace-header .eyebrow {
+  font-size: 11px;
+  padding: 3px 7px;
 }
 
 /* ── M9-UX5: AI là MỤC THU GỌN ở đáy panel Quan sát, không phải tab ngang hàng.

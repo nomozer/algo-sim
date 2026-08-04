@@ -91,36 +91,46 @@ export function SimulationControls() {
   const total = timeline.stepCount(active.state);
   const last = cursor >= total - 1;
 
+  /* POLISH-3 — GOM NHÓM. Sáu nút, đúng thứ tự, đúng nhãn, không thêm bớt cái
+     nào; chỉ bọc thành các nhóm có nghĩa để mắt không phải quét một hàng phẳng:
+     [điều hướng bước + play] · [đặt lại] · [tiến độ] · [tốc độ] · [phím tắt]. */
   return (
     <div className="stack" style={{ gap: "var(--sp-xs)" }}>
       <div className="player-controls">
-        <button className="btn-icon" onClick={toStart} disabled={cursor === 0} title="Về đầu">
-          <IconToStart />
-        </button>
-        <button className="btn-icon" onClick={prevStep} disabled={cursor === 0} title="Lùi một bước">
-          <IconPrev />
-        </button>
-        <button
-          className="btn-primary btn-play"
-          onClick={() => setPlaying(!playing)}
-          disabled={last && !playing}
-        >
-          {playing ? <IconPause size={15} /> : <IconPlay size={15} />}
-          {playing ? "Dừng" : "Tự chạy"}
-        </button>
-        <button className="btn-icon" onClick={nextStep} disabled={last} title="Tiến một bước">
-          <IconNext />
-        </button>
-        <button className="btn-icon" onClick={toEnd} disabled={last} title="Đến cuối">
-          <IconToEnd />
-        </button>
+        <span className="control-group control-group-transport">
+          <button className="btn-icon" onClick={toStart} disabled={cursor === 0} title="Về đầu">
+            <IconToStart />
+          </button>
+          <button className="btn-icon" onClick={prevStep} disabled={cursor === 0} title="Lùi một bước">
+            <IconPrev />
+          </button>
+          <button
+            className="btn-primary btn-play"
+            onClick={() => setPlaying(!playing)}
+            disabled={last && !playing}
+          >
+            {playing ? <IconPause size={15} /> : <IconPlay size={15} />}
+            {playing ? "Dừng" : "Tự chạy"}
+          </button>
+          <button className="btn-icon" onClick={nextStep} disabled={last} title="Tiến một bước">
+            <IconNext />
+          </button>
+          <button className="btn-icon" onClick={toEnd} disabled={last} title="Đến cuối">
+            <IconToEnd />
+          </button>
+        </span>
+
+        <span className="control-divider" aria-hidden="true" />
+
         <button className="btn-utility" onClick={resetSim} title="Dựng lại từ đầu">
           <IconReset size={14} />
           Đặt lại
         </button>
+
         <span className="step-indicator">
           Bước {cursor + 1} / {total}
         </span>
+
         <label className="speed-control">
           Tốc độ
           <input
@@ -132,7 +142,7 @@ export function SimulationControls() {
             onChange={(e) => setSpeedMs(2800 - Number(e.target.value))}
           />
         </label>
-        <span className="hint">← → tiến/lùi · Space tự chạy</span>
+        <span className="hint control-hint">← → tiến/lùi · Space tự chạy</span>
       </div>
       <input
         type="range"

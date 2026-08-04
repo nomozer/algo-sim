@@ -207,6 +207,14 @@ describe("(M9-UX6) DESIGN.md — sticker palette là TRANG TRÍ, không sơn hà
     expect(disabled!.body).toMatch(/background:\s*var\(--canvas-soft\)/);
     expect(disabled!.body).toMatch(/opacity:\s*1/);
   });
+
+  /* POLISH-3: nút bước hết đường đi là trạng thái BÌNH THƯỜNG, gặp liên tục —
+     mờ 40% thì vừa khó đọc vừa trông như hỏng. Cùng luật với btn-primary. */
+  it("nút bước khi disabled cũng xám trung tính, không mờ", () => {
+    const disabled = rules.find((r) => r.sel === ".btn-icon:disabled");
+    expect(disabled, ".btn-icon:disabled chưa được khai").toBeDefined();
+    expect(disabled!.body).toMatch(/opacity:\s*1/);
+  });
 });
 
 /**
