@@ -252,6 +252,213 @@ function clampCursor(state: BoolDagState, step: number): number {
 
 type Props = WorkspaceProps<BoolDagConfig, BoolDagState>;
 
+/* ── SƠ ĐỒ NODE-EDGE (DAG-VIS) ────────────────────────────────────────────
+ *
+ * Mạch logic vốn LÀ một đồ thị, nhưng sân khấu chỉ có bảng cổng — học sinh phải
+ * tự dựng hình trong đầu từ cột "Vào" để thấy g1 và g2 chảy vào g3. Sơ đồ này
+ * vẽ đúng cái đồ thị đó.
+ *
+ * BA RÀNG BUỘC ĐÃ GIỮ:
+ * 1. KHÔNG state mới, KHÔNG engine thứ hai. Mọi thứ dẫn xuất thuần từ
+ *    `config.inputs/gates/output` + `values` + `nodeOutputs` + `steps` đã có.
+ * 2. Bố cục là của RENDERER (luật renderer-neutral, M7.FREEZE): toạ độ tính tại
+ *    chỗ vẽ, không bao giờ chạm engine state.
+ * 3. KHÔNG lộ đáp án sớm: cổng chưa tới lượt hiện "?" — đúng idiom của bảng
+ *    cổng, không phải luật thứ hai.
+ */
+const NODE_W = 76;
+const NODE_H = 38;
+const COL_GAP = 54;
+const ROW_GAP = 16;
+
+interface DagNode {
+  id: string;
+  kind: "input" | "gate";
+  label: string;
+  depth: number;
+  x: number;
+  y: number;
+}
+
+/** Xếp tầng theo ĐỘ SÂU PHỤ THUỘC: đầu vào ở tầng 0, cổng ở 1 + max(tầng vào). */
+function layoutDag(config: BoolDagConfig): { nodes: Map<string, DagNode>; w: number; h: number } {
+  const depth = new Map<string, number>();
+  for (const i of config.inputs) depth.set(i.id, 0);
+  const gateById = new Map(config.gates.map((g) => [g.id, g]));
+  const depthOf = (id: string): number => {
+    const known = depth.get(id);
+    if (known !== undefined) return known;
+    const g = gateById.get(id);
+    if (!g) return 0;
+    const d = 1 + Math.max(...g.inputs.map(depthOf));
+    depth.set(id, d);
+    return d;
+  };
+  for (const g of config.gates) depthOf(g.id);
+
+  const byDepth = new Map<number, string[]>();
+  const push = (id: string) => {
+    const d = depth.get(id) ?? 0;
+    byDepth.set(d, [...(byDepth.get(d) ?? []), id]);
+  };
+  for (const i of config.inputs) push(i.id);
+  for (const g of config.gates) push(g.id);
+
+  const maxDepth = Math.max(...[...byDepth.keys()]);
+  const maxRows = Math.max(...[...byDepth.values()].map((v) => v.length));
+  const nodes = new Map<string, DagNode>();
+  const labelOfInput = new Map(config.inputs.map((i) => [i.id, i.label ?? i.id]));
+
+  for (const [d, ids] of byDepth) {
+    ids.forEach((id, row) => {
+      // căn giữa theo chiều dọc trong cột để cột ít node không dồn lên trên
+      const colH = ids.length * NODE_H + (ids.length - 1) * ROW_GAP;
+      const fullH = maxRows * NODE_H + (maxRows - 1) * ROW_GAP;
+      nodes.set(id, {
+        id,
+        kind: labelOfInput.has(id) ? "input" : "gate",
+        label: labelOfInput.get(id) ?? gateById.get(id)!.op,
+        depth: d,
+        x: d * (NODE_W + COL_GAP),
+        y: (fullH - colH) / 2 + row * (NODE_H + ROW_GAP),
+      });
+    });
+  }
+  return {
+    nodes,
+    w: (maxDepth + 1) * NODE_W + maxDepth * COL_GAP,
+    h: maxRows * NODE_H + (maxRows - 1) * ROW_GAP,
+  };
+}
+
+export function DagDiagram({
+  state,
+  dispatch,
+  busy = false,
+}: {
+  state: BoolDagState;
+  /** Không truyền = sơ đồ chỉ để ĐỌC (test/SSR); có truyền = node đầu vào bấm được. */
+  dispatch?: (action: SimAction) => void;
+  busy?: boolean;
+}) {
+  const at = clampCursor(state, state.cursor);
+  const step = state.steps[at];
+  const activeGate = step.kind === "eval" ? step.gateId : null;
+  const evaluated = new Set(
+    state.steps.slice(0, at + 1).filter((s) => s.kind === "eval").map((s) => (s as { gateId: string }).gateId),
+  );
+  const { nodes, w, h } = layoutDag(state.config);
+
+  /** Giá trị ĐÃ BIẾT của một node; null = chưa tới lượt (hiện "?"). */
+  const valueOf = (id: string): Bit | null => {
+    if (nodes.get(id)?.kind === "input") return state.values[id];
+    return evaluated.has(id) ? state.nodeOutputs[id] : null;
+  };
+  const wireColor = (v: Bit | null) =>
+    v === null ? "var(--hairline)" : v === 1 ? "var(--accent-green)" : "var(--ink-faint)";
+
+  return (
+    <svg
+      viewBox={`0 0 ${w} ${h}`}
+      width="100%"
+      style={{ maxWidth: w, display: "block", margin: "0 auto" }}
+      role="img"
+      aria-label="Sơ đồ mạch logic: đầu vào nối qua các cổng tới đầu ra"
+    >
+      {/* Dây trước, node sau — để node che đầu dây cho gọn. */}
+      {state.config.gates.flatMap((g) =>
+        g.inputs.map((src) => {
+          const a = nodes.get(src)!;
+          const b = nodes.get(g.id)!;
+          const v = valueOf(src);
+          return (
+            <path
+              key={`${src}->${g.id}`}
+              d={`M${a.x + NODE_W} ${a.y + NODE_H / 2} H${a.x + NODE_W + COL_GAP / 2} `
+                + `V${b.y + NODE_H / 2} H${b.x}`}
+              fill="none"
+              stroke={wireColor(v)}
+              strokeWidth={v === null ? 1.5 : 2.5}
+            />
+          );
+        }),
+      )}
+
+      {[...nodes.values()].map((n) => {
+        const v = valueOf(n.id);
+        const isOutput = state.config.output === n.id;
+        const isActive = activeGate === n.id;
+        /* CHỈ node ĐẦU VÀO là control. Cổng AND/NOT/OR do engine tính — biến
+           chúng thành nút sẽ là mời học sinh "sửa" kết quả của cơ chế. */
+        const interactive = n.kind === "input" && dispatch !== undefined && !busy;
+        const toggle = () => dispatch?.({ type: "toggle", target: n.id });
+        const control = interactive
+          ? {
+              role: "button",
+              tabIndex: 0,
+              "aria-pressed": v === 1,
+              /* Tên khả truy cập nói ĐỦ ba thứ: đây là gì, đang bao nhiêu, bấm
+                 thì được gì — người dùng đọc màn hình không thấy sơ đồ. */
+              "aria-label": `Đầu vào ${n.label}, giá trị ${v}, bấm để đổi`,
+              className: "dag-input",
+              onClick: toggle,
+              onKeyDown: (e: import("react").KeyboardEvent<SVGGElement>) => {
+                // Enter/Space là hợp đồng bàn phím của role="button"; phải tự
+                // nối vì <g> không phải <button> thật.
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  // Chặn luôn ở tầng NATIVE: Space cũng là phím tắt play/pause
+                  // toàn cục (`SimulationControls`), không chặn thì một lần bấm
+                  // gây HAI hành động. Hai lớp phòng thủ vì hai chỗ dễ quên nhau.
+                  e.stopPropagation();
+                  toggle();
+                }
+              },
+            }
+          : {};
+        return (
+          <g key={n.id} {...control}>
+            <rect
+              x={n.x}
+              y={n.y}
+              width={NODE_W}
+              height={NODE_H}
+              rx={n.kind === "input" ? NODE_H / 2 : 8}
+              fill="var(--surface)"
+              stroke={isActive ? "var(--primary)" : isOutput ? "var(--accent-green)" : "var(--hairline)"}
+              strokeWidth={isActive || isOutput ? 2.5 : 1.5}
+            />
+            <text
+              x={n.x + NODE_W / 2 - 9}
+              y={n.y + NODE_H / 2 + 5}
+              textAnchor="middle"
+              fontSize={13}
+              fontWeight={600}
+              fill="var(--ink)"
+              pointerEvents="none"
+            >
+              {n.label}
+            </text>
+            {/* Giá trị luôn hiện thành CHỮ SỐ bên cạnh nhãn: màu dây chỉ là dấu
+                phụ, không phải tín hiệu duy nhất (luật accessibility §7). */}
+            <text
+              x={n.x + NODE_W - 14}
+              y={n.y + NODE_H / 2 + 5}
+              textAnchor="middle"
+              fontSize={13}
+              fontWeight={700}
+              fill={v === null ? "var(--ink-faint)" : v === 1 ? "var(--accent-green)" : "var(--ink-muted)"}
+              pointerEvents="none"
+            >
+              {v === null ? "?" : v}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
   const at = clampCursor(state, state.cursor);
   const evaluated = new Set(
@@ -262,45 +469,57 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage">
         <div className="stack" style={{ gap: "var(--sp-sm)" }}>
-          <div>
-            {state.config.inputs.map((inp) => (
-              <button
-                key={inp.id}
-                type="button"
-                className="btn-utility"
-                disabled={busy}
-                onClick={() => dispatch({ type: "toggle", target: inp.id })}
-              >
-                {inp.label ?? inp.id}: {state.values[inp.id]}
-              </button>
-            ))}
-          </div>
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Cổng</th>
-                <th>Phép</th>
-                <th>Vào</th>
-                <th>Ra</th>
-              </tr>
-            </thead>
-            <tbody>
-              {state.evalOrder.map((id) => {
-                const gate = state.config.gates.find((g) => g.id === id)!;
-                const done = evaluated.has(id);
-                return (
-                  <tr key={id}>
-                    <td>{id}{state.config.output === id ? " (đầu ra)" : ""}</td>
-                    <td>{gate.op}</td>
-                    <td>{gate.inputs.join(", ")}</td>
-                    <td>{done ? state.nodeOutputs[id] : "?"}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          {/* FIX-3 — AFFORDANCE.
+              Thao tác toggle này là thao tác DUY NHẤT của module và nó chạm
+              thẳng vào cơ chế ẩn (COVERAGE §2.6). Nhưng trên màn hình nó chỉ là
+              ba chip "A: 1" — audit UI baseline bắt được: không một chữ nào nói
+              rằng bấm được, trong khi bubble_sort ngay cạnh lại có câu hướng dẫn
+              kéo-thả tường minh. Một tương tác mà học sinh phải ĐOÁN ra thì trên
+              thực tế không tồn tại. Chỉ thêm chữ — cơ chế không đổi. */}
+          <p className="stage-affordance">
+            Bấm A, B hoặc C để đổi giá trị đầu vào và quan sát tín hiệu lan
+            truyền qua các cổng.
+          </p>
+          {/* SƠ ĐỒ LÀ SÂN KHẤU CHÍNH — và là nơi DUY NHẤT có đầu vào bấm được.
+              Trước đây A/B/C xuất hiện HAI lần: node trong sơ đồ (chỉ để xem) và
+              một hàng nút bên dưới (để bấm). Hai chỗ cho một thứ vừa trùng thông
+              tin vừa làm mơ hồ vùng nào bấm được. Nay chính node là control. */}
+          <DagDiagram state={state} dispatch={dispatch} busy={busy} />
         </div>
       </div>
+
+      {/* BẢNG CỔNG = CHI TIẾT, KHÔNG PHẢI SÂN KHẤU THỨ HAI.
+          Giữ nguyên dữ liệu (nó là `gate_table_with_engine_outputs` — yêu cầu
+          renderer trong hợp đồng authenticity, không được bỏ), nhưng hạ trọng
+          lượng thị giác và đặt sát thuyết minh để mắt đi: sơ đồ → thuyết minh →
+          chi tiết. Bảng chân trị vẫn ở panel Quan sát, không đụng tới. */}
+      <section className="gate-detail">
+        <p className="detail-heading">Chi tiết các cổng</p>
+        <table className="data-table">
+          <thead>
+            <tr>
+              <th>Cổng</th>
+              <th>Phép</th>
+              <th>Vào</th>
+              <th>Ra</th>
+            </tr>
+          </thead>
+          <tbody>
+            {state.evalOrder.map((id) => {
+              const gate = state.config.gates.find((g) => g.id === id)!;
+              const done = evaluated.has(id);
+              return (
+                <tr key={id}>
+                  <td>{id}{state.config.output === id ? " (đầu ra)" : ""}</td>
+                  <td>{gate.op}</td>
+                  <td>{gate.inputs.join(", ")}</td>
+                  <td>{done ? state.nodeOutputs[id] : "?"}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </section>
       {/* (SHELL-N) Thuyết minh đã rời `.notes` (lớp dành cho ghi chú phụ) để về
           khe chung của shell — xem `narrate` bên dưới. */}
     </div>

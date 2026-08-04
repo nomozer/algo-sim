@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import {
   BoolDagInspector,
+  DagDiagram,
+  BoolDagWorkspace,
   evaluateDag,
   makeBoolDagModule,
   topoOrder,
@@ -204,6 +206,150 @@ describe("module: toggle tất định + timeline + inspector đọc sự thật
       <BoolDagInspector config={v.config} state={state} busy={false} dispatch={() => {}} />,
     ).replace(/<!--.*?-->/g, "");
     expect(html).toContain("8 hàng");
+  });
+
+  /**
+   * FIX-3 — AFFORDANCE CHO THAO TÁC DUY NHẤT CỦA MODULE.
+   *
+   * `toggle` ở đây là thao tác chạm THẲNG vào cơ chế ẩn (COVERAGE §2.6) và là
+   * thao tác duy nhất module có. Audit UI baseline bắt được: trên màn hình nó
+   * chỉ là ba chip "A: 1", không một chữ nào nói rằng bấm được — tương tác mà
+   * học sinh phải ĐOÁN ra thì trên thực tế không tồn tại. Test này giữ câu
+   * hướng dẫn đó khỏi biến mất trong lần dọn giao diện sau.
+   */
+  /**
+   * DAG-VIS — sơ đồ node-edge phải theo ĐÚNG luật hé lộ dần của bảng cổng.
+   * Sơ đồ vẽ cả mạch cùng lúc, nên nó là chỗ dễ vô tình in sẵn đầu ra của cổng
+   * chưa chạy nhất — đúng lớp lỗi đã sửa ở bảng chân trị (audit 2026-08-03).
+   */
+  it("sơ đồ mạch: cổng CHƯA đánh giá hiện '?', không lộ đáp án sớm", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const s0 = mod.init(v.config);
+
+    const svg0 = renderToString(<DagDiagram state={s0} />).replace(/<!--.*?-->/g, "");
+    // bước intro: chưa cổng nào chạy → cả ba cổng đều "?"
+    expect((svg0.match(/>\?</g) ?? []).length).toBe(v.config.gates.length);
+
+    // bước cuối: mọi cổng đã có giá trị → không còn "?" nào
+    const last = mod.timeline!.goToStep(s0, s0.steps.length - 1);
+    const svgLast = renderToString(<DagDiagram state={last} />).replace(/<!--.*?-->/g, "");
+    expect(svgLast).not.toContain(">?<");
+  });
+
+  it("sơ đồ mạch vẽ đủ node và dây từ CHÍNH config (không đồ thị thứ hai)", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const svg = renderToString(<DagDiagram state={mod.init(v.config)} />);
+    // node = inputs + gates
+    expect((svg.match(/<rect/g) ?? []).length).toBe(v.config.inputs.length + v.config.gates.length);
+    // dây = tổng số chân vào của các cổng (A,B → g1; C → g2; g1,g2 → g3 = 5)
+    const wires = v.config.gates.reduce((n, g) => n + g.inputs.length, 0);
+    expect((svg.match(/<path/g) ?? []).length).toBe(wires);
+  });
+
+  it("sân khấu nói rõ bấm được đầu vào và bấm thì quan sát cái gì", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const html = renderToString(
+      <BoolDagWorkspace config={v.config} state={mod.init(v.config)} busy={false} dispatch={() => {}} />,
+    ).replace(/<!--.*?-->/g, "");
+    expect(html).toContain("Bấm A, B hoặc C để đổi giá trị đầu vào");
+    expect(html).toContain("lan truyền qua các cổng");
+    // nút toggle khai trạng thái bật/tắt cho công nghệ hỗ trợ
+    expect(html).toContain('aria-pressed="true"'); // A = 1 trong SAMPLE
+  });
+});
+
+/**
+ * MỘT BỘ A/B/C DUY NHẤT — chính node trong sơ đồ là control.
+ *
+ * Trước: A/B/C xuất hiện HAI lần — node trong sơ đồ (chỉ để xem) và một hàng nút
+ * `A:1 · B:0 · C:1` bên dưới (để bấm). Trùng thông tin, và học sinh không biết
+ * vùng nào bấm được. Nay chỉ còn node.
+ *
+ * Kích hoạt bằng BÀN PHÍM (Enter/Space) không kiểm được ở đây: suite này chạy
+ * SSR (`renderToString`, môi trường node — repo không có jsdom/testing-library),
+ * nên không có sự kiện DOM. Ở tầng này ta khoá HỢP ĐỒNG làm cho bàn phím chạy
+ * được (`role`, `tabindex`, `aria-pressed`, tên khả truy cập) + hành vi engine;
+ * còn phím thật được bấm thật trong lượt Chrome acceptance (CDP
+ * `Input.dispatchKeyEvent`) — xem `dag-acceptance.json`.
+ */
+describe("boolean_dag: node đầu vào LÀ control (một bộ duy nhất)", () => {
+  const mod = makeBoolDagModule();
+  const cfg = valid(SAMPLE);
+  const s0 = mod.init(cfg);
+  const ws = (state = s0, busy = false) =>
+    renderToString(
+      <BoolDagWorkspace config={cfg} state={state} busy={busy} dispatch={() => {}} />,
+    ).replace(/<!--.*?-->/g, "");
+
+  it("mỗi đầu vào có ĐÚNG MỘT control; hàng toggle trùng đã bỏ", () => {
+    const html = ws();
+    expect(html).not.toContain("input-toggle-row");
+    for (const inp of cfg.inputs) {
+      const controls = html.match(new RegExp(`aria-label="Đầu vào ${inp.id},`, "g")) ?? [];
+      expect(controls, `đầu vào ${inp.id} phải có đúng 1 control`).toHaveLength(1);
+    }
+    // đúng 3 control, không nhiều hơn — cổng KHÔNG được thành nút
+    expect((html.match(/role="button"/g) ?? []).length).toBe(cfg.inputs.length);
+  });
+
+  it("cổng AND/NOT/OR KHÔNG phải control (engine sở hữu giá trị của chúng)", () => {
+    const html = ws();
+    for (const g of cfg.gates) {
+      expect(html).not.toContain(`aria-label="Đầu vào ${g.id},`);
+    }
+  });
+
+  it("hợp đồng bàn phím + aria đầy đủ trên từng node đầu vào", () => {
+    const html = ws();
+    expect((html.match(/tabindex="0"/g) ?? []).length).toBe(cfg.inputs.length);
+    // aria-pressed khớp GIÁ TRỊ hiện tại: SAMPLE có A=1, B=0, C=1
+    expect(html).toContain('aria-label="Đầu vào A, giá trị 1, bấm để đổi"');
+    expect(html).toContain('aria-label="Đầu vào B, giá trị 0, bấm để đổi"');
+    expect(html).toContain('aria-label="Đầu vào C, giá trị 1, bấm để đổi"');
+    expect((html.match(/aria-pressed="true"/g) ?? []).length).toBe(2); // A, C
+    expect((html.match(/aria-pressed="false"/g) ?? []).length).toBe(1); // B
+  });
+
+  it("toggle đi qua ĐÚNG action sẵn có; aria-pressed theo giá trị mới", () => {
+    const toggled = mod.apply(s0, { type: "toggle", target: "A" });
+    expect(toggled.values["A"]).toBe(0);
+    const html = ws(toggled);
+    expect(html).toContain('aria-label="Đầu vào A, giá trị 0, bấm để đổi"');
+    expect((html.match(/aria-pressed="true"/g) ?? []).length).toBe(1); // chỉ còn C
+    // engine tính lại downstream, không phải renderer
+    expect(toggled.nodeOutputs["g1"]).toBe(0);
+  });
+
+  it("đang tự chạy (busy) thì node không phải control — không tranh với timeline", () => {
+    const html = ws(s0, true);
+    expect(html).not.toContain('role="button"');
+    expect(html).not.toContain("dag-input");
+  });
+
+  it("toggle KHÔNG mở sớm bảng chân trị và KHÔNG lộ cổng chưa tới lượt", () => {
+    const toggled = mod.apply(s0, { type: "toggle", target: "A" });
+    // sân khấu: quay về bước đầu → cả 3 cổng vẫn "?"
+    expect(toggled.cursor).toBe(0);
+    expect((ws(toggled).match(/>\?</g) ?? []).length).toBeGreaterThanOrEqual(cfg.gates.length);
+    // Observer: cột "Ra" vẫn ẩn tới bước cuối
+    const insp = renderToString(
+      <BoolDagInspector config={cfg} state={toggled} busy={false} dispatch={() => {}} />,
+    ).replace(/<!--.*?-->/g, "");
+    expect((insp.match(/>\?</g) ?? []).length).toBe(toggled.truthTable.length);
+  });
+
+  it("Đặt lại: init lại từ config gốc → giá trị đầu vào và cursor như ban đầu", () => {
+    const changed = mod.apply(mod.timeline!.goToStep(s0, 3), { type: "toggle", target: "B" });
+    expect(changed.values["B"]).toBe(1);
+    const fresh = mod.init(cfg); // đúng thứ store.resetSim làm
+    expect(fresh.values).toEqual(s0.values);
+    expect(fresh.cursor).toBe(0);
   });
 });
 

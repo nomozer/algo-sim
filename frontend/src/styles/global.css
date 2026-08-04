@@ -901,6 +901,85 @@ html {
   margin: 0;
 }
 
+/* ── boolean_dag: NODE ĐẦU VÀO LÀ CONTROL ────────────────────────────────
+   A/B/C từng xuất hiện hai lần (node để xem + hàng nút để bấm). Nay chỉ còn
+   node, nên node phải TRÔNG như bấm được: con trỏ, hover, và vòng focus rõ cho
+   người dùng bàn phím. `<g>` không phải <button> thật nên focus ring phải tự
+   khai — mặc định của trình duyệt trên phần tử SVG rất mờ. */
+.dag-input {
+  cursor: pointer;
+}
+
+.dag-input rect {
+  transition: fill 0.15s ease, stroke 0.15s ease;
+}
+
+.dag-input:hover rect {
+  fill: var(--canvas-soft);
+  stroke: var(--primary);
+}
+
+.dag-input:focus {
+  outline: none;
+}
+
+.dag-input:focus-visible rect {
+  stroke: var(--primary);
+  stroke-width: 3;
+}
+
+.dag-input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--rounded-full);
+}
+
+/* ── Bảng cổng = CHI TIẾT dưới sơ đồ, không phải sân khấu thứ hai ────────
+   Không ẩn dữ liệu engine, không accordion — chỉ hạ trọng lượng thị giác để
+   thứ tự đọc là: sơ đồ (cơ chế) → thuyết minh (bước) → bảng (chi tiết). */
+.gate-detail {
+  margin-top: calc(-1 * var(--sp-xs));
+}
+
+.detail-heading {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 var(--sp-xs);
+}
+
+/* `width` phải khai TƯỜNG MINH: repo không có rule `.data-table` cơ sở nào, nên
+   trước đây bảng chỉ giãn ra nhờ tình cờ là flex-item của `.sim-stage`. Ra khỏi
+   ngữ cảnh flex, `width: auto` co bảng lại và các cột dính vào nhau.
+   Hẹp hơn sân khấu để vẫn đọc là CHI TIẾT, không phải khối thứ hai tranh chỗ. */
+.gate-detail .data-table {
+  font-size: 13px;
+  width: 100%;
+  max-width: 520px;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.gate-detail .data-table th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.gate-detail .data-table th,
+.gate-detail .data-table td {
+  padding: 4px var(--sp-sm) 4px 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.gate-detail .data-table tr:last-child td {
+  border-bottom: none;
+}
+
 /* ── Bố cục mô phỏng + panel mã giả ──────────────────────── */
 .sim-layout {
   display: grid;

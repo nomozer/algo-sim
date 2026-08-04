@@ -46,6 +46,13 @@ export function SimulationControls() {
     if (!timeline) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      // Phím tắt TOÀN CỤC không được cướp phím của một control đang focus.
+      // Đã cháy ở lượt nghiệm thu: bấm Space trên node đầu vào A/B/C của
+      // boolean_dag vừa đổi giá trị đầu vào, VỪA bật Tự chạy (Space là phím tắt
+      // play/pause) — timeline chạy mất và node bị khoá ngay sau đó.
+      // `role="button"` tự xử lý Enter/Space theo hợp đồng của chính nó.
+      const target = e.target as Element | null;
+      if (target?.closest?.('[role="button"]')) return;
       if (e.key === "ArrowRight") {
         e.preventDefault();
         useAppStore.getState().nextStep();
