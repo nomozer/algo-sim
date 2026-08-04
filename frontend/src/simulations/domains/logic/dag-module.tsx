@@ -266,10 +266,28 @@ type Props = WorkspaceProps<BoolDagConfig, BoolDagState>;
  * 3. KHÔNG lộ đáp án sớm: cổng chưa tới lượt hiện "?" — đúng idiom của bảng
  *    cổng, không phải luật thứ hai.
  */
-const NODE_W = 76;
-const NODE_H = 38;
-const COL_GAP = 54;
-const ROW_GAP = 16;
+/* KÍCH THƯỚC = PIXEL THẬT, KHÔNG PHÓNG TO.
+ *
+ * Lịch sử hai lần hỏng theo hai hướng ngược nhau, ghi lại để không lặp:
+ *
+ *  1. Bản gốc `maxWidth: w` với w=432 → sơ đồ khoá ở 432px trong thẻ rộng ~845px:
+ *     cơ chế chính chỉ chiếm 11% thẻ, nhỏ hơn cả bảng tra cứu (24%).
+ *  2. Bản vá vội `maxWidth: 720` → SVG bị PHÓNG 1,667 lần. Phóng viewBox thì
+ *     phóng MỌI THỨ: chữ trong node ra 21,7px (chữ thân trang chỉ 14px), node
+ *     đầu vào thành khối 160×77px để chứa đúng hai ký tự. Đo được sân khấu 49%
+ *     thẻ — đúng chỉ tiêu "sân khấu áp đảo" nhưng nhìn ra một tấm áp phích.
+ *
+ * Cách đúng: đơn vị viewBox = ĐÚNG pixel hiển thị (scale ≈ 1). Sơ đồ lớn vì bố
+ * cục của nó vốn rộng rãi, không vì bị kéo giãn — nên nét, chữ và khoảng cách
+ * đều hiện đúng cỡ đã thiết kế, và cỡ chữ trong sơ đồ so được với chữ của trang.
+ */
+const NODE_W = 134;
+const NODE_H = 62;
+const COL_GAP = 96;
+const ROW_GAP = 30;
+/** Cỡ chữ trong sơ đồ — hiển thị đúng số này vì scale ≈ 1. */
+const LABEL_FONT = 17;
+const ROLE_FONT = 11;
 
 interface DagNode {
   id: string;
@@ -361,7 +379,14 @@ export function DagDiagram({
     <svg
       viewBox={`0 0 ${w} ${h}`}
       width="100%"
-      style={{ maxWidth: w, display: "block", margin: "0 auto" }}
+      /* `maxWidth: w` ở đây KHÔNG phải quay lại lỗi cũ: lỗi cũ là w quá nhỏ
+         (432), không phải bản thân việc chặn ở w. Nay w do hằng số phía trên
+         quyết định nên sơ đồ hiện ở đúng cỡ đã thiết kế (scale 1) và chỉ CO LẠI
+         khi thẻ hẹp hơn — không bao giờ bị PHÓNG lên. */
+      /* Căn TRÁI, không căn giữa: câu hướng dẫn, chú giải và bảng chi tiết đều
+         bám mép trái của thẻ. Để riêng sơ đồ căn giữa thì nó lệch ~100px so với
+         mọi thứ khác và mắt mất đường rail dọc để men theo. */
+      style={{ maxWidth: w, display: "block" }}
       role="img"
       aria-label="Sơ đồ mạch logic: đầu vào nối qua các cổng tới đầu ra"
     >
@@ -378,7 +403,9 @@ export function DagDiagram({
                 + `V${b.y + NODE_H / 2} H${b.x}`}
               fill="none"
               stroke={wireColor(v)}
-              strokeWidth={v === null ? 1.5 : 2.5}
+              /* Nét vẽ cũng là px thật từ đây — trước bị nhân 1,667 nên dây tín
+                 hiệu dày 4,2px, đậm hơn cả viền node. */
+              strokeWidth={v === null ? 1.75 : 2.75}
             />
           );
         }),
@@ -418,6 +445,21 @@ export function DagDiagram({
           : {};
         return (
           <g key={n.id} {...control}>
+            {/* PILOT — GỠ QUÁ TẢI MÀU.
+                Trước: cổng đầu ra dùng VIỀN XANH LÁ, trong khi xanh lá cũng là
+                "tín hiệu = 1" trên dây và trên chữ số. Audit chụp được đúng ca
+                gây hiểu nhầm: cổng OR mang viền xanh lá trong khi giá trị của nó
+                còn là `?` — học sinh rất dễ đọc thành "OR đang ra 1".
+                Nay vai trò "đầu ra" nói bằng CHỮ + KHUNG NGOÀI nét đứt, không
+                mượn màu tín hiệu nữa. Màu xanh lá từ đây chỉ còn MỘT nghĩa. */}
+            {isOutput && (
+              <rect
+                x={n.x - 7} y={n.y - 7}
+                width={NODE_W + 14} height={NODE_H + 14}
+                rx={16} fill="none"
+                stroke="var(--ink-muted)" strokeWidth={1.5} strokeDasharray="6 5"
+              />
+            )}
             <rect
               x={n.x}
               y={n.y}
@@ -425,14 +467,26 @@ export function DagDiagram({
               height={NODE_H}
               rx={n.kind === "input" ? NODE_H / 2 : 8}
               fill="var(--surface)"
-              stroke={isActive ? "var(--primary)" : isOutput ? "var(--accent-green)" : "var(--hairline)"}
-              strokeWidth={isActive || isOutput ? 2.5 : 1.5}
+              stroke={isActive ? "var(--primary)" : "var(--hairline)"}
+              strokeWidth={isActive ? 2.5 : 1.5}
             />
+            {isOutput && (
+              <text
+                x={n.x + NODE_W / 2} y={n.y - 13}
+                textAnchor="middle" fontSize={ROLE_FONT} fontWeight={700}
+                fill="var(--ink-muted)" pointerEvents="none"
+              >
+                ĐẦU RA
+              </text>
+            )}
+            {/* Nhãn và giá trị là MỘT CẶP đặt cân giữa node. Trước đây nhãn ở
+                gần giữa còn giá trị dán sát mép phải, chừa một dải rỗng giữa
+                node — đúng thứ làm A/B/C trông như khối trang trí. */}
             <text
-              x={n.x + NODE_W / 2 - 9}
-              y={n.y + NODE_H / 2 + 5}
+              x={n.x + NODE_W / 2 - 19}
+              y={n.y + NODE_H / 2 + 6}
               textAnchor="middle"
-              fontSize={13}
+              fontSize={LABEL_FONT}
               fontWeight={600}
               fill="var(--ink)"
               pointerEvents="none"
@@ -442,10 +496,10 @@ export function DagDiagram({
             {/* Giá trị luôn hiện thành CHỮ SỐ bên cạnh nhãn: màu dây chỉ là dấu
                 phụ, không phải tín hiệu duy nhất (luật accessibility §7). */}
             <text
-              x={n.x + NODE_W - 14}
-              y={n.y + NODE_H / 2 + 5}
+              x={n.x + NODE_W / 2 + 21}
+              y={n.y + NODE_H / 2 + 6}
               textAnchor="middle"
-              fontSize={13}
+              fontSize={LABEL_FONT}
               fontWeight={700}
               fill={v === null ? "var(--ink-faint)" : v === 1 ? "var(--accent-green)" : "var(--ink-muted)"}
               pointerEvents="none"
@@ -461,6 +515,8 @@ export function DagDiagram({
 
 export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
   const at = clampCursor(state, state.cursor);
+  const step = state.steps[at];
+  const activeGate = step.kind === "eval" ? step.gateId : null;
   const evaluated = new Set(
     state.steps.slice(0, at + 1).filter((s) => s.kind === "eval").map((s) => (s as { gateId: string }).gateId),
   );
@@ -485,16 +541,39 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
               một hàng nút bên dưới (để bấm). Hai chỗ cho một thứ vừa trùng thông
               tin vừa làm mơ hồ vùng nào bấm được. Nay chính node là control. */}
           <DagDiagram state={state} dispatch={dispatch} busy={busy} />
+
+          {/* PILOT — CHÚ GIẢI TÍN HIỆU.
+              Audit đo được: 19/22 target không có chú giải nào, và riêng ở đây
+              màu mang nhiều nghĩa nhất. Nay nói thẳng ba quy ước, và mỗi mục
+              kèm DẤU HIỆU NGOÀI MÀU (chữ số 1/0, chữ "?", viền) để học sinh
+              không phân biệt được màu vẫn đọc được. */}
+          {/* CHÚ GIẢI TÍN HIỆU — rút gọn còn một hàng.
+              Mỗi mục vẫn có DẤU HIỆU NGOÀI MÀU: chữ số 1/0, chữ "?", và với
+              "đang tính" thì nói thẳng dấu hiệu hình là VIỀN ĐẬM (node đang xét
+              vẽ strokeWidth 2.5 so với 1.5) — không mục nào chỉ dựa vào màu. */}
+          <p className="stage-legend dag-legend">
+            <span><i className="dot is-done" /> tín hiệu <strong>1</strong></span>
+            <span><i className="dot is-idle" /> tín hiệu <strong>0</strong></span>
+            {/* Phải giữ chữ "cổng": node ĐẦU VÀO cũng nhận viền xanh khi rê
+                chuột (affordance `.dag-input:hover`). Bỏ chữ "cổng" thì chú
+                giải đọc được thành "đầu vào đang được tính" — sai. */}
+            <span><i className="dot is-current" /> viền đậm = cổng đang tính</span>
+            <span><i className="dot is-unknown" /> <strong>?</strong> chưa tới lượt</span>
+          </p>
         </div>
       </div>
 
-      {/* BẢNG CỔNG = CHI TIẾT, KHÔNG PHẢI SÂN KHẤU THỨ HAI.
-          Giữ nguyên dữ liệu (nó là `gate_table_with_engine_outputs` — yêu cầu
-          renderer trong hợp đồng authenticity, không được bỏ), nhưng hạ trọng
-          lượng thị giác và đặt sát thuyết minh để mắt đi: sơ đồ → thuyết minh →
-          chi tiết. Bảng chân trị vẫn ở panel Quan sát, không đụng tới. */}
-      <section className="gate-detail">
-        <p className="detail-heading">Chi tiết các cổng</p>
+      {/* BẢNG CỔNG = CHI TIẾT TRA CỨU, THU GỌN MẶC ĐỊNH.
+          Dữ liệu giữ nguyên (`gate_table_with_engine_outputs` — yêu cầu renderer
+          trong hợp đồng authenticity, không được bỏ) và vẫn nằm trong DOM.
+          Vì sao gọi lại được: từ khi có sơ đồ, MỌI thứ bảng này nói đều đã hiện
+          trên sân khấu — giá trị từng cổng nằm trong node, danh sách đầu vào là
+          các dây chảy vào node đó. Bày sẵn một bảng lặp lại sân khấu chỉ làm
+          nặng khung nhìn (nguyên tắc NT-2 đo từ PhET: thông tin phụ thì gập).
+          Mở ra thì hàng của cổng ĐANG được tính được làm nổi, để lúc cần đối
+          chiếu vẫn tìm được ngay. */}
+      <details className="gate-detail gate-detail--fold" open>
+        <summary className="detail-heading">Chi tiết các cổng</summary>
         <table className="data-table">
           <thead>
             <tr>
@@ -509,7 +588,7 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
               const gate = state.config.gates.find((g) => g.id === id)!;
               const done = evaluated.has(id);
               return (
-                <tr key={id}>
+                <tr key={id} className={activeGate === id ? "is-current-row" : undefined}>
                   <td>{id}{state.config.output === id ? " (đầu ra)" : ""}</td>
                   <td>{gate.op}</td>
                   <td>{gate.inputs.join(", ")}</td>
@@ -519,7 +598,7 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
             })}
           </tbody>
         </table>
-      </section>
+      </details>
       {/* (SHELL-N) Thuyết minh đã rời `.notes` (lớp dành cho ghi chú phụ) để về
           khe chung của shell — xem `narrate` bên dưới. */}
     </div>

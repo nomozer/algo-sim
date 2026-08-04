@@ -243,11 +243,163 @@ describe("module: toggle tất định + timeline + inspector đọc sự thật
     const v = mod.validateConfig(SAMPLE);
     if (!v.ok) throw new Error(v.error);
     const svg = renderToString(<DagDiagram state={mod.init(v.config)} />);
-    // node = inputs + gates
-    expect((svg.match(/<rect/g) ?? []).length).toBe(v.config.inputs.length + v.config.gates.length);
+    // node = inputs + gates, CỘNG một khung ngoài nét đứt đánh dấu cổng đầu ra
+    // (PILOT: vai trò "đầu ra" nói bằng khung + chữ, không mượn màu tín hiệu).
+    expect((svg.match(/<rect/g) ?? []).length)
+      .toBe(v.config.inputs.length + v.config.gates.length + 1);
     // dây = tổng số chân vào của các cổng (A,B → g1; C → g2; g1,g2 → g3 = 5)
     const wires = v.config.gates.reduce((n, g) => n + g.inputs.length, 0);
     expect((svg.match(/<path/g) ?? []).length).toBe(wires);
+  });
+
+  /**
+   * PILOT — GỠ QUÁ TẢI MÀU + CHÚ GIẢI TÍN HIỆU.
+   *
+   * Audit chụp được ca gây hiểu nhầm: cổng đầu ra mang VIỀN XANH LÁ trong khi
+   * giá trị của nó còn là `?`, mà xanh lá đồng thời là "tín hiệu = 1" trên dây
+   * và trên chữ số. Học sinh rất dễ đọc thành "cổng này đang ra 1".
+   * Nay: vai trò "đầu ra" nói bằng CHỮ + KHUNG NÉT ĐỨT; xanh lá chỉ còn một nghĩa.
+   */
+  it("cổng đầu ra KHÔNG dùng màu tín hiệu để đánh dấu vai trò", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const s0 = mod.init(v.config);
+    const svg = renderToString(<DagDiagram state={s0} />).replace(/<!--.*?-->/g, "");
+    // vai trò đầu ra nói bằng CHỮ
+    expect(svg).toContain("ĐẦU RA");
+    // và bằng khung nét đứt (khác HÌNH, không chỉ khác màu)
+    expect(svg).toContain("stroke-dasharray");
+    // KHÔNG một node/cổng nào (thẻ <rect>) được viền xanh lá nữa. Xanh lá từ đây
+    // CHỈ còn trên DÂY và CHỮ SỐ, với đúng một nghĩa: "tín hiệu = 1".
+    const rects = svg.match(/<rect[^>]*>/g) ?? [];
+    expect(rects.some((r) => r.includes("--accent-green"))).toBe(false);
+    // và dây mang tín hiệu 1 thì VẪN xanh lá (A=1, C=1 trong SAMPLE)
+    const paths = svg.match(/<path[^>]*>/g) ?? [];
+    expect(paths.some((p) => p.includes("--accent-green"))).toBe(true);
+  });
+
+  /**
+   * SƠ ĐỒ KHÔNG ĐƯỢC BỊ PHÓNG TO.
+   *
+   * Hai lần hỏng ngược chiều nhau đã đo được trong Chrome thật:
+   *  - `max-width` = 432 (đúng viewBox, quá nhỏ) → sơ đồ chỉ 11% thẻ, nhỏ hơn
+   *    bảng tra cứu 24%.
+   *  - `max-width` = 720 > viewBox 432 → SVG bị phóng 1,667 lần: chữ trong node
+   *    ra 21,7px (chữ thân trang 14px), node đầu vào thành khối 160×77px.
+   *
+   * Cái phải khoá là TỈ LỆ PHÓNG, không phải một con số pixel. `max-width` bằng
+   * đúng bề rộng viewBox ⇒ scale ≤ 1: co lại khi thẻ hẹp, không bao giờ phóng.
+   */
+  it("sơ đồ hiện ở cỡ thật, không bị phóng to", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const svg = renderToString(<DagDiagram state={mod.init(v.config)} />);
+    const viewBox = /viewBox="0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)"/.exec(svg);
+    const maxWidth = /max-width:\s*(\d+(?:\.\d+)?)px/.exec(svg);
+    expect(viewBox).not.toBeNull();
+    expect(maxWidth).not.toBeNull();
+    const vbW = Number(viewBox![1]);
+    // scale ≤ 1 — không phóng
+    expect(Number(maxWidth![1])).toBeLessThanOrEqual(vbW);
+    // …nhưng cũng KHÔNG được nhỏ như bản gốc: bố cục phải đủ rộng để là sân
+    // khấu chính. Sàn, không phải một con số cố định.
+    expect(vbW).toBeGreaterThan(480);
+    expect(svg).toContain('width="100%"');
+  });
+
+  /**
+   * NODE KHÔNG ĐƯỢC TO NHƯ KHỐI TRANG TRÍ — khoá bằng TỈ LỆ, không bằng pixel.
+   * Mỗi node chỉ chứa một nhãn và một chữ số; nếu nó chiếm phần lớn bề rộng sơ
+   * đồ thì hình đọc ra "ba khối lớn" chứ không phải "một mạch điện".
+   */
+  it("node giữ đúng tỉ lệ so với sơ đồ và với khoảng cách cột", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const svg = renderToString(<DagDiagram state={mod.init(v.config)} />);
+    const vb = /viewBox="0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)"/.exec(svg)!;
+    const [w, h] = [Number(vb[1]), Number(vb[2])];
+    // `\s` trước "width" là bắt buộc — không có nó thì regex khớp luôn phần đuôi
+    // của `stroke-width="1.5"` và cả 7 <rect> cùng ra 1.5.
+    const widths = [...svg.matchAll(/<rect[^>]*\swidth="(\d+(?:\.\d+)?)"/g)].map((m) => Number(m[1]));
+    // Bề rộng NODE = giá trị xuất hiện nhiều nhất; khung ngoài nét đứt của cổng
+    // đầu ra chỉ có đúng một cái nên không bao giờ thắng.
+    const tally = new Map<number, number>();
+    for (const x of widths) tally.set(x, (tally.get(x) ?? 0) + 1);
+    const nodeW = [...tally.entries()].sort((a, b) => b[1] - a[1])[0][0];
+    expect(tally.get(nodeW)).toBe(v.config.inputs.length + v.config.gates.length);
+    const node = { w: nodeW };
+    // một node không quá 1/3 bề rộng sơ đồ
+    expect(node.w).toBeLessThan(w / 3);
+    // sơ đồ nằm ngang: rộng hơn cao (mạch chảy trái → phải)
+    expect(w).toBeGreaterThan(h * 1.5);
+    // khoảng cách cột KHÔNG được rộng hơn chính node: dây dài hơn node thì
+    // khoảng trắng thành phần lớn nhất của hình.
+    const colGap = (w - 3 * node.w) / 2;
+    expect(colGap).toBeLessThan(node.w);
+  });
+
+  it("chú giải tín hiệu có mặt và mỗi mục có dấu hiệu NGOÀI màu", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const html = renderToString(
+      <BoolDagWorkspace config={v.config} state={mod.init(v.config)} busy={false} dispatch={() => {}} />,
+    ).replace(/<!--.*?-->/g, "");
+    expect(html).toContain("dag-legend");
+    expect(html).toContain("tín hiệu <strong>1</strong>");
+    expect(html).toContain("tín hiệu <strong>0</strong>");
+    // "cổng" phải còn trong mục này: node đầu vào cũng nhận viền xanh khi hover,
+    // bỏ chữ đó thì chú giải đọc được thành "đầu vào đang được tính".
+    expect(html).toContain("cổng đang tính");
+    expect(html).toContain("viền đậm");
+    expect(html).toContain("chưa tới lượt");
+  });
+
+  /**
+   * BẢNG CHI TIẾT = TRA CỨU, KHÔNG PHẢI SÂN KHẤU THỨ HAI.
+   * Gập được (`<details>`) để hạ trọng lượng thị giác, nhưng dữ liệu engine
+   * VẪN nằm trong DOM — `gate_table_with_engine_outputs` là yêu cầu renderer
+   * trong hợp đồng authenticity, gập ≠ bỏ.
+   */
+  it("bảng chi tiết gập được nhưng vẫn giữ đủ dữ liệu engine", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    const s = mod.init(v.config);
+    const html = renderToString(
+      <BoolDagWorkspace config={v.config} state={s} busy={false} dispatch={() => {}} />,
+    ).replace(/<!--.*?-->/g, "");
+    expect(html).toContain("gate-detail--fold");
+    expect(html).toContain("<summary");
+    for (const g of v.config.gates) {
+      expect(html).toContain(g.id);
+      expect(html).toContain(g.op);
+    }
+  });
+
+  /** Hàng của cổng đang tính được làm nổi — và CHỈ ở bước `eval`. */
+  it("hàng bảng chi tiết nổi đúng cổng đang được tính", () => {
+    const mod = makeBoolDagModule();
+    const v = mod.validateConfig(SAMPLE);
+    if (!v.ok) throw new Error(v.error);
+    let s = mod.init(v.config);
+    // bước 0 chưa phải `eval` ⇒ không hàng nào nổi
+    const at0 = renderToString(
+      <BoolDagWorkspace config={v.config} state={s} busy={false} dispatch={() => {}} />,
+    );
+    expect(s.steps[0].kind).not.toBe("eval");
+    expect(at0).not.toContain("is-current-row");
+    // tiến tới bước `eval` đầu tiên
+    const evalAt = s.steps.findIndex((st) => st.kind === "eval");
+    s = { ...s, cursor: evalAt };
+    const html = renderToString(
+      <BoolDagWorkspace config={v.config} state={s} busy={false} dispatch={() => {}} />,
+    );
+    expect(html).toContain("is-current-row");
+    expect((html.match(/is-current-row/g) ?? []).length).toBe(1);
   });
 
   it("sân khấu nói rõ bấm được đầu vào và bấm thì quan sát cái gì", () => {

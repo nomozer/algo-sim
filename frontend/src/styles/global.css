@@ -1124,6 +1124,14 @@ html {
 
 .frontier-visited { margin: var(--sp-xs) var(--sp-sm) 0; }
 
+/* PILOT boolean_dag: "chưa tới lượt" = viền nét đứt, khác HÌNH chứ không chỉ
+   khác màu (học sinh không phân biệt được màu vẫn đọc được). */
+.stage-legend .dot.is-unknown {
+  background: transparent;
+  border-color: var(--ink-faint);
+  border-style: dashed;
+}
+
 .stage-legend .dot.is-frontier {
   background: var(--surface);
   border-color: var(--primary);
@@ -1368,6 +1376,62 @@ html {
 
 .gate-detail .data-table tr:last-child td {
   border-bottom: none;
+}
+
+/* ── Biến thể GẬP LẠI — CHỈ dùng ở boolean_dag ───────────────────────────
+   `.gate-detail` là lớp DÙNG CHUNG (program-module dùng cho panel "Mã giả").
+   Mọi thứ dưới đây phải nằm sau `--fold` để không đụng target khác. */
+.gate-detail--fold > summary {
+  cursor: pointer;
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  border-radius: var(--rounded-sm);
+}
+
+.gate-detail--fold > summary::-webkit-details-marker { display: none; }
+
+/* Mũi tên tự vẽ: hướng của nó là dấu hiệu HÌNH cho trạng thái gập/mở,
+   không phụ thuộc marker mặc định của trình duyệt. */
+.gate-detail--fold > summary::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid currentColor;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform 120ms ease;
+}
+
+.gate-detail--fold[open] > summary::before { transform: rotate(90deg); }
+
+.gate-detail--fold > summary:hover { color: var(--ink-muted); }
+
+.gate-detail--fold > summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.gate-detail--fold[open] > summary { margin-bottom: var(--sp-xs); }
+
+/* Chừa lề trái cho THANH ĐÁNH DẤU hàng hiện tại. Đặt cho MỌI ô đầu dòng chứ
+   không riêng hàng đang chạy, để đổi hàng không làm chữ nhảy ngang. */
+.gate-detail--fold .data-table th:first-child,
+.gate-detail--fold .data-table td:first-child {
+  padding-left: 9px;
+}
+
+/* Hàng của cổng ĐANG được tính — nền nhạt + thanh trái, khớp quy ước
+   "xanh dương = đang xét" và có dấu hiệu ngoài màu (thanh viền trái). */
+.gate-detail--fold .data-table tr.is-current-row td {
+  background: var(--canvas-soft);
+  font-weight: 600;
+}
+
+.gate-detail--fold .data-table tr.is-current-row td:first-child {
+  box-shadow: inset 3px 0 0 var(--primary);
 }
 
 /* ── Bố cục mô phỏng + panel mã giả ──────────────────────── */
