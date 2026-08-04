@@ -207,3 +207,72 @@ describe("(INSERT-HOLD) sắp xếp chèn: đang giữ · ô trống · dịch p
 });
 
 
+/**
+ * (SEL-CONSISTENCY) SẮP XẾP CHỌN — mọi vùng giao diện phải cùng nói MỘT thuật toán.
+ *
+ * Bối cảnh: ảnh trong audit cơ chế cho thấy `selection_sort` mang tiêu đề "phương
+ * pháp nổi bọt". Nguyên nhân là FIXTURE của harness audit (catalog công khai
+ * không có mẫu riêng cho selection_sort nên envelope được nhân bản từ
+ * bubble_sort), KHÔNG phải sản phẩm. Test này khoá điều đó lại: với một config
+ * selection_sort đúng, tên thuật toán · mã giả · thuyết minh · engine phải khớp,
+ * và KHÔNG vùng nào được nhắc "nổi bọt".
+ */
+describe("(SEL-CONSISTENCY) sắp xếp chọn nói cùng một thuật toán ở mọi chỗ", () => {
+  const DATA = { array: [7, 3, 9, 4, 8, 2], order: "asc" };
+  const mod = makeAlgorithmModule("selection_sort");
+  const r = mod.validateConfig({
+    problem: { summary: "Sắp xếp dãy tăng dần bằng phương pháp chọn" },
+    algorithm_id: "selection_sort", data: DATA, data_generated: false, notes: null,
+  });
+  if (!r.ok) throw new Error(r.error);
+  const cfg = r.config;
+  const base = mod.init(cfg) as AlgorithmSimState;
+  const steps = activeTrace(base).steps;
+  const render = (c: number) =>
+    renderToString(
+      <AlgorithmWorkspace
+        config={cfg}
+        state={mod.timeline!.goToStep(base, c) as AlgorithmSimState}
+        busy={false}
+        dispatch={() => {}}
+      />,
+    ).replace(/<!--.*?-->/g, "");
+
+  it("module tự khai đúng tên thuật toán", () => {
+    expect(mod.id).toBe("algorithm.selection_sort");
+    expect(mod.title).toContain("chọn");
+    expect(mod.title).not.toContain("nổi bọt");
+  });
+
+  it("KHÔNG vùng nào trên sân khấu nhắc 'nổi bọt' ở bất kỳ bước nào", () => {
+    for (let c = 0; c < steps.length; c += 1) {
+      expect(render(c), `bước ${c} rò tên thuật toán khác`).not.toContain("nổi bọt");
+    }
+  });
+
+  it("thuyết minh của engine nói đúng cơ chế CHỌN (cực trị + đổi chỗ)", () => {
+    const all = steps.map((s) => s.narration).join(" ");
+    expect(all).not.toContain("nổi bọt");
+    expect(all).toMatch(/nhỏ nhất|cực trị|chọn/);
+  });
+
+  it("mã giả là mã giả của sắp xếp chọn, không phải nổi bọt", () => {
+    const insp = renderToString(
+      <AlgorithmWorkspace config={cfg} state={base} busy={false} dispatch={() => {}} />,
+    );
+    expect(insp).not.toContain("cặp kề");
+  });
+
+  it("engine cho kết quả đúng và giữ đủ phần tử", () => {
+    const lastStep = steps[steps.length - 1];
+    expect(lastStep.snapshot.array).toEqual([...DATA.array].sort((a, b) => a - b));
+    expect(lastStep.snapshot.array.length).toBe(DATA.array.length);
+  });
+
+  it("sân khấu phân biệt vùng đã sắp với vùng chưa sắp", () => {
+    // ở bước giữa phải có ít nhất một phần tử đã chốt (mark "sorted")
+    const mid = Math.floor(steps.length * 0.6);
+    const marks = Object.values(steps[mid].snapshot.marks);
+    expect(marks).toContain("sorted");
+  });
+});
