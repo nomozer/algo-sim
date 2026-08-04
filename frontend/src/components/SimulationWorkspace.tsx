@@ -1,7 +1,7 @@
 import { Suspense, type ComponentType } from "react";
 import { getSimulation } from "../simulations/registry";
 import { availableVisualModes, effectiveVisualMode, rendererFor } from "../simulations/renderer";
-import type { VisualMode, WorkspaceProps } from "../simulations/types";
+import type { Narration, VisualMode, WorkspaceProps } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { PredictionBar } from "./PredictionBar";
 
@@ -99,6 +99,30 @@ export function UnsupportedNotice({
 }
 
 /**
+ * (SHELL-N) KHE THUYẾT MINH — component THUẦN theo props (export để test SSR).
+ *
+ * Đây là chỗ DUY NHẤT trong sản phẩm dựng thuyết minh bước hiện tại. Module chỉ
+ * trả chuỗi qua `narrate()`; vị trí, nền, khoảng cách, biến thể "thao tác của
+ * em" đều do shell quyết. `null` → không dựng gì (không để lại ô rỗng).
+ *
+ * `role="status"` + `aria-live="polite"`: đổi bước bằng nút hay bằng phím tắt
+ * đều được đọc lên. Trước bản này không có vùng aria-live nào trong workspace —
+ * người dùng đọc màn hình bấm "Tiến" không nghe thấy gì.
+ */
+export function NarrationSlot({ narration }: { narration: Narration | null }) {
+  if (!narration) return null;
+  return (
+    <div
+      className={`narration-bar${narration.fromLearner ? " is-user" : ""}`}
+      role="status"
+      aria-live="polite"
+    >
+      {narration.text}
+    </div>
+  );
+}
+
+/**
  * Vùng trung tâm — host sân khấu mô phỏng (M2 #1). KHÔNG giả định simulation
  * là thuật toán (M2 #2): mọi thứ domain-specific render qua module.Workspace
  * lấy từ registry.
@@ -173,6 +197,10 @@ export function SimulationWorkspace() {
       <Suspense fallback={<div className="empty-state">Đang tải chế độ hiển thị…</div>}>
         <Stage config={active.config} state={active.state} busy={playing} dispatch={dispatch} />
       </Suspense>
+      {/* (SHELL-N) Thuyết minh: KHE của shell, chữ của module. Nằm NGOÀI renderer
+          nên 2D và 3D tự nhiên kể cùng một câu — không còn hai dòng song song
+          phải giữ đồng bộ bằng tay. */}
+      <NarrationSlot narration={mod.narrate?.(active.state, active.config) ?? null} />
       {/* M8-PRE-LIP: một UI dự đoán DÙNG CHUNG — module không khai `predict` thì
           không render gì. M8: nằm NGOÀI renderer nên tự nhiên renderer-independent —
           2D hay 3D đều cùng PredictionBar này, không có bản 3D riêng. */}

@@ -54,6 +54,13 @@ export function makeAndGateModule(): SimulationModule<LogicConfig, LogicState> {
 
     // KHÔNG có timeline (M5 §2) — Controls chỉ hiện Reset
 
+    // (SHELL-N) Mô phỏng KHÁM PHÁ: không có bước, nên "thuyết minh" ở đây là
+    // affordance + giá trị hiện tại — vẫn đúng một câu, vẫn đúng khe đó.
+    narrate: (state) => ({
+      text: `Bấm vào công tắc A hoặc B để bật/tắt. ${AND_RULE} `
+        + `Hiện tại: ${state.inputA} AND ${state.inputB} = ${andOutput(state)}.`,
+    }),
+
     getExplainContext: (state) => ({
       simulation_id: "logic.and_gate",
       inputA: state.inputA,

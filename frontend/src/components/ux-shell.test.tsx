@@ -6,6 +6,7 @@ import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
 import { useAppStore } from "../state/store";
 import { LibraryView } from "./LibraryView";
+import { SimulationInspector } from "./SimulationInspector";
 
 /**
  * M9-UX5 — vỏ ứng dụng: header, Trang chủ, Thư viện, và luật ICON.
@@ -138,6 +139,40 @@ describe("(M9-UX5) Thư viện — nhà riêng của danh mục đầy đủ", (
     expect(html).not.toContain("(tổng quát)");
     expect(html).not.toContain("algorithm.");
     expect(html).not.toContain("generic.rule_scene");
+  });
+});
+
+/**
+ * AI RA HẲN KHỎI WORKSPACE — render THẬT, không chỉ quét mã nguồn.
+ *
+ * M9-UX5 đã hạ AI từ "một nửa cột phải" xuống "mục thu gọn ở đáy". Bản này bỏ
+ * nốt mục thu gọn: workspace là nơi làm việc với mô phỏng, và narration +
+ * Observer phải tự đủ. Đường dùng AI ở Trang chủ (phân tích đề) KHÔNG đổi —
+ * đó mới là chỗ AI có việc thật.
+ */
+describe("Panel Quan sát không còn control AI nào", () => {
+  beforeEach(() => {
+    __resetHistoryForTest();
+    useAppStore.getState().reset();
+  });
+
+  it('không còn "Hỏi AI về bước này" trong panel Quan sát', () => {
+    const html = renderToString(<SimulationInspector />);
+    expect(html).not.toContain("Hỏi AI");
+    expect(html).not.toContain("ai-toggle");
+    expect(html).not.toContain("ai-section");
+    expect(html).not.toContain("aria-expanded");
+  });
+
+  it("panel Quan sát vẫn render bình thường (tiêu đề + chỗ cho Inspector)", () => {
+    const html = renderToString(<SimulationInspector />);
+    expect(html).toContain("QUAN SÁT");
+    expect(html).toContain("Chưa có mô phỏng nào đang chạy.");
+  });
+
+  it("Trang chủ VẪN giữ đường phân tích đề bằng AI", () => {
+    const html = renderToString(<App />);
+    expect(html).toContain("Phân tích đề bằng AI");
   });
 });
 

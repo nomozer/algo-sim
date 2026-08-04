@@ -1,5 +1,5 @@
 import type { WorkspaceProps } from "../../types";
-import { AND_RULE, andOutput, type Bit, type LogicConfig, type LogicState } from "./model";
+import { andOutput, type Bit, type LogicConfig, type LogicState } from "./model";
 
 /**
  * UI domain logic — cổng AND. Chỉ đọc state + phát toggle qua dispatch.
@@ -71,9 +71,7 @@ export function LogicWorkspace({ state, dispatch }: Props) {
           <Switch label="B" value={state.inputB} y={170} onToggle={() => dispatch({ type: "toggle", target: "B" })} />
         </svg>
       </div>
-      <div className="narration-bar">
-        Bấm vào công tắc A hoặc B để bật/tắt. {AND_RULE} Hiện tại: {state.inputA} AND {state.inputB} = {out}.
-      </div>
+      {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` ở `index.ts`. */}
     </div>
   );
 }

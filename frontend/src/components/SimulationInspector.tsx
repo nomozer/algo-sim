@@ -2,29 +2,30 @@ import type { ComponentType } from "react";
 import { getSimulation } from "../simulations/registry";
 import type { WorkspaceProps } from "../simulations/types";
 import { useAppStore } from "../state/store";
-import { AIHelpPanel } from "./AIHelpPanel";
-import { IconAsk, IconChevronDown, IconChevronRight } from "./icons";
 
 /**
  * Panel phải — nội dung QUAN SÁT theo domain qua module.Inspector (M2 #5):
  * algorithm → biến + mã giả; binary → bit; network → tuyến... Core không
  * hard-code bất kỳ nội dung domain nào.
  *
- * M9-UX5 — AI THÔI NGANG HÀNG VỚI MÔ PHỎNG.
- * Trước đây đây là hai tab [Quan sát][Hỏi AI]: một nửa cột phải, lúc nào cũng
- * vậy, dành cho AI. Đó là mâu thuẫn với chính luật gốc của hệ (R0: LLM KHÔNG
- * phải xương sống — nó không sinh bước, không sinh kết quả, không điều khiển
- * mô phỏng). UI mà cho AI một nửa sân khấu thì đang nói ngược lại điều đó.
+ * LỊCH SỬ CỦA CỘT NÀY — hai lần thu hẹp vai trò của AI, cùng một lý do:
  *
- * Nay: cột phải LUÔN là Quan sát. AI là một mục THU GỌN ở đáy — vẫn ở đó khi
- * học sinh cần hỏi, nhưng không đòi chỗ ngang với thứ đang dạy học.
+ * - M9-UX5: bỏ cặp tab [Quan sát][Hỏi AI] (AI chiếm một nửa cột phải) → AI
+ *   xuống thành một mục THU GỌN ở đáy.
+ * - Bản này: bỏ luôn mục thu gọn đó. Workspace là nơi học sinh làm việc với
+ *   MÔ PHỎNG; narration + Observer phải tự đủ để giải thích bước hiện tại.
+ *   Còn một nút gọi model ngay cạnh timeline nghĩa là vẫn còn một đường tiêu
+ *   token trong lúc chạy, và vẫn còn một góc màn hình thường trực cho AI.
+ *
+ * AI nay chỉ xuất hiện ở BỐN chỗ, tất cả đều ở giai đoạn HIỂU ĐỀ, không có chỗ
+ * nào trong workspace: ô nhập đề · trạng thái đang phân tích · tóm tắt "hệ
+ * thống đã hiểu" · phản hồi thiếu dữ kiện / ngoài phạm vi.
+ * Danh sách ĐÓNG — xem `docs/evaluation/ui-baseline/UI_INTERACTION_BASELINE.md §5`.
  */
 export function SimulationInspector() {
   const active = useAppStore((s) => s.active);
   const playing = useAppStore((s) => s.playing);
   const dispatch = useAppStore((s) => s.dispatch);
-  const aiOpen = useAppStore((s) => s.aiOpen);
-  const setAiOpen = useAppStore((s) => s.setAiOpen);
 
   const mod = active ? getSimulation(active.moduleId) : undefined;
   const Inspector = mod?.Inspector as ComponentType<WorkspaceProps> | undefined;
@@ -42,22 +43,6 @@ export function SimulationInspector() {
             : "Chưa có mô phỏng nào đang chạy."}
         </p>
       )}
-
-      <section className="ai-section">
-        <button
-          className="ai-toggle"
-          onClick={() => setAiOpen(!aiOpen)}
-          aria-expanded={aiOpen}
-        >
-          <IconAsk size={15} />
-          <span>Hỏi AI về bước này</span>
-          <span className="ai-toggle-caret">
-            {aiOpen ? <IconChevronDown size={15} /> : <IconChevronRight size={15} />}
-          </span>
-        </button>
-
-        {aiOpen && <AIHelpPanel />}
-      </section>
     </div>
   );
 }

@@ -96,7 +96,8 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         </div>
       )}
 
-      <div className={`narration-bar${step.userAction ? " is-user" : ""}`}>{step.narration}</div>
+      {/* (SHELL-N) Thuyết minh đã chuyển lên khe của shell — xem `narrate` ở
+          `index.ts`. Renderer không còn dựng dòng này. */}
 
       {last && doneEvent && doneEvent.type === "done" && (
         <div className="result-banner">

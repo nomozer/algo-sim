@@ -32,12 +32,14 @@ function at(step: number): EncapState {
 }
 
 describe("(M10) 2D renderer đọc CÙNG authoritative PDU state", () => {
-  it("hiện các phân đoạn PDU của bước hiện tại + narration", () => {
+  it("hiện các phân đoạn PDU của bước hiện tại + thuyết minh (khe của shell)", () => {
     const html = renderToString(<EncapWorkspace config={CONFIG} state={at(3)} busy={false} dispatch={() => {}} />);
     for (const seg of ["LINK", "IP", "TCP", "Dữ liệu ứng dụng", "FCS"]) expect(html).toContain(seg);
-    expect(html).toContain("gói IP trở thành khung");
     expect(html).toContain("MÁY GỬI");
     expect(html).toContain("MÁY NHẬN");
+    // (SHELL-N) chữ thuyết minh nay đến từ `narrate()`, shell render một lần
+    expect(makeEncapsulationModule().narrate!(at(3), CONFIG)!.text)
+      .toContain("gói IP trở thành khung");
   });
 
   it("bước truyền tin hiện dải đường truyền", () => {
@@ -68,13 +70,14 @@ describe("(M10) 3D renderer — Z = tầng giao thức (nghĩa thật)", () => {
     expect(sideX("medium")).toBe(0);
   });
 
-  it("SSR: render container + narration + caption meaning_of_z, KHÔNG ném lỗi", () => {
+  it("SSR: render container + caption meaning_of_z, KHÔNG ném lỗi", () => {
     const html = renderToString(
       <Encap3DWorkspace config={CONFIG} state={at(1)} busy={false} dispatch={() => {}} />,
     );
     expect(html).toContain("three-container");
-    expect(html).toContain("đoạn TCP");
     expect(html).toContain("Trục sâu"); // caption Z = tầng giao thức
+    // (SHELL-N) thuyết minh không còn trong renderer; nguồn duy nhất là narrate()
+    expect(makeEncapsulationModule().narrate!(at(1), CONFIG)!.text).toContain("đoạn TCP");
   });
 
   it("môi trường không WebGL → tryCreateWebGLRenderer trả null; fallback trỏ về 2D", () => {
@@ -82,11 +85,18 @@ describe("(M10) 3D renderer — Z = tầng giao thức (nghĩa thật)", () => {
     expect(ENCAP_WEBGL_FALLBACK).toContain("2D");
   });
 
-  it("3D KHÔNG tự tính PDU: narration đến từ state (không bịa)", () => {
+  it("3D KHÔNG tự tính PDU: thuyết minh đến từ state (không bịa)", () => {
+    const s = at(3);
     const html3d = renderToString(
-      <Encap3DWorkspace config={CONFIG} state={at(3)} busy={false} dispatch={() => {}} />,
+      <Encap3DWorkspace config={CONFIG} state={s} busy={false} dispatch={() => {}} />,
     );
-    expect(html3d).toContain("gói IP trở thành khung");
+    // Ở SSR, 3D mới chỉ có container (phân đoạn PDU vẽ trong canvas WebGL sau
+    // khi effect chạy) — nên bằng chứng "không bịa" nằm ở chỗ nó KHÔNG tự dựng
+    // chữ nào của riêng mình…
+    expect(html3d).toContain("three-container");
+    expect(html3d).not.toContain(s.steps[s.cursor].narration);
+    // …và câu thuyết minh là CHÍNH câu của state, qua một nguồn duy nhất.
+    expect(makeEncapsulationModule().narrate!(s, CONFIG)!.text).toBe(s.steps[s.cursor].narration);
   });
 });
 

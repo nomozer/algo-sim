@@ -205,6 +205,10 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
       },
     },
 
+    // (SHELL-N) MỘT nguồn chữ cho CẢ 2D lẫn 3D — trước đây `ui.tsx` và
+    // `ui3d.tsx` mỗi bên tự dựng một dòng narration giống hệt nhau.
+    narrate: (state) => ({ text: currentStep(state).narration }),
+
     getExplainContext: (state) => {
       const step = currentStep(state);
       return {

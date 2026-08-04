@@ -43,7 +43,8 @@ describe("network renderer 2D — tự lo bố cục", () => {
     // 3 liên kết + 1 chấm gói tin + 4 vòng tròn nút = có <line> và <circle>
     expect(html.match(/<line/g) ?? []).toHaveLength(3);
     expect((html.match(/<circle/g) ?? []).length).toBe(5); // 4 nút + 1 gói tin
-    expect(html).toContain("Tạo gói tin"); // narration bước 0
+    // (SHELL-N) thuyết minh do khe của shell dựng — renderer chỉ lo BỐ CỤC
+    expect(mod.narrate!(state, config)!.text).toContain("Tạo gói tin"); // bước 0
   });
 
   it("gói tin dịch chuyển theo bước — vị trí do renderer suy từ packetAt", () => {
@@ -56,6 +57,7 @@ describe("network renderer 2D — tự lo bố cục", () => {
       <NetworkWorkspace config={config} state={s2} busy={false} dispatch={() => {}} />,
     );
     expect(html0).not.toBe(html2); // cảnh đổi theo bước
-    expect(html2).toContain("chuyển tới"); // narration bước 2
+    // (SHELL-N) thuyết minh bước 2 đến từ `narrate`, không từ renderer
+    expect(mod.narrate!(s2, config)!.text).toContain("chuyển tới");
   });
 });

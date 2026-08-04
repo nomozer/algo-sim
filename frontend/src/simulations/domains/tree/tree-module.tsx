@@ -444,7 +444,7 @@ export function TreeWorkspace({ state }: Props) {
           {" · "}Đã thăm: {step.visitedSoFar.length > 0 ? step.visitedSoFar.map((id) => labelOf(map, id)).join(" → ") : "(chưa)"}
         </p>
       </div>
-      <p className="notes">{step.narration}</p>
+      {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` bên dưới. */}
       {last && (
         <p><strong>Thứ tự duyệt {state.config.variant}: {state.visitedOrder.map((id) => labelOf(map, id)).join(" → ")}</strong></p>
       )}
@@ -501,6 +501,9 @@ export function makeTreeTraversalModule(): SimulationModule<TreeTraversalConfig,
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step) }),
     },
+
+    // (SHELL-N) chữ thuyết minh; khe do shell dựng
+    narrate: (state) => ({ text: state.steps[clampCursor(state, state.cursor)].narration }),
 
     getExplainContext: (state) => {
       const at = clampCursor(state, state.cursor);

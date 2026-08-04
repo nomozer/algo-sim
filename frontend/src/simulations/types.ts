@@ -137,6 +137,35 @@ export interface PredictionCapability<S = unknown> {
   check(state: S, answerId: string): PredictionResult;
 }
 
+/* ── NarrationCapability (SHELL-N) ────────────────────────────────────────
+ *
+ * KHE CỦA SHELL, CHỮ CỦA MODULE.
+ *
+ * Trước bản này, "thuyết minh bước hiện tại" là quy ước tự nguyện: mỗi module tự
+ * dựng lấy, bằng BA cách khác nhau (`.narration-bar`, `.notes` của logic, và một
+ * bản riêng trong table-module). Hệ quả đo được ở lượt audit UI baseline: hai
+ * trong năm module đại diện có `narration_bar_count = 0` dù vẫn hiện một câu
+ * thuyết minh — cùng vai trò, khác hiện thực, khác vị trí, và KHÔNG có gì bắt
+ * module thứ 23 phải có thuyết minh.
+ *
+ * Nay shell cấp đúng MỘT khe ngay dưới sân khấu; module chỉ trả CHUỖI cho bước
+ * hiện tại. Renderer 2D và 3D của cùng một module vì thế kể cùng một câu mà
+ * không cần chép hai lần (trước đây `network/ui.tsx` và `network/ui3d.tsx` có
+ * hai dòng narration song song — đúng thứ dễ trôi khỏi nhau).
+ *
+ * KHÔNG đụng engine/state/trace: `narrate` là hàm THUẦN, chỉ ĐỌC state.
+ */
+export interface Narration {
+  /** Câu thuyết minh cho bước hiện tại. */
+  text: string;
+  /**
+   * true = câu này nói về THAO TÁC CỦA HỌC SINH (vd what-if đổi chỗ), không phải
+   * bước canonical của engine. Shell đánh dấu khác đi để học sinh không nhầm
+   * "việc em vừa làm" với "thuật toán đang làm".
+   */
+  fromLearner?: boolean;
+}
+
 /**
  * M10 — vai trò của renderer 3D. Phân biệt TRUNG THỰC:
  * - "architectural_poc": 3D chứng minh dùng chung renderer, nhưng chiều sâu (Z)
@@ -179,6 +208,15 @@ export interface SimulationModule<C = unknown, S = unknown> {
    * hiện ô dự đoán. Ground truth lấy từ chính engine tất định (trace/BFS).
    */
   predict?: PredictionCapability<S>;
+
+  /**
+   * (SHELL-N) Thuyết minh bước hiện tại — shell render, module chỉ cấp chữ.
+   * `null` = bước này không có gì để nói (vd bước cuối đã có băng kết quả nói
+   * đúng câu đó rồi — hiện hai lần làm học sinh tưởng là hai thông tin khác).
+   * Module KHÔNG khai = shell không dựng khe (mặc định an toàn, cùng khuôn
+   * `timeline?` / `predict?`).
+   */
+  narrate?(state: S, config: C): Narration | null;
 
   /**
    * Yêu cầu #4: snapshot JSON sạch (serializable, nhỏ) mô tả trạng thái thật

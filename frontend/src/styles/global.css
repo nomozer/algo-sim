@@ -880,6 +880,27 @@ html {
   /* giữ chữ như narration thường (--ink-secondary kế thừa), chỉ dấu viền tím */
 }
 
+/* (SHELL-N) BA VAI TRÒ KHÁC NHAU, TRƯỚC ĐÂY DÙNG CHUNG MỘT LỚP.
+   `.narration-bar` = TƯỜNG THUẬT bước hiện tại (khe của shell).
+   `.feedback-bar`  = phản hồi cho THAO TÁC vừa rồi (rule engine sinh — dữ liệu
+                      kết quả, không phải chat; bất biến #12).
+   `.stage-affordance` = HƯỚNG DẪN THAO TÁC ("bấm cái này để…"), module sở hữu
+                      vì nó gắn với chỗ bấm, không phải với bước. */
+.feedback-bar {
+  background: #f6effd;
+  border-left: 3px solid var(--accent-purple-deep);
+  border-radius: var(--rounded-md);
+  padding: var(--sp-sm) var(--sp-md);
+  font-size: 15px;
+  color: var(--ink-secondary);
+}
+
+.stage-affordance {
+  font-size: 14px;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
 /* ── Bố cục mô phỏng + panel mã giả ──────────────────────── */
 .sim-layout {
   display: grid;
@@ -998,6 +1019,23 @@ html {
       "controls";
     height: auto;
     min-height: calc(100vh - 57px);
+  }
+
+  /* FIX-1 — THANH ĐIỀU KHIỂN PHẢI LUÔN TRONG MÀN HÌNH.
+     Ở desktop, `.app-layout` cao đúng một màn (`calc(100vh - 57px)`) nên
+     `panel-controls` là hàng lưới GHIM ĐÁY. Ở đây `height: auto` (đúng, vì nội
+     dung màn hẹp phải cuộn được) làm nó mất tính chất đó và TRÔI theo chiều cao
+     nội dung. Đo được: khi ô dự đoán hiện ra, `bubble_sort` đẩy thanh điều khiển
+     xuống 99px DƯỚI nếp gấp ở 768×900, `protocol_encapsulation` 21px ở bước 5 —
+     nút chính tự dịch chuyển dưới ngón tay người học.
+     `sticky` giữ nguyên luồng cuộn (khác `fixed`: không cần bù padding) mà vẫn
+     dán thanh vào đáy màn hình. */
+  .panel-controls {
+    position: sticky;
+    bottom: 0;
+    /* CAO HƠN drawer (40): drawer Quan sát trượt RA SAU thanh điều khiển. */
+    z-index: 50;
+    box-shadow: var(--shadow-elevated);
   }
 
   .panel-right {

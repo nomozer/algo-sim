@@ -66,6 +66,12 @@ export function makeBinaryModule(): SimulationModule<BinaryConfig, BinaryState> 
 
     // KHÔNG có timeline (M5 §2)
 
+    // (SHELL-N) Mô phỏng KHÁM PHÁ: affordance + giá trị hiện tại, một câu, đúng khe.
+    narrate: (state) => ({
+      text: `Bấm vào từng bit để bật/tắt. Nhị phân ${binaryString(state)} = `
+        + `${decimalOf(state)} (hệ thập phân).`,
+    }),
+
     getExplainContext: (state) => ({
       simulation_id: "binary.decimal_to_binary",
       decimal_value: decimalOf(state),

@@ -447,12 +447,8 @@ export function CharEncodingWorkspace({ state }: Props) {
 
       <DivisionPanel state={{ ...state, cursor }} cursor={cursor} />
 
-      {/* W3-VR1: bước cuối, thuyết minh TRÙNG y hệt băng kết quả — hiện hai lần
-          cùng một câu làm học sinh tưởng là hai thông tin khác nhau. Cùng lớp
-          lỗi đã gặp ở W2C-VR3. */}
-      {!(last && done && done.type === "done" && step.narration === done.result) && (
-        <div className="narration-bar">{step.narration}</div>
-      )}
+      {/* (SHELL-N) Thuyết minh đã về khe của shell — luật ẩn ở bước cuối
+          (W3-VR1, cùng lớp lỗi W2C-VR3) nay sống trong `narrate` bên dưới. */}
 
       {last && done && done.type === "done" && (
         <div className="result-banner">
@@ -502,6 +498,17 @@ export function makeCharEncodingModule(): SimulationModule<CharEncodingSpec, Cha
       stepCount: (s) => s.trace.steps.length,
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step) }),
+    },
+
+    // (SHELL-N) W3-VR1: bước cuối, thuyết minh TRÙNG y hệt băng kết quả —
+    // trả `null` để không nói hai lần cùng một câu.
+    narrate: (state) => {
+      const cursor = clampCursor(state, state.cursor);
+      const step = state.trace.steps[cursor];
+      const last = cursor >= state.trace.steps.length - 1;
+      const done = step.events.find((e) => e.type === "done");
+      if (last && done && done.type === "done" && step.narration === done.result) return null;
+      return { text: step.narration };
     },
 
     getExplainContext: (state) => {

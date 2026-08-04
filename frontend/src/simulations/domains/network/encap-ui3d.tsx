@@ -333,7 +333,6 @@ export function Encap3DWorkspace({ state }: Props) {
             {ENCAP_WEBGL_FALLBACK}
           </p>
         </div>
-        <div className="narration-bar">{step.narration}</div>
       </div>
     );
   }
@@ -358,7 +357,7 @@ export function Encap3DWorkspace({ state }: Props) {
           ⌂ Góc nhìn
         </button>
       </div>
-      <div className="narration-bar">{step.narration}</div>
+      {/* (SHELL-N) Thuyết minh do shell dựng — 2D và 3D nay dùng CHUNG một câu. */}
     </div>
   );
 }

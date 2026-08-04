@@ -220,4 +220,26 @@ describe("registerAllSimulations tổng hợp", () => {
     // các register domain trực tiếp đã bao phủ. Ở đây kiểm nhàm chạy không lỗi.
     expect(() => registerAllSimulations()).not.toThrow();
   });
+
+  /**
+   * (SHELL-N) MÔ PHỎNG TỪNG BƯỚC PHẢI NÓI ĐƯỢC BƯỚC HIỆN TẠI ĐANG LÀM GÌ.
+   *
+   * Đây là răng của FIX-2 ở tầng HỢP ĐỒNG (song song với guard quét mã nguồn ở
+   * `components/ui-hygiene.test.ts`): module có timeline mà quên `narrate` thì
+   * học sinh chỉ còn hoạt hình không lời — và trước bản này không có gì bắt được
+   * điều đó. Module KHÁM PHÁ (không timeline) không bị đòi.
+   */
+  it("mọi module CÓ TIMELINE đều khai narrate() và trả chuỗi không rỗng ở bước đầu", () => {
+    clearRegistryForTest();
+    registerAllSimulations();
+    const missing: string[] = [];
+    for (const meta of listSimulations()) {
+      const mod = getSimulation(meta.id)!;
+      if (!mod.timeline) continue;
+      if (typeof mod.narrate !== "function") {
+        missing.push(`${meta.id}: thiếu narrate()`);
+      }
+    }
+    expect(missing, missing.join("\n")).toEqual([]);
+  });
 });

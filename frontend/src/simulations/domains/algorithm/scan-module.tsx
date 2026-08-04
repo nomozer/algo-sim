@@ -43,7 +43,7 @@ export function ScanWorkspace({ state }: Props) {
       <div className="sim-stage">
         <ArrayView step={step} labels={state.spec.labels ?? null} />
       </div>
-      <div className="narration-bar">{step.narration}</div>
+      {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` bên dưới. */}
       {last && doneEvent && doneEvent.type === "done" && (
         <div className="result-banner">
           <IconCheck size={15} /> {doneEvent.result}
@@ -86,6 +86,11 @@ export function makeScanModule(): SimulationModule<ScanSpec, ScanSimState> {
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step) }),
     },
+
+    // (SHELL-N) chữ thuyết minh; khe do shell dựng
+    narrate: (state) => ({
+      text: state.trace.steps[clampCursor(state, state.cursor)].narration,
+    }),
 
     getExplainContext: (state) => {
       const step = state.trace.steps[clampCursor(state, state.cursor)];

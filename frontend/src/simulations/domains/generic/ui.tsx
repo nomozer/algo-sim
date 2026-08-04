@@ -685,19 +685,24 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
             })}
         </svg>
       </div>
-      {/* M7.14: InteractionFeedback — dẫn xuất của RULE engine, không phải chat */}
-      {state.feedback && <div className="narration-bar is-user">{state.feedback.message}</div>}
-      {/* Ở chế độ Chỉnh sửa, hướng dẫn thao tác do EditBar hiển thị (sát nút bấm) */}
-      {!editMode && (
-        <div className="narration-bar">
-          {state.timeline.length > 1
-            ? frame.narration
-            : toggleable.size > 0
-              ? "Bấm vào các công tắc để thay đổi trạng thái và quan sát kết quả."
-              : draggable.size > 0
-                ? "Kéo các điểm có viền đứt để thay đổi hình và quan sát các cạnh cập nhật theo."
-                : spec.title}
-        </div>
+      {/* M7.14: InteractionFeedback — dẫn xuất của RULE engine, không phải chat.
+          (SHELL-N) KHÔNG phải thuyết minh bước: đây là phản hồi cho THAO TÁC vừa
+          rồi, một vai trò khác, nên nó giữ lớp riêng thay vì mượn `.narration-bar`. */}
+      {state.feedback && <div className="feedback-bar">{state.feedback.message}</div>}
+      {/* (SHELL-N) THUYẾT MINH BƯỚC đã về khe của shell (`narrate` ở `index.ts`).
+          Còn lại ở đây là HƯỚNG DẪN THAO TÁC cho cảnh KHÔNG có timeline — vai trò
+          khác (affordance, không phải tường thuật) và chỉ đúng khi KHÔNG ở chế độ
+          Chỉnh sửa. `editMode` là trạng thái TRÌNH BÀY cục bộ của renderer, không
+          nằm trong engine state (luật renderer-neutral, M7.FREEZE) — nên shell
+          không thể biết, và câu này phải ở lại đây. */}
+      {!editMode && state.timeline.length <= 1 && (
+        <p className="stage-affordance">
+          {toggleable.size > 0
+            ? "Bấm vào các công tắc để thay đổi trạng thái và quan sát kết quả."
+            : draggable.size > 0
+              ? "Kéo các điểm có viền đứt để thay đổi hình và quan sát các cạnh cập nhật theo."
+              : spec.title}
+        </p>
       )}
     </div>
   );

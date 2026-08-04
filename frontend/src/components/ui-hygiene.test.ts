@@ -91,6 +91,72 @@ describe("(M9-UX6) UI hygiene — quét MÃ NGUỒN, không phụ thuộc route 
 });
 
 /**
+ * (SHELL-N) THUYẾT MINH LÀ KHE CỦA SHELL — khoá bằng quét MÃ NGUỒN.
+ *
+ * Vì sao cần răng: trước bản này "thuyết minh bước hiện tại" chỉ là QUY ƯỚC —
+ * bốn hiện thực song song cho cùng một vai trò, và không có gì bắt module thứ 23
+ * phải thuyết minh, cũng không có gì bắt nó đặt đúng chỗ.
+ */
+describe("(SHELL-N) chỉ SHELL được dựng khe thuyết minh", () => {
+  it("không module/renderer nào tự render .narration-bar", () => {
+    const offenders = FILES.filter((f) => /[/\\]simulations[/\\]/.test(f.path))
+      .filter((f) => /className=\{?[`"'][^`"']*narration-bar/.test(code(f.text)))
+      .map((f) => f.path);
+    expect(
+      offenders,
+      "thuyết minh phải đi qua `narrate()` + khe của SimulationWorkspace:\n" +
+        offenders.join("\n"),
+    ).toEqual([]);
+  });
+
+  it("SimulationWorkspace là nơi DUY NHẤT dựng khe đó", () => {
+    const builders = FILES.filter((f) =>
+      /className=\{?[`"'][^`"']*narration-bar/.test(code(f.text)),
+    ).map((f) => f.path.replace(/\\/g, "/").split("/").pop());
+    expect(builders).toEqual(["SimulationWorkspace.tsx"]);
+  });
+});
+
+/**
+ * AI KHÔNG CÓ CHỖ THƯỜNG TRỰC TRONG WORKSPACE — quét MÃ NGUỒN.
+ *
+ * Quyết định sản phẩm: AlgoSim là hệ mô phỏng tương tác CÓ AI hỗ trợ phân tích
+ * đề, không phải chatbot. Trong workspace, narration + Observer phải tự đủ để
+ * giải thích bước hiện tại; một nút gọi model ngay cạnh timeline vừa mở thêm
+ * đường tiêu token lúc đang chạy, vừa giữ một góc màn hình thường trực cho AI.
+ */
+describe("AI không có control learner-facing trong workspace", () => {
+  const WORKSPACE_FILES = FILES.filter((f) =>
+    /[/\\](SimulationWorkspace|SimulationInspector|SimulationControls|PredictionBar)\.tsx$/
+      .test(f.path),
+  );
+
+  it("có tìm đúng các tệp workspace (guard không rỗng vô nghĩa)", () => {
+    expect(WORKSPACE_FILES.length).toBe(4);
+  });
+
+  it('không tệp workspace nào render "Hỏi AI" hay accordion AI', () => {
+    const offenders: string[] = [];
+    for (const f of WORKSPACE_FILES) {
+      const body = code(f.text);
+      for (const needle of ["Hỏi AI", "ai-toggle", "ai-section", "AIHelpPanel", "Trợ lý AI", "Giải thích bằng AI"]) {
+        if (body.includes(needle)) offenders.push(`${f.path}: "${needle}"`);
+      }
+    }
+    expect(
+      offenders,
+      `workspace phải tự giải thích bằng narration + Observer:\n${offenders.join("\n")}`,
+    ).toEqual([]);
+  });
+
+  it("không component nào còn dựng mục AI thu gọn (đã gỡ khỏi panel Quan sát)", () => {
+    const offenders = FILES.filter((f) => /className="ai-(toggle|section)"/.test(code(f.text)))
+      .map((f) => f.path);
+    expect(offenders, offenders.join("\n")).toEqual([]);
+  });
+});
+
+/**
  * NGÔN NGỮ THIẾT KẾ (DESIGN.md) — hai luật "Don't" quan trọng nhất, khoá bằng code.
  *
  * Đã vi phạm: một bản thiết kế lấy TÍM (sticker palette) tô nút "Có" và nút
@@ -130,5 +196,29 @@ describe("(M9-UX6) DESIGN.md — sticker palette là TRANG TRÍ, không sơn hà
     expect(disabled, ".btn-primary:disabled chưa được khai — sẽ rơi vào opacity .4 toàn cục").toBeDefined();
     expect(disabled!.body).toMatch(/background:\s*var\(--canvas-soft\)/);
     expect(disabled!.body).toMatch(/opacity:\s*1/);
+  });
+});
+
+/**
+ * FIX-1 — THANH ĐIỀU KHIỂN PHẢI Ở TRONG MÀN HÌNH Ở MÀN HẸP.
+ *
+ * Đo được trước bản vá (768×900): khi ô dự đoán hiện ra, `bubble_sort` đẩy thanh
+ * điều khiển xuống 99px DƯỚI nếp gấp — click vào toạ độ nút KHÔNG ăn, cuộn xuống
+ * rồi click LẠI ăn.
+ */
+describe("(FIX-1) màn hẹp: thanh điều khiển dán đáy, drawer không đè lên", () => {
+  const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
+  const narrow = /@media \(max-width: 1100px\) \{([\s\S]*?)\n\}/.exec(css)?.[1] ?? "";
+
+  it("panel-controls là sticky bottom trong media query màn hẹp", () => {
+    const rule = /\.panel-controls \{([^}]*)\}/.exec(narrow)?.[1] ?? "";
+    expect(rule, ".panel-controls chưa được ghim ở màn hẹp").toMatch(/position:\s*sticky/);
+    expect(rule).toMatch(/bottom:\s*0/);
+  });
+
+  it("z-index thanh điều khiển CAO HƠN drawer Quan sát", () => {
+    const controlsZ = Number(/\.panel-controls \{[^}]*z-index:\s*(\d+)/.exec(narrow)?.[1] ?? 0);
+    const drawerZ = Number(/\.panel-right \{[^}]*z-index:\s*(\d+)/.exec(narrow)?.[1] ?? 0);
+    expect(controlsZ).toBeGreaterThan(drawerZ);
   });
 });

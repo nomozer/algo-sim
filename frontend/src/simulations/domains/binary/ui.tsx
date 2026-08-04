@@ -21,7 +21,6 @@ export function BinaryWorkspace({ state, dispatch }: Props) {
   const pv = placeValues(state.bitWidth);
   const n = state.bits.length;
   const width = n * CELL + (n - 1) * GAP;
-  const decimal = decimalOf(state);
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -63,9 +62,7 @@ export function BinaryWorkspace({ state, dispatch }: Props) {
           })}
         </svg>
       </div>
-      <div className="narration-bar">
-        Bấm vào từng bit để bật/tắt. Nhị phân <strong>{binaryString(state)}</strong> = {decimal} (hệ thập phân).
-      </div>
+      {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` ở `index.ts`. */}
     </div>
   );
 }

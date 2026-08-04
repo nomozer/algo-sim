@@ -80,10 +80,21 @@ describe("(10) hợp đồng module: 2D + 3D trên CÙNG một module", () => {
 });
 
 describe("(11)(12) hai renderer đọc CÙNG authoritative state", () => {
-  it("cùng một state → cả 2D lẫn 3D kể CÙNG narration của CÙNG bước", () => {
+  /**
+   * (SHELL-N) Trước đây 2D và 3D mỗi bên TỰ dựng một dòng narration giống hệt
+   * nhau, và test này soi cả hai HTML để chứng minh chúng chưa trôi khỏi nhau.
+   * Nay chỉ còn MỘT nguồn: `mod.narrate()`, shell render một lần ngoài renderer.
+   * Nên lời hứa "2D và 3D kể cùng một câu" mạnh hơn trước — nó đúng theo CẤU
+   * TRÚC, không phải nhờ hai bản sao tình cờ khớp. Test khoá đúng điều đó:
+   * narration đến từ state của bước hiện tại, và KHÔNG renderer nào tự dựng lại.
+   */
+  it("narration có MỘT nguồn duy nhất (mod.narrate) — không renderer nào tự dựng", () => {
     const s0 = initState();
     const s2 = mod.timeline!.goToStep(s0, 2) as NetworkState;
     const narration2 = s2.steps[s2.cursor].narration;
+
+    // một nguồn, đọc thẳng từ state của bước hiện tại
+    expect(mod.narrate!(s2, CONFIG)).toEqual({ text: narration2 });
 
     const html2d = renderToString(
       <NetworkWorkspace config={CONFIG} state={s2} busy={false} dispatch={() => {}} />,
@@ -91,8 +102,9 @@ describe("(11)(12) hai renderer đọc CÙNG authoritative state", () => {
     const html3d = renderToString(
       <Network3DWorkspace config={CONFIG} state={s2} busy={false} dispatch={() => {}} />,
     );
-    expect(html2d).toContain(narration2);
-    expect(html3d).toContain(narration2);
+    // không bản sao nào còn sót trong renderer (đó mới là thứ từng trôi)
+    expect(html2d).not.toContain(narration2);
+    expect(html3d).not.toContain(narration2);
   });
 
   it("packetAt (id nút ngữ nghĩa) là thứ DUY NHẤT định vị gói tin — layout3d chỉ tra cứu", () => {
@@ -216,14 +228,15 @@ describe("(19) WebGL fallback tử tế", () => {
     expect(WEBGL_FALLBACK_MESSAGE).toContain("2D");
   });
 
-  it("SSR (chưa chạy effect): component 3D vẫn render container + narration, không văng lỗi", () => {
+  it("SSR (chưa chạy effect): component 3D vẫn render container, không văng lỗi", () => {
     const s = initState();
     const html = renderToString(
       <Network3DWorkspace config={CONFIG} state={s} busy={false} dispatch={() => {}} />,
     );
     expect(html).toContain("three-container");
-    expect(html).toContain(s.steps[0].narration);
     expect(html).toContain("Góc nhìn"); // nút reset CAMERA — không phải reset mô phỏng
+    // (SHELL-N) thuyết minh KHÔNG còn nằm trong renderer — nó là khe của shell
+    expect(mod.narrate!(s, CONFIG)!.text).toBe(s.steps[0].narration);
   });
 });
 

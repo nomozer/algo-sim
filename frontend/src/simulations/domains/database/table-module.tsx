@@ -445,7 +445,7 @@ function stagesReached(state: TableState, at: number) {
 
 /** Tường thuật learner-facing dựng TỪ structured detail + NHÃN cột — engine
  *  trace giữ nguyên, đây chỉ là lớp trình bày (không hiển thị id kỹ thuật). */
-function narrate(step: TableStep, schema: TableColumn[],
+function narrateStep(step: TableStep, schema: TableColumn[],
                  aggregate: TableConfig["aggregate"]): string {
   const L = (c: unknown) => labelOf(schema, String(c));
   const d = step.detail;
@@ -678,15 +678,16 @@ export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState
           {step.detail.count != null && ` (đã tính ${String(step.detail.count)} hàng hợp lệ)`}
         </p>
       )}
-      {/* Bước cuối: chỉ MỘT dòng kết quả mạnh; bước khác: tường thuật learner. */}
-      {isFinal ? (
+      {/* Bước cuối: MỘT dòng kết quả mạnh (đây là KẾT QUẢ, không phải thuyết
+          minh — các module khác dùng `.result-banner` cho đúng vai trò này).
+          Thuyết minh của các bước còn lại nay do khe của shell dựng: xem
+          `narrate` bên dưới. */}
+      {isFinal && (
         <p className="notes"><strong>
           {state.aggregateResult
             ? `${aggLabel(state.config.aggregate!, schema)} = ${fmt(state.aggregateResult.value)}`
             : `Kết quả: ${state.resultRows.length} hàng.`}
         </strong></p>
-      ) : (
-        <p className="notes">{narrate(step, schema, state.config.aggregate)}</p>
       )}
     </div>
   );
@@ -738,6 +739,18 @@ export function makeTableModule(): SimulationModule<TableConfig, TableState> {
     },
     Workspace: TableWorkspace,
     Inspector: TableInspector,
+
+    // (SHELL-N) Thuyết minh learner-facing (`narrateStep` dịch id cột sang nhãn
+    // tiếng Việt). Bước cuối trả `null`: dòng kết quả mạnh đã nói đúng câu đó,
+    // hiện hai lần là hai thông tin giả — cùng luật với program/encoding.
+    narrate: (state) => {
+      const at = clamp(state, state.cursor);
+      if (at === state.steps.length - 1) return null;
+      return {
+        text: narrateStep(state.steps[at], state.config.schema, state.config.aggregate),
+      };
+    },
+
     getExplainContext: (state) => ({
       simulation: "database.relational_table_query",
       columns: state.config.schema.map((c) => `${c.name}:${c.type}`),

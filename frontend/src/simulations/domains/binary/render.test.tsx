@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
+import { makeBinaryModule } from "./index";
 import {
   binaryString,
   decimalOf,
@@ -35,15 +36,18 @@ function ws(state: BinaryState): string {
 }
 
 describe("binary renderer đọc CÙNG sự thật engine (decimalOf/placeValues)", () => {
-  it("mọi trạng thái: engine tính đúng thập phân + workspace hiện đúng con số đó", () => {
+  it("mọi trạng thái: engine tính đúng thập phân + thuyết minh hiện đúng con số đó", () => {
+    const mod = makeBinaryModule();
     for (const c of CASES) {
       const state: BinaryState = { bits: c.bits, bitWidth: 4 };
       // engine đúng như tính tay
       expect(decimalOf(state)).toBe(c.dec);
       expect(binaryString(state)).toBe(c.bin);
-      // renderer hiện ĐÚNG con số của engine (không tự cộng kiểu khác)
-      expect(ws(state)).toContain(`= ${c.dec} (hệ thập phân)`);
-      expect(ws(state)).toContain(c.bin);
+      // (SHELL-N) chuỗi hiển thị nay sinh ở `narrate()`; vẫn phải là ĐÚNG con số
+      // của engine (không tự cộng kiểu khác)
+      const text = mod.narrate!(state, CONFIG)!.text;
+      expect(text).toContain(`= ${c.dec} (hệ thập phân)`);
+      expect(text).toContain(c.bin);
     }
   });
 

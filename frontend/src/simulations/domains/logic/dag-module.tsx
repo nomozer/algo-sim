@@ -254,7 +254,6 @@ type Props = WorkspaceProps<BoolDagConfig, BoolDagState>;
 
 export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
   const at = clampCursor(state, state.cursor);
-  const current = state.steps[at];
   const evaluated = new Set(
     state.steps.slice(0, at + 1).filter((s) => s.kind === "eval").map((s) => (s as { gateId: string }).gateId),
   );
@@ -302,7 +301,8 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
           </table>
         </div>
       </div>
-      <p className="notes">{current.narration}</p>
+      {/* (SHELL-N) Thuyết minh đã rời `.notes` (lớp dành cho ghi chú phụ) để về
+          khe chung của shell — xem `narrate` bên dưới. */}
     </div>
   );
 }
@@ -394,6 +394,9 @@ export function makeBoolDagModule(): SimulationModule<BoolDagConfig, BoolDagStat
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step) }),
     },
+
+    // (SHELL-N) chữ thuyết minh; khe do shell dựng
+    narrate: (state) => ({ text: state.steps[clampCursor(state, state.cursor)].narration }),
 
     getExplainContext: (state) => {
       const at = clampCursor(state, state.cursor);

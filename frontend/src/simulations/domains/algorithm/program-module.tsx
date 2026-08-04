@@ -107,11 +107,8 @@ export function ProgramWorkspace({ state }: Props) {
         </div>
       )}
 
-      {/* W2C-VR3: bước cuối, thuyết minh TRÙNG y hệt băng kết quả — hiện hai
-          lần cùng một câu làm học sinh tưởng là hai thông tin khác nhau. */}
-      {!(last && done && step.narration === done) && (
-        <div className="narration-bar">{step.narration}</div>
-      )}
+      {/* (SHELL-N) Thuyết minh đã chuyển lên khe của shell — luật ẩn ở bước cuối
+          (W2C-VR3) nay sống trong `narrate` bên dưới, cùng một luật, một chỗ. */}
 
       {last && done && (
         <div className="result-banner">
@@ -192,6 +189,18 @@ export function makeProgramModule(): SimulationModule<ProgramSpec, ProgramSimSta
       stepCount: (s) => s.trace.steps.length,
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step) }),
+    },
+
+    // (SHELL-N) W2C-VR3: ở bước cuối, thuyết minh TRÙNG y hệt băng kết quả —
+    // hiện hai lần cùng một câu làm học sinh tưởng là hai thông tin khác nhau.
+    // Trả `null` để shell không dựng khe.
+    narrate: (state) => {
+      const cursor = clampCursor(state, state.cursor);
+      const step = state.trace.steps[cursor];
+      const { done } = readStep(step);
+      const last = cursor >= state.trace.steps.length - 1;
+      if (last && done && step.narration === done) return null;
+      return { text: step.narration };
     },
 
     getExplainContext: (state) => {

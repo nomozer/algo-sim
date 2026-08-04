@@ -116,7 +116,7 @@ export function NetworkWorkspace({ state }: Props) {
           />
         </svg>
       </div>
-      <div className="narration-bar">{step.narration}</div>
+      {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` ở `index.ts`. */}
     </div>
   );
 }

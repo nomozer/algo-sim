@@ -191,6 +191,14 @@ export function makeAlgorithmModule(
       goToStep: (s, step) => ({ ...s, cursor: clampStep(s, step) }),
     },
 
+    // (SHELL-N) Chữ thuyết minh; khe do shell dựng. `userAction` = câu nói về
+    // thao tác what-if của HỌC SINH, không phải bước canonical.
+    narrate: (state) => {
+      const t = activeTrace(state);
+      const step = t.steps[clampStep(state, state.cursor)];
+      return { text: step.narration, fromLearner: Boolean(step.userAction) };
+    },
+
     // Yêu cầu #4: snapshot JSON sạch cho /api/explain — trạng thái THẬT của engine
     getExplainContext: (state, config) => {
       const t = activeTrace(state);

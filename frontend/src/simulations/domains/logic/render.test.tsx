@@ -1,15 +1,24 @@
 import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
+import { makeAndGateModule } from "./index";
 import { andOutput, type Bit, type LogicConfig, type LogicState } from "./model";
 import { LogicWorkspace, LogicInspector } from "./ui";
 
 /**
  * FAITHFULNESS renderer logic — cổng AND vẽ ĐÚNG sự thật engine, không tự tính.
  *
- * Bất biến: đầu ra hiển thị (workspace + bảng chân trị) LUÔN bằng `andOutput`
+ * Bất biến: đầu ra hiển thị (thuyết minh + bảng chân trị) LUÔN bằng `andOutput`
  * (engine), với MỌI tổ hợp đầu vào. Nếu ai đó chép lại luật cổng trong renderer
  * rồi để nó lệch engine → test này đỏ.
+ *
+ * (SHELL-N) Thuyết minh nay do KHE CỦA SHELL dựng, chữ đến từ `narrate()` của
+ * module — nên phần khẳng định về thuyết minh soi thẳng `narrate()`, đúng chỗ
+ * chuỗi được sinh ra, thay vì soi HTML của renderer.
  */
+
+const mod = makeAndGateModule();
+const narrationOf = (state: LogicState): string =>
+  mod.narrate!(state, CONFIG)!.text;
 
 const CONFIG: LogicConfig = { inputA: 0, inputB: 0, notes: null };
 const COMBOS: [Bit, Bit][] = [
@@ -28,23 +37,29 @@ function ws(state: LogicState): string {
 }
 
 describe("logic renderer đọc CÙNG sự thật engine (andOutput)", () => {
-  it("mọi tổ hợp (A,B): narration hiện đúng 'A AND B = andOutput'", () => {
+  it("mọi tổ hợp (A,B): thuyết minh hiện đúng 'A AND B = andOutput'", () => {
     for (const [a, b] of COMBOS) {
       const state: LogicState = { inputA: a, inputB: b };
       const out = andOutput(state);
-      expect(ws(state)).toContain(`${a} AND ${b} = ${out}`);
+      expect(narrationOf(state)).toContain(`${a} AND ${b} = ${out}`);
     }
   });
 
   it("bóng đèn đầu ra sáng (accent-green) ⇔ andOutput = 1", () => {
-    // chỉ (1,1) cho đầu ra 1 → chỉ khi đó mới có transition fill xanh của bóng đèn
+    // chỉ (1,1) cho đầu ra 1 → chỉ khi đó mới có bóng đèn tô xanh trong SVG
     const on = ws({ inputA: 1, inputB: 1 });
     const off = ws({ inputA: 1, inputB: 0 });
     expect(andOutput({ inputA: 1, inputB: 1 })).toBe(1);
     expect(andOutput({ inputA: 1, inputB: 0 })).toBe(0);
-    // đầu ra 1 xuất hiện trong workspace khi và chỉ khi cả hai vào bằng 1
-    expect(on).toContain("1 AND 1 = 1");
-    expect(off).toContain("1 AND 0 = 0");
+    // Sân khấu: BÓNG ĐÈN (circle r=26) tô accent-green KHI VÀ CHỈ KHI đầu ra = 1.
+    // Phải khớp đúng bóng đèn: công tắc A khi bật cũng dùng accent-green, nên
+    // tìm chuỗi màu trần sẽ khớp nhầm sang công tắc.
+    const lamp = (html: string) => /<circle cx="392"[^>]*fill="([^"]+)"/.exec(html)?.[1];
+    expect(lamp(on)).toBe("var(--accent-green)");
+    expect(lamp(off)).toBe("var(--canvas-soft)");
+    // Thuyết minh: cùng sự thật đó, lấy từ engine.
+    expect(narrationOf({ inputA: 1, inputB: 1 })).toContain("1 AND 1 = 1");
+    expect(narrationOf({ inputA: 1, inputB: 0 })).toContain("1 AND 0 = 0");
   });
 
   it("bảng chân trị (Inspector) khớp andOutput ở CẢ BỐN hàng — không chép luật", () => {

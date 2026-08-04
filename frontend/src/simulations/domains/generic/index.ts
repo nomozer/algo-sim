@@ -71,6 +71,12 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
     // giống nhau cho mọi cảnh generic. Domain chuyên biệt không khai → không có edit.
     edit: { policyOf: (spec) => editPolicyOf(spec) },
 
+    // (SHELL-N) Chỉ cảnh CÓ diễn biến mới có "bước" để thuyết minh. Cảnh một
+    // khung là khám phá thuần: câu duy nhất ở đó là HƯỚNG DẪN THAO TÁC, và nó
+    // ở lại renderer vì phụ thuộc chế độ Chỉnh sửa (trình bày, không phải state).
+    narrate: (state) =>
+      state.timeline.length > 1 ? { text: currentFrame(state).narration } : null,
+
     getExplainContext: (state, spec) => {
       const values = valuesOf(spec, state.base);
       const frame = currentFrame(state);

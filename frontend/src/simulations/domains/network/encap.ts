@@ -108,6 +108,9 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
       },
     },
 
+    // (SHELL-N) MỘT nguồn chữ cho cả `encap-ui.tsx` (2D) lẫn `encap-ui3d.tsx` (3D).
+    narrate: (state) => ({ text: currentStep(state).narration }),
+
     getExplainContext: (state) => {
       const step = currentStep(state);
       return {
