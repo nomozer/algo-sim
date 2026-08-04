@@ -999,6 +999,137 @@ html {
   background: transparent;
 }
 
+/* ══ FRONTIER: HÀNG ĐỢI / NGĂN XẾP (FRONTIER-VIS) ═══════════════════════
+   Queue và Stack KHÔNG dùng chung bố cục — vẽ giống nhau rồi đổi nhãn là dạy
+   sai. Queue nằm NGANG (vào cuối, ra đầu); Stack dựng ĐỨNG và đảo thứ tự để
+   đỉnh nằm trên (đẩy/lấy cùng một chỗ). Cam = frontier action (vừa vào/vừa ra),
+   theo quy ước trạng thái ở trên. */
+.frontier {
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--surface);
+  padding: var(--sp-xs) var(--sp-sm) var(--sp-sm);
+  margin: var(--sp-sm) var(--sp-sm) 0;
+}
+
+.frontier-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-sm);
+  margin-bottom: 6px;
+}
+
+.frontier-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
+}
+
+.frontier-count,
+.frontier-rule {
+  font-size: 11px;
+  color: var(--ink-faint);
+}
+
+.frontier-rule { margin: 6px 0 0; }
+
+.frontier-empty {
+  font-size: 13px;
+  color: var(--ink-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.frontier-items {
+  display: flex;
+  list-style: none;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+}
+
+/* QUEUE — nằm ngang, trái(đầu/ra) → phải(cuối/vào). */
+.frontier-queue .frontier-items { flex-direction: row; align-items: stretch; }
+
+/* STACK — dựng đứng, đỉnh trên cùng; hẹp lại để đọc ra "chồng". */
+.frontier-stack .frontier-items {
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+}
+
+.frontier-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 54px;
+  padding: 5px 9px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-xs);
+  background: var(--canvas-soft);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Phần tử SẮP RA: viền dày + nhãn chữ "đầu"/"đỉnh" — không chỉ dựa vào màu. */
+.frontier-item.is-out-next {
+  border-color: var(--primary);
+  border-width: 2px;
+  background: var(--surface);
+}
+
+.frontier-item.is-new {
+  border-color: var(--accent-orange);
+  border-style: dashed;
+}
+
+.frontier-item.is-active {
+  box-shadow: inset 0 0 0 2px var(--primary);
+}
+
+.frontier-value { font-weight: 600; color: var(--ink); }
+
+.frontier-pos {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.frontier-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  border-radius: var(--rounded-full);
+  padding: 2px 6px;
+}
+
+.frontier-tag.is-in { color: var(--accent-orange); border: 1px solid var(--accent-orange); }
+.frontier-tag.is-out { color: var(--accent-orange); border: 1px solid var(--accent-orange); }
+.frontier-tag.is-done { color: var(--accent-green); border: 1px solid var(--accent-green); }
+
+.frontier-left-out,
+.frontier-visited {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-secondary);
+  margin: 0 0 6px;
+}
+
+.frontier-visited { margin: var(--sp-xs) var(--sp-sm) 0; }
+
+.stage-legend .dot.is-frontier {
+  background: var(--surface);
+  border-color: var(--primary);
+  border-width: 2px;
+}
+
 /* ══ SÂN KHẤU VÒNG LẶP (LOOP-VIS) ═══════════════════════════════════════ */
 .loop-stage {
   display: flex;
