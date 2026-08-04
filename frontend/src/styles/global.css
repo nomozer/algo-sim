@@ -950,6 +950,55 @@ html {
   margin: 0;
 }
 
+/* ══ NGÔN NGỮ TRẠNG THÁI DÙNG CHUNG ══════════════════════════════════════
+   Trước bản này cùng một màu mang nghĩa khác nhau tuỳ target (xanh lá = "đã
+   đếm" ở count_if, "đã ổn định" ở bubble_sort, "đã thăm" ở tree, "tín hiệu 1"
+   ở boolean_dag) và KHÔNG target nào có chú giải. Quy ước từ đây:
+
+     xanh dương  = đang xét / đang hoạt động
+     xanh lá     = đã chốt / đã xác nhận / kết quả cuối
+     xám         = chưa xét · đã bỏ qua · không được chọn
+     cam         = giá trị đang giữ tạm · biên · frontier (trạng thái trung gian)
+
+   LUẬT: màu KHÔNG BAO GIỜ là tín hiệu duy nhất — luôn kèm nhãn chữ, viền, hình
+   dạng hoặc vị trí. `.stage-legend` là chú giải tối thiểu cho sân khấu nhiều
+   trạng thái. */
+.stage-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm) var(--sp-md);
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.stage-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stage-legend .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--hairline);
+  background: var(--surface);
+  flex: 0 0 auto;
+}
+
+.stage-legend .dot.is-current { background: var(--primary); border-color: var(--primary); }
+.stage-legend .dot.is-done { background: var(--accent-green); border-color: var(--accent-green); }
+.stage-legend .dot.is-bound { background: var(--accent-orange); border-color: var(--accent-orange); }
+.stage-legend .dot.is-idle { background: var(--surface); border-color: var(--ink-faint); }
+/* ô trống: hình VUÔNG nét đứt — khác hình, không chỉ khác màu */
+.stage-legend .dot.is-gap {
+  border-radius: 3px;
+  border-style: dashed;
+  border-color: var(--ink-muted);
+  background: transparent;
+}
+
 /* ── boolean_dag: NODE ĐẦU VÀO LÀ CONTROL ────────────────────────────────
    A/B/C từng xuất hiện hai lần (node để xem + hàng nút để bấm). Nay chỉ còn
    node, nên node phải TRÔNG như bấm được: con trỏ, hover, và vòng focus rõ cho
