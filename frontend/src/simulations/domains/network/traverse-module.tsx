@@ -1,4 +1,5 @@
 import { registerSimulation } from "../../registry";
+import { TraversalFrontier, frontierDelta } from "../../../components/TraversalFrontier";
 import type { ConfigResult, SimulationModule, WorkspaceProps } from "../../types";
 
 /**
@@ -274,6 +275,11 @@ function circleLayout(nodes: TraverseNode[], long = false): Map<string, { x: num
   );
 }
 
+/** Nhãn hiển thị của một node — đọc từ config, không suy từ narration. */
+function labelOfNode(config: TraverseConfig, id: string): string {
+  return config.nodes.find((n) => n.id === id)?.label ?? id;
+}
+
 export function TraverseWorkspace({ state }: Props) {
   const at = clampCursor(state, state.cursor);
   const step = state.steps[at];
@@ -335,10 +341,29 @@ export function TraverseWorkspace({ state }: Props) {
             );
           })}
         </svg>
-        <p className="notes">
-          {state.frontierKind === "queue" ? "Hàng đợi" : "Ngăn xếp"}:{" "}
-          {step.frontierAfter.length > 0 ? step.frontierAfter.join(", ") : "(rỗng)"}
-          {" · "}Đã thăm: {step.visitedSoFar.length > 0 ? step.visitedSoFar.join(" → ") : "(chưa)"}
+
+        {/* FRONTIER-VIS: hàng đợi/ngăn xếp là ĐỐI TƯỢNG CƠ CHẾ, nằm ngay trên
+            sân khấu cạnh đồ thị — không đẩy xuống panel Quan sát, vì nó chính là
+            thứ quyết định thứ tự duyệt. Dòng chữ "Hàng đợi: C, D" cũ đã bỏ: nó
+            lặp lại đúng thông tin này mà không cho thấy đầu/cuối. */}
+        <TraversalFrontier
+          mode={state.frontierKind}
+          items={step.frontierAfter.map((id) => ({ id, label: labelOfNode(state.config, id) }))}
+          delta={frontierDelta(at > 0 ? state.steps[at - 1].frontierAfter : null, step.frontierAfter)}
+          activeId={current}
+          label={state.frontierKind === "queue" ? "Hàng đợi (FIFO)" : "Ngăn xếp (LIFO)"}
+        />
+
+        <p className="frontier-visited">
+          <span className="frontier-tag is-done">đã thăm</span>
+          {step.visitedSoFar.length > 0 ? step.visitedSoFar.join(" → ") : "(chưa có)"}
+        </p>
+
+        <p className="stage-legend">
+          <span><i className="dot is-current" /> đang xử lý</span>
+          <span><i className="dot is-done" /> đã thăm</span>
+          <span><i className="dot is-frontier" /> đang chờ trong {state.frontierKind === "queue" ? "hàng đợi" : "ngăn xếp"}</span>
+          <span><i className="dot is-idle" /> chưa xét</span>
         </p>
       </div>
       <p className="notes">{step.narration}</p>
