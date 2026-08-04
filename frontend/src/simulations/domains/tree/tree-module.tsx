@@ -1,4 +1,5 @@
 import { registerSimulation } from "../../registry";
+import { TraversalFrontier, frontierDelta } from "../../../components/TraversalFrontier";
 import type { ConfigResult, SimulationModule, WorkspaceProps } from "../../types";
 
 /**
@@ -438,10 +439,29 @@ export function TreeWorkspace({ state }: Props) {
             );
           })}
         </svg>
-        <p className="notes">
-          {state.frontierKind === "stack" ? "Ngăn xếp" : "Hàng đợi"}:{" "}
-          {step.frontierAfter.length > 0 ? step.frontierAfter.map((id) => labelOf(map, id)).join(", ") : "(rỗng)"}
-          {" · "}Đã thăm: {step.visitedSoFar.length > 0 ? step.visitedSoFar.map((id) => labelOf(map, id)).join(" → ") : "(chưa)"}
+        {/* FRONTIER-VIS: ngăn xếp là thứ QUYẾT ĐỊNH thứ tự duyệt — vẽ thành
+            chồng thật, đỉnh nằm trên. Cùng primitive với graph, chỉ đổi mode và
+            nhãn: 4 biến thể (pre/in/post + level) dùng chung một component. */}
+        <TraversalFrontier
+          mode={state.frontierKind}
+          items={step.frontierAfter.map((id) => ({ id, label: labelOf(map, id) }))}
+          delta={frontierDelta(at > 0 ? state.steps[at - 1].frontierAfter : null, step.frontierAfter)}
+          activeId={step.current}
+          label={state.frontierKind === "stack" ? "Ngăn xếp (LIFO)" : "Hàng đợi (FIFO)"}
+        />
+
+        <p className="frontier-visited">
+          <span className="frontier-tag is-done">đã thăm</span>
+          {step.visitedSoFar.length > 0
+            ? step.visitedSoFar.map((id) => labelOf(map, id)).join(" → ")
+            : "(chưa có)"}
+        </p>
+
+        <p className="stage-legend">
+          <span><i className="dot is-current" /> đang xử lý</span>
+          <span><i className="dot is-done" /> đã thăm</span>
+          <span><i className="dot is-frontier" /> đang chờ trong {state.frontierKind === "stack" ? "ngăn xếp" : "hàng đợi"}</span>
+          <span><i className="dot is-idle" /> chưa xét</span>
         </p>
       </div>
       {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` bên dưới. */}
