@@ -70,6 +70,230 @@ function outputsUpTo(trace: Trace, cursor: number): string[] {
   return out;
 }
 
+/* ── SÂN KHẤU VÒNG LẶP (LOOP-VIS) ─────────────────────────────────────────
+ *
+ * Vì sao có khối này: audit cơ chế chấm target này **B− (trình xem trace)** —
+ * sân khấu chỉ có hai dòng mã giả, ba dòng chữ và một chip biến. Học sinh không
+ * thấy `x` đã đi qua những giá trị nào, còn cách biên bao xa, vì sao vòng lặp
+ * QUAY LẠI, và khi nào dừng. Trace đúng không cứu được điều đó.
+ *
+ * RÀNG BUỘC GIỮ NGUYÊN — không đụng engine/state/schema:
+ * - `loopShape` đọc CẤU TRÚC spec (bảng expressions) để biết biến lặp / phép so
+ *   sánh / biên. Đây là đọc CONFIG, không phải tính lại kết quả.
+ * - Quỹ đạo giá trị đọc từ `snapshot.vars` của các bước ĐÃ QUA — engine đã ghi.
+ * - Pha hiện tại đọc từ SỰ KIỆN của bước hiện tại. Renderer KHÔNG BAO GIỜ tự
+ *   đánh giá lại điều kiện: `ĐÚNG/SAI` luôn lấy từ `evaluate_condition.result`.
+ * - Spec không phải dạng `while (biến op hằng)` → trả null → sân khấu cũ giữ
+ *   nguyên (fail-soft, không vỡ).
+ */
+interface LoopShape {
+  varName: string;
+  op: string;
+  bound: number;
+  maxIterations: number | null;
+}
+
+function loopShape(spec: ProgramSpec): LoopShape | null {
+  const expr = new Map(spec.expressions.map((e) => [e.id, e]));
+  for (const st of spec.statements) {
+    if (st.kind !== "while" || !st.condition) continue;
+    const cond = expr.get(st.condition);
+    if (!cond || cond.kind !== "compare" || !cond.left || !cond.right) continue;
+    const left = expr.get(cond.left);
+    const right = expr.get(cond.right);
+    if (left?.kind !== "var" || !left.name) continue;
+    if (right?.kind !== "int" || typeof right.int_value !== "number") continue;
+    return {
+      varName: left.name,
+      op: cond.op ?? "?",
+      bound: right.int_value,
+      maxIterations: st.max_iterations ?? null,
+    };
+  }
+  return null;
+}
+
+/** Bốn pha của một vòng lặp — suy từ SỰ KIỆN của bước, không từ số thứ tự. */
+type LoopPhase = "check" | "body" | "update" | "back" | "exit" | null;
+
+function loopPhase(step: Step, prev: Step | null, shape: LoopShape): LoopPhase {
+  const { condition, branch, changed } = readStep(step);
+  if (branch === "loop_exit") return "exit";
+  if (condition && branch === "loop_body") {
+    // Vừa quay lại kiểm tra sau một lượt? Bước trước là cập nhật biến lặp.
+    const prevChanged = prev ? readStep(prev).changed : [];
+    return prevChanged.includes(shape.varName) ? "back" : "check";
+  }
+  if (condition) return "check";
+  if (changed.includes(shape.varName)) return "update";
+  if (changed.length > 0) return "body";
+  return null;
+}
+
+/** Quỹ đạo giá trị biến lặp qua các bước ĐÃ ĐI (bỏ lặp liên tiếp). */
+function trajectory(trace: Trace, cursor: number, varName: string): number[] {
+  const out: number[] = [];
+  for (let i = 0; i <= cursor && i < trace.steps.length; i += 1) {
+    const v = trace.steps[i].snapshot.vars[varName];
+    if (typeof v !== "number") continue;
+    if (out.length === 0 || out[out.length - 1] !== v) out.push(v);
+  }
+  return out;
+}
+
+const PHASE_LABEL: Record<Exclude<LoopPhase, null>, string> = {
+  check: "Kiểm tra điều kiện",
+  body: "Thực hiện thân",
+  update: "Cập nhật biến",
+  back: "Quay lại kiểm tra",
+  exit: "Thoát vòng lặp",
+};
+
+/**
+ * Trục giá trị: các giá trị ĐÃ đi qua + biên dừng. Không vẽ mọi số nguyên —
+ * chỉ những giá trị engine thật sự đã tạo ra, cộng vạch biên để thấy khoảng
+ * cách tới lúc dừng.
+ */
+function LoopAxis({
+  values, current, shape, exited,
+}: { values: number[]; current: number | null; shape: LoopShape; exited: boolean }) {
+  const marks = [...new Set([...values, shape.bound])].sort((a, b) => a - b);
+  if (marks.length === 0) return null;
+  const lo = marks[0];
+  const hi = marks[marks.length - 1];
+  const span = hi - lo || 1;
+  const W = 560;
+  const PAD = 28;
+  const x = (v: number) => PAD + ((v - lo) / span) * (W - 2 * PAD);
+  const boundX = x(shape.bound);
+
+  return (
+    <svg viewBox={`0 0 ${W} 96`} width="100%" style={{ maxWidth: W, display: "block" }}
+         role="img" aria-label={`Trục giá trị của ${shape.varName}, biên dừng ${shape.bound}`}>
+      {/* vùng còn thoả điều kiện (bên trái biên với <=/<) — nền rất nhạt */}
+      <rect x={PAD} y={30} width={Math.max(0, boundX - PAD)} height={16}
+            fill="var(--canvas-soft)" rx={8} />
+      <line x1={PAD} y1={38} x2={W - PAD} y2={38} stroke="var(--hairline)" strokeWidth={2} />
+
+      {/* BIÊN DỪNG — vạch + nhãn chữ, không chỉ bằng màu */}
+      <line x1={boundX} y1={20} x2={boundX} y2={56} stroke="var(--accent-orange)" strokeWidth={2.5} />
+      <text x={boundX} y={16} textAnchor="middle" fontSize={11} fontWeight={700}
+            fill="var(--accent-orange)">biên {shape.bound}</text>
+
+      {marks.map((v) => {
+        const isCurrent = current === v;
+        const visited = values.includes(v);
+        return (
+          <g key={v}>
+            <circle cx={x(v)} cy={38} r={isCurrent ? 9 : 5}
+                    fill={isCurrent ? "var(--primary)" : visited ? "var(--accent-green)" : "var(--surface)"}
+                    stroke={isCurrent ? "var(--primary)" : visited ? "var(--accent-green)" : "var(--hairline)"}
+                    strokeWidth={2} />
+            <text x={x(v)} y={70} textAnchor="middle" fontSize={12}
+                  fontWeight={isCurrent ? 700 : 500}
+                  fill={isCurrent ? "var(--primary)" : "var(--ink-muted)"}>{v}</text>
+          </g>
+        );
+      })}
+
+      {/* mũi tên bước nhảy gần nhất — "cập nhật" là thứ XẢY RA, không phải câu kể */}
+      {values.length >= 2 && (() => {
+        const from = values[values.length - 2];
+        const to = values[values.length - 1];
+        return (
+          <path d={`M${x(from)} 26 Q ${(x(from) + x(to)) / 2} 6 ${x(to)} 26`}
+                fill="none" stroke="var(--primary)" strokeWidth={2} markerEnd="url(#loop-arrow)" />
+        );
+      })()}
+      <defs>
+        <marker id="loop-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3"
+                orient="auto" markerUnits="strokeWidth">
+          <path d="M0,0 L0,6 L7,3 z" fill="var(--primary)" />
+        </marker>
+      </defs>
+      {exited && (
+        <text x={W - PAD} y={88} textAnchor="end" fontSize={12} fontWeight={600}
+              fill="var(--accent-green)">đã thoát vòng lặp</text>
+      )}
+    </svg>
+  );
+}
+
+/** Bốn ô pha + cạnh QUAY LẠI — cái làm vòng lặp *là* vòng lặp. */
+function LoopCycle({ phase }: { phase: LoopPhase }) {
+  const cells: { id: Exclude<LoopPhase, null>; text: string }[] = [
+    { id: "check", text: "Kiểm tra" },
+    { id: "body", text: "Thực hiện" },
+    { id: "update", text: "Cập nhật" },
+  ];
+  const activeBack = phase === "back";
+  return (
+    <div className="loop-cycle">
+      {cells.map((c, i) => {
+        const active = phase === c.id || (phase === "back" && c.id === "check");
+        return (
+          <span key={c.id} className={`loop-phase${active ? " is-active" : ""}`}>
+            {c.text}
+            {i < cells.length - 1 && <span className="loop-arrow" aria-hidden="true">→</span>}
+          </span>
+        );
+      })}
+      <span className={`loop-back${activeBack ? " is-active" : ""}`}>
+        ↩ quay lại kiểm tra
+      </span>
+      <span className={`loop-exit${phase === "exit" ? " is-active" : ""}`}>
+        ⇥ thoát
+      </span>
+    </div>
+  );
+}
+
+function LoopStage({ state, cursor }: { state: ProgramSimState; cursor: number }) {
+  const shape = loopShape(state.spec);
+  if (!shape) return null;
+  const step = state.trace.steps[cursor];
+  const prev = cursor > 0 ? state.trace.steps[cursor - 1] : null;
+  const { condition, iteration } = readStep(step);
+  const phase = loopPhase(step, prev, shape);
+  const values = trajectory(state.trace, cursor, shape.varName);
+  const cur = step.snapshot.vars[shape.varName];
+  const current = typeof cur === "number" ? cur : null;
+  const exited = phase === "exit";
+
+  return (
+    <div className="loop-stage">
+      <div className="loop-head">
+        <span className="loop-var">
+          {shape.varName} = <strong>{current ?? "—"}</strong>
+        </span>
+        {iteration !== null && <span className="loop-iter">lượt {iteration}</span>}
+        {phase && <span className="loop-now">{PHASE_LABEL[phase]}</span>}
+      </div>
+
+      <LoopAxis values={values} current={current} shape={shape} exited={exited} />
+
+      {/* Kết quả điều kiện: CHỮ + màu, lấy thẳng từ sự kiện engine. */}
+      {condition && (
+        <div className={`loop-cond${condition.result ? " is-true" : " is-false"}`}>
+          <span className="loop-cond-expr">{condition.expression}</span>
+          <span className="loop-cond-verdict">{condition.result ? "ĐÚNG" : "SAI"}</span>
+          <span className="loop-cond-then">
+            {condition.result ? "→ vào thân vòng lặp" : "→ dừng, thoát vòng lặp"}
+          </span>
+        </div>
+      )}
+
+      <LoopCycle phase={phase} />
+
+      <p className="stage-legend">
+        <span><i className="dot is-current" /> đang xét</span>
+        <span><i className="dot is-done" /> đã đi qua</span>
+        <span><i className="dot is-bound" /> biên dừng</span>
+      </p>
+    </div>
+  );
+}
+
 type Props = WorkspaceProps<ProgramSpec, ProgramSimState>;
 
 export function ProgramWorkspace({ state }: Props) {
@@ -78,14 +302,27 @@ export function ProgramWorkspace({ state }: Props) {
   const { condition, branch, iteration, done } = readStep(step);
   const outputs = outputsUpTo(state.trace, cursor);
   const last = cursor >= state.trace.steps.length - 1;
+  const hasLoop = loopShape(state.spec) !== null;
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
+      {/* LOOP-VIS: chương trình CÓ vòng lặp thì sân khấu chính là cơ chế lặp;
+          mã giả lùi xuống thành phần đối chiếu. Chương trình không có vòng lặp
+          giữ nguyên bố cục cũ. */}
       <div className="sim-stage">
-        <PseudocodeView lines={programLines(state.spec).lines} currentLine={step.line} />
+        {hasLoop
+          ? <LoopStage state={state} cursor={cursor} />
+          : <PseudocodeView lines={programLines(state.spec).lines} currentLine={step.line} />}
       </div>
 
-      {condition && (
+      {hasLoop && (
+        <section className="gate-detail">
+          <p className="detail-heading">Mã giả</p>
+          <PseudocodeView lines={programLines(state.spec).lines} currentLine={step.line} />
+        </section>
+      )}
+
+      {condition && !hasLoop && (
         <div className="stack" style={{ gap: "var(--sp-xs)" }}>
           <div>
             Điều kiện <strong>{condition.expression}</strong> →{" "}

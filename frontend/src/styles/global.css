@@ -999,6 +999,133 @@ html {
   background: transparent;
 }
 
+/* ══ SÂN KHẤU VÒNG LẶP (LOOP-VIS) ═══════════════════════════════════════ */
+.loop-stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  padding: var(--sp-sm) var(--sp-md) var(--sp-md);
+}
+
+.loop-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+}
+
+.loop-var {
+  font-size: 18px;
+  color: var(--ink-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.loop-var strong {
+  font-size: 22px;
+  color: var(--primary);
+}
+
+.loop-iter,
+.loop-now {
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: var(--rounded-full);
+  padding: 3px 9px;
+  border: 1px solid var(--hairline);
+  color: var(--ink-muted);
+  background: var(--surface);
+}
+
+.loop-now {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Kết quả điều kiện — CHỮ dẫn đầu, màu chỉ là dấu phụ. */
+.loop-cond {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--rounded-md);
+  border-left: 3px solid var(--hairline);
+  background: var(--canvas-soft);
+  padding: var(--sp-xs) var(--sp-sm);
+  font-size: 14px;
+}
+
+.loop-cond-expr {
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  color: var(--ink);
+}
+
+.loop-cond-verdict {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.loop-cond-then { color: var(--ink-muted); }
+.loop-cond.is-true { border-left-color: var(--accent-green); }
+.loop-cond.is-true .loop-cond-verdict { color: var(--accent-green); }
+.loop-cond.is-false { border-left-color: var(--accent-orange); }
+.loop-cond.is-false .loop-cond-verdict { color: var(--accent-orange); }
+
+/* Bốn pha + cạnh quay lại. */
+.loop-cycle {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px var(--sp-xs);
+  font-size: 13px;
+}
+
+.loop-phase {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  padding: 4px 10px;
+  color: var(--ink-muted);
+  background: var(--surface);
+}
+
+.loop-phase.is-active {
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.loop-arrow {
+  margin-left: var(--sp-xs);
+  color: var(--ink-faint);
+}
+
+.loop-back,
+.loop-exit {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--rounded-md);
+  border: 1px dashed var(--hairline);
+  padding: 4px 10px;
+  color: var(--ink-faint);
+}
+
+.loop-back.is-active {
+  border-style: solid;
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+  font-weight: 600;
+}
+
+.loop-exit.is-active {
+  border-style: solid;
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
 /* ── boolean_dag: NODE ĐẦU VÀO LÀ CONTROL ────────────────────────────────
    A/B/C từng xuất hiện hai lần (node để xem + hàng nút để bấm). Nay chỉ còn
    node, nên node phải TRÔNG như bấm được: con trỏ, hover, và vòng focus rõ cho

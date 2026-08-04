@@ -150,6 +150,97 @@ describe("renderer KHÔNG tự tính lại điều kiện", () => {
   });
 });
 
+/**
+ * (LOOP-VIS) SÂN KHẤU VÒNG LẶP — case đại diện của đề bài:
+ *   x = 2;  while x <= 14:  x = x + 3
+ * Chuỗi giá trị phải là 2 → 5 → 8 → 11 → 14 → 17.
+ *
+ * Đây là phần khoá "sân khấu không còn chỉ là code + chữ": trục giá trị, biên
+ * dừng, bốn pha và cạnh quay lại phải có mặt và phải ĐỌC TỪ ENGINE.
+ */
+const LOOP_RAW = {
+  program_version: "program-2.0",
+  variables: [{ name: "x", type: "integer", int_value: 2 }],
+  statements: [
+    { id: "s_body", kind: "assign", target: "x", value: val(vr("x"), "+", iv(3)) },
+    { id: "s_while", kind: "while", condition: cd([at(val(vr("x")), "<=", val(iv(14)))]),
+      body: ["s_body"], max_iterations: 10 },
+  ],
+  main: ["s_while"],
+};
+
+describe("(LOOP-VIS) sân khấu cơ chế vòng lặp", () => {
+  const state = stateOf(LOOP_RAW);
+  const clean = (s: ProgramSimState) => workspace(s).replace(/<!--.*?-->/g, "");
+
+  it("engine cho đúng chuỗi 2 → 5 → 8 → 11 → 14 → 17", () => {
+    const seen: number[] = [];
+    for (const s of state.trace.steps) {
+      const v = s.snapshot.vars["x"];
+      if (typeof v === "number" && seen[seen.length - 1] !== v) seen.push(v);
+    }
+    expect(seen).toEqual([2, 5, 8, 11, 14, 17]);
+  });
+
+  it("sân khấu vẽ TRỤC GIÁ TRỊ với biên dừng, không chỉ có mã giả", () => {
+    const html = clean({ ...state, cursor: state.trace.steps.length - 1 });
+    expect(html).toContain("loop-stage");
+    expect(html).toContain("<svg");
+    expect(html).toContain("biên 14");
+    // mọi giá trị của quỹ đạo đều có mặt trên trục ở bước cuối
+    for (const v of [2, 5, 8, 11, 14, 17]) {
+      expect(html, `thiếu giá trị ${v} trên trục`).toContain(`>${v}<`);
+    }
+  });
+
+  it("bốn pha + cạnh quay lại + lối thoát đều có mặt", () => {
+    const html = clean(state);
+    for (const t of ["Kiểm tra", "Thực hiện", "Cập nhật", "quay lại kiểm tra", "thoát"]) {
+      expect(html, `thiếu pha "${t}"`).toContain(t);
+    }
+  });
+
+  it("pha ĐANG hoạt động đổi theo bước — kiểm tra ≠ cập nhật", () => {
+    const check = state.trace.steps.findIndex((s) =>
+      s.events.some((e) => e.type === "evaluate_condition"));
+    const update = state.trace.steps.findIndex((s) =>
+      s.events.some((e) => e.type === "assign_var" && e.name === "x"));
+    expect(clean({ ...state, cursor: check })).toContain("Kiểm tra điều kiện");
+    expect(clean({ ...state, cursor: update })).toContain("Cập nhật biến");
+  });
+
+  it("ĐÚNG/SAI lấy từ SỰ KIỆN engine — renderer không tự đánh giá lại", () => {
+    // Bịa một sự kiện TRÁI trực giác: 2 <= 14 nhưng engine bảo SAI.
+    const forged: ProgramSimState = {
+      ...state,
+      trace: {
+        ...state.trace,
+        steps: state.trace.steps.map((s, i) =>
+          i === 0
+            ? { ...s, events: [
+                { type: "evaluate_condition" as const, expression: "x <= 14", result: false },
+                { type: "enter_branch" as const, branch: "loop_exit" as const },
+              ] }
+            : s),
+      },
+      cursor: 0,
+    };
+    const html = clean(forged);
+    expect(html).toContain("SAI");
+    expect(html).toContain("dừng, thoát vòng lặp");
+  });
+
+  it("bước cuối KHÔNG lộ sớm: ở bước đầu trục chưa có giá trị 17", () => {
+    expect(clean({ ...state, cursor: 0 })).not.toContain(">17<");
+  });
+
+  it("chương trình KHÔNG có vòng lặp thì giữ bố cục cũ (mã giả là sân khấu)", () => {
+    const html = clean(stateOf(CF2_RAW));
+    expect(html).not.toContain("loop-stage");
+    expect(html).toContain("pseudo-line");
+  });
+});
+
 describe("thông tin học sinh cần thấy", () => {
   it("mã giả có mặt và thụt cấp", () => {
     const html = workspace(stateOf(CF2_RAW));
@@ -163,7 +254,10 @@ describe("thông tin học sinh cần thấy", () => {
       s.events.some((e) => e.type === "loop_iteration"),
     );
     const html = workspace({ ...state, cursor: idx });
-    expect(html).toContain("Lượt lặp thứ 1");
+    // (LOOP-VIS) số lượt nay là một chip trên sân khấu vòng lặp, không còn là
+    // dòng chữ rời — thông tin giữ nguyên, chỗ hiện thì đổi.
+    expect(html).toContain("loop-iter");
+    expect(html.replace(/<!--.*?-->/g, "")).toContain("lượt 1");
   });
 
   it("inspector hiện biến và đánh dấu biến vừa đổi", () => {
