@@ -299,6 +299,99 @@ export function decisionPointOf(state: AlgorithmSimState): DecisionPoint | null 
   }
 }
 
+/* ── CỤM CƠ CHẾ "QUÉT DÃY + BIẾN TÍCH LUỸ" (INTERACTION-FAMILY W1) ────────
+ *
+ * Bốn target `find_max` · `find_min` · `count_if` · `sum_if` cùng một cơ chế:
+ * duyệt lần lượt → xét phần tử hiện tại → kiểm tra điều kiện → CẬP NHẬT hoặc
+ * GIỮ NGUYÊN biến tích luỹ → sang phần tử kế.
+ *
+ * Ở bốn target này, cam kết của học sinh được diễn đạt bằng HÀNH ĐỘNG lên biến
+ * tích luỹ chứ không bằng câu hỏi Có/Không. Đó vẫn là một dự đoán — vẫn phải
+ * chốt trước khi thấy kết quả — nên nó đi qua ĐÚNG `predict.check` cũ. Không có
+ * đường chấm điểm thứ hai, engine vẫn là bên duy nhất phán đúng/sai.
+ *
+ * VÌ SAO MODEL NÀY KHÔNG MANG ĐÁP ÁN: nếu đặt `correctActionId`/`evidence` vào
+ * dữ liệu của renderer thì đáp án nằm sẵn trong DOM trước khi học sinh hành
+ * động, và renderer bị mời tự phán xử. `challenge()` hiện tại cũng cố ý không
+ * trả `expectedId` — giữ đúng ranh giới đó.
+ */
+
+/** Một hành động chạm thẳng vào cơ chế. `id` khớp option id của DecisionPoint. */
+export interface MechanismAction {
+  id: string;
+  label: string;
+  tone: "update" | "keep";
+}
+
+export interface ScanInteractionModel {
+  /** Phần tử đang xét — nhãn và giá trị lấy từ snapshot. */
+  candidateLabel: string;
+  candidateValue: string;
+  /** Biến tích luỹ — tên và giá trị hiện tại lấy từ `snapshot.vars`. */
+  accumulatorLabel: string;
+  accumulatorValue: string;
+  /** Điều kiện đang xét, dạng hỏi — lấy từ `DecisionPoint.expression`. */
+  expression: string;
+  actions: MechanismAction[];
+}
+
+/** Bốn target thuộc cụm quét dãy — gate theo ĐỊNH DANH NGỮ NGHĨA đã validate. */
+const SCAN_FAMILY = new Set(["find_max", "find_min", "count_if", "sum_if"]);
+
+export function isScanFamily(algorithmId: string): boolean {
+  return SCAN_FAMILY.has(algorithmId);
+}
+
+/**
+ * Mô hình tương tác cho bước quyết định của cụm quét dãy.
+ *
+ * `null` = bước này không phải điểm quyết định, hoặc target không thuộc cụm.
+ * Mọi trường đều DẪN XUẤT từ dữ liệu canonical: renderer không dựng lại phép so
+ * sánh, không tự đánh giá điều kiện, không đoán kết quả.
+ */
+export function scanInteractionOf(state: AlgorithmSimState): ScanInteractionModel | null {
+  const id = state.config.algorithm_id;
+  if (!isScanFamily(id)) return null;
+
+  const d = decisionPointOf(state);
+  if (!d) return null;
+
+  const trace = activeTrace(state);
+  const cur = trace.steps[clampStep(state, state.cursor)];
+  const ev = cur.events.find((e) => e.type === "compare" || e.type === "compare_value");
+  if (!ev) return null;
+  const index = ev.type === "compare" ? ev.i : ev.i;
+  const value = cur.snapshot.array[index];
+
+  const isExtreme = id === "find_max" || id === "find_min";
+  const varName = id === "find_max" ? "max" : id === "find_min" ? "min" : id === "sum_if" ? "tong" : "dem";
+  const accValue = cur.snapshot.vars[varName];
+
+  // Nhãn hành động nói bằng NGÔN NGỮ CỦA CƠ CHẾ, không phải "Có"/"Không":
+  // học sinh đang làm đúng việc mà thuật toán làm ở bước này.
+  const updateLabel = isExtreme
+    ? `Đặt ${fmt(value)} làm ${varName} mới`
+    : id === "sum_if"
+      ? `Cộng ${fmt(value)} vào tổng`
+      : `Đếm ${fmt(value)} vào nhóm`;
+  const keepLabel = isExtreme
+    ? `Giữ ${varName} = ${fmt(num(accValue))}`
+    : "Bỏ qua phần tử này";
+
+  return {
+    candidateLabel: `Phần tử vị trí ${index + 1}`,
+    candidateValue: fmt(value),
+    accumulatorLabel: isExtreme ? varName : id === "sum_if" ? "tổng" : "biến đếm",
+    accumulatorValue: fmt(num(accValue)),
+    expression: d.expression,
+    actions: [
+      // id khớp option của DecisionPoint ⇒ nộp thẳng qua `predict.check`.
+      { id: d.options[0].id, label: updateLabel, tone: "update" },
+      { id: d.options[1].id, label: keepLabel, tone: "keep" },
+    ],
+  };
+}
+
 /**
  * Bỏ phần HỎI khỏi thuyết minh, giữ lại phần MÔ TẢ (UI-CLARITY W1).
  *
