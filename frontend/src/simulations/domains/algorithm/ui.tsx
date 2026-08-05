@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ArrayView } from "../../../components/ArrayView";
+import { ArrayView, arrayLegendItems } from "../../../components/ArrayView";
+import { StageLegend } from "../../../components/StageLegend";
 import { VarsView } from "../../../components/VarsView";
 import { PseudocodeView } from "../../../components/PseudocodeView";
 import { AnalysisCard } from "../../../components/AnalysisCard";
@@ -147,14 +148,15 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           onSwap={(i, j) => dispatch({ type: "whatif_swap", i, j })}
           gapIndex={hold?.gapIndex ?? null}
         />
-        {hold && (
-          <p className="stage-legend">
-            <span><i className="dot is-current" /> đang so sánh</span>
-            <span><i className="dot is-done" /> phần đã sắp</span>
-            <span><i className="dot is-gap" /> ô trống</span>
-            <span><i className="dot is-idle" /> chưa sắp</span>
-          </p>
-        )}
+        {/* Chú giải suy TỪ TRACE (không phải từ bước hiện tại) nên nó đứng yên
+            suốt timeline. Trước W1 nó gắn với `hold` — tức chỉ hiện ở sắp xếp
+            chèn, và biến mất ngay khi quân bài đáp xuống. */}
+        <StageLegend
+          items={arrayLegendItems(trace.steps, {
+            algorithmId: config.algorithm_id,
+            hasGap: hold !== null,
+          })}
+        />
       </div>
 
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8). */}

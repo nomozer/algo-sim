@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Step } from "../core/types";
 import { fmt } from "../core/trace-builder";
+import type { LegendItem } from "./StageLegend";
 
 /**
  * Renderer 2D (SVG) cho dữ liệu dạng dãy — vẽ thuần túy theo
@@ -56,6 +57,57 @@ function columnState(step: Step, index: number): ColumnState {
     return { fill: "var(--accent-teal)", stroke: "var(--accent-teal)", strokeWidth: 1, active: false };
   }
   return { fill: "#dcebfa", stroke: "var(--hairline)", strokeWidth: 1, active: false };
+}
+
+/**
+ * CHÚ GIẢI SUY TỪ TRACE THẬT (UI-CLARITY W1).
+ *
+ * Đặt cạnh `columnState` có chủ đích: đây là NƠI DUY NHẤT biết màu nào mang
+ * nghĩa gì trên sân khấu dãy. Chú giải viết tay ở chỗ khác sẽ trôi khỏi bảng
+ * màu này mà không có gì báo — mà một chú giải sai còn tệ hơn không có.
+ *
+ * Chỉ liệt kê trạng thái mà target THẬT SỰ dùng: quét toàn trace (không phải
+ * riêng bước hiện tại) nên chú giải **đứng yên suốt timeline** thay vì hiện ra
+ * rồi biến mất theo bước — bản trước chỉ hiện chú giải lúc đang giữ quân bài.
+ *
+ * KHÔNG liệt kê màu nền mặc định (phần tử chưa được đụng tới): đó là *vắng mặt
+ * trạng thái*, không phải một tín hiệu được phát ra.
+ */
+export function arrayLegendItems(
+  steps: Step[],
+  opts: { algorithmId: string; hasGap: boolean },
+): LegendItem[] {
+  const items: LegendItem[] = [];
+  const marks = new Set<string>();
+  const events = new Set<string>();
+  for (const s of steps) {
+    // `marks` là Record<number, Mark> (thưa theo chỉ số), không phải mảng.
+    for (const m of Object.values(s.snapshot.marks)) if (m) marks.add(m);
+    for (const e of s.events) events.add(e.type);
+  }
+
+  if (events.has("compare") || events.has("compare_value")) {
+    items.push({ tone: "scan", label: "đang xét / so sánh" });
+  }
+  if (marks.has("considering")) items.push({ tone: "considering", label: "vùng đang xét" });
+  if (events.has("swap")) items.push({ tone: "bound", label: "đang đổi chỗ" });
+  if (opts.hasGap) items.push({ tone: "gap", label: "ô trống" });
+  if (marks.has("sorted")) items.push({ tone: "done", label: "phần đã sắp xong" });
+  else if (marks.has("found")) items.push({ tone: "done", label: "đã tìm thấy" });
+
+  /* CÙNG MỘT MÀU XÁM, HAI NGHĨA — nhãn phải theo cơ chế của bài.
+     `binary_search` tô xám nửa BỊ LOẠI khỏi vùng tìm kiếm (không bao giờ xét
+     lại). `find_max`/`count_if`/`linear_search`… tô xám phần ĐÃ DUYỆT QUA — đã
+     xét rồi, không phải bị loại trừ. Dùng một nhãn cho cả hai là dạy sai đúng
+     kiểu mà audit ngôn ngữ màu đã chỉ ra. */
+  if (marks.has("eliminated")) {
+    items.push({
+      tone: "eliminated",
+      label: opts.algorithmId === "binary_search" ? "nửa đã bị loại" : "đã duyệt qua",
+    });
+  }
+
+  return items;
 }
 
 interface DragState {

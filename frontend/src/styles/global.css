@@ -991,6 +991,15 @@ html {
 .stage-legend .dot.is-done { background: var(--accent-green); border-color: var(--accent-green); }
 .stage-legend .dot.is-bound { background: var(--accent-orange); border-color: var(--accent-orange); }
 .stage-legend .dot.is-idle { background: var(--surface); border-color: var(--ink-faint); }
+
+/* UI-CLARITY W1 — tone của SÂN KHẤU DÃY (`ArrayView.columnState`).
+   Ba tone dưới đây phải khớp ĐÚNG màu mà cột được tô, nếu không chú giải sẽ
+   nói dối: `is-scan` = nền sky + viền primary (bước đang so sánh),
+   `is-eliminated` = xám hairline (đã loại), `is-considering` = teal (vùng còn
+   đang xét của tìm kiếm nhị phân). Đổi màu ở `ArrayView` thì đổi cả ở đây. */
+.stage-legend .dot.is-scan { background: var(--accent-sky); border-color: var(--primary); }
+.stage-legend .dot.is-eliminated { background: var(--hairline); border-color: var(--hairline); }
+.stage-legend .dot.is-considering { background: var(--accent-teal); border-color: var(--accent-teal); }
 /* ô trống: hình VUÔNG nét đứt — khác hình, không chỉ khác màu */
 .stage-legend .dot.is-gap {
   border-radius: 3px;
