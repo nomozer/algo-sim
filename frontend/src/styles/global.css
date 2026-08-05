@@ -1941,9 +1941,24 @@ html {
    Bảng màu sticker là TRANG TRÍ — cấm sơn nút (DESIGN.md §Don't). Màu duy nhất
    sơn hành động là --primary. Riêng PHÁN QUYẾT đúng/sai được dùng sticker vì
    §Semantic nói "status is carried by the sticker palette". */
+/* TRẠNG THÁI THU GỌN (UI-CLARITY W1) — một control nhỏ, KHÔNG phải một thẻ.
+   Không nền, không viền bao, không padding lớn: ở trạng thái này thanh dự đoán
+   phải đọc như một lời mời cạnh thuyết minh, không phải một khối tranh chỗ với
+   sân khấu. Đo được: 161px (19% thẻ) → 34px (4%). */
+.predict-inline {
+  margin-top: var(--sp-sm);
+  display: flex;
+}
+
+.predict-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .predict-bar {
   margin-top: var(--sp-md);
-  padding: var(--sp-lg);
+  padding: var(--sp-md) var(--sp-lg);
   background: var(--canvas-soft);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
@@ -1953,7 +1968,7 @@ html {
 }
 
 .predict-question {
-  margin: var(--sp-xs) 0 0;
+  margin: 0;
   font-size: 16px;
   font-weight: 400; /* DESIGN.md §Don't: body copy KHÔNG để weight nặng */
   color: var(--ink);
@@ -1979,21 +1994,15 @@ html {
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-/* Đang chọn = ACTIVE SIGNAL → dùng --primary. Đây đúng vai của primary
-   ("active-tab and focus signal"), không phải tô màu trang trí. */
-.btn-choice.is-picked {
-  background: var(--primary);
+/* W1 GỠ `.btn-choice.is-picked` và `.predict-options .btn-primary`: không còn
+   trạng thái "đã chọn nhưng chưa nộp" và không còn nút "Kiểm tra" — mỗi đáp án
+   LÀ hành động kiểm tra, nên hai lớp đó không còn nơi nào dùng. */
+.btn-choice:hover:not(:disabled) {
   border-color: var(--primary);
-  color: var(--on-primary);
 }
 
 .btn-choice:disabled {
   cursor: default;
-}
-
-/* Khoảng thở trước nút Kiểm tra — nó là hành động, không phải lựa chọn thứ ba. */
-.predict-options .btn-primary {
-  margin-left: var(--sp-xs);
 }
 
 .predict-result {

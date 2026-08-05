@@ -204,7 +204,17 @@ export function SimulationWorkspace() {
       {/* M8-PRE-LIP: một UI dự đoán DÙNG CHUNG — module không khai `predict` thì
           không render gì. M8: nằm NGOÀI renderer nên tự nhiên renderer-independent —
           2D hay 3D đều cùng PredictionBar này, không có bản 3D riêng. */}
-      <PredictionBar module={mod} state={active.state} busy={playing} />
+      {/* `key` theo BƯỚC HIỆN TẠI (đọc qua hợp đồng `timeline`, không thò vào
+          state của domain): mỗi bước là một lần mount mới, nên checkpoint LUÔN
+          bắt đầu ở trạng thái thu gọn — kể cả khi học sinh rời bước rồi quay
+          lại đúng bước đó. Không có nó thì "thu gọn mặc định" chỉ đúng ở lần
+          gặp đầu tiên. */}
+      <PredictionBar
+        key={mod.timeline ? mod.timeline.currentStep(active.state) : "static"}
+        module={mod}
+        state={active.state}
+        busy={playing}
+      />
     </section>
   );
 }

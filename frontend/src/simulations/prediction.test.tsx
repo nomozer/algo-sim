@@ -1,4 +1,5 @@
 import { describe, expect, it, beforeEach } from "vitest";
+import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { PredictionBar } from "../components/PredictionBar";
 import { makeAlgorithmModule } from "./domains/algorithm";
@@ -187,25 +188,58 @@ function envelopeFor(id: string, config: unknown): SimulationEnvelope {
 describe("PredictionBar — MỘT UI cho NHIỀU domain", () => {
   beforeEach(() => useAppStore.getState().reset());
 
-  it("render cho network (N lựa chọn: chọn nút)", () => {
+  /* UI-CLARITY W1 — hợp đồng ĐỔI: mặc định THU GỌN.
+     Trước W1 thanh dự đoán bày sẵn câu hỏi + lựa chọn + nút "Kiểm tra" ở mọi
+     bước có điểm quyết định, chiếm 19% diện tích thẻ (161px, đo trong Chrome).
+     Nay mặc định chỉ còn một control nhỏ; câu hỏi chỉ hiện khi học sinh mở. */
+
+  it("W1: mặc định THU GỌN — chỉ một control, KHÔNG bày câu hỏi (network)", () => {
     const html = renderToString(
       <PredictionBar module={netMod as never} state={netState()} busy={false} />,
     );
-    expect(html).toContain("DỰ ĐOÁN BƯỚC TIẾP THEO");
-    expect(html).toContain("chặng KẾ TIẾP");
-    expect(html).toContain("Router (r1)");
-    expect(html).toContain("Kiểm tra");
+    expect(html).toContain("predict-inline");
+    expect(html).toContain("Dự đoán bước này");
+    // câu hỏi và lựa chọn CHƯA được bày ra
+    expect(html).not.toContain("chặng KẾ TIẾP");
+    expect(html).not.toContain("Router (r1)");
+    // thẻ lớn `.predict-bar` chưa tồn tại ở trạng thái thu gọn
+    expect(html).not.toContain("predict-bar");
   });
 
-  it("render cho algorithm (2 lựa chọn: có/không) — CÙNG component, không có component riêng", () => {
+  it("W1: mặc định THU GỌN — CÙNG component, cùng hành vi ở domain algorithm", () => {
     const at = algoMod.timeline!.goToStep(algoState(), 1);
     const html = renderToString(
       <PredictionBar module={algoMod as never} state={at} busy={false} />,
     );
-    expect(html).toContain("DỰ ĐOÁN BƯỚC TIẾP THEO");
-    expect(html).toContain("Có");
-    expect(html).toContain("Không");
-    expect(html).toContain("Kiểm tra");
+    expect(html).toContain("predict-inline");
+    expect(html).toContain("Dự đoán bước này");
+    expect(html).not.toContain("predict-bar");
+  });
+
+  it("W1: KHÔNG còn nút nộp riêng — mỗi đáp án LÀ hành động kiểm tra", () => {
+    // Bằng chứng ở mã nguồn: không nơi nào trong PredictionBar dựng nút "Kiểm tra"
+    // nữa. Quét nguồn thay vì quét HTML đã render, vì trạng thái MỞ không đạt
+    // được qua SSR (ARCHITECTURE_MAP §8 #13: guard phải soi mã, không soi HTML).
+    // Bóc chú thích trước khi quét — cùng lý do `tokens.test.ts` phải làm vậy:
+    // chú thích ở đây CÓ nhắc tên nút đã gỡ để giải thích lịch sử, quét cả chú
+    // thích thì test tự bắt chính nó.
+    const src = readFileSync(
+      new URL("../components/PredictionBar.tsx", import.meta.url), "utf-8",
+    ).replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+    expect(src).not.toContain("Kiểm tra");
+    expect(src).toContain("submitPrediction(o.id)");
+  });
+
+  it("W1: tự chạy (busy) KHÔNG render gì — chiều cao thẻ không giật theo bước", () => {
+    /* Không phải bước nào cũng có điểm quyết định. Nếu lúc tự chạy vẫn vẽ nút
+       thu gọn thì nó xuất hiện/biến mất theo từng bước (0 ↔ 30px), tức đúng
+       kiểu giật mà W1 sinh ra để bỏ. Đo trong Chrome trước W1: thẻ nhảy
+       776px → 585px khi tự chạy. */
+    const at = algoMod.timeline!.goToStep(algoState(), 1);
+    const html = renderToString(
+      <PredictionBar module={algoMod as never} state={at} busy={true} />,
+    );
+    expect(html).toBe("");
   });
 
   it("module KHÔNG khai predict (logic) → PredictionBar không render gì", () => {

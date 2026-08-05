@@ -30,6 +30,19 @@ import { IconCheck, IconInfo, IconPredict } from "./icons";
  *   `--primary` — đây là *active signal*, đúng vai của primary.
  * - Phán quyết đúng/sai được phép dùng sticker palette vì `DESIGN.md` §Semantic
  *   nói rõ *"status is carried by the sticker palette"* — status thì được, nút thì không.
+ *
+ * THU GỌN MẶC ĐỊNH (UI-CLARITY W1) — vì sao:
+ * - Đo được ở `main@1c9f9d5`: thanh dự đoán chiếm **19 % diện tích thẻ (161 px)**
+ *   ở mọi bước có điểm quyết định, và **25 % (222 px)** sau khi trả lời. Nó là
+ *   LỚP HỖ TRỢ, không phải sân khấu — nên mặc định chỉ còn một nút nhỏ.
+ * - Bước không có điểm quyết định thì component trả `null`, nên khi TỰ CHẠY thẻ
+ *   phình/xẹp theo từng bước (đo được 776 px → 585 px). Giữ thu gọn lúc `busy`
+ *   để chiều cao không nhảy giữa lúc học sinh đang nhìn sân khấu.
+ * - Không có state "đã chọn nhưng chưa nộp": mỗi đáp án LÀ hành động kiểm tra,
+ *   nên bỏ hẳn nút "Kiểm tra" — bớt một bước, bớt một affordance.
+ *
+ * MỞ/GẬP là trạng thái TRÌNH BÀY THUẦN, sống trong component (giống `labOpen`
+ * của algorithm workspace) — KHÔNG vào store, KHÔNG vào engine state.
  */
 
 interface PredictionBarProps {
@@ -41,47 +54,66 @@ interface PredictionBarProps {
 export function PredictionBar({ module, state, busy }: PredictionBarProps) {
   const prediction = useAppStore((s) => s.prediction);
   const submitPrediction = useAppStore((s) => s.submitPrediction);
-  const [picked, setPicked] = useState<string | null>(null);
+  /**
+   * Đã mở checkpoint của BƯỚC NÀY chưa.
+   *
+   * Cờ này an toàn vì `SimulationWorkspace` gắn `key` theo bước hiện tại: đổi
+   * bước / Đặt lại / đổi fixture đều tạo mount mới nên cờ tự về `false`. Không
+   * cần effect, và component vẫn không phải biết gì về `cursor` — `state` ở đây
+   * là `unknown`, đọc `.cursor` sẽ là kiến thức domain lọt vào shell dùng chung.
+   */
+  const [opened, setOpened] = useState(false);
 
   // Mặc định an toàn — giống `timeline?` / `edit?`: không khai thì không có UI.
   if (!module.predict) return null;
+
+  /* ĐANG TỰ CHẠY → không render gì.
+     Không phải bước nào cũng có điểm quyết định, nên nếu vẫn vẽ nút thu gọn thì
+     lúc tự chạy nó nhấp nháy 0 ↔ 30px theo từng bước — đúng thứ làm sân khấu
+     giật mà W1 cần bỏ. Học sinh cũng không thao tác được lúc này (nút đằng nào
+     cũng disabled). Dừng lại thì checkpoint hiện lại ngay. */
+  if (busy) return null;
 
   const challenge = module.predict.challenge(state);
   if (!challenge) return null;
 
   const answered = prediction !== null;
+  // Tự chạy: luôn thu gọn. Học sinh không kịp đọc, mà thẻ thì không được nhảy.
+  const open = !busy && opened;
+
+  if (!open) {
+    return (
+      <div className="predict-inline">
+        <button
+          type="button"
+          className="btn-utility predict-open"
+          disabled={busy}
+          onClick={() => setOpened(true)}
+        >
+          <IconPredict size={14} />
+          Dự đoán bước này
+        </button>
+      </div>
+    );
+  }
 
   return (
     <section className="predict-bar" aria-label="Dự đoán bước tiếp theo">
-      <div className="predict-head">
-        {/* badge-pill (DESIGN.md): nền trắng, chữ primary, 12px/600, pill 4px 8px */}
-        <span className="eyebrow">
-          <IconPredict size={13} />
-          DỰ ĐOÁN BƯỚC TIẾP THEO
-        </span>
-        <p className="predict-question">{challenge.question}</p>
-      </div>
+      <p className="predict-question">{challenge.question}</p>
 
       <div className="predict-options">
+        {/* Mỗi đáp án ĐỒNG THỜI là hành động kiểm tra — không có nút nộp riêng. */}
         {challenge.options.map((o) => (
           <button
             key={o.id}
             type="button"
-            className={`btn-choice${picked === o.id ? " is-picked" : ""}`}
+            className="btn-choice"
             disabled={busy || answered}
-            onClick={() => setPicked(o.id)}
+            onClick={() => submitPrediction(o.id)}
           >
             {o.label}
           </button>
         ))}
-        <button
-          type="button"
-          className="btn-primary"
-          disabled={busy || answered || picked === null}
-          onClick={() => picked && submitPrediction(picked)}
-        >
-          Kiểm tra
-        </button>
       </div>
 
       {prediction && (
