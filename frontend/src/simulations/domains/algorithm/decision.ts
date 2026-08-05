@@ -392,6 +392,166 @@ export function scanInteractionOf(state: AlgorithmSimState): ScanInteractionMode
   };
 }
 
+/* ── CỤM CƠ CHẾ "TÌM KIẾM" (INTERACTION-FAMILY W2) ────────────────────────
+ *
+ * `linear_search` và `binary_search` cùng khuôn: xét một phần tử → so sánh với
+ * giá trị cần tìm → chọn bước đi tiếp → engine xác nhận. Nhưng cơ chế ẩn của
+ * hai bài KHÁC nhau, nên nhiệm vụ của học sinh cũng khác:
+ *
+ * - `linear_search`: quyết định từng bước gần như hiển nhiên (7 có bằng 9 không).
+ *   Cơ chế đáng học là CHI PHÍ. Nên hành động vẫn là tìm-thấy/tiếp-tục, còn chi
+ *   phí hiện ra như THÔNG TIN TIẾN TRÌNH bên cạnh — không phải một câu hỏi.
+ * - `binary_search`: quyết định là loại bỏ nửa nào — một quyết định KHÔNG GIAN
+ *   thật sự, đáng để học sinh tự chỉ tay vào.
+ *
+ * ĐẢO NGHĨA — CHỖ DỄ SHIP BUG NHẤT CỦA WAVE NÀY:
+ * `binaryDecision` hỏi "phần nào BỊ LOẠI", nên option `left` nghĩa là *nửa trái
+ * bị loại*, tức việc tìm kiếm tiếp tục ở nửa PHẢI. Vì vậy `left → search-right`
+ * và `right → search-left`. Ánh xạ thẳng tên-sang-tên sẽ dạy học sinh ngược hẳn
+ * cơ chế. `id` giữ nguyên của engine để `predict.check` vẫn chấm đúng.
+ */
+
+/** Vị trí trên sân khấu. KHÔNG mang nghĩa quyết định. */
+export type SearchVisualRole =
+  | "current-item"
+  | "continue-region"
+  | "left-region"
+  | "middle-item"
+  | "right-region";
+
+/** Nghĩa của hành động: việc tìm kiếm ĐI TIẾP về đâu. */
+export type SearchSemanticAction = "continue" | "found" | "search-left" | "search-right";
+
+export interface SearchAction {
+  /** Trùng option id của DecisionPoint ⇒ nộp thẳng qua `predict.check`. */
+  id: string;
+  label: string;
+  visualRole: SearchVisualRole;
+  semanticAction: SearchSemanticAction;
+}
+
+/** Chi phí tìm kiếm — THÔNG TIN TIẾN TRÌNH, không phải câu hỏi (W2 §1.1). */
+export interface SearchCost {
+  comparisonsDone: number;
+  remainingCandidates: number;
+  worstCaseComparisons: number;
+}
+
+export interface SearchInteractionModel {
+  currentIndex: number;
+  currentValue: string;
+  targetValue: string;
+  /** Chỉ có ở tìm kiếm nhị phân — vùng xét hiện tại, lấy từ vars trai/phai/giua. */
+  activeRange?: { left: number; right: number; middle: number };
+  /** Chỉ có ở tìm kiếm tuần tự (W2 §1.1). */
+  cost?: SearchCost;
+  /** Tiền đề phải nói ra với học sinh; null = bài này không có tiền đề nào. */
+  precondition: string | null;
+  actions: SearchAction[];
+}
+
+const SEARCH_FAMILY = new Set(["linear_search", "binary_search"]);
+
+export function isSearchFamily(algorithmId: string): boolean {
+  return SEARCH_FAMILY.has(algorithmId);
+}
+
+/**
+ * Mô hình tương tác cho bước quyết định của cụm tìm kiếm.
+ *
+ * Như `scanInteractionOf`: KHÔNG mang `correctActionId`, KHÔNG mang `evidence`,
+ * KHÔNG mang `resultIndex` — cả ba đều là đáp án. Chấm vẫn qua `predict.check`.
+ */
+export function searchInteractionOf(state: AlgorithmSimState): SearchInteractionModel | null {
+  const id = state.config.algorithm_id;
+  if (!isSearchFamily(id)) return null;
+
+  const d = decisionPointOf(state);
+  if (!d) return null;
+
+  const trace = activeTrace(state);
+  const cur = trace.steps[clampStep(state, state.cursor)];
+  const target = state.config.data.target;
+  if (target === null) return null;
+
+  if (id === "linear_search") {
+    const ev = cur.events.find((e) => e.type === "compare_value");
+    if (!ev || ev.type !== "compare_value") return null;
+    const n = state.config.data.array.length;
+    // `vars.i` là canonical; chi phí chỉ là số học trên nó, KHÔNG chạy lại thuật toán.
+    const done = num(cur.snapshot.vars["i"]) + 1;
+    return {
+      currentIndex: ev.i,
+      currentValue: fmt(cur.snapshot.array[ev.i]),
+      targetValue: fmt(target),
+      cost: {
+        comparisonsDone: done,
+        remainingCandidates: Math.max(n - done, 0),
+        worstCaseComparisons: n,
+      },
+      precondition: null,
+      actions: [
+        {
+          id: d.options[0].id,
+          label: "Đây là phần tử cần tìm",
+          visualRole: "current-item",
+          semanticAction: "found",
+        },
+        {
+          id: d.options[1].id,
+          label: "Kiểm tra phần tử kế tiếp",
+          visualRole: "continue-region",
+          semanticAction: "continue",
+        },
+      ],
+    };
+  }
+
+  // ── binary_search ──
+  const mid = num(cur.snapshot.vars["giua"]);
+  const left = num(cur.snapshot.vars["trai"]);
+  const right = num(cur.snapshot.vars["phai"]);
+  if ([mid, left, right].some(Number.isNaN)) return null;
+
+  const byId = new Map(d.options.map((o) => [o.id, o]));
+  const actions: SearchAction[] = [];
+  // Xem chú thích ĐẢO NGHĨA ở đầu khối: option "left" = nửa TRÁI bị loại.
+  if (byId.has("right")) {
+    actions.push({
+      id: "right",
+      label: "Tìm tiếp ở nửa TRÁI",
+      visualRole: "left-region",
+      semanticAction: "search-left",
+    });
+  }
+  if (byId.has("found")) {
+    actions.push({
+      id: "found",
+      label: "Chính là phần tử giữa",
+      visualRole: "middle-item",
+      semanticAction: "found",
+    });
+  }
+  if (byId.has("left")) {
+    actions.push({
+      id: "left",
+      label: "Tìm tiếp ở nửa PHẢI",
+      visualRole: "right-region",
+      semanticAction: "search-right",
+    });
+  }
+
+  return {
+    currentIndex: mid,
+    currentValue: fmt(cur.snapshot.array[mid]),
+    targetValue: fmt(target),
+    activeRange: { left, right, middle: mid },
+    // Tiền đề phải nói ra: SGK nhấn mạnh nhị phân chỉ đúng trên dãy có thứ tự.
+    precondition: "Thuật toán này chỉ đúng khi dãy đã được sắp xếp tăng dần.",
+    actions,
+  };
+}
+
 /**
  * Bỏ phần HỎI khỏi thuyết minh, giữ lại phần MÔ TẢ (UI-CLARITY W1).
  *
