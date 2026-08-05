@@ -30,8 +30,19 @@ export interface DecisionOption {
   label: string;
 }
 
+/**
+ * BA LOẠI THÔNG TIN, MỖI LOẠI ĐÚNG MỘT CHỖ (UI-CLARITY W1).
+ *
+ * `consideration` = STATE LINE — dữ liệu hiện tại, hiện ở dải nhân quả.
+ * `question`      = PROMPT — CHỈ hỏi, hiện ở PredictionBar.
+ * `evidence`      = FEEDBACK — chỉ giải thích sau khi chọn.
+ *
+ * Trước W1, `question` nhắc lại nguyên state line ("max đang là 7,5. Xét phần
+ * tử 9 (vị trí 2): …") nên chuỗi "(vị trí 2)" hiện HAI lần cùng lúc trên màn
+ * hình (đo được: 2 → 1). Đừng nhét lại trạng thái vào `question`.
+ */
 export interface DecisionPoint {
-  /** Câu hỏi dự đoán — nêu rõ đang xét gì, cơ chế nào. */
+  /** PROMPT — chỉ đặt câu hỏi, KHÔNG nhắc lại state line. */
   question: string;
   options: DecisionOption[];
   /** Đáp án chuẩn — dẫn xuất từ trace, không đoán. */
@@ -73,9 +84,9 @@ function extremeDecision(state: AlgorithmSimState, mode: "max" | "min"): Decisio
   const word = mode === "max" ? "lớn hơn" : "nhỏ hơn";
 
   return {
-    question:
-      `${mode} đang là ${fmt(best)}. Xét phần tử ${fmt(vi)} (vị trí ${cmp.i + 1}): ` +
-      `${mode} có được cập nhật không?`,
+    // CHỈ hỏi. Trạng thái ("đang xét gì", "max hiện tại bao nhiêu") thuộc
+    // `consideration` và đã hiện ở dải nhân quả — nhắc lại ở đây là lặp.
+    question: `${fmt(vi)} có làm ${mode} được cập nhật không?`,
     options: YES_NO,
     expectedId: updates ? "yes" : "no",
     evidence: updates
@@ -105,8 +116,8 @@ function aggregateDecision(state: AlgorithmSimState, mode: "sum" | "count"): Dec
   return {
     question:
       mode === "sum"
-        ? `Giá trị đang xét là ${fmt(v)}, điều kiện là "${condText}". ${fmt(v)} có được cộng vào tổng không?`
-        : `Giá trị đang xét là ${fmt(v)}, điều kiện là "${condText}". Biến đếm có tăng ở bước này không?`,
+        ? `${fmt(v)} có được cộng vào tổng không?`
+        : `Biến đếm có tăng ở bước này không?`,
     options: YES_NO,
     expectedId: includes ? "yes" : "no",
     evidence: includes
@@ -131,9 +142,7 @@ function linearDecision(state: AlgorithmSimState): DecisionPoint | null {
   const found = ev.result === "match";
 
   return {
-    question:
-      `Đang xét ${fmt(v)} (vị trí ${ev.i + 1}), cần tìm ${fmt(target)}. ` +
-      `Ở bước này đã tìm thấy giá trị cần tìm chưa?`,
+    question: `Ở bước này đã tìm thấy ${fmt(target)} chưa?`,
     options: [
       { id: "yes", label: "Đã tìm thấy" },
       { id: "no", label: "Chưa" },
@@ -172,9 +181,7 @@ function binaryDecision(state: AlgorithmSimState): DecisionPoint | null {
         : `${fmt(midVal)} > ${fmt(target)} nên giá trị cần tìm (nếu có) nằm bên TRÁI — nửa phải bị loại.`;
 
   return {
-    question:
-      `Phần tử giữa vùng xét là ${fmt(midVal)} (vị trí ${mid + 1}); cần tìm ${fmt(target)}. ` +
-      `Sau phép so sánh này, phần nào của vùng tìm kiếm sẽ bị loại?`,
+    question: `Sau phép so sánh này, phần nào của vùng tìm kiếm sẽ bị loại?`,
     options: [
       { id: "left", label: "Nửa trái" },
       { id: "right", label: "Nửa phải" },
@@ -199,13 +206,15 @@ function bubbleDecision(state: AlgorithmSimState): DecisionPoint | null {
   const orderText = (state.config.data.order ?? "asc") === "asc" ? "tăng dần" : "giảm dần";
 
   return {
-    question: `So sánh cặp kề ${fmt(vi)} và ${fmt(vj)} (sắp ${orderText}). Hai phần tử này có đổi chỗ không?`,
+    question: `Hai phần tử này có đổi chỗ không?`,
     options: YES_NO,
     expectedId: swaps ? "yes" : "no",
     evidence: swaps
       ? `${fmt(vi)} và ${fmt(vj)} đang sai thứ tự ${orderText} nên hai phần tử đổi chỗ.`
       : `${fmt(vi)} rồi ${fmt(vj)} đã đúng thứ tự ${orderText} nên giữ nguyên.`,
-    consideration: `Đang xét cặp kề (${fmt(vi)}, ${fmt(vj)}) — vị trí ${cmp.i + 1} và ${cmp.j + 1}`,
+    // Thứ tự cần sắp là dữ kiện để trả lời được câu hỏi — nó rời khỏi câu hỏi
+    // thì phải có mặt ở state line, không được biến mất khỏi màn hình.
+    consideration: `Đang xét cặp kề (${fmt(vi)}, ${fmt(vj)}) — vị trí ${cmp.i + 1} và ${cmp.j + 1}, sắp ${orderText}`,
     expression: `${fmt(vi)} ${cmp.result} ${fmt(vj)} ?`,
   };
 }
@@ -223,9 +232,7 @@ function insertionDecision(state: AlgorithmSimState): DecisionPoint | null {
   const word = (state.config.data.order ?? "asc") === "asc" ? "lớn hơn" : "nhỏ hơn";
 
   return {
-    question:
-      `So sánh ${fmt(vj)} với giá trị chèn ${fmt(key)}. ` +
-      `Phần tử ${fmt(vj)} có bị dời sang phải một ô không?`,
+    question: `${fmt(vj)} có bị dời sang phải một ô không?`,
     options: YES_NO,
     expectedId: shifts ? "yes" : "no",
     evidence: shifts
@@ -255,9 +262,7 @@ function selectionDecision(state: AlgorithmSimState): DecisionPoint | null {
   const word = asc ? "nhỏ hơn" : "lớn hơn";
 
   return {
-    question:
-      `So sánh ${fmt(vNew)} với ${extremeText} hiện tại ${fmt(vCur)}. ` +
-      `Vị trí ${extremeText} có được cập nhật không?`,
+    question: `Vị trí ${extremeText} có được cập nhật không?`,
     options: YES_NO,
     expectedId: updates ? "yes" : "no",
     evidence: updates
@@ -292,6 +297,26 @@ export function decisionPointOf(state: AlgorithmSimState): DecisionPoint | null 
     case "selection_sort":
       return selectionDecision(state);
   }
+}
+
+/**
+ * Bỏ phần HỎI khỏi thuyết minh, giữ lại phần MÔ TẢ (UI-CLARITY W1).
+ *
+ * Engine kể bước quyết định theo khuôn `"<mô tả>: <câu hỏi>?"`, ví dụ
+ * `"So sánh a[1] = 9 với max = 7,5: max có được cập nhật không?"`. Khuôn đó có
+ * lý do lịch sử: khe thuyết minh từng là nơi DUY NHẤT nêu câu hỏi nên nó phải
+ * hỏi mà không được lộ đáp án.
+ *
+ * Từ W1, câu hỏi có nhà riêng là PredictionBar, nên để nguyên thì cùng một câu
+ * hỏi hiện hai chỗ cùng lúc (đo được trong Chrome). Ở đây chỉ CẮT PHẦN TRÌNH
+ * BÀY: `step.narration` của engine, timeline và mọi kết quả tất định giữ nguyên
+ * từng ký tự — `getExplainContext` vẫn gửi đi chuỗi gốc.
+ */
+export function narrationWithoutPrompt(narration: string): string {
+  if (!narration.trimEnd().endsWith("?")) return narration;
+  const cut = narration.lastIndexOf(": ");
+  if (cut < 0) return narration;
+  return `${narration.slice(0, cut)}.`;
 }
 
 /**

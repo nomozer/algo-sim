@@ -3,7 +3,7 @@ import { ALGORITHM_IDS, ALGORITHM_NAMES } from "../../../core/types";
 import { runAlgorithm } from "../../../core/algorithms";
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
-import { decisionPointOf } from "./decision";
+import { decisionPointOf, narrationWithoutPrompt } from "./decision";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
@@ -196,7 +196,12 @@ export function makeAlgorithmModule(
     narrate: (state) => {
       const t = activeTrace(state);
       const step = t.steps[clampStep(state, state.cursor)];
-      return { text: step.narration, fromLearner: Boolean(step.userAction) };
+      // W1: khe thuyết minh MÔ TẢ bước đang diễn ra; việc HỎI là của
+      // PredictionBar. Chỉ cắt ở tầng trình bày — `step.narration` không đổi.
+      return {
+        text: narrationWithoutPrompt(step.narration),
+        fromLearner: Boolean(step.userAction),
+      };
     },
 
     // Yêu cầu #4: snapshot JSON sạch cho /api/explain — trạng thái THẬT của engine
