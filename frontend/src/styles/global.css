@@ -1941,6 +1941,71 @@ html {
    Bảng màu sticker là TRANG TRÍ — cấm sơn nút (DESIGN.md §Don't). Màu duy nhất
    sơn hành động là --primary. Riêng PHÁN QUYẾT đúng/sai được dùng sticker vì
    §Semantic nói "status is carried by the sticker palette". */
+/* ══ VÙNG HÀNH ĐỘNG CỤM QUÉT DÃY (INTERACTION-FAMILY W1) ══════════════════
+   Nằm NGAY DƯỚI sân khấu, trong cùng thẻ: hành động phải ở cạnh đối tượng nó
+   tác động, không nằm ở một khối riêng phía dưới. Nền canvas ấm + hairline theo
+   khuôn `pricing-plan-card-featured` (surface tint, KHÔNG viền màu). */
+.scan-action {
+  margin-top: var(--sp-sm);
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+/* Hàng trạng thái: ứng viên · phép so sánh · biến tích luỹ. Cuốn xuống dòng gọn
+   ở màn hẹp thay vì ép ngang. */
+.scan-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-xs) var(--sp-sm);
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+.scan-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+}
+
+.scan-chip strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+/* Ứng viên = "đang xét" ⇒ dùng đúng quy ước xanh dương của sân khấu. */
+.scan-chip.is-candidate { border-color: var(--primary); }
+
+.scan-expression {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+
+.scan-instruction {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+.scan-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+}
+
+/* Hai hành động phân biệt bằng CHỮ và vị trí. Không sơn hai màu trang trí —
+   `--primary` là màu duy nhất được sơn hành động (DESIGN.md §Don't). */
+.scan-act { text-align: left; }
+
 /* TRẠNG THÁI THU GỌN (UI-CLARITY W1) — một control nhỏ, KHÔNG phải một thẻ.
    Không nền, không viền bao, không padding lớn: ở trạng thái này thanh dự đoán
    phải đọc như một lời mời cạnh thuyết minh, không phải một khối tranh chỗ với
