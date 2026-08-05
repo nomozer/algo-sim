@@ -209,12 +209,18 @@ export function SimulationWorkspace() {
           bắt đầu ở trạng thái thu gọn — kể cả khi học sinh rời bước rồi quay
           lại đúng bước đó. Không có nó thì "thu gọn mặc định" chỉ đúng ở lần
           gặp đầu tiên. */}
-      <PredictionBar
-        key={mod.timeline ? mod.timeline.currentStep(active.state) : "static"}
-        module={mod}
-        state={active.state}
-        busy={playing}
-      />
+      {/* INTERACTION-FAMILY W1: module có thể khai rằng bước này ĐÃ được trình
+          bày ngay trên sân khấu (vd cụm quét dãy dùng `ScanActionZone`). Khi đó
+          shell không dựng UI dùng chung nữa — một cam kết, một hình thức. Module
+          không khai thì hành vi giữ nguyên như cũ. */}
+      {!mod.predict?.presentedInStage?.(active.state) && (
+        <PredictionBar
+          key={mod.timeline ? mod.timeline.currentStep(active.state) : "static"}
+          module={mod}
+          state={active.state}
+          busy={playing}
+        />
+      )}
     </section>
   );
 }

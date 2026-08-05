@@ -3,7 +3,7 @@ import { ALGORITHM_IDS, ALGORITHM_NAMES } from "../../../core/types";
 import { runAlgorithm } from "../../../core/algorithms";
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
-import { decisionPointOf, narrationWithoutPrompt } from "./decision";
+import { decisionPointOf, narrationWithoutPrompt, scanInteractionOf } from "./decision";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
@@ -182,6 +182,14 @@ export function makeAlgorithmModule(
           message: (verdict === "correct" ? "Chính xác. " : "Chưa đúng. ") + d.evidence,
         };
       },
+      /**
+       * INTERACTION-FAMILY W1 — cụm quét dãy trình bày cam kết NGAY TRÊN SÂN
+       * KHẤU (`ScanActionZone`), nên shell không dựng PredictionBar ở bước đó.
+       * Một cam kết, một hình thức: bày cả hai là hỏi cùng một câu hai lần.
+       * Bước không phải điểm quyết định → `scanInteractionOf` trả null → shell
+       * quay lại hành vi cũ, không target nào khác bị ảnh hưởng.
+       */
+      presentedInStage: (s) => scanInteractionOf(s) !== null,
     },
 
     // Yêu cầu #2: capability timeline — domain này là progressive nên có

@@ -6,7 +6,9 @@ import { PseudocodeView } from "../../../components/PseudocodeView";
 import { AnalysisCard } from "../../../components/AnalysisCard";
 import { fmt } from "../../../core/trace-builder";
 import type { WorkspaceProps } from "../../types";
-import { consequenceOf, decisionPointOf } from "./decision";
+import { consequenceOf, decisionPointOf, scanInteractionOf } from "./decision";
+import { ScanActionZone } from "../../../components/ScanActionZone";
+import { useAppStore } from "../../../state/store";
 import { whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import {
@@ -112,6 +114,13 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
   const decision = decisionPointOf(state);
   const consequence = decision ? null : consequenceOf(state);
   const hold = insertionHold(state, clampStep(state, state.cursor));
+  const scan = scanInteractionOf(state);
+
+  /* Nhánh DỰ ĐOÁN (không phải state canonical) đọc/ghi qua store — đúng khuôn
+     `PredictionBar` đã dùng từ M8-PRE-LIP: kết quả chấm sống ở `store.prediction`,
+     `active.state` không hề bị đụng tới. */
+  const prediction = useAppStore((s) => s.prediction);
+  const submitPrediction = useAppStore((s) => s.submitPrediction);
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -159,8 +168,25 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         />
       </div>
 
-      {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8). */}
-      {decision && (
+      {/* CỤM QUÉT DÃY (INTERACTION-FAMILY W1): cam kết của học sinh là HÀNH
+          ĐỘNG lên biến tích luỹ, không phải câu Có/Không. Vẫn nộp qua chính
+          `predict.check` nên engine vẫn là bên duy nhất phán đúng/sai; ở bước
+          này shell KHÔNG dựng PredictionBar (`predict.presentedInStage`). */}
+      {scan && (
+        <ScanActionZone
+          model={scan}
+          answered={prediction !== null}
+          busy={busy}
+          onAct={(actionId) => submitPrediction(actionId)}
+          feedback={prediction}
+        />
+      )}
+
+      {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8).
+          KHÔNG dựng khi đã có vùng hành động: `ScanActionZone` mang sẵn state
+          line và phép so sánh, bày cả hai là lặp đúng thứ W1 vừa gỡ (test
+          `ui-clarity-w1` bắt được ngay khi tôi thử). */}
+      {decision && !scan && (
         <div className="decision-strip">
           <span className="decision-consideration">
             <IconSearch size={14} />

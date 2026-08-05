@@ -79,8 +79,14 @@ describe("(19) dải nhân quả — khớp sự kiện trace hiện tại", () 
     const vj = step.snapshot.array[cmp.j];
 
     const h = html("find_max", { array: [7.5, 9, 6] }, 1);
-    expect(h).toContain("decision-strip");
-    // expression của dải dùng ĐÚNG hai giá trị của event (9 và 7,5) — SSR escape ">"
+    /* INTERACTION-FAMILY W1: ở cụm quét dãy, bước quyết định nay được trình bày
+       bằng VÙNG HÀNH ĐỘNG (`ScanActionZone`) thay cho dải nhân quả — vùng đó
+       mang sẵn state line + phép so sánh, nên dựng cả hai là lặp. Điều test này
+       thật sự khoá không đổi: biểu thức phải dùng ĐÚNG hai giá trị mà event
+       `compare` nêu, không phải renderer tự tính lại. */
+    expect(h).toContain("scan-action");
+    expect(h).not.toContain("decision-strip");
+    // SSR escape ">"
     expect(h).toMatch(new RegExp(`${vi}\\s*&gt;\\s*${String(vj).replace(".", ",")}`));
   });
 

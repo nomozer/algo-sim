@@ -135,6 +135,19 @@ export interface PredictionCapability<S = unknown> {
   challenge(state: S): PredictionChallenge | null;
   /** Chấm TẤT ĐỊNH, PURE — không đổi state canonical. */
   check(state: S, answerId: string): PredictionResult;
+  /**
+   * Optional (INTERACTION-FAMILY W1) — bước này đã được trình bày NGAY TRÊN SÂN
+   * KHẤU, nên shell KHÔNG dựng UI dự đoán dùng chung nữa.
+   *
+   * Dùng khi cùng một cam kết được diễn đạt bằng HÀNH ĐỘNG lên chính đối tượng
+   * (vd đặt phần tử vào ô tích luỹ) thay vì bằng một câu hỏi Có/Không: đó vẫn là
+   * một dự đoán, chỉ khác hình thức, nên nó vẫn đi qua `check` — engine tất định
+   * vẫn là bên duy nhất phán đúng/sai (bất biến #11).
+   *
+   * KHÔNG khai = shell dựng UI dùng chung như cũ. Không được để hai hình thức
+   * cùng hỏi một câu trên một màn hình.
+   */
+  presentedInStage?(state: S): boolean;
 }
 
 /* ── NarrationCapability (SHELL-N) ────────────────────────────────────────
