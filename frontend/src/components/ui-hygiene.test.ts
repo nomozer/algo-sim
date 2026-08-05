@@ -231,9 +231,17 @@ describe("(M9-UX6) DESIGN.md — sticker palette là TRANG TRÍ, không sơn hà
 describe("phím tắt toàn cục nhường control đang focus", () => {
   const controls = FILES.find((f) => /SimulationControls\.tsx$/.test(f.path))!;
 
-  it("handler phím tắt bỏ qua sự kiện phát từ trong [role=button]", () => {
+  /* W1 MỞ RỘNG: guard cũ chỉ kể `[role="button"]` vì nó được viết cho đúng ca
+     boolean_dag. Nút đáp án của PredictionBar là `<button>` THẬT nên lọt qua —
+     đo trong Chrome thấy Space làm `playing = true` và câu trả lời mất trắng.
+     Nay guard kể theo NĂNG LỰC "tự xử lý Enter/Space": control gốc lẫn control
+     giả đều phải được nhường phím. */
+  it("handler phím tắt bỏ qua sự kiện phát từ trong control tự xử lý phím", () => {
     const body = code(controls.text);
-    expect(body).toMatch(/closest\??\.\(\s*'\[role="button"\]'\s*\)/);
+    const guard = /closest\??\.\(\s*'([^']+)'\s*\)/.exec(body)?.[1] ?? "";
+    expect(guard).toContain('[role="button"]');
+    // native <button> phải có tên riêng — đây là ca đã lọt ở W1
+    expect(guard).toMatch(/(^|,\s*)button(\s*,|$)/);
   });
 
   it("vẫn giữ luật cũ: bỏ qua khi đang gõ trong ô nhập", () => {

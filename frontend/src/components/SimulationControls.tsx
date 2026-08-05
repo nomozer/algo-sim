@@ -47,12 +47,16 @@ export function SimulationControls() {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
       // Phím tắt TOÀN CỤC không được cướp phím của một control đang focus.
-      // Đã cháy ở lượt nghiệm thu: bấm Space trên node đầu vào A/B/C của
-      // boolean_dag vừa đổi giá trị đầu vào, VỪA bật Tự chạy (Space là phím tắt
-      // play/pause) — timeline chạy mất và node bị khoá ngay sau đó.
-      // `role="button"` tự xử lý Enter/Space theo hợp đồng của chính nó.
+      // Đã cháy HAI lần, cùng một nguyên nhân:
+      //  1. node đầu vào A/B/C của boolean_dag (`role="button"`) — bấm Space
+      //     vừa đổi giá trị đầu vào, VỪA bật Tự chạy;
+      //  2. (W1) nút đáp án dự đoán — `<button>` THẬT, không có `role`, nên
+      //     guard cũ không che: đo trong Chrome thấy Space làm `playing = true`
+      //     và câu trả lời mất trắng.
+      // Nên guard theo NĂNG LỰC "tự xử lý Enter/Space", không theo một thuộc
+      // tính cụ thể: control gốc và control giả đều tự lo phím của mình.
       const target = e.target as Element | null;
-      if (target?.closest?.('[role="button"]')) return;
+      if (target?.closest?.('button, a[href], select, [role="button"]')) return;
       if (e.key === "ArrowRight") {
         e.preventDefault();
         useAppStore.getState().nextStep();
