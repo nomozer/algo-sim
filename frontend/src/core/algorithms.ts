@@ -166,6 +166,18 @@ function runAggregateIf(a: AnalysisOk, mode: "sum" | "count", whatIf?: WhatIfSwa
 
 /* ── linear_search ───────────────────────────────────────── */
 
+/**
+ * CHÍNH SÁCH PHẦN TỬ TRÙNG: **FIRST_MATCH** (đặt tên ở W2).
+ *
+ * Duyệt từ đầu và `return` ngay lần khớp đầu tiên, nên vị trí trả về LUÔN là vị
+ * trí xuất hiện sớm nhất của giá trị cần tìm. Đây là hệ quả trực tiếp của việc
+ * dừng sớm, không phải một lựa chọn thêm.
+ *
+ * Khác với `binary_search` (xem ANY_MATCH_BY_MIDPOINT bên dưới) — hai thuật toán
+ * cho ra vị trí khác nhau trên cùng một dãy có phần tử trùng, và đó là một khác
+ * biệt ngữ nghĩa THẬT, không phải lỗi.
+ */
+
 function runLinearSearch(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
   const b = new TraceBuilder(a.data.array, "engine", whatIf);
   const labels = a.data.labels;
@@ -211,6 +223,19 @@ function runLinearSearch(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
 }
 
 /* ── binary_search ───────────────────────────────────────── */
+
+/**
+ * CHÍNH SÁCH PHẦN TỬ TRÙNG: **ANY_MATCH_BY_MIDPOINT** (đặt tên ở W2).
+ *
+ * Thuật toán trả về vị trí khớp mà quá trình CHIA ĐÔI gặp được, **không bảo đảm
+ * là vị trí đầu tiên**. Với dãy `[2, 5, 5, 5, 9]` tìm `5`, phần tử giữa rơi đúng
+ * vào một trong các bản sao và vòng lặp dừng ngay tại đó.
+ *
+ * Đây KHÔNG phải lỗi: tìm kiếm nhị phân chỉ hứa "tìm được MỘT vị trí chứa giá
+ * trị", còn "vị trí đầu tiên" là một bài toán khác (lower bound). Ghi tên chính
+ * sách ở đây để UI không được phát biểu quá — chuỗi hiển thị phải trung tính
+ * ("Tìm thấy tại vị trí …"), không nói "vị trí đầu tiên".
+ */
 
 function runBinarySearch(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
   const b = new TraceBuilder(a.data.array, "engine", whatIf);
