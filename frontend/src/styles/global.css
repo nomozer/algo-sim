@@ -2006,6 +2006,70 @@ html {
    `--primary` là màu duy nhất được sơn hành động (DESIGN.md §Don't). */
 .scan-act { text-align: left; }
 
+/* ══ VÙNG HÀNH ĐỘNG CỤM TÌM KIẾM (INTERACTION-FAMILY W2) ══════════════════
+   Dùng lại nguyên khung của `.scan-action` (cùng vai: vùng hành động cạnh sân
+   khấu) — không dựng ngôn ngữ thị giác thứ hai cho cùng một loại thành phần. */
+.search-action {
+  margin-top: var(--sp-sm);
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+/* TIỀN ĐỀ — nhị phân chỉ đúng trên dãy đã sắp. SGK nhấn mạnh điều này, nên nó
+   phải hiện ra chứ không nằm im trong validator. */
+.search-precondition {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+.search-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-xs) var(--sp-sm);
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+/* CHI PHÍ — thông tin tiến trình, KHÔNG phải một câu hỏi. Đặt thành hàng số
+   riêng để học sinh thấy nó đổi theo từng bước mình đi. */
+.search-cost {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs) var(--sp-md);
+  font-size: 13px;
+  color: var(--ink-secondary);
+  padding: var(--sp-xs) 0 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.search-cost strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  margin-left: 4px;
+}
+
+.search-cost-worst { color: var(--ink-muted); }
+
+.search-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+}
+
+/* Hành động phân biệt bằng CHỮ và thứ tự trái→giữa→phải khớp với sân khấu,
+   không bằng màu trang trí (DESIGN.md §Don't). */
+.search-act { text-align: left; }
+
 /* TRẠNG THÁI THU GỌN (UI-CLARITY W1) — một control nhỏ, KHÔNG phải một thẻ.
    Không nền, không viền bao, không padding lớn: ở trạng thái này thanh dự đoán
    phải đọc như một lời mời cạnh thuyết minh, không phải một khối tranh chỗ với
