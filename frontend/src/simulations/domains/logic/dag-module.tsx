@@ -283,7 +283,22 @@ type Props = WorkspaceProps<BoolDagConfig, BoolDagState>;
  */
 const NODE_W = 134;
 const NODE_H = 62;
-const COL_GAP = 96;
+/**
+ * Khoảng cách giữa hai tầng cổng.
+ *
+ * W1 nới 96 → 130 để sơ đồ dùng hết bề ngang thẻ: với fixture 3 tầng, bề rộng
+ * đi từ 594px lên 662px, bớt được khoảng trắng chết bên phải cổng đầu ra.
+ *
+ * Đây KHÔNG phải lỗi #2 ở trên: chỗ đó phóng `maxWidth` nên viewBox bị kéo giãn
+ * và MỌI thứ to lên theo (chữ 17px hoá 21,7px). Ở đây `NODE_W`, `NODE_H`,
+ * `LABEL_FONT` và nét dây giữ nguyên từng pixel — chỉ DÂY dài ra. Sơ đồ rộng
+ * hơn vì bố cục thưa hơn, không vì bị scale.
+ *
+ * TRẦN CỨNG: phải nhỏ hơn `NODE_W` (134) — `dag.test.tsx` khoá điều này, vì dây
+ * dài hơn node thì khoảng trắng trở thành thành phần lớn nhất của hình. Thử 140
+ * đã chạm trần đó và bị test chặn; 130 là mức lớn nhất còn giữ được tỉ lệ.
+ */
+const COL_GAP = 130;
 const ROW_GAP = 30;
 /** Cỡ chữ trong sơ đồ — hiển thị đúng số này vì scale ≈ 1. */
 const LABEL_FONT = 17;
@@ -572,7 +587,7 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
           nặng khung nhìn (nguyên tắc NT-2 đo từ PhET: thông tin phụ thì gập).
           Mở ra thì hàng của cổng ĐANG được tính được làm nổi, để lúc cần đối
           chiếu vẫn tìm được ngay. */}
-      <details className="gate-detail gate-detail--fold" open>
+      <details className="gate-detail gate-detail--fold">
         <summary className="detail-heading">Chi tiết các cổng</summary>
         <table className="data-table">
           <thead>
