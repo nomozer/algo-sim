@@ -6,8 +6,9 @@ import { PseudocodeView } from "../../../components/PseudocodeView";
 import { AnalysisCard } from "../../../components/AnalysisCard";
 import { fmt } from "../../../core/trace-builder";
 import type { WorkspaceProps } from "../../types";
-import { consequenceOf, decisionPointOf, scanInteractionOf } from "./decision";
+import { consequenceOf, decisionPointOf, scanInteractionOf, searchInteractionOf } from "./decision";
 import { ScanActionZone } from "../../../components/ScanActionZone";
+import { SearchActionZone } from "../../../components/SearchActionZone";
 import { useAppStore } from "../../../state/store";
 import { whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
@@ -115,6 +116,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
   const consequence = decision ? null : consequenceOf(state);
   const hold = insertionHold(state, clampStep(state, state.cursor));
   const scan = scanInteractionOf(state);
+  const search = searchInteractionOf(state);
 
   /* Nhánh DỰ ĐOÁN (không phải state canonical) đọc/ghi qua store — đúng khuôn
      `PredictionBar` đã dùng từ M8-PRE-LIP: kết quả chấm sống ở `store.prediction`,
@@ -182,11 +184,23 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         />
       )}
 
+      {/* CỤM TÌM KIẾM (W2): tuần tự nhắm CHI PHÍ, nhị phân nhắm VÙNG BỊ LOẠI —
+          cùng primitive, khác nhiệm vụ. Nộp qua chính `predict.check`. */}
+      {search && (
+        <SearchActionZone
+          model={search}
+          answered={prediction !== null}
+          busy={busy}
+          onAct={(actionId) => submitPrediction(actionId)}
+          feedback={prediction}
+        />
+      )}
+
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8).
           KHÔNG dựng khi đã có vùng hành động: `ScanActionZone` mang sẵn state
           line và phép so sánh, bày cả hai là lặp đúng thứ W1 vừa gỡ (test
           `ui-clarity-w1` bắt được ngay khi tôi thử). */}
-      {decision && !scan && (
+      {decision && !scan && !search && (
         <div className="decision-strip">
           <span className="decision-consideration">
             <IconSearch size={14} />

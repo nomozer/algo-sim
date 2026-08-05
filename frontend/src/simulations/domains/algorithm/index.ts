@@ -3,7 +3,7 @@ import { ALGORITHM_IDS, ALGORITHM_NAMES } from "../../../core/types";
 import { runAlgorithm } from "../../../core/algorithms";
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
-import { decisionPointOf, narrationWithoutPrompt, scanInteractionOf } from "./decision";
+import { decisionPointOf, narrationWithoutPrompt, scanInteractionOf, searchInteractionOf } from "./decision";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
@@ -189,7 +189,7 @@ export function makeAlgorithmModule(
        * Bước không phải điểm quyết định → `scanInteractionOf` trả null → shell
        * quay lại hành vi cũ, không target nào khác bị ảnh hưởng.
        */
-      presentedInStage: (s) => scanInteractionOf(s) !== null,
+      presentedInStage: (s) => scanInteractionOf(s) !== null || searchInteractionOf(s) !== null,
     },
 
     // Yêu cầu #2: capability timeline — domain này là progressive nên có

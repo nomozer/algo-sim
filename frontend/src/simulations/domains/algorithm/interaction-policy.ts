@@ -71,8 +71,11 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   binary_search: {
     mode: "challenge",
     challengeLabel: "Thí nghiệm: nếu dãy không còn được sắp thứ tự?",
-    challengeTeaser:
-      "Tìm nhị phân chỉ đúng khi dãy đã được sắp thứ tự — thử phá thứ tự đó rồi xem chuyện gì xảy ra.",
+    /* W2: teaser KHÔNG nhắc lại tiền đề nữa — `SearchActionZone` đã nêu nó
+       thường trực ngay trên vùng hành động, nên nói lại ở đây là cùng một ý
+       hiện hai lần trên một màn hình (đúng loại trùng lặp W1 đã gỡ). Teaser
+       chỉ còn làm việc của nó: mời thử. */
+    challengeTeaser: "Thử phá thứ tự đã sắp của dãy rồi xem chuyện gì xảy ra.",
     framing:
       "Tìm kiếm nhị phân chỉ đúng khi dãy đã sắp thứ tự. Hãy đổi chỗ hai phần tử để phá thứ tự đó, rồi quan sát: thuật toán có thể bỏ sót giá trị có thật trong dãy.",
     hint: "Kéo đổi chỗ hai cột để phá thứ tự sắp — rồi xem thuật toán còn tìm thấy đúng không.",
