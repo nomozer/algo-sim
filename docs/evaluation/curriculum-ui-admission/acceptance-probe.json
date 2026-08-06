@@ -1,0 +1,65 @@
+{
+  "generated_at": "2026-08-04T18:07:32.276Z",
+  "space_on_input_node": {
+    "cursor_before": 4,
+    "values_before": {
+      "A": 1,
+      "B": 0,
+      "C": 1
+    },
+    "cursor_immediately_after": 0,
+    "values_after": {
+      "A": 0,
+      "B": 0,
+      "C": 1
+    },
+    "cursor_1s4_later": 0,
+    "verdict_autoplay_started": false
+  },
+  "drawer_vs_controls": {
+    "controls_rect": {
+      "x": 69,
+      "y": 675,
+      "w": 876,
+      "h": 40
+    },
+    "candidates": [
+      {
+        "sel": "panel-right",
+        "contains_controls": false,
+        "rect": {
+          "x": 654,
+          "y": 57,
+          "w": 360,
+          "h": 711
+        }
+      }
+    ],
+    "hit_test": [
+      {
+        "label": "Về đầu",
+        "reachable": true
+      },
+      {
+        "label": "Lùi một bước",
+        "reachable": true
+      },
+      {
+        "label": "Tự chạy",
+        "reachable": true
+      },
+      {
+        "label": "Tiến một bước",
+        "reachable": true
+      },
+      {
+        "label": "Đến cuối",
+        "reachable": true
+      },
+      {
+        "label": "Dựng lại từ đầu",
+        "reachable": true
+      }
+    ]
+  }
+}

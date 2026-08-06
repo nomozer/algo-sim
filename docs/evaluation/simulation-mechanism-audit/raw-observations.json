@@ -1,0 +1,3098 @@
+{
+  "checkpoint": "SIMULATION MECHANISM QUALITY AUDIT (read-only)",
+  "generated_at": "2026-08-04T14:48:06.168Z",
+  "app": "http://localhost:3000",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "method": "Chrome thật qua CDP. Store CHỈ dùng để nạp fixture + đọc state; mọi bước đi là click chuột thật lên nút của sản phẩm.",
+  "target_count": 22,
+  "records": [
+    {
+      "target": "algorithm.binary_search",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-binary_search-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 877,
+              "h": 268,
+              "area": 234969
+            },
+            "svg_rect": {
+              "w": 714,
+              "h": 268,
+              "area": 191352
+            },
+            "svg_shapes": 30,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 7,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Cần tìm 8,5 trong dãy đã sắp thứ tự. Vùng xét ban đầu: từ vị trí 1 đến 10.",
+            "step_indicator": "Bước 1 / 13",
+            "stage_text_len": 48,
+            "stage_text": "4 0 5,5 1 6 2 6,5 3 7 4 8 5 8,5 6 9 7 9,5 8 10 9",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần INPUT Dãy 10 mức điểm đã xếp tăng dần OUTPUT Vị trí của mức điểm 8,5, hoặc kết luận không có THUẬT TOÁN Tìm kiếm nhị phân DỮ LIỆU [4; 5,5; 6; 6,5; 7; 8; 8,5; 9; 9,5; 10] — cần tìm: 8,5 cần tìm 8,5 trái 0 phải 9 THUẬT TOÁN 1 trái ← 1; phải ← n ",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 962
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.binary_search",
+            "steps": 13,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 5,
+          "png": "screenshots/algorithm-binary_search-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 877,
+              "h": 268,
+              "area": 234969
+            },
+            "svg_rect": {
+              "w": 714,
+              "h": 268,
+              "area": 191352
+            },
+            "svg_shapes": 31,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 7,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh 9 với 8,5: 9 lớn hơn → giá trị cần tìm (nếu có) nằm ở nửa TRÁI. Loại bỏ nửa phải.",
+            "step_indicator": "Bước 6 / 13",
+            "stage_text_len": 48,
+            "stage_text": "4 0 5,5 1 6 2 6,5 3 7 4 8 5 8,5 6 9 7 9,5 8 10 9",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần INPUT Dãy 10 mức điểm đã xếp tăng dần OUTPUT Vị trí của mức điểm 8,5, hoặc kết luận không có THUẬT TOÁN Tìm kiếm nhị phân DỮ LIỆU [4; 5,5; 6; 6,5; 7; 8; 8,5; 9; 9,5; 10] — cần tìm: 8,5 cần tìm 8,5 trái 5 phải 9 giữa 7 THUẬT TOÁN 1 trái ← 1; ph",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 1054
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.binary_search",
+            "steps": 13,
+            "cursor": 5,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-binary_search-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 877,
+              "h": 268,
+              "area": 234969
+            },
+            "svg_rect": {
+              "w": 714,
+              "h": 268,
+              "area": 191352
+            },
+            "svg_shapes": 30,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 7,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Tìm thấy 8,5 tại vị trí thứ 7. Chỉ mất 4 lần so sánh (tuần tự có thể mất tới 10).",
+            "step_indicator": "Bước 13 / 13",
+            "stage_text_len": 48,
+            "stage_text": "4 0 5,5 1 6 2 6,5 3 7 4 8 5 8,5 6 9 7 9,5 8 10 9",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm điểm 8,5 trong sổ điểm đã sắp thứ tự tăng dần INPUT Dãy 10 mức điểm đã xếp tăng dần OUTPUT Vị trí của mức điểm 8,5, hoặc kết luận không có THUẬT TOÁN Tìm kiếm nhị phân DỮ LIỆU [4; 5,5; 6; 6,5; 7; 8; 8,5; 9; 9,5; 10] — cần tìm: 8,5 cần tìm 8,5 trái 6 phải 6 giữa 6 THUẬT TOÁN 1 trái ← 1; ph",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Tìm thấy 8,5 tại vị trí thứ 7. Chỉ mất 4 lần so sánh (tuần tự có thể mất tới 10).",
+            "overflow_x": false,
+            "body_len": 917
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.binary_search",
+            "steps": 13,
+            "cursor": 12,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-bounded_control_flow-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 853,
+              "h": 180,
+              "area": 153540
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 2,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Xét x = 2: 2 <= 14 → ĐÚNG, vào thân vòng lặp (lượt 1).",
+            "step_indicator": "Bước 1 / 12",
+            "stage_text_len": 47,
+            "stage_text": "THUẬT TOÁN 1 trong khi x <= 14 lặp: 2 x ← x + 3",
+            "observer_text": "QUAN SÁT x 2",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 390
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.bounded_control_flow",
+            "steps": 12,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 4,
+          "png": "screenshots/algorithm-bounded_control_flow-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 853,
+              "h": 180,
+              "area": 153540
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 2,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Xét x = 8: 8 <= 14 → ĐÚNG, vào thân vòng lặp (lượt 3).",
+            "step_indicator": "Bước 5 / 12",
+            "stage_text_len": 47,
+            "stage_text": "THUẬT TOÁN 1 trong khi x <= 14 lặp: 2 x ← x + 3",
+            "observer_text": "QUAN SÁT x 8",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 390
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.bounded_control_flow",
+            "steps": 12,
+            "cursor": 4,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-bounded_control_flow-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 853,
+              "h": 180,
+              "area": 153540
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 2,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 12 / 12",
+            "stage_text_len": 47,
+            "stage_text": "THUẬT TOÁN 1 trong khi x <= 14 lặp: 2 x ← x + 3",
+            "observer_text": "QUAN SÁT x 17",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Chương trình kết thúc. x = 17.",
+            "overflow_x": false,
+            "body_len": 304
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.bounded_control_flow",
+            "steps": 12,
+            "cursor": 11,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-bubble_sort-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 268,
+              "area": 272288
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 21,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 6,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Sắp xếp nổi bọt tăng dần: lặp lại việc so sánh từng cặp kề nhau, đổi chỗ nếu sai thứ tự.",
+            "step_indicator": "Bước 1 / 40",
+            "stage_text_len": 41,
+            "stage_text": "172 0 158 1 180 2 165 3 175 4 160 5 168 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt INPUT Chiều cao của 7 thành viên đội bóng rổ (cm) OUTPUT Danh sách chiều cao đã xếp tăng dần THUẬT TOÁN Sắp xếp nổi bọt DỮ LIỆU [172; 158; 180; 165; 175; 160; 168] — thứ tự: tăng dần THUẬT TOÁN 1 với mỗi lượt từ 1 đến n − 1: 2 với",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 939
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.bubble_sort",
+            "steps": 40,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 16,
+          "png": "screenshots/algorithm-bubble_sort-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 268,
+              "area": 272288
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 23,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 6,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh cặp kề (172, 175): có cần đổi chỗ không?",
+            "step_indicator": "Bước 17 / 40",
+            "stage_text_len": 41,
+            "stage_text": "158 0 165 1 172 2 175 3 160 4 168 5 180 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt INPUT Chiều cao của 7 thành viên đội bóng rổ (cm) OUTPUT Danh sách chiều cao đã xếp tăng dần THUẬT TOÁN Sắp xếp nổi bọt DỮ LIỆU [172; 158; 180; 165; 175; 160; 168] — thứ tự: tăng dần lượt 2 THUẬT TOÁN 1 với mỗi lượt từ 1 đến n − 1",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 1079
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.bubble_sort",
+            "steps": 40,
+            "cursor": 16,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-bubble_sort-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 268,
+              "area": 272288
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 21,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 6,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Dãy đã sắp xếp tăng dần xong sau 11 lần đổi chỗ.",
+            "step_indicator": "Bước 40 / 40",
+            "stage_text_len": 41,
+            "stage_text": "158 0 160 1 165 2 168 3 172 4 175 5 180 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt INPUT Chiều cao của 7 thành viên đội bóng rổ (cm) OUTPUT Danh sách chiều cao đã xếp tăng dần THUẬT TOÁN Sắp xếp nổi bọt DỮ LIỆU [172; 158; 180; 165; 175; 160; 168] — thứ tự: tăng dần lượt 6 THUẬT TOÁN 1 với mỗi lượt từ 1 đến n − 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Dãy đã sắp xếp tăng dần xong sau 11 lần đổi chỗ.",
+            "overflow_x": false,
+            "body_len": 850
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.bubble_sort",
+            "steps": 40,
+            "cursor": 39,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.count_if",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-count_if-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 935,
+              "h": 268,
+              "area": 250685
+            },
+            "svg_rect": {
+              "w": 714,
+              "h": 268,
+              "area": 191352
+            },
+            "svg_shapes": 30,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Khởi tạo dem = 0. Sẽ duyệt từng phần tử, xét điều kiện \"lớn hơn hoặc bằng 8\".",
+            "step_indicator": "Bước 1 / 17",
+            "stage_text_len": 57,
+            "stage_text": "8,2 0 6,5 1 9,1 2 7,8 3 8 4 5,9 5 8,7 6 7,2 7 9,4 8 6,8 9",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Đếm số học sinh đạt điểm trung bình môn từ 8,0 trở lên INPUT Điểm trung bình môn Tin học của 10 học sinh OUTPUT Số lượng học sinh đạt loại giỏi (điểm ≥ 8,0) THUẬT TOÁN Đếm theo điều kiện DỮ LIỆU [8,2; 6,5; 9,1; 7,8; 8; 5,9; 8,7; 7,2; 9,4; 6,8] — điều kiện: ≥ 8 đếm 0 THUẬT TOÁN 1 dem ← 0 2 với",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 743
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.count_if",
+            "steps": 17,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 6,
+          "png": "screenshots/algorithm-count_if-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 935,
+              "h": 268,
+              "area": 250685
+            },
+            "svg_rect": {
+              "w": 714,
+              "h": 268,
+              "area": 191352
+            },
+            "svg_shapes": 31,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Xét a[3] = 7,8: có thỏa điều kiện \"lớn hơn hoặc bằng 8\" không?",
+            "step_indicator": "Bước 7 / 17",
+            "stage_text_len": 57,
+            "stage_text": "8,2 0 6,5 1 9,1 2 7,8 3 8 4 5,9 5 8,7 6 7,2 7 9,4 8 6,8 9",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Đếm số học sinh đạt điểm trung bình môn từ 8,0 trở lên INPUT Điểm trung bình môn Tin học của 10 học sinh OUTPUT Số lượng học sinh đạt loại giỏi (điểm ≥ 8,0) THUẬT TOÁN Đếm theo điều kiện DỮ LIỆU [8,2; 6,5; 9,1; 7,8; 8; 5,9; 8,7; 7,2; 9,4; 6,8] — điều kiện: ≥ 8 đếm 2 THUẬT TOÁN 1 dem ← 0 2 với",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 914
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.count_if",
+            "steps": 17,
+            "cursor": 6,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-count_if-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 935,
+              "h": 268,
+              "area": 250685
+            },
+            "svg_rect": {
+              "w": 714,
+              "h": 268,
+              "area": 191352
+            },
+            "svg_shapes": 30,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Duyệt hết dãy. Số phần tử thỏa điều kiện \"lớn hơn hoặc bằng 8\" là 5.",
+            "step_indicator": "Bước 17 / 17",
+            "stage_text_len": 57,
+            "stage_text": "8,2 0 6,5 1 9,1 2 7,8 3 8 4 5,9 5 8,7 6 7,2 7 9,4 8 6,8 9",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Đếm số học sinh đạt điểm trung bình môn từ 8,0 trở lên INPUT Điểm trung bình môn Tin học của 10 học sinh OUTPUT Số lượng học sinh đạt loại giỏi (điểm ≥ 8,0) THUẬT TOÁN Đếm theo điều kiện DỮ LIỆU [8,2; 6,5; 9,1; 7,8; 8; 5,9; 8,7; 7,2; 9,4; 6,8] — điều kiện: ≥ 8 đếm 5 THUẬT TOÁN 1 dem ← 0 2 với",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Số phần tử thỏa điều kiện \"lớn hơn hoặc bằng 8\" là 5.",
+            "overflow_x": false,
+            "body_len": 847
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.count_if",
+            "steps": 17,
+            "cursor": 16,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.find_max",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-find_max-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 914,
+              "h": 268,
+              "area": 244885
+            },
+            "svg_rect": {
+              "w": 574,
+              "h": 268,
+              "area": 153832
+            },
+            "svg_shapes": 32,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Bắt đầu: tạm coi phần tử đầu tiên An (7,5) là lớn nhất.",
+            "step_indicator": "Bước 1 / 10",
+            "stage_text_len": 74,
+            "stage_text": "7,5 An 0 9 Bình 1 6,5 Chi 2 8 Dũng 3 5,5 Em 4 8,5 Giang 5 7 Hà 6 6 Khang 7",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn INPUT Danh sách điểm kiểm tra của 8 học sinh tổ 1 lớp 10A OUTPUT Học sinh có điểm cao nhất và giá trị điểm đó THUẬT TOÁN Tìm giá trị lớn nhất DỮ LIỆU [7,5; 9; 6,5; 8; 5,5; 8,5; 7; 6] max 7,5 vị trí 0 THUẬT TOÁN 1 max ← a[1]; vt ← 1 2 với m",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 875
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.find_max",
+            "steps": 10,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 4,
+          "png": "screenshots/algorithm-find_max-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 914,
+              "h": 268,
+              "area": 244885
+            },
+            "svg_rect": {
+              "w": 574,
+              "h": 268,
+              "area": 153832
+            },
+            "svg_shapes": 34,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh Dũng (8) với max = 9: max có được cập nhật không?",
+            "step_indicator": "Bước 5 / 10",
+            "stage_text_len": 74,
+            "stage_text": "7,5 An 0 9 Bình 1 6,5 Chi 2 8 Dũng 3 5,5 Em 4 8,5 Giang 5 7 Hà 6 6 Khang 7",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn INPUT Danh sách điểm kiểm tra của 8 học sinh tổ 1 lớp 10A OUTPUT Học sinh có điểm cao nhất và giá trị điểm đó THUẬT TOÁN Tìm giá trị lớn nhất DỮ LIỆU [7,5; 9; 6,5; 8; 5,5; 8,5; 7; 6] max 9 vị trí 1 THUẬT TOÁN 1 max ← a[1]; vt ← 1 2 với mỗi",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 1033
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.find_max",
+            "steps": 10,
+            "cursor": 4,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-find_max-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 914,
+              "h": 268,
+              "area": 244885
+            },
+            "svg_rect": {
+              "w": 574,
+              "h": 268,
+              "area": 153832
+            },
+            "svg_shapes": 32,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Duyệt hết dãy. Phần tử lớn nhất là Bình (9), ở vị trí thứ 2.",
+            "step_indicator": "Bước 10 / 10",
+            "stage_text_len": 74,
+            "stage_text": "7,5 An 0 9 Bình 1 6,5 Chi 2 8 Dũng 3 5,5 Em 4 8,5 Giang 5 7 Hà 6 6 Khang 7",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn INPUT Danh sách điểm kiểm tra của 8 học sinh tổ 1 lớp 10A OUTPUT Học sinh có điểm cao nhất và giá trị điểm đó THUẬT TOÁN Tìm giá trị lớn nhất DỮ LIỆU [7,5; 9; 6,5; 8; 5,5; 8,5; 7; 6] max 9 vị trí 1 THUẬT TOÁN 1 max ← a[1]; vt ← 1 2 với mỗi",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Phần tử lớn nhất là Bình (9), ở vị trí thứ 2.",
+            "overflow_x": false,
+            "body_len": 836
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.find_max",
+            "steps": 10,
+            "cursor": 9,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.find_min",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-find_min-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 914,
+              "h": 268,
+              "area": 245002
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 28,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Bắt đầu: tạm coi phần tử đầu tiên Thứ 2 (28) là nhỏ nhất.",
+            "step_indicator": "Bước 1 / 10",
+            "stage_text_len": 73,
+            "stage_text": "28 Thứ 2 0 26 Thứ 3 1 31 Thứ 4 2 24 Thứ 5 3 27 Thứ 6 4 30 Thứ 7 5 25 CN 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm ngày có nhiệt độ trung bình thấp nhất trong tuần INPUT Nhiệt độ trung bình của 7 ngày trong tuần (độ C) OUTPUT Ngày có nhiệt độ thấp nhất và giá trị nhiệt độ đó THUẬT TOÁN Tìm giá trị nhỏ nhất DỮ LIỆU [28; 26; 31; 24; 27; 30; 25] min 28 vị trí 0 THUẬT TOÁN 1 min ← a[1]; vt ← 1 2 với mỗi i",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 871
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.find_min",
+            "steps": 10,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 4,
+          "png": "screenshots/algorithm-find_min-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 914,
+              "h": 268,
+              "area": 245002
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 30,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh Thứ 5 (24) với min = 26: min có được cập nhật không?",
+            "step_indicator": "Bước 5 / 10",
+            "stage_text_len": 73,
+            "stage_text": "28 Thứ 2 0 26 Thứ 3 1 31 Thứ 4 2 24 Thứ 5 3 27 Thứ 6 4 30 Thứ 7 5 25 CN 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm ngày có nhiệt độ trung bình thấp nhất trong tuần INPUT Nhiệt độ trung bình của 7 ngày trong tuần (độ C) OUTPUT Ngày có nhiệt độ thấp nhất và giá trị nhiệt độ đó THUẬT TOÁN Tìm giá trị nhỏ nhất DỮ LIỆU [28; 26; 31; 24; 27; 30; 25] min 26 vị trí 1 THUẬT TOÁN 1 min ← a[1]; vt ← 1 2 với mỗi i",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 1038
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.find_min",
+            "steps": 10,
+            "cursor": 4,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-find_min-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 914,
+              "h": 268,
+              "area": 245002
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 28,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Duyệt hết dãy. Phần tử nhỏ nhất là Thứ 5 (24), ở vị trí thứ 4.",
+            "step_indicator": "Bước 10 / 10",
+            "stage_text_len": 73,
+            "stage_text": "28 Thứ 2 0 26 Thứ 3 1 31 Thứ 4 2 24 Thứ 5 3 27 Thứ 6 4 30 Thứ 7 5 25 CN 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm ngày có nhiệt độ trung bình thấp nhất trong tuần INPUT Nhiệt độ trung bình của 7 ngày trong tuần (độ C) OUTPUT Ngày có nhiệt độ thấp nhất và giá trị nhiệt độ đó THUẬT TOÁN Tìm giá trị nhỏ nhất DỮ LIỆU [28; 26; 31; 24; 27; 30; 25] min 24 vị trí 3 THUẬT TOÁN 1 min ← a[1]; vt ← 1 2 với mỗi i",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Phần tử nhỏ nhất là Thứ 5 (24), ở vị trí thứ 4.",
+            "overflow_x": false,
+            "body_len": 839
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.find_min",
+            "steps": 10,
+            "cursor": 9,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-insertion_sort-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 896,
+              "h": 268,
+              "area": 240048
+            },
+            "svg_rect": {
+              "w": 434,
+              "h": 268,
+              "area": 116312
+            },
+            "svg_shapes": 18,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 7,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Sắp xếp chèn tăng dần: coi phần tử đầu là \"phần đã sắp\"; lần lượt chèn từng phần tử sau vào đúng chỗ.",
+            "step_indicator": "Bước 1 / 33",
+            "stage_text_len": 23,
+            "stage_text": "7 0 3 1 9 2 4 3 8 4 2 5",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp các quân bài tăng dần bằng phương pháp chèn INPUT Dãy 6 quân bài trên tay theo thứ tự đang cầm OUTPUT Dãy quân bài đã xếp tăng dần THUẬT TOÁN Sắp xếp chèn DỮ LIỆU [7; 3; 9; 4; 8; 2] — thứ tự: tăng dần THUẬT TOÁN 1 coi a[1] là phần đã sắp 2 với mỗi i từ 2 đến n: 3 k ← a[i]; j ← i − 1 4",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 857
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.insertion_sort",
+            "steps": 33,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 13,
+          "png": "screenshots/algorithm-insertion_sort-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 896,
+              "h": 268,
+              "area": 240048
+            },
+            "svg_rect": {
+              "w": 434,
+              "h": 268,
+              "area": 116312
+            },
+            "svg_shapes": 20,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 7,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh 3 với giá trị chèn 4: có phải dời 3 sang phải không?",
+            "step_indicator": "Bước 14 / 33",
+            "stage_text_len": 23,
+            "stage_text": "3 0 7 1 7 2 9 3 8 4 2 5",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp các quân bài tăng dần bằng phương pháp chèn INPUT Dãy 6 quân bài trên tay theo thứ tự đang cầm OUTPUT Dãy quân bài đã xếp tăng dần THUẬT TOÁN Sắp xếp chèn DỮ LIỆU [7; 3; 9; 4; 8; 2] — thứ tự: tăng dần giá trị chèn 4 THUẬT TOÁN 1 coi a[1] là phần đã sắp 2 với mỗi i từ 2 đến n: 3 k ← a[",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 1000
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.insertion_sort",
+            "steps": 33,
+            "cursor": 13,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-insertion_sort-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 896,
+              "h": 268,
+              "area": 240048
+            },
+            "svg_rect": {
+              "w": 434,
+              "h": 268,
+              "area": 116312
+            },
+            "svg_shapes": 18,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 7,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Dãy đã sắp xếp tăng dần xong bằng phương pháp chèn.",
+            "step_indicator": "Bước 33 / 33",
+            "stage_text_len": 23,
+            "stage_text": "2 0 3 1 4 2 7 3 8 4 9 5",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp các quân bài tăng dần bằng phương pháp chèn INPUT Dãy 6 quân bài trên tay theo thứ tự đang cầm OUTPUT Dãy quân bài đã xếp tăng dần THUẬT TOÁN Sắp xếp chèn DỮ LIỆU [7; 3; 9; 4; 8; 2] — thứ tự: tăng dần giá trị chèn 2 THUẬT TOÁN 1 coi a[1] là phần đã sắp 2 với mỗi i từ 2 đến n: 3 k ← a[",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Dãy đã sắp xếp tăng dần xong bằng phương pháp chèn.",
+            "overflow_x": false,
+            "body_len": 774
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.insertion_sort",
+            "steps": 33,
+            "cursor": 32,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.linear_search",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-linear_search-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 952,
+              "h": 268,
+              "area": 255241
+            },
+            "svg_rect": {
+              "w": 574,
+              "h": 268,
+              "area": 153832
+            },
+            "svg_shapes": 24,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 4,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Cần tìm giá trị 189. Duyệt lần lượt từ đầu dãy.",
+            "step_indicator": "Bước 1 / 8",
+            "stage_text_len": 47,
+            "stage_text": "105 0 213 1 178 2 154 3 231 4 189 5 122 6 167 7",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm thí sinh có số báo danh 189 trong danh sách phòng thi INPUT Danh sách 8 số báo danh xếp theo chỗ ngồi (chưa theo thứ tự) OUTPUT Vị trí của thí sinh 189, hoặc kết luận không có trong phòng THUẬT TOÁN Tìm kiếm tuần tự DỮ LIỆU [105; 213; 178; 154; 231; 189; 122; 167] — cần tìm: 189 cần tìm 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 824
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.linear_search",
+            "steps": 8,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 3,
+          "png": "screenshots/algorithm-linear_search-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 952,
+              "h": 268,
+              "area": 255241
+            },
+            "svg_rect": {
+              "w": 574,
+              "h": 268,
+              "area": 153832
+            },
+            "svg_shapes": 25,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 4,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh a[2] = 178 với 189: có khớp không?",
+            "step_indicator": "Bước 4 / 8",
+            "stage_text_len": 47,
+            "stage_text": "105 0 213 1 178 2 154 3 231 4 189 5 122 6 167 7",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm thí sinh có số báo danh 189 trong danh sách phòng thi INPUT Danh sách 8 số báo danh xếp theo chỗ ngồi (chưa theo thứ tự) OUTPUT Vị trí của thí sinh 189, hoặc kết luận không có trong phòng THUẬT TOÁN Tìm kiếm tuần tự DỮ LIỆU [105; 213; 178; 154; 231; 189; 122; 167] — cần tìm: 189 cần tìm 1",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 1006
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.linear_search",
+            "steps": 8,
+            "cursor": 3,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-linear_search-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 952,
+              "h": 268,
+              "area": 255241
+            },
+            "svg_rect": {
+              "w": 574,
+              "h": 268,
+              "area": 153832
+            },
+            "svg_shapes": 24,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 4,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Tìm thấy 189 tại vị trí thứ 6. Số lần so sánh: 6.",
+            "step_indicator": "Bước 8 / 8",
+            "stage_text_len": 47,
+            "stage_text": "105 0 213 1 178 2 154 3 231 4 189 5 122 6 167 7",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tìm thí sinh có số báo danh 189 trong danh sách phòng thi INPUT Danh sách 8 số báo danh xếp theo chỗ ngồi (chưa theo thứ tự) OUTPUT Vị trí của thí sinh 189, hoặc kết luận không có trong phòng THUẬT TOÁN Tìm kiếm tuần tự DỮ LIỆU [105; 213; 178; 154; 231; 189; 122; 167] — cần tìm: 189 cần tìm 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Tìm thấy 189 tại vị trí thứ 6. Số lần so sánh: 6.",
+            "overflow_x": false,
+            "body_len": 824
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.linear_search",
+            "steps": 8,
+            "cursor": 7,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.scan",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-scan-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 683,
+              "h": 268,
+              "area": 183061
+            },
+            "svg_rect": {
+              "w": 364,
+              "h": 268,
+              "area": 97552
+            },
+            "svg_shapes": 15,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Bắt đầu: tạm coi phần tử đầu tiên là max = 3.",
+            "step_indicator": "Bước 1 / 8",
+            "stage_text_len": 19,
+            "stage_text": "3 0 7 1 2 2 9 3 4 4",
+            "observer_text": "QUAN SÁT max 3 vị trí 0 THUẬT TOÁN 1 max ← a[1]; vt ← 1 2 với mỗi i từ 2 đến n: 3 nếu a[i] > max thì 4 max ← a[i]; vt ← i 5 trả về max và vị trí vt",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 401
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.scan",
+            "steps": 8,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 3,
+          "png": "screenshots/algorithm-scan-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 683,
+              "h": 268,
+              "area": 183061
+            },
+            "svg_rect": {
+              "w": 364,
+              "h": 268,
+              "area": 97552
+            },
+            "svg_shapes": 17,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh a[3] = 2 với max = 7: max có được cập nhật không?",
+            "step_indicator": "Bước 4 / 8",
+            "stage_text_len": 19,
+            "stage_text": "3 0 7 1 2 2 9 3 4 4",
+            "observer_text": "QUAN SÁT max 7 vị trí 1 THUẬT TOÁN 1 max ← a[1]; vt ← 1 2 với mỗi i từ 2 đến n: 3 nếu a[i] > max thì 4 max ← a[i]; vt ← i 5 trả về max và vị trí vt",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 413
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.scan",
+            "steps": 8,
+            "cursor": 3,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-scan-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 683,
+              "h": 268,
+              "area": 183061
+            },
+            "svg_rect": {
+              "w": 364,
+              "h": 268,
+              "area": 97552
+            },
+            "svg_shapes": 15,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Duyệt hết dãy. max = 9, tại vị trí thứ 4.",
+            "step_indicator": "Bước 8 / 8",
+            "stage_text_len": 19,
+            "stage_text": "3 0 7 1 2 2 9 3 4 4",
+            "observer_text": "QUAN SÁT max 9 vị trí 3 THUẬT TOÁN 1 max ← a[1]; vt ← 1 2 với mỗi i từ 2 đến n: 3 nếu a[i] > max thì 4 max ← a[i]; vt ← i 5 trả về max và vị trí vt",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Duyệt hết dãy. max = 9, tại vị trí thứ 4.",
+            "overflow_x": false,
+            "body_len": 439
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.scan",
+            "steps": 8,
+            "cursor": 7,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "how": "derived-from-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-selection_sort-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1015,
+              "h": 268,
+              "area": 271987
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 21,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 6,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Sắp xếp chọn tăng dần: mỗi lượt TÌM phần tử nhỏ nhất của phần chưa sắp rồi đưa về đầu phần đó.",
+            "step_indicator": "Bước 1 / 43",
+            "stage_text_len": 41,
+            "stage_text": "172 0 158 1 180 2 165 3 175 4 160 5 168 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt INPUT Chiều cao của 7 thành viên đội bóng rổ (cm) OUTPUT Danh sách chiều cao đã xếp tăng dần THUẬT TOÁN Sắp xếp chọn DỮ LIỆU [172; 158; 180; 165; 175; 160; 168] — thứ tự: tăng dần THUẬT TOÁN 1 với mỗi i từ 1 đến n − 1: 2 vt ← i (v",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 971
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.selection_sort",
+            "steps": 43,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 17,
+          "png": "screenshots/algorithm-selection_sort-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1015,
+              "h": 268,
+              "area": 271987
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 23,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 6,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "So sánh 168 với nhỏ nhất hiện tại 160: có ghi nhớ vị trí mới không?",
+            "step_indicator": "Bước 18 / 43",
+            "stage_text_len": 41,
+            "stage_text": "158 0 172 1 180 2 165 3 175 4 160 5 168 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt INPUT Chiều cao của 7 thành viên đội bóng rổ (cm) OUTPUT Danh sách chiều cao đã xếp tăng dần THUẬT TOÁN Sắp xếp chọn DỮ LIỆU [172; 158; 180; 165; 175; 160; 168] — thứ tự: tăng dần vi_tri_cuc_tri 6 THUẬT TOÁN 1 với mỗi i từ 1 đến n",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 1149
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.selection_sort",
+            "steps": 43,
+            "cursor": 17,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-selection_sort-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1015,
+              "h": 268,
+              "area": 271987
+            },
+            "svg_rect": {
+              "w": 504,
+              "h": 268,
+              "area": 135072
+            },
+            "svg_shapes": 21,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 6,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Dãy đã sắp xếp tăng dần xong sau 6 lượt chọn, 5 lần đổi chỗ.",
+            "step_indicator": "Bước 43 / 43",
+            "stage_text_len": 41,
+            "stage_text": "158 0 160 1 165 2 168 3 172 4 175 5 180 6",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt INPUT Chiều cao của 7 thành viên đội bóng rổ (cm) OUTPUT Danh sách chiều cao đã xếp tăng dần THUẬT TOÁN Sắp xếp chọn DỮ LIỆU [172; 158; 180; 165; 175; 160; 168] — thứ tự: tăng dần vi_tri_cuc_tri 6 THUẬT TOÁN 1 với mỗi i từ 1 đến n",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Dãy đã sắp xếp tăng dần xong sau 6 lượt chọn, 5 lần đổi chỗ.",
+            "overflow_x": false,
+            "body_len": 891
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.selection_sort",
+            "steps": 43,
+            "cursor": 42,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "algorithm.sum_if",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/algorithm-sum_if-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 268,
+              "area": 272288
+            },
+            "svg_rect": {
+              "w": 644,
+              "h": 268,
+              "area": 172592
+            },
+            "svg_shapes": 27,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Khởi tạo tong = 0. Sẽ duyệt từng phần tử, xét điều kiện \"lớn hơn hoặc bằng 80\".",
+            "step_indicator": "Bước 1 / 16",
+            "stage_text_len": 47,
+            "stage_text": "45 0 120 1 80 2 30 3 95 4 150 5 60 6 25 7 110 8",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tính tổng tiền các đơn hàng có giá trị từ 80 nghìn đồng trở lên INPUT Số tiền của 9 đơn hàng trong buổi sáng (nghìn đồng) OUTPUT Tổng tiền của các đơn hàng ≥ 80 nghìn đồng THUẬT TOÁN Tính tổng theo điều kiện DỮ LIỆU [45; 120; 80; 30; 95; 150; 60; 25; 110] — điều kiện: ≥ 80 tổng 0 THUẬT TOÁN 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 771
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.sum_if",
+            "steps": 16,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 6,
+          "png": "screenshots/algorithm-sum_if-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 268,
+              "area": 272288
+            },
+            "svg_rect": {
+              "w": 644,
+              "h": 268,
+              "area": 172592
+            },
+            "svg_shapes": 28,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Xét a[3] = 30: có thỏa điều kiện \"lớn hơn hoặc bằng 80\" không?",
+            "step_indicator": "Bước 7 / 16",
+            "stage_text_len": 47,
+            "stage_text": "45 0 120 1 80 2 30 3 95 4 150 5 60 6 25 7 110 8",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tính tổng tiền các đơn hàng có giá trị từ 80 nghìn đồng trở lên INPUT Số tiền của 9 đơn hàng trong buổi sáng (nghìn đồng) OUTPUT Tổng tiền của các đơn hàng ≥ 80 nghìn đồng THUẬT TOÁN Tính tổng theo điều kiện DỮ LIỆU [45; 120; 80; 30; 95; 150; 60; 25; 110] — điều kiện: ≥ 80 tổng 200 THUẬT TOÁN",
+            "predict_bar": true,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 936
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.sum_if",
+            "steps": 16,
+            "cursor": 6,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/algorithm-sum_if-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 268,
+              "area": 272288
+            },
+            "svg_rect": {
+              "w": 644,
+              "h": 268,
+              "area": 172592
+            },
+            "svg_shapes": 27,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 5,
+            "pseudocode_current": 1,
+            "array_columns": 0,
+            "narration": "Duyệt hết dãy. Tổng thỏa điều kiện \"lớn hơn hoặc bằng 80\" là 555.",
+            "step_indicator": "Bước 16 / 16",
+            "stage_text_len": 47,
+            "stage_text": "45 0 120 1 80 2 30 3 95 4 150 5 60 6 25 7 110 8",
+            "observer_text": "QUAN SÁT XÁC ĐỊNH BÀI TOÁN Tính tổng tiền các đơn hàng có giá trị từ 80 nghìn đồng trở lên INPUT Số tiền của 9 đơn hàng trong buổi sáng (nghìn đồng) OUTPUT Tổng tiền của các đơn hàng ≥ 80 nghìn đồng THUẬT TOÁN Tính tổng theo điều kiện DỮ LIỆU [45; 120; 80; 30; 95; 150; 60; 25; 110] — điều kiện: ≥ 80 tổng 555 THUẬT TOÁN",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Tổng thỏa điều kiện \"lớn hơn hoặc bằng 80\" là 555.",
+            "overflow_x": false,
+            "body_len": 811
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "algorithm.sum_if",
+            "steps": 16,
+            "cursor": 15,
+            "hasPredict": true,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "binary.base_conversion",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/binary-base_conversion-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 645,
+              "h": 180,
+              "area": 116173
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 1 / 5",
+            "stage_text_len": 0,
+            "stage_text": "",
+            "observer_text": "QUAN SÁT Cơ số nguồn: 10 · Cơ số đích: 16 Giá trị vào: 2026 Giá trị thập phân trung gian: 2026 Chiến lược: chia lấy dư",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 378
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.base_conversion",
+            "steps": 5,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 2,
+          "png": "screenshots/binary-base_conversion-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 645,
+              "h": 180,
+              "area": 116173
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 3,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 3 / 5",
+            "stage_text_len": 97,
+            "stage_text": "Phép chia Thương Dư Chữ số 2026 : 16 126 10 A 126 : 16 7 14 E Chữ số đã thu (đọc ngược số dư): EA",
+            "observer_text": "QUAN SÁT Cơ số nguồn: 10 · Cơ số đích: 16 Giá trị vào: 2026 Giá trị thập phân trung gian: 2026 Chiến lược: chia lấy dư",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 487
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.base_conversion",
+            "steps": 5,
+            "cursor": 2,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/binary-base_conversion-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 645,
+              "h": 180,
+              "area": 116173
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 4,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 5 / 5",
+            "stage_text_len": 107,
+            "stage_text": "Phép chia Thương Dư Chữ số 2026 : 16 126 10 A 126 : 16 7 14 E 7 : 16 0 7 7 2026 (cơ số 10) = 7EA (cơ số 16)",
+            "observer_text": "QUAN SÁT Cơ số nguồn: 10 · Cơ số đích: 16 Giá trị vào: 2026 Giá trị thập phân trung gian: 2026 Chiến lược: chia lấy dư",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 459
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.base_conversion",
+            "steps": 5,
+            "cursor": 4,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "binary.character_encoding",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/binary-character_encoding-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 689,
+              "h": 180,
+              "area": 124012
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 2,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Xét ký tự thứ 1: A.",
+            "step_indicator": "Bước 1 / 13",
+            "stage_text_len": 59,
+            "stage_text": "Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' … … …",
+            "observer_text": "QUAN SÁT Ký tự đang xét: 'A'",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 333
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.character_encoding",
+            "steps": 13,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 5,
+          "png": "screenshots/binary-character_encoding-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 689,
+              "h": 180,
+              "area": 124012
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 2,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "16 : 2 = 8 dư 0 → chữ số 0. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả.",
+            "step_indicator": "Bước 6 / 13",
+            "stage_text_len": 65,
+            "stage_text": "Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 …",
+            "observer_text": "QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 627
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.character_encoding",
+            "steps": 13,
+            "cursor": 5,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/binary-character_encoding-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 689,
+              "h": 180,
+              "area": 124012
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 2,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 13 / 13",
+            "stage_text_len": 71,
+            "stage_text": "Vị trí Ký tự Mã (code point) Thập phân Nhị phân 1 'A' U+0041 65 1000001",
+            "observer_text": "QUAN SÁT Ký tự đang xét: 'A' Mã thập phân: 65 Dãy bit: 1000001",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": "Đã mã hoá 1 ký tự theo bảng mã ASCII.",
+            "overflow_x": false,
+            "body_len": 398
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.character_encoding",
+            "steps": 13,
+            "cursor": 12,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/binary-decimal_to_binary-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 584,
+              "h": 182,
+              "area": 106220
+            },
+            "svg_rect": {
+              "w": 276,
+              "h": 150,
+              "area": 41400
+            },
+            "svg_shapes": 16,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Bấm vào từng bit để bật/tắt. Nhị phân 1101 = 13 (hệ thập phân).",
+            "step_indicator": null,
+            "stage_text_len": 26,
+            "stage_text": "8 1 +8 4 1 +4 2 0 0 1 1 +1",
+            "observer_text": "QUAN SÁT GIÁ TRỊ THẬP PHÂN 13 NHỊ PHÂN 1101 SỐ BIT 4 TRỌNG SỐ 8 · 4 · 2 · 1 BIT ĐANG BẬT 8 + 4 + 1 = 13",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 374
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.decimal_to_binary",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 0,
+          "png": "screenshots/binary-decimal_to_binary-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 584,
+              "h": 182,
+              "area": 106220
+            },
+            "svg_rect": {
+              "w": 276,
+              "h": 150,
+              "area": 41400
+            },
+            "svg_shapes": 16,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Bấm vào từng bit để bật/tắt. Nhị phân 1101 = 13 (hệ thập phân).",
+            "step_indicator": null,
+            "stage_text_len": 26,
+            "stage_text": "8 1 +8 4 1 +4 2 0 0 1 1 +1",
+            "observer_text": "QUAN SÁT GIÁ TRỊ THẬP PHÂN 13 NHỊ PHÂN 1101 SỐ BIT 4 TRỌNG SỐ 8 · 4 · 2 · 1 BIT ĐANG BẬT 8 + 4 + 1 = 13",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 374
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.decimal_to_binary",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/binary-decimal_to_binary-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 584,
+              "h": 182,
+              "area": 106220
+            },
+            "svg_rect": {
+              "w": 276,
+              "h": 150,
+              "area": 41400
+            },
+            "svg_shapes": 16,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Bấm vào từng bit để bật/tắt. Nhị phân 1101 = 13 (hệ thập phân).",
+            "step_indicator": null,
+            "stage_text_len": 26,
+            "stage_text": "8 1 +8 4 1 +4 2 0 0 1 1 +1",
+            "observer_text": "QUAN SÁT GIÁ TRỊ THẬP PHÂN 13 NHỊ PHÂN 1101 SỐ BIT 4 TRỌNG SỐ 8 · 4 · 2 · 1 BIT ĐANG BẬT 8 + 4 + 1 = 13",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 374
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "binary.decimal_to_binary",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "database.relational_table_query",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/database-relational_table_query-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 943,
+              "h": 273,
+              "area": 257448
+            },
+            "svg_rect": {
+              "w": 12,
+              "h": 12,
+              "area": 144
+            },
+            "svg_shapes": 1,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 9,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Đọc hàng 1: Tên = An, Tổ = A, Điểm = 9…",
+            "step_indicator": "Bước 1 / 32",
+            "stage_text_len": 133,
+            "stage_text": "Trạng thái Tên Tổ Điểm Số buổi vắng Đang xét An A 9 1 Bình B 8.5 0 Chi A 6 2 Dũng A 9 0 Hà B 7.5 3 Lan A 7.5 1 Minh A 6 0 Nga B 9.5 2",
+            "observer_text": "QUAN SÁT Bảng: 8 dòng · 4 cột Sắp xếp: Điểm giảm dần (ổn định) Kết quả hiện dần theo từng bước…",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 554
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "database.relational_table_query",
+            "steps": 32,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 12,
+          "png": "screenshots/database-relational_table_query-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 943,
+              "h": 273,
+              "area": 257448
+            },
+            "svg_rect": {
+              "w": 12,
+              "h": 12,
+              "area": 144
+            },
+            "svg_shapes": 1,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 9,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Đọc hàng 5: Tên = Hà, Tổ = B, Điểm = 7.5…",
+            "step_indicator": "Bước 13 / 32",
+            "stage_text_len": 150,
+            "stage_text": "Trạng thái Tên Tổ Điểm Số buổi vắng Giữ An A 9 1 Loại Bình B 8.5 0 Giữ Chi A 6 2 Giữ Dũng A 9 0 Đang xét Hà B 7.5 3 Lan A 7.5 1 Minh A 6 0 Nga B 9.5 2",
+            "observer_text": "QUAN SÁT Bảng: 8 dòng · 4 cột Sắp xếp: Điểm giảm dần (ổn định) Kết quả hiện dần theo từng bước…",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 574
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "database.relational_table_query",
+            "steps": 32,
+            "cursor": 12,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/database-relational_table_query-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 943,
+              "h": 183,
+              "area": 172575
+            },
+            "svg_rect": {
+              "w": 12,
+              "h": 12,
+              "area": 144
+            },
+            "svg_shapes": 1,
+            "tables_in_stage": 1,
+            "table_rows_in_stage": 6,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 32 / 32",
+            "stage_text_len": 120,
+            "stage_text": "Trạng thái Tên Tổ Điểm Số buổi vắng Giữ An A 9 1 Giữ Dũng A 9 0 Giữ Lan A 7.5 1 Không lấy Chi A 6 2 Không lấy Minh A 6 0",
+            "observer_text": "QUAN SÁT Bảng: 8 dòng · 4 cột Sắp xếp: Điểm giảm dần (ổn định) Kết quả: 3 dòng · Trung bình của Điểm = 8.5",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 539
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "database.relational_table_query",
+            "steps": 32,
+            "cursor": 31,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "generic.rule_scene",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/generic-rule_scene-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 696,
+              "h": 269,
+              "area": 187336
+            },
+            "svg_rect": {
+              "w": 600,
+              "h": 269,
+              "area": 161588
+            },
+            "svg_shapes": 13,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": null,
+            "stage_text_len": 16,
+            "stage_text": "A 0 B 0 Đầu ra 0",
+            "observer_text": "QUAN SÁT ĐỐI TƯỢNG A 0 B 0 ĐẦU RA 0 QUY TẮC Đầu ra = AND(A, B)",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 362
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "generic.rule_scene",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 0,
+          "png": "screenshots/generic-rule_scene-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 696,
+              "h": 269,
+              "area": 187336
+            },
+            "svg_rect": {
+              "w": 600,
+              "h": 269,
+              "area": 161588
+            },
+            "svg_shapes": 13,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": null,
+            "stage_text_len": 16,
+            "stage_text": "A 0 B 0 Đầu ra 0",
+            "observer_text": "QUAN SÁT ĐỐI TƯỢNG A 0 B 0 ĐẦU RA 0 QUY TẮC Đầu ra = AND(A, B)",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 362
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "generic.rule_scene",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/generic-rule_scene-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 696,
+              "h": 269,
+              "area": 187336
+            },
+            "svg_rect": {
+              "w": 600,
+              "h": 269,
+              "area": 161588
+            },
+            "svg_shapes": 13,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": null,
+            "stage_text_len": 16,
+            "stage_text": "A 0 B 0 Đầu ra 0",
+            "observer_text": "QUAN SÁT ĐỐI TƯỢNG A 0 B 0 ĐẦU RA 0 QUY TẮC Đầu ra = AND(A, B)",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 362
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "generic.rule_scene",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "logic.and_gate",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/logic-and_gate-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 762,
+              "h": 240,
+              "area": 182880
+            },
+            "svg_rect": {
+              "w": 460,
+              "h": 240,
+              "area": 110400
+            },
+            "svg_shapes": 14,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Bấm vào công tắc A hoặc B để bật/tắt. AND chỉ cho đầu ra 1 khi cả hai đầu vào đều là 1. Hiện tại: 0 AND 0 = 0.",
+            "step_indicator": null,
+            "stage_text_len": 24,
+            "stage_text": "AND 0 Đầu ra A = 0 B = 0",
+            "observer_text": "QUAN SÁT TRẠNG THÁI A 0 B 0 ĐẦU RA 0 BẢNG CHÂN TRỊ A B A AND B 0 0 0 0 1 0 1 0 0 1 1 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 380
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "logic.and_gate",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 0,
+          "png": "screenshots/logic-and_gate-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 762,
+              "h": 240,
+              "area": 182880
+            },
+            "svg_rect": {
+              "w": 460,
+              "h": 240,
+              "area": 110400
+            },
+            "svg_shapes": 14,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Bấm vào công tắc A hoặc B để bật/tắt. AND chỉ cho đầu ra 1 khi cả hai đầu vào đều là 1. Hiện tại: 0 AND 0 = 0.",
+            "step_indicator": null,
+            "stage_text_len": 24,
+            "stage_text": "AND 0 Đầu ra A = 0 B = 0",
+            "observer_text": "QUAN SÁT TRẠNG THÁI A 0 B 0 ĐẦU RA 0 BẢNG CHÂN TRỊ A B A AND B 0 0 0 0 1 0 1 0 0 1 1 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 380
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "logic.and_gate",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/logic-and_gate-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 762,
+              "h": 240,
+              "area": 182880
+            },
+            "svg_rect": {
+              "w": 460,
+              "h": 240,
+              "area": 110400
+            },
+            "svg_shapes": 14,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Bấm vào công tắc A hoặc B để bật/tắt. AND chỉ cho đầu ra 1 khi cả hai đầu vào đều là 1. Hiện tại: 0 AND 0 = 0.",
+            "step_indicator": null,
+            "stage_text_len": 24,
+            "stage_text": "AND 0 Đầu ra A = 0 B = 0",
+            "observer_text": "QUAN SÁT TRẠNG THÁI A 0 B 0 ĐẦU RA 0 BẢNG CHÂN TRỊ A B A AND B 0 0 0 0 1 0 1 0 0 1 1 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 380
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "logic.and_gate",
+            "steps": 1,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "logic.boolean_dag",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/logic-boolean_dag-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 795,
+              "h": 180,
+              "area": 143041
+            },
+            "svg_rect": {
+              "w": 336,
+              "h": 146,
+              "area": 49056
+            },
+            "svg_shapes": 23,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Mạch có 3 đầu vào và 3 cổng — đánh giá lần lượt theo thứ tự phụ thuộc (topo).",
+            "step_indicator": "Bước 1 / 5",
+            "stage_text_len": 113,
+            "stage_text": "Bấm A, B hoặc C để đổi giá trị đầu vào và quan sát tín hiệu lan truyền qua các cổng. A 1 B 0 C 1 AND ? NOT ? OR ?",
+            "observer_text": "QUAN SÁT Bảng chân trị (engine sinh đủ 8 hàng): Cột “Ra” mở ở bước cuối — em thử tự suy luận trước. A B C Ra 0 0 0 ? 0 0 1 ? 0 1 0 ? 0 1 1 ? 1 0 0 ? 1 0 1 ? 1 1 0 ? 1 1 1 ?",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 3,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 653
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "logic.boolean_dag",
+            "steps": 5,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 2,
+          "png": "screenshots/logic-boolean_dag-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 795,
+              "h": 180,
+              "area": 143041
+            },
+            "svg_rect": {
+              "w": 336,
+              "h": 146,
+              "area": 49056
+            },
+            "svg_shapes": 23,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Cổng g2 (NOT) nhận [1] → ra 0.",
+            "step_indicator": "Bước 3 / 5",
+            "stage_text_len": 113,
+            "stage_text": "Bấm A, B hoặc C để đổi giá trị đầu vào và quan sát tín hiệu lan truyền qua các cổng. A 1 B 0 C 1 AND 0 NOT 0 OR ?",
+            "observer_text": "QUAN SÁT Bảng chân trị (engine sinh đủ 8 hàng): Cột “Ra” mở ở bước cuối — em thử tự suy luận trước. A B C Ra 0 0 0 ? 0 0 1 ? 0 1 0 ? 0 1 1 ? 1 0 0 ? 1 0 1 ? 1 1 0 ? 1 1 1 ?",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 3,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 606
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "logic.boolean_dag",
+            "steps": 5,
+            "cursor": 2,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/logic-boolean_dag-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 795,
+              "h": 180,
+              "area": 143041
+            },
+            "svg_rect": {
+              "w": 336,
+              "h": 146,
+              "area": 49056
+            },
+            "svg_shapes": 23,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Đầu ra của mạch (cổng g3): 0.",
+            "step_indicator": "Bước 5 / 5",
+            "stage_text_len": 113,
+            "stage_text": "Bấm A, B hoặc C để đổi giá trị đầu vào và quan sát tín hiệu lan truyền qua các cổng. A 1 B 0 C 1 AND 0 NOT 0 OR 0",
+            "observer_text": "QUAN SÁT Bảng chân trị (engine sinh đủ 8 hàng): A B C Ra 0 0 0 1 0 0 1 0 0 1 0 1 0 1 1 0 1 0 0 1 1 0 1 0 1 1 0 1 1 1 1 1",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 3,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 553
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "logic.boolean_dag",
+            "steps": 5,
+            "cursor": 4,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": {
+        "kind": "stage-control",
+        "png": "screenshots/logic-boolean_dag-4-interaction.png",
+        "stage": {
+          "stage_rect": {
+            "w": 795,
+            "h": 180,
+            "area": 143041
+          },
+          "svg_rect": {
+            "w": 336,
+            "h": 146,
+            "area": 49056
+          },
+          "svg_shapes": 23,
+          "tables_in_stage": 0,
+          "table_rows_in_stage": 0,
+          "pseudocode_lines": 0,
+          "pseudocode_current": 0,
+          "array_columns": 0,
+          "narration": "Mạch có 3 đầu vào và 3 cổng — đánh giá lần lượt theo thứ tự phụ thuộc (topo).",
+          "step_indicator": "Bước 1 / 5",
+          "stage_text_len": 113,
+          "stage_text": "Bấm A, B hoặc C để đổi giá trị đầu vào và quan sát tín hiệu lan truyền qua các cổng. A 0 B 0 C 1 AND ? NOT ? OR ?",
+          "observer_text": "QUAN SÁT Bảng chân trị (engine sinh đủ 8 hàng): Cột “Ra” mở ở bước cuối — em thử tự suy luận trước. A B C Ra 0 0 0 ? 0 0 1 ? 0 1 0 ? 0 1 1 ? 1 0 0 ? 1 0 1 ? 1 1 0 ? 1 1 1 ?",
+          "predict_bar": false,
+          "mode_buttons": [],
+          "stage_buttons": 3,
+          "result_banner": null,
+          "overflow_x": false,
+          "body_len": 653
+        }
+      }
+    },
+    {
+      "target": "network.graph_traversal",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/network-graph_traversal-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 743,
+              "h": 315,
+              "area": 234084
+            },
+            "svg_rect": {
+              "w": 420,
+              "h": 260,
+              "area": 109200
+            },
+            "svg_shapes": 15,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 1 / 7",
+            "stage_text_len": 39,
+            "stage_text": "A B C D E Hàng đợi: A · Đã thăm: (chưa)",
+            "observer_text": "QUAN SÁT Biến thể: BFS (hàng đợi FIFO) · đồ thị vô hướng Thứ tự thăm (engine): A → B → C → D → E Đường đi: A → B → D → E",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 425
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.graph_traversal",
+            "steps": 7,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 2,
+          "png": "screenshots/network-graph_traversal-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 743,
+              "h": 315,
+              "area": 234084
+            },
+            "svg_rect": {
+              "w": 420,
+              "h": 260,
+              "area": 109200
+            },
+            "svg_shapes": 15,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 3 / 7",
+            "stage_text_len": 41,
+            "stage_text": "A B C D E Hàng đợi: C, D · Đã thăm: A → B",
+            "observer_text": "QUAN SÁT Biến thể: BFS (hàng đợi FIFO) · đồ thị vô hướng Thứ tự thăm (engine): A → B → C → D → E Đường đi: A → B → D → E",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 418
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.graph_traversal",
+            "steps": 7,
+            "cursor": 2,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/network-graph_traversal-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 743,
+              "h": 315,
+              "area": 234084
+            },
+            "svg_rect": {
+              "w": 420,
+              "h": 260,
+              "area": 109200
+            },
+            "svg_shapes": 15,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": null,
+            "step_indicator": "Bước 7 / 7",
+            "stage_text_len": 55,
+            "stage_text": "A B C D E Hàng đợi: (rỗng) · Đã thăm: A → B → C → D → E",
+            "observer_text": "QUAN SÁT Biến thể: BFS (hàng đợi FIFO) · đồ thị vô hướng Thứ tự thăm (engine): A → B → C → D → E Đường đi: A → B → D → E",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 419
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.graph_traversal",
+            "steps": 7,
+            "cursor": 6,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    },
+    {
+      "target": "network.packet_routing",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/network-packet_routing-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 823,
+              "h": 180,
+              "area": 148120
+            },
+            "svg_rect": {
+              "w": 610,
+              "h": 140,
+              "area": 85400
+            },
+            "svg_shapes": 16,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Tạo gói tin tại Máy khách (client).",
+            "step_indicator": "Bước 1 / 4",
+            "stage_text_len": 53,
+            "stage_text": "client Máy khách router Router isp ISP server Máy chủ",
+            "observer_text": "QUAN SÁT GÓI TIN NGUỒN client ĐÍCH server ĐANG Ở client ĐƯỜNG ĐI client → router → isp → server BƯỚC 1 / 4",
+            "predict_bar": true,
+            "mode_buttons": [
+              "2D",
+              "3D"
+            ],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 534
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.packet_routing",
+            "steps": 4,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d",
+              "3d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 1,
+          "png": "screenshots/network-packet_routing-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 799,
+              "h": 180,
+              "area": 143803
+            },
+            "svg_rect": {
+              "w": 610,
+              "h": 140,
+              "area": 85400
+            },
+            "svg_shapes": 16,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Gói tin chuyển tới Router (router), tiếp tục chuyển tiếp.",
+            "step_indicator": "Bước 2 / 4",
+            "stage_text_len": 53,
+            "stage_text": "client Máy khách router Router isp ISP server Máy chủ",
+            "observer_text": "QUAN SÁT GÓI TIN NGUỒN client ĐÍCH server ĐANG Ở router ĐƯỜNG ĐI client → router → isp → server BƯỚC 2 / 4",
+            "predict_bar": true,
+            "mode_buttons": [
+              "2D",
+              "3D"
+            ],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 566
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.packet_routing",
+            "steps": 4,
+            "cursor": 1,
+            "hasPredict": true,
+            "modes": [
+              "2d",
+              "3d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/network-packet_routing-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 643,
+              "h": 180,
+              "area": 115791
+            },
+            "svg_rect": {
+              "w": 610,
+              "h": 140,
+              "area": 85400
+            },
+            "svg_shapes": 16,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Gói tin tới đích Máy chủ (server). Hoàn tất!",
+            "step_indicator": "Bước 4 / 4",
+            "stage_text_len": 53,
+            "stage_text": "client Máy khách router Router isp ISP server Máy chủ",
+            "observer_text": "QUAN SÁT GÓI TIN NGUỒN client ĐÍCH server ĐANG Ở server ĐƯỜNG ĐI client → router → isp → server BƯỚC 4 / 4",
+            "predict_bar": false,
+            "mode_buttons": [
+              "2D",
+              "3D"
+            ],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 385
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.packet_routing",
+            "steps": 4,
+            "cursor": 3,
+            "hasPredict": true,
+            "modes": [
+              "2d",
+              "3d"
+            ]
+          }
+        }
+      ],
+      "interaction": {
+        "kind": "3d",
+        "png": "screenshots/network-packet_routing-4-interaction-3d.png",
+        "stage": {
+          "stage_rect": {
+            "w": 643,
+            "h": 340,
+            "area": 218716
+          },
+          "svg_rect": null,
+          "svg_shapes": 0,
+          "tables_in_stage": 0,
+          "table_rows_in_stage": 0,
+          "pseudocode_lines": 0,
+          "pseudocode_current": 0,
+          "array_columns": 0,
+          "narration": "Gói tin tới đích Máy chủ (server). Hoàn tất!",
+          "step_indicator": "Bước 4 / 4",
+          "stage_text_len": 10,
+          "stage_text": "⌂ Góc nhìn",
+          "observer_text": "QUAN SÁT GÓI TIN NGUỒN client ĐÍCH server ĐANG Ở server ĐƯỜNG ĐI client → router → isp → server BƯỚC 4 / 4",
+          "predict_bar": false,
+          "mode_buttons": [
+            "2D",
+            "3D"
+          ],
+          "stage_buttons": 1,
+          "result_banner": null,
+          "overflow_x": false,
+          "body_len": 342
+        }
+      }
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "how": "offline-catalog",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/network-protocol_encapsulation-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 262,
+              "area": 266192
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Máy gửi: ứng dụng tạo dữ liệu cần gửi đi.",
+            "step_indicator": "Bước 1 / 9",
+            "stage_text_len": 157,
+            "stage_text": "MÁY GỬI Tầng Ứng dụng Dữ liệu ứng dụng Tầng Giao vận Tầng Liên mạng Tầng Truy cập mạng MÁY NHẬN Tầng Ứng dụng Tầng Giao vận Tầng Liên mạng Tầng Truy cập mạng",
+            "observer_text": "QUAN SÁT ĐÓNG GÓI DỮ LIỆU VỊ TRÍ Máy gửi TẦNG Tầng Ứng dụng ĐƠN VỊ DỮ LIỆU Dữ liệu ứng dụng BƯỚC 1 / 9",
+            "predict_bar": true,
+            "mode_buttons": [
+              "2D",
+              "3D"
+            ],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 681
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.protocol_encapsulation",
+            "steps": 9,
+            "cursor": 0,
+            "hasPredict": true,
+            "modes": [
+              "2d",
+              "3d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 3,
+          "png": "screenshots/network-protocol_encapsulation-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 262,
+              "area": 266192
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.",
+            "step_indicator": "Bước 4 / 9",
+            "stage_text_len": 173,
+            "stage_text": "MÁY GỬI Tầng Ứng dụng Tầng Giao vận Tầng Liên mạng Tầng Truy cập mạng LINK IP TCP Dữ liệu ứng dụng FCS MÁY NHẬN Tầng Ứng dụng Tầng Giao vận Tầng Liên mạng Tầng Truy cập mạng",
+            "observer_text": "QUAN SÁT ĐÓNG GÓI DỮ LIỆU VỊ TRÍ Máy gửi TẦNG Tầng Truy cập mạng ĐƠN VỊ DỮ LIỆU LINK | IP | TCP | Dữ liệu ứng dụng | FCS BƯỚC 4 / 9",
+            "predict_bar": false,
+            "mode_buttons": [
+              "2D",
+              "3D"
+            ],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 618
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.protocol_encapsulation",
+            "steps": 9,
+            "cursor": 3,
+            "hasPredict": true,
+            "modes": [
+              "2d",
+              "3d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/network-protocol_encapsulation-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 262,
+              "area": 266192
+            },
+            "svg_rect": null,
+            "svg_shapes": 0,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Ứng dụng ở máy nhận nhận đúng dữ liệu ban đầu. Hoàn tất!",
+            "step_indicator": "Bước 9 / 9",
+            "stage_text_len": 157,
+            "stage_text": "MÁY GỬI Tầng Ứng dụng Tầng Giao vận Tầng Liên mạng Tầng Truy cập mạng MÁY NHẬN Tầng Ứng dụng Dữ liệu ứng dụng Tầng Giao vận Tầng Liên mạng Tầng Truy cập mạng",
+            "observer_text": "QUAN SÁT ĐÓNG GÓI DỮ LIỆU VỊ TRÍ Máy nhận TẦNG Tầng Ứng dụng ĐƠN VỊ DỮ LIỆU Dữ liệu ứng dụng BƯỚC 9 / 9",
+            "predict_bar": false,
+            "mode_buttons": [
+              "2D",
+              "3D"
+            ],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 550
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "network.protocol_encapsulation",
+            "steps": 9,
+            "cursor": 8,
+            "hasPredict": true,
+            "modes": [
+              "2d",
+              "3d"
+            ]
+          }
+        }
+      ],
+      "interaction": {
+        "kind": "3d",
+        "png": "screenshots/network-protocol_encapsulation-4-interaction-3d.png",
+        "stage": {
+          "stage_rect": {
+            "w": 1016,
+            "h": 340,
+            "area": 345440
+          },
+          "svg_rect": null,
+          "svg_shapes": 0,
+          "tables_in_stage": 0,
+          "table_rows_in_stage": 0,
+          "pseudocode_lines": 0,
+          "pseudocode_current": 0,
+          "array_columns": 0,
+          "narration": "Ứng dụng ở máy nhận nhận đúng dữ liệu ban đầu. Hoàn tất!",
+          "step_indicator": "Bước 9 / 9",
+          "stage_text_len": 64,
+          "stage_text": "Trục sâu = tầng giao thức · trục ngang = chiều truyền ⌂ Góc nhìn",
+          "observer_text": "QUAN SÁT ĐÓNG GÓI DỮ LIỆU VỊ TRÍ Máy nhận TẦNG Tầng Ứng dụng ĐƠN VỊ DỮ LIỆU Dữ liệu ứng dụng BƯỚC 9 / 9",
+          "predict_bar": false,
+          "mode_buttons": [
+            "2D",
+            "3D"
+          ],
+          "stage_buttons": 1,
+          "result_banner": null,
+          "overflow_x": false,
+          "body_len": 457
+        }
+      }
+    },
+    {
+      "target": "tree.traversal",
+      "how": "explicit",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/tree-traversal-1-initial.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 329,
+              "area": 334264
+            },
+            "svg_rect": {
+              "w": 602,
+              "h": 274,
+              "area": 164948
+            },
+            "svg_shapes": 26,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Duyệt thứ tự giữa (trái–gốc–phải) từ gốc A. Đưa gốc vào ngăn xếp.",
+            "step_indicator": "Bước 1 / 22",
+            "stage_text_len": 73,
+            "stage_text": "trái phải trái phải trái phải A B C D E F G Ngăn xếp: A · Đã thăm: (chưa)",
+            "observer_text": "QUAN SÁT Biến thể: inorder (ngăn xếp – DFS) Gốc: A · 7 node Đã thăm 0/7: (chưa nút nào)",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 468
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "tree.traversal",
+            "steps": 22,
+            "cursor": 0,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "mechanism-active",
+          "clicks": 8,
+          "png": "screenshots/tree-traversal-2-mechanism-active.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 329,
+              "area": 334264
+            },
+            "svg_rect": {
+              "w": 602,
+              "h": 274,
+              "area": 164948
+            },
+            "svg_shapes": 26,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Xong nhánh của E — lấy ra khỏi ngăn xếp.",
+            "step_indicator": "Bước 9 / 22",
+            "stage_text_len": 79,
+            "stage_text": "trái phải trái phải trái phải A B C D E F G Ngăn xếp: A, B · Đã thăm: D → B → E",
+            "observer_text": "QUAN SÁT Biến thể: inorder (ngăn xếp – DFS) Gốc: A · 7 node Đã thăm 3/7: D → B → E",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 444
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "tree.traversal",
+            "steps": 22,
+            "cursor": 8,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/tree-traversal-3-final.png",
+          "stage": {
+            "stage_rect": {
+              "w": 1016,
+              "h": 329,
+              "area": 334264
+            },
+            "svg_rect": {
+              "w": 602,
+              "h": 274,
+              "area": 164948
+            },
+            "svg_shapes": 26,
+            "tables_in_stage": 0,
+            "table_rows_in_stage": 0,
+            "pseudocode_lines": 0,
+            "pseudocode_current": 0,
+            "array_columns": 0,
+            "narration": "Duyệt xong. Thứ tự thăm: D → B → E → A → F → C → G.",
+            "step_indicator": "Bước 22 / 22",
+            "stage_text_len": 97,
+            "stage_text": "trái phải trái phải trái phải A B C D E F G Ngăn xếp: (rỗng) · Đã thăm: D → B → E → A → F → C → G",
+            "observer_text": "QUAN SÁT Biến thể: inorder (ngăn xếp – DFS) Gốc: A · 7 node Thứ tự thăm (engine): D → B → E → A → F → C → G",
+            "predict_bar": false,
+            "mode_buttons": [],
+            "stage_buttons": 0,
+            "result_banner": null,
+            "overflow_x": false,
+            "body_len": 547
+          },
+          "info": {
+            "ok": true,
+            "moduleId": "tree.traversal",
+            "steps": 22,
+            "cursor": 21,
+            "hasPredict": false,
+            "modes": [
+              "2d"
+            ]
+          }
+        }
+      ],
+      "interaction": null
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,1213 @@
+{
+  "generated_at": "2026-08-04T15:39:58.824Z",
+  "app": "http://localhost:3000",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "laptop",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "loop_value_sequence_via_ui": [
+    2,
+    5,
+    8,
+    11,
+    14,
+    17
+  ],
+  "records": [
+    {
+      "viewport": "desktop",
+      "target": "loop",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/loop-desktop-1-initial.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [
+              "Kiểm tra\n→"
+            ],
+            "back_active": false,
+            "exit_active": false,
+            "cond": "x <= 14 ĐÚNG → vào thân vòng lặp",
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 1 / 12"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {
+              "x": 2
+            },
+            "array": []
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/loop-desktop-2-mid.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [
+              "Cập nhật"
+            ],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 6 / 12"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "x": 11
+            },
+            "array": []
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/loop-desktop-3-final.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 0,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 12 / 12"
+          },
+          "state": {
+            "cursor": 11,
+            "playing": false,
+            "vars": {
+              "x": 17
+            },
+            "array": []
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {
+          "x": 2
+        },
+        "array": []
+      }
+    },
+    {
+      "viewport": "desktop",
+      "target": "insertion",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/insertion-desktop-1-initial.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 1 / 33"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {},
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/insertion-desktop-2-mid.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": true,
+            "hold_text": "ĐANG GIỮ 9 đã rút khỏi dãy — ô trống ở vị trí 2",
+            "gap_count": 1,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 6 / 33"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "gia_tri_chen": 9
+            },
+            "array": [
+              3,
+              7,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/insertion-desktop-3-final.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": true,
+            "hold_text": "ĐANG GIỮ 2 đã rút khỏi dãy — ô trống ở vị trí 0",
+            "gap_count": 1,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 33 / 33"
+          },
+          "state": {
+            "cursor": 32,
+            "playing": false,
+            "vars": {
+              "gia_tri_chen": 2
+            },
+            "array": [
+              2,
+              3,
+              4,
+              7,
+              8,
+              9
+            ]
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {},
+        "array": [
+          7,
+          3,
+          9,
+          4,
+          8,
+          2
+        ]
+      }
+    },
+    {
+      "viewport": "desktop",
+      "target": "selection",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/selection-desktop-1-initial.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 1 / 32"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {},
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/selection-desktop-2-mid.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 6 / 32"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "vi_tri_cuc_tri": 2
+            },
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/selection-desktop-3-final.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": false,
+            "overflow_x": false,
+            "step": "Bước 32 / 32"
+          },
+          "state": {
+            "cursor": 31,
+            "playing": false,
+            "vars": {
+              "vi_tri_cuc_tri": 5
+            },
+            "array": [
+              2,
+              3,
+              4,
+              7,
+              8,
+              9
+            ]
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {},
+        "array": [
+          7,
+          3,
+          9,
+          4,
+          8,
+          2
+        ]
+      }
+    },
+    {
+      "viewport": "laptop",
+      "target": "loop",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/loop-laptop-1-initial.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [
+              "Kiểm tra\n→"
+            ],
+            "back_active": false,
+            "exit_active": false,
+            "cond": "x <= 14 ĐÚNG → vào thân vòng lặp",
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 1 / 12"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {
+              "x": 2
+            },
+            "array": []
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/loop-laptop-2-mid.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [
+              "Cập nhật"
+            ],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 6 / 12"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "x": 11
+            },
+            "array": []
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/loop-laptop-3-final.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 0,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 12 / 12"
+          },
+          "state": {
+            "cursor": 11,
+            "playing": false,
+            "vars": {
+              "x": 17
+            },
+            "array": []
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {
+          "x": 2
+        },
+        "array": []
+      }
+    },
+    {
+      "viewport": "laptop",
+      "target": "insertion",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/insertion-laptop-1-initial.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 1 / 33"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {},
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/insertion-laptop-2-mid.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": true,
+            "hold_text": "ĐANG GIỮ 9 đã rút khỏi dãy — ô trống ở vị trí 2",
+            "gap_count": 1,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 6 / 33"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "gia_tri_chen": 9
+            },
+            "array": [
+              3,
+              7,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/insertion-laptop-3-final.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": true,
+            "hold_text": "ĐANG GIỮ 2 đã rút khỏi dãy — ô trống ở vị trí 0",
+            "gap_count": 1,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 33 / 33"
+          },
+          "state": {
+            "cursor": 32,
+            "playing": false,
+            "vars": {
+              "gia_tri_chen": 2
+            },
+            "array": [
+              2,
+              3,
+              4,
+              7,
+              8,
+              9
+            ]
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {},
+        "array": [
+          7,
+          3,
+          9,
+          4,
+          8,
+          2
+        ]
+      }
+    },
+    {
+      "viewport": "laptop",
+      "target": "selection",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/selection-laptop-1-initial.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 1 / 32"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {},
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/selection-laptop-2-mid.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 6 / 32"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "vi_tri_cuc_tri": 2
+            },
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/selection-laptop-3-final.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 32 / 32"
+          },
+          "state": {
+            "cursor": 31,
+            "playing": false,
+            "vars": {
+              "vi_tri_cuc_tri": 5
+            },
+            "array": [
+              2,
+              3,
+              4,
+              7,
+              8,
+              9
+            ]
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {},
+        "array": [
+          7,
+          3,
+          9,
+          4,
+          8,
+          2
+        ]
+      }
+    },
+    {
+      "viewport": "narrow",
+      "target": "loop",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/loop-narrow-1-initial.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [
+              "Kiểm tra\n→"
+            ],
+            "back_active": false,
+            "exit_active": false,
+            "cond": "x <= 14 ĐÚNG → vào thân vòng lặp",
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 1 / 12"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {
+              "x": 2
+            },
+            "array": []
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/loop-narrow-2-mid.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [
+              "Cập nhật"
+            ],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 6 / 12"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "x": 11
+            },
+            "array": []
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/loop-narrow-3-final.png",
+          "dom": {
+            "loop_stage": true,
+            "axis": true,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 0,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 12 / 12"
+          },
+          "state": {
+            "cursor": 11,
+            "playing": false,
+            "vars": {
+              "x": 17
+            },
+            "array": []
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {
+          "x": 2
+        },
+        "array": []
+      }
+    },
+    {
+      "viewport": "narrow",
+      "target": "insertion",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/insertion-narrow-1-initial.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 1 / 33"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {},
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/insertion-narrow-2-mid.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": true,
+            "hold_text": "ĐANG GIỮ 9 đã rút khỏi dãy — ô trống ở vị trí 2",
+            "gap_count": 1,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 6 / 33"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "gia_tri_chen": 9
+            },
+            "array": [
+              3,
+              7,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/insertion-narrow-3-final.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": true,
+            "hold_text": "ĐANG GIỮ 2 đã rút khỏi dãy — ô trống ở vị trí 0",
+            "gap_count": 1,
+            "legend": true,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 33 / 33"
+          },
+          "state": {
+            "cursor": 32,
+            "playing": false,
+            "vars": {
+              "gia_tri_chen": 2
+            },
+            "array": [
+              2,
+              3,
+              4,
+              7,
+              8,
+              9
+            ]
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {},
+        "array": [
+          7,
+          3,
+          9,
+          4,
+          8,
+          2
+        ]
+      }
+    },
+    {
+      "viewport": "narrow",
+      "target": "selection",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/selection-narrow-1-initial.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 1 / 32"
+          },
+          "state": {
+            "cursor": 0,
+            "playing": false,
+            "vars": {},
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "mid",
+          "png": "screenshots/selection-narrow-2-mid.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 6 / 32"
+          },
+          "state": {
+            "cursor": 5,
+            "playing": false,
+            "vars": {
+              "vi_tri_cuc_tri": 2
+            },
+            "array": [
+              7,
+              3,
+              9,
+              4,
+              8,
+              2
+            ]
+          }
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/selection-narrow-3-final.png",
+          "dom": {
+            "loop_stage": false,
+            "axis": false,
+            "phase_active": [],
+            "back_active": false,
+            "exit_active": false,
+            "cond": null,
+            "hold_tray": false,
+            "hold_text": null,
+            "gap_count": 0,
+            "legend": false,
+            "bubble_leak": false,
+            "narration_count": 1,
+            "ai_control": false,
+            "ctrl_total": 6,
+            "ctrl_in_vp": 6,
+            "drawer_covers_controls": null,
+            "overflow_x": false,
+            "step": "Bước 32 / 32"
+          },
+          "state": {
+            "cursor": 31,
+            "playing": false,
+            "vars": {
+              "vi_tri_cuc_tri": 5
+            },
+            "array": [
+              2,
+              3,
+              4,
+              7,
+              8,
+              9
+            ]
+          }
+        }
+      ],
+      "keyboard": {
+        "after_arrow_cursor": 6,
+        "playing_after_arrow": false
+      },
+      "after_reset": {
+        "cursor": 0,
+        "playing": false,
+        "vars": {},
+        "array": [
+          7,
+          3,
+          9,
+          4,
+          8,
+          2
+        ]
+      }
+    }
+  ]
+}

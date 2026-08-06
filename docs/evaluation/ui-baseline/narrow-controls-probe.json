@@ -1,0 +1,534 @@
+{
+  "viewport": {
+    "width": 768,
+    "height": 900
+  },
+  "generated_at": "2026-08-04T09:08:38.508Z",
+  "cases": [
+    {
+      "target": "algorithm.bounded_control_flow",
+      "trail": [
+        {
+          "at": "initial",
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 1 / 12"
+          },
+          "cursor": 0
+        },
+        {
+          "at": "after_forward_1",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 2 / 12"
+          },
+          "cursor": 1
+        },
+        {
+          "at": "after_forward_2",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 3 / 12"
+          },
+          "cursor": 2
+        },
+        {
+          "at": "after_forward_3",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 4 / 12"
+          },
+          "cursor": 3
+        },
+        {
+          "at": "after_scroll_to_bottom_then_forward",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 798
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 778,
+            "controls_bottom": 847,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 5 / 12"
+          },
+          "cursor": 4
+        }
+      ]
+    },
+    {
+      "target": "logic.boolean_dag",
+      "trail": [
+        {
+          "at": "initial",
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 1 / 5"
+          },
+          "cursor": 0
+        },
+        {
+          "at": "after_forward_1",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 2 / 5"
+          },
+          "cursor": 1
+        },
+        {
+          "at": "after_forward_2",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 3 / 5"
+          },
+          "cursor": 2
+        },
+        {
+          "at": "after_forward_3",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 4 / 5"
+          },
+          "cursor": 3
+        },
+        {
+          "at": "after_scroll_to_bottom_then_forward",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 798
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 778,
+            "controls_bottom": 847,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 5 / 5"
+          },
+          "cursor": 4
+        }
+      ]
+    },
+    {
+      "target": "database.relational_table_query",
+      "trail": [
+        {
+          "at": "initial",
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 1 / 32"
+          },
+          "cursor": 0
+        },
+        {
+          "at": "after_forward_1",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 2 / 32"
+          },
+          "cursor": 1
+        },
+        {
+          "at": "after_forward_2",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 3 / 32"
+          },
+          "cursor": 2
+        },
+        {
+          "at": "after_forward_3",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 4 / 32"
+          },
+          "cursor": 3
+        },
+        {
+          "at": "after_scroll_to_bottom_then_forward",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 798
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 778,
+            "controls_bottom": 847,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 5 / 32"
+          },
+          "cursor": 4
+        }
+      ]
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "trail": [
+        {
+          "at": "initial",
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 1 / 40"
+          },
+          "cursor": 0
+        },
+        {
+          "at": "after_forward_1",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 799
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 930,
+            "controls_bottom": 999,
+            "viewport_h": 900,
+            "fully_visible": false,
+            "px_below_fold": 99,
+            "page_scroll_height": 1052,
+            "vertical_scroll_needed": true,
+            "predict_bar": true,
+            "step": "Bước 2 / 40"
+          },
+          "cursor": 1
+        },
+        {
+          "at": "after_forward_2",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": false,
+            "y": 950
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 930,
+            "controls_bottom": 999,
+            "viewport_h": 900,
+            "fully_visible": false,
+            "px_below_fold": 99,
+            "page_scroll_height": 1052,
+            "vertical_scroll_needed": true,
+            "predict_bar": true,
+            "step": "Bước 2 / 40"
+          },
+          "cursor": 1
+        },
+        {
+          "at": "after_forward_3",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": false,
+            "y": 950
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 930,
+            "controls_bottom": 999,
+            "viewport_h": 900,
+            "fully_visible": false,
+            "px_below_fold": 99,
+            "page_scroll_height": 1052,
+            "vertical_scroll_needed": true,
+            "predict_bar": true,
+            "step": "Bước 2 / 40"
+          },
+          "cursor": 1
+        },
+        {
+          "at": "after_scroll_to_bottom_then_forward",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 798
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 778,
+            "controls_bottom": 847,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 3 / 40"
+          },
+          "cursor": 2
+        }
+      ]
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "trail": [
+        {
+          "at": "initial",
+          "m": {
+            "has_controls": true,
+            "controls_top": 818,
+            "controls_bottom": 887,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 940,
+            "vertical_scroll_needed": true,
+            "predict_bar": true,
+            "step": "Bước 1 / 9"
+          },
+          "cursor": 0
+        },
+        {
+          "at": "after_forward_1",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 838
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 818,
+            "controls_bottom": 887,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 940,
+            "vertical_scroll_needed": true,
+            "predict_bar": true,
+            "step": "Bước 2 / 9"
+          },
+          "cursor": 1
+        },
+        {
+          "at": "after_forward_2",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 838
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 818,
+            "controls_bottom": 887,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 940,
+            "vertical_scroll_needed": true,
+            "predict_bar": true,
+            "step": "Bước 3 / 9"
+          },
+          "cursor": 2
+        },
+        {
+          "at": "after_forward_3",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 838
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 779,
+            "controls_bottom": 848,
+            "viewport_h": 900,
+            "fully_visible": true,
+            "px_below_fold": 0,
+            "page_scroll_height": 901,
+            "vertical_scroll_needed": false,
+            "predict_bar": false,
+            "step": "Bước 4 / 9"
+          },
+          "cursor": 3
+        },
+        {
+          "at": "after_scroll_to_bottom_then_forward",
+          "click": {
+            "ok": true,
+            "coord_inside_viewport": true,
+            "y": 798
+          },
+          "m": {
+            "has_controls": true,
+            "controls_top": 852,
+            "controls_bottom": 921,
+            "viewport_h": 900,
+            "fully_visible": false,
+            "px_below_fold": 21,
+            "page_scroll_height": 975,
+            "vertical_scroll_needed": true,
+            "predict_bar": true,
+            "step": "Bước 5 / 9"
+          },
+          "cursor": 4
+        }
+      ]
+    }
+  ]
+}

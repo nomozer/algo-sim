@@ -1,0 +1,125 @@
+{
+  "generated_at": "2026-08-04T17:52:19.650Z",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "method": "Chrome thật qua CDP, mở trang mô phỏng thật, chờ JS dựng, chụp ảnh và đo DOM. Chỉ rút nguyên tắc — không sao chép theme/màu/layout/icon.",
+  "sites": [
+    {
+      "id": "phet-build-an-atom",
+      "name": "PhET Interactive Simulations",
+      "url": "https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html",
+      "png": "benchmark-screenshots/phet-build-an-atom.png",
+      "measured": {
+        "viewport_area": 1440000,
+        "stage_tag": "svg",
+        "stage_area": 1440000,
+        "stage_pct": 100,
+        "canvas_count": 0,
+        "svg_count": 4,
+        "text_chars": 648,
+        "text_sample": "Build an Atom Welcome to Build an Atom. It has 3 interactive screens that you can explore. Choose a screen to start exploring. Atom Screen Build atoms to see how particles determine mass, charge, and element identity. Symbol Screen Relate element symbols to particle counts. Game Screen Test your kno",
+        "buttons": 32,
+        "inputs": 10,
+        "sliders": 0,
+        "panel_like_blocks": 1,
+        "has_code_block": false,
+        "title": "‪Build an Atom‬"
+      },
+      "error": null
+    },
+    {
+      "id": "visualgo-sorting",
+      "name": "VisuAlgo",
+      "url": "https://visualgo.net/en/sorting",
+      "png": "benchmark-screenshots/visualgo-sorting.png",
+      "measured": {
+        "viewport_area": 1440000,
+        "stage_tag": "svg",
+        "stage_area": 504000,
+        "stage_pct": 35,
+        "canvas_count": 0,
+        "svg_count": 3,
+        "text_chars": 3588,
+        "text_sample": "7 VisuAlgo.net / en zh id /sorting BUBBLE SORT SEL INS MER QUI R-Q COU RAD e-Lecture Mode ▿ Login 1x slide 1 (1%) ✍ ✘ Sorting is a very classic problem of reordering items (that can be compared, e.g., integers, floating-point numbers, strings, etc) of an array (or a list) in a certain order (increas",
+        "buttons": 4,
+        "inputs": 27,
+        "sliders": 0,
+        "panel_like_blocks": 2,
+        "has_code_block": true,
+        "title": "Sorting (Bubble, Selection, Insertion, Merge, Quick, Counting, Radix) - VisuAlgo"
+      },
+      "error": null
+    },
+    {
+      "id": "pythontutor",
+      "name": "Python Tutor",
+      "url": "https://pythontutor.com/visualize.html",
+      "png": "benchmark-screenshots/pythontutor.png",
+      "measured": {
+        "viewport_area": 1440000,
+        "stage_tag": "svg",
+        "stage_area": 576,
+        "stage_pct": 0,
+        "canvas_count": 0,
+        "svg_count": 10,
+        "text_chars": 4930,
+        "text_sample": "Python Tutor Java Tutor C Tutor C++ Tutor JavaScript Tutor Teacher Mode Docs Impact Donate Visualize code execution for Python, Java, C, C++, and JavaScript This is the only tool that lets you debug code step-by-step and get personalized AI tutoring. Write code in Python 3.11 Python 3.6 [try if 3.11",
+        "buttons": 9,
+        "inputs": 11,
+        "sliders": 0,
+        "panel_like_blocks": 10,
+        "has_code_block": true,
+        "title": "Python Tutor code visualizer: Visualize code in Python, JavaScript, C, C++, and Java"
+      },
+      "error": null
+    },
+    {
+      "id": "algorithm-visualizer",
+      "name": "Algorithm Visualizer",
+      "url": "https://algorithm-visualizer.org/",
+      "png": "benchmark-screenshots/algorithm-visualizer.png",
+      "measured": {
+        "viewport_area": 1440000,
+        "stage_tag": null,
+        "stage_area": 0,
+        "stage_pct": 0,
+        "canvas_count": 0,
+        "svg_count": 0,
+        "text_chars": 0,
+        "text_sample": "",
+        "buttons": 0,
+        "inputs": 0,
+        "sliders": 0,
+        "panel_like_blocks": 0,
+        "has_code_block": false,
+        "title": "Algorithm Visualizer"
+      },
+      "error": null
+    },
+    {
+      "id": "csfieldguide-sorting",
+      "name": "CS Field Guide",
+      "url": "https://www.csfieldguide.org.nz/en/chapters/algorithms/sorting-algorithms/",
+      "png": "benchmark-screenshots/csfieldguide-sorting.png",
+      "measured": {
+        "viewport_area": 1440000,
+        "stage_tag": "svg",
+        "stage_area": 1193,
+        "stage_pct": 0,
+        "canvas_count": 0,
+        "svg_count": 2,
+        "text_chars": 940,
+        "text_sample": "CSFG Chapters Curriculum Guides Appendices Page not found We are sorry but we could not find a page for the link you provided. You may find one of the links below useful: Home page Search Looking for something for primary schools? Check out CS Unplugged. The Computer Science Field Guide is an online",
+        "buttons": 5,
+        "inputs": 1,
+        "sliders": 0,
+        "panel_like_blocks": 2,
+        "has_code_block": false,
+        "title": "Page not found - Computer Science Field Guide"
+      },
+      "error": null
+    }
+  ]
+}

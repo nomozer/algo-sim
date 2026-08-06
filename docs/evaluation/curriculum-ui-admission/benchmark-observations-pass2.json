@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-08-04T17:54:06.124Z",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "method": "Chrome thật; có BẤM để vào sân khấu mô phỏng (PhET), chờ lâu hơn cho SPA.",
+  "sites": [
+    {
+      "id": "phet-atom-screen",
+      "name": "PhET — màn hình mô phỏng Atom (đã bấm vào)",
+      "url": "https://phet.colorado.edu/sims/html/build-an-atom/latest/build-an-atom_en.html",
+      "png": "benchmark-screenshots/phet-atom-screen.png",
+      "measured": {
+        "stage_tag": "svg",
+        "stage_pct": 100,
+        "text_chars": 2364,
+        "text_sample": "Atom Screen, Build an Atom The Atom Screen changes as you play with it. It has a Play Area and a Control Area. In Play Area: There is an interactive atom that you build by grabbing protons, neutrons, and electrons from their buckets. As you build, you can track the number of added particles and explore how they influence element identity, charge, and mass. In Control Area: You can turn on labels f",
+        "buttons": 32,
+        "sliders": 0,
+        "inputs": 10,
+        "has_code": false,
+        "title": "‪Build an Atom‬"
+      }
+    },
+    {
+      "id": "algorithm-visualizer-bubble",
+      "name": "Algorithm Visualizer — Bubble Sort",
+      "url": "https://algorithm-visualizer.org/brute-force/bubble-sort",
+      "png": "benchmark-screenshots/algorithm-visualizer-bubble.png",
+      "measured": {
+        "stage_tag": null,
+        "stage_pct": 0,
+        "text_chars": 0,
+        "text_sample": "",
+        "buttons": 0,
+        "sliders": 0,
+        "inputs": 0,
+        "has_code": false,
+        "title": "Brute Force - Bubble Sort"
+      }
+    },
+    {
+      "id": "visualgo-sorting-2",
+      "name": "VisuAlgo — Sorting (chờ lâu hơn)",
+      "url": "https://visualgo.net/en/sorting",
+      "png": "benchmark-screenshots/visualgo-sorting-2.png",
+      "measured": {
+        "stage_tag": "svg",
+        "stage_pct": 35,
+        "text_chars": 3588,
+        "text_sample": "7 VisuAlgo.net / en zh id /sorting BUBBLE SORT SEL INS MER QUI R-Q COU RAD e-Lecture Mode ▿ Login 1x slide 1 (1%) ✍ ✘ Sorting is a very classic problem of reordering items (that can be compared, e.g., integers, floating-point numbers, strings, etc) of an array (or a list) in a certain order (increasing, non-decreasing (increasing or flat), decreasing, non-increasing (decreasing or flat), lexicogra",
+        "buttons": 4,
+        "sliders": 0,
+        "inputs": 27,
+        "has_code": true,
+        "title": "Sorting (Bubble, Selection, Insertion, Merge, Quick, Counting, Radix) - VisuAlgo"
+      }
+    }
+  ]
+}

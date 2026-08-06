@@ -1,0 +1,1983 @@
+{
+  "generated_at": "2026-08-04T16:11:53.758Z",
+  "note": "Đo lại tương tác trực tiếp bằng snapshot NGUYÊN state (shape-agnostic).",
+  "cases": [
+    {
+      "target": "binary.decimal_to_binary",
+      "how": "mouse",
+      "performed": true,
+      "changed": true,
+      "before": {
+        "bits": [
+          1,
+          1,
+          0,
+          1
+        ],
+        "bitWidth": 4
+      },
+      "after": {
+        "bits": [
+          0,
+          1,
+          0,
+          1
+        ],
+        "bitWidth": 4
+      }
+    },
+    {
+      "target": "logic.and_gate",
+      "how": "mouse",
+      "performed": true,
+      "changed": true,
+      "before": {
+        "inputA": 0,
+        "inputB": 0
+      },
+      "after": {
+        "inputA": 1,
+        "inputB": 0
+      }
+    },
+    {
+      "target": "generic.rule_scene",
+      "how": "mouse",
+      "performed": true,
+      "changed": true,
+      "before": {
+        "spec": {
+          "dsl_version": "1.0",
+          "title": "Cổng AND (tổng quát)",
+          "objects": [
+            {
+              "id": "a",
+              "type": "switch",
+              "x": 12,
+              "y": 28,
+              "value": 0,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "type": "switch",
+              "x": 12,
+              "y": 70,
+              "value": 0,
+              "label": "B"
+            },
+            {
+              "id": "y",
+              "type": "lamp",
+              "x": 82,
+              "y": 49,
+              "label": "Đầu ra"
+            }
+          ],
+          "rules": [
+            {
+              "type": "boolean",
+              "target": "y",
+              "inputs": [
+                "a",
+                "b"
+              ],
+              "op": "and"
+            }
+          ],
+          "interactions": [
+            {
+              "type": "toggle",
+              "target": "a"
+            },
+            {
+              "type": "toggle",
+              "target": "b"
+            }
+          ],
+          "processes": [],
+          "notes": null
+        },
+        "base": {
+          "a": 0,
+          "b": 0
+        },
+        "pos": {
+          "a": {
+            "x": 12,
+            "y": 28
+          },
+          "b": {
+            "x": 12,
+            "y": 70
+          },
+          "y": {
+            "x": 82,
+            "y": 49
+          }
+        },
+        "cursor": 0
+      },
+      "after": {
+        "spec": {
+          "dsl_version": "1.0",
+          "title": "Cổng AND (tổng quát)",
+          "objects": [
+            {
+              "id": "a",
+              "type": "switch",
+              "x": 12,
+              "y": 28,
+              "value": 0,
+              "label": "A"
+            },
+            {
+              "id": "b",
+              "type": "switch",
+              "x": 12,
+              "y": 70,
+              "value": 0,
+              "label": "B"
+            },
+            {
+              "id": "y",
+              "type": "lamp",
+              "x": 82,
+              "y": 49,
+              "label": "Đầu ra"
+            }
+          ],
+          "rules": [
+            {
+              "type": "boolean",
+              "target": "y",
+              "inputs": [
+                "a",
+                "b"
+              ],
+              "op": "and"
+            }
+          ],
+          "interactions": [
+            {
+              "type": "toggle",
+              "target": "a"
+            },
+            {
+              "type": "toggle",
+              "target": "b"
+            }
+          ],
+          "processes": [],
+          "notes": null
+        },
+        "base": {
+          "a": 1,
+          "b": 0
+        },
+        "pos": {
+          "a": {
+            "x": 12,
+            "y": 28
+          },
+          "b": {
+            "x": 12,
+            "y": 70
+          },
+          "y": {
+            "x": 82,
+            "y": 49
+          }
+        },
+        "cursor": 0
+      }
+    },
+    {
+      "target": "logic.boolean_dag",
+      "how": "key",
+      "performed": true,
+      "changed": true,
+      "before": {
+        "config": {
+          "inputs": [
+            {
+              "id": "A",
+              "label": null,
+              "value": 1
+            },
+            {
+              "id": "B",
+              "label": null,
+              "value": 0
+            },
+            {
+              "id": "C",
+              "label": null,
+              "value": 1
+            }
+          ],
+          "gates": [
+            {
+              "id": "g1",
+              "op": "AND",
+              "inputs": [
+                "A",
+                "B"
+              ]
+            },
+            {
+              "id": "g2",
+              "op": "NOT",
+              "inputs": [
+                "C"
+              ]
+            },
+            {
+              "id": "g3",
+              "op": "OR",
+              "inputs": [
+                "g1",
+                "g2"
+              ]
+            }
+          ],
+          "output": "g3",
+          "notes": null
+        },
+        "values": {
+          "A": 1,
+          "B": 0,
+          "C": 1
+        },
+        "evalOrder": [
+          "g1",
+          "g2",
+          "g3"
+        ],
+        "nodeOutputs": {
+          "A": 1,
+          "B": 0,
+          "C": 1,
+          "g1": 0,
+          "g2": 0,
+          "g3": 0
+        },
+        "cursor": 0
+      },
+      "after": {
+        "config": {
+          "inputs": [
+            {
+              "id": "A",
+              "label": null,
+              "value": 1
+            },
+            {
+              "id": "B",
+              "label": null,
+              "value": 0
+            },
+            {
+              "id": "C",
+              "label": null,
+              "value": 1
+            }
+          ],
+          "gates": [
+            {
+              "id": "g1",
+              "op": "AND",
+              "inputs": [
+                "A",
+                "B"
+              ]
+            },
+            {
+              "id": "g2",
+              "op": "NOT",
+              "inputs": [
+                "C"
+              ]
+            },
+            {
+              "id": "g3",
+              "op": "OR",
+              "inputs": [
+                "g1",
+                "g2"
+              ]
+            }
+          ],
+          "output": "g3",
+          "notes": null
+        },
+        "values": {
+          "A": 0,
+          "B": 0,
+          "C": 1
+        },
+        "evalOrder": [
+          "g1",
+          "g2",
+          "g3"
+        ],
+        "nodeOutputs": {
+          "A": 0,
+          "B": 0,
+          "C": 1,
+          "g1": 0,
+          "g2": 0,
+          "g3": 0
+        },
+        "cursor": 0
+      }
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "how": "drag",
+      "performed": true,
+      "changed": true,
+      "before": {
+        "config": {
+          "status": "ok",
+          "problem": {
+            "summary": "Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt",
+            "input": "Chiều cao của 7 thành viên đội bóng rổ (cm)",
+            "output": "Danh sách chiều cao đã xếp tăng dần"
+          },
+          "algorithm_id": "bubble_sort",
+          "data": {
+            "array": [
+              172,
+              158,
+              180,
+              165,
+              175,
+              160,
+              168
+            ],
+            "labels": null,
+            "target": null,
+            "condition": null,
+            "order": "asc"
+          },
+          "data_generated": false,
+          "notes": null
+        },
+        "branch": null,
+        "cursor": 0
+      },
+      "after": {
+        "config": {
+          "status": "ok",
+          "problem": {
+            "summary": "Sắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọt",
+            "input": "Chiều cao của 7 thành viên đội bóng rổ (cm)",
+            "output": "Danh sách chiều cao đã xếp tăng dần"
+          },
+          "algorithm_id": "bubble_sort",
+          "data": {
+            "array": [
+              172,
+              158,
+              180,
+              165,
+              175,
+              160,
+              168
+            ],
+            "labels": null,
+            "target": null,
+            "condition": null,
+            "order": "asc"
+          },
+          "data_generated": false,
+          "notes": null
+        },
+        "branch": {
+          "trace": {
+            "source": "engine",
+            "steps": [
+              {
+                "index": 0,
+                "snapshot": {
+                  "array": [
+                    172,
+                    158,
+                    180,
+                    165,
+                    175,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "vars": {},
+                  "marks": {}
+                },
+                "events": [],
+                "narration": "Sắp xếp nổi bọt tăng dần: lặp lại việc so sánh từng cặp kề nhau, đổi chỗ nếu sai thứ tự.",
+                "line": 1
+              },
+              {
+                "index": 1,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    180,
+                    165,
+                    175,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "vars": {},
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 0,
+                    "j": 1
+                  }
+                ],
+                "narration": "Em đã tự đổi chỗ 172 (vị trí thứ 1) với 158 (vị trí thứ 2). Thuật toán không hề biết điều này — quan sát xem nó chạy tiếp ra sao.",
+                "userAction": true
+              },
+              {
+                "index": 2,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    180,
+                    165,
+                    175,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 0,
+                    "j": 1,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (158, 172): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 3,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    180,
+                    165,
+                    175,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 1,
+                    "j": 2,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (172, 180): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 4,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    180,
+                    165,
+                    175,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 2,
+                    "j": 3,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (180, 165): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 5,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    180,
+                    175,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    2,
+                    4,
+                    5,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 2,
+                    "j": 3
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 165 đứng trước 180.",
+                "line": 4
+              },
+              {
+                "index": 6,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    180,
+                    175,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    2,
+                    4,
+                    5,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 3,
+                    "j": 4,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (180, 175): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 7,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    180,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    2,
+                    5,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 3,
+                    "j": 4
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 175 đứng trước 180.",
+                "line": 4
+              },
+              {
+                "index": 8,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    180,
+                    160,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    2,
+                    5,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 4,
+                    "j": 5,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (180, 160): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 9,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    160,
+                    180,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    5,
+                    2,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 4,
+                    "j": 5
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 160 đứng trước 180.",
+                "line": 4
+              },
+              {
+                "index": 10,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    160,
+                    180,
+                    168
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    5,
+                    2,
+                    6
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 5,
+                    "j": 6,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (180, 168): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 11,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    160,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    5,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {}
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 5,
+                    "j": 6
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 168 đứng trước 180.",
+                "line": 4
+              },
+              {
+                "index": 12,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    160,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    5,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 1
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "mark",
+                    "index": 6,
+                    "status": "sorted"
+                  }
+                ],
+                "narration": "Hết lượt 1: phần tử 180 đã \"nổi\" về đúng vị trí cuối vùng chưa sắp.",
+                "line": 5
+              },
+              {
+                "index": 13,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    160,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    5,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 0,
+                    "j": 1,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (158, 172): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 14,
+                "snapshot": {
+                  "array": [
+                    158,
+                    172,
+                    165,
+                    175,
+                    160,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    0,
+                    3,
+                    4,
+                    5,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 1,
+                    "j": 2,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (172, 165): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 15,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    175,
+                    160,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    4,
+                    5,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 1,
+                    "j": 2
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 165 đứng trước 172.",
+                "line": 4
+              },
+              {
+                "index": 16,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    175,
+                    160,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    4,
+                    5,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 2,
+                    "j": 3,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (172, 175): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 17,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    175,
+                    160,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    4,
+                    5,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 3,
+                    "j": 4,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (175, 160): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 18,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    160,
+                    175,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    5,
+                    4,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 3,
+                    "j": 4
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 160 đứng trước 175.",
+                "line": 4
+              },
+              {
+                "index": 19,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    160,
+                    175,
+                    168,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    5,
+                    4,
+                    6,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 4,
+                    "j": 5,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (175, 168): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 20,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    160,
+                    168,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    5,
+                    6,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 4,
+                    "j": 5
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 168 đứng trước 175.",
+                "line": 4
+              },
+              {
+                "index": 21,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    160,
+                    168,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    5,
+                    6,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 2
+                  },
+                  "marks": {
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "mark",
+                    "index": 5,
+                    "status": "sorted"
+                  }
+                ],
+                "narration": "Hết lượt 2: phần tử 175 đã \"nổi\" về đúng vị trí cuối vùng chưa sắp.",
+                "line": 5
+              },
+              {
+                "index": 22,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    160,
+                    168,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    5,
+                    6,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 3
+                  },
+                  "marks": {
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 0,
+                    "j": 1,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (158, 165): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 23,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    160,
+                    168,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    5,
+                    6,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 3
+                  },
+                  "marks": {
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 1,
+                    "j": 2,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (165, 172): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 24,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    172,
+                    160,
+                    168,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    0,
+                    5,
+                    6,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 3
+                  },
+                  "marks": {
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 2,
+                    "j": 3,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (172, 160): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 25,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    160,
+                    172,
+                    168,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    5,
+                    0,
+                    6,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 3
+                  },
+                  "marks": {
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 2,
+                    "j": 3
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 160 đứng trước 172.",
+                "line": 4
+              },
+              {
+                "index": 26,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    160,
+                    172,
+                    168,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    5,
+                    0,
+                    6,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 3
+                  },
+                  "marks": {
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 3,
+                    "j": 4,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (172, 168): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 27,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    160,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    5,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 3
+                  },
+                  "marks": {
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 3,
+                    "j": 4
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 168 đứng trước 172.",
+                "line": 4
+              },
+              {
+                "index": 28,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    160,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    5,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 3
+                  },
+                  "marks": {
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "mark",
+                    "index": 4,
+                    "status": "sorted"
+                  }
+                ],
+                "narration": "Hết lượt 3: phần tử 172 đã \"nổi\" về đúng vị trí cuối vùng chưa sắp.",
+                "line": 5
+              },
+              {
+                "index": 29,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    160,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    5,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 4
+                  },
+                  "marks": {
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 0,
+                    "j": 1,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (158, 165): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 30,
+                "snapshot": {
+                  "array": [
+                    158,
+                    165,
+                    160,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    3,
+                    5,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 4
+                  },
+                  "marks": {
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 1,
+                    "j": 2,
+                    "result": ">"
+                  }
+                ],
+                "narration": "So sánh cặp kề (165, 160): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 31,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 4
+                  },
+                  "marks": {
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "swap",
+                    "i": 1,
+                    "j": 2
+                  }
+                ],
+                "narration": "Đổi chỗ: dãy bây giờ có 160 đứng trước 165.",
+                "line": 4
+              },
+              {
+                "index": 32,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 4
+                  },
+                  "marks": {
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 2,
+                    "j": 3,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (165, 168): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 33,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 4
+                  },
+                  "marks": {
+                    "3": "sorted",
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "mark",
+                    "index": 3,
+                    "status": "sorted"
+                  }
+                ],
+                "narration": "Hết lượt 4: phần tử 168 đã \"nổi\" về đúng vị trí cuối vùng chưa sắp.",
+                "line": 5
+              },
+              {
+                "index": 34,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 5
+                  },
+                  "marks": {
+                    "3": "sorted",
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 0,
+                    "j": 1,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (158, 160): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 35,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 5
+                  },
+                  "marks": {
+                    "3": "sorted",
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 1,
+                    "j": 2,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (160, 165): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 36,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 5
+                  },
+                  "marks": {
+                    "2": "sorted",
+                    "3": "sorted",
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "mark",
+                    "index": 2,
+                    "status": "sorted"
+                  }
+                ],
+                "narration": "Hết lượt 5: phần tử 165 đã \"nổi\" về đúng vị trí cuối vùng chưa sắp.",
+                "line": 5
+              },
+              {
+                "index": 37,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 6
+                  },
+                  "marks": {
+                    "2": "sorted",
+                    "3": "sorted",
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "compare",
+                    "i": 0,
+                    "j": 1,
+                    "result": "<"
+                  }
+                ],
+                "narration": "So sánh cặp kề (158, 160): có cần đổi chỗ không?",
+                "checkpoint": true,
+                "line": 3
+              },
+              {
+                "index": 38,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 6
+                  },
+                  "marks": {
+                    "1": "sorted",
+                    "2": "sorted",
+                    "3": "sorted",
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "mark",
+                    "index": 1,
+                    "status": "sorted"
+                  }
+                ],
+                "narration": "Hết lượt 6: phần tử 160 đã \"nổi\" về đúng vị trí cuối vùng chưa sắp.",
+                "line": 5
+              },
+              {
+                "index": 39,
+                "snapshot": {
+                  "array": [
+                    158,
+                    160,
+                    165,
+                    168,
+                    172,
+                    175,
+                    180
+                  ],
+                  "ids": [
+                    1,
+                    5,
+                    3,
+                    6,
+                    0,
+                    4,
+                    2
+                  ],
+                  "vars": {
+                    "luot": 6
+                  },
+                  "marks": {
+                    "0": "sorted",
+                    "1": "sorted",
+                    "2": "sorted",
+                    "3": "sorted",
+                    "4": "sorted",
+                    "5": "sorted",
+                    "6": "sorted"
+                  }
+                },
+                "events": [
+                  {
+                    "type": "done",
+                    "result": "Dãy đã sắp xếp tăng dần xong sau 10 lần đổi chỗ."
+                  }
+                ],
+                "narration": "Dãy đã sắp xếp tăng dần xong sau 10 lần đổi chỗ.",
+                "line": 6
+              }
+            ]
+          },
+          "fromStep": 0,
+          "i": 0,
+          "j": 1
+        },
+        "cursor": 1
+      }
+    }
+  ]
+}

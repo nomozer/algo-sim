@@ -1,0 +1,558 @@
+{
+  "checkpoint": "M17 — PEDAGOGICAL ALIGNMENT AND FAMILY-SCOPE AUDIT (bản rút gọn)",
+  "mode": "READ_ONLY — không sửa production, không chạy LLM, không chạy Chrome, 0 ảnh mới",
+  "generated_at": "2026-07-29T09:45:19.211139+00:00",
+  "git_sha": "887ec10331d4e8c238ef8ef8656737eb611dc63d",
+  "family_count": 11,
+  "target_count": 22,
+  "eval_items_total": 113,
+  "eval_items_with_learning_objective": 83,
+  "learner_impact": "NOT_EVALUATED",
+  "curriculum_granularity_limit": "COVERAGE.md §: taxonomy ở MỨC TÊN BÀI, KHÔNG phải mức 'yêu cầu cần đạt'; cấu trúc mục tiêu→nhiệm vụ→chấm điểm CHƯA CÓ. Nguồn objective duy nhất có neo là EvalItem.learning_objective (admission-gated qua check_admission).",
+  "families": [
+    {
+      "family_id": "single_pass_scan",
+      "targets": [
+        "algorithm.count_if",
+        "algorithm.find_max",
+        "algorithm.find_min",
+        "algorithm.linear_search",
+        "algorithm.scan",
+        "algorithm.sum_if"
+      ],
+      "representative_target": "algorithm.count_if",
+      "curriculum_anchors": [
+        "T10 CĐ5 · T11CS B17"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "algorithm.count_if",
+        "algorithm.find_max",
+        "algorithm.find_min",
+        "algorithm.linear_search",
+        "algorithm.scan",
+        "algorithm.sum_if"
+      ],
+      "eval_cases_with_learning_objective": 16,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "SUPPORTING_EVIDENCE",
+      "deep_audited": []
+    },
+    {
+      "family_id": "interval_elimination",
+      "targets": [
+        "algorithm.binary_search"
+      ],
+      "representative_target": "algorithm.binary_search",
+      "curriculum_anchors": [
+        "T11CS B19"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "algorithm.binary_search"
+      ],
+      "eval_cases_with_learning_objective": 6,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "SUPPORTING_EVIDENCE",
+      "deep_audited": []
+    },
+    {
+      "family_id": "comparison_sort",
+      "targets": [
+        "algorithm.bubble_sort",
+        "algorithm.insertion_sort",
+        "algorithm.selection_sort"
+      ],
+      "representative_target": "algorithm.bubble_sort",
+      "curriculum_anchors": [
+        "T11CS B21–22"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "algorithm.bubble_sort",
+        "algorithm.insertion_sort",
+        "algorithm.selection_sort"
+      ],
+      "eval_cases_with_learning_objective": 8,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "CORE_EVIDENCE",
+      "deep_audited": [
+        "algorithm.bubble_sort"
+      ]
+    },
+    {
+      "family_id": "boolean_composition",
+      "targets": [
+        "generic.rule_scene",
+        "logic.and_gate",
+        "logic.boolean_dag"
+      ],
+      "representative_target": "generic.rule_scene",
+      "curriculum_anchors": [
+        "T10 B5 · T10 B9",
+        "T10 B5 · T12CS B22–24",
+        "T11 B10 · T12CS B29 · T12 CĐ4"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "generic.rule_scene",
+        "logic.and_gate",
+        "logic.boolean_dag"
+      ],
+      "eval_cases_with_learning_objective": 18,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "CORE_EVIDENCE",
+      "deep_audited": [
+        "logic.boolean_dag"
+      ]
+    },
+    {
+      "family_id": "positional_representation",
+      "targets": [
+        "binary.base_conversion",
+        "binary.character_encoding",
+        "binary.decimal_to_binary"
+      ],
+      "representative_target": "binary.base_conversion",
+      "curriculum_anchors": [
+        "T10 B3 · T10 B6 (mã hoá văn bản)",
+        "T10 B4"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "binary.base_conversion",
+        "binary.character_encoding",
+        "binary.decimal_to_binary"
+      ],
+      "eval_cases_with_learning_objective": 8,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "CORE_EVIDENCE",
+      "deep_audited": [
+        "binary.character_encoding"
+      ]
+    },
+    {
+      "family_id": "graph_traversal",
+      "targets": [
+        "network.graph_traversal",
+        "network.packet_routing"
+      ],
+      "representative_target": "network.graph_traversal",
+      "curriculum_anchors": [
+        "T10 CĐ2 · T12 CĐ2",
+        "T11CS B17 · T12 CĐ2"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d",
+        "3d"
+      ],
+      "ai_reachable_public": [
+        "network.graph_traversal",
+        "network.packet_routing"
+      ],
+      "eval_cases_with_learning_objective": 5,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "SUPPORTING_EVIDENCE",
+      "deep_audited": []
+    },
+    {
+      "family_id": "layered_pdu_transform",
+      "targets": [
+        "network.protocol_encapsulation"
+      ],
+      "representative_target": "network.protocol_encapsulation",
+      "curriculum_anchors": [
+        "T12 B4 · 12CS B22–24"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d",
+        "3d"
+      ],
+      "ai_reachable_public": [
+        "network.protocol_encapsulation"
+      ],
+      "eval_cases_with_learning_objective": 6,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "CORE_EVIDENCE",
+      "deep_audited": [
+        "network.protocol_encapsulation"
+      ]
+    },
+    {
+      "family_id": "structural_progressive_representation",
+      "targets": [
+        "generic.rule_scene"
+      ],
+      "representative_target": "generic.rule_scene",
+      "curriculum_anchors": [
+        "T11 B10 · T12CS B29 · T12 CĐ4"
+      ],
+      "result_authority": [
+        "representation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "generic.rule_scene"
+      ],
+      "eval_cases_with_learning_objective": 16,
+      "curriculum_evidence": "GROUNDED",
+      "thesis_role": "REPRESENTATION_ONLY",
+      "deep_audited": []
+    },
+    {
+      "family_id": "tree_traversal",
+      "targets": [
+        "tree.traversal"
+      ],
+      "representative_target": "tree.traversal",
+      "curriculum_anchors": [
+        "T11CS B17 · T11 CĐ (cấu trúc dữ liệu cây)"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "tree.traversal"
+      ],
+      "eval_cases_with_learning_objective": 0,
+      "curriculum_evidence": "CURRICULUM_ANCHOR_INCOMPLETE",
+      "thesis_role": "NEEDS_REVIEW",
+      "deep_audited": []
+    },
+    {
+      "family_id": "relational_table_query",
+      "targets": [
+        "database.relational_table_query"
+      ],
+      "representative_target": "database.relational_table_query",
+      "curriculum_anchors": [
+        "T11 CĐ CSDL (bảng, truy vấn cơ bản)"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "database.relational_table_query"
+      ],
+      "eval_cases_with_learning_objective": 0,
+      "curriculum_evidence": "CURRICULUM_ANCHOR_INCOMPLETE",
+      "thesis_role": "NEEDS_REVIEW",
+      "deep_audited": []
+    },
+    {
+      "family_id": "bounded_control_flow",
+      "targets": [
+        "algorithm.bounded_control_flow"
+      ],
+      "representative_target": "algorithm.bounded_control_flow",
+      "curriculum_anchors": [
+        "T10 B16–B19 (cấu trúc rẽ nhánh, lặp) · T11CS CĐ"
+      ],
+      "result_authority": [
+        "computation"
+      ],
+      "visual_modes": [
+        "2d"
+      ],
+      "ai_reachable_public": [
+        "algorithm.bounded_control_flow"
+      ],
+      "eval_cases_with_learning_objective": 0,
+      "curriculum_evidence": "CURRICULUM_ANCHOR_INCOMPLETE",
+      "thesis_role": "NEEDS_REVIEW",
+      "deep_audited": []
+    }
+  ],
+  "deep_audit": {
+    "algorithm.bubble_sort": {
+      "families": [
+        "comparison_sort"
+      ],
+      "curriculum_anchor": "T11CS B21–22",
+      "visual_modes": [
+        "2d"
+      ],
+      "interaction": {
+        "timeline": true,
+        "predict": true,
+        "learner_actions": [
+          "whatif_swap",
+          "exit_branch"
+        ],
+        "level": "PREDICTION_OR_WHAT_IF",
+        "source": "domains/algorithm/index.ts:155 (predict), :188 (timeline), :122/:139 (apply)"
+      },
+      "authenticity_contract": {
+        "required_state_fields": [
+          "config",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "compare",
+          "swap",
+          "mark",
+          "done"
+        ],
+        "required_result_fields": [
+          "done.result"
+        ],
+        "renderer_semantic_requirements": [
+          "array_columns",
+          "narration_per_step",
+          "pseudocode_line"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": [
+          "comparison_sort.partition_recursive",
+          "comparison_sort.other_unspecified"
+        ]
+      },
+      "eval_cases_with_learning_objective": 5,
+      "grounded_learning_objectives": [
+        {
+          "case_id": "cap-bubble",
+          "complexity": "L2",
+          "curriculum_area": "T11CS.CD6",
+          "learning_objective": "Giải thích một lượt duyệt của sắp xếp nổi bọt làm gì và vì sao thuật toán dừng."
+        },
+        {
+          "case_id": "cap-bubble-paraphrase",
+          "complexity": "L2",
+          "curriculum_area": "T11CS.CD6",
+          "learning_objective": "Nhận ra cơ chế đổi-chỗ-cặp-kề của sắp xếp nổi bọt qua MÔ TẢ, không qua tên gọi."
+        },
+        {
+          "case_id": "m16-bubble-explicit",
+          "complexity": "L2",
+          "curriculum_area": "T11CS.CD6",
+          "learning_objective": "Giải thích một lượt nổi bọt làm gì: so-đổi các cặp kề, phần tử lớn 'nổi' về cuối."
+        },
+        {
+          "case_id": "m16-bubble-paraphrase",
+          "complexity": "L2",
+          "curriculum_area": "T11CS.CD6",
+          "learning_objective": "Nhận ra cơ chế đổi-chỗ-cặp-kề của nổi bọt qua MÔ TẢ thao tác, không qua tên gọi."
+        },
+        {
+          "case_id": "m16-vb-sort-duplicates",
+          "complexity": "L2",
+          "curriculum_area": "T11CS.CD6",
+          "learning_objective": "Thấy sắp xếp vẫn ổn định/đúng khi dãy có phần tử TRÙNG giá trị."
+        }
+      ],
+      "objective_audit_scope": "FULL"
+    },
+    "logic.boolean_dag": {
+      "families": [
+        "boolean_composition"
+      ],
+      "curriculum_anchor": "T10 B5 · T12CS B22–24",
+      "visual_modes": [
+        "2d"
+      ],
+      "interaction": {
+        "timeline": true,
+        "predict": false,
+        "learner_actions": [
+          "toggle"
+        ],
+        "level": "MECHANISM_ACTION",
+        "source": "domains/logic/dag-module.tsx:383 (timeline), :371 (apply toggle)"
+      },
+      "authenticity_contract": {
+        "required_state_fields": [
+          "config",
+          "values",
+          "evalOrder",
+          "nodeOutputs",
+          "steps",
+          "truthTable",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "eval",
+          "result"
+        ],
+        "required_result_fields": [
+          "nodeOutputs",
+          "truthTable"
+        ],
+        "renderer_semantic_requirements": [
+          "gate_table_with_engine_outputs",
+          "truth_table_panel",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      },
+      "eval_cases_with_learning_objective": 0,
+      "grounded_learning_objectives": [],
+      "objective_audit_scope": "CURRICULUM_ANCHOR_INCOMPLETE"
+    },
+    "binary.character_encoding": {
+      "families": [
+        "positional_representation"
+      ],
+      "curriculum_anchor": "T10 B3 · T10 B6 (mã hoá văn bản)",
+      "visual_modes": [
+        "2d"
+      ],
+      "interaction": {
+        "timeline": true,
+        "predict": false,
+        "learner_actions": [],
+        "level": "TIMELINE_CONTROL",
+        "source": "domains/binary/encoding-module.tsx:501 (timeline); không có apply action"
+      },
+      "authenticity_contract": {
+        "required_state_fields": [
+          "spec",
+          "trace",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "assign_var",
+          "done"
+        ],
+        "required_result_fields": [
+          "rows"
+        ],
+        "renderer_semantic_requirements": [
+          "input_text_visible",
+          "encoding_mode_visible",
+          "current_character_distinct",
+          "code_point_after_mapping_only",
+          "binary_after_conversion_only",
+          "completed_rows_distinct",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      },
+      "eval_cases_with_learning_objective": 0,
+      "grounded_learning_objectives": [],
+      "objective_audit_scope": "CURRICULUM_ANCHOR_INCOMPLETE"
+    },
+    "network.protocol_encapsulation": {
+      "families": [
+        "layered_pdu_transform"
+      ],
+      "curriculum_anchor": "T12 B4 · 12CS B22–24",
+      "visual_modes": [
+        "2d",
+        "3d"
+      ],
+      "interaction": {
+        "timeline": true,
+        "predict": true,
+        "learner_actions": [],
+        "level": "PREDICTION + 2D_AND_3D",
+        "source": "domains/network/encap.ts:53 (timeline), :64 (predict); visual_modes 2d+3d"
+      },
+      "authenticity_contract": {
+        "required_state_fields": [
+          "payloadLabel",
+          "layers",
+          "steps",
+          "cursor"
+        ],
+        "required_trace_events": [
+          "add",
+          "remove",
+          "transmit",
+          "deliver"
+        ],
+        "required_result_fields": [
+          "steps.final_pdu"
+        ],
+        "renderer_semantic_requirements": [
+          "layer_stacks_sender_receiver",
+          "pdu_segments",
+          "narration_per_step"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      },
+      "eval_cases_with_learning_objective": 6,
+      "grounded_learning_objectives": [
+        {
+          "case_id": "cur-t12-encap1",
+          "complexity": "L2",
+          "curriculum_area": "T12.CD2",
+          "learning_objective": "Hiểu dữ liệu được THÊM DẦN thông tin giao thức khi đi xuống từng tầng ở máy gửi."
+        },
+        {
+          "case_id": "cur-t12-encap2",
+          "complexity": "L2",
+          "curriculum_area": "T12.CD2",
+          "learning_objective": "Mô tả được PDU ở từng tầng và giải thích tháo gói là quá trình NGƯỢC của đóng gói."
+        },
+        {
+          "case_id": "cur-t12-encap-mixed",
+          "complexity": "L3",
+          "curriculum_area": "T12.CD2",
+          "learning_objective": "Phân biệt được cơ chế ĐÓNG GÓI theo tầng với việc gói tin ĐI QUA thiết bị trung gian."
+        },
+        {
+          "case_id": "m16-encap-explicit",
+          "complexity": "L2",
+          "curriculum_area": "T12.CD2",
+          "learning_objective": "Hiểu dữ liệu được THÊM DẦN thông tin giao thức khi đi xuống từng tầng ở máy gửi."
+        },
+        {
+          "case_id": "m16-encap-paraphrase",
+          "complexity": "L2",
+          "curriculum_area": "T12.CD2",
+          "learning_objective": "Nhận ra đóng-gói-theo-tầng qua mô tả 'mỗi tầng bọc thêm thông tin, gói lớn dần, gỡ ngược ở máy nhận'."
+        },
+        {
+          "case_id": "m16-vb-decapsulation",
+          "complexity": "L2",
+          "curriculum_area": "T12.CD2",
+          "learning_objective": "Thấy tháo gói là quá trình NGƯỢC của đóng gói — mỗi tầng gỡ đúng phần của mình."
+        }
+      ],
+      "objective_audit_scope": "FULL"
+    }
+  }
+}

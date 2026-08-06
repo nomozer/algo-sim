@@ -1,0 +1,2053 @@
+{
+  "generated_at": "2026-08-04T19:32:25.845Z",
+  "app": "http://localhost:3000",
+  "target": "logic.boolean_dag",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "laptop",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "method": "Chrome thật. mid = floor(steps*0.45) lần BẤM CHUỘT THẬT 'Tiến một bước'; final = 'Đến cuối'; pha 4 = BẤM CHUỘT THẬT vào node đầu vào A. Ghi engine facts + hình học từng khối.",
+  "runs": [
+    {
+      "viewport": "desktop",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/balance-after/logic-boolean_dag-desktop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "geo": {
+            "card": {
+              "x": 135,
+              "y": 74,
+              "w": 845,
+              "h": 657,
+              "a": 554949
+            },
+            "stage": {
+              "x": 160,
+              "y": 186,
+              "w": 795,
+              "h": 309,
+              "a": 245554
+            },
+            "svg": {
+              "x": 160,
+              "y": 219,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 160,
+              "y": 503,
+              "w": 795,
+              "h": 141,
+              "a": 112049
+            },
+            "legend": {
+              "x": 160,
+              "y": 477,
+              "w": 795,
+              "h": 18,
+              "a": 14304
+            },
+            "affordance": {
+              "x": 160,
+              "y": 186,
+              "w": 795,
+              "h": 21,
+              "a": 16688
+            },
+            "narration": {
+              "x": 160,
+              "y": 660,
+              "w": 795,
+              "h": 47,
+              "a": 36952
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 160,
+                "y": 219,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 160,
+                "y": 311,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 160,
+                "y": 403,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 26,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "card_text_chars": 444,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/balance-after/logic-boolean_dag-desktop-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "geo": {
+            "card": {
+              "x": 135,
+              "y": 73,
+              "w": 845,
+              "h": 657,
+              "a": 554949
+            },
+            "stage": {
+              "x": 160,
+              "y": 185,
+              "w": 795,
+              "h": 309,
+              "a": 245554
+            },
+            "svg": {
+              "x": 160,
+              "y": 218,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 160,
+              "y": 502,
+              "w": 795,
+              "h": 141,
+              "a": 112049
+            },
+            "legend": {
+              "x": 160,
+              "y": 476,
+              "w": 795,
+              "h": 18,
+              "a": 14304
+            },
+            "affordance": {
+              "x": 160,
+              "y": 185,
+              "w": 795,
+              "h": 21,
+              "a": 16688
+            },
+            "narration": {
+              "x": 160,
+              "y": 659,
+              "w": 795,
+              "h": 47,
+              "a": 36952
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 160,
+                "y": 218,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 160,
+                "y": 310,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 160,
+                "y": 402,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 26,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 1,
+            "card_text_chars": 397,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/balance-after/logic-boolean_dag-desktop-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "geo": {
+            "card": {
+              "x": 135,
+              "y": 73,
+              "w": 845,
+              "h": 657,
+              "a": 554949
+            },
+            "stage": {
+              "x": 160,
+              "y": 185,
+              "w": 795,
+              "h": 309,
+              "a": 245554
+            },
+            "svg": {
+              "x": 160,
+              "y": 218,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 160,
+              "y": 502,
+              "w": 795,
+              "h": 141,
+              "a": 112049
+            },
+            "legend": {
+              "x": 160,
+              "y": 476,
+              "w": 795,
+              "h": 18,
+              "a": 14304
+            },
+            "affordance": {
+              "x": 160,
+              "y": 185,
+              "w": 795,
+              "h": 21,
+              "a": 16688
+            },
+            "narration": {
+              "x": 160,
+              "y": 659,
+              "w": 795,
+              "h": 47,
+              "a": 36952
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 160,
+                "y": 218,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 160,
+                "y": 310,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 160,
+                "y": 402,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 26,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "card_text_chars": 396,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "4-click-input",
+          "kind": "mouse",
+          "clicked": true,
+          "png": "screenshots/balance-after/logic-boolean_dag-desktop-4-click-input.png",
+          "values_before": {
+            "A": 1,
+            "B": 0,
+            "C": 1
+          },
+          "values_after": {
+            "A": 0,
+            "B": 0,
+            "C": 1
+          },
+          "values_changed": true,
+          "cursor_before": 4,
+          "cursor_after": 0,
+          "cursor_1s4_later": 0,
+          "timeline_rebuilt": true,
+          "autoplay_started": false,
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "geo": {
+            "card": {
+              "x": 135,
+              "y": 74,
+              "w": 845,
+              "h": 657,
+              "a": 554949
+            },
+            "stage": {
+              "x": 160,
+              "y": 186,
+              "w": 795,
+              "h": 309,
+              "a": 245554
+            },
+            "svg": {
+              "x": 160,
+              "y": 219,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 160,
+              "y": 503,
+              "w": 795,
+              "h": 141,
+              "a": 112049
+            },
+            "legend": {
+              "x": 160,
+              "y": 477,
+              "w": 795,
+              "h": 18,
+              "a": 14304
+            },
+            "affordance": {
+              "x": 160,
+              "y": 186,
+              "w": 795,
+              "h": 21,
+              "a": 16688
+            },
+            "narration": {
+              "x": 160,
+              "y": 660,
+              "w": 795,
+              "h": 47,
+              "a": 36952
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 0, ",
+                "x": 160,
+                "y": 219,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 160,
+                "y": 311,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 160,
+                "y": 403,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 26,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "card_text_chars": 444,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "laptop",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/balance-after/logic-boolean_dag-laptop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "geo": {
+            "card": {
+              "x": 52,
+              "y": 74,
+              "w": 910,
+              "h": 657,
+              "a": 598024
+            },
+            "stage": {
+              "x": 77,
+              "y": 186,
+              "w": 860,
+              "h": 309,
+              "a": 265812
+            },
+            "svg": {
+              "x": 77,
+              "y": 219,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 77,
+              "y": 503,
+              "w": 860,
+              "h": 141,
+              "a": 121293
+            },
+            "legend": {
+              "x": 77,
+              "y": 477,
+              "w": 860,
+              "h": 18,
+              "a": 15484
+            },
+            "affordance": {
+              "x": 77,
+              "y": 186,
+              "w": 860,
+              "h": 21,
+              "a": 18065
+            },
+            "narration": {
+              "x": 77,
+              "y": 660,
+              "w": 860,
+              "h": 47,
+              "a": 40001
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 77,
+                "y": 219,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 77,
+                "y": 311,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 77,
+                "y": 403,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 24,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "card_text_chars": 444,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/balance-after/logic-boolean_dag-laptop-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "geo": {
+            "card": {
+              "x": 52,
+              "y": -11,
+              "w": 910,
+              "h": 657,
+              "a": 598024
+            },
+            "stage": {
+              "x": 77,
+              "y": 101,
+              "w": 860,
+              "h": 309,
+              "a": 265812
+            },
+            "svg": {
+              "x": 77,
+              "y": 134,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 77,
+              "y": 418,
+              "w": 860,
+              "h": 141,
+              "a": 121293
+            },
+            "legend": {
+              "x": 77,
+              "y": 392,
+              "w": 860,
+              "h": 18,
+              "a": 15484
+            },
+            "affordance": {
+              "x": 77,
+              "y": 101,
+              "w": 860,
+              "h": 21,
+              "a": 18065
+            },
+            "narration": {
+              "x": 77,
+              "y": 575,
+              "w": 860,
+              "h": 47,
+              "a": 40001
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 77,
+                "y": 134,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 77,
+                "y": 226,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 77,
+                "y": 318,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 24,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 1,
+            "card_text_chars": 397,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/balance-after/logic-boolean_dag-laptop-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "geo": {
+            "card": {
+              "x": 51,
+              "y": -11,
+              "w": 912,
+              "h": 657,
+              "a": 599338
+            },
+            "stage": {
+              "x": 76,
+              "y": 101,
+              "w": 862,
+              "h": 309,
+              "a": 266430
+            },
+            "svg": {
+              "x": 76,
+              "y": 134,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 76,
+              "y": 418,
+              "w": 862,
+              "h": 141,
+              "a": 121575
+            },
+            "legend": {
+              "x": 76,
+              "y": 392,
+              "w": 862,
+              "h": 18,
+              "a": 15520
+            },
+            "affordance": {
+              "x": 76,
+              "y": 101,
+              "w": 862,
+              "h": 21,
+              "a": 18107
+            },
+            "narration": {
+              "x": 76,
+              "y": 575,
+              "w": 862,
+              "h": 47,
+              "a": 40094
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 76,
+                "y": 134,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 76,
+                "y": 226,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 76,
+                "y": 318,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 24,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "card_text_chars": 396,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "4-click-input",
+          "kind": "mouse",
+          "clicked": true,
+          "png": "screenshots/balance-after/logic-boolean_dag-laptop-4-click-input.png",
+          "values_before": {
+            "A": 1,
+            "B": 0,
+            "C": 1
+          },
+          "values_after": {
+            "A": 0,
+            "B": 0,
+            "C": 1
+          },
+          "values_changed": true,
+          "cursor_before": 4,
+          "cursor_after": 0,
+          "cursor_1s4_later": 0,
+          "timeline_rebuilt": true,
+          "autoplay_started": false,
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "geo": {
+            "card": {
+              "x": 52,
+              "y": 74,
+              "w": 910,
+              "h": 657,
+              "a": 598024
+            },
+            "stage": {
+              "x": 77,
+              "y": 186,
+              "w": 860,
+              "h": 309,
+              "a": 265812
+            },
+            "svg": {
+              "x": 77,
+              "y": 219,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 77,
+              "y": 503,
+              "w": 860,
+              "h": 141,
+              "a": 121293
+            },
+            "legend": {
+              "x": 77,
+              "y": 477,
+              "w": 860,
+              "h": 18,
+              "a": 15484
+            },
+            "affordance": {
+              "x": 77,
+              "y": 186,
+              "w": 860,
+              "h": 21,
+              "a": 18065
+            },
+            "narration": {
+              "x": 77,
+              "y": 660,
+              "w": 860,
+              "h": 47,
+              "a": 40001
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 0, ",
+                "x": 77,
+                "y": 219,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 77,
+                "y": 311,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 77,
+                "y": 403,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 24,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "card_text_chars": 444,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "narrow",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/balance-after/logic-boolean_dag-narrow-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "geo": {
+            "card": {
+              "x": 24,
+              "y": 74,
+              "w": 710,
+              "h": 657,
+              "a": 466470
+            },
+            "stage": {
+              "x": 49,
+              "y": 186,
+              "w": 660,
+              "h": 309,
+              "a": 203940
+            },
+            "svg": {
+              "x": 49,
+              "y": 219,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 49,
+              "y": 503,
+              "w": 660,
+              "h": 141,
+              "a": 93060
+            },
+            "legend": {
+              "x": 49,
+              "y": 477,
+              "w": 660,
+              "h": 18,
+              "a": 11880
+            },
+            "affordance": {
+              "x": 49,
+              "y": 186,
+              "w": 660,
+              "h": 21,
+              "a": 13860
+            },
+            "narration": {
+              "x": 49,
+              "y": 660,
+              "w": 660,
+              "h": 47,
+              "a": 30690
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 49,
+                "y": 219,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 49,
+                "y": 311,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 49,
+                "y": 403,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 31,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "card_text_chars": 444,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/balance-after/logic-boolean_dag-narrow-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "geo": {
+            "card": {
+              "x": 24,
+              "y": 73,
+              "w": 710,
+              "h": 657,
+              "a": 466470
+            },
+            "stage": {
+              "x": 49,
+              "y": 185,
+              "w": 660,
+              "h": 309,
+              "a": 203940
+            },
+            "svg": {
+              "x": 49,
+              "y": 218,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 49,
+              "y": 502,
+              "w": 660,
+              "h": 141,
+              "a": 93060
+            },
+            "legend": {
+              "x": 49,
+              "y": 476,
+              "w": 660,
+              "h": 18,
+              "a": 11880
+            },
+            "affordance": {
+              "x": 49,
+              "y": 185,
+              "w": 660,
+              "h": 21,
+              "a": 13860
+            },
+            "narration": {
+              "x": 49,
+              "y": 659,
+              "w": 660,
+              "h": 47,
+              "a": 30690
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 49,
+                "y": 218,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 49,
+                "y": 310,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 49,
+                "y": 402,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 31,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 1,
+            "card_text_chars": 397,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/balance-after/logic-boolean_dag-narrow-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "geo": {
+            "card": {
+              "x": 24,
+              "y": 73,
+              "w": 710,
+              "h": 657,
+              "a": 466470
+            },
+            "stage": {
+              "x": 49,
+              "y": 185,
+              "w": 660,
+              "h": 309,
+              "a": 203940
+            },
+            "svg": {
+              "x": 49,
+              "y": 218,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 49,
+              "y": 502,
+              "w": 660,
+              "h": 141,
+              "a": 93060
+            },
+            "legend": {
+              "x": 49,
+              "y": 476,
+              "w": 660,
+              "h": 18,
+              "a": 11880
+            },
+            "affordance": {
+              "x": 49,
+              "y": 185,
+              "w": 660,
+              "h": 21,
+              "a": 13860
+            },
+            "narration": {
+              "x": 49,
+              "y": 659,
+              "w": 660,
+              "h": 47,
+              "a": 30690
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "x": 49,
+                "y": 218,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 49,
+                "y": 310,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 49,
+                "y": 402,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 31,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "card_text_chars": 396,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 1, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        },
+        {
+          "phase": "4-click-input",
+          "kind": "mouse",
+          "clicked": true,
+          "png": "screenshots/balance-after/logic-boolean_dag-narrow-4-click-input.png",
+          "values_before": {
+            "A": 1,
+            "B": 0,
+            "C": 1
+          },
+          "values_after": {
+            "A": 0,
+            "B": 0,
+            "C": 1
+          },
+          "values_changed": true,
+          "cursor_before": 4,
+          "cursor_after": 0,
+          "cursor_1s4_later": 0,
+          "timeline_rebuilt": true,
+          "autoplay_started": false,
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "geo": {
+            "card": {
+              "x": 24,
+              "y": 74,
+              "w": 710,
+              "h": 657,
+              "a": 466470
+            },
+            "stage": {
+              "x": 49,
+              "y": 186,
+              "w": 660,
+              "h": 309,
+              "a": 203940
+            },
+            "svg": {
+              "x": 49,
+              "y": 219,
+              "w": 594,
+              "h": 246,
+              "a": 146124
+            },
+            "gate_detail": {
+              "x": 49,
+              "y": 503,
+              "w": 660,
+              "h": 141,
+              "a": 93060
+            },
+            "legend": {
+              "x": 49,
+              "y": 477,
+              "w": 660,
+              "h": 18,
+              "a": 11880
+            },
+            "affordance": {
+              "x": 49,
+              "y": 186,
+              "w": 660,
+              "h": 21,
+              "a": 13860
+            },
+            "narration": {
+              "x": 49,
+              "y": 660,
+              "w": 660,
+              "h": 47,
+              "a": 30690
+            },
+            "svg_viewbox": {
+              "w": 594,
+              "h": 246
+            },
+            "svg_scale": 1,
+            "node_font_px": 17,
+            "input_nodes": [
+              {
+                "label": "Đầu vào A, giá trị 0, ",
+                "x": 49,
+                "y": 219,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "x": 49,
+                "y": 311,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "x": 49,
+                "y": 403,
+                "w": 134,
+                "h": 62,
+                "a": 8308
+              }
+            ],
+            "legend_rows": 1
+          },
+          "pct": {
+            "stage": 44,
+            "svg": 31,
+            "gate_detail": 20,
+            "legend": 3
+          },
+          "dom": {
+            "legend_items": 4,
+            "output_label": true,
+            "dashed_output": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "card_text_chars": 444,
+            "overflow_x": false,
+            "stage_overflow_x": false,
+            "ctrl_hit": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "input_hit": [
+              {
+                "label": "Đầu vào A, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, ",
+                "reachable": true
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, ",
+                "reachable": true
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

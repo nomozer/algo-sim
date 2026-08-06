@@ -1,0 +1,494 @@
+{
+  "checkpoint": "SIMULATION MECHANISM QUALITY AUDIT (read-only)",
+  "generated_at": "2026-08-04T15:07:38.352Z",
+  "head": "cc449d59e603bd460ca53c771c2061a95e24fc09",
+  "catalog": {
+    "family_count": 11,
+    "target_count": 22,
+    "canonical_source": "backend/scripts/catalog_runtime_matrix.py",
+    "stable_catalog_hash": "4d7c8e65e1fa421e26779ca722cde020a31ab7939a40559730c3823edf607f29"
+  },
+  "classification_legend": {
+    "A": "MECHANISM_SIMULATION",
+    "B": "EXECUTION_VISUALIZATION",
+    "C": "PROGRESSIVE_REPRESENTATION",
+    "D": "ILLUSTRATION_OR_UNCLEAR"
+  },
+  "counts_by_main_class": {
+    "A": 16,
+    "B": 5,
+    "C": 1
+  },
+  "pilot_redesign": "algorithm.bounded_control_flow",
+  "next_two": [
+    "network.graph_traversal",
+    "tree.traversal"
+  ],
+  "deferred_two": [
+    "algorithm.insertion_sort",
+    "network.packet_routing"
+  ],
+  "presentation_correctness_risks": [
+    {
+      "target": "algorithm.insertion_sort",
+      "note": "Sân khấu hiện số 7 hai lần; giá trị đang chèn (4) không có trong dãy."
+    },
+    {
+      "target": "tree.traversal",
+      "note": "Bước 9/22: cạnh tô là A-B trong khi thuyết minh nói xong nhánh của E."
+    },
+    {
+      "target": "__catalog__",
+      "note": "Cùng một màu mang nghĩa khác nhau giữa các target; không target nào có chú giải."
+    }
+  ],
+  "limits": [
+    "Không phải correctness audit; không dựng oracle, không đối chiếu mọi con số.",
+    "Không đánh giá tác động học tập — không có dữ liệu người học.",
+    "Một viewport (1440x1000) và một fixture cho mỗi target.",
+    "selection_sort dùng envelope nhân bản từ bubble_sort (catalog không có mẫu riêng).",
+    "Không gọi live model; không đi qua đường NL -> LLM -> envelope."
+  ],
+  "targets": [
+    {
+      "target": "algorithm.find_max",
+      "family": "single_pass_scan",
+      "classification": "A",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Giữ nguyên — chuẩn tham chiếu nội bộ.",
+      "screenshots": [
+        "screenshots/algorithm-find_max-1-initial.png",
+        "screenshots/algorithm-find_max-2-mechanism-active.png",
+        "screenshots/algorithm-find_max-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.find_min",
+      "family": "single_pass_scan",
+      "classification": "A",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Giữ nguyên.",
+      "screenshots": [
+        "screenshots/algorithm-find_min-1-initial.png",
+        "screenshots/algorithm-find_min-2-mechanism-active.png",
+        "screenshots/algorithm-find_min-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.count_if",
+      "family": "single_pass_scan",
+      "classification": "A",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Giữ nguyên.",
+      "screenshots": [
+        "screenshots/algorithm-count_if-1-initial.png",
+        "screenshots/algorithm-count_if-2-mechanism-active.png",
+        "screenshots/algorithm-count_if-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.sum_if",
+      "family": "single_pass_scan",
+      "classification": "A",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Giữ nguyên.",
+      "screenshots": [
+        "screenshots/algorithm-sum_if-1-initial.png",
+        "screenshots/algorithm-sum_if-2-mechanism-active.png",
+        "screenshots/algorithm-sum_if-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.binary_search",
+      "family": "interval_elimination",
+      "classification": "A",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Giữ nguyên.",
+      "screenshots": [
+        "screenshots/algorithm-binary_search-1-initial.png",
+        "screenshots/algorithm-binary_search-2-mechanism-active.png",
+        "screenshots/algorithm-binary_search-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.linear_search",
+      "family": "single_pass_scan",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "PARTIAL",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Làm mờ vùng đã loại.",
+      "screenshots": [
+        "screenshots/algorithm-linear_search-1-initial.png",
+        "screenshots/algorithm-linear_search-2-mechanism-active.png",
+        "screenshots/algorithm-linear_search-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "family": "comparison_sort",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "PARTIAL",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Diễn tả bước đổi chỗ như một hành động, không chỉ hai trạng thái.",
+      "screenshots": [
+        "screenshots/algorithm-bubble_sort-1-initial.png",
+        "screenshots/algorithm-bubble_sort-2-mechanism-active.png",
+        "screenshots/algorithm-bubble_sort-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "family": "comparison_sort",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "PARTIAL",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Đánh dấu vùng đã cố định sau mỗi lượt.",
+      "screenshots": [
+        "screenshots/algorithm-selection_sort-1-initial.png",
+        "screenshots/algorithm-selection_sort-2-mechanism-active.png",
+        "screenshots/algorithm-selection_sort-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.scan",
+      "family": "single_pass_scan",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Tuỳ chọn: thêm nhịp dự đoán.",
+      "screenshots": [
+        "screenshots/algorithm-scan-1-initial.png",
+        "screenshots/algorithm-scan-2-mechanism-active.png",
+        "screenshots/algorithm-scan-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "family": "comparison_sort",
+      "classification": "B+",
+      "classification_main": "B",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "PARTIAL",
+        "before_after_visible": "NO",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "PARTIAL"
+      },
+      "priority": 4,
+      "minimal_direction": "Vẽ giá trị đang cầm tách khỏi dãy; ô trống là ô rỗng, không phải số lặp lại.",
+      "screenshots": [
+        "screenshots/algorithm-insertion_sort-1-initial.png",
+        "screenshots/algorithm-insertion_sort-2-mechanism-active.png",
+        "screenshots/algorithm-insertion_sort-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "family": "bounded_control_flow",
+      "classification": "B-",
+      "classification_main": "B",
+      "five_question_scores": {
+        "object_visible": "PARTIAL",
+        "action_visible": "NO",
+        "before_after_visible": "NO",
+        "next_step_reason_visible": "PARTIAL",
+        "mechanism_readable_without_prose": "NO"
+      },
+      "priority": 1,
+      "minimal_direction": "Trục giá trị biến + biên dừng + cạnh quay lại + lịch sử các lượt.",
+      "screenshots": [
+        "screenshots/algorithm-bounded_control_flow-1-initial.png",
+        "screenshots/algorithm-bounded_control_flow-2-mechanism-active.png",
+        "screenshots/algorithm-bounded_control_flow-3-final.png"
+      ]
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "family": "positional_representation",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "PARTIAL",
+        "next_step_reason_visible": "NOT_APPLICABLE",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Nói rõ đây là mô hình trọng số vị trí, không phải quy trình đổi.",
+      "screenshots": [
+        "screenshots/binary-decimal_to_binary-1-initial.png",
+        "screenshots/binary-decimal_to_binary-2-mechanism-active.png",
+        "screenshots/binary-decimal_to_binary-3-final.png"
+      ]
+    },
+    {
+      "target": "binary.base_conversion",
+      "family": "positional_representation",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "PARTIAL",
+        "action_visible": "PARTIAL",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Tô hàng chia đang tính.",
+      "screenshots": [
+        "screenshots/binary-base_conversion-1-initial.png",
+        "screenshots/binary-base_conversion-2-mechanism-active.png",
+        "screenshots/binary-base_conversion-3-final.png"
+      ]
+    },
+    {
+      "target": "binary.character_encoding",
+      "family": "positional_representation",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Hình cho bước đọc ngược số dư.",
+      "screenshots": [
+        "screenshots/binary-character_encoding-1-initial.png",
+        "screenshots/binary-character_encoding-2-mechanism-active.png",
+        "screenshots/binary-character_encoding-3-final.png"
+      ]
+    },
+    {
+      "target": "database.relational_table_query",
+      "family": "relational_table_query",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Làm nổi tầng pipeline đang chạy.",
+      "screenshots": [
+        "screenshots/database-relational_table_query-1-initial.png",
+        "screenshots/database-relational_table_query-2-mechanism-active.png",
+        "screenshots/database-relational_table_query-3-final.png"
+      ]
+    },
+    {
+      "target": "generic.rule_scene",
+      "family": "structural_progressive_representation",
+      "classification": "C",
+      "classification_main": "C",
+      "five_question_scores": {
+        "object_visible": "PARTIAL",
+        "action_visible": "PARTIAL",
+        "before_after_visible": "PARTIAL",
+        "next_step_reason_visible": "NOT_APPLICABLE",
+        "mechanism_readable_without_prose": "PARTIAL"
+      },
+      "priority": null,
+      "minimal_direction": "Giữ nguyên — family khai result_authority=representation.",
+      "screenshots": [
+        "screenshots/generic-rule_scene-1-initial.png",
+        "screenshots/generic-rule_scene-2-mechanism-active.png",
+        "screenshots/generic-rule_scene-3-final.png"
+      ]
+    },
+    {
+      "target": "logic.and_gate",
+      "family": "boolean_composition",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "NOT_APPLICABLE",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Chú giải tín hiệu.",
+      "screenshots": [
+        "screenshots/logic-and_gate-1-initial.png",
+        "screenshots/logic-and_gate-2-mechanism-active.png",
+        "screenshots/logic-and_gate-3-final.png"
+      ]
+    },
+    {
+      "target": "logic.boolean_dag",
+      "family": "boolean_composition",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "PARTIAL"
+      },
+      "priority": null,
+      "minimal_direction": "Chú giải tín hiệu; tách màu đầu-ra khỏi màu tín-hiệu-1.",
+      "screenshots": [
+        "screenshots/logic-boolean_dag-1-initial.png",
+        "screenshots/logic-boolean_dag-2-mechanism-active.png",
+        "screenshots/logic-boolean_dag-3-final.png"
+      ]
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "family": "layered_pdu_transform",
+      "classification": "A-",
+      "classification_main": "A",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": null,
+      "minimal_direction": "Giữ nguyên.",
+      "screenshots": [
+        "screenshots/network-protocol_encapsulation-1-initial.png",
+        "screenshots/network-protocol_encapsulation-2-mechanism-active.png",
+        "screenshots/network-protocol_encapsulation-3-final.png"
+      ]
+    },
+    {
+      "target": "network.packet_routing",
+      "family": "graph_traversal",
+      "classification": "B+",
+      "classification_main": "B",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "PARTIAL",
+        "before_after_visible": "YES",
+        "next_step_reason_visible": "YES",
+        "mechanism_readable_without_prose": "YES"
+      },
+      "priority": 5,
+      "minimal_direction": "Tô đoạn đã đi; thêm hướng truyền.",
+      "screenshots": [
+        "screenshots/network-packet_routing-1-initial.png",
+        "screenshots/network-packet_routing-2-mechanism-active.png",
+        "screenshots/network-packet_routing-3-final.png"
+      ]
+    },
+    {
+      "target": "tree.traversal",
+      "family": "tree_traversal",
+      "classification": "B+",
+      "classification_main": "B",
+      "five_question_scores": {
+        "object_visible": "YES",
+        "action_visible": "YES",
+        "before_after_visible": "PARTIAL",
+        "next_step_reason_visible": "NO",
+        "mechanism_readable_without_prose": "PARTIAL"
+      },
+      "priority": 3,
+      "minimal_direction": "Vẽ ngăn xếp có đẩy/lấy ra, đồng bộ với cạnh đã tô.",
+      "screenshots": [
+        "screenshots/tree-traversal-1-initial.png",
+        "screenshots/tree-traversal-2-mechanism-active.png",
+        "screenshots/tree-traversal-3-final.png"
+      ]
+    },
+    {
+      "target": "network.graph_traversal",
+      "family": "graph_traversal",
+      "classification": "B",
+      "classification_main": "B",
+      "five_question_scores": {
+        "object_visible": "PARTIAL",
+        "action_visible": "PARTIAL",
+        "before_after_visible": "PARTIAL",
+        "next_step_reason_visible": "NO",
+        "mechanism_readable_without_prose": "NO"
+      },
+      "priority": 2,
+      "minimal_direction": "Vẽ hàng đợi thành cấu trúc có vào/ra; tô cạnh đang đi.",
+      "screenshots": [
+        "screenshots/network-graph_traversal-1-initial.png",
+        "screenshots/network-graph_traversal-2-mechanism-active.png",
+        "screenshots/network-graph_traversal-3-final.png"
+      ]
+    }
+  ]
+}

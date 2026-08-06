@@ -1,0 +1,2386 @@
+{
+  "generated_at": "2026-08-04T17:06:27.541Z",
+  "app": "http://localhost:3000",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "laptop",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "method": "Chrome thật. Store chỉ nạp fixture. Next/back/autoplay/pause/scrub/reset đều là sự kiện chuột thật. Mỗi pha so ENGINE FACTS với DOM FACTS.",
+  "mismatches": [],
+  "records": [
+    {
+      "target": "network.graph_traversal",
+      "viewport": "desktop",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/graph-desktop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": null,
+            "visited": [],
+            "activePath": null,
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "before-pop",
+          "png": "screenshots/graph-desktop-2-before-pop.png",
+          "engine": {
+            "cursor": 1,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "B",
+              "C"
+            ],
+            "frontier_before": [
+              "A"
+            ],
+            "current": "A",
+            "visited": [
+              "A"
+            ],
+            "activePath": null,
+            "head_or_top": "B"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "B",
+              "C"
+            ],
+            "out_next": "B",
+            "new_tags": 2,
+            "left_out": "VỪA LẤY RA A",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-pop",
+          "png": "screenshots/graph-desktop-3-after-pop.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-push",
+          "png": "screenshots/graph-desktop-4-after-push.png",
+          "engine": {
+            "cursor": 3,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "D"
+            ],
+            "frontier_before": [
+              "C",
+              "D"
+            ],
+            "current": "C",
+            "visited": [
+              "A",
+              "B",
+              "C"
+            ],
+            "activePath": null,
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "D"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": "VỪA LẤY RA C",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-back",
+          "png": "screenshots/graph-desktop-5-after-back.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-autoplay-pause",
+          "png": "screenshots/graph-desktop-6-autoplay.png",
+          "engine": {
+            "cursor": 3,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "D"
+            ],
+            "frontier_before": [
+              "C",
+              "D"
+            ],
+            "current": "C",
+            "visited": [
+              "A",
+              "B",
+              "C"
+            ],
+            "activePath": null,
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "D"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": "VỪA LẤY RA C",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-scrub",
+          "png": "screenshots/graph-desktop-7-scrub.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/graph-desktop-8-final.png",
+          "engine": {
+            "cursor": 6,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [],
+            "frontier_before": [],
+            "current": null,
+            "visited": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E"
+            ],
+            "activePath": null,
+            "head_or_top": null
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [],
+            "out_next": null,
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-reset",
+          "png": "screenshots/graph-desktop-9-reset.png",
+          "engine": {
+            "cursor": 0,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": null,
+            "visited": [],
+            "activePath": null,
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        }
+      ]
+    },
+    {
+      "target": "tree.traversal",
+      "viewport": "desktop",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/tree-desktop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": "A",
+            "visited": [],
+            "activePath": [
+              "A"
+            ],
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "before-pop",
+          "png": "screenshots/tree-desktop-2-before-pop.png",
+          "engine": {
+            "cursor": 1,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B"
+            ],
+            "frontier_before": [
+              "A"
+            ],
+            "current": "B",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B"
+            ],
+            "head_or_top": "B"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "B",
+              "A"
+            ],
+            "out_next": "B",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-pop",
+          "png": "screenshots/tree-desktop-3-after-pop.png",
+          "engine": {
+            "cursor": 2,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B"
+            ],
+            "current": "D",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-push",
+          "png": "screenshots/tree-desktop-4-after-push.png",
+          "engine": {
+            "cursor": 3,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "D"
+            ],
+            "current": "D",
+            "visited": [
+              "D"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-back",
+          "png": "screenshots/tree-desktop-5-after-back.png",
+          "engine": {
+            "cursor": 2,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B"
+            ],
+            "current": "D",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-autoplay-pause",
+          "png": "screenshots/tree-desktop-6-autoplay.png",
+          "engine": {
+            "cursor": 3,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "D"
+            ],
+            "current": "D",
+            "visited": [
+              "D"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-scrub",
+          "png": "screenshots/tree-desktop-7-scrub.png",
+          "engine": {
+            "cursor": 7,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "E"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "E"
+            ],
+            "current": "E",
+            "visited": [
+              "D",
+              "B",
+              "E"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "E"
+            ],
+            "head_or_top": "E"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "E",
+              "B",
+              "A"
+            ],
+            "out_next": "E",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/tree-desktop-8-final.png",
+          "engine": {
+            "cursor": 21,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [],
+            "frontier_before": [],
+            "current": null,
+            "visited": [
+              "D",
+              "B",
+              "E",
+              "A",
+              "F",
+              "C",
+              "G"
+            ],
+            "activePath": [],
+            "head_or_top": null
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [],
+            "out_next": null,
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-reset",
+          "png": "screenshots/tree-desktop-9-reset.png",
+          "engine": {
+            "cursor": 0,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": "A",
+            "visited": [],
+            "activePath": [
+              "A"
+            ],
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": false,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        }
+      ]
+    },
+    {
+      "target": "network.graph_traversal",
+      "viewport": "laptop",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/graph-laptop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": null,
+            "visited": [],
+            "activePath": null,
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "before-pop",
+          "png": "screenshots/graph-laptop-2-before-pop.png",
+          "engine": {
+            "cursor": 1,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "B",
+              "C"
+            ],
+            "frontier_before": [
+              "A"
+            ],
+            "current": "A",
+            "visited": [
+              "A"
+            ],
+            "activePath": null,
+            "head_or_top": "B"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "B",
+              "C"
+            ],
+            "out_next": "B",
+            "new_tags": 2,
+            "left_out": "VỪA LẤY RA A",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-pop",
+          "png": "screenshots/graph-laptop-3-after-pop.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-push",
+          "png": "screenshots/graph-laptop-4-after-push.png",
+          "engine": {
+            "cursor": 3,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "D"
+            ],
+            "frontier_before": [
+              "C",
+              "D"
+            ],
+            "current": "C",
+            "visited": [
+              "A",
+              "B",
+              "C"
+            ],
+            "activePath": null,
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "D"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": "VỪA LẤY RA C",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-back",
+          "png": "screenshots/graph-laptop-5-after-back.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-autoplay-pause",
+          "png": "screenshots/graph-laptop-6-autoplay.png",
+          "engine": {
+            "cursor": 3,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "D"
+            ],
+            "frontier_before": [
+              "C",
+              "D"
+            ],
+            "current": "C",
+            "visited": [
+              "A",
+              "B",
+              "C"
+            ],
+            "activePath": null,
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "D"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": "VỪA LẤY RA C",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-scrub",
+          "png": "screenshots/graph-laptop-7-scrub.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/graph-laptop-8-final.png",
+          "engine": {
+            "cursor": 6,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [],
+            "frontier_before": [],
+            "current": null,
+            "visited": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E"
+            ],
+            "activePath": null,
+            "head_or_top": null
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [],
+            "out_next": null,
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-reset",
+          "png": "screenshots/graph-laptop-9-reset.png",
+          "engine": {
+            "cursor": 0,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": null,
+            "visited": [],
+            "activePath": null,
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        }
+      ]
+    },
+    {
+      "target": "tree.traversal",
+      "viewport": "laptop",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/tree-laptop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": "A",
+            "visited": [],
+            "activePath": [
+              "A"
+            ],
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "before-pop",
+          "png": "screenshots/tree-laptop-2-before-pop.png",
+          "engine": {
+            "cursor": 1,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B"
+            ],
+            "frontier_before": [
+              "A"
+            ],
+            "current": "B",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B"
+            ],
+            "head_or_top": "B"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "B",
+              "A"
+            ],
+            "out_next": "B",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-pop",
+          "png": "screenshots/tree-laptop-3-after-pop.png",
+          "engine": {
+            "cursor": 2,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B"
+            ],
+            "current": "D",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-push",
+          "png": "screenshots/tree-laptop-4-after-push.png",
+          "engine": {
+            "cursor": 3,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "D"
+            ],
+            "current": "D",
+            "visited": [
+              "D"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-back",
+          "png": "screenshots/tree-laptop-5-after-back.png",
+          "engine": {
+            "cursor": 2,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B"
+            ],
+            "current": "D",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-autoplay-pause",
+          "png": "screenshots/tree-laptop-6-autoplay.png",
+          "engine": {
+            "cursor": 3,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "D"
+            ],
+            "current": "D",
+            "visited": [
+              "D"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-scrub",
+          "png": "screenshots/tree-laptop-7-scrub.png",
+          "engine": {
+            "cursor": 7,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "E"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "E"
+            ],
+            "current": "E",
+            "visited": [
+              "D",
+              "B",
+              "E"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "E"
+            ],
+            "head_or_top": "E"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "E",
+              "B",
+              "A"
+            ],
+            "out_next": "E",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/tree-laptop-8-final.png",
+          "engine": {
+            "cursor": 21,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [],
+            "frontier_before": [],
+            "current": null,
+            "visited": [
+              "D",
+              "B",
+              "E",
+              "A",
+              "F",
+              "C",
+              "G"
+            ],
+            "activePath": [],
+            "head_or_top": null
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [],
+            "out_next": null,
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-reset",
+          "png": "screenshots/tree-laptop-9-reset.png",
+          "engine": {
+            "cursor": 0,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": "A",
+            "visited": [],
+            "activePath": [
+              "A"
+            ],
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        }
+      ]
+    },
+    {
+      "target": "network.graph_traversal",
+      "viewport": "narrow",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/graph-narrow-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": null,
+            "visited": [],
+            "activePath": null,
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "before-pop",
+          "png": "screenshots/graph-narrow-2-before-pop.png",
+          "engine": {
+            "cursor": 1,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "B",
+              "C"
+            ],
+            "frontier_before": [
+              "A"
+            ],
+            "current": "A",
+            "visited": [
+              "A"
+            ],
+            "activePath": null,
+            "head_or_top": "B"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "B",
+              "C"
+            ],
+            "out_next": "B",
+            "new_tags": 2,
+            "left_out": "VỪA LẤY RA A",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-pop",
+          "png": "screenshots/graph-narrow-3-after-pop.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-push",
+          "png": "screenshots/graph-narrow-4-after-push.png",
+          "engine": {
+            "cursor": 3,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "D"
+            ],
+            "frontier_before": [
+              "C",
+              "D"
+            ],
+            "current": "C",
+            "visited": [
+              "A",
+              "B",
+              "C"
+            ],
+            "activePath": null,
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "D"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": "VỪA LẤY RA C",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-back",
+          "png": "screenshots/graph-narrow-5-after-back.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-autoplay-pause",
+          "png": "screenshots/graph-narrow-6-autoplay.png",
+          "engine": {
+            "cursor": 3,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "D"
+            ],
+            "frontier_before": [
+              "C",
+              "D"
+            ],
+            "current": "C",
+            "visited": [
+              "A",
+              "B",
+              "C"
+            ],
+            "activePath": null,
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "D"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": "VỪA LẤY RA C",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-scrub",
+          "png": "screenshots/graph-narrow-7-scrub.png",
+          "engine": {
+            "cursor": 2,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "C",
+              "D"
+            ],
+            "frontier_before": [
+              "B",
+              "C"
+            ],
+            "current": "B",
+            "visited": [
+              "A",
+              "B"
+            ],
+            "activePath": null,
+            "head_or_top": "C"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "C",
+              "D"
+            ],
+            "out_next": "C",
+            "new_tags": 1,
+            "left_out": "VỪA LẤY RA B",
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/graph-narrow-8-final.png",
+          "engine": {
+            "cursor": 6,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [],
+            "frontier_before": [],
+            "current": null,
+            "visited": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E"
+            ],
+            "activePath": null,
+            "head_or_top": null
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [],
+            "out_next": null,
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-reset",
+          "png": "screenshots/graph-narrow-9-reset.png",
+          "engine": {
+            "cursor": 0,
+            "total": 7,
+            "playing": false,
+            "frontierKind": "queue",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": null,
+            "visited": [],
+            "activePath": null,
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "queue",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        }
+      ]
+    },
+    {
+      "target": "tree.traversal",
+      "viewport": "narrow",
+      "phases": [
+        {
+          "phase": "initial",
+          "png": "screenshots/tree-narrow-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": "A",
+            "visited": [],
+            "activePath": [
+              "A"
+            ],
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "before-pop",
+          "png": "screenshots/tree-narrow-2-before-pop.png",
+          "engine": {
+            "cursor": 1,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B"
+            ],
+            "frontier_before": [
+              "A"
+            ],
+            "current": "B",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B"
+            ],
+            "head_or_top": "B"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "B",
+              "A"
+            ],
+            "out_next": "B",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-pop",
+          "png": "screenshots/tree-narrow-3-after-pop.png",
+          "engine": {
+            "cursor": 2,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B"
+            ],
+            "current": "D",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-push",
+          "png": "screenshots/tree-narrow-4-after-push.png",
+          "engine": {
+            "cursor": 3,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "D"
+            ],
+            "current": "D",
+            "visited": [
+              "D"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-back",
+          "png": "screenshots/tree-narrow-5-after-back.png",
+          "engine": {
+            "cursor": 2,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B"
+            ],
+            "current": "D",
+            "visited": [],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 1,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-autoplay-pause",
+          "png": "screenshots/tree-narrow-6-autoplay.png",
+          "engine": {
+            "cursor": 3,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "D"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "D"
+            ],
+            "current": "D",
+            "visited": [
+              "D"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "D"
+            ],
+            "head_or_top": "D"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "D",
+              "B",
+              "A"
+            ],
+            "out_next": "D",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-scrub",
+          "png": "screenshots/tree-narrow-7-scrub.png",
+          "engine": {
+            "cursor": 7,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A",
+              "B",
+              "E"
+            ],
+            "frontier_before": [
+              "A",
+              "B",
+              "E"
+            ],
+            "current": "E",
+            "visited": [
+              "D",
+              "B",
+              "E"
+            ],
+            "activePath": [
+              "A",
+              "B",
+              "E"
+            ],
+            "head_or_top": "E"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "E",
+              "B",
+              "A"
+            ],
+            "out_next": "E",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "final",
+          "png": "screenshots/tree-narrow-8-final.png",
+          "engine": {
+            "cursor": 21,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [],
+            "frontier_before": [],
+            "current": null,
+            "visited": [
+              "D",
+              "B",
+              "E",
+              "A",
+              "F",
+              "C",
+              "G"
+            ],
+            "activePath": [],
+            "head_or_top": null
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [],
+            "out_next": null,
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        },
+        {
+          "phase": "after-reset",
+          "png": "screenshots/tree-narrow-9-reset.png",
+          "engine": {
+            "cursor": 0,
+            "total": 22,
+            "playing": false,
+            "frontierKind": "stack",
+            "frontier_after": [
+              "A"
+            ],
+            "frontier_before": null,
+            "current": "A",
+            "visited": [],
+            "activePath": [
+              "A"
+            ],
+            "head_or_top": "A"
+          },
+          "dom": {
+            "mode": "stack",
+            "items_dom": [
+              "A"
+            ],
+            "out_next": "A",
+            "new_tags": 0,
+            "left_out": null,
+            "legend": true,
+            "old_text_line": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6,
+            "frontier_overlapped_by_controls": false,
+            "drawer_covers_controls": null,
+            "overflow_x": false
+          },
+          "match_order": true,
+          "match_head": true
+        }
+      ]
+    }
+  ]
+}

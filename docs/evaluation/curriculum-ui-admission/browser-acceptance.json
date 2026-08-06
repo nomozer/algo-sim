@@ -1,0 +1,1593 @@
+{
+  "generated_at": "2026-08-04T18:15:32.531Z",
+  "target": "logic.boolean_dag",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "laptop",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "method": "Chrome thật qua CDP. BEFORE đo trên worktree tách rời tại HEAD 722acea (mã TRƯỚC pilot, dev server cổng 3100); AFTER đo trên working tree có pilot (cổng 3000). CÙNG một harness, cùng viewport, cùng kịch bản: mid = floor(steps*0.45) lần bấm THẬT nút 'Tiến một bước', final = nút 'Đến cuối'. Mỗi pha ghi engine facts (nguồn sự thật) và DOM facts (cái học sinh thấy).",
+  "caveats": [
+    "text_chars TĂNG 326 → 411: pilot THÊM chữ (chú giải 4 mục). Đây là đánh đổi có chủ ý, không phải cải thiện — báo cáo đúng như đo được.",
+    "'overlap_px' giữa panel-right và thanh control là ARTIFACT bounding-box (cột cao vs thanh ngang). Chỉ số hợp lệ là HIT TEST bằng document.elementFromPoint — ghi ở pha 4-observer.",
+    "Space trên node đầu vào làm cursor về 0 vì đổi đầu vào thì TIMELINE DỰNG LẠI, không phải autoplay; đã tách hai chỉ số `timeline_rebuilt` và `autoplay_started`.",
+    "Chưa có kiểm chứng với học sinh thật. Mọi số ở đây là số ĐO GIAO DIỆN, không phải số học được."
+  ],
+  "before_head": "722acea (worktree d:/tmp/pilot-base, detached)",
+  "deltas": [
+    {
+      "viewport": "desktop",
+      "phase": "1-initial",
+      "cursor_before": 0,
+      "cursor_after": 0,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 11,
+        "after": 36
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 373,
+        "after": 458
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 3,
+        "after": 3
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "desktop",
+      "phase": "2-mid",
+      "cursor_before": 2,
+      "cursor_after": 2,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 11,
+        "after": 36
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 326,
+        "after": 411
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 1,
+        "after": 1
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "desktop",
+      "phase": "3-final",
+      "cursor_before": 4,
+      "cursor_after": 4,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 11,
+        "after": 36
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 325,
+        "after": 410
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 0,
+        "after": 0
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "desktop",
+      "phase": "4-interaction",
+      "cursor_before": 0,
+      "cursor_after": 0,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 11,
+        "after": 36
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 373,
+        "after": 458
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 3,
+        "after": 3
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "laptop",
+      "phase": "1-initial",
+      "cursor_before": 0,
+      "cursor_after": 0,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 10,
+        "after": 34
+      },
+      "gate_table_pct": {
+        "before": 25,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 33,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 373,
+        "after": 458
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 3,
+        "after": 3
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "laptop",
+      "phase": "2-mid",
+      "cursor_before": 2,
+      "cursor_after": 2,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 10,
+        "after": 34
+      },
+      "gate_table_pct": {
+        "before": 25,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 33,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 326,
+        "after": 411
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 1,
+        "after": 1
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "laptop",
+      "phase": "3-final",
+      "cursor_before": 4,
+      "cursor_after": 4,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 10,
+        "after": 34
+      },
+      "gate_table_pct": {
+        "before": 25,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 33,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 325,
+        "after": 410
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 0,
+        "after": 0
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "laptop",
+      "phase": "4-observer",
+      "cursor_before": 4,
+      "cursor_after": 4,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 10,
+        "after": 34
+      },
+      "gate_table_pct": {
+        "before": 25,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 33,
+        "after": 49
+      },
+      "text_chars": {
+        "before": 325,
+        "after": 410
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 0,
+        "after": 0
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "narrow",
+      "phase": "1-initial",
+      "cursor_before": 0,
+      "cursor_after": 0,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 13,
+        "after": 38
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 46
+      },
+      "text_chars": {
+        "before": 373,
+        "after": 458
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 3,
+        "after": 3
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "narrow",
+      "phase": "2-mid",
+      "cursor_before": 2,
+      "cursor_after": 2,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 13,
+        "after": 38
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 46
+      },
+      "text_chars": {
+        "before": 326,
+        "after": 411
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 1,
+        "after": 1
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "narrow",
+      "phase": "3-final",
+      "cursor_before": 4,
+      "cursor_after": 4,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 13,
+        "after": 38
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 46
+      },
+      "text_chars": {
+        "before": 325,
+        "after": 410
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 0,
+        "after": 0
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    },
+    {
+      "viewport": "narrow",
+      "phase": "4-observer",
+      "cursor_before": 4,
+      "cursor_after": 4,
+      "same_cursor": true,
+      "same_engine_values": true,
+      "svg_pct": {
+        "before": 13,
+        "after": 38
+      },
+      "gate_table_pct": {
+        "before": 24,
+        "after": 18
+      },
+      "stage_pct": {
+        "before": 32,
+        "after": 46
+      },
+      "text_chars": {
+        "before": 325,
+        "after": 410
+      },
+      "legend_items": {
+        "before": 0,
+        "after": 4
+      },
+      "green_stroked_rects": {
+        "before": 1,
+        "after": 0
+      },
+      "question_marks": {
+        "before": 0,
+        "after": 0
+      },
+      "overflow_x": {
+        "before": false,
+        "after": false
+      }
+    }
+  ],
+  "before": [
+    {
+      "viewport": "desktop",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/before-measured/logic-boolean_dag-desktop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 11,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 3,
+            "text_chars": 373,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/before-measured/logic-boolean_dag-desktop-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 11,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 1,
+            "text_chars": 326,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/before-measured/logic-boolean_dag-desktop-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 11,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 0,
+            "text_chars": 325,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "4-interaction",
+          "kind": "keyboard(Space)",
+          "focused": true,
+          "png": "screenshots/before-measured/logic-boolean_dag-desktop-4-interaction.png",
+          "values_before": {
+            "A": 1,
+            "B": 0,
+            "C": 1
+          },
+          "values_after": {
+            "A": 0,
+            "B": 0,
+            "C": 1
+          },
+          "values_changed": true,
+          "cursor_before": 4,
+          "cursor_after": 0,
+          "cursor_1s4_later": 0,
+          "playing_after": false,
+          "autoplay_started": false,
+          "timeline_rebuilt": true,
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 11,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 3,
+            "text_chars": 373,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "laptop",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/before-measured/logic-boolean_dag-laptop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 33,
+            "svg_pct": 10,
+            "gate_table_pct": 25,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 3,
+            "text_chars": 373,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/before-measured/logic-boolean_dag-laptop-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "dom": {
+            "stage_pct": 33,
+            "svg_pct": 10,
+            "gate_table_pct": 25,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 1,
+            "text_chars": 326,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/before-measured/logic-boolean_dag-laptop-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 33,
+            "svg_pct": 10,
+            "gate_table_pct": 25,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 0,
+            "text_chars": 325,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "4-observer",
+          "png": "screenshots/before-measured/logic-boolean_dag-laptop-4-observer.png",
+          "drawer_vs_controls": {
+            "hit_test": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "all_reachable": true
+          },
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 33,
+            "svg_pct": 10,
+            "gate_table_pct": 25,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 0,
+            "text_chars": 325,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "narrow",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/before-measured/logic-boolean_dag-narrow-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 13,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 3,
+            "text_chars": 373,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/before-measured/logic-boolean_dag-narrow-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 13,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 1,
+            "text_chars": 326,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/before-measured/logic-boolean_dag-narrow-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 13,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 0,
+            "text_chars": 325,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "4-observer",
+          "png": "screenshots/before-measured/logic-boolean_dag-narrow-4-observer.png",
+          "drawer_vs_controls": {
+            "hit_test": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "all_reachable": true
+          },
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 32,
+            "svg_pct": 13,
+            "gate_table_pct": 24,
+            "legend": false,
+            "legend_items": 0,
+            "output_label": false,
+            "green_stroked_rects": 1,
+            "question_marks": 0,
+            "text_chars": 325,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        }
+      ]
+    }
+  ],
+  "after": [
+    {
+      "viewport": "desktop",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/after/logic-boolean_dag-desktop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 36,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "text_chars": 458,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/after/logic-boolean_dag-desktop-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 36,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 1,
+            "text_chars": 411,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/after/logic-boolean_dag-desktop-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 36,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "text_chars": 410,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "4-interaction",
+          "kind": "keyboard(Space)",
+          "focused": true,
+          "png": "screenshots/after/logic-boolean_dag-desktop-4-interaction.png",
+          "values_before": {
+            "A": 1,
+            "B": 0,
+            "C": 1
+          },
+          "values_after": {
+            "A": 0,
+            "B": 0,
+            "C": 1
+          },
+          "values_changed": true,
+          "cursor_before": 4,
+          "cursor_after": 0,
+          "cursor_1s4_later": 0,
+          "playing_after": false,
+          "autoplay_started": false,
+          "timeline_rebuilt": true,
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 36,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "text_chars": 458,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "laptop",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/after/logic-boolean_dag-laptop-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 34,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "text_chars": 458,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/after/logic-boolean_dag-laptop-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 34,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 1,
+            "text_chars": 411,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/after/logic-boolean_dag-laptop-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 34,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "text_chars": 410,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "4-observer",
+          "png": "screenshots/after/logic-boolean_dag-laptop-4-observer.png",
+          "drawer_vs_controls": {
+            "hit_test": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "all_reachable": true
+          },
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 49,
+            "svg_pct": 34,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "text_chars": 410,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "narrow",
+      "phases": [
+        {
+          "phase": "1-initial",
+          "png": "screenshots/after/logic-boolean_dag-narrow-1-initial.png",
+          "engine": {
+            "cursor": 0,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "intro"
+          },
+          "dom": {
+            "stage_pct": 46,
+            "svg_pct": 38,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 3,
+            "text_chars": 458,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "2-mid",
+          "clicks": 2,
+          "png": "screenshots/after/logic-boolean_dag-narrow-2-mid.png",
+          "engine": {
+            "cursor": 2,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "eval"
+          },
+          "dom": {
+            "stage_pct": 46,
+            "svg_pct": 38,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 1,
+            "text_chars": 411,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "3-final",
+          "png": "screenshots/after/logic-boolean_dag-narrow-3-final.png",
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 46,
+            "svg_pct": 38,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "text_chars": 410,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        },
+        {
+          "phase": "4-observer",
+          "png": "screenshots/after/logic-boolean_dag-narrow-4-observer.png",
+          "drawer_vs_controls": {
+            "hit_test": [
+              {
+                "label": "Về đầu",
+                "reachable": true
+              },
+              {
+                "label": "Lùi một bước",
+                "reachable": true
+              },
+              {
+                "label": "Tự chạy",
+                "reachable": true
+              },
+              {
+                "label": "Tiến một bước",
+                "reachable": true
+              },
+              {
+                "label": "Đến cuối",
+                "reachable": true
+              },
+              {
+                "label": "Dựng lại từ đầu",
+                "reachable": true
+              }
+            ],
+            "all_reachable": true
+          },
+          "engine": {
+            "cursor": 4,
+            "total": 5,
+            "playing": false,
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "step_kind": "result"
+          },
+          "dom": {
+            "stage_pct": 46,
+            "svg_pct": 38,
+            "gate_table_pct": 18,
+            "legend": true,
+            "legend_items": 4,
+            "output_label": true,
+            "green_stroked_rects": 0,
+            "question_marks": 0,
+            "text_chars": 410,
+            "overflow_x": false,
+            "ctrl_in_vp": 6,
+            "ctrl_total": 6
+          }
+        }
+      ]
+    }
+  ]
+}

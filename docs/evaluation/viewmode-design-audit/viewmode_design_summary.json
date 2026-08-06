@@ -1,0 +1,584 @@
+{
+  "checkpoint": "VIEW-MODE + DESIGN CLARITY AUDIT (read-only)",
+  "generated_at": "2026-08-04T16:17:53.593Z",
+  "head": "cc449d59e603bd460ca53c771c2061a95e24fc09",
+  "working_tree_note": "Có patch cơ chế CHƯA COMMIT (bounded_control_flow, insertion_sort, quy ước màu). Audit mô tả trạng thái ĐÃ VÁ.",
+  "canonical": {
+    "family_count": 11,
+    "target_count": 22,
+    "source": "backend/scripts/catalog_runtime_matrix.py",
+    "stable_catalog_hash": "4d7c8e65e1fa421e26779ca722cde020a31ab7939a40559730c3823edf607f29"
+  },
+  "mode_decision_counts": {
+    "2D_ONLY": 20,
+    "2D_PRIMARY_3D_OPTIONAL": 1,
+    "DO_NOT_USE_3D": 1
+  },
+  "verdict_counts": {
+    "READY_FOR_PILOT": 5,
+    "MINOR_REFINEMENT": 15,
+    "MECHANISM_REDESIGN": 2
+  },
+  "score_criteria": [
+    "mechanism_visibility",
+    "cause_effect_clarity",
+    "interaction_value",
+    "visual_hierarchy",
+    "state_language_consistency",
+    "responsive_usability"
+  ],
+  "targets_with_3d_today": [
+    "network.packet_routing",
+    "network.protocol_encapsulation"
+  ],
+  "proposed_3d_additions": [],
+  "top_risks": [
+    {
+      "id": "R1",
+      "risk": "Frontier vô hình ở graph_traversal và tree.traversal",
+      "evidence": "Bước 3/7 graph: narration 'Lấy B ra khỏi hàng đợi' nhưng UI không vẽ hàng đợi nào; graph không tô cạnh nào.",
+      "affected": [
+        "network.graph_traversal",
+        "tree.traversal"
+      ]
+    },
+    {
+      "id": "R2",
+      "risk": "Ngôn ngữ trạng thái không nhất quán toàn catalog; xanh lá mang 4 nghĩa khác nhau",
+      "evidence": "legend=true ở 1/22 target; count_if xanh=đã đếm, bubble_sort xanh=đã ổn định, tree xanh=đã thăm, boolean_dag xanh=tín hiệu 1 và viền cổng ra.",
+      "affected": [
+        "__all__"
+      ]
+    },
+    {
+      "id": "R3",
+      "risk": "Panel Quan sát lặp lại tiêu đề đã có trên sân khấu",
+      "evidence": "dup_title_in_observer=true ở 9 target domain algorithm; observer chiếm cố định 21% chiều ngang desktop cho MỌI target.",
+      "affected": [
+        "algorithm.*"
+      ]
+    },
+    {
+      "id": "R4",
+      "risk": "packet_routing 3D không mã hoá gì nhưng vẫn nằm trên đường học",
+      "evidence": "threeD.role=architectural_poc; ảnh 3D cho 4 nút cùng một độ sâu, nhãn mờ hơn 2D, thông tin giống hệt 2D.",
+      "affected": [
+        "network.packet_routing"
+      ]
+    },
+    {
+      "id": "R5",
+      "risk": "Mã giả cạnh tranh với sân khấu ở bounded_control_flow sau patch",
+      "evidence": "stage=40% vs pseudo=37% diện tích thẻ ở bước giữa desktop.",
+      "affected": [
+        "algorithm.bounded_control_flow"
+      ]
+    }
+  ],
+  "proposed_next_patch_wave": {
+    "max_targets": 3,
+    "targets": [
+      {
+        "rank": 1,
+        "target": "network.graph_traversal",
+        "primitive": "Queue (FIFO) + Graph traversal edge highlight",
+        "minimal_change": "Vẽ hàng đợi thành cấu trúc có vào/ra; tô cạnh đang đi.",
+        "files": [
+          "frontend/src/simulations/domains/network/traverse-module.tsx",
+          "frontend/src/styles/global.css"
+        ]
+      },
+      {
+        "rank": 2,
+        "target": "tree.traversal",
+        "primitive": "Stack (LIFO) — dùng chung với #1",
+        "minimal_change": "Vẽ ngăn xếp có đẩy/lấy ra, đồng bộ với cạnh đã tô sẵn.",
+        "files": [
+          "frontend/src/simulations/domains/tree/tree-module.tsx",
+          "frontend/src/styles/global.css"
+        ]
+      },
+      {
+        "rank": 3,
+        "target": "__catalog__",
+        "primitive": "State legend",
+        "minimal_change": "Áp chú giải trạng thái + quy ước màu cho các target còn lại.",
+        "files": [
+          "frontend/src/styles/global.css",
+          "các renderer domain"
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Không đánh giá tác động học tập — không có dữ liệu người học.",
+    "Mỗi target một fixture; cơ chế có thể đọc khác với dữ liệu lớn hơn.",
+    "stage_share_of_card thấp giả ở binary.* và database.* vì nội dung nằm ngoài .sim-stage.",
+    "Không gọi live model; không đi qua đường NL -> LLM -> envelope.",
+    "Audit mô tả trạng thái ĐÃ VÁ (patch chưa commit); nếu patch đổi sau review thì 3 target phải chấm lại."
+  ],
+  "targets": [
+    {
+      "target": "algorithm.bubble_sort",
+      "family": "comparison_sort",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 3,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 15,
+      "max": 18,
+      "verdict_label": "READY_FOR_PILOT",
+      "screenshots": [
+        "screenshots/algorithm-bubble_sort-desktop-1-initial.png",
+        "screenshots/algorithm-bubble_sort-desktop-2-mid.png",
+        "screenshots/algorithm-bubble_sort-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "family": "comparison_sort",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 2,
+        "responsive_usability": 3
+      },
+      "total": 15,
+      "max": 18,
+      "verdict_label": "READY_FOR_PILOT",
+      "screenshots": [
+        "screenshots/algorithm-insertion_sort-desktop-1-initial.png",
+        "screenshots/algorithm-insertion_sort-desktop-2-mid.png",
+        "screenshots/algorithm-insertion_sort-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "family": "positional_representation",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 3,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 15,
+      "max": 18,
+      "verdict_label": "READY_FOR_PILOT",
+      "screenshots": [
+        "screenshots/binary-decimal_to_binary-desktop-1-initial.png",
+        "screenshots/binary-decimal_to_binary-desktop-2-mid.png",
+        "screenshots/binary-decimal_to_binary-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "logic.and_gate",
+      "family": "boolean_composition",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 3,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 15,
+      "max": 18,
+      "verdict_label": "READY_FOR_PILOT",
+      "screenshots": [
+        "screenshots/logic-and_gate-desktop-1-initial.png",
+        "screenshots/logic-and_gate-desktop-2-mid.png",
+        "screenshots/logic-and_gate-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "logic.boolean_dag",
+      "family": "boolean_composition",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 3,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 15,
+      "max": 18,
+      "verdict_label": "READY_FOR_PILOT",
+      "screenshots": [
+        "screenshots/logic-boolean_dag-desktop-1-initial.png",
+        "screenshots/logic-boolean_dag-desktop-2-mid.png",
+        "screenshots/logic-boolean_dag-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.find_max",
+      "family": "single_pass_scan",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 14,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-find_max-desktop-1-initial.png",
+        "screenshots/algorithm-find_max-desktop-2-mid.png",
+        "screenshots/algorithm-find_max-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.find_min",
+      "family": "single_pass_scan",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 14,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-find_min-desktop-1-initial.png",
+        "screenshots/algorithm-find_min-desktop-2-mid.png",
+        "screenshots/algorithm-find_min-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.count_if",
+      "family": "single_pass_scan",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 14,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-count_if-desktop-1-initial.png",
+        "screenshots/algorithm-count_if-desktop-2-mid.png",
+        "screenshots/algorithm-count_if-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.sum_if",
+      "family": "single_pass_scan",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 14,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-sum_if-desktop-1-initial.png",
+        "screenshots/algorithm-sum_if-desktop-2-mid.png",
+        "screenshots/algorithm-sum_if-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.binary_search",
+      "family": "interval_elimination",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 14,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-binary_search-desktop-1-initial.png",
+        "screenshots/algorithm-binary_search-desktop-2-mid.png",
+        "screenshots/algorithm-binary_search-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "family": "bounded_control_flow",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 1,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 2,
+        "responsive_usability": 3
+      },
+      "total": 14,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-bounded_control_flow-desktop-1-initial.png",
+        "screenshots/algorithm-bounded_control_flow-desktop-2-mid.png",
+        "screenshots/algorithm-bounded_control_flow-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "family": "layered_pdu_transform",
+      "mode_decision": "2D_PRIMARY_3D_OPTIONAL",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 14,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/network-protocol_encapsulation-desktop-1-initial.png",
+        "screenshots/network-protocol_encapsulation-desktop-2-mid.png",
+        "screenshots/network-protocol_encapsulation-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.linear_search",
+      "family": "single_pass_scan",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 2,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 13,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-linear_search-desktop-1-initial.png",
+        "screenshots/algorithm-linear_search-desktop-2-mid.png",
+        "screenshots/algorithm-linear_search-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.scan",
+      "family": "single_pass_scan",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 1,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 13,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-scan-desktop-1-initial.png",
+        "screenshots/algorithm-scan-desktop-2-mid.png",
+        "screenshots/algorithm-scan-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "family": "comparison_sort",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 2,
+        "cause_effect_clarity": 3,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 13,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/algorithm-selection_sort-desktop-1-initial.png",
+        "screenshots/algorithm-selection_sort-desktop-2-mid.png",
+        "screenshots/algorithm-selection_sort-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "binary.character_encoding",
+      "family": "positional_representation",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 1,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 13,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/binary-character_encoding-desktop-1-initial.png",
+        "screenshots/binary-character_encoding-desktop-2-mid.png",
+        "screenshots/binary-character_encoding-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "database.relational_table_query",
+      "family": "relational_table_query",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 3,
+        "cause_effect_clarity": 3,
+        "interaction_value": 1,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 13,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/database-relational_table_query-desktop-1-initial.png",
+        "screenshots/database-relational_table_query-desktop-2-mid.png",
+        "screenshots/database-relational_table_query-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "network.packet_routing",
+      "family": "graph_traversal",
+      "mode_decision": "DO_NOT_USE_3D",
+      "scores": {
+        "mechanism_visibility": 2,
+        "cause_effect_clarity": 2,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 12,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/network-packet_routing-desktop-1-initial.png",
+        "screenshots/network-packet_routing-desktop-2-mid.png",
+        "screenshots/network-packet_routing-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "binary.base_conversion",
+      "family": "positional_representation",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 2,
+        "cause_effect_clarity": 2,
+        "interaction_value": 1,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 11,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/binary-base_conversion-desktop-1-initial.png",
+        "screenshots/binary-base_conversion-desktop-2-mid.png",
+        "screenshots/binary-base_conversion-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "tree.traversal",
+      "family": "tree_traversal",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 2,
+        "cause_effect_clarity": 2,
+        "interaction_value": 1,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 11,
+      "max": 18,
+      "verdict_label": "MINOR_REFINEMENT",
+      "screenshots": [
+        "screenshots/tree-traversal-desktop-1-initial.png",
+        "screenshots/tree-traversal-desktop-2-mid.png",
+        "screenshots/tree-traversal-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "generic.rule_scene",
+      "family": "structural_progressive_representation",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 1,
+        "cause_effect_clarity": 1,
+        "interaction_value": 2,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 10,
+      "max": 18,
+      "verdict_label": "MECHANISM_REDESIGN",
+      "screenshots": [
+        "screenshots/generic-rule_scene-desktop-1-initial.png",
+        "screenshots/generic-rule_scene-desktop-2-mid.png",
+        "screenshots/generic-rule_scene-desktop-3-final.png"
+      ]
+    },
+    {
+      "target": "network.graph_traversal",
+      "family": "graph_traversal",
+      "mode_decision": "2D_ONLY",
+      "scores": {
+        "mechanism_visibility": 1,
+        "cause_effect_clarity": 1,
+        "interaction_value": 1,
+        "visual_hierarchy": 2,
+        "state_language_consistency": 1,
+        "responsive_usability": 3
+      },
+      "total": 9,
+      "max": 18,
+      "verdict_label": "MECHANISM_REDESIGN",
+      "screenshots": [
+        "screenshots/network-graph_traversal-desktop-1-initial.png",
+        "screenshots/network-graph_traversal-desktop-2-mid.png",
+        "screenshots/network-graph_traversal-desktop-3-final.png"
+      ]
+    }
+  ]
+}

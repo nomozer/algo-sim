@@ -1,0 +1,806 @@
+{
+  "generated_at": "2026-08-04T19:29:36.965Z",
+  "target": "logic.boolean_dag",
+  "viewport": "1440x1000",
+  "method": "Chrome thật. Chuột và bàn phím THẬT (Input.dispatchMouseEvent / dispatchKeyEvent). Mỗi bước đọc engine state rồi so với chữ số trong sơ đồ và ô 'Ra' của bảng chi tiết.",
+  "checks": [
+    {
+      "check": "0 · khởi tạo",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 1,
+        "B": 0,
+        "C": 1
+      },
+      "engine_expected": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false
+    },
+    {
+      "check": "bấm chuột A",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 0,
+        "B": 0,
+        "C": 1
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "0",
+        "C": "1",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "0",
+        "C": "1",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "toggled": true,
+      "value_before": 1
+    },
+    {
+      "check": "bấm chuột B",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 1
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "1",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "1",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "toggled": true,
+      "value_before": 0
+    },
+    {
+      "check": "bấm chuột C",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "toggled": true,
+      "value_before": 1
+    },
+    {
+      "check": "Enter trên đầu vào B",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 0,
+        "B": 0,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "0",
+        "C": "0",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "0",
+        "C": "0",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "toggled": true
+    },
+    {
+      "check": "Space trên đầu vào B",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "toggled": true,
+      "autoplay_started": false
+    },
+    {
+      "check": "Tiến một bước",
+      "cursor": 1,
+      "total": 5,
+      "playing": false,
+      "step": "eval",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "0",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "0",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "0",
+          "current": true
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": "g1",
+      "highlighted_rows": [
+        "g1"
+      ],
+      "highlight_correct": true,
+      "truth_table_revealed": false
+    },
+    {
+      "check": "Tiến (lần 2)",
+      "cursor": 2,
+      "total": 5,
+      "playing": false,
+      "step": "eval",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "0",
+        "g2": "1",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "0",
+        "NOT": "1",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "0",
+          "current": false
+        },
+        "g2": {
+          "out": "1",
+          "current": true
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": "g2",
+      "highlighted_rows": [
+        "g2"
+      ],
+      "highlight_correct": true,
+      "truth_table_revealed": false
+    },
+    {
+      "check": "Lùi một bước",
+      "cursor": 1,
+      "total": 5,
+      "playing": false,
+      "step": "eval",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "0",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "0",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "0",
+          "current": true
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": "g1",
+      "highlighted_rows": [
+        "g1"
+      ],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "went_back": true
+    },
+    {
+      "check": "Tự chạy (dang chay)",
+      "cursor": 1,
+      "total": 5,
+      "playing": true,
+      "step": "eval",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "0",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "0",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "0",
+          "current": true
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": "g1",
+      "highlighted_rows": [
+        "g1"
+      ],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "autoplay_running": true
+    },
+    {
+      "check": "Dừng",
+      "cursor": 1,
+      "total": 5,
+      "playing": false,
+      "step": "eval",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "0",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "0",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "0",
+          "current": true
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": "g1",
+      "highlighted_rows": [
+        "g1"
+      ],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "stopped": true
+    },
+    {
+      "check": "Đến cuối",
+      "cursor": 4,
+      "total": 5,
+      "playing": false,
+      "step": "result",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "0",
+        "g2": "1",
+        "g3": "1"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "0",
+        "NOT": "1",
+        "OR": "1"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "0",
+          "current": false
+        },
+        "g2": {
+          "out": "1",
+          "current": false
+        },
+        "g3": {
+          "out": "1",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": true,
+      "at_end": true,
+      "reveal_at_end": true
+    },
+    {
+      "check": "Về đầu",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 0,
+        "B": 1,
+        "C": 0
+      },
+      "engine_expected": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "0",
+        "B": "1",
+        "C": "0",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "at_start": true
+    },
+    {
+      "check": "Đặt lại",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 1,
+        "B": 0,
+        "C": 1
+      },
+      "engine_expected": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "at_start": true
+    },
+    {
+      "check": "kéo thanh timeline",
+      "cursor": 2,
+      "total": 5,
+      "playing": false,
+      "step": "eval",
+      "values": {
+        "A": 1,
+        "B": 0,
+        "C": 1
+      },
+      "engine_expected": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "g1": "0",
+        "g2": "0",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "AND": "0",
+        "NOT": "0",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "0",
+          "current": false
+        },
+        "g2": {
+          "out": "0",
+          "current": true
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": "g2",
+      "highlighted_rows": [
+        "g2"
+      ],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "seek_moved": true
+    },
+    {
+      "check": "lộ đáp án sớm?",
+      "cursor": 0,
+      "total": 5,
+      "playing": false,
+      "step": "intro",
+      "values": {
+        "A": 1,
+        "B": 0,
+        "C": 1
+      },
+      "engine_expected": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "g1": "?",
+        "g2": "?",
+        "g3": "?"
+      },
+      "diagram_shown": {
+        "A": "1",
+        "B": "0",
+        "C": "1",
+        "AND": "?",
+        "NOT": "?",
+        "OR": "?"
+      },
+      "gate_rows": {
+        "g1": {
+          "out": "?",
+          "current": false
+        },
+        "g2": {
+          "out": "?",
+          "current": false
+        },
+        "g3": {
+          "out": "?",
+          "current": false
+        }
+      },
+      "input_mismatch": [],
+      "gate_mismatch": [],
+      "active_gate": null,
+      "highlighted_rows": [],
+      "highlight_correct": true,
+      "truth_table_revealed": false,
+      "hidden_at_start": true
+    }
+  ]
+}

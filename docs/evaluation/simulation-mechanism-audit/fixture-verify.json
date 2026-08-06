@@ -1,0 +1,324 @@
+{
+  "checkpoint": "SIMULATION MECHANISM QUALITY AUDIT (read-only)",
+  "generated_at": "2026-08-04T14:45:53.035Z",
+  "app": "http://localhost:3000",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "method": "Chrome thật qua CDP. Store CHỈ dùng để nạp fixture + đọc state; mọi bước đi là click chuột thật lên nút của sản phẩm.",
+  "target_count": 22,
+  "records": [
+    {
+      "target": "algorithm.binary_search",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.binary_search",
+        "steps": 13,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.bounded_control_flow",
+        "steps": 12,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.bubble_sort",
+        "steps": 40,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.count_if",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.count_if",
+        "steps": 17,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.find_max",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.find_max",
+        "steps": 10,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.find_min",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.find_min",
+        "steps": 10,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.insertion_sort",
+        "steps": 33,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.linear_search",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.linear_search",
+        "steps": 8,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.scan",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.scan",
+        "steps": 8,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "how": "derived-from-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.selection_sort",
+        "steps": 43,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "algorithm.sum_if",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "algorithm.sum_if",
+        "steps": 16,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "binary.base_conversion",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "binary.base_conversion",
+        "steps": 5,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "binary.character_encoding",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "binary.character_encoding",
+        "steps": 13,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "binary.decimal_to_binary",
+        "steps": 1,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "database.relational_table_query",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "database.relational_table_query",
+        "steps": 32,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "generic.rule_scene",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "generic.rule_scene",
+        "steps": 1,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "logic.and_gate",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "logic.and_gate",
+        "steps": 1,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "logic.boolean_dag",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "logic.boolean_dag",
+        "steps": 5,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "network.graph_traversal",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "network.graph_traversal",
+        "steps": 7,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    },
+    {
+      "target": "network.packet_routing",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "network.packet_routing",
+        "steps": 4,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d",
+          "3d"
+        ]
+      }
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "how": "offline-catalog",
+      "info": {
+        "ok": true,
+        "moduleId": "network.protocol_encapsulation",
+        "steps": 9,
+        "cursor": 0,
+        "hasPredict": true,
+        "modes": [
+          "2d",
+          "3d"
+        ]
+      }
+    },
+    {
+      "target": "tree.traversal",
+      "how": "explicit",
+      "info": {
+        "ok": true,
+        "moduleId": "tree.traversal",
+        "steps": 22,
+        "cursor": 0,
+        "hasPredict": false,
+        "modes": [
+          "2d"
+        ]
+      }
+    }
+  ],
+  "failures": []
+}

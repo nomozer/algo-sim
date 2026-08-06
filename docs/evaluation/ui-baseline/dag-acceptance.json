@@ -1,0 +1,1993 @@
+{
+  "checkpoint": "Final review acceptance — 3 quyết định cuối",
+  "generated_at": "2026-08-04T10:49:56.401Z",
+  "app": "http://localhost:3000",
+  "viewports": [
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "laptop",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "id": "narrow",
+      "width": 768,
+      "height": 900
+    }
+  ],
+  "method": "Chrome thật. Chuột: Input.dispatchMouseEvent. Bàn phím: focus + Input.dispatchKeyEvent (Space/Enter) — đường bàn phím thật, không phải click. Store chỉ dùng để nạp đề và đọc state đối chiếu.",
+  "boolean_dag": [
+    {
+      "viewport": "desktop",
+      "steps": [
+        {
+          "phase": "1-initial",
+          "png": "shots-final/dag-desktop-1-initial.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 8,
+            "observer_open": true,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "2-click-node-A",
+          "clicked": true,
+          "png": "shots-final/dag-desktop-2-after-click-A.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 8,
+            "observer_open": true,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "3-keyboard-B",
+          "space": {
+            "focused": true
+          },
+          "enter": {
+            "focused": true
+          },
+          "after_space": {
+            "dom": {
+              "ai_control_present": false,
+              "narration_count": 1,
+              "dag_inputs": [
+                {
+                  "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                  "pressed": "false",
+                  "tabindex": "0"
+                },
+                {
+                  "label": "Đầu vào B, giá trị 1, bấm để đổi",
+                  "pressed": "true",
+                  "tabindex": "0"
+                },
+                {
+                  "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                  "pressed": "true",
+                  "tabindex": "0"
+                }
+              ],
+              "legacy_toggle_row": false,
+              "gate_unknowns_in_diagram": 3,
+              "gate_unknowns_in_table": 3,
+              "truth_unknowns": 8,
+              "observer_open": true,
+              "diagram_top": 219,
+              "gate_table_top": 400,
+              "diagram_area": 49056,
+              "gate_table_area": 57200,
+              "controls_total": 6,
+              "controls_in_viewport": 6,
+              "step": "Bước 1 / 5",
+              "overflow_x": false,
+              "stage_visible": true,
+              "body_has_text": true,
+              "mode_buttons": []
+            },
+            "engine": {
+              "values": {
+                "A": 0,
+                "B": 1,
+                "C": 1
+              },
+              "nodeOutputs": {
+                "A": 0,
+                "B": 1,
+                "C": 1,
+                "g1": 0,
+                "g2": 0,
+                "g3": 0
+              },
+              "cursor": 0
+            }
+          },
+          "png": "shots-final/dag-desktop-3-keyboard-B.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 8,
+            "observer_open": true,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "4-mid",
+          "png": "shots-final/dag-desktop-4-mid.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 1,
+            "gate_unknowns_in_table": 1,
+            "truth_unknowns": 8,
+            "observer_open": true,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 3 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 2
+          }
+        },
+        {
+          "phase": "5-final",
+          "png": "shots-final/dag-desktop-5-final.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 0,
+            "gate_unknowns_in_table": 0,
+            "truth_unknowns": 0,
+            "observer_open": true,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 5 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 4
+          }
+        },
+        {
+          "phase": "6-reset",
+          "png": "shots-final/dag-desktop-6-reset.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 8,
+            "observer_open": true,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "7-observer",
+          "png": "shots-final/dag-desktop-7-observer.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "laptop",
+      "steps": [
+        {
+          "phase": "1-initial",
+          "png": "shots-final/dag-laptop-1-initial.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "2-click-node-A",
+          "clicked": true,
+          "png": "shots-final/dag-laptop-2-after-click-A.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "3-keyboard-B",
+          "space": {
+            "focused": true
+          },
+          "enter": {
+            "focused": true
+          },
+          "after_space": {
+            "dom": {
+              "ai_control_present": false,
+              "narration_count": 1,
+              "dag_inputs": [
+                {
+                  "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                  "pressed": "false",
+                  "tabindex": "0"
+                },
+                {
+                  "label": "Đầu vào B, giá trị 1, bấm để đổi",
+                  "pressed": "true",
+                  "tabindex": "0"
+                },
+                {
+                  "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                  "pressed": "true",
+                  "tabindex": "0"
+                }
+              ],
+              "legacy_toggle_row": false,
+              "gate_unknowns_in_diagram": 3,
+              "gate_unknowns_in_table": 3,
+              "truth_unknowns": 0,
+              "observer_open": false,
+              "diagram_top": 219,
+              "gate_table_top": 400,
+              "diagram_area": 49056,
+              "gate_table_area": 57200,
+              "controls_total": 6,
+              "controls_in_viewport": 6,
+              "step": "Bước 1 / 5",
+              "overflow_x": false,
+              "stage_visible": true,
+              "body_has_text": true,
+              "mode_buttons": []
+            },
+            "engine": {
+              "values": {
+                "A": 0,
+                "B": 1,
+                "C": 1
+              },
+              "nodeOutputs": {
+                "A": 0,
+                "B": 1,
+                "C": 1,
+                "g1": 0,
+                "g2": 0,
+                "g3": 0
+              },
+              "cursor": 0
+            }
+          },
+          "png": "shots-final/dag-laptop-3-keyboard-B.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "4-mid",
+          "png": "shots-final/dag-laptop-4-mid.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 1,
+            "gate_unknowns_in_table": 1,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 3 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 2
+          }
+        },
+        {
+          "phase": "5-final",
+          "png": "shots-final/dag-laptop-5-final.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 0,
+            "gate_unknowns_in_table": 0,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 5 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 4
+          }
+        },
+        {
+          "phase": "6-reset",
+          "png": "shots-final/dag-laptop-6-reset.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "7-observer",
+          "png": "shots-final/dag-laptop-7-observer.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 8,
+            "observer_open": true,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        }
+      ]
+    },
+    {
+      "viewport": "narrow",
+      "steps": [
+        {
+          "phase": "1-initial",
+          "png": "shots-final/dag-narrow-1-initial.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "2-click-node-A",
+          "clicked": true,
+          "png": "shots-final/dag-narrow-2-after-click-A.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "3-keyboard-B",
+          "space": {
+            "focused": true
+          },
+          "enter": {
+            "focused": true
+          },
+          "after_space": {
+            "dom": {
+              "ai_control_present": false,
+              "narration_count": 1,
+              "dag_inputs": [
+                {
+                  "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                  "pressed": "false",
+                  "tabindex": "0"
+                },
+                {
+                  "label": "Đầu vào B, giá trị 1, bấm để đổi",
+                  "pressed": "true",
+                  "tabindex": "0"
+                },
+                {
+                  "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                  "pressed": "true",
+                  "tabindex": "0"
+                }
+              ],
+              "legacy_toggle_row": false,
+              "gate_unknowns_in_diagram": 3,
+              "gate_unknowns_in_table": 3,
+              "truth_unknowns": 0,
+              "observer_open": false,
+              "diagram_top": 219,
+              "gate_table_top": 400,
+              "diagram_area": 49056,
+              "gate_table_area": 57200,
+              "controls_total": 6,
+              "controls_in_viewport": 6,
+              "step": "Bước 1 / 5",
+              "overflow_x": false,
+              "stage_visible": true,
+              "body_has_text": true,
+              "mode_buttons": []
+            },
+            "engine": {
+              "values": {
+                "A": 0,
+                "B": 1,
+                "C": 1
+              },
+              "nodeOutputs": {
+                "A": 0,
+                "B": 1,
+                "C": 1,
+                "g1": 0,
+                "g2": 0,
+                "g3": 0
+              },
+              "cursor": 0
+            }
+          },
+          "png": "shots-final/dag-narrow-3-keyboard-B.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "4-mid",
+          "png": "shots-final/dag-narrow-4-mid.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 1,
+            "gate_unknowns_in_table": 1,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 3 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 2
+          }
+        },
+        {
+          "phase": "5-final",
+          "png": "shots-final/dag-narrow-5-final.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 0,
+            "gate_unknowns_in_table": 0,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 5 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 0,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 0,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 4
+          }
+        },
+        {
+          "phase": "6-reset",
+          "png": "shots-final/dag-narrow-6-reset.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 0,
+            "observer_open": false,
+            "diagram_top": 218,
+            "gate_table_top": 399,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        },
+        {
+          "phase": "7-observer",
+          "png": "shots-final/dag-narrow-7-observer.png",
+          "dom": {
+            "ai_control_present": false,
+            "narration_count": 1,
+            "dag_inputs": [
+              {
+                "label": "Đầu vào A, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào B, giá trị 0, bấm để đổi",
+                "pressed": "false",
+                "tabindex": "0"
+              },
+              {
+                "label": "Đầu vào C, giá trị 1, bấm để đổi",
+                "pressed": "true",
+                "tabindex": "0"
+              }
+            ],
+            "legacy_toggle_row": false,
+            "gate_unknowns_in_diagram": 3,
+            "gate_unknowns_in_table": 3,
+            "truth_unknowns": 8,
+            "observer_open": true,
+            "diagram_top": 219,
+            "gate_table_top": 400,
+            "diagram_area": 49056,
+            "gate_table_area": 57200,
+            "controls_total": 6,
+            "controls_in_viewport": 6,
+            "step": "Bước 1 / 5",
+            "overflow_x": false,
+            "stage_visible": true,
+            "body_has_text": true,
+            "mode_buttons": []
+          },
+          "engine": {
+            "values": {
+              "A": 1,
+              "B": 0,
+              "C": 1
+            },
+            "nodeOutputs": {
+              "A": 1,
+              "B": 0,
+              "C": 1,
+              "g1": 0,
+              "g2": 0,
+              "g3": 0
+            },
+            "cursor": 0
+          }
+        }
+      ]
+    }
+  ],
+  "shell": [
+    {
+      "target": "algorithm.bounded_control_flow",
+      "viewport": "desktop",
+      "png": "shots-final/shell-bounded-control-flow-desktop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": null,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": true,
+        "diagram_top": null,
+        "gate_table_top": null,
+        "diagram_area": null,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 12",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "logic.boolean_dag",
+      "viewport": "desktop",
+      "png": "shots-final/shell-boolean-dag-desktop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [
+          {
+            "label": "Đầu vào A, giá trị 1, bấm để đổi",
+            "pressed": "true",
+            "tabindex": "0"
+          },
+          {
+            "label": "Đầu vào B, giá trị 0, bấm để đổi",
+            "pressed": "false",
+            "tabindex": "0"
+          },
+          {
+            "label": "Đầu vào C, giá trị 1, bấm để đổi",
+            "pressed": "true",
+            "tabindex": "0"
+          }
+        ],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": 0,
+        "truth_unknowns": 0,
+        "observer_open": true,
+        "diagram_top": 218,
+        "gate_table_top": 399,
+        "diagram_area": 49056,
+        "gate_table_area": 57200,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 5",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "database.relational_table_query",
+      "viewport": "desktop",
+      "png": "shots-final/shell-table-query-desktop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": true,
+        "diagram_top": 272,
+        "gate_table_top": null,
+        "diagram_area": 144,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 32",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "viewport": "desktop",
+      "png": "shots-final/shell-bubble-sort-desktop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": true,
+        "diagram_top": 185,
+        "gate_table_top": null,
+        "diagram_area": 135072,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 40",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "viewport": "desktop",
+      "png": "shots-final/shell-encapsulation-desktop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": null,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": true,
+        "diagram_top": null,
+        "gate_table_top": null,
+        "diagram_area": null,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 9",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": [
+          "2D",
+          "3D"
+        ]
+      },
+      "mode3d": {
+        "cursor_before": 4,
+        "cursor_after": 4,
+        "png": "shots-final/shell-encapsulation-desktop-3d.png",
+        "dom": {
+          "ai_control_present": false,
+          "narration_count": 1,
+          "dag_inputs": [],
+          "legacy_toggle_row": false,
+          "gate_unknowns_in_diagram": null,
+          "gate_unknowns_in_table": null,
+          "truth_unknowns": 0,
+          "observer_open": true,
+          "diagram_top": null,
+          "gate_table_top": null,
+          "diagram_area": null,
+          "gate_table_area": null,
+          "controls_total": 6,
+          "controls_in_viewport": 6,
+          "step": "Bước 5 / 9",
+          "overflow_x": false,
+          "stage_visible": true,
+          "body_has_text": true,
+          "mode_buttons": [
+            "2D",
+            "3D"
+          ]
+        }
+      }
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "viewport": "laptop",
+      "png": "shots-final/shell-bounded-control-flow-laptop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": null,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": null,
+        "gate_table_top": null,
+        "diagram_area": null,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 12",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "logic.boolean_dag",
+      "viewport": "laptop",
+      "png": "shots-final/shell-boolean-dag-laptop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [
+          {
+            "label": "Đầu vào A, giá trị 1, bấm để đổi",
+            "pressed": "true",
+            "tabindex": "0"
+          },
+          {
+            "label": "Đầu vào B, giá trị 0, bấm để đổi",
+            "pressed": "false",
+            "tabindex": "0"
+          },
+          {
+            "label": "Đầu vào C, giá trị 1, bấm để đổi",
+            "pressed": "true",
+            "tabindex": "0"
+          }
+        ],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": 0,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": 218,
+        "gate_table_top": 399,
+        "diagram_area": 49056,
+        "gate_table_area": 57200,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 5",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "database.relational_table_query",
+      "viewport": "laptop",
+      "png": "shots-final/shell-table-query-laptop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": 272,
+        "gate_table_top": null,
+        "diagram_area": 144,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 32",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "viewport": "laptop",
+      "png": "shots-final/shell-bubble-sort-laptop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": 11,
+        "gate_table_top": null,
+        "diagram_area": 135072,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 40",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "viewport": "laptop",
+      "png": "shots-final/shell-encapsulation-laptop.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": null,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": null,
+        "gate_table_top": null,
+        "diagram_area": null,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 9",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": [
+          "2D",
+          "3D"
+        ]
+      },
+      "mode3d": {
+        "cursor_before": 4,
+        "cursor_after": 4,
+        "png": "shots-final/shell-encapsulation-laptop-3d.png",
+        "dom": {
+          "ai_control_present": false,
+          "narration_count": 1,
+          "dag_inputs": [],
+          "legacy_toggle_row": false,
+          "gate_unknowns_in_diagram": null,
+          "gate_unknowns_in_table": null,
+          "truth_unknowns": 0,
+          "observer_open": false,
+          "diagram_top": null,
+          "gate_table_top": null,
+          "diagram_area": null,
+          "gate_table_area": null,
+          "controls_total": 6,
+          "controls_in_viewport": 6,
+          "step": "Bước 5 / 9",
+          "overflow_x": false,
+          "stage_visible": true,
+          "body_has_text": true,
+          "mode_buttons": [
+            "2D",
+            "3D"
+          ]
+        }
+      }
+    },
+    {
+      "target": "__drawer_vs_controls__",
+      "viewport": "laptop",
+      "png": "shots-final/drawer-vs-controls-laptop.png",
+      "drawer": {
+        "overlap": true,
+        "z_controls": 50,
+        "z_drawer": 40,
+        "controls_on_top": true
+      }
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "viewport": "narrow",
+      "png": "shots-final/shell-bounded-control-flow-narrow.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": null,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": null,
+        "gate_table_top": null,
+        "diagram_area": null,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 12",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "logic.boolean_dag",
+      "viewport": "narrow",
+      "png": "shots-final/shell-boolean-dag-narrow.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [
+          {
+            "label": "Đầu vào A, giá trị 1, bấm để đổi",
+            "pressed": "true",
+            "tabindex": "0"
+          },
+          {
+            "label": "Đầu vào B, giá trị 0, bấm để đổi",
+            "pressed": "false",
+            "tabindex": "0"
+          },
+          {
+            "label": "Đầu vào C, giá trị 1, bấm để đổi",
+            "pressed": "true",
+            "tabindex": "0"
+          }
+        ],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": 0,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": 218,
+        "gate_table_top": 399,
+        "diagram_area": 49056,
+        "gate_table_area": 57200,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 5",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "database.relational_table_query",
+      "viewport": "narrow",
+      "png": "shots-final/shell-table-query-narrow.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": 272,
+        "gate_table_top": null,
+        "diagram_area": 144,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 32",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "viewport": "narrow",
+      "png": "shots-final/shell-bubble-sort-narrow.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": 0,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": 114,
+        "gate_table_top": null,
+        "diagram_area": 135072,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 40",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": []
+      },
+      "mode3d": null
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "viewport": "narrow",
+      "png": "shots-final/shell-encapsulation-narrow.png",
+      "dom": {
+        "ai_control_present": false,
+        "narration_count": 1,
+        "dag_inputs": [],
+        "legacy_toggle_row": false,
+        "gate_unknowns_in_diagram": null,
+        "gate_unknowns_in_table": null,
+        "truth_unknowns": 0,
+        "observer_open": false,
+        "diagram_top": null,
+        "gate_table_top": null,
+        "diagram_area": null,
+        "gate_table_area": null,
+        "controls_total": 6,
+        "controls_in_viewport": 6,
+        "step": "Bước 5 / 9",
+        "overflow_x": false,
+        "stage_visible": true,
+        "body_has_text": true,
+        "mode_buttons": [
+          "2D",
+          "3D"
+        ]
+      },
+      "mode3d": {
+        "cursor_before": 4,
+        "cursor_after": 4,
+        "png": "shots-final/shell-encapsulation-narrow-3d.png",
+        "dom": {
+          "ai_control_present": false,
+          "narration_count": 1,
+          "dag_inputs": [],
+          "legacy_toggle_row": false,
+          "gate_unknowns_in_diagram": null,
+          "gate_unknowns_in_table": null,
+          "truth_unknowns": 0,
+          "observer_open": false,
+          "diagram_top": null,
+          "gate_table_top": null,
+          "diagram_area": null,
+          "gate_table_area": null,
+          "controls_total": 6,
+          "controls_in_viewport": 6,
+          "step": "Bước 5 / 9",
+          "overflow_x": false,
+          "stage_visible": true,
+          "body_has_text": true,
+          "mode_buttons": [
+            "2D",
+            "3D"
+          ]
+        }
+      }
+    },
+    {
+      "target": "__drawer_vs_controls__",
+      "viewport": "narrow",
+      "png": "shots-final/drawer-vs-controls-narrow.png",
+      "drawer": {
+        "overlap": true,
+        "z_controls": 50,
+        "z_drawer": 40,
+        "controls_on_top": true
+      }
+    }
+  ]
+}

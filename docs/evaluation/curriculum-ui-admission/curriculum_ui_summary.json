@@ -1,0 +1,118 @@
+{
+  "checkpoint": "curriculum-ui-admission",
+  "generated_at": "2026-08-05",
+  "base_commit": "722acea",
+  "committed": false,
+  "pushed": false,
+  "live_model_calls": 0,
+  "catalog": { "families": 11, "targets": 22, "changed": false },
+
+  "curriculum_admission": {
+    "framework": "Chương trình GDPT 2018 môn Tin học (Thông tư 32/2018/TT-BGDĐT)",
+    "source_confidence": "SGK KNTT + Cánh diều (nguồn thứ cấp); KHÔNG đọc được toàn văn phụ lục chương trình",
+    "counts": { "cot_loi": 13, "dinh_huong": 6, "chuyen_de": 2, "cong_cu": 1, "total": 22 },
+    "cot_loi": [
+      "algorithm.bounded_control_flow", "algorithm.scan", "algorithm.find_max",
+      "algorithm.find_min", "algorithm.count_if", "algorithm.sum_if",
+      "binary.decimal_to_binary", "binary.base_conversion", "binary.character_encoding",
+      "logic.and_gate", "logic.boolean_dag",
+      "network.protocol_encapsulation", "network.packet_routing"
+    ],
+    "dinh_huong": [
+      "algorithm.linear_search", "algorithm.binary_search", "algorithm.bubble_sort",
+      "algorithm.selection_sort", "algorithm.insertion_sort",
+      "database.relational_table_query"
+    ],
+    "chuyen_de": ["network.graph_traversal", "tree.traversal"],
+    "cong_cu": ["generic.rule_scene"],
+    "out_of_curriculum": [],
+    "bfs_verdict": {
+      "in_curriculum": true,
+      "location": "Chuyên đề học tập Tin học 12, định hướng Khoa học máy tính",
+      "prioritized": false,
+      "reason": "Nhóm học sinh hẹp nhất; hai target này đã có sân khấu lớn nhất (65%, 67%) và đã có chú giải."
+    }
+  },
+
+  "view_mode": {
+    "two_d_only": 20,
+    "three_d_pedagogical": ["network.protocol_encapsulation"],
+    "three_d_architectural_poc": ["network.packet_routing"],
+    "new_3d_proposed": 0,
+    "matches_current_implementation": true,
+    "verified_in_chrome": "mode_buttons = '2D,3D' đúng ở 2 target, 20 target còn lại không có"
+  },
+
+  "ui_complexity": {
+    "measured_in": "Chrome thật qua CDP",
+    "targets_opened": 22,
+    "runtime_errors": 0,
+    "horizontal_overflow": 0,
+    "narration_slots_max": 1,
+    "observer_width_pct": { "min": 21, "max": 21, "note": "hằng số ở cả 22 target" },
+    "duplicate_narration_in_observer": 0,
+    "duplicate_title_in_observer": 9,
+    "targets_with_legend_before": 3,
+    "targets_with_legend_after_pilot": 4,
+    "verdict": "Không phải quá nhiều panel. Vấn đề là TỈ LỆ sân khấu / phần còn lại, và 19/22 target dùng màu mà không giải thích màu.",
+    "invalid_metric_note": "stage_share_of_card KHÔNG hợp lệ cho binary.base_conversion, binary.character_encoding, database.relational_table_query (sân khấu là BẢNG, svg_in_stage=false). Không dùng chỉ số này để xếp hạng hay chọn pilot cho ba target đó."
+  },
+
+  "benchmark": {
+    "method": "Chrome thật, mở mô phỏng thật, chờ JS dựng, đo DOM",
+    "sites": [
+      { "id": "phet-build-an-atom", "stage_pct": 100, "text_chars": 2364, "buttons": 32, "code_block": false, "verified": true },
+      { "id": "visualgo-sorting", "stage_pct": 35, "text_chars": 3588, "buttons": 4, "code_block": true, "verified": true },
+      { "id": "pythontutor", "stage_pct": 0, "text_chars": 4930, "panels": 10, "code_block": true, "verified": true },
+      { "id": "csfieldguide-sorting", "stage_pct": 0, "text_chars": 940, "code_block": false, "verified": true },
+      { "id": "algorithm-visualizer", "verified": false, "status": "NOT_VERIFIED", "reason": "SPA không dựng được trong headless, thử 2 lượt đều trắng trang" }
+    ]
+  },
+
+  "pilot": {
+    "target": "logic.boolean_dag",
+    "curriculum_label": "CỐT LÕI",
+    "curriculum_location": "Tin học 11, Chủ đề A — phần chung cho cả hai định hướng",
+    "production_files_changed": 2,
+    "production_files_limit": 8,
+    "test_files_changed": 1,
+    "touched_engine_or_state_or_schema": false,
+    "changes": ["sân khấu lớn hơn (nới maxWidth SVG)", "gỡ quá tải màu ở cổng đầu ra", "thêm chú giải tín hiệu"],
+    "before_after": {
+      "paired_phases": 12,
+      "cursor_matched_phases": 12,
+      "diagram_share_pct": { "desktop": [11, 36], "laptop": [10, 34], "narrow": [13, 38] },
+      "gate_table_share_pct": { "desktop": [24, 18], "laptop": [25, 18], "narrow": [24, 18] },
+      "legend_items": [0, 4],
+      "green_stroked_rects": [1, 0],
+      "output_label_present": [false, true],
+      "card_text_chars_mid": [326, 411],
+      "tradeoff": "Lượng chữ TĂNG 26%. Pilot thêm chú giải — đánh đổi có chủ ý, không phải cải thiện."
+    },
+    "acceptance": {
+      "viewports": 3,
+      "horizontal_overflow": false,
+      "controls_in_viewport": "6/6 ở cả 3 viewport",
+      "drawer_covers_controls": false,
+      "drawer_check_method": "document.elementFromPoint hit test — KHÔNG dùng chồng lấn bounding-box (đó là artifact)",
+      "space_starts_autoplay": false,
+      "space_rebuilds_timeline": true
+    }
+  },
+
+  "regression": {
+    "vitest": { "before": 810, "after": 813, "files": 52 },
+    "build_tsc": "pass",
+    "pytest": { "passed": 1129, "skipped": 2 },
+    "catalog_runtime_matrix": "22 PASS",
+    "git_diff_check": "clean"
+  },
+
+  "not_verified": [
+    "Không có bất kỳ kiểm chứng nào với học sinh thật — mọi số ở đây là số đo GIAO DIỆN, không phải số HỌC ĐƯỢC.",
+    "Không đọc được toàn văn phụ lục Thông tư 32/2018/TT-BGDĐT; ánh xạ chương trình dựa trên mục lục SGK.",
+    "Không xác định được 'yêu cầu cần đạt' cho từng nội dung, nên không kết luận được mức độ cần đạt.",
+    "Không kiểm thử với người dùng khiếm thị màu; lập luận 'dấu hiệu ngoài màu' là suy luận thiết kế.",
+    "Algorithm Visualizer: NOT_VERIFIED sau 2 lượt thử."
+  ]
+}
