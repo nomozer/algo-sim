@@ -2006,6 +2006,36 @@ html {
    `--primary` là màu duy nhất được sơn hành động (DESIGN.md §Don't). */
 .scan-act { text-align: left; }
 
+/* ── TRẠNG THÁI ĐÃ CHỌN (W3B-1) ──────────────────────────────────────────────
+   Chốt xong thì cả hai nút cùng `disabled`, nên nếu không có gì khác thì học
+   sinh mất dấu lựa chọn của chính mình (đo trong Chrome: 4/4 target chỉ khác ở
+   thuộc tính `disabled`). Viền dùng `--primary` — đúng màu hành động duy nhất —
+   và INSET shadow thay cho việc tăng `border-width`: tăng viền làm nút to thêm
+   và đẩy dòng, tức vá một lỗi trình bày bằng một lỗi trình bày khác. */
+.scan-act.is-chosen {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+  opacity: 1;
+}
+
+/* Nút không chọn nhẹ đi nhưng PHẢI còn đọc được: giá trị học tập nằm ở chỗ đối
+   chiếu "mình đã chọn cái này thay vì cái kia". */
+.scan-act.is-notchosen {
+  opacity: 0.72;
+}
+
+/* Dấu hiệu CHỮ — thứ duy nhất không phụ thuộc vào việc phân biệt được màu. */
+.scan-act-mark {
+  margin-left: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.scan-act-mark::before {
+  content: "✓ ";
+}
+
 /* ══ VÙNG HÀNH ĐỘNG CỤM TÌM KIẾM (INTERACTION-FAMILY W2) ══════════════════
    Dùng lại nguyên khung của `.scan-action` (cùng vai: vùng hành động cạnh sân
    khấu) — không dựng ngôn ngữ thị giác thứ hai cho cùng một loại thành phần. */

@@ -59,6 +59,40 @@ function columnState(step: Step, index: number): ColumnState {
   return { fill: "#dcebfa", stroke: "var(--hairline)", strokeWidth: 1, active: false };
 }
 
+/* ── NGHĨA CỦA MARK THEO BÀI (W3B-1) ─────────────────────────────────────────
+ *
+ * Engine chỉ có bốn mark (`Mark` ở core/types.ts) nhưng chúng phục vụ chín
+ * thuật toán, nên MỘT mark mang nhiều nghĩa — y hệt chuyện `eliminated` ở cuối
+ * hàm dưới. Với `found`, đo trong Chrome (W3A-001/002) thấy cả bốn bài quét dãy
+ * đều đọc thành "đã tìm thấy": `count_if` nói "đã tìm thấy" cho phần tử nó vừa
+ * ĐẾM, `sum_if` cho phần tử vừa CỘNG vào tổng. Không bài nào trong bốn bài này
+ * đi tìm một giá trị cho trước, nên nhãn đó dạy sai cơ chế.
+ *
+ * Sửa ở TẦNG TRÌNH BÀY: mark canonical giữ nguyên từng ký tự (engine, trace,
+ * timeline không đụng tới) — chỉ chỗ ĐẶT TÊN cho màu là đổi. Bài không có trong
+ * bảng rơi về nhãn cũ, nên `linear_search`/`binary_search` (hai bài THẬT SỰ đi
+ * tìm) và mọi target khác không đổi một chữ.
+ */
+const FOUND_LABEL: Record<string, string> = {
+  // Ở đây `found` là phần tử THẮNG cuối cùng: engine `clearMarks()` rồi mark
+  // đúng một ô ở bước kết. Nó ĐƯỢC CHỌN làm max/min chứ không phải "tìm thấy".
+  find_max: "đã chọn làm max",
+  find_min: "đã chọn làm min",
+  // Ở đây `found` gắn cho TỪNG phần tử thoả điều kiện, ngay bước nó được gộp
+  // vào biến tích luỹ — nghĩa là "đã vào kết quả", khác hẳn "tìm thấy".
+  count_if: "đã được đếm",
+  sum_if: "đã được cộng vào tổng",
+};
+
+/* `considering` chỉ do find_max/find_min phát ra, và engine giữ ĐÚNG MỘT ô mang
+ * mark này: ô đang giữ vai max/min hiện hành (khi cập nhật, ô cũ chuyển sang
+ * `eliminated`). Gọi nó là "vùng đang xét" biến một phần tử cụ thể thành một
+ * vùng mơ hồ, và trùng nghĩa với nhãn "đang xét / so sánh" ngay bên trên. */
+const CONSIDERING_LABEL: Record<string, string> = {
+  find_max: "max hiện tại",
+  find_min: "min hiện tại",
+};
+
 /**
  * CHÚ GIẢI SUY TỪ TRACE THẬT (UI-CLARITY W1).
  *
@@ -89,11 +123,18 @@ export function arrayLegendItems(
   if (events.has("compare") || events.has("compare_value")) {
     items.push({ tone: "scan", label: "đang xét / so sánh" });
   }
-  if (marks.has("considering")) items.push({ tone: "considering", label: "vùng đang xét" });
+  if (marks.has("considering")) {
+    items.push({
+      tone: "considering",
+      label: CONSIDERING_LABEL[opts.algorithmId] ?? "vùng đang xét",
+    });
+  }
   if (events.has("swap")) items.push({ tone: "bound", label: "đang đổi chỗ" });
   if (opts.hasGap) items.push({ tone: "gap", label: "ô trống" });
   if (marks.has("sorted")) items.push({ tone: "done", label: "phần đã sắp xong" });
-  else if (marks.has("found")) items.push({ tone: "done", label: "đã tìm thấy" });
+  else if (marks.has("found")) {
+    items.push({ tone: "done", label: FOUND_LABEL[opts.algorithmId] ?? "đã tìm thấy" });
+  }
 
   /* CÙNG MỘT MÀU XÁM, HAI NGHĨA — nhãn phải theo cơ chế của bài.
      `binary_search` tô xám nửa BỊ LOẠI khỏi vùng tìm kiếm (không bao giờ xét

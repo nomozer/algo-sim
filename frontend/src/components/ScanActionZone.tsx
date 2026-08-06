@@ -34,8 +34,15 @@ interface ScanActionZoneProps {
   answered: boolean;
   busy: boolean;
   onAct: (actionId: string) => void;
-  /** Phản hồi sau khi chốt: do ENGINE sinh, component chỉ hiển thị. */
-  feedback?: { verdict: string; message: string } | null;
+  /**
+   * Phản hồi sau khi chốt: do ENGINE sinh, component chỉ hiển thị.
+   *
+   * `answerId` là LỰA CHỌN CỦA CHÍNH HỌC SINH, không phải đáp án — nó vào đây
+   * để vùng hành động nói lại được "em vừa chọn cái nào". `expectedId` của
+   * `PredictionResult` cố ý KHÔNG có mặt trong kiểu này: đọc được nó ở renderer
+   * là mời renderer tự phán xử, và nó sẽ lọt vào DOM.
+   */
+  feedback?: { verdict: string; message: string; answerId?: string } | null;
 }
 
 export function ScanActionZone({
@@ -58,18 +65,37 @@ export function ScanActionZone({
 
       <p className="scan-instruction">Em hãy làm bước này: chọn một trong hai.</p>
 
+      {/* SAU KHI CHỐT, HỌC SINH PHẢI CÒN THẤY MÌNH ĐÃ CHỌN GÌ.
+          Đo trong Chrome (W3B-1 baseline, 4/4 target): chốt xong thì cả hai nút
+          chỉ khác trạng thái trước ở chỗ `disabled` — không viền, không chữ,
+          không thuộc tính nào phân biệt. Phản hồi thì nói "Chưa đúng…" mà không
+          nói chưa đúng CÁI GÌ, nên nửa vòng lặp học tập bị mất.
+          Dấu hiệu chính là CHỮ ("em đã chọn"); viền và độ đậm chỉ là lớp thứ
+          hai — màu không bao giờ là tín hiệu duy nhất (global.css). */}
       <div className="scan-actions">
-        {model.actions.map((a: MechanismAction) => (
-          <button
-            key={a.id}
-            type="button"
-            className={`btn-choice scan-act is-${a.tone}`}
-            disabled={busy || answered}
-            onClick={() => onAct(a.id)}
-          >
-            {a.label}
-          </button>
-        ))}
+        {model.actions.map((a: MechanismAction) => {
+          const chosen = answered && feedback?.answerId === a.id;
+          const state = answered ? (chosen ? " is-chosen" : " is-notchosen") : "";
+          return (
+            <button
+              key={a.id}
+              type="button"
+              className={`btn-choice scan-act is-${a.tone}${state}`}
+              disabled={busy || answered}
+              // Chỉ khẳng định khi đã có cam kết: trước đó hai nút chưa mang
+              // trạng thái nào, nói "không được nhấn" là kể sai.
+              aria-pressed={answered ? chosen : undefined}
+              data-chosen={answered ? String(chosen) : undefined}
+              onClick={() => onAct(a.id)}
+            >
+              {a.label}
+              {/* Khoảng trắng THẬT, không phải `margin` — đo trong Chrome thấy
+                  `innerText` ra "Giữ max = 9em đã chọn": mắt thấy cách nhau vì
+                  margin, còn trình đọc màn hình đọc dính liền. */}
+              {chosen && <> <span className="scan-act-mark">em đã chọn</span></>}
+            </button>
+          );
+        })}
       </div>
 
       {feedback && (
