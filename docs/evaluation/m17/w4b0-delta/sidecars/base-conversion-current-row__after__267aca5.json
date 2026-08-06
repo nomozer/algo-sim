@@ -1,0 +1,50 @@
+{
+  "case": "base-conversion-current-row",
+  "target": "binary.base_conversion",
+  "head": "267aca5",
+  "cursor": 2,
+  "oldClaim": "không đánh dấu hàng đang tính",
+  "probe": {
+    "rowTotal": 3,
+    "rowMarked": 0,
+    "classes": []
+  },
+  "sidecar": {
+    "moduleId": "binary.base_conversion",
+    "cursor": 2,
+    "timelineLength": null,
+    "events": null,
+    "snapshotArray": null,
+    "vars": null,
+    "marks": null,
+    "ids": null,
+    "narration": null,
+    "prediction": null,
+    "branch": null,
+    "domText": "HỆ CƠ SỐ Đổi 2026 sang thập lục phân Đổi cơ số (2 · 8 · 10 · 16) · từng bước · 2D Phép chia Thương Dư Chữ số 2026 : 16 126 10 A 126 : 16 7 14 E Chữ số đã thu (đọc ngược số dư): EA 126 : 16 = 7 dư 14 → chữ số E. Các số dư đọc NGƯỢC từ dưới lên sẽ thành kết quả.",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 456,
+        "w": 688,
+        "h": 382
+      },
+      "stage": {
+        "top": 186,
+        "bottom": 366,
+        "w": 638,
+        "h": 180
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 970,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

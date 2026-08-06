@@ -1,0 +1,52 @@
+{
+  "case": "packet-routing-progress",
+  "target": "network.packet_routing",
+  "head": "267aca5",
+  "cursor": 1,
+  "oldClaim": "đoạn đã đi vs còn lại không phân biệt; không có hướng",
+  "probe": {
+    "edgeTotal": 6,
+    "edgeClasses": [],
+    "arrowMarkers": 0,
+    "legend": false,
+    "legendItems": []
+  },
+  "sidecar": {
+    "moduleId": "network.packet_routing",
+    "cursor": 1,
+    "timelineLength": null,
+    "events": null,
+    "snapshotArray": null,
+    "vars": null,
+    "marks": null,
+    "ids": null,
+    "narration": null,
+    "prediction": null,
+    "branch": null,
+    "domText": "MẠNG Định tuyến gói tin Định tuyến gói tin · từng bước · 2D / 3D 2D 3D pc Máy khách r1 Router sw Switch srv Máy chủ Gói tin chuyển tới Router (r1), tiếp tục chuyển tiếp. Dự đoán bước này",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 619,
+        "w": 666,
+        "h": 545
+      },
+      "stage": {
+        "top": 224,
+        "bottom": 474,
+        "w": 616,
+        "h": 250
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 948,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

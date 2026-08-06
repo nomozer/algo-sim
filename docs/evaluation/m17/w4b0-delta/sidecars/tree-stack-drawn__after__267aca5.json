@@ -1,0 +1,52 @@
+{
+  "case": "tree-stack-drawn",
+  "target": "tree.traversal",
+  "head": "267aca5",
+  "cursor": 10,
+  "oldClaim": "ngăn xếp chỉ là dòng chữ — đúng thứ quyết định thứ tự duyệt",
+  "probe": {
+    "frontierEl": true,
+    "frontierClass": "frontier frontier-stack",
+    "frontierText": "NGĂN XẾP (LIFO) 1 phần tử VỪA LẤY RA B ĐỈNH A LIFO — đẩy vào và lấy ra đều ở đỉnh (trên cùng)",
+    "frontierCells": 2,
+    "mentionsStack": true
+  },
+  "sidecar": {
+    "moduleId": "tree.traversal",
+    "cursor": 10,
+    "timelineLength": null,
+    "events": null,
+    "snapshotArray": null,
+    "vars": null,
+    "marks": null,
+    "ids": null,
+    "narration": null,
+    "prediction": null,
+    "branch": null,
+    "domText": "CÂY Duyệt trước — cây cân bằng Duyệt cây nhị phân (preorder · inorder · postorder · level-order) · từng bước · 2D trái phải trái phải trái phải A B C D E F G NGĂN XẾP (LIFO) 1 phần tử VỪA LẤY RA B ĐỈNH A LIFO — đẩy vào và lấy ra đều ở đỉnh (trên cùng) ĐÃ THĂM A → B → D → E đang xử lý đã thăm đang chờ trong ngăn xếp chưa xét Xong nhánh của B — lấy ra khỏi ngăn xếp.",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 743,
+        "w": 881,
+        "h": 669
+      },
+      "stage": {
+        "top": 186,
+        "bottom": 656,
+        "w": 831,
+        "h": 470
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 1163,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

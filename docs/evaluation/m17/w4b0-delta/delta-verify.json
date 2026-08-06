@@ -1,0 +1,152 @@
+{
+  "head": "267aca5",
+  "generatedAt": "2026-08-06T21:43:20.712Z",
+  "rows": [
+    {
+      "id": "insertion-held-key",
+      "target": "algorithm.insertion_sort",
+      "oldClass": "B+",
+      "oldClaim": "giá trị đang cầm (4) KHÔNG có trên sân khấu; ô trống hiện thành số 7 lặp lại",
+      "oldAction": "thiết kế lại: vẽ giá trị đang cầm + ô trống",
+      "candidateFix": "bb992eb fix(algorithm): show held key and gap in insertion sort",
+      "cursor": 15,
+      "steps": 32,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "RESOLVED",
+      "note": "hold-tray=true · ô trống=1 · giá trị lặp=[\"3\",\"4\",\"2\"]",
+      "shot": "insertion-held-key__after__267aca5.png"
+    },
+    {
+      "id": "bounded-loop-visible",
+      "target": "algorithm.bounded_control_flow",
+      "oldClass": "B−",
+      "oldClaim": "toàn bộ vòng lặp: quỹ đạo biến, biên dừng, cạnh quay lại, tích luỹ đều ẩn",
+      "oldAction": "thiết kế lại sân khấu",
+      "candidateFix": "04b68e1 feat(algorithm): visualize loop mechanism for bounded control flow",
+      "cursor": 4,
+      "steps": 10,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "RESOLVED",
+      "note": "svg=1 · từ khoá vòng lặp=[\"lượt\",\"vòng\",\"lặp\"]",
+      "shot": "bounded-loop-visible__after__267aca5.png"
+    },
+    {
+      "id": "tree-stack-drawn",
+      "target": "tree.traversal",
+      "oldClass": "B+",
+      "oldClaim": "ngăn xếp chỉ là dòng chữ — đúng thứ quyết định thứ tự duyệt",
+      "oldAction": "thiết kế lại: vẽ ngăn xếp",
+      "candidateFix": "722acea feat(tree): visualize traversal stack transitions · 1372a8d shared frontier view",
+      "cursor": 10,
+      "steps": 22,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "RESOLVED",
+      "note": "frontier=frontier frontier-stack · ô=2 · \"NGĂN XẾP (LIFO) 1 phần tử VỪA LẤY RA B ĐỈNH A LIFO — đẩy vào và lấy ra đều ở đỉnh (trên cùng)\"",
+      "shot": "tree-stack-drawn__after__267aca5.png"
+    },
+    {
+      "id": "graph-queue-drawn",
+      "target": "network.graph_traversal",
+      "oldClass": "B",
+      "oldClaim": "hàng đợi chỉ là dòng chữ; không cạnh nào được tô",
+      "oldAction": "thiết kế lại: vẽ hàng đợi + cạnh đang đi",
+      "candidateFix": "33956bd feat(network): visualize BFS frontier queue · 1372a8d shared frontier view",
+      "cursor": 3,
+      "steps": 8,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "IMPROVED_PARTIAL",
+      "note": "hàng đợi=đã vẽ (ô=4) · cạnh được tô=0/5",
+      "shot": "graph-queue-drawn__after__267aca5.png"
+    },
+    {
+      "id": "dag-legend",
+      "target": "logic.boolean_dag",
+      "oldClass": "A−",
+      "oldClaim": "không chú giải màu; xanh lá mang HAI nghĩa",
+      "oldAction": "chỉnh nhẹ: thêm chú giải",
+      "candidateFix": "e3bf406 feat(ui): add shared stage legend derived from trace",
+      "cursor": 2,
+      "steps": 5,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "RESOLVED",
+      "note": "chú giải=true · [\"tín hiệu 1\",\"tín hiệu 0\",\"viền đậm = cổng đang tính\",\"? chưa tới lượt\"]",
+      "shot": "dag-legend__after__267aca5.png"
+    },
+    {
+      "id": "and-gate-legend",
+      "target": "logic.and_gate",
+      "oldClass": "A−",
+      "oldClaim": "không chú giải màu",
+      "oldAction": "chỉnh nhẹ",
+      "candidateFix": "e3bf406 (chú giải dùng chung) — chưa rõ có áp cho and_gate",
+      "cursor": 1,
+      "steps": 1,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "STILL_PRESENT",
+      "note": "chú giải=false · []",
+      "shot": "and-gate-legend__after__267aca5.png"
+    },
+    {
+      "id": "base-conversion-current-row",
+      "target": "binary.base_conversion",
+      "oldClass": "A−",
+      "oldClaim": "không đánh dấu hàng đang tính",
+      "oldAction": "chỉnh nhẹ: tô hàng hiện tại",
+      "candidateFix": "(không có commit nào trỏ vào)",
+      "cursor": 2,
+      "steps": 5,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "STILL_PRESENT",
+      "note": "hàng=3 · hàng được tô=0 · class=[]",
+      "shot": "base-conversion-current-row__after__267aca5.png"
+    },
+    {
+      "id": "table-active-stage",
+      "target": "database.relational_table_query",
+      "oldClass": "A−",
+      "oldClaim": "tầng đang chạy không nổi bật trong dải chip",
+      "oldAction": "chỉnh nhẹ",
+      "candidateFix": "(không có commit nào trỏ vào)",
+      "cursor": 7,
+      "steps": 16,
+      "visualModes": [
+        "2d"
+      ],
+      "status": "STILL_PRESENT",
+      "note": "chip=4 · đang chạy được nhấn=0",
+      "shot": "table-active-stage__after__267aca5.png"
+    },
+    {
+      "id": "packet-routing-progress",
+      "target": "network.packet_routing",
+      "oldClass": "B+",
+      "oldClaim": "đoạn đã đi vs còn lại không phân biệt; không có hướng",
+      "oldAction": "chỉnh nhẹ",
+      "candidateFix": "(không có commit nào trỏ vào)",
+      "cursor": 1,
+      "steps": 3,
+      "visualModes": [
+        "2d",
+        "3d"
+      ],
+      "status": "STILL_PRESENT",
+      "note": "cạnh=6 · lớp cạnh=[] · mũi tên=0 · chú giải=[]",
+      "shot": "packet-routing-progress__after__267aca5.png"
+    }
+  ],
+  "problems": []
+}

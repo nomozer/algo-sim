@@ -1,0 +1,96 @@
+{
+  "case": "insertion-held-key",
+  "target": "algorithm.insertion_sort",
+  "head": "267aca5",
+  "cursor": 15,
+  "oldClaim": "giá trị đang cầm (4) KHÔNG có trên sân khấu; ô trống hiện thành số 7 lặp lại",
+  "probe": {
+    "heldTray": true,
+    "heldText": "ĐANG GIỮ 8 đã rút khỏi dãy — ô trống ở vị trí 4",
+    "gapCells": 1,
+    "values": [
+      "3",
+      "0",
+      "4",
+      "1",
+      "7",
+      "2",
+      "9",
+      "3",
+      "4",
+      "2",
+      "5"
+    ],
+    "duplicatedValues": [
+      "3",
+      "4",
+      "2"
+    ]
+  },
+  "sidecar": {
+    "moduleId": "algorithm.insertion_sort",
+    "cursor": 15,
+    "timelineLength": 32,
+    "events": [
+      {
+        "type": "compare",
+        "i": 3,
+        "j": 4,
+        "result": ">"
+      }
+    ],
+    "snapshotArray": [
+      3,
+      4,
+      7,
+      9,
+      8,
+      2
+    ],
+    "vars": {
+      "gia_tri_chen": 8
+    },
+    "marks": {
+      "0": "sorted",
+      "1": "sorted",
+      "2": "sorted",
+      "3": "sorted"
+    },
+    "ids": [
+      0,
+      3,
+      1,
+      2,
+      4,
+      5
+    ],
+    "narration": "So sánh 9 với giá trị chèn 8: có phải dời 9 sang phải không?",
+    "prediction": null,
+    "branch": null,
+    "domText": "THUẬT TOÁN Sắp xếp chèn Sắp xếp chèn · từng bước · 2D ĐANG GIỮ 8 đã rút khỏi dãy — ô trống ở vị trí 4 3 0 4 1 7 2 9 3 trống 4 2 5 đang xét / so sánh ô trống phần đã sắp xong Tìm chỗ cho quân bài đang giữ Đang giữ 8 Đang xét 9 (vị trí 4) 9 lớn hơn 8 ? Em hãy làm bước này: chọn một trong hai. Dời phần tử này sang phải Dừng dịch chuyển",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 761,
+        "w": 610,
+        "h": 687
+      },
+      "stage": {
+        "top": 186,
+        "bottom": 530,
+        "w": 560,
+        "h": 344
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 892,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

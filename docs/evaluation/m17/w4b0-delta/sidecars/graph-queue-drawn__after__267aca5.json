@@ -1,0 +1,52 @@
+{
+  "case": "graph-queue-drawn",
+  "target": "network.graph_traversal",
+  "head": "267aca5",
+  "cursor": 3,
+  "oldClaim": "hàng đợi chỉ là dòng chữ; không cạnh nào được tô",
+  "probe": {
+    "frontierEl": true,
+    "frontierClass": "frontier frontier-queue",
+    "frontierCells": 4,
+    "edgeTotal": 5,
+    "edgeEmphasised": 0
+  },
+  "sidecar": {
+    "moduleId": "network.graph_traversal",
+    "cursor": 3,
+    "timelineLength": null,
+    "events": null,
+    "snapshotArray": null,
+    "vars": null,
+    "marks": null,
+    "ids": null,
+    "narration": null,
+    "prediction": null,
+    "branch": null,
+    "domText": "MẠNG BFS — đồ thị phân nhánh Duyệt đồ thị (BFS · DFS) · từng bước · 2D A B C D E F HÀNG ĐỢI (FIFO) 3 phần tử VỪA LẤY RA C ĐẦU D E F MỚI FIFO — vào ở cuối, ra ở đầu (trái → phải) ĐÃ THĂM A → B → C đang xử lý đã thăm đang chờ trong hàng đợi chưa xét Lấy C ra khỏi hàng đợi và THĂM nó; nạp hàng xóm chưa thấy: F.",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 732,
+        "w": 636,
+        "h": 658
+      },
+      "stage": {
+        "top": 186,
+        "bottom": 642,
+        "w": 586,
+        "h": 456
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 918,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

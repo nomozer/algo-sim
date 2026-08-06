@@ -1,0 +1,54 @@
+{
+  "case": "dag-legend",
+  "target": "logic.boolean_dag",
+  "head": "267aca5",
+  "cursor": 2,
+  "oldClaim": "không chú giải màu; xanh lá mang HAI nghĩa",
+  "probe": {
+    "legend": true,
+    "items": [
+      "tín hiệu 1",
+      "tín hiệu 0",
+      "viền đậm = cổng đang tính",
+      "? chưa tới lượt"
+    ]
+  },
+  "sidecar": {
+    "moduleId": "logic.boolean_dag",
+    "cursor": 2,
+    "timelineLength": null,
+    "events": null,
+    "snapshotArray": null,
+    "vars": null,
+    "marks": null,
+    "ids": null,
+    "narration": null,
+    "prediction": null,
+    "branch": null,
+    "domText": "LOGIC Mạch (A AND B) OR NOT C Mạch logic nhiều cổng (AND · OR · NOT · XOR) · kết hợp · 2D Bấm A, B hoặc C để đổi giá trị đầu vào và quan sát tín hiệu lan truyền qua các cổng. A 1 B 0 C 1 AND 0 NOT 0 ĐẦU RA OR ? tín hiệu 1 tín hiệu 0 viền đậm = cổng đang tính ? chưa tới lượt CHI TIẾT CÁC CỔNG Cổng g2 (NOT) nhận [1] → ra 0.",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 621,
+        "w": 768,
+        "h": 547
+      },
+      "stage": {
+        "top": 186,
+        "bottom": 495,
+        "w": 718,
+        "h": 309
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 1050,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

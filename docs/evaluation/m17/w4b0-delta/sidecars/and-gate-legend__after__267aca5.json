@@ -1,0 +1,49 @@
+{
+  "case": "and-gate-legend",
+  "target": "logic.and_gate",
+  "head": "267aca5",
+  "cursor": 1,
+  "oldClaim": "không chú giải màu",
+  "probe": {
+    "legend": false,
+    "items": []
+  },
+  "sidecar": {
+    "moduleId": "logic.and_gate",
+    "cursor": null,
+    "timelineLength": null,
+    "events": null,
+    "snapshotArray": null,
+    "vars": null,
+    "marks": null,
+    "ids": null,
+    "narration": null,
+    "prediction": null,
+    "branch": null,
+    "domText": "LOGIC Cổng AND Cổng logic AND · khám phá · 2D AND 1 Đầu ra A = 1 B = 1 Bấm vào công tắc A hoặc B để bật/tắt. AND chỉ cho đầu ra 1 khi cả hai đầu vào đều là 1. Hiện tại: 1 AND 1 = 1.",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 513,
+        "w": 812,
+        "h": 439
+      },
+      "stage": {
+        "top": 186,
+        "bottom": 426,
+        "w": 762,
+        "h": 240
+      },
+      "controls": {
+        "top": 942,
+        "bottom": 972,
+        "w": 1094,
+        "h": 30
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

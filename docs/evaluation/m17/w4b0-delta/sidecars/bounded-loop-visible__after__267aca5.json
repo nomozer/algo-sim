@@ -1,0 +1,72 @@
+{
+  "case": "bounded-loop-visible",
+  "target": "algorithm.bounded_control_flow",
+  "head": "267aca5",
+  "cursor": 4,
+  "oldClaim": "toàn bộ vòng lặp: quỹ đạo biến, biên dừng, cạnh quay lại, tích luỹ đều ẩn",
+  "probe": {
+    "svgCount": 1,
+    "loopWords": [
+      "lượt",
+      "vòng",
+      "lặp"
+    ],
+    "hasTrajectory": true,
+    "sample": "THUẬT TOÁN Vòng lặp có chặn Chạy từng bước đoạn chương trình · từng bước · 2D x = 3 lượt 3 Quay lại kiểm tra biên 5 1 2 3 5 x < 5 ĐÚNG → vào thân vòng lặp Kiểm tra → Thực hiện → Cập nhật ↩ quay lại kiểm tra ⇥ thoát đang "
+  },
+  "sidecar": {
+    "moduleId": "algorithm.bounded_control_flow",
+    "cursor": 4,
+    "timelineLength": 10,
+    "events": [
+      {
+        "type": "evaluate_condition",
+        "expression": "x < 5",
+        "result": true
+      },
+      {
+        "type": "enter_branch",
+        "branch": "loop_body"
+      },
+      {
+        "type": "loop_iteration",
+        "statementId": "s_while",
+        "iteration": 3
+      }
+    ],
+    "snapshotArray": [],
+    "vars": {
+      "x": 3
+    },
+    "marks": {},
+    "ids": [],
+    "narration": "Xét x = 3: 3 < 5 → ĐÚNG, vào thân vòng lặp (lượt 3).",
+    "prediction": null,
+    "branch": null,
+    "domText": "THUẬT TOÁN Vòng lặp có chặn Chạy từng bước đoạn chương trình · từng bước · 2D x = 3 lượt 3 Quay lại kiểm tra biên 5 1 2 3 5 x < 5 ĐÚNG → vào thân vòng lặp Kiểm tra → Thực hiện → Cập nhật ↩ quay lại kiểm tra ⇥ thoát đang xét đã đi qua biên dừng MÃ GIẢ THUẬT TOÁN 1 trong khi x < 5 lặp: 2 x ← x + 1 Xét x = 3: 3 < 5 → ĐÚNG, vào thân vòng lặp (lượt 3).",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 698,
+        "w": 646,
+        "h": 624
+      },
+      "stage": {
+        "top": 186,
+        "bottom": 475,
+        "w": 596,
+        "h": 290
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 928,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}

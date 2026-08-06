@@ -1,0 +1,54 @@
+{
+  "case": "table-active-stage",
+  "target": "database.relational_table_query",
+  "head": "267aca5",
+  "cursor": 7,
+  "oldClaim": "tầng đang chạy không nổi bật trong dải chip",
+  "probe": {
+    "chipTotal": 4,
+    "chipActive": 0,
+    "classes": [
+      "tq-stages",
+      "",
+      "sim-stage"
+    ]
+  },
+  "sidecar": {
+    "moduleId": "database.relational_table_query",
+    "cursor": 7,
+    "timelineLength": null,
+    "events": null,
+    "snapshotArray": null,
+    "vars": null,
+    "marks": null,
+    "ids": null,
+    "narration": null,
+    "prediction": null,
+    "branch": null,
+    "domText": "TRUY VẤN BẢNG Lọc điểm ≥8 Truy vấn bảng dữ liệu · từng bước · 2D 1. Lọc 2. Sắp xếp giảm dần Trạng thái Họ và tên Tổ Điểm Giữ Nguyễn An A 8.5 Giữ Trần Bình B 8 Đang xét Lê Chi A 9.25 Đỗ Hà A 6.5 Hàng 3: Điểm = 9.25 ≥ 8 → đúng",
+    "rects": {
+      "card": {
+        "top": 74,
+        "bottom": 499,
+        "w": 602,
+        "h": 425
+      },
+      "stage": {
+        "top": 232,
+        "bottom": 412,
+        "w": 552,
+        "h": 180
+      },
+      "controls": {
+        "top": 908,
+        "bottom": 948,
+        "w": 884,
+        "h": 40
+      }
+    },
+    "viewport": {
+      "w": 1440,
+      "h": 1000
+    }
+  }
+}
