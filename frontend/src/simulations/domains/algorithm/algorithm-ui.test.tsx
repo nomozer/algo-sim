@@ -31,9 +31,18 @@ function html(algorithmId: AlgorithmId, data: Record<string, unknown>, cursor: n
 }
 
 describe("gating swap trong AlgorithmWorkspace", () => {
-  it("bubble_sort (free): hiện gợi ý kéo-thả", () => {
-    const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1);
+  /* W3B §15 — mode "free" GIỮ NGUYÊN, nhưng gợi ý kéo không được mời học sinh
+     làm việc đang bị khoá. Ở bước quyết định, cam kết đi trước bằng nút; kéo
+     (thí nghiệm what-if) mở lại sau khi đã chốt. */
+  it("bubble_sort (free): hiện gợi ý kéo-thả ở bước KHÔNG phải điểm quyết định", () => {
+    const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 0);
     expect(h).toContain("Kéo một cột");
+  });
+
+  it("bubble_sort: ở điểm quyết định CHƯA cam kết thì không mời kéo", () => {
+    const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1);
+    expect(h).toContain("Thao tác sắp xếp"); // vùng cam kết có mặt
+    expect(h).not.toContain("Kéo một cột"); // …và kéo không được mời song song
   });
 
   it("(17) sum_if (hidden): KHÔNG gợi ý kéo-thả, KHÔNG nút thí nghiệm", () => {

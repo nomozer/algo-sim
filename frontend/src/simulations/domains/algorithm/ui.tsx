@@ -6,11 +6,18 @@ import { PseudocodeView } from "../../../components/PseudocodeView";
 import { AnalysisCard } from "../../../components/AnalysisCard";
 import { fmt } from "../../../core/trace-builder";
 import type { WorkspaceProps } from "../../types";
-import { consequenceOf, decisionPointOf, scanInteractionOf, searchInteractionOf } from "./decision";
+import {
+  consequenceOf,
+  decisionPointOf,
+  scanInteractionOf,
+  searchInteractionOf,
+  sortInteractionOf,
+} from "./decision";
 import { ScanActionZone } from "../../../components/ScanActionZone";
 import { SearchActionZone } from "../../../components/SearchActionZone";
+import { SortActionZone } from "../../../components/SortActionZone";
 import { useAppStore } from "../../../state/store";
-import { whatIfPolicyOf } from "./interaction-policy";
+import { whatIfDragAllowed, whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import {
   IconBack,
@@ -109,20 +116,28 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
 
   const dragAllowedByPolicy =
     policy.mode === "free" || policy.mode === "framed" || (policy.mode === "challenge" && labOpen);
-  // R3.3a giữ nguyên: chỉ khi đang dừng, chưa ở nhánh, chưa hết bài.
-  const canDrag = dragAllowedByPolicy && !busy && !state.branch && !last;
 
   const decision = decisionPointOf(state);
   const consequence = decision ? null : consequenceOf(state);
   const hold = insertionHold(state, clampStep(state, state.cursor));
   const scan = scanInteractionOf(state);
   const search = searchInteractionOf(state);
+  const sort = sortInteractionOf(state);
 
   /* Nhánh DỰ ĐOÁN (không phải state canonical) đọc/ghi qua store — đúng khuôn
      `PredictionBar` đã dùng từ M8-PRE-LIP: kết quả chấm sống ở `store.prediction`,
      `active.state` không hề bị đụng tới. */
   const prediction = useAppStore((s) => s.prediction);
   const submitPrediction = useAppStore((s) => s.submitPrediction);
+
+  // Luật kéo-vs-cam-kết (W3B §15) sống ở `interaction-policy.ts` — hàm thuần,
+  // kiểm được không cần trình duyệt. Ở đây chỉ cung cấp dữ kiện thời điểm.
+  const canDrag = whatIfDragAllowed(state, {
+    policyAllows: dragAllowedByPolicy,
+    busy,
+    last,
+    answered: prediction !== null,
+  });
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -196,11 +211,24 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         />
       )}
 
+      {/* CỤM SẮP XẾP (W3B): cam kết là NÚT, kéo vẫn là thí nghiệm. Trong lúc
+          chưa cam kết, kéo bị khoá (`sortingCommitmentPending`) để một cử chỉ
+          không mang hai nghĩa ở cùng một bước. Nộp qua chính `predict.check`. */}
+      {sort && (
+        <SortActionZone
+          model={sort}
+          answered={prediction !== null}
+          busy={busy}
+          onAct={(actionId) => submitPrediction(actionId)}
+          feedback={prediction}
+        />
+      )}
+
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8).
           KHÔNG dựng khi đã có vùng hành động: `ScanActionZone` mang sẵn state
           line và phép so sánh, bày cả hai là lặp đúng thứ W1 vừa gỡ (test
           `ui-clarity-w1` bắt được ngay khi tôi thử). */}
-      {decision && !scan && !search && (
+      {decision && !scan && !search && !sort && (
         <div className="decision-strip">
           <span className="decision-consideration">
             <IconSearch size={14} />
@@ -255,7 +283,15 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         </div>
       )}
 
-      {canDrag && policy.hint && <span className="hint">{policy.hint}</span>}
+      {/* Gợi ý kéo KHÔNG được mời làm việc đang bị khoá, và sau khi đã cam kết
+          thì phải nói rõ kéo là THỬ NGHIỆM — khác hẳn việc vừa làm bằng nút. */}
+      {canDrag && sort && prediction !== null && (
+        <span className="hint">
+          Em có thể kéo hai cột để THỬ một nhánh khác — đó là thí nghiệm, không
+          phải bước của thuật toán.
+        </span>
+      )}
+      {canDrag && !sort && policy.hint && <span className="hint">{policy.hint}</span>}
     </div>
   );
 }

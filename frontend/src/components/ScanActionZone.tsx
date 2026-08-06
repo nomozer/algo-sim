@@ -49,7 +49,7 @@ export function ScanActionZone({
   model, answered, busy, onAct, feedback = null,
 }: ScanActionZoneProps) {
   return (
-    <section className="scan-action" aria-label="Thao tác với biến tích luỹ">
+    <section className="action-zone scan-action" aria-label="Thao tác với biến tích luỹ">
       <div className="scan-state">
         <span className="scan-chip is-candidate">
           <IconSearch size={13} />

@@ -3,11 +3,11 @@ import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
-import { isScanFamily, scanInteractionOf } from "./domains/algorithm/decision";
+import { isScanFamily, scanInteractionOf, stageInteractionsOf } from "./domains/algorithm/decision";
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
 import type { AlgorithmSimState } from "./domains/algorithm";
-import type { AlgorithmId } from "../core/types";
+import { ALGORITHM_IDS, type AlgorithmId } from "../core/types";
 import type { SimulationEnvelope } from "./types";
 
 registerAllSimulations();
@@ -184,10 +184,51 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
     }
   });
 
-  it("target ngoài cụm KHÔNG khai presentedInStage ở bất kỳ bước nào", () => {
-    const { mod, state } = build("bubble_sort", { order: "asc" });
-    for (let i = 0; i < state.trace.steps.length; i += 1) {
-      expect(mod.predict!.presentedInStage!(at(state, i))).toBe(false);
+  /* ── W3B §14 — LOCK CŨ ĐÃ ĐƯỢC THAY, CÓ CHỦ ĐÍCH ────────────────────────
+   *
+   * Bản cũ khoá "bubble_sort không bao giờ presentedInStage". Từ W3B, sắp xếp
+   * CÓ vùng hành động nên khẳng định đó sai theo thiết kế. Không thay bằng một
+   * target khác rồi tiếp tục `expect(false)`: cụm tìm kiếm cũng có vùng hành
+   * động, nên trò đó chỉ dời cái lock tới chỗ sắp sai tiếp.
+   *
+   * Thay bằng BẤT BIẾN TỔNG QUÁT — thứ vẫn đúng khi có thêm cụm cơ chế mới:
+   * một bước có TỐI ĐA MỘT mô hình, và `presentedInStage` phải khớp đúng với
+   * việc có hay không có mô hình đó.
+   */
+  it("mọi target · mọi bước: tối đa MỘT mô hình tương tác sân khấu", () => {
+    for (const id of ALGORITHM_IDS) {
+      const extra =
+        id === "binary_search" || id === "linear_search"
+          ? { array: [...ARR].sort((a, b) => a - b), target: 8 }
+          : id === "count_if" || id === "sum_if"
+            ? { condition: { op: ">=", value: 7 } }
+            : id === "bubble_sort" || id === "insertion_sort" || id === "selection_sort"
+              ? { order: "asc" }
+              : {};
+      const { state } = build(id, extra);
+      for (let i = 0; i < state.trace.steps.length; i += 1) {
+        const present = stageInteractionsOf(at(state, i));
+        expect(present.length, `${id} bước ${i}: ${present.join("+")}`).toBeLessThanOrEqual(1);
+      }
+    }
+  });
+
+  it("presentedInStage khớp ĐÚNG việc có mô hình hay không", () => {
+    for (const id of ALGORITHM_IDS) {
+      const extra =
+        id === "binary_search" || id === "linear_search"
+          ? { array: [...ARR].sort((a, b) => a - b), target: 8 }
+          : id === "count_if" || id === "sum_if"
+            ? { condition: { op: ">=", value: 7 } }
+            : id === "bubble_sort" || id === "insertion_sort" || id === "selection_sort"
+              ? { order: "asc" }
+              : {};
+      const { mod, state } = build(id, extra);
+      for (let i = 0; i < state.trace.steps.length; i += 1) {
+        const cur = at(state, i);
+        expect(mod.predict!.presentedInStage!(cur), `${id} bước ${i}`)
+          .toBe(stageInteractionsOf(cur).length === 1);
+      }
     }
   });
 

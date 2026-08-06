@@ -1,4 +1,6 @@
 import type { AlgorithmId } from "../../../core/types";
+import { sortInteractionOf } from "./decision";
+import type { AlgorithmSimState } from "./model";
 
 /**
  * CHÍNH SÁCH TƯƠNG TÁC THEO CƠ CHẾ (M9-S1) — chấm dứt "một swap cho cả tám bài".
@@ -118,4 +120,38 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
 
 export function whatIfPolicyOf(algorithmId: AlgorithmId): WhatIfPolicy {
   return POLICIES[algorithmId];
+}
+
+/* ── KÉO VÀ CAM KẾT KHÔNG TRANH NHAU (W3B §1.2, §15) ─────────────────────────
+ *
+ * Ở ba bài sắp xếp, kéo cột có mode "free" — nó ĐÃ mang nghĩa "thí nghiệm: nếu
+ * đổi chỗ thì sao" từ trước wave này. Nay bước quyết định có thêm vùng cam kết
+ * nghĩa là "làm đúng việc thuật toán làm". Để cả hai cùng sống thì học sinh có
+ * HAI đường để "đổi chỗ hai cột này" ở CÙNG một bước, cho hai kết cục khác hẳn:
+ * một cái được engine chấm, một cái đẻ ra nhánh what-if.
+ *
+ * Luật: cam kết trước, thí nghiệm sau — đúng thứ tự của việc học (chốt điều
+ * mình nghĩ → thấy phán quyết → mới hỏi "nếu khác đi thì sao"). Mode "free"
+ * KHÔNG bị gỡ; nó chỉ hoãn trong lúc còn một cam kết đang chờ.
+ *
+ * Hàm THUẦN, không đọc store: luật này phải kiểm được mà không cần trình duyệt
+ * (`useAppStore` trong SSR chỉ trả trạng thái ĐẦU — `ARCHITECTURE_MAP §8` #13,
+ * nên một luật chôn trong JSX là một luật không test được ngoài Chrome).
+ */
+export interface DragGateInput {
+  /** Mode của bài cho phép kéo ở thời điểm này chưa (gồm cả nút thí nghiệm đã mở). */
+  policyAllows: boolean;
+  busy: boolean;
+  /** Đang ở bước cuối — không còn gì để chạy tiếp trên nhánh. */
+  last: boolean;
+  /** Học sinh đã chốt cam kết ở bước này chưa. */
+  answered: boolean;
+}
+
+export function whatIfDragAllowed(state: AlgorithmSimState, input: DragGateInput): boolean {
+  // R3.3a giữ nguyên: chỉ khi đang dừng, chưa ở nhánh, chưa hết bài.
+  if (!input.policyAllows || input.busy || input.last || state.branch) return false;
+  // §15: bước sắp xếp còn cam kết đang chờ ⇒ hoãn kéo.
+  if (sortInteractionOf(state) !== null && !input.answered) return false;
+  return true;
 }

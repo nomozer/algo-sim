@@ -43,6 +43,13 @@ const SCAN: Array<[AlgorithmId, Record<string, unknown>]> = [
 /** Dữ liệu bắt buộc theo từng target — một nguồn, dùng cho cả test completeness. */
 const DATA_FOR: Partial<Record<AlgorithmId, Record<string, unknown>>> = Object.fromEntries(SCAN);
 
+/** Nhãn ngữ nghĩa của ba vùng hành động — hợp đồng với người dùng, không phải CSS. */
+const ZONE_LABELS = [
+  "Thao tác với biến tích luỹ",
+  "Thao tác với bước tìm kiếm",
+  "Thao tác sắp xếp",
+];
+
 const ARR = [7.5, 9, 6.5, 8, 5.5, 8.5, 7, 6];
 
 function build(id: AlgorithmId, data: Record<string, unknown>) {
@@ -178,10 +185,11 @@ describe("W3B-1 · vùng hành động giữ đúng ranh giới cam kết", () =
           config={config} state={at(state, firstDecision(state))} busy={false} dispatch={() => {}}
         />,
       );
-      // Đếm ĐÚNG thẻ vùng hành động: `scan-action` là tiền tố của `scan-actions`
-      // (hàng nút bên trong), nên đếm chuỗi trần sẽ luôn ra 2 và test hoá vô nghĩa.
-      expect(html.split('class="scan-action"').length - 1, id).toBe(1);
-      expect(html, id).not.toContain('class="search-action"');
+      /* Đếm theo NHÃN NGỮ NGHĨA, không theo class: class đổi khi refactor CSS
+         (đã xảy ra ở W3B §10 khi ba vùng dùng chung `.action-zone`), còn
+         `aria-label` là hợp đồng với người dùng nên nó ổn định hơn. */
+      const zones = ZONE_LABELS.map((l) => html.split(`aria-label="${l}"`).length - 1);
+      expect(zones.reduce((a, b) => a + b, 0), `${id}: ${zones}`).toBe(1);
       expect(html, id).not.toContain('class="predict-bar"');
       expect(html, id).not.toContain("decision-strip");
     }

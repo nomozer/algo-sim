@@ -563,6 +563,144 @@ export function searchInteractionOf(state: AlgorithmSimState): SearchInteraction
   };
 }
 
+/* ── CỤM CƠ CHẾ "SẮP XẾP" (W3B §8) ────────────────────────────────────────────
+ *
+ * Ba thuật toán sắp xếp cùng một khuôn — duyệt, so sánh, rồi HÀNH ĐỘNG hoặc
+ * GIỮ NGUYÊN — nhưng hành động của mỗi bài là một cơ chế khác nhau, nên không
+ * gộp thành một nhãn chung:
+ * - `compare-pair`     (nổi bọt): cặp kề có đổi chỗ không;
+ * - `select-candidate` (chọn):    có ghi nhớ vị trí cực trị mới không;
+ * - `shift-or-stop`    (chèn):    phần tử này có bị dời sang phải không.
+ *
+ * VÌ SAO CAM KẾT LÀ NÚT, KHÔNG PHẢI KÉO (quyết định B của wave):
+ * kéo cột ĐÃ có nghĩa từ trước — thí nghiệm what-if, fork sang nhánh. Dùng lại
+ * đúng cử chỉ ấy cho cam kết thì cùng một thao tác, trên cùng hai cột, ở cùng
+ * một bước lại mang hai nghĩa và cho hai kết cục khác nhau. Nút giữ hai nghĩa
+ * tách bạch, và dùng lại đúng primitive mà cụm quét dãy/tìm kiếm đã chứng minh.
+ *
+ * Như hai cụm trước: model KHÔNG mang `expectedId`/`evidence`/kết quả cuối, và
+ * `id` của hành động chính là option id của `DecisionPoint` nên chấm vẫn đi qua
+ * đúng `predict.check`.
+ */
+
+export type SortInteractionKind = "compare-pair" | "select-candidate" | "shift-or-stop";
+
+/** Một dữ kiện hiện trạng — nhãn + giá trị, lấy từ snapshot/vars canonical. */
+export interface SortFact {
+  label: string;
+  value: string;
+}
+
+export interface SortInteractionModel {
+  kind: SortInteractionKind;
+  /** Việc đang làm ở bước này. KHÔNG phải câu hỏi, không mang đáp án. */
+  title: string;
+  /** Ứng viên / cặp / quân bài đang giữ / ranh giới vùng chưa sắp. */
+  facts: SortFact[];
+  /** Phép so sánh dạng hỏi — lấy nguyên từ `DecisionPoint.expression`. */
+  expression: string;
+  actions: MechanismAction[];
+}
+
+const SORT_FAMILY = new Set(["bubble_sort", "selection_sort", "insertion_sort"]);
+
+export function isSortFamily(algorithmId: string): boolean {
+  return SORT_FAMILY.has(algorithmId);
+}
+
+/**
+ * Ranh giới vùng CHƯA SẮP — đọc `set_range` gần nhất ĐÃ ĐI QUA.
+ *
+ * Quét LÙI, không quét tới: bước đã qua là chuyện đã xảy ra, còn đọc bước sau
+ * là đọc đáp án. `insertionHold` trong `ui.tsx` đã dùng đúng khuôn này.
+ */
+function lastRange(state: AlgorithmSimState, at: number): { left: number; right: number } | null {
+  const trace = activeTrace(state);
+  for (let i = at; i >= 0; i -= 1) {
+    for (const ev of trace.steps[i].events) {
+      if (ev.type === "set_range") return { left: ev.left, right: ev.right };
+    }
+  }
+  return null;
+}
+
+export function sortInteractionOf(state: AlgorithmSimState): SortInteractionModel | null {
+  const id = state.config.algorithm_id;
+  if (!isSortFamily(id)) return null;
+
+  const d = decisionPointOf(state);
+  if (!d) return null;
+
+  const trace = activeTrace(state);
+  const at = clampStep(state, state.cursor);
+  const cur = trace.steps[at];
+  const cmp = cur.events.find((e) => e.type === "compare");
+  if (!cmp || cmp.type !== "compare") return null;
+
+  const asc = (state.config.data.order ?? "asc") === "asc";
+  const orderText = asc ? "tăng dần" : "giảm dần";
+  // Quy ước chung ba cụm: option[0] = HÀNH ĐỘNG, option[1] = GIỮ NGUYÊN.
+  const act = (label: string, keep: string): MechanismAction[] => [
+    { id: d.options[0].id, label, tone: "update" },
+    { id: d.options[1].id, label: keep, tone: "keep" },
+  ];
+
+  if (id === "bubble_sort") {
+    const vi = fmt(cur.snapshot.array[cmp.i]);
+    const vj = fmt(cur.snapshot.array[cmp.j]);
+    return {
+      kind: "compare-pair",
+      title: "Cặp kề đang xét",
+      facts: [
+        { label: `Vị trí ${cmp.i + 1}`, value: vi },
+        { label: `Vị trí ${cmp.j + 1}`, value: vj },
+        { label: "Cần sắp", value: orderText },
+      ],
+      expression: d.expression,
+      actions: act("Đổi chỗ hai phần tử này", "Giữ nguyên thứ tự"),
+    };
+  }
+
+  if (id === "selection_sort") {
+    // `cmp.i` = ô đang giữ vai cực trị, `cmp.j` = ứng viên đang xét (engine).
+    const extremeText = asc ? "nhỏ nhất" : "lớn nhất";
+    const range = lastRange(state, at);
+    const facts: SortFact[] = [
+      { label: "Đang xét", value: `${fmt(cur.snapshot.array[cmp.j])} (vị trí ${cmp.j + 1})` },
+      { label: `${extremeText} hiện tại`, value: `${fmt(cur.snapshot.array[cmp.i])} (vị trí ${cmp.i + 1})` },
+    ];
+    // Ranh giới là dữ kiện phải nói ra: cơ chế của bài là "chỉ chọn TRONG phần
+    // chưa sắp", mà ranh giới đó nằm im trong event nên học sinh không thấy.
+    if (range) {
+      facts.push({ label: "Phần chưa sắp", value: `vị trí ${range.left + 1}–${range.right + 1}` });
+    }
+    return {
+      kind: "select-candidate",
+      title: `Tìm phần tử ${extremeText} của phần chưa sắp`,
+      facts,
+      expression: d.expression,
+      actions: act(
+        `Chọn phần tử này làm ${extremeText} mới`,
+        `Giữ ${extremeText} hiện tại`,
+      ),
+    };
+  }
+
+  // ── insertion_sort ──
+  const key = cur.snapshot.vars["gia_tri_chen"];
+  if (typeof key !== "number") return null;
+  return {
+    kind: "shift-or-stop",
+    title: "Tìm chỗ cho quân bài đang giữ",
+    facts: [
+      { label: "Đang giữ", value: fmt(key) },
+      { label: "Đang xét", value: `${fmt(cur.snapshot.array[cmp.i])} (vị trí ${cmp.i + 1})` },
+    ],
+    expression: d.expression,
+    actions: act("Dời phần tử này sang phải", "Dừng dịch chuyển"),
+  };
+}
+
 /* ── VÙNG HÀNH ĐỘNG SÂN KHẤU: ĐẾM ĐƯỢC, VÀ PHẢI ≤ 1 (W3B §5.2, §14) ────────
  *
  * Ba cụm cơ chế đều có thể dựng vùng hành động ngay trên sân khấu. Bất biến:
@@ -576,6 +714,7 @@ export function stageInteractionsOf(state: AlgorithmSimState): string[] {
   const present: string[] = [];
   if (scanInteractionOf(state) !== null) present.push("scan");
   if (searchInteractionOf(state) !== null) present.push("search");
+  if (sortInteractionOf(state) !== null) present.push("sort");
   return present;
 }
 

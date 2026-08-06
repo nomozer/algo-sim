@@ -1583,8 +1583,20 @@ html {
      `bubble_sort` đẩy thanh điều khiển xuống 99px DƯỚI nếp gấp ở 768×900, và
      `protocol_encapsulation` 21px ở bước 5 — tức là nó RA VÀO nếp gấp theo từng
      bước, nút chính tự dịch chuyển dưới ngón tay người học.
-     `sticky` giữ nguyên luồng cuộn của nội dung (khác `fixed`: không cần bù
-     padding, không che phần cuối sân khấu) mà vẫn dán thanh vào đáy màn hình. */
+     `sticky` giữ nguyên luồng cuộn của nội dung (khác `fixed`) mà vẫn dán thanh
+     vào đáy màn hình.
+
+     ĐÍNH CHÍNH (W3B §16): bản trước ghi ở đây rằng sticky "không cần bù padding,
+     không che phần cuối sân khấu". Đo trong Chrome thì KHÔNG đúng — khi nội dung
+     cao hơn một màn, thanh ghim đáy phủ lên phần cuối của `.panel-center`:
+
+       insertion_sort @1024×768 · scrollTop 0 · doc cao 883
+         .panel-controls  678–768  (sticky, z-index 50)
+         nút hành động    684–719  → elementFromPoint trả về `btn-play`
+
+     Học sinh bấm vào nút hành động thì trúng nút Tự chạy. Ba bài quét dãy thoát
+     nạn chỉ vì card thấp hơn 33px, không phải vì luật đúng. Nên phải BÙ PADDING
+     để nội dung cuộn được qua khỏi thanh ghim. */
   .panel-controls {
     position: sticky;
     bottom: 0;
@@ -1592,6 +1604,13 @@ html {
        đè lên nó — yêu cầu "observer drawer không che controls". */
     z-index: 50;
     box-shadow: var(--shadow-elevated);
+  }
+
+  /* Chỗ trống bằng chiều cao thanh ghim (đo được 90px ở 1024, 119px ở 768) cộng
+     một khoảng thở. Guard `accept-sorting.mjs` khẳng định thanh không chồng lên
+     vùng hành động ở cả ba viewport — nó sẽ đỏ nếu thanh cao vượt số này. */
+  .panel-center {
+    padding-bottom: 140px;
   }
 
   .panel-right {
@@ -1945,7 +1964,12 @@ html {
    Nằm NGAY DƯỚI sân khấu, trong cùng thẻ: hành động phải ở cạnh đối tượng nó
    tác động, không nằm ở một khối riêng phía dưới. Nền canvas ấm + hairline theo
    khuôn `pricing-plan-card-featured` (surface tint, KHÔNG viền màu). */
-.scan-action {
+/* KHUNG CHUNG CỦA MỌI VÙNG HÀNH ĐỘNG (W3B §10).
+   Ba cụm — quét dãy · tìm kiếm · sắp xếp — cùng một vai trên sân khấu nên phải
+   cùng một khung. Trước bản này khối 8 dòng dưới đây bị CHÉP hai lần (bản thứ
+   hai còn tự ghi chú "dùng lại nguyên khung của .scan-action"), và cụm thứ ba
+   sắp thành bản sao thứ ba. Khác biệt của từng cụm ở class riêng bên dưới. */
+.action-zone {
   margin-top: var(--sp-sm);
   padding: var(--sp-md) var(--sp-lg);
   background: var(--canvas-soft);
@@ -2036,19 +2060,77 @@ html {
   content: "✓ ";
 }
 
-/* ══ VÙNG HÀNH ĐỘNG CỤM TÌM KIẾM (INTERACTION-FAMILY W2) ══════════════════
-   Dùng lại nguyên khung của `.scan-action` (cùng vai: vùng hành động cạnh sân
-   khấu) — không dựng ngôn ngữ thị giác thứ hai cho cùng một loại thành phần. */
-.search-action {
-  margin-top: var(--sp-sm);
-  padding: var(--sp-md) var(--sp-lg);
-  background: var(--canvas-soft);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
+/* ══ VÙNG HÀNH ĐỘNG CỤM SẮP XẾP (W3B §9) ══════════════════════════════════
+   Khung lấy từ `.action-zone`. Dữ kiện hiện trạng của ba bài khác nhau (cặp
+   kề · ứng viên + ranh giới · quân bài đang giữ) nên bày thành DÃY CHIP thay
+   vì ba bố cục riêng — cùng một vùng phục vụ cả ba cơ chế. */
+.sort-title {
   display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-secondary);
 }
+
+.sort-state {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-xs) var(--sp-sm);
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+.sort-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+}
+
+.sort-chip strong {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.sort-expression {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+
+.sort-instruction {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+.sort-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+}
+
+.sort-act { text-align: left; }
+
+/* Trạng thái đã chọn dùng CHUNG quy tắc với cụm quét dãy — cùng một cam kết
+   thì cùng một cách nói, không dựng ngôn ngữ thị giác thứ hai. */
+.sort-act.is-chosen {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+  opacity: 1;
+}
+
+.sort-act.is-notchosen {
+  opacity: 0.72;
+}
+
+/* ══ VÙNG HÀNH ĐỘNG CỤM TÌM KIẾM (INTERACTION-FAMILY W2) ══════════════════
+   Khung lấy từ `.action-zone`; dưới đây chỉ là phần riêng của cụm tìm kiếm. */
 
 /* TIỀN ĐỀ — nhị phân chỉ đúng trên dãy đã sắp. SGK nhấn mạnh điều này, nên nó
    phải hiện ra chứ không nằm im trong validator. */

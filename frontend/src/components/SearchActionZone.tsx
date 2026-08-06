@@ -36,7 +36,7 @@ export function SearchActionZone({
   model, answered, busy, onAct, feedback = null,
 }: SearchActionZoneProps) {
   return (
-    <section className="search-action" aria-label="Thao tác với bước tìm kiếm">
+    <section className="action-zone search-action" aria-label="Thao tác với bước tìm kiếm">
       {model.precondition && (
         <p className="search-precondition">
           <IconInfo size={13} />
