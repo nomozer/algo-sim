@@ -92,6 +92,57 @@ describe("W3B-sort · một primitive, ba cơ chế", () => {
     }
   });
 
+  /* ── CHỐNG "VÙNG HÀNH ĐỘNG BIẾN MẤT KHÔNG BÁO" ─────────────────────────
+   *
+   * Bất biến "≤ 1 mô hình" chỉ bắt được ca THỪA, không bắt được ca THIẾU: nếu
+   * `sortInteractionOf` trả `null` ở một bước ĐANG CÓ điểm quyết định — vì
+   * engine đổi hình dạng sự kiện, vì thiếu một biến, vì một nhánh `return null`
+   * mới — thì vùng hành động lặng lẽ mất và học sinh mất luôn chỗ cam kết, mà
+   * mọi test hiện có vẫn xanh. Đây là rủi ro tôi đã tự nêu ở báo cáo W3B (§Y.3).
+   *
+   * Quét MỌI bước của cả ba target và khoá chiều ngược lại: có DecisionPoint ⇒
+   * phải có ĐÚNG MỘT mô hình sân khấu, và id hành động phải khớp option.
+   */
+  it("(9d) MỌI bước có DecisionPoint đều có ĐÚNG MỘT mô hình sân khấu", () => {
+    for (const id of SORT) {
+      const { state } = build(id);
+      let decisions = 0;
+
+      for (let i = 0; i < state.trace.steps.length; i += 1) {
+        const cur = at(state, i);
+        const d = decisionPointOf(cur);
+        if (!d) continue;
+        decisions += 1;
+
+        const m = sortInteractionOf(cur);
+        expect(m, `${id} bước ${i}: có DecisionPoint nhưng KHÔNG có mô hình sắp xếp`)
+          .not.toBeNull();
+
+        const present = stageInteractionsOf(cur);
+        expect(present, `${id} bước ${i}: ${present.join("+")}`).toEqual(["sort"]);
+
+        expect(m!.actions.map((a) => a.id), `${id} bước ${i}: action id lệch option`)
+          .toEqual(d.options.map((o) => o.id));
+        expect(m!.actions.length, `${id} bước ${i}`).toBe(d.options.length);
+      }
+
+      // Bài không có điểm quyết định nào thì phép quét trên chẳng khoá được gì.
+      expect(decisions, `${id}: không quét được bước quyết định nào`).toBeGreaterThan(0);
+    }
+  });
+
+  it("(9e) chiều ngược lại: có mô hình sắp xếp ⇒ phải có DecisionPoint", () => {
+    for (const id of SORT) {
+      const { state } = build(id);
+      for (let i = 0; i < state.trace.steps.length; i += 1) {
+        const cur = at(state, i);
+        if (!sortInteractionOf(cur)) continue;
+        expect(decisionPointOf(cur), `${id} bước ${i}: mô hình không có điểm quyết định`)
+          .not.toBeNull();
+      }
+    }
+  });
+
   it("(9b) target NGOÀI cụm không sinh mô hình sắp xếp", () => {
     for (const id of ALGORITHM_IDS) {
       if (SORT.includes(id)) continue;
