@@ -10,10 +10,40 @@ import { TraceBuilder, fmt, type WhatIfSwap } from "./trace-builder";
  * core/pseudocode.ts (1-based) để panel mã giả highlight đồng bộ.
  */
 
-/** Tên phần tử trong thuyết minh: có nhãn → "Bình (9)", không → "a[1] = 9". */
-function elem(b: TraceBuilder, labels: string[] | null, i: number): string {
+/* ── CÁCH GỌI VỊ TRÍ (W3B §5.1) ───────────────────────────────────────────────
+ *
+ * `elem()` cũ trả `a[1] = 9` khi đề không có nhãn, trong khi mọi bề mặt khác nói
+ * với học sinh bằng vị trí đếm TỪ 1 (`decision.ts`: "vị trí 3"). Đo trong Chrome
+ * thấy hai cách đếm hiện CÙNG LÚC trên một màn hình — narration "a[2] = 2" cạnh
+ * state line "Phần tử vị trí 3" — và ở hai câu thì chúng nằm ngay cạnh nhau
+ * trong CÙNG một câu ("là a[3] = 11, ở vị trí thứ 4"). Chỉ số 0-based là chuyện
+ * của MÃ, không phải của người học.
+ *
+ * Ba helper chia theo VAI TRÒ TRONG CÂU, để mỗi câu nói vị trí đúng MỘT lần.
+ * Nhánh CÓ NHÃN vốn không mang chỉ số nên không dính lỗi 0/1-based; nó vẫn đi
+ * qua cùng helper để hai nhánh không trôi thành hai giọng khác nhau.
+ */
+
+/** Vị trí NÓI VỚI HỌC SINH — luôn đếm từ 1. */
+function pos(i: number): string {
+  return `vị trí ${i + 1}`;
+}
+
+/** Nhận dạng phần tử, KHÔNG kèm vị trí — dùng khi câu đã nêu vị trí ở chỗ khác. */
+function elemIdentity(b: TraceBuilder, labels: string[] | null, i: number): string {
   const v = fmt(b.at(i));
-  return labels && labels[i] ? `${labels[i]} (${v})` : `a[${i}] = ${v}`;
+  return labels && labels[i] ? `${labels[i]} (${v})` : `giá trị ${v}`;
+}
+
+/** Nhận dạng KÈM vị trí — dùng khi câu chưa nêu vị trí ở đâu khác. */
+function elemAt(b: TraceBuilder, labels: string[] | null, i: number): string {
+  const v = fmt(b.at(i));
+  return labels && labels[i] ? `${labels[i]} (${v}) ở ${pos(i)}` : `${pos(i)} (giá trị ${v})`;
+}
+
+/** Chỉ NƠI CHỐN — dùng khi câu đã nêu giá trị rồi, nói lại là lặp. */
+function elemWhere(labels: string[] | null, i: number): string {
+  return labels && labels[i] ? labels[i] : pos(i);
 }
 
 export const OP_TEXT: Record<Condition["op"], string> = {
@@ -55,7 +85,8 @@ function runFindExtreme(a: AnalysisOk, mode: "max" | "min", whatIf?: WhatIfSwap)
   b.mark(0, "considering");
   b.step(
     [{ type: "assign_var", name: varName, value: b.at(0) }],
-    `Bắt đầu: tạm coi phần tử đầu tiên ${elem(b, labels, 0)} là ${word}.`,
+    // "phần tử đầu tiên" ĐÃ là vị trí ⇒ chỉ cần nhận dạng, nói vị trí nữa là lặp.
+    `Bắt đầu: tạm coi phần tử đầu tiên ${elemIdentity(b, labels, 0)} là ${word}.`,
     false,
     1,
   );
@@ -74,7 +105,7 @@ function runFindExtreme(a: AnalysisOk, mode: "max" | "min", whatIf?: WhatIfSwap)
           result: b.at(i) > b.at(best) ? ">" : b.at(i) < b.at(best) ? "<" : "==",
         },
       ],
-      `So sánh ${elem(b, labels, i)} với ${varName} = ${fmt(b.at(best))}: ${varName} có được cập nhật không?`,
+      `So sánh ${elemAt(b, labels, i)} với ${varName} = ${fmt(b.at(best))}: ${varName} có được cập nhật không?`,
       true,
       3,
     );
@@ -91,7 +122,8 @@ function runFindExtreme(a: AnalysisOk, mode: "max" | "min", whatIf?: WhatIfSwap)
           { type: "assign_var", name: varName, value: b.at(i) },
           { type: "assign_var", name: "vt", value: i },
         ],
-        `Cập nhật: ${varName} = ${fmt(b.at(i))} (tại ${elem(b, labels, i)}).`,
+        // Giá trị đã nằm ngay trước dấu ngoặc ⇒ trong ngoặc chỉ nói NƠI CHỐN.
+        `Cập nhật: ${varName} = ${fmt(b.at(i))} (tại ${elemWhere(labels, i)}).`,
         false,
         4,
       );
@@ -103,7 +135,9 @@ function runFindExtreme(a: AnalysisOk, mode: "max" | "min", whatIf?: WhatIfSwap)
 
   b.clearMarks();
   b.mark(best, "found");
-  const result = `Phần tử ${word} là ${elem(b, labels, best)}, ở vị trí thứ ${best + 1}.`;
+  // Câu này TỰ nói vị trí ở vế sau ⇒ vế trước chỉ nhận dạng. Bản cũ ghép
+  // "a[3] = 11, ở vị trí thứ 4" — hai cách đếm cạnh nhau trong một câu.
+  const result = `Phần tử ${word} là ${elemIdentity(b, labels, best)}, ở ${pos(best)}.`;
   b.step([{ type: "done", result }], `Duyệt hết dãy. ${result}`, false, 5);
   return b.build();
 }
@@ -139,7 +173,7 @@ function runAggregateIf(a: AnalysisOk, mode: "sum" | "count", whatIf?: WhatIfSwa
           result: match ? "match" : "no_match",
         },
       ],
-      `Xét ${elem(b, labels, i)}: có thỏa điều kiện "${condText}" không?`,
+      `Xét ${elemAt(b, labels, i)}: có thỏa điều kiện "${condText}" không?`,
       true,
       3,
     );
@@ -204,7 +238,7 @@ function runLinearSearch(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
           result: match ? "match" : "no_match",
         },
       ],
-      `So sánh ${elem(b, labels, i)} với ${fmt(target)}: có khớp không?`,
+      `So sánh ${elemAt(b, labels, i)} với ${fmt(target)}: có khớp không?`,
       true,
       2,
     );
@@ -261,7 +295,8 @@ function runBinarySearch(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
     b.setVar("giua", mid);
     b.step(
       [{ type: "assign_var", name: "giua", value: mid }],
-      `Lấy phần tử giữa vùng xét: ${elem(b, labels, mid)} (vị trí thứ ${mid + 1}).`,
+      // Bản cũ: "a[2] = 6 (vị trí thứ 3)" — nói vị trí hai lần, hai cách đếm.
+      `Lấy phần tử giữa vùng xét: ${elemAt(b, labels, mid)}.`,
       false,
       3,
     );
@@ -405,7 +440,9 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
     b.setVar("gia_tri_chen", key);
     b.step(
       [{ type: "assign_var", name: "gia_tri_chen", value: key }],
-      `Lấy phần tử a[${i}] = ${fmt(key)} để chèn vào phần đã sắp bên trái.`,
+      // Call site thứ 8 — KHÔNG đi qua `elem()` nên nằm ngoài danh sách audit,
+      // nhưng mắc đúng lỗi ấy: `a[i]` 0-based nói với học sinh.
+      `Lấy phần tử ở ${pos(i)} (giá trị ${fmt(key)}) để chèn vào phần đã sắp bên trái.`,
       true,
       3,
     );

@@ -94,15 +94,26 @@ describe("W1 · một nguồn câu hỏi — prompt KHÔNG nhắc lại state li
     const base = mod.init(r.config);
 
     for (let i = 0; i < base.trace.steps.length; i += 1) {
-      const shown = mod.narrate!(at(base, i), r.config)!.text;
-      // khe thuyết minh không còn đặt câu hỏi ở bất kỳ bước nào
-      expect(shown.trimEnd().endsWith("?"), `bước ${i}: "${shown}"`).toBe(false);
+      const n = mod.narrate!(at(base, i), r.config);
+      /* W3B §5.2 — bước CÓ vùng hành động thì shell không dựng khe thuyết minh
+         (null), vì vùng hành động đã mang ứng viên/so sánh/biến tích luỹ rồi.
+         Bước còn lại vẫn phải MÔ TẢ, và vẫn không được hỏi. */
+      if (n === null) continue;
+      expect(n.text.trimEnd().endsWith("?"), `bước ${i}: "${n.text}"`).toBe(false);
+      expect(n.text.length, `bước ${i}: chuỗi rỗng để lại khe trắng`).toBeGreaterThan(0);
     }
 
     // …nhưng SỰ THẬT của engine không đổi: bước quyết định vẫn giữ chuỗi gốc
     const raw = base.trace.steps[1].narration;
     expect(raw).toContain("max có được cập nhật không?");
-    expect(narrationWithoutPrompt(raw)).toBe("So sánh a[1] = 9 với max = 7,5.");
+    /* W3B §5.1 — khoá HÀNH VI của phép cắt, không khoá wording của narration.
+       Bản cũ ghim nguyên văn "So sánh a[1] = 9 với max = 7,5.", nên mọi lần sửa
+       cách gọi vị trí đều làm test này đỏ vì một lý do chẳng liên quan gì tới
+       điều nó muốn bảo vệ. */
+    const shown = narrationWithoutPrompt(raw);
+    expect(shown).not.toContain("có được cập nhật không?");
+    expect(shown.trimEnd().endsWith("?")).toBe(false);
+    expect(raw.startsWith(shown.slice(0, -1))).toBe(true);
     // chuỗi không phải câu hỏi thì giữ nguyên từng ký tự
     expect(narrationWithoutPrompt(base.trace.steps[0].narration))
       .toBe(base.trace.steps[0].narration);

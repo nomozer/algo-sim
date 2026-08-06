@@ -3,7 +3,7 @@ import { ALGORITHM_IDS, ALGORITHM_NAMES } from "../../../core/types";
 import { runAlgorithm } from "../../../core/algorithms";
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
-import { decisionPointOf, narrationWithoutPrompt, scanInteractionOf, searchInteractionOf } from "./decision";
+import { decisionPointOf, hasStageInteraction, narrationWithoutPrompt } from "./decision";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
@@ -189,7 +189,9 @@ export function makeAlgorithmModule(
        * Bước không phải điểm quyết định → `scanInteractionOf` trả null → shell
        * quay lại hành vi cũ, không target nào khác bị ảnh hưởng.
        */
-      presentedInStage: (s) => scanInteractionOf(s) !== null || searchInteractionOf(s) !== null,
+      // W3B §14 — MỘT nguồn đếm vùng hành động, dùng chung với khe thuyết minh
+      // và test bất biến. Liệt kê tay ở đây từng làm hai chỗ trôi khỏi nhau.
+      presentedInStage: (s) => hasStageInteraction(s),
     },
 
     // Yêu cầu #2: capability timeline — domain này là progressive nên có
@@ -204,6 +206,24 @@ export function makeAlgorithmModule(
     narrate: (state) => {
       const t = activeTrace(state);
       const step = t.steps[clampStep(state, state.cursor)];
+
+      /* W3B §5.2 — DỮ KIỆN QUYẾT ĐỊNH CHỈ THUỘC MỘT CHỖ.
+       *
+       * Ở bước có vùng hành động, vùng đó đã sở hữu ứng viên, phép so sánh và
+       * biến tích luỹ. Khe thuyết minh kể lại đúng ba thứ ấy ("So sánh vị trí 3
+       * (giá trị 2) với max = 9." ngay trên "Phần tử vị trí 3 · 2 · 2 > 9 ? ·
+       * max 9") nên cùng một dữ kiện hiện hai lần trên một màn hình.
+       *
+       * Trả `null` chứ không trả chuỗi rỗng: shell KHÔNG dựng khe khi null
+       * (`NarrationSlot`), còn chuỗi rỗng để lại một khe trắng vô nghĩa.
+       * `step.narration` của engine không đổi một ký tự — `getExplainContext`
+       * vẫn gửi đi chuỗi gốc.
+       *
+       * Bước THAO TÁC CỦA HỌC SINH (what-if) luôn giữ lời kể: nó nói về việc em
+       * vừa làm, không phải dữ kiện canonical mà vùng hành động đang mang.
+       */
+      if (!step.userAction && hasStageInteraction(state)) return null;
+
       // W1: khe thuyết minh MÔ TẢ bước đang diễn ra; việc HỎI là của
       // PredictionBar. Chỉ cắt ở tầng trình bày — `step.narration` không đổi.
       return {

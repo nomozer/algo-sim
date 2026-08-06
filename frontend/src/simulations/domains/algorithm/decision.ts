@@ -378,8 +378,19 @@ export function scanInteractionOf(state: AlgorithmSimState): ScanInteractionMode
     ? `Giữ ${varName} = ${fmt(num(accValue))}`
     : "Bỏ qua phần tử này";
 
+  /* W3B §5.2 — DỮ KIỆN CHUYỂN CHỖ, KHÔNG ĐƯỢC BIẾN MẤT.
+   *
+   * Khi đề có nhãn ("An", "Bình"…), câu DUY NHẤT gọi tên phần tử là narration
+   * bước quyết định — mà §5.2 vừa ẩn nó đi vì trùng dữ kiện. Nếu vùng hành động
+   * không nhận lấy cái tên đó thì học sinh đọc "Phần tử vị trí 2" trong khi cột
+   * trên sân khấu ghi "Bình": mất luôn cầu nối giữa đề bài và sân khấu.
+   * Vùng hành động sở hữu ứng viên, nên tên của ứng viên thuộc về nó.
+   */
+  const labels = state.config.data.labels;
+  const name = labels && labels[index] ? labels[index] : null;
+
   return {
-    candidateLabel: `Phần tử vị trí ${index + 1}`,
+    candidateLabel: name ? `${name} — vị trí ${index + 1}` : `Phần tử vị trí ${index + 1}`,
     candidateValue: fmt(value),
     accumulatorLabel: isExtreme ? varName : id === "sum_if" ? "tổng" : "biến đếm",
     accumulatorValue: fmt(num(accValue)),
@@ -550,6 +561,27 @@ export function searchInteractionOf(state: AlgorithmSimState): SearchInteraction
     precondition: "Thuật toán này chỉ đúng khi dãy đã được sắp xếp tăng dần.",
     actions,
   };
+}
+
+/* ── VÙNG HÀNH ĐỘNG SÂN KHẤU: ĐẾM ĐƯỢC, VÀ PHẢI ≤ 1 (W3B §5.2, §14) ────────
+ *
+ * Ba cụm cơ chế đều có thể dựng vùng hành động ngay trên sân khấu. Bất biến:
+ * một bước có TỐI ĐA MỘT mô hình — hai vùng cùng lúc nghĩa là hỏi học sinh hai
+ * câu cho cùng một quyết định. Gom phép đếm về một chỗ để `presentedInStage`,
+ * khe thuyết minh và test cùng đọc MỘT nguồn, không ai tự suy lại.
+ */
+
+/** Các mô hình tương tác sân khấu đang tồn tại ở bước hiện tại. */
+export function stageInteractionsOf(state: AlgorithmSimState): string[] {
+  const present: string[] = [];
+  if (scanInteractionOf(state) !== null) present.push("scan");
+  if (searchInteractionOf(state) !== null) present.push("search");
+  return present;
+}
+
+/** Bước này có vùng hành động trên sân khấu không. */
+export function hasStageInteraction(state: AlgorithmSimState): boolean {
+  return stageInteractionsOf(state).length > 0;
 }
 
 /**
