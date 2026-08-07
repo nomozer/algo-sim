@@ -38,6 +38,8 @@ export interface Pos3D {
 
 /** Khoảng cách giữa hai nút liền kề trên một hàng (đơn vị thế giới 3D). */
 const SPACING = 3;
+import { edgeKey, routeEdgeViews, type EdgeStatus } from "./edge-view";
+
 /** Hàng nút ngoài route lùi về phía sau — chiều SÂU là giá trị 3D thêm vào. */
 const OFF_ROUTE_Z = -3.5;
 
@@ -71,6 +73,22 @@ const NODE_COLOR_3D: Record<NodeType, number> = {
 
 const PACKET_COLOR = 0xec4899; // pink — khớp chấm gói tin 2D
 const ROUTE_COLOR = 0x2563eb; // primary — cạnh trên đường đi
+
+/**
+ * Màu trụ cạnh theo TRẠNG THÁI TIẾN TRÌNH (W4B-1B). Export để test đối chiếu
+ * phủ đúng tập trạng thái mà `routeEdgeViews` thật sự sinh ra — cùng khuôn với
+ * `ROLE_COLOR_3D` của encapsulation.
+ *
+ * 3D không có nét đứt như SVG, nên kênh tín hiệu thứ hai là ĐỘ MỜ: đoạn chưa
+ * tới mờ hẳn đi (xem effect theo bước).
+ */
+export const ROUTE_EDGE_COLOR_3D: Record<EdgeStatus, number> = {
+  idle: 0xd4d4d4,
+  considering: 0xd4d4d4, // packet_routing không sinh trạng thái này
+  active: 0xdd5b00, // accent-orange
+  traversed: ROUTE_COLOR, // primary
+  remaining: 0x9ca3af,
+};
 const LINK_COLOR = 0x9ca3af; // hairline — cạnh thường
 const NODE_RADIUS = 0.55;
 
@@ -142,6 +160,8 @@ interface SceneHandles {
   packet: THREE.Mesh;
   packetTarget: THREE.Vector3;
   highlight: THREE.Mesh;
+  /** Trụ cạnh trên tuyến, khoá theo `edgeKey` — để đổi màu theo bước. */
+  routeMeshes: Record<string, THREE.Mesh>;
   raf: number;
   observer: ResizeObserver;
   home: { position: THREE.Vector3; target: THREE.Vector3 };
@@ -233,13 +253,24 @@ export function Network3DWorkspace({ state }: Props) {
     }
 
     // Liên kết: cạnh trên route = trụ màu primary (nổi bật), cạnh thường = line mảnh
-    const routeIdx = new Map(state.route.map((id, i) => [id, i]));
+    //
+    // W4B-1B: trụ route được GIỮ LẠI THEO KHOÁ CẠNH để effect theo bước đổi màu
+    // vật liệu. Trước đây cạnh dựng một lần theo topology và không bao giờ đọc
+    // cursor, nên 3D vẽ y hệt nhau ở mọi bước — cùng lỗi với 2D, chỉ khác là
+    // không test được vì phần dẫn xuất nằm trong mã mệnh lệnh. Nay cả hai
+    // renderer đọc CÙNG `routeEdgeViews`.
+    const routeMeshes: Record<string, THREE.Mesh> = {};
+    const onRouteKeys = new Set(
+      routeEdgeViews(state.links, state.route, 0)
+        .filter((e) => e.status !== "idle")
+        .map((e) => e.id),
+    );
     for (const [a, b] of state.links) {
-      const ia = routeIdx.get(a);
-      const ib = routeIdx.get(b);
-      const onRoute = ia !== undefined && ib !== undefined && Math.abs(ia - ib) === 1;
+      const onRoute = onRouteKeys.has(edgeKey(a, b, false));
       if (onRoute) {
-        scene.add(makeRouteEdge(positions[a], positions[b]));
+        const mesh = makeRouteEdge(positions[a], positions[b]);
+        routeMeshes[edgeKey(a, b, false)] = mesh;
+        scene.add(mesh);
       } else {
         const geometry = new THREE.BufferGeometry().setFromPoints([
           new THREE.Vector3(positions[a].x, positions[a].y, positions[a].z),
@@ -304,6 +335,7 @@ export function Network3DWorkspace({ state }: Props) {
       packet,
       packetTarget: packet.position.clone(),
       highlight,
+      routeMeshes,
       raf: 0,
       observer,
       home,
@@ -335,7 +367,18 @@ export function Network3DWorkspace({ state }: Props) {
     if (!p) return;
     h.packetTarget.set(p.x, p.y + 1.0, p.z);
     h.highlight.position.set(p.x, p.y, p.z);
-  }, [step.packetAt]);
+
+    // W4B-1B — TIẾN TRÌNH TUYẾN đọc CÙNG một dẫn xuất thuần với renderer 2D.
+    // Không tính lại gì ở đây: chỉ ánh xạ status → màu vật liệu.
+    for (const ev of routeEdgeViews(state.links, state.route, state.cursor)) {
+      const mesh = h.routeMeshes[ev.id];
+      if (!mesh) continue;
+      const mat = mesh.material as THREE.MeshLambertMaterial;
+      mat.color.setHex(ROUTE_EDGE_COLOR_3D[ev.status]);
+      mat.opacity = ev.status === "remaining" ? 0.45 : 1;
+      mat.transparent = ev.status === "remaining";
+    }
+  }, [step.packetAt, state.cursor, state.links, state.route]);
 
   if (webglFailed) {
     return (

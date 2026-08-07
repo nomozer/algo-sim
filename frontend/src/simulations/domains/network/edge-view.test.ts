@@ -189,3 +189,25 @@ describe("routeEdgeViews — dẫn xuất từ route + cursor, KHÔNG thêm stat
     }
   });
 });
+
+describe("PARITY 2D↔3D — bảng màu 3D phủ ĐÚNG tập trạng thái renderer sinh ra", () => {
+  it("mọi status xuất hiện ở bất kỳ bước nào đều có màu 3D xác định", async () => {
+    const { ROUTE_EDGE_COLOR_3D } = await import("./ui3d");
+    const s = netState();
+    const seen = new Set<string>();
+    for (let k = 0; k < s.route.length; k++) {
+      for (const e of routeEdgeViews(s.links, s.route, k)) seen.add(e.status);
+    }
+    expect(seen.size).toBeGreaterThan(1);
+    for (const status of seen) {
+      expect(ROUTE_EDGE_COLOR_3D[status as keyof typeof ROUTE_EDGE_COLOR_3D]).toBeTypeOf("number");
+    }
+  });
+
+  it("3D không tự bịa trạng thái nào ngoài từ vựng EdgeStatus", async () => {
+    const { ROUTE_EDGE_COLOR_3D } = await import("./ui3d");
+    expect(Object.keys(ROUTE_EDGE_COLOR_3D).sort()).toEqual(
+      ["active", "considering", "idle", "remaining", "traversed"],
+    );
+  });
+});
