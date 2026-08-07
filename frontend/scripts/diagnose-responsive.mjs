@@ -8,7 +8,7 @@
  *   node scripts/diagnose-responsive.mjs --out ../docs/evaluation/m17/rc1/visual/before/VIS-003
  */
 import { spawn } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -18,7 +18,6 @@ const args = process.argv.slice(2);
 const argOf = (n, d) => { const i = args.indexOf(n); return i >= 0 ? args[i + 1] : d; };
 const APP = `http://localhost:${argOf("--port", "3000")}`;
 const OUT = resolve(argOf("--out", "../docs/evaluation/m17/rc1/visual/before/VIS-003"));
-const CDP_PORT = 9337;
 
 /* W4B-1A — viewport THAM SỐ HOÁ. Mặc định giữ nguyên cặp cũ (1440×1000 +
    768×900) để lượt chạy RC1 cũ tái lập được y hệt. Trục CHIỀU CAO cần cặp
@@ -94,13 +93,60 @@ const CHROME = [
 ].find(existsSync);
 if (!CHROME) { console.error("Không tìm thấy Chrome."); process.exit(1); }
 
+/* ── W4B-1A.1 §3A — MỖI LƯỢT CHẠY SỞ HỮU CHROME CỦA RIÊNG NÓ ────────────────
+   Trước đây cổng CDP là hằng số 9337. Hai lượt chạy song song (hoặc một lượt
+   trước đó ném lỗi và bỏ lại Chrome mồ côi) thì `connect()` **bám vào trình
+   duyệt của lượt khác** và trả về hình học của trang khác — mà dấu vân tay cũ
+   chỉ kiểm cấu trúc DOM nên không phát hiện được. Đã xảy ra thật: hai agent
+   critique chạy đồng thời và sinh ra một artifact gắn nhãn sai fixture.
+
+   Cách chữa: `--remote-debugging-port=0` để Chrome tự chọn cổng rảnh, rồi đọc
+   cổng thật từ `DevToolsActivePort` trong CHÍNH profile của lượt này. Không có
+   hằng số nào để đụng nhau, và không cần dò cổng rảnh (dò vẫn còn khe hở race). */
 const profile = mkdtempSync(join(tmpdir(), "algosim-e1-"));
 const chrome = spawn(CHROME, ["--headless=new", "--disable-gpu",
-  `--remote-debugging-port=${CDP_PORT}`, `--user-data-dir=${profile}`,
+  "--remote-debugging-port=0", `--user-data-dir=${profile}`,
   "--window-size=1440,1000", "--hide-scrollbars", "about:blank"], { stdio: "ignore" });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/* ── §3D — ĐƯỜNG DỌN DẸP ĐẢM BẢO ───────────────────────────────────────────
+   Trước đây `chrome.kill()` chỉ nằm trên hai đường thoát bình thường, nên một
+   assertion đỏ hay một exception giữa chừng đều bỏ lại tiến trình Chrome sống.
+   Nay mọi lối ra — thành công, thoát mã != 0, throw, unhandled rejection,
+   SIGINT/SIGTERM — đều đi qua `shutdown()`. Handler của 'exit' phải ĐỒNG BỘ. */
+let closed = false;
+function shutdown() {
+  if (closed) return;
+  closed = true;
+  try { globalThis.__algosimWs?.close(); } catch { /* ws có thể chưa mở */ }
+  try { chrome.kill(); } catch { /* đã chết */ }
+}
+process.on("exit", shutdown);
+process.on("SIGINT", () => { shutdown(); process.exit(130); });
+process.on("SIGTERM", () => { shutdown(); process.exit(143); });
+for (const ev of ["uncaughtException", "unhandledRejection"]) {
+  process.on(ev, (err) => {
+    console.error(`\n✗ ${ev}:`, err instanceof Error ? err.stack : err);
+    shutdown();
+    process.exit(3);
+  });
+}
+
+let CDP_PORT = null;
+async function resolvePort() {
+  const portFile = join(profile, "DevToolsActivePort");
+  for (let i = 0; i < 80; i++) {
+    if (existsSync(portFile)) {
+      const first = readFileSync(portFile, "utf-8").split("\n")[0].trim();
+      if (first && Number(first) > 0) return Number(first);
+    }
+    await sleep(125);
+  }
+  throw new Error("Chrome không ghi DevToolsActivePort — không xác định được cổng CDP.");
+}
+
 async function connect() {
+  CDP_PORT = await resolvePort();
   for (let i = 0; i < 40; i++) {
     try {
       const l = await (await fetch(`http://127.0.0.1:${CDP_PORT}/json/list`)).json();
@@ -109,9 +155,11 @@ async function connect() {
     } catch { /* chưa lên */ }
     await sleep(250);
   }
-  throw new Error("Chrome không mở được cổng debug.");
+  throw new Error(`Chrome không phản hồi trên cổng CDP ${CDP_PORT}.`);
 }
 const ws = new WebSocket(await connect());
+globalThis.__algosimWs = ws;
+console.log(`  phiên: chrome pid ${chrome.pid} · cổng CDP ${CDP_PORT} · profile ${profile}`);
 await new Promise((r) => (ws.onopen = r));
 let id = 0; const pending = new Map();
 ws.onmessage = (e) => { const m = JSON.parse(e.data);
@@ -208,6 +256,12 @@ const PROBE = `(() => {
              hidden_px: Math.max(0, el.scrollHeight - el.clientHeight),
              overflow_y: cs.overflowY, css_height: cs.height,
              css_min_height: cs.minHeight, css_max_height: cs.maxHeight,
+             /* W4B-1A.1 §4/§5 — hợp đồng BỀ RỘNG. align-self + margin ngang là
+                cặp quyết định một flex item có stretch hay co theo nội dung:
+                auto margin trên trục ngang triệt tiêu stretch. */
+             css_max_width: cs.maxWidth, css_width: cs.width,
+             css_margin_left: cs.marginLeft, css_margin_right: cs.marginRight,
+             align_self: cs.alignSelf, display: cs.display,
              below_fold: r.bottom > vh + 1 };
   };
   /* Hit-test THẬT tại tâm control: elementFromPoint trả về chính nút hay một
@@ -238,6 +292,7 @@ const PROBE = `(() => {
     offenders: over.slice(0, 14),
     /* W4B-1A */
     height_axis: {
+      root: box('#root'),
       app_layout: box('.app-layout'), panel_center: box('.panel-center'),
       panel_right: box('.panel-right'), panel_controls: box('.panel-controls'),
       stage: box('.sim-stage'), narration: box('.notes'),
@@ -273,8 +328,22 @@ const goToStep = (n) => evaluate(`(async () => {
   return s.useAppStore.getState().active.state.cursor ?? null;
 })()`);
 
+/** §3B — danh tính AUTHORITATIVE: hỏi engine store, không suy từ DOM. */
+const activeIdentity = () => evaluate(`(async () => {
+  const s = await import('/src/state/store.ts');
+  const a = s.useAppStore.getState().active;
+  return a ? { moduleId: a.moduleId } : null;
+})()`);
+
 const CHECKPOINTS = argOf("--checkpoints", "initial").split(",").map((s) => s.trim());
 const SHOOT_ALL = args.includes("--shoot-all");
+/* §3D — TIÊM LỖI TÁI LẬP ĐƯỢC cho cổng dọn dẹp. Ném đúng sau khi Chrome đã
+   chạy và đã nối CDP: nếu `shutdown()` không nằm trên đường thoát ngoại lệ thì
+   tiến trình Chrome sẽ sống sót và lượt sau bám vào nó. Chứng minh guard đỏ
+   được mà không phải sửa tạm file rồi hoàn tác. */
+if (args.includes("--self-test-throw")) {
+  throw new Error("SELF_TEST: lỗi giả sau khi Chrome khởi động (kiểm đường dọn dẹp).");
+}
 
 /* `--fixture catalog` — quét TOÀN DANH MỤC bằng chính `offlineCatalog()` của
    app. Không chép fixture sang script: nguồn duy nhất vẫn là dữ liệu mà học
@@ -352,12 +421,29 @@ for (const vp of VIEWPORTS) {
     if (route.id === "workspace") {
       const fp = probe.fingerprint;
       const missing = ["app_layout", "panel_center", "panel_controls", "stage"].filter((k) => !fp[k]);
-      if (missing.length) {
-        writeFileSync(join(OUT, "WRONG_PAGE_OR_FIXTURE.json"),
-          JSON.stringify({ verdict: "WRONG_PAGE_OR_FIXTURE", viewport: vp.id,
-                           fixture: FIXTURE_ID, missing, fingerprint: fp }, null, 2) + "\n", "utf-8");
-        console.error(`\n✗ WRONG_PAGE_OR_FIXTURE @ ${vp.id} — thiếu: ${missing.join(", ")}`);
-        ws.close(); chrome.kill();
+
+      /* §3B — DẤU VÂN TAY DANH TÍNH, không chỉ hình dạng DOM.
+         Bản cũ chỉ hỏi "có phải một workspace không". Một Chrome bị bám nhầm
+         vẫn là workspace hợp lệ — chỉ là của mô phỏng KHÁC. Nay hỏi thẳng
+         engine store xem đang mở ĐÚNG mô phỏng nào. */
+      const identity = await activeIdentity();
+      const expected = subject.simId;
+      const idMismatch = expected && (!identity || identity.moduleId !== expected);
+
+      if (missing.length || idMismatch) {
+        const verdict = idMismatch ? "WRONG_SIMULATION_OR_FIXTURE" : "WRONG_PAGE_OR_FIXTURE";
+        writeFileSync(join(OUT, `${verdict}.json`),
+          JSON.stringify({ verdict, viewport: vp.id, checkpoint: cpName,
+                           fixture: FIXTURE_ID, subject: subject.key,
+                           expected_simulation_id: expected,
+                           actual_simulation_id: identity ? identity.moduleId : null,
+                           workspace_title: fp.workspace_title,
+                           chrome_pid: chrome.pid, cdp_port: CDP_PORT,
+                           missing, fingerprint: fp }, null, 2) + "\n", "utf-8");
+        console.error(`\n✗ ${verdict} @ ${vp.id}` +
+          (idMismatch ? ` — chờ "${expected}", gặp "${identity ? identity.moduleId : "(không có)"}"` : "") +
+          (missing.length ? ` — thiếu: ${missing.join(", ")}` : ""));
+        shutdown();
         process.exit(2);
       }
     }
@@ -414,6 +500,27 @@ for (const r of results) {
     failures.push({ where, type: "HORIZONTAL_OVERFLOW",
                     detail: `scrollWidth ${r.viewport.scrollWidth} > clientWidth ${r.viewport.clientWidth}` });
   }
+  /* §5 LAYOUT_NOT_USING_VIEWPORT — bố cục bỏ không màn hình.
+     Guard W4B-1A chỉ hỏi "có tràn / có bị giấu / có bị che". Không điều kiện nào
+     hỏi "app có DÙNG màn hình không", nên một shell bỏ trống 46% bề rộng vẫn
+     PASS sạch. Bề rộng mong đợi DẪN XUẤT từ hợp đồng CSS đo được — không phải
+     một tỉ lệ cố định áp cho mọi breakpoint:
+       màn hẹp hơn max-width  → phải dùng gần trọn bề rộng khung cha;
+       màn rộng hơn max-width → phải đạt đúng max-width đã khai. */
+  const al = r.height_axis.app_layout, root = r.height_axis.root;
+  if (al.present && root && root.present) {
+    const declared = Number.parseFloat(al.css_max_width);
+    const cap = Number.isFinite(declared) ? declared : Infinity;
+    const expected = Math.min(root.width, cap);
+    const deadMargin = root.width - al.width;
+    if (al.width < expected - 4) {
+      failures.push({ where, type: "LAYOUT_NOT_USING_VIEWPORT",
+                      detail: `.app-layout ${al.width}px < mong đợi ${Math.round(expected)}px ` +
+                              `(khung cha ${root.width}px · max-width ${al.css_max_width}) ` +
+                              `⇒ lề chết ${Math.round(deadMargin)}px` });
+    }
+  }
+
   const pc = r.height_axis.panel_center;
   if (pc.present && pc.inner_scroll) {
     failures.push({ where, type: "CONTENT_HIDDEN_IN_PANEL",
@@ -438,9 +545,12 @@ const verdict = failures.length ? "FAIL" : "PASS";
 writeFileSync(join(OUT, "responsive-diagnosis.json"),
   JSON.stringify({ app: APP, generated_at: new Date().toISOString(),
                    fixture: FIXTURE_ID, zoom: "100% (deviceScaleFactor=1, mobile=false)",
+                   /* §3A/§3C — danh tính PHIÊN: hai lượt song song phải khác cả
+                      hai giá trị này thì mới chứng minh được không bám chéo. */
+                   session: { chrome_pid: chrome.pid, cdp_port: CDP_PORT, profile },
                    viewports: VIEWPORTS, verdict, failures, results }, null, 2) + "\n", "utf-8");
 console.log(`\n${verdict === "PASS" ? "✓ PASS" : `✗ FAIL — ${failures.length} vi phạm`}`);
 for (const f of failures) console.log(`   ${f.where}  ${f.type}  ${f.detail}`);
 console.log(`→ ${OUT}`);
-ws.close(); chrome.kill();
+shutdown();
 process.exit(verdict === "PASS" ? 0 : 1);
