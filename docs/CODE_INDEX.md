@@ -812,6 +812,34 @@ khung cha · khoảng cách ngoài thang 4px. Có **dấu vân tay trang** (đo 
 thoát mã 2) và đã được **chứng minh bằng tiêm lỗi giả**. Đây là thứ DUY NHẤT bắt
 được lớp lỗi CSS im lặng (vd `var(--sp-2xl)` không tồn tại) — vitest không chạy CSS.
 
+### `scripts/diagnose-responsive.mjs` · Change impact: offline (cần `npm run dev`)
+**Chủ sở hữu phép đo responsive** — trục chiều rộng **và chiều cao**, before/after.
+W4B-1A mở rộng: viewport tham số hoá (`--viewports 1366x768,1536x864`), checkpoint
+timeline (`--checkpoints initial,mid,final`), chế độ quét danh mục
+(`--fixture catalog|stress|all`), dấu vân tay trang (sai route → **thoát 2**),
+và **acceptance chấm máy có mã thoát** (vi phạm → **thoát 1**): `HORIZONTAL_OVERFLOW`
+· `CONTENT_HIDDEN_IN_PANEL` · `CONTROL_OCCLUDED` (elementFromPoint) ·
+`CONTROL_OFFSCREEN` · `TEXT_CLIPPED`.
+
+**Bất biến bố cục nó khoá**: trang phải cuộn được khi nội dung cao hơn viewport —
+nội dung **không** được biến mất vào thanh cuộn nội bộ của `.panel-center`. Đây là
+lớp lỗi mà mọi breakpoint theo chiều RỘNG không bao giờ bắt được (xem
+`global.css` khối `@media (min-width: 1101px) and (max-height: 900px)`).
+
+Lệnh hồi quy (0 API call, cần dev server):
+```bash
+cd frontend && node scripts/diagnose-responsive.mjs --port 3000 --fixture all \
+  --routes workspace --checkpoints initial,mid,final --viewports 1366x768,1536x864 --out <dir>
+```
+Bằng chứng + injected-fault proof: `docs/evaluation/m17/w4b1a-responsive/`.
+
+### `scripts/fixtures.mjs` · Change impact: offline
+**Bộ fixture DÙNG CHUNG** cho runner Chrome/CDP (dữ liệu thuần, 0 side effect).
+Tách khỏi `visual-stress-audit.mjs` ở W4B-1A — script đó nay `import`, dữ liệu
+không đổi. Lý do tồn tại: `offlineCatalog()` của app chỉ phủ **13/22** target,
+nên bản soát bố cục cần nguồn bù. Thêm fixture ở ĐÂY, không chép sang runner
+khác. Cùng `offlineCatalog()` phủ đủ **22/22** target.
+
 ### `components/SessionCard.tsx` · Change impact: offline
 M9-UX4 — MỘT thẻ cho phiên đã học, dùng chung `HomeView` ("Tiếp tục học") +
 `HistoryView`. Exports: `SessionCard`, `progressOf(item)`.

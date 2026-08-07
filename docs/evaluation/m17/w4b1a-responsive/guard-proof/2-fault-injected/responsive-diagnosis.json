@@ -1,0 +1,428 @@
+{
+  "app": "http://localhost:3001",
+  "generated_at": "2026-08-07T15:43:53.255Z",
+  "fixture": "network.graph_traversal",
+  "zoom": "100% (deviceScaleFactor=1, mobile=false)",
+  "viewports": [
+    {
+      "id": "1366x768",
+      "width": 1366,
+      "height": 768
+    }
+  ],
+  "verdict": "FAIL",
+  "failures": [
+    {
+      "where": "[object Object]/mid",
+      "type": "HORIZONTAL_OVERFLOW",
+      "detail": "scrollWidth 3000 > clientWidth 1366"
+    },
+    {
+      "where": "[object Object]/mid",
+      "type": "CONTROL_OCCLUDED",
+      "detail": "submit ← footer.panel-controls · submit ← footer.panel-controls · Tự chạy ← footer.panel-controls · submit ← footer.panel-controls · submit ← footer.panel-controls · Đặt lại ← footer.panel-controls"
+    },
+    {
+      "where": "[object Object]/mid",
+      "type": "CONTROL_OFFSCREEN",
+      "detail": "range · Tua đến bước"
+    }
+  ],
+  "results": [
+    {
+      "route": "workspace",
+      "checkpoint": "mid",
+      "cursor": 3,
+      "viewport": {
+        "clientWidth": 1366,
+        "clientHeight": 768,
+        "scrollWidth": 3000,
+        "scrollHeight": 1104,
+        "page_overflow_x": true,
+        "page_scrollable_y": true,
+        "hidden_below_fold_px": 336
+      },
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w4b1a-responsive/guard-proof/2-fault-injected/workspace-mid-1366x768.png",
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 111,
+          "right": 431,
+          "width": 319,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 49,
+          "right": 2635,
+          "width": 2586,
+          "inside": false
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 24,
+          "right": 2660,
+          "width": 2636,
+          "inside": false
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 0,
+          "right": 3000,
+          "width": 3000,
+          "inside": false
+        }
+      ],
+      "controls": {
+        "total": 11,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": [
+        {
+          "tag": "main",
+          "cls": "app-layout",
+          "left": 0,
+          "right": 3000,
+          "width": 3000,
+          "min_width": "3000px",
+          "overflow_x": "visible",
+          "display": "grid",
+          "grid_template": "2636px 300px",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "section",
+          "cls": "panel-center",
+          "left": 24,
+          "right": 2660,
+          "width": 2636,
+          "min_width": "auto",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "section",
+          "cls": "card card-elevated workspace-card",
+          "left": 24,
+          "right": 2660,
+          "width": 2636,
+          "min_width": "auto",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "div",
+          "cls": "workspace-header",
+          "left": 49,
+          "right": 2635,
+          "width": 2586,
+          "min_width": "auto",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "span",
+          "cls": "hint",
+          "left": 49,
+          "right": 2635,
+          "width": 2586,
+          "min_width": "auto",
+          "overflow_x": "visible",
+          "display": "block",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "div",
+          "cls": "stack",
+          "left": 49,
+          "right": 2635,
+          "width": 2586,
+          "min_width": "auto",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "div",
+          "cls": "sim-stage",
+          "left": 49,
+          "right": 2635,
+          "width": 2586,
+          "min_width": "auto",
+          "overflow_x": "auto",
+          "display": "block",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "section",
+          "cls": "frontier frontier-queue",
+          "left": 61,
+          "right": 2623,
+          "width": 2562,
+          "min_width": "0px",
+          "overflow_x": "visible",
+          "display": "block",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "header",
+          "cls": "frontier-head",
+          "left": 74,
+          "right": 2610,
+          "width": 2536,
+          "min_width": "0px",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "p",
+          "cls": "frontier-left-out",
+          "left": 74,
+          "right": 2610,
+          "width": 2536,
+          "min_width": "0px",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "ol",
+          "cls": "frontier-items",
+          "left": 74,
+          "right": 2610,
+          "width": 2536,
+          "min_width": "0px",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "p",
+          "cls": "frontier-rule",
+          "left": 74,
+          "right": 2610,
+          "width": 2536,
+          "min_width": "0px",
+          "overflow_x": "visible",
+          "display": "block",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "p",
+          "cls": "frontier-visited",
+          "left": 61,
+          "right": 2623,
+          "width": 2562,
+          "min_width": "0px",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        },
+        {
+          "tag": "p",
+          "cls": "stage-legend",
+          "left": 49,
+          "right": 2635,
+          "width": 2586,
+          "min_width": "0px",
+          "overflow_x": "visible",
+          "display": "flex",
+          "grid_template": "none",
+          "reason": "spills_past_viewport"
+        }
+      ],
+      "height_axis": {
+        "app_layout": {
+          "sel": ".app-layout",
+          "present": true,
+          "top": 58,
+          "bottom": 1104,
+          "height": 1046,
+          "width": 3000,
+          "client_height": 1046,
+          "scroll_height": 1046,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "1045.78px",
+          "css_min_height": "711px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_center": {
+          "sel": ".panel-center",
+          "present": true,
+          "top": 74,
+          "bottom": 982,
+          "height": 908,
+          "width": 2636,
+          "client_height": 908,
+          "scroll_height": 908,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "907.781px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_right": {
+          "sel": ".panel-right",
+          "present": true,
+          "top": 74,
+          "bottom": 982,
+          "height": 908,
+          "width": 300,
+          "client_height": 908,
+          "scroll_height": 908,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "907.781px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_controls": {
+          "sel": ".panel-controls",
+          "present": true,
+          "top": 678,
+          "bottom": 768,
+          "height": 90,
+          "width": 2952,
+          "client_height": 88,
+          "scroll_height": 88,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "90px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "stage": {
+          "sel": ".sim-stage",
+          "present": true,
+          "top": 186,
+          "bottom": 752,
+          "height": 566,
+          "width": 2586,
+          "client_height": 566,
+          "scroll_height": 566,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "566.281px",
+          "css_min_height": "180px",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "narration": {
+          "sel": ".notes",
+          "present": true,
+          "top": 780,
+          "bottom": 817,
+          "height": 37,
+          "width": 2586,
+          "client_height": 37,
+          "scroll_height": 37,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "37px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "below_fold": true
+        }
+      },
+      "hit_test": [
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": false,
+          "hit_instead": "footer.panel-controls"
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": false,
+          "hit_instead": "footer.panel-controls"
+        },
+        {
+          "text": "Tự chạy",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": false,
+          "hit_instead": "footer.panel-controls"
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": false,
+          "hit_instead": "footer.panel-controls"
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": false,
+          "hit_instead": "footer.panel-controls"
+        },
+        {
+          "text": "Đặt lại",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": false,
+          "hit_instead": "footer.panel-controls"
+        },
+        {
+          "text": "range",
+          "disabled": false,
+          "in_viewport": false,
+          "hit_self": false,
+          "hit_instead": null
+        },
+        {
+          "text": "Tua đến bước",
+          "disabled": false,
+          "in_viewport": false,
+          "hit_self": false,
+          "hit_instead": null
+        }
+      ],
+      "fingerprint": {
+        "hash": "",
+        "app_layout": true,
+        "panel_center": true,
+        "panel_controls": true,
+        "stage": true,
+        "workspace_title": "Duyệt đồ thị theo chiều rộng"
+      }
+    }
+  ]
+}
