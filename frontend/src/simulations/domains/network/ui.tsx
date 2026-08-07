@@ -1,4 +1,5 @@
 import type { WorkspaceProps } from "../../types";
+import { routeEdgeViews, type EdgeStatus } from "./edge-view";
 import {
   currentStep,
   typeLabel,
@@ -29,6 +30,19 @@ const NODE_COLOR: Record<NodeType, string> = {
 
 const NODE_R = 30;
 
+/**
+ * Hai kênh tín hiệu cho mỗi trạng thái (DESIGN_BRIEF §3.5): màu + độ dày, và
+ * đoạn chưa tới thêm nét đứt. Dùng CHUNG từ vựng `EdgeStatus` với duyệt đồ thị
+ * nhưng bảng màu riêng — `packet_routing` không có trạng thái "đang cân nhắc".
+ */
+const ROUTE_EDGE_STYLE: Record<EdgeStatus, { stroke: string; width: number; dash?: string }> = {
+  idle: { stroke: "var(--hairline)", width: 1.5 },
+  considering: { stroke: "var(--hairline)", width: 1.5 }, // không dùng ở đây
+  active: { stroke: "var(--accent-orange)", width: 4.5 },
+  traversed: { stroke: "var(--primary)", width: 3 },
+  remaining: { stroke: "var(--ink-faint)", width: 2, dash: "6 5" },
+};
+
 interface Pos2D {
   x: number;
   y: number;
@@ -58,27 +72,33 @@ export function NetworkWorkspace({ state }: Props) {
   const { positions: pos, width, height } = layout2d(state.nodes, state.route);
   const step = currentStep(state);
   const packetPos = pos[step.packetAt];
-  const onRoute = new Set(state.route);
+  const edgeViews = routeEdgeViews(state.links, state.route, state.cursor);
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage">
         <svg viewBox={`0 0 ${width} ${height}`} width="100%" style={{ maxWidth: width, display: "block", margin: "0 auto" }}>
-          {/* Liên kết */}
-          {state.links.map(([a, b], i) => {
-            const routeEdge =
-              onRoute.has(a) && onRoute.has(b) &&
-              Math.abs(state.route.indexOf(a) - state.route.indexOf(b)) === 1;
+          {/* Liên kết — trạng thái theo TIẾN TRÌNH gói tin, không phải tĩnh.
+              Trước W4B-1B mọi cạnh trên tuyến tô như nhau ở MỌI bước, nên bước
+              1 và bước cuối vẽ giống hệt: học sinh không thấy đoạn nào đã đi,
+              đoạn nào còn lại — mà đó chính là nội dung bài. Dẫn xuất thuần từ
+              `route` + `cursor`, KHÔNG thêm trường nào vào state. */}
+          {edgeViews.map((ev, i) => {
+            const st = ROUTE_EDGE_STYLE[ev.status];
             return (
               <line
                 key={i}
-                x1={pos[a].x}
-                y1={pos[a].y}
-                x2={pos[b].x}
-                y2={pos[b].y}
-                stroke={routeEdge ? "var(--primary)" : "var(--hairline)"}
-                strokeWidth={routeEdge ? 3 : 1.5}
-              />
+                x1={pos[ev.from].x}
+                y1={pos[ev.from].y}
+                x2={pos[ev.to].x}
+                y2={pos[ev.to].y}
+                stroke={st.stroke}
+                strokeWidth={st.width}
+                strokeDasharray={st.dash}
+                strokeLinecap="round"
+              >
+                <title>{ev.accessibleLabel}</title>
+              </line>
             );
           })}
           {/* Nút */}

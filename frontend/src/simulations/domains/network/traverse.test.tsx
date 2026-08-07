@@ -179,9 +179,27 @@ describe("module + inspector đọc sự thật engine", () => {
     expect(state.steps[0].kind).toBe("intro");
     expect(state.steps[state.steps.length - 1].kind).toBe("result");
     expect(state.frontierKind).toBe("queue");
-    const html = renderToString(
-      <TraverseInspector config={v.config} state={state} busy={false} dispatch={() => {}} />,
-    ).replace(/<!--.*?-->/g, "");
-    expect(html).toContain("A → B → C");
+    // W4B-1B — HIỆN DẦN. Trước đây test này khẳng định inspector in ĐỦ
+    // "A → B → C" ngay ở bước 0, tức là nó KHOÁ LẠI chính lỗi lộ đáp án
+    // (DESIGN_BRIEF §3.3). Nay hợp đồng ngược lại: giữa chừng chỉ nêu phần đã
+    // thăm, thứ tự đầy đủ chỉ công bố ở bước cuối.
+    const htmlAt = (cursor: number) =>
+      renderToString(
+        <TraverseInspector
+          config={v.config}
+          state={{ ...state, cursor }}
+          busy={false}
+          dispatch={() => {}}
+        />,
+      ).replace(/<!--.*?-->/g, "");
+
+    const first = htmlAt(0);
+    expect(first).not.toContain("A → B → C"); // KHÔNG lộ đáp án
+    expect(first).toContain("Đã thăm");
+
+    const final = htmlAt(state.steps.length - 1);
+    expect(final).toContain("A → B → C"); // công bố ở bước cuối
+    // "(engine)" là thuật ngữ lập trình viên — không được lên màn hình học sinh
+    expect(final).not.toContain("(engine)");
   });
 });

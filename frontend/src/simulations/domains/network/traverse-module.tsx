@@ -1,5 +1,6 @@
 import { registerSimulation } from "../../registry";
 import { TraversalFrontier, frontierDelta } from "../../../components/TraversalFrontier";
+import { statusLabel, traversalEdgeViews, usedStatuses, type EdgeStatus } from "./edge-view";
 import type { ConfigResult, SimulationModule, WorkspaceProps } from "../../types";
 
 /**
@@ -41,8 +42,22 @@ export type TraverseStep =
   | {
       kind: "visit";
       current: string;
+      /**
+       * Nút mà `current` được nạp TỪ ĐÓ — tức cạnh của CÂY DUYỆT đi vào bước
+       * này. `null` ở nút xuất phát.
+       *
+       * W4B-1B: engine vốn đã biết dữ kiện này (`entry.parent`) nhưng trước đây
+       * VỨT ĐI sau khi dựng `pred`. Không có nó, renderer buộc phải đoán cạnh
+       * đang đi bằng "nút thăm liền trước → nút hiện tại" — SAI ở DFS: sau khi
+       * quay lui, nút thăm liền trước thường KHÔNG kề `current`, nên sẽ tô một
+       * cạnh không tồn tại trong `config.edges`. Đó là renderer bịa ngữ nghĩa
+       * (bất biến #6), tệ hơn hẳn lỗi không tô gì.
+       */
+      parent: string | null;
       /** Frontier SAU khi thăm current và nạp hàng xóm mới. */
       frontierAfter: string[];
+      /** Hàng xóm THỰC SỰ được nạp ở bước này (không gồm nút đã thấy). */
+      frontierAdded: string[];
       visitedSoFar: string[];
       narration: string;
     }
@@ -142,7 +157,11 @@ export function buildTraversal(config: TraverseConfig): {
     steps.push({
       kind: "visit",
       current,
+      // Provenance do ENGINE giữ, không phải renderer suy: cạnh cây duyệt đi
+      // vào bước này, và hàng xóm thực sự được nạp ở bước này.
+      parent: entry.parent,
       frontierAfter: displayFrontier(),
+      frontierAdded: [...added],
       visitedSoFar: [...visited],
       narration:
         `Lấy ${current} ra khỏi ${frontierName} và THĂM nó` +
@@ -251,6 +270,20 @@ const W = 420;
 const H = 260;
 const NODE_R = 16;
 
+/**
+ * Mỗi trạng thái cạnh mang ÍT NHẤT HAI kênh tín hiệu (DESIGN_BRIEF §3.5: màu
+ * không bao giờ là tín hiệu duy nhất): màu + độ dày, và `considering` thêm nét
+ * đứt. Người không phân biệt được màu vẫn đọc được bằng độ dày/nét.
+ */
+const EDGE_STYLE: Record<EdgeStatus | "path", { stroke: string; width: number; dash?: string }> = {
+  idle: { stroke: "var(--ink-faint)", width: 1.5 },
+  considering: { stroke: "var(--primary)", width: 2, dash: "5 4" },
+  active: { stroke: "var(--accent-orange)", width: 4 },
+  traversed: { stroke: "var(--accent-green)", width: 3 },
+  remaining: { stroke: "var(--ink-faint)", width: 1.5 }, // không dùng ở duyệt đồ thị
+  path: { stroke: "var(--accent-green)", width: 4 },
+};
+
 // M17-RC1 §E — nhãn DÀI hơn ngần này không vẽ lọt trong hình tròn r=16: chữ
 // tràn ra hai bên và bị chính nút cắt ngang (audit trình duyệt thật đo được 5
 // chồng lấn node-label ở fixture nhãn tiếng Việt). Nhãn dài vẽ BÊN DƯỚI nút,
@@ -294,6 +327,12 @@ export function TraverseWorkspace({ state }: Props) {
       pathEdges.add(`${state.path[i]}→${state.path[i + 1]}`);
     }
   }
+  // Trạng thái cạnh DẪN XUẤT từ provenance của engine (`parent`/`frontierAdded`),
+  // không suy từ thứ tự thăm — xem `edge-view.ts`.
+  const edgeViews = traversalEdgeViews(state.config.edges, state.config.directed, state.steps, at);
+  // Chú giải khớp HAI CHIỀU với thứ đang vẽ: chỉ nêu trạng thái thật sự xuất
+  // hiện ở bước này, và mọi trạng thái xuất hiện đều được nêu.
+  const edgeStatuses = usedStatuses(edgeViews).filter((s) => s !== "idle");
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -301,17 +340,26 @@ export function TraverseWorkspace({ state }: Props) {
         <svg viewBox={`0 0 ${W} ${long ? H + 28 : H}`}
              style={{ width: "100%", maxWidth: long ? W + 120 : W }} role="img"
              aria-label="Đồ thị duyệt">
-          {state.config.edges.map(([a, b], i) => {
-            const pa = pos.get(a)!;
-            const pb = pos.get(b)!;
-            const onPath = pathEdges.has(`${a}→${b}`) || (!state.config.directed && pathEdges.has(`${b}→${a}`));
+          {edgeViews.map((ev, i) => {
+            const pa = pos.get(ev.from)!;
+            const pb = pos.get(ev.to)!;
+            const onPath =
+              pathEdges.has(`${ev.from}→${ev.to}`) ||
+              (!state.config.directed && pathEdges.has(`${ev.to}→${ev.from}`));
+            // Ở bước cuối, ĐƯỜNG ĐI tới đích là kết luận của bài — giữ nguyên
+            // cách tô cũ, đè lên trạng thái duyệt.
+            const style = onPath ? EDGE_STYLE.path : EDGE_STYLE[ev.status];
             return (
               <line
                 key={i}
                 x1={pa.x} y1={pa.y} x2={pb.x} y2={pb.y}
-                stroke={onPath ? "var(--accent-green)" : "var(--ink-faint)"}
-                strokeWidth={onPath ? 3 : 1.5}
-              />
+                stroke={style.stroke}
+                strokeWidth={style.width}
+                strokeDasharray={style.dash}
+                strokeLinecap="round"
+              >
+                <title>{onPath ? `Đường ${ev.from} – ${ev.to}: thuộc đường đi` : ev.accessibleLabel}</title>
+              </line>
             );
           })}
           {state.config.nodes.map((n) => {
@@ -359,12 +407,35 @@ export function TraverseWorkspace({ state }: Props) {
           {step.visitedSoFar.length > 0 ? step.visitedSoFar.join(" → ") : "(chưa có)"}
         </p>
 
+        {/* Chú giải TÁCH HAI NHÓM: nút và đường. Gộp 4 mục nút với 3 mục đường
+            vào một hàng thành 7 mục đọc như nhiễu — hai từ vựng khác nhau cho
+            hai loại đối tượng khác nhau. */}
         <p className="stage-legend">
+          <span className="legend-group">Nút</span>
           <span><i className="dot is-current" /> đang xử lý</span>
           <span><i className="dot is-done" /> đã thăm</span>
           <span><i className="dot is-frontier" /> đang chờ trong {state.frontierKind === "queue" ? "hàng đợi" : "ngăn xếp"}</span>
           <span><i className="dot is-idle" /> chưa xét</span>
         </p>
+        {edgeStatuses.length > 0 && (
+          <p className="stage-legend">
+            <span className="legend-group">Đường duyệt</span>
+            {edgeStatuses.map((s) => (
+              <span key={s}>
+                <svg width="22" height="8" aria-hidden="true" style={{ verticalAlign: "middle" }}>
+                  <line
+                    x1="1" y1="4" x2="21" y2="4"
+                    stroke={EDGE_STYLE[s].stroke}
+                    strokeWidth={EDGE_STYLE[s].width}
+                    strokeDasharray={EDGE_STYLE[s].dash}
+                    strokeLinecap="round"
+                  />
+                </svg>{" "}
+                {statusLabel(s)}
+              </span>
+            ))}
+          </p>
+        )}
       </div>
       <p className="notes">{step.narration}</p>
     </div>
@@ -372,6 +443,27 @@ export function TraverseWorkspace({ state }: Props) {
 }
 
 export function TraverseInspector({ state }: Props) {
+  /**
+   * HIỆN DẦN — CẤM LỘ ĐÁP ÁN (DESIGN_BRIEF §3.3).
+   *
+   * Bản trước in TOÀN BỘ `visitedOrder` và `path` vô điều kiện, tức là ngay ở
+   * bước 1/8: học sinh đọc được thứ tự thăm và đường đi trước khi mô phỏng
+   * chạy, mất sạch cơ hội tự suy luận. Module anh em `tree.traversal` đã sửa
+   * đúng lỗi này ở M17-VR1 và có comment ghi lại; ở đây thì bị bỏ quên — đúng
+   * hình dạng anti-pattern #10 (vá một bề mặt, quên bề mặt anh em).
+   *
+   * Nay inspector chỉ đọc thứ mà BƯỚC HIỆN TẠI đã tới. Kết quả cuối (thứ tự
+   * đầy đủ · đường đi · đến được hay không) chỉ công bố ở bước cuối.
+   *
+   * Cũng bỏ chuỗi "(engine)" — thuật ngữ của lập trình viên, không phải của
+   * học sinh (§3.4).
+   */
+  const at = clampCursor(state, state.cursor);
+  const step = state.steps[at];
+  const done = at === state.steps.length - 1;
+  const total = state.config.nodes.length;
+  const seen = step.visitedSoFar;
+
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <p className="notes">
@@ -379,8 +471,12 @@ export function TraverseInspector({ state }: Props) {
         {state.frontierKind === "queue" ? "hàng đợi FIFO" : "ngăn xếp LIFO"})
         {state.config.directed ? " · đồ thị CÓ hướng" : " · đồ thị vô hướng"}
       </p>
-      <p className="notes">Thứ tự thăm (engine): {state.visitedOrder.join(" → ")}</p>
-      {state.reachable !== null && (
+      <p className="notes">
+        {done
+          ? `Thứ tự thăm: ${state.visitedOrder.join(" → ")}`
+          : `Đã thăm ${seen.length}/${total}: ${seen.length ? seen.join(" → ") : "(chưa nút nào)"}`}
+      </p>
+      {done && state.reachable !== null && (
         <p className="notes">
           {state.reachable
             ? `Đường đi: ${state.path!.join(" → ")}`

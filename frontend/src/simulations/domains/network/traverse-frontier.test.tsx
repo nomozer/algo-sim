@@ -130,15 +130,25 @@ describe("(FRONTIER-VIS) BFS — hàng đợi nhìn thấy được", () => {
     expect(domQueue(h)).not.toContain("X");
   });
 
-  it("10. CONTRACT_GAP_EDGE: state không có cạnh nguồn→đích nên KHÔNG tô cạnh duyệt", () => {
-    // hợp đồng bước chỉ có current/frontierAfter/visitedSoFar — không có edge
-    for (const s of steps) {
-      expect(Object.keys(s)).not.toContain("edge");
-      expect(Object.keys(s)).not.toContain("from");
+  it("10. EDGE_PROVENANCE: bước visit mang parent + frontierAdded do ENGINE ghi", () => {
+    // W4B-1B — test này TRƯỚC ĐÂY tên là CONTRACT_GAP_EDGE và khẳng định điều
+    // ngược lại: "state không có cạnh nguồn→đích nên KHÔNG tô cạnh duyệt". Nó
+    // khoá lại đúng khoảng trống khiến học sinh thấy nút đổi màu mà không thấy
+    // ĐI TỪ ĐÂU TỚI ĐÂU. Engine vốn đã biết `entry.parent` nhưng vứt đi.
+    const visits = steps.filter((s) => s.kind === "visit");
+    expect(visits.length).toBeGreaterThan(1);
+    for (const s of visits) {
+      expect(Object.keys(s)).toContain("parent");
+      expect(Object.keys(s)).toContain("frontierAdded");
     }
-    // ở bước giữa (chưa phải bước cuối) không có cạnh nào được tô xanh
+    // nút xuất phát không có cha; mọi nút sau đều có
+    expect(visits[0].kind === "visit" && visits[0].parent).toBeNull();
+    for (const s of visits.slice(1)) {
+      expect(s.kind === "visit" && s.parent).not.toBeNull();
+    }
+    // và giữa chừng cạnh đã đi qua ĐƯỢC tô (đúng thứ MV-1 báo thiếu)
     const mid = html(Math.floor(steps.length / 2));
-    expect(mid).not.toContain('stroke="var(--accent-green)"');
+    expect(mid).toContain('stroke="var(--accent-green)"');
   });
 
   it("dòng chữ frontier cũ đã bỏ — không lặp lại cùng thông tin hai nơi", () => {

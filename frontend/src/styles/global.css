@@ -978,6 +978,18 @@ html {
   gap: 6px;
 }
 
+/* W4B-1B — nhãn NHÓM cho chú giải nhiều từ vựng (nút vs đường). Bốn mục nút
+   cộng ba mục đường trong MỘT hàng đọc ra như nhiễu; tách nhóm thì mỗi hàng
+   chỉ nói về một loại đối tượng. Chữ hoa nhỏ + màu nhạt hơn để nó đọc như
+   tiêu đề, không như một mục chú giải nữa. */
+.stage-legend .legend-group {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
 .stage-legend .dot {
   width: 10px;
   height: 10px;
