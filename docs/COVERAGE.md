@@ -133,6 +133,40 @@ Xem §7 — danh sách chống "phủ giả".
 | **practice_activity** | ⚠️ **substrate, CHƯA phải một mode** (§6) |
 | `capability_gap` (từ chối trung thực) | ✅ — 8 gap role, gate tất định, `gap_gate_recall = 1.0` |
 
+### §4b — HAI TRỤC TÁCH RỜI: năng lực ≠ neo chương trình (W4B-1B)
+
+Hai thuộc tính khác nhau, **không được suy cái này ra cái kia**:
+
+| Trục | Giá trị |
+|---|---|
+| **CAPABILITY** | `ENGINE_SUPPORTED` · `AI_REACHABLE` · `UNSUPPORTED` |
+| **CURRICULUM** | `ANCHORED` · `PARTIAL` · `NOT_ANCHORED` |
+
+Một target hoàn toàn có thể là **`ENGINE_SUPPORTED` + `AI_REACHABLE` +
+`NOT_ANCHORED`**. Trạng thái đó **không** sinh ra tuyên bố phủ chương trình.
+
+**"AI-reachable"** nghĩa là: pipeline ngôn ngữ tự nhiên **được phép** định tuyến
+tới năng lực đó khi hợp đồng hợp lệ và dữ kiện đủ. **"Curriculum anchored"** là
+một thuộc tính **bằng chứng** riêng, neo vào SGK.
+
+**Ca cụ thể — `binary.base_conversion`.** Hợp đồng engine nhận cơ số
+**{2, 8, 10, 16}**; target khai `ai_reachable`. Neo SGK thì chỉ có nhị phân
+(T10.CD1 Bài 4). Vậy: đề đổi sang bát phân/thập lục **được định tuyến** (đúng
+trục năng lực) nhưng **không** làm tăng độ phủ chương trình. Cơ số ngoài hợp
+đồng — ví dụ **cơ số 5** — vẫn `capability_gap`, fail-closed như cũ.
+
+> **Cấm suy diễn ngược.** Trước W4B-1B, ba ca đánh giá lịch sử từ chối
+> bát phân/thập lục với lý do trộn hai lập luận: *"ngoài neo SGK"* **và**
+> *"không target nào sở hữu"*. Lập luận thứ hai đã hết đúng từ khi
+> `binary.base_conversion` ship (M17 W1). Các artifact lịch sử **giữ nguyên,
+> không viết lại** — chúng phản ánh policy tại thời điểm đó; nhãn hiện hành của
+> chúng là `STALE_BY_CURRENT_CAPABILITY_POLICY`.
+
+**Tuyên bố được phép** sau khi 22/22 target có ca tường minh:
+*"22/22 catalog target có ca đánh giá tường minh, chọn được trực tiếp bằng
+runner hiện có."*
+**Cấm** nói *"22/22 curriculum-supported"* hoặc *"22/22 đã đo live"*.
+
 ---
 
 ## 5. Mức độ phức tạp (L1–L4) và Result mode

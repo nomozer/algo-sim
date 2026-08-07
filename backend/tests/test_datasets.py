@@ -130,19 +130,54 @@ def test_pools_dang_ky_du():
 # `expect_simulation_id`. Hai ca dưới đóng hai lỗ; lỗ thứ ba
 # (`binary.base_conversion`) CỐ Ý để mở — xem artifact w4b1b, nó vướng mâu thuẫn
 # chính sách với ba ca từ chối hex/bát phân đang tồn tại.
+# case_id -> (pool sở hữu, target). Pool KHÁC NHAU là có chủ đích: hai ca đầu
+# neo chương trình → `curriculum`; ca base_conversion là NĂNG LỰC không neo SGK
+# → `capability` (docstring pool đó: "phủ các HÌNH THỨC mô phỏng hệ có, không
+# phủ theo môn"). Đặt nó vào curriculum chỉ để đạt 22/22 sẽ là một claim độ phủ
+# chương trình không có thật.
 W4B1B_NEW_CASES = {
-    "cur-t11-selection-sort": "algorithm.selection_sort",
-    "cur-t11-graph-traversal-bfs": "network.graph_traversal",
+    "cur-t11-selection-sort": ("curriculum", "algorithm.selection_sort"),
+    "cur-t11-graph-traversal-bfs": ("curriculum", "network.graph_traversal"),
+    "cap-base-conversion-hex": ("capability", "binary.base_conversion"),
 }
 
 
-def test_w4b1b_ca_moi_nam_dung_pool_mutable_va_khong_dung_baseline():
-    """Ca mới phải ở `curriculum` — KHÔNG chèn vào regression/m16 frozen."""
-    curriculum_ids = {it.id for it in get_pool("curriculum")}
-    for case_id in W4B1B_NEW_CASES:
-        assert case_id in curriculum_ids, f"{case_id} không nằm ở pool curriculum"
+def test_w4b1b_ca_moi_nam_dung_pool_va_khong_dung_baseline_dong_bang():
+    """Mỗi ca mới nằm ĐÚNG pool đã chọn theo ngữ nghĩa — và không đụng frozen."""
+    for case_id, (pool_name, _) in W4B1B_NEW_CASES.items():
+        ids = {it.id for it in get_pool(pool_name)}
+        assert case_id in ids, f"{case_id} không nằm ở pool {pool_name}"
     frozen = {it.id for it in DATASET} | {it.id for it in get_pool("m16")}
     assert not (set(W4B1B_NEW_CASES) & frozen), "ca mới rò rỉ vào pool đóng băng"
+
+
+def test_w4b1b_pool_dong_bang_nguyen_ven():
+    """Frozen discipline: regression giữ 30, m16 giữ 50, và ba ca từ chối lịch
+    sử về đổi cơ số vẫn còn nguyên (chúng là bằng chứng policy CŨ, không bị viết
+    lại chỉ để khớp policy mới — xem artifact W4B-1B)."""
+    assert len(DATASET) == 30
+    assert len(get_pool("m16")) == 50
+    historical_refusals = {"m15-hex-gap", "m15-octal-gap", "m16-nm-hex-gap"}
+    all_items = {it.id: it for pool in POOLS.values() for it in pool}
+    for case_id in historical_refusals:
+        assert case_id in all_items, f"{case_id} bị xoá — cấm sửa bằng chứng lịch sử"
+        assert all_items[case_id].group == "unsupported", (
+            f"{case_id} bị viết lại; policy lịch sử phải giữ nguyên"
+        )
+
+
+def test_w4b1b_co_so_ngoai_hop_dong_van_phai_tu_choi():
+    """Cơ số 5 KHÔNG thuộc hợp đồng {2,8,10,16} ⇒ vẫn là ca từ chối hợp lệ.
+    Test này phải ĐỎ nếu ai đó nới hợp đồng mà quên xét lại ca này."""
+    from app.simulation.catalog import CATALOG
+
+    all_items = {it.id: it for pool in POOLS.values() for it in pool}
+    base5 = all_items["m16-cr-positional-fail"]
+    assert base5.group == "unsupported"
+    assert base5.expect_simulation_id is None
+    schema = CATALOG["binary.base_conversion"].config_schema
+    props = schema.get("properties", {})
+    assert "sourceBase" in props and "targetBase" in props
 
 
 def test_w4b1b_ca_moi_du_hop_dong_va_target_co_that_trong_catalog():
@@ -155,15 +190,14 @@ def test_w4b1b_ca_moi_du_hop_dong_va_target_co_that_trong_catalog():
         for it in pool:
             by_id.setdefault(it.id, []).append(name)
 
-    for case_id, target in W4B1B_NEW_CASES.items():
-        item = next(it for it in get_pool("curriculum") if it.id == case_id)
+    for case_id, (pool_name, target) in W4B1B_NEW_CASES.items():
+        item = next(it for it in get_pool(pool_name) if it.id == case_id)
         assert item.expect_simulation_id == target
         assert target in catalog_ids, f"{target} không có trong catalog"
         assert item.group == "specialized"
         assert len(item.learning_objective.strip()) >= 10
         assert item.text.strip(), "prompt rỗng"
-        # id không được trùng với bất kỳ ca nào ở pool khác
-        assert by_id[case_id] == ["curriculum"], f"{case_id} trùng id ở {by_id[case_id]}"
+        assert by_id[case_id] == [pool_name], f"{case_id} trùng id ở {by_id[case_id]}"
 
 
 def test_w4b1b_runner_chon_duoc_dung_ca_bang_case_id():
@@ -171,33 +205,30 @@ def test_w4b1b_runner_chon_duoc_dung_ca_bang_case_id():
 
     Chứng minh OFFLINE (0 API call): `live.py` từ chối chạy khi thiếu
     `ALLOW_LIVE_AI`, nên không thể dùng CLI để chứng minh selection mà không
-    tiêu quota. Ở đây gọi đúng ba bước mà `live.py:265-268` gọi.
+    tiêu quota. Ở đây gọi đúng ba bước mà `live.py` gọi.
 
     Ràng buộc thật của CLI, khoá luôn ở đây: `--case` lọc SAU `--suite`, và
-    suite mặc định `smoke` không chọn gì từ `curriculum` — nên lệnh đúng phải là
-    `--dataset curriculum --suite full --case <id>`.
+    suite mặc định `smoke` không chọn ca nào trong hai pool này — nên lệnh đúng
+    phải là `--dataset <pool> --suite full --case <id>`.
     """
-    pool = get_pool("curriculum")
-    for case_id in W4B1B_NEW_CASES:
+    for case_id, (pool_name, _) in W4B1B_NEW_CASES.items():
+        pool = get_pool(pool_name)
         chosen = [it for it in select_suite("full", pool) if it.id == case_id]
         assert len(chosen) == 1, f"--suite full --case {case_id} không resolve đúng 1 ca"
-        # và đúng cái bẫy: suite mặc định KHÔNG chọn được
         assert not [it for it in select_suite("smoke", pool) if it.id == case_id], (
-            "ca curriculum không nên tự nhiên nằm trong suite smoke"
+            f"{case_id} không nên tự nhiên nằm trong suite smoke"
         )
 
 
 def test_w4b1b_do_phu_target_tuong_minh_dung_bang_so_thuc():
-    """Khoá con số THẬT, không phải nhãn mong muốn."""
+    """Khoá con số THẬT. Đây là ĐỘ SẴN SÀNG ĐÁNH GIÁ NĂNG LỰC, KHÔNG phải độ phủ
+    chương trình và KHÔNG phải đã đo live."""
     from app.simulation.catalog import CATALOG
 
     catalog_ids = set(CATALOG)
     covered = {it.expect_simulation_id for pool in POOLS.values() for it in pool
                if it.expect_simulation_id}
-    explicit = catalog_ids & covered
     missing = catalog_ids - covered
     assert len(catalog_ids) == 22
-    assert len(explicit) == 21, f"độ phủ tường minh {len(explicit)}/22, thiếu {sorted(missing)}"
-    assert missing == {"binary.base_conversion"}, (
-        "chỉ base_conversion được phép còn thiếu — xem artifact W4B-1B"
-    )
+    assert missing == set(), f"còn thiếu ca tường minh cho: {sorted(missing)}"
+    assert len(catalog_ids & covered) == 22

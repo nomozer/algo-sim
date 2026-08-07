@@ -291,4 +291,45 @@ CAPABILITY_ITEMS: list[EvalItem] = [
             "tiền đề hoặc từ chối oan."
         ),
     ),
+    # ── W4B-1B — NĂNG LỰC CÓ, NHƯNG KHÔNG NEO SGK ────────────────────────────
+    # Ca này ở ĐÂY chứ không ở `curriculum.py` là có chủ đích. Pool curriculum
+    # phủ chương trình theo môn; đổi cơ số sang thập lục phân KHÔNG có anchor
+    # SGK (T10.CD1 chỉ phủ nhị phân). Nhưng `binary.base_conversion` là năng lực
+    # tất định ĐANG SHIP, khai AI-reachable, schema nhận cơ số {2,8,10,16}.
+    #
+    # Hai trục tách rời (quyết định W4B-1B):
+    #   CAPABILITY : ENGINE_SUPPORTED + AI_REACHABLE
+    #   CURRICULUM : NOT_ANCHORED
+    # Ca này chứng minh trục thứ nhất và KHÔNG tạo tuyên bố nào về trục thứ hai.
+    #
+    # Ba ca từ chối cũ cùng chủ đề (`m15-hex-gap`, `m15-octal-gap`,
+    # `m16-nm-hex-gap`) GIỮ NGUYÊN — chúng là bằng chứng lịch sử của policy khi
+    # chưa có engine, không phải policy hiện hành. Xem artifact W4B-1B, mục
+    # STALE_BY_CURRENT_CAPABILITY_POLICY. `m16-cr-positional-fail` (cơ số 5) VẪN
+    # ĐÚNG: 5 không thuộc tập cơ số hợp đồng.
+    EvalItem(
+        id="cap-base-conversion-hex",
+        text=(
+            "Đổi số 2026 trong hệ thập phân sang hệ thập lục phân (cơ số 16), "
+            "trình bày từng bước chia lấy dư."
+        ),
+        group="specialized",
+        expect_simulation_id="binary.base_conversion",
+        tags=("capability",),
+        curriculum_area="NOT_ANCHORED — T10.CD1 chỉ phủ nhị phân; cơ số 16 nằm trong hợp đồng engine {2,8,10,16} nhưng ngoài neo SGK",
+        capability_family="positional_representation",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Nhận ra phép chia lấy dư là CÙNG một cơ chế cho mọi cơ số — đổi cơ "
+            "số đích chỉ đổi số chia, không đổi cách làm."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: dãy số dư đọc ngược. Bảng tra hex chỉ cho cặp giá trị↔ký "
+            "hiệu và giấu mất phép chia lặp; thấy từng lượt chia mới hiểu vì sao "
+            "kết quả phải đọc từ dưới lên, và vì sao nhị phân chỉ là trường hợp "
+            "riêng với số chia bằng 2. Ca này đo NĂNG LỰC, không đo độ phủ "
+            "chương trình — xem `curriculum_area`."
+        ),
+    ),
 ]
