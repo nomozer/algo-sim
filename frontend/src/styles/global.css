@@ -1627,6 +1627,65 @@ html {
   }
 }
 
+/* ── W4B-1A — MÀN THẤP: thứ khan hiếm là CHIỀU CAO, không phải chiều rộng ────
+   Mọi breakpoint trước đây đều theo chiều RỘNG (1100/900/860), nên laptop
+   1366×768 và 1536×864 rơi vào nhánh desktop "cao đúng một màn":
+
+     .app-layout { height: calc(100vh - 57px) }  +  .panel-center { overflow-y: auto }
+
+   Nội dung cao hơn một màn KHÔNG làm trang dài ra — nó biến mất sau một thanh
+   cuộn NỘI BỘ của panel. Học sinh không có tín hiệu nào ở mức trang, nên cách
+   duy nhất để thấy hết là THU NHỎ BROWSER (zoom < 100% ⇒ nhiều CSS px hơn).
+
+   Đo được (probe trực giao W4B-1A, zoom 100%, `network.graph_traversal` bước
+   giữa — `docs/evaluation/m17/w4b1a-responsive/`):
+
+     1920×1080  center 885/885   giấu   0px      ← cao, không lỗi
+     1366×1024  center 829/829   giấu   0px      ← HẸP mà vẫn không lỗi
+     1920×768   center 573/743   giấu 170px      ← RỘNG mà vẫn lỗi
+     1366×768   center 573/743   giấu 170px
+
+   Hai cột giữa chứng minh trục: đổi chiều rộng không đổi kết quả, đổi chiều cao
+   thì đổi. `page_scrollable_y` = false ở CẢ BỐN — trang chưa bao giờ cuộn.
+
+   Vì chiều rộng vẫn dư ở 1366+, KHÔNG dùng lại nhánh ≤1100px (nhánh đó biến
+   Quan sát thành drawer — đúng cho màn hẹp, thừa và gây hại cho màn rộng-mà-thấp).
+   Ở đây chỉ chuyển QUYỀN SỞ HỮU CUỘN từ panel sang trang, giữ nguyên hai cột.
+
+   Ngưỡng 900px suy từ hình học đo được: chiều cao khả dụng của `.panel-center`
+   = viewportH − 195 (header 57 + padding 32 + thanh điều khiển 90 + gap 16).
+   Nội dung cao nhất đo được là 743px ⇒ cần viewportH ≥ 938px mới vừa. Ngưỡng
+   900 phủ trọn 768 · 864 · 900; từ 1024 trở lên bố cục một-màn vẫn đủ chỗ. */
+@media (min-width: 1101px) and (max-height: 900px) {
+  .app-layout,
+  .app-layout.right-closed {
+    height: auto;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* Trả quyền cuộn cho TRANG. Panel không được giấu cơ chế học tập sau một
+     thanh cuộn nội bộ mà người học không có lý do để đi tìm. */
+  .panel-center,
+  .panel-right {
+    overflow-y: visible;
+  }
+
+  /* Cùng lý do FIX-1 + đính chính W3B ở nhánh màn hẹp: layout cao theo nội dung
+     thì `panel-controls` hết là hàng lưới ghim đáy và TRÔI theo nội dung. Sticky
+     giữ nó trong màn hình; padding bù để thanh không phủ lên phần cuối sân khấu
+     (đó là ca `insertion_sort @1024×768` đã đo được ở W3B). */
+  .panel-controls {
+    position: sticky;
+    bottom: 0;
+    z-index: 50;
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .panel-center {
+    padding-bottom: 140px;
+  }
+}
+
 /* POLISH-1 — KHOẢNG TRẮNG CHẾT.
    `flex: 1` kéo thẻ workspace cao bằng CẢ cột, nên module ít nội dung
    (boolean_dag: 3 chip + bảng 3 dòng) để lại một mảng trắng chiếm gần nửa màn
