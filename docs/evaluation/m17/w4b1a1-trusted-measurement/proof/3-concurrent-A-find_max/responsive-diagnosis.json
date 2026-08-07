@@ -1,0 +1,670 @@
+{
+  "app": "http://localhost:3003",
+  "generated_at": "2026-08-07T18:35:19.294Z",
+  "fixture": "algorithm.find_max",
+  "zoom": "100% (deviceScaleFactor=1, mobile=false)",
+  "session": {
+    "chrome_pid": 9204,
+    "cdp_port": 59755,
+    "profile": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-e1-X8Xush"
+  },
+  "viewports": [
+    {
+      "id": "1366x768",
+      "width": 1366,
+      "height": 768
+    }
+  ],
+  "verdict": "PASS",
+  "failures": [],
+  "results": [
+    {
+      "route": "workspace",
+      "subject": "algorithm.find_max",
+      "simulation_id": "algorithm.find_max",
+      "checkpoint": "initial",
+      "cursor": 0,
+      "viewport_id": "1366x768",
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w4b1a1-trusted-measurement/proof/3-concurrent-A-find_max/workspace-initial-1366x768.png",
+      "viewport": {
+        "clientWidth": 1366,
+        "clientHeight": 768,
+        "scrollWidth": 1356,
+        "scrollHeight": 895,
+        "page_overflow_x": false,
+        "page_scrollable_y": true,
+        "hidden_below_fold_px": 127
+      },
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 337,
+          "right": 550,
+          "width": 213,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 240,
+          "right": 800,
+          "width": 560,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 215,
+          "right": 825,
+          "width": 610,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 191,
+          "right": 1165,
+          "width": 974,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 12,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": [],
+      "height_axis": {
+        "app_layout": {
+          "sel": ".app-layout",
+          "present": true,
+          "top": 58,
+          "bottom": 895,
+          "height": 837,
+          "width": 974,
+          "client_height": 837,
+          "scroll_height": 837,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "836.5px",
+          "css_min_height": "711px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_center": {
+          "sel": ".panel-center",
+          "present": true,
+          "top": 74,
+          "bottom": 773,
+          "height": 699,
+          "width": 610,
+          "client_height": 699,
+          "scroll_height": 699,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "698.5px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_right": {
+          "sel": ".panel-right",
+          "present": true,
+          "top": 74,
+          "bottom": 773,
+          "height": 699,
+          "width": 300,
+          "client_height": 699,
+          "scroll_height": 699,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "698.5px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_controls": {
+          "sel": ".panel-controls",
+          "present": true,
+          "top": 678,
+          "bottom": 768,
+          "height": 90,
+          "width": 926,
+          "client_height": 88,
+          "scroll_height": 88,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "90px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "stage": {
+          "sel": ".sim-stage",
+          "present": true,
+          "top": 186,
+          "bottom": 472,
+          "height": 286,
+          "width": 560,
+          "client_height": 286,
+          "scroll_height": 286,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "286px",
+          "css_min_height": "180px",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "narration": {
+          "sel": ".notes",
+          "present": false
+        }
+      },
+      "hit_test": [
+        {
+          "text": "submit",
+          "disabled": true,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": true,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tự chạy",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Đặt lại",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "range",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tua đến bước",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        }
+      ],
+      "fingerprint": {
+        "hash": "",
+        "app_layout": true,
+        "panel_center": true,
+        "panel_controls": true,
+        "stage": true,
+        "workspace_title": "Tìm giá trị lớn nhất"
+      }
+    },
+    {
+      "route": "workspace",
+      "subject": "algorithm.find_max",
+      "simulation_id": "algorithm.find_max",
+      "checkpoint": "mid",
+      "cursor": 3,
+      "viewport_id": "1366x768",
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w4b1a1-trusted-measurement/proof/3-concurrent-A-find_max/workspace-mid-1366x768.png",
+      "viewport": {
+        "clientWidth": 1366,
+        "clientHeight": 768,
+        "scrollWidth": 1356,
+        "scrollHeight": 946,
+        "page_overflow_x": false,
+        "page_scrollable_y": true,
+        "hidden_below_fold_px": 178
+      },
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 337,
+          "right": 550,
+          "width": 213,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 240,
+          "right": 800,
+          "width": 560,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 215,
+          "right": 825,
+          "width": 610,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 191,
+          "right": 1165,
+          "width": 974,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 12,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": [],
+      "height_axis": {
+        "app_layout": {
+          "sel": ".app-layout",
+          "present": true,
+          "top": 58,
+          "bottom": 946,
+          "height": 888,
+          "width": 974,
+          "client_height": 888,
+          "scroll_height": 888,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "887.5px",
+          "css_min_height": "711px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_center": {
+          "sel": ".panel-center",
+          "present": true,
+          "top": 74,
+          "bottom": 824,
+          "height": 750,
+          "width": 610,
+          "client_height": 750,
+          "scroll_height": 750,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "749.5px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_right": {
+          "sel": ".panel-right",
+          "present": true,
+          "top": 74,
+          "bottom": 824,
+          "height": 750,
+          "width": 300,
+          "client_height": 750,
+          "scroll_height": 750,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "749.5px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_controls": {
+          "sel": ".panel-controls",
+          "present": true,
+          "top": 678,
+          "bottom": 768,
+          "height": 90,
+          "width": 926,
+          "client_height": 88,
+          "scroll_height": 88,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "90px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "stage": {
+          "sel": ".sim-stage",
+          "present": true,
+          "top": 186,
+          "bottom": 472,
+          "height": 286,
+          "width": 560,
+          "client_height": 286,
+          "scroll_height": 286,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "286px",
+          "css_min_height": "180px",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "narration": {
+          "sel": ".notes",
+          "present": false
+        }
+      },
+      "hit_test": [
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tự chạy",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Đặt lại",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "range",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tua đến bước",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        }
+      ],
+      "fingerprint": {
+        "hash": "",
+        "app_layout": true,
+        "panel_center": true,
+        "panel_controls": true,
+        "stage": true,
+        "workspace_title": "Tìm giá trị lớn nhất"
+      }
+    },
+    {
+      "route": "workspace",
+      "subject": "algorithm.find_max",
+      "simulation_id": "algorithm.find_max",
+      "checkpoint": "final",
+      "cursor": 6,
+      "viewport_id": "1366x768",
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w4b1a1-trusted-measurement/proof/3-concurrent-A-find_max/workspace-final-1366x768.png",
+      "viewport": {
+        "clientWidth": 1366,
+        "clientHeight": 768,
+        "scrollWidth": 1356,
+        "scrollHeight": 935,
+        "page_overflow_x": false,
+        "page_scrollable_y": true,
+        "hidden_below_fold_px": 167
+      },
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 344,
+          "right": 557,
+          "width": 213,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 247,
+          "right": 793,
+          "width": 546,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 222,
+          "right": 818,
+          "width": 596,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 198,
+          "right": 1158,
+          "width": 960,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 11,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": [],
+      "height_axis": {
+        "app_layout": {
+          "sel": ".app-layout",
+          "present": true,
+          "top": 58,
+          "bottom": 935,
+          "height": 877,
+          "width": 960,
+          "client_height": 877,
+          "scroll_height": 877,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "876.5px",
+          "css_min_height": "711px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_center": {
+          "sel": ".panel-center",
+          "present": true,
+          "top": 74,
+          "bottom": 813,
+          "height": 739,
+          "width": 596,
+          "client_height": 739,
+          "scroll_height": 739,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "738.5px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_right": {
+          "sel": ".panel-right",
+          "present": true,
+          "top": 74,
+          "bottom": 813,
+          "height": 739,
+          "width": 300,
+          "client_height": 739,
+          "scroll_height": 739,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "738.5px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "below_fold": true
+        },
+        "panel_controls": {
+          "sel": ".panel-controls",
+          "present": true,
+          "top": 678,
+          "bottom": 768,
+          "height": 90,
+          "width": 912,
+          "client_height": 88,
+          "scroll_height": 88,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "90px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "stage": {
+          "sel": ".sim-stage",
+          "present": true,
+          "top": 186,
+          "bottom": 472,
+          "height": 286,
+          "width": 546,
+          "client_height": 286,
+          "scroll_height": 286,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "286px",
+          "css_min_height": "180px",
+          "css_max_height": "none",
+          "below_fold": false
+        },
+        "narration": {
+          "sel": ".notes",
+          "present": false
+        }
+      },
+      "hit_test": [
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tự chạy",
+          "disabled": true,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": true,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": true,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Đặt lại",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "range",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tua đến bước",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        }
+      ],
+      "fingerprint": {
+        "hash": "",
+        "app_layout": true,
+        "panel_center": true,
+        "panel_controls": true,
+        "stage": true,
+        "workspace_title": "Tìm giá trị lớn nhất"
+      }
+    }
+  ]
+}

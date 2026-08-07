@@ -821,10 +821,26 @@ và **acceptance chấm máy có mã thoát** (vi phạm → **thoát 1**): `HOR
 · `CONTENT_HIDDEN_IN_PANEL` · `CONTROL_OCCLUDED` (elementFromPoint) ·
 `CONTROL_OFFSCREEN` · `TEXT_CLIPPED`.
 
-**Bất biến bố cục nó khoá**: trang phải cuộn được khi nội dung cao hơn viewport —
-nội dung **không** được biến mất vào thanh cuộn nội bộ của `.panel-center`. Đây là
-lớp lỗi mà mọi breakpoint theo chiều RỘNG không bao giờ bắt được (xem
-`global.css` khối `@media (min-width: 1101px) and (max-height: 900px)`).
+**Bất biến bố cục nó khoá** (hai cái, hai trục):
+1. **Chiều cao** — trang phải cuộn được khi nội dung cao hơn viewport; nội dung
+   **không** được biến mất vào thanh cuộn nội bộ của `.panel-center`. Lớp lỗi mà
+   mọi breakpoint theo chiều RỘNG không bao giờ bắt được (`global.css` khối
+   `@media (min-width: 1101px) and (max-height: 900px)`).
+2. **Chiều rộng** (W4B-1A.1) — `LAYOUT_NOT_USING_VIEWPORT`: `.app-layout` phải
+   dùng gần trọn khung cha, hoặc đạt đúng `max-width` đã khai khi màn rộng hơn.
+   Bề rộng mong đợi **dẫn xuất từ `css_max_width` đo được**, không hard-code.
+   Lớp lỗi này guard đầu tiên không thấy: năm điều kiện cũ đều hỏi "có tràn / có
+   bị giấu", không cái nào hỏi "app có DÙNG màn hình không".
+
+**Cô lập phiên (W4B-1A.1)** — mỗi lượt chạy sở hữu Chrome riêng:
+`--remote-debugging-port=0` rồi đọc cổng thật từ `DevToolsActivePort` trong
+profile của chính nó; PID/cổng/profile ghi vào `session` của artifact. Dấu vân
+tay kiểm **danh tính** (`store.active.moduleId` so với target đang yêu cầu), không
+chỉ hình dạng DOM → lệch thì `WRONG_SIMULATION_OR_FIXTURE` + thoát 2. Mọi lối ra
+(thành công · exit != 0 · throw · unhandled rejection · SIGINT/SIGTERM) đi qua
+`shutdown()`. Cờ `--self-test-throw` tiêm lỗi tái lập được để chứng minh đường
+dọn dẹp. **Lý do tồn tại**: cổng cố định 9337 + thiếu teardown từng khiến hai
+lượt chạy song song bám chéo và sinh artifact gắn nhãn sai fixture.
 
 Lệnh hồi quy (0 API call, cần dev server):
 ```bash
