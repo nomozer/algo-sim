@@ -1517,8 +1517,30 @@ html {
   gap: var(--sp-md);
   padding: var(--sp-md) var(--sp-lg);
   height: calc(100vh - 57px);
+
+  /* W4B-1A.1 — BỀ RỘNG LẤY TỪ MÀN HÌNH, KHÔNG TỪ NỘI DUNG.
+     Bản cũ chỉ có `max-width: 1720px; margin: 0 auto`. `.app-layout` là flex
+     item của `#root { display:flex; flex-direction:column }`, nên trục ngang là
+     TRỤC PHỤ — và auto margin trên trục phụ **triệt tiêu `align-self: stretch`**.
+     Kết quả: lưới co về fit-content và `max-width` không bao giờ được chạm tới.
+
+     Đo được trước khi sửa (`width-before/`, zoom 100%):
+
+       viewport   #root   .app-layout   margin trái/phải   max-width
+       1366x768    1356      1039            158.5px        1720px (không chạm)
+       1920x1080   1910      1039            435.5px        1720px (không chạm)
+
+     Cùng một bề rộng 1039px ở hai màn hình khác hẳn nhau: bề rộng của mô phỏng
+     đang do ĐỘ DÀI CÂU THUYẾT MINH quyết định, không do màn hình. Ở 1920 thì
+     871px (46%) là lề trống.
+
+     `width: 100%` cho flex item một bề rộng XÁC ĐỊNH nên nó không co theo nội
+     dung nữa; `max-width` mới có tác dụng; `margin-inline: auto` chỉ còn việc
+     căn giữa phần dư khi màn rộng hơn 1720px. `box-sizing: border-box` (đặt ở
+     `*`, dòng 3-7) đảm bảo padding nằm TRONG 100% — không sinh tràn ngang. */
+  width: 100%;
   max-width: 1720px;
-  margin: 0 auto;
+  margin-inline: auto;
 }
 
 /* Đóng panel Quan sát → sân khấu chiếm trọn. */
