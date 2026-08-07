@@ -609,4 +609,62 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "không tuyên bố gì về byte UTF-8."
         ),
     ),
+    # ── W4B-1B — hai target catalog chưa từng có ca đánh giá tường minh ──────
+    # Reconciliation (xem docs/evaluation/m17/w4b1b-edge-state/): inventory
+    # runtime cho 19/22 target có `expect_simulation_id`. Hai ca dưới đây đóng
+    # hai trong ba lỗ. Lỗ thứ ba (`binary.base_conversion`) KHÔNG đóng ở đây —
+    # nó vướng một mâu thuẫn chính sách chưa được giải quyết, ghi rõ trong
+    # artifact; thêm ca cho nó bây giờ sẽ chọi vào ba ca từ chối đang tồn tại.
+    EvalItem(
+        id="cur-t11-selection-sort",
+        text=(
+            "Điểm kiểm tra của 5 bạn trong tổ lần lượt là 29, 10, 14, 37, 13. "
+            "Hãy sắp xếp dãy điểm này tăng dần bằng cách mỗi lượt chọn ra điểm "
+            "nhỏ nhất trong phần chưa sắp rồi đưa về đầu."
+        ),
+        group="specialized",
+        expect_simulation_id="algorithm.selection_sort",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T11CS.CD6",
+        curriculum_topic="Thuật toán sắp xếp — sắp xếp chọn (Bài 24)",
+        capability_family="sorting_movement",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Phân biệt được sắp xếp chọn với sắp xếp nổi bọt: mỗi lượt chỉ có "
+            "MỘT lần đổi chỗ, sau khi đã quét hết phần chưa sắp để tìm cực trị."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: ứng viên cực trị được GIỮ trong suốt một lượt quét rồi "
+            "mới đổi chỗ đúng một lần — khác hẳn nổi bọt đổi chỗ liên tục. Dãy "
+            "kết quả in sẵn trong sách giấu mất chính chỗ đó; thấy ứng viên đổi "
+            "khi gặp phần tử nhỏ hơn mới hiểu vì sao chỉ cần một lần đổi chỗ."
+        ),
+    ),
+    EvalItem(
+        id="cur-t11-graph-traversal-bfs",
+        text=(
+            "Một mạng có 6 trạm A, B, C, D, E, F. Các đường nối trực tiếp là "
+            "A–B, A–C, B–D, C–E, D–F, E–F. Xuất phát từ trạm A, hãy duyệt theo "
+            "chiều rộng để tìm đường tới trạm F."
+        ),
+        group="specialized",
+        expect_simulation_id="network.graph_traversal",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T12.CD2",
+        curriculum_topic="Cấu trúc dữ liệu đồ thị — duyệt theo chiều rộng",
+        capability_family="search_path",
+        complexity="L2",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Giải thích được vì sao hàng đợi quyết định thứ tự thăm, và vì sao "
+            "duyệt theo chiều rộng cho đường đi qua ít cạnh nhất."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: HÀNG ĐỢI. Sách vẽ đồ thị và liệt kê thứ tự thăm nhưng "
+            "giấu cái quyết định thứ tự đó; thấy trạm được nạp vào cuối hàng và "
+            "lấy ra từ đầu mới hiểu vì sao BFS lan theo từng lớp thay vì đi sâu "
+            "một nhánh."
+        ),
+    ),
 ]

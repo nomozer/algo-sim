@@ -123,3 +123,81 @@ def test_pools_dang_ky_du():
     # M16 Task 4: pool "m16" (catalog-wide eval) đăng ký thêm vào POOLS.
     assert set(POOLS) == {"regression", "curriculum", "capability", "cross_domain", "thesis", "m16"}
     assert get_pool("regression") is DATASET
+
+
+# ── W4B-1B — độ phủ target TƯỜNG MINH cho catalog ────────────────────────────
+# Reconciliation W4B-1B: inventory runtime (không phải grep) cho 19/22 target có
+# `expect_simulation_id`. Hai ca dưới đóng hai lỗ; lỗ thứ ba
+# (`binary.base_conversion`) CỐ Ý để mở — xem artifact w4b1b, nó vướng mâu thuẫn
+# chính sách với ba ca từ chối hex/bát phân đang tồn tại.
+W4B1B_NEW_CASES = {
+    "cur-t11-selection-sort": "algorithm.selection_sort",
+    "cur-t11-graph-traversal-bfs": "network.graph_traversal",
+}
+
+
+def test_w4b1b_ca_moi_nam_dung_pool_mutable_va_khong_dung_baseline():
+    """Ca mới phải ở `curriculum` — KHÔNG chèn vào regression/m16 frozen."""
+    curriculum_ids = {it.id for it in get_pool("curriculum")}
+    for case_id in W4B1B_NEW_CASES:
+        assert case_id in curriculum_ids, f"{case_id} không nằm ở pool curriculum"
+    frozen = {it.id for it in DATASET} | {it.id for it in get_pool("m16")}
+    assert not (set(W4B1B_NEW_CASES) & frozen), "ca mới rò rỉ vào pool đóng băng"
+
+
+def test_w4b1b_ca_moi_du_hop_dong_va_target_co_that_trong_catalog():
+    """id duy nhất · target có thật · learning_objective không rỗng."""
+    from app.simulation.catalog import CATALOG
+
+    catalog_ids = set(CATALOG)
+    by_id: dict[str, list[str]] = {}
+    for name, pool in POOLS.items():
+        for it in pool:
+            by_id.setdefault(it.id, []).append(name)
+
+    for case_id, target in W4B1B_NEW_CASES.items():
+        item = next(it for it in get_pool("curriculum") if it.id == case_id)
+        assert item.expect_simulation_id == target
+        assert target in catalog_ids, f"{target} không có trong catalog"
+        assert item.group == "specialized"
+        assert len(item.learning_objective.strip()) >= 10
+        assert item.text.strip(), "prompt rỗng"
+        # id không được trùng với bất kỳ ca nào ở pool khác
+        assert by_id[case_id] == ["curriculum"], f"{case_id} trùng id ở {by_id[case_id]}"
+
+
+def test_w4b1b_runner_chon_duoc_dung_ca_bang_case_id():
+    """§G — CHÍNH code path của `live.py`: get_pool → select_suite → lọc theo id.
+
+    Chứng minh OFFLINE (0 API call): `live.py` từ chối chạy khi thiếu
+    `ALLOW_LIVE_AI`, nên không thể dùng CLI để chứng minh selection mà không
+    tiêu quota. Ở đây gọi đúng ba bước mà `live.py:265-268` gọi.
+
+    Ràng buộc thật của CLI, khoá luôn ở đây: `--case` lọc SAU `--suite`, và
+    suite mặc định `smoke` không chọn gì từ `curriculum` — nên lệnh đúng phải là
+    `--dataset curriculum --suite full --case <id>`.
+    """
+    pool = get_pool("curriculum")
+    for case_id in W4B1B_NEW_CASES:
+        chosen = [it for it in select_suite("full", pool) if it.id == case_id]
+        assert len(chosen) == 1, f"--suite full --case {case_id} không resolve đúng 1 ca"
+        # và đúng cái bẫy: suite mặc định KHÔNG chọn được
+        assert not [it for it in select_suite("smoke", pool) if it.id == case_id], (
+            "ca curriculum không nên tự nhiên nằm trong suite smoke"
+        )
+
+
+def test_w4b1b_do_phu_target_tuong_minh_dung_bang_so_thuc():
+    """Khoá con số THẬT, không phải nhãn mong muốn."""
+    from app.simulation.catalog import CATALOG
+
+    catalog_ids = set(CATALOG)
+    covered = {it.expect_simulation_id for pool in POOLS.values() for it in pool
+               if it.expect_simulation_id}
+    explicit = catalog_ids & covered
+    missing = catalog_ids - covered
+    assert len(catalog_ids) == 22
+    assert len(explicit) == 21, f"độ phủ tường minh {len(explicit)}/22, thiếu {sorted(missing)}"
+    assert missing == {"binary.base_conversion"}, (
+        "chỉ base_conversion được phép còn thiếu — xem artifact W4B-1B"
+    )
