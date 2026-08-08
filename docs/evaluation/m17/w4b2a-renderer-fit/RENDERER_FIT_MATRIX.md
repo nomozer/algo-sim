@@ -42,12 +42,45 @@ không, hay chỉ đẻ thêm khoảng trắng?
 | Hình vẽ rộng thêm | **+0px, cả 19** |
 | Phản ứng theo bề rộng | **0 / 19** |
 
-**Không một renderer nào phản ứng.** Đây là bằng chứng trực tiếp cho hợp đồng
-`ADAPTIVE_LAYOUT` bị vi phạm toàn danh mục: mọi SVG khoá `maxWidth` bằng đúng bề
-rộng `viewBox` nội tại, nên toàn bộ 316px vừa cấp thành khoảng trắng.
+**Không một renderer nào phản ứng.**
 
-Nó cũng xác nhận điều §9 lo: **đóng Quan sát hiện chỉ tạo thêm white space**,
-không làm mô phỏng lớn hơn một pixel nào.
+⚠️ **Đọc con số này theo LỚP renderer, không kết luận cả 19 đều hỏng.** Phản ứng
+0px chỉ là **khiếm khuyết** với lớp `ADAPTIVE_LAYOUT` khi chưa chạm trần ngữ
+nghĩa. Với `FIXED_SEMANTIC_SIZE` thì 0px có thể là **chủ đích** — ở đó phải xét
+riêng phần sân khấu bỏ trống, không xét bề rộng hình vẽ.
+
+Cái chung cho mọi lớp: mọi SVG đang khoá `maxWidth` bằng đúng bề rộng `viewBox`
+nội tại, và bề rộng nội tại đó **không hề là hàm của khung chứa** — nên không
+renderer nào có cơ hội phản ứng, kể cả những cái đáng lẽ phải phản ứng.
+
+Nó cũng xác nhận điều §9 lo: **đóng Quan sát hiện chỉ tạo thêm white space**.
+
+## 2b. SAU khi sửa `ArrayView` (AFTER)
+
+| Target | Hình vẽ TRƯỚC | SAU | Chênh |
+|---|---:|---:|---:|
+| `algorithm.binary_search` | 714 | **1224** | +510 |
+| `algorithm.count_if` | 714 | **1224** | +510 |
+| `algorithm.sum_if` | 644 | **1104** | +460 |
+| `algorithm.find_max` | 574 | **984** | +410 |
+| `algorithm.linear_search` | 574 | **984** | +410 |
+| `algorithm.bubble_sort` | **504** | **864** | **+360** |
+| `algorithm.find_min` | 504 | **864** | +360 |
+| `algorithm.insertion_sort` | 434 | **744** | +310 |
+| `algorithm.scan` | 364 | **624** | +260 |
+| `algorithm.selection_sort` | 364 | **624** | +260 |
+
+**10/10 target `ArrayView` cải thiện.** Chín target ngoài họ `ArrayView` đo lại
+đều **+0px** — không có blast radius ngoài ý muốn.
+
+`bubble_sort` — đúng mẫu ảnh người dùng gửi — từ **504px → 864px** trong sân
+khấu 1306px.
+
+**Đóng Quan sát vẫn +0px sau bản vá, và đó là PASS chứ không phải FAIL:** với 7
+cột, bố cục đã **chạm trần ngữ nghĩa** (`colW = 96`) ngay ở 1306px, nên 316px
+thêm vào thành lề căn giữa có chủ đích. Đây là `SEMANTIC_MAX_REACHED` theo §11.
+Bằng chứng tính thích ứng nằm ở test đơn vị (620px → 900px thì bố cục lớn theo)
+cộng với chênh lệch trước–sau ở trên.
 
 ## 3. Phân loại (từ số đo, chưa phải kết luận cuối)
 

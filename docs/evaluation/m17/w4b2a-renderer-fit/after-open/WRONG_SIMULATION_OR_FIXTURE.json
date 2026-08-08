@@ -1,0 +1,26 @@
+{
+  "verdict": "WRONG_SIMULATION_OR_FIXTURE",
+  "viewport": "1366x768",
+  "checkpoint": "mid",
+  "fixture": "all",
+  "subject": "diem-cao-nhat",
+  "expected_simulation_id": "algorithm.find_max",
+  "actual_simulation_id": null,
+  "workspace_title": null,
+  "chrome_pid": 18796,
+  "cdp_port": 60014,
+  "missing": [
+    "app_layout",
+    "panel_center",
+    "panel_controls",
+    "stage"
+  ],
+  "fingerprint": {
+    "hash": "",
+    "app_layout": false,
+    "panel_center": false,
+    "panel_controls": false,
+    "stage": false,
+    "workspace_title": null
+  }
+}
