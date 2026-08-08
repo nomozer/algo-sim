@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Step } from "../core/types";
 import { fmt } from "../core/trace-builder";
@@ -18,6 +18,65 @@ const COL_GAP = 14;
 const CHART_H = 190;
 const TOP_PAD = 26;
 const BOTTOM_PAD = 52;
+
+/* ── W4B-2A — BỐ CỤC THÍCH ỨNG THEO BỀ RỘNG KHẢ DỤNG ───────────────────────
+ *
+ * Trước đây `COL_W`/`COL_GAP` là hằng số, nên bề rộng hình vẽ chỉ phụ thuộc SỐ
+ * phần tử: 7 cột luôn ra 504px, kể cả trong sân khấu 1306px. Đo được trên toàn
+ * danh mục (W4B-2A baseline): đóng panel Quan sát cấp thêm 316px bề rộng, hình
+ * vẽ lớn thêm **0px** — chỗ dư thành khoảng trắng.
+ *
+ * Cách chữa KHÔNG phải kéo giãn SVG. `viewBox` vẫn bằng đúng bề rộng hiển thị
+ * nên `scale ≈ 1` giữ nguyên — chữ và nét không phình. Thay vào đó **tính lại
+ * bố cục nội tại**: cột và khe rộng ra cho tới một TRẦN NGỮ NGHĨA, rồi dừng.
+ *
+ * Vì sao có trần: bảy cột trải kín 1300px không dạy thêm điều gì, chỉ làm mắt
+ * phải quét xa hơn giữa hai cột đang so sánh — mà "so sánh hai cột kề nhau"
+ * chính là cơ chế của bài. Chạm trần thì phần dư thành lề căn giữa CÓ CHỦ ĐÍCH,
+ * không phải lỗi.
+ *
+ * Tỉ lệ khe/cột giữ đúng 14/56 = 0,25 của bản gốc.
+ */
+const MIN_COL_W = 28;
+const MAX_COL_W = 96;
+const MIN_GAP = 8;
+const MAX_GAP = 28;
+const GAP_RATIO = COL_GAP / COL_W;
+/** Chừa hai bên để hình không dính mép thẻ. */
+const SAFE_PAD = 24;
+
+export interface ArrayChartLayout {
+  colW: number;
+  gap: number;
+  width: number;
+  /** Đã chạm trần ngữ nghĩa — bề rộng dư thêm là lề căn giữa, không phải lỗi. */
+  capped: boolean;
+}
+
+/**
+ * Bố cục nội tại của biểu đồ dãy. HÀM THUẦN — kiểm được không cần trình duyệt.
+ *
+ * `available <= 0` nghĩa là chưa đo được khung (lần render đầu, SSR, jsdom):
+ * trả đúng bố cục hằng số cũ để không có bước nhảy thị giác và để mọi test
+ * SSR sẵn có giữ nguyên kết quả.
+ */
+export function arrayChartLayout(n: number, available: number): ArrayChartLayout {
+  const count = Math.max(1, n);
+  if (!Number.isFinite(available) || available <= 0) {
+    return { colW: COL_W, gap: COL_GAP, width: count * COL_W + (count + 1) * COL_GAP, capped: false };
+  }
+  const usable = Math.max(0, available - SAFE_PAD);
+  // width(colW) = n*colW + (n+1)*colW*GAP_RATIO  ⇒ giải ra colW
+  const raw = usable / (count + (count + 1) * GAP_RATIO);
+  const colW = Math.max(MIN_COL_W, Math.min(MAX_COL_W, Math.floor(raw)));
+  const gap = Math.max(MIN_GAP, Math.min(MAX_GAP, Math.round(colW * GAP_RATIO)));
+  return {
+    colW,
+    gap,
+    width: count * colW + (count + 1) * gap,
+    capped: colW >= MAX_COL_W,
+  };
+}
 
 interface ColumnState {
   fill: string;
@@ -182,14 +241,35 @@ export function ArrayView({
   const arr = step.snapshot.array;
   const ids = step.snapshot.ids;
   const n = arr.length;
-  const width = n * COL_W + (n + 1) * COL_GAP;
   const height = TOP_PAD + CHART_H + BOTTOM_PAD;
   const maxV = Math.max(...arr, 1);
 
   const svgRef = useRef<SVGSVGElement>(null);
   const [drag, setDrag] = useState<DragState | null>(null);
 
-  const colX = (i: number) => COL_GAP + i * (COL_W + COL_GAP);
+  /* Bề rộng khả dụng đo từ CHÍNH khung chứa, không từ `window.innerWidth`:
+     sân khấu co giãn theo panel Quan sát mở/đóng chứ không theo cửa sổ. Đo tại
+     chỗ (ArrayView là chủ sở hữu sizing) thay vì dựng một hook dùng chung khi
+     mới có một consumer. */
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [available, setAvailable] = useState(0);
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(([entry]) => {
+      setAvailable(Math.round(entry.contentRect.width));
+    });
+    ro.observe(el);
+    setAvailable(Math.round(el.getBoundingClientRect().width));
+    return () => ro.disconnect();
+  }, []);
+
+  const layout = arrayChartLayout(n, available);
+  const colW = layout.colW;
+  const colGap = layout.gap;
+  const width = layout.width;
+
+  const colX = (i: number) => colGap + i * (colW + colGap);
 
   /** Quy đổi khoảng cách chuột (px màn hình) sang đơn vị viewBox. */
   function screenToSvg(px: number): number {
@@ -199,7 +279,7 @@ export function ArrayView({
   }
 
   function targetFromCenter(cx: number, from: number): number | null {
-    const idx = Math.round((cx - COL_GAP - COL_W / 2) / (COL_W + COL_GAP));
+    const idx = Math.round((cx - colGap - colW / 2) / (colW + colGap));
     if (idx < 0 || idx >= n || idx === from) return null;
     return idx;
   }
@@ -214,7 +294,7 @@ export function ArrayView({
     if (!drag) return;
     const dx = screenToSvg(e.clientX - drag.startX);
     const dy = screenToSvg(e.clientY - drag.startY);
-    const center = colX(drag.from) + COL_W / 2 + dx;
+    const center = colX(drag.from) + colW / 2 + dx;
     setDrag({ ...drag, dx, dy, target: targetFromCenter(center, drag.from) });
   }
 
@@ -232,10 +312,15 @@ export function ArrayView({
   }
 
   return (
+    <div ref={boxRef} style={{ width: "100%" }}>
     <svg
       ref={svgRef}
       viewBox={`0 0 ${width} ${height}`}
       width="100%"
+      /* `maxWidth: width` GIỮ NGUYÊN — đây KHÔNG phải chỗ kéo giãn. `width` nay
+         là bề rộng bố cục vừa tính lại từ khung chứa, nên viewBox vẫn khớp đúng
+         pixel hiển thị và `scale ≈ 1` được bảo toàn (test khoá ở dag.test.tsx
+         cùng luật). Hình lớn hơn vì BỐ CỤC lớn hơn, không vì SVG bị phóng. */
       style={{ maxWidth: width, display: "block", margin: "0 auto", touchAction: "none" }}
       role="img"
       aria-label="Mô phỏng dãy số"
@@ -258,11 +343,11 @@ export function ArrayView({
           return (
             <g key={ids[i]} style={{ transform: `translate(${colX(i)}px, 0px)`,
                                      transition: "transform 0.35s ease" }}>
-              <rect x={0} y={TOP_PAD} width={COL_W} height={CHART_H} rx={5}
+              <rect x={0} y={TOP_PAD} width={colW} height={CHART_H} rx={5}
                     fill="none" stroke="var(--ink-muted)" strokeWidth={2} strokeDasharray="6 5" />
-              <text x={COL_W / 2} y={TOP_PAD + CHART_H / 2} textAnchor="middle"
+              <text x={colW / 2} y={TOP_PAD + CHART_H / 2} textAnchor="middle"
                     fontSize={12} fill="var(--ink-muted)">trống</text>
-              <text x={COL_W / 2} y={TOP_PAD + CHART_H + (labels ? 42 : 26)} textAnchor="middle"
+              <text x={colW / 2} y={TOP_PAD + CHART_H + (labels ? 42 : 26)} textAnchor="middle"
                     fontSize={11} fill="var(--ink-faint)">{i}</text>
             </g>
           );
@@ -282,7 +367,7 @@ export function ArrayView({
               <rect
                 x={-4}
                 y={TOP_PAD - 4}
-                width={COL_W + 8}
+                width={colW + 8}
                 height={CHART_H + 8}
                 rx={8}
                 fill="none"
@@ -294,7 +379,7 @@ export function ArrayView({
             <rect
               x={0}
               y={y}
-              width={COL_W}
+              width={colW}
               height={h}
               rx={5}
               fill={st.fill}
@@ -310,7 +395,7 @@ export function ArrayView({
               onPointerCancel={() => setDrag(null)}
             />
             <text
-              x={COL_W / 2}
+              x={colW / 2}
               y={y - 8}
               textAnchor="middle"
               fontSize={14}
@@ -323,13 +408,13 @@ export function ArrayView({
             {/* Con trỏ chỉ phần tử đang tham gia sự kiện của bước */}
             {st.active && (
               <path
-                d={`M ${COL_W / 2} ${TOP_PAD + CHART_H + 4} l -6 9 h 12 z`}
+                d={`M ${colW / 2} ${TOP_PAD + CHART_H + 4} l -6 9 h 12 z`}
                 fill={st.stroke}
               />
             )}
             {labels && labels[i] && (
               <text
-                x={COL_W / 2}
+                x={colW / 2}
                 y={TOP_PAD + CHART_H + 26}
                 textAnchor="middle"
                 fontSize={12}
@@ -339,7 +424,7 @@ export function ArrayView({
               </text>
             )}
             <text
-              x={COL_W / 2}
+              x={colW / 2}
               y={TOP_PAD + CHART_H + (labels ? 42 : 26)}
               textAnchor="middle"
               fontSize={11}
@@ -351,5 +436,6 @@ export function ArrayView({
         );
       })}
     </svg>
+    </div>
   );
 }
