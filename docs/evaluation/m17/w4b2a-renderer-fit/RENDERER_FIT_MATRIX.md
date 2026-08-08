@@ -1,5 +1,59 @@
 # RENDERER_FIT_MATRIX — W4B-2A
 
+## 0a. Bốn hàng còn lại — phân loại từ MÃ NGUỒN, không từ tỉ lệ
+
+Giả thuyết vào lượt này là ba trong bốn hàng đều `TRUE_ADAPTIVE_FIT_FAILURE`.
+Đọc chủ sở hữu bố cục thì **không hàng nào giống ca `graph_traversal`**.
+
+`graph_traversal` có `const W = 420` — một hằng số **bất kể đồ thị có mấy nút**.
+Đó là lối tắt cài đặt, và sửa nó là đúng. Bốn hàng còn lại thì ngược lại: bề
+rộng của chúng **đã dẫn xuất từ nội dung**.
+
+| Hàng | Chủ sở hữu bề rộng | Bề rộng tính từ | Phân loại |
+|---|---|---|---|
+| `logic.boolean_dag` | `layoutDag` | `(maxDepth+1)·NODE_W + maxDepth·COL_GAP` — **topology** | **B** |
+| `tree.traversal` | `layoutSize` | `max(360, số_nút · SLOT_W)`, `SLOT_W = 86` — **bề rộng nhãn** | **B** |
+| `network.packet_routing` / 2d | `layout2d` | `X0·2 + (cols−1)·COL` — **độ dài tuyến** | **B** |
+| `generic.rule_scene` | `layoutPositions` | toạ độ do **spec DSL** sinh | **B** |
+
+Bằng chứng cho từng cái:
+
+- **`tree.traversal`** — `SLOT_W = 86` không phải số tuỳ tiện: comment tại chỗ
+  ghi đây là bản sửa hồi quy **M17-VR1**, khung cố định 460×300 chỉ đủ nhãn 1–2
+  ký tự nên tên tiếng Việt dài ("Trăng Khuyết", "Sương Mai") tràn khỏi nút và
+  chồng nhau. Mỗi nút nay được cấp **một làn đủ rộng cho nhãn ~12 ký tự**. Nới
+  làn rộng hơn nữa **không thêm chỗ cho nhãn** — chỉ tăng quãng mắt phải đi giữa
+  hai nút anh em.
+- **`logic.boolean_dag`** — bề rộng là `số tầng × bề rộng cổng + khe`. Nới khe
+  giữa các tầng làm **dây tín hiệu dài ra**, không làm đường lan truyền dễ đọc
+  hơn; cổng đã đủ rộng cho nhãn.
+- **`packet_routing` 2D** — `COL = 150` cho mỗi chặng. Nới ra chỉ kéo dài liên
+  kết giữa hai thiết bị.
+- **`generic.rule_scene`** — toạ độ đến **từ spec do LLM soạn và validator
+  duyệt**. Đổi tỉ lệ toạ độ là **đổi nghĩa cảnh**, đúng thứ §6 cảnh báo. Không
+  đụng.
+
+### Vì sao dừng ở đây thay vì chọn một owner
+
+`§11` yêu cầu: xếp hạng mơ hồ thì **DỪNG và báo**. Sau khi đọc mã, số hàng thuộc
+`TRUE_ADAPTIVE_FIT_FAILURE` là **0** — không có ứng viên nào để xếp hạng.
+
+Tỉ lệ 0.46–0.51 của chúng **không** cùng bản chất với 0.32 của `graph_traversal`.
+Cùng một con số thấp đến từ hai nguyên nhân khác hẳn: một bên là hằng số bỏ quên,
+một bên là hệ toạ độ ngữ nghĩa đã cấp đủ chỗ cho thứ cần đọc. Sửa nhóm sau bằng
+cách nới bố cục sẽ là **tối ưu cho một tỉ lệ**, đúng thứ `§5` của lượt trước cấm.
+
+### Điều lượt này CHƯA kết luận
+
+Nhãn **B** ở trên dựa trên **mã nguồn + hình học đã đo**, chưa dựa trên soát thị
+giác từng ca biên: cây 3 nút trong sân khấu 1306px, hay DAG 2 tầng, có thể vẫn
+đọc ra như một hòn đảo nhỏ. Nếu có ca như vậy thì nó thuộc **C —
+`STAGE_OR_CONTAINER_DENSITY_ISSUE`** (vấn đề mật độ sân khấu, xử lý ở container)
+chứ không phải nới bố cục renderer. Đó là phép đo còn thiếu, đã ghi ở đây thay
+vì để trống.
+
+---
+
 ## 0. Ba phép đo đặc biệt — độ phủ đạt 22/22
 
 Ba ca này trước đây **không đo được** bằng phép "phần tử vẽ lớn nhất": bảng
