@@ -43,6 +43,31 @@ Cùng một con số thấp đến từ hai nguyên nhân khác hẳn: một bê
 một bên là hệ toạ độ ngữ nghĩa đã cấp đủ chỗ cho thứ cần đọc. Sửa nhóm sau bằng
 cách nới bố cục sẽ là **tối ưu cho một tỉ lệ**, đúng thứ `§5` của lượt trước cấm.
 
+### Soát thị giác ca biên (A0) — nhãn B giữ nguyên, nhưng lộ ra một vấn đề KHÁC
+
+Ảnh 1920×1080 cho thấy thứ mà hình học không nói được.
+
+**Renderer thì đọc tốt.** `tree.traversal` 7 nút: nút rõ, cạnh có nhãn
+*trái/phải*, nút hiện tại cam, đã thăm xanh, ngăn xếp LIFO ngay dưới sân khấu.
+`logic.boolean_dag`: cổng có nhãn, dây tín hiệu xanh khi mang giá trị 1, cổng
+đang tính viền đậm, đầu ra nét đứt = *chưa tới lượt*. Không cái nào cần rộng
+hơn — nới ra chỉ kéo dài dây và tăng quãng mắt. **Nhãn `B` được xác nhận.**
+
+**Nhưng cả hai đều để lại một dải trống lớn DƯỚI thẻ**: ~230px với cây, ~350px
+với DAG, cộng panel bên phải gần như rỗng (2–3 dòng chữ trong một cột cao). Ở
+1920×1080, nhánh `max-height: 900px` của W4B-1A **không** áp dụng, nên bố cục là
+một-màn cố định `height: calc(100vh − 57px)` với `.panel-center` cuộn trong —
+nội dung ngắn thì phần còn lại của cột là khoảng trống.
+
+Đó **không phải** lỗi renderer. Đó là **`C — STAGE_OR_CONTAINER_DENSITY_ISSUE`**,
+và nó **dùng chung**: mọi target có nội dung ngắn đều dính, không riêng bốn hàng
+này. Đúng triệu chứng §4 mô tả — "sân khấu dư thừa làm thứ bậc thị giác yếu đi".
+
+**Hệ quả cho cổng A0**: theo `§13`, còn một hàng `C` chưa xử lý thì Phase A0
+**chưa** đóng, và `§15` không cho Phase B bắt đầu. Việc cần làm là chỉnh **mật độ
+container**, không nới renderer — và vì nó dùng chung nên phải sửa ở một chỗ, đo
+lại, chứ không vá từng target.
+
 ### Điều lượt này CHƯA kết luận
 
 Nhãn **B** ở trên dựa trên **mã nguồn + hình học đã đo**, chưa dựa trên soát thị
