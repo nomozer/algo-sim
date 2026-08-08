@@ -409,9 +409,21 @@ const catalogList = () => evaluate(`(async () => {
 const loadCatalogEntry = (i) => evaluate(`(async () => {
   const c = await import('/src/data/offline-catalog.ts');
   const s = await import('/src/state/store.ts');
+  /* BẮT BUỘC: bảo đảm registry ĐÃ ĐĂNG KÝ trên chính nhánh module này.
+     'loadEnvelope' tra 'getSimulation(simulation_id)'; không thấy module thì nó
+     đặt 'analysisError' rồi THOÁT IM LẶNG — 'active' giữ null và 'error' vẫn
+     null, nên nhìn từ ngoài giống hệt "nạp xong mà không có gì". Nhánh nạp một
+     fixture đơn không dính vì nó chỉ chạm 'store' (cùng thể hiện app đã khởi
+     tạo), còn nhánh catalog kéo theo 'offline-catalog' và có thể chạm một thể
+     hiện registry chưa chạy đăng ký. 'registerAllSimulations' idempotent nên
+     gọi thừa vô hại. */
+  const r = await import('/src/simulations/index.ts');
+  r.registerAllSimulations();
   const e = c.offlineCatalog()[${i}];
   s.useAppStore.getState().loadEnvelope(e.envelope);
-  return e.simId;
+  const after = s.useAppStore.getState();
+  return { simId: e.simId, appliedNow: !!after.active,
+           activeId: after.active ? after.active.moduleId : null, err: after.error ?? null };
 })()`);
 
 const results = [];
@@ -445,7 +457,10 @@ for (const vp of VIEWPORTS) {
     let points = [["n/a", null]];
     if (route.id === "workspace") {
       if (subject.index !== null) {
-        await loadCatalogEntry(subject.index);
+        const res = await loadCatalogEntry(subject.index);
+        if (!res || !res.appliedNow) {
+          console.error(`  ! loadEnvelope không có hiệu lực ngay: ${JSON.stringify(res)}`);
+        }
       } else {
         const envelope = subject.envelope ?? FIXTURES[FIXTURE_ID];
         await evaluate(`(async () => {
@@ -462,6 +477,20 @@ for (const vp of VIEWPORTS) {
       for (let tries = 0; tries < 24 && !ready; tries++) {
         await sleep(250);
         ready = await activeIdentity();
+      }
+      if (!ready) {
+        /* Không đoán vì sao nạp hỏng — HỎI store. `loadEnvelope` fail-closed:
+           config không qua validator thì `active` giữ null và lỗi nằm ở `error`. */
+        const why = await evaluate(`(async () => {
+          const s = await import('/src/state/store.ts');
+          const st = s.useAppStore.getState();
+          /* analysisError chu khong phai error - day chinh la truong ma
+             loadEnvelope dat khi khong tra duoc module. (Khoi nay nam TRONG
+             template literal: cam backtick.) */
+          return { analysisError: st.analysisError ?? null, error: st.error ?? null,
+                   view: st.view ?? null, hasActive: !!st.active };
+        })()`);
+        console.error(`  ✗ nạp hỏng: ${subject.key} (${subject.simId}) → ${JSON.stringify(why)}`);
       }
       await setObservation(OBSERVATION === "open");
       await sleep(250);

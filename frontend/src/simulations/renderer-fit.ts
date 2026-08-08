@@ -99,7 +99,21 @@ function arrayItemCount(state: unknown): number | null {
   return Array.isArray(arr) ? arr.length : null;
 }
 
-export function rendererFitOf(simulationId: string, state: unknown): RendererFit {
+export function rendererFitOf(
+  simulationId: string,
+  state: unknown,
+  visualMode: string = "2d",
+): RendererFit {
+  /* Lớp phụ thuộc CHẾ ĐỘ TRÌNH BÀY, không chỉ phụ thuộc target. Hai target
+     mạng có canvas Three.js, nhưng ở chế độ 2D chúng vẽ bằng SVG và phải được
+     chấm theo hợp đồng adaptive. Guard bắt được đúng ca này ngay lần chạy đầu:
+     `packet_routing` 2D bị xếp nhầm `canvas_fill` rồi báo canvas 610px không
+     bám sân khấu 1306px — trong khi nó có phải canvas đâu. */
+  if (CANVAS_TARGETS.has(simulationId) && visualMode !== "3d") {
+    return { simulationId, cls: "adaptive_layout", semanticMaxWidth: null,
+             maxWidthPerItem: null, itemCount: null,
+             reason: "chế độ 2D của một target có 3D — SVG, chưa khai trần bề rộng" };
+  }
   if (ARRAY_VIEW_TARGETS.has(simulationId)) {
     const n = arrayItemCount(state);
     // Trần = bố cục ở bề rộng vô hạn: chính là lúc cột chạm trần ngữ nghĩa.
@@ -132,7 +146,7 @@ export function rendererFitOf(simulationId: string, state: unknown): RendererFit
 
 /** Hợp đồng của mô phỏng ĐANG MỞ — runner đo gọi qua đây. */
 export function currentRendererFit(): RendererFit | null {
-  const active = useAppStore.getState().active;
-  if (!active) return null;
-  return rendererFitOf(active.moduleId, active.state);
+  const s = useAppStore.getState();
+  if (!s.active) return null;
+  return rendererFitOf(s.active.moduleId, s.active.state, s.visualMode);
 }
