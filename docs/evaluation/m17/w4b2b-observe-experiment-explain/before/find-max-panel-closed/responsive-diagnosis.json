@@ -1,0 +1,324 @@
+{
+  "app": "http://localhost:4199",
+  "generated_at": "2026-08-08T15:57:31.808Z",
+  "fixture": "all",
+  "zoom": "100% (deviceScaleFactor=1, mobile=false)",
+  "session": {
+    "chrome_pid": 15164,
+    "cdp_port": 61775,
+    "profile": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-e1-oA7cPx"
+  },
+  "viewports": [
+    {
+      "id": "1920x1080",
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "verdict": "PASS",
+  "failures": [],
+  "fit_passes": [
+    {
+      "where": "algorithm.find_max  1920x1080/mid",
+      "verdict": "ACCEPTABLE",
+      "reason": "SEMANTIC_MAX_REACHED"
+    }
+  ],
+  "results": [
+    {
+      "route": "workspace",
+      "subject": "diem-cao-nhat",
+      "simulation_id": "algorithm.find_max",
+      "checkpoint": "mid",
+      "cursor": 4,
+      "observation": "closed",
+      "requested_visual_mode": null,
+      "renderer_fit": {
+        "simulationId": "algorithm.find_max",
+        "cls": "adaptive_layout",
+        "semanticMaxWidth": 779,
+        "maxWidthPerItem": 100,
+        "itemCount": 8,
+        "reason": "ArrayView — bố cục tính lại từ bề rộng khả dụng, có trần mật độ"
+      },
+      "viewport_id": "1920x1080",
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w4b2b-observe-experiment-explain/before/find-max-panel-closed/diem-cao-nhat-mid-1920x1080.png",
+      "viewport": {
+        "clientWidth": 1920,
+        "clientHeight": 1080,
+        "scrollWidth": 1910,
+        "scrollHeight": 1081,
+        "page_overflow_x": false,
+        "page_scrollable_y": false,
+        "hidden_below_fold_px": 1
+      },
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 241,
+          "right": 841,
+          "width": 600,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 144,
+          "right": 1766,
+          "width": 1622,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 119,
+          "right": 1791,
+          "width": 1672,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 95,
+          "right": 1815,
+          "width": 1720,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 14,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": [],
+      "height_axis": {
+        "root": {
+          "sel": "#root",
+          "present": true,
+          "top": 0,
+          "bottom": 1081,
+          "height": 1081,
+          "width": 1910,
+          "client_height": 1081,
+          "scroll_height": 1081,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "1081px",
+          "css_min_height": "1080px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1910px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        },
+        "visual": {
+          "sel": "svg",
+          "present": true,
+          "top": 186,
+          "bottom": 454,
+          "width": 779,
+          "height": 268,
+          "css_max_width": "779px",
+          "css_width": "779px",
+          "view_box": "0 0 779 268"
+        },
+        "workspace_card": {
+          "sel": ".workspace-card",
+          "present": true,
+          "top": 74,
+          "bottom": 743,
+          "height": 669,
+          "width": 1672,
+          "client_height": 667,
+          "scroll_height": 667,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "669px",
+          "css_min_height": "320px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1672px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        },
+        "app_layout": {
+          "sel": ".app-layout",
+          "present": true,
+          "top": 58,
+          "bottom": 1081,
+          "height": 1023,
+          "width": 1720,
+          "client_height": 1023,
+          "scroll_height": 1023,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "1023px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "css_max_width": "1720px",
+          "css_width": "1720px",
+          "css_margin_left": "95px",
+          "css_margin_right": "95px",
+          "align_self": "auto",
+          "display": "grid",
+          "below_fold": false
+        },
+        "panel_center": {
+          "sel": ".panel-center",
+          "present": true,
+          "top": 74,
+          "bottom": 743,
+          "height": 669,
+          "width": 1672,
+          "client_height": 669,
+          "scroll_height": 669,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "669px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1672px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        },
+        "panel_right": {
+          "sel": ".panel-right",
+          "present": false
+        },
+        "panel_controls": {
+          "sel": ".panel-controls",
+          "present": true,
+          "top": 759,
+          "bottom": 849,
+          "height": 90,
+          "width": 1672,
+          "client_height": 88,
+          "scroll_height": 88,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "90px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1672px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "block",
+          "below_fold": false
+        },
+        "stage": {
+          "sel": ".sim-stage",
+          "present": true,
+          "top": 186,
+          "bottom": 472,
+          "height": 286,
+          "width": 1622,
+          "client_height": 286,
+          "scroll_height": 286,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "286px",
+          "css_min_height": "180px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1622px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "block",
+          "below_fold": false
+        },
+        "narration": {
+          "sel": ".notes",
+          "present": false
+        }
+      },
+      "hit_test": [
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tự chạy",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Đặt lại",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "range",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tua đến bước",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        }
+      ],
+      "fingerprint": {
+        "hash": "",
+        "app_layout": true,
+        "panel_center": true,
+        "panel_controls": true,
+        "stage": true,
+        "has_canvas": false,
+        "workspace_title": "Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn"
+      }
+    }
+  ]
+}
