@@ -293,6 +293,28 @@ const PROBE = `(() => {
     /* W4B-1A */
     height_axis: {
       root: box('#root'),
+      /* W4B-2A — HÌNH VẼ THẬT bên trong sân khấu, không phải khung sân khấu.
+         Lấy phần tử vẽ CÓ DIỆN TÍCH LỚN NHẤT trong sim-stage (svg hoặc canvas):
+         một sân khấu có thể chứa nhiều svg nhỏ (ô chú giải), nên lấy phần tử
+         đầu tiên theo thứ tự DOM sẽ đo nhầm cái chú giải.
+         (Lưu ý: khối này nằm TRONG template literal — cấm dùng backtick.) */
+      visual: (() => {
+        const cands = [...document.querySelectorAll('.sim-stage svg, .sim-stage canvas')];
+        if (!cands.length) return { sel: '.sim-stage svg|canvas', present: false };
+        let best = cands[0], bestArea = -1;
+        for (const el of cands) {
+          const r = el.getBoundingClientRect();
+          const area = r.width * r.height;
+          if (area > bestArea) { bestArea = area; best = el; }
+        }
+        const r = best.getBoundingClientRect();
+        const cs = getComputedStyle(best);
+        return { sel: best.tagName.toLowerCase(), present: true,
+                 top: Math.round(r.top), bottom: Math.round(r.bottom),
+                 width: Math.round(r.width), height: Math.round(r.height),
+                 css_max_width: cs.maxWidth, css_width: cs.width,
+                 view_box: best.getAttribute && best.getAttribute('viewBox') };
+      })(),
       app_layout: box('.app-layout'), panel_center: box('.panel-center'),
       panel_right: box('.panel-right'), panel_controls: box('.panel-controls'),
       stage: box('.sim-stage'), narration: box('.notes'),
@@ -312,18 +334,25 @@ const PROBE = `(() => {
 /* Điều khiển timeline — dùng LẠI đúng API store của visual-stress-audit.mjs,
    không thêm dev hook, không sửa production. Bước sau mới là bước có thuyết
    minh + vùng thao tác, tức là bước CAO NHẤT của nội dung. */
+/* Null-safe: sau `Page.navigate` store về rỗng, và một envelope không qua được
+   validator cũng để `active` = null. Ném thẳng ReferenceError ở đây thì lượt
+   chạy chết không nói được đang đo mẫu nào — trả null để dấu vân tay báo đúng. */
 const stepCount = () => evaluate(`(async () => {
   const s = await import('/src/state/store.ts');
   const r = await import('/src/simulations/registry.ts');
   const st = s.useAppStore.getState();
+  if (!st.active) return 0;
   const mod = r.getSimulation(st.active.moduleId);
+  if (!mod) return 0;
   return mod.timeline ? mod.timeline.stepCount(st.active.state) : 1;
 })()`);
 const goToStep = (n) => evaluate(`(async () => {
   const s = await import('/src/state/store.ts');
   const st = s.useAppStore.getState();
   const r = await import('/src/simulations/registry.ts');
-  if (!r.getSimulation(st.active.moduleId).timeline) return null;
+  if (!st.active) return null;
+  const m = r.getSimulation(st.active.moduleId);
+  if (!m || !m.timeline) return null;
   st.goToStep(${n});
   return s.useAppStore.getState().active.state.cursor ?? null;
 })()`);
@@ -337,6 +366,22 @@ const activeIdentity = () => evaluate(`(async () => {
 
 const CHECKPOINTS = argOf("--checkpoints", "initial").split(",").map((s) => s.trim());
 const SHOOT_ALL = args.includes("--shoot-all");
+
+/* W4B-2A — trạng thái panel Quan sát. Đóng panel là phép thử QUYẾT ĐỊNH cho
+   lớp ADAPTIVE_LAYOUT: sân khấu rộng thêm ~300px thì hình vẽ có lớn theo không,
+   hay chỉ đẻ thêm khoảng trắng. Chạy hai lượt riêng (open/closed) thay vì lồng
+   thêm một vòng lặp nữa vào runner. */
+const OBSERVATION = argOf("--observation", "open");
+if (!["open", "closed"].includes(OBSERVATION)) {
+  console.error(`--observation phải là open hoặc closed (nhận: ${OBSERVATION})`);
+  process.exit(2);
+}
+const setObservation = (open) => evaluate(`(async () => {
+  const s = await import('/src/state/store.ts');
+  const st = s.useAppStore.getState();
+  if (st.rightOpen !== ${open}) st.toggleRight();
+  return s.useAppStore.getState().rightOpen;
+})()`);
 /* §3D — TIÊM LỖI TÁI LẬP ĐƯỢC cho cổng dọn dẹp. Ném đúng sau khi Chrome đã
    chạy và đã nối CDP: nếu `shutdown()` không nằm trên đường thoát ngoại lệ thì
    tiến trình Chrome sẽ sống sót và lượt sau bám vào nó. Chứng minh guard đỏ
@@ -403,6 +448,8 @@ for (const vp of VIEWPORTS) {
           return true; })()`);
       }
       await sleep(700);
+      await setObservation(OBSERVATION === "open");
+      await sleep(250);
       const total = await stepCount();
       points = CHECKPOINTS.map((name) => {
         if (name === "initial") return [name, 0];
