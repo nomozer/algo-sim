@@ -1,4 +1,38 @@
-# RENDERER_FIT_MATRIX — W4B-2A baseline
+# RENDERER_FIT_MATRIX — W4B-2A
+
+## 0. Ba phép đo đặc biệt — độ phủ đạt 22/22
+
+Ba ca này trước đây **không đo được** bằng phép "phần tử vẽ lớn nhất": bảng
+không phải SVG, và hai target 3D mặc định mở ở chế độ 2D.
+
+| Target / chế độ | Thẻ đo | Sân khấu | Hình vẽ | Tỉ lệ | Lớp |
+|---|---|---|---|---:|---|
+| `database.relational_table_query` / 2d | `table` | 1306×273 | **1306×273** | **1.00** | hợp đồng BẢNG |
+| `network.packet_routing` / **3d** | `canvas` | 1306×340 | **1306×340** | **1.00** | `CANVAS_FILL` ✓ |
+| `network.protocol_encapsulation` / **3d** | `canvas` | 1306×340 | **1306×340** | **1.00** | `CANVAS_FILL` ✓ |
+
+**Bảng chưa bao giờ thiếu hụt.** Nó khai `width: 100%` trong `.sim-stage` nên
+vốn bám khung theo CSS — con số 12×12 ở baseline là phép đo bắt nhầm một icon,
+**lỗi của dụng cụ đo, không phải của renderer**. Hợp đồng của nó là riêng: không
+so tỉ lệ với renderer SVG như thể hai thứ cùng nghĩa.
+
+**Hai canvas 3D bám trọn sân khấu**, thoả `CANVAS_FILL`. Lưu ý ranh giới: canvas
+đầy khung **không** đồng nghĩa với "3D tốt cho học tập" — kích thước vật thể bên
+trong canvas là câu hỏi khác, và `threeD.role` của `packet_routing` vẫn là
+`architectural_poc`, không đổi trong milestone này.
+
+Độ phủ nay tách làm hai phát biểu:
+
+- **Độ phủ nạp danh mục**: 22/22 target nạp được qua runner.
+- **Độ phủ đo vừa-khung**: **22/22 target** đã có ít nhất một phép đo hợp lệ.
+- **Số hàng target × chế độ**: 24 (hai target mạng có thêm hàng 3D).
+
+Không được rút gọn thành *"22/22 renderer đều adaptive"* — mỗi hàng giữ lớp
+riêng: `ADAPTIVE_LAYOUT` · `CANVAS_FILL` · `FIXED_SEMANTIC_SIZE`.
+
+---
+
+# Baseline ban đầu
 
 Đo trên Chrome thật, zoom 100%, 1920×1080, checkpoint có hình vẽ lớn nhất.
 `visual` = phần tử vẽ **có diện tích lớn nhất** trong `.sim-stage` (svg hoặc

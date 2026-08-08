@@ -86,8 +86,16 @@ export const FIXED_SIZE_TARGETS = new Set([
   "binary.base_conversion",
   "binary.character_encoding",
   "algorithm.bounded_control_flow",
-  "database.relational_table_query",
 ]);
+
+/**
+ * Renderer dạng BẢNG — hợp đồng riêng, không so tỉ lệ với renderer SVG.
+ * Bảng đã khai  trong  nên nó vốn co giãn theo khung;
+ * đo được 1306x273 trong sân khấu 1306x273 (tỉ lệ 1.0). Phép đo "phần tử vẽ
+ * lớn nhất" trước đây bắt nhầm một icon 12x12 rồi báo nó chiếm 1% - lỗi của
+ * phép đo, không phải của renderer.
+ */
+export const TABLE_TARGETS = new Set(["database.relational_table_query"]);
 
 /** Số phần tử của dãy ở trạng thái hiện tại, nếu renderer là ArrayView. */
 function arrayItemCount(state: unknown): number | null {
@@ -131,6 +139,11 @@ export function rendererFitOf(
     return { simulationId, cls: "canvas_fill", semanticMaxWidth: null,
              maxWidthPerItem: null, itemCount: null,
              reason: "canvas Three.js — bám khung sân khấu, vật thể giữ tỉ lệ ngữ nghĩa" };
+  }
+  if (TABLE_TARGETS.has(simulationId)) {
+    return { simulationId, cls: "adaptive_layout", semanticMaxWidth: null,
+             maxWidthPerItem: null, itemCount: null,
+             reason: "bảng HTML width:100% - đã bám khung theo CSS, hợp đồng riêng" };
   }
   if (FIXED_SIZE_TARGETS.has(simulationId)) {
     return { simulationId, cls: "fixed_semantic_size", semanticMaxWidth: null,

@@ -299,7 +299,10 @@ const PROBE = `(() => {
          đầu tiên theo thứ tự DOM sẽ đo nhầm cái chú giải.
          (Lưu ý: khối này nằm TRONG template literal — cấm dùng backtick.) */
       visual: (() => {
-        const cands = [...document.querySelectorAll('.sim-stage svg, .sim-stage canvas')];
+        /* W4B-2A - them 'table': renderer dang bang khong ve bang SVG, nen phep
+           do "phan tu ve lon nhat" cu bat nham mot icon 12x12 va bao no chiem
+           1% san khau. Bang la mot hop dong rieng, khong so ti le voi SVG. */
+        const cands = [...document.querySelectorAll('.sim-stage svg, .sim-stage canvas, .sim-stage table')];
         if (!cands.length) return { sel: '.sim-stage svg|canvas', present: false };
         let best = cands[0], bestArea = -1;
         for (const el of cands) {
@@ -326,6 +329,7 @@ const PROBE = `(() => {
       panel_center: !!document.querySelector('.panel-center'),
       panel_controls: !!document.querySelector('.panel-controls'),
       stage: !!document.querySelector('.sim-stage'),
+      has_canvas: !!document.querySelector('.sim-stage canvas'),
       workspace_title: (document.querySelector('.workspace-title') || {}).textContent || null,
     },
   };
@@ -372,6 +376,39 @@ const activeIdentity = () => evaluate(`(async () => {
 
 const CHECKPOINTS = argOf("--checkpoints", "initial").split(",").map((s) => s.trim());
 const SHOOT_ALL = args.includes("--shoot-all");
+
+/* W4B-2A §2 — CHẾ ĐỘ HIỂN THỊ do runner yêu cầu tường minh.
+   Một bản render 2D bị lưu thành artifact 3D là lỗi NẶNG, nên chế độ phải nằm
+   trong dấu vân tay chứ không phải giả định. */
+const ONLY_TARGET = argOf("--only-target", null);
+const VISUAL_MODE = argOf("--visual-mode", null);
+if (VISUAL_MODE && !["2d", "3d"].includes(VISUAL_MODE)) {
+  console.error(`--visual-mode phải là 2d hoặc 3d (nhận: ${VISUAL_MODE})`);
+  process.exit(2);
+}
+
+/** Đổi chế độ rồi CHỜ ĐIỀU KIỆN THẬT — không ngủ một khoảng tuỳ tiện. */
+const requestVisualMode = (mode) => evaluate(`(async () => {
+  const s = await import('/src/state/store.ts');
+  const st = s.useAppStore.getState();
+  if (typeof st.setVisualMode !== 'function') return { ok: false, why: 'no_api' };
+  st.setVisualMode('${mode}');
+  return { ok: true };
+})()`);
+
+const visualModeState = (mode) => evaluate(`(async () => {
+  const s = await import('/src/state/store.ts');
+  const st = s.useAppStore.getState();
+  const wanted = '${mode}';
+  const canvas = !!document.querySelector('.sim-stage canvas');
+  const svg = !!document.querySelector('.sim-stage svg');
+  /* Voi 3D, be mat WebGL PHAI ton tai; voi 2D thi phai co SVG hoac bang. */
+  const rootOk = wanted === '3d'
+    ? canvas
+    : (svg || !!document.querySelector('.sim-stage table'));
+  return { mode: st.visualMode ?? null, moduleId: st.active ? st.active.moduleId : null,
+           canvas, svg, ready: st.visualMode === wanted && rootOk };
+})()`);
 
 /* W4B-2A — trạng thái panel Quan sát. Đóng panel là phép thử QUYẾT ĐỊNH cho
    lớp ADAPTIVE_LAYOUT: sân khấu rộng thêm ~300px thì hình vẽ có lớn theo không,
@@ -450,6 +487,9 @@ for (const vp of VIEWPORTS) {
           subjects.push({ key: f.id, simId: f.target, index: null, envelope: f.envelope });
         }
       }
+      /* Loc theo target: can thiet de do rieng mot target o che do 3D ma khong
+         bat moi target 2D-only phai doi sang 3D roi that bai. */
+      if (ONLY_TARGET) subjects = subjects.filter((s) => s.simId === ONLY_TARGET);
       console.log(`  chủ thể: ${subjects.length} mẫu · ${new Set(subjects.map((s) => s.simId)).size} target`);
     }
 
@@ -497,6 +537,26 @@ for (const vp of VIEWPORTS) {
                    view: st.view ?? null, hasActive: !!st.active };
         })()`);
         console.error(`  ✗ nạp hỏng: ${subject.key} (${subject.simId}) → ${JSON.stringify(why)}`);
+      }
+      /* §3 — đổi chế độ hiển thị và CHỜ ĐIỀU KIỆN, không ngủ tuỳ tiện. */
+      if (VISUAL_MODE) {
+        await requestVisualMode(VISUAL_MODE);
+        let vm = null;
+        for (let tries = 0; tries < 40; tries++) {
+          await sleep(250);
+          vm = await visualModeState(VISUAL_MODE);
+          if (vm && vm.ready) break;
+        }
+        if (!vm || !vm.ready) {
+          writeFileSync(join(OUT, "WRONG_VISUAL_MODE_OR_RENDERER.json"),
+            JSON.stringify({ verdict: "WRONG_VISUAL_MODE_OR_RENDERER",
+                             subject: subject.key, expected_simulation_id: subject.simId,
+                             expected_visual_mode: VISUAL_MODE, actual: vm,
+                             viewport: vp.id }, null, 2) + "\n", "utf-8");
+          console.error(`\n✗ WRONG_VISUAL_MODE_OR_RENDERER — chờ ${VISUAL_MODE}, gặp ${JSON.stringify(vm)}`);
+          shutdown();
+          process.exit(2);
+        }
       }
       await setObservation(OBSERVATION === "open");
       await sleep(250);
@@ -562,6 +622,7 @@ for (const vp of VIEWPORTS) {
        `viewport` (object hình học) và sẽ ghi đè chuỗi nhãn. */
     results.push({ route: route.id, subject: subject.key, simulation_id: subject.simId,
                    checkpoint: cpName, cursor: cpIndex, observation: OBSERVATION,
+                   requested_visual_mode: VISUAL_MODE,
                    renderer_fit: fit,
                    viewport_id: vp.id, screenshot: png ? png.replace(/\\/g, "/") : null, ...probe });
     const bad = probe.viewport.page_overflow_x || probe.controls.clipped.length

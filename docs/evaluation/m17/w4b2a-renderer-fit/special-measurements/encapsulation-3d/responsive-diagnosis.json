@@ -1,0 +1,320 @@
+{
+  "app": "http://localhost:4199",
+  "generated_at": "2026-08-08T09:20:01.525Z",
+  "fixture": "all",
+  "zoom": "100% (deviceScaleFactor=1, mobile=false)",
+  "session": {
+    "chrome_pid": 17324,
+    "cdp_port": 49654,
+    "profile": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-e1-Gtie0O"
+  },
+  "viewports": [
+    {
+      "id": "1920x1080",
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "verdict": "PASS",
+  "failures": [],
+  "fit_passes": [
+    {
+      "where": "network.protocol_encapsulation  1920x1080/mid",
+      "verdict": "ACCEPTABLE",
+      "reason": "CANVAS_FILL"
+    }
+  ],
+  "results": [
+    {
+      "route": "workspace",
+      "subject": "network-encapsulation",
+      "simulation_id": "network.protocol_encapsulation",
+      "checkpoint": "mid",
+      "cursor": 4,
+      "observation": "open",
+      "requested_visual_mode": "3d",
+      "renderer_fit": {
+        "simulationId": "network.protocol_encapsulation",
+        "cls": "canvas_fill",
+        "semanticMaxWidth": null,
+        "maxWidthPerItem": null,
+        "itemCount": null,
+        "reason": "canvas Three.js — bám khung sân khấu, vật thể giữ tỉ lệ ngữ nghĩa"
+      },
+      "viewport_id": "1920x1080",
+      "screenshot": null,
+      "viewport": {
+        "clientWidth": 1920,
+        "clientHeight": 1080,
+        "scrollWidth": 1910,
+        "scrollHeight": 1081,
+        "page_overflow_x": false,
+        "page_scrollable_y": false,
+        "hidden_below_fold_px": 1
+      },
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 206,
+          "right": 834,
+          "width": 628,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 144,
+          "right": 1450,
+          "width": 1306,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 119,
+          "right": 1475,
+          "width": 1356,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 95,
+          "right": 1815,
+          "width": 1720,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 15,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": [],
+      "height_axis": {
+        "root": {
+          "sel": "#root",
+          "present": true,
+          "top": 0,
+          "bottom": 1081,
+          "height": 1081,
+          "width": 1910,
+          "client_height": 1081,
+          "scroll_height": 1081,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "1081px",
+          "css_min_height": "1080px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1910px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        },
+        "visual": {
+          "sel": "canvas",
+          "present": true,
+          "top": 224,
+          "bottom": 564,
+          "width": 1306,
+          "height": 340,
+          "css_max_width": "none",
+          "css_width": "1306px",
+          "view_box": null
+        },
+        "app_layout": {
+          "sel": ".app-layout",
+          "present": true,
+          "top": 58,
+          "bottom": 1081,
+          "height": 1023,
+          "width": 1720,
+          "client_height": 1023,
+          "scroll_height": 1023,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "1023px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "css_max_width": "1720px",
+          "css_width": "1720px",
+          "css_margin_left": "95px",
+          "css_margin_right": "95px",
+          "align_self": "auto",
+          "display": "grid",
+          "below_fold": false
+        },
+        "panel_center": {
+          "sel": ".panel-center",
+          "present": true,
+          "top": 74,
+          "bottom": 959,
+          "height": 885,
+          "width": 1356,
+          "client_height": 885,
+          "scroll_height": 885,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "885px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1356px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        },
+        "panel_right": {
+          "sel": ".panel-right",
+          "present": true,
+          "top": 74,
+          "bottom": 959,
+          "height": 885,
+          "width": 300,
+          "client_height": 885,
+          "scroll_height": 885,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "885px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "300px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "block",
+          "below_fold": false
+        },
+        "panel_controls": {
+          "sel": ".panel-controls",
+          "present": true,
+          "top": 975,
+          "bottom": 1065,
+          "height": 90,
+          "width": 1672,
+          "client_height": 88,
+          "scroll_height": 88,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "90px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1672px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "block",
+          "below_fold": false
+        },
+        "stage": {
+          "sel": ".sim-stage",
+          "present": true,
+          "top": 224,
+          "bottom": 564,
+          "height": 340,
+          "width": 1306,
+          "client_height": 340,
+          "scroll_height": 340,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "340px",
+          "css_min_height": "180px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1306px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "block",
+          "below_fold": false
+        },
+        "narration": {
+          "sel": ".notes",
+          "present": false
+        }
+      },
+      "hit_test": [
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tự chạy",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Đặt lại",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "range",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tua đến bước",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        }
+      ],
+      "fingerprint": {
+        "hash": "",
+        "app_layout": true,
+        "panel_center": true,
+        "panel_controls": true,
+        "stage": true,
+        "has_canvas": true,
+        "workspace_title": "Dữ liệu được đóng gói qua các tầng TCP/IP như thế nào?"
+      }
+    }
+  ]
+}
