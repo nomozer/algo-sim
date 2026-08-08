@@ -1522,7 +1522,28 @@ html {
 .app-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
-  grid-template-rows: minmax(0, 1fr) auto;
+
+  /* ── W4B-2A A0 — HÀNG NỘI DUNG CAO THEO NỘI DUNG ────────────────────────
+     Trước đây hàng giữa là `minmax(0, 1fr)`, nên nó **nuốt trọn** phần chiều
+     cao còn lại của khung nhìn. Hệ quả đo được ở 1920×1080: **21/22 target** có
+     ≥150px trống bên trong cột giữa — tệ nhất `binary.decimal_to_binary` 538px
+     (59% cột) — và thanh điều khiển bị đẩy xa hàng trăm pixel khỏi cụm nội
+     dung, làm thứ bậc thị giác đứt đoạn.
+
+     `.workspace-card` KHÔNG phải thủ phạm: nó đã là `flex: 0 1 auto` từ bản vá
+     POLISH-1 nên vốn cao theo nội dung. Thứ giãn là HÀNG LƯỚI.
+
+     Một giả thuyết trước đó — bỏ trần `max-height: 900px` để container cao theo
+     nội dung — đã được thử và **bác bằng phép đo**: 0px cải thiện. Lý do:
+     `min-height` không loại bỏ được hàng `1fr`; container cao tối thiểu một màn
+     thì hàng `1fr` vẫn nuốt phần dư.
+
+     Nay hai hàng đều `auto` và `align-content: start` đẩy phần dư xuống DƯỚI cả
+     lưới. Trang vẫn phủ đủ một màn (`height` giữ nguyên), nhưng chỗ trống nằm
+     NGOÀI hàng nội dung thay vì bên trong cột giữa — đúng nguyên tắc "trang phủ
+     khung nhìn ≠ hàng mô phỏng phủ khung nhìn". */
+  grid-template-rows: auto auto;
+  align-content: start;
   grid-template-areas:
     "center right"
     "controls controls";

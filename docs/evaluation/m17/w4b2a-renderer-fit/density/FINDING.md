@@ -66,7 +66,49 @@ container: hàng theo `auto` cộng `align-content: start`, để phần dư rơ
 padding), nên nó xứng đáng có một lượt riêng với BEFORE/AFTER và đủ sáu viewport
 — không phải một sửa vội.
 
-## 4. Trạng thái
+## 4. Bản vá đúng — đổi CÁCH CHIA HÀNG, không đổi chiều cao container
+
+```css
+.app-layout {
+  grid-template-rows: auto auto;   /* trước: minmax(0, 1fr) auto */
+  align-content: start;
+}
+```
+
+`height: calc(100vh − 57px)` **giữ nguyên** — trang vẫn phủ đủ một màn. Khác
+biệt là phần dư nay rơi xuống **dưới cả lưới** thay vì vào trong cột giữa. Đúng
+nguyên tắc: *trang phủ khung nhìn ≠ hàng mô phỏng phủ khung nhìn*.
+
+`align-content: start` là **bắt buộc**: chỉ đổi `1fr` → `auto` thì lưới vẫn có
+thể phân phối phần dư cho các hàng.
+
+### Kết quả đo
+
+| Viewport | Trống TB | Lớn nhất | ≥150px |
+|---|---|---|---|
+| 1920×1080 | **308 → 43** | 538 → 253 | **21/22 → 4/22** |
+| 1536×864 | 174 → 148 | 322 → 253 | 10/22 → 4/22 |
+| 1366×768 | 155 → 148 | 253 → 253 | 7/22 → 4/22 |
+
+Từng target ở 1920×1080:
+
+| Target | Trống | Thẻ cao | Sân khấu rộng |
+|---|---|---|---|
+| `binary.decimal_to_binary` | **538 → 0** | 381 → 381 | 1306 → 1306 |
+| `database.relational_table_query` | **367 → 0** | 518 → 518 | 1306 → 1306 |
+| `logic.boolean_dag` | **338 → 0** | 547 → 547 | 1306 → 1306 |
+| `tree.traversal` | **216 → 0** | 669 → 669 | 1306 → 1306 |
+| `network.graph_traversal` | **209 → 0** | 676 → 676 | 1306 → 1306 |
+| `algorithm.find_max` | 216 → 33 | 669 → 669 | 1306 → 1306 |
+
+**Không renderer nào đổi hình học** — chiều cao thẻ và bề rộng sân khấu giữ
+nguyên từng pixel. Đúng ràng buộc §13.
+
+Bốn target còn ≥150px là ca mà **cột Quan sát cao hơn cột giữa**, nên chiều cao
+hàng do cột phải quyết định. Đó là nội dung thật của panel, không phải khoảng
+trống vô nghĩa — và nó sẽ tự hết khi panel đóng mặc định ở W4B-2B.
+
+## 5. Trạng thái
 
 Không giữ thay đổi mã nào từ lượt này. Cây làm việc sạch ngoài phần đo thêm
 `workspace_card` trong runner (thuần đo, không đụng sản phẩm).
