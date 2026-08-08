@@ -77,10 +77,52 @@ Nó cũng xác nhận điều §9 lo: **đóng Quan sát hiện chỉ tạo thê
 khấu 1306px.
 
 **Đóng Quan sát vẫn +0px sau bản vá, và đó là PASS chứ không phải FAIL:** với 7
-cột, bố cục đã **chạm trần ngữ nghĩa** (`colW = 96`) ngay ở 1306px, nên 316px
-thêm vào thành lề căn giữa có chủ đích. Đây là `SEMANTIC_MAX_REACHED` theo §11.
-Bằng chứng tính thích ứng nằm ở test đơn vị (620px → 900px thì bố cục lớn theo)
-cộng với chênh lệch trước–sau ở trên.
+cột, bố cục đã **chạm trần ngữ nghĩa** ngay ở 1306px, nên 316px thêm vào thành
+lề căn giữa có chủ đích. Đây là `SEMANTIC_MAX_REACHED` theo §11. Bằng chứng tính
+thích ứng nằm ở test đơn vị (620px → 900px thì bố cục lớn theo) cộng với chênh
+lệch trước–sau ở trên.
+
+## 2c. HIỆU CHỈNH MẬT ĐỘ — trần 96px là VƯỢT MỨC
+
+Soát trình duyệt cho thấy trần đầu tiên làm cột quá lớn và bố cục mất cân đối.
+Một renderer hỏng được theo **hai** hướng, và "chiếm nhiều sân khấu nhất" **không
+phải** là tiêu chí thành công.
+
+Bốn ứng viên, đo trong Chrome @1920×1080 (sân khấu 1306px):
+
+| Trần cột | 7 cột (`bubble_sort`) | 8 cột (`find_max`) | Nhận xét |
+|---:|---:|---:|---|
+| 96 | 864 | 984 | **vượt mức** — cặp đang so sánh cách nhau quá xa |
+| **76** | **684** | **779** | **CHỌN** |
+| 68 | 612 | 697 | còn dè dặt |
+| 60 | 540 | 615 | gần như quay lại bản hằng số cũ (504) |
+
+Chọn **76** vì nó giữ khoảng cách tâm-đến-tâm hai cột kề nhau **dưới 100px** —
+mắt bắt được cả cặp trong một lần nhìn, mà vẫn hơn hẳn bản cũ. Cơ chế của bài là
+*so sánh hai cột kề nhau*, nên khoảng cách đó là ràng buộc sư phạm, không phải
+sở thích.
+
+### Bảng cuối — 10 target `ArrayView` @1920×1080
+
+| Target | Hằng số cũ | Trần 96 | **Trần 76 (chọn)** |
+|---|---:|---:|---:|
+| `algorithm.binary_search` | 714 | 1224 | **969** |
+| `algorithm.count_if` | 714 | 1224 | **969** |
+| `algorithm.sum_if` | 644 | 1104 | **874** |
+| `algorithm.find_max` | 574 | 984 | **779** |
+| `algorithm.linear_search` | 574 | 984 | **779** |
+| `algorithm.bubble_sort` | **504** | 864 | **684** |
+| `algorithm.find_min` | 504 | 864 | **684** |
+| `algorithm.insertion_sort` | 434 | 744 | **589** |
+| `algorithm.scan` | 364 | 624 | **494** |
+| `algorithm.selection_sort` | 364 | 624 | **494** |
+
+Chín target ngoài họ `ArrayView` đo lại ở cả ba mốc đều **+0px**.
+
+**Không gian dư còn lại là có chủ đích** — dành cho con trỏ, quan hệ giữa cặp
+đang xét, ranh giới vùng đã sắp, quỹ đạo dời chỗ, và công cụ thao tác của học
+sinh ở milestone sau. Hợp đồng sizing chừa chỗ cho chúng thay vì tiêu vào bề
+rộng cột.
 
 ## 3. Phân loại (từ số đo, chưa phải kết luận cuối)
 
