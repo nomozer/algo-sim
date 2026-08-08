@@ -318,6 +318,9 @@ const PROBE = `(() => {
                  css_max_width: cs.maxWidth, css_width: cs.width,
                  view_box: best.getAttribute && best.getAttribute('viewBox') };
       })(),
+      /* W4B-2A A0 - MAT DO CONTAINER: day the noi dung so voi day cot chua no.
+         Khoang giua hai cai do la vung trong ma khong be mat UI nao dung. */
+      workspace_card: box('.workspace-card'),
       app_layout: box('.app-layout'), panel_center: box('.panel-center'),
       panel_right: box('.panel-right'), panel_controls: box('.panel-controls'),
       stage: box('.sim-stage'), narration: box('.notes'),
