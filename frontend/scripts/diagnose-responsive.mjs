@@ -690,7 +690,13 @@ for (const r of results) {
      Ba phán quyết: UNDER_UTILIZED · ACCEPTABLE · OVER_EXPANDED. */
   const stage = r.height_axis.stage, vis = r.height_axis.visual, fit = r.renderer_fit;
   if (fit && stage && stage.present && vis && vis.present) {
-    const TOL = 6;
+    /* Dung sai phải tính được, không phải con số cho vừa lòng.
+       Bố cục làm tròn XUỐNG cả bề rộng phần tử lẫn khe, nên mất tối đa 1px mỗi
+       phần tử và 1px mỗi khe — tức ~(2n+1)px so với bề rộng lý thuyết. Đặt dung
+       sai cứng 6px thì đồ thị 10 phần tử ở khung hẹp bị báo thiếu hụt oan 15px,
+       trong khi renderer đã dùng hết chỗ nó có thể dùng. */
+    const quantLoss = fit.itemCount ? 2 * fit.itemCount + 2 : 0;
+    const TOL = Math.max(6, quantLoss);
     if (fit.cls === "adaptive_layout" && fit.semanticMaxWidth) {
       const room = Math.max(0, stage.width - 24);
       const expected = Math.min(fit.semanticMaxWidth, room);

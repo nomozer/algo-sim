@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { registerSimulation } from "../../registry";
 import { TraversalFrontier, frontierDelta } from "../../../components/TraversalFrontier";
 import { statusLabel, traversalEdgeViews, usedStatuses, type EdgeStatus } from "./edge-view";
@@ -270,6 +271,47 @@ const W = 420;
 const H = 260;
 const NODE_R = 16;
 
+/* ── W4B-2A — BỐ CỤC ĐỒ THỊ THÍCH ỨNG THEO BỀ RỘNG KHẢ DỤNG ────────────────
+ *
+ * Đo được (xếp hạng lại W4B-2A): đồ thị giữ đúng 420px ở mọi sân khấu — 0,32
+ * bề rộng ở 1920×1080, thấp nhất toàn danh mục, và không nhúc nhích khi đóng
+ * panel Quan sát (+316px sân khấu → +0px hình).
+ *
+ * Chỗ dư KHÔNG dùng để phóng to nút. `NODE_R` giữ nguyên 16. Nó dùng để **tách
+ * các nút ra xa nhau hơn**, tức là để đọc được: cạnh ít chồng chéo, quan hệ
+ * cha→hiện tại rõ hơn, nhãn không dính nhau. Đó là cơ chế của bài, không phải
+ * kích thước của đối tượng.
+ *
+ * CHỈ nới theo CHIỀU NGANG. Chiều cao giữ nguyên `H` vì sân khấu đang chật
+ * chiều cao ở laptop 768px — nới cao sẽ tái sinh đúng lớp lỗi
+ * `CONTENT_HIDDEN_IN_PANEL` mà W4B-1A vừa đóng. Vì vậy vòng tròn thành **bầu
+ * dục**: bán trục ngang lớn theo `W`, bán trục dọc vẫn theo `H`.
+ *
+ * `viewBox` vẫn bằng đúng bề rộng hiển thị nên `scale ≈ 1` được giữ — chữ và
+ * nét không phình. Hình lớn hơn vì BỐ CỤC lớn hơn.
+ */
+const MIN_GRAPH_W = 360;
+/** Trần thiết kế hiện hành: tách thêm nữa không giúp đọc cơ chế tốt hơn. */
+const MAX_GRAPH_W = 820;
+const GRAPH_SAFE_PAD = 24;
+
+export interface GraphChartLayout {
+  width: number;
+  height: number;
+  capped: boolean;
+}
+
+/** Bố cục nội tại của sân khấu đồ thị. HÀM THUẦN — kiểm được không cần browser. */
+export function graphChartLayout(available: number, long = false): GraphChartLayout {
+  const height = long ? H + 28 : H;
+  if (!Number.isFinite(available) || available <= 0) {
+    return { width: W, height, capped: false };
+  }
+  const usable = Math.max(0, available - GRAPH_SAFE_PAD);
+  const width = Math.max(MIN_GRAPH_W, Math.min(MAX_GRAPH_W, Math.floor(usable)));
+  return { width, height, capped: width >= MAX_GRAPH_W };
+}
+
 /**
  * Mỗi trạng thái cạnh mang ÍT NHẤT HAI kênh tín hiệu (DESIGN_BRIEF §3.5: màu
  * không bao giờ là tín hiệu duy nhất): màu + độ dày, và `considering` thêm nét
@@ -296,14 +338,33 @@ function hasLongLabel(nodes: TraverseNode[]): boolean {
   return nodes.some((n) => (n.label ?? n.id).length > INLINE_LABEL_MAX);
 }
 
-function circleLayout(nodes: TraverseNode[], long = false): Map<string, { x: number; y: number }> {
-  const cx = W / 2;
-  const cy = H / 2;
-  const r = Math.min(W, H) / 2 - (long ? 48 : 34);
+/**
+ * Bố trí nút trên một BẦU DỤC, không phải vòng tròn.
+ *
+ * Vòng tròn lấy `r = min(W, H)/2`, nên nới bề rộng mà giữ chiều cao thì bán
+ * kính vẫn bị chiều cao khoá — chỗ vừa giành được không tới tay nút nào. Bầu
+ * dục tách hai bán trục: ngang theo `width`, dọc theo `height`. Nhờ vậy chỗ dư
+ * theo phương ngang thành KHOẢNG CÁCH GIỮA CÁC NÚT, còn chiều cao không đổi
+ * nên không đụng tới hợp đồng chiều cao của W4B-1A.
+ *
+ * `width`/`height` mặc định giữ đúng hằng số cũ, nên mọi lời gọi và test SSR
+ * chưa truyền kích thước vẫn cho kết quả y hệt bản trước.
+ */
+function circleLayout(
+  nodes: TraverseNode[],
+  long = false,
+  width: number = W,
+  height: number = H,
+): Map<string, { x: number; y: number }> {
+  const cx = width / 2;
+  const cy = height / 2;
+  const inset = long ? 48 : 34;
+  const rx = Math.max(NODE_R, width / 2 - inset);
+  const ry = Math.max(NODE_R, height / 2 - inset);
   return new Map(
     nodes.map((n, i) => {
       const angle = (2 * Math.PI * i) / nodes.length - Math.PI / 2;
-      return [n.id, { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) }];
+      return [n.id, { x: cx + rx * Math.cos(angle), y: cy + ry * Math.sin(angle) }];
     }),
   );
 }
@@ -317,7 +378,20 @@ export function TraverseWorkspace({ state }: Props) {
   const at = clampCursor(state, state.cursor);
   const step = state.steps[at];
   const long = hasLongLabel(state.config.nodes);
-  const pos = circleLayout(state.config.nodes, long);
+  /* Bề rộng khả dụng đo từ CHÍNH khung chứa — cùng khuôn đã dùng ở ArrayView. */
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [available, setAvailable] = useState(0);
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(([entry]) => setAvailable(Math.round(entry.contentRect.width)));
+    ro.observe(el);
+    setAvailable(Math.round(el.getBoundingClientRect().width));
+    return () => ro.disconnect();
+  }, []);
+
+  const gl = graphChartLayout(available, long);
+  const pos = circleLayout(state.config.nodes, long, gl.width, gl.height);
   const visited = new Set(step.visitedSoFar);
   const current = step.kind === "visit" ? step.current : null;
   const last = at === state.steps.length - 1;
@@ -336,9 +410,9 @@ export function TraverseWorkspace({ state }: Props) {
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
-      <div className="sim-stage">
-        <svg viewBox={`0 0 ${W} ${long ? H + 28 : H}`}
-             style={{ width: "100%", maxWidth: long ? W + 120 : W }} role="img"
+      <div className="sim-stage" ref={boxRef}>
+        <svg viewBox={`0 0 ${gl.width} ${gl.height}`}
+             style={{ width: "100%", maxWidth: gl.width }} role="img"
              aria-label="Đồ thị duyệt">
           {edgeViews.map((ev, i) => {
             const pa = pos.get(ev.from)!;

@@ -1,0 +1,314 @@
+{
+  "app": "http://localhost:4199",
+  "generated_at": "2026-08-08T09:36:24.622Z",
+  "fixture": "network.graph_traversal",
+  "zoom": "100% (deviceScaleFactor=1, mobile=false)",
+  "session": {
+    "chrome_pid": 25092,
+    "cdp_port": 56374,
+    "profile": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-e1-JdKvLQ"
+  },
+  "viewports": [
+    {
+      "id": "1920x1080",
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "verdict": "PASS",
+  "failures": [],
+  "fit_passes": [],
+  "results": [
+    {
+      "route": "workspace",
+      "subject": "network.graph_traversal",
+      "simulation_id": "network.graph_traversal",
+      "checkpoint": "mid",
+      "cursor": 3,
+      "observation": "closed",
+      "requested_visual_mode": null,
+      "renderer_fit": {
+        "simulationId": "network.graph_traversal",
+        "cls": "adaptive_layout",
+        "semanticMaxWidth": null,
+        "maxWidthPerItem": null,
+        "itemCount": null,
+        "reason": "CHƯA KHAI LỚP — mặc định adaptive, cần phân loại từ phép đo"
+      },
+      "viewport_id": "1920x1080",
+      "screenshot": "D:/Documents/projects/algo-sim/docs/evaluation/m17/w4b2a-renderer-fit/graph-after/closed/workspace-mid-1920x1080.png",
+      "viewport": {
+        "clientWidth": 1920,
+        "clientHeight": 1080,
+        "scrollWidth": 1910,
+        "scrollHeight": 1081,
+        "page_overflow_x": false,
+        "page_scrollable_y": false,
+        "hidden_below_fold_px": 1
+      },
+      "key_elements": [
+        {
+          "name": "title",
+          "present": true,
+          "left": 206,
+          "right": 526,
+          "width": 319,
+          "inside": true
+        },
+        {
+          "name": "canvas",
+          "present": true,
+          "left": 144,
+          "right": 1766,
+          "width": 1622,
+          "inside": true
+        },
+        {
+          "name": "workspace",
+          "present": true,
+          "left": 119,
+          "right": 1791,
+          "width": 1672,
+          "inside": true
+        },
+        {
+          "name": "main",
+          "present": true,
+          "left": 95,
+          "right": 1815,
+          "width": 1720,
+          "inside": true
+        }
+      ],
+      "controls": {
+        "total": 11,
+        "clipped": [],
+        "clipped_by_ancestor": []
+      },
+      "clipped_content": [],
+      "offenders": [],
+      "height_axis": {
+        "root": {
+          "sel": "#root",
+          "present": true,
+          "top": 0,
+          "bottom": 1081,
+          "height": 1081,
+          "width": 1910,
+          "client_height": 1081,
+          "scroll_height": 1081,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "1081px",
+          "css_min_height": "1080px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1910px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        },
+        "visual": {
+          "sel": "svg",
+          "present": true,
+          "top": 186,
+          "bottom": 474,
+          "width": 820,
+          "height": 288,
+          "css_max_width": "820px",
+          "css_width": "820px",
+          "view_box": "0 0 820 288"
+        },
+        "app_layout": {
+          "sel": ".app-layout",
+          "present": true,
+          "top": 58,
+          "bottom": 1081,
+          "height": 1023,
+          "width": 1720,
+          "client_height": 1023,
+          "scroll_height": 1023,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "1023px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "css_max_width": "1720px",
+          "css_width": "1720px",
+          "css_margin_left": "95px",
+          "css_margin_right": "95px",
+          "align_self": "auto",
+          "display": "grid",
+          "below_fold": false
+        },
+        "panel_center": {
+          "sel": ".panel-center",
+          "present": true,
+          "top": 74,
+          "bottom": 959,
+          "height": 885,
+          "width": 1672,
+          "client_height": 885,
+          "scroll_height": 885,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "885px",
+          "css_min_height": "0px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1672px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        },
+        "panel_right": {
+          "sel": ".panel-right",
+          "present": false
+        },
+        "panel_controls": {
+          "sel": ".panel-controls",
+          "present": true,
+          "top": 975,
+          "bottom": 1065,
+          "height": 90,
+          "width": 1672,
+          "client_height": 88,
+          "scroll_height": 88,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "90px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1672px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "block",
+          "below_fold": false
+        },
+        "stage": {
+          "sel": ".sim-stage",
+          "present": true,
+          "top": 186,
+          "bottom": 688,
+          "height": 502,
+          "width": 1622,
+          "client_height": 502,
+          "scroll_height": 502,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "auto",
+          "css_height": "502px",
+          "css_min_height": "180px",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1622px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "block",
+          "below_fold": false
+        },
+        "narration": {
+          "sel": ".notes",
+          "present": true,
+          "top": 716,
+          "bottom": 753,
+          "height": 37,
+          "width": 1622,
+          "client_height": 37,
+          "scroll_height": 37,
+          "inner_scroll": false,
+          "hidden_px": 0,
+          "overflow_y": "visible",
+          "css_height": "37px",
+          "css_min_height": "auto",
+          "css_max_height": "none",
+          "css_max_width": "none",
+          "css_width": "1622px",
+          "css_margin_left": "0px",
+          "css_margin_right": "0px",
+          "align_self": "auto",
+          "display": "flex",
+          "below_fold": false
+        }
+      },
+      "hit_test": [
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tự chạy",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "submit",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Đặt lại",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "range",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        },
+        {
+          "text": "Tua đến bước",
+          "disabled": false,
+          "in_viewport": true,
+          "hit_self": true,
+          "hit_instead": null
+        }
+      ],
+      "fingerprint": {
+        "hash": "",
+        "app_layout": true,
+        "panel_center": true,
+        "panel_controls": true,
+        "stage": true,
+        "has_canvas": false,
+        "workspace_title": "Duyệt đồ thị theo chiều rộng"
+      }
+    }
+  ]
+}

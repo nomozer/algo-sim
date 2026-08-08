@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { buildTraversal, validateTraverseConfig } from "./traverse-module";
+import { buildTraversal, graphChartLayout, validateTraverseConfig } from "./traverse-module";
 import { edgeKey, routeEdgeViews, traversalEdgeViews, usedStatuses } from "./edge-view";
 import { makeNetworkModule } from "./index";
 import type { NetworkState } from "./model";
@@ -208,6 +208,55 @@ describe("PARITY 2D↔3D — bảng màu 3D phủ ĐÚNG tập trạng thái ren
     const { ROUTE_EDGE_COLOR_3D } = await import("./ui3d");
     expect(Object.keys(ROUTE_EDGE_COLOR_3D).sort()).toEqual(
       ["active", "considering", "idle", "remaining", "traversed"],
+    );
+  });
+});
+
+describe("W4B-2A — bố cục đồ thị thích ứng theo bề rộng khả dụng", () => {
+  it("bề rộng lớn hơn ⇒ bố cục rộng hơn (khi chưa chạm trần)", () => {
+    const narrow = graphChartLayout(500);
+    const wide = graphChartLayout(700);
+    expect(wide.width).toBeGreaterThan(narrow.width);
+    expect(narrow.capped).toBe(false);
+  });
+
+  it("chạm TRẦN THIẾT KẾ thì dừng — tách thêm nữa không giúp đọc cơ chế", () => {
+    const atCap = graphChartLayout(1282);
+    const wider = graphChartLayout(1598); // đóng panel Quan sát
+    expect(atCap.capped).toBe(true);
+    expect(wider.width).toBe(atCap.width);
+    expect(atCap.width).toBeLessThan(1282); // phần dư là lề căn giữa có chủ đích
+  });
+
+  it("hơn hẳn bố cục hằng số cũ (420px)", () => {
+    expect(graphChartLayout(1282).width).toBeGreaterThan(420);
+  });
+
+  it("CHIỀU CAO KHÔNG ĐỔI — nới ngang không được đụng hợp đồng chiều cao", () => {
+    for (const avail of [0, 500, 900, 1282, 1598]) {
+      expect(graphChartLayout(avail, false).height).toBe(260);
+      expect(graphChartLayout(avail, true).height).toBe(288);
+    }
+  });
+
+  it("chưa đo được khung (SSR/jsdom) ⇒ giữ NGUYÊN bố cục hằng số cũ", () => {
+    for (const bad of [0, -1, Number.NaN]) {
+      expect(graphChartLayout(bad).width).toBe(420);
+    }
+  });
+
+  it("khung rất hẹp: co xuống tới sàn, không nhỏ vô hạn", () => {
+    expect(graphChartLayout(200).width).toBe(360);
+  });
+
+  it("NGỮ NGHĨA W4B-1B KHÔNG ĐỔI khi bố cục đổi", () => {
+    // Bố cục là việc của renderer; provenance và trạng thái cạnh là của engine.
+    const { steps } = buildTraversal(BACKTRACK);
+    const before = traversalEdgeViews(BACKTRACK.edges, BACKTRACK.directed, steps, 2);
+    const visits = steps.filter((s) => s.kind === "visit");
+    expect(visits.every((s) => "parent" in s && "frontierAdded" in s)).toBe(true);
+    expect(before.map((e) => e.status)).toEqual(
+      traversalEdgeViews(BACKTRACK.edges, BACKTRACK.directed, steps, 2).map((e) => e.status),
     );
   });
 });
