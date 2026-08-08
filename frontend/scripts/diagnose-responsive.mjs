@@ -463,8 +463,14 @@ for (const vp of VIEWPORTS) {
         }
       } else {
         const envelope = subject.envelope ?? FIXTURES[FIXTURE_ID];
+        /* Cùng lý do như nhánh catalog: loadEnvelope tra registry, registry
+           rỗng thì nó đặt analysisError rồi thoát im lặng. Nhánh này trước đây
+           "may thì chạy" — phụ thuộc app đã kịp đăng ký hay chưa. Ép đăng ký ở
+           đây làm phép đo tất định thay vì phụ thuộc thời điểm. */
         await evaluate(`(async () => {
           const m = await import('/src/state/store.ts');
+          const r = await import('/src/simulations/index.ts');
+          r.registerAllSimulations();
           m.useAppStore.getState().loadEnvelope(${JSON.stringify(envelope)});
           return true; })()`);
       }
