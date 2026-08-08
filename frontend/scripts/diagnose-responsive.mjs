@@ -357,6 +357,12 @@ const goToStep = (n) => evaluate(`(async () => {
   return s.useAppStore.getState().active.state.cursor ?? null;
 })()`);
 
+/** §3 — hợp đồng vừa-khung, KHAI TỪ NGUỒN chứ không hard-code theo moduleId. */
+const rendererFit = () => evaluate(`(async () => {
+  const m = await import('/src/simulations/renderer-fit.ts');
+  return m.currentRendererFit();
+})()`);
+
 /** §3B — danh tính AUTHORITATIVE: hỏi engine store, không suy từ DOM. */
 const activeIdentity = () => evaluate(`(async () => {
   const s = await import('/src/state/store.ts');
@@ -503,6 +509,7 @@ for (const vp of VIEWPORTS) {
         process.exit(2);
       }
     }
+    const fit = route.id === "workspace" ? await rendererFit() : null;
     const label = cpIndex === null ? route.id
       : `${CATALOG_MODE ? subject.key : route.id}-${cpName}`;
     /* Quét toàn danh mục sinh hàng trăm khung hình — hình học JSON đã đủ chấm
@@ -519,7 +526,8 @@ for (const vp of VIEWPORTS) {
     /* `viewport_id` chứ không phải `viewport`: `...probe` mang theo khoá
        `viewport` (object hình học) và sẽ ghi đè chuỗi nhãn. */
     results.push({ route: route.id, subject: subject.key, simulation_id: subject.simId,
-                   checkpoint: cpName, cursor: cpIndex,
+                   checkpoint: cpName, cursor: cpIndex, observation: OBSERVATION,
+                   renderer_fit: fit,
                    viewport_id: vp.id, screenshot: png ? png.replace(/\\/g, "/") : null, ...probe });
     const bad = probe.viewport.page_overflow_x || probe.controls.clipped.length
       || probe.controls.clipped_by_ancestor.length || probe.clipped_content.length
@@ -549,6 +557,9 @@ for (const vp of VIEWPORTS) {
    Một bản soát chỉ là bằng chứng khi nó ĐỎ ĐƯỢC. Bốn điều kiện dưới đây đều
    suy từ hình học đo được, không từ ảnh chụp. */
 const failures = [];
+/** Ca ĐẠT của hợp đồng vừa-khung, kèm LÝ DO — artifact phải phân biệt được
+    "lớn lên đúng" với "đã chạm trần" với "cố ý giữ nguyên kích thước". */
+const fitPasses = [];
 for (const r of results) {
   if (r.route !== "workspace") continue;
   const where = `${r.simulation_id ?? r.subject}  ${r.viewport_id}/${r.checkpoint}`;
@@ -574,6 +585,44 @@ for (const r of results) {
                       detail: `.app-layout ${al.width}px < mong đợi ${Math.round(expected)}px ` +
                               `(khung cha ${root.width}px · max-width ${al.css_max_width}) ` +
                               `⇒ lề chết ${Math.round(deadMargin)}px` });
+    }
+  }
+
+  /* §3 VISUAL_FIT_OUT_OF_RANGE — hợp đồng vừa-khung, CÓ Ý THỨC VỀ LỚP.
+     Cố ý KHÔNG phải "hình phải chiếm ≥ X% sân khấu": luật đó thưởng cho hướng
+     hỏng thứ hai (phình quá mức) — mà đó là lỗi đã xảy ra thật ở milestone này.
+     Ba phán quyết: UNDER_UTILIZED · ACCEPTABLE · OVER_EXPANDED. */
+  const stage = r.height_axis.stage, vis = r.height_axis.visual, fit = r.renderer_fit;
+  if (fit && stage && stage.present && vis && vis.present) {
+    const TOL = 6;
+    if (fit.cls === "adaptive_layout" && fit.semanticMaxWidth) {
+      const room = Math.max(0, stage.width - 24);
+      const expected = Math.min(fit.semanticMaxWidth, room);
+      if (vis.width < expected - TOL) {
+        failures.push({ where, type: "VISUAL_FIT_OUT_OF_RANGE",
+                        detail: `UNDER_UTILIZED — hình ${vis.width}px < mong đợi ${Math.round(expected)}px ` +
+                                `(sân khấu ${stage.width}px · trần ngữ nghĩa ${fit.semanticMaxWidth}px)` });
+      } else if (fit.maxWidthPerItem && fit.itemCount &&
+                 vis.width / fit.itemCount > fit.maxWidthPerItem) {
+        failures.push({ where, type: "VISUAL_FIT_OUT_OF_RANGE",
+                        detail: `OVER_EXPANDED — ${Math.round(vis.width / fit.itemCount)}px/phần tử ` +
+                                `> trần mật độ ${fit.maxWidthPerItem}px (hình ${vis.width}px, ${fit.itemCount} phần tử)` });
+      } else {
+        fitPasses.push({ where, verdict: "ACCEPTABLE",
+                         reason: vis.width >= fit.semanticMaxWidth - TOL
+                           ? "SEMANTIC_MAX_REACHED" : "RESPONSIVE_GROWTH" });
+      }
+    } else if (fit.cls === "canvas_fill") {
+      const room = Math.max(0, stage.width - 24);
+      if (vis.width < room * 0.9) {
+        failures.push({ where, type: "VISUAL_FIT_OUT_OF_RANGE",
+                        detail: `UNDER_UTILIZED — canvas ${vis.width}px không bám khung sân khấu ${stage.width}px` });
+      } else {
+        fitPasses.push({ where, verdict: "ACCEPTABLE", reason: "CANVAS_FILL" });
+      }
+    } else if (fit.cls === "fixed_semantic_size") {
+      // Phản ứng 0px theo bề rộng là CHỦ ĐÍCH ở lớp này — không đòi hình lớn lên.
+      fitPasses.push({ where, verdict: "ACCEPTABLE", reason: "FIXED_SEMANTIC_SIZE" });
     }
   }
 
@@ -604,7 +653,7 @@ writeFileSync(join(OUT, "responsive-diagnosis.json"),
                    /* §3A/§3C — danh tính PHIÊN: hai lượt song song phải khác cả
                       hai giá trị này thì mới chứng minh được không bám chéo. */
                    session: { chrome_pid: chrome.pid, cdp_port: CDP_PORT, profile },
-                   viewports: VIEWPORTS, verdict, failures, results }, null, 2) + "\n", "utf-8");
+                   viewports: VIEWPORTS, verdict, failures, fit_passes: fitPasses, results }, null, 2) + "\n", "utf-8");
 console.log(`\n${verdict === "PASS" ? "✓ PASS" : `✗ FAIL — ${failures.length} vi phạm`}`);
 for (const f of failures) console.log(`   ${f.where}  ${f.type}  ${f.detail}`);
 console.log(`→ ${OUT}`);

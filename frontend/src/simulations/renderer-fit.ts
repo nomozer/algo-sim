@@ -1,0 +1,138 @@
+import { arrayChartLayout } from "../components/ArrayView";
+import { useAppStore } from "../state/store";
+
+/**
+ * HỢP ĐỒNG VỪA-KHUNG CỦA RENDERER (W4B-2A).
+ *
+ * Một renderer hỏng được theo **hai** hướng, không phải một:
+ *
+ *   UNDER_UTILIZED   khung rộng ra mà hình vẽ đứng yên dù chưa chạm trần;
+ *   OVER_EXPANDED    hình vẽ phình quá mật độ ngữ nghĩa đã khai.
+ *
+ * Nên cổng chấm KHÔNG được là "hình phải chiếm ≥ X% sân khấu": luật đó thưởng
+ * cho hướng hỏng thứ hai. Chính lỗi đó đã xảy ra thật trong milestone này — trần
+ * cột đầu tiên đặt ở 96px làm bảy cột ra 864px, thích ứng đúng về kỹ thuật nhưng
+ * bố cục mất cân đối.
+ *
+ * File này là **chủ sở hữu khai báo** để runner đo không phải hard-code theo
+ * `moduleId`. Mười target họ `ArrayView` thừa hưởng CÙNG một hợp đồng.
+ */
+
+export type RendererFitClass = "adaptive_layout" | "canvas_fill" | "fixed_semantic_size";
+
+export interface RendererFit {
+  simulationId: string;
+  cls: RendererFitClass;
+  /**
+   * Bề rộng bố cục tối đa theo hợp đồng ngữ nghĩa, tính cho TRẠNG THÁI HIỆN
+   * TẠI (số phần tử thật). `null` = lớp này không khai trần bề rộng.
+   */
+  semanticMaxWidth: number | null;
+  /**
+   * RÀNG BUỘC MẬT ĐỘ ĐỘC LẬP với cài đặt — bề rộng tối đa cho mỗi phần tử.
+   *
+   * `semanticMaxWidth` được tính TỪ chính hàm bố cục, nên nếu ai đó nới trần
+   * cột thì trần cũng nới theo và cổng chấm sẽ không bao giờ thấy vượt mức.
+   * Con số dưới đây là ràng buộc **khai riêng**: nó phát biểu điều kiện sư phạm
+   * (hai cột kề nhau phải nằm gọn trong một lần nhìn) chứ không mô tả cài đặt,
+   * nên nới trần cột lên 96px sẽ làm nó ĐỎ.
+   *
+   * `null` = lớp này không khai ràng buộc mật độ.
+   */
+  maxWidthPerItem: number | null;
+  /** Số phần tử ở trạng thái hiện tại, nếu đếm được. */
+  itemCount: number | null;
+  /** Vì sao lớp này — để artifact đọc được mà không phải tra mã. */
+  reason: string;
+}
+
+/**
+ * Bề rộng tối đa cho mỗi cột của biểu đồ dãy.
+ *
+ * Đây là **ràng buộc thiết kế hiện hành**, suy từ yêu cầu đọc được của phép so
+ * sánh hai cột KỀ NHAU — cơ chế trung tâm của các bài sắp xếp. Nó **không phải**
+ * bằng chứng về tác động học tập, và không được trích dẫn như vậy.
+ */
+export const ARRAY_MAX_WIDTH_PER_ITEM = 100;
+
+/** Target vẽ bằng `ArrayView` — cùng một chủ sở hữu sizing. */
+export const ARRAY_VIEW_TARGETS = new Set([
+  "algorithm.scan",
+  "algorithm.find_max",
+  "algorithm.find_min",
+  "algorithm.count_if",
+  "algorithm.sum_if",
+  "algorithm.linear_search",
+  "algorithm.binary_search",
+  "algorithm.bubble_sort",
+  "algorithm.selection_sort",
+  "algorithm.insertion_sort",
+]);
+
+/** Renderer dùng canvas (Three.js) — canvas bám khung, vật thể giữ tỉ lệ ngữ nghĩa. */
+export const CANVAS_TARGETS = new Set([
+  "network.packet_routing",
+  "network.protocol_encapsulation",
+]);
+
+/**
+ * Target mà phóng to hình KHÔNG tăng giá trị nhận thức. Với lớp này, phản ứng
+ * 0px theo bề rộng là **chủ đích**; thứ cần xét là sân khấu có giữ lại khoảng
+ * trống vô nghĩa hay không — một phép đo khác, không thuộc bề rộng hình.
+ */
+export const FIXED_SIZE_TARGETS = new Set([
+  "logic.and_gate",
+  "binary.decimal_to_binary",
+  "binary.base_conversion",
+  "binary.character_encoding",
+  "algorithm.bounded_control_flow",
+  "database.relational_table_query",
+]);
+
+/** Số phần tử của dãy ở trạng thái hiện tại, nếu renderer là ArrayView. */
+function arrayItemCount(state: unknown): number | null {
+  const s = state as { trace?: { steps?: { snapshot?: { array?: unknown[] } }[] }; cursor?: number };
+  const steps = s?.trace?.steps;
+  if (!Array.isArray(steps) || steps.length === 0) return null;
+  const at = Math.max(0, Math.min(s.cursor ?? 0, steps.length - 1));
+  const arr = steps[at]?.snapshot?.array;
+  return Array.isArray(arr) ? arr.length : null;
+}
+
+export function rendererFitOf(simulationId: string, state: unknown): RendererFit {
+  if (ARRAY_VIEW_TARGETS.has(simulationId)) {
+    const n = arrayItemCount(state);
+    // Trần = bố cục ở bề rộng vô hạn: chính là lúc cột chạm trần ngữ nghĩa.
+    const max = n === null ? null : arrayChartLayout(n, Number.MAX_SAFE_INTEGER).width;
+    return {
+      simulationId,
+      cls: "adaptive_layout",
+      semanticMaxWidth: max,
+      maxWidthPerItem: ARRAY_MAX_WIDTH_PER_ITEM,
+      itemCount: n,
+      reason: "ArrayView — bố cục tính lại từ bề rộng khả dụng, có trần mật độ",
+    };
+  }
+  if (CANVAS_TARGETS.has(simulationId)) {
+    return { simulationId, cls: "canvas_fill", semanticMaxWidth: null,
+             maxWidthPerItem: null, itemCount: null,
+             reason: "canvas Three.js — bám khung sân khấu, vật thể giữ tỉ lệ ngữ nghĩa" };
+  }
+  if (FIXED_SIZE_TARGETS.has(simulationId)) {
+    return { simulationId, cls: "fixed_semantic_size", semanticMaxWidth: null,
+             maxWidthPerItem: null, itemCount: null,
+             reason: "phóng to không tăng giá trị nhận thức — xét khoảng trống sân khấu, không xét bề rộng hình" };
+  }
+  // Chưa phân lớp: mặc định adaptive để guard còn nói được điều gì đó, và ghi
+  // rõ là chưa khai — im lặng xếp nhầm lớp còn tệ hơn.
+  return { simulationId, cls: "adaptive_layout", semanticMaxWidth: null,
+           maxWidthPerItem: null, itemCount: null,
+           reason: "CHƯA KHAI LỚP — mặc định adaptive, cần phân loại từ phép đo" };
+}
+
+/** Hợp đồng của mô phỏng ĐANG MỞ — runner đo gọi qua đây. */
+export function currentRendererFit(): RendererFit | null {
+  const active = useAppStore.getState().active;
+  if (!active) return null;
+  return rendererFitOf(active.moduleId, active.state);
+}
