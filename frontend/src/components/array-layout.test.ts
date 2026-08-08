@@ -44,12 +44,38 @@ describe("arrayChartLayout — phản ứng theo bề rộng khả dụng", () =
       for (const available of [420, 700, 1000, 1306, 1622]) {
         const l = arrayChartLayout(n, available);
         expect(l.colW).toBeGreaterThanOrEqual(28);
-        expect(l.colW).toBeLessThanOrEqual(96);
+        expect(l.colW).toBeLessThanOrEqual(76);
         expect(l.gap).toBeGreaterThanOrEqual(8);
-        expect(l.gap).toBeLessThanOrEqual(28);
+        expect(l.gap).toBeLessThanOrEqual(24);
         // bố cục phải khớp chính công thức mà renderer dùng để đặt toạ độ
         expect(l.width).toBe(n * l.colW + (n + 1) * l.gap);
       }
+    }
+  });
+
+  it("D. CHỐNG VƯỢT MỨC — cột không được phình để chiếm sân khấu", () => {
+    // Một renderer hỏng được theo HAI hướng. Trần đầu tiên đặt ở 96px làm bảy
+    // cột ra 864px: thích ứng đúng về kỹ thuật nhưng bố cục mất cân đối, và
+    // khoảng cách giữa hai cột đang so sánh xa tới mức phải đảo mắt. Thành công
+    // KHÔNG phải là chiếm được nhiều sân khấu nhất.
+    const b7 = arrayChartLayout(7, 1306);
+    expect(b7.width).toBeGreaterThan(504); // hơn hẳn bản hằng số cũ
+    expect(b7.width).toBeLessThan(760); // nhưng không phình như bản 96px (864)
+
+    const f8 = arrayChartLayout(8, 1306);
+    expect(f8.width).toBeGreaterThan(574);
+    expect(f8.width).toBeLessThan(860); // bản 96px cho 984
+
+    // và ở sân khấu rộng gấp rưỡi vẫn KHÔNG phình thêm
+    expect(arrayChartLayout(7, 1920).width).toBe(b7.width);
+  });
+
+  it("khoảng cách so sánh giữa hai cột kề nhau đủ ngắn để nhìn một lần", () => {
+    // Cơ chế của sắp xếp là SO SÁNH HAI CỘT KỀ NHAU; nếu tâm hai cột cách nhau
+    // quá xa thì học sinh phải quét mắt thay vì thấy cả cặp cùng lúc.
+    for (const n of [5, 7, 8]) {
+      const l = arrayChartLayout(n, 1306);
+      expect(l.colW + l.gap).toBeLessThanOrEqual(100);
     }
   });
 

@@ -447,7 +447,16 @@ for (const vp of VIEWPORTS) {
           m.useAppStore.getState().loadEnvelope(${JSON.stringify(envelope)});
           return true; })()`);
       }
-      await sleep(700);
+      /* Chờ store THẬT SỰ có mô phỏng trước khi đo. Lượt đầu của mỗi tiến trình
+         luôn chậm hơn: Vite dev biên dịch module theo yêu cầu, nên `loadEnvelope`
+         trả về trước khi `active` kịp có. Trước khi có vòng chờ này, dấu vân tay
+         danh tính bắt đúng ca đó và thoát 2 — guard làm đúng việc, nhưng cái sai
+         nằm ở chỗ đo quá sớm chứ không phải ở trang. */
+      let ready = null;
+      for (let tries = 0; tries < 24 && !ready; tries++) {
+        await sleep(250);
+        ready = await activeIdentity();
+      }
       await setObservation(OBSERVATION === "open");
       await sleep(250);
       const total = await stepCount();

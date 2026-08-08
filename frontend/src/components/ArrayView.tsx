@@ -36,11 +36,31 @@ const BOTTOM_PAD = 52;
  * không phải lỗi.
  *
  * Tỉ lệ khe/cột giữ đúng 14/56 = 0,25 của bản gốc.
+ *
+ * ── HIỆU CHỈNH MẬT ĐỘ (W4B-2A, sau soát trình duyệt) ───────────────────────
+ * Trần đầu tiên đặt ở 96px là VƯỢT MỨC: bảy cột ra 864px, tám cột ra 984px —
+ * kỹ thuật thì thích ứng đúng, nhưng cột to tới mức bố cục mất cân đối. Bài học
+ * ghi lại để không lặp: **"simulation-first" KHÔNG có nghĩa là phóng đối tượng
+ * cho chiếm nhiều sân khấu hơn.** Sân khấu ưu tiên chỗ cho *quan hệ* giữa các
+ * đối tượng — con trỏ, cặp đang so sánh, ranh giới vùng đã sắp, quỹ đạo dời
+ * chỗ, và sau này là công cụ thao tác của học sinh. Cột chỉ cần lớn tới mức
+ * ĐỌC ĐƯỢC; chỗ dư dành cho cơ chế, không dành cho kích thước cột.
+ *
+ * Bốn ứng viên đo được (sân khấu 1306px):
+ *
+ *   trần   colW  khe   7 cột   8 cột
+ *    96     96    24    864     984   ← vượt mức, bố cục mất cân đối
+ *    76     76    19    684     779   ← CHỌN
+ *    68     68    17    612     697
+ *    60     60    15    540     615   ← gần như quay lại bản cũ (504)
+ *
+ * Chọn 76 vì nó giữ được khoảng cách so sánh giữa hai cột kề nhau đủ ngắn để
+ * mắt bắt được cả cặp trong một lần nhìn, mà vẫn hơn hẳn bản hằng số cũ.
  */
 const MIN_COL_W = 28;
-const MAX_COL_W = 96;
+const MAX_COL_W = 76;
 const MIN_GAP = 8;
-const MAX_GAP = 28;
+const MAX_GAP = 24;
 const GAP_RATIO = COL_GAP / COL_W;
 /** Chừa hai bên để hình không dính mép thẻ. */
 const SAFE_PAD = 24;
