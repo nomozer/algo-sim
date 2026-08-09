@@ -24,6 +24,29 @@ import { IconCheck, IconInfo, IconPredict, IconSearch } from "./icons";
  * câu trắc nghiệm nữa.
  */
 
+/**
+ * TIỀN ĐỀ — thuộc QUAN SÁT, không thuộc cổng Thí nghiệm (W4B-2D §29).
+ *
+ * "Tìm kiếm nhị phân chỉ đúng khi dãy đã sắp thứ tự" là điều kiện áp dụng của
+ * thuật toán: nó đúng ở mọi bước, kể cả khi học sinh chưa làm gì. Trước wave
+ * này nó sống BÊN TRONG vùng cam kết, nên khoảnh khắc cổng ẩn vùng đó đi thì
+ * tiền đề biến mất theo — cổng vô tình lấy mất một dữ kiện thuần quan sát, đúng
+ * thứ §29 cấm.
+ *
+ * Tách ra thành component riêng thay vì chép JSX sang `ui.tsx`: hai nơi dựng
+ * cùng một dòng chữ là hai nơi để nó trôi khác nhau. Người gọi bảo đảm nó chỉ
+ * xuất hiện MỘT lần (vùng cam kết hiện XOR dòng độc lập hiện) — bất biến "tiền
+ * đề chỉ nói một lần" của W2 có test riêng.
+ */
+export function SearchPrecondition({ text }: { text: string }) {
+  return (
+    <p className="search-precondition">
+      <IconInfo size={13} />
+      {text}
+    </p>
+  );
+}
+
 interface SearchActionZoneProps {
   model: SearchInteractionModel;
   answered: boolean;
@@ -37,12 +60,7 @@ export function SearchActionZone({
 }: SearchActionZoneProps) {
   return (
     <section className="action-zone search-action" aria-label="Thao tác với bước tìm kiếm">
-      {model.precondition && (
-        <p className="search-precondition">
-          <IconInfo size={13} />
-          {model.precondition}
-        </p>
-      )}
+      {model.precondition && <SearchPrecondition text={model.precondition} />}
 
       <div className="search-state">
         <span className="scan-chip is-candidate">

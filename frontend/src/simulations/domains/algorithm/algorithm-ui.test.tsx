@@ -5,6 +5,7 @@ import { AlgorithmWorkspace, insertionHold } from "./ui";
 import type { AlgorithmSimState } from "./model";
 import { activeTrace } from "./model";
 import type { AlgorithmId } from "../../../core/types";
+import { whatIfPolicyOf } from "./interaction-policy";
 
 /**
  * M9-S1 — UI theo chính sách tương tác + dải nhân quả dùng chung.
@@ -58,11 +59,16 @@ describe("gating swap trong AlgorithmWorkspace", () => {
     expect(h).not.toContain("cursor:grab");
   });
 
-  it("(16) binary_search (challenge): không gợi ý kéo tự do; CÓ nút thí nghiệm phá tiền điều kiện", () => {
+  it("(16) binary_search: không gợi ý kéo tự do; CÓ cổng Thí nghiệm; tiền đề vẫn đọc được", () => {
     const h = html("binary_search", { array: [1, 3, 5, 7, 9, 11, 13], target: 3 }, 1);
     expect(h).not.toContain("Kéo một cột");
     expect(h).toContain("Thí nghiệm");
-    expect(h).toContain("sắp thứ tự");
+    /* W4B-2D: nhãn nút nay hứa THỨ NẰM SAU CỔNG — cổng gác cả vùng cam kết, nên
+       nhãn cũ (chỉ nói về kéo) sẽ khiến học sinh không biết các nút chọn nửa đi
+       đâu. Vế "phá tiền đề" chuyển vào `framing`, hiện khi đã mở. */
+    expect(h).toContain("tự chọn nửa để tìm tiếp");
+    // Tiền đề là dữ kiện QUAN SÁT — nó ở lại kể cả khi cổng đã ẩn vùng cam kết.
+    expect(h).toContain("sắp xếp tăng dần");
   });
 
   it("find_max (challenge): có nút thí nghiệm phá bất biến, không kéo tự do mặc định", () => {
@@ -75,14 +81,25 @@ describe("gating swap trong AlgorithmWorkspace", () => {
     // find_max: teaser nêu bất biến vùng-đã-duyệt, mời thử mà chưa lộ hệ quả.
     const hMax = html("find_max", { array: [7.5, 9, 6] }, 1);
     expect(hMax).toContain("vùng đã duyệt");
-    // binary_search: teaser nêu tiền điều kiện dãy-đã-sắp, ngay khi CHƯA mở lab.
+    /* binary_search: teaser nay mời làm ĐÚNG việc nằm sau cổng (chọn nửa), vì
+       W4B-2D đưa cả vùng cam kết vào sau nó. Vẫn là teaser tự-giải-thích, vẫn
+       không lộ hệ quả. */
     const hBin = html("binary_search", { array: [1, 3, 5, 7, 9, 11, 13], target: 3 }, 1);
-    expect(hBin).toContain("phá thứ tự");
+    expect(hBin).toContain("loại đi một nửa");
   });
 
-  it("linear_search (framed): kéo được nhưng khung câu hỏi là CHI PHÍ tìm kiếm", () => {
+  it("linear_search: kéo WHAT-IF nay nằm sau cổng — Quan sát không mời kéo", () => {
+    /* W4B-2D §3. `mode` vẫn `framed` (khung câu hỏi là CHI PHÍ), nhưng chỗ ĐẶT
+       công cụ đổi: `runLinearSearch` không phát sự kiện swap nào, nên đổi chỗ
+       là WHAT-IF chứ không phải bước của thuật toán. Gợi ý kéo chỉ được xuất
+       hiện SAU khi học sinh mở Thí nghiệm — bản render đó do runner trình duyệt
+       phủ (labOpen là useState cục bộ). */
     const h = html("linear_search", { array: [4, 9, 7], target: 9 }, 1);
-    expect(h).toContain("sớm hơn"); // khung: đưa target sớm/muộn → số lần so sánh đổi
+    expect(h, "Quan sát vẫn mời kéo").not.toContain("sớm hơn");
+    expect(h).toContain("tự đi từng bước tìm");
+    // Khung câu hỏi CHI PHÍ không mất đi, nó chỉ chuyển vào `framing` của cổng.
+    expect(whatIfPolicyOf("linear_search").hint).toContain("sớm hơn");
+    expect(whatIfPolicyOf("linear_search").framing).toContain("số lần so sánh");
   });
 });
 

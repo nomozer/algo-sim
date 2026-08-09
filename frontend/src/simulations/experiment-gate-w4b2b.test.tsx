@@ -3,7 +3,12 @@ import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
-import { scanInteractionOf, sortInteractionOf } from "./domains/algorithm/decision";
+import {
+  scanInteractionOf,
+  searchInteractionOf,
+  sortInteractionOf,
+  stageInteractionsOf,
+} from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
@@ -30,18 +35,35 @@ const SORT_ARR = [4, 9, 2, 11, 7, 5];
 /** Hai bài pilot — đọc từ CHÍNH bản khai, không chép tay danh sách id. */
 const GATED = ALGORITHM_IDS.filter((id) => whatIfPolicyOf(id).experimentGated === true);
 
+/* W4B-2D: họ tìm kiếm cần `target`, và nhị phân cần dãy ĐÃ SẮP (validator từ
+   chối dãy chưa sắp). Trước wave này hai bài đó chưa gác cổng nên không lượt
+   nào của `GATED` chạm tới chúng; nay có. */
+const SORTED_ARR = [...ARR].sort((a, b) => a - b);
+
+/**
+ * Dữ liệu hợp lệ TỐI THIỂU cho một bài — MỘT nguồn duy nhất.
+ *
+ * Trước W4B-2D khối envelope ở §13 dựng lại dữ liệu bằng tay, nên khi họ tìm
+ * kiếm vào `GATED` thì `build()` được vá còn khối kia thì không: `loadEnvelope`
+ * lặng lẽ trả `active = null` và test đổ ở `.state` với một thông báo chẳng liên
+ * quan. Hai bản sao của cùng một tri thức là một bản sẽ hết hạn.
+ */
+function dataFor(id: AlgorithmId, extra: Record<string, unknown> = {}) {
+  return {
+    array: id.endsWith("_sort") ? SORT_ARR : id === "binary_search" ? SORTED_ARR : ARR,
+    ...(id.endsWith("_sort") ? { order: "asc" } : {}),
+    ...(id === "count_if" || id === "sum_if" ? { condition: { op: ">=", value: 7 } } : {}),
+    ...(id === "linear_search" || id === "binary_search" ? { target: 8 } : {}),
+    ...extra,
+  };
+}
+
 function build(id: AlgorithmId, data: Record<string, unknown> = {}) {
   const mod = makeAlgorithmModule(id);
-  const arr = id.endsWith("_sort") ? SORT_ARR : ARR;
   const r = mod.validateConfig({
     problem: { summary: "s", input: "i", output: "o" },
     algorithm_id: id,
-    data: {
-      array: arr,
-      ...(id.endsWith("_sort") ? { order: "asc" } : {}),
-      ...(id === "count_if" || id === "sum_if" ? { condition: { op: ">=", value: 7 } } : {}),
-      ...data,
-    },
+    data: dataFor(id, data),
     data_generated: false,
     notes: null,
   });
@@ -61,13 +83,30 @@ function code(text: string): string {
   return text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
 }
 
-/** Bước quyết định đầu tiên — dùng chính hàm mà production dùng. */
+/**
+ * Bước quyết định đầu tiên — dùng chính hàm mà production dùng.
+ *
+ * W4B-2D: đổi sang `stageInteractionsOf` (phủ scan + SEARCH + sort) thay vì gọi
+ * tay hai hàm. Bản cũ liệt kê hai họ đang được gác lúc đó, nên khi họ tìm kiếm
+ * vào `GATED` thì mọi lượt của nó ném "không tìm được bước có thể cam kết" —
+ * một danh sách chép tay lại hết hạn đúng lúc nó cần đúng nhất.
+ */
 function firstActionable(s: AlgorithmSimState): number {
   for (let i = 0; i < s.trace.steps.length; i += 1) {
-    const cur = at(s, i);
-    if (scanInteractionOf(cur) || sortInteractionOf(cur)) return i;
+    if (stageInteractionsOf(at(s, i)).length > 0) return i;
   }
   throw new Error("không tìm được bước có thể cam kết");
+}
+
+/**
+ * Mô hình tương tác của bước — BẤT KỂ họ nào. Trước W4B-2D các chỗ dùng đều
+ * viết `scanInteractionOf(cur) ?? sortInteractionOf(cur)`, tức chép tay danh
+ * sách họ tại thời điểm viết; thêm họ thứ ba là ba chỗ cùng hỏng.
+ */
+function stageModel(s: AlgorithmSimState): { actions: { id: string }[] } {
+  const m = scanInteractionOf(s) ?? searchInteractionOf(s) ?? sortInteractionOf(s);
+  if (!m) throw new Error("bước này không có mô hình tương tác");
+  return m;
 }
 
 const observeHtml = (id: AlgorithmId) => {
@@ -85,15 +124,19 @@ const observeHtml = (id: AlgorithmId) => {
 /* ══ 1. PILOT ĐÚNG HAI BÀI ════════════════════════════════════════════════ */
 
 describe("W4B-2B · cổng là PILOT, không phải rollout cả họ", () => {
-  it("W4B-2C: đúng NĂM target được gác — cả họ quét dãy + insertion_sort", () => {
-    expect([...GATED].sort())
-      .toEqual(["count_if", "find_max", "find_min", "insertion_sort", "sum_if"]);
+  it("W4B-2D: đúng BẢY target được gác — quét dãy + insertion_sort + họ tìm kiếm", () => {
+    expect([...GATED].sort()).toEqual([
+      "binary_search", "count_if", "find_max", "find_min",
+      "insertion_sort", "linear_search", "sum_if",
+    ]);
   });
 
-  it("họ TÌM KIẾM và hai bài sắp xếp còn lại KHÔNG bị kéo theo", () => {
-    /* §29/§33: mở rộng dừng ở họ quét dãy. Bốn bài này phải giữ nguyên hành vi —
-       vùng cam kết vẫn hiện thẳng ở Quan sát, không có cổng nào. */
-    for (const id of ["linear_search", "binary_search", "bubble_sort", "selection_sort"] as AlgorithmId[]) {
+  it("HAI bài sắp xếp còn lại KHÔNG bị kéo theo — họ sắp xếp là wave sau", () => {
+    /* §31/§33: mở rộng dừng đúng ở họ tìm kiếm. `bubble_sort`/`selection_sort`
+       phải giữ nguyên hành vi — vùng cam kết vẫn hiện thẳng ở Quan sát, không
+       có cổng nào. Đây cũng là thứ giữ cho ca (A) của bất biến bề mặt cam kết
+       còn bài làm chứng. */
+    for (const id of ["bubble_sort", "selection_sort"] as AlgorithmId[]) {
       expect(whatIfPolicyOf(id).experimentGated, `${id} bị kéo vào wave này`).toBeUndefined();
     }
   });
@@ -124,7 +167,11 @@ describe("W4B-2B §7/§18 · Quan sát ẩn CAM KẾT, giữ QUAN HỆ", () => {
   it("không vùng cam kết nào ở chế độ Quan sát", () => {
     for (const id of GATED) {
       const html = observeHtml(id);
-      for (const label of ["Thao tác với biến tích luỹ", "Thao tác sắp xếp"]) {
+      // W4B-2D: thêm nhãn của họ tìm kiếm — thiếu nó thì bài mới gác cổng đi
+      // qua test này mà không bị kiểm gì cả.
+      for (const label of [
+        "Thao tác với biến tích luỹ", "Thao tác sắp xếp", "Thao tác với bước tìm kiếm",
+      ]) {
         expect(html, `${id}: còn "${label}" ở Quan sát`).not.toContain(`aria-label="${label}"`);
       }
       expect(html, `${id}: PredictionBar thế chỗ vùng cam kết`).not.toContain('class="predict-bar"');
@@ -162,8 +209,7 @@ describe("W4B-2B §10 · Thí nghiệm bày LỰA CHỌN, không bày cái nào 
     for (const id of GATED) {
       const { state } = build(id);
       const cur = at(state, firstActionable(state));
-      const model = (scanInteractionOf(cur) ?? sortInteractionOf(cur)) as unknown as
-        Record<string, unknown>;
+      const model = stageModel(cur) as unknown as Record<string, unknown>;
       for (const forbidden of ["correctActionId", "expectedId", "expectedAction", "evidence", "result"]) {
         expect(Object.keys(model), `${id}: lộ ${forbidden}`).not.toContain(forbidden);
       }
@@ -210,13 +256,7 @@ describe("W4B-2B §13 · mở/đóng Thí nghiệm KHÔNG chạm engine state", 
         config: {
           problem: { summary: "s", input: "i", output: "o" },
           algorithm_id: id,
-          data: {
-            array: id.endsWith("_sort") ? SORT_ARR : ARR,
-            ...(id.endsWith("_sort") ? { order: "asc" } : {}),
-            ...(id === "count_if" || id === "sum_if"
-              ? { condition: { op: ">=", value: 7 } }
-              : {}),
-          },
+          data: dataFor(id),
           data_generated: false, notes: null,
         },
       };
@@ -247,13 +287,18 @@ describe("W4B-2B §4 · `predict.check` vẫn là bên chấm DUY NHẤT", () =>
     for (const id of GATED) {
       const { mod, state } = build(id);
       const cur = at(state, firstActionable(state));
-      const model = scanInteractionOf(cur) ?? sortInteractionOf(cur)!;
+      const model = stageModel(cur);
       const ids = model.actions.map((a) => a.id);
 
       // đúng một đáp án được engine chấm là đúng — engine, không phải renderer
       const verdicts = ids.map((a) => mod.predict!.check(cur, a).verdict);
+      /* W4B-2D: `binary_search` bày tới BA hành động (trái / giữa / phải), nên
+         "đúng 1 sai 1" là con số của hai họ cũ, không phải bất biến. Bất biến
+         thật: engine chấm ĐÚNG MỘT lựa chọn là đúng, mọi lựa chọn còn lại sai —
+         và không lựa chọn nào rơi ra ngoài hai phán quyết đó. */
       expect(verdicts.filter((v) => v === "correct").length, `${id}: ${verdicts}`).toBe(1);
-      expect(verdicts.filter((v) => v === "incorrect").length, `${id}: ${verdicts}`).toBe(1);
+      expect(verdicts.filter((v) => v === "incorrect").length, `${id}: ${verdicts}`)
+        .toBe(ids.length - 1);
     }
   });
 

@@ -223,8 +223,14 @@ describe("W2 · tiền đề dãy đã sắp được NÓI RA cho học sinh", (
       <AlgorithmWorkspace config={config} state={at(state, firstDecision(state))}
         busy={false} dispatch={() => {}} />,
     );
-    expect(html).toContain("search-action");
+    /* W4B-2D: tiền đề KHÔNG còn sống trong vùng cam kết. Cổng Thí nghiệm ẩn
+       vùng đó ở Quan sát, nên nếu tiền đề vẫn nằm bên trong thì nó biến mất
+       theo — cổng lấy mất một dữ kiện thuần quan sát (§29). Nay nó là
+       `SearchPrecondition` riêng, và đây là khẳng định MẠNH HƠN bản cũ: tiền đề
+       phải đọc được NGAY Ở QUAN SÁT, khi chưa hề mở công cụ nào. */
+    expect(html, "Quan sát mất tiền đề").toContain("search-precondition");
     expect(html).toContain("sắp xếp tăng dần");
+    expect(html, "vùng cam kết chưa bị gác").not.toContain("search-action");
   });
 
   it("tiền đề chỉ nói MỘT lần — teaser thí nghiệm không nhắc lại", () => {
@@ -284,8 +290,18 @@ describe("W2 · không hiện hai hình thức cam kết cùng lúc", () => {
       const html = renderToString(
         <AlgorithmWorkspace config={config} state={cur} busy={false} dispatch={() => {}} />,
       );
-      expect(html, id).toContain("search-action");
-      expect(html, id).not.toContain("decision-strip");
+      /* W4B-2D — BẤT BIẾN ĐỔI HÌNH, KHÔNG YẾU ĐI.
+         Bản cũ: "có vùng hành động ⇒ có `search-action`, không dải nhân quả".
+         Nay hai bài này gác cổng, nên ở QUAN SÁT đúng ra phải là điều NGƯỢC
+         LẠI: không vùng cam kết, mà quan hệ thì Ở LẠI. Thứ được giữ nguyên là
+         cái đáng giữ — KHÔNG BAO GIỜ dựng cả hai cùng lúc. Bản render có mở
+         Thí nghiệm do runner trình duyệt phủ (`labOpen` là useState cục bộ,
+         SSR luôn thấy false — ARCHITECTURE_MAP §8 #13). */
+      const zone = html.includes('aria-label="Thao tác với bước tìm kiếm"');
+      const strip = html.includes("decision-strip");
+      expect(zone && strip, `${id}: dựng CẢ vùng cam kết lẫn dải nhân quả`).toBe(false);
+      expect(zone || strip, `${id}: mất cả hai — bước quyết định trống trơn`).toBe(true);
+      expect(zone, `${id}: bài đã gác cổng mà Quan sát vẫn bày cam kết`).toBe(false);
     }
   });
 

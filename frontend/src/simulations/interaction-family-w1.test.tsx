@@ -312,11 +312,15 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
     const gated = ALGORITHM_IDS.filter((id) => whatIfPolicyOf(id).experimentGated);
     expect(gated.length, "không còn bài gác cổng nào — bất biến mất ý nghĩa").toBeGreaterThan(0);
     for (const id of gated) {
+      /* W4B-2D: họ tìm kiếm nay nằm trong `gated`, nên nhánh này phải cấp
+         `target` (và dãy ĐÃ SẮP cho nhị phân) — giống hệt ca (A) bên trên. */
       const extra = id.endsWith("_sort")
         ? { order: "asc" }
         : id === "count_if" || id === "sum_if"
           ? { condition: { op: ">=", value: 7 } }
-          : {};
+          : id === "binary_search" || id === "linear_search"
+            ? { array: [...ARR].sort((x, y) => x - y), target: 8 }
+            : {};
       const { config, state } = build(id, extra);
       let d = -1;
       for (let i = 0; i < state.trace.steps.length && d < 0; i += 1) {

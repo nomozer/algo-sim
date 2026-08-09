@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./index";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
+import { SearchActionZone } from "../../../components/SearchActionZone";
+import { searchInteractionOf } from "./decision";
 import { activeTrace, type AlgorithmSimState } from "./model";
 import { ALGORITHM_IDS, type AlgorithmId } from "../../../core/types";
 import { POSITION_VARS } from "../../../core/pseudocode";
@@ -194,6 +196,21 @@ describe("W4B-2D §4 · cùng màn hình ⇒ cùng một con số", () => {
       s.events.some((e) => e.type === "compare_value") ||
       typeof s.snapshot.vars["giua"] === "number");
 
+  /**
+   * W4B-2D §17/§26 — vùng hành động của họ tìm kiếm NAY nằm sau cổng Thí nghiệm,
+   * mà `labOpen` là `useState` cục bộ nên SSR luôn thấy `false`
+   * (`ARCHITECTURE_MAP §8` #13). Dựng thẳng `SearchActionZone` với CHÍNH model
+   * mà production cấp cho nó: đó đúng là thứ học sinh đọc khi đã mở Thí nghiệm,
+   * và không phải giả lập `labOpen` bằng `renderToString`.
+   */
+  const zoneHtml = (state: AlgorithmSimState, k: number) => {
+    const model = searchInteractionOf(at(state, k));
+    if (!model) throw new Error("bước này không có mô hình tìm kiếm");
+    return renderToString(
+      <SearchActionZone model={model} answered={false} busy={false} onAct={() => {}} />,
+    );
+  };
+
   it("linear_search: chip `i`, vùng hành động và nhãn cột nói cùng một vị trí", () => {
     const { config, state } = build("linear_search", DATA.linear_search);
     const k = firstSearchStep(state);
@@ -209,7 +226,8 @@ describe("W4B-2D §4 · cùng màn hình ⇒ cùng một con số", () => {
     );
 
     // Vùng hành động đã nói "vị trí i+1" từ trước wave này — nó là mốc ĐÚNG.
-    expect(seen(stage), "vùng hành động đổi cách đếm").toContain(`Phần tử vị trí ${i + 1}`);
+    expect(seen(zoneHtml(state, k)), "vùng hành động đổi cách đếm")
+      .toContain(`Phần tử vị trí ${i + 1}`);
     // Chip BIẾN phải nói CÙNG con số đó, không phải giá trị thô.
     expect(chips(panel)["i"], `chip i phải là ${i + 1}, không phải ${i}`).toBe(String(i + 1));
     // Và nhãn cột tương ứng cũng vậy.
@@ -225,14 +243,11 @@ describe("W4B-2D §4 · cùng màn hình ⇒ cùng một con số", () => {
     const l = v["trai"] as number;
     const r = v["phai"] as number;
 
-    const stage = renderToString(
-      <AlgorithmWorkspace config={config} state={s} busy={false} dispatch={() => {}} />,
-    );
     const panel = renderToString(
       <AlgorithmInspector config={config} state={s} busy={false} dispatch={() => {}} />,
     );
 
-    expect(seen(stage), "vùng xét đổi cách đếm").toContain(`${l + 1}–${r + 1}`);
+    expect(seen(zoneHtml(state, k)), "vùng xét đổi cách đếm").toContain(`${l + 1}–${r + 1}`);
     const c = chips(panel);
     expect(c["trái"], `chip trái phải là ${l + 1}`).toBe(String(l + 1));
     expect(c["phải"], `chip phải phải là ${r + 1}`).toBe(String(r + 1));

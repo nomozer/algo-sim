@@ -96,20 +96,60 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: "Kéo đổi chỗ để đưa giá trị cần tìm tới sớm hơn hay muộn hơn — số lần so sánh sẽ thay đổi thế nào?",
     rationale:
       "Vị trí của giá trị cần tìm quyết định CHI PHÍ tìm kiếm (số lần so sánh) — hệ quả tất định, nhìn thấy ở kết quả nhánh.",
+    /* W4B-2D §3 — KÉO Ở ĐÂY LÀ WHAT-IF, KHÔNG PHẢI BƯỚC CỦA THUẬT TOÁN.
+     *
+     * `mode` giữ `framed`: lý do cũ không sai đi — hệ quả của việc dời đích chỉ
+     * có nghĩa khi có khung câu hỏi. Đổi là chỗ ĐẶT nó.
+     *
+     * Căn cứ (source + Chrome, không suy từ tên bài):
+     *  - `runLinearSearch` KHÔNG phát một sự kiện swap nào — chỉ `compare_value`
+     *    / `mark` / `done`. Đổi chỗ không nằm trong thuật toán canonical, và mã
+     *    giả trên màn hình cũng không có bước nào như thế.
+     *  - Kéo đổi ĐẦU VÀO rồi chạy lại, tức nó hỏi "nếu khác đi thì sao" — đúng
+     *    định nghĩa WHAT-IF, khác hẳn cam kết "thuật toán nên làm gì bước này".
+     *  - Quan sát KHÔNG cần kéo mới hiểu được tìm tuần tự: khối chi phí (đã so
+     *    sánh / chưa xét / xấu nhất) đã chở trọn cơ chế đáng học, và ảnh
+     *    `position-numbering/before/` cho thấy màn hình đọc được đầy đủ khi chưa
+     *    hề kéo.
+     *  - Trước wave này Quan sát bày ĐỒNG THỜI vùng cam kết và lời mời kéo, không
+     *    gì phân biệt hai thứ — đúng sự lẫn lộn mà tách Quan sát/Thí nghiệm sinh
+     *    ra để gỡ.
+     *
+     * Cờ này đẩy CẢ HAI (cam kết + kéo) vào sau cổng: ở `ui.tsx`, `gated` làm
+     * `dragAllowedByPolicy` phụ thuộc `labOpen` y như mode `challenge`. */
+    experimentGated: true,
+    challengeLabel: "Thí nghiệm: tự đi từng bước tìm",
+    challengeTeaser:
+      "Thuật toán này phải xét lần lượt từ đầu dãy, không được nhảy cóc — em thử tự đi xem.",
+    /* §18 — HAI CÔNG CỤ, HAI CÂU HỎI KHÁC NHAU, nói tách bạch. Gộp chúng thành
+       một lời mời sẽ dạy học sinh rằng kéo là "bước tiếp theo của thuật toán",
+       đúng thứ §7 cấm. */
+    framing:
+      "Ở bước này em quyết định thay thuật toán: phần tử đang xét có đúng là giá trị cần tìm, hay phải kiểm tra tiếp phần tử sau? Ngoài ra em có thể kéo đổi chỗ hai cột để hỏi một câu KHÁC — đó là thí nghiệm, không phải bước của thuật toán: nếu giá trị cần tìm nằm sớm hơn hay muộn hơn thì số lần so sánh đổi thế nào?",
   },
   binary_search: {
     mode: "challenge",
-    challengeLabel: "Thí nghiệm: nếu dãy không còn được sắp thứ tự?",
+    /* W4B-2D §26 — cổng nay gác CẢ vùng cam kết, nên nhãn nút phải hứa đúng thứ
+       nằm sau nó. Nhãn cũ ("nếu dãy không còn được sắp thứ tự?") chỉ nói về
+       KÉO; giữ nguyên thì học sinh mất các nút chọn nửa mà không có gì cho biết
+       chúng đi đâu. Vế phá-tiền-đề không mất, nó chuyển vào `framing`. */
+    challengeLabel: "Thí nghiệm: tự chọn nửa để tìm tiếp",
     /* W2: teaser KHÔNG nhắc lại tiền đề nữa — `SearchActionZone` đã nêu nó
        thường trực ngay trên vùng hành động, nên nói lại ở đây là cùng một ý
        hiện hai lần trên một màn hình (đúng loại trùng lặp W1 đã gỡ). Teaser
        chỉ còn làm việc của nó: mời thử. */
-    challengeTeaser: "Thử phá thứ tự đã sắp của dãy rồi xem chuyện gì xảy ra.",
+    challengeTeaser: "Mỗi bước loại đi một nửa — em thử tự quyết định loại nửa nào.",
+    /* §18 — hai công cụ, hai câu hỏi. Cam kết đứng trước (đó là việc của thuật
+       toán), phá tiền đề đứng sau (đó là thí nghiệm về điều kiện áp dụng). */
     framing:
-      "Tìm kiếm nhị phân chỉ đúng khi dãy đã sắp thứ tự. Hãy đổi chỗ hai phần tử để phá thứ tự đó, rồi quan sát: thuật toán có thể bỏ sót giá trị có thật trong dãy.",
+      "Ở bước này em quyết định thay thuật toán: nên tìm tiếp ở nửa nào, hay phần tử giữa chính là giá trị cần tìm? Ngoài ra em có thể kéo đổi chỗ hai cột để thử một câu KHÁC — tìm kiếm nhị phân chỉ đúng khi dãy đã sắp thứ tự, hãy phá thứ tự đó rồi quan sát: thuật toán có thể bỏ sót giá trị có thật trong dãy.",
     hint: "Kéo đổi chỗ hai cột để phá thứ tự sắp — rồi xem thuật toán còn tìm thấy đúng không.",
     rationale:
       "Đổi chỗ tự do phá tiền điều kiện mà không ai giải thích → gây hiểu lầm; đóng khung thành thí nghiệm tiền-điều-kiện thì hệ quả (bỏ sót giá trị) là bài học tất định.",
+    /* W4B-2D §26 — kéo VỐN đã sau cổng (mode `challenge`); cờ này thêm vùng cam
+       kết vào cùng cổng đó, để Quan sát chỉ còn mô phỏng. Hành vi kéo không đổi
+       một dòng. */
+    experimentGated: true,
   },
   find_max: {
     mode: "challenge",
