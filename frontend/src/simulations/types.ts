@@ -266,7 +266,7 @@ export interface SimulationModule<C = unknown, S = unknown> {
    */
   threeD?: ThreeDMeaning;
 
-  /** Panel quan sát bên phải — nội dung theo domain (biến/mã giả, truth table, bit...). */
+  /** Panel Giải thích bên phải — nội dung theo domain (biến/mã giả, truth table, bit...). */
   Inspector?: ComponentType<WorkspaceProps<C, S>>;
 }
 

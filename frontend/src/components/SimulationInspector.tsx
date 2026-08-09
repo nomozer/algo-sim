@@ -4,14 +4,15 @@ import type { WorkspaceProps } from "../simulations/types";
 import { useAppStore } from "../state/store";
 
 /**
- * Panel phải — nội dung QUAN SÁT theo domain qua module.Inspector (M2 #5):
+ * Panel phải — nội dung GIẢI THÍCH theo domain qua module.Inspector (M2 #5):
  * algorithm → biến + mã giả; binary → bit; network → tuyến... Core không
  * hard-code bất kỳ nội dung domain nào.
  *
  * LỊCH SỬ CỦA CỘT NÀY — hai lần thu hẹp vai trò của AI, cùng một lý do:
  *
  * - M9-UX5: bỏ cặp tab [Quan sát][Hỏi AI] (AI chiếm một nửa cột phải) → AI
- *   xuống thành một mục THU GỌN ở đáy.
+ *   xuống thành một mục THU GỌN ở đáy. (Nhãn "Quan sát" là tên CŨ của chính
+ *   panel này — W4B-2B §7 đổi thành "Giải thích".)
  * - Bản này: bỏ luôn mục thu gọn đó. Workspace là nơi học sinh làm việc với
  *   MÔ PHỎNG; narration + Observer phải tự đủ để giải thích bước hiện tại.
  *   Còn một nút gọi model ngay cạnh timeline nghĩa là vẫn còn một đường tiêu
@@ -32,14 +33,14 @@ export function SimulationInspector() {
 
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
-      <span className="eyebrow">QUAN SÁT</span>
+      <span className="eyebrow">GIẢI THÍCH</span>
 
       {active && Inspector ? (
         <Inspector config={active.config} state={active.state} busy={playing} dispatch={dispatch} />
       ) : (
         <p className="hint">
           {active
-            ? "Mô phỏng này không có panel quan sát riêng."
+            ? "Mô phỏng này không có phần giải thích riêng."
             : "Chưa có mô phỏng nào đang chạy."}
         </p>
       )}

@@ -269,9 +269,61 @@ describe("(FIX-1) màn hẹp: thanh điều khiển dán đáy, drawer không đ
     expect(rule).toMatch(/bottom:\s*0/);
   });
 
-  it("z-index thanh điều khiển CAO HƠN drawer Quan sát", () => {
+  it("z-index thanh điều khiển CAO HƠN drawer Giải thích", () => {
     const controlsZ = Number(/\.panel-controls \{[^}]*z-index:\s*(\d+)/.exec(narrow)?.[1] ?? 0);
     const drawerZ = Number(/\.panel-right \{[^}]*z-index:\s*(\d+)/.exec(narrow)?.[1] ?? 0);
     expect(controlsZ).toBeGreaterThan(drawerZ);
+  });
+});
+
+/**
+ * W4B-2B §7 — PANEL PHẢI TÊN LÀ "GIẢI THÍCH", KHÔNG PHẢI "QUAN SÁT".
+ *
+ * Vì sao quét MÃ NGUỒN chứ không quét HTML: panel phải chỉ tồn tại trong
+ * workspace, mà SSR qua `App` không bao giờ tới workspace (anti-pattern #8/#13).
+ * Một guard render-based ở đây sẽ xanh mà không soi gì cả.
+ *
+ * RANH GIỚI PHẢI GIỮ — hai chữ "Quan sát" KHÁC NGHĨA trong repo này:
+ *
+ *  1. tên panel phải (biến/mã giả/bit...) → nay là "Giải thích";
+ *  2. chế độ xem của renderer generic, cặp [Quan sát][Chỉnh sửa]
+ *     (`generic/ui.tsx`) → GIỮ NGUYÊN. Đổi nó thành "Giải thích" sẽ đẻ ra cặp
+ *     vô nghĩa "Giải thích ↔ Chỉnh sửa" và phá `generic/mode-switch.test.tsx`.
+ *
+ * Vì vậy guard cấm nhãn ở MỌI component TRỪ đúng một file sở hữu nghĩa (2), và
+ * khẳng định luôn rằng file đó vẫn còn nhãn — nếu không, allowlist đã thành xác
+ * và guard sẽ âm thầm mất hiệu lực.
+ */
+describe("(W4B-2B §7) nhãn panel phải — đổi tên có ranh giới, không thay chuỗi mù", () => {
+  /** Nơi DUY NHẤT "Quan sát" còn hợp lệ: chế độ xem của renderer generic. */
+  const MODE_SWITCH_OWNER = join("simulations", "domains", "generic", "ui.tsx");
+
+  it("không component nào còn gọi panel phải là Quan sát/QUAN SÁT", () => {
+    const offenders: string[] = [];
+    for (const f of FILES) {
+      if (f.path.endsWith(MODE_SWITCH_OWNER)) continue;
+      const body = code(f.text); // chú thích lịch sử được phép nhắc tên cũ
+      for (const needle of ["Quan sát", "QUAN SÁT"]) {
+        if (body.includes(needle)) offenders.push(`${f.path}: nhãn "${needle}"`);
+      }
+    }
+    expect(
+      offenders,
+      `panel phải nay tên "Giải thích" (W4B-2B §7):\n${offenders.join("\n")}`,
+    ).toEqual([]);
+  });
+
+  it("chế độ xem của renderer generic VẪN là [Quan sát][Chỉnh sửa]", () => {
+    const owner = FILES.find((f) => f.path.endsWith(MODE_SWITCH_OWNER));
+    expect(owner, `không tìm thấy ${MODE_SWITCH_OWNER}`).toBeDefined();
+    const body = code(owner!.text);
+    expect(body).toContain("Quan sát");
+    expect(body).toContain("Chỉnh sửa");
+  });
+
+  it("panel phải tự xưng là GIẢI THÍCH ở đúng component sở hữu nó", () => {
+    const inspector = FILES.find((f) => f.path.endsWith(join("components", "SimulationInspector.tsx")));
+    expect(inspector).toBeDefined();
+    expect(code(inspector!.text)).toContain("GIẢI THÍCH");
   });
 });

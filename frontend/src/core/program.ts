@@ -786,10 +786,18 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
   /**
    * Thuyết minh bước xét điều kiện: "x = 17: 17 <= 14".
    *
-   * Ở màn hẹp panel Quan sát đóng mặc định, nên bước xét điều kiện là chỗ DUY
-   * NHẤT học sinh không thấy giá trị biến — đúng lúc câu hỏi là "x còn ≤ 14
-   * không?". Ghép tên+giá trị các biến ĐƯỢC ĐỌC trong điều kiện, rồi để
-   * `renderExpression` thay giá trị vào chính biểu thức.
+   * `VarsView` chỉ sống trong `ProgramInspector`, tức panel PHẢI. Khi panel đóng,
+   * narration là đường DUY NHẤT còn chở giá trị biến — và bước xét điều kiện là
+   * chỗ nó thiếu, đúng lúc câu hỏi là "x còn ≤ 14 không?". Bước GÁN vốn đã tự
+   * nêu ("x ← x + 3 = 5."). Ghép tên+giá trị các biến ĐƯỢC ĐỌC trong điều kiện,
+   * rồi để `renderExpression` thay giá trị vào chính biểu thức.
+   *
+   * Phát hiện ở audit 768×900 (2026-08-03), khi panel mới chỉ đóng mặc định trên
+   * MÀN HẸP. W4B-2B §8 đóng panel mặc định ở MỌI bề rộng, nên điều kiện "màn hẹp"
+   * trong lý do cũ hết ý nghĩa — không phải vì bản vá thừa, mà vì nó nay áp cho
+   * mọi học sinh. Đây chưa bao giờ là một nhánh runtime: hàm này luôn chạy, và
+   * phải tiếp tục luôn chạy. Gỡ nó đi = trả lại đúng lỗ hổng đã vá, lần này ở
+   * mọi viewport.
    *
    * Dùng `byExpr`/`env` SẴN CÓ — không thêm state, không dựng cấu trúc mới.
    * Phải gọi ĐÚNG LÚC đánh giá: giá trị đổi sau mỗi lượt lặp.

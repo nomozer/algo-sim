@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
@@ -150,13 +151,13 @@ describe("(M9-UX5) Thư viện — nhà riêng của danh mục đầy đủ", (
  * Observer phải tự đủ. Đường dùng AI ở Trang chủ (phân tích đề) KHÔNG đổi —
  * đó mới là chỗ AI có việc thật.
  */
-describe("Panel Quan sát không còn control AI nào", () => {
+describe("Panel Giải thích không còn control AI nào", () => {
   beforeEach(() => {
     __resetHistoryForTest();
     useAppStore.getState().reset();
   });
 
-  it('không còn "Hỏi AI về bước này" trong panel Quan sát', () => {
+  it('không còn "Hỏi AI về bước này" trong panel Giải thích', () => {
     const html = renderToString(<SimulationInspector />);
     expect(html).not.toContain("Hỏi AI");
     expect(html).not.toContain("ai-toggle");
@@ -164,9 +165,9 @@ describe("Panel Quan sát không còn control AI nào", () => {
     expect(html).not.toContain("aria-expanded");
   });
 
-  it("panel Quan sát vẫn render bình thường (tiêu đề + chỗ cho Inspector)", () => {
+  it("panel Giải thích vẫn render bình thường (tiêu đề + chỗ cho Inspector)", () => {
     const html = renderToString(<SimulationInspector />);
-    expect(html).toContain("QUAN SÁT");
+    expect(html).toContain("GIẢI THÍCH");
     expect(html).toContain("Chưa có mô phỏng nào đang chạy.");
   });
 
@@ -182,6 +183,37 @@ describe("(M9-UX5) AI thôi ngang hàng với mô phỏng (R0 phản chiếu lê
     expect(useAppStore.getState().aiOpen).toBe(false);
     // cặp tab cũ đã biến mất khỏi hợp đồng store
     expect("inspectorTab" in useAppStore.getState()).toBe(false);
+  });
+
+  /**
+   * W4B-2B §8 — panel Giải thích ĐÓNG mặc định ở MỌI bề rộng.
+   *
+   * Dùng `getInitialState()` chứ không `getState()`: `reset()` cố ý KHÔNG đụng
+   * trạng thái panel (nó dọn runtime, không dọn tuỳ chọn trình bày), nên
+   * `getState()` sẽ mang theo mọi lượt `toggleRight` của test chạy trước và test
+   * này sẽ xanh/đỏ vì lý do sai.
+   *
+   * Assert thứ hai là phần QUAN TRỌNG hơn: mặc định không được phụ thuộc
+   * `window.innerWidth` nữa. Trước đây `rightOpen: WIDE_SCREEN` đọc bề rộng lúc
+   * nạp module ⇒ SSR (không có `window`) mở panel còn trình duyệt hẹp thì đóng,
+   * hai nhánh khởi tạo khác nhau cho cùng một học sinh.
+   */
+  it("store: rightOpen mặc định ĐÓNG, và không đọc bề rộng cửa sổ nữa", () => {
+    expect(useAppStore.getInitialState().rightOpen).toBe(false);
+
+    const src = readFileSync(new URL("../state/store.ts", import.meta.url), "utf-8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/^\s*\/\/.*$/gm, "");
+    expect(src).not.toMatch(/window\.innerWidth/);
+    expect(src).toMatch(/rightOpen:\s*false/);
+  });
+
+  it("panel vẫn MỞ ĐƯỢC — đóng mặc định là điểm khởi đầu, không phải gỡ bỏ", () => {
+    useAppStore.setState({ rightOpen: useAppStore.getInitialState().rightOpen });
+    useAppStore.getState().toggleRight();
+    expect(useAppStore.getState().rightOpen).toBe(true);
+    useAppStore.getState().toggleRight();
+    expect(useAppStore.getState().rightOpen).toBe(false);
   });
 
   it("header có mục Thư viện; điều hướng là link chữ, không phải nút pill", () => {

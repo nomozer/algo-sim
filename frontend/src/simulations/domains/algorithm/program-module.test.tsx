@@ -495,9 +495,13 @@ describe("đường canonical vẫn fail-closed", () => {
 /**
  * VISIBILITY — thuyết minh bước xét điều kiện phải mang GIÁ TRỊ hiện tại.
  *
- * Audit tương tác 2026-08-03: ở 768×900 panel Quan sát đóng mặc định, nên bước
- * xét điều kiện là chỗ DUY NHẤT học sinh không thấy giá trị biến — đúng lúc câu
- * hỏi là "x còn ≤ 14 không?". Bước GÁN vốn đã nêu ("x ← x + 3 = 5.").
+ * Audit tương tác 2026-08-03: ở 768×900 panel phải đóng mặc định, nên bước xét
+ * điều kiện là chỗ DUY NHẤT học sinh không thấy giá trị biến — đúng lúc câu hỏi
+ * là "x còn ≤ 14 không?". Bước GÁN vốn đã nêu ("x ← x + 3 = 5.").
+ *
+ * W4B-2B §8 nâng phạm vi của chính bất biến này: panel (nay tên "Giải thích")
+ * đóng mặc định ở MỌI bề rộng ⇒ narration là đường duy nhất chở giá trị biến cho
+ * mọi học sinh, không riêng màn hẹp. Các assert dưới đây vì thế KHÔNG được nới.
  *
  * Chỉ đổi CHỮ. Engine/state/timeline/bố cục/tương tác không đụng: dãy trace và
  * số bước phải y nguyên (khoá ở test dưới cùng).

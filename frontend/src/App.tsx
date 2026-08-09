@@ -11,7 +11,7 @@ import { useAppStore } from "./state/store";
  * M9-UX1 (mở rộng M9-UX5/UX7) — BỐN mặt trình bày trên MỘT store:
  *   home      = vào cửa: MỘT hành động chính (phân tích đề) + 6 gợi ý + 1 thẻ tiếp tục;
  *   library   = danh mục mô phỏng ĐẦY ĐỦ (gom nhóm, có lọc);
- *   workspace = phiên học: SÂN KHẤU + Quan sát + điều khiển theo capability;
+ *   workspace = phiên học: SÂN KHẤU + Giải thích + điều khiển theo capability;
  *   history   = toàn bộ lịch sử học (mở lại zero-AI).
  * Về Home KHÔNG phá liên tục học: active dọn đi nhưng lịch sử bền giữ nguyên.
  *
@@ -41,7 +41,9 @@ export default function App() {
           AlgoSim
         </button>
         {/* M9-UX5: điều hướng là LINK CHỮ đẩy sang phải, trang đang xem gạch chân.
-            M9-UX7: chỉ còn MỘT nút bật/tắt panel (Quan sát) — panel trái đã gỡ hẳn. */}
+            M9-UX7: chỉ còn MỘT nút bật/tắt panel (Giải thích) — panel trái đã gỡ hẳn.
+            W4B-2B §8: panel nay ĐÓNG mặc định ở mọi màn, nên nút này là đường VÀO
+            chứ không còn là đường ra — giữ nó luôn hiện khi ở workspace. */}
         <nav className="nav-links">
           <button
             className={`nav-link${view === "home" ? " is-active" : ""}`}
@@ -68,9 +70,9 @@ export default function App() {
               <button
                 className={`btn-utility${rightOpen ? " is-active" : ""}`}
                 onClick={toggleRight}
-                title="Ẩn/hiện bảng quan sát"
+                title="Ẩn/hiện bảng giải thích"
               >
-                Quan sát
+                Giải thích
                 <IconPanel side="right" size={14} />
               </button>
             </>

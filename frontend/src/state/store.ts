@@ -70,14 +70,15 @@ interface AppState {
    * Trạng thái panel (tổng quát, không dính domain — M2 #3, #8).
    * M9-UX7: panel TRÁI đã GỠ HẲN — sau khi có trang Thư viện, danh mục tồn tại ở
    * ba nơi (Home / Thư viện / panel trái). Panel trái là bản sao thứ ba; đổi bài
-   * nay đi qua Thư viện trên header. Workspace còn 2 cột: sân khấu + Quan sát.
+   * nay đi qua Thư viện trên header. Workspace còn 2 cột: sân khấu + Giải thích.
+   * W4B-2B §8: mặc định ĐÓNG ở mọi bề rộng — xem lý do ở chỗ khởi tạo bên dưới.
    */
   rightOpen: boolean;
   /**
    * M9-UX5 — AI KHÔNG còn ngang hàng với Quan sát.
    * Trước đây panel phải là hai tab [Quan sát][Hỏi AI]: một nửa cột phải, lúc
    * nào cũng vậy, dành cho AI — trong khi luật gốc R0 nói LLM KHÔNG phải xương
-   * sống của hệ. Nay cột phải LUÔN là Quan sát; AI là một mục THU GỌN ở đáy.
+   * sống của hệ. Nay cột phải LUÔN là Giải thích; AI là một mục THU GỌN ở đáy.
    * (Thay `inspectorTab: "inspect" | "ai"`.)
    */
   aiOpen: boolean;
@@ -139,8 +140,6 @@ interface AppState {
   reset: () => void;
 }
 
-/** Màn hình hẹp → panel đóng sẵn để workspace không bị bóp (M2 responsive). */
-const WIDE_SCREEN = typeof window === "undefined" || window.innerWidth >= 1100;
 
 export const useAppStore = create<AppState>((set, get) => {
   /** Chạy một phép biến đổi qua timeline capability; không có thì bỏ qua. */
@@ -176,9 +175,23 @@ export const useAppStore = create<AppState>((set, get) => {
     playing: false,
     speedMs: 1200,
     prediction: null,
-    // Panel PHẢI (Quan sát) giữ mở trên màn rộng: biến/mã giả là biểu diễn
-    // liên kết cốt lõi của M9-S1, không phải trang trí.
-    rightOpen: WIDE_SCREEN,
+    // W4B-2B §8 — panel PHẢI (Giải thích) ĐÓNG mặc định ở MỌI bề rộng.
+    //
+    // Trước đây nó mở sẵn trên màn ≥1100px với lý do "biến/mã giả là biểu diễn
+    // liên kết cốt lõi". Lý do đó vẫn đúng, nhưng nó biện minh cho việc panel
+    // LUÔN SẴN CÓ, không phải cho việc panel LUÔN MỞ: mở sẵn thì sân khấu — thứ
+    // duy nhất mang cơ chế của bài — bị cắt ~316px ngay ở cái nhìn đầu tiên, và
+    // học sinh đọc lời giải thích trước khi kịp tự nhìn ra điều gì.
+    //
+    // An toàn được vì thông tin KHÔNG nằm riêng ở đây: mọi bước đều mang giá trị
+    // trong `Step.narration` do engine dựng (vd `core/program.ts` ghép tên+giá
+    // trị biến vào chính bước xét điều kiện), và narration nằm ở cột giữa nên
+    // không phụ thuộc trạng thái panel. Panel là đường ĐÀO SÂU, mở bằng nút
+    // "Giải thích" trên header — không phải nguồn duy nhất của sự thật.
+    //
+    // Hằng `WIDE_SCREEN` đã gỡ: không còn mặc định nào phụ thuộc `window` nữa,
+    // nên SSR và trình duyệt khởi tạo giống hệt nhau.
+    rightOpen: false,
     aiOpen: false,
     visualMode: "2d",
 
