@@ -2261,6 +2261,21 @@ html {
    nghiệm. Cố ý KHÔNG dùng `.action-zone`: khối này không phải chỗ học sinh
    hành động, nên nó không được mang cùng nền/viền với vùng cam kết — nhìn vào
    phải thấy ngay đâu là thông tin, đâu là việc phải làm. */
+/* W4B-2V/C — KHAY THÍ NGHIỆM. Một hàng, không nền thẻ, không padding lớn:
+   Thí nghiệm là CÔNG CỤ gắn vào mô phỏng, không phải tấm nội dung thứ hai nằm
+   dưới nó. Lối đóng đẩy về cuối hàng để không chen vào câu hỏi hành động. */
+.experiment-tray {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  font-size: 14px;
+  color: var(--ink-secondary);
+}
+
+.experiment-tray-close {
+  margin-left: auto;
+}
+
 .search-observe {
   display: flex;
   flex-direction: column;

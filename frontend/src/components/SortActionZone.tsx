@@ -39,10 +39,12 @@ interface SortActionZoneProps {
    * khỏi kiểu này (xem `ScanActionZone`).
    */
   feedback?: { verdict: string; message: string; answerId?: string } | null;
+  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để khay Thí nghiệm hỏi. */
+  showPrompt?: boolean;
 }
 
 export function SortActionZone({
-  model, answered, busy, onAct, feedback = null,
+  model, answered, busy, onAct, feedback = null, showPrompt = true,
 }: SortActionZoneProps) {
   return (
     <section className="action-zone sort-action" aria-label="Thao tác sắp xếp">
@@ -61,7 +63,10 @@ export function SortActionZone({
         <span className="sort-expression">{model.expression}</span>
       </div>
 
-      <p className="sort-instruction">Em hãy làm bước này: chọn một trong hai.</p>
+      {/* W4B-2V/C: ở bài GÁC CỔNG, khay Thí nghiệm đã hỏi đúng câu này rồi —
+          in lại ở đây là hai kênh nói một điều. Bài CHƯA gác không có khay
+          nên mặc định `true` giữ nguyên hành vi cũ cho chúng. */}
+      {showPrompt && <p className="sort-instruction">Em hãy làm bước này: chọn một trong hai.</p>}
 
       <div className="sort-actions">
         {model.actions.map((a: MechanismAction) => {

@@ -63,6 +63,20 @@ export interface WhatIfPolicy {
   experimentGated?: boolean;
 }
 
+/* W4B-2V/C — THÍ NGHIỆM LÀ CÔNG CỤ, KHÔNG PHẢI TẤM NỘI DUNG THỨ HAI.
+ *
+ * Đo được trước khi sửa (`docs/evaluation/m17/w4b2vc-experiment-tool/before/`):
+ * mở cổng làm vùng làm việc CAO THÊM 122–186px, và `framing` là khối chữ lớn
+ * nhất (135–310 ký tự) dựng trong một thẻ `.notes`. Đó đúng là "bài giảng thứ
+ * hai nằm dưới mô phỏng".
+ *
+ * `framing` nay là MỘT CÂU HỎI HÀNH ĐỘNG. Nghĩa what-if KHÔNG bị xoá — nó
+ * chuyển sang `hint`, chuỗi vốn đã render ngay cạnh chính công cụ kéo. Đây là
+ * ràng buộc bắt buộc, không phải tuỳ chọn: W4B-2D §7 cấm trình bày kéo như
+ * "bước tiếp theo của thuật toán", và câu phân biệt đó phải sống ở đâu đó.
+ * Cắt chữ mà đánh mất phân biệt cam kết ↔ what-if là đổi một khối chữ lấy một
+ * hồi quy ngữ nghĩa.
+ */
 const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   bubble_sort: {
     mode: "free",
@@ -83,7 +97,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     challengeTeaser:
       "Quân bài đang giữ phải nằm đúng chỗ của nó — em thử tự quyết định chỗ đó xem.",
     framing:
-      "Ở bước này em quyết định thay thuật toán: quân bài đang giữ nên dời tiếp sang phải, hay dừng lại và chèn vào đây? Em cũng có thể kéo đổi chỗ hai cột để thử một thứ tự khác.",
+      "Dời tiếp hay dừng lại?",
   },
   selection_sort: {
     mode: "free",
@@ -93,7 +107,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
   },
   linear_search: {
     mode: "framed",
-    hint: "Kéo đổi chỗ để đưa giá trị cần tìm tới sớm hơn hay muộn hơn — số lần so sánh sẽ thay đổi thế nào?",
+    hint: "Kéo = thí nghiệm, không phải bước thuật toán: dời đích, xem chi phí đổi.",
     rationale:
       "Vị trí của giá trị cần tìm quyết định CHI PHÍ tìm kiếm (số lần so sánh) — hệ quả tất định, nhìn thấy ở kết quả nhánh.",
     /* W4B-2D §3 — KÉO Ở ĐÂY LÀ WHAT-IF, KHÔNG PHẢI BƯỚC CỦA THUẬT TOÁN.
@@ -125,7 +139,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
        một lời mời sẽ dạy học sinh rằng kéo là "bước tiếp theo của thuật toán",
        đúng thứ §7 cấm. */
     framing:
-      "Ở bước này em quyết định thay thuật toán: phần tử đang xét có đúng là giá trị cần tìm, hay phải kiểm tra tiếp phần tử sau? Ngoài ra em có thể kéo đổi chỗ hai cột để hỏi một câu KHÁC — đó là thí nghiệm, không phải bước của thuật toán: nếu giá trị cần tìm nằm sớm hơn hay muộn hơn thì số lần so sánh đổi thế nào?",
+      "Em quyết định bước tiếp theo.",
   },
   binary_search: {
     mode: "challenge",
@@ -142,8 +156,8 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     /* §18 — hai công cụ, hai câu hỏi. Cam kết đứng trước (đó là việc của thuật
        toán), phá tiền đề đứng sau (đó là thí nghiệm về điều kiện áp dụng). */
     framing:
-      "Ở bước này em quyết định thay thuật toán: nên tìm tiếp ở nửa nào, hay phần tử giữa chính là giá trị cần tìm? Ngoài ra em có thể kéo đổi chỗ hai cột để thử một câu KHÁC — tìm kiếm nhị phân chỉ đúng khi dãy đã sắp thứ tự, hãy phá thứ tự đó rồi quan sát: thuật toán có thể bỏ sót giá trị có thật trong dãy.",
-    hint: "Kéo đổi chỗ hai cột để phá thứ tự sắp — rồi xem thuật toán còn tìm thấy đúng không.",
+      "Em chọn nửa để tìm tiếp.",
+    hint: "Kéo = thí nghiệm: phá thứ tự đã sắp, xem còn tìm đúng không.",
     rationale:
       "Đổi chỗ tự do phá tiền điều kiện mà không ai giải thích → gây hiểu lầm; đóng khung thành thí nghiệm tiền-điều-kiện thì hệ quả (bỏ sót giá trị) là bài học tất định.",
     /* W4B-2D §26 — kéo VỐN đã sau cổng (mode `challenge`); cờ này thêm vùng cam
@@ -157,7 +171,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     challengeTeaser:
       "Thuật toán không bao giờ nhìn lại vùng đã duyệt — thử xem điều đó có đánh lừa được nó không.",
     framing:
-      "Thuật toán chỉ nhớ giá trị tốt nhất ĐÃ GẶP và không bao giờ quay lại vùng đã duyệt. Hãy đổi một phần tử chưa duyệt vào vùng đã duyệt rồi xem kết quả cuối.",
+      "Cập nhật hay giữ nguyên?",
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
     rationale:
       "Đổi chỗ thường không đổi kết quả (max bất biến theo thứ tự) → tự do là trang trí; đóng khung quanh bất biến vùng-đã-duyệt thì hệ quả (thuật toán bị lừa) là bài học tất định về vòng lặp.",
@@ -172,7 +186,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     challengeTeaser:
       "Thuật toán không bao giờ nhìn lại vùng đã duyệt — thử xem điều đó có đánh lừa được nó không.",
     framing:
-      "Thuật toán chỉ nhớ giá trị tốt nhất ĐÃ GẶP và không bao giờ quay lại vùng đã duyệt. Hãy đổi một phần tử chưa duyệt vào vùng đã duyệt rồi xem kết quả cuối.",
+      "Cập nhật hay giữ nguyên?",
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
     rationale:
       "Như find_max: chỉ có nghĩa khi đóng khung quanh bất biến vùng-đã-duyệt; đổi chỗ tự do hầu như không đổi kết quả.",
@@ -193,7 +207,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     challengeTeaser:
       "Không phải phần tử nào cũng được cộng — em thử tự quyết định phần tử này có vào tổng không.",
     framing:
-      "Ở bước này em quyết định thay thuật toán: phần tử đang xét có thoả điều kiện để cộng vào tổng không? Chọn xong sẽ thấy engine chấm ngay.",
+      "Phần tử này có vào tổng không?",
   },
   count_if: {
     mode: "hidden",
@@ -205,7 +219,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     challengeTeaser:
       "Không phải phần tử nào cũng được đếm — em thử tự quyết định phần tử này có vào nhóm không.",
     framing:
-      "Ở bước này em quyết định thay thuật toán: phần tử đang xét có thoả điều kiện để đếm vào nhóm không? Chọn xong sẽ thấy engine chấm ngay.",
+      "Phần tử này có vào nhóm không?",
   },
 };
 

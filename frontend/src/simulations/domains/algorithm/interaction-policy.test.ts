@@ -15,6 +15,24 @@ import { whatIfPolicyOf } from "./interaction-policy";
  * Gating theo ĐỊNH DANH NGỮ NGHĨA (algorithm_id trong config) — không theo tiêu đề.
  */
 
+
+/**
+ * W4B-2V/C — KHÁI NIỆM PHẢI SỐNG, KHÔNG PHẢI Ô CHỨA NÓ.
+ *
+ * Các assert cũ khoá vào ĐÚNG MỘT trường (`framing` hoặc `hint`) và đúng một
+ * từ. Khi wave này rút `framing` xuống một câu hỏi hành động và dời nghĩa
+ * what-if sang `hint` — chuỗi render ngay cạnh công cụ kéo — chúng đỏ dù học
+ * sinh vẫn đọc được đúng ý đó. Test khoá VỊ TRÍ thay vì Ý là test cản đúng loại
+ * refactor mà nó lẽ ra phải bảo vệ.
+ *
+ * Nay khẳng định trên CẶP `framing ∪ hint`: đó là những gì học sinh thấy khi
+ * công cụ đã mở. Vẫn chặt — bỏ hẳn khái niệm đi thì vẫn đỏ.
+ */
+function toolCopy(id: Parameters<typeof whatIfPolicyOf>[0]): string {
+  const p = whatIfPolicyOf(id);
+  return `${p.framing ?? ""} ${p.hint ?? ""}`;
+}
+
 describe("whatIfPolicyOf — gating theo cơ chế", () => {
   it("(15) bubble_sort: giữ swap tự do — đổi chỗ là chính cơ chế", () => {
     expect(whatIfPolicyOf("bubble_sort").mode).toBe("free");
@@ -27,21 +45,26 @@ describe("whatIfPolicyOf — gating theo cơ chế", () => {
   it("linear_search: chỉ giữ dạng CÓ KHUNG quanh chi phí tìm kiếm", () => {
     const p = whatIfPolicyOf("linear_search");
     expect(p.mode).toBe("framed");
-    expect(p.hint).toContain("so sánh"); // khung: số lần so sánh thay đổi thế nào
+    // khung CHI PHÍ phải còn, và kéo phải được gọi đúng tên là THÍ NGHIỆM
+    expect(toolCopy("linear_search")).toContain("chi phí");
+    expect(toolCopy("linear_search")).toContain("thí nghiệm");
+    expect(toolCopy("linear_search"), "kéo bị trình bày như bước của thuật toán")
+      .toContain("không phải bước thuật toán");
   });
 
   it("(16) binary_search: KHÔNG có swap tự do; chỉ thí nghiệm phá tiền điều kiện có khung", () => {
     const p = whatIfPolicyOf("binary_search");
     expect(p.mode).toBe("challenge");
-    expect(p.framing).toContain("sắp thứ tự");
-    expect(p.framing).toContain("bỏ sót");
+    // tiền đề bị phá vẫn phải được nói ra ở đâu đó trong bộ chữ của công cụ
+    expect(toolCopy("binary_search")).toContain("thứ tự đã sắp");
+    expect(toolCopy("binary_search")).toContain("thí nghiệm");
   });
 
   it("find_max/find_min: ẩn mặc định; chỉ mở như thí nghiệm phá bất biến vùng-đã-duyệt", () => {
     for (const id of ["find_max", "find_min"] as const) {
       const p = whatIfPolicyOf(id);
       expect(p.mode).toBe("challenge");
-      expect(p.framing).toContain("đã duyệt");
+      expect(toolCopy(id)).toContain("đã duyệt");
     }
   });
 

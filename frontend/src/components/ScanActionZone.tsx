@@ -43,10 +43,12 @@ interface ScanActionZoneProps {
    * là mời renderer tự phán xử, và nó sẽ lọt vào DOM.
    */
   feedback?: { verdict: string; message: string; answerId?: string } | null;
+  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để khay Thí nghiệm hỏi. */
+  showPrompt?: boolean;
 }
 
 export function ScanActionZone({
-  model, answered, busy, onAct, feedback = null,
+  model, answered, busy, onAct, feedback = null, showPrompt = true,
 }: ScanActionZoneProps) {
   return (
     <section className="action-zone scan-action" aria-label="Thao tác với biến tích luỹ">
@@ -63,7 +65,10 @@ export function ScanActionZone({
         </span>
       </div>
 
-      <p className="scan-instruction">Em hãy làm bước này: chọn một trong hai.</p>
+      {/* W4B-2V/C: ở bài GÁC CỔNG, khay Thí nghiệm đã hỏi đúng câu này rồi —
+          in lại ở đây là hai kênh nói một điều. Bài CHƯA gác không có khay
+          nên mặc định `true` giữ nguyên hành vi cũ cho chúng. */}
+      {showPrompt && <p className="scan-instruction">Em hãy làm bước này: chọn một trong hai.</p>}
 
       {/* SAU KHI CHỐT, HỌC SINH PHẢI CÒN THẤY MÌNH ĐÃ CHỌN GÌ.
           Đo trong Chrome (W3B-1 baseline, 4/4 target): chốt xong thì cả hai nút

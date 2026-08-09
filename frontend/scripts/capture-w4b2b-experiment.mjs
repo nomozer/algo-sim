@@ -123,6 +123,21 @@ const snapshot = () => evaluate(`(async () => {
        Ghi nguyen van de sidecar chung minh duoc tinh don dieu, khong chi bao co/khong. */
     observeState: (document.querySelector('.search-observe') || {}).textContent || null,
     observeCost: (document.querySelector('.search-cost') || {}).textContent || null,
+    /* W4B-2V/C §15 — COMPACTNESS PHAI DO DUOC, khong duoc noi "trong nho hon".
+       Do chieu cao khoi mo phong + dem KHOI CHU (doan van dai >= 60 ky tu ma
+       hoc sinh doc o vung lam viec). Mo Thi nghiem khong duoc de ra mot khoi
+       noi dung lon thu hai. */
+    stageHeight: Math.round((document.querySelector('.sim-stage') || {getBoundingClientRect:()=>({height:0})}).getBoundingClientRect().height),
+    /* Phan tu CO GIAN la khoi ma AlgorithmWorkspace tra ve — cha truc tiep cua
+       .sim-stage. Ban dau do '.workspace-main, .app-single, main' va ra 927px
+       BAT DONG o ca bon target: do la container cao co dinh bang khung nhin,
+       tuc phep do khong he do thu dang doi. Mot so khong doi trong y het mot
+       ket qua tot. */
+    workspaceHeight: Math.round(((document.querySelector('.sim-stage') || {}).parentElement
+      || document.body).getBoundingClientRect().height),
+    proseBlocks: [...document.querySelectorAll('.notes, .hint, .scan-instruction, .sort-title, .narration-bar')]
+      .map((el) => el.textContent.replace(/\s+/g,' ').trim())
+      .filter((t) => t.length >= 60),
     /* W4B-2V: quan he co HAI chu so huu hop le — dai nhan qua (quet day/sap xep)
        va khoi quan sat cua ho tim kiem. Do NGU NGHIA, khong do ten class. */
     relation: !!document.querySelector('.decision-strip')
@@ -391,7 +406,16 @@ try {
     await sleep(300);
 
     /* 6 — ĐÓNG CỔNG → Quan sát trở lại, không reset mô phỏng */
-    await clickText("Đóng thí nghiệm");
+    /* W4B-2V/C: nhãn hiện rút còn "Đóng"; tên khả truy cập vẫn là "Đóng thí
+       nghiệm". Bấm theo ARIA-LABEL trước — đó là danh tính bền của nút, chữ
+       hiện thì đổi theo thiết kế. Lượt đo đầu sau khi rút nhãn báo "đóng cổng
+       ⇒ vùng cam kết biến mất" FAIL ở cả bốn target: runner hết hạn, không phải
+       sản phẩm hỏng. */
+    const closed_ok = await evaluate(`(() => {
+      const b = document.querySelector('[aria-label="Đóng thí nghiệm"]');
+      if (!b) return false; b.click(); return true;
+    })()`);
+    if (!closed_ok) await clickText("Đóng");
     await sleep(400);
     const closed = await snapshot();
     await shot(`${short}-6-observe-again`);
@@ -425,6 +449,18 @@ try {
       prediction_correct: afterRight.prediction,
       /* §29: tien de phai doc duoc o Quan sat, va chi noi MOT lan. */
       precondition_in_observe: observe.precondition,
+      /* §15 — so sanh DUOC giua before/after. `delta` la chieu cao ma viec MO
+         Thi nghiem them vao vung lam viec; do moi la con so noi len "cong cu
+         hay tam noi dung thu hai". */
+      layout: {
+        observe: { stage: observe.stageHeight, workspace: observe.workspaceHeight,
+                   proseBlocks: observe.proseBlocks.length },
+        experiment: { stage: opened.stageHeight, workspace: opened.workspaceHeight,
+                      proseBlocks: opened.proseBlocks.length },
+        workspaceDelta: opened.workspaceHeight - observe.workspaceHeight,
+        proseDelta: opened.proseBlocks.length - observe.proseBlocks.length,
+        experimentProse: opened.proseBlocks,
+      },
 
     };
   }

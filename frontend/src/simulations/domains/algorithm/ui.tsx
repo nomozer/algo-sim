@@ -221,6 +221,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           này shell KHÔNG dựng PredictionBar (`predict.presentedInStage`). */}
       {scan && commitmentVisible && (
         <ScanActionZone
+          showPrompt={!gated}
           model={scan}
           answered={prediction !== null}
           busy={busy}
@@ -238,6 +239,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
 
       {search && commitmentVisible && (
         <SearchActionZone
+          showPrompt={!gated}
           model={search}
           answered={prediction !== null}
           busy={busy}
@@ -251,6 +253,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           không mang hai nghĩa ở cùng một bước. Nộp qua chính `predict.check`. */}
       {sort && commitmentVisible && (
         <SortActionZone
+          showPrompt={!gated}
           model={sort}
           answered={prediction !== null}
           busy={busy}
@@ -334,16 +337,25 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           </button>
         </div>
       )}
+      {/* W4B-2V/C — KHAY CÔNG CỤ, KHÔNG PHẢI THẺ NỘI DUNG.
+          Trước đây khối này là `.notes` — một thẻ có nền và padding, mang một
+          đoạn 135–310 ký tự. Đo được: mở cổng làm vùng làm việc cao thêm
+          122–186px (`w4b2vc-experiment-tool/before/`). Nay là MỘT DÒNG: câu hỏi
+          hành động + lối đóng. Nội dung what-if không mất — nó ở `policy.hint`,
+          ngay cạnh chính công cụ kéo. */}
       {hasExperiment && labOpen && !state.branch && (
-        <div className="notes" role="note">
-          <IconExperiment size={14} /> {policy.framing}{" "}
+        <div className="experiment-tray" role="note">
+          <IconExperiment size={14} />
+          <strong>{policy.framing}</strong>
+          {/* Nhãn hiện NGẮN cho gọn khay, nhưng TÊN KHẢ TRUY CẬP giữ đủ ngữ
+              cảnh: đọc màn hình nghe "Đóng" trơ trọi thì không biết đóng cái gì. */}
           <button
-            className="btn-utility"
-            style={{ marginLeft: 8 }}
+            className="btn-utility experiment-tray-close"
             onClick={() => setLabOpen(false)}
+            aria-label="Đóng thí nghiệm"
             aria-expanded
           >
-            Đóng thí nghiệm
+            Đóng
           </button>
         </div>
       )}

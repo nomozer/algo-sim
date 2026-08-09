@@ -126,6 +126,8 @@ interface SearchActionZoneProps {
   busy: boolean;
   onAct: (actionId: string) => void;
   feedback?: { verdict: string; message: string } | null;
+  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để khay Thí nghiệm hỏi. */
+  showPrompt?: boolean;
 }
 
 /**
@@ -137,11 +139,14 @@ interface SearchActionZoneProps {
  * không đổi lượng thông tin về cơ chế.
  */
 export function SearchActionZone({
-  model, answered, busy, onAct, feedback = null,
+  model, answered, busy, onAct, feedback = null, showPrompt = true,
 }: SearchActionZoneProps) {
   return (
     <section className="action-zone search-action" aria-label="Thao tác với bước tìm kiếm">
-      <p className="scan-instruction">Em hãy quyết định bước tiếp theo.</p>
+      {/* W4B-2V/C: ở bài GÁC CỔNG, khay Thí nghiệm đã hỏi đúng câu này rồi —
+          in lại ở đây là hai kênh nói một điều. Bài CHƯA gác không có khay
+          nên mặc định `true` giữ nguyên hành vi cũ cho chúng. */}
+      {showPrompt && <p className="scan-instruction">Em hãy quyết định bước tiếp theo.</p>}
 
       <div className="search-actions">
         {model.actions.map((a: SearchAction) => (

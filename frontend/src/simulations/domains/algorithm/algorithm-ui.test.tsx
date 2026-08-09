@@ -95,11 +95,13 @@ describe("gating swap trong AlgorithmWorkspace", () => {
        hiện SAU khi học sinh mở Thí nghiệm — bản render đó do runner trình duyệt
        phủ (labOpen là useState cục bộ). */
     const h = html("linear_search", { array: [4, 9, 7], target: 9 }, 1);
-    expect(h, "Quan sát vẫn mời kéo").not.toContain("sớm hơn");
+    expect(h, "Quan sát vẫn mời kéo").not.toContain("Kéo =");
     expect(h).toContain("tự đi từng bước tìm");
-    // Khung câu hỏi CHI PHÍ không mất đi, nó chỉ chuyển vào `framing` của cổng.
-    expect(whatIfPolicyOf("linear_search").hint).toContain("sớm hơn");
-    expect(whatIfPolicyOf("linear_search").framing).toContain("số lần so sánh");
+    /* W4B-2V/C: khung CHI PHÍ chuyển từ `framing` (đoạn 310 ký tự) sang `hint`
+       — chuỗi đứng ngay cạnh công cụ kéo. Ý không mất, chỗ đặt đổi. */
+    expect(whatIfPolicyOf("linear_search").hint).toContain("chi phí");
+    expect(whatIfPolicyOf("linear_search").framing!.length,
+      "framing lại phình thành đoạn giảng").toBeLessThan(60);
   });
 });
 
