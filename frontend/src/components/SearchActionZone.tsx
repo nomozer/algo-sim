@@ -47,19 +47,36 @@ export function SearchPrecondition({ text }: { text: string }) {
   );
 }
 
-interface SearchActionZoneProps {
+/**
+ * TRẠNG THÁI QUAN SÁT CỦA BƯỚC TÌM KIẾM — W4B-2V, tách khỏi vùng cam kết.
+ *
+ * VÌ SAO TÁCH (root cause #1 của bản audit đóng băng `fe6b0d5`):
+ * component này trước đây sở hữu HAI trách nhiệm khác loại trong cùng một
+ * `<section>` — trạng thái để QUAN SÁT và điều khiển để CAM KẾT — rồi
+ * `AlgorithmWorkspace` gác cả cây con bằng `commitmentVisible`. Hệ quả đo được
+ * ở W4B-2D: gác *nút cam kết* thì mất luôn chip vị trí/đích/vùng xét và khối
+ * chi phí. Với tìm tuần tự thì chi phí CHÍNH LÀ cơ chế đáng học — chính lời
+ * biện minh trong `interaction-policy.ts` nói thế — nên cổng đã lấy đi đúng thứ
+ * nó viện dẫn để tự biện minh.
+ *
+ * Luật nay là: **cổng chỉ gác QUYỀN HÀNH ĐỘNG, không gác THÔNG TIN.**
+ *
+ * QUAN HỆ CŨNG VỀ ĐÂY. `expression` ("7 = 9 ?") trước sống ở dải nhân quả, mà
+ * dải đó bị tắt đúng khi vùng cam kết bật — nên MỞ Thí nghiệm lại làm mất quan
+ * hệ. Hai chiều của cùng một lỗi: một dữ kiện quan sát bị buộc vào công tắc của
+ * cổng. Nay khối này là chủ sở hữu DUY NHẤT của quan hệ ở họ tìm kiếm, và dải
+ * nhân quả không dựng cho họ này nữa ⇒ không còn hai kênh nói cùng một điều.
+ */
+export function SearchStateView({
+  model,
+  relation = null,
+}: {
   model: SearchInteractionModel;
-  answered: boolean;
-  busy: boolean;
-  onAct: (actionId: string) => void;
-  feedback?: { verdict: string; message: string } | null;
-}
-
-export function SearchActionZone({
-  model, answered, busy, onAct, feedback = null,
-}: SearchActionZoneProps) {
+  /** Phép so sánh đang xét, từ `decisionPointOf(state).expression`. */
+  relation?: string | null;
+}) {
   return (
-    <section className="action-zone search-action" aria-label="Thao tác với bước tìm kiếm">
+    <section className="search-observe" aria-label="Trạng thái bước tìm kiếm">
       {model.precondition && <SearchPrecondition text={model.precondition} />}
 
       <div className="search-state">
@@ -80,6 +97,7 @@ export function SearchActionZone({
             </strong>
           </span>
         )}
+        {relation && <span className="scan-expression">{relation}</span>}
       </div>
 
       {/* CHI PHÍ — dẫn xuất từ `vars.i` và độ dài dãy, không phải chạy lại thuật
@@ -98,7 +116,31 @@ export function SearchActionZone({
           </span>
         </div>
       )}
+    </section>
+  );
+}
 
+interface SearchActionZoneProps {
+  model: SearchInteractionModel;
+  answered: boolean;
+  busy: boolean;
+  onAct: (actionId: string) => void;
+  feedback?: { verdict: string; message: string } | null;
+}
+
+/**
+ * VÙNG CAM KẾT của bước tìm kiếm — CHỈ quyền hành động của học sinh.
+ *
+ * Sau W4B-2V khối này không còn mang một dữ kiện quan sát nào: trạng thái đã
+ * sang `SearchStateView`. Nhờ vậy `commitmentSurfaceVisible` gác đúng thứ nó
+ * được đặt tên để gác, và mở/đóng Thí nghiệm chỉ THÊM/BỚT quyền hành động chứ
+ * không đổi lượng thông tin về cơ chế.
+ */
+export function SearchActionZone({
+  model, answered, busy, onAct, feedback = null,
+}: SearchActionZoneProps) {
+  return (
+    <section className="action-zone search-action" aria-label="Thao tác với bước tìm kiếm">
       <p className="scan-instruction">Em hãy quyết định bước tiếp theo.</p>
 
       <div className="search-actions">

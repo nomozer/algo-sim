@@ -1092,6 +1092,24 @@ vẫn phải sở hữu `state k → k+1 → result`), bảng sở hữu rendere
 hiện tại 11/3/8 của 22 target. Đọc trước khi thêm target mới hoặc khi định cho
 renderer "tự tính" thứ gì.
 
+### `components/SearchActionZone.tsx` — HAI export, HAI trách nhiệm · offline
+`SearchStateView` = **trạng thái quan sát** của bước tìm kiếm (tiền đề · chip vị
+trí/đích/vùng xét · quan hệ · khối chi phí) — render **NGOÀI** cổng Thí nghiệm.
+`SearchActionZone` = **chỉ** điều khiển cam kết (lời nhắc · nút · phản hồi), do
+`commitmentSurfaceVisible` gác. Tách ở W4B-2V vì gác cả cụm làm mất trạng thái
+quan sát (hồi quy W4B-2D). Luật: **cổng gác quyền hành động, không gác thông
+tin.** Dải nhân quả KHÔNG dựng cho họ tìm kiếm nữa — `SearchStateView` là chủ sở
+hữu duy nhất của quan hệ ở họ này.
+
+### `simulations/observation-preservation.test.tsx` · Change impact: offline
+Khoá `CORE_OBSERVATION_STATE_PRESERVED_UNDER_GATING`. Chứng minh THEO CẤU TRÚC
+(không so hai lần render, vì `labOpen` là useState cục bộ nên SSR luôn thấy
+`false`): (1) mọi probe cơ chế lõi nằm ngoài phần bị gác; (2) phần bị gác không
+chứa probe lõi nào ⇒ mở cổng chỉ THÊM quyền hành động. Probe suy từ
+`searchInteractionOf` + `decisionPointOf`, không viết tay. Ngoại lệ có tên
+`PRESENTATION_COPY_TRANSITION` (teaser ↔ framing ↔ nhãn nút ↔ phản hồi được phép
+đổi). Đã tiêm lỗi: gác lại trạng thái → ĐỎ; lộ cam kết ra Quan sát → ĐỎ.
+
 ### `simulations/spec-reuse.test.tsx` · Change impact: offline
 Khoá hợp đồng tái dụng (W4B-2V §30): ba cặp ngữ cảnh khác nhau của cùng cơ chế
 (`binary_search` điểm↔số báo danh · `count_if` điểm↔nhiệt độ · `find_max` học

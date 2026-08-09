@@ -186,8 +186,16 @@ describe("W4B-2B §7/§18 · Quan sát ẩn CAM KẾT, giữ QUAN HỆ", () => {
   });
 
   it("QUAN HỆ đang xét vẫn ở lại — cổng không được lấy mất dữ kiện quan sát", () => {
+    /* W4B-2V: quan hệ có HAI chủ sở hữu hợp lệ tuỳ họ — dải nhân quả
+       (`.decision-strip`) cho quét dãy/sắp xếp, và khối quan sát
+       (`.search-observe`) cho tìm kiếm, nơi quan hệ dọn về ở cùng chip trạng
+       thái. Test khẳng định NGỮ NGHĨA còn sống, không khẳng định tên class —
+       bản cũ chỉ biết một chủ sở hữu nên nó đỏ ngay khi quyền sở hữu dời đi,
+       dù học sinh vẫn nhìn thấy đủ. */
     for (const id of GATED) {
-      expect(observeHtml(id), `${id}: mất dải quan hệ`).toContain("decision-strip");
+      const html = observeHtml(id);
+      const hasRelation = html.includes("decision-strip") || html.includes("search-observe");
+      expect(hasRelation, `${id}: mất quan hệ ở Quan sát`).toBe(true);
     }
   });
 

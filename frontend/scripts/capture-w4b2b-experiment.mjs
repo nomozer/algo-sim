@@ -119,7 +119,14 @@ const snapshot = () => evaluate(`(async () => {
     /* Tien de thuoc QUAN SAT (§29): no phai o lai ke ca khi cong da an vung
        cam ket. Do rieng vi day la thu W4B-2D suyt lam mat. */
     precondition: (document.querySelector('.search-precondition') || {}).textContent || null,
-    relation: !!document.querySelector('.decision-strip'),
+    /* W4B-2V: khoi TRANG THAI QUAN SAT phai co mat o CA Quan sat lan Thi nghiem.
+       Ghi nguyen van de sidecar chung minh duoc tinh don dieu, khong chi bao co/khong. */
+    observeState: (document.querySelector('.search-observe') || {}).textContent || null,
+    observeCost: (document.querySelector('.search-cost') || {}).textContent || null,
+    /* W4B-2V: quan he co HAI chu so huu hop le — dai nhan qua (quet day/sap xep)
+       va khoi quan sat cua ho tim kiem. Do NGU NGHIA, khong do ten class. */
+    relation: !!document.querySelector('.decision-strip')
+      || !!document.querySelector('.search-observe'),
     experimentButton: btn ? btn.textContent.replace(/\\s+/g, ' ').trim() : null,
     experimentOpen: btn ? btn.getAttribute('aria-expanded') === 'true' : null,
     commitButtons: [...document.querySelectorAll('[aria-label^="Thao tác"] button')]
@@ -205,7 +212,12 @@ const nextStepViaUi = () => evaluate(`(() => {
 /** Tiến từng bước BẰNG NÚT tới bước đầu tiên có công cụ cam kết + cổng Thí nghiệm. */
 const gotoActionable = async () => {
   for (let i = 0; i < 40; i += 1) {
-    const ok = await evaluate(`(() => !!document.querySelector('.decision-strip')
+    /* W4B-2V: quan he cua ho tim kiem doi chu so huu tu .decision-strip sang
+       .search-observe (khoi trang thai dung NGOAI cong). Pheo do chi biet mot
+       chu so huu se bao 'khong co buoc cam ket nao' o dung nhung bai vua duoc
+       sua — mot runner het han lai to cao san pham. */
+    const ok = await evaluate(`(() => (!!document.querySelector('.decision-strip')
+        || !!document.querySelector('.search-observe'))
       && [...document.querySelectorAll('button')].some((b) => b.textContent.includes('Thí nghiệm')))()`);
     if (ok) return i;
     if (!(await nextStepViaUi())) break;

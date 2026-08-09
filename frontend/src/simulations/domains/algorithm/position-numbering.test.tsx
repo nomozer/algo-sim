@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./index";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
-import { SearchActionZone } from "../../../components/SearchActionZone";
+import { SearchStateView } from "../../../components/SearchActionZone";
 import { searchInteractionOf } from "./decision";
 import { activeTrace, type AlgorithmSimState } from "./model";
 import { ALGORITHM_IDS, type AlgorithmId } from "../../../core/types";
@@ -206,9 +206,8 @@ describe("W4B-2D §4 · cùng màn hình ⇒ cùng một con số", () => {
   const zoneHtml = (state: AlgorithmSimState, k: number) => {
     const model = searchInteractionOf(at(state, k));
     if (!model) throw new Error("bước này không có mô hình tìm kiếm");
-    return renderToString(
-      <SearchActionZone model={model} answered={false} busy={false} onAct={() => {}} />,
-    );
+    // W4B-2V: chip vị trí/vùng xét dời sang khối QUAN SÁT (ngoài cổng).
+    return renderToString(<SearchStateView model={model} />);
   };
 
   it("linear_search: chip `i`, vùng hành động và nhãn cột nói cùng một vị trí", () => {

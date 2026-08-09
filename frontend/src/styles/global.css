@@ -2257,6 +2257,16 @@ html {
   color: var(--ink-muted);
 }
 
+/* W4B-2V — KHỐI TRẠNG THÁI QUAN SÁT của bước tìm kiếm, đứng NGOÀI cổng Thí
+   nghiệm. Cố ý KHÔNG dùng `.action-zone`: khối này không phải chỗ học sinh
+   hành động, nên nó không được mang cùng nền/viền với vùng cam kết — nhìn vào
+   phải thấy ngay đâu là thông tin, đâu là việc phải làm. */
+.search-observe {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+}
+
 .search-state {
   display: flex;
   flex-wrap: wrap;

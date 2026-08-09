@@ -298,9 +298,14 @@ describe("W2 · không hiện hai hình thức cam kết cùng lúc", () => {
          Thí nghiệm do runner trình duyệt phủ (`labOpen` là useState cục bộ,
          SSR luôn thấy false — ARCHITECTURE_MAP §8 #13). */
       const zone = html.includes('aria-label="Thao tác với bước tìm kiếm"');
-      const strip = html.includes("decision-strip");
-      expect(zone && strip, `${id}: dựng CẢ vùng cam kết lẫn dải nhân quả`).toBe(false);
-      expect(zone || strip, `${id}: mất cả hai — bước quyết định trống trơn`).toBe(true);
+      /* W4B-2V: quan hệ + chip trạng thái nay sống ở `.search-observe`, LUÔN
+         hiện. Dải nhân quả không còn dựng cho họ này ⇒ hai kênh không nói cùng
+         một điều nữa. Bất biến giữ nguyên tinh thần: bước quyết định không bao
+         giờ trống, và không bao giờ có hai kênh trùng. */
+      const observe = html.includes("search-observe");
+      expect(observe, `${id}: mất khối trạng thái quan sát`).toBe(true);
+      expect(html.includes("decision-strip"), `${id}: dựng hai kênh quan hệ`).toBe(false);
+      expect(zone && observe && html.includes("decision-strip"), `${id}: ba kênh`).toBe(false);
       expect(zone, `${id}: bài đã gác cổng mà Quan sát vẫn bày cam kết`).toBe(false);
     }
   });

@@ -331,7 +331,11 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
         <AlgorithmWorkspace config={config} state={at(state, d)} busy={false} dispatch={() => {}} />,
       );
       expect(surfaceCount(html), `${id}: Quan sát vẫn còn bề mặt cam kết`).toBe(0);
-      expect(html, `${id}: cổng đã lấy mất quan hệ`).toContain("decision-strip");
+      // W4B-2V: họ tìm kiếm dời quan hệ sang `.search-observe` (ngoài cổng).
+      expect(
+        html.includes("decision-strip") || html.includes("search-observe"),
+        `${id}: cổng đã lấy mất quan hệ`,
+      ).toBe(true);
       expect(html, `${id}: mất đường vào Thí nghiệm`).toContain("Thí nghiệm");
     }
   });

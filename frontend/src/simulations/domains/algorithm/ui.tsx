@@ -15,7 +15,7 @@ import {
   sortInteractionOf,
 } from "./decision";
 import { ScanActionZone } from "../../../components/ScanActionZone";
-import { SearchActionZone, SearchPrecondition } from "../../../components/SearchActionZone";
+import { SearchActionZone, SearchStateView } from "../../../components/SearchActionZone";
 import { SortActionZone } from "../../../components/SortActionZone";
 import { useAppStore } from "../../../state/store";
 import { commitmentSurfaceVisible, whatIfDragAllowed, whatIfPolicyOf } from "./interaction-policy";
@@ -231,6 +231,11 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
 
       {/* CỤM TÌM KIẾM (W2): tuần tự nhắm CHI PHÍ, nhị phân nhắm VÙNG BỊ LOẠI —
           cùng primitive, khác nhiệm vụ. Nộp qua chính `predict.check`. */}
+      {/* W4B-2V — TRẠNG THÁI QUAN SÁT ĐỨNG NGOÀI CỔNG.
+          Điều kiện là `search` thuần, KHÔNG kèm `commitmentVisible`: cổng gác
+          quyền hành động, không gác thông tin về cơ chế. */}
+      {search && <SearchStateView model={search} relation={decision?.expression ?? null} />}
+
       {search && commitmentVisible && (
         <SearchActionZone
           model={search}
@@ -265,20 +270,16 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           ("Dũng — vị trí 4", "8 > 9 ?"), tức là cổng Thí nghiệm vô tình lấy đi
           một dữ kiện thuần quan sát. Quan hệ thuộc về Quan sát; chỉ NÚT CAM KẾT
           mới thuộc về Thí nghiệm. */}
-      {/* TIỀN ĐỀ Ở LẠI QUAN SÁT (§29). Vùng cam kết đã bị cổng ẩn, nhưng điều
-          kiện áp dụng của thuật toán thì không phải công cụ của học sinh — nó
-          đúng ở mọi bước. Điều kiện `!commitmentVisible` bảo đảm nó chỉ hiện
-          MỘT lần: hoặc ở đây, hoặc trong vùng cam kết, không bao giờ cả hai. */}
-      {search?.precondition && !commitmentVisible && (
-        <SearchPrecondition text={search.precondition} />
-      )}
-
-      {/* W4B-2D §29: `!search` phải thành `!(search && commitmentVisible)` —
-          cùng khuôn scan/sort. Để nguyên `!search` thì ở bài tìm kiếm ĐÃ gác
-          cổng, Quan sát mất CẢ vùng cam kết LẪN dải nhân quả: cổng vô tình lấy
-          đi một dữ kiện thuần quan sát. Quan hệ thuộc Quan sát; chỉ NÚT CAM KẾT
-          thuộc Thí nghiệm. Test (B) của `interaction-family-w1` bắt đúng ca này. */}
-      {decision && !(scan && commitmentVisible) && !(search && commitmentVisible) && !(sort && commitmentVisible) && (
+      {/* W4B-2V — DẢI NHÂN QUẢ KHÔNG DỰNG CHO HỌ TÌM KIẾM NỮA.
+          W4B-2D dùng `!(search && commitmentVisible)`, tức quan hệ hiện ở Quan
+          sát rồi BIẾN MẤT khi mở Thí nghiệm — dải tắt, mà vùng cam kết không hề
+          mang `expression`. Đó là cùng một lỗi ở chiều ngược lại: một dữ kiện
+          quan sát bị buộc vào công tắc của cổng. Nay `SearchStateView` là chủ
+          sở hữu DUY NHẤT của quan hệ ở họ này — luôn hiện, và không có hai kênh
+          nói cùng một điều. Tiền đề cũng đã về đó, nên khối
+          `SearchPrecondition` độc lập của W4B-2D không còn cần.
+          Scan/sort giữ nguyên hành vi cũ. */}
+      {decision && !(scan && commitmentVisible) && !search && !(sort && commitmentVisible) && (
         <div className="decision-strip">
           <span className="decision-consideration">
             <IconSearch size={14} />
