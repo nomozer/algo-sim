@@ -240,12 +240,30 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
   });
 
   it("bước có vùng hành động KHÔNG dựng thêm dải nhân quả (state line một lần)", () => {
-    const { config, state } = build("find_max", {});
+    /* Bất biến: state line xuất hiện ĐÚNG MỘT lần — không bao giờ vùng hành động
+       và dải nhân quả cùng lúc.
+
+       W4B-2B: `find_max` nay gác vùng cam kết sau cổng Thí nghiệm nên nó không
+       còn minh hoạ được vế "có vùng hành động". Dùng `sum_if` — cùng cụm quét
+       dãy, KHÔNG thuộc pilot, nên vẫn dựng `ScanActionZone` thẳng ở bước quyết
+       định. Bất biến không đổi, chỉ đổi bài làm chứng. */
+    const { config, state } = build("sum_if", { condition: { op: ">=", value: 7 } });
     const html = renderToString(
       <AlgorithmWorkspace config={config} state={at(state, firstDecision(state))} busy={false} dispatch={() => {}} />,
     );
     expect(html).toContain("scan-action");
     expect(html).not.toContain("decision-strip");
+  });
+
+  it("W4B-2B §7 — bài pilot: Quan sát KHÔNG có vùng cam kết, nhưng CÒN quan hệ", () => {
+    const { config, state } = build("find_max", {});
+    const html = renderToString(
+      <AlgorithmWorkspace config={config} state={at(state, firstDecision(state))} busy={false} dispatch={() => {}} />,
+    );
+    expect(html).not.toContain("scan-action");
+    expect(html).toContain("decision-strip");
+    // cổng phải nhìn thấy được, nếu không học sinh mất đường vào
+    expect(html).toContain("Thí nghiệm");
   });
 });
 

@@ -1,3 +1,4 @@
+import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { describe, expect, it, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
@@ -189,9 +190,21 @@ describe("W3B-1 · vùng hành động giữ đúng ranh giới cam kết", () =
          (đã xảy ra ở W3B §10 khi ba vùng dùng chung `.action-zone`), còn
          `aria-label` là hợp đồng với người dùng nên nó ổn định hơn. */
       const zones = ZONE_LABELS.map((l) => html.split(`aria-label="${l}"`).length - 1);
-      expect(zones.reduce((a, b) => a + b, 0), `${id}: ${zones}`).toBe(1);
+      /* W4B-2B §7 — bài PILOT gác vùng cam kết sau cổng Thí nghiệm, và SSR luôn
+         thấy `labOpen = false` (state cục bộ, ARCHITECTURE_MAP §8 #13) ⇒ ở chế
+         độ Quan sát số bề mặt cam kết là 0, không phải 1.
+
+         Điều bất biến này thật sự bảo vệ là "KHÔNG BAO GIỜ HAI" — nó không hề
+         đòi phải luôn có một. Nên đọc kỳ vọng từ CHÍNH bản khai policy: thêm
+         target vào pilot thì test đi theo, không đỏ vì một lý do chẳng liên
+         quan; mà lỡ có hai bề mặt thì vẫn đỏ như cũ. */
+      const gated = whatIfPolicyOf(id as never).experimentGated === true;
+      expect(zones.reduce((a, b) => a + b, 0), `${id}: ${zones}`).toBe(gated ? 0 : 1);
       expect(html, id).not.toContain('class="predict-bar"');
-      expect(html, id).not.toContain("decision-strip");
+      /* Vùng cam kết đi vắng thì QUAN HỆ phải ở lại — dải nhân quả nhận việc đó.
+         Không có nó, cổng Thí nghiệm vô tình lấy mất một dữ kiện thuần quan sát. */
+      if (gated) expect(html, id).toContain("decision-strip");
+      else expect(html, id).not.toContain("decision-strip");
     }
   });
 

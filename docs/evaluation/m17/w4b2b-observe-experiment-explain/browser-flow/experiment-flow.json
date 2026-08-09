@@ -1,0 +1,309 @@
+{
+  "app": "http://localhost:3003",
+  "generated_at": "2026-08-09T07:01:43.283Z",
+  "targets": {
+    "algorithm.find_max": {
+      "actionable_step": 1,
+      "canonical_at_actionable": 3828,
+      "canonical_stable_across_ui_modes": true,
+      "commit_buttons": [
+        "Đặt 9 làm max mới",
+        "Giữ max = 7,5"
+      ],
+      "experiment_opened_by": "keyboard",
+      "expected_option_hidden_from_dom": true,
+      "prediction_wrong": {
+        "verdict": "incorrect",
+        "answerId": "no"
+      },
+      "prediction_correct": {
+        "verdict": "correct",
+        "answerId": "yes"
+      }
+    },
+    "algorithm.insertion_sort": {
+      "actionable_step": 2,
+      "canonical_at_actionable": 9886,
+      "canonical_stable_across_ui_modes": true,
+      "commit_buttons": [
+        "Dời phần tử này sang phải",
+        "Dừng dịch chuyển"
+      ],
+      "experiment_opened_by": "keyboard",
+      "expected_option_hidden_from_dom": true,
+      "prediction_wrong": {
+        "verdict": "incorrect",
+        "answerId": "no"
+      },
+      "prediction_correct": {
+        "verdict": "correct",
+        "answerId": "yes"
+      }
+    }
+  },
+  "findings": [
+    {
+      "check": "find_max: Quan sát KHÔNG có vùng cam kết",
+      "verdict": "PASS",
+      "detail": {
+        "scan": false,
+        "sort": false
+      }
+    },
+    {
+      "check": "find_max: cổng Thí nghiệm nhìn thấy được",
+      "verdict": "PASS",
+      "detail": "Thí nghiệm: thử đánh lừa thuật toán"
+    },
+    {
+      "check": "find_max: Quan sát không rò đáp án",
+      "verdict": "PASS",
+      "detail": []
+    },
+    {
+      "check": "find_max: Tab tới được cổng",
+      "verdict": "PASS",
+      "detail": "Thí nghiệm: thử đánh lừa thuật toán"
+    },
+    {
+      "check": "find_max: mở cổng BẰNG BÀN PHÍM (Enter)",
+      "verdict": "PASS",
+      "detail": {
+        "openedBy": "keyboard",
+        "zones": {
+          "scan": true,
+          "sort": false
+        }
+      }
+    },
+    {
+      "check": "find_max: mở cổng ⇒ vùng cam kết hiện ra",
+      "verdict": "PASS",
+      "detail": {
+        "openedBy": "keyboard",
+        "zones": {
+          "scan": true,
+          "sort": false
+        }
+      }
+    },
+    {
+      "check": "find_max: có nút cam kết",
+      "verdict": "PASS",
+      "detail": [
+        "Đặt 9 làm max mới",
+        "Giữ max = 7,5"
+      ]
+    },
+    {
+      "check": "find_max: mở cổng KHÔNG đổi canonical state",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "check": "find_max: Thí nghiệm mở vẫn không rò đáp án",
+      "verdict": "PASS",
+      "detail": []
+    },
+    {
+      "check": "find_max: cam kết SAI được engine chấm là sai",
+      "verdict": "PASS",
+      "detail": {
+        "verdict": "incorrect",
+        "answerId": "no"
+      }
+    },
+    {
+      "check": "find_max: chấm sai KHÔNG đổi canonical state",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": 1
+      }
+    },
+    {
+      "check": "find_max: cam kết ĐÚNG được engine chấm là đúng",
+      "verdict": "PASS",
+      "detail": {
+        "verdict": "correct",
+        "answerId": "yes"
+      }
+    },
+    {
+      "check": "find_max: mở Giải thích KHÔNG đóng Thí nghiệm",
+      "verdict": "PASS",
+      "detail": {
+        "scan": true,
+        "sort": false
+      }
+    },
+    {
+      "check": "find_max: mở Giải thích KHÔNG đổi canonical state",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": 1
+      }
+    },
+    {
+      "check": "find_max: đóng cổng ⇒ vùng cam kết biến mất",
+      "verdict": "PASS",
+      "detail": {
+        "scan": false,
+        "sort": false
+      }
+    },
+    {
+      "check": "find_max: đóng cổng KHÔNG reset mô phỏng",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "check": "find_max: timeline vẫn tiến được sau khi rời Thí nghiệm",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": 2
+      }
+    },
+    {
+      "check": "insertion_sort: Quan sát KHÔNG có vùng cam kết",
+      "verdict": "PASS",
+      "detail": {
+        "scan": false,
+        "sort": false
+      }
+    },
+    {
+      "check": "insertion_sort: cổng Thí nghiệm nhìn thấy được",
+      "verdict": "PASS",
+      "detail": "Thí nghiệm: tự làm bước chèn"
+    },
+    {
+      "check": "insertion_sort: Quan sát không rò đáp án",
+      "verdict": "PASS",
+      "detail": []
+    },
+    {
+      "check": "insertion_sort: Tab tới được cổng",
+      "verdict": "PASS",
+      "detail": "Thí nghiệm: tự làm bước chèn"
+    },
+    {
+      "check": "insertion_sort: mở cổng BẰNG BÀN PHÍM (Enter)",
+      "verdict": "PASS",
+      "detail": {
+        "openedBy": "keyboard",
+        "zones": {
+          "scan": false,
+          "sort": true
+        }
+      }
+    },
+    {
+      "check": "insertion_sort: mở cổng ⇒ vùng cam kết hiện ra",
+      "verdict": "PASS",
+      "detail": {
+        "openedBy": "keyboard",
+        "zones": {
+          "scan": false,
+          "sort": true
+        }
+      }
+    },
+    {
+      "check": "insertion_sort: có nút cam kết",
+      "verdict": "PASS",
+      "detail": [
+        "Dời phần tử này sang phải",
+        "Dừng dịch chuyển"
+      ]
+    },
+    {
+      "check": "insertion_sort: mở cổng KHÔNG đổi canonical state",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "check": "insertion_sort: Thí nghiệm mở vẫn không rò đáp án",
+      "verdict": "PASS",
+      "detail": []
+    },
+    {
+      "check": "insertion_sort: cam kết SAI được engine chấm là sai",
+      "verdict": "PASS",
+      "detail": {
+        "verdict": "incorrect",
+        "answerId": "no"
+      }
+    },
+    {
+      "check": "insertion_sort: chấm sai KHÔNG đổi canonical state",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": 2
+      }
+    },
+    {
+      "check": "insertion_sort: cam kết ĐÚNG được engine chấm là đúng",
+      "verdict": "PASS",
+      "detail": {
+        "verdict": "correct",
+        "answerId": "yes"
+      }
+    },
+    {
+      "check": "insertion_sort: mở Giải thích KHÔNG đóng Thí nghiệm",
+      "verdict": "PASS",
+      "detail": {
+        "scan": false,
+        "sort": true
+      }
+    },
+    {
+      "check": "insertion_sort: mở Giải thích KHÔNG đổi canonical state",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": 2
+      }
+    },
+    {
+      "check": "insertion_sort: đóng cổng ⇒ vùng cam kết biến mất",
+      "verdict": "PASS",
+      "detail": {
+        "scan": false,
+        "sort": false
+      }
+    },
+    {
+      "check": "insertion_sort: đóng cổng KHÔNG reset mô phỏng",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "check": "insertion_sort: timeline vẫn tiến được sau khi rời Thí nghiệm",
+      "verdict": "PASS",
+      "detail": {
+        "cursor": 3
+      }
+    }
+  ],
+  "verdict": "PASS"
+}

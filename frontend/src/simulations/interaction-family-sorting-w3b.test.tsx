@@ -10,7 +10,7 @@ import {
   sortInteractionOf,
   stageInteractionsOf,
 } from "./domains/algorithm/decision";
-import { whatIfDragAllowed } from "./domains/algorithm/interaction-policy";
+import { whatIfDragAllowed, whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
 import type { AlgorithmSimState } from "./domains/algorithm";
@@ -272,8 +272,21 @@ describe("W3B-sort · một bề mặt cam kết, phản hồi sống đúng m�
       const html = renderToString(
         <AlgorithmWorkspace config={config} state={cur} busy={false} dispatch={() => {}} />,
       );
-      expect(html, id).toContain('aria-label="Thao tác sắp xếp"');
-      expect(html, id).not.toContain("decision-strip");
+      /* W4B-2B §18 — `insertion_sort` là bài PILOT: vùng cam kết nay nằm sau cổng
+         Thí nghiệm, mà SSR luôn thấy `labOpen = false`. Hai bài sắp xếp còn lại
+         KHÔNG đổi hành vi (§25 — pilot hai bài, không rollout cả họ).
+         Kỳ vọng đọc từ chính bản khai policy, không viết tay danh sách id. */
+      const gated = whatIfPolicyOf(id as never).experimentGated === true;
+      if (gated) {
+        expect(html, id).not.toContain('aria-label="Thao tác sắp xếp"');
+        // quan hệ ở lại Quan sát dù nút cam kết đã đi vào Thí nghiệm
+        expect(html, id).toContain("decision-strip");
+      } else {
+        expect(html, id).toContain('aria-label="Thao tác sắp xếp"');
+        expect(html, id).not.toContain("decision-strip");
+      }
+      /* KHÔNG đổi: bước này vẫn do sân khấu trình bày ⇒ shell không dựng
+         PredictionBar. Cổng là chuyện trình bày, không đụng hợp đồng predict. */
       expect(mod.predict!.presentedInStage!(cur), id).toBe(true);
       expect(stageInteractionsOf(cur), id).toEqual(["sort"]);
     }

@@ -88,13 +88,20 @@ describe("(19) dải nhân quả — khớp sự kiện trace hiện tại", () 
     const vj = step.snapshot.array[cmp.j];
 
     const h = html("find_max", { array: [7.5, 9, 6] }, 1);
-    /* INTERACTION-FAMILY W1: ở cụm quét dãy, bước quyết định nay được trình bày
+    /* INTERACTION-FAMILY W1: ở cụm quét dãy, bước quyết định từng được trình bày
        bằng VÙNG HÀNH ĐỘNG (`ScanActionZone`) thay cho dải nhân quả — vùng đó
-       mang sẵn state line + phép so sánh, nên dựng cả hai là lặp. Điều test này
-       thật sự khoá không đổi: biểu thức phải dùng ĐÚNG hai giá trị mà event
-       `compare` nêu, không phải renderer tự tính lại. */
-    expect(h).toContain("scan-action");
-    expect(h).not.toContain("decision-strip");
+       mang sẵn state line + phép so sánh, nên dựng cả hai là lặp.
+
+       W4B-2B §7: `find_max` nay GÁC vùng cam kết sau cổng Thí nghiệm, mà SSR
+       luôn thấy `labOpen = false` (state cục bộ của component — ARCHITECTURE_MAP
+       §8 #13), nên ở đây bề mặt hợp lệ là DẢI NHÂN QUẢ. Đúng luật "một bề mặt
+       một lúc", chỉ là bề mặt đổi theo chế độ. Quan hệ KHÔNG được biến mất khỏi
+       Quan sát chỉ vì nút cam kết đã đi chỗ khác.
+
+       Điều test này thật sự khoá KHÔNG ĐỔI: biểu thức phải dùng ĐÚNG hai giá trị
+       mà event `compare` nêu, không phải renderer tự tính lại. */
+    expect(h).toContain("decision-strip");
+    expect(h).not.toContain("scan-action");
     // SSR escape ">"
     expect(h).toMatch(new RegExp(`${vi}\\s*&gt;\\s*${String(vj).replace(".", ",")}`));
   });

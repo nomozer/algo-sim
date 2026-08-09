@@ -151,3 +151,101 @@ trả `<h2>{problem.summary}</h2>` về → 1 đỏ · gộp lại hai vai trò 
   answer-leak có kiểm chứng · viewport 1920×768 và 1024×768 · motion.
 - ~40 finding token drift ở `global.css` **vẫn còn nguyên**, không sửa không ẩn
   không ignore → `POST-W4B2B_DESIGN_TOKEN_AUDIT`.
+
+---
+
+# PHẦN 2 — CỔNG THÍ NGHIỆM (§0–§29 của lượt kế tiếp)
+
+Lượt này đảo ngược quyết định của lượt trước (khi đó chốt "giữ W3B §15" và "giữ
+`insertion_sort` = free"). Ghi lại để không ai đọc hai artifact rồi tưởng mâu thuẫn.
+
+## A. `labOpen` sở hữu gì TRƯỚC wave (truy vết, không suy từ tên)
+
+| Câu hỏi | Sự thật đo được |
+|---|---|
+| Sống ở đâu | `useState(false)` **cục bộ** trong `AlgorithmWorkspace` (`ui.tsx:115`) — không phải store, không persist |
+| Gác cái gì | ĐÚNG MỘT thứ: `dragAllowedByPolicy`, và chỉ khi `mode === "challenge"` |
+| ActionZone có phụ thuộc nó không | **Không** — `ui.tsx:192/217` render chỉ theo `scan`/`sort` khác null |
+| `whatIfPolicyOf` tham gia ra sao | cấp `mode` + copy; `labOpen` chỉ có nghĩa với `challenge` |
+
+## B. Thay đổi — EXTEND, không CREATE
+
+Thêm **một** cờ khai báo `experimentGated?: boolean` vào `WhatIfPolicy`. Cờ này
+gác **cả vùng cam kết lẫn kéo-thả**. Bật cho đúng hai bài pilot.
+
+Vì sao là cờ riêng chứ không thêm `mode`: hai pilot có `mode` khác nhau vì lý do
+chính đáng (`find_max` = `challenge`, kéo chỉ có nghĩa như phép thử bất biến;
+`insertion_sort` = `free`, kéo CHÍNH LÀ cơ chế đang học). Gộp lại sẽ xoá đúng
+phân biệt mà `mode` sinh ra để giữ. **Cổng là TRÌNH BÀY; `mode` là NGỮ NGHĨA.**
+
+- state mới: **không có** (dùng lại `labOpen`)
+- bên chấm mới: **không có** (`submitPrediction → predict.check` nguyên vẹn)
+- if-chain theo tên bài trong shell: **không có** (test quét mã nguồn khoá điều này)
+
+## C. Quan hệ Ở LẠI Quan sát — quyết định đáng chú ý nhất
+
+Ẩn vùng cam kết làm lộ ra một rủi ro: dải nhân quả vốn tắt khi có ActionZone
+(luật chống lặp W1), nên gác cổng sẽ **lấy mất luôn quan hệ đang xét**
+("Dũng — vị trí 4", "8 > 9 ?") khỏi màn mặc định. Điều kiện nay đọc **vùng đang
+hiện**, không đọc "bước có phải điểm quyết định": quan hệ thuộc Quan sát, chỉ
+NÚT CAM KẾT thuộc Thí nghiệm.
+
+## D. Blast radius (§25) — 5 test khoá hợp đồng CŨ
+
+`algorithm-ui.test.tsx` (×2) · `interaction-family-w1.test.tsx` ·
+`scan-semantics-w3b1.test.tsx` · `interaction-family-sorting-w3b.test.tsx`.
+
+Không nới lỏng cái nào. Bất biến thật là **"không bao giờ HAI bề mặt cam kết"**,
+nó chưa bao giờ đòi "luôn có một" — nay kỳ vọng đọc từ **chính bản khai policy**
+(`whatIfPolicyOf(id).experimentGated`) nên thêm target vào pilot thì test đi theo,
+mà lỡ có hai bề mặt thì vẫn đỏ như cũ.
+
+Anh em KHÔNG bị kéo theo: `find_min`, `bubble_sort`, `selection_sort`,
+`binary_search`, `linear_search`, `sum_if`, `count_if` giữ nguyên hành vi — có
+test khẳng định `experimentGated` của chúng là `undefined`.
+
+## E. Bằng chứng trình duyệt (`browser-flow/`)
+
+**34/34 PASS**, cả hai pilot, Chrome thật, thao tác thật:
+
+Quan sát không có vùng cam kết · cổng nhìn thấy được · **Tab tới được và Enter mở
+được** (không cần chuột) · vùng cam kết hiện ra · cam kết SAI → `verdict:
+"incorrect"` · cam kết ĐÚNG → `verdict: "correct"` · mở Giải thích KHÔNG đóng Thí
+nghiệm · đóng cổng → Quan sát trở lại, **không reset** · timeline vẫn tiến được.
+
+**Canonical state:** repo không có tiện ích hash ở frontend, nên bằng chứng là
+`JSON.stringify(active.state)` **toàn phần** — mạnh hơn một digest tự chế. Chuỗi
+này **không đổi một ký tự** qua: mở cổng → chấm sai → mở/đóng Giải thích → đóng
+cổng. `canonical_stable_across_ui_modes: true` cho cả hai target.
+
+**Rò rỉ đáp án:** `correctActionId` / `expectedId` / `expectedAction` / "đáp án
+đúng" — **0 lần** trong `document.body.innerHTML`, cả ở Quan sát lẫn khi Thí
+nghiệm đang mở.
+
+## F. Hai sự cố công cụ (ghi lại, không giấu)
+
+1. **Tiến trình Vite "bẩn" cho ra phán quyết sai.** Trên server đã phục vụ nhiều
+   lượt, `loadEnvelope` đặt được `view:"workspace"` mà React vẫn vẽ Trang chủ —
+   và `diagnose-responsive.mjs` cũng hỏng y hệt trên đúng server đó. Không phải
+   lỗi sản phẩm. Trên tiến trình Vite MỚI, cả hai chạy sạch. Đây là lý do §0 của
+   đề bài đòi "fresh Vite process" — đòi hỏi đó đúng.
+2. **Enter không kích hoạt nút nếu phát phím thiếu.** `Input.dispatchKeyEvent`
+   chỉ `keyDown`/`keyUp` thì phím tới DOM nhưng không thành activation. Phải đủ
+   `rawKeyDown` + `char` + `keyUp` kèm mã phím gốc. Runner nay thử bàn phím
+   TRƯỚC, chuột chỉ là đường lùi **có ghi nhãn** (`experiment_opened_by`) — để
+   không bao giờ gộp "bàn phím hỏng" với "cách đo hỏng" thành một kết luận.
+
+## G. Cổng đã chạy (lượt 2)
+
+vitest **992** / 62 file · build sạch · pytest **1135** (+2 skip) ·
+catalog **22 PASS** · responsive **22 target × 6 viewport** (thêm 1920×768,
+1024×768, 768×900) **PASS 0 failure** · `git diff --check` sạch.
+
+## H. Chưa làm — KHÔNG được claim
+
+- **Ma trận 22 target (`CONTEXTUAL_TOOL_CAPABILITY_MATRIX.md`) chưa viết.**
+- **Impeccable critique có phạm vi: chưa chạy.**
+- What-if drag trong Thí nghiệm: chỉ chứng minh gián tiếp qua policy + test đơn
+  vị; **chưa** có kịch bản kéo thật trong trình duyệt rồi khôi phục.
+- `LEARNER_IMPACT_NOT_EVALUATED` · `CURRICULUM_SUPPORT_PARTIAL` giữ nguyên.
+- ~40 finding token drift `global.css` vẫn nguyên → `POST-W4B2B_DESIGN_TOKEN_AUDIT`.

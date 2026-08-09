@@ -114,8 +114,32 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
   // Thí nghiệm (mode "challenge") do học sinh CHỦ ĐỘNG mở — state trình bày cục bộ.
   const [labOpen, setLabOpen] = useState(false);
 
+  /* W4B-2B §5 — CỔNG THÍ NGHIỆM, DẪN XUẤT TỪ POLICY, KHÔNG TỪ `algorithm_id`.
+   *
+   * `experimentGated` là cờ KHAI BÁO ở `interaction-policy.ts`. Ở đây chỉ đọc —
+   * không có `if (moduleId === "algorithm.find_max")` nào trong shell, đúng
+   * anti-pattern #2 (mọi quyết định suy từ capability/cấu trúc, không từ tên bài).
+   *
+   * Cổng áp cho HAI thứ, và đó là điểm mới của wave này:
+   *  - kéo-thả (trước nay `mode: "challenge"` đã gác);
+   *  - VÙNG CAM KẾT (`ScanActionZone`/`SortActionZone`) — trước nay render vô
+   *    điều kiện mỗi khi bước là điểm quyết định.
+   */
+  const gated = policy.experimentGated === true;
+  /** Bài nào có nút "Thí nghiệm": bài gác cổng, hoặc bài `challenge` sẵn có. */
+  const hasExperiment = gated || policy.mode === "challenge";
+  /**
+   * Vùng cam kết chỉ ẩn ở bài ĐƯỢC GÁC. Bài khác giữ nguyên hành vi cũ —
+   * đây là pilot hai bài, không phải rollout cả họ (§25).
+   */
+  const commitmentVisible = !gated || labOpen;
+
   const dragAllowedByPolicy =
-    policy.mode === "free" || policy.mode === "framed" || (policy.mode === "challenge" && labOpen);
+    policy.mode === "hidden"
+      ? false
+      : policy.mode === "challenge" || gated
+        ? labOpen
+        : true;
 
   const decision = decisionPointOf(state);
   const consequence = decision ? null : consequenceOf(state);
@@ -189,7 +213,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           ĐỘNG lên biến tích luỹ, không phải câu Có/Không. Vẫn nộp qua chính
           `predict.check` nên engine vẫn là bên duy nhất phán đúng/sai; ở bước
           này shell KHÔNG dựng PredictionBar (`predict.presentedInStage`). */}
-      {scan && (
+      {scan && commitmentVisible && (
         <ScanActionZone
           model={scan}
           answered={prediction !== null}
@@ -214,7 +238,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {/* CỤM SẮP XẾP (W3B): cam kết là NÚT, kéo vẫn là thí nghiệm. Trong lúc
           chưa cam kết, kéo bị khoá (`sortingCommitmentPending`) để một cử chỉ
           không mang hai nghĩa ở cùng một bước. Nộp qua chính `predict.check`. */}
-      {sort && (
+      {sort && commitmentVisible && (
         <SortActionZone
           model={sort}
           answered={prediction !== null}
@@ -227,8 +251,15 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8).
           KHÔNG dựng khi đã có vùng hành động: `ScanActionZone` mang sẵn state
           line và phép so sánh, bày cả hai là lặp đúng thứ W1 vừa gỡ (test
-          `ui-clarity-w1` bắt được ngay khi tôi thử). */}
-      {decision && !scan && !search && !sort && (
+          `ui-clarity-w1` bắt được ngay khi tôi thử).
+
+          W4B-2B: điều kiện đọc VÙNG ĐANG HIỆN, không đọc "bước có phải điểm
+          quyết định". Ở bài gác cổng, Quan sát ẩn vùng cam kết — nếu vẫn tắt dải
+          này theo `scan !== null` thì học sinh mất luôn QUAN HỆ đang được xét
+          ("Dũng — vị trí 4", "8 > 9 ?"), tức là cổng Thí nghiệm vô tình lấy đi
+          một dữ kiện thuần quan sát. Quan hệ thuộc về Quan sát; chỉ NÚT CAM KẾT
+          mới thuộc về Thí nghiệm. */}
+      {decision && !(scan && commitmentVisible) && !search && !(sort && commitmentVisible) && (
         <div className="decision-strip">
           <span className="decision-consideration">
             <IconSearch size={14} />
@@ -265,19 +296,33 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {/* Mode "challenge": nút mở thí nghiệm có khung — không kéo tự do mặc định.
           PhET/CLT: teaser hiện TRƯỚC nút để affordance tự giải thích (giảm tải
           "nút bí ẩn"), không lộ hệ quả — hệ quả để dành `framing` khi đã mở. */}
-      {policy.mode === "challenge" && !labOpen && !state.branch && !last && (
+      {/* CỔNG THÍ NGHIỆM — §8.
+          Teaser GIỮ NGUYÊN ở trạng thái chưa mở: đó là bất biến PhET/CLT có test
+          riêng (`algorithm-ui.test.tsx` — "nút không còn bí ẩn"), và §8 đòi cổng
+          phải DISCOVERABLE. Bỏ nó đi là đọc §7 quá rộng: thứ §7 cấm ở Quan sát là
+          bề mặt CAM KẾT, không phải lời mời khám phá. */}
+      {hasExperiment && !labOpen && !state.branch && !last && (
         <div className="stack" style={{ gap: "var(--sp-xs)", alignItems: "flex-start" }}>
           {policy.challengeTeaser && <span className="hint">{policy.challengeTeaser}</span>}
-          <button className="btn-utility" onClick={() => setLabOpen(true)}>
+          <button
+            className="btn-utility"
+            onClick={() => setLabOpen(true)}
+            aria-expanded={false}
+          >
             <IconExperiment size={14} />
             {policy.challengeLabel}
           </button>
         </div>
       )}
-      {policy.mode === "challenge" && labOpen && !state.branch && (
+      {hasExperiment && labOpen && !state.branch && (
         <div className="notes" role="note">
           <IconExperiment size={14} /> {policy.framing}{" "}
-          <button className="btn-utility" style={{ marginLeft: 8 }} onClick={() => setLabOpen(false)}>
+          <button
+            className="btn-utility"
+            style={{ marginLeft: 8 }}
+            onClick={() => setLabOpen(false)}
+            aria-expanded
+          >
             Đóng thí nghiệm
           </button>
         </div>

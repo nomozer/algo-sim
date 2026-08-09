@@ -43,6 +43,24 @@ export interface WhatIfPolicy {
   framing?: string;
   /** Vì sao thao tác này KHÔNG phải trang trí (tự khai, phục vụ audit). */
   rationale: string;
+  /**
+   * W4B-2B §5 — CỔNG THÍ NGHIỆM CHO **MỌI** CÔNG CỤ CỦA HỌC SINH.
+   *
+   * `mode` trả lời "kéo-thả có nghĩa gì ở bài này". Cờ này trả lời một câu KHÁC:
+   * *"công cụ của học sinh có phải tự mở mới hiện không"* — và khi bật thì nó áp
+   * cho **cả vùng cam kết lẫn kéo-thả**, không riêng kéo.
+   *
+   * Vì sao là cờ riêng chứ không nhét thêm một `mode`: hai bài pilot có `mode`
+   * KHÁC NHAU vì lý do chính đáng (`find_max` = `challenge` — kéo chỉ có nghĩa
+   * như phép thử bất biến; `insertion_sort` = `free` — kéo CHÍNH LÀ cơ chế đang
+   * học). Gộp chúng thành một mode sẽ xoá đúng phân biệt mà `mode` sinh ra để
+   * giữ. Cổng là chuyện TRÌNH BÀY; `mode` là chuyện NGỮ NGHĨA.
+   *
+   * KHÔNG bật cho bài nào khác. `find_min` và `binary_search` vẫn là `challenge`
+   * (kéo sau cổng, vùng cam kết hiện thẳng ở Quan sát) — hành vi của chúng
+   * không đổi một dòng trong wave này. Đây là pilot, không phải rollout.
+   */
+  experimentGated?: boolean;
 }
 
 const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
@@ -57,6 +75,15 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: 'Kéo một cột thả lên cột khác để thử "nếu đổi chỗ thì sao?" — quan sát thứ tự dời/chèn thay đổi theo.',
     rationale:
       "Thứ tự phần tử quyết định số lần dời và vị trí chèn; đổi chỗ làm hệ quả đó hiện ra tất định trong nhánh thử nghiệm.",
+    /* W4B-2B — PILOT. `mode` giữ nguyên `free`: kéo vẫn CHÍNH LÀ cơ chế đang
+       học, lý do đó không hề sai đi. Đổi là chỗ ĐẶT nó: công cụ nay nằm sau
+       cổng Thí nghiệm để màn mặc định chỉ còn mô phỏng. */
+    experimentGated: true,
+    challengeLabel: "Thí nghiệm: tự làm bước chèn",
+    challengeTeaser:
+      "Quân bài đang giữ phải nằm đúng chỗ của nó — em thử tự quyết định chỗ đó xem.",
+    framing:
+      "Ở bước này em quyết định thay thuật toán: quân bài đang giữ nên dời tiếp sang phải, hay dừng lại và chèn vào đây? Em cũng có thể kéo đổi chỗ hai cột để thử một thứ tự khác.",
   },
   selection_sort: {
     mode: "free",
@@ -94,6 +121,10 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
     rationale:
       "Đổi chỗ thường không đổi kết quả (max bất biến theo thứ tự) → tự do là trang trí; đóng khung quanh bất biến vùng-đã-duyệt thì hệ quả (thuật toán bị lừa) là bài học tất định về vòng lặp.",
+    /* W4B-2B — PILOT. Trước wave này cổng đã gác KÉO; nay gác cả VÙNG CAM KẾT,
+       nên Quan sát chỉ còn mô phỏng và học sinh phải chủ động bước vào vai
+       "người làm thuật toán". `find_min` cố ý KHÔNG bật cờ này. */
+    experimentGated: true,
   },
   find_min: {
     mode: "challenge",
