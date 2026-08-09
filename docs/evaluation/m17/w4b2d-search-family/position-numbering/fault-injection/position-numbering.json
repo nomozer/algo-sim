@@ -1,0 +1,195 @@
+{
+  "app": "http://localhost:3000",
+  "capturedAt": "2026-08-09T14:44:24.035Z",
+  "targets": [
+    {
+      "target": "algorithm.linear_search",
+      "stepsToActionable": 1,
+      "explainClosed": {
+        "engineVars": {
+          "can_tim": 189,
+          "i": 0
+        },
+        "cursor": 1,
+        "surfaces": {
+          "arrayColumnIndexes": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "searchActionZone": "Phần tử vị trí 1105cần tìm189Đã so sánh 1Chưa xét 7Xấu nhất 8Em hãy quyết định bước tiếp theo.Đây là phần tử cần tìmKiểm tra phần tử kế tiếp",
+          "searchChips": [
+            {
+              "label": "Phần tử vị trí 1",
+              "value": "105"
+            },
+            {
+              "label": "cần tìm",
+              "value": "189"
+            }
+          ],
+          "decisionStrip": null,
+          "narration": null,
+          "varChips": {},
+          "pseudocodeActive": null
+        }
+      },
+      "explainOpen": {
+        "engineVars": {
+          "can_tim": 189,
+          "i": 0
+        },
+        "cursor": 1,
+        "surfaces": {
+          "arrayColumnIndexes": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "searchActionZone": "Phần tử vị trí 1105cần tìm189Đã so sánh 1Chưa xét 7Xấu nhất 8Em hãy quyết định bước tiếp theo.Đây là phần tử cần tìmKiểm tra phần tử kế tiếp",
+          "searchChips": [
+            {
+              "label": "Phần tử vị trí 1",
+              "value": "105"
+            },
+            {
+              "label": "cần tìm",
+              "value": "189"
+            }
+          ],
+          "decisionStrip": null,
+          "narration": null,
+          "varChips": {
+            "cần tìm": "189",
+            "i": "0"
+          },
+          "pseudocodeActive": null
+        }
+      },
+      "contradictions": [
+        {
+          "semanticLocation": "chỉ số cột trên sân khấu",
+          "detail": "nhãn cột bắt đầu từ \"0\" (0,1,2,3,4,5,6,7) trong khi vùng hành động đếm từ 1"
+        },
+        {
+          "semanticLocation": "phần tử đang xét",
+          "detail": "chip i = 0 nhưng vùng hành động nói \"vị trí 1\""
+        }
+      ]
+    },
+    {
+      "target": "algorithm.binary_search",
+      "stepsToActionable": 1,
+      "explainClosed": {
+        "engineVars": {
+          "can_tim": 8.5,
+          "trai": 0,
+          "phai": 9,
+          "giua": 4
+        },
+        "cursor": 1,
+        "surfaces": {
+          "arrayColumnIndexes": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "searchActionZone": "Thuật toán này chỉ đúng khi dãy đã được sắp xếp tăng dần.Phần tử giữa7cần tìm8,5vùng xét1–10Em hãy quyết định bước tiếp theo.Tìm tiếp ở nửa TRÁIChính là phần tử giữaTìm tiếp ở nửa PHẢI",
+          "searchChips": [
+            {
+              "label": "Phần tử giữa",
+              "value": "7"
+            },
+            {
+              "label": "cần tìm",
+              "value": "8,5"
+            },
+            {
+              "label": "vùng xét",
+              "value": "1–10"
+            }
+          ],
+          "decisionStrip": null,
+          "narration": null,
+          "varChips": {},
+          "pseudocodeActive": null
+        }
+      },
+      "explainOpen": {
+        "engineVars": {
+          "can_tim": 8.5,
+          "trai": 0,
+          "phai": 9,
+          "giua": 4
+        },
+        "cursor": 1,
+        "surfaces": {
+          "arrayColumnIndexes": [
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "searchActionZone": "Thuật toán này chỉ đúng khi dãy đã được sắp xếp tăng dần.Phần tử giữa7cần tìm8,5vùng xét1–10Em hãy quyết định bước tiếp theo.Tìm tiếp ở nửa TRÁIChính là phần tử giữaTìm tiếp ở nửa PHẢI",
+          "searchChips": [
+            {
+              "label": "Phần tử giữa",
+              "value": "7"
+            },
+            {
+              "label": "cần tìm",
+              "value": "8,5"
+            },
+            {
+              "label": "vùng xét",
+              "value": "1–10"
+            }
+          ],
+          "decisionStrip": null,
+          "narration": null,
+          "varChips": {
+            "cần tìm": "8,5",
+            "trái": "0",
+            "phải": "9",
+            "giữa": "4"
+          },
+          "pseudocodeActive": null
+        }
+      },
+      "contradictions": [
+        {
+          "semanticLocation": "chỉ số cột trên sân khấu",
+          "detail": "nhãn cột bắt đầu từ \"0\" (0,1,2,3,4,5,6,7,8,9) trong khi vùng hành động đếm từ 1"
+        },
+        {
+          "semanticLocation": "vùng xét của tìm kiếm nhị phân",
+          "detail": "chip trái=0 phải=9 nhưng vùng hành động nói \"1–10\""
+        }
+      ]
+    }
+  ],
+  "verdict": "SAME_SCREEN_CONTRADICTION"
+}

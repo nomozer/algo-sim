@@ -399,7 +399,7 @@ export function ArrayView({
               <text x={colW / 2} y={TOP_PAD + CHART_H / 2} textAnchor="middle"
                     fontSize={12} fill="var(--ink-muted)">trống</text>
               <text x={colW / 2} y={TOP_PAD + CHART_H + (labels ? 42 : 26)} textAnchor="middle"
-                    fontSize={11} fill="var(--ink-faint)">{i}</text>
+                    fontSize={11} fill="var(--ink-faint)">{i + 1}</text>
             </g>
           );
         }
@@ -474,6 +474,13 @@ export function ArrayView({
                 {labels[i]}
               </text>
             )}
+            {/* W4B-2D §4 — NHÃN CỘT ĐẾM TỪ 1.
+                Đây là vị trí NÓI VỚI HỌC SINH, không phải chỉ số mảng của mã:
+                `algorithms.ts::pos()` đã chốt luật ấy cho thuyết minh, mã giả
+                (`PSEUDOCODE`, kể cả bản dẫn xuất `scanPseudocode`) khai 1-based,
+                và `SearchActionZone` in `vị trí i+1`. Chỉ nhãn cột còn in `i`
+                thô — đo trong Chrome thấy cột `0` bị mũi tên chỉ vào trong khi
+                vùng hành động gọi nó là "vị trí 1". */}
             <text
               x={colW / 2}
               y={TOP_PAD + CHART_H + (labels ? 42 : 26)}
@@ -481,7 +488,7 @@ export function ArrayView({
               fontSize={11}
               fill="var(--ink-faint)"
             >
-              {i}
+              {i + 1}
             </text>
           </g>
         );

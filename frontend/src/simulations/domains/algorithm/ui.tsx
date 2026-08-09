@@ -3,6 +3,7 @@ import { ArrayView, arrayLegendItems } from "../../../components/ArrayView";
 import { StageLegend } from "../../../components/StageLegend";
 import { VarsView } from "../../../components/VarsView";
 import { PseudocodeView } from "../../../components/PseudocodeView";
+import { POSITION_VARS } from "../../../core/pseudocode";
 import { AnalysisCard } from "../../../components/AnalysisCard";
 import { fmt } from "../../../core/trace-builder";
 import type { WorkspaceProps } from "../../types";
@@ -188,7 +189,12 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           <div className="hold-tray">
             <span className="hold-label">Đang giữ</span>
             <span className="hold-value">{fmt(hold.key)}</span>
-            <span className="hold-note">đã rút khỏi dãy — ô trống ở vị trí {hold.gapIndex}</span>
+            {/* W4B-2D §4: `gapIndex` là chỉ số 0-based của engine; thuyết minh
+                của chính bước này đã nói "ô trống lùi về vị trí j+1". In thô ở
+                đây là hai số cho CÙNG một ô trên CÙNG một màn hình. */}
+            <span className="hold-note">
+              đã rút khỏi dãy — ô trống ở vị trí {hold.gapIndex + 1}
+            </span>
           </div>
         )}
         <ArrayView
@@ -349,7 +355,10 @@ export function AlgorithmInspector({ config, state }: Props) {
       <AnalysisCard analysis={config} />
       {/* W4B-2B §9: panel chia mục rõ — "BIẾN" đứng cạnh "THUẬT TOÁN" của khối
           mã giả. Nhãn do `VarsView` dựng nên bước không có biến thì mất cả mục. */}
-      <VarsView step={step} label="BIẾN" />
+      {/* W4B-2D §4: chip vị trí đếm từ 1 để khớp mã giả 1-based ngay bên dưới —
+          khai báo ở `POSITION_VARS`, không phải suy từ tên biến (xem chú thích
+          tại nguồn: `program`/`scan` để ĐỀ BÀI đặt tên biến). */}
+      <VarsView step={step} label="BIẾN" positionVars={POSITION_VARS[config.algorithm_id]} />
       <PseudocodeView algorithmId={config.algorithm_id} currentLine={step.line} />
     </div>
   );

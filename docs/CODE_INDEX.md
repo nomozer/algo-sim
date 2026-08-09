@@ -1083,6 +1083,16 @@ bày, và 0 rò rỉ đáp án trong DOM. Cờ: `--port --targets --out`. ⚠️
 quả trên tiến trình Vite MỚI: server đã qua nhiều lượt HMR cho phán quyết sai
 (đo được: store `view:"workspace"` mà React vẫn vẽ Home).
 
+### `scripts/audit-search-position.mjs` · offline (cần Chrome + Vite)
+Runner ĐO HỆ ĐẾM VỊ TRÍ của họ tìm kiếm (W4B-2D §4) — chỉ ĐỌC, không bấm cam
+kết, không mở Thí nghiệm. Ở một bước cam kết của `linear_search`/`binary_search`
+nó thu hoạch MỌI bề mặt nói vị trí (nhãn cột `ArrayView` · `SearchActionZone` ·
+chip `VarsView` · dải nhân quả · thuyết minh · mã giả) rồi đối chiếu bằng SỐ LẤY
+TỪ ENGINE, không bằng chuỗi. Kết luận `SAME_SCREEN_CONTRADICTION` khi cùng một
+vị trí ngữ nghĩa hiện hai hệ đếm. Có DẤU VÂN TAY bắt buộc (`active.moduleId` +
+sân khấu đã dựng, sai thì exit 2). Cờ: `--port --out`. Artifact:
+`docs/evaluation/m17/w4b2d-search-family/position-numbering/`.
+
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
 Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
 Next/Prev/Play) — tiền lệ cho EditPolicy. M8: Stage = `rendererFor(mod, mode)`

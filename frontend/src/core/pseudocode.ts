@@ -5,6 +5,49 @@ import type { AlgorithmId } from "./types";
  * Engine gắn Step.line trỏ vào dòng đang thực hiện — renderer highlight.
  * R1.2: khi đối chiếu SGK, chỉnh câu chữ tại đây cho khớp sách.
  */
+/**
+ * W4B-2D §4 — BIẾN NÀO LÀ **VỊ TRÍ 0-BASED CỦA ENGINE**.
+ *
+ * Bảng này sống CẠNH `PSEUDOCODE` vì chính `PSEUDOCODE` sinh ra nghĩa vụ: mã giả
+ * ở trên khai "chỉ số 1-based", nên mọi biến chỉ-số hiện cho học sinh phải đếm
+ * từ 1 theo. Đo trong Chrome (`docs/evaluation/m17/w4b2d-search-family/`) thấy
+ * điều ngược lại — cùng MỘT màn hình binary_search: mã giả `trái ← 1`, chip BIẾN
+ * `trái 0`, vùng xét `1–10`, nhãn cột `0–9`. Học sinh tính `giữa ← (trái+phải)
+ * div 2` theo mã giả ra 5, app hiện 4: mã giả KHÔNG lần theo được bằng chính
+ * bảng biến đứng cạnh nó.
+ *
+ * `algorithms.ts` đã chốt luật này từ trước cho THUYẾT MINH (`pos()` — "Vị trí
+ * nói với học sinh: luôn đếm từ 1"), nhưng chưa bao giờ áp cho `VarsView` và
+ * `ArrayView`. Đúng anti-pattern #10: vá một bề mặt, quên bề mặt kia.
+ *
+ * ─── VÌ SAO LÀ BẢNG THEO BÀI, KHÔNG PHẢI BẢNG THEO TÊN BIẾN ────────────────
+ * Cám dỗ là để `VarsView` tự nhận ra "biến tên `i` thì cộng 1". Không được —
+ * tra thật cho thấy tên biến KHÔNG suy ra được tính-vị-trí:
+ *  - `core/program.ts` cho ĐỀ BÀI tự đặt tên biến; một chương trình khai biến
+ *    tên `i` mà bị cộng 1 là sai câm;
+ *  - `core/scan.ts` có `trackIndexVar` LÀ vị trí 0-based thật, nhưng tên do spec
+ *    đặt nên bảng theo tên sẽ bỏ sót.
+ * Tính-vị-trí phải do bên SINH TRACE khai, không do bề mặt hiển thị đoán. Ở đây
+ * bên sinh trace là 9 bài chuyên biệt, và chúng khai tĩnh — đúng một chỗ.
+ *
+ * ─── HAI BIẾN CỐ Ý VẮNG MẶT ────────────────────────────────────────────────
+ * `luot` (nổi bọt) và `vi_tri_cuc_tri` (chọn) ĐÃ được engine ghi 1-based sẵn
+ * (`setVar("luot", i + 1)`, `setVar("vi_tri_cuc_tri", j + 1)`). Cho chúng vào
+ * đây là cộng 1 lần thứ hai. Đây chính là lý do bảng phải liệt kê theo bài chứ
+ * không quét theo tên: hai biến này *nghe như* chỉ số nhưng không phải.
+ */
+export const POSITION_VARS: Record<AlgorithmId, readonly string[]> = {
+  find_max: ["vt"],
+  find_min: ["vt"],
+  sum_if: [],
+  count_if: [],
+  linear_search: ["i"],
+  binary_search: ["trai", "phai", "giua"],
+  bubble_sort: [],
+  insertion_sort: [],
+  selection_sort: [],
+};
+
 export const PSEUDOCODE: Record<AlgorithmId, string[]> = {
   find_max: [
     "max ← a[1]; vt ← 1",

@@ -14,6 +14,12 @@ const VAR_LABELS: Record<string, string> = {
   giua: "giữa",
   luot: "lượt",
   gia_tri_chen: "giá trị chèn",
+  /* W4B-2D §4 — `vi_tri_cuc_tri` (sắp xếp chọn) trước nay KHÔNG có nhãn, nên
+     `VAR_LABELS[name] ?? name` in thẳng định danh snake_case ra chip của học
+     sinh. Đúng loại rò rỉ mà ARCHITECTURE_MAP §8 #10 cấm; phát hiện khi soát
+     hệ đếm vị trí của họ tìm kiếm. Giá trị của nó ĐÃ 1-based ở engine nên nó
+     cố ý KHÔNG nằm trong `POSITION_VARS`. */
+  vi_tri_cuc_tri: "vị trí cực trị",
 };
 
 /**
@@ -40,9 +46,28 @@ export function formatVarValue(value: number | string | boolean | null): string 
  * Dùng lại class `.pseudo-title` (12px/600/ink-faint) thay vì đẻ token mới —
  * đây đúng là nhãn khối cùng cấp với đầu mục của khối mã giả.
  */
-export function VarsView({ step, label }: { step: Step; label?: string }) {
+export function VarsView({
+  step,
+  label,
+  positionVars,
+}: {
+  step: Step;
+  label?: string;
+  /**
+   * W4B-2D §4 — tên các biến mang **vị trí 0-based của engine**, do NGƯỜI GỌI
+   * khai (nguồn: `POSITION_VARS` ở `core/pseudocode.ts`). Chip của chúng hiện
+   * `giá trị + 1` để khớp mã giả 1-based đứng ngay bên cạnh trong cùng panel.
+   *
+   * Là THAM SỐ chứ không phải bảng nội bộ, vì component này còn phục vụ
+   * `scan-module` và `program-module` — nơi tên biến do ĐỀ BÀI đặt. Một bảng
+   * đoán theo tên sẽ cộng 1 vào biến `i` của chương trình học sinh viết. Không
+   * khai ⇒ không đổi gì: mặc định an toàn.
+   */
+  positionVars?: readonly string[];
+}) {
   const entries = Object.entries(step.snapshot.vars);
   if (entries.length === 0) return null;
+  const isPosition = new Set(positionVars ?? []);
 
   const justAssigned = new Set(
     step.events.filter((e) => e.type === "assign_var").map((e) => e.name),
@@ -71,7 +96,9 @@ export function VarsView({ step, label }: { step: Step; label?: string }) {
               {VAR_LABELS[name] ?? name}
             </span>
             <span style={{ fontWeight: 600, fontVariantNumeric: "tabular-nums" }}>
-              {formatVarValue(value)}
+              {formatVarValue(
+                isPosition.has(name) && typeof value === "number" ? value + 1 : value,
+              )}
             </span>
           </div>
         );
