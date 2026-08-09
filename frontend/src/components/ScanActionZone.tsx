@@ -43,15 +43,23 @@ interface ScanActionZoneProps {
    * là mời renderer tự phán xử, và nó sẽ lọt vào DOM.
    */
   feedback?: { verdict: string; message: string; answerId?: string } | null;
-  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để khay Thí nghiệm hỏi. */
+  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để công cụ hỏi. */
   showPrompt?: boolean;
+  /**
+   * W4B-2V/C2 — HÌNH HỌC, không phải nội dung.
+   * `"panel"` = thẻ cũ (nền + viền + padding, xếp dọc) cho bài CHƯA gác cổng,
+   * nơi vùng cam kết là một phần thường trực của Quan sát.
+   * `"tool"`  = một hàng inline không nền không viền, để nó nằm GỌN TRONG
+   * `.experiment-tool` thay vì thành tấm nội dung thứ hai.
+   */
+  chrome?: "panel" | "tool";
 }
 
 export function ScanActionZone({
-  model, answered, busy, onAct, feedback = null, showPrompt = true,
+  model, answered, busy, onAct, feedback = null, showPrompt = true, chrome = "panel",
 }: ScanActionZoneProps) {
   return (
-    <section className="action-zone scan-action" aria-label="Thao tác với biến tích luỹ">
+    <section className={`action-zone scan-action is-${chrome}`} aria-label="Thao tác với biến tích luỹ">
       <div className="scan-state">
         <span className="scan-chip is-candidate">
           <IconSearch size={13} />

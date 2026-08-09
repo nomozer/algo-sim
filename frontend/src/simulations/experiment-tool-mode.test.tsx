@@ -3,36 +3,44 @@ import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
-import { stageInteractionsOf } from "./domains/algorithm/decision";
+import { SearchActionZone } from "../components/SearchActionZone";
+import { searchInteractionOf, stageInteractionsOf } from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { ALGORITHM_IDS, type AlgorithmId } from "../core/types";
 import type { AlgorithmSimState } from "./domains/algorithm";
 
 /**
- * EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL (W4B-2V/C).
+ * EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL — W4B-2V/C2.
  *
- * ĐO ĐƯỢC TRƯỚC KHI SỬA (`docs/evaluation/m17/w4b2vc-experiment-tool/before/`):
- * mở cổng Thí nghiệm làm vùng làm việc **cao thêm 122–186px**, vì `framing`
- * (135–310 ký tự) được dựng trong một thẻ `.notes` có nền và padding. Đó là một
- * bài giảng thứ hai nằm dưới mô phỏng, không phải một công cụ.
+ * VÌ SAO BẢN TRƯỚC CHƯA ĐỦ. Wave C rút chữ và giảm chiều cao 39–50%, rồi tuyên
+ * bố "Tool Mode". Ảnh chụp cho thấy nó vẫn là **một tấm nội dung, chỉ nhỏ hơn**:
+ * `.action-zone` là `<section>` block mang `background: canvas-soft` + `border`
+ * + `padding md lg` + `flex-direction: column`, nên nó vẫn trải gần hết bề
+ * ngang. Bớt px và bớt câu là **điều kiện cần, không đủ** — chính vì thế các
+ * assert dưới đây kiểm **CẤU TRÚC và QUYỀN SỞ HỮU**, không kiểm số ký tự.
  *
- * Bất biến: mở Thí nghiệm chỉ được THÊM **quyền hành động** — nút, phản hồi
- * ngắn, lối đóng — chứ không thêm một khối nội dung.
+ * Hợp đồng được khoá:
+ *  - `EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL`
+ *  - `EXPERIMENT_CLOSE_CONTROL_LIVES_INSIDE_TOOL`
+ *  - `NO_SEPARATE_EXPERIMENT_FRAMING_ROW`
+ *  - `EXPERIMENT_DOES_NOT_DUPLICATE_CORE_OBSERVATION_STATE`
+ *  - `EXPERIMENT_FEEDBACK_ATTACHED_TO_TOOL`
+ *  - `DESCRIPTIVE_EXPERIMENT_AFFORDANCE_EXISTS`
  *
- * ─── VÌ SAO KHÔNG ĐO BẰNG SỐ KÝ TỰ THÔ ─────────────────────────────────────
- * Chữ NÊU TÊN trạng thái là biểu diễn, không phải prose ("vùng xét 4–7", "Đã so
- * sánh 4"). Nên bất biến này nhắm đúng thứ đã đo được là thủ phạm: **đoạn văn
- * hướng dẫn**. Trần đặt ở 60 ký tự vì đó cũng là ngưỡng runner trình duyệt dùng
- * để đếm "khối chữ", nên test và phép đo nói cùng một ngôn ngữ.
- *
- * ─── RÀNG BUỘC KHÔNG ĐƯỢC ĐÁNH ĐỔI ─────────────────────────────────────────
- * Rút gọn chữ KHÔNG được làm mất phân biệt cam kết ↔ what-if (W4B-2D §7 cấm
- * trình bày kéo như "bước tiếp theo của thuật toán"). Ý đó nay sống ở `hint`,
- * chuỗi render ngay cạnh công cụ kéo — có test riêng ở `interaction-policy.test.ts`.
- * Cắt chữ mà đánh mất phân biệt đó là đổi một khối chữ lấy một hồi quy ngữ nghĩa.
+ * `labOpen` là `useState` cục bộ nên SSR không mở được công cụ
+ * (`ARCHITECTURE_MAP §8` #13). Ở đây khoá **cấu trúc mã nguồn + hợp đồng
+ * component**; hình học thật (bề rộng, số hàng, close nằm trong khung công cụ)
+ * do runner trình duyệt đo — `docs/evaluation/m17/w4b2vc2-tool-mode/`.
  */
 
-const CAP = 60;
+const UI_SRC = readFileSync(
+  new URL("./domains/algorithm/ui.tsx", import.meta.url), "utf-8",
+);
+/** Bóc chú thích: repo CỐ Ý nhắc tên thứ đã bỏ để ghi lại vì sao bỏ. */
+const UI = UI_SRC.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+const CSS = readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
+
+const GATED = ALGORITHM_IDS.filter((id) => whatIfPolicyOf(id).experimentGated === true);
 
 const DATA: Partial<Record<AlgorithmId, Record<string, unknown>>> = {
   linear_search: { array: [4, 9, 2, 7, 5, 8], target: 7 },
@@ -44,8 +52,6 @@ const DATA: Partial<Record<AlgorithmId, Record<string, unknown>>> = {
   find_min: { array: [4, 9, 2, 7, 5, 8] },
 };
 
-const GATED = ALGORITHM_IDS.filter((id) => whatIfPolicyOf(id).experimentGated === true);
-
 function build(id: AlgorithmId) {
   const mod = makeAlgorithmModule(id);
   const r = mod.validateConfig({
@@ -54,60 +60,130 @@ function build(id: AlgorithmId) {
   if (!r.ok) throw new Error(`${id}: ${r.error}`);
   return { mod, config: r.config, state: mod.init(r.config) as AlgorithmSimState };
 }
-
 const at = (s: AlgorithmSimState, cursor: number): AlgorithmSimState => ({ ...s, cursor });
 
-describe("W4B-2V/C · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
-  it("mọi bài gác cổng đều có fixture — nếu thiếu, bất biến phủ hụt", () => {
-    for (const id of GATED) expect(DATA[id], `thiếu fixture cho ${id}`).toBeTruthy();
+function actionableStep(s: AlgorithmSimState): number {
+  for (let i = 0; i < s.trace.steps.length; i += 1) {
+    if (stageInteractionsOf(at(s, i)).length > 0) return i;
+  }
+  return -1;
+}
+
+describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
+  it("mọi bài gác cổng đều có fixture — thiếu thì bất biến phủ hụt", () => {
+    for (const id of GATED) expect(DATA[id], `thiếu fixture ${id}`).toBeTruthy();
     expect(GATED.length).toBeGreaterThan(0);
   });
 
-  it(`framing là CÂU HỎI HÀNH ĐỘNG, không phải đoạn giảng (< ${CAP} ký tự)`, () => {
+  it("công cụ KHÔNG dựng bằng chrome thẻ (`.notes` / `.experiment-tray` / `.card`)", () => {
+    for (const dead of ['className="notes"', 'className="experiment-tray"', 'experiment-tray-close']) {
+      expect(UI, `chrome thẻ quay lại: ${dead}`).not.toContain(dead);
+    }
+    expect(UI, "mất chủ sở hữu công cụ").toContain('className="experiment-tool"');
+  });
+
+  it("chrome CÔNG CỤ gỡ nền/viền/padding và xếp NGANG — khác hẳn chrome thẻ", () => {
+    /* Đây là khác biệt panel ↔ tool, và nó sống ở CSS chứ không ở JSX. Kiểm
+       thẳng luật: `.action-zone` giữ thẻ; `.is-tool` phải huỷ nó. */
+    const tool = CSS.slice(CSS.indexOf(".action-zone.is-tool"));
+    const rule = tool.slice(0, tool.indexOf("}"));
+    for (const kill of ["padding: 0", "background: none", "border: none", "flex-direction: row"]) {
+      expect(rule, `.is-tool thiếu "${kill}" — vẫn là thẻ`).toContain(kill);
+    }
+    const wrap = CSS.slice(CSS.indexOf(".experiment-tool {"));
+    const wrapRule = wrap.slice(0, wrap.indexOf("}"));
+    expect(wrapRule, "công cụ vẫn rộng theo khung chứa").toContain("width: fit-content");
+    expect(wrapRule, "công cụ không xếp inline").toContain("inline-flex");
+  });
+
+  it("zone nhận chrome DẪN XUẤT từ capability, không từ tên bài", () => {
+    expect(UI).toMatch(/chrome:\s*\(gated \? "tool" : "panel"\)/);
+    expect(UI, "shell quyết định theo định danh bài").not.toMatch(/algorithm_id\s*===\s*["']/);
+    const z = renderToString(
+      <SearchActionZone
+        model={searchInteractionOf(at(build("binary_search").state, actionableStep(build("binary_search").state)))!}
+        answered={false} busy={false} onAct={() => {}} chrome="tool"
+      />,
+    );
+    expect(z).toContain("is-tool");
+  });
+
+  it("EXPERIMENT_CLOSE_CONTROL_LIVES_INSIDE_TOOL — không có hàng đóng riêng", () => {
+    const tool = UI.slice(UI.indexOf('className="experiment-tool"'));
+    const block = tool.slice(0, tool.indexOf("</div>"));
+    expect(block, "lối đóng nằm ngoài công cụ").toContain("experiment-tool-close");
+    expect(block).toContain('aria-label="Đóng thí nghiệm"');
+  });
+
+  it("NO_SEPARATE_EXPERIMENT_FRAMING_ROW — framing là TÊN KHẢ TRUY CẬP", () => {
+    /* `framing` được phép tồn tại, nhưng không được là một hàng chữ. Cách duy
+       nhất nó xuất hiện trong JSX phải là `aria-label`. */
+    const uses = [...UI.matchAll(/policy\.framing/g)].length;
+    expect(uses, "framing xuất hiện nhiều hơn một chỗ").toBe(1);
+    expect(UI).toContain("aria-label={policy.framing}");
+    expect(UI, "framing bị in thành nội dung").not.toContain("{policy.framing}<");
+    expect(UI).not.toContain("<strong>{policy.framing}</strong>");
+  });
+
+  it("DESCRIPTIVE_EXPERIMENT_AFFORDANCE_EXISTS — cổng tự mô tả, không bí ẩn", () => {
+    /* Đối trọng bắt buộc của việc bỏ hàng teaser: nếu chỉ tối ưu cho gọn thì
+       nút thành bí ẩn — lỗi PhET/CLT đã bắt ở W4B-2B. Nhãn phải MÔ TẢ, và
+       teaser vẫn tới được người dùng qua `title`. */
+    expect(UI).toContain("title={policy.challengeTeaser}");
     for (const id of GATED) {
-      const f = whatIfPolicyOf(id).framing;
-      expect(f, `${id}: bài gác cổng phải có framing`).toBeTruthy();
-      expect(f!.length, `${id}: framing dài ${f!.length} — đã thành đoạn giảng: "${f}"`)
-        .toBeLessThan(CAP);
+      const p = whatIfPolicyOf(id);
+      expect(p.challengeLabel, `${id}: mất nhãn`).toBeTruthy();
+      expect(p.challengeLabel!.length, `${id}: nhãn quá cụt để tự mô tả`).toBeGreaterThan(14);
+      expect(p.challengeTeaser, `${id}: mất teaser`).toBeTruthy();
     }
   });
 
-  it("khay Thí nghiệm KHÔNG dựng bằng thẻ nội dung `.notes`", () => {
-    /* Khoá ở tầng mã nguồn: `.notes` là thẻ có nền + padding, dùng cho khối
-       giải thích. Dùng lại nó cho công cụ là cách khối này phình lên lần trước. */
-    const src = readFileSync(
-      new URL("./domains/algorithm/ui.tsx", import.meta.url), "utf-8",
-    ).replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
-    expect(src, "khay Thí nghiệm quay lại dùng `.notes`").not.toContain('className="notes"');
-    expect(src).toContain('className="experiment-tray"');
+  it("EXPERIMENT_DOES_NOT_DUPLICATE_CORE_OBSERVATION_STATE", () => {
+    /* Công cụ sở hữu HÀNH ĐỘNG; trạng thái đã nằm ở Quan sát. Chép lại vào
+       công cụ là cách nó phình lên lần nữa. */
+    for (const id of ["linear_search", "binary_search"] as AlgorithmId[]) {
+      const { state } = build(id);
+      const k = actionableStep(state);
+      const zone = renderToString(
+        <SearchActionZone
+          model={searchInteractionOf(at(state, k))!}
+          answered={false} busy={false} onAct={() => {}} chrome="tool"
+        />,
+      );
+      for (const dup of ["search-state", "search-cost", "search-precondition", "scan-chip"]) {
+        expect(zone, `${id}: công cụ chép lại "${dup}" của Quan sát`).not.toContain(dup);
+      }
+    }
   });
 
-  it("Quan sát: nhiều nhất MỘT khối chữ dài — cổng chưa mở thì chưa có công cụ", () => {
+  it("EXPERIMENT_FEEDBACK_ATTACHED_TO_TOOL — phản hồi ở TRONG zone", () => {
+    const { state } = build("binary_search");
+    const k = actionableStep(state);
+    const zone = renderToString(
+      <SearchActionZone
+        model={searchInteractionOf(at(state, k))!}
+        answered busy={false} onAct={() => {}} chrome="tool"
+        feedback={{ verdict: "incorrect", message: "Chưa đúng." }}
+      />,
+    );
+    expect(zone).toContain("predict-result");
+    expect(zone.indexOf("predict-result"), "phản hồi rơi ra ngoài zone")
+      .toBeLessThan(zone.lastIndexOf("</section>"));
+  });
+
+  it("Quan sát vẫn sạch: 0 bề mặt cam kết, nhiều nhất một khối chữ dài", () => {
     for (const id of GATED) {
       const { config, state } = build(id);
-      let k = -1;
-      for (let i = 0; i < state.trace.steps.length && k < 0; i += 1) {
-        if (stageInteractionsOf(at(state, i)).length > 0) k = i;
-      }
+      const k = actionableStep(state);
       if (k < 0) continue;
       const html = renderToString(
         <AlgorithmWorkspace config={config} state={at(state, k)} busy={false} dispatch={() => {}} />,
       );
-      const text = html.replace(/<[^>]+>/g, "|");
-      const longBlocks = text.split("|").map((t) => t.trim()).filter((t) => t.length >= CAP);
-      expect(longBlocks.length, `${id}: Quan sát có ${longBlocks.length} khối chữ dài:\n${longBlocks.join("\n")}`)
+      expect(html, `${id}: Quan sát bày cam kết`).not.toContain('aria-label="Thao tác');
+      const blocks = html.replace(/<[^>]+>/g, "|").split("|")
+        .map((t) => t.trim()).filter((t) => t.length >= 60);
+      expect(blocks.length, `${id}: ${blocks.length} khối chữ dài:\n${blocks.join("\n")}`)
         .toBeLessThanOrEqual(1);
-    }
-  });
-
-  it("teaser vẫn còn — cổng phải TÌM THẤY ĐƯỢC, gọn không có nghĩa là câm", () => {
-    /* Đối trọng của bất biến trên: nếu chỉ tối ưu cho "ít chữ" thì cám dỗ kế
-       tiếp là bỏ teaser, và nút Thí nghiệm thành nút bí ẩn — đúng thứ PhET/CLT
-       đã bắt ở W4B-2B. */
-    for (const id of GATED) {
-      const p = whatIfPolicyOf(id);
-      expect(p.challengeTeaser, `${id}: mất teaser`).toBeTruthy();
-      expect(p.challengeLabel, `${id}: mất nhãn nút`).toBeTruthy();
     }
   });
 });

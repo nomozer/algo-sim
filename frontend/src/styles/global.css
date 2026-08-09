@@ -2094,6 +2094,59 @@ html {
   gap: var(--sp-sm);
 }
 
+/* ── W4B-2V/C2 — CHROME CÔNG CỤ ────────────────────────────────────────────
+ *
+ * `.action-zone` ở trên là một THẺ: nền, viền, padding lớn, xếp dọc, trên phần
+ * tử block ⇒ trải gần hết bề ngang. Đúng cho bài CHƯA gác cổng, nơi vùng cam
+ * kết là phần thường trực của Quan sát. SAI cho Thí nghiệm: ở đó nó biến quyền
+ * hành động thành một tấm nội dung thứ hai nằm dưới mô phỏng.
+ *
+ * `.is-tool` gỡ toàn bộ chrome thẻ và xếp NGANG, để zone nằm gọn bên trong
+ * `.experiment-tool`. Vẫn giữ `<section aria-label>` — DOM ngữ nghĩa và hình
+ * học là hai chuyện khác nhau; §10 cấm phá cái trước để đạt cái sau.
+ */
+.action-zone.is-tool {
+  margin-top: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+}
+
+/* Công cụ Thí nghiệm: rộng theo NỘI DUNG, không theo khung chứa. */
+.experiment-tool {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+  margin-top: var(--sp-sm);
+  color: var(--ink-secondary);
+}
+
+/* Chip what-if: giữ phân biệt cam kết ↔ thí nghiệm mà không tốn một hàng chữ.
+   Nội dung đầy đủ ở `title`/`aria-label`. */
+.experiment-tool-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--ink-muted);
+  cursor: help;
+}
+
+/* Lối đóng nằm TRONG công cụ, không phải một hàng riêng. */
+.experiment-tool-close {
+  padding: 2px 8px;
+  line-height: 1;
+  font-size: 16px;
+}
+
 /* Hàng trạng thái: ứng viên · phép so sánh · biến tích luỹ. Cuốn xuống dòng gọn
    ở màn hẹp thay vì ép ngang. */
 .scan-state {
@@ -2261,21 +2314,6 @@ html {
    nghiệm. Cố ý KHÔNG dùng `.action-zone`: khối này không phải chỗ học sinh
    hành động, nên nó không được mang cùng nền/viền với vùng cam kết — nhìn vào
    phải thấy ngay đâu là thông tin, đâu là việc phải làm. */
-/* W4B-2V/C — KHAY THÍ NGHIỆM. Một hàng, không nền thẻ, không padding lớn:
-   Thí nghiệm là CÔNG CỤ gắn vào mô phỏng, không phải tấm nội dung thứ hai nằm
-   dưới nó. Lối đóng đẩy về cuối hàng để không chen vào câu hỏi hành động. */
-.experiment-tray {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-xs);
-  font-size: 14px;
-  color: var(--ink-secondary);
-}
-
-.experiment-tray-close {
-  margin-left: auto;
-}
-
 .search-observe {
   display: flex;
   flex-direction: column;

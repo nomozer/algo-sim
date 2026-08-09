@@ -39,15 +39,23 @@ interface SortActionZoneProps {
    * khỏi kiểu này (xem `ScanActionZone`).
    */
   feedback?: { verdict: string; message: string; answerId?: string } | null;
-  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để khay Thí nghiệm hỏi. */
+  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để công cụ hỏi. */
   showPrompt?: boolean;
+  /**
+   * W4B-2V/C2 — HÌNH HỌC, không phải nội dung.
+   * `"panel"` = thẻ cũ (nền + viền + padding, xếp dọc) cho bài CHƯA gác cổng,
+   * nơi vùng cam kết là một phần thường trực của Quan sát.
+   * `"tool"`  = một hàng inline không nền không viền, để nó nằm GỌN TRONG
+   * `.experiment-tool` thay vì thành tấm nội dung thứ hai.
+   */
+  chrome?: "panel" | "tool";
 }
 
 export function SortActionZone({
-  model, answered, busy, onAct, feedback = null, showPrompt = true,
+  model, answered, busy, onAct, feedback = null, showPrompt = true, chrome = "panel",
 }: SortActionZoneProps) {
   return (
-    <section className="action-zone sort-action" aria-label="Thao tác sắp xếp">
+    <section className={`action-zone sort-action is-${chrome}`} aria-label="Thao tác sắp xếp">
       <p className="sort-title">
         <IconSearch size={13} />
         {model.title}

@@ -135,6 +135,34 @@ const snapshot = () => evaluate(`(async () => {
        ket qua tot. */
     workspaceHeight: Math.round(((document.querySelector('.sim-stage') || {}).parentElement
       || document.body).getBoundingClientRect().height),
+    /* W4B-2V/C2 §21 — HINH HOC CONG CU, khong chi chieu cao.
+       Chi rieng workspaceDelta da tung khien mot PANEL NHO HON duoc nghiem thu
+       la "tool mode". Do them: be rong khoi cam ket so voi vung lam viec, lo
+       dong co NAM TRONG khung cong cu khong, va so HANG. */
+    tool: (() => {
+      const wrap = document.querySelector('.experiment-tool')
+        || document.querySelector('.action-zone');
+      if (!wrap) return null;
+      const w = wrap.getBoundingClientRect();
+      const host = (document.querySelector('.sim-stage') || {}).parentElement || document.body;
+      const hw = host.getBoundingClientRect();
+      const close = document.querySelector('[aria-label="Đóng thí nghiệm"]');
+      const c = close ? close.getBoundingClientRect() : null;
+      const cs = getComputedStyle(wrap);
+      return {
+        cls: wrap.className,
+        display: cs.display,
+        widthRatio: hw.width ? Math.round((w.width / hw.width) * 100) : null,
+        height: Math.round(w.height),
+        hasCardChrome: cs.borderTopWidth !== '0px' || !['none','rgba(0, 0, 0, 0)','transparent'].includes(cs.backgroundColor),
+        closeInsideTool: !!(c && c.top >= w.top - 2 && c.bottom <= w.bottom + 2
+                            && c.left >= w.left - 2 && c.right <= w.right + 2),
+        /* So HANG = so muc top khac nhau cua cac con truc tiep. */
+        rows: new Set([...wrap.querySelectorAll(':scope > *, :scope > * > *')]
+          .filter((el) => el.getBoundingClientRect().height > 0)
+          .map((el) => Math.round(el.getBoundingClientRect().top / 8))).size,
+      };
+    })(),
     proseBlocks: [...document.querySelectorAll('.notes, .hint, .scan-instruction, .sort-title, .narration-bar')]
       .map((el) => el.textContent.replace(/\s+/g,' ').trim())
       .filter((t) => t.length >= 60),
@@ -460,6 +488,8 @@ try {
         workspaceDelta: opened.workspaceHeight - observe.workspaceHeight,
         proseDelta: opened.proseBlocks.length - observe.proseBlocks.length,
         experimentProse: opened.proseBlocks,
+        toolObserve: observe.tool,
+        toolOpen: opened.tool,
       },
 
     };

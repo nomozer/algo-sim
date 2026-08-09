@@ -126,8 +126,16 @@ interface SearchActionZoneProps {
   busy: boolean;
   onAct: (actionId: string) => void;
   feedback?: { verdict: string; message: string } | null;
-  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để khay Thí nghiệm hỏi. */
+  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để công cụ hỏi. */
   showPrompt?: boolean;
+  /**
+   * W4B-2V/C2 — HÌNH HỌC, không phải nội dung.
+   * `"panel"` = thẻ cũ (nền + viền + padding, xếp dọc) cho bài CHƯA gác cổng,
+   * nơi vùng cam kết là một phần thường trực của Quan sát.
+   * `"tool"`  = một hàng inline không nền không viền, để nó nằm GỌN TRONG
+   * `.experiment-tool` thay vì thành tấm nội dung thứ hai.
+   */
+  chrome?: "panel" | "tool";
 }
 
 /**
@@ -139,10 +147,10 @@ interface SearchActionZoneProps {
  * không đổi lượng thông tin về cơ chế.
  */
 export function SearchActionZone({
-  model, answered, busy, onAct, feedback = null, showPrompt = true,
+  model, answered, busy, onAct, feedback = null, showPrompt = true, chrome = "panel",
 }: SearchActionZoneProps) {
   return (
-    <section className="action-zone search-action" aria-label="Thao tác với bước tìm kiếm">
+    <section className={`action-zone search-action is-${chrome}`} aria-label="Thao tác với bước tìm kiếm">
       {/* W4B-2V/C: ở bài GÁC CỔNG, khay Thí nghiệm đã hỏi đúng câu này rồi —
           in lại ở đây là hai kênh nói một điều. Bài CHƯA gác không có khay
           nên mặc định `true` giữ nguyên hành vi cũ cho chúng. */}

@@ -22,6 +22,7 @@ import { commitmentSurfaceVisible, whatIfDragAllowed, whatIfPolicyOf } from "./i
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import {
   IconBack,
+  IconInfo,
   IconCheck,
   IconExperiment,
   IconPredict,
@@ -164,6 +165,27 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
     answered: prediction !== null,
   });
 
+  /* Đúng MỘT mô hình tương tác sống ở một bước (`stageInteractionsOf`), nên
+     chọn ở đây thay vì dựng ba nhánh JSX song song. `chrome` dẫn xuất từ
+     `gated` — capability, không phải tên bài. */
+  const zoneProps = {
+    answered: prediction !== null,
+    busy,
+    onAct: (actionId: string) => submitPrediction(actionId),
+    feedback: prediction,
+    showPrompt: !gated,
+    chrome: (gated ? "tool" : "panel") as "tool" | "panel",
+  };
+  const commitZone = !commitmentVisible
+    ? null
+    : scan
+      ? <ScanActionZone model={scan} {...zoneProps} />
+      : search
+        ? <SearchActionZone model={search} {...zoneProps} />
+        : sort
+          ? <SortActionZone model={sort} {...zoneProps} />
+          : null;
+
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       {state.branch && (
@@ -215,52 +237,54 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         />
       </div>
 
-      {/* CỤM QUÉT DÃY (INTERACTION-FAMILY W1): cam kết của học sinh là HÀNH
-          ĐỘNG lên biến tích luỹ, không phải câu Có/Không. Vẫn nộp qua chính
-          `predict.check` nên engine vẫn là bên duy nhất phán đúng/sai; ở bước
-          này shell KHÔNG dựng PredictionBar (`predict.presentedInStage`). */}
-      {scan && commitmentVisible && (
-        <ScanActionZone
-          showPrompt={!gated}
-          model={scan}
-          answered={prediction !== null}
-          busy={busy}
-          onAct={(actionId) => submitPrediction(actionId)}
-          feedback={prediction}
-        />
-      )}
-
-      {/* CỤM TÌM KIẾM (W2): tuần tự nhắm CHI PHÍ, nhị phân nhắm VÙNG BỊ LOẠI —
-          cùng primitive, khác nhiệm vụ. Nộp qua chính `predict.check`. */}
       {/* W4B-2V — TRẠNG THÁI QUAN SÁT ĐỨNG NGOÀI CỔNG.
           Điều kiện là `search` thuần, KHÔNG kèm `commitmentVisible`: cổng gác
           quyền hành động, không gác thông tin về cơ chế. */}
       {search && <SearchStateView model={search} relation={decision?.expression ?? null} />}
 
-      {search && commitmentVisible && (
-        <SearchActionZone
-          showPrompt={!gated}
-          model={search}
-          answered={prediction !== null}
-          busy={busy}
-          onAct={(actionId) => submitPrediction(actionId)}
-          feedback={prediction}
-        />
-      )}
-
-      {/* CỤM SẮP XẾP (W3B): cam kết là NÚT, kéo vẫn là thí nghiệm. Trong lúc
-          chưa cam kết, kéo bị khoá (`sortingCommitmentPending`) để một cử chỉ
-          không mang hai nghĩa ở cùng một bước. Nộp qua chính `predict.check`. */}
-      {sort && commitmentVisible && (
-        <SortActionZone
-          showPrompt={!gated}
-          model={sort}
-          answered={prediction !== null}
-          busy={busy}
-          onAct={(actionId) => submitPrediction(actionId)}
-          feedback={prediction}
-        />
-      )}
+      {/* W4B-2V/C2 — MỘT KHỐI CAM KẾT, BỌC TRONG CÔNG CỤ KHI ĐÃ GÁC CỔNG.
+       *
+       * Trước đây ba họ dựng ba `<section className="action-zone">` rời, và
+       * `.action-zone` là một THẺ: `background: canvas-soft` + `border` +
+       * `padding md lg` + `flex-direction: column`, trên phần tử block ⇒ trải
+       * gần hết bề ngang. Rút chữ ở wave trước làm nó NHỎ HƠN nhưng vẫn là một
+       * tấm nội dung thứ hai. Đây mới là chỗ phải đổi.
+       *
+       * Ba mô hình loại trừ nhau (bất biến COMMITMENT_SURFACE_COUNT ≤ 1), nên
+       * gom được thành một biểu thức — và nhờ vậy CHỈ MỘT chỗ quyết định
+       * "chrome nào": bài gác cổng dùng chrome CÔNG CỤ, bài chưa gác giữ nguyên
+       * thẻ cũ (chúng không có Thí nghiệm; vùng cam kết của chúng là một phần
+       * thường trực của Quan sát).
+       */}
+      {commitZone && (gated ? (
+        <div
+          className="experiment-tool"
+          role="group"
+          /* `framing` không còn là một HÀNG chữ; nó thành TÊN KHẢ TRUY CẬP của
+             công cụ. Người dùng đọc màn hình vẫn nghe được mục đích, người nhìn
+             thì đọc thẳng nhãn nút — không ai phải đọc hai lần. */
+          aria-label={policy.framing}
+        >
+          <IconExperiment size={14} />
+          {commitZone}
+          {canDrag && policy.hint && (
+            /* §13 — phân biệt CAM KẾT ↔ WHAT-IF không được mất, nhưng cũng
+               không được chiếm một hàng chữ full-width. Chip nhỏ, nội dung đầy
+               đủ nằm ở `title` + `aria-label`. */
+            <span className="experiment-tool-note" title={policy.hint} aria-label={policy.hint}>
+              <IconInfo size={12} /> what-if
+            </span>
+          )}
+          <button
+            className="btn-utility experiment-tool-close"
+            onClick={() => setLabOpen(false)}
+            aria-label="Đóng thí nghiệm"
+            aria-expanded
+          >
+            ×
+          </button>
+        </div>
+      ) : commitZone)}
 
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8).
           KHÔNG dựng khi đã có vùng hành động: `ScanActionZone` mang sẵn state
@@ -324,42 +348,22 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           riêng (`algorithm-ui.test.tsx` — "nút không còn bí ẩn"), và §8 đòi cổng
           phải DISCOVERABLE. Bỏ nó đi là đọc §7 quá rộng: thứ §7 cấm ở Quan sát là
           bề mặt CAM KẾT, không phải lời mời khám phá. */}
+      {/* W4B-2V/C2 — CỔNG LÀ MỘT NÚT MÔ TẢ, KHÔNG KÈM HÀNG CHỮ RIÊNG.
+          Nhãn nút đã tự nói năng lực ("Thí nghiệm: tự chọn nửa để tìm tiếp"),
+          nên teaser không cần một hàng nữa; nó thành `title` — vẫn tới được
+          chuột và công nghệ hỗ trợ, không tốn một dòng bố cục. Bất biến giữ
+          nguyên: cổng phải TỰ MÔ TẢ, không được là nút bí ẩn. */}
       {hasExperiment && !labOpen && !state.branch && !last && (
-        <div className="stack" style={{ gap: "var(--sp-xs)", alignItems: "flex-start" }}>
-          {policy.challengeTeaser && <span className="hint">{policy.challengeTeaser}</span>}
-          <button
-            className="btn-utility"
-            onClick={() => setLabOpen(true)}
-            aria-expanded={false}
-          >
-            <IconExperiment size={14} />
-            {policy.challengeLabel}
-          </button>
-        </div>
-      )}
-      {/* W4B-2V/C — KHAY CÔNG CỤ, KHÔNG PHẢI THẺ NỘI DUNG.
-          Trước đây khối này là `.notes` — một thẻ có nền và padding, mang một
-          đoạn 135–310 ký tự. Đo được: mở cổng làm vùng làm việc cao thêm
-          122–186px (`w4b2vc-experiment-tool/before/`). Nay là MỘT DÒNG: câu hỏi
-          hành động + lối đóng. Nội dung what-if không mất — nó ở `policy.hint`,
-          ngay cạnh chính công cụ kéo. */}
-      {hasExperiment && labOpen && !state.branch && (
-        <div className="experiment-tray" role="note">
+        <button
+          className="btn-utility experiment-trigger"
+          onClick={() => setLabOpen(true)}
+          title={policy.challengeTeaser}
+          aria-expanded={false}
+        >
           <IconExperiment size={14} />
-          <strong>{policy.framing}</strong>
-          {/* Nhãn hiện NGẮN cho gọn khay, nhưng TÊN KHẢ TRUY CẬP giữ đủ ngữ
-              cảnh: đọc màn hình nghe "Đóng" trơ trọi thì không biết đóng cái gì. */}
-          <button
-            className="btn-utility experiment-tray-close"
-            onClick={() => setLabOpen(false)}
-            aria-label="Đóng thí nghiệm"
-            aria-expanded
-          >
-            Đóng
-          </button>
-        </div>
+          {policy.challengeLabel}
+        </button>
       )}
-
       {/* Gợi ý kéo KHÔNG được mời làm việc đang bị khoá, và sau khi đã cam kết
           thì phải nói rõ kéo là THỬ NGHIỆM — khác hẳn việc vừa làm bằng nút. */}
       {canDrag && sort && prediction !== null && (
@@ -368,7 +372,9 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           phải bước của thuật toán.
         </span>
       )}
-      {canDrag && !sort && policy.hint && <span className="hint">{policy.hint}</span>}
+      {/* Bài CHƯA gác cổng không có công cụ để gắn chip what-if vào, nên giữ
+          hàng gợi ý như cũ. Bài gác cổng đã có chip trong `.experiment-tool`. */}
+      {canDrag && !sort && !gated && policy.hint && <span className="hint">{policy.hint}</span>}
     </div>
   );
 }
