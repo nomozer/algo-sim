@@ -1083,6 +1083,24 @@ bày, và 0 rò rỉ đáp án trong DOM. Cờ: `--port --targets --out`. ⚠️
 quả trên tiến trình Vite MỚI: server đã qua nhiều lượt HMR cho phán quyết sai
 (đo được: store `view:"workspace"` mà React vẫn vẽ Home).
 
+### `docs/SIMULATION_VS_ILLUSTRATION_CONTRACT.md` · tài liệu hợp đồng
+Định nghĩa ba mức AlgoSim công nhận — ILLUSTRATION (**cấm admit**) ·
+STEP_VISUALIZATION · INTERACTIVE_SIMULATION — phân biệt bằng **ai sở hữu diễn
+biến**, không bằng độ đẹp. Chứa PHÉP THỬ BỎ RENDERER (xoá renderer thì engine
+vẫn phải sở hữu `state k → k+1 → result`), bảng sở hữu renderer-vs-engine, chỗ
+đứng của LLM, hợp đồng **ngữ cảnh đổi NHÃN / cơ chế đổi HÀNH VI**, và phân mức
+hiện tại 11/3/8 của 22 target. Đọc trước khi thêm target mới hoặc khi định cho
+renderer "tự tính" thứ gì.
+
+### `simulations/spec-reuse.test.tsx` · Change impact: offline
+Khoá hợp đồng tái dụng (W4B-2V §30): ba cặp ngữ cảnh khác nhau của cùng cơ chế
+(`binary_search` điểm↔số báo danh · `count_if` điểm↔nhiệt độ · `find_max` học
+sinh↔lượng mưa) phải cho **cùng chuỗi kiểu sự kiện engine** + **cùng tham chiếu
+component renderer**, còn dữ liệu/nhãn phải KHÁC. So SỞ HỮU, không so pixel.
+Kèm guard quét `domains/**` cấm renderer rẽ nhánh theo nội dung đề
+(`summary.includes(...)`) hay theo `algorithm_id`/`simulation_id` — guard tự
+kiểm bằng ba mẫu vi phạm tổng hợp trước khi tin kết quả 0.
+
 ### `scripts/audit-search-position.mjs` · offline (cần Chrome + Vite)
 Runner ĐO HỆ ĐẾM VỊ TRÍ của họ tìm kiếm (W4B-2D §4) — chỉ ĐỌC, không bấm cam
 kết, không mở Thí nghiệm. Ở một bước cam kết của `linear_search`/`binary_search`
