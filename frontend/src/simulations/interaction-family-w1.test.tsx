@@ -4,6 +4,7 @@ import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
 import { isScanFamily, scanInteractionOf, stageInteractionsOf } from "./domains/algorithm/decision";
+import { commitmentSurfaceVisible, whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
 import type { AlgorithmSimState } from "./domains/algorithm";
@@ -239,39 +240,114 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
     expect(src).toMatch(/!mod\.predict\?\.presentedInStage\?\.\(active\.state\)/);
   });
 
-  it("bước có vùng hành động KHÔNG dựng thêm dải nhân quả (state line một lần)", () => {
-    /* Bất biến: state line xuất hiện ĐÚNG MỘT lần — không bao giờ vùng hành động
-       và dải nhân quả cùng lúc.
+  /* ── BẤT BIẾN BỀ MẶT CAM KẾT (W4B-2D §2) ────────────────────────────────
+   *
+   *   COMMITMENT_SURFACE_COUNT <= 1
+   *
+   * LỊCH SỬ CỦA CHÍNH TEST NÀY, và vì sao nó được viết lại:
+   * bản cũ khoá luật bằng cách chọn một bài LÀM CHỨNG chưa gác cổng rồi render
+   * SSR. Bài đó đã phải đổi BA lần khi từng họ lần lượt gác cổng
+   * (`find_max` → `sum_if` → `linear_search`), và sẽ hết bài ngay khi họ tìm
+   * kiếm được gác. Đổi lần thứ tư là chữa triệu chứng.
+   *
+   * Nay luật có chủ sở hữu gọi tên được: `commitmentSurfaceVisible(policy, labOpen)`
+   * ở `interaction-policy.ts` — CÙNG hàm mà `AlgorithmWorkspace` gọi, không phải
+   * bản sao dành riêng cho test.
+   *
+   * Bốn ca, và cách mỗi ca được phủ:
+   *   A. gated=false, có điểm quyết định        → 1 bề mặt   (hàm thuần + SSR)
+   *   B. gated=true, labOpen=false               → 0 bề mặt   (hàm thuần + SSR)
+   *   C. gated=true, labOpen=true, có quyết định → 1 bề mặt   (hàm thuần; bản
+   *      RENDER do runner trình duyệt phủ, vì `labOpen` là useState cục bộ và
+   *      SSR luôn thấy `false` — ARCHITECTURE_MAP §8 #13. KHÔNG giả lập nó bằng
+   *      renderToString, và KHÔNG đưa labOpen lên store chỉ để test dễ hơn.)
+   *   D. không có điểm quyết định               → 0 bề mặt   (SSR)
+   */
+  const ZONE_LABELS = [
+    "Thao tác với biến tích luỹ",
+    "Thao tác với bước tìm kiếm",
+    "Thao tác sắp xếp",
+  ];
+  const surfaceCount = (html: string) =>
+    ZONE_LABELS.reduce((n, l) => n + (html.split(`aria-label="${l}"`).length - 1), 0);
 
-       W4B-2C: nay CẢ BỐN bài quét dãy đều gác cổng, nên không bài quét nào minh
-       hoạ được vế "có vùng hành động" ở SSR (`labOpen` luôn false). Dùng
-       `linear_search` — họ TÌM KIẾM chưa mở rộng trong wave này nên vẫn dựng
-       `SearchActionZone` thẳng ở bước quyết định. Bất biến không đổi (một điểm
-       quyết định, một bề mặt), chỉ đổi bài làm chứng. */
-    const { config, state } = build("linear_search", { target: 8 });
-    /* `firstDecision` dùng `scanInteractionOf` nên vô dụng ở họ tìm kiếm — tìm
-       bước quyết định bằng chính nguồn đếm chung của shell. */
-    let d = -1;
-    for (let i = 0; i < state.trace.steps.length && d < 0; i += 1) {
-      if (stageInteractionsOf(at(state, i)).length > 0) d = i;
-    }
-    expect(d, "linear_search không có bước quyết định nào").toBeGreaterThanOrEqual(0);
-    const html = renderToString(
-      <AlgorithmWorkspace config={config} state={at(state, d)} busy={false} dispatch={() => {}} />,
-    );
-    expect(html).toContain("aria-label=\"Thao tác với bước tìm kiếm\"");
-    expect(html).not.toContain("decision-strip");
+  it("(A/B) luật thuần: gated quyết định bề mặt cam kết, không phụ thuộc bài nào", () => {
+    const ungated = { mode: "free", rationale: "r" } as const;
+    const gated = { mode: "free", rationale: "r", experimentGated: true } as const;
+    // A — chưa gác cổng thì bề mặt luôn có mặt, kể cả khi chưa mở Thí nghiệm
+    expect(commitmentSurfaceVisible(ungated, false)).toBe(true);
+    expect(commitmentSurfaceVisible(ungated, true)).toBe(true);
+    // B — gác cổng mà chưa mở ⇒ không bề mặt nào
+    expect(commitmentSurfaceVisible(gated, false)).toBe(false);
+    // C — gác cổng và đã mở ⇒ có bề mặt
+    expect(commitmentSurfaceVisible(gated, true)).toBe(true);
   });
 
-  it("W4B-2B §7 — bài pilot: Quan sát KHÔNG có vùng cam kết, nhưng CÒN quan hệ", () => {
-    const { config, state } = build("find_max", {});
-    const html = renderToString(
-      <AlgorithmWorkspace config={config} state={at(state, firstDecision(state))} busy={false} dispatch={() => {}} />,
-    );
-    expect(html).not.toContain("scan-action");
-    expect(html).toContain("decision-strip");
-    // cổng phải nhìn thấy được, nếu không học sinh mất đường vào
-    expect(html).toContain("Thí nghiệm");
+  it("(A) bài CHƯA gác cổng ở điểm quyết định: đúng MỘT bề mặt, không kèm dải nhân quả", () => {
+    /* Đọc kỳ vọng từ chính bản khai policy: bài nào chưa gác cổng cũng được, và
+       nếu một ngày KHÔNG còn bài nào chưa gác thì test tự bỏ qua thay vì đỏ vì
+       một lý do chẳng liên quan. */
+    const ungated = ALGORITHM_IDS.filter((id) => !whatIfPolicyOf(id).experimentGated);
+    if (ungated.length === 0) return;
+    for (const id of ungated) {
+      const extra = id === "binary_search" || id === "linear_search"
+        ? { array: [...ARR].sort((x, y) => x - y), target: 8 }
+        : { order: "asc" };
+      const { config, state } = build(id, extra);
+      let d = -1;
+      for (let i = 0; i < state.trace.steps.length && d < 0; i += 1) {
+        if (stageInteractionsOf(at(state, i)).length > 0) d = i;
+      }
+      if (d < 0) continue;
+      const html = renderToString(
+        <AlgorithmWorkspace config={config} state={at(state, d)} busy={false} dispatch={() => {}} />,
+      );
+      expect(surfaceCount(html), `${id}: số bề mặt cam kết`).toBe(1);
+      // một bề mặt một lúc ⇒ dải nhân quả không được dựng song song
+      expect(html, `${id}: dựng cả hai`).not.toContain("decision-strip");
+    }
+  });
+
+  it("(B) bài ĐÃ gác cổng ở Quan sát: KHÔNG bề mặt nào, nhưng quan hệ ở lại", () => {
+    const gated = ALGORITHM_IDS.filter((id) => whatIfPolicyOf(id).experimentGated);
+    expect(gated.length, "không còn bài gác cổng nào — bất biến mất ý nghĩa").toBeGreaterThan(0);
+    for (const id of gated) {
+      const extra = id.endsWith("_sort")
+        ? { order: "asc" }
+        : id === "count_if" || id === "sum_if"
+          ? { condition: { op: ">=", value: 7 } }
+          : {};
+      const { config, state } = build(id, extra);
+      let d = -1;
+      for (let i = 0; i < state.trace.steps.length && d < 0; i += 1) {
+        if (stageInteractionsOf(at(state, i)).length > 0) d = i;
+      }
+      if (d < 0) continue;
+      const html = renderToString(
+        <AlgorithmWorkspace config={config} state={at(state, d)} busy={false} dispatch={() => {}} />,
+      );
+      expect(surfaceCount(html), `${id}: Quan sát vẫn còn bề mặt cam kết`).toBe(0);
+      expect(html, `${id}: cổng đã lấy mất quan hệ`).toContain("decision-strip");
+      expect(html, `${id}: mất đường vào Thí nghiệm`).toContain("Thí nghiệm");
+    }
+  });
+
+  it("(D) bước KHÔNG phải điểm quyết định: không bề mặt cam kết nào", () => {
+    for (const [id, data] of SCAN) {
+      const { config, state } = build(id, data);
+      const html = renderToString(
+        <AlgorithmWorkspace config={config} state={at(state, 0)} busy={false} dispatch={() => {}} />,
+      );
+      expect(surfaceCount(html), `${id} bước 0`).toBe(0);
+    }
+  });
+
+  it("bất biến vẫn bắt được LỖI THỪA: hai bề mặt cùng lúc là đỏ", () => {
+    /* Phép đếm phải thật sự đếm. Ghép hai đoạn HTML có nhãn vùng khác nhau —
+       nếu `surfaceCount` chỉ trả 0/1 thì nó không bao giờ bắt được ca THỪA. */
+    const fake = '<div aria-label="Thao tác sắp xếp"></div>'
+      + '<div aria-label="Thao tác với bước tìm kiếm"></div>';
+    expect(surfaceCount(fake)).toBe(2);
   });
 });
 

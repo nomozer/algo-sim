@@ -17,7 +17,7 @@ import { ScanActionZone } from "../../../components/ScanActionZone";
 import { SearchActionZone } from "../../../components/SearchActionZone";
 import { SortActionZone } from "../../../components/SortActionZone";
 import { useAppStore } from "../../../state/store";
-import { whatIfDragAllowed, whatIfPolicyOf } from "./interaction-policy";
+import { commitmentSurfaceVisible, whatIfDragAllowed, whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import {
   IconBack,
@@ -132,7 +132,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
    * Vùng cam kết chỉ ẩn ở bài ĐƯỢC GÁC. Bài khác giữ nguyên hành vi cũ —
    * đây là pilot hai bài, không phải rollout cả họ (§25).
    */
-  const commitmentVisible = !gated || labOpen;
+  const commitmentVisible = commitmentSurfaceVisible(policy, labOpen);
 
   const dragAllowedByPolicy =
     policy.mode === "hidden"

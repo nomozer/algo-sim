@@ -173,6 +173,32 @@ export function whatIfPolicyOf(algorithmId: AlgorithmId): WhatIfPolicy {
   return POLICIES[algorithmId];
 }
 
+/**
+ * W4B-2D §2 — VÙNG CAM KẾT CÓ ĐƯỢC DỰNG KHÔNG. Hàm THUẦN, một dòng, nhưng nó
+ * là chủ sở hữu thật của một bất biến toàn sản phẩm:
+ *
+ *   COMMITMENT_SURFACE_COUNT <= 1
+ *   Quan sát ở bài gác cổng ⇒ 0 · Thí nghiệm mở ở bước quyết định ⇒ 1
+ *
+ * VÌ SAO TÁCH RA. Luật này trước đây chôn trong JSX của `AlgorithmWorkspace`,
+ * nên test duy nhất kiểm được nó phải chọn một bài LÀM CHỨNG chưa gác cổng rồi
+ * render SSR. Bài làm chứng đó đã phải đổi BA lần khi các họ lần lượt gác cổng
+ * (`find_max` → `sum_if` → `linear_search`), và sẽ hết bài ngay khi họ tìm kiếm
+ * được gác. Đổi bài làm chứng lần thứ tư là chữa triệu chứng: cái sai nằm ở chỗ
+ * luật không có nơi nào gọi tên được ngoài JSX.
+ *
+ * Tách vào ĐÂY chứ không vào một helper của test, vì đây mới là chủ sở hữu khai
+ * báo của chính sách tương tác — production gọi nó, test gọi nó, cùng một nguồn.
+ * Một helper chỉ-dành-cho-test sẽ là bản sao thứ hai của luật, đúng thứ
+ * `ARCHITECTURE_MAP §8` #1 cấm.
+ *
+ * `labOpen` là state TRÌNH BÀY cục bộ của workspace (không phải store), nên nó
+ * vào đây như THAM SỐ — hàm không được biết React tồn tại.
+ */
+export function commitmentSurfaceVisible(policy: WhatIfPolicy, labOpen: boolean): boolean {
+  return policy.experimentGated !== true || labOpen;
+}
+
 /* ── KÉO VÀ CAM KẾT KHÔNG TRANH NHAU (W3B §1.2, §15) ─────────────────────────
  *
  * Ở ba bài sắp xếp, kéo cột có mode "free" — nó ĐÃ mang nghĩa "thí nghiệm: nếu
