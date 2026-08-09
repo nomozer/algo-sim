@@ -1101,6 +1101,16 @@ quan sát (hồi quy W4B-2D). Luật: **cổng gác quyền hành động, khôn
 tin.** Dải nhân quả KHÔNG dựng cho họ tìm kiếm nữa — `SearchStateView` là chủ sở
 hữu duy nhất của quan hệ ở họ này.
 
+### `generic/narration-boundary.characterization.test.tsx` · offline · **ĐẶC TẢ**
+⚠️ Mô tả hành vi **HIỆN TẠI**, kể cả hành vi đáng lo — KHÔNG phải hợp đồng mong
+muốn. Siết `RevealStep.narration` thì test này ĐỎ; sửa test cho khớp, đừng nới
+bản vá cho khớp test. Đo ranh giới LLM ↔ bề mặt học sinh của
+`generic.rule_scene`: validator hai tầng chỉ kiểm `typeof string` (không trần độ
+dài, không ràng nội dung) nên narration mâu thuẫn/tuyên bố kết quả/tự phán đúng
+sai đều ACCEPTED và tới học sinh nguyên văn qua khe thuyết minh của shell; nhưng
+KHÔNG đổi được state/kết quả/phán quyết (đã đo). Kết luận + chuỗi sở hữu:
+`docs/GENERIC_RULE_SCENE_LLM_BOUNDARY_AUDIT.md`.
+
 ### `simulations/observation-preservation.test.tsx` · Change impact: offline
 Khoá `CORE_OBSERVATION_STATE_PRESERVED_UNDER_GATING`. Chứng minh THEO CẤU TRÚC
 (không so hai lần render, vì `labOpen` là useState cục bộ nên SSR luôn thấy
