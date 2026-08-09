@@ -40,7 +40,11 @@ if (!CHROME) { console.error("Không tìm thấy Chrome."); process.exit(1); }
 const profile = mkdtempSync(join(tmpdir(), "algosim-w4b2b-"));
 const chrome = spawn(CHROME, [
   "--headless=new", "--disable-gpu", `--remote-debugging-port=${CDP_PORT}`,
-  `--user-data-dir=${profile}`, "--window-size=1920,1080", "--hide-scrollbars", "about:blank",
+  /* W4B-2D §32: bề rộng đo được là THAM SỐ. Trước đây cố định 1920x1080, nên
+     luồng Quan sát/Thí nghiệm/Giải thích chỉ từng được chứng minh ở đúng một
+     viewport — trong khi lỗi bố cục của kho này đều lộ ở bề ngang hẹp. */
+  `--user-data-dir=${profile}`, `--window-size=${argOf("--window", "1920,1080")}`,
+  "--hide-scrollbars", "about:blank",
 ], { stdio: "ignore" });
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -107,7 +111,15 @@ const snapshot = () => evaluate(`(async () => {
     zones: {
       scan: zone('Thao tác với biến tích luỹ'),
       sort: zone('Thao tác sắp xếp'),
+      /* W4B-2D: ho tim kiem la ho thu ba di qua cong nay. Thieu dong nay thi
+         moi phep kiem "vung cam ket co hien khong" doc nham ket qua cho
+         linear_search/binary_search — va bao PASS. */
+      search: zone('Thao tác với bước tìm kiếm'),
     },
+    /* Tien de thuoc QUAN SAT (§29): no phai o lai ke ca khi cong da an vung
+       cam ket. Do rieng vi day la thu W4B-2D suyt lam mat. */
+    precondition: (document.querySelector('.search-precondition') || {}).textContent || null,
+    relation: !!document.querySelector('.decision-strip'),
     experimentButton: btn ? btn.textContent.replace(/\\s+/g, ' ').trim() : null,
     experimentOpen: btn ? btn.getAttribute('aria-expanded') === 'true' : null,
     commitButtons: [...document.querySelectorAll('[aria-label^="Thao tác"] button')]
@@ -117,6 +129,9 @@ const snapshot = () => evaluate(`(async () => {
       .filter((k) => document.body.innerHTML.includes(k)),
   };
 })()`);
+
+/** Bat ky vung cam ket nao dang hien — khong chep tay danh sach ho. */
+const anyZone = (z) => !!(z.scan || z.sort || z.search);
 
 /** Bấm nút theo CHỮ học sinh đọc được — không theo class/id nội bộ. */
 const clickText = (text, scope = "button") => evaluate(`(() => {
@@ -263,10 +278,12 @@ try {
     const observe = await snapshot();
     await shot(`${short}-1-observe`);
     check(`${short}: Quan sát KHÔNG có vùng cam kết`,
-      !observe.zones.scan && !observe.zones.sort, observe.zones);
+      !anyZone(observe.zones), observe.zones);
     check(`${short}: cổng Thí nghiệm nhìn thấy được`, !!observe.experimentButton,
       observe.experimentButton);
     check(`${short}: Quan sát không rò đáp án`, observe.domLeak.length === 0, observe.domLeak);
+    /* §29 — cong khong duoc lay mat du kien QUAN SAT. */
+    check(`${short}: quan hệ đang xét vẫn ở lại Quan sát`, observe.relation, observe.relation);
 
     /* 2 — MỞ CỔNG BẰNG BÀN PHÍM (§14) */
     const focused = await focusText("Thí nghiệm");
@@ -274,16 +291,16 @@ try {
     await pressEnter();
     let opened = await snapshot();
     let openedBy = "keyboard";
-    if (!(opened.zones.scan || opened.zones.sort)) {
+    if (!anyZone(opened.zones)) {
       /* Không mở được bằng phím ⇒ thử chuột để BIẾT lỗi nằm ở đâu: cổng hỏng,
          hay chỉ đường bàn phím hỏng. Hai kết luận rất khác nhau, không được gộp. */
       await clickText("Thí nghiệm");
       await sleep(350);
       opened = await snapshot();
-      openedBy = (opened.zones.scan || opened.zones.sort) ? "mouse-only" : "none";
+      openedBy = anyZone(opened.zones) ? "mouse-only" : "none";
     }
     await shot(`${short}-2-experiment-open`);
-    const zoneOn = opened.zones.scan || opened.zones.sort;
+    const zoneOn = anyZone(opened.zones);
     check(`${short}: mở cổng BẰNG BÀN PHÍM (Enter)`, openedBy === "keyboard",
       { openedBy, zones: opened.zones });
     check(`${short}: mở cổng ⇒ vùng cam kết hiện ra`, zoneOn, { openedBy, zones: opened.zones });
@@ -294,16 +311,33 @@ try {
     check(`${short}: Thí nghiệm mở vẫn không rò đáp án`, opened.domLeak.length === 0, opened.domLeak);
 
     /* 3 — CAM KẾT SAI → phản hồi từ predict.check */
+    /* ANH XA NHAN <- ID PHAI LAY TU CHINH MO HINH, KHONG SUY THEO VI TRI.
+     *
+     * Ban dau doan: `commitButtons[options.indexOf(id)]`. Dung cho hai ho cu vi
+     * chung co 2 lua chon cung thu tu. VO cho `binary_search`:
+     * `DecisionPoint.options` xep [left, right, found], con `SearchActionZone`
+     * CO Y dung theo [right, found, left] va DAO NGHIA nhan ("option left" =
+     * nua trai BI LOAI = tim tiep ben PHAI — xem chu thich DAO NGHIA trong
+     * decision.ts). Lượt do dau tien vi the bam nhan cua `found` khi tuong minh
+     * bam `right`, roi bao "engine cham dung thanh sai" — mot ket luan oan cho
+     * san pham. Nay hoi thang mo hinh: id va label di theo cap. */
     const expected = await evaluate(`(async () => {
       const s = await import('/src/state/store.ts');
       const d = await import('/src/simulations/domains/algorithm/decision.ts');
-      const dp = d.decisionPointOf(s.useAppStore.getState().active.state);
-      return { expectedId: dp.expectedId, options: dp.options.map((o) => o.id) };
+      const st = s.useAppStore.getState().active.state;
+      const dp = d.decisionPointOf(st);
+      const model = d.scanInteractionOf(st) || d.searchInteractionOf(st) || d.sortInteractionOf(st);
+      return {
+        expectedId: dp.expectedId,
+        options: dp.options.map((o) => o.id),
+        actions: model ? model.actions.map((a) => ({ id: a.id, label: a.label })) : [],
+      };
     })()`);
-    const wrongId = expected.options.find((o) => o !== expected.expectedId);
+    const labelOf = (id) => (expected.actions.find((a) => a.id === id) || {}).label;
+    const wrongId = expected.actions.map((a) => a.id).find((o) => o !== expected.expectedId);
     const labels = opened.commitButtons;
-    // nút SAI = nút không ứng với expectedId; lấy theo thứ tự option ⇒ nhãn tương ứng
-    const wrongLabel = labels[expected.options.indexOf(wrongId)];
+    const wrongLabel = labelOf(wrongId);
+    if (!wrongLabel) throw new Error(`${simId}: khong anh xa duoc nhan cho id "${wrongId}"`);
     await clickText(wrongLabel, '[aria-label^="Thao tác"] button');
     await sleep(400);
     const afterWrong = await snapshot();
@@ -319,7 +353,8 @@ try {
       s.useAppStore.getState().clearPrediction();
       return true; })()`);
     await sleep(200);
-    const rightLabel = labels[expected.options.indexOf(expected.expectedId)];
+    const rightLabel = labelOf(expected.expectedId);
+    if (!rightLabel) throw new Error(`${simId}: khong anh xa duoc nhan cho expectedId`);
     await clickText(rightLabel, '[aria-label^="Thao tác"] button');
     await sleep(400);
     const afterRight = await snapshot();
@@ -335,7 +370,7 @@ try {
     const withExplain = await snapshot();
     await shot(`${short}-5-experiment-plus-explain`);
     check(`${short}: mở Giải thích KHÔNG đóng Thí nghiệm`,
-      withExplain.zones.scan || withExplain.zones.sort, withExplain.zones);
+      anyZone(withExplain.zones), withExplain.zones);
     check(`${short}: mở Giải thích KHÔNG đổi canonical state`,
       withExplain.canonical === observe.canonical, { cursor: withExplain.cursor });
     await evaluate(`(async () => {
@@ -349,7 +384,7 @@ try {
     const closed = await snapshot();
     await shot(`${short}-6-observe-again`);
     check(`${short}: đóng cổng ⇒ vùng cam kết biến mất`,
-      !closed.zones.scan && !closed.zones.sort, closed.zones);
+      !anyZone(closed.zones), closed.zones);
     check(`${short}: đóng cổng KHÔNG reset mô phỏng`,
       closed.cursor === observe.cursor && closed.canonical === observe.canonical,
       { cursor: [observe.cursor, closed.cursor] });
@@ -376,6 +411,9 @@ try {
       expected_option_hidden_from_dom: observe.domLeak.length === 0 && opened.domLeak.length === 0,
       prediction_wrong: afterWrong.prediction,
       prediction_correct: afterRight.prediction,
+      /* §29: tien de phai doc duoc o Quan sat, va chi noi MOT lan. */
+      precondition_in_observe: observe.precondition,
+
     };
   }
 

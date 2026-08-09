@@ -3,7 +3,7 @@
 **Đây là bằng chứng QUY HOẠCH KIẾN TRÚC TƯƠNG TÁC, không phải bằng chứng học
 tập.** `LEARNER_IMPACT_NOT_EVALUATED` · `CURRICULUM_SUPPORT_PARTIAL`.
 
-Chụp tại `0a71268`; cập nhật sau W4B-2C (họ quét dãy đã triển khai). Ma trận này **không** được triển khai trong cùng wave sinh ra
+Chụp tại `0a71268`; cập nhật sau W4B-2C (họ quét dãy) rồi **W4B-2D (họ tìm kiếm)**. Ma trận này **không** được triển khai trong cùng wave sinh ra
 nó (§8 của đề bài) — nó là căn cứ để quyết định wave sau.
 
 ## Luật phân loại — đọc trước khi dùng bảng
@@ -38,8 +38,8 @@ xem diễn biến, và bịa một câu hỏi để "có tương tác" chính l�
 | 2 | `algorithm.find_min` | như trên, cực trị ngược | đang xét · min hiện tại · đã duyệt · quan hệ | cam kết (Scan) + kéo what-if | `predict.check` | **có** | commitment + what-if | **IMPLEMENTED — VERIFIED** | — (xong W4B-2C) | cùng `runFindExtreme`; đã hưởng bản vá cue ở `9d56f18` |
 | 3 | `algorithm.count_if` | biến đếm có điều kiện | đang xét · vị từ · đếm hiện tại · tiến độ | cam kết (Scan); **kéo `hidden`** | `predict.check` | **có** | commitment | **IMPLEMENTED — VERIFIED** | — (xong W4B-2C) | `scanInteractionOf` cấp nhãn "Đếm X vào nhóm"/"Bỏ qua"; policy `hidden` vì đếm bất biến theo thứ tự duyệt |
 | 4 | `algorithm.sum_if` | biến tích luỹ có điều kiện | đang xét · vị từ · tổng hiện tại · tiến độ | cam kết (Scan); **kéo `hidden`** | `predict.check` | **có** | commitment | **IMPLEMENTED — VERIFIED** | — (xong W4B-2C) | như trên, nhãn "Cộng X vào tổng"/"Bỏ qua" |
-| 5 | `algorithm.linear_search` | CHI PHÍ phụ thuộc vị trí đích | đang xét · đích · số lần so sánh | cam kết (Search) + kéo `framed` | `predict.check` | **có** | commitment + what-if | **EXPERIMENT_READY** | W4B-2D (họ tìm kiếm) | `searchInteractionOf`; policy `framed` |
-| 6 | `algorithm.binary_search` | tiền điều kiện "dãy đã sắp" | vùng còn lại · vùng bị loại · mốc giữa | cam kết (Search) + kéo `challenge` | `predict.check` | **có** | commitment + what-if | **EXPERIMENT_READY** | W4B-2D | đã có `challengeLabel` phá tiền điều kiện |
+| 5 | `algorithm.linear_search` | CHI PHÍ phụ thuộc vị trí đích | đang xét · đích · số lần so sánh | cam kết (Search) + kéo `framed` — **cả hai sau cổng** | `predict.check` | **có** | commitment + what-if | **IMPLEMENTED — VERIFIED** | — (xong W4B-2D) | kéo xếp là WHAT-IF (engine không phát swap); browser 18/18 |
+| 6 | `algorithm.binary_search` | tiền điều kiện "dãy đã sắp" | vùng còn lại · vùng bị loại · mốc giữa | cam kết (Search) + kéo `challenge` — **cả hai sau cổng** | `predict.check` | **có** | commitment + what-if | **IMPLEMENTED — VERIFIED** | — (xong W4B-2D) | tiền đề tách khỏi vùng cam kết để ở lại Quan sát; browser 18/18 |
 | 7 | `algorithm.bubble_sort` | đổi chỗ kề nhau | cặp đang so · phần đã sắp | cam kết (Sort) + kéo `free` | `predict.check` | **có** | commitment + what-if | **EXPERIMENT_READY** | W4B-2E (họ sắp xếp) | hai cột NGANG VAI — cue vai trò của find_max **không** áp được |
 | 8 | `algorithm.selection_sort` | chọn cực trị của phần chưa sắp | ranh giới chưa sắp · ứng viên | cam kết (Sort) + kéo `free` | `predict.check` | **có** | commitment + what-if | **EXPERIMENT_READY** | W4B-2E | `sortInteractionOf.kind = select-candidate` |
 | 9 | `algorithm.insertion_sort` | dời chỗ tới vị trí chèn | quân đang giữ · ô trống · vùng đã sắp · so sánh | cam kết (Sort) + kéo what-if | `predict.check` | **có** | commitment + what-if | **IMPLEMENTED — VERIFIED** | — (xong) | pilot W4B-2B, browser 17/17 |
@@ -66,15 +66,22 @@ xem diễn biến, và bịa một câu hỏi để "có tương tác" chính l�
 
 | Lớp | Số | Target |
 |---|---|---|
-| **IMPLEMENTED — VERIFIED** | 5 | `find_max` · `insertion_sort` · **`find_min`** · **`count_if`** · **`sum_if`** (ba bài sau: W4B-2C) |
-| **EXPERIMENT_READY** | 6 | `linear_search` · `binary_search` · `bubble_sort` · `selection_sort` · `packet_routing` · `protocol_encapsulation` |
+| **IMPLEMENTED — VERIFIED** | 7 | `find_max` · `insertion_sort` · `find_min` · `count_if` · `sum_if` · **`linear_search`** · **`binary_search`** (hai bài sau: W4B-2D) |
+| **EXPERIMENT_READY** | 4 | `bubble_sort` · `selection_sort` · `packet_routing` · `protocol_encapsulation` |
 | **WHAT_IF_READY** | 3 | `decimal_to_binary` · `and_gate` · `generic.rule_scene` |
 | **NEEDS_ENGINE_CONTRACT** | 8 | `algorithm.scan` · `bounded_control_flow` · `base_conversion` · `character_encoding` · `boolean_dag` · `graph_traversal` · `tree.traversal` · `relational_table_query` |
 | **OBSERVE_ONLY thuần** | 0 | mọi target đều có ít nhất điều khiển timeline |
 
-> 5 + 6 + 3 + 8 = **22**. Số EXPERIMENT_READY (9) khớp đúng với số target có
-> `predict` (11) trừ hai target đã triển khai — không phải trùng hợp: **có bên
-> kiểm định tất định là điều kiện cần và đủ để vào lớp này**.
+> 7 + 4 + 3 + 8 = **22**.
+>
+> Bất biến đáng nhớ: **IMPLEMENTED (7) + EXPERIMENT_READY (4) = 11 = đúng số
+> target có `predict`.** Không phải trùng hợp — có bên kiểm định tất định là
+> điều kiện cần và đủ để vào một trong hai lớp đó. Mỗi wave chỉ chuyển target
+> từ vế phải sang vế trái; tổng 11 không đổi cho tới khi một target nào đó được
+> cấp `predict` mới.
+>
+> *(Ghi chú cũ ở đây viết "EXPERIMENT_READY (9)" trong khi bảng ghi 6 — con số
+> đó đã lệch từ trước W4B-2D, sửa luôn thay vì chép tiếp.)*
 
 ## D. Ba điều bảng này KHÔNG nói
 
