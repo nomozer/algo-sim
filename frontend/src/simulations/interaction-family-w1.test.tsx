@@ -243,15 +243,23 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
     /* Bất biến: state line xuất hiện ĐÚNG MỘT lần — không bao giờ vùng hành động
        và dải nhân quả cùng lúc.
 
-       W4B-2B: `find_max` nay gác vùng cam kết sau cổng Thí nghiệm nên nó không
-       còn minh hoạ được vế "có vùng hành động". Dùng `sum_if` — cùng cụm quét
-       dãy, KHÔNG thuộc pilot, nên vẫn dựng `ScanActionZone` thẳng ở bước quyết
-       định. Bất biến không đổi, chỉ đổi bài làm chứng. */
-    const { config, state } = build("sum_if", { condition: { op: ">=", value: 7 } });
+       W4B-2C: nay CẢ BỐN bài quét dãy đều gác cổng, nên không bài quét nào minh
+       hoạ được vế "có vùng hành động" ở SSR (`labOpen` luôn false). Dùng
+       `linear_search` — họ TÌM KIẾM chưa mở rộng trong wave này nên vẫn dựng
+       `SearchActionZone` thẳng ở bước quyết định. Bất biến không đổi (một điểm
+       quyết định, một bề mặt), chỉ đổi bài làm chứng. */
+    const { config, state } = build("linear_search", { target: 8 });
+    /* `firstDecision` dùng `scanInteractionOf` nên vô dụng ở họ tìm kiếm — tìm
+       bước quyết định bằng chính nguồn đếm chung của shell. */
+    let d = -1;
+    for (let i = 0; i < state.trace.steps.length && d < 0; i += 1) {
+      if (stageInteractionsOf(at(state, i)).length > 0) d = i;
+    }
+    expect(d, "linear_search không có bước quyết định nào").toBeGreaterThanOrEqual(0);
     const html = renderToString(
-      <AlgorithmWorkspace config={config} state={at(state, firstDecision(state))} busy={false} dispatch={() => {}} />,
+      <AlgorithmWorkspace config={config} state={at(state, d)} busy={false} dispatch={() => {}} />,
     );
-    expect(html).toContain("scan-action");
+    expect(html).toContain("aria-label=\"Thao tác với bước tìm kiếm\"");
     expect(html).not.toContain("decision-strip");
   });
 

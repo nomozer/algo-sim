@@ -45,10 +45,17 @@ describe("gating swap trong AlgorithmWorkspace", () => {
     expect(h).not.toContain("Kéo một cột"); // …và kéo không được mời song song
   });
 
-  it("(17) sum_if (hidden): KHÔNG gợi ý kéo-thả, KHÔNG nút thí nghiệm", () => {
+  it("(17) sum_if (hidden): KHÔNG gợi ý kéo-thả — kể cả sau khi có cổng Thí nghiệm", () => {
+    /* W4B-2C ĐỔI TIỀN ĐỀ CỦA TEST NÀY, có chủ đích.
+       Trước: `hidden` ⇒ không kéo VÀ không nút thí nghiệm — đúng khi cổng chỉ
+       mang MỘT nghĩa là "mở kéo-thả".
+       Nay: cổng mang nghĩa rộng hơn — "công cụ của học sinh". Với `sum_if` bộ
+       công cụ đó chỉ có CAM KẾT, không có kéo. Nên nút thí nghiệm được phép có
+       mặt, còn điều phải giữ bằng mọi giá vẫn là: KHÔNG kéo.
+       Đó mới là thứ `mode: "hidden"` bảo vệ (kéo ở bài này là trang trí). */
     const h = html("sum_if", { array: [5, 8, 3], condition: { op: ">", value: 4 } }, 1);
     expect(h).not.toContain("Kéo một cột");
-    expect(h).not.toContain("Thí nghiệm");
+    expect(h).not.toContain("cursor:grab");
   });
 
   it("(16) binary_search (challenge): không gợi ý kéo tự do; CÓ nút thí nghiệm phá tiền điều kiện", () => {

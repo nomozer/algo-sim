@@ -235,7 +235,8 @@ try {
   await send("Page.enable");
   await send("Runtime.enable");
 
-  for (const simId of ["algorithm.find_max", "algorithm.insertion_sort"]) {
+  const TARGETS = (argOf("--targets", "algorithm.find_max,algorithm.insertion_sort")).split(",");
+  for (const simId of TARGETS) {
     const short = simId.split(".")[1];
     console.log(`\n── ${simId}`);
     await send("Page.navigate", { url: APP });

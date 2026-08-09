@@ -136,16 +136,36 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
     rationale:
       "Như find_max: chỉ có nghĩa khi đóng khung quanh bất biến vùng-đã-duyệt; đổi chỗ tự do hầu như không đổi kết quả.",
+    /* W4B-2C — mở rộng họ quét dãy. Cùng `runFindExtreme`, cùng `challenge`,
+       nên đây là bản sao kiến trúc ĐÚNG NGHĨA của find_max: cổng gác cả cam kết
+       lẫn kéo. Không đổi một chữ nào của nhãn/khung — chúng vốn đã nói min. */
+    experimentGated: true,
   },
   sum_if: {
     mode: "hidden",
     rationale:
       "Tổng có điều kiện bất biến theo thứ tự duyệt (trừ trường hợp biên vắt qua ranh giới đã-duyệt, quá khó thấy để tự khám phá) — swap không nhắm cơ chế tích luỹ; cơ chế được nhắm bằng DỰ ĐOÁN cộng-hay-không.",
+    /* W4B-2C. `mode` GIỮ `hidden` — kéo ở bài này vẫn là trang trí, và thứ tự
+       kiểm trong `ui.tsx` đặt `hidden` TRƯỚC cổng nên bật cờ này KHÔNG bật kéo.
+       Cổng ở đây vì thế chở đúng MỘT việc: cam kết. */
+    experimentGated: true,
+    challengeLabel: "Thí nghiệm: tự cộng vào tổng",
+    challengeTeaser:
+      "Không phải phần tử nào cũng được cộng — em thử tự quyết định phần tử này có vào tổng không.",
+    framing:
+      "Ở bước này em quyết định thay thuật toán: phần tử đang xét có thoả điều kiện để cộng vào tổng không? Chọn xong sẽ thấy engine chấm ngay.",
   },
   count_if: {
     mode: "hidden",
     rationale:
       "Như sum_if: biến đếm bất biến theo thứ tự duyệt; swap là trang trí. Cơ chế đếm được nhắm bằng dự đoán tăng-hay-giữ-nguyên.",
+    /* W4B-2C — như sum_if: `hidden` giữ nguyên, cổng chỉ gác cam kết. */
+    experimentGated: true,
+    challengeLabel: "Thí nghiệm: tự đếm phần tử",
+    challengeTeaser:
+      "Không phải phần tử nào cũng được đếm — em thử tự quyết định phần tử này có vào nhóm không.",
+    framing:
+      "Ở bước này em quyết định thay thuật toán: phần tử đang xét có thoả điều kiện để đếm vào nhóm không? Chọn xong sẽ thấy engine chấm ngay.",
   },
 };
 

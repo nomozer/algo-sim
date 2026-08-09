@@ -1,0 +1,4 @@
+{
+  "error": "Error: {\"type\":\"object\",\"subtype\":\"error\",\"className\":\"TypeError\",\"description\":\"TypeError: Failed to resolve module specifier '/src/data/offline-catalog.ts'\\n    at <anonymous>:2:13\\n    at <anonymous>:13:3\",\"objectId\":\"-3511148544825354817.1.1\"}",
+  "findings": []
+}

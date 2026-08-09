@@ -36,7 +36,12 @@ function build(id: AlgorithmId, data: Record<string, unknown> = {}) {
   const r = mod.validateConfig({
     problem: { summary: "s", input: "i", output: "o" },
     algorithm_id: id,
-    data: { array: arr, ...(id.endsWith("_sort") ? { order: "asc" } : {}), ...data },
+    data: {
+      array: arr,
+      ...(id.endsWith("_sort") ? { order: "asc" } : {}),
+      ...(id === "count_if" || id === "sum_if" ? { condition: { op: ">=", value: 7 } } : {}),
+      ...data,
+    },
     data_generated: false,
     notes: null,
   });
@@ -80,14 +85,27 @@ const observeHtml = (id: AlgorithmId) => {
 /* ══ 1. PILOT ĐÚNG HAI BÀI ════════════════════════════════════════════════ */
 
 describe("W4B-2B · cổng là PILOT, không phải rollout cả họ", () => {
-  it("đúng hai target được gác: find_max và insertion_sort", () => {
-    expect([...GATED].sort()).toEqual(["find_max", "insertion_sort"]);
+  it("W4B-2C: đúng NĂM target được gác — cả họ quét dãy + insertion_sort", () => {
+    expect([...GATED].sort())
+      .toEqual(["count_if", "find_max", "find_min", "insertion_sort", "sum_if"]);
   });
 
-  it("anh em cùng cụm KHÔNG bị kéo theo — vùng cam kết vẫn hiện thẳng ở Quan sát", () => {
-    // find_min cùng engine với find_max; selection/bubble cùng cụm với insertion.
-    for (const id of ["find_min", "bubble_sort", "selection_sort"] as AlgorithmId[]) {
-      expect(whatIfPolicyOf(id).experimentGated, `${id} bị kéo vào pilot`).toBeUndefined();
+  it("họ TÌM KIẾM và hai bài sắp xếp còn lại KHÔNG bị kéo theo", () => {
+    /* §29/§33: mở rộng dừng ở họ quét dãy. Bốn bài này phải giữ nguyên hành vi —
+       vùng cam kết vẫn hiện thẳng ở Quan sát, không có cổng nào. */
+    for (const id of ["linear_search", "binary_search", "bubble_sort", "selection_sort"] as AlgorithmId[]) {
+      expect(whatIfPolicyOf(id).experimentGated, `${id} bị kéo vào wave này`).toBeUndefined();
+    }
+  });
+
+  it("§12/§16 — gác cổng KHÔNG bật kéo cho bài `hidden`", () => {
+    /* count_if/sum_if: kéo là trang trí (bất biến theo thứ tự duyệt). Thứ tự
+       kiểm trong `ui.tsx` đặt `hidden` TRƯỚC cổng; test này khoá đúng thứ tự đó
+       ở tầng khai báo để không ai đảo nó rồi biến đếm thành bài kéo-thả. */
+    for (const id of ["count_if", "sum_if"] as AlgorithmId[]) {
+      const p = whatIfPolicyOf(id);
+      expect(p.experimentGated, `${id}`).toBe(true);
+      expect(p.mode, `${id}: mode đổi ⇒ kéo có thể bật theo`).toBe("hidden");
     }
   });
 
@@ -195,6 +213,9 @@ describe("W4B-2B §13 · mở/đóng Thí nghiệm KHÔNG chạm engine state", 
           data: {
             array: id.endsWith("_sort") ? SORT_ARR : ARR,
             ...(id.endsWith("_sort") ? { order: "asc" } : {}),
+            ...(id === "count_if" || id === "sum_if"
+              ? { condition: { op: ">=", value: 7 } }
+              : {}),
           },
           data_generated: false, notes: null,
         },
