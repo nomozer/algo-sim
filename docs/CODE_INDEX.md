@@ -933,13 +933,42 @@ quả — CÙNG chuỗi evidence). Một nguồn nuôi cả `module.predict` l�
 trong Workspace → hỏi/chấm/trình bày không lệch nhau. binary_search hỏi ở bước
 LẤY MID (3 lựa chọn trái/phải/found). Tests: `decision.test.ts`.
 
+**Ba MÔ HÌNH TƯƠNG TÁC SÂN KHẤU** (W1/W2/W3B) cũng sống ở đây — tra tên trước khi
+định viết cái thứ tư: `scanInteractionOf` (quét dãy: find_max/min · sum_if ·
+count_if — nhãn theo cơ chế "Đặt X làm max mới"/"Cộng X vào tổng"/"Đếm X vào
+nhóm"/"Bỏ qua phần tử này"), `searchInteractionOf` (linear_search ·
+binary_search), `sortInteractionOf` (`kind` = compare-pair · select-candidate ·
+shift-or-stop), `isScanFamily`/`isSortFamily`, và `stageInteractionsOf` — NGUỒN
+ĐẾM DÙNG CHUNG cho "bước này có mấy vùng hành động", dùng bởi cả
+`predict.presentedInStage` lẫn test bất biến. **Không mô hình nào mang
+`correctActionId`/`evidence`/`expectedId`**: đáp án chỉ sống trong
+`predict.check`. Tests: `scan-semantics-w3b1.test.tsx`,
+`interaction-family-w1.test.tsx`, `interaction-family-w2.test.tsx`,
+`interaction-family-sorting-w3b.test.tsx`.
+
 ### `simulations/domains/algorithm/interaction-policy.ts` · Change impact: offline
 M9-S1 — chính sách what-if theo cơ chế (hết "một swap cho cả 8 bài"). Exports:
-`whatIfPolicyOf`, `WhatIfPolicy`, `WhatIfMode` (free: bubble/insertion · framed:
-linear_search · challenge: find_max/min + binary_search, ẩn mặc định, mở qua nút
-thí nghiệm có khung · hidden: sum/count). Mỗi policy kèm `rationale` (vì sao
-không trang trí). Gating theo `algorithm_id` ngữ nghĩa. Tests:
-`interaction-policy.test.ts`, `algorithm-ui.test.tsx`.
+`whatIfPolicyOf`, `WhatIfPolicy`, `WhatIfMode` (free: bubble/insertion/selection — `insertion_sort` GIỮ `free` dù đã gác cổng: kéo vẫn là cơ chế đang học, chỉ đổi chỗ đặt · framed:
+linear_search · challenge: find_max/min + binary_search · hidden: sum/count).
+Mỗi policy kèm `rationale` (vì sao không trang trí). Gating theo `algorithm_id`
+ngữ nghĩa. Tests: `interaction-policy.test.ts`, `algorithm-ui.test.tsx`.
+
+**File này là CHỦ SỞ HỮU KHAI BÁO của mọi luật bày công cụ cho học sinh.** Ba
+export nữa, tra ở đây trước khi nhét điều kiện vào JSX:
+
+- `whatIfDragAllowed(state, {policyAllows, busy, last, answered})` (W3B §15) —
+  luật *"cam kết trước, thí nghiệm sau"*: bước sắp xếp còn cam kết đang chờ thì
+  HOÃN kéo. Hàm thuần ⇒ kiểm được không cần trình duyệt.
+- cờ `experimentGated` (W4B-2B) — **CỔNG THÍ NGHIỆM**: bật thì cả vùng cam kết
+  LẪN kéo đều nằm sau nút "Thí nghiệm". Tách khỏi `mode` có chủ đích: `mode` nói
+  kéo có NGHĨA gì, cờ này nói công cụ đặt Ở ĐÂU. Đang bật cho 5 target:
+  find_max · find_min · count_if · sum_if · insertion_sort. `hidden` được kiểm
+  TRƯỚC cổng nên bật cờ KHÔNG bật kéo cho count_if/sum_if.
+- `commitmentSurfaceVisible(policy, labOpen)` (W4B-2D) — chủ sở hữu của bất biến
+  **`COMMITMENT_SURFACE_COUNT <= 1`**. Trước đây luật này chôn trong JSX nên test
+  phải chọn một bài LÀM CHỨNG chưa gác cổng, và đã phải đổi bài ba lần. Nay
+  production và test gọi CÙNG hàm này. Tests: `interaction-family-w1.test.tsx`
+  (ca A/B/D + phép đếm tự kiểm), `experiment-gate-w4b2b.test.tsx`.
 `network/model.ts` exports: `bfsRoute`, `buildSteps`, `currentStep`, `typeLabel`,
 `neighborsOf`, `hopDistance`, `NetworkState` (topology + route + steps + cursor).
 **M7.FREEZE**: bố cục KHÔNG còn trong state — `layout2d` sống trong
@@ -1026,6 +1055,33 @@ trường + coherence "quét trên GIÁ TRỊ phần tử". (M12-AI-SCAN) `scanP
 prediction/what-if HOÃN) + route NL backend (catalog `algorithm.scan`).
 Specialized giữ nguyên làm oracle — KHÔNG thay thế. Mirror Python:
 `simulation/scan_engine.py`.
+
+### `components/ScanActionZone.tsx` · `SearchActionZone.tsx` · `SortActionZone.tsx` · offline
+Ba VÙNG HÀNH ĐỘNG trên sân khấu — nơi học sinh CAM KẾT (W1/W2/W3B). Nhận `model`
+từ `*InteractionOf`, phát `onAct(actionId)` lên `store.submitPrediction`, hiển
+thị `feedback` từ `store.prediction`. **Không component nào tự chấm** — không
+`correctActionId`, không so `=== "yes"`; có test quét mã nguồn khoá điều đó.
+Nhận diện bằng `aria-label` ("Thao tác với biến tích luỹ" / "…với bước tìm kiếm"
+/ "Thao tác sắp xếp") — hợp đồng với người dùng, ổn định hơn class CSS. Nút đã
+chọn GIỮ vết ("✓ em đã chọn") sau khi chấm: nửa sau của vòng học phụ thuộc nó.
+
+### `simulations/domains/algorithm/ui.tsx` — trạng thái TRÌNH BÀY · offline
+`labOpen` = `useState(false)` **cục bộ trong `AlgorithmWorkspace`**, KHÔNG ở
+store, không persist. Nó gác: kéo-thả (qua `dragAllowedByPolicy`) + vùng cam kết
+(qua `commitmentSurfaceVisible`). ⚠️ SSR luôn thấy `labOpen = false`
+(ARCHITECTURE_MAP §8 #13) ⇒ **trạng thái "Thí nghiệm đang mở" KHÔNG test được
+bằng `renderToString`** — phủ bằng hàm thuần + runner trình duyệt. Dải nhân quả
+(`decision-strip`) dựng theo VÙNG ĐANG HIỆN chứ không theo "bước có phải điểm
+quyết định": QUAN HỆ thuộc Quan sát, chỉ NÚT CAM KẾT thuộc Thí nghiệm.
+
+### `scripts/capture-w4b2b-experiment.mjs` · offline (cần Chrome + Vite)
+Runner LUỒNG HỌC SINH qua CDP — khác `diagnose-responsive.mjs` (runner ĐO hình
+học, không bấm nút). Chứng minh chuỗi: Quan sát không vùng cam kết → mở cổng
+BẰNG BÀN PHÍM → cam kết sai/đúng qua `predict.check` → đóng cổng → timeline vẫn
+chạy; cộng `JSON.stringify(active.state)` không đổi qua mọi lần bật/tắt trình
+bày, và 0 rò rỉ đáp án trong DOM. Cờ: `--port --targets --out`. ⚠️ Chỉ tin kết
+quả trên tiến trình Vite MỚI: server đã qua nhiều lượt HMR cho phán quyết sai
+(đo được: store `view:"workspace"` mà React vẫn vẽ Home).
 
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
 Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
