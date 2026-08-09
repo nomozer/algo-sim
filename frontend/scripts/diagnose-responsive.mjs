@@ -455,10 +455,18 @@ const loadCatalogEntry = (i) => evaluate(`(async () => {
      null, nên nhìn từ ngoài giống hệt "nạp xong mà không có gì". Nhánh nạp một
      fixture đơn không dính vì nó chỉ chạm 'store' (cùng thể hiện app đã khởi
      tạo), còn nhánh catalog kéo theo 'offline-catalog' và có thể chạm một thể
-     hiện registry chưa chạy đăng ký. 'registerAllSimulations' idempotent nên
-     gọi thừa vô hại. */
+     hiện registry chưa chạy đăng ký.
+
+     W4B-2B: 'registerAllSimulations' KHÔNG idempotent như chú thích cũ tin. Cờ
+     'registered' sống ở 'simulations/index.ts' còn Map sống ở
+     'simulations/registry.ts'. Dev server HMR dựng lại index.ts (khi một file
+     trong đồ thị import của nó vừa đổi) mà KHÔNG dựng lại registry.ts ⇒ cờ về
+     false trong khi Map vẫn đầy ⇒ 'registerSimulation' ném "đã được đăng ký
+     trước đó" và cả lượt đo chết giữa chừng. Gác theo TRẠNG THÁI THẬT của
+     registry, không theo cờ của một module có thể bị thay dưới chân. */
   const r = await import('/src/simulations/index.ts');
-  r.registerAllSimulations();
+  const reg = await import('/src/simulations/registry.ts');
+  if (reg.listSimulations().length === 0) r.registerAllSimulations();
   const e = c.offlineCatalog()[${i}];
   s.useAppStore.getState().loadEnvelope(e.envelope);
   const after = s.useAppStore.getState();
@@ -513,7 +521,9 @@ for (const vp of VIEWPORTS) {
         await evaluate(`(async () => {
           const m = await import('/src/state/store.ts');
           const r = await import('/src/simulations/index.ts');
-          r.registerAllSimulations();
+          const reg = await import('/src/simulations/registry.ts');
+          /* Cùng lý do HMR như nhánh catalog ở trên. */
+          if (reg.listSimulations().length === 0) r.registerAllSimulations();
           m.useAppStore.getState().loadEnvelope(${JSON.stringify(envelope)});
           return true; })()`);
       }

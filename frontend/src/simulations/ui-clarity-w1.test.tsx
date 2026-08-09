@@ -4,7 +4,7 @@ import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
 import { decisionPointOf, narrationWithoutPrompt } from "./domains/algorithm/decision";
-import { arrayLegendItems } from "../components/ArrayView";
+import { ArrayView, arrayLegendItems } from "../components/ArrayView";
 import { BoolDagWorkspace, makeBoolDagModule } from "./domains/logic/dag-module";
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
@@ -297,5 +297,150 @@ describe("W1 · reset trả PredictionBar về thu gọn & chưa trả lời", (
     expect(useAppStore.getState().prediction).toBeNull();
     // và cursor về đầu ⇒ câu hỏi đổi ⇒ bar tự thu gọn (khoá mở theo câu hỏi)
     expect((useAppStore.getState().active!.state as AlgorithmSimState).cursor).toBe(0);
+  });
+});
+
+/* ── 5. W4B-2B §9 — PANEL GIẢI THÍCH KHÔNG CHÉP LẠI HEADER WORKSPACE ─────────
+ *
+ * Panel nay ĐÓNG mặc định (W4B-2B §8), nên nội dung của nó phải ĐÀO SÂU chứ
+ * không lặp trang chính. Hai thứ header đã sở hữu:
+ *
+ *  - `SimulationWorkspace` dựng `<h2 class="workspace-title">{envelope.title}</h2>`
+ *    và `offline-catalog.ts` đặt `envelope.title = analysis.problem.summary`
+ *    ⇒ `problem.summary` in trong panel là HAI `<h2>` chữ y hệt trên một màn;
+ *  - header còn in `mod.title` = `ALGORITHM_NAMES[algorithm_id]`, mà panel vừa
+ *    có hàng "Thuật toán" in cùng bảng tên đó VỪA có đầu mục "THUẬT TOÁN" của
+ *    khối mã giả — một ý ba lần trong một cột hẹp.
+ *
+ * Khoá bằng cách render THẲNG `AlgorithmInspector` (không đi qua `App`: SSR chỉ
+ * thấy trạng thái đầu — anti-pattern #8). Test khẳng định cả hai chiều: chuỗi
+ * của header BIẾN MẤT, còn phần header không nói (Input/Output/Dữ liệu/BIẾN)
+ * thì CÒN NGUYÊN — nếu không đây sẽ thành test "xoá càng nhiều càng tốt".
+ */
+describe("W4B-2B §9 · Giải thích đào sâu, không chép lại header", () => {
+  const SUMMARY = "Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn";
+
+  function inspectorHtml(id: string, data: Record<string, unknown> = {}): string {
+    const mod = makeAlgorithmModule(id as never);
+    const r = mod.validateConfig({
+      problem: { summary: SUMMARY, input: "Danh sách điểm 8 bạn", output: "Điểm cao nhất" },
+      algorithm_id: id,
+      data: { array: ARR, ...data },
+      data_generated: false,
+      notes: null,
+    });
+    if (!r.ok) throw new Error(r.error);
+    const state = mod.init(r.config);
+    const Inspector = mod.Inspector!;
+    return renderToString(
+      <Inspector config={r.config} state={{ ...state, cursor: 3 }} busy={false} dispatch={() => {}} />,
+    );
+  }
+
+  it("không in lại tiêu đề bài toán (header đã sở hữu nó)", () => {
+    expect(inspectorHtml("find_max")).not.toContain(SUMMARY);
+  });
+
+  it("không in lại tên thuật toán (header + đầu mục mã giả đã nói)", () => {
+    expect(inspectorHtml("find_max")).not.toContain("Tìm giá trị lớn nhất");
+    expect(inspectorHtml("insertion_sort", { order: "asc" })).not.toContain("Sắp xếp chèn");
+  });
+
+  it("VẪN giữ thứ header KHÔNG nói: Input, Output, dữ liệu, biến, mã giả", () => {
+    const html = inspectorHtml("find_max");
+    for (const needle of ["Input", "Output", "Dữ liệu", "BIẾN", "THUẬT TOÁN"]) {
+      expect(html, `mất mục "${needle}"`).toContain(needle);
+    }
+  });
+
+  it("nhãn BIẾN biến mất cùng nội dung khi bước chưa có biến nào", () => {
+    const mod = makeAlgorithmModule("find_max" as never);
+    const r = mod.validateConfig({
+      problem: { summary: SUMMARY, input: "i", output: "o" },
+      algorithm_id: "find_max",
+      data: { array: ARR },
+      data_generated: false,
+      notes: null,
+    });
+    if (!r.ok) throw new Error(r.error);
+    const state = mod.init(r.config);
+    const empty = { ...state } as AlgorithmSimState;
+    const steps = empty.trace.steps.map((s, i) =>
+      i === 0 ? { ...s, snapshot: { ...s.snapshot, vars: {} } } : s,
+    );
+    const Inspector = mod.Inspector!;
+    const html = renderToString(
+      <Inspector
+        config={r.config}
+        state={{ ...empty, trace: { ...empty.trace, steps }, cursor: 0 }}
+        busy={false}
+        dispatch={() => {}}
+      />,
+    );
+    expect(html).not.toContain("BIẾN");
+  });
+});
+
+/* ── 6. W4B-2B §10 — "ĐANG XÉT" ≠ "MAX HIỆN TẠI" TRÊN SÂN KHẤU ──────────────
+ *
+ * Khe hở ĐO ĐƯỢC (ảnh `observe-baseline/find-max-explain-closed`, bước 5/10,
+ * Explain ĐÓNG): sự kiện `compare` mang hai chỉ số — `i` là phần tử đang xét,
+ * `j` là ứng viên tốt nhất — nhưng `columnState` trả CÙNG style cho cả hai, kể
+ * cả con trỏ ▲. Học sinh nhìn hai cột xanh y hệt nhau đúng lúc câu hỏi là "cái
+ * đang xét có hơn max không?".
+ *
+ * Đồng thời chú giải ĐÃ hứa hai mục riêng (`arrayLegendItems` đọc mark
+ * `considering` → "max hiện tại"), nên trước bản vá chú giải nói dối.
+ *
+ * Khoá cả ba mệnh đề, không chỉ "có hai màu":
+ *  a. hai vai trò cho ra HAI tông khác nhau;
+ *  b. con trỏ ▲ chỉ ĐÚNG MỘT cột (chỗ thuật toán đang đứng);
+ *  c. tông của cột ứng viên KHỚP tông mà chú giải dùng cho "max hiện tại".
+ */
+describe("W4B-2B §10 · find_max: đang xét và max hiện tại phân biệt được", () => {
+  const CURSOR_PATH = /d="M [\d.]+ [\d.]+ l -6 9 h 12 z"/g;
+
+  function compareStepOf(id: "find_max" | "find_min") {
+    const st = algoState(id);
+    const step = st.trace.steps.find((s) => s.events.some((e) => e.type === "compare"));
+    if (!step) throw new Error(`${id}: không có bước so sánh nào`);
+    return step;
+  }
+
+  it("bước so sánh: cột đang xét và cột ứng viên KHÁC tông", () => {
+    const html = renderToString(<ArrayView step={compareStepOf("find_max")} labels={null} />);
+    expect(html, "mất tông của cột đang xét").toContain("var(--accent-sky)");
+    expect(html, "cột max vẫn bị nhuộm cùng tông với cột đang xét")
+      .toContain("var(--accent-teal)");
+  });
+
+  it("con trỏ ▲ chỉ đúng MỘT cột — không chỉ hai chỗ cùng lúc", () => {
+    const html = renderToString(<ArrayView step={compareStepOf("find_max")} labels={null} />);
+    expect((html.match(CURSOR_PATH) ?? []).length).toBe(1);
+  });
+
+  it("chú giải KHÔNG nói dối: có mục riêng cho max hiện tại", () => {
+    const st = algoState("find_max");
+    const items = arrayLegendItems(st.trace.steps, { algorithmId: "find_max", hasGap: false });
+    const labels = items.map((i) => i.label);
+    expect(labels).toContain("đang xét / so sánh");
+    expect(labels).toContain("max hiện tại");
+    // tông của mục "max hiện tại" phải là tông mà sân khấu THẬT SỰ dùng
+    expect(items.find((i) => i.label === "max hiện tại")!.tone).toBe("considering");
+  });
+
+  it("find_min hưởng cùng bản vá (cùng engine runFindExtreme)", () => {
+    const html = renderToString(<ArrayView step={compareStepOf("find_min")} labels={null} />);
+    expect(html).toContain("var(--accent-teal)");
+    expect((html.match(CURSOR_PATH) ?? []).length).toBe(1);
+  });
+
+  it("bài KHÔNG dùng mark `considering` giữ nguyên hành vi cũ (2 cột so sánh)", () => {
+    // bubble_sort so sánh hai phần tử NGANG VAI — cả hai đều phải là "đang xét".
+    const st = algoState("bubble_sort", { order: "asc" });
+    const step = st.trace.steps.find((s) => s.events.some((e) => e.type === "compare"))!;
+    const html = renderToString(<ArrayView step={step} labels={null} />);
+    expect(html).not.toContain("var(--accent-teal)");
+    expect((html.match(CURSOR_PATH) ?? []).length).toBe(2);
   });
 });

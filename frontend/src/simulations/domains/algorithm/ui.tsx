@@ -302,7 +302,9 @@ export function AlgorithmInspector({ config, state }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <AnalysisCard analysis={config} />
-      <VarsView step={step} />
+      {/* W4B-2B §9: panel chia mục rõ — "BIẾN" đứng cạnh "THUẬT TOÁN" của khối
+          mã giả. Nhãn do `VarsView` dựng nên bước không có biến thì mất cả mục. */}
+      <VarsView step={step} label="BIẾN" />
       <PseudocodeView algorithmId={config.algorithm_id} currentLine={step.line} />
     </div>
   );

@@ -115,6 +115,37 @@ function columnState(step: Step, index: number): ColumnState {
         : { fill: "var(--accent-orange)", stroke: "var(--accent-orange-deep)", strokeWidth: 2, active: true };
     }
     if (ev.type === "compare" && (ev.i === index || ev.j === index)) {
+      /* W4B-2B §10 — HAI VAI TRÒ, HAI TRẠNG THÁI NHÌN THẤY ĐƯỢC.
+       *
+       * `compare` mang HAI chỉ số: `i` là phần tử ĐANG XÉT, `j` là ứng viên tốt
+       * nhất tới lúc này. Nhánh này trước đây trả CÙNG một style cho cả hai, nên
+       * ở đúng bước mà câu hỏi là "cái đang xét có hơn max không?", hai cột đó
+       * tô y hệt nhau — kể cả con trỏ ▲ cũng vẽ ở cả hai. Đo được ở
+       * `observe-baseline/find-max-explain-closed` (bước 5/10): Bình=9 và Dũng=8
+       * không phân biệt nổi trên sân khấu.
+       *
+       * Tệ hơn: chú giải ĐÃ hứa hai mục riêng ("đang xét / so sánh" và "max hiện
+       * tại") vì `arrayLegendItems` đọc mark `considering`. Ưu tiên-sự-kiện ở
+       * đây xoá đúng phân biệt mà chú giải đang quảng cáo ⇒ chú giải nói dối.
+       *
+       * Sửa bằng CHÍNH state đã có, không thêm prop, không đọc `algorithm_id`:
+       * cột nào đang mang mark `considering` thì nó sáng lên vì là ỨNG VIÊN, chứ
+       * không phải vì đang bị xét — giữ nguyên tông của vai trò đó và KHÔNG vẽ
+       * con trỏ (con trỏ chỉ một thứ duy nhất: chỗ thuật toán đang đứng).
+       * Hai kênh phân biệt, đúng DESIGN_BRIEF §3.5: màu + có/không con trỏ.
+       *
+       * Bán kính ảnh hưởng ĐÚNG BẰNG hai bài: `considering` chỉ được phát ở
+       * `runFindExtreme` (find_max, find_min) — grep `considering` trong
+       * `core/algorithms.ts` chỉ ra hai chỗ, đều trong hàm đó.
+       */
+      if (step.snapshot.marks[index] === "considering") {
+        return {
+          fill: "var(--accent-teal)",
+          stroke: "var(--accent-teal)",
+          strokeWidth: 2,
+          active: false,
+        };
+      }
       return { fill: "var(--accent-sky)", stroke: "var(--primary)", strokeWidth: 2, active: true };
     }
     if (ev.type === "compare_value" && ev.i === index) {

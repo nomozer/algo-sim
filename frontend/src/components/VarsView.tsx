@@ -29,8 +29,18 @@ export function formatVarValue(value: number | string | boolean | null): string 
   return String(value ?? "—");
 }
 
-/** Hộp giá trị các biến của thuật toán — nháy sáng biến vừa được gán. */
-export function VarsView({ step }: { step: Step }) {
+/**
+ * Hộp giá trị các biến của thuật toán — nháy sáng biến vừa được gán.
+ *
+ * W4B-2B §9: `label` tuỳ chọn để panel Giải thích chia mục rõ ("BIẾN" đứng cạnh
+ * "THUẬT TOÁN" của `PseudocodeView`). Nhãn do CHÍNH component này dựng, không
+ * phải người gọi — nếu bước không có biến nào thì hàm trả `null` và nhãn biến
+ * mất theo; nhãn đặt bên ngoài sẽ để lại một đầu mục rỗng.
+ *
+ * Dùng lại class `.pseudo-title` (12px/600/ink-faint) thay vì đẻ token mới —
+ * đây đúng là nhãn khối cùng cấp với đầu mục của khối mã giả.
+ */
+export function VarsView({ step, label }: { step: Step; label?: string }) {
   const entries = Object.entries(step.snapshot.vars);
   if (entries.length === 0) return null;
 
@@ -38,7 +48,7 @@ export function VarsView({ step }: { step: Step }) {
     step.events.filter((e) => e.type === "assign_var").map((e) => e.name),
   );
 
-  return (
+  const chips = (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--sp-xs)" }}>
       {entries.map(([name, value]) => {
         const hot = justAssigned.has(name);
@@ -66,6 +76,14 @@ export function VarsView({ step }: { step: Step }) {
           </div>
         );
       })}
+    </div>
+  );
+
+  if (!label) return chips;
+  return (
+    <div>
+      <div className="pseudo-title">{label}</div>
+      {chips}
     </div>
   );
 }
