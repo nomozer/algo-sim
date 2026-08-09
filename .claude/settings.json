@@ -1,0 +1,17 @@
+{
+  "description": "Cau hinh DUNG CHUNG cua du an (commit vao git). Cau hinh CA NHAN (permissions.allow, additionalDirectories, duong dan tuyet doi cua may) thuoc .claude/settings.local.json va KHONG duoc commit.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf \"%s\n\" \"── AGENT BOOTSTRAP (nguon: docs/RULES.md §1) ──\" \"Doc theo dung thu tu NAY truoc khi sua code:\" \"  1. docs/RULES.md          — luat cung + scope guard (DUNG neu DEEP_HARDENING/OUT_OF_SCOPE)\" \"  2. docs/ARCHITECTURE_MAP.md — so huu, huong phu thuoc, bat bien danh so, anti-pattern\" \"  3. docs/CURRENT_STATE.md  — milestone, baseline test, gioi han\" \"  4. docs/CORRECTNESS.md    — canonical vs learner\" \"  5. docs/COVERAGE.md       — tuyen bo BI CAM (bat buoc truoc moi con so do phu)\" \"  6. docs/CODE_INDEX.md     — CAI GI DA TON TAI O DAU (tra TEN SYMBOL truoc khi viet moi)\" \"\" \"SAU khi xong, phan hay bi quen: GHI NGUOC LAI.\" \"  doi export cong khai / them module hay script -> cap nhat docs/CODE_INDEX.md\" \"  kiem nhanh: grep <ten-symbol-vua-them> docs/CODE_INDEX.md  (tra 0 = chua ghi)\" \"  xong milestone -> docs/CURRENT_STATE.md ; doi KIEN TRUC -> docs/ARCHITECTURE_MAP.md\"",
+            "timeout": 5,
+            "statusMessage": "Agent bootstrap: thu tu doc tai lieu"
+          }
+        ]
+      }
+    ]
+  }
+}

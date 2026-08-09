@@ -20,5 +20,9 @@ CLAUDE.md
 /.superpowers/
 
 # Claude Code local settings (permissions, machine-specific paths) — không commit.
-/.claude/
+# Cau hinh Claude Code: chi settings.json (dung chung) duoc commit.
+# Luu y git: khong the negate mot FILE khi thu muc CHA bi loai — nen phai
+# loai NOI DUNG (/.claude/*) roi mo lai dung mot file.
+/.claude/*
+!/.claude/settings.json
 
