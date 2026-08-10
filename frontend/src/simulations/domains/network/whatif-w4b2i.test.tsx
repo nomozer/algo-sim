@@ -172,15 +172,32 @@ describe("W4B-2I · renderer chỉ ĐỌC — không tính định tuyến", () 
     expect(html).toContain("Thí nghiệm");
   });
 
-  it("không tới được ⇒ nói thẳng, và KHÔNG vẽ gói tin đứng im ở nguồn", () => {
+  it("không tới được ⇒ KHÔNG vẽ gói tin đứng im ở nguồn", () => {
+    /* Chấm gói tin đứng yên tại nguồn đọc thành "đang chờ gửi", trong khi sự
+       thật là không có đường để đi. Vắng mặt nó + liên kết nét đứt là hai kênh
+       THỊ GIÁC của trạng thái này. */
     const { mod, config, state } = build();
     let s = mod.apply(state, { type: "net_disconnect", a: "R1", b: "R2" }) as NetworkState;
     s = mod.apply(s, { type: "net_disconnect", a: "R3", b: "R4" }) as NetworkState;
     const html = renderToString(
       <NetworkWorkspace config={config} state={s} busy={false} dispatch={() => {}} />,
     );
-    expect(html).toContain("Không còn đường nào");
     expect(html).not.toContain("accent-pink"); // chấm gói tin
+    expect(html).toContain("3 6"); // strokeDasharray của liên kết đã ngắt
+  });
+
+  it("câu 'không đi được' có ĐÚNG MỘT chủ sở hữu: `narrate`, không phải một dải riêng", () => {
+    /* Ảnh B3 của wave này bắt được hai kênh nói cùng một điều nằm cạnh nhau —
+       đúng loại trùng lặp W4B-2V đã gỡ ở họ tìm kiếm. */
+    const { mod, config, state } = build();
+    let s = mod.apply(state, { type: "net_disconnect", a: "R1", b: "R2" }) as NetworkState;
+    s = mod.apply(s, { type: "net_disconnect", a: "R3", b: "R4" }) as NetworkState;
+    expect(mod.narrate!(s, config)!.text).toContain("không đi được");
+    const html = renderToString(
+      <NetworkWorkspace config={config} state={s} busy={false} dispatch={() => {}} />,
+    );
+    expect(html, "renderer dựng kênh thứ hai cho cùng một câu")
+      .not.toContain("không đi được");
   });
 
   it("2D và 3D đọc CÙNG một state sau thí nghiệm — không có sự thật riêng cho 3D", () => {

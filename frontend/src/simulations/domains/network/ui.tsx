@@ -11,7 +11,7 @@ import {
   type NetworkState,
   type NodeType,
 } from "./model";
-import { IconExperiment, IconInfo, IconReset } from "../../../components/icons";
+import { IconExperiment, IconReset } from "../../../components/icons";
 
 /**
  * UI domain network — nút + link + chấm gói tin chạy theo bước.
@@ -218,15 +218,13 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
         </svg>
       </div>
 
-      {/* KHÔNG CÓ ĐƯỜNG ĐI — phán quyết TẤT ĐỊNH của BFS, không phải lỗi hệ
-          thống. Nói thẳng ra vì đây chính là bài học của thí nghiệm. */}
-      {!isReachable(state) && (
-        <p className="net-unreachable" role="status">
-          <IconInfo size={13} />
-          Không còn đường nào từ <strong>{state.source}</strong> tới{" "}
-          <strong>{state.destination}</strong>.
-        </p>
-      )}
+      {/* KHÔNG dựng thêm một dải "không có đường đi" ở đây.
+          Ảnh `B3-network-disconnected-unreachable.png` của chính wave này bắt
+          được: dải đó và khe thuyết minh nói CÙNG một điều, ngay cạnh nhau —
+          đúng loại trùng lặp W4B-2V đã gỡ ở họ tìm kiếm. Chủ sở hữu của câu
+          "gói tin không đi được" là `narrate()` (SHELL-N: một khe chữ cho mỗi
+          bước); trạng thái không-tới-được đọc được trên SÂN KHẤU bằng liên kết
+          nét đứt + vắng chấm gói tin. */}
 
       {/* CỔNG THÍ NGHIỆM — cùng khuôn với họ thuật toán. */}
       {!labOpen && (

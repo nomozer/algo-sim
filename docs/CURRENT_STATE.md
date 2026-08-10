@@ -25,6 +25,40 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### W4B-2I — thao tác trên sân khấu + thí nghiệm cấu trúc (2026-08-10)
+>
+> Bằng chứng đầy đủ: `docs/W4B2I_INTERACTIVE_SIMULATION_EVIDENCE.md`; audit và
+> lý do bác bỏ `BASELINE_OBSERVED`: `docs/W4B2I_INTERACTION_MODEL_AUDIT.md`.
+> Commit: `96c3075` (audit) · `8ddf93a` (cổng 9/9) · `ebed0b3` (sân khấu + bàn
+> phím) · `fce4f39` (what-if mạng).
+>
+> - **Cổng Thí nghiệm nay phủ 9/9 target thuật toán.** `bubble_sort` và
+>   `selection_sort` là hai bài cuối; trước đó chúng là nơi DUY NHẤT còn bày vùng
+>   cam kết ở Quan sát. Từ đây **không còn "bài làm chứng chưa gác"** — luật phát
+>   biểu trên toàn danh mục.
+> - **Họ tìm kiếm thao tác trên chính các cột**, không phải hàng nút:
+>   `searchSceneRegions` ánh xạ `visualRole` (có từ W2, tới nay chỉ dùng làm tên
+>   class) sang chỉ số cột. Có bàn phím đầy đủ; `svg` đổi `role` `img`→`group` khi
+>   có vùng bấm. **Tất cả-hoặc-không**: không ánh xạ được thì hàng nút quay lại
+>   nguyên vẹn, không có trạng thái lai.
+> - **`network.packet_routing` có what-if CẤU TRÚC** (`net_connect` /
+>   `net_disconnect` / `net_reset`) — target thứ hai đạt
+>   `WHAT_IF_STRUCTURE_READY`. **Đổi engine CÓ KHAI BÁO**: `route: []` nay là
+>   trạng thái hợp lệ "không tới được" (trước đây `buildSteps` ném lỗi).
+>   `validateNetworkConfig` **vẫn** từ chối config đứt — hệ thì đúng-hoặc-từ-chối,
+>   học sinh thì được phép làm đứt.
+> - **KHÔNG dựng `BASELINE_OBSERVED`.** Tiền đề "lượt chạy đầu bị chặn chờ trả
+>   lời" **sai** (5 bất biến liên quan đã đúng + đã khoá từ trước); thêm cổng sẽ
+>   lấy đi quyền và là wave thứ SÁU trên cùng capability (`RULES.md §3c`).
+>   User duyệt bỏ.
+> - Offline: pytest **1135** (2 skip, 1 deselect) · vitest **1089/71** · build
+>   sạch. Browser CDP **20/20 × 3 viewport** (1920×1080 · 1366×768 · 768×900).
+>   Tiêm lỗi **8/8 ĐỎ** rồi khôi phục XANH.
+> - **CHƯA làm (không claim):** 7/9 target vẫn SCENE_ADJACENT (họ scan/sort cần
+>   thêm chỉ số vào model trước) · `sum_if` accumulator vẫn
+>   REPRESENTATION_BLOCKED · 8 target vẫn `WHAT_IF_BLOCKED` · thêm/xoá **nút**
+>   mạng cố ý ngoài phạm vi · chưa đo trên người học.
+>
 > ### Wave 3 — mã hoá ký tự (XONG offline)
 >
 > Target thứ **22** `binary.character_encoding` trong family **cũ**

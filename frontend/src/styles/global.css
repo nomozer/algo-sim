@@ -2267,21 +2267,6 @@ html {
   border-radius: var(--rounded-sm);
 }
 
-/* Không còn đường đi — TRẠNG THÁI TẤT ĐỊNH, không phải lỗi hệ thống. Dùng tông
-   cam (DESIGN.md §Semantic cho phép sticker palette mang STATUS), không dùng đỏ
-   báo lỗi: học sinh vừa làm đúng một thí nghiệm, không làm hỏng gì cả. */
-.net-unreachable {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-xs);
-  margin: 0;
-  padding: var(--sp-xs) var(--sp-sm);
-  border-radius: var(--rounded-sm);
-  background: var(--canvas-soft);
-  color: var(--ink-secondary);
-  font-size: 13px;
-}
-
 .scan-actions {
   display: flex;
   flex-wrap: wrap;

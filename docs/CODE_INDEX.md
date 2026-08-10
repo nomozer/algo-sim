@@ -946,6 +946,16 @@ shift-or-stop), `isScanFamily`/`isSortFamily`, và `stageInteractionsOf` — NGU
 `interaction-family-w1.test.tsx`, `interaction-family-w2.test.tsx`,
 `interaction-family-sorting-w3b.test.tsx`.
 
+**`searchSceneRegions(model, arrayLength) → SceneRegion[] | null`** (W4B-2I) —
+ánh xạ `SearchAction.visualRole` sang **chỉ số cột thật** để học sinh bấm vào
+chính vùng bị tác động thay vì một hàng nút. Ở ĐÂY chứ không ở renderer vì "nửa
+trái là cột `trai..giua-1`" là **ngữ nghĩa thuật toán** (bất biến #6). ⚠️ Cẩn
+thận ĐẢO NGHĨA: option `left` = nửa trái BỊ LOẠI ⇒ tìm tiếp ở nửa PHẢI; ánh xạ
+tên-sang-tên là dạy ngược cơ chế. Trả `null` (⇒ hàng nút quay lại nguyên vẹn)
+khi một vùng RỖNG hoặc hai hành động TRÙNG cột — **tất cả-hoặc-không**, vì nửa
+vùng nửa nút là hai bề mặt cam kết. `SceneRegion` chỉ mang `id`/`label`/`indices`
+(không đáp án). Tests: `scene-interaction-w4b2i.test.tsx`.
+
 ### `simulations/domains/algorithm/interaction-policy.ts` · Change impact: offline
 M9-S1 — chính sách what-if theo cơ chế (hết "một swap cho cả 8 bài"). Exports:
 `whatIfPolicyOf`, `WhatIfPolicy`, `WhatIfMode` (free: bubble/insertion/selection — `insertion_sort` GIỮ `free` dù đã gác cổng: kéo vẫn là cơ chế đang học, chỉ đổi chỗ đặt · framed:
@@ -953,7 +963,12 @@ linear_search · challenge: find_max/min + binary_search · hidden: sum/count).
 Mỗi policy kèm `rationale` (vì sao không trang trí). Gating theo `algorithm_id`
 ngữ nghĩa. Tests: `interaction-policy.test.ts`, `algorithm-ui.test.tsx`.
 
-**File này là CHỦ SỞ HỮU KHAI BÁO của mọi luật bày công cụ cho học sinh.** Ba
+W4B-2I: **cả CHÍN target đều `experimentGated: true`** — `bubble_sort`/
+`selection_sort` là hai bài cuối vào cổng, khép rollout 7/9 → 9/9. Từ đây không
+còn bài nào bày vùng cam kết ở Quan sát, nên đừng đi tìm "bài làm chứng chưa gác"
+(nó đã phải đổi ba lần rồi mới hết).
+
+**File này là CHỦ SỞ HỮU KHAI BÁO của mọi luật bày công cụ cho học sinh.** Bốn
 export nữa, tra ở đây trước khi nhét điều kiện vào JSX:
 
 - `whatIfDragAllowed(state, {policyAllows, busy, last, answered})` (W3B §15) —
@@ -963,17 +978,44 @@ export nữa, tra ở đây trước khi nhét điều kiện vào JSX:
   LẪN kéo đều nằm sau nút "Thí nghiệm". Tách khỏi `mode` có chủ đích: `mode` nói
   kéo có NGHĨA gì, cờ này nói công cụ đặt Ở ĐÂU. Đang bật cho 5 target:
   find_max · find_min · count_if · sum_if · insertion_sort. `hidden` được kiểm
-  TRƯỚC cổng nên bật cờ KHÔNG bật kéo cho count_if/sum_if.
+  TRƯỚC cổng nên bật cờ KHÔNG bật kéo cho count_if/sum_if. **W4B-2I: nay bật cho
+  cả CHÍN.**
+- `commitmentSurfaceKind(commitmentVisible, sceneBound)` (W4B-2I) → `"none" |
+  "scene" | "buttons"` — chủ sở hữu của **`NO_DUPLICATE_DETACHED_QUIZ_SURFACE`**.
+  Tồn tại vì TIÊM LỖI chứng minh nó phải tồn tại: viết thẳng
+  `actionsHidden={false}` trong `ui.tsx` làm hàng nút rời quay lại đứng song song
+  với vùng bấm sân khấu **mà cả suite vẫn XANH** (`labOpen` cục bộ ⇒ SSR chỉ đi
+  qua trạng thái ĐÓNG, nơi cả hai đều vắng). Hàm thuần ⇒ liệt kê được cả bốn tổ
+  hợp không cần trình duyệt. Tests: `scene-interaction-w4b2i.test.tsx`.
 - `commitmentSurfaceVisible(policy, labOpen)` (W4B-2D) — chủ sở hữu của bất biến
   **`COMMITMENT_SURFACE_COUNT <= 1`**. Trước đây luật này chôn trong JSX nên test
   phải chọn một bài LÀM CHỨNG chưa gác cổng, và đã phải đổi bài ba lần. Nay
   production và test gọi CÙNG hàm này. Tests: `interaction-family-w1.test.tsx`
   (ca A/B/D + phép đếm tự kiểm), `experiment-gate-w4b2b.test.tsx`.
 `network/model.ts` exports: `bfsRoute`, `buildSteps`, `currentStep`, `typeLabel`,
-`neighborsOf`, `hopDistance`, `NetworkState` (topology + route + steps + cursor).
-**M7.FREEZE**: bố cục KHÔNG còn trong state — `layout2d` sống trong
-`network/ui.tsx` (renderer). Tests: `domains.test.ts` (khóa state
+`neighborsOf`, `hopDistance`, `NetworkState` (topology + route + steps + cursor
++ `baseline`). **M7.FREEZE**: bố cục KHÔNG còn trong state — `layout2d` sống
+trong `network/ui.tsx` (renderer). Tests: `domains.test.ts` (khóa state
 renderer-neutral), `network/render.test.tsx`.
+
+**W4B-2I — THÍ NGHIỆM CẤU TRÚC** (target DUY NHẤT có what-if sửa MÔ HÌNH):
+- `recompute(nodes, links, source, destination)` — **chủ sở hữu duy nhất** của
+  phép tính lại `route + steps`; `init` và mọi what-if đều đi qua đây nên lượt
+  đầu và lượt sau không thể chạy hai đường tính khác nhau.
+- `applyNetworkAction` (`network/index.ts`) — `net_connect` · `net_disconnect` ·
+  `net_reset`. **Fail-closed**: tham chiếu nút phải có thật, hai đầu khác nhau,
+  ngắt thì liên kết phải đang tồn tại, nối thì phải chưa — sai ⇒ trả **NGUYÊN
+  tham chiếu state cũ** (không ném, không sửa liều). Cố ý KHÔNG có thêm/xoá nút:
+  đó là trình soạn đồ thị (§27).
+- `isReachable` / `isModified` — dẫn xuất, không lưu cờ. `route: []` NAY HỢP LỆ
+  = "không có đường đi"; `buildSteps` dựng đúng một bước với `packetAt` vẫn là
+  nodeId thật (trước W4B-2I chỗ này NÉ`M`: `byId[route[0]]` → `undefined.type`).
+- `state.baseline` — topology gốc đã validate; what-if **không bao giờ** ghi đè
+  ⇒ `net_reset` là phép toán chứ không phải undo log.
+- ⚠️ `validateNetworkConfig` **vẫn từ chối** config không tới được. Đó KHÔNG mâu
+  thuẫn: mô phỏng do HỆ dựng là đúng-hoặc-từ-chối, còn HỌC SINH thì được phép
+  làm đứt — đúng hai trục của `CORRECTNESS.md`. Đừng nới validator.
+Tests: `network/whatif-w4b2i.test.tsx` (13 ca + 4 tiêm lỗi đã chứng minh đỏ).
 
 ### `simulations/domains/network/ui3d.tsx` · Change impact: offline
 M8 — renderer 3D (Three.js thuần, KHÔNG @react-three/fiber) của
@@ -1082,6 +1124,22 @@ chạy; cộng `JSON.stringify(active.state)` không đổi qua mọi lần bậ
 bày, và 0 rò rỉ đáp án trong DOM. Cờ: `--port --targets --out`. ⚠️ Chỉ tin kết
 quả trên tiến trình Vite MỚI: server đã qua nhiều lượt HMR cho phán quyết sai
 (đo được: store `view:"workspace"` mà React vẫn vẽ Home).
+
+### `scripts/capture-w4b2i-interaction.mjs` · offline (cần Chrome + Vite)
+Runner CDP của W4B-2I, hai chuỗi hành vi trong một lượt: (A) `binary_search` —
+Quan sát 0 vùng bấm → mở Thí nghiệm → **3 vùng bấm trên chính các cột** (nửa
+trái / phần tử giữa / nửa phải) → `svg` đổi `role` `img`→`group` → focus bàn
+phím → bấm sai: `JSON.stringify(active.state)` KHÔNG đổi; (B) `packet_routing` —
+tuyến gốc → ngắt chặng → **không tới được** → nối lại → **Về mạng ban đầu**.
+Cờ: `--port --window --out`. Có **dấu vân tay trang** (`active.moduleId`, sai thì
+thoát != 0).
+⚠️ Hai cái bẫy đã dính trong chính wave này, đừng lặp lại:
+(1) `evaluate` phải **thử lại** khi CDP báo `Promise was collected` — lần import
+đầu làm Vite pre-bundle rồi RELOAD trang, huỷ execution context; coi đó là lỗi
+sản phẩm là tố cáo nhầm. Có `warmup()` nạp trước đồ thị module nặng.
+(2) Dừng bước theo nút "Thí nghiệm" là **SAI** — nút đó hiện ở mọi bước chưa
+phải bước cuối, nên runner đứng ở bước 0 (không có điểm quyết định) rồi báo FAIL.
+Mốc đúng là `.search-observe` (chỉ dựng khi `searchInteractionOf != null`).
 
 ### `docs/SIMULATION_VS_ILLUSTRATION_CONTRACT.md` · tài liệu hợp đồng
 Định nghĩa ba mức AlgoSim công nhận — ILLUSTRATION (**cấm admit**) ·

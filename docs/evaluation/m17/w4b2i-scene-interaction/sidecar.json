@@ -1,0 +1,132 @@
+{
+  "wave": "W4B-2I",
+  "when": "2026-08-10T05:14:49.581Z",
+  "app": "http://localhost:3000",
+  "viewport": "1920,1080",
+  "checks": [
+    {
+      "name": "dấu vân tay: đang đo ĐÚNG binary_search",
+      "ok": true,
+      "detail": "algorithm.binary_search"
+    },
+    {
+      "name": "tìm được bước có quyết định của họ tìm kiếm",
+      "ok": true,
+      "detail": {
+        "step": 1
+      }
+    },
+    {
+      "name": "Quan sát: KHÔNG vùng bấm, KHÔNG hàng nút cam kết",
+      "ok": true,
+      "detail": {
+        "regions": 0,
+        "buttonRow": false
+      }
+    },
+    {
+      "name": "Quan sát: svg vẫn là role=img (chưa có gì bấm được)",
+      "ok": true,
+      "detail": "img"
+    },
+    {
+      "name": "Mở Thí nghiệm: vùng bấm xuất hiện TRÊN SÂN KHẤU",
+      "ok": true,
+      "detail": {
+        "regions": 3,
+        "labels": [
+          "Tìm tiếp ở nửa TRÁI",
+          "Chính là phần tử giữa",
+          "Tìm tiếp ở nửa PHẢI"
+        ]
+      }
+    },
+    {
+      "name": "NO_DUPLICATE_DETACHED_QUIZ_SURFACE: hàng nút rời KHÔNG song song",
+      "ok": true,
+      "detail": {
+        "buttonRow": false
+      }
+    },
+    {
+      "name": "svg chuyển sang role=group ⇒ vùng bấm ĐỌC được với AT",
+      "ok": true,
+      "detail": "group"
+    },
+    {
+      "name": "mọi vùng đều vào được bằng Tab",
+      "ok": true,
+      "detail": {
+        "regions": 3,
+        "tabbable": 3
+      }
+    },
+    {
+      "name": "KEYBOARD: focus được vào vùng trên sân khấu",
+      "ok": true,
+      "detail": "Tìm tiếp ở nửa TRÁI"
+    },
+    {
+      "name": "engine ĐÃ chấm thao tác trên sân khấu (không phải renderer)",
+      "ok": true,
+      "detail": "incorrect"
+    },
+    {
+      "name": "WRONG_DIRECT_ACTION_PRESERVES_CANONICAL_STATE",
+      "ok": true,
+      "detail": {
+        "changed": false
+      }
+    },
+    {
+      "name": "dấu vân tay: đang đo ĐÚNG packet_routing",
+      "ok": true,
+      "detail": "network.packet_routing"
+    },
+    {
+      "name": "tuyến gốc do engine BFS dựng",
+      "ok": true,
+      "detail": "client→router→isp→server"
+    },
+    {
+      "name": "Quan sát: KHÔNG liên kết nào bấm được",
+      "ok": true,
+      "detail": 0
+    },
+    {
+      "name": "mở Thí nghiệm: các liên kết thành vùng bấm",
+      "ok": true,
+      "detail": 3
+    },
+    {
+      "name": "ngắt chặng ⇒ engine cho trạng thái KHÔNG TỚI ĐƯỢC (tất định)",
+      "ok": true,
+      "detail": {
+        "route": "",
+        "narration": "Gói tin hình thành tại Máy khách (client), nhưng không còn liên kết nào dẫn tới Máy chủ (server) — gói tin không đi được."
+      }
+    },
+    {
+      "name": "không vẽ gói tin đứng im ở nguồn khi không đi được",
+      "ok": true,
+      "detail": false
+    },
+    {
+      "name": "nối lại chặng vừa ngắt ⇒ tuyến gốc quay về",
+      "ok": true,
+      "detail": "client→router→isp→server"
+    },
+    {
+      "name": "ngắt chặng đầu ⇒ lại không tới được",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "BASELINE_RESET_RESTORES_ORIGINAL_SPEC",
+      "ok": true,
+      "detail": "client→router→isp→server"
+    }
+  ],
+  "passed": 20,
+  "total": 20
+}
