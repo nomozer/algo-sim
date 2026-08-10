@@ -1,7 +1,7 @@
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import { applyStyleChange, cssTextOf, isModified } from "./apply";
-import { DEFAULT_STYLE } from "./props";
+import { CONTENT_MAX_LENGTH, DEFAULT_STYLE } from "./props";
 import type { WebConfig, WebState, WebStyle } from "./model";
 import { WebInspector, WebWorkspace } from "./ui";
 
@@ -22,7 +22,9 @@ function validateWebConfig(raw: unknown): ConfigResult<WebConfig> {
   const r = raw as Record<string, unknown>;
   const content = typeof r.content === "string" ? r.content.trim() : "";
   if (!content) return { ok: false, error: 'Thiếu "content" (nội dung khối).' };
-  if (content.length > 120) return { ok: false, error: '"content" tối đa 120 ký tự.' };
+  if (content.length > CONTENT_MAX_LENGTH) {
+    return { ok: false, error: `"content" tối đa ${CONTENT_MAX_LENGTH} ký tự.` };
+  }
 
   const rawStyle = r.style;
   if (rawStyle !== undefined && (typeof rawStyle !== "object" || rawStyle === null)) {

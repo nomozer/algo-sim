@@ -676,9 +676,15 @@ def validate_encapsulation_config(raw) -> tuple[dict | None, str | None]:
 _WEB_BG_COLORS = ("#ffffff", "#fde68a", "#fca5a5", "#a7f3d0", "#bfdbfe", "#e9d5ff", "#1f2937")
 _WEB_TEXT_COLORS = ("#1f2937", "#b91c1c", "#1d4ed8", "#047857", "#ffffff")
 _WEB_NUMERIC = {"fontSize": (12, 48), "padding": (0, 48), "borderRadius": (0, 40)}
+# Mặc định phải TRÙNG với `props.ts::DEFAULT_STYLE` — không chỉ cho gọn: mẫu
+# offline chỉ đi qua validate FE, đề thật đi qua cả hai; hai bảng mặc định lệch
+# nhau nghĩa là CÙNG một config cho ra hai khối trông khác nhau.
+# Chọn nền xanh nhạt + cỡ chữ 20 (thay vì trắng/16) để khối MẶC ĐỊNH ĐÃ nhìn
+# thấy được trên nền trang — bắt đầu bằng một khối trắng vô hình thì thao tác
+# đầu tiên của học sinh là đi tìm đối tượng, không phải quan sát.
 _WEB_DEFAULT_STYLE = {
-    "backgroundColor": "#ffffff", "color": "#1f2937",
-    "fontSize": 16, "padding": 16, "borderRadius": 8,
+    "backgroundColor": "#bfdbfe", "color": "#1f2937",
+    "fontSize": 20, "padding": 16, "borderRadius": 8,
 }
 _WEB_CONTENT_MAX = 120
 
@@ -732,3 +738,23 @@ def validate_web_style_config(raw) -> tuple[dict | None, str | None]:
 
     notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
     return {"content": content.strip(), "style": out, "notes": notes}, None
+
+
+def web_style_domain() -> dict:
+    """MIỀN GIÁ TRỊ dạng máy-đọc của `web.style_model` — nguồn CANONICAL.
+
+    Đi ra `capability_descriptors()` để frontend cross-lock được từng giá trị
+    (`web-contract-parity.test.ts`), thay vì hai bảng viết tay trôi độc lập.
+
+    Vì sao vẫn là MIRROR chứ không phải import thẳng: descriptor là artifact
+    TEST/GENERATED, production FE không import nó (quyết định M14 §C4 điểm 6).
+    Nên hợp đồng ở đây là NGUỒN, `props.ts` là bản sao, và sync-lock chứng minh
+    hai bên khớp TỪNG GIÁ TRỊ — quên đồng bộ là ĐỎ, không phải trôi âm thầm.
+    """
+    return {
+        "background_colors": list(_WEB_BG_COLORS),
+        "text_colors": list(_WEB_TEXT_COLORS),
+        "numeric_bounds": {k: {"min": lo, "max": hi} for k, (lo, hi) in _WEB_NUMERIC.items()},
+        "defaults": dict(_WEB_DEFAULT_STYLE),
+        "content_max_length": _WEB_CONTENT_MAX,
+    }

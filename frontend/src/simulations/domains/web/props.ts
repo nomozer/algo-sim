@@ -32,6 +32,9 @@ export const NUMERIC_RANGE = {
 
 export const NUMERIC_PROPS = ["fontSize", "padding", "borderRadius"] as const;
 
+/** Giới hạn nội dung — khớp `_WEB_CONTENT_MAX` của validator BE. */
+export const CONTENT_MAX_LENGTH = 120;
+
 /**
  * Kiểu mặc định khi spec không nói gì. Ở ĐÂY vì đây là chủ sở hữu MIỀN GIÁ TRỊ:
  * để module tự viết lại mã màu là dựng nguồn sự thật thứ hai, và bảng màu phải

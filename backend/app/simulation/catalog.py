@@ -92,6 +92,7 @@ from app.validation.simulation import (
     validate_encapsulation_config,
     validate_logic_config,
     validate_web_style_config,
+    web_style_domain,
     validate_network_config,
     validate_scan_config,
     validate_traverse_config,
@@ -1503,6 +1504,10 @@ def capability_descriptors() -> dict:
         "runtime_targets": targets,
         "family_selectors": selectors,
         "llm_choices": llm_choices(),
+        # W4B-2Z — MIỀN GIÁ TRỊ có ràng buộc của các domain "đổi tham số".
+        # Không phải metadata trình bày: đây là HỢP ĐỒNG mà cả hai tầng validate
+        # phải nói giống nhau, nên nó phải đo được chứ không chỉ mô tả được.
+        "bounded_domains": {"web.style_model": web_style_domain()},
     }
 
 

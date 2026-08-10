@@ -1209,7 +1209,18 @@ Backend: `catalog.py::CATALOG["web.style_model"]` + `FamilyId.WEB_PRESENTATION`
 + mechanism `web_presentation.bounded_style_properties`
 (`ResultAuthority.REPRESENTATION` — không có kết quả thuật toán nào được tính).
 Dùng lại `set_param` sẵn có, KHÔNG đẻ SimAction riêng.
-Tests: `web/bounded-model-w4b2z.test.tsx`.
+Tests: `web/bounded-model-w4b2z.test.tsx` (ranh giới bounded),
+`web/contract-parity.test.ts` (**sync-lock FE≡BE từng giá trị**).
+
+**Hợp đồng miền giá trị**: `app/validation/simulation.py::web_style_domain()` là
+NGUỒN; nó đi ra `capability_descriptors()["bounded_domains"]`. `props.ts` là bản
+sao (production FE không import artifact generated — M14 §C4 điểm 6), và
+sync-lock so từng giá trị: bảng màu nền/chữ, biên số, **mặc định**, độ dài nội
+dung. Mặc định phải khớp vì mẫu offline chỉ đi qua validate FE.
+
+**DOMAIN_DATA_LITERAL ≠ DESIGN_SYSTEM_LITERAL**: mã màu trong `props.ts` là DỮ
+LIỆU BÀI HỌC, không phải token giao diện. Token-hoá thành `var(--…)` sẽ phá
+kiểm hai tầng. Đừng "sửa" chúng ở các pass thiết kế sau.
 
 ### `scripts/measure-composition.mjs` · offline (cần Chrome + Vite)
 **ĐO bố cục, không cảm nhận** (W4B-2T §4). Với mỗi target chạy được offline, đo

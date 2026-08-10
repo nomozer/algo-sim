@@ -1263,5 +1263,47 @@
     "generic.rule_scene",
     "web.style_model",
     "algorithm.comparison_sort"
-  ]
+  ],
+  "bounded_domains": {
+    "web.style_model": {
+      "background_colors": [
+        "#ffffff",
+        "#fde68a",
+        "#fca5a5",
+        "#a7f3d0",
+        "#bfdbfe",
+        "#e9d5ff",
+        "#1f2937"
+      ],
+      "text_colors": [
+        "#1f2937",
+        "#b91c1c",
+        "#1d4ed8",
+        "#047857",
+        "#ffffff"
+      ],
+      "numeric_bounds": {
+        "fontSize": {
+          "min": 12,
+          "max": 48
+        },
+        "padding": {
+          "min": 0,
+          "max": 48
+        },
+        "borderRadius": {
+          "min": 0,
+          "max": 40
+        }
+      },
+      "defaults": {
+        "backgroundColor": "#bfdbfe",
+        "color": "#1f2937",
+        "fontSize": 20,
+        "padding": 16,
+        "borderRadius": 8
+      },
+      "content_max_length": 120
+    }
+  }
 }
