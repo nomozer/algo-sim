@@ -212,6 +212,31 @@ export type PedagogicalFit =
   | "mechanism_fidelity"
   | "dimensional_value";
 
+/**
+ * W4B-2V — VỊ THẾ CỦA BIỂU DIỄN THAY THẾ.
+ *
+ * Phân biệt phải giữ: **CHẾ ĐỘ RENDER ĐƯỢC HỖ TRỢ** ≠ **BIỂU DIỄN CHÍNH CỦA
+ * HỌC SINH**. Một target có thể có hai renderer mà chỉ bày MỘT cái ở luồng học
+ * bình thường. Bày `[2D] [3D]` chỉ vì hai renderer cùng tồn tại là đem một chi
+ * tiết cài đặt lên làm quyết định của học sinh — trong khi học sinh chưa hiểu
+ * cơ chế thì không có cơ sở nào để chọn.
+ */
+export type AlternateRepresentationStatus =
+  | "NO_ALTERNATE_NEEDED"
+  | "ALTERNATE_FOR_EXPLANATION"
+  | "ALTERNATE_FOR_COMPARISON"
+  | "ALTERNATE_FOR_ACCESSIBILITY"
+  | "DUAL_VIEW_CORE_TO_MECHANISM";
+
+/** Khai vị thế biểu diễn. Chỉ target có >1 renderer mới cần khai. */
+export interface RepresentationIntent {
+  /** Biểu diễn học sinh thấy ở luồng bình thường — HỆ quyết, không phải học sinh. */
+  primary: VisualMode;
+  alternate: AlternateRepresentationStatus;
+  /** Vì sao biểu diễn thay thế đáng tồn tại; bắt buộc khi alternate ≠ NO_ALTERNATE_NEEDED. */
+  alternateReason?: string;
+}
+
 export interface ThreeDMeaning {
   role: "architectural_poc" | "pedagogical";
   /** Trục sâu (Z) mã hoá điều gì — tiếng Việt, dùng cho caption + test trung thực. */
@@ -299,6 +324,12 @@ export interface SimulationModule<C = unknown, S = unknown> {
    * Khoá bằng test: PoC không được giả vờ có nghĩa khái niệm.
    */
   threeD?: ThreeDMeaning;
+
+  /**
+   * W4B-2V: vị thế biểu diễn. Vắng ⇒ suy an toàn: mode duy nhất là chính,
+   * không có biểu diễn thay thế ⇒ KHÔNG bày công tắc.
+   */
+  representation?: RepresentationIntent;
 
   /** Panel Giải thích bên phải — nội dung theo domain (biến/mã giả, truth table, bit...). */
   Inspector?: ComponentType<WorkspaceProps<C, S>>;

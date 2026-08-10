@@ -55,6 +55,27 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
         "thứ tự đóng/mở gói.",
     },
 
+    /* W4B-2V — BIỂU DIỄN CHÍNH LÀ 2D; 3D LÀ CÁCH XEM BỔ SUNG.
+     *
+     * Cơ chế của bài có HAI trục: tầng giao thức, và chiều truyền gửi→nhận.
+     * Bản 2D nói được CẢ HAI cùng lúc (dọc = tầng, ngang = hai đầu + đường
+     * truyền) mà không che khuất gì và không cần điều khiển camera — nên nó là
+     * thứ học sinh nên gặp trước. Thêm nữa, xếp chồng KHÔNG phải quy ước đi
+     * mượn: sơ đồ chồng tầng chính là quy ước chuẩn của chính miền này.
+     *
+     * 3D vẫn đáng giữ vì quan hệ BỌC NHAU đọc thẳng từ chiều sâu — nhưng đó là
+     * một góc nhìn LÀM RÕ THÊM, không phải cách đọc mặc định. Nên nó là
+     * `ALTERNATE_FOR_EXPLANATION`, và học sinh không bị hỏi "2D hay 3D?" trước
+     * khi kịp hiểu cơ chế.
+     */
+    representation: {
+      primary: "2d",
+      alternate: "ALTERNATE_FOR_EXPLANATION",
+      alternateReason:
+        "Chiều sâu cho thấy quan hệ BỌC NHAU giữa các tầng — thứ 2D phải diễn " +
+        "đạt bằng xếp chồng. Là góc nhìn làm rõ thêm, không phải cách đọc chính.",
+    },
+
     validateConfig: validateEncapConfig,
     init: buildEncapState,
     apply: (state) => state, // điều khiển qua timeline; không what-if

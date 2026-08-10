@@ -2669,3 +2669,11 @@ html {
 .acc-badge .acc-arrow {
   color: var(--primary);
 }
+
+/* W4B-2V — nhãn trách nhiệm của công tắc cách xem. Nó lùi công tắc về vai PHỤ:
+   học sinh đọc "Cách xem: 2D | 3D" thay vì bị hỏi trống "2D hay 3D?". */
+.visual-mode-label {
+  margin-right: var(--sp-xs);
+  font-size: 12px;
+  color: var(--ink-muted);
+}

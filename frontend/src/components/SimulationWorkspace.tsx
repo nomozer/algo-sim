@@ -1,6 +1,10 @@
 import { Suspense, type ComponentType } from "react";
 import { getSimulation } from "../simulations/registry";
-import { availableVisualModes, effectiveVisualMode, rendererFor } from "../simulations/renderer";
+import {
+  effectiveVisualMode,
+  learnerFacingModes,
+  rendererFor,
+} from "../simulations/renderer";
 import type { Narration, VisualMode, WorkspaceProps } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { PredictionBar } from "./PredictionBar";
@@ -21,7 +25,12 @@ export function VisualModeToggle({
 }) {
   if (modes.length < 2) return null;
   return (
-    <span className="visual-mode-toggle" role="group" aria-label="Chế độ hiển thị">
+    /* W4B-2V — ĐÂY LÀ "CÁCH XEM", KHÔNG PHẢI MỘT LỰA CHỌN KỸ THUẬT.
+       Nhãn `2D`/`3D` trần đặt câu hỏi mà học sinh chưa có cơ sở trả lời ("nên
+       hiểu bài này ở 2D hay 3D?"). Gọi đúng tên trách nhiệm — đổi CÁCH XEM một
+       mô hình đã có sẵn biểu diễn chính — thì nó lùi về đúng vai phụ. */
+    <span className="visual-mode-toggle" role="group" aria-label="Cách xem mô hình">
+      <span className="visual-mode-label">Cách xem</span>
       {modes.map((m) => (
         <button
           key={m}
@@ -194,7 +203,10 @@ export function SimulationWorkspace() {
 
   // M8: renderer DẪN XUẤT TỪ CAPABILITY của module (không switch-case theo id).
   // Mode người dùng chọn nhưng module không đáp ứng → rơi an toàn về 2D.
-  const modes = availableVisualModes(mod);
+  /* W4B-2V: công tắc dẫn xuất từ CÁCH XEM ĐƯỢC BÀY CHO HỌC SINH, không từ năng
+     lực kỹ thuật. Một target dựng được 3D mà không có lý do sư phạm riêng thì
+     `learnerFacingModes` trả rỗng ⇒ không công tắc nào được dựng. */
+  const modes = learnerFacingModes(mod);
   const mode = effectiveVisualMode(mod, visualMode);
   const Stage = rendererFor(mod, mode) as ComponentType<WorkspaceProps>;
   // M17-RC1 §E — nhãn miền hiển thị cho HỌC SINH, không phải id kỹ thuật.

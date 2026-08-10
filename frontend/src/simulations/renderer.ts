@@ -1,5 +1,10 @@
 import type { ComponentType } from "react";
-import type { SimulationModule, VisualMode, WorkspaceProps } from "./types";
+import type {
+  AlternateRepresentationStatus,
+  SimulationModule,
+  VisualMode,
+  WorkspaceProps,
+} from "./types";
 
 /**
  * Chọn renderer theo visual mode (M8) — DẪN XUẤT TỪ HỢP ĐỒNG MODULE, không
@@ -110,6 +115,12 @@ export function representationPolicyProblems<C, S>(
     out.push(`${module.id}: khai threeD nhưng chính sách là ${policy}`);
   }
 
+  /* W4B-2V: biện minh cho biểu diễn thay thế phải NÓI RA, y như biện minh 3D.
+     "Renderer đã có sẵn" không phải lý do sư phạm. */
+  if (alternateStatusOf(module) !== "NO_ALTERNATE_NEEDED" && !module.representation?.alternateReason) {
+    out.push(`${module.id}: bày cách xem thay thế mà không nói vì sao nó đáng tồn tại`);
+  }
+
   // Khai một mode mà không có renderer thật = affordance rỗng đã hứa rồi nuốt lời.
   for (const m of declared) {
     if (rendererFor(module, m) === undefined) {
@@ -119,13 +130,58 @@ export function representationPolicyProblems<C, S>(
   return out;
 }
 
+/* ── W4B-2V: CHẾ ĐỘ HỖ TRỢ ≠ BIỂU DIỄN CHÍNH CỦA HỌC SINH ───────────────────
+ *
+ * Sai lầm đang sửa: hễ một target có hai renderer là UI bày `[2D] [3D]`. Đó là
+ * đem một CHI TIẾT CÀI ĐẶT lên làm QUYẾT ĐỊNH CỦA HỌC SINH — mà học sinh chưa
+ * hiểu cơ chế thì lấy gì để chọn? Hệ phải tự quyết biểu diễn chính.
+ *
+ * Công tắc đổi cách xem chỉ được bày khi biểu diễn thay thế có LÝ DO SƯ PHẠM
+ * riêng, không phải khi nó *tồn tại*.
+ */
+
+/** Biểu diễn học sinh thấy ở luồng bình thường. Khai thiếu ⇒ suy an toàn. */
+export function primaryRepresentationOf<C, S>(module: SimulationModule<C, S>): VisualMode {
+  const declared = module.representation?.primary;
+  const modes = availableVisualModes(module);
+  // Khai một mode không dựng được thì lời khai đó vô nghĩa — rơi về mode thật.
+  if (declared && modes.includes(declared)) return declared;
+  return modes[0] ?? "2d";
+}
+
+/** Vị thế của biểu diễn thay thế. Một mode ⇒ không có gì để thay thế. */
+export function alternateStatusOf<C, S>(
+  module: SimulationModule<C, S>,
+): AlternateRepresentationStatus {
+  if (availableVisualModes(module).length < 2) return "NO_ALTERNATE_NEEDED";
+  return module.representation?.alternate ?? "NO_ALTERNATE_NEEDED";
+}
+
 /**
- * Mode hiệu lực khi render: giữ lựa chọn của người dùng nếu module đáp ứng
- * được, ngược lại rơi an toàn về "2d" (Workspace là bắt buộc nên luôn có).
+ * Các mode ĐƯỢC BÀY CHO HỌC SINH — nguồn duy nhất cho công tắc đổi cách xem.
+ *
+ * Rỗng ⇒ không dựng công tắc. Khác hẳn `availableVisualModes` (năng lực kỹ
+ * thuật): một target có thể dựng được 3D mà vẫn không bày nó ra.
+ */
+export function learnerFacingModes<C, S>(module: SimulationModule<C, S>): VisualMode[] {
+  return alternateStatusOf(module) === "NO_ALTERNATE_NEEDED"
+    ? []
+    : availableVisualModes(module);
+}
+
+/**
+ * Mode hiệu lực khi render.
+ *
+ * W4B-2V: chỗ rơi về KHÔNG còn là hằng số `"2d"` mà là **biểu diễn chính** của
+ * chính module. Trước đây một target có primary = 3D vẫn mở ra ở 2D vì store
+ * khởi tạo `visualMode: "2d"` — tức lời khai vị thế biểu diễn bị vô hiệu ngay
+ * ở lần render đầu. Lựa chọn của học sinh vẫn thắng khi module đáp ứng được.
  */
 export function effectiveVisualMode<C, S>(
   module: SimulationModule<C, S>,
   requested: VisualMode,
 ): VisualMode {
-  return availableVisualModes(module).includes(requested) ? requested : "2d";
+  const modes = availableVisualModes(module);
+  if (modes.includes(requested) && learnerFacingModes(module).length > 0) return requested;
+  return primaryRepresentationOf(module);
 }
