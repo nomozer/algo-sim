@@ -725,6 +725,30 @@ M8 — chọn renderer từ HỢP ĐỒNG module (không switch-case id). Export
 `rendererFor`, `availableVisualModes` (= tuyên bố ∩ có renderer thật),
 `effectiveVisualMode` (rơi an toàn về "2d"). Tests: `visual-mode.test.tsx`.
 
+**W4B-2R — CHỦ SỞ HỮU CHÍNH SÁCH BIỂU DIỄN** cũng ở đây (đừng đẻ file thứ hai):
+`RepresentationPolicy` = `"2d_only" | "3d_only" | "2d_and_3d_justified"`,
+`representationPolicyOf(module)` (phân loại — MÔ TẢ) và
+`representationPolicyProblems(module)` (phán quyết hợp lệ — trả mảng lý do, rỗng
+= hợp lệ). **DẪN XUẤT, không thêm trường vào 22 module**: chính sách đã nằm
+trong `supportedVisualModes` (được cấp mode nào) + `threeD.role` (chiều sâu
+nghĩa gì); trường thứ ba là nguồn sự thật thứ hai phải đồng bộ tay
+(anti-pattern #1). **Điều kiện của `2d_and_3d_justified` là
+`threeD.role === "pedagogical"`, KHÔNG phải sự tồn tại của renderer** — đây
+chính là phép kiểm hạ `network.packet_routing` về 2D_ONLY (nó tự khai
+`architectural_poc`). Danh mục: **21 / 0 / 1**. Guard toàn danh mục **dẫn xuất
+từ registry**, không chép tay 22 tên: `representation-policy-w4b2r.test.ts`.
+⚠️ File này chỉ được import `./types` — guard khoá đúng danh sách import để chính
+sách không bao giờ đọc được tiêu đề/đề bài.
+
+### `simulations/observe-lifecycle-w4b2r.test.ts` · Change impact: offline
+Khoá TOÀN DANH MỤC ba luật vòng đời Quan sát — cả ba **đã đúng từ trước**, wave
+W4B-2R chỉ đo và khoá: `LEARNER_INITIATES_FIRST_RUN` (`playing` chỉ nhận `true`
+qua `setPlaying`; mọi nhánh nạp đặt `false`), `CANONICAL_RUN_CAN_COMPLETE_
+WITHOUT_PREDICTION` (chạy trọn timeline MỌI envelope offline bằng `nextStep`,
+`prediction` vẫn `null`), `OBSERVE_REQUIRES_NO_ANSWER` (`nextStep` không đọc
+`prediction`; `submitPrediction` không đụng cursor). Mở file này trước khi định
+thêm bất kỳ cổng nào chặn Play.
+
 ### `simulations/registry.ts` · `legacy.ts` · Change impact: offline
 Đăng ký/tra module theo id; `legacy.ts` nâng `algorithm_id` cũ thành envelope.
 Exports: `registerSimulation`, `getSimulation`, `listSimulations`,
@@ -1017,16 +1041,22 @@ renderer-neutral), `network/render.test.tsx`.
   làm đứt — đúng hai trục của `CORRECTNESS.md`. Đừng nới validator.
 Tests: `network/whatif-w4b2i.test.tsx` (13 ca + 4 tiêm lỗi đã chứng minh đỏ).
 
-### `simulations/domains/network/ui3d.tsx` · Change impact: offline
-M8 — renderer 3D (Three.js thuần, KHÔNG @react-three/fiber) của
-`network.packet_routing`: đọc NGUYÊN NetworkState, không engine/BFS/prediction
-riêng. Exports: `Network3DWorkspace`, `layout3d` (pure: route z=0, ngoài route
-lùi chiều sâu), `tryCreateWebGLRenderer` (fail → null, không ném),
-`WEBGL_FALLBACK_MESSAGE`. Nạp qua `React.lazy` trong `network/index.ts`
-(code-split ~549KB — chỉ tải khi bấm 3D). Camera OrbitControls (xoay+zoom, khoá
-pan) + nút reset GÓC NHÌN (không reset mô phỏng); dispose/RAF-cancel đầy đủ khi
-unmount. Tests: `render3d.test.tsx`, `m8-acceptance.test.tsx` (kịch bản nghiệm
-thu 2D→dự đoán→3D→2D). Deps: `three` (+ `@types/three` dev).
+### ~~`simulations/domains/network/ui3d.tsx`~~ — ĐÃ NGHỈ (W4B-2R)
+Renderer 3D của `network.packet_routing` (M8) **đã gỡ khỏi kho mã** cùng
+`render3d.test.tsx`. Lý do: chính module khai `threeD.role = "architectural_poc"`
++ `meaningOfZ = "bố cục, không mang nghĩa khái niệm"`, nên theo chính sách biểu
+diễn W4B-2R nó không đủ tư cách bày toggle 2D/3D cho học sinh (`renderer.ts::
+representationPolicyProblems`). Cơ chế của bài — topology + đường đi + khả năng
+tới được — đọc trọn trên mặt phẳng.
+**Đừng dựng lại nó để "cho có 3D".** Muốn thêm 3D cho một target thì điều kiện là
+`threeD.role = "pedagogical"` kèm `meaningOfZ` nói được Z mã hoá BIẾN KHÁI NIỆM
+nào; guard toàn danh mục sẽ chặn ngay nếu không.
+Ba luật cũ sống ở đây **không mất**: state renderer-neutral của NetworkState nay
+do `domains.test.ts` khoá trọn (danh sách khoá + cấm `positions/width/height` +
+cấm giá trị pixel); kịch bản nghiệm thu 2D→dự đoán→3D→2D chuyển sang bài làm
+chứng `network.protocol_encapsulation` (`m8-acceptance.test.tsx`, bài làm chứng
+DẪN XUẤT từ chính sách chứ không viết cứng). `three` vẫn là dep runtime —
+`encap-ui3d.tsx` dùng.
 
 ### `simulations/domains/network/encap-{model,ui,ui3d}.ts(x)` + `encap.ts` · offline
 **M10 — 3D SƯ PHẠM: `network.protocol_encapsulation`** (module THỨ HAI của domain
@@ -1140,6 +1170,18 @@ sản phẩm là tố cáo nhầm. Có `warmup()` nạp trước đồ thị mod
 (2) Dừng bước theo nút "Thí nghiệm" là **SAI** — nút đó hiện ở mọi bước chưa
 phải bước cuối, nên runner đứng ở bước 0 (không có điểm quyết định) rồi báo FAIL.
 Mốc đúng là `.search-observe` (chỉ dựng khi `searchInteractionOf != null`).
+
+### `scripts/capture-w4b2r-representation.mjs` · offline (cần Chrome + Vite)
+Runner CDP của W4B-2R — chứng minh CHÍNH SÁCH BIỂU DIỄN + vòng đời Quan sát trên
+**7 bài làm chứng chọn theo CƠ CHẾ** (§31: tìm kiếm · sắp xếp · logic · hệ cơ số
+· cảnh DSL · mạng đổi chính sách · mạng 3D sư phạm), không chọn theo ảnh ai gửi.
+Mỗi bài kiểm ba việc: **READY/PAUSED** sau khi nạp (không tự chạy) · **toggle
+2D/3D chỉ xuất hiện khi `representationPolicyOf` = `2d_and_3d_justified`** ·
+chạy **trọn** canonical bằng nút Tiến với `prediction` vẫn `null`. Sidecar ghi
+policy/renderer owner/timeline/capability đọc THẲNG từ store + `renderer.ts`,
+không suy từ DOM. Cờ: `--port --window --out`.
+⚠️ Dùng lại `warmup()` + thử lại `Promise was collected` của
+`capture-w4b2i-interaction.mjs` (Vite pre-bundle làm reload trang giữa lượt đo).
 
 ### `docs/SIMULATION_VS_ILLUSTRATION_CONTRACT.md` · tài liệu hợp đồng
 Định nghĩa ba mức AlgoSim công nhận — ILLUSTRATION (**cấm admit**) ·

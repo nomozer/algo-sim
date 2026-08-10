@@ -300,7 +300,8 @@ Căn cứ (đối chiếu Mục lục 5 SGK KNTT ở §1 — không tìm thấy 
   Hộp-tầng hiện dần bằng `reveal_sequence` là **progressive visualization**, CẤM
   dán nhãn *executable simulation* (phân biệt ở §6). → **✅ ĐÃ SHIP ở M10** với
   engine 9 bước tất định (xem mục M10 ngay dưới) — reveal-boxes vẫn bị cấm.
-- Phạm vi 3D hiện tại: **một** module (`network.packet_routing`); logic/binary/
+- Phạm vi 3D hiện tại (W4B-2R): **một** module — `network.protocol_encapsulation`
+  (Z = tầng giao thức). `network.packet_routing` ĐÃ hạ về 2D_ONLY. logic/binary/
   algorithm/generic **cố ý** 2D-only.
 
 ### M10 — 3D SƯ PHẠM đầu tiên (đã ship, nhánh `m10-3d-ped`)

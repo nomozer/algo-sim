@@ -1,0 +1,507 @@
+{
+  "wave": "W4B-2R",
+  "when": "2026-08-10T06:31:57.798Z",
+  "app": "http://localhost:3000",
+  "viewport": "1920,1080",
+  "pilots": [
+    {
+      "id": "algorithm.binary_search",
+      "mechanism": "tìm kiếm — thu hẹp khoảng",
+      "ready": {
+        "active": true,
+        "target": "algorithm.binary_search",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "AlgorithmWorkspace",
+        "playing": false,
+        "timelineIndex": 0,
+        "timelineTotal": 13,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:algorithm.binary_search",
+        "toggleInDom": false,
+        "modeButtons": []
+      },
+      "end": {
+        "active": true,
+        "target": "algorithm.binary_search",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "AlgorithmWorkspace",
+        "playing": false,
+        "timelineIndex": 12,
+        "timelineTotal": 13,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:algorithm.binary_search",
+        "toggleInDom": false,
+        "modeButtons": []
+      }
+    },
+    {
+      "id": "algorithm.insertion_sort",
+      "mechanism": "sắp xếp — giữ/dời/chèn",
+      "ready": {
+        "active": true,
+        "target": "algorithm.insertion_sort",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "AlgorithmWorkspace",
+        "playing": false,
+        "timelineIndex": 0,
+        "timelineTotal": 33,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:algorithm.insertion_sort",
+        "toggleInDom": false,
+        "modeButtons": []
+      },
+      "end": {
+        "active": true,
+        "target": "algorithm.insertion_sort",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "AlgorithmWorkspace",
+        "playing": false,
+        "timelineIndex": 32,
+        "timelineTotal": 33,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:algorithm.insertion_sort",
+        "toggleInDom": false,
+        "modeButtons": []
+      }
+    },
+    {
+      "id": "logic.and_gate",
+      "mechanism": "logic — tín hiệu qua cổng",
+      "ready": {
+        "active": true,
+        "target": "logic.and_gate",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "LogicWorkspace",
+        "playing": false,
+        "timelineIndex": null,
+        "timelineTotal": null,
+        "predictionCapability": false,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:logic.and_gate",
+        "toggleInDom": false,
+        "modeButtons": []
+      },
+      "end": null
+    },
+    {
+      "id": "binary.decimal_to_binary",
+      "mechanism": "hệ cơ số — trọng số vị trí",
+      "ready": {
+        "active": true,
+        "target": "binary.decimal_to_binary",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "BinaryWorkspace",
+        "playing": false,
+        "timelineIndex": null,
+        "timelineTotal": null,
+        "predictionCapability": false,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:binary.decimal_to_binary",
+        "toggleInDom": false,
+        "modeButtons": []
+      },
+      "end": null
+    },
+    {
+      "id": "generic.rule_scene",
+      "mechanism": "cảnh do DSL mô tả",
+      "ready": {
+        "active": true,
+        "target": "generic.rule_scene",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "GenericWorkspace",
+        "playing": false,
+        "timelineIndex": 0,
+        "timelineTotal": 1,
+        "predictionCapability": false,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:generic.rule_scene",
+        "toggleInDom": false,
+        "modeButtons": []
+      },
+      "end": null
+    },
+    {
+      "id": "network.packet_routing",
+      "mechanism": "mạng — topology + đường đi (ĐỔI chính sách)",
+      "ready": {
+        "active": true,
+        "target": "network.packet_routing",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "NetworkWorkspace",
+        "playing": false,
+        "timelineIndex": 0,
+        "timelineTotal": 4,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:network.packet_routing",
+        "toggleInDom": false,
+        "modeButtons": []
+      },
+      "end": {
+        "active": true,
+        "target": "network.packet_routing",
+        "representationPolicy": "2d_only",
+        "availableModes": [
+          "2d"
+        ],
+        "rendererOwner": "NetworkWorkspace",
+        "playing": false,
+        "timelineIndex": 3,
+        "timelineTotal": 4,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:network.packet_routing",
+        "toggleInDom": false,
+        "modeButtons": []
+      }
+    },
+    {
+      "id": "network.protocol_encapsulation",
+      "mechanism": "mạng — tầng giao thức (3D SƯ PHẠM)",
+      "ready": {
+        "active": true,
+        "target": "network.protocol_encapsulation",
+        "representationPolicy": "2d_and_3d_justified",
+        "availableModes": [
+          "2d",
+          "3d"
+        ],
+        "rendererOwner": "EncapWorkspace",
+        "playing": false,
+        "timelineIndex": 0,
+        "timelineTotal": 9,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:network.protocol_encapsulation",
+        "toggleInDom": true,
+        "modeButtons": [
+          "2D",
+          "3D"
+        ]
+      },
+      "end": {
+        "active": true,
+        "target": "network.protocol_encapsulation",
+        "representationPolicy": "2d_and_3d_justified",
+        "availableModes": [
+          "2d",
+          "3d"
+        ],
+        "rendererOwner": "EncapWorkspace",
+        "playing": false,
+        "timelineIndex": 8,
+        "timelineTotal": 9,
+        "predictionCapability": true,
+        "whatIfCapability": false,
+        "prediction": null,
+        "resultOwner": "engine:network.protocol_encapsulation",
+        "toggleInDom": true,
+        "modeButtons": [
+          "2D",
+          "3D"
+        ]
+      }
+    }
+  ],
+  "checks": [
+    {
+      "name": "algorithm.binary_search: dấu vân tay đúng target",
+      "ok": true,
+      "detail": "algorithm.binary_search"
+    },
+    {
+      "name": "algorithm.binary_search: READY/PAUSED — không tự chạy",
+      "ok": true,
+      "detail": {
+        "playing": false
+      }
+    },
+    {
+      "name": "algorithm.binary_search: con trỏ ở bước đầu",
+      "ok": true,
+      "detail": 0
+    },
+    {
+      "name": "algorithm.binary_search: chính sách 2d_only ⇒ toggle KHÔNG",
+      "ok": true,
+      "detail": {
+        "policy": "2d_only",
+        "toggle": false,
+        "buttons": []
+      }
+    },
+    {
+      "name": "algorithm.binary_search: chạy TRỌN canonical mà không trả lời gì",
+      "ok": true,
+      "detail": {
+        "at": 12,
+        "total": 13
+      }
+    },
+    {
+      "name": "algorithm.binary_search: prediction vẫn null suốt lượt Quan sát",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "algorithm.insertion_sort: dấu vân tay đúng target",
+      "ok": true,
+      "detail": "algorithm.insertion_sort"
+    },
+    {
+      "name": "algorithm.insertion_sort: READY/PAUSED — không tự chạy",
+      "ok": true,
+      "detail": {
+        "playing": false
+      }
+    },
+    {
+      "name": "algorithm.insertion_sort: con trỏ ở bước đầu",
+      "ok": true,
+      "detail": 0
+    },
+    {
+      "name": "algorithm.insertion_sort: chính sách 2d_only ⇒ toggle KHÔNG",
+      "ok": true,
+      "detail": {
+        "policy": "2d_only",
+        "toggle": false,
+        "buttons": []
+      }
+    },
+    {
+      "name": "algorithm.insertion_sort: chạy TRỌN canonical mà không trả lời gì",
+      "ok": true,
+      "detail": {
+        "at": 32,
+        "total": 33
+      }
+    },
+    {
+      "name": "algorithm.insertion_sort: prediction vẫn null suốt lượt Quan sát",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "logic.and_gate: dấu vân tay đúng target",
+      "ok": true,
+      "detail": "logic.and_gate"
+    },
+    {
+      "name": "logic.and_gate: READY/PAUSED — không tự chạy",
+      "ok": true,
+      "detail": {
+        "playing": false
+      }
+    },
+    {
+      "name": "logic.and_gate: con trỏ ở bước đầu",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "logic.and_gate: chính sách 2d_only ⇒ toggle KHÔNG",
+      "ok": true,
+      "detail": {
+        "policy": "2d_only",
+        "toggle": false,
+        "buttons": []
+      }
+    },
+    {
+      "name": "logic.and_gate: cảnh khám phá (1 khung) — không có bước để chạy",
+      "ok": true,
+      "detail": {
+        "total": null
+      }
+    },
+    {
+      "name": "binary.decimal_to_binary: dấu vân tay đúng target",
+      "ok": true,
+      "detail": "binary.decimal_to_binary"
+    },
+    {
+      "name": "binary.decimal_to_binary: READY/PAUSED — không tự chạy",
+      "ok": true,
+      "detail": {
+        "playing": false
+      }
+    },
+    {
+      "name": "binary.decimal_to_binary: con trỏ ở bước đầu",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "binary.decimal_to_binary: chính sách 2d_only ⇒ toggle KHÔNG",
+      "ok": true,
+      "detail": {
+        "policy": "2d_only",
+        "toggle": false,
+        "buttons": []
+      }
+    },
+    {
+      "name": "binary.decimal_to_binary: cảnh khám phá (1 khung) — không có bước để chạy",
+      "ok": true,
+      "detail": {
+        "total": null
+      }
+    },
+    {
+      "name": "generic.rule_scene: dấu vân tay đúng target",
+      "ok": true,
+      "detail": "generic.rule_scene"
+    },
+    {
+      "name": "generic.rule_scene: READY/PAUSED — không tự chạy",
+      "ok": true,
+      "detail": {
+        "playing": false
+      }
+    },
+    {
+      "name": "generic.rule_scene: con trỏ ở bước đầu",
+      "ok": true,
+      "detail": 0
+    },
+    {
+      "name": "generic.rule_scene: chính sách 2d_only ⇒ toggle KHÔNG",
+      "ok": true,
+      "detail": {
+        "policy": "2d_only",
+        "toggle": false,
+        "buttons": []
+      }
+    },
+    {
+      "name": "generic.rule_scene: cảnh khám phá (1 khung) — không có bước để chạy",
+      "ok": true,
+      "detail": {
+        "total": 1
+      }
+    },
+    {
+      "name": "network.packet_routing: dấu vân tay đúng target",
+      "ok": true,
+      "detail": "network.packet_routing"
+    },
+    {
+      "name": "network.packet_routing: READY/PAUSED — không tự chạy",
+      "ok": true,
+      "detail": {
+        "playing": false
+      }
+    },
+    {
+      "name": "network.packet_routing: con trỏ ở bước đầu",
+      "ok": true,
+      "detail": 0
+    },
+    {
+      "name": "network.packet_routing: chính sách 2d_only ⇒ toggle KHÔNG",
+      "ok": true,
+      "detail": {
+        "policy": "2d_only",
+        "toggle": false,
+        "buttons": []
+      }
+    },
+    {
+      "name": "network.packet_routing: chạy TRỌN canonical mà không trả lời gì",
+      "ok": true,
+      "detail": {
+        "at": 3,
+        "total": 4
+      }
+    },
+    {
+      "name": "network.packet_routing: prediction vẫn null suốt lượt Quan sát",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "network.protocol_encapsulation: dấu vân tay đúng target",
+      "ok": true,
+      "detail": "network.protocol_encapsulation"
+    },
+    {
+      "name": "network.protocol_encapsulation: READY/PAUSED — không tự chạy",
+      "ok": true,
+      "detail": {
+        "playing": false
+      }
+    },
+    {
+      "name": "network.protocol_encapsulation: con trỏ ở bước đầu",
+      "ok": true,
+      "detail": 0
+    },
+    {
+      "name": "network.protocol_encapsulation: chính sách 2d_and_3d_justified ⇒ toggle CÓ",
+      "ok": true,
+      "detail": {
+        "policy": "2d_and_3d_justified",
+        "toggle": true,
+        "buttons": [
+          "2D",
+          "3D"
+        ]
+      }
+    },
+    {
+      "name": "network.protocol_encapsulation: chạy TRỌN canonical mà không trả lời gì",
+      "ok": true,
+      "detail": {
+        "at": 8,
+        "total": 9
+      }
+    },
+    {
+      "name": "network.protocol_encapsulation: prediction vẫn null suốt lượt Quan sát",
+      "ok": true,
+      "detail": null
+    }
+  ],
+  "passed": 39,
+  "total": 39
+}

@@ -13,7 +13,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Family / Target | **11 / 22** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **1 biểu diễn tiến triển** (`representation` — `structural_progressive_representation`). **Không** đếm phẳng cả 11 là "mô phỏng thuật toán" |
-> | Trình bày 2D / 3D | **20 chỉ 2D · 2 có 2D+3D** (`network.packet_routing`, `network.protocol_encapsulation`) — nguồn: `SimSpec.visual_modes`, parity khoá ở `capability-descriptors.test.ts` |
+> | Trình bày 2D / 3D | **21 chỉ 2D · 1 có 2D+3D** (`network.protocol_encapsulation`) — W4B-2R: chính sách biểu diễn chọn theo CƠ CHẾ, `architectural_poc` không đủ tư cách bày toggle. Nguồn: `SimSpec.visual_modes` + `renderer.ts::representationPolicyOf`; guard toàn danh mục ở `representation-policy-w4b2r.test.ts` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
@@ -24,6 +24,38 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Scope guard (phân loại + luật dừng) | **`docs/RULES.md` §3** |
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
+>
+> ### W4B-2R — biểu diễn theo cơ chế + vòng đời Quan sát (2026-08-10)
+>
+> Bằng chứng: `docs/MECHANISM_FIRST_REPRESENTATION_INTERACTION_EVIDENCE.md`;
+> ma trận 22 dòng: `docs/MECHANISM_FIRST_REPRESENTATION_INTERACTION_AUDIT.md`.
+> Commit: `eebc22a`.
+>
+> - **Chính sách biểu diễn có chủ sở hữu khai báo** — `renderer.ts::
+>   representationPolicyOf` + `representationPolicyProblems`. **Dẫn xuất** từ
+>   `supportedVisualModes` + `threeD.role`, KHÔNG thêm trường vào 22 module.
+>   Điều kiện bày cả 2D lẫn 3D là `threeD.role === "pedagogical"` — sự tồn tại
+>   của renderer KHÔNG phải lý do.
+> - **Danh mục: 21 × `2D_ONLY` · 0 × `3D_ONLY` · 1 × `2D_AND_3D_JUSTIFIED`.**
+>   Đúng MỘT target đổi chính sách: `network.packet_routing` (2D+3D → 2D_ONLY),
+>   kết tội bằng lời khai của chính nó (`architectural_poc`, `meaningOfZ` =
+>   "bố cục, không mang nghĩa khái niệm"). `ui3d.tsx` + `render3d.test.tsx` đã gỡ.
+>   3D sư phạm còn nguyên ở `protocol_encapsulation` (Z = tầng giao thức).
+> - **Ba luật vòng đời Quan sát ĐÃ ĐÚNG từ trước, nay khoá TOÀN DANH MỤC**
+>   (`observe-lifecycle-w4b2r.test.ts`): learner khởi động lượt đầu · canonical
+>   chạy trọn không cần trả lời · `nextStep` không đọc `prediction`.
+> - **`m8-acceptance` từng XANH VÌ LÝ DO SAI** — nó "nghiệm thu 3D" sau khi 3D bị
+>   gỡ, vì `setVisualMode` chỉ ghi cờ trình bày. Bài làm chứng nay dẫn xuất từ
+>   chính sách.
+> - Offline: pytest **1135** (2 skip, 1 deselect) · vitest **1089/72** · build
+>   sạch. Browser CDP **39/39 × 3 viewport**. Tiêm lỗi **7/8 ĐỎ** (G không áp
+>   dụng — chính sách cố ý không đòi baseline), khôi phục XANH.
+> - **CHƯA làm (không claim):** §11/§26 *vai trò miền chở bằng CHỮ* — ĐÃ ĐO
+>   (packet_routing vẽ 4 hình tròn giống hệt) nhưng **chưa sửa**, phải sửa ở chủ
+>   sở hữu hình dạng dùng chung sau khi đo cả tree/graph/database · 7 target vẫn
+>   `ENGINE_CONTRACT_MISSING` · `tree.traversal`/`algorithm.scan` chưa có mẫu
+>   offline nên vắng trong bộ ảnh · KHÔNG dựng `BASELINE_OBSERVED` (§16) — lý do
+>   ở evidence §6.
 >
 > ### W4B-2I — thao tác trên sân khấu + thí nghiệm cấu trúc (2026-08-10)
 >
