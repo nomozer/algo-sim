@@ -137,13 +137,16 @@ def test_C1_dong_lo_hong_bieu_dat_cho_MOI_family():
 
     Kênh mechanism CHỈ phủ các family có cơ chế được phơi vào analyze — giữ
     nguyên sự thật đó để không overclaim rằng M15 đã mở rộng. W2C thêm
-    bounded_control_flow vì cơ chế của nó ĐƯỢC phơi (nuôi route-consistency)."""
+    bounded_control_flow vì cơ chế của nó ĐƯỢC phơi (nuôi route-consistency);
+    W4B-2Z thêm web_presentation vì CÙNG LÝ DO — không phải vì kênh mechanism
+    tự nhiên rộng ra."""
     assert analyze_expressible_families() == {f.value for f in FamilyId}
     assert mechanism_expressible_families() == {
         FamilyId.COMPARISON_SORT.value,
         FamilyId.POSITIONAL_REPRESENTATION.value,
         FamilyId.TREE_TRAVERSAL.value,
         FamilyId.BOUNDED_CONTROL_FLOW.value,
+        FamilyId.WEB_PRESENTATION.value,
     }
     t = next(t for t in build_target_records([])
              if t["target_id"] == "network.graph_traversal")

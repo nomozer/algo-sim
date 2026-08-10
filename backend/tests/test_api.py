@@ -242,7 +242,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # (quyết theo HÌNH DẠNG ĐẦU VÀO: ký tự ↔ số) và cho bounded_control_flow.
     # Chính sách analyze đổi ⇒ envelope OK sinh dưới luật cũ có thể mang target
     # kém phù hợp (đề mã hoá ký tự từng bị định tuyến theo cơ chế đổi cơ số).
-    assert main_module.CACHE_VERSION == "25"
+    # W4B-2Z (bump 25→26): thêm family/target AI-reachable `web.style_model` +
+    # phơi `web_presentation.*` vào enum `prescribed_procedure` và
+    # `requested_operations` ⇒ chính sách định tuyến đổi. Envelope OK sinh dưới
+    # luật cũ mang đúng những đề CSS đã bị `generic.rule_scene` nuốt — trả lại
+    # mù thì bản sửa định tuyến này vô hiệu với chính các đề nó nhắm tới.
+    assert main_module.CACHE_VERSION == "26"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

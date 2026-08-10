@@ -68,6 +68,16 @@ CÁC TRƯỜNG TRÍCH XUẤT:
     trúc là trọng tâm rõ ràng. Nếu các cấu trúc ngang nhau, không cái nào là
     chính → **để null**; đừng chọn bừa một cái chỉ để trường khác null. Liệt kê
     ĐỦ ở requested_mechanisms theo quy tắc bên dưới.
+- prescribed_procedure (bổ sung W4B-2Z — bài ĐỔI CÁCH TRÌNH BÀY MỘT KHỐI TRÊN
+  TRANG WEB): nhận diện bằng THAO TÁC, không bằng chữ "CSS" hay "HTML":
+  - "web_presentation.bounded_style_properties": đề yêu cầu ĐỔI THUỘC TÍNH HIỂN
+    THỊ của một khối/thẻ đã có sẵn (màu nền, màu chữ, cỡ chữ, khoảng đệm bên
+    trong, bo góc) rồi QUAN SÁT khối trông khác đi thế nào.
+  - Phân biệt với dựng cảnh theo bước: nếu đề yêu cầu XÂY DẦN cấu trúc trang
+    (thêm phần đầu trang, rồi thân, rồi chân trang — có TRÌNH TỰ) thì đó KHÔNG
+    phải giá trị này; để null.
+  - Đề yêu cầu VIẾT/CHẠY mã HTML, CSS hay JavaScript tuỳ ý → **để null**; hệ
+    không thực thi mã do người dùng viết.
 - requested_operations: LIỆT KÊ ĐỦ **mọi VIỆC** (mục tiêu) đề yêu cầu — mỗi việc
   một giá trị trong enum. **Mục tiêu ≠ cơ chế:** hai mục tiêu KHÁC NHAU có thể
   dùng CHUNG một cơ chế, vẫn phải nêu ĐỦ CẢ HAI.

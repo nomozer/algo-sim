@@ -161,4 +161,10 @@ def analyze_exposed_values() -> tuple[str, ...]:
         # M17 W2C — cùng lý do: đề "chạy từng bước đoạn chương trình có if/while"
         # mà classify trả generic → mismatch họ → 1 reclassify bounded → fail-closed.
         *FAMILY_MECHANISMS[FamilyId.BOUNDED_CONTROL_FLOW],
+        # W4B-2Z — cùng lý do, và đây là family ĐANG bị misroute thật: đề
+        # "đổi màu nền / cỡ chữ của thẻ" xưa nay rơi vào `generic.rule_scene`
+        # rồi bị dựng thành các bước hé lộ. Không phơi cơ chế ra enum thì
+        # `_family_mismatch` KHÔNG THỂ nhìn thấy sai lệch đó — sửa định tuyến
+        # bằng SỞ HỮU NĂNG LỰC, không bằng dò chuỗi tiêu đề.
+        *FAMILY_MECHANISMS[FamilyId.WEB_PRESENTATION],
     )

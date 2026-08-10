@@ -362,3 +362,94 @@ def test_hex_octal_nhanh_B2_reclassify_ra_unsupported_tu_choi_trung_thuc(monkeyp
     assert "config" not in env
     assert counts["classify"] == 2
     assert counts["simulate"] == 0
+
+
+# ── W4B-2Z: đề CSS bị nuốt vào generic → reclassify sang chủ sở hữu thật ──
+
+_WEB_PROC = "web_presentation.bounded_style_properties"
+
+
+def _web_analysis(proc=_WEB_PROC):
+    """Đề "đổi màu nền / cỡ chữ của thẻ" — ownership `provided`: không có thuật
+    toán nào phải chạy, chỉ có thuộc tính trình bày và hệ quả của nó."""
+    return _analysis(proc=proc, ownership="provided",
+                     goal="Đổi màu nền và cỡ chữ của một thẻ trên trang web")
+
+
+def _web_spec():
+    return json.dumps({
+        "content": "Chào mừng đến với lớp 12A1",
+        "style": {"backgroundColor": "#fde68a", "fontSize": 24},
+        "notes": None,
+    })
+
+
+def test_W4B2Z_de_css_misroute_sang_generic_duoc_dinh_tuyen_lai(monkeypatch):
+    """HỒI QUY ĐỊNH TUYẾN — đây là lỗi đã ship: đề đổi thuộc tính CSS rơi vào
+    `generic.rule_scene` rồi bị dựng thành "Bước 1/3 → hiện khung", tức bịa ra
+    một trình tự mà bài học không có.
+
+    Sửa bằng SỞ HỮU NĂNG LỰC: `web_presentation.*` nay có mặt trong enum
+    `prescribed_procedure`, nên `_family_mismatch` NHÌN THẤY được sai lệch họ và
+    kích đúng một lượt reclassify. KHÔNG có dò chuỗi tiêu đề/đề bài ở bất kỳ đâu
+    trong đường đi này."""
+    mock, counts = _mock(
+        _web_analysis(),
+        classify_seq=[_classify("generic.rule_scene"), _classify("web.style_model")],
+        simulate_seq=[_web_spec()],
+    )
+    obs = AttemptObserver()
+    env = _run(monkeypatch, mock, obs)
+
+    assert env["status"] == "ok"
+    assert env["simulation_id"] == "web.style_model"
+    assert counts["classify"] == 2      # 1 + đúng một lượt cứu
+    assert counts["analyze"] == 1
+    rm = _gates(obs, "route_mechanism")
+    assert rm and rm[0]["fired"] is True
+    assert rm[0]["reason_code"] == "route_mechanism_family_mismatch"
+
+
+def test_W4B2Z_van_o_generic_sau_reclassify_thi_fail_closed(monkeypatch):
+    """Nếu classify BÁM generic sau lượt cứu thì hệ TỪ CHỐI TRUNG THỰC, chứ
+    không hạ xuống dựng cảnh cho xong — đó chính là hành vi cũ cần chặn."""
+    mock, counts = _mock(
+        _web_analysis(),
+        classify_seq=[_classify("generic.rule_scene"), _classify("generic.rule_scene")],
+    )
+    obs = AttemptObserver()
+    env = _run(monkeypatch, mock, obs)
+
+    assert env["status"] == "unsupported"
+    assert env["failure_category"] == "capability_gap"
+    assert env["error_code"] == "route_mechanism_family_mismatch"
+    assert counts["simulate"] == 0     # KHÔNG dựng cảnh sai
+
+
+def test_W4B2Z_de_dung_trinh_tu_KHONG_bi_keo_sang_web(monkeypatch):
+    """Chiều ngược lại — chống sửa quá tay. Đề XÂY DẦN cấu trúc trang (có TRÌNH
+    TỰ) thì analyze để `prescribed_procedure` null, và `generic.rule_scene` vẫn
+    là chủ sở hữu đúng: không mismatch, không reclassify."""
+    mock, counts = _mock(
+        _analysis(proc=None, ownership="provided",
+                  goal="Dựng dần các phần của trang: đầu trang, thân, chân trang"),
+        classify_seq=[_classify("generic.rule_scene")],
+        simulate_seq=[json.dumps({
+            "dsl_version": "1.0",
+            "title": "Cấu trúc trang web dựng dần",
+            "objects": [
+                {"id": "page", "type": "container", "label": "Trang web"},
+                {"id": "header", "type": "heading", "text": "Đầu trang", "parent": "page"},
+                {"id": "footer", "type": "paragraph", "text": "Chân trang.", "parent": "page"},
+            ],
+            "rules": [], "interactions": [], "processes": [],
+        })],
+    )
+    obs = AttemptObserver()
+    env = _run(monkeypatch, mock, obs)
+
+    assert counts["classify"] == 1                  # KHÔNG kích reclassify
+    assert _gates(obs, "route_mechanism") in ([], [
+        g for g in _gates(obs, "route_mechanism") if g["fired"] is False
+    ])
+    assert env["simulation_id"] != "web.style_model"

@@ -54,6 +54,10 @@ def test_enum_dong_dung_sau_gia_tri():
         "bounded_control_flow.assignment",
         "bounded_control_flow.conditional_branch",
         "bounded_control_flow.bounded_loop",
+        # W4B-2Z — cơ chế thuộc tính trình bày có ràng buộc. Phơi ra để
+        # `_family_mismatch` nhìn thấy được đề CSS bị định tuyến sang
+        # `generic.rule_scene` (định tuyến theo SỞ HỮU, không theo chuỗi).
+        "web_presentation.bounded_style_properties",
     }
 
 
@@ -114,6 +118,35 @@ def test_moi_gia_tri_exposed_deu_co_huong_dan_trong_analyze_md():
     assert missing == [], (
         "Các giá trị được phơi cho analyze nhưng KHÔNG có hướng dẫn trong "
         f"analyze.md: {missing}. Phơi mà không dạy = LLM không thể phát ra."
+    )
+
+
+def test_day_ma_khong_phoi_cung_la_LOI(monkeypatch):
+    """Khoá NGƯỢC (W4B-2Z): hướng dẫn ⊆ enum.
+
+    Lock trên chỉ bắt chiều "phơi mà không dạy". Chiều còn lại nguy hiểm không
+    kém và ĐÃ ĐO ĐƯỢC bằng tiêm lỗi: gỡ một family khỏi `analyze_exposed_values`
+    trong khi `analyze.md` vẫn dạy cơ chế đó thì prompt bảo LLM phát ra một giá
+    trị mà SCHEMA từ chối — đúng tiền lệ W3-LIVE-C1 (`character_code_mapping`).
+    Triệu chứng ở đời thực không phải lỗi rõ ràng, mà là im lặng chọn hàng xóm
+    gần nhất rồi rơi vào `capability_gap`.
+
+    Suy từ nguồn: mọi cơ chế trong taxonomy được analyze.md gọi ĐÍCH DANH thì
+    phải có mặt trong enum.
+    """
+    from app.simulation.mechanisms import FAMILY_MECHANISMS, analyze_exposed_values
+
+    text = _analyze_skill_text()
+    exposed = set(analyze_exposed_values())
+    taught_but_hidden = sorted(
+        mech
+        for mechs in FAMILY_MECHANISMS.values()
+        for mech in mechs
+        if mech in text and mech not in exposed
+    )
+    assert taught_but_hidden == [], (
+        f"analyze.md dạy nhưng enum KHÔNG phơi: {taught_but_hidden}. "
+        "Dạy mà không phơi = LLM được bảo phát ra giá trị schema sẽ từ chối."
     )
 
 
