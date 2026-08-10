@@ -151,7 +151,9 @@ describe("network.packet_routing (progressive)", () => {
     // Khóa chính xác bộ khóa của state: bố cục (positions/width/height) KHÔNG
     // được nằm ở đây — đó là dữ liệu trình bày, thuộc renderer.
     expect(Object.keys(s).sort()).toEqual(
-      ["cursor", "destination", "links", "nodes", "route", "source", "steps"].sort(),
+      // W4B-2I: `baseline` = topology gốc để thí nghiệm phục hồi được. Ngữ
+      // nghĩa thuần, không toạ độ — xem chú thích ở `render3d.test.tsx`.
+      ["baseline", "cursor", "destination", "links", "nodes", "route", "source", "steps"].sort(),
     );
     const dump = JSON.stringify(s);
     for (const forbidden of ["positions", "width", "height", "viewBox", "svg"]) {

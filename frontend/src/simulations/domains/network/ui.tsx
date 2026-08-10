@@ -1,13 +1,17 @@
+import { useState } from "react";
 import type { WorkspaceProps } from "../../types";
 import { routeEdgeViews, type EdgeStatus } from "./edge-view";
 import {
   currentStep,
+  isModified,
+  isReachable,
   typeLabel,
   type NetNode,
   type NetworkConfig,
   type NetworkState,
   type NodeType,
 } from "./model";
+import { IconExperiment, IconInfo, IconReset } from "../../../components/icons";
 
 /**
  * UI domain network — nút + link + chấm gói tin chạy theo bước.
@@ -68,11 +72,59 @@ export function layout2d(
   return { positions, width: X0 * 2 + (cols - 1) * COL, height: off.length ? 250 : 140 };
 }
 
-export function NetworkWorkspace({ state }: Props) {
+/**
+ * W4B-2I — LIÊN KẾT ĐÃ NGẮT, vẽ mờ để còn NỐI LẠI được.
+ *
+ * Dẫn xuất từ `baseline.links \ links`; KHÔNG thêm trường nào vào state. Không
+ * có nó thì ngắt là thao tác một chiều: học sinh chỉ còn đường "Về ban đầu", tức
+ * không so sánh được hai cấu hình cạnh nhau — mà so sánh mới là chỗ có bài học.
+ */
+function removedLinks(state: NetworkState): [string, string][] {
+  const key = (a: string, b: string) => (a < b ? `${a}~${b}` : `${b}~${a}`);
+  const live = new Set(state.links.map(([a, b]) => key(a, b)));
+  return state.baseline.links.filter(([a, b]) => !live.has(key(a, b)));
+}
+
+export function NetworkWorkspace({ state, busy, dispatch }: Props) {
   const { positions: pos, width, height } = layout2d(state.nodes, state.route);
   const step = currentStep(state);
   const packetPos = pos[step.packetAt];
   const edgeViews = routeEdgeViews(state.links, state.route, state.cursor);
+
+  /* Cùng khuôn cổng với họ thuật toán: Quan sát chỉ có mô phỏng, công cụ do học
+     sinh CHỦ ĐỘNG mở. `labOpen` là trạng thái TRÌNH BÀY cục bộ — không vào store,
+     không vào engine state. */
+  const [labOpen, setLabOpen] = useState(false);
+  const gone = removedLinks(state);
+  const modified = isModified(state);
+  const editable = labOpen && !busy;
+
+  /** Một liên kết bấm được. `onAct` chỉ PHÁT action — engine tính lại, không phải đây. */
+  const LinkHandle = ({ a, b, label, onAct }: {
+    a: string; b: string; label: string; onAct: () => void;
+  }) => (
+    <g
+      className="net-link-handle"
+      role="button"
+      tabIndex={0}
+      aria-label={label}
+      onClick={onAct}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          e.stopPropagation(); // Space cũng là phím tắt Tự chạy toàn cục.
+          onAct();
+        }
+      }}
+      style={{ cursor: "pointer" }}
+    >
+      <title>{label}</title>
+      <line
+        x1={pos[a].x} y1={pos[a].y} x2={pos[b].x} y2={pos[b].y}
+        stroke="transparent" strokeWidth={18} strokeLinecap="round"
+      />
+    </g>
+  );
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -124,18 +176,95 @@ export function NetworkWorkspace({ state }: Props) {
               </g>
             );
           })}
-          {/* Gói tin */}
-          <circle
-            cx={packetPos.x}
-            cy={packetPos.y - NODE_R - 10}
-            r={9}
-            fill="var(--accent-pink)"
-            stroke="#fff"
-            strokeWidth={2}
-            style={{ transition: "cx 0.4s ease, cy 0.4s ease" }}
-          />
+          {/* LIÊN KẾT ĐÃ NGẮT — vẽ mờ, nét đứt; chỉ hiện khi có. */}
+          {gone.map(([a, b]) => (
+            <line
+              key={`gone-${a}-${b}`}
+              x1={pos[a].x} y1={pos[a].y} x2={pos[b].x} y2={pos[b].y}
+              stroke="var(--ink-faint)" strokeWidth={1.5}
+              strokeDasharray="3 6" opacity={0.55}
+            />
+          ))}
+          {/* Gói tin — KHÔNG vẽ khi không có đường đi: một chấm đứng im ở nguồn
+              đọc thành "gói tin đang chờ", trong khi sự thật là nó không đi được. */}
+          {isReachable(state) && (
+            <circle
+              cx={packetPos.x}
+              cy={packetPos.y - NODE_R - 10}
+              r={9}
+              fill="var(--accent-pink)"
+              stroke="#fff"
+              strokeWidth={2}
+              style={{ transition: "cx 0.4s ease, cy 0.4s ease" }}
+            />
+          )}
+
+          {/* VÙNG BẤM — vẽ SAU cùng để nằm trên trong thứ tự hit-test. Chỉ dựng
+              khi công cụ đang mở: ở Quan sát sân khấu không được bấm được. */}
+          {editable && state.links.map(([a, b]) => (
+            <LinkHandle
+              key={`cut-${a}-${b}`} a={a} b={b}
+              label={`Ngắt liên kết ${a} — ${b}`}
+              onAct={() => dispatch({ type: "net_disconnect", a, b })}
+            />
+          ))}
+          {editable && gone.map(([a, b]) => (
+            <LinkHandle
+              key={`join-${a}-${b}`} a={a} b={b}
+              label={`Nối lại liên kết ${a} — ${b}`}
+              onAct={() => dispatch({ type: "net_connect", a, b })}
+            />
+          ))}
         </svg>
       </div>
+
+      {/* KHÔNG CÓ ĐƯỜNG ĐI — phán quyết TẤT ĐỊNH của BFS, không phải lỗi hệ
+          thống. Nói thẳng ra vì đây chính là bài học của thí nghiệm. */}
+      {!isReachable(state) && (
+        <p className="net-unreachable" role="status">
+          <IconInfo size={13} />
+          Không còn đường nào từ <strong>{state.source}</strong> tới{" "}
+          <strong>{state.destination}</strong>.
+        </p>
+      )}
+
+      {/* CỔNG THÍ NGHIỆM — cùng khuôn với họ thuật toán. */}
+      {!labOpen && (
+        <button
+          className="btn-utility experiment-trigger"
+          onClick={() => setLabOpen(true)}
+          title="Mạng thật vẫn đứt cáp — thử xem gói tin có đường khác để đi không."
+          aria-expanded={false}
+        >
+          <IconExperiment size={14} />
+          Thí nghiệm: tự đổi đường mạng
+        </button>
+      )}
+      {labOpen && (
+        <div className="experiment-tool" role="group" aria-label="Thí nghiệm với đường mạng">
+          <IconExperiment size={14} />
+          <span className="scene-bound-note">
+            Bấm vào một liên kết trên sân khấu để ngắt hoặc nối lại.
+          </span>
+          {modified && (
+            <button
+              className="btn-utility"
+              onClick={() => dispatch({ type: "net_reset" })}
+            >
+              <IconReset size={13} />
+              Về mạng ban đầu
+            </button>
+          )}
+          <button
+            className="btn-utility experiment-tool-close"
+            onClick={() => setLabOpen(false)}
+            aria-label="Đóng thí nghiệm"
+            aria-expanded
+          >
+            ×
+          </button>
+        </div>
+      )}
       {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` ở `index.ts`. */}
     </div>
   );

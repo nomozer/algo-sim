@@ -193,9 +193,14 @@ describe("(14)(15) prediction — MỘT capability cho cả hai renderer", () =>
 describe("(17)(18) authoritative state SẠCH dữ liệu trình bày 3D", () => {
   it("không camera/mesh/toạ độ nào lọt vào NetworkState — trước và sau khi có 3D", () => {
     const s = initState();
-    // Khoá đúng bộ khoá M7.FREEZE — thêm 3D KHÔNG thêm trường nào vào state.
+    /* Khoá đúng bộ khoá M7.FREEZE — thêm 3D KHÔNG thêm trường nào vào state.
+       W4B-2I thêm ĐÚNG MỘT trường: `baseline`. Nó qua được đúng phép thử mà bất
+       biến này bảo vệ — nội dung là TOPOLOGY NGỮ NGHĨA (id nút, cặp liên kết,
+       nguồn, đích), không một toạ độ/camera/kích thước nào. Các assert bên dưới
+       (cấm `position`/`x`/`y`/`z`…) vẫn xanh không sửa một chữ, và đó mới là
+       phần thực thi của bất biến; danh sách khoá này chỉ là bản kê. */
     expect(Object.keys(s).sort()).toEqual(
-      ["cursor", "destination", "links", "nodes", "route", "source", "steps"].sort(),
+      ["baseline", "cursor", "destination", "links", "nodes", "route", "source", "steps"].sort(),
     );
     const dump = JSON.stringify(s);
     for (const forbidden of ["camera", "position", "mesh", "vector", "layout", "webgl"]) {

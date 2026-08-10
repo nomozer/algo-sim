@@ -1,8 +1,10 @@
 import { lazy } from "react";
 import { registerSimulation } from "../../registry";
 import type { NetNode, NetworkConfig, NetworkState, NodeType } from "./model";
-import { bfsRoute, buildSteps, currentStep, hopDistance, neighborsOf, typeLabel } from "./model";
-import type { ConfigResult, SimulationModule } from "../../types";
+import {
+  bfsRoute, currentStep, hopDistance, isModified, isReachable, neighborsOf, recompute, typeLabel,
+} from "./model";
+import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import { NetworkInspector, NetworkWorkspace } from "./ui";
 import { makeEncapsulationModule } from "./encap";
 import { registerTraverseModule } from "./traverse-module";
@@ -75,18 +77,73 @@ function validateNetworkConfig(raw: unknown): ConfigResult<NetworkConfig> {
  * vị trí là chuyện của renderer (M7.FREEZE — renderer-neutral state).
  */
 function buildState(config: NetworkConfig): NetworkState {
-  const ids = config.nodes.map((n) => n.id);
-  const byId = Object.fromEntries(config.nodes.map((n) => [n.id, n]));
-  const route = bfsRoute(ids, config.links, config.source, config.destination);
+  const { route, steps } = recompute(
+    config.nodes, config.links, config.source, config.destination,
+  );
   return {
     nodes: config.nodes,
     links: config.links,
     source: config.source,
     destination: config.destination,
     route,
-    steps: buildSteps(route, byId),
+    steps,
     cursor: 0,
+    baseline: {
+      links: config.links,
+      source: config.source,
+      destination: config.destination,
+    },
   };
+}
+
+/* ── W4B-2I: THÍ NGHIỆM CẤU TRÚC CÓ RÀNG BUỘC ───────────────────────────────
+ *
+ * Hợp đồng: học sinh đổi MÔ HÌNH (nối / ngắt liên kết), engine tính lại tuyến
+ * bằng đúng `recompute` mà lượt đầu đã dùng, rồi hệ quả hiện ra. Renderer không
+ * tính định tuyến, không đoán tuyến mới, không dựng "đường có vẻ đúng".
+ *
+ * VÌ SAO CHỈ NỐI/NGẮT/VỀ-BAN-ĐẦU. Đủ để dạy trọn ý "đứt một chặng thì sao" —
+ * đúng kịch bản sư phạm của bài — và mỗi phép đều tất định trên topology sẵn có.
+ * Thêm/xoá NÚT thì phải kéo theo đặt kiểu nút, đặt lại nguồn/đích khi nút bị
+ * xoá, và bố cục cho nút mới ở cả 2D lẫn 3D: đó là một trình soạn đồ thị, tức
+ * là Packet Tracer, thứ §27 cấm. Cố ý để ngoài, không phải bỏ sót.
+ *
+ * FAIL-CLOSED. Mọi tham chiếu nút phải có thật, hai đầu phải khác nhau, ngắt thì
+ * liên kết phải đang tồn tại, nối thì phải chưa tồn tại. Không hợp lệ ⇒ TRẢ
+ * NGUYÊN state cũ (store chỉ ghi khi tham chiếu đổi), không ném, không sửa liều.
+ *
+ * KHÔNG ĐỤNG `baseline`: nó được chép sang nguyên vẹn ở mọi nhánh, nên "Về ban
+ * đầu" luôn dựng lại được đúng đề gốc.
+ */
+
+const linkKey = (a: string, b: string) => (a < b ? `${a}~${b}` : `${b}~${a}`);
+
+function applyTopology(state: NetworkState, links: [string, string][]): NetworkState {
+  const { route, steps } = recompute(state.nodes, links, state.source, state.destination);
+  // cursor về 0: diễn biến mới là một câu chuyện khác, giữ con trỏ cũ sẽ trỏ
+  // vào một bước không còn tồn tại.
+  return { ...state, links, route, steps, cursor: 0 };
+}
+
+export function applyNetworkAction(state: NetworkState, action: SimAction): NetworkState {
+  if (action.type === "net_reset") {
+    return applyTopology({ ...state, ...state.baseline }, state.baseline.links);
+  }
+  if (action.type !== "net_connect" && action.type !== "net_disconnect") return state;
+
+  const { a, b } = action;
+  const known = new Set(state.nodes.map((n) => n.id));
+  if (!known.has(a) || !known.has(b) || a === b) return state;
+
+  const key = linkKey(a, b);
+  const exists = state.links.some(([x, y]) => linkKey(x, y) === key);
+
+  if (action.type === "net_disconnect") {
+    if (!exists) return state;
+    return applyTopology(state, state.links.filter(([x, y]) => linkKey(x, y) !== key));
+  }
+  if (exists) return state;
+  return applyTopology(state, [...state.links, [a, b]]);
 }
 
 export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkState> {
@@ -109,7 +166,7 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
 
     init: buildState,
 
-    apply: (state) => state, // không what-if — điều khiển qua timeline
+    apply: applyNetworkAction,
 
     // Progressive → có timeline capability (M5 §2, §4)
     timeline: {
@@ -220,6 +277,11 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
         total_steps: state.steps.length,
         packet_at: step.packetAt,
         narration: step.narration,
+        /* W4B-2I: sau một thí nghiệm cấu trúc có thể KHÔNG còn đường đi. Không
+           nói ra thì Explain nhận `route: []` mà không có gì phân biệt "chưa
+           chạy" với "không tới được", và sẽ giải thích một tuyến không tồn tại. */
+        reachable: isReachable(state),
+        topology_modified: isModified(state),
       };
     },
 

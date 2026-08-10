@@ -2240,6 +2240,48 @@ html {
   color: var(--ink-muted);
 }
 
+/* W4B-2I — LIÊN KẾT MẠNG BẤM ĐƯỢC. Cùng khuôn `.scene-region`/`.dag-input`:
+   `<g role="button">` trong SVG, tự nối Enter/Space, focus thấy được. Vạch bắt
+   chuột trong suốt và DÀY hơn nét vẽ để không phải nhắm vào một đường 2px. */
+.net-link-handle line {
+  transition: stroke 0.15s ease;
+}
+
+.net-link-handle:hover line {
+  stroke: var(--primary);
+  opacity: 0.28;
+}
+
+.net-link-handle:focus {
+  outline: none;
+}
+
+.net-link-handle:focus-visible line {
+  stroke: var(--primary);
+  opacity: 0.45;
+}
+
+.net-link-handle:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--rounded-sm);
+}
+
+/* Không còn đường đi — TRẠNG THÁI TẤT ĐỊNH, không phải lỗi hệ thống. Dùng tông
+   cam (DESIGN.md §Semantic cho phép sticker palette mang STATUS), không dùng đỏ
+   báo lỗi: học sinh vừa làm đúng một thí nghiệm, không làm hỏng gì cả. */
+.net-unreachable {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  margin: 0;
+  padding: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas-soft);
+  color: var(--ink-secondary);
+  font-size: 13px;
+}
+
 .scan-actions {
   display: flex;
   flex-wrap: wrap;

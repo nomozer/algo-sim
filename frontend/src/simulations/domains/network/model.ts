@@ -36,11 +36,27 @@ export interface NetworkState {
   links: [string, string][];
   source: string;
   destination: string;
-  /** Đường đi ngắn nhất (BFS) — engine tất định tính, KHÔNG từ LLM. */
+  /**
+   * Đường đi ngắn nhất (BFS) — engine tất định tính, KHÔNG từ LLM.
+   *
+   * W4B-2I: `[]` NAY LÀ GIÁ TRỊ HỢP LỆ, nghĩa là "không có đường đi". Trước wave
+   * này `bfsRoute` vẫn trả `[]` nhưng không chỗ nào biểu diễn được nó:
+   * `validateNetworkConfig` chặn từ cổng, và `buildSteps` thì NÉ`M` lỗi
+   * (`byId[route[0]]` → `undefined.type`). Nên tình huống sư phạm đắt nhất của
+   * bài này — "ngắt liên kết thì gói tin còn tới được không?" — không kể được.
+   */
   route: string[];
   /** Diễn biến từng bước — engine dựng, không phải LLM sinh. */
   steps: NetStep[];
   cursor: number;
+  /**
+   * TOPOLOGY GỐC đã validate — thí nghiệm KHÔNG BAO GIỜ ghi đè lên nó.
+   *
+   * `BASELINE_RESTORABLE`: mọi what-if đọc từ đây để dựng lại, nên "Về ban đầu"
+   * là phép toán tất định chứ không phải cố lần ngược chuỗi thao tác đã làm.
+   * Chỉ dữ liệu NGỮ NGHĨA (topology), không có gì thuộc trình bày.
+   */
+  baseline: { links: [string, string][]; source: string; destination: string };
 }
 
 const TYPE_LABEL: Record<NodeType, string> = {
@@ -90,8 +106,36 @@ export function bfsRoute(
   return route;
 }
 
-/** Dựng timeline diễn biến gói tin dọc theo route. */
-export function buildSteps(route: string[], byId: Record<string, NetNode>): NetStep[] {
+/**
+ * Dựng timeline diễn biến gói tin dọc theo route.
+ *
+ * W4B-2I — ROUTE RỖNG KHÔNG CÒN LÀ CA NÉM LỖI. Nó dựng ĐÚNG MỘT bước: gói tin
+ * hình thành tại nguồn rồi không đi được đâu. Đó là sự thật tất định mà BFS đã
+ * tính (`prev` không chạm tới đích), không phải một thông báo lỗi kỹ thuật —
+ * nên nó thuộc timeline như mọi bước khác, và `packetAt` vẫn là một nodeId thật
+ * để renderer 2D/3D không phải biết gì thêm (giữ nguyên M7.FREEZE).
+ *
+ * `source` truyền tường minh: khi route rỗng thì `route[0]` không tồn tại, và
+ * đó chính là chỗ bản cũ nổ.
+ */
+export function buildSteps(
+  route: string[],
+  byId: Record<string, NetNode>,
+  source: string,
+  destination: string,
+): NetStep[] {
+  if (route.length === 0) {
+    const src = byId[source];
+    const dst = byId[destination];
+    return [
+      {
+        packetAt: source,
+        narration:
+          `Gói tin hình thành tại ${typeLabel(src.type)} (${source}), nhưng không còn ` +
+          `liên kết nào dẫn tới ${typeLabel(dst.type)} (${destination}) — gói tin không đi được.`,
+      },
+    ];
+  }
   const steps: NetStep[] = [];
   const src = byId[route[0]];
   steps.push({ packetAt: route[0], narration: `Tạo gói tin tại ${typeLabel(src.type)} (${src.id}).` });
@@ -110,6 +154,40 @@ export function buildSteps(route: string[], byId: Record<string, NetNode>): NetS
 
 export function currentStep(state: NetworkState): NetStep {
   return state.steps[Math.max(0, Math.min(state.cursor, state.steps.length - 1))];
+}
+
+/**
+ * TÍNH LẠI toàn bộ diễn biến từ topology — CHỦ SỞ HỮU DUY NHẤT của phép này.
+ *
+ * `init` và mọi thí nghiệm what-if đều đi qua đây, nên không thể có chuyện lượt
+ * đầu và lượt sau khi sửa mô hình chạy hai đường tính khác nhau. Renderer không
+ * bao giờ gọi `bfsRoute` — nó chỉ đọc `route`/`steps` có sẵn trong state.
+ */
+export function recompute(
+  nodes: NetNode[],
+  links: [string, string][],
+  source: string,
+  destination: string,
+): { route: string[]; steps: NetStep[] } {
+  const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+  const route = bfsRoute(nodes.map((n) => n.id), links, source, destination);
+  return { route, steps: buildSteps(route, byId, source, destination) };
+}
+
+/** Gói tin có tới được đích không — dẫn xuất, KHÔNG lưu thành cờ riêng. */
+export function isReachable(state: NetworkState): boolean {
+  return state.route.length > 0;
+}
+
+/** Topology hiện tại có khác bản gốc không (đang ở nhánh thí nghiệm). */
+export function isModified(state: NetworkState): boolean {
+  const key = (ls: [string, string][]) =>
+    ls.map(([a, b]) => (a < b ? `${a}~${b}` : `${b}~${a}`)).sort().join("|");
+  return (
+    key(state.links) !== key(state.baseline.links) ||
+    state.source !== state.baseline.source ||
+    state.destination !== state.baseline.destination
+  );
 }
 
 /* ── M8-PRE-LIP: nền tảng cho nhịp DỰ ĐOÁN "chặng kế tiếp" ────────────────

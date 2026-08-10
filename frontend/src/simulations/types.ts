@@ -45,7 +45,15 @@ export type SimAction =
   | { type: "set_param"; name: string; value: number | string | boolean }
   /** M7.13A: kéo một object tới tọa độ domain 0–100 — engine kiểm quyền
    *  (spec khai drag + visible) và clamp constraints; renderer chỉ phát action. */
-  | { type: "move"; target: string; x: number; y: number };
+  | { type: "move"; target: string; x: number; y: number }
+  /* W4B-2I — THÍ NGHIỆM CẤU TRÚC (mạng). Đổi MÔ HÌNH rồi để engine tính lại,
+   * khác hẳn `toggle`/`set_param` vốn chỉ đổi giá trị trong một mô hình đứng yên.
+   * Tham chiếu là VAI NGỮ NGHĨA (id nút), không phải nhãn theo ngữ cảnh đề bài,
+   * nên cùng bộ công cụ chạy được cho mạng trường học lẫn mạng văn phòng (§48). */
+  | { type: "net_connect"; a: string; b: string }
+  | { type: "net_disconnect"; a: string; b: string }
+  /** Về đúng topology đã validate lúc nạp — không phải "undo" từng bước. */
+  | { type: "net_reset" };
 
 /**
  * Capability tùy chọn (yêu cầu #2): chỉ mô phỏng progressive/hybrid khai báo.
