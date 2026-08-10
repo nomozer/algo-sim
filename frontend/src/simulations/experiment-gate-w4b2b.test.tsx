@@ -124,20 +124,23 @@ const observeHtml = (id: AlgorithmId) => {
 /* ══ 1. PILOT ĐÚNG HAI BÀI ════════════════════════════════════════════════ */
 
 describe("W4B-2B · cổng là PILOT, không phải rollout cả họ", () => {
-  it("W4B-2D: đúng BẢY target được gác — quét dãy + insertion_sort + họ tìm kiếm", () => {
-    expect([...GATED].sort()).toEqual([
-      "binary_search", "count_if", "find_max", "find_min",
-      "insertion_sort", "linear_search", "sum_if",
-    ]);
+  it("W4B-2I: rollout ĐÃ KHÉP — cả CHÍN target đều gác cổng", () => {
+    /* W4B-2D dừng ở BẢY. Hai bài sắp xếp còn lại là chỗ rò quiz-like thật:
+       chúng bày vùng cam kết + "Em hãy quyết định bước tiếp theo." ngay ở Quan
+       sát trong khi bảy bài kia đã ẩn. Hai luật cho cùng một loại bề mặt = học
+       sinh không đọc ra luật nào. */
+    expect([...GATED].sort()).toEqual([...ALGORITHM_IDS].sort());
   });
 
-  it("HAI bài sắp xếp còn lại KHÔNG bị kéo theo — họ sắp xếp là wave sau", () => {
-    /* §31/§33: mở rộng dừng đúng ở họ tìm kiếm. `bubble_sort`/`selection_sort`
-       phải giữ nguyên hành vi — vùng cam kết vẫn hiện thẳng ở Quan sát, không
-       có cổng nào. Đây cũng là thứ giữ cho ca (A) của bất biến bề mặt cam kết
-       còn bài làm chứng. */
-    for (const id of ["bubble_sort", "selection_sort"] as AlgorithmId[]) {
-      expect(whatIfPolicyOf(id).experimentGated, `${id} bị kéo vào wave này`).toBeUndefined();
+  it("KHÔNG bài nào bày vùng cam kết ở Quan sát nữa", () => {
+    /* Bất biến này trước đây phải chọn một bài LÀM CHỨNG chưa gác cổng, và bài
+       đó đã phải đổi ba lần (find_max → sum_if → linear_search). Nay luật được
+       phát biểu trên TOÀN BỘ danh mục nên không còn bài làm chứng nào để hết.
+       Ca "chưa gác" của `commitmentSurfaceVisible` vẫn được kiểm bằng policy
+       TỔNG HỢP ở `interaction-family-w1.test.tsx` — hàm thuần, không cần một
+       target thật để làm chứng. */
+    for (const id of ALGORITHM_IDS) {
+      expect(whatIfPolicyOf(id).experimentGated, `${id} còn hở vùng cam kết`).toBe(true);
     }
   });
 

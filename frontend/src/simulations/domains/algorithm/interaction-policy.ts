@@ -83,6 +83,19 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: 'Kéo một cột thả lên cột khác để thử "nếu đổi chỗ thì sao?" — đổi chỗ chính là cơ chế của sắp xếp nổi bọt.',
     rationale:
       "Đổi chỗ là chính cơ chế đang học; engine chạy tiếp tất định trên dãy đã đổi, hệ quả nhìn thấy ngay trong nhánh thử nghiệm.",
+    /* W4B-2I §4 — HAI BÀI CUỐI VÀO CỔNG, khép rollout 7/9 → 9/9.
+       Đây là chỗ rò quiz-like THẬT của sản phẩm: trước wave này `bubble_sort` và
+       `selection_sort` là hai target DUY NHẤT còn bày vùng cam kết + dòng "Em hãy
+       quyết định bước tiếp theo." ngay ở Quan sát, trong khi bảy bài kia đã ẩn nó
+       sau cổng từ W4B-2D. Một sản phẩm có hai luật cho cùng một loại bề mặt thì
+       học sinh không đọc ra luật nào cả.
+       `mode` GIỮ `free` — kéo vẫn chính là cơ chế đang học, y như `insertion_sort`
+       (đã `free` + gated từ W4B-2B). Đổi là chỗ ĐẶT, không phải nghĩa. */
+    experimentGated: true,
+    challengeLabel: "Thí nghiệm: tự đổi chỗ từng cặp",
+    challengeTeaser:
+      "Mỗi lượt thuật toán chỉ so hai phần tử kề nhau — em thử tự quyết định cặp này có đổi chỗ không.",
+    framing: "Đổi chỗ hay giữ nguyên?",
   },
   insertion_sort: {
     mode: "free",
@@ -104,6 +117,15 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: 'Kéo một cột thả lên cột khác để thử "nếu đổi chỗ thì sao?" — vị trí phần tử nhỏ nhất/lớn nhất của phần chưa sắp sẽ đổi theo.',
     rationale:
       "Thứ tự phần tử quyết định vị trí cực trị được CHỌN mỗi lượt và số lần đổi chỗ; engine chạy tiếp tất định trên dãy đã đổi nên hệ quả nhìn thấy ngay trong nhánh thử nghiệm.",
+    /* W4B-2I §4 — như `bubble_sort`: cùng lý do, cùng một dòng. */
+    experimentGated: true,
+    challengeLabel: "Thí nghiệm: tự chọn phần tử mỗi lượt",
+    challengeTeaser:
+      "Mỗi lượt thuật toán chỉ chọn trong phần chưa sắp — em thử tự quyết định phần tử này có được chọn không.",
+    /* Nhãn KHÔNG nói "nhỏ nhất"/"lớn nhất": chiều sắp xếp đến từ `data.order`,
+       còn policy là hằng theo `algorithm_id`. Viết cứng một chiều ở đây sẽ nói
+       ngược đề khi `order = "desc"` — `sortInteractionOf` mới là chỗ biết chiều. */
+    framing: "Chọn phần tử này hay giữ nguyên?",
   },
   linear_search: {
     mode: "framed",

@@ -50,6 +50,10 @@ const DATA: Partial<Record<AlgorithmId, Record<string, unknown>>> = {
   insertion_sort: { array: [4, 9, 2, 7, 5, 8], order: "asc" },
   find_max: { array: [4, 9, 2, 7, 5, 8] },
   find_min: { array: [4, 9, 2, 7, 5, 8] },
+  // W4B-2I: hai bài sắp xếp cuối vào cổng ⇒ bất biến này phủ tới chúng. Guard
+  // "thiếu fixture" ở ngay dưới là thứ bắt được thiếu sót này, không phải tôi.
+  bubble_sort: { array: [4, 9, 2, 7, 5, 8], order: "asc" },
+  selection_sort: { array: [4, 9, 2, 7, 5, 8], order: "asc" },
 };
 
 function build(id: AlgorithmId) {

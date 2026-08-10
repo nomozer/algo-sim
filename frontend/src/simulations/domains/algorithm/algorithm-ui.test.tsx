@@ -32,18 +32,33 @@ function html(algorithmId: AlgorithmId, data: Record<string, unknown>, cursor: n
 }
 
 describe("gating swap trong AlgorithmWorkspace", () => {
-  /* W3B §15 — mode "free" GIỮ NGUYÊN, nhưng gợi ý kéo không được mời học sinh
-     làm việc đang bị khoá. Ở bước quyết định, cam kết đi trước bằng nút; kéo
-     (thí nghiệm what-if) mở lại sau khi đã chốt. */
-  it("bubble_sort (free): hiện gợi ý kéo-thả ở bước KHÔNG phải điểm quyết định", () => {
-    const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 0);
-    expect(h).toContain("Kéo một cột");
+  /* W4B-2I — HAI TEST NÀY ĐỔI TIỀN ĐỀ, có chủ đích.
+   *
+   * Trước: `bubble_sort`/`selection_sort` là hai bài DUY NHẤT chưa gác cổng, nên
+   * chúng làm bài làm chứng cho "vùng cam kết hiện thẳng ở Quan sát" và "gợi ý
+   * kéo hiện ở bước thường". Nay cả chín bài đều gác ⇒ hai khẳng định đó mô tả
+   * một trạng thái sản phẩm KHÔNG CÒN TỒN TẠI.
+   *
+   * Luật W3B §15 (cam kết trước, kéo sau) KHÔNG mất và không cần SSR để kiểm:
+   * chủ sở hữu của nó là hàm thuần `whatIfDragAllowed`, đã khoá đủ sáu nhánh ở
+   * `interaction-family-sorting-w3b.test.tsx`. `labOpen` là state cục bộ nên
+   * `renderToString` luôn chỉ thấy trạng thái ĐÓNG — dùng SSR để kiểm trạng thái
+   * MỞ là đúng anti-pattern #8 (ARCHITECTURE_MAP §8).
+   *
+   * Nên hai test này nay khoá đúng thứ SSR nhìn thấy được: Quan sát của bài sắp
+   * xếp trông y hệt bảy bài kia. */
+  it("bubble_sort: Quan sát KHÔNG bày cam kết, KHÔNG mời kéo — chỉ có lối vào Thí nghiệm", () => {
+    const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1);
+    expect(h).not.toContain("Thao tác sắp xếp");
+    expect(h).not.toContain("Kéo một cột");
+    expect(h).toContain("tự đổi chỗ từng cặp");
   });
 
-  it("bubble_sort: ở điểm quyết định CHƯA cam kết thì không mời kéo", () => {
-    const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1);
-    expect(h).toContain("Thao tác sắp xếp"); // vùng cam kết có mặt
-    expect(h).not.toContain("Kéo một cột"); // …và kéo không được mời song song
+  it("selection_sort: cùng một luật — không còn bài sắp xếp nào hở vùng cam kết", () => {
+    const h = html("selection_sort", { array: [3, 1, 2], order: "asc" }, 1);
+    expect(h).not.toContain("Thao tác sắp xếp");
+    expect(h).not.toContain("Kéo một cột");
+    expect(h).toContain("tự chọn phần tử mỗi lượt");
   });
 
   it("(17) sum_if (hidden): KHÔNG gợi ý kéo-thả — kể cả sau khi có cổng Thí nghiệm", () => {
