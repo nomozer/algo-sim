@@ -1222,6 +1222,23 @@ dung. Mặc định phải khớp vì mẫu offline chỉ đi qua validate FE.
 LIỆU BÀI HỌC, không phải token giao diện. Token-hoá thành `var(--…)` sẽ phá
 kiểm hai tầng. Đừng "sửa" chúng ở các pass thiết kế sau.
 
+### `components/SessionRail.tsx` — PHIÊN ĐANG MỞ (W4B-2Z §29)
+Cột trái liệt kê các mô phỏng ĐANG MỞ; mở/chuyển/đóng phiên + "+ Mô phỏng mới".
+**Chỉ dựng khi có ≥2 phiên** (`.has-rail` do `App.tsx` gắn) — một cột rỗng sẽ ăn
+bề ngang của sân khấu suốt thời gian còn lại. ≤1100px: nằm ngang phía trên sân
+khấu, cuộn ngang.
+
+Sở hữu state: `state/store.ts` — `sessions: OpenSession[]` + `activeSessionId`,
+với `newSession` / `switchSession` / `closeSession`. `active` là BẢN LÀM VIỆC
+của phiên đang chọn; chuyển phiên = chụp bản làm việc vào phiên cũ rồi khôi phục
+bản của phiên mới (đúng tham chiếu object cũ).
+
+**Phiên ≠ Lịch sử.** Lịch sử ghi "đã từng mở" (bền, localStorage,
+`reopenFromHistory` dựng lại từ envelope rồi tua tới `lastCursor`). Phiên ghi
+"đang mở và đang dở" — chuyển phiên KHÔNG dựng lại gì, nên what-if của học sinh
+còn nguyên. Cả hai đều ZERO-AI nhưng vì lý do khác nhau.
+Tests: `state/sessions.test.ts` (A→B→A, đóng phiên, 0 `fetch`, 0 `init`).
+
 ### `scripts/measure-composition.mjs` · offline (cần Chrome + Vite)
 **ĐO bố cục, không cảm nhận** (W4B-2T §4). Với mỗi target chạy được offline, đo
 trong Chrome: hộp bao **sân khấu** vs hộp bao **nội dung có nghĩa** (hợp của mọi

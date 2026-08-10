@@ -6,6 +6,7 @@ import { SimulationControls } from "./components/SimulationControls";
 import { SimulationInspector } from "./components/SimulationInspector";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
 import { useAppStore } from "./state/store";
+import { SessionRail } from "./components/SessionRail";
 
 /**
  * M9-UX1 (mở rộng M9-UX5/UX7) — BỐN mặt trình bày trên MỘT store:
@@ -30,9 +31,15 @@ export default function App() {
   const goHome = useAppStore((s) => s.goHome);
   const openHistory = useAppStore((s) => s.openHistory);
   const openLibrary = useAppStore((s) => s.openLibrary);
+  const sessionCount = useAppStore((s) => s.sessions.length);
 
   const inWorkspace = view === "workspace" && active !== null;
-  const layoutClass = `app-layout${rightOpen ? "" : " right-closed"}`;
+  /* W4B-2Z §29 — cột phiên chỉ TỒN TẠI khi có ≥2 bài đang mở. Dựng sẵn một cột
+     rỗng sẽ ăn bề ngang của sân khấu suốt thời gian còn lại, mà sân khấu là thứ
+     phải chiếm ưu thế thị giác. */
+  const hasRail = sessionCount >= 2;
+  const layoutClass =
+    `app-layout${rightOpen ? "" : " right-closed"}${hasRail ? " has-rail" : ""}`;
 
   return (
     <>
@@ -82,6 +89,7 @@ export default function App() {
 
       {inWorkspace ? (
         <main className={layoutClass}>
+          <SessionRail />
 
           <section className="panel-center">
             <SimulationWorkspace />
