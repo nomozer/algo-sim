@@ -596,6 +596,56 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary)" />
             </marker>
           </defs>
+          {/* 0. QUAN HỆ DO `rules` KHAI — dưới cùng, dưới cả edge.
+           *
+           * W4B-2U §12. Trước wave này, một cảnh AND dựng ra ba widget rời:
+           * công tắc A, công tắc B, đèn Đầu ra — không gì trên sân khấu nói ba
+           * thứ đó liên quan nhau. Quan hệ CÓ tồn tại và ĐÃ được validate, nhưng
+           * chỉ hiện dưới dạng CHỮ trong mục "QUY TẮC" của Giải thích
+           * (`y = AND(A, B)`), tức đúng lỗi "quan hệ chở bằng prose".
+           *
+           * Đây KHÔNG phải renderer bịa quan hệ (thứ
+           * `SIMULATION_VS_ILLUSTRATION_CONTRACT` cấm): mỗi đường vẽ ra đọc
+           * thẳng từ `rule.inputs → rule.target` — cùng dữ liệu mà engine dùng
+           * để TÍNH. Nếu spec không khai rule thì không có đường nào.
+           *
+           * Vẽ mảnh và nét đứt để phân biệt với `edge` — edge là đối tượng CÓ
+           * THẬT trong mô hình (dây nối, đoạn thẳng), còn đây là PHỤ THUỘC TÍNH
+           * TOÁN. Hai thứ khác loại thì không được trông giống nhau. */}
+          {spec.rules.flatMap((r, ri) => {
+            const t = pos[r.target];
+            if (!t) return [];
+            return (r.inputs ?? []).map((inputId) => {
+              const s = pos[inputId];
+              if (!s) return null;
+              return (
+                <line
+                  key={`rule-${ri}-${inputId}`}
+                  x1={s.x} y1={s.y} x2={t.x} y2={t.y}
+                  stroke="var(--ink-faint)" strokeWidth={1.5}
+                  strokeDasharray="4 5" opacity={0.7}
+                >
+                  <title>{`${displayLabel(spec, inputId)} → ${displayLabel(spec, r.target)}`}</title>
+                </line>
+              );
+            });
+          })}
+          {/* Toán tử đặt cạnh đích — nói QUAN HỆ LÀ GÌ, không chỉ "có liên quan". */}
+          {spec.rules.map((r, ri) => {
+            const t = pos[r.target];
+            if (!t || !(r.inputs ?? []).some((i) => pos[i])) return null;
+            const label = r.type === "boolean" ? (r.op ?? "").toUpperCase() : "Σ";
+            if (!label) return null;
+            return (
+              <text
+                key={`op-${ri}`}
+                x={t.x} y={t.y - 34} textAnchor="middle"
+                fontSize={11} fontWeight={600} fill="var(--ink-muted)"
+              >
+                {label}
+              </text>
+            );
+          })}
           {/* 1. Cạnh (edge) — dưới cùng; chỉ khi edge + hai đầu đều visible (§6) */}
           {spec.objects
             .filter((o) => o.type === "edge" && isObjectRenderable(frame, o))
