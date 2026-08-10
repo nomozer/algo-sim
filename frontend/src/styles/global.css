@@ -2624,8 +2624,53 @@ html {
 /* W4B-2U2 §13 — LỐI VÀO THỬ THÁCH. Một nút nhỏ, canh trái, không nền không
    viền khối: Quan sát là mặc định, Thử thách là chỗ học sinh chủ động bước vào.
    Không dựng thành thẻ để tránh thêm một dải nội dung nữa dưới sân khấu. */
-.challenge-entry {
+/* W4B-2W §13/§18 — TẦNG HÀNH ĐỘNG PHỤ.
+ *
+ * Đo được ở ảnh nhiều wave: dưới sân khấu xếp chồng ba DẢI toàn chiều ngang —
+ * "Thí nghiệm: …", khe thuyết minh, rồi "Thử thách: …". Mỗi dải là một `btn-utility`
+ * nằm trong một khối riêng nên nó chiếm trọn một hàng nội dung, và mắt đọc thành
+ * MÔ HÌNH → DẢI → DẢI → DẢI, tức mô phỏng thành một mục trong bảng điều khiển.
+ *
+ * Cả Thí nghiệm lẫn Thử thách đều là HÀNH ĐỘNG PHỤ: mở khi học sinh muốn, không
+ * phải nội dung. Gom chúng về MỘT tầng chung, chữ nhỏ hơn, không nền không viền
+ * khối — chúng lùi lại sau mô hình mà vẫn tới được bằng chuột lẫn bàn phím.
+ *
+ * Ba chỗ dựng nút này (shell + hai domain) nay dùng chung một class, nên không
+ * còn ba định nghĩa "nút phụ" trôi khác nhau. */
+.sim-secondary-actions {
   display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+  align-items: center;
+}
+
+.sim-secondary-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  padding: var(--sp-xxs) var(--sp-xs);
+  border: none;
+  background: none;
+  border-radius: var(--rounded-sm);
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.sim-secondary-action:hover {
+  color: var(--primary);
+  background: var(--canvas-soft);
+}
+
+.sim-secondary-action:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Đang mở: dùng --primary như mọi tín hiệu "đang hoạt động" khác của sản phẩm. */
+.sim-secondary-action.is-active {
+  color: var(--primary);
 }
 
 /* W4B-2U2 §12 — BIẾN TÍCH LUỸ TRÊN SÂN KHẤU.

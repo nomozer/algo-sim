@@ -299,7 +299,7 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
       {/* CỔNG THÍ NGHIỆM — cùng khuôn với họ thuật toán. */}
       {!labOpen && (
         <button
-          className="btn-utility experiment-trigger"
+          className="sim-secondary-action experiment-trigger"
           onClick={() => setLabOpen(true)}
           title="Mạng thật vẫn đứt cáp — thử xem gói tin có đường khác để đi không."
           aria-expanded={false}

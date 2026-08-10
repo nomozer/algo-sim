@@ -402,7 +402,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           nguyên: cổng phải TỰ MÔ TẢ, không được là nút bí ẩn. */}
       {hasExperiment && !labOpen && !state.branch && !last && (
         <button
-          className="btn-utility experiment-trigger"
+          className="sim-secondary-action experiment-trigger"
           onClick={() => setLabOpen(true)}
           title={policy.challengeTeaser}
           aria-expanded={false}

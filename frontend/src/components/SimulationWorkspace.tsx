@@ -281,10 +281,10 @@ export function SimulationWorkspace() {
           Module tự trình bày cam kết trên sân khấu (`presentedInStage`) thì không
           dựng lối vào thứ hai — một cam kết, một hình thức. */}
       {challengeEntryVisible(mod, active.state) && (
-        <div className="challenge-entry">
+        <div className="sim-secondary-actions">
           <button
             type="button"
-            className={`btn-utility${challengeOpen ? " is-active" : ""}`}
+            className={`sim-secondary-action${challengeOpen ? " is-active" : ""}`}
             onClick={() => setChallengeOpen(!challengeOpen)}
             aria-expanded={challengeOpen}
           >
