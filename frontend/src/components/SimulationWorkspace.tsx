@@ -136,9 +136,9 @@ export function NarrationSlot({ narration }: { narration: Narration | null }) {
  * `predict` là NĂNG LỰC; `challengeOpen` là TRÌNH BÀY. Module tự bày cam kết
  * trên sân khấu (`presentedInStage`) thì shell không dựng bề mặt thứ hai.
  */
-export function challengeSurfaceVisible(
-  mod: { predict?: { presentedInStage?: (s: unknown) => boolean } },
-  state: unknown,
+export function challengeSurfaceVisible<S>(
+  mod: { predict?: { presentedInStage?: (state: S) => boolean } },
+  state: S,
   challengeOpen: boolean,
 ): boolean {
   if (!mod.predict) return false;
@@ -147,9 +147,9 @@ export function challengeSurfaceVisible(
 }
 
 /** Có dựng LỐI VÀO Thử thách không — dẫn xuất từ năng lực, không từ tên bài. */
-export function challengeEntryVisible(
-  mod: { predict?: { presentedInStage?: (s: unknown) => boolean } },
-  state: unknown,
+export function challengeEntryVisible<S>(
+  mod: { predict?: { presentedInStage?: (state: S) => boolean } },
+  state: S,
 ): boolean {
   if (!mod.predict) return false;
   return !mod.predict.presentedInStage?.(state);
