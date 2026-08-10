@@ -779,6 +779,32 @@ scan HOÃN có chủ đích.
 > - M7.15 (geometry) vẫn KHÔNG nằm trong kế hoạch; danh sách §5b vẫn áp dụng
 >   cho mọi thứ không phải blocker renderer.
 
+
+## W4B-2Z — mô hình web có ràng buộc + phiên đang mở (2026-08-11)
+
+- **Danh mục**: 23 target · 12 family. Mới: `web.style_model`
+  (`FamilyId.WEB_PRESENTATION`, `ResultAuthority.REPRESENTATION`, cơ chế
+  `web_presentation.bounded_style_properties`). `CACHE_VERSION = "26"`.
+- **Baseline test**: backend 1139 passed / 2 skipped · frontend 1182 passed
+  (83 file) · `npm run build` xanh.
+- **Hợp đồng miền giá trị web**: `web_style_domain()` là NGUỒN, đi ra
+  `capability_descriptors()["bounded_domains"]`; `props.ts` là bản sao và bị
+  sync-lock so từng giá trị (`web/contract-parity.test.ts`).
+- **Phiên đang mở**: `sessions` + `activeSessionId` trong `state/store.ts`;
+  chuyển phiên là khôi phục thuần (0 `fetch`, 0 `init`). Khác Lịch sử.
+- **`code_experiment` vẫn DEFERRED** — không có đường thực thi mã tuỳ ý.
+
+### Giới hạn CÒN LẠI (đo được, không phải "chưa kịp làm")
+
+- **`experimentTrigger` vẫn là một dải dưới mô hình ở 8 target thuật toán.**
+  Đo tại 1920: `legend, narration, experimentTrigger` (bandCount 3). Nó KHÔNG
+  phải nhãn suông — nó là CỬA mở quyền cam kết trên sân khấu
+  (`ScanActionZone`/`SearchActionZone`/`SortActionZone`), nên gỡ đi là mất năng
+  lực. Dời nó vào dải điều khiển đòi nâng state `labOpen` (đang cục bộ trong
+  `domains/algorithm/ui.tsx`) lên chủ sở hữu dùng chung — đổi kiến trúc, chưa làm.
+- **`CURRICULUM_SUPPORT_PARTIAL`** giữ nguyên. **`LEARNER_IMPACT_NOT_EVALUATED`**
+  giữ nguyên.
+
 ## 1. Baseline
 
 | | |
