@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { WorkspaceProps } from "../../types";
 import { routeEdgeViews, type EdgeStatus } from "./edge-view";
 import { GLYPH_BOX, endpointRoleOf, nodeGlyph } from "./node-glyph";
@@ -55,12 +55,29 @@ interface Pos2D {
 
 /** Bố trí 2D: nút trên route xếp hàng ngang, nút ngoài route xếp hàng dưới.
  *  Export để test totality/parity với `layout3d` (bố cục renderer-owned). */
+/* W4B-2T — BỀ RỘNG CỘT THÍCH ỨNG, dùng lại khuôn `arrayChartLayout` (W4B-2A).
+ *
+ * Đo được: topology dựng đúng 610px bất kể sân khấu rộng bao nhiêu (mức dùng bề
+ * ngang 37.6% ở 1920). Họ mảng đã giải bài này từ W4B-2A bằng "suy bề rộng từ
+ * chỗ THẬT SỰ có, kẹp giữa MIN và MAX"; network thì chưa — nó là renderer duy
+ * nhất còn tự khai một hằng số pixel. Đây là ÁP LẠI khuôn đã có, không phải
+ * khuôn mới, và MAX giữ cho thiết bị không phình to lố (§7).
+ */
+const COL_MIN = 150;
+const COL_MAX = 240;
+
 export function layout2d(
   nodes: NetNode[],
   route: string[],
+  available = 0,
 ): { positions: Record<string, Pos2D>; width: number; height: number } {
-  const COL = 150;
   const X0 = 80;
+  const cols0 = Math.max(route.length, nodes.filter((n) => !route.includes(n.id)).length, 1);
+  // Bề rộng cần cho `cols0` cột ở khoảng cách `c`: X0*2 + (cols0-1)*c.
+  const fit = cols0 > 1 ? (available - X0 * 2) / (cols0 - 1) : COL_MIN;
+  const COL = available > 0
+    ? Math.max(COL_MIN, Math.min(COL_MAX, Math.floor(fit)))
+    : COL_MIN;
   const positions: Record<string, Pos2D> = {};
   route.forEach((id, i) => {
     positions[id] = { x: X0 + i * COL, y: 70 };
@@ -90,7 +107,20 @@ function removedLinks(state: NetworkState): [string, string][] {
 }
 
 export function NetworkWorkspace({ state, busy, dispatch }: Props) {
-  const { positions: pos, width, height } = layout2d(state.nodes, state.route);
+  /* Đo bề rộng từ CHÍNH khung chứa (không phải `window.innerWidth`): sân khấu co
+     theo panel Giải thích mở/đóng chứ không theo cửa sổ. Cùng khuôn ArrayView. */
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [available, setAvailable] = useState(0);
+  useEffect(() => {
+    const el = boxRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(([entry]) => setAvailable(Math.round(entry.contentRect.width)));
+    ro.observe(el);
+    setAvailable(Math.round(el.getBoundingClientRect().width));
+    return () => ro.disconnect();
+  }, []);
+
+  const { positions: pos, width, height } = layout2d(state.nodes, state.route, available);
   const step = currentStep(state);
   const packetPos = pos[step.packetAt];
   const edgeViews = routeEdgeViews(state.links, state.route, state.cursor);
@@ -132,7 +162,7 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
-      <div className="sim-stage">
+      <div className="sim-stage" ref={boxRef}>
         <svg viewBox={`0 0 ${width} ${height}`} width="100%" style={{ maxWidth: width, display: "block", margin: "0 auto" }}>
           {/* Liên kết — trạng thái theo TIẾN TRÌNH gói tin, không phải tĩnh.
               Trước W4B-1B mọi cạnh trên tuyến tô như nhau ở MỌI bước, nên bước

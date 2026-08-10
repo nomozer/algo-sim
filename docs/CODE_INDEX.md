@@ -1188,6 +1188,20 @@ sản phẩm là tố cáo nhầm. Có `warmup()` nạp trước đồ thị mod
 phải bước cuối, nên runner đứng ở bước 0 (không có điểm quyết định) rồi báo FAIL.
 Mốc đúng là `.search-observe` (chỉ dựng khi `searchInteractionOf != null`).
 
+### `scripts/measure-composition.mjs` · offline (cần Chrome + Vite)
+**ĐO bố cục, không cảm nhận** (W4B-2T §4). Với mỗi target chạy được offline, đo
+trong Chrome: hộp bao **sân khấu** vs hộp bao **nội dung có nghĩa** (hợp của mọi
+`svg`/`table` bên trong), mức dùng bề ngang/bề dọc, số **dải thông tin** quanh mô
+phỏng (chú giải · thuyết minh · dải nhân quả · trạng thái tìm kiếm · kết quả ·
+teaser · công cụ · khay giữ), và **TRÙNG NGHĨA ở bước cuối** (so tập từ ≥ 60%,
+không so chuỗi — hai câu diễn đạt khác nhau vẫn là trùng). Cờ:
+`--out --shots --window --port`.
+⚠️ **Tỉ lệ dùng KHÔNG phải điểm chất lượng.** Cây cần khoảng thở, bit gom cụm là
+đúng, `decimal_to_binary` 17% là ca DISCONFIRMING hợp lệ. Con số là dữ kiện để
+phân loại, đừng biến thành mục tiêu tối ưu.
+⚠️ Biết trước: encap 2D dựng bằng `div` nên không có `svg/table` ⇒ hộp bao trả
+`null`. Đó là giới hạn của phép đo, không phải lỗi sản phẩm.
+
 ### `scripts/capture-w4b2r-representation.mjs` · offline (cần Chrome + Vite)
 Runner CDP của W4B-2R — chứng minh CHÍNH SÁCH BIỂU DIỄN + vòng đời Quan sát trên
 **7 bài làm chứng chọn theo CƠ CHẾ** (§31: tìm kiếm · sắp xếp · logic · hệ cơ số

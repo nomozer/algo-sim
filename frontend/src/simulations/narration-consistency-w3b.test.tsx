@@ -184,6 +184,16 @@ describe("W3B §5.2 · dữ kiện quyết định chỉ thuộc MỘT chỗ", (
   });
 
   it("(7) bước KHÔNG có vùng hành động vẫn có thuyết minh, và không rỗng", () => {
+    /* W4B-2T — MỘT NGOẠI LỆ CÓ TÊN: BƯỚC CUỐI.
+     *
+     * Ý của luật này là *"không để bước nào câm khi không có bề mặt nào khác kể
+     * nó"*. Ở bước `done`, `.result-banner` LÀ bề mặt kể nó — nên tiền đề "không
+     * có vùng hành động ⇒ không ai nói" không còn đúng ở đúng bước ấy. Đo được
+     * ở cả 8 bài: dải kết quả và khe thuyết minh in cùng một câu (4 bài trùng
+     * từng ký tự). Xem `processLeadOf`.
+     *
+     * Nới đúng một bước, và ca "câm" vẫn bị chặn ở phần dưới: bước cuối phải có
+     * NGƯỜI KỂ, chỉ là không nhất thiết là khe thuyết minh. */
     for (const [name, withLabels] of BOTH) {
       for (const id of ALGORITHM_IDS) {
         const { mod, config, state } = build(id, withLabels);
@@ -191,7 +201,24 @@ describe("W3B §5.2 · dữ kiện quyết định chỉ thuộc MỘT chỗ", (
         for (let i = 0; i < state.trace.steps.length; i += 1) {
           const cur = at(state, i);
           if (hasStageInteraction(cur)) continue;
+          const step = state.trace.steps[i];
+          const done = step.events.find((e) => e.type === "done");
           const n = mod.narrate!(cur, config);
+
+          if (done && done.type === "done") {
+            // Bước cuối: dải kết quả sở hữu câu kết. Khe thuyết minh chỉ được
+            // giữ phần TIẾN TRÌNH, và tuyệt đối không lặp lại kết quả.
+            expect(done.result.trim().length, `${id}/${name}: bước cuối không có người kể`)
+              .toBeGreaterThan(0);
+            if (n !== null) {
+              expect(n.text, `${id}/${name}: thuyết minh lặp lại kết quả ở bước cuối`)
+                .not.toContain(done.result);
+              expect(n.text.trim().length).toBeGreaterThan(0);
+              described += 1;
+            }
+            continue;
+          }
+
           expect(n, `${id}/${name} bước ${i}: mất thuyết minh ở bước không có vùng hành động`)
             .not.toBeNull();
           expect(n!.text.trim().length, `${id}/${name} bước ${i}: chuỗi rỗng`).toBeGreaterThan(0);
@@ -199,6 +226,21 @@ describe("W3B §5.2 · dữ kiện quyết định chỉ thuộc MỘT chỗ", (
         }
         expect(described, `${id}/${name}: không còn bước nào có thuyết minh`).toBeGreaterThan(0);
       }
+    }
+  });
+
+  it("(7c) KHÔNG TRÙNG NGHĨA Ở BƯỚC CUỐI — kết quả chỉ có MỘT chủ sở hữu", () => {
+    /* Đây là bất biến mới của W4B-2T, phát biểu trên TOÀN họ thuật toán chứ
+       không trên một bài làm chứng. Trước wave này cả 8 bài đều đỏ. */
+    for (const id of ALGORITHM_IDS) {
+      const { mod, config, state } = build(id, true);
+      const last = state.trace.steps.length - 1;
+      const step = state.trace.steps[last];
+      const done = step.events.find((e) => e.type === "done");
+      if (!done || done.type !== "done") continue;
+      const n = mod.narrate!(at(state, last), config);
+      if (n === null) continue; // thuyết minh nhả hẳn — dải kết quả kể một mình
+      expect(n.text, `${id}: kết quả in hai lần ở bước cuối`).not.toContain(done.result);
     }
   });
 

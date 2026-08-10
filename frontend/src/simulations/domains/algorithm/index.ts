@@ -3,7 +3,12 @@ import { ALGORITHM_IDS, ALGORITHM_NAMES } from "../../../core/types";
 import { runAlgorithm } from "../../../core/algorithms";
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
-import { decisionPointOf, hasStageInteraction, narrationWithoutPrompt } from "./decision";
+import {
+  decisionPointOf,
+  hasStageInteraction,
+  narrationWithoutPrompt,
+  processLeadOf,
+} from "./decision";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
@@ -224,10 +229,33 @@ export function makeAlgorithmModule(
        */
       if (!step.userAction && hasStageInteraction(state)) return null;
 
+      /* W4B-2T — CÙNG MỘT LUẬT, ÁP CHO BƯỚC CUỐI: KẾT QUẢ CHỈ THUỘC MỘT CHỖ.
+       *
+       * Đo được ở cả 8 target thuật toán (`measure-composition.mjs`): ở bước
+       * cuối, dải kết quả và khe thuyết minh nói ĐÚNG một câu — bốn bài trùng
+       * từng ký tự, bốn bài chỉ khác tiền tố "Duyệt hết dãy.". Học sinh đọc hai
+       * lần cùng một điều ngay tại khoảnh khắc đáng nhớ nhất của bài.
+       *
+       * `.result-banner` là chủ sở hữu: nó có biểu tượng, có tông kết thúc, và
+       * còn chở thêm dãy gốc khi đang ở nhánh what-if. Nên khe thuyết minh nhả
+       * phần KẾT QUẢ ra và chỉ giữ phần TIẾN TRÌNH ("Duyệt hết dãy.") — thứ mà
+       * dải kết quả không nói. Không còn gì để nói thì trả `null`, y như luật
+       * vùng hành động ở trên (shell không dựng khe rỗng).
+       *
+       * Engine KHÔNG đổi: `step.narration` nguyên vẹn, `getExplainContext` vẫn
+       * gửi chuỗi gốc. Đây là cắt ở tầng trình bày.
+       */
+      const text = narrationWithoutPrompt(step.narration);
+      const done = step.events.find((e) => e.type === "done");
+      if (done && done.type === "done" && !step.userAction) {
+        const lead = processLeadOf(text, done.result);
+        return lead === null ? null : { text: lead, fromLearner: false };
+      }
+
       // W1: khe thuyết minh MÔ TẢ bước đang diễn ra; việc HỎI là của
       // PredictionBar. Chỉ cắt ở tầng trình bày — `step.narration` không đổi.
       return {
-        text: narrationWithoutPrompt(step.narration),
+        text,
         fromLearner: Boolean(step.userAction),
       };
     },

@@ -802,6 +802,25 @@ export function hasStageInteraction(state: AlgorithmSimState): boolean {
 }
 
 /**
+ * W4B-2T — TÁCH PHẦN TIẾN TRÌNH KHỎI PHẦN KẾT QUẢ ở bước cuối.
+ *
+ * Ở bước `done`, engine kể `"<tiến trình>. <kết quả>"` (vd `"Duyệt hết dãy.
+ * Phần tử lớn nhất là Bình (9), ở vị trí 2."`) trong khi `.result-banner` in
+ * đúng vế sau. Hàm trả về **chỉ vế tiến trình**, hoặc `null` khi thuyết minh
+ * không nói gì ngoài kết quả (4/8 bài rơi vào ca này — chuỗi trùng từng ký tự).
+ *
+ * So bằng CHUỖI CON thay vì tách theo dấu chấm: `result` có thể chứa dấu chấm
+ * bên trong (số thập phân, "9,5.") nên cắt theo dấu câu sẽ vỡ. Hàm THUẦN, kiểm
+ * được không cần trình duyệt.
+ */
+export function processLeadOf(narration: string, result: string): string | null {
+  const i = narration.indexOf(result);
+  if (i < 0) return narration; // engine đổi cách kể ⇒ giữ nguyên, không đoán
+  const lead = narration.slice(0, i).trim();
+  return lead.length > 0 ? lead : null;
+}
+
+/**
  * Bỏ phần HỎI khỏi thuyết minh, giữ lại phần MÔ TẢ (UI-CLARITY W1).
  *
  * Engine kể bước quyết định theo khuôn `"<mô tả>: <câu hỏi>?"`, ví dụ
