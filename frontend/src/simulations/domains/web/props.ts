@@ -31,3 +31,20 @@ export const NUMERIC_RANGE = {
 } as const;
 
 export const NUMERIC_PROPS = ["fontSize", "padding", "borderRadius"] as const;
+
+/**
+ * Kiểu mặc định khi spec không nói gì. Ở ĐÂY vì đây là chủ sở hữu MIỀN GIÁ TRỊ:
+ * để module tự viết lại mã màu là dựng nguồn sự thật thứ hai, và bảng màu phải
+ * khớp TỪNG BYTE với validator BE thì kiểm hai tầng mới có nghĩa.
+ *
+ * Lưu ý cho task thiết kế: các mã màu trong file này KHÔNG phải token giao
+ * diện — chúng là DỮ LIỆU của bài học, tức bảng màu học sinh chọn để tô khối
+ * trong trang web MÔ PHỎNG. Đổi chúng sang `var(--…)` sẽ phá kiểm hai tầng.
+ */
+export const DEFAULT_STYLE = {
+  backgroundColor: COLOR_CHOICES[4].value,   // Xanh dương nhạt
+  color: TEXT_COLOR_CHOICES[0].value,        // Đen
+  fontSize: 20,
+  padding: 16,
+  borderRadius: 8,
+} as const;

@@ -1,6 +1,7 @@
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import { applyStyleChange, cssTextOf, isModified } from "./apply";
+import { DEFAULT_STYLE } from "./props";
 import type { WebConfig, WebState, WebStyle } from "./model";
 import { WebInspector, WebWorkspace } from "./ui";
 
@@ -13,13 +14,6 @@ import { WebInspector, WebWorkspace } from "./ui";
  * thời gian mà cơ chế không có.
  */
 
-const DEFAULT_STYLE: WebStyle = {
-  backgroundColor: "#bfdbfe",
-  color: "#1f2937",
-  fontSize: 20,
-  padding: 16,
-  borderRadius: 8,
-};
 
 function validateWebConfig(raw: unknown): ConfigResult<WebConfig> {
   if (typeof raw !== "object" || raw === null) {
