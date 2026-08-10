@@ -871,13 +871,34 @@ html {
   overflow-x: auto;
 }
 
+/* ── KẾT QUẢ MÔ PHỎNG LÀ MỘT CHÚ THÍCH, KHÔNG PHẢI MỘT DẢI ─────────────────
+ *
+ * Lỗi cấu trúc (không phải lỗi màu): kết quả tất định của mô phỏng chiếm trọn
+ * một HÀNG NỘI DUNG toàn chiều ngang, có nền thẻ và vạch xanh lá bên trái. Hai
+ * hệ quả đo được từ ảnh nhiều wave:
+ *   1. nó đọc thành PHẢN HỒI ĐÚNG/SAI của một bài kiểm tra, trong khi không có
+ *      câu trả lời nào của học sinh xảy ra — kết quả engine bị mặc áo quiz;
+ *   2. nó cộng thêm một dải nữa vào chồng dải dưới sân khấu.
+ *
+ * Sửa ở CẤU TRÚC: `width: fit-content` ⇒ nó không còn chiếm một hàng; bỏ vạch
+ * cạnh ⇒ không còn ngữ pháp "thẻ thông báo". Nó thành một CHÚ THÍCH KẾT THÚC
+ * gọn, nằm ngay dưới mô hình đã mang sẵn trạng thái cuối.
+ *
+ * Giữ nguyên phân biệt ngữ nghĩa: đây là KẾT QUẢ MÔ PHỎNG (đầu ra của engine),
+ * khác hẳn PHẢN HỒI THỬ THÁCH (phán quyết về học sinh) vốn sống ở
+ * `.predict-result`. Không gộp hai thứ. Kết quả vẫn xuất hiện ĐÚNG MỘT LẦN. */
 .result-banner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  width: fit-content;
+  max-width: 100%;
+  padding: var(--sp-xxs) var(--sp-sm);
+  border-radius: var(--rounded-full);
   background: var(--canvas-soft);
-  border-left: 3px solid var(--accent-green);
-  border-radius: var(--rounded-md);
-  padding: var(--sp-sm) var(--sp-md);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
+  color: var(--ink);
 }
 
 .error-banner {
