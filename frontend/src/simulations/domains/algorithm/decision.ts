@@ -563,6 +563,84 @@ export function searchInteractionOf(state: AlgorithmSimState): SearchInteraction
   };
 }
 
+/* ── W4B-2I: HÀNH ĐỘNG GẮN VÀO SÂN KHẤU ──────────────────────────────────────
+ *
+ * `SearchAction.visualRole` tồn tại từ W2 nhưng tới nay chỉ được tiêu vào một
+ * tên class CSS trên một cái nút (`SearchActionZone.tsx`). Nó vốn là một TỪ VỰNG
+ * VỊ TRÍ: "nửa trái", "phần tử giữa", "nửa phải", "phần tử đang xét", "phần còn
+ * lại". Wave này chỉ làm một việc — nối từ vựng đó vào chỉ số cột thật, để học
+ * sinh bấm vào CHÍNH VÙNG mà hành động tác động, thay vì bấm một nút rời mô tả
+ * vùng đó bằng lời.
+ *
+ * VÌ SAO ÁNH XẠ NẰM Ở ĐÂY, KHÔNG Ở RENDERER. Câu "nửa trái của vùng đang xét là
+ * các cột trai..giua-1" là NGỮ NGHĨA của thuật toán, không phải bố cục. Để
+ * `ArrayView` tự suy ra nghĩa là renderer bắt đầu sở hữu sự thật thuật toán —
+ * đúng thứ bất biến #6 và `SIMULATION_VS_ILLUSTRATION_CONTRACT §3` cấm. Renderer
+ * chỉ nhận danh sách chỉ số + nhãn + `id`, vẽ vùng bấm, và phát lại `id` nguyên
+ * văn. `id` vẫn là option id của `DecisionPoint` ⇒ chấm vẫn đi qua đúng
+ * `predict.check`, không sinh đường chấm thứ hai.
+ *
+ * TẤT CẢ-HOẶC-KHÔNG. Trả `null` khi có bất kỳ hành động nào không ánh xạ được
+ * sang một vùng KHÔNG RỖNG (vd nửa trái rỗng khi `giua === trai`). Nửa vùng bấm
+ * nửa nút sẽ là HAI bề mặt cam kết trên cùng một bước — vi phạm
+ * `COMMITMENT_SURFACE_COUNT <= 1`. Thà lùi hẳn về hàng nút cho bước đó.
+ */
+
+/** Một vùng bấm được trên sân khấu. KHÔNG mang đáp án — chỉ vị trí + nhãn + id. */
+export interface SceneRegion {
+  /** Option id của `DecisionPoint` — renderer phát lại NGUYÊN VĂN, không diễn giải. */
+  id: string;
+  /** Tên khả truy cập (đọc màn hình) cho vùng này. */
+  label: string;
+  /** Các cột hợp thành vùng. Luôn không rỗng. */
+  indices: number[];
+}
+
+const range = (from: number, to: number): number[] =>
+  from > to ? [] : Array.from({ length: to - from + 1 }, (_, k) => from + k);
+
+/**
+ * Ánh xạ hành động tìm kiếm → vùng cột trên sân khấu.
+ *
+ * `arrayLength` truyền vào tường minh thay vì moi từ `cost.worstCaseComparisons`
+ * (vốn TÌNH CỜ bằng n ở tìm tuần tự): một hằng số trùng nhau không phải một hợp
+ * đồng, và nó không tồn tại ở nhị phân.
+ */
+export function searchSceneRegions(
+  model: SearchInteractionModel,
+  arrayLength: number,
+): SceneRegion[] | null {
+  const regions: SceneRegion[] = [];
+  for (const a of model.actions) {
+    let indices: number[];
+    switch (a.visualRole) {
+      case "current-item":
+      case "middle-item":
+        indices = [model.currentIndex];
+        break;
+      case "continue-region":
+        // Tuần tự: "xét tiếp" = toàn bộ phần CHƯA duyệt sau phần tử hiện tại.
+        indices = range(model.currentIndex + 1, arrayLength - 1);
+        break;
+      case "left-region":
+        if (!model.activeRange) return null;
+        indices = range(model.activeRange.left, model.activeRange.middle - 1);
+        break;
+      case "right-region":
+        if (!model.activeRange) return null;
+        indices = range(model.activeRange.middle + 1, model.activeRange.right);
+        break;
+    }
+    if (indices.length === 0) return null;
+    regions.push({ id: a.id, label: a.label, indices });
+  }
+  // Hai hành động cùng trỏ một cột thì học sinh không thể phân biệt bằng cách
+  // bấm — cũng là một ca "không gắn được vào sân khấu", không phải ca hiếm bỏ qua.
+  const touched = regions.flatMap((r) => r.indices);
+  if (new Set(touched).size !== touched.length) return null;
+  return regions.length > 0 ? regions : null;
+}
+
 /* ── CỤM CƠ CHẾ "SẮP XẾP" (W3B §8) ────────────────────────────────────────────
  *
  * Ba thuật toán sắp xếp cùng một khuôn — duyệt, so sánh, rồi HÀNH ĐỘNG hoặc

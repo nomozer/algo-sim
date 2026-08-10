@@ -3,6 +3,7 @@ import type { PointerEvent as ReactPointerEvent } from "react";
 import type { Step } from "../core/types";
 import { fmt } from "../core/trace-builder";
 import type { LegendItem } from "./StageLegend";
+import type { SceneRegion } from "../simulations/domains/algorithm/decision";
 
 /**
  * Renderer 2D (SVG) cho dữ liệu dạng dãy — vẽ thuần túy theo
@@ -16,6 +17,8 @@ import type { LegendItem } from "./StageLegend";
 const COL_W = 56;
 const COL_GAP = 14;
 const CHART_H = 190;
+/** Vùng bấm nới ra ngoài cột để viền không dính vào cạnh cột. */
+const REGION_PAD = 6;
 const TOP_PAD = 26;
 const BOTTOM_PAD = 52;
 
@@ -284,10 +287,23 @@ interface ArrayViewProps {
    * bằng màu. `null` = không có ô trống (mọi target khác không đổi gì).
    */
   gapIndex?: number | null;
+  /**
+   * W4B-2I — VÙNG BẤM NGỮ NGHĨA trên chính sân khấu.
+   *
+   * `null`/vắng ⇒ không dựng gì (mọi target chưa gắn sân khấu không đổi một
+   * pixel). Chỉ số + nhãn + `id` đều do `searchSceneRegions` (tầng ngữ nghĩa)
+   * cấp; component này KHÔNG suy ra vùng nào ứng với hành động nào, KHÔNG biết
+   * "nửa trái" nghĩa là gì, và phát lại `id` NGUYÊN VĂN.
+   */
+  regions?: SceneRegion[] | null;
+  onRegionAct?: (id: string) => void;
+  /** Đã cam kết ở bước này / đang tự chạy ⇒ vùng còn thấy được nhưng bấm không được. */
+  regionsDisabled?: boolean;
 }
 
 export function ArrayView({
   step, labels, interactive = false, onSwap, gapIndex = null,
+  regions = null, onRegionAct, regionsDisabled = false,
 }: ArrayViewProps) {
   const arr = step.snapshot.array;
   const ids = step.snapshot.ids;
@@ -297,6 +313,7 @@ export function ArrayView({
 
   const svgRef = useRef<SVGSVGElement>(null);
   const [drag, setDrag] = useState<DragState | null>(null);
+  const hasRegions = regions !== null && regions.length > 0;
 
   /* Bề rộng khả dụng đo từ CHÍNH khung chứa, không từ `window.innerWidth`:
      sân khấu co giãn theo panel Quan sát mở/đóng chứ không theo cửa sổ. Đo tại
@@ -373,7 +390,11 @@ export function ArrayView({
          pixel hiển thị và `scale ≈ 1` được bảo toàn (test khoá ở dag.test.tsx
          cùng luật). Hình lớn hơn vì BỐ CỤC lớn hơn, không vì SVG bị phóng. */
       style={{ maxWidth: width, display: "block", margin: "0 auto", touchAction: "none" }}
-      role="img"
+      /* Có vùng bấm ⇒ KHÔNG còn là `img`. `role="img"` biến mọi con thành trang
+         trí với công nghệ hỗ trợ, nên các vùng bấm sẽ tàng hình với trình đọc
+         màn hình — một hàng nút thì "dễ tiếp cận", còn sân khấu tương tác lại
+         không, đúng cái bẫy §39 cảnh báo. */
+      role={hasRegions ? "group" : "img"}
       aria-label="Mô phỏng dãy số"
     >
       {order.map((i) => {
@@ -490,6 +511,48 @@ export function ArrayView({
             >
               {i + 1}
             </text>
+          </g>
+        );
+      })}
+
+      {/* VÙNG BẤM NGỮ NGHĨA — vẽ SAU các cột để nằm trên trong thứ tự hit-test.
+          Không tô nền đặc: sân khấu vẫn phải đọc được, vùng chỉ viền + nhãn. */}
+      {hasRegions && regions!.map((r) => {
+        const lo = Math.min(...r.indices);
+        const hi = Math.max(...r.indices);
+        const x = colX(lo) - REGION_PAD;
+        const w = colX(hi) + colW - colX(lo) + REGION_PAD * 2;
+        const act = () => { if (!regionsDisabled) onRegionAct?.(r.id); };
+        return (
+          <g
+            key={r.id}
+            className={`scene-region${regionsDisabled ? " is-disabled" : ""}`}
+            /* Nút thật về mặt ngữ nghĩa: có vai, có tên, tới được bằng Tab, và
+               tự xử lý Enter/Space. Phím tắt toàn cục của `SimulationControls`
+               bỏ qua mọi thứ khớp `[role="button"]`, nên Space ở đây KHÔNG bị
+               cướp để bật Tự chạy — cái bẫy đã cháy hai lần trước đó. */
+            role="button"
+            tabIndex={regionsDisabled ? -1 : 0}
+            aria-disabled={regionsDisabled || undefined}
+            aria-label={r.label}
+            onClick={act}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                e.stopPropagation();
+                act();
+              }
+            }}
+            style={{ cursor: regionsDisabled ? "default" : "pointer" }}
+          >
+            <rect
+              x={x}
+              y={TOP_PAD - REGION_PAD}
+              width={w}
+              height={CHART_H + REGION_PAD * 2}
+              rx={8}
+              className="scene-region-hit"
+            />
           </g>
         );
       })}

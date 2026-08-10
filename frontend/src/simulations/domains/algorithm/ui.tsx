@@ -12,13 +12,19 @@ import {
   decisionPointOf,
   scanInteractionOf,
   searchInteractionOf,
+  searchSceneRegions,
   sortInteractionOf,
 } from "./decision";
 import { ScanActionZone } from "../../../components/ScanActionZone";
 import { SearchActionZone, SearchStateView } from "../../../components/SearchActionZone";
 import { SortActionZone } from "../../../components/SortActionZone";
 import { useAppStore } from "../../../state/store";
-import { commitmentSurfaceVisible, whatIfDragAllowed, whatIfPolicyOf } from "./interaction-policy";
+import {
+  commitmentSurfaceKind,
+  commitmentSurfaceVisible,
+  whatIfDragAllowed,
+  whatIfPolicyOf,
+} from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import {
   IconBack,
@@ -176,12 +182,29 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
     showPrompt: !gated,
     chrome: (gated ? "tool" : "panel") as "tool" | "panel",
   };
+
+  /* W4B-2I — HÀNH ĐỘNG VỀ ĐÚNG CHỖ NÓ TÁC ĐỘNG.
+   *
+   * Vùng bấm chỉ dựng khi vùng cam kết ĐANG được phép hiện: nó LÀ vùng cam kết,
+   * chỉ khác hình thức. Dựng nó ở Quan sát sẽ là đúng thứ cổng sinh ra để chặn.
+   *
+   * `searchSceneRegions` trả `null` khi không gắn được (nửa rỗng, hai hành động
+   * trùng cột) ⇒ hàng nút cũ quay lại nguyên vẹn cho bước đó. Không có trạng
+   * thái lai nửa-vùng-nửa-nút. */
+  const sceneRegions =
+    search && commitmentVisible
+      ? searchSceneRegions(search, config.data.array.length)
+      : null;
+  /* Hình thức bề mặt cam kết do HÀM THUẦN quyết, không do JSX — xem lý do ở
+     `commitmentSurfaceKind` (một lần tiêm lỗi đã đi lọt vì luật nằm trong JSX). */
+  const surface = commitmentSurfaceKind(commitmentVisible, sceneRegions !== null);
+
   const commitZone = !commitmentVisible
     ? null
     : scan
       ? <ScanActionZone model={scan} {...zoneProps} />
       : search
-        ? <SearchActionZone model={search} {...zoneProps} />
+        ? <SearchActionZone model={search} {...zoneProps} actionsHidden={surface === "scene"} />
         : sort
           ? <SortActionZone model={sort} {...zoneProps} />
           : null;
@@ -225,6 +248,11 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           interactive={canDrag}
           onSwap={(i, j) => dispatch({ type: "whatif_swap", i, j })}
           gapIndex={hold?.gapIndex ?? null}
+          regions={sceneRegions}
+          /* Cùng đường nộp với hàng nút: `submitPrediction` → `predict.check`.
+             Sân khấu KHÔNG tự chấm, không có bên chấm thứ hai. */
+          onRegionAct={(actionId) => submitPrediction(actionId)}
+          regionsDisabled={busy || prediction !== null}
         />
         {/* Chú giải suy TỪ TRACE (không phải từ bước hiện tại) nên nó đứng yên
             suốt timeline. Trước W1 nó gắn với `hold` — tức chỉ hiện ở sắp xếp

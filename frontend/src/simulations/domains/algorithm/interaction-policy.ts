@@ -275,6 +275,31 @@ export function commitmentSurfaceVisible(policy: WhatIfPolicy, labOpen: boolean)
   return policy.experimentGated !== true || labOpen;
 }
 
+/**
+ * W4B-2I §12 — HÌNH THỨC của bề mặt cam kết. Cùng lý do tồn tại như
+ * `commitmentSurfaceVisible`: luật chôn trong JSX là luật KHÔNG kiểm được.
+ *
+ * Vì sao phải tách — đây là lỗ hổng do TIÊM LỖI bắt được, không phải phòng xa:
+ * bản đầu của wave này viết thẳng `actionsHidden={sceneBound}` trong `ui.tsx`.
+ * Tiêm lỗi đổi nó thành `actionsHidden={false}` — tức hàng nút rời quay lại
+ * đứng SONG SONG với vùng bấm trên sân khấu, đúng hồi quy wave này sinh ra để
+ * chặn — mà **toàn bộ suite vẫn XANH**. Lý do: `labOpen` là state cục bộ nên
+ * `renderToString` chỉ đi qua trạng thái ĐÓNG, nơi cả hai đều vắng mặt
+ * (`ARCHITECTURE_MAP §8` #13 — guard đặt ở chỗ phụ thuộc trạng thái).
+ *
+ * Nay luật là hàm thuần liệt kê được mọi tổ hợp, nên "không bao giờ hai bề mặt"
+ * kiểm được mà không cần trình duyệt.
+ */
+export type CommitmentSurface = "none" | "scene" | "buttons";
+
+export function commitmentSurfaceKind(
+  commitmentVisible: boolean,
+  sceneBound: boolean,
+): CommitmentSurface {
+  if (!commitmentVisible) return "none";
+  return sceneBound ? "scene" : "buttons";
+}
+
 /* ── KÉO VÀ CAM KẾT KHÔNG TRANH NHAU (W3B §1.2, §15) ─────────────────────────
  *
  * Ở ba bài sắp xếp, kéo cột có mode "free" — nó ĐÃ mang nghĩa "thí nghiệm: nếu

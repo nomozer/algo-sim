@@ -129,6 +129,18 @@ interface SearchActionZoneProps {
   /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để công cụ hỏi. */
   showPrompt?: boolean;
   /**
+   * W4B-2I — SÂN KHẤU ĐANG SỞ HỮU HÀNH ĐỘNG.
+   *
+   * Khi `searchSceneRegions` gắn được hành động vào chính các cột, hàng nút ở
+   * đây phải BIẾN MẤT chứ không được đứng song song: hai đường cùng nộp một
+   * quyết định ở cùng một bước là đúng thứ `COMMITMENT_SURFACE_COUNT <= 1` cấm,
+   * và là "hàng nút rời" mà wave này sinh ra để gỡ.
+   *
+   * Zone vẫn được dựng — nó còn giữ PHẢN HỒI. Dời phản hồi sang chỗ khác sẽ tách
+   * nó khỏi chủ sở hữu hiện tại mà không được gì.
+   */
+  actionsHidden?: boolean;
+  /**
    * W4B-2V/C2 — HÌNH HỌC, không phải nội dung.
    * `"panel"` = thẻ cũ (nền + viền + padding, xếp dọc) cho bài CHƯA gác cổng,
    * nơi vùng cam kết là một phần thường trực của Quan sát.
@@ -148,27 +160,37 @@ interface SearchActionZoneProps {
  */
 export function SearchActionZone({
   model, answered, busy, onAct, feedback = null, showPrompt = true, chrome = "panel",
+  actionsHidden = false,
 }: SearchActionZoneProps) {
   return (
     <section className={`action-zone search-action is-${chrome}`} aria-label="Thao tác với bước tìm kiếm">
       {/* W4B-2V/C: ở bài GÁC CỔNG, khay Thí nghiệm đã hỏi đúng câu này rồi —
           in lại ở đây là hai kênh nói một điều. Bài CHƯA gác không có khay
           nên mặc định `true` giữ nguyên hành vi cũ cho chúng. */}
-      {showPrompt && <p className="scan-instruction">Em hãy quyết định bước tiếp theo.</p>}
+      {showPrompt && !actionsHidden && (
+        <p className="scan-instruction">Em hãy quyết định bước tiếp theo.</p>
+      )}
 
-      <div className="search-actions">
-        {model.actions.map((a: SearchAction) => (
-          <button
-            key={a.id}
-            type="button"
-            className={`btn-choice search-act is-${a.visualRole}`}
-            disabled={busy || answered}
-            onClick={() => onAct(a.id)}
-          >
-            {a.label}
-          </button>
-        ))}
-      </div>
+      {actionsHidden ? (
+        /* Một dòng NGẮN, và chỉ khi công cụ đang mở: sân khấu có viền nét đứt
+           quanh vùng bấm được rồi, nên đây là lời chỉ đường chứ không phải bài
+           giảng (§37 — không đoạn văn thường trực). */
+        <p className="scene-bound-note">Bấm thẳng vào vùng em chọn trên sân khấu.</p>
+      ) : (
+        <div className="search-actions">
+          {model.actions.map((a: SearchAction) => (
+            <button
+              key={a.id}
+              type="button"
+              className={`btn-choice search-act is-${a.visualRole}`}
+              disabled={busy || answered}
+              onClick={() => onAct(a.id)}
+            >
+              {a.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {feedback && (
         <p className={`predict-result is-${feedback.verdict}`} role="status">

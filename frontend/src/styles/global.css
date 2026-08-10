@@ -963,6 +963,51 @@ html {
    LUẬT: màu KHÔNG BAO GIỜ là tín hiệu duy nhất — luôn kèm nhãn chữ, viền, hình
    dạng hoặc vị trí. `.stage-legend` là chú giải tối thiểu cho sân khấu nhiều
    trạng thái. */
+
+/* ── W4B-2I: VÙNG BẤM NGỮ NGHĨA TRÊN SÂN KHẤU ───────────────────────────────
+   Affordance phải TINH nhưng có thật (§38): viền nét đứt mảnh khi rảnh, đặc lại
+   khi trỏ/focus. KHÔNG tô nền đặc — sân khấu bên dưới vẫn là thứ phải đọc được.
+   Màu hành động DUY NHẤT là `--primary` (DESIGN.md §Don't: sticker palette là
+   trang trí, không sơn hành động).
+   Khuôn lấy nguyên từ `.dag-input` — cũng là `<g role="button">` trong SVG, cũng
+   phải tự nối Enter/Space. Một khuôn cho cả hai chỗ, không đẻ khuôn thứ hai. */
+.scene-region-hit {
+  fill: transparent;
+  stroke: var(--ink-faint);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+  transition: stroke 0.15s ease, fill 0.15s ease, stroke-width 0.15s ease;
+}
+
+.scene-region:hover .scene-region-hit {
+  fill: var(--canvas-soft);
+  stroke: var(--primary);
+  stroke-width: 2;
+  stroke-dasharray: none;
+}
+
+.scene-region:focus {
+  outline: none;
+}
+
+.scene-region:focus-visible .scene-region-hit {
+  stroke: var(--primary);
+  stroke-width: 3;
+  stroke-dasharray: none;
+}
+
+.scene-region:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--rounded-md);
+}
+
+/* Đã cam kết ở bước này ⇒ vùng vẫn THẤY được (học sinh còn đọc được mình vừa
+   chọn ở đâu) nhưng không còn mời bấm. */
+.scene-region.is-disabled .scene-region-hit {
+  stroke: var(--hairline);
+}
+
 .stage-legend {
   display: flex;
   flex-wrap: wrap;
@@ -2185,6 +2230,14 @@ html {
   margin: 0;
   font-size: 14px;
   color: var(--ink-secondary);
+}
+
+/* W4B-2I — lời chỉ đường khi sân khấu đã sở hữu hành động. Nhẹ hơn
+   `.scan-instruction`: affordance thật nằm trên sân khấu, dòng này chỉ trỏ tới. */
+.scene-bound-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-muted);
 }
 
 .scan-actions {
