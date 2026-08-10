@@ -100,7 +100,10 @@ describe("M14 §C4 — descriptor ↔ registry cross-lock", () => {
  * backend — hoặc ngược lại — đều làm test đỏ, nên không phía nào đi lẻ được.
  */
 describe("M17 P0 — visual modes: một nguồn, hai phía khớp", () => {
-  const TARGETS_3D = ["network.packet_routing", "network.protocol_encapsulation"];
+  /* W4B-2R — MỘT target 3D, không phải hai. `packet_routing` chuyển 2D_ONLY vì
+     chính nó khai `threeD.role = "architectural_poc"` (Z chỉ là bố cục). Còn lại
+     đúng bài mà chiều sâu CHỞ NGHĨA: Z = tầng giao thức. */
+  const TARGETS_3D = ["network.protocol_encapsulation"];
 
   it("descriptor khớp ĐÚNG supportedVisualModes của module thật", () => {
     for (const [id, t] of Object.entries(descriptors.runtime_targets)) {
@@ -110,7 +113,7 @@ describe("M17 P0 — visual modes: một nguồn, hai phía khớp", () => {
     }
   });
 
-  it("đúng hai target hỗ trợ 3D — và đúng hai target đó", () => {
+  it("đúng MỘT target hỗ trợ 3D — và đúng target đó", () => {
     const co3d = Object.entries(descriptors.runtime_targets)
       .filter(([, t]) => t.visual_modes.includes("3d"))
       .map(([id]) => id)
@@ -120,10 +123,10 @@ describe("M17 P0 — visual modes: một nguồn, hai phía khớp", () => {
     expect(co3d).not.toContain("network.graph_traversal");
   });
 
-  it("20 target còn lại chỉ 2D, không bị khai vống", () => {
+  it("21 target còn lại chỉ 2D, không bị khai vống", () => {
     const chi2d = Object.values(descriptors.runtime_targets)
       .filter((t) => !t.visual_modes.includes("3d"));
-    expect(chi2d.length).toBe(20);
+    expect(chi2d.length).toBe(21);
     for (const t of chi2d) expect(t.visual_modes).toEqual(["2d"]);
   });
 

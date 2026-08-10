@@ -3,7 +3,7 @@ import { renderToString } from "react-dom/server";
 import { VisualModeToggle } from "../components/SimulationWorkspace";
 import { useAppStore } from "../state/store";
 import { makeAndGateModule } from "./domains/logic";
-import { makeNetworkModule } from "./domains/network";
+import { makeEncapsulationModule } from "./domains/network/encap";
 import { registerAllSimulations } from "./index";
 import { listSimulations } from "./registry";
 import { availableVisualModes, effectiveVisualMode, rendererFor } from "./renderer";
@@ -141,7 +141,10 @@ describe("VisualModeToggle — affordance theo capability (component thuần, SS
   });
 
   it("(3) module khai 2D+3D → hiện đủ hai nút, nút mode hiện tại được đánh dấu", () => {
-    const modes = availableVisualModes(makeNetworkModule());
+    /* W4B-2R — ĐỔI BÀI LÀM CHỨNG. `packet_routing` nay 2D_ONLY (nó tự khai
+       `architectural_poc`: Z chỉ là bố cục), nên nó không còn chứng minh được
+       "khai 2D+3D" nữa. Bài làm chứng đúng là target mà chiều sâu CHỞ NGHĨA. */
+    const modes = availableVisualModes(makeEncapsulationModule());
     expect(modes).toEqual(["2d", "3d"]);
     const html = renderToString(<VisualModeToggle modes={modes} mode="3d" onSelect={() => {}} />);
     expect(html).toContain("visual-mode-toggle");

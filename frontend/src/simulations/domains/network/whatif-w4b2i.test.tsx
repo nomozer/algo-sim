@@ -200,20 +200,20 @@ describe("W4B-2I · renderer chỉ ĐỌC — không tính định tuyến", () 
       .not.toContain("không đi được");
   });
 
-  it("2D và 3D đọc CÙNG một state sau thí nghiệm — không có sự thật riêng cho 3D", () => {
+  it("đường tính KHÔNG biết chế độ hiển thị tồn tại — thí nghiệm cho cùng một sự thật", () => {
     const { mod, state } = build();
     const next = mod.apply(state, { type: "net_disconnect", a: "R1", b: "R2" }) as NetworkState;
     expect(next.route).toEqual(["A", "R3", "R4", "S"]);
 
     /* Bằng chứng đúng chỗ: ĐƯỜNG TÍNH (`model.ts` — bfs/recompute/apply) không
-       được biết chế độ hiển thị tồn tại. `index.ts` CÓ nhắc `"3d"` một cách hợp
-       lệ — đó là khai renderer (`renderers: { "3d": … }`), không phải rẽ nhánh
-       sự thật; khẳng định trên file đó sẽ cấm nhầm chính cơ chế M8 dựng ra. */
+       được biết chế độ hiển thị tồn tại. */
     const model = code(readFileSync(new URL("./model.ts", import.meta.url), "utf-8"));
     expect(model).not.toMatch(/visualMode|["']3d["']|renderer/i);
 
-    // …và chỉ có MỘT module/engine: 3D là renderer, không phải simulation_id riêng.
+    /* W4B-2R: bài này nay 2D_ONLY — không renderer phụ nào, và KHÔNG có
+       `simulation_id` riêng cho một chế độ hiển thị (bất biến #16 giữ nguyên). */
     expect(mod.id).toBe("network.packet_routing");
-    expect(Object.keys(mod.renderers ?? {})).toEqual(["3d"]);
+    expect(mod.renderers ?? {}).toEqual({});
+    expect(mod.supportedVisualModes).toEqual(["2d"]);
   });
 });

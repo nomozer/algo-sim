@@ -649,8 +649,7 @@
       "domain": "network",
       "executor_id": "network.packet_routing",
       "visual_modes": [
-        "2d",
-        "3d"
+        "2d"
       ],
       "reachability": [
         "registered",

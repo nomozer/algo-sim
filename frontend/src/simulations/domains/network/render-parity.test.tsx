@@ -8,7 +8,6 @@ import { layerDepth, pduLayout3d, ROLE_COLOR_3D, sideX } from "./encap-ui3d";
 import { makeNetworkModule } from "./index";
 import type { NetworkState } from "./model";
 import { layout2d, NetworkWorkspace } from "./ui";
-import { layout3d } from "./ui3d";
 
 /**
  * TẦNG ĐỐI CHIẾU RENDERER (2D ↔ 3D) — bằng chứng khoá được cho luận điểm
@@ -137,25 +136,22 @@ function netState(): NetworkState {
   return mod.init(r.config);
 }
 
-describe("PARITY packet_routing — bố cục 2D và 3D phủ CÙNG tập nút", () => {
-  it("layout2d và layout3d cùng định vị ĐÚNG toàn bộ nút (không thừa/thiếu)", () => {
+describe("COVERAGE packet_routing — bố cục 2D phủ ĐÚNG tập nút", () => {
+  /* W4B-2R: bài này nay 2D_ONLY nên không còn "parity 2D↔3D" để đối chiếu.
+     Điều PHẢI giữ là bố cục không bỏ sót/bịa thêm nút — luật đó chưa bao giờ
+     phụ thuộc vào việc có 3D hay không. */
+  it("layout2d định vị ĐÚNG toàn bộ nút (không thừa/thiếu)", () => {
     const s = netState();
     const allIds = s.nodes.map((n) => n.id).sort();
-    const keys2d = Object.keys(layout2d(s.nodes, s.route).positions).sort();
-    const keys3d = Object.keys(layout3d(s.nodes, s.route)).sort();
-    expect(keys2d).toEqual(allIds);
-    expect(keys3d).toEqual(allIds);
-    expect(keys2d).toEqual(keys3d); // đối chiếu trực tiếp 2D↔3D
+    expect(Object.keys(layout2d(s.nodes, s.route).positions).sort()).toEqual(allIds);
   });
 
-  it("mọi bước: cả hai renderer định vị được gói tin ở CÙNG nút (packetAt)", () => {
+  it("mọi bước: renderer định vị được gói tin ở đúng nút (packetAt)", () => {
     const s = netState();
     const pos2d = layout2d(s.nodes, s.route).positions;
-    const pos3d = layout3d(s.nodes, s.route);
     for (let i = 0; i < mod.timeline!.stepCount(s); i++) {
       const at = (mod.timeline!.goToStep(s, i) as NetworkState).steps[i].packetAt;
-      expect(pos2d[at]).toBeDefined(); // gói tin không mồ côi ở 2D
-      expect(pos3d[at]).toBeDefined(); // ...cũng không ở 3D
+      expect(pos2d[at]).toBeDefined();
     }
   });
 
@@ -169,10 +165,9 @@ describe("PARITY packet_routing — bố cục 2D và 3D phủ CÙNG tập nút"
 });
 
 describe("FAITHFULNESS packet_routing — bố cục KHÔNG bịa nút ngoài topology", () => {
-  it("không key bố cục nào nằm ngoài tập nút của state (cả 2D lẫn 3D)", () => {
+  it("không key bố cục nào nằm ngoài tập nút của state", () => {
     const s = netState();
     const known = new Set(s.nodes.map((n) => n.id));
     for (const id of Object.keys(layout2d(s.nodes, s.route).positions)) expect(known.has(id)).toBe(true);
-    for (const id of Object.keys(layout3d(s.nodes, s.route))) expect(known.has(id)).toBe(true);
   });
 });

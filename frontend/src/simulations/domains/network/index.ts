@@ -1,4 +1,3 @@
-import { lazy } from "react";
 import { registerSimulation } from "../../registry";
 import type { NetNode, NetworkConfig, NetworkState, NodeType } from "./model";
 import {
@@ -8,15 +7,6 @@ import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import { NetworkInspector, NetworkWorkspace } from "./ui";
 import { makeEncapsulationModule } from "./encap";
 import { registerTraverseModule } from "./traverse-module";
-
-/**
- * M8: renderer 3D nạp LƯỜI (code-split) — Three.js (~600KB) chỉ tải khi người
- * dùng thật sự bấm 3D; người dùng 2D không trả thêm một byte bundle nào.
- * VẪN là cùng module/config/state/timeline — chỉ khác component vẽ.
- */
-const Network3DWorkspace = lazy(() =>
-  import("./ui3d").then((m) => ({ default: m.Network3DWorkspace })),
-);
 
 /**
  * network.packet_routing — mô phỏng TIẾN TRÌNH (progressive): có timeline.
@@ -152,15 +142,20 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
     domain: "network",
     title: "Định tuyến gói tin",
     interactionMode: "progressive",
-    // M8: module ĐẦU TIÊN khai 3D — topology/chiều sâu là chỗ 3D thêm giá trị
-    // biểu diễn thật (COVERAGE.md §8); logic/binary/algorithm CỐ Ý giữ 2D-only.
-    supportedVisualModes: ["2d", "3d"],
-    // M10: TRUNG THỰC — Z ở đây chỉ tách hàng route/ngoài-route (bố cục), KHÔNG
-    // mang nghĩa khái niệm. Đây là PoC kiến trúc, không phải 3D sư phạm.
-    threeD: {
-      role: "architectural_poc",
-      meaningOfZ: "phân tách nút trên/ngoài tuyến (bố cục), không mang nghĩa khái niệm",
-    },
+    /* W4B-2R — 2D_ONLY, quyết định bằng CƠ CHẾ chứ không bằng lịch sử kiến trúc.
+     *
+     * M8 dựng 3D ở đây, M10 khai trung thực `role: "architectural_poc"` +
+     * `meaningOfZ: "bố cục, KHÔNG mang nghĩa khái niệm"`. Lời khai đó chính là
+     * bằng chứng kết tội: cơ chế của bài là TOPOLOGY + ĐƯỜNG ĐI + KHẢ NĂNG TỚI
+     * ĐƯỢC, cả ba đọc trọn trên mặt phẳng, còn trục Z chỉ tách hàng cho đẹp.
+     * Giữ toggle vì "sản phẩm đã có renderer 3D" đúng là lý do mà chính sách
+     * biểu diễn liệt vào `2D_AND_3D_BY_DEFAULT`.
+     *
+     * KHÔNG mất gì về kiến trúc: `network.protocol_encapsulation` vẫn chứng minh
+     * 2D/3D dùng chung một state (Z = tầng giao thức — nghĩa khái niệm thật), nên
+     * bất biến #16/#18 vẫn có bài làm chứng.
+     */
+    supportedVisualModes: ["2d"],
 
     validateConfig: validateNetworkConfig,
 
@@ -286,9 +281,6 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
     },
 
     Workspace: NetworkWorkspace,
-    // M8: renderer 3D — CÙNG WorkspaceProps, đọc CÙNG state; "2d" mặc định
-    // là Workspace nên không cần khai lại.
-    renderers: { "3d": Network3DWorkspace },
     Inspector: NetworkInspector,
   };
 }

@@ -76,10 +76,14 @@ def test_formalized_families_owned_khong_rong():
 # 3D = 0/22 và tự phản chứng tên đề tài "2D/3D". Nay `visual_modes` là nguồn,
 # `visual_mode` (payload API) dẫn xuất. Parity phía FE: capability-descriptors.test.ts.
 
-TARGETS_3D = {"network.packet_routing", "network.protocol_encapsulation"}
+# W4B-2R: MOT target 3D, khong phai hai. `packet_routing` chuyen 2D_ONLY vi
+# chinh module frontend khai `threeD.role = "architectural_poc"` — Z chi la bo
+# cuc, khong mang nghia khai niem. Con lai dung bai ma chieu sau CHO NGHIA:
+# Z = tang giao thuc.
+TARGETS_3D = {"network.protocol_encapsulation"}
 
 
-def test_dung_hai_target_ho_tro_3d():
+def test_dung_mot_target_ho_tro_3d():
     from app.simulation.catalog import CATALOG
     assert {k for k, s in CATALOG.items() if s.supports_3d()} == TARGETS_3D
 
@@ -124,9 +128,9 @@ def test_che_do_la_tu_vung_dong_khong_phai_chuoi_tuy_y():
 
 
 def test_descriptor_mang_dung_visual_modes():
-    """Bảng năng lực sinh tự động phải báo 2/22, không phải 0/22."""
+    """Bảng năng lực sinh tự động phải báo 1/22, không phải 0/22."""
     d = capability_descriptors()["runtime_targets"]
     assert len(d) == 22
     co_3d = {k for k, t in d.items() if "3d" in t["visual_modes"]}
     assert co_3d == TARGETS_3D
-    assert sum(1 for t in d.values() if t["visual_modes"] == ["2d"]) == 20
+    assert sum(1 for t in d.values() if t["visual_modes"] == ["2d"]) == 21

@@ -39,6 +39,72 @@ export function availableVisualModes<C, S>(module: SimulationModule<C, S>): Visu
   return out;
 }
 
+/* ── W4B-2R: CHÍNH SÁCH BIỂU DIỄN — MỘT CHỦ SỞ HỮU KHAI BÁO ─────────────────
+ *
+ * Luật: **2D và 3D là LỰA CHỌN BIỂU DIỄN, không phải tầng đúng đắn.** Một target
+ * chỉ được có cả hai khi mỗi bên chở một nghĩa khác nhau bảo vệ được. Trạng thái
+ * bị cấm là `2D_AND_3D_BY_DEFAULT`: có 3D chỉ vì sản phẩm đã có renderer 3D.
+ *
+ * VÌ SAO DẪN XUẤT chứ không thêm một trường `representationPolicy` vào cả 22
+ * module: chính sách đã nằm sẵn trong hai thứ module VỐN khai —
+ * `supportedVisualModes` (được cấp mode nào) và `threeD.role` (chiều sâu có
+ * nghĩa gì). Thêm trường thứ ba là dựng nguồn sự thật thứ hai để rồi phải giữ
+ * đồng bộ bằng tay — đúng anti-pattern #1. Ở đây chỉ ĐẶT TÊN cho tổ hợp đã có.
+ *
+ * Hàm phân loại là MÔ TẢ (nói target đang ở đâu). Việc phán "được phép ở đó
+ * không" thuộc `representationPolicyProblems` — tách ra để guard toàn danh mục
+ * gọi được, và để một target sai chính sách vẫn phân loại được thay vì ném lỗi.
+ */
+export type RepresentationPolicy = "2d_only" | "3d_only" | "2d_and_3d_justified";
+
+export function representationPolicyOf<C, S>(
+  module: SimulationModule<C, S>,
+): RepresentationPolicy {
+  const modes = availableVisualModes(module);
+  const has3d = modes.includes("3d");
+  if (!has3d) return "2d_only";
+  return modes.includes("2d") ? "2d_and_3d_justified" : "3d_only";
+}
+
+/**
+ * Lý do target này VI PHẠM chính sách biểu diễn. Rỗng = hợp lệ.
+ *
+ * Điều kiện của `2d_and_3d_justified` là **lời khai `threeD.role`**, không phải
+ * sự tồn tại của renderer: `architectural_poc` tự nhận chiều sâu chỉ là bố cục,
+ * nên nó KHÔNG đủ tư cách bày toggle cho học sinh. Đây chính là phép kiểm đã
+ * loại `network.packet_routing` khỏi 3D ở wave này — module tự khai
+ * `meaningOfZ: "bố cục, không mang nghĩa khái niệm"`.
+ */
+export function representationPolicyProblems<C, S>(
+  module: SimulationModule<C, S>,
+): string[] {
+  const out: string[] = [];
+  const policy = representationPolicyOf(module);
+  const declared = new Set(module.supportedVisualModes);
+
+  if (policy === "2d_and_3d_justified") {
+    if (module.threeD?.role !== "pedagogical") {
+      out.push(
+        `${module.id}: bày cả 2D lẫn 3D nhưng threeD.role = ` +
+          `${module.threeD?.role ?? "(không khai)"} — chỉ "pedagogical" mới biện minh được`,
+      );
+    }
+    if (!module.threeD?.meaningOfZ) {
+      out.push(`${module.id}: có 3D mà không nói trục Z nghĩa là gì`);
+    }
+  } else if (module.threeD) {
+    out.push(`${module.id}: khai threeD nhưng chính sách là ${policy}`);
+  }
+
+  // Khai một mode mà không có renderer thật = affordance rỗng đã hứa rồi nuốt lời.
+  for (const m of declared) {
+    if (rendererFor(module, m) === undefined) {
+      out.push(`${module.id}: khai mode "${m}" nhưng không có renderer`);
+    }
+  }
+  return out;
+}
+
 /**
  * Mode hiệu lực khi render: giữ lựa chọn của người dùng nếu module đáp ứng
  * được, ngược lại rơi an toàn về "2d" (Workspace là bắt buộc nên luôn có).

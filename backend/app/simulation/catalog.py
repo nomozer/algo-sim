@@ -609,9 +609,13 @@ _NETWORK_CONTRACT = """HỢP ĐỒNG CONFIG (network.packet_routing):
 CATALOG["network.packet_routing"] = SimSpec(
     simulation_id="network.packet_routing",
     domain="network",
-    # 3D THẬT: renderer `network/ui3d.tsx` đọc CHÍNH state authoritative
-    # (currentStep/nodes/route); camera sống trong ref, không vào store.
-    visual_modes=("2d", "3d"),
+    # W4B-2R: 2D_ONLY. Bản 3D cũ (M8) tự khai `role: "architectural_poc"` với
+    # `meaningOfZ = "bố cục, KHÔNG mang nghĩa khái niệm"` — tức chính module thừa
+    # nhận chiều sâu ở đây không chở ngữ nghĩa nào. Cơ chế của bài là TOPOLOGY +
+    # ĐƯỜNG ĐI, đọc trọn vẹn trên mặt phẳng. Giữ toggle chỉ để chứng minh "sản
+    # phẩm có 3D" chính là `2D_AND_3D_BY_DEFAULT` mà chính sách biểu diễn cấm.
+    # 3D sư phạm còn nguyên ở `network.protocol_encapsulation` (Z = tầng giao thức).
+    visual_modes=("2d",),
     description="định tuyến gói tin trên MỘT MẠNG CHO SẴN đầy đủ — mô phỏng gói tin đi từng chặng từ máy nguồn qua các router tới máy đích. CHỈ dùng khi topology có sẵn ngay; KHÔNG dựng mạng từng bước (không tạo từng thiết bị/liên kết dần). Cơ chế ẩn là ĐƯỜNG ĐI qua các NÚT thiết bị; bài hỏi dữ liệu được ĐÓNG GÓI/THÁO GÓI qua các TẦNG giao thức (thêm/gỡ TCP, IP, header) → network.protocol_encapsulation",
     config_schema=_NETWORK_SCHEMA,
     contract=_NETWORK_CONTRACT,
