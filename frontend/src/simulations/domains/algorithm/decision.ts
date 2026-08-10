@@ -335,6 +335,52 @@ export interface ScanInteractionModel {
   actions: MechanismAction[];
 }
 
+/**
+ * W4B-2U2 §12 — BIẾN TÍCH LUỸ PHẢI THẤY ĐƯỢC TRÊN SÂN KHẤU, KỂ CẢ LÚC NÓ ĐỔI.
+ *
+ * Khoảng trống cuối cùng của ngữ pháp thị giác (audit U2-A): với `count_if` /
+ * `sum_if`, biến đếm/tổng chỉ sống trong vùng hành động, nên chuyển tiếp
+ * `4 → 5` hay `405 → 555` phải ĐỌC CHỮ mới biết. TRANSITION bị xếp `TEXT_ONLY`.
+ *
+ * ⚠️ KHÔNG ĐƯỢC ĐỌC BƯỚC SAU. Giá trị "sau" lấy từ bước HIỆN TẠI, giá trị
+ * "trước" lấy từ bước ĐÃ QUA (`cursor - 1`) — đó là lịch sử, không phải tương
+ * lai. Nhìn tới `cursor + 1` sẽ lộ đáp án của chính điểm quyết định đang hỏi,
+ * đúng thứ `decisionPointOf` giữ kín.
+ *
+ * Hàm THUẦN, đọc `snapshot.vars` do engine sở hữu — renderer không tự cộng.
+ */
+export interface AccumulatorView {
+  /** Tên biến hiển thị (max/min/tổng/biến đếm). */
+  label: string;
+  /** Giá trị ở bước hiện tại. */
+  value: string;
+  /** Giá trị ở bước liền trước; `null` khi đang ở bước đầu. */
+  previous: string | null;
+  /** Bước này biến vừa đổi giá trị. */
+  changed: boolean;
+}
+
+/** Tên biến tích luỹ theo target — CÙNG bảng `scanInteractionOf` dùng. */
+const ACC_VAR: Record<string, { v: string; label: string }> = {
+  find_max: { v: "max", label: "max" },
+  find_min: { v: "min", label: "min" },
+  sum_if: { v: "tong", label: "tổng" },
+  count_if: { v: "dem", label: "biến đếm" },
+};
+
+export function accumulatorViewOf(state: AlgorithmSimState): AccumulatorView | null {
+  const spec = ACC_VAR[state.config.algorithm_id];
+  if (!spec) return null;
+  const trace = activeTrace(state);
+  const at = clampStep(state, state.cursor);
+  const now = trace.steps[at]?.snapshot.vars[spec.v];
+  if (now === undefined) return null;
+  const before = at > 0 ? trace.steps[at - 1]?.snapshot.vars[spec.v] : undefined;
+  const value = fmt(num(now));
+  const previous = before === undefined ? null : fmt(num(before));
+  return { label: spec.label, value, previous, changed: previous !== null && previous !== value };
+}
+
 /** Bốn target thuộc cụm quét dãy — gate theo ĐỊNH DANH NGỮ NGHĨA đã validate. */
 const SCAN_FAMILY = new Set(["find_max", "find_min", "count_if", "sum_if"]);
 

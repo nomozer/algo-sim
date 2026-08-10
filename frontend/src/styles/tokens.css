@@ -16,6 +16,12 @@
   --ink-faint: #a39e98;
   --hairline: #e6e6e6;
   --accent-sky: #62aef0;
+  /* Sắc NHẠT của --accent-sky, dùng cho cột dãy ở trạng thái NHÀN RỖI (chưa
+     xét). W4B-2U2 §13: trước đây là literal `#dcebfa` trong `ArrayView`
+     (TOKEN_DRIFT_CONFIRMED ở audit U2-A). Không tái dùng được token nào đang
+     có: `--accent-sky` là bản đậm (dành cho "đang xét"), `--canvas-soft` là
+     xám ấm nên cột nhàn rỗi sẽ hoá xám và đổi nghĩa. Thêm ĐÚNG MỘT token. */
+  --accent-sky-tint: #dcebfa;
   --accent-purple: #d6b6f6;
   --accent-purple-deep: #391c57;
   --accent-pink: #ff64c8;

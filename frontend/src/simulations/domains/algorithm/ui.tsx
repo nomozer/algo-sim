@@ -8,6 +8,7 @@ import { AnalysisCard } from "../../../components/AnalysisCard";
 import { fmt } from "../../../core/trace-builder";
 import type { WorkspaceProps } from "../../types";
 import {
+  accumulatorViewOf,
   consequenceOf,
   decisionPointOf,
   scanInteractionOf,
@@ -153,6 +154,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
   const consequence = decision ? null : consequenceOf(state);
   const hold = insertionHold(state, clampStep(state, state.cursor));
   const scan = scanInteractionOf(state);
+  const accumulator = accumulatorViewOf(state);
   const search = searchInteractionOf(state);
   const sort = sortInteractionOf(state);
 
@@ -228,6 +230,23 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       )}
 
       <div className="sim-stage">
+        {/* W4B-2U2 §12 — BIẾN TÍCH LUỸ SỐNG TRÊN SÂN KHẤU.
+            Trước wave này nó chỉ nằm trong vùng hành động, nên chuyển tiếp
+            `4 → 5` phải đọc chữ mới biết (TRANSITION = TEXT_ONLY trong audit).
+            Giá trị "trước" lấy từ bước ĐÃ QUA — lịch sử, không phải bước sau,
+            nên không lộ đáp án của điểm quyết định đang hỏi. */}
+        {accumulator && (
+          <div className={`acc-badge${accumulator.changed ? " is-changed" : ""}`}>
+            <span className="acc-label">{accumulator.label}</span>
+            {accumulator.changed && accumulator.previous !== null && (
+              <>
+                <span className="acc-prev">{accumulator.previous}</span>
+                <span className="acc-arrow" aria-hidden="true">→</span>
+              </>
+            )}
+            <strong className="acc-value">{accumulator.value}</strong>
+          </div>
+        )}
         {/* INSERT-HOLD: quân bài đang cầm nằm NGOÀI dãy, đúng như thao tác thật —
             và ô nó để lại trong dãy là ô TRỐNG, không phải một số lặp lại. */}
         {hold && (

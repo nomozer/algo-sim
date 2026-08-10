@@ -169,7 +169,7 @@ function columnState(step: Step, index: number): ColumnState {
   if (mark === "considering") {
     return { fill: "var(--accent-teal)", stroke: "var(--accent-teal)", strokeWidth: 1, active: false };
   }
-  return { fill: "#dcebfa", stroke: "var(--hairline)", strokeWidth: 1, active: false };
+  return { fill: "var(--accent-sky-tint)", stroke: "var(--hairline)", strokeWidth: 1, active: false };
 }
 
 /* ── NGHĨA CỦA MARK THEO BÀI (W3B-1) ─────────────────────────────────────────
