@@ -1610,9 +1610,13 @@ html {
      khung nhìn ≠ hàng mô phỏng phủ khung nhìn". */
   grid-template-rows: auto auto;
   align-content: start;
+  /* W4B-2Z §23 — DẢI ĐIỀU KHIỂN THUỘC VỀ MÔ PHỎNG, KHÔNG PHẢI VỀ TRANG.
+     Trước đây nó trải ngang DƯỚI CẢ cột Giải thích, nên đọc thành một bảng
+     điều khiển thứ hai không dính gì tới sân khấu. Nay nó rộng đúng bằng sân
+     khấu và dính ngay dưới sân khấu ⇒ mắt đọc MỘT đối tượng, không đọc hai. */
   grid-template-areas:
     "center right"
-    "controls controls";
+    "controls right";
   gap: var(--sp-md);
   padding: var(--sp-md) var(--sp-lg);
   height: calc(100vh - 57px);
@@ -1678,10 +1682,12 @@ html {
 
 .panel-controls {
   grid-area: controls;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-lg);
-  padding: var(--sp-sm) var(--sp-md);
+  /* Không viền, không nền riêng ở desktop: khối có viền riêng nằm sát dưới một
+     khối có viền riêng thì đọc thành HAI thẻ. Ở màn hẹp nó thành thanh ghim
+     đáy nổi trên nội dung nên PHẢI có nền — xem media query bên dưới. */
+  padding: var(--sp-xs) 0 0;
+  border-top: 1px solid var(--hairline);
+  margin-top: calc(-1 * var(--sp-md) + var(--sp-xs));
 }
 
 /* Màn hẹp: Quan sát thành DRAWER nổi trên sân khấu thay vì ép nhỏ nó. */
@@ -2806,7 +2812,7 @@ html {
   grid-template-columns: 208px minmax(0, 1fr) 300px;
   grid-template-areas:
     "rail center right"
-    "rail controls controls";
+    "rail controls right";
 }
 
 .app-layout.has-rail.right-closed {

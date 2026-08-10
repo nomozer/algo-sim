@@ -176,7 +176,6 @@ export function SimulationWorkspace() {
   const dispatch = useAppStore((s) => s.dispatch);
   const visualMode = useAppStore((s) => s.visualMode);
   const challengeOpen = useAppStore((s) => s.challengeOpen);
-  const setChallengeOpen = useAppStore((s) => s.setChallengeOpen);
   const setVisualMode = useAppStore((s) => s.setVisualMode);
 
   if (unsupported) {
@@ -276,22 +275,11 @@ export function SimulationWorkspace() {
         />
       )}
 
-      {/* LỐI VÀO THỬ THÁCH — dẫn xuất từ NĂNG LỰC (`mod.predict`), không từ tên
-          bài. Một nút nhỏ, không phải một tấm nội dung: Quan sát vẫn là mặc định.
-          Module tự trình bày cam kết trên sân khấu (`presentedInStage`) thì không
-          dựng lối vào thứ hai — một cam kết, một hình thức. */}
-      {challengeEntryVisible(mod, active.state) && (
-        <div className="sim-secondary-actions">
-          <button
-            type="button"
-            className={`sim-secondary-action${challengeOpen ? " is-active" : ""}`}
-            onClick={() => setChallengeOpen(!challengeOpen)}
-            aria-expanded={challengeOpen}
-          >
-            {challengeOpen ? "Đóng thử thách" : "Thử thách: tự dự đoán bước này"}
-          </button>
-        </div>
-      )}
+      {/* W4B-2Z §20/§23 — LỐI VÀO THỬ THÁCH ĐÃ RỜI KHỎI CỘT NỘI DUNG.
+          Nó nay nằm trong dải điều khiển (`SimulationControls`) cùng hàng với
+          transport, nên dưới mô hình bớt hẳn một dải toàn chiều ngang. Trước
+          đây dù đã là nút nhỏ, nó vẫn CHIẾM một hàng riêng ngay dưới sân khấu —
+          mắt vẫn đọc thành MÔ HÌNH → DẢI → DẢI. */}
     </section>
   );
 }

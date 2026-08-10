@@ -19,9 +19,12 @@ const read = (rel: string) =>
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/^\s*\/\/.*$/gm, "");
 
-/** Ba nơi dựng lối vào hành động phụ — dẫn xuất từ nguồn, không chép tay nhãn. */
+/** Ba nơi dựng lối vào hành động phụ — dẫn xuất từ nguồn, không chép tay nhãn.
+    W4B-2Z §20/§23: lối vào Thử thách của shell đã rời `SimulationWorkspace`
+    sang `SimulationControls` — nó nay nằm CẠNH transport thay vì chiếm một dải
+    riêng dưới mô hình. Chủ sở hữu đổi, LUẬT giữ nguyên. */
 const OWNERS = [
-  "../components/SimulationWorkspace.tsx",
+  "../components/SimulationControls.tsx",
   "./domains/algorithm/ui.tsx",
   "./domains/network/ui.tsx",
 ] as const;

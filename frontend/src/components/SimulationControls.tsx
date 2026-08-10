@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { getSimulation } from "../simulations/registry";
 import { useAppStore } from "../state/store";
+import { challengeEntryVisible } from "./SimulationWorkspace";
 import {
   IconNext,
   IconPause,
@@ -32,6 +33,8 @@ export function SimulationControls() {
   const setSpeedMs = useAppStore((s) => s.setSpeedMs);
 
   const mod = active ? getSimulation(active.moduleId) : undefined;
+  const challengeOpen = useAppStore((s) => s.challengeOpen);
+  const setChallengeOpen = useAppStore((s) => s.setChallengeOpen);
   const timeline = mod?.timeline;
 
   // Tự chạy: hẹn giờ gọi nextStep; store tự dừng khi hết timeline
@@ -75,6 +78,22 @@ export function SimulationControls() {
 
   if (!active || !mod) return null;
 
+  /* W4B-2Z §20/§23 — Thử thách là HÀNH ĐỘNG PHỤ NẰM CẠNH ĐIỀU KHIỂN, không phải
+     một dải nội dung dưới mô hình. Đặt ở đây (thay vì trong `SimulationWorkspace`)
+     vì đây đã là chỗ của "việc học sinh làm với mô phỏng" — gộp vào chứ KHÔNG
+     đẻ thêm container để chứa nó. Năng lực `predict` và bên chấm `predict.check`
+     không đổi một dòng; đây là dời TRÌNH BÀY. */
+  const challengeEntry = challengeEntryVisible(mod, active.state) ? (
+    <button
+      type="button"
+      className={`sim-secondary-action${challengeOpen ? " is-active" : ""}`}
+      onClick={() => setChallengeOpen(!challengeOpen)}
+      aria-expanded={challengeOpen}
+    >
+      {challengeOpen ? "Đóng thử thách" : "Thử thách: tự dự đoán bước này"}
+    </button>
+  ) : null;
+
   // Capability-driven (không switch-case id): hiện nút bước KHI có timeline VÀ
   // thực sự có >1 bước để đi. Cảnh khám phá (1 khung) chỉ hiện Đặt lại —
   // không "step giả". Áp dụng cho cả generic exploratory lẫn module chuyên biệt.
@@ -87,6 +106,7 @@ export function SimulationControls() {
           Đặt lại
         </button>
         <span className="hint">Mô phỏng khám phá — thao tác trực tiếp trên sân khấu.</span>
+        {challengeEntry}
       </div>
     );
   }
@@ -147,6 +167,7 @@ export function SimulationControls() {
           />
         </label>
         <span className="hint control-hint">← → tiến/lùi · Space tự chạy</span>
+        {challengeEntry}
       </div>
       <input
         type="range"
