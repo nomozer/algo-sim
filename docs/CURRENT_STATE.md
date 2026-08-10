@@ -25,6 +25,33 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### W4B-2S — biểu diễn phù hợp sư phạm + vai trò miền chở bằng hình (2026-08-10)
+>
+> Chính sách: `docs/PEDAGOGICAL_REPRESENTATION_POLICY.md`.
+>
+> - **Tiêu chí 2D/3D nới ĐÚNG CHỖ.** W4B-2R phán bằng một câu hỏi ("Z có mã hoá
+>   biến khái niệm không") — loại đúng target nhưng vì lý do sai, và sẽ loại nhầm
+>   về sau. Nay target có 3D phải khai `threeD.pedagogicalFit[]` + `whyNot2d`;
+>   `role: "pedagogical"` một mình KHÔNG còn đủ (nó chỉ là nhãn tự nhận).
+> - **Con số không đổi (21 / 0 / 1) nhưng LÝ DO đổi.** `packet_routing` chấm lại
+>   bằng 10 tiêu chí: 3D **không thắng tiêu chí nào**, thua ở quan hệ (che khuất),
+>   thao tác (chọn theo chiều sâu), rủi ro ngộ nhận (phối cảnh làm topology trông
+>   có metric) — nên `2D_ONLY` đứng vững bằng ĐO. `encap` khai
+>   `["relation_clarity","dimensional_value","mechanism_fidelity"]`.
+> - **`DOMAIN_ROLE_CARRIED_BY_TEXT` đã SỬA** (W4B-2R mới chỉ đo). Audit cả 22:
+>   `packet_routing` là target DUY NHẤT vẽ nhiều vai trò bằng cùng một hình tròn.
+>   Chủ sở hữu mới `domains/network/node-glyph.ts` — `NodeType` (engine) → laptop
+>   / router / tủ rack / switch / đám mây, vẽ tay bằng `path`, **không asset**.
+>   Nguồn/đích tách khỏi loại thiết bị (vòng ngắm kép cho đích).
+>   **KHÔNG dựng framework icon toàn hệ**: mảng/cây/đồ thị dùng hình trừu tượng
+>   là ĐÚNG, thay bằng tranh vẽ sẽ làm hỏng chỗ đang đúng.
+> - Offline: pytest **1135** (2 skip, 1 deselect) · vitest **1100/73** · build
+>   sạch. Browser CDP **39/39 × 4 viewport** (1920/1536/1366/768). Tiêm lỗi
+>   **4/4 ĐỎ** (gồm chính lỗi gốc), khôi phục XANH.
+> - **CHƯA làm:** 3D `packet_routing` không dựng lại (điều kiện tái xét: topology
+>   có tầng thật) · dấu hiệu NGUỒN nhạt hơn dấu hiệu ĐÍCH · 7 target vẫn
+>   `ENGINE_CONTRACT_MISSING` · chưa đo trên người học.
+>
 > ### W4B-2R — biểu diễn theo cơ chế + vòng đời Quan sát (2026-08-10)
 >
 > Bằng chứng: `docs/MECHANISM_FIRST_REPRESENTATION_INTERACTION_EVIDENCE.md`;

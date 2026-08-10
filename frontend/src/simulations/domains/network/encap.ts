@@ -40,10 +40,19 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
     title: "Đóng gói dữ liệu qua các tầng TCP/IP",
     interactionMode: "progressive",
     supportedVisualModes: ["2d", "3d"],
-    // M10: 3D SƯ PHẠM — Z = tầng giao thức (nghĩa khái niệm thật, không phải bố cục).
+    /* M10: 3D SƯ PHẠM — Z = tầng giao thức (nghĩa khái niệm thật, không phải bố cục).
+     * W4B-2S: khai thêm ĐÍCH DANH 3D thắng ở đâu. Cơ chế của bài là LỒNG NHAU —
+     * mỗi tầng bọc gói tin của tầng trên rồi tầng nhận bóc ngược lại. Trên mặt
+     * phẳng, "bọc" phải vẽ thành xếp chồng hoặc thụt lề, tức mượn một quy ước
+     * khác để nói chuyện chứa-đựng; trong không gian nó CHÍNH LÀ chiều sâu. */
     threeD: {
       role: "pedagogical",
       meaningOfZ: "độ sâu tầng giao thức (Application → Network Access)",
+      pedagogicalFit: ["relation_clarity", "dimensional_value", "mechanism_fidelity"],
+      whyNot2d:
+        "2D phải quy ước hoá quan hệ BỌC NHAU thành xếp chồng/thụt lề; ở 3D quan hệ " +
+        "chứa-đựng đọc thẳng từ chiều sâu, và gói tin đi xuống rồi đi lên đúng như " +
+        "thứ tự đóng/mở gói.",
     },
 
     validateConfig: validateEncapConfig,

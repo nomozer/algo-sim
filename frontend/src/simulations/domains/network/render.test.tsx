@@ -35,14 +35,22 @@ describe("network renderer 2D — tự lo bố cục", () => {
       <NetworkWorkspace config={config} state={state} busy={false} dispatch={() => {}} />,
     );
     // viewBox lấy từ layout2d của renderer (4 nút trên route: 80*2 + 3*150 = 610)
-    expect(html).toContain('viewBox="0 0 610 140"');
+    expect(html).toContain('viewBox="0 0 610 160"'); // W4B-2S: cao thêm 20 cho nhãn dưới hình
     // đủ 4 nút + nhãn loại
     for (const id of ["client", "router", "isp", "server"]) expect(html).toContain(id);
     expect(html).toContain("Máy khách");
     expect(html).toContain("Máy chủ");
-    // 3 liên kết + 1 chấm gói tin + 4 vòng tròn nút = có <line> và <circle>
+    /* W4B-2S — ĐỔI TIỀN ĐỀ, có chủ đích.
+       Bản cũ đếm "4 nút = 4 <circle>", tức khoá đúng cái lỗi wave này gỡ: mọi
+       vai trò miền vẽ chung một hình tròn. Nay thiết bị là HÌNH THEO VAI TRÒ
+       (`<path>` từ `nodeGlyph`), còn `<circle>` chỉ còn dành cho gói tin và
+       vòng ngắm đích — nhờ vậy gói tin phân biệt được với thiết bị bằng HÌNH,
+       không phải bằng màu. */
     expect(html.match(/<line/g) ?? []).toHaveLength(3);
-    expect((html.match(/<circle/g) ?? []).length).toBe(5); // 4 nút + 1 gói tin
+    // 4 thiết bị × (1 outline + ≥0 chi tiết) ⇒ ít nhất 4 path.
+    expect((html.match(/<path/g) ?? []).length).toBeGreaterThanOrEqual(4);
+    // gói tin (1) + vòng ngắm đích (2) — KHÔNG còn vòng tròn nào là thiết bị.
+    expect((html.match(/<circle/g) ?? []).length).toBe(3);
     // (SHELL-N) thuyết minh do khe của shell dựng — renderer chỉ lo BỐ CỤC
     expect(mod.narrate!(state, config)!.text).toContain("Tạo gói tin"); // bước 0
   });

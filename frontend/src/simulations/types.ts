@@ -194,10 +194,36 @@ export interface Narration {
  * - "pedagogical": Z mã hoá một biến khái niệm thật (vd tầng giao thức).
  * Không khai = module không có 3D hoặc chưa phân loại.
  */
+/**
+ * Tiêu chí PHÙ HỢP SƯ PHẠM của một biểu diễn (W4B-2S §1).
+ *
+ * VÌ SAO CÓ KIỂU NÀY. W4B-2R phán 3D bằng đúng một câu hỏi — *"Z có mã hoá một
+ * biến khái niệm không?"* — và câu đó QUÁ HẸP: nó loại 3D ngay cả khi chiều sâu
+ * giúp nhận ra vật thể, thấy quan hệ, hay thao tác dễ hơn. Nay biện minh phải
+ * nêu ĐÍCH DANH nó thắng ở tiêu chí nào, nên "sản phẩm đã có renderer 3D" và
+ * "Z không phải biến" đều không còn là câu trả lời hợp lệ.
+ */
+export type PedagogicalFit =
+  | "object_recognition"
+  | "role_discrimination"
+  | "relation_clarity"
+  | "transition_clarity"
+  | "direct_manipulation_fit"
+  | "mechanism_fidelity"
+  | "dimensional_value";
+
 export interface ThreeDMeaning {
   role: "architectural_poc" | "pedagogical";
   /** Trục sâu (Z) mã hoá điều gì — tiếng Việt, dùng cho caption + test trung thực. */
   meaningOfZ: string;
+  /**
+   * Các tiêu chí mà 3D THẮNG rõ so với 2D ở bài này. Rỗng/thiếu ⇒ không đủ tư
+   * cách bày cho học sinh (guard toàn danh mục chặn). Chỉ target thật sự có 3D
+   * mới phải khai — không bắt 22 module điền một trường vô nghĩa.
+   */
+  pedagogicalFit?: PedagogicalFit[];
+  /** Vì sao 2D KHÔNG diễn đạt được điều đó — buộc so sánh, không chỉ khen 3D. */
+  whyNot2d?: string;
 }
 
 export interface SimulationModule<C = unknown, S = unknown> {

@@ -92,6 +92,20 @@ export function representationPolicyProblems<C, S>(
     if (!module.threeD?.meaningOfZ) {
       out.push(`${module.id}: có 3D mà không nói trục Z nghĩa là gì`);
     }
+    /* W4B-2S — BIỆN MINH PHẢI NÊU ĐÍCH DANH TIÊU CHÍ.
+     * Luật cũ dừng ở `role === "pedagogical"`, mà `role` chỉ là một nhãn tự nhận:
+     * một target chép nhãn đó vào là qua cửa. Nay phải nói 3D THẮNG ở tiêu chí
+     * nào VÀ vì sao 2D không diễn đạt được — buộc so sánh hai biểu diễn thay vì
+     * khen một cái. */
+    if (!module.threeD?.pedagogicalFit?.length) {
+      out.push(
+        `${module.id}: có 3D mà không khai pedagogicalFit — ` +
+          `"đã có renderer 3D" không phải lý do sư phạm`,
+      );
+    }
+    if (!module.threeD?.whyNot2d) {
+      out.push(`${module.id}: có 3D mà không nói vì sao 2D không đủ`);
+    }
   } else if (module.threeD) {
     out.push(`${module.id}: khai threeD nhưng chính sách là ${policy}`);
   }

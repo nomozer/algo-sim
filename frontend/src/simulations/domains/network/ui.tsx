@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { WorkspaceProps } from "../../types";
 import { routeEdgeViews, type EdgeStatus } from "./edge-view";
+import { GLYPH_BOX, endpointRoleOf, nodeGlyph } from "./node-glyph";
 import {
   currentStep,
   isModified,
@@ -69,7 +70,10 @@ export function layout2d(
     positions[n.id] = { x: X0 + i * COL, y: 190 };
   });
   const cols = Math.max(route.length, off.length, 1);
-  return { positions, width: X0 * 2 + (cols - 1) * COL, height: off.length ? 250 : 140 };
+  /* W4B-2S: thiết bị nay là hình có nhãn nằm DƯỚI (tới y+66 kể từ tâm), thay vì
+     hình tròn có chữ bên trong. Chiều cao cũ 140/250 cắt mất dòng loại thiết bị
+     ở hàng cuối — đo được trong Chrome, không suy từ code. */
+  return { positions, width: X0 * 2 + (cols - 1) * COL, height: off.length ? 270 : 160 };
 }
 
 /**
@@ -153,24 +157,60 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
               </line>
             );
           })}
-          {/* Nút */}
+          {/* THIẾT BỊ — hình dạng theo VAI TRÒ do engine khai (`n.type`), không
+              phải theo nhãn/đề bài. Chữ nằm DƯỚI hình và chỉ xác nhận danh tính. */}
           {state.nodes.map((n) => {
             const p = pos[n.id];
-            const isEnd = n.id === state.source || n.id === state.destination;
+            const glyph = nodeGlyph(n.type);
+            const endpoint = endpointRoleOf(n.id, state.source, state.destination);
+            const color = NODE_COLOR[n.type];
+            // Hộp glyph 48×48 → đường kính nút; đặt tâm glyph trùng tâm nút.
+            const k = (NODE_R * 2) / GLYPH_BOX;
+            const gx = p.x - NODE_R;
+            const gy = p.y - NODE_R;
             return (
               <g key={n.id}>
-                <circle
-                  cx={p.x}
-                  cy={p.y}
-                  r={NODE_R}
-                  fill="var(--surface)"
-                  stroke={NODE_COLOR[n.type]}
-                  strokeWidth={isEnd ? 3.5 : 2}
-                />
-                <text x={p.x} y={p.y - 2} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
+                <title>{`${glyph.role} (${n.id})${
+                  endpoint === "source" ? " — nguồn"
+                  : endpoint === "destination" ? " — đích" : ""}`}</title>
+
+                {/* Dấu hiệu NGUỒN/ĐÍCH: vai trò trong phiên truyền, tách khỏi loại
+                    thiết bị (một mạng có thể có hai máy chủ). Đích = vòng ngắm
+                    kép; nguồn = cung phát. Hình khác nhau, không chỉ khác màu. */}
+                {endpoint === "destination" && (
+                  <>
+                    <circle cx={p.x} cy={p.y} r={NODE_R + 7} fill="none"
+                      stroke="var(--primary)" strokeWidth={2} />
+                    <circle cx={p.x} cy={p.y} r={NODE_R + 11} fill="none"
+                      stroke="var(--primary)" strokeWidth={1} strokeDasharray="3 4" />
+                  </>
+                )}
+                {endpoint === "source" && (
+                  <path
+                    d={`M ${p.x - NODE_R - 6} ${p.y + 8} a ${NODE_R + 6} ${NODE_R + 6} 0 0 1 0 -16`}
+                    fill="none" stroke={color} strokeWidth={2.5} strokeLinecap="round"
+                  />
+                )}
+
+                <g transform={`translate(${gx} ${gy}) scale(${k})`}>
+                  <path d={glyph.outline} fill="var(--surface)" stroke={color}
+                    strokeWidth={2.2 / k} strokeLinejoin="round" />
+                  {glyph.details.map((d, i) => (
+                    <path key={i} d={d} fill="none" stroke={color}
+                      strokeWidth={1.8 / k} strokeLinecap="round" strokeLinejoin="round" />
+                  ))}
+                </g>
+
+                {/* Chữ XÁC NHẬN hình, không thay hình — nên nằm ngoài, dưới thiết bị.
+                    Lùi qua KHỎI vòng ngắm đích (bán kính ngoài NODE_R + 11): ảnh
+                    lượt chụp đầu cho thấy nhãn "server" dính vào vòng ngắm, tức
+                    hai tín hiệu đè nhau đúng ở nút quan trọng nhất. */}
+                <text x={p.x} y={p.y + NODE_R + 24} textAnchor="middle"
+                  fontSize={11} fontWeight={600} fill="var(--ink)">
                   {n.id}
                 </text>
-                <text x={p.x} y={p.y + 11} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
+                <text x={p.x} y={p.y + NODE_R + 36} textAnchor="middle"
+                  fontSize={9} fill="var(--ink-muted)">
                   {typeLabel(n.type)}
                 </text>
               </g>

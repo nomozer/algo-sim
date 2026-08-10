@@ -1041,6 +1041,23 @@ renderer-neutral), `network/render.test.tsx`.
   làm đứt — đúng hai trục của `CORRECTNESS.md`. Đừng nới validator.
 Tests: `network/whatif-w4b2i.test.tsx` (13 ca + 4 tiêm lỗi đã chứng minh đỏ).
 
+### `simulations/domains/network/node-glyph.ts` · Change impact: offline
+**W4B-2S — CHỦ SỞ HỮU "VAI TRÒ MIỀN → HÌNH DẠNG"** của `packet_routing`. Exports:
+`nodeGlyph(type)` (hộp chuẩn 48×48: `outline` + `details[]` + `role`),
+`GLYPH_BOX`, `endpointRoleOf(nodeId, source, destination)`, `EndpointRole`.
+Khoá theo **`NodeType` do ENGINE sở hữu** — laptop / router có ăng-ten / tủ rack
+/ switch nhiều cổng / đám mây nhà mạng. Hàm THUẦN, không React, **không màu**
+(màu thuộc renderer, hình thuộc vai trò).
+**Vì sao chỉ miền mạng, không phải framework icon toàn hệ:** audit W4B-2S đo cả
+22 target và `packet_routing` là target DUY NHẤT vẽ nhiều vai trò KHÁC NHAU bằng
+CÙNG một hình. Mảng/cây/đồ thị dùng hình trừu tượng là ĐÚNG (giá trị và đỉnh vốn
+trừu tượng); logic đã có hình cổng; database đã dùng `<table>` thật; encapsulation
+đã có tầng/phong bì. Đừng mở rộng file này thành "icon cho mọi domain".
+`endpointRoleOf` tách **nguồn/đích** khỏi **loại thiết bị** vì một mạng có thể có
+hai máy chủ — glyph không phân biệt nổi, nên đích có vòng ngắm kép riêng.
+Tests: `semantic-roles-w4b2s.test.tsx` (phép thử **XOÁ HẾT CHỮ**: bỏ `<text>` mà
+vẫn phải phân biệt được vai trò; 4 tiêm lỗi đã chứng minh đỏ).
+
 ### ~~`simulations/domains/network/ui3d.tsx`~~ — ĐÃ NGHỈ (W4B-2R)
 Renderer 3D của `network.packet_routing` (M8) **đã gỡ khỏi kho mã** cùng
 `render3d.test.tsx`. Lý do: chính module khai `threeD.role = "architectural_poc"`
