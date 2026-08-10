@@ -1,5 +1,9 @@
 import { describe, expect, it, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
+import {
+  challengeEntryVisible,
+  challengeSurfaceVisible,
+} from "../components/SimulationWorkspace";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
@@ -234,10 +238,22 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
   });
 
   it("shell tôn trọng presentedInStage trước khi dựng PredictionBar", () => {
-    const src = readFileSync(
-      new URL("../components/SimulationWorkspace.tsx", import.meta.url), "utf-8",
-    );
-    expect(src).toMatch(/!mod\.predict\?\.presentedInStage\?\.\(active\.state\)/);
+    /* W4B-2U2: luật giữ nguyên, chỗ ở đổi. Bản cũ khớp REGEX trên mã nguồn của
+       một biểu thức inline trong JSX — nên nó đỏ ngay khi biểu thức được tách
+       thành hàm thuần, dù hành vi không đổi một chút nào. Test khoá HÌNH DẠNG MÃ
+       chặn đúng loại refactor nó lẽ ra phải bảo vệ.
+       Nay khẳng định vào HÀNH VI qua chủ sở hữu `challengeSurfaceVisible`. */
+    const presented = { predict: { presentedInStage: () => true } };
+    const notPresented = { predict: { presentedInStage: () => false } };
+
+    // Module tự bày cam kết trên sân khấu ⇒ shell KHÔNG dựng bề mặt thứ hai,
+    // kể cả khi Thử thách đang mở.
+    expect(challengeSurfaceVisible(presented, {}, true)).toBe(false);
+    expect(challengeEntryVisible(presented, {})).toBe(false);
+
+    // Không tự bày ⇒ bề mặt dùng chung thuộc về Thử thách, không thuộc Quan sát.
+    expect(challengeSurfaceVisible(notPresented, {}, false)).toBe(false);
+    expect(challengeSurfaceVisible(notPresented, {}, true)).toBe(true);
   });
 
   /* ── BẤT BIẾN BỀ MẶT CAM KẾT (W4B-2D §2) ────────────────────────────────

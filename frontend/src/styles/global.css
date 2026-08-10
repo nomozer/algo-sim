@@ -2620,3 +2620,10 @@ html {
   padding: 4px 8px;
   pointer-events: none;
 }
+
+/* W4B-2U2 §13 — LỐI VÀO THỬ THÁCH. Một nút nhỏ, canh trái, không nền không
+   viền khối: Quan sát là mặc định, Thử thách là chỗ học sinh chủ động bước vào.
+   Không dựng thành thẻ để tránh thêm một dải nội dung nữa dưới sân khấu. */
+.challenge-entry {
+  display: flex;
+}

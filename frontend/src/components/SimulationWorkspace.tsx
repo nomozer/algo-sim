@@ -123,6 +123,39 @@ export function NarrationSlot({ narration }: { narration: Narration | null }) {
 }
 
 /**
+ * W4B-2U2 §13 — CÓ BÀY BỀ MẶT THỬ THÁCH KHÔNG. Hàm THUẦN, và nó phải thuần vì
+ * một lý do đã có tiền lệ trong kho: `SimulationWorkspace` đọc store, mà zustand
+ * v5 dùng `useSyncExternalStore` nên **SSR luôn trả trạng thái ĐẦU**
+ * (`ARCHITECTURE_MAP §8` #8). Test `renderToString(<SimulationWorkspace/>)` sau
+ * khi `loadEnvelope` sẽ thấy **empty-state**, và mọi khẳng định kiểu "không chứa
+ * chuỗi X" sẽ XANH vì màn hình rỗng — xanh vì lý do sai.
+ *
+ * Cùng khuôn `commitmentSurfaceVisible` / `commitmentSurfaceKind`: luật sống ở
+ * hàm thuần, production và test gọi CÙNG một nguồn.
+ *
+ * `predict` là NĂNG LỰC; `challengeOpen` là TRÌNH BÀY. Module tự bày cam kết
+ * trên sân khấu (`presentedInStage`) thì shell không dựng bề mặt thứ hai.
+ */
+export function challengeSurfaceVisible(
+  mod: { predict?: { presentedInStage?: (s: unknown) => boolean } },
+  state: unknown,
+  challengeOpen: boolean,
+): boolean {
+  if (!mod.predict) return false;
+  if (mod.predict.presentedInStage?.(state)) return false;
+  return challengeOpen;
+}
+
+/** Có dựng LỐI VÀO Thử thách không — dẫn xuất từ năng lực, không từ tên bài. */
+export function challengeEntryVisible(
+  mod: { predict?: { presentedInStage?: (s: unknown) => boolean } },
+  state: unknown,
+): boolean {
+  if (!mod.predict) return false;
+  return !mod.predict.presentedInStage?.(state);
+}
+
+/**
  * Vùng trung tâm — host sân khấu mô phỏng (M2 #1). KHÔNG giả định simulation
  * là thuật toán (M2 #2): mọi thứ domain-specific render qua module.Workspace
  * lấy từ registry.
@@ -133,6 +166,8 @@ export function SimulationWorkspace() {
   const playing = useAppStore((s) => s.playing);
   const dispatch = useAppStore((s) => s.dispatch);
   const visualMode = useAppStore((s) => s.visualMode);
+  const challengeOpen = useAppStore((s) => s.challengeOpen);
+  const setChallengeOpen = useAppStore((s) => s.setChallengeOpen);
   const setVisualMode = useAppStore((s) => s.setVisualMode);
 
   if (unsupported) {
@@ -213,13 +248,37 @@ export function SimulationWorkspace() {
           bày ngay trên sân khấu (vd cụm quét dãy dùng `ScanActionZone`). Khi đó
           shell không dựng UI dùng chung nữa — một cam kết, một hình thức. Module
           không khai thì hành vi giữ nguyên như cũ. */}
-      {!mod.predict?.presentedInStage?.(active.state) && (
+      {/* W4B-2U2 §13 — THỬ THÁCH LÀ CHẾ ĐỘ, KHÔNG PHẢI ĐỒ ĐẠC THƯỜNG TRỰC.
+       *
+       * Trước wave này, hễ module khai `predict` là thanh dự đoán nằm sẵn trong
+       * Quan sát ở cả 11 target — nên sản phẩm đọc thành hỏi-đáp dù nó chưa bao
+       * giờ chặn playback. Nay `challengeOpen` (trình bày thuần) quyết định BÀY
+       * hay không; NĂNG LỰC `predict` và bên chấm `predict.check` không đổi một
+       * dòng. Đây là dời TRÌNH BÀY, không dời SỰ THẬT. */}
+      {challengeSurfaceVisible(mod, active.state, challengeOpen) && (
         <PredictionBar
           key={mod.timeline ? mod.timeline.currentStep(active.state) : "static"}
           module={mod}
           state={active.state}
           busy={playing}
         />
+      )}
+
+      {/* LỐI VÀO THỬ THÁCH — dẫn xuất từ NĂNG LỰC (`mod.predict`), không từ tên
+          bài. Một nút nhỏ, không phải một tấm nội dung: Quan sát vẫn là mặc định.
+          Module tự trình bày cam kết trên sân khấu (`presentedInStage`) thì không
+          dựng lối vào thứ hai — một cam kết, một hình thức. */}
+      {challengeEntryVisible(mod, active.state) && (
+        <div className="challenge-entry">
+          <button
+            type="button"
+            className={`btn-utility${challengeOpen ? " is-active" : ""}`}
+            onClick={() => setChallengeOpen(!challengeOpen)}
+            aria-expanded={challengeOpen}
+          >
+            {challengeOpen ? "Đóng thử thách" : "Thử thách: tự dự đoán bước này"}
+          </button>
+        </div>
       )}
     </section>
   );

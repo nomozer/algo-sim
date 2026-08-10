@@ -1,6 +1,7 @@
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { describe, expect, it, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
+import { challengeSurfaceVisible } from "../components/SimulationWorkspace";
 import { renderToString } from "react-dom/server";
 import { arrayLegendItems } from "../components/ArrayView";
 import { ScanActionZone } from "../components/ScanActionZone";
@@ -213,11 +214,18 @@ describe("W3B-1 · vùng hành động giữ đúng ranh giới cam kết", () =
       const { mod, state } = build(id, data);
       expect(mod.predict!.presentedInStage!(at(state, firstDecision(state))), id).toBe(true);
     }
-    // …và shell thật sự tôn trọng cờ đó trước khi dựng PredictionBar.
-    const shell = readFileSync(
-      new URL("../components/SimulationWorkspace.tsx", import.meta.url), "utf-8",
-    );
-    expect(shell).toMatch(/!mod\.predict\?\.presentedInStage\?\.\(active\.state\)/);
+    /* W4B-2U2: luật này KHÔNG đổi, chỉ ĐỔI CHỖ Ở. Trước đây nó là một biểu
+       thức inline trong JSX nên chỉ kiểm được bằng regex trên mã nguồn — brittle,
+       và đã đỏ khi biểu thức được tách ra. Nay chủ sở hữu là hàm THUẦN
+       `challengeSurfaceVisible`, nên khẳng định thẳng vào HÀNH VI: bước đã có
+       vùng hành động thì shell KHÔNG dựng bề mặt thứ hai, kể cả khi học sinh mở
+       Thử thách. */
+    for (const [id, data] of SCAN) {
+      const { mod, state } = build(id, data);
+      const s = at(state, firstDecision(state));
+      expect(challengeSurfaceVisible(mod, s, true), `${id}: dựng hai bề mặt cam kết`)
+        .toBe(false);
+    }
   });
 
   it("(11) hành động SAI không đổi bất kỳ sự thật nào của engine", () => {

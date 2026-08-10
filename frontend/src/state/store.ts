@@ -83,6 +83,17 @@ interface AppState {
    */
   aiOpen: boolean;
   /**
+   * W4B-2U2 §13 — CHẾ ĐỘ THỬ THÁCH có mở không. TRÌNH BÀY THUẦN, sống cạnh
+   * `rightOpen`/`aiOpen`, KHÔNG bao giờ vào engine state hay spec.
+   *
+   * Vì sao cần: `predict` là NĂNG LỰC của module, nhưng trước wave này hễ module
+   * khai `predict` là `PredictionBar` hiện THƯỜNG TRỰC trong Quan sát — nên mọi
+   * bài đều đọc thành hỏi-đáp. Đo được: 11 target khai `predict`.
+   * Nó CHƯA TỪNG chặn playback (`nextStep` không đọc `prediction`); lỗi là SỰ
+   * HIỆN DIỆN, không phải cái chốt. Cờ này tách *có năng lực* khỏi *đang bày ra*.
+   */
+  challengeOpen: boolean;
+  /**
    * M8: visual mode là TRÌNH BÀY THUẦN TÚY — chọn component vẽ, không hơn.
    * KHÔNG nằm trong engine state/SimulationSpec, KHÔNG do LLM chọn, KHÔNG ảnh
    * hưởng tính toán tất định. Đổi mode giữ nguyên active/state/cursor/prediction
@@ -134,6 +145,7 @@ interface AppState {
   setSpeedMs: (ms: number) => void;
   toggleRight: () => void;
   setAiOpen: (v: boolean) => void;
+  setChallengeOpen: (v: boolean) => void;
   openLibrary: () => void;
   /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active/prediction. */
   setVisualMode: (mode: VisualMode) => void;
@@ -193,6 +205,7 @@ export const useAppStore = create<AppState>((set, get) => {
     // nên SSR và trình duyệt khởi tạo giống hệt nhau.
     rightOpen: false,
     aiOpen: false,
+    challengeOpen: false,
     visualMode: "2d",
 
     setProblemText: (text) => set({ problemText: text }),
@@ -360,7 +373,11 @@ export const useAppStore = create<AppState>((set, get) => {
       if (!active) return;
       const mod = getSimulation(active.moduleId);
       if (!mod) return;
-      set({ active: { ...active, state: mod.init(active.config) }, playing: false, prediction: null });
+      // Đặt lại = về Quan sát: Thử thách là chế độ học sinh chủ động vào.
+      set({
+        active: { ...active, state: mod.init(active.config) },
+        playing: false, prediction: null, challengeOpen: false,
+      });
     },
 
     replaceSimulation: (config, state) => {
@@ -382,6 +399,7 @@ export const useAppStore = create<AppState>((set, get) => {
     setSpeedMs: (ms) => set({ speedMs: ms }),
     toggleRight: () => set({ rightOpen: !get().rightOpen }),
     setAiOpen: (v) => set({ aiOpen: v }),
+    setChallengeOpen: (v) => set({ challengeOpen: v }),
 
     // M8: CHỈ đổi trường trình bày. Không đụng active (engine state/cursor giữ
     // nguyên khối), không xoá prediction (nó gắn với BƯỚC hiện tại — bước không
@@ -402,6 +420,7 @@ export const useAppStore = create<AppState>((set, get) => {
         activeSampleId: null,
         playing: false,
         prediction: null,
+        challengeOpen: false,
         visualMode: "2d",
         view: "home",
         activeHistoryId: null,
