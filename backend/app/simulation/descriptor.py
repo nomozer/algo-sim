@@ -47,6 +47,11 @@ class FamilyId(str, Enum):
     TREE_TRAVERSAL = "tree_traversal"  # M17 W2A
     RELATIONAL_TABLE_QUERY = "relational_table_query"  # M17 W2B
     BOUNDED_CONTROL_FLOW = "bounded_control_flow"  # M17 W2C
+    # W4B-2Z — thuộc tính trình bày CÓ RÀNG BUỘC (HTML/CSS ở THPT).
+    # KHÔNG gộp vào structural_progressive_representation: family đó sở hữu
+    # reveal/move theo TRÌNH TỰ, còn ở đây không có trình tự nào — học sinh đổi
+    # một thuộc tính và đọc hệ quả ngay. Khác cơ chế, nên khác family.
+    WEB_PRESENTATION = "web_presentation"
 
 
 @dataclass(frozen=True)

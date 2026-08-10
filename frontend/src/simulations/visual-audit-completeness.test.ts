@@ -75,8 +75,13 @@ describe("W4B-2V §25 · bảng audit thị giác phải phủ đủ 22 target",
     }
   })();
 
-  it("catalog có đúng 22 target (nguồn: capability-descriptors.json)", () => {
-    expect(CATALOG_IDS.length).toBe(22);
+  it("catalog không rỗng và mọi id là duy nhất (nguồn: capability-descriptors.json)", () => {
+    /* W4B-2Z §8 — DẪN XUẤT, KHÔNG CHÉP SỐ. Khẳng định cũ đọc chính nguồn
+     chuẩn rồi khẳng định kích thước của nó — vòng tròn, và biến mỗi lần thêm
+     cơ chế thành một đợt sửa số ma thuật ở năm chỗ không liên quan. Hợp đồng
+     THẬT là PHỦ ĐỦ/song ánh, và nó mạnh hơn khi suy từ chủ sở hữu. */
+    expect(CATALOG_IDS.length).toBeGreaterThan(0);
+    expect(new Set(CATALOG_IDS).size, "id trùng trong catalog").toBe(CATALOG_IDS.length);
   });
 
   it("tài liệu audit tồn tại", () => {
@@ -92,7 +97,7 @@ describe("W4B-2V §25 · bảng audit thị giác phải phủ đủ 22 target",
 
     const missing = CATALOG_IDS.filter((c) => !ids.includes(c));
     expect(missing, `target trong catalog nhưng vắng khỏi audit:\n${missing.join("\n")}`).toEqual([]);
-    expect(ids.length, "số target được audit").toBe(22);
+    expect(ids.length, "số target được audit").toBe(CATALOG_IDS.length);
   });
 
   it("mỗi target có đúng MỘT phân loại, và tổng bốn lớp = 22", () => {
@@ -112,7 +117,7 @@ describe("W4B-2V §25 · bảng audit thị giác phải phủ đủ 22 target",
       "target mang hai phân loại — bảng tự mâu thuẫn").toEqual([]);
 
     const total = [...byId.values()].length;
-    expect(total, "tổng phân loại phải bằng 22").toBe(22);
+    expect(total, "tổng phân loại phải phủ đủ catalog").toBe(CATALOG_IDS.length);
   });
 
   it("dòng TEXT_DEPENDENT / REPRESENTATION_GAP phải NÊU TÊN thứ còn thiếu", () => {

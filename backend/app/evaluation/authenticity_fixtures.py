@@ -54,6 +54,14 @@ _P_NONBIN = "positional_representation.non_binary_base"
 OK_ARCHETYPES = ("direct", "paraphrase", "changed_input", "boundary")
 
 
+def _web_cfg(content: str, **style: object) -> str:
+    """Config web.style_model (W4B-2Z) — đúng schema validator BE.
+
+    `style` chỉ nhận khoá thuộc tập ĐÓNG; fixture truyền khoá lạ sẽ bị chính
+    validator production chặn (fixture không có đường vòng riêng)."""
+    return _j({"content": content, "style": style, "notes": None})
+
+
 def _baseconv_cfg(source: int, target: int, value: str) -> str:
     """Config binary.base_conversion (M17 W1) — đúng schema validator BE."""
     return _j({"sourceBase": source, "targetBase": target, "inputValue": value})
@@ -881,6 +889,47 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                           objects=_PG_OBJECTS, data=_PG_DATA),
                 [_classify("algorithm.bounded_control_flow")],
                 [_program_cfg_boolean()],
+            ),
+        },
+    ),
+    # W4B-2Z — thuộc tính trình bày có ràng buộc (HTML/CSS ở THPT).
+    # Bốn archetype đổi THUỘC TÍNH, không đổi cơ chế: đó chính là điều phải
+    # chứng minh — một cơ chế phục vụ nhiều bài học khác nhau.
+    "web.style_model": TargetFixture(
+        prompts={
+            "direct": "Một thẻ có dòng chữ \"Chào các bạn\". Hãy đổi màu nền của thẻ "
+                      "sang màu vàng nhạt và xem trang thay đổi thế nào.",
+            "paraphrase": "Em muốn dòng chữ \"Lớp 12A1\" hiển thị to hơn và có màu đỏ. "
+                          "Hãy thử đổi cỡ chữ và màu chữ rồi quan sát.",
+            "changed_input": "Cho khối chữ \"Thông báo\". Tăng khoảng đệm bên trong "
+                             "để chữ không dính sát mép, rồi so sánh trước và sau.",
+            "boundary": "Thẻ giới thiệu \"Câu lạc bộ Tin học\" đang vuông góc. "
+                        "Hãy bo tròn góc thẻ ở mức lớn nhất xem trông thế nào.",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Đổi màu nền của một khối chữ", ownership="provided",
+                          objects=["thẻ", "dòng chữ"], data=[]),
+                [_classify("web.style_model")],
+                [_web_cfg("Chào các bạn", backgroundColor="#fde68a")],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Đổi cỡ chữ và màu chữ", ownership="provided",
+                          objects=["dòng chữ"], data=[]),
+                [_classify("web.style_model")],
+                [_web_cfg("Lớp 12A1", fontSize=32, color="#b91c1c")],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Đổi khoảng đệm bên trong khối", ownership="provided",
+                          objects=["khối chữ"], data=[]),
+                [_classify("web.style_model")],
+                [_web_cfg("Thông báo", padding=32)],
+            ),
+            "boundary": CaseScript(
+                _analysis(goal="Bo tròn góc ở mức lớn nhất", ownership="provided",
+                          objects=["thẻ giới thiệu"], data=[]),
+                [_classify("web.style_model")],
+                [_web_cfg("Câu lạc bộ Tin học", borderRadius=40)],
             ),
         },
     ),

@@ -1188,6 +1188,29 @@ sản phẩm là tố cáo nhầm. Có `warmup()` nạp trước đồ thị mod
 phải bước cuối, nên runner đứng ở bước 0 (không có điểm quyết định) rồi báo FAIL.
 Mốc đúng là `.search-observe` (chỉ dựng khi `searchInteractionOf != null`).
 
+### `simulations/domains/web/` — MÔ HÌNH CSS CÓ RÀNG BUỘC (W4B-2Z)
+`web.style_model` — **BOUNDED_INTERACTIVE_ARTIFACT**, không phải trình soạn mã.
+Files: `props.ts` (miền giá trị — mirror của `catalog.py::validate_web_style_config`),
+`model.ts` (kiểu state), `apply.ts` (`applyStyleChange` fail-closed · `cssTextOf`
+SINH từ state · `isModified`), `index.ts` (module), `ui.tsx` (bố cục chia đôi).
+
+**Vì sao đây KHÔNG phải `code_experiment`** (vẫn DEFERRED — `ARCHITECTURE_MAP §10`):
+spec/state KHÔNG chứa mã nguồn. Học sinh đổi **thuộc tính trong tập ĐÓNG**
+(backgroundColor · color · fontSize · padding · borderRadius); mô hình tất định
+sở hữu sự thật, trình duyệt chỉ VẼ LẠI state. Không `eval`, không `new Function`,
+không iframe, không JS, không CSS passthrough. Tên/giá trị ngoài miền ⇒ no-op.
+Về kiến trúc giống hệt `logic.and_gate`: đổi tham số → state → biểu diễn.
+
+**Không khai `timeline`** ⇒ shell không dựng thanh phát (EXPLORATION_FIRST). Đây
+là chỗ sửa lỗi cũ: đề HTML/CSS từng bị đẩy vào `generic.rule_scene` và dựng
+thành "Bước 1/3 → hiện khung", tức BỊA một trục thời gian mà cơ chế không có.
+
+Backend: `catalog.py::CATALOG["web.style_model"]` + `FamilyId.WEB_PRESENTATION`
++ mechanism `web_presentation.bounded_style_properties`
+(`ResultAuthority.REPRESENTATION` — không có kết quả thuật toán nào được tính).
+Dùng lại `set_param` sẵn có, KHÔNG đẻ SimAction riêng.
+Tests: `web/bounded-model-w4b2z.test.tsx`.
+
 ### `scripts/measure-composition.mjs` · offline (cần Chrome + Vite)
 **ĐO bố cục, không cảm nhận** (W4B-2T §4). Với mỗi target chạy được offline, đo
 trong Chrome: hộp bao **sân khấu** vs hộp bao **nội dung có nghĩa** (hợp của mọi

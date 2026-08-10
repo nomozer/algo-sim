@@ -113,6 +113,13 @@ FAMILY_OPERATION_POLICY: dict[FamilyId, OperationPolicy] = {
         cardinality=PIPELINE, max_operations=4,
         note="Gán → rẽ nhánh → lặp → hiển thị là MỘT chương trình chạy nối tiếp.",
     ),
+    # W4B-2Z — thuộc tính trình bày là ĐỘC LẬP, không nối tiếp: đổi màu nền
+    # không phải "bước trước" của đổi cỡ chữ. Nên MULTIPLE chứ không PIPELINE,
+    # và không có nhóm loại-trừ nào — mọi tổ hợp thuộc tính đều dựng được.
+    FamilyId.WEB_PRESENTATION: OperationPolicy(
+        cardinality=MULTIPLE, max_operations=5,
+        note="Năm thuộc tính trình bày đổi được độc lập trong cùng một mô hình.",
+    ),
 }
 
 DEFAULT_POLICY = OperationPolicy(cardinality=SINGLE, max_operations=1)

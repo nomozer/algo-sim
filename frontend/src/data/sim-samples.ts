@@ -228,6 +228,40 @@ function genericEnvelope(title: string, spec: object): SimulationEnvelope {
   };
 }
 
+/* W4B-2Z — HAI bài CSS dùng CHUNG cơ chế `web.style_model`, khác nhau CHỈ ở
+   config đã validate. Đây là bằng chứng tái dụng: "đổi màu nền" và "trang trí
+   thẻ" KHÔNG đẻ hai renderer. */
+OFFLINE_SAMPLES.push(
+  {
+    id: "web-style-basic",
+    envelope: {
+      status: "ok", simulation_id: "web.style_model", domain: "web",
+      visual_mode: "2d", title: "Đổi màu nền và cỡ chữ (CSS)",
+      description: "Chỉnh thuộc tính, khối bên phải đổi ngay",
+      config: {
+        content: "Xin chào, đây là khối của em!",
+        style: { backgroundColor: "#bfdbfe", color: "#1f2937", fontSize: 20, padding: 16, borderRadius: 8 },
+        notes: null,
+      },
+      notes: null,
+    },
+  },
+  {
+    id: "web-style-card",
+    envelope: {
+      status: "ok", simulation_id: "web.style_model", domain: "web",
+      visual_mode: "2d", title: "Trang trí thẻ giới thiệu (CSS)",
+      description: "Cùng cơ chế, khác dữ liệu đã kiểm định",
+      config: {
+        content: "Nguyễn Văn A — Lớp 11A1",
+        style: { backgroundColor: "#fde68a", color: "#b91c1c", fontSize: 24, padding: 24, borderRadius: 20 },
+        notes: null,
+      },
+      notes: null,
+    },
+  },
+);
+
 OFFLINE_SAMPLES.push(
   // Ba bản "(tổng quát)" là FIXTURE PARITY: chứng minh generic engine tái tạo
   // được hành vi module chuyên biệt — giá trị cho test/dev, trùng lặp và gây

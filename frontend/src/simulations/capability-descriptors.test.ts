@@ -46,9 +46,13 @@ const descriptors = descriptorsJson as unknown as {
 beforeAll(() => registerAllSimulations());
 
 describe("M14 §C4 — descriptor ↔ registry cross-lock", () => {
-  it("mọi runtime target là module FE đã đăng ký (song ánh 1:1, 22 sau M17 W3)", () => {
+  it("mọi runtime target là module FE đã đăng ký (song ánh 1:1)", () => {
     const ids = Object.keys(descriptors.runtime_targets);
-    expect(ids.length).toBe(22);
+    /* W4B-2Z §8 — DẪN XUẤT, KHÔNG CHÉP SỐ. Khẳng định cũ đọc chính nguồn
+     chuẩn rồi khẳng định kích thước của nó — vòng tròn, và biến mỗi lần thêm
+     cơ chế thành một đợt sửa số ma thuật ở năm chỗ không liên quan. Hợp đồng
+     THẬT là PHỦ ĐỦ/song ánh, và nó mạnh hơn khi suy từ chủ sở hữu. */
+    expect(ids.length).toBeGreaterThan(0);
     for (const id of ids) expect(getSimulation(id), `thiếu module ${id}`).toBeDefined();
     // song ánh: số module đăng ký == số runtime target
     expect(listSimulations().length).toBe(ids.length);
@@ -123,10 +127,11 @@ describe("M17 P0 — visual modes: một nguồn, hai phía khớp", () => {
     expect(co3d).not.toContain("network.graph_traversal");
   });
 
-  it("21 target còn lại chỉ 2D, không bị khai vống", () => {
+  it("target còn lại chỉ 2D, không bị khai vống", () => {
     const chi2d = Object.values(descriptors.runtime_targets)
       .filter((t) => !t.visual_modes.includes("3d"));
-    expect(chi2d.length).toBe(21);
+    // W4B-2Z §8: suy từ tổng, không chép số.
+    expect(chi2d.length).toBe(Object.keys(descriptors.runtime_targets).length - TARGETS_3D.length);
     for (const t of chi2d) expect(t.visual_modes).toEqual(["2d"]);
   });
 

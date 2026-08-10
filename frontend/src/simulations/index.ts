@@ -2,6 +2,7 @@ import { registerAlgorithmDomain } from "./domains/algorithm";
 import { registerBinaryDomain } from "./domains/binary";
 import { registerDatabaseDomain } from "./domains/database/table-module";
 import { registerGenericDomain } from "./domains/generic";
+import { registerWebDomain } from "./domains/web";
 import { registerLogicDomain } from "./domains/logic";
 import { registerNetworkDomain } from "./domains/network";
 import { registerTreeDomain } from "./domains/tree/tree-module";
@@ -26,4 +27,5 @@ export function registerAllSimulations(): void {
   registerTreeDomain(); // M17 W2A — duyệt cây nhị phân
   registerDatabaseDomain(); // M17 W2B — truy vấn bảng quan hệ
   registerGenericDomain();
+  registerWebDomain();
 }

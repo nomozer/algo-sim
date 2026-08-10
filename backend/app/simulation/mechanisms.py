@@ -83,6 +83,12 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
         "bounded_control_flow.conditional_branch",
         "bounded_control_flow.bounded_loop",
     ),
+    # W4B-2Z — mô hình thuộc tính trình bày có ràng buộc. MỘT cơ chế phục vụ
+    # nhiều bài CSS (đổi màu nền, đổi cỡ chữ, trang trí thẻ) — khác dữ liệu đã
+    # validate, KHÔNG khác renderer.
+    FamilyId.WEB_PRESENTATION: (
+        "web_presentation.bounded_style_properties",
+    ),
 }
 
 # Khóa 2 — giá trị CỐ Ý không target nào sở hữu (gap-trigger, khai tường minh)
@@ -115,6 +121,7 @@ FORMALIZED_FAMILIES: frozenset[FamilyId] = frozenset({
     FamilyId.TREE_TRAVERSAL,             # M17 W2A — duyệt cây nhị phân
     FamilyId.RELATIONAL_TABLE_QUERY,     # M17 W2B — truy vấn bảng quan hệ
     FamilyId.BOUNDED_CONTROL_FLOW,       # M17 W2C — luồng điều khiển hữu hạn
+    FamilyId.WEB_PRESENTATION,           # W4B-2Z — thuộc tính trình bày bounded
 })  # đủ == frozenset(FamilyId) — K1 lock kích hoạt ĐẦY ĐỦ (test_formalized_families_owned_khong_rong)
 
 

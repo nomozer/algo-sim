@@ -229,6 +229,6 @@ def test_w4b1b_do_phu_target_tuong_minh_dung_bang_so_thuc():
     covered = {it.expect_simulation_id for pool in POOLS.values() for it in pool
                if it.expect_simulation_id}
     missing = catalog_ids - covered
-    assert len(catalog_ids) == 22
     assert missing == set(), f"còn thiếu ca tường minh cho: {sorted(missing)}"
-    assert len(catalog_ids & covered) == 22
+    # Điều phải chứng minh là PHỦ KÍN, không phải "danh mục có đúng N mục".
+    assert len(catalog_ids & covered) == len(catalog_ids) > 0

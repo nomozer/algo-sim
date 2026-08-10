@@ -109,6 +109,21 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
             "loop_iteration_counter", "narration_per_step",
         ),
     ),
+    # W4B-2Z — thuộc tính trình bày CÓ RÀNG BUỘC. Không có trace: không có quá
+    # trình theo thời gian nào cả (giống `logic.and_gate`). Sự thật là `style`
+    # sau khi qua cổng kiểm miền; `baseline` giữ bản gốc đã validate để "về ban
+    # đầu" là PHÉP TOÁN chứ không phải nhật ký hoàn tác. Renderer chỉ VẼ state —
+    # `css_text_derived_from_state` khoá đúng chỗ dễ trôi nhất: nếu chuỗi CSS
+    # hiển thị được lưu riêng thì sẽ có HAI nguồn sự thật lệch nhau.
+    "web.style_model": AuthenticityContract(
+        required_state_fields=("content", "style", "baseline"),
+        required_trace_events=(),
+        required_result_fields=("style",),
+        renderer_semantic_requirements=(
+            "artifact_reflects_style_state", "css_text_derived_from_state",
+            "control_shows_current_value", "out_of_domain_value_rejected",
+        ),
+    ),
     # logic — exploratory, không timeline; output là hàm dẫn xuất andOutput
     "logic.and_gate": AuthenticityContract(
         required_state_fields=("inputA", "inputB"),

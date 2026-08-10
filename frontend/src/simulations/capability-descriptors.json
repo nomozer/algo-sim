@@ -1165,6 +1165,52 @@
         "generic_allowed": true,
         "near_miss_mechanisms": []
       }
+    },
+    "web.style_model": {
+      "domain": "web",
+      "executor_id": "web.style_model",
+      "visual_modes": [
+        "2d"
+      ],
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T12 CĐ4 · HTML/CSS",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "web_presentation",
+          "result_authority": "representation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "web_presentation.bounded_style_properties"
+          ]
+        }
+      ],
+      "config_contract_version": "web-style-1",
+      "authenticity": {
+        "required_state_fields": [
+          "content",
+          "style",
+          "baseline"
+        ],
+        "required_trace_events": [],
+        "required_result_fields": [
+          "style"
+        ],
+        "renderer_semantic_requirements": [
+          "artifact_reflects_style_state",
+          "css_text_derived_from_state",
+          "control_shows_current_value",
+          "out_of_domain_value_rejected"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
     }
   },
   "family_selectors": {
@@ -1215,6 +1261,7 @@
     "binary.character_encoding",
     "network.protocol_encapsulation",
     "generic.rule_scene",
+    "web.style_model",
     "algorithm.comparison_sort"
   ]
 }

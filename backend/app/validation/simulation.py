@@ -666,3 +666,69 @@ def validate_encapsulation_config(raw) -> tuple[dict | None, str | None]:
 
     notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
     return {"payloadLabel": payload, "appProtocol": proto, "notes": notes}, None
+
+
+# ── Domain web (W4B-2Z) — thuộc tính trình bày CÓ RÀNG BUỘC ───
+
+# Bảng màu ĐÓNG. Học sinh chọn trong bảng, LLM cũng chỉ được chọn trong bảng —
+# không có đường nào đưa chuỗi CSS tự do vào state. Mirror ở
+# `frontend/src/simulations/domains/web/props.ts` (kiểm hai tầng).
+_WEB_BG_COLORS = ("#ffffff", "#fde68a", "#fca5a5", "#a7f3d0", "#bfdbfe", "#e9d5ff", "#1f2937")
+_WEB_TEXT_COLORS = ("#1f2937", "#b91c1c", "#1d4ed8", "#047857", "#ffffff")
+_WEB_NUMERIC = {"fontSize": (12, 48), "padding": (0, 48), "borderRadius": (0, 40)}
+_WEB_DEFAULT_STYLE = {
+    "backgroundColor": "#ffffff", "color": "#1f2937",
+    "fontSize": 16, "padding": 16, "borderRadius": 8,
+}
+_WEB_CONTENT_MAX = 120
+
+
+def validate_web_style_config(raw) -> tuple[dict | None, str | None]:
+    """web.style_model — nội dung một dòng + năm thuộc tính trình bày.
+
+    FAIL-CLOSED theo cả hai chiều: khoá lạ bị từ chối (không im lặng bỏ qua) và
+    giá trị ngoài miền bị từ chối (không kẹp về biên). Kẹp im lặng sẽ dạy học
+    sinh một điều SAI: rằng em đã đặt được giá trị đó.
+
+    Khoá thiếu thì điền mặc định — nhờ vậy config LUÔN mang đủ năm thuộc tính,
+    và `EXPLICIT_TARGET_OPERATIONS` mới nói đúng rằng spec biểu diễn cả năm.
+    """
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+
+    content = raw.get("content")
+    if not isinstance(content, str) or not content.strip():
+        return None, '"content" phải là chuỗi không rỗng.'
+    if len(content) > _WEB_CONTENT_MAX:
+        return None, f'"content" tối đa {_WEB_CONTENT_MAX} ký tự.'
+
+    style = raw.get("style", {})
+    if style is None:
+        style = {}
+    if not isinstance(style, dict):
+        return None, '"style" phải là đối tượng.'
+
+    out = dict(_WEB_DEFAULT_STYLE)
+    for key, value in style.items():
+        if key == "backgroundColor":
+            if value not in _WEB_BG_COLORS:
+                return None, f'"backgroundColor" phải thuộc bảng màu: {", ".join(_WEB_BG_COLORS)}.'
+        elif key == "color":
+            if value not in _WEB_TEXT_COLORS:
+                return None, f'"color" phải thuộc bảng màu chữ: {", ".join(_WEB_TEXT_COLORS)}.'
+        elif key in _WEB_NUMERIC:
+            lo, hi = _WEB_NUMERIC[key]
+            if not isinstance(value, int) or isinstance(value, bool) or not lo <= value <= hi:
+                return None, f'"{key}" phải là số nguyên trong [{lo}, {hi}].'
+        else:
+            return None, (
+                f'Thuộc tính "{key}" không được hỗ trợ. '
+                f'Chỉ có: {", ".join(sorted(_WEB_DEFAULT_STYLE))}.'
+            )
+        out[key] = value
+
+    notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
+    return {"content": content.strip(), "style": out, "notes": notes}, None

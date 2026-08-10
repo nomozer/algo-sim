@@ -561,6 +561,36 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "chạm biên thì dừng và nói thật — không giả vờ đã chạy xong."
         ),
     ),
+    # W4B-2Z — HTML/CSS lớp 12. Đây là chỗ chương trình THPT nói về trình bày
+    # trang web; trước đây đề kiểu này rơi vào generic.rule_scene và bị dựng
+    # thành "các bước hé lộ", tức bịa ra một trục thời gian mà bài học không có.
+    EvalItem(
+        id="cur-t12-css-style-card",
+        text=(
+            "Trang web có một thẻ hiển thị dòng chữ \"Chào mừng đến với lớp 12A1\". "
+            "Hãy thử đổi màu nền, cỡ chữ và khoảng đệm của thẻ để xem mỗi thuộc "
+            "tính CSS ảnh hưởng thế nào tới cách thẻ hiển thị."
+        ),
+        group="specialized",
+        expect_simulation_id="web.style_model",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T12.CD4",
+        curriculum_topic="Định dạng trang web bằng CSS (Bài 12–14)",
+        capability_family="web_presentation",
+        complexity="L2",
+        result_mode="interactive_visualization",
+        learning_objective=(
+            "Chỉ ra được thuộc tính CSS nào chi phối phần nào của cách hiển thị, "
+            "và dự đoán được thẻ trông thế nào TRƯỚC khi đổi giá trị."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: thuộc tính trình bày tác động ĐỘC LẬP lên cùng một khối — "
+            "padding đổi khoảng trống bên trong chứ không đổi cỡ chữ. Học sinh học "
+            "CSS qua bảng thuộc tính in sẵn thì nhớ tên mà không nối được tên với "
+            "hệ quả nhìn thấy. Đổi một giá trị rồi thấy khối đổi ngay là cách nối "
+            "đó. KHÔNG có tiến trình theo thời gian, nên KHÔNG có thanh phát."
+        ),
+    ),
     EvalItem(
         id="cur-t10-dag-truth-table",
         text=(

@@ -151,6 +151,13 @@ SEMANTIC_OPERATION_MAP: dict[str, SemanticRequirement] = {
     "bounded_control_flow:conditional": SemanticRequirement("program.branch"),
     "bounded_control_flow:loop": SemanticRequirement("program.loop"),
     "bounded_control_flow:output": SemanticRequirement("program.output"),
+    # W4B-2Z — mỗi thuộc tính trình bày là MỘT yêu cầu riêng: đề hỏi "đổi màu
+    # nền và cỡ chữ" mà spec chỉ đổi màu nền là đã bỏ sót một nửa.
+    "web_presentation:background": SemanticRequirement("style.background"),
+    "web_presentation:text_color": SemanticRequirement("style.text_color"),
+    "web_presentation:font_size": SemanticRequirement("style.font_size"),
+    "web_presentation:padding": SemanticRequirement("style.spacing"),
+    "web_presentation:border_radius": SemanticRequirement("style.corner"),
 }
 
 
@@ -323,6 +330,12 @@ _LABELS: dict[str, str] = {
     "bounded_control_flow:conditional": "rẽ nhánh theo điều kiện",
     "bounded_control_flow:loop": "lặp có biên",
     "bounded_control_flow:output": "hiển thị giá trị",
+    # W4B-2Z — nhãn nói bằng tiếng của học sinh, không nói tên thuộc tính CSS
+    "web_presentation:background": "đổi màu nền",
+    "web_presentation:text_color": "đổi màu chữ",
+    "web_presentation:font_size": "đổi cỡ chữ",
+    "web_presentation:padding": "đổi khoảng đệm bên trong",
+    "web_presentation:border_radius": "bo tròn góc",
 }
 
 
@@ -341,6 +354,9 @@ EXPLICIT_TARGET_OPERATIONS: dict[str, tuple[str, ...]] = {
     # W2C: một chương trình gồm NHIỀU cấu trúc nối tiếp (gán → rẽ nhánh → lặp);
     # mỗi cấu trúc là một operation, nên family này cũng có cardinality `pipeline`.
     "algorithm.bounded_control_flow": ("assignment", "conditional", "loop", "output"),
+    # W4B-2Z: config LUÔN mang đủ năm thuộc tính, nên spec biểu diễn cả năm —
+    # không có tập con nào bị bỏ im lặng. `style_model` KHÔNG tự thành operation.
+    "web.style_model": ("background", "text_color", "font_size", "padding", "border_radius"),
 }
 
 

@@ -21,7 +21,10 @@ def test_descriptor_json_khong_troi_khoi_nguon():
 
 def test_cau_truc_co_ban():
     d = capability_descriptors()
-    assert len(d["runtime_targets"]) == 22  # W2A +tree.traversal · W2B +database.relational_table_query · W2C +algorithm.bounded_control_flow
+    # W4B-2Z §8: suy từ CATALOG (chủ sở hữu chuẩn) thay vì chép số — thêm cơ chế
+    # không còn kéo theo sửa số ma thuật ở nhiều chỗ không liên quan.
+    from app.simulation.catalog import CATALOG
+    assert len(d["runtime_targets"]) == len(CATALOG)
     assert "comparison_sort" in d["family_selectors"]
     token = d["family_selectors"]["comparison_sort"]["selector_token"]
     # token selector KHÔNG được là một runtime target
@@ -130,7 +133,10 @@ def test_che_do_la_tu_vung_dong_khong_phai_chuoi_tuy_y():
 def test_descriptor_mang_dung_visual_modes():
     """Bảng năng lực sinh tự động phải báo 1/22, không phải 0/22."""
     d = capability_descriptors()["runtime_targets"]
-    assert len(d) == 22
+    from app.simulation.catalog import CATALOG
+    assert len(d) == len(CATALOG)
     co_3d = {k for k, t in d.items() if "3d" in t["visual_modes"]}
     assert co_3d == TARGETS_3D
-    assert sum(1 for t in d.values() if t["visual_modes"] == ["2d"]) == 21
+    # Suy từ nguồn: mọi target KHÔNG thuộc TARGETS_3D thì chỉ 2D. Khoá con số
+    # tay ở đây chỉ đo được "danh mục có đúng N mục", không đo được điều cần đo.
+    assert sum(1 for t in d.values() if t["visual_modes"] == ["2d"]) == len(d) - len(TARGETS_3D)

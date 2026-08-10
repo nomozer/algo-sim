@@ -91,6 +91,7 @@ from app.validation.simulation import (
     validate_boolean_dag_config,
     validate_encapsulation_config,
     validate_logic_config,
+    validate_web_style_config,
     validate_network_config,
     validate_scan_config,
     validate_traverse_config,
@@ -1519,3 +1520,62 @@ def catalog_text() -> str:
             if sel is not None:
                 lines.append(f"- {choice}: {sel.description}")
     return "\n".join(lines)
+
+# ── web.style_model (W4B-2Z) — MÔ HÌNH THUỘC TÍNH TRÌNH BÀY CÓ RÀNG BUỘC ──
+#
+# Vì sao đây là một CƠ CHẾ, không phải một đề bài mới: học sinh không xem một
+# tiến trình chạy mà ĐỔI THAM SỐ rồi đọc hệ quả ngay — cùng khuôn khám phá với
+# logic.and_gate, khác miền. Trước wave này, đề HTML/CSS bị đẩy vào
+# generic.rule_scene và dựng thành "Bước 1/3 → hiện khung", tức BỊA một trục
+# thời gian mà cơ chế không hề có.
+#
+# ĐÂY KHÔNG PHẢI code_experiment (vẫn DEFERRED, ARCHITECTURE_MAP §10):
+# spec KHÔNG chứa mã nguồn HTML/CSS. Nó mô tả một MÔ HÌNH có tập thuộc tính
+# ĐÓNG; trình duyệt chỉ vẽ lại state, không diễn giải code tuỳ ý.
+_WEB_STYLE_SCHEMA: dict = {
+    "type": "object",
+    "additionalProperties": False,
+    "required": ["content"],
+    "properties": {
+        "content": {"type": "string", "minLength": 1, "maxLength": 120},
+        "style": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "backgroundColor": {"type": "string"},
+                "color": {"type": "string"},
+                "fontSize": {"type": "integer", "minimum": 12, "maximum": 48},
+                "padding": {"type": "integer", "minimum": 0, "maximum": 48},
+                "borderRadius": {"type": "integer", "minimum": 0, "maximum": 40},
+            },
+        },
+        "notes": {"type": ["string", "null"]},
+    },
+}
+
+_WEB_STYLE_CONTRACT = """web.style_model — mô hình thuộc tính trình bày CÓ RÀNG BUỘC.
+- content: một dòng chữ hiển thị trong khối (<= 120 ký tự).
+- style: CHỈ các khoá backgroundColor, color, fontSize, padding, borderRadius.
+- Màu phải nằm trong bảng đã khai; số phải trong biên đã khai.
+- KHÔNG sinh mã HTML/CSS/JS, KHÔNG chuỗi style tự do, KHÔNG thuộc tính ngoài danh sách.
+- Đây là mô phỏng KHÁM PHÁ: không có bước, không timeline."""
+
+CATALOG["web.style_model"] = SimSpec(
+    simulation_id="web.style_model",
+    domain="web",
+    visual_modes=("2d",),
+    description="thay đổi thuộc tính trình bày (CSS) của một khối và quan sát kết quả đổi ngay: màu nền, màu chữ, cỡ chữ, đệm trong, bo góc. Dùng khi đề hỏi VỀ HIỆU QUẢ của thuộc tính CSS. KHÔNG dùng cho dựng cấu trúc trang từng bước (đó là generic.rule_scene)",
+    config_schema=_WEB_STYLE_SCHEMA,
+    contract=_WEB_STYLE_CONTRACT,
+    validate=validate_web_style_config,
+    make_title=lambda config, analysis: "Thay đổi kiểu hiển thị (CSS)",
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.WEB_PRESENTATION, ResultAuthority.REPRESENTATION,
+            owned_mechanisms=("web_presentation.bounded_style_properties",),
+        ),
+    ),
+    reachability=_R_FULL,
+    curriculum_anchor="T12 CĐ4 · HTML/CSS",
+    config_contract_version="web-style-1",
+)

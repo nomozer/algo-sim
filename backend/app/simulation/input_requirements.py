@@ -129,6 +129,21 @@ INPUT_REQUIREMENTS: dict[str, InputRequirements] = {
             "chương trình thay em."
         ),
     ),
+    # ── W4B-2Z: cần ĐỐI TƯỢNG được trình bày (khối/thẻ và chữ trong nó) ──
+    # Dùng lại REPRESENTATION_OBJECTS chứ KHÔNG đẻ InputKind mới: "một thẻ giới
+    # thiệu có tiêu đề X" đúng là đối tượng cần biểu diễn — không có gì mới về
+    # NHÓM dữ kiện, chỉ mới về cơ chế. Đề trống ⇒ chặn, vì hệ tự nghĩ ra nội
+    # dung thì học sinh đang nhìn trang của MÁY, không phải trang của đề.
+    "web.style_model": InputRequirements(
+        required_grounded_inputs=(InputKind.REPRESENTATION_OBJECTS,),
+        accepted_evidence_types=("objects.named_entities", "objects.quoted_characters"),
+        insufficiency_error_code=ErrorCode.INPUT_INSUFFICIENT,
+        learner_prompt_template=(
+            "Đề chưa cho biết cần trình bày nội dung gì. Em hãy nêu rõ khối chữ "
+            "cần đổi kiểu hiển thị (ví dụ: một thẻ có dòng chữ \"Chào các bạn\") "
+            "rồi thử lại — hệ không tự nghĩ ra nội dung trang thay em."
+        ),
+    ),
     # ── W3: cần CHUỖI cần mã hoá + BẢNG MÃ ──
     "binary.character_encoding": InputRequirements(
         required_grounded_inputs=(InputKind.TEXT_AND_ENCODING,),

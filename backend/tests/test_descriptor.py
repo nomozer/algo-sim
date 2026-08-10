@@ -29,7 +29,7 @@ def test_reachability_dong_bon_muc():
 
 def test_family_taxonomy_dong_dung_muoi_family():
     # M17 W2A: +tree_traversal (9) · W2B: +relational_table_query (10)
-    #      W2C: +bounded_control_flow (11)
+    #      W2C: +bounded_control_flow (11) · W4B-2Z: +web_presentation (12)
     assert {f.value for f in FamilyId} == {
         "single_pass_scan",
         "interval_elimination",
@@ -42,6 +42,7 @@ def test_family_taxonomy_dong_dung_muoi_family():
         "tree_traversal",
         "relational_table_query",
         "bounded_control_flow",
+        "web_presentation",
     }
 
 

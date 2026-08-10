@@ -110,7 +110,14 @@ def test_classification_va_metrics(monkeypatch):
     n_targets = len(ai_reachable_ids())
     assert len(cls) == n_targets
     assert cls["generic.rule_scene"] == "PARTIAL"  # dual authority (boolean DAG + representation)
-    assert all(v == "REAL" for sid, v in cls.items() if sid != "generic.rule_scene")
+    # W4B-2Z — `web.style_model` KHÔNG tính ra đáp án nào: nó biểu diễn hệ quả
+    # của thuộc tính trình bày. REPRESENTATION_ONLY là phân loại TRUNG THỰC, và
+    # khai nó ở đây (thay vì nới lỏng assert) giữ nguyên sức mạnh của lock: mọi
+    # target khác vẫn phải là REAL.
+    assert cls["web.style_model"] == "REPRESENTATION_ONLY"
+    _rest = {sid: v for sid, v in cls.items()
+             if sid not in ("generic.rule_scene", "web.style_model")}
+    assert all(v == "REAL" for v in _rest.values()), _rest
 
     m = audit_metrics(records, cls)
     n_nm = len({nm for c in AUTHENTICITY_CONTRACTS.values() for nm in c.near_miss_mechanisms})
@@ -122,7 +129,9 @@ def test_classification_va_metrics(monkeypatch):
     assert parity["numerator"] == parity["denominator"] == len(records)
     assert m["generic_leak"]["unconditional_leaks"] == 0
     assert m["generic_leak"]["conditional_leaks_confirmed"] == 0  # W2A: probe đã đóng
-    assert m["classification_histogram"] == {"REAL": n_targets - 1, "PARTIAL": 1}
+    assert m["classification_histogram"] == {
+        "REAL": n_targets - 2, "PARTIAL": 1, "REPRESENTATION_ONLY": 1,
+    }
 
     ledger = build_leak_ledger(records)
     verdicts = {e["case_id"]: e["verdict"] for e in ledger}
