@@ -2632,11 +2632,18 @@ html {
    Đặt ngay trong `.sim-stage`, phía trên dãy: trạng thái nằm cạnh đối tượng nó
    mô tả, không phải ở một tấm thẻ tận mép kia. Khi giá trị vừa đổi thì hiện
    `trước → sau` — học sinh THẤY chuyển tiếp thay vì đọc câu kể lại nó. */
+/* Căn GIỮA theo sân khấu: `.sim-stage` không phải flex container nên
+   `align-self` vô tác dụng — ảnh `count_if-terminal` của chính wave này cho thấy
+   huy hiệu dạt hẳn mép trái trong khi dãy nằm giữa, tức trạng thái lại rời khỏi
+   đối tượng nó mô tả. `margin-inline: auto` trên phần tử `flex` bề rộng
+   `fit-content` là cách căn giữa không cần đụng vào layout của sân khấu. */
 .acc-badge {
-  display: inline-flex;
+  display: flex;
+  width: fit-content;
+  margin-inline: auto;
+  margin-bottom: var(--sp-xs);
   align-items: baseline;
   gap: var(--sp-xs);
-  align-self: center;
   padding: var(--sp-xxs) var(--sp-sm);
   border-radius: var(--rounded-full);
   background: var(--canvas-soft);
