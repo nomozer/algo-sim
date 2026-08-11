@@ -81,7 +81,9 @@ def test_catalog_entry_descriptor_day_du():
     owned = {m for mb in spec.family_memberships for m in mb.owned_mechanisms}
     assert "positional_representation.non_binary_base" in owned  # gap flip W1
     assert "positional_representation.binary_positional_weights" in owned
-    # AI-reachable nhưng KHÔNG library_discoverable (chưa có mẫu offline)
+    # W4B-3D — nay CÓ mẫu offline công khai nên `library_discoverable` là khai
+    # ĐÚNG SỰ THẬT. Chốt cũ ("chưa có mẫu") mô tả một trạng thái không còn tồn
+    # tại; giữ nó lại sẽ khoá kho mã vào một giới hạn đã được gỡ.
     assert ReachabilityLevel.AI_REACHABLE_PUBLIC in spec.reachability
-    assert ReachabilityLevel.LIBRARY_DISCOVERABLE not in spec.reachability
+    assert ReachabilityLevel.LIBRARY_DISCOVERABLE in spec.reachability
     assert CONV_BASES == (2, 8, 10, 16)

@@ -336,10 +336,8 @@ _ALGO_META: dict[str, dict] = {
             ),
         ),
         "anchor": "T11CS B21–22",
-        "reachability": (
-            ReachabilityLevel.REGISTERED,
-            ReachabilityLevel.AI_REACHABLE_PUBLIC,
-        ),
+        # W4B-3D — nay có mẫu offline công khai.
+        "reachability": _R_FULL,
     },
 }
 
@@ -463,10 +461,9 @@ CATALOG["logic.boolean_dag"] = SimSpec(
             owned_mechanisms=("boolean_composition.bounded_gate_dag",),
         ),
     ),
-    reachability=(
-        ReachabilityLevel.REGISTERED,
-        ReachabilityLevel.AI_REACHABLE_PUBLIC,
-    ),
+    # W4B-3D — nay CÓ mẫu offline công khai (Thư viện học sinh), nên
+    # `library_discoverable` là khai ĐÚNG SỰ THẬT, không phải nâng hạng.
+    reachability=_R_FULL,
     curriculum_anchor="T10 B5 · T12CS B22–24",
     config_contract_version="logic-dag-1.0",
 )
@@ -565,10 +562,9 @@ CATALOG["binary.base_conversion"] = SimSpec(
         ),
     ),
     # Như scan/selection: AI-reachable, KHÔNG library_discoverable (chưa có mẫu offline)
-    reachability=(
-        ReachabilityLevel.REGISTERED,
-        ReachabilityLevel.AI_REACHABLE_PUBLIC,
-    ),
+    # W4B-3D — nay CÓ mẫu offline công khai (Thư viện học sinh), nên
+    # `library_discoverable` là khai ĐÚNG SỰ THẬT, không phải nâng hạng.
+    reachability=_R_FULL,
     curriculum_anchor="T10 B4",
     config_contract_version="baseconv-1.0",
 )
@@ -698,10 +694,9 @@ CATALOG["network.graph_traversal"] = SimSpec(
             ),
         ),
     ),
-    reachability=(
-        ReachabilityLevel.REGISTERED,
-        ReachabilityLevel.AI_REACHABLE_PUBLIC,
-    ),
+    # W4B-3D — nay CÓ mẫu offline công khai (Thư viện học sinh), nên
+    # `library_discoverable` là khai ĐÚNG SỰ THẬT, không phải nâng hạng.
+    reachability=_R_FULL,
     curriculum_anchor="T11CS B17 · T12 CĐ2",
     known_gaps=("đường đi ngắn nhất có trọng số (Dijkstra) — future family",),
     config_contract_version="traverse-1.0",
@@ -856,10 +851,9 @@ CATALOG["tree.traversal"] = SimSpec(
             ),
         ),
     ),
-    reachability=(
-        ReachabilityLevel.REGISTERED,
-        ReachabilityLevel.AI_REACHABLE_PUBLIC,
-    ),
+    # W4B-3D — nay CÓ mẫu offline công khai (Thư viện học sinh), nên
+    # `library_discoverable` là khai ĐÚNG SỰ THẬT, không phải nâng hạng.
+    reachability=_R_FULL,
     curriculum_anchor="T11CS B17 · T11 CĐ (cấu trúc dữ liệu cây)",
     known_gaps=(
         "BST/AVL/heap/cây biểu thức/cây n-nhánh — ngoài phạm vi duyệt cây nhị phân",
@@ -905,10 +899,9 @@ CATALOG["database.relational_table_query"] = SimSpec(
     # AI-reachable phải có module render thật; route tới target không vẽ được
     # là trả cho học sinh một màn hình hỏng. Lật sang AI_REACHABLE_PUBLIC ngay
     # khi renderer xong.
-    reachability=(
-        ReachabilityLevel.REGISTERED,
-        ReachabilityLevel.AI_REACHABLE_PUBLIC,
-    ),
+    # W4B-3D — nay CÓ mẫu offline công khai (Thư viện học sinh), nên
+    # `library_discoverable` là khai ĐÚNG SỰ THẬT, không phải nâng hạng.
+    reachability=_R_FULL,
     curriculum_anchor="T11 CĐ CSDL (bảng, truy vấn cơ bản)",
     known_gaps=(
         "JOIN nhiều bảng · truy vấn lồng · thêm/sửa/xoá dữ liệu · SQL tự do · "
@@ -1166,7 +1159,9 @@ CATALOG["algorithm.bounded_control_flow"] = SimSpec(
             owned_mechanisms=FAMILY_MECHANISMS[FamilyId.BOUNDED_CONTROL_FLOW],
         ),
     ),
-    reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),
+    # W4B-3D — nay CÓ mẫu offline công khai (Thư viện học sinh), nên
+    # `library_discoverable` là khai ĐÚNG SỰ THẬT, không phải nâng hạng.
+    reachability=_R_FULL,
     curriculum_anchor="T10 B16–B19 (cấu trúc rẽ nhánh, lặp) · T11CS CĐ",
     known_gaps=(
         "hàm/thủ tục và đệ quy — ngoài phạm vi luồng điều khiển hữu hạn",
@@ -1235,7 +1230,9 @@ CATALOG["binary.character_encoding"] = SimSpec(
     # Chưa có đề mẫu công khai trong Thư viện ⇒ KHÔNG khai library_discoverable
     # (đúng tiền lệ algorithm.scan / bounded_control_flow: không quảng bá một
     # affordance chưa tồn tại). Thêm mẫu là việc nhỏ, để checkpoint sau.
-    reachability=(ReachabilityLevel.REGISTERED, ReachabilityLevel.AI_REACHABLE_PUBLIC),
+    # W4B-3D — nay CÓ mẫu offline công khai (Thư viện học sinh), nên
+    # `library_discoverable` là khai ĐÚNG SỰ THẬT, không phải nâng hạng.
+    reachability=_R_FULL,
     curriculum_anchor="T10 B3 · T10 B6 (mã hoá văn bản)",
     known_gaps=(
         "emoji và ký tự ngoài BMP (mã > 65535) — ngoài phạm vi v1",

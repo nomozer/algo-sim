@@ -409,6 +409,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T11CS B21–22",
@@ -506,6 +507,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B5 · T12CS B22–24",
@@ -602,6 +604,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B4",
@@ -707,6 +710,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T11CS B17 · T12 CĐ2",
@@ -765,6 +769,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T11CS B17 · T11 CĐ (cấu trúc dữ liệu cây)",
@@ -822,6 +827,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T11 CĐ CSDL (bảng, truy vấn cơ bản)",
@@ -942,6 +948,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B16–B19 (cấu trúc rẽ nhánh, lặp) · T11CS CĐ",
@@ -1001,6 +1008,7 @@
       ],
       "reachability": [
         "registered",
+        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B3 · T10 B6 (mã hoá văn bản)",

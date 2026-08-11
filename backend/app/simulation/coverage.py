@@ -87,7 +87,7 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
                   "biến thể selection (bubble/insertion/selection — quick vẫn gap); "
                   "targeted acceptance, KHÔNG phải bằng chứng thống kê",
                   support_kind=SupportKind.SUPPORTED_INTERACTIVE,
-                  support_evidence="bubble/insertion ĐO ĐƯỢC là INTERACTIVE_MODEL (kéo đổi chỗ → apply → engine chạy lại nhánh); selection chỉ KHAI BÁO (chưa có bài mẫu offline)"),
+                  support_evidence="bubble/insertion/selection ĐO ĐƯỢC là INTERACTIVE_MODEL (kéo đổi chỗ → apply → engine chạy lại nhánh). W4B-3D: selection nay có mẫu offline nên đã đo trong trình duyệt, không còn chỉ khai báo"),
     KnowledgeUnit("binary_search", "Tìm kiếm nhị phân", "T11CS B19",
                   CoverageStatus.SUPPORTED, "algorithm.binary_search",
                   support_kind=SupportKind.SUPPORTED_INTERACTIVE,
@@ -104,20 +104,20 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
                   "ĐÓNG. Tích hợp ngôn ngữ tự nhiên PARTIAL. KHÔNG chạy code Python "
                   "tự do; hàm/đệ quy ngoài phạm vi",
                   support_kind=SupportKind.PARTIAL,
-                  support_evidence="bounded_control_flow có timeline nhưng CHƯA có bài mẫu offline ⇒ chưa có bằng chứng trình duyệt; không predict, không explore"),
+                  support_evidence="bounded_control_flow ĐÃ có mẫu offline và đo được trong trình duyệt (W4B-3D). Vẫn PARTIAL vì tích hợp ngôn ngữ tự nhiên chưa đủ và không có predict/explore — TRACE thuần"),
     KnowledgeUnit("binary_system", "Hệ đếm & đổi cơ số (trọng số vị trí)", "T10 B4",
                   CoverageStatus.SUPPORTED,
                   "binary.decimal_to_binary (bit trọng số 8/4/2/1) + M17 W1 "
                   "binary.base_conversion (đổi cơ số 2/8/10/16 kể cả hex/octal — "
                   "cơ số ≠ 2 KHÔNG còn là gap)",
                   support_kind=SupportKind.SUPPORTED_INTERACTIVE,
-                  support_evidence="decimal_to_binary INTERACTIVE_STAGE (bật/tắt bit, engine tính lại); base_conversion chỉ khai báo, chưa đo"),
+                  support_evidence="decimal_to_binary INTERACTIVE_STAGE (bật/tắt bit, engine tính lại); base_conversion nay ĐÃ đo (W4B-3D) — TRACE từng bước chia lấy dư"),
     KnowledgeUnit("logic_data", "Dữ liệu lôgic / bảng chân trị", "T10 B5",
                   CoverageStatus.SUPPORTED,
                   "logic.and_gate (1 cổng) + M17 W1 logic.boolean_dag (mạch nhiều "
                   "cổng AND/OR/NOT/XOR + bảng chân trị) + generic boolean composition",
                   support_kind=SupportKind.SUPPORTED_INTERACTIVE,
-                  support_evidence="and_gate INTERACTIVE_STAGE (gạt đầu vào → bảng chân trị tất định); boolean_dag chưa có bài mẫu offline"),
+                  support_evidence="and_gate INTERACTIVE_STAGE (gạt đầu vào → bảng chân trị tất định); boolean_dag nay ĐÃ đo (W4B-3D), mạch nhiều cổng + bảng chân trị đầy đủ"),
     KnowledgeUnit("packet_routing", "Định tuyến gói tin (BFS số chặng)", "T10 CĐ2 · T12 CĐ2",
                   CoverageStatus.SUPPORTED, "network.packet_routing",
                   support_kind=SupportKind.SUPPORTED_INTERACTIVE,
@@ -127,7 +127,7 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
                   "M17 W1 network.graph_traversal (BFS/DFS, có/không hướng, tìm đường "
                   "+ unreachable); đường đi ngắn nhất CÓ TRỌNG SỐ (Dijkstra) vẫn gap",
                   support_kind=SupportKind.SUPPORTED_TRACE,
-                  support_evidence="có timeline BFS/DFS nhưng CHƯA có bài mẫu offline ⇒ chưa đo được trong trình duyệt; không khai thao tác tự do"),
+                  support_evidence="BFS/DFS có timeline, nay ĐÃ đo trong trình duyệt (W4B-3D); không khai thao tác tự do nên là TRACE, không phải mô hình tương tác"),
     KnowledgeUnit("info_system_dataflow", "Hệ thống thông tin / luồng dữ liệu có hướng",
                   "T11 B10 · T12CS B29", CoverageStatus.SUPPORTED, "generic.rule_scene + edge.directed",
                   support_kind=SupportKind.SUPPORTED_INTERACTIVE,
@@ -152,7 +152,7 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
                   "code point trong BMP) → nhị phân, từng bước. Mã hoá ảnh/âm thanh "
                   "và dãy byte UTF-8 vẫn ngoài phạm vi",
                   support_kind=SupportKind.PARTIAL,
-                  support_evidence="character_encoding có timeline nhưng chưa có bài mẫu offline; ảnh/âm thanh và dãy byte UTF-8 ngoài phạm vi"),
+                  support_evidence="character_encoding nay ĐÃ có mẫu và đo được (W4B-3D); vẫn PARTIAL vì ảnh/âm thanh và dãy byte UTF-8 ngoài phạm vi"),
     KnowledgeUnit("arrays_1d_2d", "Mảng 1D/2D (chỉ số ↔ giá trị)", "T11CS B17",
                   CoverageStatus.PARTIAL, "1D ngầm trong trace; 2D chưa có",
                   support_kind=SupportKind.PARTIAL,
@@ -165,7 +165,7 @@ KNOWLEDGE_UNITS: tuple[KnowledgeUnit, ...] = (
                   "VERIFIED (live lọc+chọn cột, sắp xếp ổn định); pipeline nhiều tầng "
                   "bằng ngôn ngữ tự nhiên PARTIAL/EXPERIMENTAL. Wave 2B NOT CLOSED",
                   support_kind=SupportKind.PARTIAL,
-                  support_evidence="relational_table_query có timeline nhưng chưa có bài mẫu offline; pipeline nhiều tầng bằng NL vẫn PARTIAL"),
+                  support_evidence="relational_table_query nay ĐÃ có mẫu và đo được (W4B-3D); vẫn PARTIAL vì pipeline nhiều tầng bằng ngôn ngữ tự nhiên chưa đạt"),
     KnowledgeUnit("os_process_fsm", "Hệ điều hành: tiến trình (máy trạng thái)", "T11 B1–2",
                   CoverageStatus.CAPABILITY_GAP, "chưa có FSM",
                   support_kind=SupportKind.UNSUPPORTED,

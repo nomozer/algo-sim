@@ -1,0 +1,225 @@
+{
+  "units": 25,
+  "in_scope_units": 18,
+  "by_support_kind": {
+    "SUPPORTED_INTERACTIVE": 8,
+    "SUPPORTED_TRACE": 2,
+    "SUPPORTED_BOUNDED_ARTIFACT": 1,
+    "SUPPORTED_EXPLANATION": 0,
+    "PARTIAL": 5,
+    "UNSUPPORTED": 2,
+    "NOT_SIMULATION_SUITABLE": 7
+  },
+  "unfinished_in_scope": [
+    "arrays_1d_2d",
+    "database_table_query",
+    "dijkstra_weighted_shortest_path",
+    "loops_branch_variable",
+    "os_process_fsm",
+    "practice_activity",
+    "text_media_encoding"
+  ],
+  "claim": "CURRICULUM_SUPPORT_PARTIAL",
+  "rows": [
+    {
+      "unit_id": "access_control",
+      "label": "Kiểm soát truy cập (quy tắc logic)",
+      "curriculum_anchor": "T10 B9 · T11 B15",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "tái dụng bề mặt boolean (gạt điều kiện) — cùng đường tương tác với logic_data"
+    },
+    {
+      "unit_id": "binary_search",
+      "label": "Tìm kiếm nhị phân",
+      "curriculum_anchor": "T11CS B19",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "INTERACTIVE_MODEL đo được: Khám phá cho phá tiền đề dãy đã sắp, Thử thách cho chọn nửa (4/13 bước)"
+    },
+    {
+      "unit_id": "binary_system",
+      "label": "Hệ đếm & đổi cơ số (trọng số vị trí)",
+      "curriculum_anchor": "T10 B4",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "decimal_to_binary INTERACTIVE_STAGE (bật/tắt bit, engine tính lại); base_conversion nay ĐÃ đo (W4B-3D) — TRACE từng bước chia lấy dư"
+    },
+    {
+      "unit_id": "info_system_dataflow",
+      "label": "Hệ thống thông tin / luồng dữ liệu có hướng",
+      "curriculum_anchor": "T11 B10 · T12CS B29",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "generic.rule_scene INTERACTIVE_STAGE (hybrid — gạt công tắc, chuỗi rule tính lại)"
+    },
+    {
+      "unit_id": "logic_data",
+      "label": "Dữ liệu lôgic / bảng chân trị",
+      "curriculum_anchor": "T10 B5",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "and_gate INTERACTIVE_STAGE (gạt đầu vào → bảng chân trị tất định); boolean_dag nay ĐÃ đo (W4B-3D), mạch nhiều cổng + bảng chân trị đầy đủ"
+    },
+    {
+      "unit_id": "packet_routing",
+      "label": "Định tuyến gói tin (BFS số chặng)",
+      "curriculum_anchor": "T10 CĐ2 · T12 CĐ2",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "INTERACTIVE_MODEL đo được: ngắt/nối liên kết → BFS định tuyến lại; kèm predict chặng kế tiếp"
+    },
+    {
+      "unit_id": "single_pass_scan",
+      "label": "Quét dãy một lượt (tìm/đếm/tổng/tìm-đầu-tiên)",
+      "curriculum_anchor": "T10 CĐ5 · T11CS B17",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "find_max/find_min/linear_search INTERACTIVE_MODEL; sum_if/count_if chỉ COMMITMENT_TRACE — kéo ở hai bài đó là trang trí nên CỐ Ý không bày (COVERAGE §2.6)"
+    },
+    {
+      "unit_id": "sorting",
+      "label": "Sắp xếp so sánh",
+      "curriculum_anchor": "T11CS B21–22",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_INTERACTIVE",
+      "support_evidence": "bubble/insertion/selection ĐO ĐƯỢC là INTERACTIVE_MODEL (kéo đổi chỗ → apply → engine chạy lại nhánh). W4B-3D: selection nay có mẫu offline nên đã đo trong trình duyệt, không còn chỉ khai báo"
+    },
+    {
+      "unit_id": "graph_traversal",
+      "label": "Duyệt đồ thị / tìm đường không trọng số (BFS/DFS)",
+      "curriculum_anchor": "T11CS B17 · T12 CĐ2",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_TRACE",
+      "support_evidence": "BFS/DFS có timeline, nay ĐÃ đo trong trình duyệt (W4B-3D); không khai thao tác tự do nên là TRACE, không phải mô hình tương tác"
+    },
+    {
+      "unit_id": "network_layering",
+      "label": "Giao thức / phân tầng mạng (đóng-mở gói)",
+      "curriculum_anchor": "T12 B4 · 12CS B22–24",
+      "coverage_status": "SUPPORTED",
+      "support_kind": "SUPPORTED_TRACE",
+      "support_evidence": "protocol_encapsulation TRACE_PLAYBACK: đóng/mở gói từng tầng, parity 2D↔3D đã đo trong trình duyệt; KHÔNG có thao tác tự do lên PDU"
+    },
+    {
+      "unit_id": "html_css",
+      "label": "HTML/CSS (quan hệ markup ↔ hiển thị)",
+      "curriculum_anchor": "T12 CĐ4",
+      "coverage_status": "PARTIAL",
+      "support_kind": "SUPPORTED_BOUNDED_ARTIFACT",
+      "support_evidence": "web.style_model: sửa thuộc tính trong MIỀN ĐÓNG (hợp đồng FE≡BE có sync-lock); KHÔNG có đường viết CSS tự do"
+    },
+    {
+      "unit_id": "arrays_1d_2d",
+      "label": "Mảng 1D/2D (chỉ số ↔ giá trị)",
+      "curriculum_anchor": "T11CS B17",
+      "coverage_status": "PARTIAL",
+      "support_kind": "PARTIAL",
+      "support_evidence": "1D ngầm trong trace của mọi bài dãy; 2D chưa có target nào"
+    },
+    {
+      "unit_id": "database_table_query",
+      "label": "CSDL: bảng, bản ghi, truy vấn",
+      "curriculum_anchor": "T11 CĐ4",
+      "coverage_status": "PARTIAL",
+      "support_kind": "PARTIAL",
+      "support_evidence": "relational_table_query nay ĐÃ có mẫu và đo được (W4B-3D); vẫn PARTIAL vì pipeline nhiều tầng bằng ngôn ngữ tự nhiên chưa đạt"
+    },
+    {
+      "unit_id": "loops_branch_variable",
+      "label": "Lặp / rẽ nhánh / biến",
+      "curriculum_anchor": "T10 B17–21",
+      "coverage_status": "PARTIAL",
+      "support_kind": "PARTIAL",
+      "support_evidence": "bounded_control_flow ĐÃ có mẫu offline và đo được trong trình duyệt (W4B-3D). Vẫn PARTIAL vì tích hợp ngôn ngữ tự nhiên chưa đủ và không có predict/explore — TRACE thuần"
+    },
+    {
+      "unit_id": "practice_activity",
+      "label": "Học sinh tự dựng/thao tác, engine kiểm được",
+      "curriculum_anchor": "cross",
+      "coverage_status": "PARTIAL",
+      "support_kind": "PARTIAL",
+      "support_evidence": "substrate đã có (predict.check + explore/apply) nhưng chưa phải một mode học tập đầy đủ"
+    },
+    {
+      "unit_id": "text_media_encoding",
+      "label": "Mã hoá văn bản/âm thanh/ảnh",
+      "curriculum_anchor": "T10 B3, B6",
+      "coverage_status": "PARTIAL",
+      "support_kind": "PARTIAL",
+      "support_evidence": "character_encoding nay ĐÃ có mẫu và đo được (W4B-3D); vẫn PARTIAL vì ảnh/âm thanh và dãy byte UTF-8 ngoài phạm vi"
+    },
+    {
+      "unit_id": "dijkstra_weighted_shortest_path",
+      "label": "Đường đi ngắn nhất CÓ TRỌNG SỐ (Dijkstra)",
+      "curriculum_anchor": "không có anchor SGK",
+      "coverage_status": "CAPABILITY_GAP",
+      "support_kind": "UNSUPPORTED",
+      "support_evidence": "COVERAGE §7b — capability_gap là câu trả lời đúng, không phải thiếu sót cần vá"
+    },
+    {
+      "unit_id": "os_process_fsm",
+      "label": "Hệ điều hành: tiến trình (máy trạng thái)",
+      "curriculum_anchor": "T11 B1–2",
+      "coverage_status": "CAPABILITY_GAP",
+      "support_kind": "UNSUPPORTED",
+      "support_evidence": "chưa có engine FSM nào sở hữu cơ chế này"
+    },
+    {
+      "unit_id": "ai_ml_datascience_overview",
+      "label": "Tổng quan AI / Học máy / KHDL",
+      "curriculum_anchor": "T12 CĐ1 · 12CS CĐ7",
+      "coverage_status": "OUT_OF_SCOPE",
+      "support_kind": "NOT_SIMULATION_SUITABLE",
+      "support_evidence": "'mạng nơ-ron 3D xoay' là mô phỏng trang trí kinh điển"
+    },
+    {
+      "unit_id": "career_orientation",
+      "label": "Hướng nghiệp",
+      "curriculum_anchor": "mọi khối",
+      "coverage_status": "OUT_OF_SCOPE",
+      "support_kind": "NOT_SIMULATION_SUITABLE",
+      "support_evidence": "không có cơ chế ẩn động"
+    },
+    {
+      "unit_id": "cloud_email_social",
+      "label": "Lưu trữ đám mây, email, mạng xã hội",
+      "curriculum_anchor": "T11 B6–8",
+      "coverage_status": "OUT_OF_SCOPE",
+      "support_kind": "NOT_SIMULATION_SUITABLE",
+      "support_evidence": "thao tác công cụ, không phải cơ chế"
+    },
+    {
+      "unit_id": "digital_ethics_law_culture",
+      "label": "Đạo đức/pháp luật/văn hoá số, bản quyền",
+      "curriculum_anchor": "CĐ3 (mọi khối)",
+      "coverage_status": "OUT_OF_SCOPE",
+      "support_kind": "NOT_SIMULATION_SUITABLE",
+      "support_evidence": "không có cơ chế ẩn động để thao tác"
+    },
+    {
+      "unit_id": "hardware_network_lookup",
+      "label": "Bên trong máy tính / thiết bị mạng",
+      "curriculum_anchor": "T11 B4 · T12 B3",
+      "coverage_status": "OUT_OF_SCOPE",
+      "support_kind": "NOT_SIMULATION_SUITABLE",
+      "support_evidence": "sự kiện tra cứu"
+    },
+    {
+      "unit_id": "info_concepts_devices",
+      "label": "Thông tin & xử lí thông tin; thiết bị số",
+      "curriculum_anchor": "T10 B1–2, B7",
+      "coverage_status": "OUT_OF_SCOPE",
+      "support_kind": "NOT_SIMULATION_SUITABLE",
+      "support_evidence": "khái niệm — hình tĩnh có chú thích tốt hơn"
+    },
+    {
+      "unit_id": "software_skills",
+      "label": "Kĩ năng phần mềm (đồ hoạ/ảnh/video)",
+      "curriculum_anchor": "T10 CĐ4 · T11-ICT CĐ7",
+      "coverage_status": "OUT_OF_SCOPE",
+      "support_kind": "NOT_SIMULATION_SUITABLE",
+      "support_evidence": "chính phần mềm đó mới là 'mô phỏng'"
+    }
+  ]
+}
