@@ -1342,6 +1342,23 @@ vị trí ngữ nghĩa hiện hai hệ đếm. Có DẤU VÂN TAY bắt buộc (
 sân khấu đã dựng, sai thì exit 2). Cờ: `--port --out`. Artifact:
 `docs/evaluation/m17/w4b2d-search-family/position-numbering/`.
 
+### `frontend/scripts/accept-w4b3a.mjs` · Change impact: offline (cần `npm run dev`)
+W4B-3A — NGHIỆM THU TRÌNH DUYỆT ở BỐN bề rộng (1920/1536/1366/768) cho 7 target
+đại diện: 0 dải `experiment-trigger`; mọi `.sim-secondary-action` phải nằm TRONG
+`.player-controls`; không tràn ngang; mở Thử thách ⇒ ≤1 bề mặt cam kết; parity
+2D↔3D của `protocol_encapsulation` (cursor/stepCount/`getExplainContext` phải
+KHỚP khi đổi cách xem); phiên A→Khám phá→B→A giữ nguyên object state, 0 `fetch`.
+Có dấu vân tay trang + `--self-test` (tiêm lỗi giả, exit 1). Cờ:
+`--port --out --self-test`. Artifact: `docs/evaluation/m17/w4b3a-after/`.
+
+**BẪY ĐÃ CẮN MỘT LẦN — đọc trước khi viết script CDP mới.** Vite gắn
+`?t=<timestamp>` vào URL module sau HMR, nên `import('/src/state/store.ts')` từ
+console có thể trả về **instance THỨ HAI**: script lái một store, trang vẽ theo
+store kia, và mọi khẳng định "không thấy X" đều XANH vì lý do sai. Script này
+giải URL từ chính trang (`performance.getEntriesByType('resource')`).
+`measure-composition.mjs` KHÔNG có lớp bảo vệ đó — nó thất bại ồn ào (null
+`querySelectorAll`), nên gặp lỗi đó thì **restart `npm run dev`**, đừng sửa số.
+
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
 Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
 Next/Prev/Play) — tiền lệ cho EditPolicy. M8: Stage = `rendererFor(mod, mode)`

@@ -1,0 +1,948 @@
+{
+  "when": "2026-08-11T13:03:58.717Z",
+  "viewports": [
+    [
+      1920,
+      1080
+    ],
+    [
+      1536,
+      864
+    ],
+    [
+      1366,
+      768
+    ],
+    [
+      768,
+      900
+    ]
+  ],
+  "rows": [
+    {
+      "viewport": "1920x1080",
+      "target": "web.style_model",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 0
+      },
+      "opened": null
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "algorithm.count_if",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thí nghiệm: tự đếm phần tử"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1622
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1622
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "algorithm.linear_search",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Thí nghiệm: tự đi từng bước tìm"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1622
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1622
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "algorithm.bubble_sort",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Thí nghiệm: tự đổi chỗ từng cặp"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1622
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1622
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "network.packet_routing",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1622
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1622
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "network.protocol_encapsulation",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1622
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1622
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "generic.rule_scene",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1622
+      },
+      "opened": null
+    },
+    {
+      "viewport": "1920x1080",
+      "parity": {
+        "in2d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "in3d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "back": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "modes": [
+          "2d",
+          "3d"
+        ]
+      },
+      "sess": {
+        "restoredSameObject": true,
+        "exploreRestored": true,
+        "exploreLeakedToB": false,
+        "fetches": 0,
+        "sessions": 2
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "target": "web.style_model",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 0
+      },
+      "opened": null
+    },
+    {
+      "viewport": "1536x864",
+      "target": "algorithm.count_if",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thí nghiệm: tự đếm phần tử"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1410
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1410
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "target": "algorithm.linear_search",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Thí nghiệm: tự đi từng bước tìm"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1410
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1410
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "target": "algorithm.bubble_sort",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Thí nghiệm: tự đổi chỗ từng cặp"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1410
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1410
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "target": "network.packet_routing",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1410
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1410
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "target": "network.protocol_encapsulation",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1410
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1410
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "target": "generic.rule_scene",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1410
+      },
+      "opened": null
+    },
+    {
+      "viewport": "1536x864",
+      "parity": {
+        "in2d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "in3d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "back": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "modes": [
+          "2d",
+          "3d"
+        ]
+      },
+      "sess": {
+        "restoredSameObject": true,
+        "exploreRestored": true,
+        "exploreLeakedToB": false,
+        "fetches": 0,
+        "sessions": 2
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "target": "web.style_model",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 0
+      },
+      "opened": null
+    },
+    {
+      "viewport": "1366x768",
+      "target": "algorithm.count_if",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thí nghiệm: tự đếm phần tử"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1240
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1240
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "target": "algorithm.linear_search",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Thí nghiệm: tự đi từng bước tìm"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1240
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1240
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "target": "algorithm.bubble_sort",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Thí nghiệm: tự đổi chỗ từng cặp"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1240
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1240
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "target": "network.packet_routing",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1240
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1240
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "target": "network.protocol_encapsulation",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1240
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 1240
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "target": "generic.rule_scene",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 1240
+      },
+      "opened": null
+    },
+    {
+      "viewport": "1366x768",
+      "parity": {
+        "in2d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "in3d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "back": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "modes": [
+          "2d",
+          "3d"
+        ]
+      },
+      "sess": {
+        "restoredSameObject": true,
+        "exploreRestored": true,
+        "exploreLeakedToB": false,
+        "fetches": 0,
+        "sessions": 2
+      }
+    },
+    {
+      "viewport": "768x900",
+      "target": "web.style_model",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 0
+      },
+      "opened": null
+    },
+    {
+      "viewport": "768x900",
+      "target": "algorithm.count_if",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thí nghiệm: tự đếm phần tử"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 642
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 642
+      }
+    },
+    {
+      "viewport": "768x900",
+      "target": "algorithm.linear_search",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Thí nghiệm: tự đi từng bước tìm"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 642
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: dời giá trị cần tìm đi chỗ khác",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 642
+      }
+    },
+    {
+      "viewport": "768x900",
+      "target": "algorithm.bubble_sort",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Thí nghiệm: tự đổi chỗ từng cặp"
+        ],
+        "entriesDisabled": 1,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 642
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi chỗ hai cột bất kì",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 642
+      }
+    },
+    {
+      "viewport": "768x900",
+      "target": "network.packet_routing",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 642
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 2,
+        "entriesInControls": 2,
+        "entryLabels": [
+          "Khám phá: tự đổi đường mạng",
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 642
+      }
+    },
+    {
+      "viewport": "768x900",
+      "target": "network.protocol_encapsulation",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Thử thách: tự dự đoán bước này"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 642
+      },
+      "opened": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 1,
+        "entriesInControls": 1,
+        "entryLabels": [
+          "Đóng thử thách"
+        ],
+        "entriesDisabled": 0,
+        "transport": 1,
+        "commitmentSurfaces": 1,
+        "overflowX": -10,
+        "stageWidth": 642
+      }
+    },
+    {
+      "viewport": "768x900",
+      "target": "generic.rule_scene",
+      "before": {
+        "fingerprintStage": true,
+        "triggerBand": 0,
+        "entries": 0,
+        "entriesInControls": 0,
+        "entryLabels": [],
+        "entriesDisabled": 0,
+        "transport": 0,
+        "commitmentSurfaces": 0,
+        "overflowX": -10,
+        "stageWidth": 642
+      },
+      "opened": null
+    },
+    {
+      "viewport": "768x900",
+      "parity": {
+        "in2d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "in3d": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "back": {
+          "cursor": 3,
+          "total": 9,
+          "ctx": "{\"simulation_id\":\"network.protocol_encapsulation\",\"phase\":\"sender_encapsulation\",\"side\":\"sender\",\"active_layer\":\"network_access\",\"pdu\":[\"LINK\",\"IP\",\"TCP\",\"Dữ liệu ứng dụng\",\"FCS\"],\"current_step\":4,\"total_steps\":9,\"narration\":\"Tầng Truy cập mạng thêm phần đầu LINK và phần đuôi FCS → gói IP trở thành khung.\"}"
+        },
+        "modes": [
+          "2d",
+          "3d"
+        ]
+      },
+      "sess": {
+        "restoredSameObject": true,
+        "exploreRestored": true,
+        "exploreLeakedToB": false,
+        "fetches": 0,
+        "sessions": 2
+      }
+    }
+  ],
+  "failures": []
+}
