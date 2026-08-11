@@ -56,8 +56,6 @@ const KNOWN_GAPS = [
   "components/StageLegend.tsx",
   "components/TraversalFrontier.tsx",
   "components/VarsView.tsx",
-  "data/samples.ts",
-  "data/sim-samples.ts",
   "llm/input.ts",
   "simulations/domains/database/table-module.tsx",
   "simulations/domains/logic/dag-module.tsx",

@@ -102,10 +102,17 @@ async function withChrome(w, h, fn) {
     await send("Page.navigate", { url: APP });
     await sleep(2500);
     /* WARMUP: nạp trước đúng những module sẽ dùng, để lần tối ưu-deps + reload
-       của Vite xảy ra Ở ĐÂY chứ không xảy ra giữa một phép đo. */
+       của Vite xảy ra Ở ĐÂY chứ không xảy ra giữa một phép đo.
+       ⚠️ PHẢI dùng URL ĐÃ GIẢI TỪ TRANG, không dùng đường dẫn trần. Warmup bằng
+       `import('/src/state/store.ts')` sẽ ĐĂNG KÝ chính URL trần đó vào
+       `performance.getEntriesByType('resource')`, nên `pick()` sau đó chọn nó
+       thay vì URL `?t=…` mà app đang chạy — và ta lại lái một store thứ hai
+       trong khi trang vẽ theo store kia. Đúng cái bẫy script này viết ra để
+       tránh; nó cắn lần thứ hai vì warmup được thêm vào SAU. */
+    const warm = JSON.parse(await once(RESOLVE));
     for (let i = 0; i < 8; i++) {
       try {
-        await once(`(async()=>{await import('/src/data/offline-catalog.ts');await import('/src/state/store.ts');await import('/src/simulations/index.ts');await import('/src/simulations/registry.ts');return true})()`);
+        await once(`(async()=>{${Object.values(warm).map((u) => `await import(${JSON.stringify(u)});`).join("")}return true})()`);
         break;
       } catch { await sleep(1500); }
     }

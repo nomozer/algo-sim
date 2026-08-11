@@ -798,6 +798,11 @@ scan HOÃN có chủ đích.
   chuyển phiên là khôi phục thuần (0 `fetch`, 0 `init`). Khác Lịch sử.
 - **`code_experiment` vẫn DEFERRED** — không có đường thực thi mã tuỳ ý.
 
+> ⚠️ **Đoạn W4B-2Z ở trên là LỊCH SỬ.** Baseline test, số mẫu và cách trình bày
+> phiên trong đó mô tả trạng thái tại thời điểm wave đó đóng. Trạng thái HIỆN
+> HÀNH ở mục **W4B-3B…3D** cuối file. Cụ thể: cột phiên trái đã bị thay bằng
+> hàng tab, và 23/23 target nay có mẫu offline.
+
 ### Giới hạn CÒN LẠI (đo được, không phải "chưa kịp làm")
 
 - ~~`experimentTrigger` vẫn là một dải dưới mô hình ở 8 target thuật toán.~~
@@ -854,6 +859,80 @@ tự dựng lấy — cái nút tự dựng ấy nằm ngay dưới sân khấu.
   **Ba guard hụt bị phát hiện nhờ chính đợt tiêm lỗi và đã vá**: quét ngữ-cảnh
   toàn kho không đi qua `components/` và bỏ lọt optional chaining; `ArrayView`
   viết lại id trước khi nộp mà không guard nào thấy.
+
+## W4B-3B…3D — sân khấu lấy lại bề ngang · sự thật ở bước cuối · hết điểm mù (2026-08-12)
+
+**Đây là mục TRẠNG THÁI HIỆN HÀNH.** Mọi mô tả trình bày phiên ở các mục W4B-2Z
+trở về trước là lịch sử.
+
+### 3B — điều hướng phiên thôi lấn sân khấu
+
+Cột phiên trái (`SessionRail`, 208px) có `grid-area: rail` trải qua **cả** hàng
+`center` lẫn hàng `controls`, nên nó bóp sân khấu VÀ bóp dải điều khiển đúng
+ngần ấy. Hai triệu chứng, một nguyên nhân.
+
+| bề rộng | sân khấu 1 phiên → 2 phiên | dải điều khiển |
+|---|---|---|
+| 1920 | 1672 → **1448** px (dời phải 224) | 1 → **2** dòng |
+| 1536 | 1460 → **1236** px (dời phải 224) | 1 → **2** dòng |
+| 1366 | 1290 → **1066** px (dời phải 224) | đã 2 dòng sẵn |
+
+Kèm một **lỗi chức năng**: `+ Mô phỏng mới` chỉ nằm trong đầu cột, mà cột ẩn khi
+<2 phiên ⇒ đang mở đúng một bài thì **không có đường mở bài thứ hai** (đo được
+`newSession=false` ở cả 4 bề rộng).
+
+Nay: `SessionTabs` là hàng ngang trên sân khấu, chỉ dựng khi ≥2 phiên, tối đa 4
+tab rồi gộp `+N` (danh sách bung ra liệt kê đủ phiên); ≤860px đổi thành bộ chọn
+`Mô phỏng: … ▾` bằng CSS (không đọc `window` trong JS). Lối vào `Mô phỏng mới`
+về header. **Sân khấu nay RỘNG BẰNG NHAU ở 1, 2 và 6 phiên** tại cả 4 bề rộng.
+Nhãn đầy đủ của Khám phá/Thử thách rút còn hai chữ trên dải điều khiển (câu đầy
+đủ + teaser vào `aria-label`/`title`, khung giải thích hiện khi MỞ chế độ) ⇒
+1366 còn **1 dòng**, 768 còn **2**. Kiến trúc phiên KHÔNG đổi.
+
+### 3C — sự thật ở bước cuối
+
+`insertion_sort` ở bước 33/33 tuyên bố đã sắp xong nhưng vẫn vẽ quân bài 2 ngoài
+dãy + ô trống nét đứt. **Renderer không sai** — nó vẽ đúng snapshot có thẩm
+quyền. `TraceBuilder` chỉ có `setVar`, nên biến mô tả thao tác ĐANG DỞ
+(`gia_tri_chen`, `vi_tri_cuc_tri`) sống tới hết trace và bước `done` tự mâu
+thuẫn. Thêm `clearVar`, gỡ biến ĐÚNG LÚC thứ nó mô tả hết tồn tại. Bất biến khoá
+cho cả họ sắp xếp × 2 chiều, cộng một bất biến mạnh hơn: **hold luôn phải có
+bước chèn phía sau**, không bao giờ treo.
+
+### 3D — hết điểm mù bằng chứng
+
+14/23 target có mẫu offline ⇒ **9 target chưa từng được đo trong trình duyệt**.
+Nay 23/23 có mẫu (config lấy từ chính fixture đã validate ở
+`authenticity-cross-lock`). Ba lỗi lộ ra ngay khi có mẫu:
+
+- `base_conversion`: panel Giải thích không đọc cursor — đọc y hệt ở bước 1 và
+  bước cuối;
+- `tree.traversal`: in `Thứ tự thăm (engine)` — từ vựng máy trên bề mặt học sinh;
+- `LibraryView.GROUP_ORDER` thiếu `tree`, mà danh sách đó vừa là thứ tự vừa là
+  BỘ LỌC ⇒ mẫu công khai của `tree.traversal` render vào không nhóm nào và biến
+  mất khỏi Thư viện, im lặng. Khoá lại theo TẬP MIỀN (đếm chỉ đỏ khi miền bị
+  quên tình cờ có mẫu công khai);
+- `algorithm.scan` lặp kết quả ở bước cuối (`dupTerminal` cả 4 bề rộng) — dùng
+  lại `processLeadOf`, không viết luật thứ hai.
+
+**Bốn tập KHÁC NHAU, không đánh đồng** (§9): registry **23** · học-sinh-tới-được
+(`ai_reachable_public`) **23** · nội bộ **0** · có mẫu offline **23** · trong Thư
+viện học sinh **22** (`algorithm.scan` cố ý ở ngoài: có mẫu để ĐO, không quảng bá
+vì nó trùng nghĩa với tám bài chuyên biệt) · **đo được trong trình duyệt 23**.
+
+**Đo bố cục toàn danh mục**: 23 target × 4 bề rộng = **92 phép đo**,
+`experimentTrigger` **0**, trùng nghĩa bước cuối **0**.
+
+**Ma trận AFTER** (`docs/evaluation/m17/w4b3d-after/after-matrix.md`): 23 target ·
+12 family · **đo được 23/23, không còn cột "chỉ khai báo"**. Thao tác trực tiếp
+**13 đo được** (8 sau cổng Khám phá + 5 luôn mở trên sân khấu), cam kết **9**,
+khai `predict` **11**.
+
+**Bảng chương trình** (`curriculum-support.md`): 25 đơn vị — 8
+SUPPORTED_INTERACTIVE · 2 SUPPORTED_TRACE · 1 SUPPORTED_BOUNDED_ARTIFACT · 5
+PARTIAL · 2 UNSUPPORTED · 7 NOT_SIMULATION_SUITABLE.
+**`CURRICULUM_SUPPORT_PARTIAL` GIỮ NGUYÊN** (7 đơn vị in-scope còn dang dở).
+**`LEARNER_IMPACT_NOT_EVALUATED` GIỮ NGUYÊN.**
 
 ## 1. Baseline
 

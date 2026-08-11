@@ -1270,6 +1270,35 @@ dung. Mặc định phải khớp vì mẫu offline chỉ đi qua validate FE.
 LIỆU BÀI HỌC, không phải token giao diện. Token-hoá thành `var(--…)` sẽ phá
 kiểm hai tầng. Đừng "sửa" chúng ở các pass thiết kế sau.
 
+### `frontend/scripts/accept-workspace-w4b3b.mjs` — xem mục ở phần script bên dưới.
+
+### `core/trace-builder.ts` — bổ sung W4B-3C
+`clearVar(name)` — GỠ một biến TẠM khi thứ nó mô tả hết tồn tại. Không có nó thì
+biến mô tả thao tác ĐANG DỞ sống tới hết trace và bước `done` tự mâu thuẫn:
+`insertion_sort` tuyên bố đã sắp xong trong khi snapshot vẫn khai đang giữ một
+phần tử, và renderer vẽ trung thành cái nó được kể (quân bài ngoài dãy + ô trống).
+Chủ sở hữu là ENGINE — **đừng vá bằng `if (bước cuối) ẩn quân bài`**, đó là dạy
+renderer nói dối hộ engine và để nguyên mâu thuẫn trong state gửi cho AI giải
+thích. Tests: `core/terminal-truth-w4b3c.test.ts` (cả họ sắp xếp × 2 chiều +
+quét toàn danh mục + bất biến "hold luôn có bước chèn phía sau").
+
+### `data/samples.ts` · Change impact: offline
+Mẫu LEGACY dạng `analysis` (tiền-envelope): `SAMPLES` được `offline-catalog.ts`
+map qua `fromLegacyAnalysis`/`toSimulationId` thành `CatalogEntry`. Đây là nguồn
+của tám bài thuật toán chuyên biệt trong danh mục. Mẫu MỚI không thêm vào đây —
+thêm envelope thẳng vào `sim-samples.ts` (`OFFLINE_SAMPLES`).
+
+### `data/sim-samples.ts` — bổ sung W4B-3D
+Thêm mẫu cho **9 target chưa từng đo được trong trình duyệt**; nay 23/23 có mẫu.
+Config lấy NGUYÊN VĂN từ fixture đã validate ở `authenticity-cross-lock.test.ts`
+(và `program-normalized-envelope.json` cho `bounded_control_flow` — dạng chuẩn
+hoá `program-2.0` KHÔNG chép tay được, bản viết tay đầu tiên bị validator từ
+chối). `visibility` tách BẰNG CHỨNG khỏi QUẢNG BÁ: `algorithm.scan` là
+`internal_fixture` — có mẫu để đo, không vào Thư viện vì trùng nghĩa với tám bài
+chuyên biệt. Tests: `data/sample-coverage-w4b3d.test.ts` (mọi target
+`ai_reachable_public` phải có mẫu · mọi mẫu phải `validateConfig`+`init` được ·
+D≠E · `GROUP_ORDER` phủ mọi `Domain`).
+
 ### `components/SessionTabs.tsx` — PHIÊN ĐANG MỞ (W4B-3B; thay `SessionRail` của W4B-2Z §29)
 HÀNG NGANG gọn ngay TRÊN sân khấu (`grid-area: tabs`, class `.has-tabs` do
 `App.tsx` gắn), **chỉ dựng khi có ≥2 phiên**. Exports: `SessionTabs`,
@@ -1410,13 +1439,19 @@ chứa) · chuyển phiên**. Khẳng định: 0 cột phiên thường trực �
 chuyển phiên giữ đúng object state, 0 `fetch`. Có `--self-test` + `--label`.
 Artifact: `docs/evaluation/m17/w4b3b-workspace/{before,acceptance}.json`.
 
-**HAI BẪY ĐÃ CẮN KHI VIẾT SCRIPT NÀY** (đọc trước khi viết script CDP mới):
+**BA BẪY ĐÃ CẮN KHI VIẾT SCRIPT NÀY** (đọc trước khi viết script CDP mới):
 1. **Đếm dòng bằng `top` là SAI.** Trong flex row có `align-items:center`, con
    cao thấp khác nhau thì `top` khác nhau — phép đếm đó báo 5–7 dòng cho một
    hàng phẳng. Đếm bằng CHỒNG LẤN DỌC theo thứ tự DOM.
-2. **`Promise was collected`** = Vite tối ưu deps rồi reload GIỮA lúc await.
+2. **WARMUP PHẢI DÙNG URL ĐÃ GIẢI**, không dùng đường dẫn trần. Warmup bằng
+   `import('/src/state/store.ts')` ĐĂNG KÝ chính URL trần vào
+   `performance.getEntriesByType('resource')`, nên `pick()` sau đó chọn nó thay
+   vì URL `?t=…` app đang chạy ⇒ lại lái store thứ hai. Bẫy hai-instance cắn
+   LẦN THỨ HAI, do chính lớp chống nó gây ra vì thêm sai thứ tự.
+3. **`Promise was collected`** = Vite tối ưu deps rồi reload GIỮA lúc await.
    Phải có `warmup()` + retry trên lỗi CDP (cùng khuôn `measure-composition.mjs`).
    Và **chú thích bên trong template literal KHÔNG được chứa dấu backtick**.
+4. **Đếm dòng bằng `top` là SAI** (xem 1).
 
 **BẪY ĐÃ CẮN MỘT LẦN — đọc trước khi viết script CDP mới.** Vite gắn
 `?t=<timestamp>` vào URL module sau HMR, nên `import('/src/state/store.ts')` từ
