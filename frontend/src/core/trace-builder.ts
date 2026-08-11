@@ -42,6 +42,23 @@ export class TraceBuilder {
     this.vars[name] = value;
   }
 
+  /**
+   * W4B-3C — GỠ một biến TẠM khi thứ nó mô tả không còn tồn tại.
+   *
+   * Vì sao cần: `setVar` chỉ biết đặt, nên một biến mô tả thao tác ĐANG DỞ
+   * (quân bài đang cầm, vị trí cực trị của lượt hiện tại) sẽ sống tới hết
+   * trace. Ở bước `done` điều đó làm state có thẩm quyền TỰ MÂU THUẪN: kết quả
+   * nói "đã sắp xong" trong khi snapshot vẫn khai đang giữ một phần tử — và
+   * renderer trung thành vẽ đúng cái nó được kể (quân bài ngoài dãy + một ô
+   * trống nét đứt).
+   *
+   * Đây là chuyện của ENGINE, không phải của renderer: renderer chỉ ĐỌC state.
+   * Vá bằng `if (bước cuối) ẩn quân bài` là dạy renderer nói dối cho engine.
+   */
+  clearVar(name: string): void {
+    delete this.vars[name];
+  }
+
   swap(i: number, j: number): void {
     [this.array[i], this.array[j]] = [this.array[j], this.array[i]];
     [this.ids[i], this.ids[j]] = [this.ids[j], this.ids[i]];

@@ -489,6 +489,14 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
     }
     b.set(j + 1, key);
     b.setIdAt(j + 1, keyId);
+    /* W4B-3C — QUÂN BÀI ĐÃ ĐÁP XUỐNG THÌ KHÔNG CÒN CẦM.
+       `gia_tri_chen` mô tả thao tác ĐANG DỞ ("đang giữ giá trị này ngoài dãy").
+       Trước đây nó không bao giờ được gỡ, nên nó sống tới tận bước `done`: state
+       có thẩm quyền vừa nói "đã sắp xong" vừa khai đang giữ một phần tử, và
+       renderer vẽ đúng điều được kể — quân bài ngoài dãy + ô trống nét đứt ở
+       bước 33/33. Gỡ ĐÚNG LÚC nó hết tồn tại thì cả bước chèn lẫn bước cuối
+       đều tự nhất quán, không cần renderer đoán. */
+    b.clearVar("gia_tri_chen");
     for (let k = 0; k <= i; k++) b.mark(k, "sorted");
     b.step(
       [{ type: "insert", index: j + 1, value: key }],
@@ -585,6 +593,10 @@ function runSelectionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
   }
 
   b.mark(n - 1, "sorted");
+  /* W4B-3C — cùng luật với `gia_tri_chen`: "vị trí cực trị" là của MỘT LƯỢT
+     đang chạy. Hết lượt cuối thì không còn lượt nào đang chọn, nên để nó ở lại
+     bước `done` là khai một thao tác dở dang không có thật. */
+  b.clearVar("vi_tri_cuc_tri");
   const result = `Dãy đã sắp xếp ${orderText} xong sau ${n - 1} lượt chọn, ${swaps} lần đổi chỗ.`;
   b.step([{ type: "done", result }], result, false, 6);
   return b.build();
