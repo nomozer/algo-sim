@@ -285,4 +285,24 @@ describe("W4B-2I · ENGINE_OWNS_ACTION_VERDICT trên đường sân khấu", () 
       expect(src, `ArrayView sở hữu ngữ nghĩa (${forbidden})`).not.toContain(forbidden);
     }
   });
+
+  it("ArrayView nộp ĐÚNG id engine cấp — không viết lại ở khoảnh khắc phát", () => {
+    /* W4B-3A — LỖ HỔNG DO TIÊM LỖI BẮT ĐƯỢC, không phải phòng xa.
+     *
+     * Hai guard trên kiểm MÔ HÌNH vùng (id khớp option engine) và một DANH SÁCH
+     * TỪ CẤM trong nguồn. Tiêm lỗi
+     *     onRegionAct?.(r.id === "left" ? "correct" : r.id)
+     * đi lọt cả hai: mô hình không đổi, và không dùng từ nào trong danh sách —
+     * nhưng renderer vừa tự quyết định một cam kết là ĐÚNG. Đó chính là bất biến
+     * #11 (chỉ engine tất định mới được phán) bị thủng ngay tại chỗ phát.
+     *
+     * Nên khoá vào chính ĐỐI SỐ: id đi ra phải là id của vùng, nguyên vẹn. */
+    const src = code(readFileSync(new URL("../components/ArrayView.tsx", import.meta.url), "utf-8"));
+    const calls = [...src.matchAll(/onRegionAct\?\.\(([^)]*)\)/g)].map((m) => m[1].trim());
+    // Phép dò phải thật sự dò: 0 lượt khớp trông y hệt một regex hỏng.
+    expect(calls.length, "không tìm thấy chỗ phát nào — regex hỏng?").toBeGreaterThan(0);
+    for (const arg of calls) {
+      expect(arg, `renderer viết lại id trước khi nộp: onRegionAct(${arg})`).toBe("r.id");
+    }
+  });
 });
