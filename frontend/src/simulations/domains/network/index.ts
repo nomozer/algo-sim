@@ -195,6 +195,7 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
     explore: {
       entry: () => ({
         label: "Khám phá: tự đổi đường mạng",
+        shortLabel: "Khám phá",
         closeLabel: "Đóng khám phá",
         hint: "Mạng thật vẫn đứt cáp — thử xem gói tin có đường khác để đi không.",
       }),

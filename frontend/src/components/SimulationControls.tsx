@@ -37,6 +37,12 @@ function SecondaryEntry({
      Đang MỞ thì không bao giờ khoá — nếu không học sinh mắc kẹt trong chế độ
      không có đường ra. */
   const disabled = entry.available === false && !open;
+  /* W4B-3B — CHỮ ĐẦY ĐỦ KHÔNG MẤT, CHỈ THÔI CHIẾM CHỖ.
+     Nhãn hiển thị rút gọn ("Khám phá"/"Thử thách") để dải điều khiển không
+     xuống dòng ở 1366; tên khả truy cập vẫn là câu đầy đủ + câu mời-thử, nên
+     bất biến "cổng tự mô tả" (PhET/CLT) giữ nguyên với cả chuột lẫn công nghệ
+     hỗ trợ. Khung giải thích đầy đủ hiện ra KHI MỞ chế độ. */
+  const full = [entry.label, entry.hint].filter(Boolean).join(" — ");
   return (
     <button
       type="button"
@@ -44,12 +50,10 @@ function SecondaryEntry({
       onClick={onToggle}
       disabled={disabled}
       aria-expanded={open}
-      /* Câu mời-thử đi vào `title`/`aria-label` chứ không chiếm một dòng bố cục
-         (W4B-2V/C2). Đang mở thì không mời nữa — nhãn đã là "Đóng …". */
-      title={open ? undefined : entry.hint}
-      aria-label={open ? undefined : entry.hint}
+      title={open ? undefined : full}
+      aria-label={open ? undefined : full}
     >
-      {open ? (entry.closeLabel ?? closeFallback) : entry.label}
+      {open ? (entry.closeLabel ?? closeFallback) : (entry.shortLabel ?? entry.label)}
     </button>
   );
 }

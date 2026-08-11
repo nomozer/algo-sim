@@ -141,7 +141,14 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     const controls = readFileSync(
       new URL("../components/SimulationControls.tsx", import.meta.url), "utf-8",
     );
-    expect(controls, "câu mời không tới được người dùng").toContain("title={open ? undefined : entry.hint}");
+    /* W4B-3B — nhãn HIỂN THỊ rút gọn ("Khám phá"/"Thử thách") để dải điều khiển
+       không xuống dòng ở 1366, nhưng TÊN KHẢ TRUY CẬP phải mang cả câu đầy đủ
+       LẪN câu mời-thử. Khoá đúng chỗ đó, không khoá chuỗi hiển thị. */
+    expect(controls, "tên khả truy cập không gộp nhãn đầy đủ + câu mời")
+      .toContain("const full = [entry.label, entry.hint]");
+    expect(controls, "câu mời không tới được chuột").toContain("title={open ? undefined : full}");
+    expect(controls, "câu mời không tới được công nghệ hỗ trợ")
+      .toContain("aria-label={open ? undefined : full}");
     for (const id of GATED) {
       expect(whatIfPolicyOf(id).challengeTeaser, `${id}: mất teaser`).toBeTruthy();
     }

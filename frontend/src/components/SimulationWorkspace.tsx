@@ -193,6 +193,7 @@ export function challengeEntry<S>(
 /** Câu mời mặc định khi module không khai `predict.entry`. */
 export const DEFAULT_CHALLENGE: PresentationEntry = {
   label: "Thử thách: tự dự đoán bước này",
+  shortLabel: "Thử thách",
   closeLabel: "Đóng thử thách",
 };
 

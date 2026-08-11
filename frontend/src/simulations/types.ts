@@ -178,8 +178,27 @@ export interface PredictionCapability<S = unknown> {
  * quyết định gì; shell chỉ đọc để đặt chữ lên nút.
  */
 export interface PresentationEntry {
-  /** Nhãn nút, tiếng Việt, tự mô tả năng lực nằm sau nó. */
+  /**
+   * TÊN KHẢ TRUY CẬP đầy đủ — tự mô tả năng lực nằm sau cổng ("Thí nghiệm: tự
+   * chọn nửa để tìm tiếp"). Luôn tới được chuột và công nghệ hỗ trợ.
+   */
   label: string;
+  /**
+   * W4B-3B — NHÃN NGẮN HIỂN THỊ trong dải điều khiển ("Khám phá" / "Thử thách").
+   *
+   * Vì sao tách khỏi `label`: đo được ở 1366×768, hai nhãn đầy đủ cộng với
+   * transport + tốc độ + gợi ý phím làm dải điều khiển XUỐNG DÒNG thành băng
+   * thứ hai — và điều đó xảy ra **kể cả khi chỉ có một phiên**, tức nó không
+   * phải hệ quả của cột phiên cũ mà là quá tải của chính dải này.
+   *
+   * Chữ mô tả KHÔNG bị vứt đi: `label` (+ `hint`) vào `title`/`aria-label`, và
+   * khung giải thích đầy đủ hiện ra KHI MỞ chế độ. Bất biến PhET/CLT "cổng phải
+   * tự mô tả" vẫn giữ — nó nói về việc người dùng ĐỌC ĐƯỢC mục đích, không bắt
+   * mọi chữ phải chiếm chỗ trong dải điều khiển.
+   *
+   * Không khai ⇒ hiện `label` như cũ.
+   */
+  shortLabel?: string;
   /** Nhãn khi đang mở (đóng lại). Không khai → shell tự dựng "Đóng …". */
   closeLabel?: string;
   /** Câu mời-thử ngắn — vào `title`/`aria-label`, không tốn một dòng bố cục. */

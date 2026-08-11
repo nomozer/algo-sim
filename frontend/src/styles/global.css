@@ -2818,169 +2818,191 @@ html {
   .web-workspace { grid-template-columns: 1fr; }
 }
 
-/* ── W4B-2Z §29 — CỘT PHIÊN ĐANG MỞ ───────────────────────────────────────
-   Chỉ tồn tại khi có ≥2 bài đang mở (`.has-rail` do App gắn). Không dựng sẵn
-   một cột rỗng: sân khấu là thứ phải chiếm ưu thế thị giác, mọi pixel bề ngang
-   lấy đi của nó phải có việc để làm. */
-.app-layout.has-rail {
-  grid-template-columns: 208px minmax(0, 1fr) 300px;
+/* ── W4B-3B — HÀNG PHIÊN ĐANG MỞ (thay CỘT của W4B-2Z §29) ────────────────
+   Cột 208px cũ trải qua CẢ hai hàng `center` và `controls`, nên nó bóp sân khấu
+   VÀ bóp luôn dải điều khiển đúng ngần ấy — nguyên nhân thật của việc hàng
+   transport xuống dòng. Đo được ở 1920: mở phiên thứ hai làm sân khấu tụt
+   1672→1448px và dời sang phải 224px, dải điều khiển 1→2 dòng.
+   Nay điều hướng phiên là một HÀNG NGANG GỌN nằm đúng trên sân khấu, rộng bằng
+   sân khấu, KHÔNG lấy một pixel bề ngang nào.
+   Thứ bậc: sân khấu > điều khiển > quản lí phiên. */
+.app-layout.has-tabs {
   grid-template-areas:
-    "rail center right"
-    "rail controls right";
+    "tabs right"
+    "center right"
+    "controls right";
 }
 
-.app-layout.has-rail.right-closed {
-  grid-template-columns: 208px minmax(0, 1fr);
+.app-layout.has-tabs.right-closed {
   grid-template-areas:
-    "rail center"
-    "rail controls";
+    "tabs"
+    "center"
+    "controls";
 }
 
-.session-rail {
-  grid-area: rail;
+.session-tabs {
+  grid-area: tabs;
   min-width: 0;
-  overflow-y: auto;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: var(--sp-sm);
 }
 
-.session-rail-head {
+.session-tab-list {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--sp-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+  /* Tràn thì CUỘN TRONG HÀNG NÀY, không đẩy trang tràn ngang. Số tab hiện thẳng
+     đã bị chặn ở `VISIBLE_TABS` nên đây chỉ là lưới an toàn cuối. */
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-.session-rail-title {
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
+.session-tab-list::-webkit-scrollbar { display: none; }
+
+/* Tab = CHỮ + gạch chân khi đang xem. Không nền lớn, không viền khối, không
+   thẻ — đó là thứ khiến điều hướng đọc ngang hàng với mô phỏng. */
+.session-tab {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 200px;
+  border-bottom: 2px solid transparent;
 }
 
-.session-new {
+.session-tab.is-active { border-bottom-color: var(--primary); }
+
+.session-tab-open {
+  flex: 1 1 auto;
+  min-width: 0;
   background: none;
   border: none;
-  padding: 2px 4px;
-  border-radius: var(--rounded-sm);
+  padding: var(--sp-xxs) var(--sp-xs);
   font: inherit;
-  font-size: 12px;
-  color: var(--primary);
+  font-size: 13px;
+  color: var(--ink-muted);
   cursor: pointer;
+  /* MỘT DÒNG, cắt bằng ellipsis. Tiêu đề đề bài dài 60+ ký tự là chuyện thường;
+     cho nó xuống dòng là cách hàng điều hướng phình thành thẻ. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
-.session-new:hover { text-decoration: underline; }
+.session-tab.is-active .session-tab-open { color: var(--ink); font-weight: 600; }
+.session-tab-open:hover { color: var(--primary); }
 
-.session-new:focus-visible,
-.session-open:focus-visible,
-.session-close:focus-visible {
+.session-tab-close,
+.session-more-close {
+  flex: 0 0 auto;
+  background: none;
+  border: none;
+  padding: 0 var(--sp-xxs);
+  font: inherit;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--ink-faint);
+  cursor: pointer;
+  border-radius: var(--rounded-sm);
+}
+
+/* Cùng tín hiệu hover với nút đóng cũ — không đẻ tông màu mới cho một việc sản
+   phẩm đã có cách nói. (`--danger` KHÔNG có trong `tokens.css`; dùng nó là lỗi
+   IM LẶNG — trình duyệt vứt cả dòng khai báo, không cảnh báo ở đâu.) */
+.session-tab-close:hover,
+.session-more-close:hover { color: var(--ink); background: var(--canvas-soft); }
+
+.session-tab-open:focus-visible,
+.session-tab-close:focus-visible,
+.session-more-trigger:focus-visible,
+.session-more-open:focus-visible,
+.session-more-close:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
-.session-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+/* ── `+N` (màn rộng) ↔ bộ chọn "Mô phỏng: …" (màn hẹp) ──────────────────
+   MỘT nút, hai vai, đổi vai bằng CSS. Đọc `window.innerWidth` trong JS sẽ làm
+   SSR và trình duyệt khởi tạo khác nhau — store đã cố ý bỏ mọi mặc định phụ
+   thuộc `window`, giữ đúng nguyên tắc đó ở đây. */
+.session-more { position: relative; flex: 0 0 auto; }
+.session-more.is-empty { display: none; }
 
-.session-item {
-  display: flex;
-  align-items: stretch;
-  gap: 2px;
-  border-radius: var(--rounded-md);
-}
-
-/* Phiên đang xem được đánh dấu bằng NỀN + vạch bên, không chỉ bằng màu chữ:
-   màu chữ một mình không đủ để phân biệt khi hai tiêu đề dài gần giống nhau. */
-.session-item.is-active {
-  background: var(--accent-sky-tint);
-  box-shadow: inset 2px 0 0 var(--primary);
-}
-
-.session-open {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+.session-more-trigger {
   background: none;
   border: none;
-  padding: 6px 8px;
-  text-align: left;
+  padding: var(--sp-xxs) var(--sp-xs);
+  border-radius: var(--rounded-sm);
   font: inherit;
+  font-size: 13px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.session-more-trigger:hover { color: var(--primary); background: var(--canvas-soft); }
+.session-more-current { display: none; }
+
+.session-more-list {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 240px;
+  max-width: 320px;
+  max-height: 60vh;
+  overflow-y: auto;
+  margin: 0;
+  padding: var(--sp-xxs);
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  box-shadow: var(--shadow-elevated);
+}
+
+.session-more-list li { display: flex; align-items: center; gap: var(--sp-xxs); }
+.session-more-list li.is-active .session-more-open { color: var(--primary); font-weight: 600; }
+
+.session-more-open {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: none;
+  border: none;
+  padding: var(--sp-xs);
+  font: inherit;
+  font-size: 13px;
   color: var(--ink);
   cursor: pointer;
-  border-radius: var(--rounded-md);
-}
-
-.session-name {
-  font-size: 13px;
-  line-height: 1.3;
-  /* Tiêu đề đề bài dài tuỳ ý — cắt hai dòng để danh sách không đẩy nhau lệch. */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.session-kind {
-  font-size: 11px;
-  color: var(--ink-muted);
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.session-close {
-  flex: 0 0 auto;
-  align-self: center;
-  width: 22px;
-  height: 22px;
-  margin-right: 4px;
-  background: none;
-  border: none;
   border-radius: var(--rounded-sm);
-  color: var(--ink-muted);
-  font-size: 15px;
-  line-height: 1;
-  cursor: pointer;
 }
 
-.session-close:hover { color: var(--ink); background: var(--canvas-soft); }
+.session-more-open:hover { background: var(--canvas-soft); }
 
-/* Màn hẹp: cột phiên nằm NGANG phía trên sân khấu và cuộn ngang. Giữ cột dọc ở
-   đây sẽ ép sân khấu — mà §29 nói rõ: ở 768 KHÔNG được giữ cột dọc bằng giá của
-   khả năng đọc mô hình. */
-@media (max-width: 1100px) {
-  .app-layout.has-rail,
-  .app-layout.has-rail.right-closed {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "rail"
-      "center"
-      "controls";
+/* Màn hẹp: KHÔNG ép tab desktop vào 768px. Chỉ còn một bộ chọn gọn; danh sách
+   bung ra là lớp phủ TẠM THỜI, không phải một cột nội dung thường trực. */
+@media (max-width: 860px) {
+  .session-tab-list { display: none; }
+  .session-more,
+  .session-more.is-empty { display: block; }
+  .session-more-count { display: none; }
+  .session-more-current {
+    display: inline-block;
+    max-width: min(70vw, 320px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
   }
-
-  .session-rail {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-
-  .session-list {
-    flex-direction: row;
-    gap: var(--sp-xs);
-  }
-
-  .session-item { flex: 0 0 auto; max-width: 220px; }
-
-  .session-item.is-active {
-    box-shadow: inset 0 -2px 0 var(--primary);
-  }
-
-  .session-name { -webkit-line-clamp: 1; }
+  .session-more-trigger::after { content: " ▾"; }
 }

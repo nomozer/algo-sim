@@ -1,0 +1,629 @@
+{
+  "when": "2026-08-11T18:35:52.370Z",
+  "label": "after",
+  "viewports": [
+    [
+      1920,
+      1080
+    ],
+    [
+      1536,
+      864
+    ],
+    [
+      1366,
+      768
+    ],
+    [
+      768,
+      900
+    ]
+  ],
+  "rows": [
+    {
+      "viewport": "1920x1080",
+      "state": "1-session",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 86,
+          "y": 58,
+          "w": 1720,
+          "h": 927
+        },
+        "center": {
+          "x": 110,
+          "y": 74,
+          "w": 1672,
+          "h": 525
+        },
+        "card": {
+          "x": 110,
+          "y": 74,
+          "w": 1672,
+          "h": 525
+        },
+        "controls": {
+          "x": 110,
+          "y": 616,
+          "w": 1672,
+          "h": 40
+        },
+        "tabs": null,
+        "tabCount": 0,
+        "tabListVisible": false,
+        "moreVisible": false,
+        "moreLabel": null,
+        "activeTabLabel": null,
+        "activeTabCount": 0,
+        "closeButtons": 0,
+        "newSessionReachable": true,
+        "titleLines": null,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "state": "2-sessions-duplicate-title",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 86,
+          "y": 58,
+          "w": 1720,
+          "h": 927
+        },
+        "center": {
+          "x": 110,
+          "y": 120,
+          "w": 1672,
+          "h": 525
+        },
+        "card": {
+          "x": 110,
+          "y": 120,
+          "w": 1672,
+          "h": 525
+        },
+        "controls": {
+          "x": 110,
+          "y": 662,
+          "w": 1672,
+          "h": 40
+        },
+        "tabs": {
+          "x": 110,
+          "y": 74,
+          "w": 1672,
+          "h": 30
+        },
+        "tabCount": 2,
+        "tabListVisible": true,
+        "moreVisible": false,
+        "moreLabel": "+0Mô phỏng: Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2",
+        "activeTabLabel": "Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2×",
+        "activeTabCount": 1,
+        "closeButtons": 2,
+        "newSessionReachable": true,
+        "titleLines": 1,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "state": "6-sessions",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 86,
+          "y": 58,
+          "w": 1720,
+          "h": 927
+        },
+        "center": {
+          "x": 110,
+          "y": 120,
+          "w": 1672,
+          "h": 379
+        },
+        "card": {
+          "x": 110,
+          "y": 120,
+          "w": 1672,
+          "h": 379
+        },
+        "controls": {
+          "x": 110,
+          "y": 516,
+          "w": 1672,
+          "h": 40
+        },
+        "tabs": {
+          "x": 110,
+          "y": 74,
+          "w": 1672,
+          "h": 30
+        },
+        "tabCount": 4,
+        "tabListVisible": true,
+        "moreVisible": true,
+        "moreLabel": "+2Mô phỏng: Đường đi của gói tin",
+        "activeTabLabel": "Đường đi của gói tin×",
+        "activeTabCount": 1,
+        "closeButtons": 4,
+        "newSessionReachable": true,
+        "titleLines": 1,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1920x1080",
+      "state": "switch",
+      "switch": {
+        "same": true,
+        "fetches": 0,
+        "id": true
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "state": "1-session",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 1508,
+          "h": 778
+        },
+        "center": {
+          "x": 24,
+          "y": 74,
+          "w": 1460,
+          "h": 665
+        },
+        "card": {
+          "x": 24,
+          "y": 74,
+          "w": 1460,
+          "h": 525
+        },
+        "controls": {
+          "x": 24,
+          "y": 704,
+          "w": 1460,
+          "h": 40
+        },
+        "tabs": null,
+        "tabCount": 0,
+        "tabListVisible": false,
+        "moreVisible": false,
+        "moreLabel": null,
+        "activeTabLabel": null,
+        "activeTabCount": 0,
+        "closeButtons": 0,
+        "newSessionReachable": true,
+        "titleLines": null,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "state": "2-sessions-duplicate-title",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 1508,
+          "h": 824
+        },
+        "center": {
+          "x": 24,
+          "y": 120,
+          "w": 1460,
+          "h": 665
+        },
+        "card": {
+          "x": 24,
+          "y": 120,
+          "w": 1460,
+          "h": 525
+        },
+        "controls": {
+          "x": 24,
+          "y": 704,
+          "w": 1460,
+          "h": 40
+        },
+        "tabs": {
+          "x": 24,
+          "y": 74,
+          "w": 1460,
+          "h": 30
+        },
+        "tabCount": 2,
+        "tabListVisible": true,
+        "moreVisible": false,
+        "moreLabel": "+0Mô phỏng: Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2",
+        "activeTabLabel": "Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2×",
+        "activeTabCount": 1,
+        "closeButtons": 2,
+        "newSessionReachable": true,
+        "titleLines": 1,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "state": "6-sessions",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 1508,
+          "h": 711
+        },
+        "center": {
+          "x": 24,
+          "y": 120,
+          "w": 1460,
+          "h": 519
+        },
+        "card": {
+          "x": 24,
+          "y": 120,
+          "w": 1460,
+          "h": 379
+        },
+        "controls": {
+          "x": 24,
+          "y": 656,
+          "w": 1460,
+          "h": 40
+        },
+        "tabs": {
+          "x": 24,
+          "y": 74,
+          "w": 1460,
+          "h": 30
+        },
+        "tabCount": 4,
+        "tabListVisible": true,
+        "moreVisible": true,
+        "moreLabel": "+2Mô phỏng: Đường đi của gói tin",
+        "activeTabLabel": "Đường đi của gói tin×",
+        "activeTabCount": 1,
+        "closeButtons": 4,
+        "newSessionReachable": true,
+        "titleLines": 1,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "state": "switch",
+      "switch": {
+        "same": true,
+        "fetches": 0,
+        "id": true
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "state": "1-session",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 1338,
+          "h": 778
+        },
+        "center": {
+          "x": 24,
+          "y": 74,
+          "w": 1290,
+          "h": 665
+        },
+        "card": {
+          "x": 24,
+          "y": 74,
+          "w": 1290,
+          "h": 525
+        },
+        "controls": {
+          "x": 24,
+          "y": 608,
+          "w": 1290,
+          "h": 40
+        },
+        "tabs": null,
+        "tabCount": 0,
+        "tabListVisible": false,
+        "moreVisible": false,
+        "moreLabel": null,
+        "activeTabLabel": null,
+        "activeTabCount": 0,
+        "closeButtons": 0,
+        "newSessionReachable": true,
+        "titleLines": null,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "state": "2-sessions-duplicate-title",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 1338,
+          "h": 824
+        },
+        "center": {
+          "x": 24,
+          "y": 120,
+          "w": 1290,
+          "h": 665
+        },
+        "card": {
+          "x": 24,
+          "y": 120,
+          "w": 1290,
+          "h": 525
+        },
+        "controls": {
+          "x": 24,
+          "y": 608,
+          "w": 1290,
+          "h": 40
+        },
+        "tabs": {
+          "x": 24,
+          "y": 74,
+          "w": 1290,
+          "h": 30
+        },
+        "tabCount": 2,
+        "tabListVisible": true,
+        "moreVisible": false,
+        "moreLabel": "+0Mô phỏng: Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2",
+        "activeTabLabel": "Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2×",
+        "activeTabCount": 1,
+        "closeButtons": 2,
+        "newSessionReachable": true,
+        "titleLines": 1,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "state": "6-sessions",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 1338,
+          "h": 678
+        },
+        "center": {
+          "x": 24,
+          "y": 120,
+          "w": 1290,
+          "h": 519
+        },
+        "card": {
+          "x": 24,
+          "y": 120,
+          "w": 1290,
+          "h": 379
+        },
+        "controls": {
+          "x": 24,
+          "y": 608,
+          "w": 1290,
+          "h": 40
+        },
+        "tabs": {
+          "x": 24,
+          "y": 74,
+          "w": 1290,
+          "h": 30
+        },
+        "tabCount": 4,
+        "tabListVisible": true,
+        "moreVisible": true,
+        "moreLabel": "+2Mô phỏng: Đường đi của gói tin",
+        "activeTabLabel": "Đường đi của gói tin×",
+        "activeTabCount": 1,
+        "closeButtons": 4,
+        "newSessionReachable": true,
+        "titleLines": 1,
+        "ctrlRows": 1,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "state": "switch",
+      "switch": {
+        "same": true,
+        "fetches": 0,
+        "id": true
+      }
+    },
+    {
+      "viewport": "768x900",
+      "state": "1-session",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 740,
+          "h": 844
+        },
+        "center": {
+          "x": 24,
+          "y": 74,
+          "w": 692,
+          "h": 698
+        },
+        "card": {
+          "x": 24,
+          "y": 74,
+          "w": 692,
+          "h": 558
+        },
+        "controls": {
+          "x": 24,
+          "y": 707,
+          "w": 692,
+          "h": 73
+        },
+        "tabs": null,
+        "tabCount": 0,
+        "tabListVisible": false,
+        "moreVisible": false,
+        "moreLabel": null,
+        "activeTabLabel": null,
+        "activeTabCount": 0,
+        "closeButtons": 0,
+        "newSessionReachable": true,
+        "titleLines": null,
+        "ctrlRows": 2,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "768x900",
+      "state": "2-sessions-duplicate-title",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 740,
+          "h": 887
+        },
+        "center": {
+          "x": 24,
+          "y": 118,
+          "w": 692,
+          "h": 698
+        },
+        "card": {
+          "x": 24,
+          "y": 118,
+          "w": 692,
+          "h": 558
+        },
+        "controls": {
+          "x": 24,
+          "y": 707,
+          "w": 692,
+          "h": 73
+        },
+        "tabs": {
+          "x": 24,
+          "y": 74,
+          "w": 692,
+          "h": 28
+        },
+        "tabCount": 2,
+        "tabListVisible": false,
+        "moreVisible": true,
+        "moreLabel": "+0Mô phỏng: Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2",
+        "activeTabLabel": "Tìm học sinh có điểm kiểm tra cao nhất trong tổ 8 bạn · 2×",
+        "activeTabCount": 1,
+        "closeButtons": 2,
+        "newSessionReachable": true,
+        "titleLines": 0,
+        "ctrlRows": 2,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "768x900",
+      "state": "6-sessions",
+      "probe": {
+        "fingerprintStage": true,
+        "railPresent": false,
+        "layout": {
+          "x": 0,
+          "y": 58,
+          "w": 740,
+          "h": 747
+        },
+        "center": {
+          "x": 24,
+          "y": 118,
+          "w": 692,
+          "h": 519
+        },
+        "card": {
+          "x": 24,
+          "y": 118,
+          "w": 692,
+          "h": 379
+        },
+        "controls": {
+          "x": 24,
+          "y": 654,
+          "w": 692,
+          "h": 73
+        },
+        "tabs": {
+          "x": 24,
+          "y": 74,
+          "w": 692,
+          "h": 28
+        },
+        "tabCount": 4,
+        "tabListVisible": false,
+        "moreVisible": true,
+        "moreLabel": "+2Mô phỏng: Đường đi của gói tin",
+        "activeTabLabel": "Đường đi của gói tin×",
+        "activeTabCount": 1,
+        "closeButtons": 4,
+        "newSessionReachable": true,
+        "titleLines": 0,
+        "ctrlRows": 2,
+        "overflowX": -10
+      }
+    },
+    {
+      "viewport": "768x900",
+      "state": "switch",
+      "switch": {
+        "same": true,
+        "fetches": 0,
+        "id": true
+      }
+    }
+  ],
+  "failures": []
+}

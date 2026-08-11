@@ -289,6 +289,7 @@ export function challengeEntryOf(
 ): PresentationEntry | null {
   return {
     label: policy.challengeLabel ?? "Thử thách: tự dự đoán bước này",
+    shortLabel: "Thử thách",
     closeLabel: "Đóng thử thách",
     hint: policy.challengeTeaser,
     // Bước không có gì để cam kết ⇒ MỜ, không biến mất (xem `PresentationEntry`).
@@ -310,6 +311,7 @@ export function exploreEntryOf(
   if (!policy.exploreLabel) return null;
   return {
     label: policy.exploreLabel,
+    shortLabel: "Khám phá",
     closeLabel: "Đóng khám phá",
     hint: policy.hint,
     available: opts.canManipulate,

@@ -1270,11 +1270,33 @@ dung. Mặc định phải khớp vì mẫu offline chỉ đi qua validate FE.
 LIỆU BÀI HỌC, không phải token giao diện. Token-hoá thành `var(--…)` sẽ phá
 kiểm hai tầng. Đừng "sửa" chúng ở các pass thiết kế sau.
 
-### `components/SessionRail.tsx` — PHIÊN ĐANG MỞ (W4B-2Z §29)
-Cột trái liệt kê các mô phỏng ĐANG MỞ; mở/chuyển/đóng phiên + "+ Mô phỏng mới".
-**Chỉ dựng khi có ≥2 phiên** (`.has-rail` do `App.tsx` gắn) — một cột rỗng sẽ ăn
-bề ngang của sân khấu suốt thời gian còn lại. ≤1100px: nằm ngang phía trên sân
-khấu, cuộn ngang.
+### `components/SessionTabs.tsx` — PHIÊN ĐANG MỞ (W4B-3B; thay `SessionRail` của W4B-2Z §29)
+HÀNG NGANG gọn ngay TRÊN sân khấu (`grid-area: tabs`, class `.has-tabs` do
+`App.tsx` gắn), **chỉ dựng khi có ≥2 phiên**. Exports: `SessionTabs`,
+`sessionLabels(titles)` (hàm thuần — hậu tố `· 1`, `· 2` CHỈ khi trùng tiêu đề;
+trình bày thuần, không đụng config/envelope, không suy nghĩa từ chuỗi).
+
+**VÌ SAO THAY CỘT.** Bản cũ là `grid-area: rail` rộng 208px trải qua **cả hai**
+hàng `center` và `controls`:
+
+    "rail center right"
+    "rail controls right"
+
+nên nó bóp sân khấu VÀ bóp dải điều khiển đúng ngần ấy — nguyên nhân thật của
+việc hàng transport xuống dòng. Hai triệu chứng, một nguyên nhân. Thứ bậc đúng:
+**sân khấu > điều khiển > quản lí phiên**; một cột thường trực cho hạng mục thứ
+ba là đặt ngược thứ bậc.
+
+**LỖI CHỨC NĂNG BẢN CŨ.** `+ Mô phỏng mới` chỉ nằm trong đầu cột, mà cột ẩn khi
+<2 phiên ⇒ đang mở đúng MỘT bài thì **không có đường nào mở bài thứ hai**. Lối
+vào đó nay ở `App` header, cạnh "Giải thích" (chủ sở hữu sẵn có của hành động
+mức-không-gian-làm-việc) nên có mặt ở MỌI số phiên.
+
+Tràn: hiện thẳng tối đa `VISIBLE_TABS = 4` (phiên đang xem LUÔN nằm trong nhóm
+hiện thẳng), phần dư gộp vào `+N`; danh sách bung ra liệt kê **đủ** phiên nên
+không bài nào không với tới được. ≤860px: CSS ẩn hàng tab, cùng MỘT nút đổi vai
+thành bộ chọn `Mô phỏng: <tên> ▾` + lớp phủ tạm thời — **không** đọc
+`window.innerWidth` trong JS (SSR và trình duyệt phải khởi tạo giống nhau).
 
 Sở hữu state: `state/store.ts` — `sessions: OpenSession[]` + `activeSessionId`,
 với `newSession` / `switchSession` / `closeSession`. `active` là BẢN LÀM VIỆC
@@ -1377,6 +1399,24 @@ W4B-3A — NGHIỆM THU TRÌNH DUYỆT ở BỐN bề rộng (1920/1536/1366/768
 KHỚP khi đổi cách xem); phiên A→Khám phá→B→A giữ nguyên object state, 0 `fetch`.
 Có dấu vân tay trang + `--self-test` (tiêm lỗi giả, exit 1). Cờ:
 `--port --out --self-test`. Artifact: `docs/evaluation/m17/w4b3a-after/`.
+
+### `frontend/scripts/accept-workspace-w4b3b.mjs` · Change impact: offline (cần `npm run dev`)
+W4B-3B — NGHIỆM THU BỐ CỤC KHÔNG-GIAN-LÀM-VIỆC ở 4 bề rộng, ở các trạng thái
+unit test không với tới: **1 phiên · 2 phiên TRÙNG TIÊU ĐỀ · 6 phiên (quá sức
+chứa) · chuyển phiên**. Khẳng định: 0 cột phiên thường trực · sân khấu KHÔNG hẹp
+đi và KHÔNG bị đẩy sang phải khi số phiên tăng · 0 tràn ngang · tiêu đề 1 dòng ·
+đúng 1 tab đang-xem · nhãn không trùng khi tiêu đề trùng · `Mô phỏng mới` tới
+được **kể cả khi chỉ có 1 phiên** · dải điều khiển không xuống dòng trên desktop ·
+chuyển phiên giữ đúng object state, 0 `fetch`. Có `--self-test` + `--label`.
+Artifact: `docs/evaluation/m17/w4b3b-workspace/{before,acceptance}.json`.
+
+**HAI BẪY ĐÃ CẮN KHI VIẾT SCRIPT NÀY** (đọc trước khi viết script CDP mới):
+1. **Đếm dòng bằng `top` là SAI.** Trong flex row có `align-items:center`, con
+   cao thấp khác nhau thì `top` khác nhau — phép đếm đó báo 5–7 dòng cho một
+   hàng phẳng. Đếm bằng CHỒNG LẤN DỌC theo thứ tự DOM.
+2. **`Promise was collected`** = Vite tối ưu deps rồi reload GIỮA lúc await.
+   Phải có `warmup()` + retry trên lỗi CDP (cùng khuôn `measure-composition.mjs`).
+   Và **chú thích bên trong template literal KHÔNG được chứa dấu backtick**.
 
 **BẪY ĐÃ CẮN MỘT LẦN — đọc trước khi viết script CDP mới.** Vite gắn
 `?t=<timestamp>` vào URL module sau HMR, nên `import('/src/state/store.ts')` từ

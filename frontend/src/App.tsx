@@ -6,7 +6,7 @@ import { SimulationControls } from "./components/SimulationControls";
 import { SimulationInspector } from "./components/SimulationInspector";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
 import { useAppStore } from "./state/store";
-import { SessionRail } from "./components/SessionRail";
+import { SessionTabs } from "./components/SessionTabs";
 
 /**
  * M9-UX1 (mở rộng M9-UX5/UX7) — BỐN mặt trình bày trên MỘT store:
@@ -31,15 +31,17 @@ export default function App() {
   const goHome = useAppStore((s) => s.goHome);
   const openHistory = useAppStore((s) => s.openHistory);
   const openLibrary = useAppStore((s) => s.openLibrary);
+  const newSession = useAppStore((s) => s.newSession);
   const sessionCount = useAppStore((s) => s.sessions.length);
 
   const inWorkspace = view === "workspace" && active !== null;
-  /* W4B-2Z §29 — cột phiên chỉ TỒN TẠI khi có ≥2 bài đang mở. Dựng sẵn một cột
-     rỗng sẽ ăn bề ngang của sân khấu suốt thời gian còn lại, mà sân khấu là thứ
-     phải chiếm ưu thế thị giác. */
-  const hasRail = sessionCount >= 2;
+  /* W4B-3B — điều hướng phiên là một HÀNG NGANG GỌN ngay trên sân khấu, chỉ
+     dựng khi có ≥2 bài đang mở. Bản trước là một CỘT 208px trải qua cả hàng
+     `center` lẫn hàng `controls`, nên nó bóp cả sân khấu lẫn dải điều khiển —
+     đó mới là nguyên nhân thật của việc hàng transport xuống dòng. */
+  const hasTabs = sessionCount >= 2;
   const layoutClass =
-    `app-layout${rightOpen ? "" : " right-closed"}${hasRail ? " has-rail" : ""}`;
+    `app-layout${rightOpen ? "" : " right-closed"}${hasTabs ? " has-tabs" : ""}`;
 
   return (
     <>
@@ -74,6 +76,20 @@ export default function App() {
           {inWorkspace && (
             <>
               <span className="nav-divider" />
+              {/* W4B-3B — LỐI VÀO "MÔ PHỎNG MỚI" VỀ ĐÂY.
+                  Trước đây nó chỉ nằm trong đầu cột phiên, mà cột đó ẩn khi có
+                  <2 phiên ⇒ đang mở đúng MỘT bài thì không có đường nào mở bài
+                  thứ hai: tính năng nhiều phiên không với tới được từ chính
+                  trạng thái khởi đầu của nó. Header đã là chủ sở hữu của hành
+                  động mức-không-gian-làm-việc (cạnh "Giải thích"), nên gộp vào
+                  đây chứ KHÔNG dựng hệ điều hướng thứ hai. */}
+              <button
+                className="btn-utility"
+                onClick={newSession}
+                title="Mở thêm một mô phỏng, giữ nguyên bài đang dở"
+              >
+                + Mô phỏng mới
+              </button>
               <button
                 className={`btn-utility${rightOpen ? " is-active" : ""}`}
                 onClick={toggleRight}
@@ -89,7 +105,7 @@ export default function App() {
 
       {inWorkspace ? (
         <main className={layoutClass}>
-          <SessionRail />
+          <SessionTabs />
 
           <section className="panel-center">
             <SimulationWorkspace />
