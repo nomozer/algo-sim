@@ -3,17 +3,21 @@
 Cập nhật **sau mỗi milestone**. Chỉ ghi việc **đã thật sự xong** (có commit +
 test). Không ghi việc đang định làm vào mục "đã xong".
 
-> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (2026-07-25)
+> ## ⛳ DANH TÍNH KHO MÃ — ĐỌC TRƯỚC MỌI THAY ĐỔI (2026-08-11)
+>
+> Ba hàng số sống dưới đây **có sync-lock**: `backend/tests/test_current_state_identity.py`
+> dẫn xuất chúng từ nguồn (`app.main.CACHE_VERSION`, `build_matrix()` đọc registry)
+> và ĐỎ khi bảng này trôi. Test không viết số nào — sửa **tài liệu**, đừng sửa mã.
 >
 > | | |
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **25** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **26** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
-> | Family / Target | **11 / 22** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
-> | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **1 biểu diễn tiến triển** (`representation` — `structural_progressive_representation`). **Không** đếm phẳng cả 11 là "mô phỏng thuật toán" |
-> | Trình bày 2D / 3D | **21 chỉ 2D · 1 có 2D+3D** (`network.protocol_encapsulation`) — W4B-2R: chính sách biểu diễn chọn theo CƠ CHẾ, `architectural_poc` không đủ tư cách bày toggle. Nguồn: `SimSpec.visual_modes` + `renderer.ts::representationPolicyOf`; guard toàn danh mục ở `representation-policy-w4b2r.test.ts` |
+> | Family / Target | **12 / 23** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+> | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **2 biểu diễn** (`representation` — `structural_progressive_representation`, `web_presentation`). **Không** đếm phẳng cả 12 là "mô phỏng thuật toán" |
+> | Trình bày 2D / 3D | **22 chỉ 2D · 1 có 2D+3D** (`network.protocol_encapsulation`) — W4B-2R: chính sách biểu diễn chọn theo CƠ CHẾ, `architectural_poc` không đủ tư cách bày toggle. Nguồn: `SimSpec.visual_modes` + `renderer.ts::representationPolicyOf`; guard toàn danh mục ở `representation-policy-w4b2r.test.ts` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code
