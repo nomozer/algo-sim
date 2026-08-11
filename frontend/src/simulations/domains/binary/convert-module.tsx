@@ -193,8 +193,18 @@ export function BaseConvWorkspace({ state }: Props) {
 }
 
 export function BaseConvInspector({ state }: Props) {
+  /* W4B-3D — PANEL PHẢI ĐỌC BƯỚC HIỆN TẠI.
+     Bản trước chỉ in cấu hình, nên "Giải thích" hiện y hệt nhau ở bước 1 và
+     bước cuối: học sinh bấm Tiến, sân khấu đổi, panel đứng im. Lỗi này chỉ lộ
+     ra khi target có mẫu offline đầu tiên (W4B-3D) — trước đó không lượt audit
+     toàn-danh-mục nào chạm tới nó. */
+  const step = state.steps[Math.min(state.cursor, state.steps.length - 1)];
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
+      <p className="notes">
+        Bước {state.cursor + 1} / {state.steps.length}
+        {step ? ` — ${step.narration}` : ""}
+      </p>
       <p className="notes">
         Cơ số nguồn: {state.config.sourceBase} · Cơ số đích: {state.config.targetBase}
       </p>

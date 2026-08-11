@@ -297,6 +297,290 @@ OFFLINE_SAMPLES.push(
   },
 );
 
+/* ── W4B-3D — MẪU CHO CHÍN TARGET CÒN THIẾU BẰNG CHỨNG TRÌNH DUYỆT ────────
+ *
+ * Trước wave này, 14/23 target có mẫu offline. Chín target còn lại
+ * `ai_reachable_public` (học sinh CÓ THỂ tới được bằng đề bài) nhưng không có
+ * mẫu nào, nên **không lượt đo trình duyệt nào từng chạm chúng** — engine và
+ * validator đã khoá kĩ, còn phần học sinh NHÌN THẤY thì chưa ai đo.
+ *
+ * Config ở đây KHÔNG bịa: lấy đúng những cấu hình đã được `validateConfig`
+ * THẬT chấp nhận trong `authenticity-cross-lock.test.ts`, nên mẫu và
+ * cross-lock không thể trôi khỏi nhau.
+ *
+ * NGỮ CẢNH khác nhau là CỐ Ý (§11): cùng một cơ chế, dữ liệu đời sống khác —
+ * điểm số, nhiệt độ, giá tiền. Đó là bằng chứng tái dụng. Nó **chỉ là dữ liệu**:
+ * không renderer nào được rẽ nhánh theo ngữ cảnh (khoá ở `spec-reuse.test.tsx`).
+ *
+ * VISIBILITY giữ đúng sự thật sản phẩm: những bài là nội dung Tin học THPT thì
+ * `public`; `algorithm.scan` là bề mặt TỔNG QUÁT bắt các đề ngoài tám bài
+ * chuyên biệt — đưa nó vào Thư viện học sinh sẽ trùng nghĩa với chính tám bài
+ * ấy, nên nó là `internal_fixture`: có bằng chứng, không quảng bá.
+ */
+OFFLINE_SAMPLES.push(
+  {
+    id: "algo-selection-sort",
+    envelope: {
+      status: "ok",
+      simulation_id: "algorithm.selection_sort",
+      domain: "algorithm",
+      visual_mode: "2d",
+      title: "Xếp hạng 5 vận động viên theo thời gian chạy",
+      description: "Mỗi lượt chọn thời gian nhỏ nhất còn lại rồi đưa lên đầu",
+      config: {
+        problem: {
+          summary: "Xếp hạng 5 vận động viên theo thời gian chạy",
+          input: "Thời gian chạy (giây) của 5 vận động viên",
+          output: "Danh sách đã xếp từ nhanh đến chậm",
+        },
+        data: { array: [9, 4, 7, 2, 6], order: "asc" },
+        notes: null,
+      },
+      notes: null,
+    },
+  },
+  {
+    id: "algo-scan-first-hot-day",
+    envelope: {
+      status: "ok",
+      simulation_id: "algorithm.scan",
+      domain: "algorithm",
+      visual_mode: "2d",
+      title: "Ngày đầu tiên nhiệt độ vượt 4 độ so với trung bình",
+      description: "Quét một lượt, dừng ngay ở phần tử đầu tiên thoả điều kiện",
+      config: {
+        scan_version: "1.0",
+        array: [3, 6, 2, 8, 5],
+        seed: { from: "constant", value: 4, varName: "nguong" },
+        compare: { kind: "to_constant", op: ">", value: 4 },
+        update: { kind: "none" },
+        marking: "match_highlight",
+        stop: "first_match",
+      },
+      notes: null,
+    },
+    visibility: "internal_fixture",
+  },
+  {
+    id: "algo-bounded-control-flow",
+    envelope: {
+      status: "ok",
+      simulation_id: "algorithm.bounded_control_flow",
+      domain: "algorithm",
+      visual_mode: "2d",
+      title: "Cộng dồn 3 cho tới khi vượt 14",
+      description: "Gán, lặp CÓ BIÊN và điều kiện — từng bước, biến hiện rõ",
+      /* Config lấy NGUYÊN VĂN từ `program-normalized-envelope.json` — artifact
+         do CHÍNH `validate_program_config` của backend sinh ra. Dạng chuẩn hoá
+         của `program-2.0` (biểu thức tách thành bảng có id, thân lệnh tham
+         chiếu theo id) không phải thứ nên chép tay: bản viết tay đầu tiên đã bị
+         validator từ chối ngay. */
+      config: {
+              "program_version": "program-2.0",
+              "variables": [
+                      {
+                              "name": "x",
+                              "type": "integer",
+                              "int_value": 2,
+                              "bool_value": null,
+                              "initialized": true
+                      }
+              ],
+              "expressions": [
+                      {
+                              "id": "_e1",
+                              "kind": "var",
+                              "name": "x"
+                      },
+                      {
+                              "id": "_e2",
+                              "kind": "int",
+                              "int_value": 14
+                      },
+                      {
+                              "id": "_e3",
+                              "kind": "compare",
+                              "op": "<=",
+                              "left": "_e1",
+                              "right": "_e2"
+                      },
+                      {
+                              "id": "_e4",
+                              "kind": "int",
+                              "int_value": 3
+                      },
+                      {
+                              "id": "_e5",
+                              "kind": "binary",
+                              "op": "+",
+                              "left": "_e1",
+                              "right": "_e4"
+                      }
+              ],
+              "statements": [
+                      {
+                              "id": "s_while",
+                              "kind": "while",
+                              "target": null,
+                              "value": null,
+                              "condition": "_e3",
+                              "then_body": [],
+                              "else_body": [],
+                              "body": [
+                                      "s_body"
+                              ],
+                              "max_iterations": 10
+                      },
+                      {
+                              "id": "s_body",
+                              "kind": "assign",
+                              "target": "x",
+                              "value": "_e5",
+                              "condition": null,
+                              "then_body": [],
+                              "else_body": [],
+                              "body": [],
+                              "max_iterations": null
+                      }
+              ],
+              "main": [
+                      "s_while"
+              ]
+      },
+      notes: null,
+    },
+  },
+  {
+    id: "binary-base-conversion",
+    envelope: {
+      status: "ok",
+      simulation_id: "binary.base_conversion",
+      domain: "binary",
+      visual_mode: "2d",
+      title: "Đổi năm 2026 sang hệ thập lục phân",
+      description: "Chia lấy dư liên tiếp — từng bước một",
+      config: { sourceBase: 10, targetBase: 16, inputValue: "2026", notes: null },
+      notes: null,
+    },
+  },
+  {
+    id: "binary-character-encoding",
+    envelope: {
+      status: "ok",
+      simulation_id: "binary.character_encoding",
+      domain: "binary",
+      visual_mode: "2d",
+      title: "Chữ \"Tin\" được máy tính lưu thành các bit nào",
+      description: "Ký tự → mã → nhị phân, từng ký tự một",
+      config: { text: "Tin", encoding: "ascii", notes: null },
+      notes: null,
+    },
+  },
+  {
+    id: "logic-boolean-dag",
+    envelope: {
+      status: "ok",
+      simulation_id: "logic.boolean_dag",
+      domain: "logic",
+      visual_mode: "2d",
+      title: "Cửa tự động: mở khi ĐÚNG MỘT trong hai cảm biến báo",
+      description: "Mạch XOR hai đầu vào kèm bảng chân trị đầy đủ",
+      config: {
+        inputs: [
+          { id: "A", value: 1 },
+          { id: "B", value: 0 },
+        ],
+        gates: [{ id: "g", op: "XOR", inputs: ["A", "B"] }],
+        output: "g",
+        notes: null,
+      },
+      notes: null,
+    },
+  },
+  {
+    id: "network-graph-traversal",
+    envelope: {
+      status: "ok",
+      simulation_id: "network.graph_traversal",
+      domain: "network",
+      visual_mode: "2d",
+      title: "Tìm đường ít chặng nhất giữa hai điểm trong mạng lưới",
+      description: "Duyệt theo chiều rộng (BFS), có đường đi và thứ tự thăm",
+      config: {
+        nodes: [{ id: "A" }, { id: "B" }, { id: "C" }, { id: "D" }, { id: "E" }],
+        edges: [["A", "B"], ["A", "C"], ["B", "D"], ["C", "D"], ["D", "E"]],
+        directed: false,
+        start: "A",
+        goal: "E",
+        variant: "bfs",
+        notes: null,
+      },
+      notes: null,
+    },
+  },
+  {
+    id: "db-table-query",
+    envelope: {
+      status: "ok",
+      simulation_id: "database.relational_table_query",
+      domain: "database",
+      visual_mode: "2d",
+      title: "Lọc học sinh có điểm từ 8 trở lên rồi sắp theo điểm",
+      description: "Lọc — chọn cột — sắp xếp, mỗi dòng được xét một lần",
+      config: {
+        specVersion: "table-1.0",
+        schema: [
+          { name: "ten", type: "text", label: "Họ tên" },
+          { name: "diem", type: "number", label: "Điểm" },
+          { name: "to", type: "number", label: "Tổ" },
+        ],
+        rows: [
+          { ten: "An", diem: 7.5, to: 1 },
+          { ten: "Bình", diem: 9, to: 2 },
+          { ten: "Chi", diem: 6.5, to: 1 },
+          { ten: "Dũng", diem: 8, to: 2 },
+          { ten: "Em", diem: 8.5, to: 1 },
+        ],
+        filter: { kind: "compare", column: "diem", op: ">=", value: 8 },
+        projection: ["ten", "diem"],
+        sort: { column: "diem", direction: "desc" },
+        limit: null,
+        aggregate: null,
+        normalizations: [],
+        notes: null,
+      },
+      notes: null,
+    },
+  },
+  {
+    id: "tree-traversal-preorder",
+    envelope: {
+      status: "ok",
+      simulation_id: "tree.traversal",
+      domain: "tree",
+      visual_mode: "2d",
+      title: "Duyệt cây thư mục theo thứ tự trước",
+      description: "Thăm gốc rồi nhánh trái, nhánh phải — ngăn xếp hiện rõ",
+      config: {
+        specVersion: "tree-1.0",
+        variant: "preorder",
+        rootId: "A",
+        nodes: [
+          { id: "A", label: "Gốc", left: "B", right: "C" },
+          { id: "B", label: "Tài liệu", left: "D", right: "E" },
+          { id: "C", label: "Hình ảnh", left: "F", right: "G" },
+          { id: "D", label: "Bài tập", left: null, right: null },
+          { id: "E", label: "Đề thi", left: null, right: null },
+          { id: "F", label: "Ảnh lớp", left: null, right: null },
+          { id: "G", label: "Ảnh sân trường", left: null, right: null },
+        ],
+        notes: null,
+      },
+      notes: null,
+    },
+  },
+);
+
 /** Đề mẫu để THỬ pipeline AI (§8) — điền vào ô nhập rồi bấm Phân tích. */
 /**
  * Đề mẫu để THỬ PIPELINE AI thật (analyze→classify→simulate→validate) — khác với

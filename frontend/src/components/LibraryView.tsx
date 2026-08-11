@@ -23,10 +23,20 @@ import { previewKindOf, SamplePreview } from "./SamplePreview";
  */
 
 /** Thứ tự nhóm — bám chương trình, không bám bảng chữ cái. */
-const GROUP_ORDER: Domain[] = [
+/**
+ * Thứ tự nhóm trong Thư viện — CỐ Ý theo mạch sư phạm, không theo bảng chữ cái.
+ *
+ * W4B-3D — DANH SÁCH NÀY LÀ BỘ LỌC, NÊN THIẾU MỘT MIỀN LÀ MẤT BÀI KHÔNG BÁO.
+ * `groupByDomain` chỉ giữ những miền có mặt ở đây, nên khi `tree` bị bỏ quên,
+ * mẫu công khai của `tree.traversal` render vào KHÔNG nhóm nào và biến mất khỏi
+ * Thư viện — im lặng, không lỗi. Chỉ lộ ra khi miền đó có mẫu công khai đầu
+ * tiên. `library-domain-coverage` khoá: mọi `Domain` phải có mặt ở đây.
+ */
+export const GROUP_ORDER: Domain[] = [
   "algorithm",
   "binary",
   "network",
+  "tree",
   "logic",
   "web",
   "database",

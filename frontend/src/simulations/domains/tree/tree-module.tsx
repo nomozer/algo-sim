@@ -486,7 +486,12 @@ export function TreeInspector({ state }: Props) {
           lộ thứ tự cuối ngay từ bước 0 (học sinh mất cơ hội tự suy luận). */}
       <p className="notes">
         {done
-          ? `Thứ tự thăm (engine): ${state.visitedOrder.map((id) => labelOf(map, id)).join(" → ")}`
+          /* W4B-3D — "(engine)" là từ vựng của MÁY, không phải của học sinh.
+             Nó lọt ra đây vì muốn nói "thứ tự này do engine tất định tính, không
+             phải AI đoán" — nhưng đó là điều để ghi trong tài liệu kiến trúc,
+             không phải chữ in trên màn hình lớp 11 (ARCHITECTURE_MAP §8 #10).
+             Chỉ lộ ra khi target này có mẫu offline đầu tiên (W4B-3D). */
+          ? `Thứ tự thăm: ${state.visitedOrder.map((id) => labelOf(map, id)).join(" → ")}`
           : `Đã thăm ${step.visitedSoFar.length}/${total}: ${
               step.visitedSoFar.length
                 ? step.visitedSoFar.map((id) => labelOf(map, id)).join(" → ")
