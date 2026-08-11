@@ -53,6 +53,20 @@ const TARGETS = [
   "network.packet_routing",
   "network.protocol_encapsulation",
   "generic.rule_scene",
+  /* W4B-3D — chín target vừa có mẫu offline đầu tiên. Trước đó không lượt đo
+     trình duyệt nào chạm tới chúng, nên mọi khẳng định về bố cục/quyền sở hữu
+     lối vào chỉ đúng cho 14/23. */
+  "algorithm.selection_sort",
+  "algorithm.scan",
+  "algorithm.bounded_control_flow",
+  "binary.base_conversion",
+  "binary.character_encoding",
+  "binary.decimal_to_binary",
+  "logic.and_gate",
+  "logic.boolean_dag",
+  "network.graph_traversal",
+  "tree.traversal",
+  "database.relational_table_query",
 ];
 
 const CHROME = [

@@ -3,6 +3,8 @@ import { ALGORITHM_IDS, type AlgorithmId } from "./types";
 import { makeAlgorithmModule } from "../simulations/domains/algorithm";
 import { activeTrace, type AlgorithmSimState } from "../simulations/domains/algorithm/model";
 import { insertionHold } from "../simulations/domains/algorithm/ui";
+import { offlineCatalog } from "../data/offline-catalog";
+import { getSimulation, registerAllSimulations } from "../simulations";
 
 /**
  * W4B-3C — SỰ THẬT Ở BƯỚC CUỐI.
@@ -37,6 +39,8 @@ import { insertionHold } from "../simulations/domains/algorithm/ui";
  *   4. mọi phần tử được đánh dấu đã-sắp;
  *   5. hình chiếu của renderer ở bước cuối là RỖNG các hiện vật đang-dở.
  */
+
+registerAllSimulations();
 
 const SORTS: AlgorithmId[] = ["bubble_sort", "insertion_sort", "selection_sort"];
 const ARRAY = [5, 2, 9, 1, 7, 3];
@@ -108,6 +112,36 @@ describe("W4B-3C · bước cuối của họ sắp xếp phải tự nhất qu�
       const laterInsert = trace.steps.slice(i).some((st) => st.events.some((e) => e.type === "insert"));
       expect(laterInsert, `bước ${i + 1}/${total}: đang giữ quân bài mà không còn bước chèn nào`)
         .toBe(true);
+    }
+  });
+
+  it("TOÀN DANH MỤC: mọi mẫu có dòng thời gian đều tới được bước cuối ổn định", () => {
+    /* W4B-3D — quét CẢ danh mục offline (nay đủ 23 target), không riêng họ
+       thuật toán. Ba điều kiểm được mà không cần trình duyệt:
+         1. đi tới bước cuối KHÔNG ném lỗi;
+         2. bước cuối là ĐIỂM DỪNG — tiến thêm không đổi state nữa;
+         3. state ở bước cuối là ỔN ĐỊNH — vào lại đúng bước ấy cho cùng kết quả.
+       (2) là thứ dễ hỏng nhất khi thêm timeline mới: một `goToStep` không kẹp
+       biên sẽ chạy quá cuối và đẻ ra bước rỗng. */
+    for (const e of offlineCatalog()) {
+      const mod = getSimulation(e.simId);
+      if (!mod?.timeline) continue;
+      const v = mod.validateConfig(e.envelope.config);
+      expect(v.ok, `${e.id}: config mẫu không hợp lệ`).toBe(true);
+      if (!v.ok) continue;
+      const s0 = mod.init(v.config);
+      const total = mod.timeline.stepCount(s0);
+      expect(total, `${e.id}: timeline rỗng`).toBeGreaterThan(0);
+
+      const last = mod.timeline.goToStep(s0, total - 1);
+      expect(mod.timeline.currentStep(last), `${e.id}: không tới được bước cuối`).toBe(total - 1);
+
+      const past = mod.timeline.goToStep(last, total);
+      expect(mod.timeline.currentStep(past), `${e.id}: đi quá bước cuối không bị kẹp biên`)
+        .toBe(total - 1);
+
+      const again = mod.timeline.goToStep(s0, total - 1);
+      expect(mod.timeline.currentStep(again), `${e.id}: bước cuối không ổn định`).toBe(total - 1);
     }
   });
 

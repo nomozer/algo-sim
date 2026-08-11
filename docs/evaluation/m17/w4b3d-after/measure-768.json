@@ -1,0 +1,1533 @@
+{
+  "when": "2026-08-11T19:19:53.878Z",
+  "viewport": "768,900",
+  "rows": [
+    {
+      "target": "algorithm.find_max",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.find_max",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 63,
+          "y": 258,
+          "w": 615,
+          "h": 268
+        },
+        "hUse": 95.8,
+        "vUse": 82.2,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Bắt đầu: tạm coi phần tử đầu tiên An (7,5) là lớn nhất.",
+        "timelineTotal": 10
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.find_max",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 63,
+          "y": 258,
+          "w": 615,
+          "h": 268
+        },
+        "hUse": 95.8,
+        "vUse": 82.2,
+        "bandCount": 4,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 1,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Phần tử lớn nhất là Bình (9), ở vị trí 2.",
+        "narrationText": "Duyệt hết dãy.",
+        "timelineTotal": 10
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.find_min",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.find_min",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 64,
+          "y": 258,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 82.2,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Bắt đầu: tạm coi phần tử đầu tiên Thứ 2 (28) là nhỏ nhất.",
+        "timelineTotal": 10
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.find_min",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 64,
+          "y": 258,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 82.2,
+        "bandCount": 4,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 1,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Phần tử nhỏ nhất là Thứ 5 (24), ở vị trí 4.",
+        "narrationText": "Duyệt hết dãy.",
+        "timelineTotal": 10
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.sum_if",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.sum_if",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 248,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 67,
+          "y": 288,
+          "w": 607,
+          "h": 268
+        },
+        "hUse": 94.5,
+        "vUse": 82.2,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Khởi tạo tong = 0. Sẽ duyệt từng phần tử, xét điều kiện \"lớn hơn hoặc bằng 80\".",
+        "timelineTotal": 16
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.sum_if",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 248,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 67,
+          "y": 288,
+          "w": 607,
+          "h": 268
+        },
+        "hUse": 94.5,
+        "vUse": 82.2,
+        "bandCount": 3,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Tổng thỏa điều kiện \"lớn hơn hoặc bằng 80\" là 555.",
+        "narrationText": "Duyệt hết dãy.",
+        "timelineTotal": 16
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.count_if",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.count_if",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 64,
+          "y": 258,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 82.2,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Khởi tạo dem = 0. Sẽ duyệt từng phần tử, xét điều kiện \"lớn hơn hoặc bằng 8\".",
+        "timelineTotal": 17
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.count_if",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 326
+        },
+        "content": {
+          "x": 64,
+          "y": 258,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 82.2,
+        "bandCount": 4,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 1,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Số phần tử thỏa điều kiện \"lớn hơn hoặc bằng 8\" là 5.",
+        "narrationText": "Duyệt hết dãy.",
+        "timelineTotal": 17
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.linear_search",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.linear_search",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 248,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 63,
+          "y": 248,
+          "w": 615,
+          "h": 268
+        },
+        "hUse": 95.8,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Cần tìm giá trị 189. Duyệt lần lượt từ đầu dãy.",
+        "timelineTotal": 8
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.linear_search",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 248,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 63,
+          "y": 248,
+          "w": 615,
+          "h": 268
+        },
+        "hUse": 95.8,
+        "vUse": 93.7,
+        "bandCount": 3,
+        "bands": {
+          "legend": 1,
+          "narration": 0,
+          "decisionStrip": 1,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Tìm thấy 189 tại vị trí thứ 6. Số lần so sánh: 6.",
+        "narrationText": null,
+        "timelineTotal": 8
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.binary_search",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.binary_search",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 64,
+          "y": 218,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Cần tìm 8,5 trong dãy đã sắp thứ tự. Vùng xét ban đầu: từ vị trí 1 đến 10.",
+        "timelineTotal": 13
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.binary_search",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 64,
+          "y": 218,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Tìm thấy 8,5 tại vị trí thứ 7. Chỉ mất 4 lần so sánh (tuần tự có thể mất tới 10).",
+        "narrationText": null,
+        "timelineTotal": 13
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.bubble_sort",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 248,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 64,
+          "y": 248,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Sắp xếp nổi bọt tăng dần: lặp lại việc so sánh từng cặp kề nhau, đổi chỗ nếu sai thứ tự.",
+        "timelineTotal": 40
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.bubble_sort",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 248,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 64,
+          "y": 248,
+          "w": 612,
+          "h": 268
+        },
+        "hUse": 95.3,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Dãy đã sắp xếp tăng dần xong sau 11 lần đổi chỗ.",
+        "narrationText": null,
+        "timelineTotal": 40
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.insertion_sort",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 76,
+          "y": 218,
+          "w": 589,
+          "h": 268
+        },
+        "hUse": 91.7,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Sắp xếp chèn tăng dần: coi phần tử đầu là \"phần đã sắp\"; lần lượt chèn từng phần tử sau vào đúng chỗ.",
+        "timelineTotal": 33
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.insertion_sort",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 76,
+          "y": 218,
+          "w": 589,
+          "h": 268
+        },
+        "hUse": 91.7,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Dãy đã sắp xếp tăng dần xong bằng phương pháp chèn.",
+        "narrationText": null,
+        "timelineTotal": 33
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "logic.and_gate",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "logic.and_gate",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 240
+        },
+        "content": {
+          "x": 140,
+          "y": 186,
+          "w": 460,
+          "h": 240
+        },
+        "hUse": 71.7,
+        "vUse": 100,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Bấm vào công tắc A hoặc B để bật/tắt. AND chỉ cho đầu ra 1 khi cả hai đầu vào đều là 1. Hiện tại: 0 AND 0 = 0.",
+        "timelineTotal": null
+      },
+      "terminal": null,
+      "dupTerminal": false
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "binary.decimal_to_binary",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 182
+        },
+        "content": {
+          "x": 232,
+          "y": 202,
+          "w": 276,
+          "h": 150
+        },
+        "hUse": 43,
+        "vUse": 82.4,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Bấm vào từng bit để bật/tắt. Nhị phân 1101 = 13 (hệ thập phân).",
+        "timelineTotal": null
+      },
+      "terminal": null,
+      "dupTerminal": false
+    },
+    {
+      "target": "network.packet_routing",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "network.packet_routing",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 180
+        },
+        "content": {
+          "x": 50,
+          "y": 186,
+          "w": 640,
+          "h": 160
+        },
+        "hUse": 99.7,
+        "vUse": 88.9,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Tạo gói tin tại Máy khách (client).",
+        "timelineTotal": 4
+      },
+      "terminal": {
+        "active": true,
+        "target": "network.packet_routing",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 180
+        },
+        "content": {
+          "x": 50,
+          "y": 186,
+          "w": 640,
+          "h": 160
+        },
+        "hUse": 99.7,
+        "vUse": 88.9,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Gói tin tới đích Máy chủ (server). Hoàn tất!",
+        "timelineTotal": 4
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "network.protocol_encapsulation",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 256,
+          "w": 642,
+          "h": 262
+        },
+        "content": null,
+        "hUse": null,
+        "vUse": null,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Máy gửi: ứng dụng tạo dữ liệu cần gửi đi.",
+        "timelineTotal": 9
+      },
+      "terminal": {
+        "active": true,
+        "target": "network.protocol_encapsulation",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 256,
+          "w": 642,
+          "h": 262
+        },
+        "content": null,
+        "hUse": null,
+        "vUse": null,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Ứng dụng ở máy nhận nhận đúng dữ liệu ban đầu. Hoàn tất!",
+        "timelineTotal": 9
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "web.style_model",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "web.style_model",
+        "cardW": 692,
+        "stage": {
+          "x": 24,
+          "y": 74,
+          "w": 692,
+          "h": 949
+        },
+        "content": null,
+        "hUse": null,
+        "vUse": null,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Đổi thuộc tính bên trái và quan sát khối bên phải đổi ngay.",
+        "timelineTotal": null
+      },
+      "terminal": null,
+      "dupTerminal": false
+    },
+    {
+      "target": "generic.rule_scene",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "generic.rule_scene",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 232,
+          "w": 642,
+          "h": 269
+        },
+        "content": {
+          "x": 70,
+          "y": 232,
+          "w": 600,
+          "h": 269
+        },
+        "hUse": 93.5,
+        "vUse": 100,
+        "bandCount": 0,
+        "bands": {
+          "legend": 0,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": null,
+        "timelineTotal": 1
+      },
+      "terminal": null,
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.selection_sort",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 123,
+          "y": 186,
+          "w": 494,
+          "h": 268
+        },
+        "hUse": 76.9,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Sắp xếp chọn tăng dần: mỗi lượt TÌM phần tử nhỏ nhất của phần chưa sắp rồi đưa về đầu phần đó.",
+        "timelineTotal": 24
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.selection_sort",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 286
+        },
+        "content": {
+          "x": 123,
+          "y": 186,
+          "w": 494,
+          "h": 268
+        },
+        "hUse": 76.9,
+        "vUse": 93.7,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Dãy đã sắp xếp tăng dần xong sau 4 lượt chọn, 3 lần đổi chỗ.",
+        "narrationText": null,
+        "timelineTotal": 24
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.scan",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.scan",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 268
+        },
+        "content": {
+          "x": 123,
+          "y": 218,
+          "w": 494,
+          "h": 268
+        },
+        "hUse": 76.9,
+        "vUse": 100,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Khởi tạo nguong = 4.",
+        "timelineTotal": 4
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.scan",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 268
+        },
+        "content": {
+          "x": 123,
+          "y": 218,
+          "w": 494,
+          "h": 268
+        },
+        "hUse": 76.9,
+        "vUse": 100,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Tìm thấy tại vị trí thứ 2. Số lần so sánh: 2.",
+        "narrationText": null,
+        "timelineTotal": 4
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "algorithm.bounded_control_flow",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 290
+        },
+        "content": {
+          "x": 65,
+          "y": 243,
+          "w": 560,
+          "h": 96
+        },
+        "hUse": 87.2,
+        "vUse": 33.1,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Xét x = 2: 2 <= 14 → ĐÚNG, vào thân vòng lặp (lượt 1).",
+        "timelineTotal": 12
+      },
+      "terminal": {
+        "active": true,
+        "target": "algorithm.bounded_control_flow",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 241
+        },
+        "content": {
+          "x": 65,
+          "y": 243,
+          "w": 560,
+          "h": 96
+        },
+        "hUse": 87.2,
+        "vUse": 39.8,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Chương trình kết thúc. x = 17.",
+        "narrationText": null,
+        "timelineTotal": 12
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "binary.base_conversion",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "binary.base_conversion",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 180
+        },
+        "content": null,
+        "hUse": null,
+        "vUse": null,
+        "bandCount": 0,
+        "bands": {
+          "legend": 0,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": null,
+        "timelineTotal": 5
+      },
+      "terminal": {
+        "active": true,
+        "target": "binary.base_conversion",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 180
+        },
+        "content": {
+          "x": 49,
+          "y": 186,
+          "w": 216,
+          "h": 106
+        },
+        "hUse": 33.6,
+        "vUse": 58.9,
+        "bandCount": 0,
+        "bands": {
+          "legend": 0,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": null,
+        "timelineTotal": 5
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "binary.character_encoding",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "binary.character_encoding",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 226,
+          "w": 642,
+          "h": 180
+        },
+        "content": {
+          "x": 49,
+          "y": 238,
+          "w": 642,
+          "h": 58
+        },
+        "hUse": 100,
+        "vUse": 32.2,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Xét ký tự thứ 1: T.",
+        "timelineTotal": 21
+      },
+      "terminal": {
+        "active": true,
+        "target": "binary.character_encoding",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 226,
+          "w": 642,
+          "h": 180
+        },
+        "content": {
+          "x": 49,
+          "y": 238,
+          "w": 642,
+          "h": 118
+        },
+        "hUse": 100,
+        "vUse": 65.6,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 1,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": "Đã mã hoá 3 ký tự theo bảng mã ASCII.",
+        "narrationText": null,
+        "timelineTotal": 21
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "logic.boolean_dag",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "logic.boolean_dag",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 217
+        },
+        "content": {
+          "x": 49,
+          "y": 251,
+          "w": 398,
+          "h": 154
+        },
+        "hUse": 62,
+        "vUse": 71,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Mạch có 2 đầu vào và 1 cổng — đánh giá lần lượt theo thứ tự phụ thuộc (topo).",
+        "timelineTotal": 3
+      },
+      "terminal": {
+        "active": true,
+        "target": "logic.boolean_dag",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 217
+        },
+        "content": {
+          "x": 49,
+          "y": 251,
+          "w": 398,
+          "h": 154
+        },
+        "hUse": 62,
+        "vUse": 71,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Đầu ra của mạch (cổng g): 1.",
+        "timelineTotal": 3
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "network.graph_traversal",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "network.graph_traversal",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 429
+        },
+        "content": {
+          "x": 49,
+          "y": 218,
+          "w": 618,
+          "h": 260
+        },
+        "hUse": 96.3,
+        "vUse": 60.6,
+        "bandCount": 1,
+        "bands": {
+          "legend": 1,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": null,
+        "timelineTotal": 7
+      },
+      "terminal": {
+        "active": true,
+        "target": "network.graph_traversal",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 218,
+          "w": 642,
+          "h": 432
+        },
+        "content": {
+          "x": 49,
+          "y": 218,
+          "w": 618,
+          "h": 427
+        },
+        "hUse": 96.3,
+        "vUse": 98.8,
+        "bandCount": 2,
+        "bands": {
+          "legend": 2,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": null,
+        "timelineTotal": 7
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "database.relational_table_query",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "database.relational_table_query",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 264,
+          "w": 642,
+          "h": 183
+        },
+        "content": {
+          "x": 49,
+          "y": 264,
+          "w": 642,
+          "h": 183
+        },
+        "hUse": 100,
+        "vUse": 100,
+        "bandCount": 1,
+        "bands": {
+          "legend": 0,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Đọc hàng 1: Họ tên = An, Điểm = 7.5, Tổ = 1",
+        "timelineTotal": 19
+      },
+      "terminal": {
+        "active": true,
+        "target": "database.relational_table_query",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 264,
+          "w": 642,
+          "h": 180
+        },
+        "content": {
+          "x": 49,
+          "y": 264,
+          "w": 642,
+          "h": 123
+        },
+        "hUse": 100,
+        "vUse": 68.3,
+        "bandCount": 0,
+        "bands": {
+          "legend": 0,
+          "narration": 0,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": null,
+        "timelineTotal": 19
+      },
+      "dupTerminal": false
+    },
+    {
+      "target": "tree.traversal",
+      "runnable": true,
+      "ready": {
+        "active": true,
+        "target": "tree.traversal",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 443
+        },
+        "content": {
+          "x": 49,
+          "y": 186,
+          "w": 602,
+          "h": 274
+        },
+        "hUse": 93.8,
+        "vUse": 61.9,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Duyệt thứ tự trước (gốc–trái–phải) từ gốc Gốc. Đưa gốc vào ngăn xếp.",
+        "timelineTotal": 22
+      },
+      "terminal": {
+        "active": true,
+        "target": "tree.traversal",
+        "cardW": 692,
+        "stage": {
+          "x": 49,
+          "y": 186,
+          "w": 642,
+          "h": 428
+        },
+        "content": {
+          "x": 49,
+          "y": 186,
+          "w": 602,
+          "h": 274
+        },
+        "hUse": 93.8,
+        "vUse": 64,
+        "bandCount": 2,
+        "bands": {
+          "legend": 1,
+          "narration": 1,
+          "decisionStrip": 0,
+          "searchObserve": 0,
+          "result": 0,
+          "experimentTrigger": 0,
+          "experimentTool": 0,
+          "predictInline": 0,
+          "holdTray": 0
+        },
+        "resultText": null,
+        "narrationText": "Duyệt xong. Thứ tự thăm: Gốc → Tài liệu → Bài tập → Đề thi → Hình ảnh → Ảnh lớp → Ảnh sân trường.",
+        "timelineTotal": 22
+      },
+      "dupTerminal": false
+    }
+  ]
+}

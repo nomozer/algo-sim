@@ -5,6 +5,7 @@ import { IconCheck } from "../../../components/icons";
 import { runScan, scanPseudocode, validateScanSpec, type ScanSpec } from "../../../core/scan";
 import type { Trace } from "../../../core/types";
 import type { ConfigResult, SimulationModule, WorkspaceProps } from "../../types";
+import { processLeadOf } from "./decision";
 
 /**
  * Module `algorithm.scan` (M12) — adapter MỎNG quanh scan-interpreter tất định
@@ -88,9 +89,21 @@ export function makeScanModule(): SimulationModule<ScanSpec, ScanSimState> {
     },
 
     // (SHELL-N) chữ thuyết minh; khe do shell dựng
-    narrate: (state) => ({
-      text: state.trace.steps[clampCursor(state, state.cursor)].narration,
-    }),
+    narrate: (state) => {
+      const step = state.trace.steps[clampCursor(state, state.cursor)];
+      /* W4B-3D — KẾT QUẢ CHỈ THUỘC MỘT CHỖ, áp cho cả `algorithm.scan`.
+         W4B-2T đã sửa luật này cho tám bài chuyên biệt, nhưng scan chưa có mẫu
+         offline nên không lượt đo bố cục nào chạm tới nó — và nó vẫn lặp: đo ở
+         cả BỐN bề rộng thấy `dupTerminal`, tức dải kết quả và khe thuyết minh
+         nói cùng một câu ngay tại khoảnh khắc đáng nhớ nhất của bài.
+         Dùng LẠI đúng chủ sở hữu `processLeadOf`, không viết luật thứ hai. */
+      const done = step.events.find((e) => e.type === "done");
+      if (done && done.type === "done") {
+        const lead = processLeadOf(step.narration, done.result);
+        return lead === null ? null : { text: lead };
+      }
+      return { text: step.narration };
+    },
 
     getExplainContext: (state) => {
       const step = state.trace.steps[clampCursor(state, state.cursor)];
