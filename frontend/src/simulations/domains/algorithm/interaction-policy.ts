@@ -1,4 +1,5 @@
 import type { AlgorithmId } from "../../../core/types";
+import type { PresentationEntry } from "../../types";
 import { sortInteractionOf } from "./decision";
 import type { AlgorithmSimState } from "./model";
 
@@ -44,6 +45,20 @@ export interface WhatIfPolicy {
   /** Vì sao thao tác này KHÔNG phải trang trí (tự khai, phục vụ audit). */
   rationale: string;
   /**
+   * W4B-3A — NHÃN LỐI VÀO KHÁM PHÁ (thao tác trực tiếp), tách khỏi
+   * `challengeLabel` (lối vào cam kết).
+   *
+   * Vì sao phải là hai chuỗi chứ không dùng lại một: chúng mời hai việc khác
+   * loại. `challengeLabel` mời học sinh CAM KẾT một quyết định của thuật toán
+   * và engine sẽ phán đúng/sai; nhãn này mời học sinh ĐỔI mô hình rồi xem hệ
+   * quả tất định — không có đúng/sai nào cả. Một nhãn cho cả hai chính là thứ
+   * đã khiến "Thí nghiệm" vừa mở vùng chấm điểm vừa mở kéo-thả.
+   *
+   * KHÔNG khai ⇒ bài này không có lối vào Khám phá. `mode: "hidden"` bắt buộc
+   * không khai: kéo ở đó là trang trí (COVERAGE §2.6), mời là mời hão.
+   */
+  exploreLabel?: string;
+  /**
    * W4B-2B §5 — CỔNG THÍ NGHIỆM CHO **MỌI** CÔNG CỤ CỦA HỌC SINH.
    *
    * `mode` trả lời "kéo-thả có nghĩa gì ở bài này". Cờ này trả lời một câu KHÁC:
@@ -83,6 +98,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: 'Kéo một cột thả lên cột khác để thử "nếu đổi chỗ thì sao?" — đổi chỗ chính là cơ chế của sắp xếp nổi bọt.',
     rationale:
       "Đổi chỗ là chính cơ chế đang học; engine chạy tiếp tất định trên dãy đã đổi, hệ quả nhìn thấy ngay trong nhánh thử nghiệm.",
+    exploreLabel: "Khám phá: tự đổi chỗ hai cột bất kì",
     /* W4B-2I §4 — HAI BÀI CUỐI VÀO CỔNG, khép rollout 7/9 → 9/9.
        Đây là chỗ rò quiz-like THẬT của sản phẩm: trước wave này `bubble_sort` và
        `selection_sort` là hai target DUY NHẤT còn bày vùng cam kết + dòng "Em hãy
@@ -102,6 +118,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: 'Kéo một cột thả lên cột khác để thử "nếu đổi chỗ thì sao?" — quan sát thứ tự dời/chèn thay đổi theo.',
     rationale:
       "Thứ tự phần tử quyết định số lần dời và vị trí chèn; đổi chỗ làm hệ quả đó hiện ra tất định trong nhánh thử nghiệm.",
+    exploreLabel: "Khám phá: tự đổi chỗ hai cột bất kì",
     /* W4B-2B — PILOT. `mode` giữ nguyên `free`: kéo vẫn CHÍNH LÀ cơ chế đang
        học, lý do đó không hề sai đi. Đổi là chỗ ĐẶT nó: công cụ nay nằm sau
        cổng Thí nghiệm để màn mặc định chỉ còn mô phỏng. */
@@ -117,6 +134,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: 'Kéo một cột thả lên cột khác để thử "nếu đổi chỗ thì sao?" — vị trí phần tử nhỏ nhất/lớn nhất của phần chưa sắp sẽ đổi theo.',
     rationale:
       "Thứ tự phần tử quyết định vị trí cực trị được CHỌN mỗi lượt và số lần đổi chỗ; engine chạy tiếp tất định trên dãy đã đổi nên hệ quả nhìn thấy ngay trong nhánh thử nghiệm.",
+    exploreLabel: "Khám phá: tự đổi chỗ hai cột bất kì",
     /* W4B-2I §4 — như `bubble_sort`: cùng lý do, cùng một dòng. */
     experimentGated: true,
     challengeLabel: "Thí nghiệm: tự chọn phần tử mỗi lượt",
@@ -132,6 +150,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: "Kéo = thí nghiệm, không phải bước thuật toán: dời đích, xem chi phí đổi.",
     rationale:
       "Vị trí của giá trị cần tìm quyết định CHI PHÍ tìm kiếm (số lần so sánh) — hệ quả tất định, nhìn thấy ở kết quả nhánh.",
+    exploreLabel: "Khám phá: dời giá trị cần tìm đi chỗ khác",
     /* W4B-2D §3 — KÉO Ở ĐÂY LÀ WHAT-IF, KHÔNG PHẢI BƯỚC CỦA THUẬT TOÁN.
      *
      * `mode` giữ `framed`: lý do cũ không sai đi — hệ quả của việc dời đích chỉ
@@ -182,6 +201,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: "Kéo = thí nghiệm: phá thứ tự đã sắp, xem còn tìm đúng không.",
     rationale:
       "Đổi chỗ tự do phá tiền điều kiện mà không ai giải thích → gây hiểu lầm; đóng khung thành thí nghiệm tiền-điều-kiện thì hệ quả (bỏ sót giá trị) là bài học tất định.",
+    exploreLabel: "Khám phá: phá thứ tự đã sắp xem còn tìm đúng không",
     /* W4B-2D §26 — kéo VỐN đã sau cổng (mode `challenge`); cờ này thêm vùng cam
        kết vào cùng cổng đó, để Quan sát chỉ còn mô phỏng. Hành vi kéo không đổi
        một dòng. */
@@ -197,6 +217,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
     rationale:
       "Đổi chỗ thường không đổi kết quả (max bất biến theo thứ tự) → tự do là trang trí; đóng khung quanh bất biến vùng-đã-duyệt thì hệ quả (thuật toán bị lừa) là bài học tất định về vòng lặp.",
+    exploreLabel: "Khám phá: đưa một cột chưa duyệt vào vùng đã duyệt",
     /* W4B-2B — PILOT. Trước wave này cổng đã gác KÉO; nay gác cả VÙNG CAM KẾT,
        nên Quan sát chỉ còn mô phỏng và học sinh phải chủ động bước vào vai
        "người làm thuật toán". `find_min` cố ý KHÔNG bật cờ này. */
@@ -212,6 +233,7 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     hint: "Kéo một cột chưa duyệt thả vào vùng đã duyệt (các cột xám) — kết quả cuối có còn đúng với dãy mới không?",
     rationale:
       "Như find_max: chỉ có nghĩa khi đóng khung quanh bất biến vùng-đã-duyệt; đổi chỗ tự do hầu như không đổi kết quả.",
+    exploreLabel: "Khám phá: đưa một cột chưa duyệt vào vùng đã duyệt",
     /* W4B-2C — mở rộng họ quét dãy. Cùng `runFindExtreme`, cùng `challenge`,
        nên đây là bản sao kiến trúc ĐÚNG NGHĨA của find_max: cổng gác cả cam kết
        lẫn kéo. Không đổi một chữ nào của nhãn/khung — chúng vốn đã nói min. */
@@ -247,6 +269,51 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
 
 export function whatIfPolicyOf(algorithmId: AlgorithmId): WhatIfPolicy {
   return POLICIES[algorithmId];
+}
+
+/**
+ * W4B-3A — LỐI VÀO THỬ THÁCH của họ thuật toán. Hàm THUẦN, cùng lý do tồn tại
+ * như `commitmentSurfaceVisible`: luật chôn trong JSX là luật chỉ kiểm được
+ * bằng trình duyệt (`ARCHITECTURE_MAP §8` #13).
+ *
+ * `hasSurface` = mở ra thì có thứ gì để cam kết không. Không có ⇒ `null`: một
+ * lối vào dẫn tới màn hình trống còn tệ hơn không có lối vào.
+ *
+ * `inBranch` giữ nguyên hành vi trước wave: đang ở nhánh what-if thì không mời
+ * cam kết — nhánh là câu hỏi "nếu khác đi thì sao", không phải dòng chính để
+ * chấm điểm.
+ */
+export function challengeEntryOf(
+  policy: WhatIfPolicy,
+  opts: { inBranch: boolean; hasSurface: boolean },
+): PresentationEntry | null {
+  return {
+    label: policy.challengeLabel ?? "Thử thách: tự dự đoán bước này",
+    closeLabel: "Đóng thử thách",
+    hint: policy.challengeTeaser,
+    // Bước không có gì để cam kết ⇒ MỜ, không biến mất (xem `PresentationEntry`).
+    available: !opts.inBranch && opts.hasSurface,
+  };
+}
+
+/**
+ * W4B-3A — LỐI VÀO KHÁM PHÁ. `mode: "hidden"` không khai `exploreLabel` nên trả
+ * `null` — kéo ở những bài đó là trang trí, và COVERAGE §2.6 cấm bày tương tác
+ * trang trí. `canManipulate` là dữ kiện thời điểm (hết bài thì không còn gì để
+ * đổi), do nơi gọi cung cấp — hàm này không được biết state.
+ */
+export function exploreEntryOf(
+  policy: WhatIfPolicy,
+  opts: { canManipulate: boolean },
+): PresentationEntry | null {
+  // KHÔNG khai nhãn ⇒ bài này không có chế độ Khám phá: không nút, không nút mờ.
+  if (!policy.exploreLabel) return null;
+  return {
+    label: policy.exploreLabel,
+    closeLabel: "Đóng khám phá",
+    hint: policy.hint,
+    available: opts.canManipulate,
+  };
 }
 
 /**

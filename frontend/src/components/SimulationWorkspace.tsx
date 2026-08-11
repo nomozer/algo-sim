@@ -5,7 +5,14 @@ import {
   learnerFacingModes,
   rendererFor,
 } from "../simulations/renderer";
-import type { Narration, VisualMode, WorkspaceProps } from "../simulations/types";
+import type {
+  ExploreCapability,
+  Narration,
+  PredictionCapability,
+  PresentationEntry,
+  VisualMode,
+  WorkspaceProps,
+} from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { PredictionBar } from "./PredictionBar";
 
@@ -155,13 +162,53 @@ export function challengeSurfaceVisible<S>(
   return challengeOpen;
 }
 
-/** Có dựng LỐI VÀO Thử thách không — dẫn xuất từ năng lực, không từ tên bài. */
-export function challengeEntryVisible<S>(
-  mod: { predict?: { presentedInStage?: (state: S) => boolean } },
+/**
+ * Có dựng LỐI VÀO Thử thách không — dẫn xuất từ NĂNG LỰC, không từ tên bài.
+ *
+ * W4B-3A — SỬA MỘT LẦN LẪN LỘN CỬA VỚI PHÒNG.
+ *
+ * Bản trước trả `false` khi module tự bày cam kết trên sân khấu
+ * (`presentedInStage`). Ý định đúng — không được có HAI bề mặt hỏi cùng một câu
+ * — nhưng chỗ áp sai: nó tắt cả CÁI CỬA, không chỉ bề mặt thứ hai. Hệ quả đo
+ * được ở 8 target thuật toán: đúng những bước có vùng cam kết thì shell không
+ * dựng lối vào nào, nên `domains/algorithm/ui.tsx` phải tự dựng lấy một nút mở
+ * — và nút tự dựng ấy CHÍNH LÀ dải `experimentTrigger` nằm dưới mô hình.
+ *
+ * Nay: cửa suy từ năng lực `predict` (một cửa, ở dải hành động phụ), còn
+ * `presentedInStage` giữ nguyên trách nhiệm THẬT của nó ở
+ * `challengeSurfaceVisible` — chặn `PredictionBar` khi sân khấu đã hỏi rồi.
+ * Một cửa, nhiều nhất một bề mặt.
+ */
+export function challengeEntry<S>(
+  mod: { predict?: PredictionCapability<S> },
   state: S,
-): boolean {
-  if (!mod.predict) return false;
-  return !mod.predict.presentedInStage?.(state);
+  config: unknown,
+): PresentationEntry | null {
+  if (!mod.predict) return null;
+  // Module chưa khai câu mời ⇒ câu mặc định của shell (tương thích ngược).
+  if (!mod.predict.entry) return DEFAULT_CHALLENGE;
+  return mod.predict.entry(state, config);
+}
+
+/** Câu mời mặc định khi module không khai `predict.entry`. */
+export const DEFAULT_CHALLENGE: PresentationEntry = {
+  label: "Thử thách: tự dự đoán bước này",
+  closeLabel: "Đóng thử thách",
+};
+
+/**
+ * Có dựng LỐI VÀO Khám phá không — cũng dẫn xuất từ năng lực.
+ *
+ * Module không khai `explore` ⇒ không có lối vào (mặc định an toàn). Khai mà
+ * `entry()` trả `null` ở trạng thái này ⇒ cũng không dựng: một lối vào rỗng
+ * ("khám phá đi" ở bước cuối, khi không còn gì để đổi) tệ hơn là không có.
+ */
+export function exploreEntry<S>(
+  mod: { explore?: ExploreCapability<S> },
+  state: S,
+  config: unknown,
+): PresentationEntry | null {
+  return mod.explore?.entry(state, config) ?? null;
 }
 
 /**

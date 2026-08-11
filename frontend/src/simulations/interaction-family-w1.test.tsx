@@ -1,7 +1,7 @@
 import { describe, expect, it, beforeEach } from "vitest";
 import { readFileSync } from "node:fs";
 import {
-  challengeEntryVisible,
+  challengeEntry,
   challengeSurfaceVisible,
 } from "../components/SimulationWorkspace";
 import { renderToString } from "react-dom/server";
@@ -242,14 +242,22 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
        một biểu thức inline trong JSX — nên nó đỏ ngay khi biểu thức được tách
        thành hàm thuần, dù hành vi không đổi một chút nào. Test khoá HÌNH DẠNG MÃ
        chặn đúng loại refactor nó lẽ ra phải bảo vệ.
-       Nay khẳng định vào HÀNH VI qua chủ sở hữu `challengeSurfaceVisible`. */
-    const presented = { predict: { presentedInStage: () => true } };
-    const notPresented = { predict: { presentedInStage: () => false } };
+       Nay khẳng định vào HÀNH VI qua chủ sở hữu `challengeSurfaceVisible`.
+
+       W4B-3A — TÁCH CỬA KHỎI PHÒNG. `presentedInStage` chỉ được phép tắt BỀ MẶT
+       thứ hai (`PredictionBar`); nó KHÔNG được tắt LỐI VÀO. Bản trước áp nó cho
+       cả hai, nên ở đúng những bước có vùng cam kết thì shell không dựng lối
+       vào nào — và họ thuật toán phải tự dựng lấy một nút, chính là dải
+       `experimentTrigger` nằm dưới mô hình. */
+    const cap = { challenge: () => null, check: () => ({ verdict: "unsupported_to_verify" as const, answerId: "x", message: "" }) };
+    const presented = { predict: { ...cap, presentedInStage: () => true } };
+    const notPresented = { predict: { ...cap, presentedInStage: () => false } };
 
     // Module tự bày cam kết trên sân khấu ⇒ shell KHÔNG dựng bề mặt thứ hai,
     // kể cả khi Thử thách đang mở.
     expect(challengeSurfaceVisible(presented, {}, true)).toBe(false);
-    expect(challengeEntryVisible(presented, {})).toBe(false);
+    // …nhưng LỐI VÀO vẫn còn: đó là cửa, không phải bề mặt.
+    expect(challengeEntry(presented, {}, {})).not.toBeNull();
 
     // Không tự bày ⇒ bề mặt dùng chung thuộc về Thử thách, không thuộc Quan sát.
     expect(challengeSurfaceVisible(notPresented, {}, false)).toBe(false);
@@ -352,7 +360,13 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
         html.includes("decision-strip") || html.includes("search-observe"),
         `${id}: cổng đã lấy mất quan hệ`,
       ).toBe(true);
-      expect(html, `${id}: mất đường vào Thí nghiệm`).toContain("Thí nghiệm");
+      /* W4B-3A — đường vào KHÔNG còn nằm trong HTML của sân khấu; đó chính là
+         dải đã gỡ. Hỏi chủ sở hữu mới, và hỏi cả tính KHẢ DỤNG: ở đúng bước có
+         vùng cam kết thì lối vào phải mời được (không mờ), nếu không thì bề mặt
+         đã bị gác sau một cửa khoá. */
+      const entry = challengeEntry(makeAlgorithmModule(id), at(state, d), config);
+      expect(entry, `${id}: mất đường vào Thử thách`).not.toBeNull();
+      expect(entry!.available, `${id}: cửa khoá ngay tại bước có cam kết`).not.toBe(false);
     }
   });
 

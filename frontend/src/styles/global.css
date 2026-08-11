@@ -2700,6 +2700,20 @@ html {
   color: var(--primary);
 }
 
+/* W4B-3A — BƯỚC NÀY KHÔNG DÙNG ĐƯỢC: MỜ, KHÔNG BIẾN MẤT.
+   Số bước mời được chỉ là 4/13 đến 21/40 tuỳ bài, nên nếu tự gỡ mình thì nút
+   nhấp nháy vào/ra dải điều khiển mỗi lần bấm Tiến. Cùng thành ngữ với các nút
+   transport ngay cạnh (`:disabled`), không đẻ tín hiệu mới. */
+.sim-secondary-action:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.sim-secondary-action:disabled:hover {
+  color: var(--ink-muted);
+  background: none;
+}
+
 /* W4B-2U2 §12 — BIẾN TÍCH LUỸ TRÊN SÂN KHẤU.
    Đặt ngay trong `.sim-stage`, phía trên dãy: trạng thái nằm cạnh đối tượng nó
    mô tả, không phải ở một tấm thẻ tận mép kia. Khi giá trị vừa đổi thì hiện

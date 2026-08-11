@@ -183,6 +183,23 @@ export function makeNetworkModule(): SimulationModule<NetworkConfig, NetworkStat
      *   phải NÓI RÕ điều đó — không được để học sinh hiểu nhầm là lựa chọn tồi.
      * - Route canonical BẤT BIẾN: check là hàm thuần, không đụng state.
      */
+    /* W4B-3A — KHÁM PHÁ: sửa TÔPÔ rồi để engine định tuyến lại.
+     *
+     * Khác hẳn `predict` bên dưới: ở đây không có đáp án nào được chấm. Học sinh
+     * ngắt một liên kết, `applyTopology` chạy lại BFS, và hệ quả (đường vòng,
+     * hoặc không còn đường) LÀ câu trả lời. Đó là lý do nó phải là một lối vào
+     * riêng, không dùng chung nút với Thử thách.
+     *
+     * Luôn có lối vào: tôpô sửa được ở MỌI bước, kể cả sau khi gói tin đã tới
+     * đích — ngắt cáp rồi xem đường đi đổi thế nào vẫn là một câu hỏi thật. */
+    explore: {
+      entry: () => ({
+        label: "Khám phá: tự đổi đường mạng",
+        closeLabel: "Đóng khám phá",
+        hint: "Mạng thật vẫn đứt cáp — thử xem gói tin có đường khác để đi không.",
+      }),
+    },
+
     predict: {
       challenge: (s) => {
         // Chỉ hỏi khi gói tin còn chặng phía trước.

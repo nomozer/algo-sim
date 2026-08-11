@@ -73,6 +73,7 @@ describe("W4B-2Z §30 · A → B → A giữ nguyên chỗ đang dở", () => {
     s().nextStep();
     s().nextStep();
     s().setChallengeOpen(true);
+    s().setExploreOpen(true);
     const stateA = s().active!.state;
     const configA = s().active!.config;
     const envelopeA = s().active!.envelope;
@@ -93,11 +94,36 @@ describe("W4B-2Z §30 · A → B → A giữ nguyên chỗ đang dở", () => {
     expect(s().active!.config).toBe(configA);
     expect(s().active!.envelope).toBe(envelopeA);
     expect(s().challengeOpen).toBe(true);
+    /* W4B-3A — CHÍNH SÁCH KHAI TƯỜNG MINH: Khám phá theo PHIÊN, y như Thử thách.
+       Quay lại một bài đang dở mà chế độ tự đóng thì học sinh vừa kéo xong đã
+       mất lối vào để kéo tiếp — "làm mới trong im lặng", đúng thứ §26 chặn. */
+    expect(s().exploreOpen, "chế độ Khám phá không được khôi phục theo phiên").toBe(true);
 
     // ── quay lại B: B cũng còn nguyên ──
     s().switchSession(idB);
     expect(s().active!.state).toBe(stateB);
     expect(s().challengeOpen).toBe(false);
+    // …và KHÔNG rò chế độ của A sang B.
+    expect(s().exploreOpen, "chế độ Khám phá rò từ phiên A sang phiên B").toBe(false);
+  });
+
+  it("nạp bài MỚI luôn mở ở Quan sát — không thừa hưởng chế độ của bài trước", () => {
+    s().loadEnvelope(ENV_A);
+    s().setChallengeOpen(true);
+    s().setExploreOpen(true);
+    s().newSession();
+    s().loadEnvelope(ENV_B);
+    expect(s().challengeOpen).toBe(false);
+    expect(s().exploreOpen).toBe(false);
+  });
+
+  it("Đặt lại đóng cả hai chế độ — dựng lại mô hình là về Quan sát", () => {
+    s().loadEnvelope(ENV_A);
+    s().setChallengeOpen(true);
+    s().setExploreOpen(true);
+    s().resetSim();
+    expect(s().challengeOpen).toBe(false);
+    expect(s().exploreOpen).toBe(false);
   });
 
   it("đóng A KHÔNG đụng B", () => {
@@ -175,16 +201,21 @@ describe("W4B-2Z §28 · chuyển phiên = 0 gọi AI", () => {
        khi chuyển phiên. Làm thế thì fetch vẫn 0 (envelope có sẵn) nhưng state
        BỊ DỰNG LẠI — học sinh mất what-if mà test mạng không thấy gì. Nên phải
        kiểm bằng chính module. */
-    const mod = getSimulation("logic.and_gate")!;
-    const spyInit = vi.spyOn(mod, "init");
-    const spyValidate = vi.spyOn(mod, "validateConfig");
+    /* W4B-3A — theo dõi CẢ HAI module, không chỉ một.
+       Tiêm lỗi (`switchSession` gọi `loadEnvelope`) cho thấy bản một-module có
+       thể im lặng: tuỳ thứ tự chuyển, phiên được dựng lại có thể là bài KIA,
+       nên spy đặt nhầm bài sẽ không nghe thấy gì. Guard chỉ chứng minh được
+       điều nó nói khi phủ mọi module đang mở. */
+    const spies = ["algorithm.bubble_sort", "logic.and_gate"].flatMap((id) => {
+      const mod = getSimulation(id)!;
+      return [vi.spyOn(mod, "init"), vi.spyOn(mod, "validateConfig")];
+    });
 
     s().switchSession(idA);
     s().switchSession(idB);
+    s().switchSession(idA);
 
-    expect(spyInit).not.toHaveBeenCalled();
-    expect(spyValidate).not.toHaveBeenCalled();
-    spyInit.mockRestore();
-    spyValidate.mockRestore();
+    for (const spy of spies) expect(spy, "chuyển phiên đã dựng lại mô phỏng").not.toHaveBeenCalled();
+    for (const spy of spies) spy.mockRestore();
   });
 });

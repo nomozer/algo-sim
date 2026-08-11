@@ -772,6 +772,20 @@ renderToString (SSR) — component cần test SSR phải nhận dữ liệu qua 
 qua tới runtime) → `analysisError` tiếng Việt thân thiện, `active` giữ `null`
 (fail-closed, không dựng cảnh một phần).
 
+W4B-2Z: `sessions`/`activeSessionId` + `newSession`/`switchSession`/`closeSession`
+— chuyển phiên là KHÔI PHỤC THUẦN (`activate()` trả về đúng object state cũ; 0
+`fetch`, 0 `init`, 0 `validateConfig`). **Đừng "dọn cho gọn" bằng cách gọi
+`loadEnvelope` khi chuyển phiên**: fetch vẫn 0 nên guard mạng không thấy gì,
+nhưng state bị dựng lại và what-if của học sinh biến mất. Tests:
+`sessions.test.ts` (spy `init`/`validateConfig` trên MỌI module đang mở).
+
+W4B-3A: thêm `exploreOpen`/`setExploreOpen` — cờ TRÌNH BÀY thứ hai, cùng tầng
+`challengeOpen`, cũng mù domain. **Hai cờ chứ không một** vì hai chế độ khác
+nhau ở chỗ ai phán xét: Thử thách đưa cam kết qua `predict.check` (engine phán
+đúng/sai), Khám phá đưa thao tác qua `module.apply` (không phán gì). Cả hai:
+lưu theo phiên (`OpenSession`), reset khi `loadEnvelope`/`resetSim`/`reset`.
+Trước wave này cờ là `useState` cục bộ tên `labOpen` trong hai renderer miền.
+
 ### `state/history.ts` · Change impact: offline
 M9-UX1 — lịch sử học BỀN (localStorage, schema v1, `algosim.history.v1`).
 Exports: `createHistoryStore` (inject storage — test được), `historyStore`
@@ -986,6 +1000,13 @@ M9-S1 — chính sách what-if theo cơ chế (hết "một swap cho cả 8 bài
 linear_search · challenge: find_max/min + binary_search · hidden: sum/count).
 Mỗi policy kèm `rationale` (vì sao không trang trí). Gating theo `algorithm_id`
 ngữ nghĩa. Tests: `interaction-policy.test.ts`, `algorithm-ui.test.tsx`.
+
+W4B-3A: thêm `exploreLabel?` (nhãn lối vào KHÁM PHÁ — thao tác trực tiếp) tách
+khỏi `challengeLabel` (lối vào CAM KẾT). Hai hàm THUẦN mới dựng câu mời:
+`challengeEntryOf(policy, {inBranch, hasSurface})` và
+`exploreEntryOf(policy, {canManipulate})` — module gọi ở `index.ts`, shell chỉ
+đặt chỗ. `mode: "hidden"` (sum_if/count_if) KHÔNG khai `exploreLabel` ⇒ không
+có lối vào Khám phá (kéo ở đó là trang trí, COVERAGE §2.6).
 
 W4B-2I: **cả CHÍN target đều `experimentGated: true`** — `bubble_sort`/
 `selection_sort` là hai bài cuối vào cổng, khép rollout 7/9 → 9/9. Từ đây không
@@ -1327,6 +1348,25 @@ Next/Prev/Play) — tiền lệ cho EditPolicy. M8: Stage = `rendererFor(mod, mo
 trong `<Suspense>` (renderer lazy); export `VisualModeToggle` (component thuần
 theo props — toggle 2D/3D chỉ khi ≥2 mode khả dụng); `PredictionBar` nằm NGOÀI
 renderer nên tự nhiên renderer-independent.
+
+**W4B-3A — `SimulationControls` là CHỦ SỞ HỮU DUY NHẤT của lối vào hành động
+phụ** (Khám phá + Thử thách), dựng bằng `SecondaryEntry` (component nội bộ, một
+hình thức cho cả hai). Trước wave này ba nơi dựng nút — shell + hai renderer
+miền — và hai nơi sau đặt nút ngay dưới sân khấu, tức dải `experimentTrigger`
+mà bốn lượt đo bố cục đều bắt được. **Renderer miền không được chứa
+`sim-secondary-action`** (khoá ở `secondary-actions-w4b2w.test.ts`).
+
+`SimulationWorkspace` export hai bộ chọn THUẦN mà `SimulationControls` gọi:
+`challengeEntry(mod, state, config)` và `exploreEntry(mod, state, config)` →
+`PresentationEntry | null`. `null` = module không có chế độ đó ⇒ không nút;
+`available: false` = có năng lực nhưng bước này không dùng được ⇒ nút MỜ, không
+biến mất (số bước mời được chỉ 4/13 → 21/40 tuỳ bài, tự gỡ mình thì nút nhấp
+nháy). Hằng `DEFAULT_CHALLENGE` là câu mời mặc định cho module chưa khai
+`predict.entry`. `challengeSurfaceVisible` GIỮ nguyên trách nhiệm cũ — chặn
+`PredictionBar` khi module đã bày cam kết trên sân khấu (`presentedInStage`);
+đừng dùng nó để tắt LỐI VÀO (đó chính là lỗi đã sinh ra dải).
+Tests: `explore-ownership-w4b3a.test.ts`, `secondary-actions-w4b2w.test.ts`,
+`dequiz-observe.test.tsx`, `interaction-family-w1.test.tsx`.
 
 ### `llm/client.ts` · Change impact: offline
 Exports: `analyzeViaServer`, `editViaServer`, `explainViaServer`, `fetchHealth`,

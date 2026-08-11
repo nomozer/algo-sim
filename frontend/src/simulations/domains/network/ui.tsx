@@ -13,6 +13,7 @@ import {
   type NodeType,
 } from "./model";
 import { IconExperiment, IconReset } from "../../../components/icons";
+import { useAppStore } from "../../../state/store";
 
 /**
  * UI domain network — nút + link + chấm gói tin chạy theo bước.
@@ -125,13 +126,21 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
   const packetPos = pos[step.packetAt];
   const edgeViews = routeEdgeViews(state.links, state.route, state.cursor);
 
-  /* Cùng khuôn cổng với họ thuật toán: Quan sát chỉ có mô phỏng, công cụ do học
-     sinh CHỦ ĐỘNG mở. `labOpen` là trạng thái TRÌNH BÀY cục bộ — không vào store,
-     không vào engine state. */
-  const [labOpen, setLabOpen] = useState(false);
+  /* W4B-3A — CHẾ ĐỘ KHÁM PHÁ, do shell sở hữu.
+   *
+   * Ở bài này cổng gác đúng MỘT việc: sửa tôpô (ngắt/nối liên kết) rồi để engine
+   * định tuyến lại. Không có `predict.check` nào can dự — nên nó là KHÁM PHÁ,
+   * không phải Thử thách. Bài này CÓ `predict` riêng ("chặng kế tiếp là nút
+   * nào?") và lối vào đó là một nút KHÁC, cũng ở dải hành động phụ.
+   *
+   * Trước wave này cờ là `useState` cục bộ tên `labOpen` và nút mở nó nằm ngay
+   * dưới sân khấu — đo được là dải `experimentTrigger` (bandCount 2 ở
+   * `network.packet_routing`, cả bốn bề rộng). */
+  const exploreOpen = useAppStore((s) => s.exploreOpen);
+  const setExploreOpen = useAppStore((s) => s.setExploreOpen);
   const gone = removedLinks(state);
   const modified = isModified(state);
-  const editable = labOpen && !busy;
+  const editable = exploreOpen && !busy;
 
   /** Một liên kết bấm được. `onAct` chỉ PHÁT action — engine tính lại, không phải đây. */
   const LinkHandle = ({ a, b, label, onAct }: {
@@ -296,19 +305,11 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
           bước); trạng thái không-tới-được đọc được trên SÂN KHẤU bằng liên kết
           nét đứt + vắng chấm gói tin. */}
 
-      {/* CỔNG THÍ NGHIỆM — cùng khuôn với họ thuật toán. */}
-      {!labOpen && (
-        <button
-          className="sim-secondary-action experiment-trigger"
-          onClick={() => setLabOpen(true)}
-          title="Mạng thật vẫn đứt cáp — thử xem gói tin có đường khác để đi không."
-          aria-expanded={false}
-        >
-          <IconExperiment size={14} />
-          Thí nghiệm: tự đổi đường mạng
-        </button>
-      )}
-      {labOpen && (
+      {/* W4B-3A — CỔNG ĐÃ RỜI KHỎI ĐÂY, sang dải hành động phụ của
+          `SimulationControls`. Câu mời ("tự đổi đường mạng" + teaser đứt cáp)
+          nay do module khai ở `explore.entry`, nên nó vẫn là câu của bài này —
+          chỉ không còn chiếm một dải riêng ngay dưới sân khấu. */}
+      {exploreOpen && (
         <div className="experiment-tool" role="group" aria-label="Thí nghiệm với đường mạng">
           <IconExperiment size={14} />
           <span className="scene-bound-note">
@@ -325,8 +326,8 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
           )}
           <button
             className="btn-utility experiment-tool-close"
-            onClick={() => setLabOpen(false)}
-            aria-label="Đóng thí nghiệm"
+            onClick={() => setExploreOpen(false)}
+            aria-label="Đóng khám phá"
             aria-expanded
           >
             ×

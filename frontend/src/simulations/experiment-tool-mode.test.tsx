@@ -116,7 +116,9 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     const tool = UI.slice(UI.indexOf('className="experiment-tool"'));
     const block = tool.slice(0, tool.indexOf("</div>"));
     expect(block, "lối đóng nằm ngoài công cụ").toContain("experiment-tool-close");
-    expect(block).toContain('aria-label="Đóng thí nghiệm"');
+    /* W4B-3A: công cụ này bọc vùng CAM KẾT, nên nó thuộc chế độ Thử thách —
+       nhãn đóng nói đúng chế độ mình đóng. */
+    expect(block).toContain('aria-label="Đóng thử thách"');
   });
 
   it("NO_SEPARATE_EXPERIMENT_FRAMING_ROW — framing là TÊN KHẢ TRUY CẬP", () => {
@@ -133,7 +135,16 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     /* Đối trọng bắt buộc của việc bỏ hàng teaser: nếu chỉ tối ưu cho gọn thì
        nút thành bí ẩn — lỗi PhET/CLT đã bắt ở W4B-2B. Nhãn phải MÔ TẢ, và
        teaser vẫn tới được người dùng qua `title`. */
-    expect(UI).toContain("title={policy.challengeTeaser}");
+    /* W4B-3A — teaser không còn là `title` của một nút do sân khấu dựng; nó là
+       `hint` của CÂU MỜI, và `SimulationControls` đặt nó vào `title`/`aria-label`
+       của lối vào. Bất biến "cổng tự mô tả" giữ nguyên, chỉ đổi chủ. */
+    const controls = readFileSync(
+      new URL("../components/SimulationControls.tsx", import.meta.url), "utf-8",
+    );
+    expect(controls, "câu mời không tới được người dùng").toContain("title={open ? undefined : entry.hint}");
+    for (const id of GATED) {
+      expect(whatIfPolicyOf(id).challengeTeaser, `${id}: mất teaser`).toBeTruthy();
+    }
     for (const id of GATED) {
       const p = whatIfPolicyOf(id);
       expect(p.challengeLabel, `${id}: mất nhãn`).toBeTruthy();

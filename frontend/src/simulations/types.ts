@@ -156,6 +156,77 @@ export interface PredictionCapability<S = unknown> {
    * cùng hỏi một câu trên một màn hình.
    */
   presentedInStage?(state: S): boolean;
+
+  /**
+   * W4B-3A — NHÃN CỦA LỐI VÀO THỬ THÁCH, do module cấp.
+   *
+   * Shell sở hữu *chỗ đặt* lối vào (dải hành động phụ cạnh transport) và *cờ
+   * mở/đóng*; module sở hữu *câu mời*. Trước wave này shell viết cứng một câu
+   * ("Thử thách: tự dự đoán bước này") cho mọi target, nên họ thuật toán phải
+   * tự dựng lấy một nút thứ hai mới nói được đúng cơ chế của mình ("tự chọn nửa
+   * để tìm tiếp") — và cái nút thứ hai ấy chính là dải `experimentTrigger`.
+   *
+   * DẪN XUẤT TỪ CONFIG/STATE, không từ tiêu đề đề bài (anti-pattern #2).
+   * `null` = ở trạng thái này không có gì để mời. Không khai = shell dùng câu
+   * mặc định (tương thích ngược).
+   */
+  entry?(state: S, config: unknown): PresentationEntry | null;
+}
+
+/**
+ * Câu mời của một lối vào phụ. Chỉ TRÌNH BÀY — không mang ngữ nghĩa, không
+ * quyết định gì; shell chỉ đọc để đặt chữ lên nút.
+ */
+export interface PresentationEntry {
+  /** Nhãn nút, tiếng Việt, tự mô tả năng lực nằm sau nó. */
+  label: string;
+  /** Nhãn khi đang mở (đóng lại). Không khai → shell tự dựng "Đóng …". */
+  closeLabel?: string;
+  /** Câu mời-thử ngắn — vào `title`/`aria-label`, không tốn một dòng bố cục. */
+  hint?: string;
+  /**
+   * `false` = có năng lực nhưng BƯỚC NÀY không dùng được ⇒ nút MỜ ĐI, **không**
+   * biến mất.
+   *
+   * Vì sao không đơn giản trả `null` cho những bước đó: đo trên chính danh mục
+   * offline, số bước mời được là 4/13 (binary_search) đến 21/40 (bubble_sort) —
+   * tức nút sẽ NHẤP NHÁY vào/ra khỏi dải điều khiển mỗi lần học sinh bấm Tiến.
+   * Một control nhảy chỗ khó dùng hơn hẳn một control mờ, và dải này đã có sẵn
+   * đúng thành ngữ ấy: các nút transport dùng `disabled` chứ không tự gỡ mình.
+   *
+   * `null` (không phải `available: false`) vẫn dành cho ca khác hẳn: module
+   * KHÔNG có chế độ này ở bài này (vd `sum_if` không có Khám phá vì kéo ở đó là
+   * trang trí). Không năng lực ⇒ không nút; có năng lực ⇒ nút luôn ở đó.
+   */
+  available?: boolean;
+}
+
+/**
+ * W4B-3A — KHÁM PHÁ (thao tác trực tiếp lên mô hình), TÁCH KHỎI THỬ THÁCH.
+ *
+ * VÌ SAO LÀ MỘT NĂNG LỰC RIÊNG, không gộp vào `predict`. Hai thứ này khác nhau
+ * ở chỗ AI PHÁN XÉT:
+ *
+ * - `predict` = học sinh CAM KẾT một quyết định của thuật toán, và
+ *   `predict.check` (engine tất định) phán đúng/sai;
+ * - `explore` = học sinh ĐỔI mô hình (kéo đổi chỗ, ngắt một liên kết mạng), rồi
+ *   `module.apply` tính lại hệ quả. KHÔNG có đúng/sai nào được phán — hệ quả
+ *   tất định LÀ câu trả lời.
+ *
+ * Trước wave này cả hai nằm sau CÙNG một nút "Thí nghiệm" do domain tự dựng, nên
+ * sản phẩm không có chỗ nào nói được rằng chúng là hai việc khác nhau — và một
+ * nút mở hai thứ khác loại thì học sinh học sai luôn cả hai.
+ *
+ * Năng lực này KHÔNG sở hữu ngữ nghĩa: nó chỉ khai *có chế độ khám phá không* và
+ * *mời bằng câu gì*. Bộ điều khiển cụ thể (kéo cột, bấm liên kết) vẫn do renderer
+ * miền dựng, và mọi biến đổi vẫn đi qua `module.apply`.
+ */
+export interface ExploreCapability<S = unknown> {
+  /**
+   * `null` = ở trạng thái này không có gì để khám phá (vd bước cuối, hoặc bài mà
+   * thao tác trực tiếp là trang trí). Shell không dựng lối vào rỗng.
+   */
+  entry(state: S, config: unknown): PresentationEntry | null;
 }
 
 /* ── NarrationCapability (SHELL-N) ────────────────────────────────────────
@@ -280,6 +351,14 @@ export interface SimulationModule<C = unknown, S = unknown> {
    * hiện ô dự đoán. Ground truth lấy từ chính engine tất định (trace/BFS).
    */
   predict?: PredictionCapability<S>;
+
+  /**
+   * Optional (W4B-3A) — chế độ KHÁM PHÁ: học sinh đổi mô hình, `apply` tính lại.
+   * Không khai = không có lối vào khám phá (mặc định an toàn, cùng khuôn
+   * `timeline?` / `predict?`). Khai KHÔNG tạo ra thao tác nào — thao tác vẫn do
+   * renderer miền dựng; đây chỉ là lối vào và câu mời.
+   */
+  explore?: ExploreCapability<S>;
 
   /**
    * (SHELL-N) Thuyết minh bước hiện tại — shell render, module chỉ cấp chữ.

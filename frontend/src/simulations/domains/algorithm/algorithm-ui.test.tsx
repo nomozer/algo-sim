@@ -6,6 +6,7 @@ import type { AlgorithmSimState } from "./model";
 import { activeTrace } from "./model";
 import type { AlgorithmId } from "../../../core/types";
 import { whatIfPolicyOf } from "./interaction-policy";
+import { challengeEntry, exploreEntry } from "../../../components/SimulationWorkspace";
 
 /**
  * M9-S1 — UI theo chính sách tương tác + dải nhân quả dùng chung.
@@ -31,6 +32,29 @@ function html(algorithmId: AlgorithmId, data: Record<string, unknown>, cursor: n
   );
 }
 
+/**
+ * W4B-3A — CÂU MỜI ĐỌC QUA ĐÚNG ĐƯỜNG SHELL DÙNG.
+ *
+ * Lối vào Thí nghiệm/Thử thách KHÔNG còn do `AlgorithmWorkspace` dựng, nên mọi
+ * khẳng định "nhãn X có trên màn hình" phải hỏi chủ sở hữu mới. Gọi thẳng
+ * `challengeEntry`/`exploreEntry` — CÙNG hàm `SimulationControls` gọi, không
+ * phải bản sao dành riêng cho test.
+ */
+function entries(algorithmId: AlgorithmId, data: Record<string, unknown>, cursor: number) {
+  const mod = makeAlgorithmModule(algorithmId);
+  const r = mod.validateConfig({ problem: {}, algorithm_id: algorithmId, data, data_generated: false, notes: null });
+  if (!r.ok) throw new Error(r.error);
+  const s = stateAt(algorithmId, data, cursor);
+  return {
+    challenge: challengeEntry(mod, s, r.config),
+    explore: exploreEntry(mod, s, r.config),
+  };
+}
+
+/** Toàn bộ chữ một lối vào mang ra màn hình (nhãn + câu mời). */
+const textOf = (e: { label: string; hint?: string } | null) =>
+  e ? `${e.label} ${e.hint ?? ""}` : "";
+
 describe("gating swap trong AlgorithmWorkspace", () => {
   /* W4B-2I — HAI TEST NÀY ĐỔI TIỀN ĐỀ, có chủ đích.
    *
@@ -47,18 +71,24 @@ describe("gating swap trong AlgorithmWorkspace", () => {
    *
    * Nên hai test này nay khoá đúng thứ SSR nhìn thấy được: Quan sát của bài sắp
    * xếp trông y hệt bảy bài kia. */
-  it("bubble_sort: Quan sát KHÔNG bày cam kết, KHÔNG mời kéo — chỉ có lối vào Thí nghiệm", () => {
+  /* W4B-3A — cùng ba khẳng định, nhưng vế thứ ba hỏi ĐÚNG CHỦ SỞ HỮU MỚI: câu
+     mời không còn nằm trong HTML của sân khấu (đó chính là dải đã gỡ), nó nằm ở
+     lối vào mà `SimulationControls` dựng. */
+  it("bubble_sort: Quan sát KHÔNG bày cam kết, KHÔNG mời kéo — lối vào ở dải phụ", () => {
     const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1);
     expect(h).not.toContain("Thao tác sắp xếp");
     expect(h).not.toContain("Kéo một cột");
-    expect(h).toContain("tự đổi chỗ từng cặp");
+    expect(h, "câu mời quay lại thành dải dưới mô hình").not.toContain("tự đổi chỗ từng cặp");
+    expect(textOf(entries("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1).challenge))
+      .toContain("tự đổi chỗ từng cặp");
   });
 
   it("selection_sort: cùng một luật — không còn bài sắp xếp nào hở vùng cam kết", () => {
     const h = html("selection_sort", { array: [3, 1, 2], order: "asc" }, 1);
     expect(h).not.toContain("Thao tác sắp xếp");
     expect(h).not.toContain("Kéo một cột");
-    expect(h).toContain("tự chọn phần tử mỗi lượt");
+    expect(textOf(entries("selection_sort", { array: [3, 1, 2], order: "asc" }, 1).challenge))
+      .toContain("tự chọn phần tử mỗi lượt");
   });
 
   it("(17) sum_if (hidden): KHÔNG gợi ý kéo-thả — kể cả sau khi có cổng Thí nghiệm", () => {
@@ -75,32 +105,31 @@ describe("gating swap trong AlgorithmWorkspace", () => {
   });
 
   it("(16) binary_search: không gợi ý kéo tự do; CÓ cổng Thí nghiệm; tiền đề vẫn đọc được", () => {
-    const h = html("binary_search", { array: [1, 3, 5, 7, 9, 11, 13], target: 3 }, 1);
+    const BIN = { array: [1, 3, 5, 7, 9, 11, 13], target: 3 };
+    const h = html("binary_search", BIN, 1);
     expect(h).not.toContain("Kéo một cột");
-    expect(h).toContain("Thí nghiệm");
-    /* W4B-2D: nhãn nút nay hứa THỨ NẰM SAU CỔNG — cổng gác cả vùng cam kết, nên
+    /* W4B-2D: nhãn nút hứa THỨ NẰM SAU CỔNG — cổng gác cả vùng cam kết, nên
        nhãn cũ (chỉ nói về kéo) sẽ khiến học sinh không biết các nút chọn nửa đi
-       đâu. Vế "phá tiền đề" chuyển vào `framing`, hiện khi đã mở. */
-    expect(h).toContain("tự chọn nửa để tìm tiếp");
+       đâu. W4B-3A: nhãn đó nay sống ở lối vào, không ở sân khấu. */
+    expect(textOf(entries("binary_search", BIN, 1).challenge)).toContain("tự chọn nửa để tìm tiếp");
     // Tiền đề là dữ kiện QUAN SÁT — nó ở lại kể cả khi cổng đã ẩn vùng cam kết.
     expect(h).toContain("sắp xếp tăng dần");
   });
 
-  it("find_max (challenge): có nút thí nghiệm phá bất biến, không kéo tự do mặc định", () => {
+  it("find_max (challenge): có lối vào phá bất biến, không kéo tự do mặc định", () => {
     const h = html("find_max", { array: [7.5, 9, 6] }, 1);
     expect(h).not.toContain("Kéo một cột");
-    expect(h).toContain("Thí nghiệm");
+    expect(entries("find_max", { array: [7.5, 9, 6] }, 1).challenge).not.toBeNull();
   });
 
-  it("(PhET/CLT) challenge: teaser tự-giải-thích hiện TRƯỚC khi mở thí nghiệm — nút không còn bí ẩn", () => {
-    // find_max: teaser nêu bất biến vùng-đã-duyệt, mời thử mà chưa lộ hệ quả.
-    const hMax = html("find_max", { array: [7.5, 9, 6] }, 1);
-    expect(hMax).toContain("vùng đã duyệt");
-    /* binary_search: teaser nay mời làm ĐÚNG việc nằm sau cổng (chọn nửa), vì
-       W4B-2D đưa cả vùng cam kết vào sau nó. Vẫn là teaser tự-giải-thích, vẫn
-       không lộ hệ quả. */
-    const hBin = html("binary_search", { array: [1, 3, 5, 7, 9, 11, 13], target: 3 }, 1);
-    expect(hBin).toContain("loại đi một nửa");
+  it("(PhET/CLT) challenge: teaser tự-giải-thích đi KÈM lối vào — nút không còn bí ẩn", () => {
+    /* Bất biến giữ nguyên qua W4B-3A: cổng phải TỰ MÔ TẢ. Đổi là chỗ đọc nó —
+       teaser nay là `hint` của câu mời (vào `title`/`aria-label` của nút), chứ
+       không phải một dòng chữ dựng dưới sân khấu. */
+    expect(textOf(entries("find_max", { array: [7.5, 9, 6] }, 1).challenge))
+      .toContain("vùng đã duyệt");
+    expect(textOf(entries("binary_search", { array: [1, 3, 5, 7, 9, 11, 13], target: 3 }, 1).challenge))
+      .toContain("loại đi một nửa");
   });
 
   it("linear_search: kéo WHAT-IF nay nằm sau cổng — Quan sát không mời kéo", () => {
@@ -111,7 +140,8 @@ describe("gating swap trong AlgorithmWorkspace", () => {
        phủ (labOpen là useState cục bộ). */
     const h = html("linear_search", { array: [4, 9, 7], target: 9 }, 1);
     expect(h, "Quan sát vẫn mời kéo").not.toContain("Kéo =");
-    expect(h).toContain("tự đi từng bước tìm");
+    expect(textOf(entries("linear_search", { array: [4, 9, 7], target: 9 }, 1).challenge))
+      .toContain("tự đi từng bước tìm");
     /* W4B-2V/C: khung CHI PHÍ chuyển từ `framing` (đoạn 310 ký tự) sang `hint`
        — chuỗi đứng ngay cạnh công cụ kéo. Ý không mất, chỗ đặt đổi. */
     expect(whatIfPolicyOf("linear_search").hint).toContain("chi phí");

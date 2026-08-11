@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ArrayView, arrayLegendItems } from "../../../components/ArrayView";
 import { StageLegend } from "../../../components/StageLegend";
 import { VarsView } from "../../../components/VarsView";
@@ -120,8 +119,25 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
   const doneEvent = step.events.find((e) => e.type === "done");
 
   const policy = whatIfPolicyOf(config.algorithm_id);
-  // Thí nghiệm (mode "challenge") do học sinh CHỦ ĐỘNG mở — state trình bày cục bộ.
-  const [labOpen, setLabOpen] = useState(false);
+
+  /* W4B-3A — HAI CHẾ ĐỘ, HAI CỜ, MỘT CHỦ SỞ HỮU DÙNG CHUNG.
+   *
+   * Trước wave này cả hai nằm sau MỘT `useState` cục bộ tên `labOpen`, và nút mở
+   * nó do chính file này dựng — nên dưới sân khấu luôn thừa một dải
+   * `experimentTrigger`, và chuyển phiên là mất chế độ đang mở.
+   *
+   * Nay cờ sống ở store (mù domain, theo phiên) và LỐI VÀO do
+   * `SimulationControls` dựng. Chỗ này chỉ ĐỌC — nó không còn quyền quyết định
+   * chế độ nào đang mở, đúng phân vai: shell sở hữu "có mở không", renderer
+   * miền sở hữu "mở ra thì thấy bộ điều khiển gì".
+   *
+   * Vì sao hai cờ chứ không một: Thử thách đưa cam kết qua `predict.check` để
+   * engine PHÁN đúng/sai; Khám phá đưa thao tác qua `module.apply` và không
+   * phán gì. Một cửa cho hai việc khác loại thì học sinh học sai cả hai.
+   */
+  const challengeOpen = useAppStore((s) => s.challengeOpen);
+  const exploreOpen = useAppStore((s) => s.exploreOpen);
+  const setChallengeOpen = useAppStore((s) => s.setChallengeOpen);
 
   /* W4B-2B §5 — CỔNG THÍ NGHIỆM, DẪN XUẤT TỪ POLICY, KHÔNG TỪ `algorithm_id`.
    *
@@ -135,20 +151,24 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
    *    điều kiện mỗi khi bước là điểm quyết định.
    */
   const gated = policy.experimentGated === true;
-  /** Bài nào có nút "Thí nghiệm": bài gác cổng, hoặc bài `challenge` sẵn có. */
-  const hasExperiment = gated || policy.mode === "challenge";
   /**
    * Vùng cam kết chỉ ẩn ở bài ĐƯỢC GÁC. Bài khác giữ nguyên hành vi cũ —
    * đây là pilot hai bài, không phải rollout cả họ (§25).
    */
-  const commitmentVisible = commitmentSurfaceVisible(policy, labOpen);
+  const commitmentVisible = commitmentSurfaceVisible(policy, challengeOpen);
 
-  const dragAllowedByPolicy =
-    policy.mode === "hidden"
-      ? false
-      : policy.mode === "challenge" || gated
-        ? labOpen
-        : true;
+  /* W4B-3A — KÉO THUỘC VỀ KHÁM PHÁ, KHÔNG THUỘC VỀ THỬ THÁCH.
+   *
+   * `mode` giữ nguyên trách nhiệm cũ: nó trả lời "kéo ở bài này có nhắm cơ chế
+   * không" (`hidden` = trang trí ⇒ không bày, bất kể chế độ nào đang mở). Chỗ
+   * ĐẶT thì nay là chế độ Khám phá — nơi thao tác đi qua `apply` và không ai
+   * chấm điểm.
+   *
+   * Hành vi ship KHÔNG đổi: cả 9 bài đều `experimentGated`, nên trước wave này
+   * kéo cũng đã nằm sau một cổng; nay cổng đó có tên đúng và có chủ sở hữu
+   * dùng chung.
+   */
+  const dragAllowedByPolicy = policy.mode === "hidden" ? false : exploreOpen;
 
   const decision = decisionPointOf(state);
   const consequence = decision ? null : consequenceOf(state);
@@ -324,8 +344,8 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           )}
           <button
             className="btn-utility experiment-tool-close"
-            onClick={() => setLabOpen(false)}
-            aria-label="Đóng thí nghiệm"
+            onClick={() => setChallengeOpen(false)}
+            aria-label="Đóng thử thách"
             aria-expanded
           >
             ×
@@ -387,30 +407,19 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
         </div>
       )}
 
-      {/* Mode "challenge": nút mở thí nghiệm có khung — không kéo tự do mặc định.
-          PhET/CLT: teaser hiện TRƯỚC nút để affordance tự giải thích (giảm tải
-          "nút bí ẩn"), không lộ hệ quả — hệ quả để dành `framing` khi đã mở. */}
-      {/* CỔNG THÍ NGHIỆM — §8.
-          Teaser GIỮ NGUYÊN ở trạng thái chưa mở: đó là bất biến PhET/CLT có test
-          riêng (`algorithm-ui.test.tsx` — "nút không còn bí ẩn"), và §8 đòi cổng
-          phải DISCOVERABLE. Bỏ nó đi là đọc §7 quá rộng: thứ §7 cấm ở Quan sát là
-          bề mặt CAM KẾT, không phải lời mời khám phá. */}
-      {/* W4B-2V/C2 — CỔNG LÀ MỘT NÚT MÔ TẢ, KHÔNG KÈM HÀNG CHỮ RIÊNG.
-          Nhãn nút đã tự nói năng lực ("Thí nghiệm: tự chọn nửa để tìm tiếp"),
-          nên teaser không cần một hàng nữa; nó thành `title` — vẫn tới được
-          chuột và công nghệ hỗ trợ, không tốn một dòng bố cục. Bất biến giữ
-          nguyên: cổng phải TỰ MÔ TẢ, không được là nút bí ẩn. */}
-      {hasExperiment && !labOpen && !state.branch && !last && (
-        <button
-          className="sim-secondary-action experiment-trigger"
-          onClick={() => setLabOpen(true)}
-          title={policy.challengeTeaser}
-          aria-expanded={false}
-        >
-          <IconExperiment size={14} />
-          {policy.challengeLabel}
-        </button>
-      )}
+      {/* W4B-3A — CỔNG ĐÃ RỜI KHỎI ĐÂY.
+       *
+       * Trước wave này chính chỗ này dựng nút "Thí nghiệm: …" và nó là dải
+       * `experimentTrigger` mà bốn lượt đo bố cục đều bắt được: dưới sân khấu
+       * xếp `legend → narration → experimentTrigger` (bandCount 3 ở cả 8 target
+       * thuật toán, cả bốn bề rộng).
+       *
+       * Nút KHÔNG bị xoá, nó ĐỔI CHỦ: `SimulationControls` dựng nó trong dải
+       * hành động phụ cạnh transport, nhãn vẫn là nhãn của bài này (module cấp
+       * qua `predict.entry` / `explore.entry`, dẫn xuất từ `algorithm_id`). Bất
+       * biến PhET/CLT giữ nguyên — cổng vẫn TỰ MÔ TẢ, teaser vẫn đi kèm, chỉ
+       * không còn chiếm một dải toàn chiều ngang dưới mô hình.
+       */}
       {/* Gợi ý kéo KHÔNG được mời làm việc đang bị khoá, và sau khi đã cam kết
           thì phải nói rõ kéo là THỬ NGHIỆM — khác hẳn việc vừa làm bằng nút. */}
       {canDrag && sort && prediction !== null && (
@@ -419,9 +428,17 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           phải bước của thuật toán.
         </span>
       )}
-      {/* Bài CHƯA gác cổng không có công cụ để gắn chip what-if vào, nên giữ
-          hàng gợi ý như cũ. Bài gác cổng đã có chip trong `.experiment-tool`. */}
-      {canDrag && !sort && !gated && policy.hint && <span className="hint">{policy.hint}</span>}
+      {/* W4B-3A — CHẾ ĐỘ KHÁM PHÁ ĐỨNG MỘT MÌNH THÌ PHẢI TỰ NÓI ĐƯỢC.
+       *
+       * Chip "what-if" sống trong `.experiment-tool`, mà công cụ đó là bao của
+       * vùng CAM KẾT — nó chỉ dựng khi Thử thách đang mở. Nên khi học sinh chỉ
+       * mở Khám phá, sân khấu cho kéo được nhưng không câu nào nói kéo để làm
+       * gì, và W4B-2D §7 (kéo KHÔNG phải "bước tiếp theo của thuật toán") mất
+       * chỗ đứng. Hàng gợi ý này lấp đúng khoảng đó, và tự tắt khi chip đã nói
+       * hộ hoặc khi hàng "sau cam kết" ở trên đã nói. */}
+      {canDrag && policy.hint && !(commitZone && gated) && !(sort && prediction !== null) && (
+        <span className="hint">{policy.hint}</span>
+      )}
     </div>
   );
 }

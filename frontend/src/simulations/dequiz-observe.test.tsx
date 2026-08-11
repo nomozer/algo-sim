@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import {
-  challengeEntryVisible,
+  challengeEntry,
   challengeSurfaceVisible,
 } from "../components/SimulationWorkspace";
 import { useAppStore } from "../state/store";
@@ -51,7 +51,7 @@ function initOf(simId: string, envelope: unknown) {
   const mod = getSimulation(simId)!;
   const r = mod.validateConfig((envelope as { config: unknown }).config);
   if (!r.ok) throw new Error(`${simId}: ${r.error}`);
-  return { mod, state: mod.init(r.config) };
+  return { mod, config: r.config, state: mod.init(r.config) };
 }
 
 beforeEach(() => useAppStore.getState().reset());
@@ -93,10 +93,20 @@ describe("W4B-2U2 · DEFAULT_OBSERVE_DEQUIZZED", () => {
     }
   });
 
+  /* W4B-3A — lối vào nay TRẢ VỀ CÂU MỜI thay vì một boolean, và nó có quyền
+     trả `null` khi mở ra không có gì để cam kết. Nên khẳng định đúng thứ đáng
+     giữ: dọc TOÀN BỘ timeline phải có ít nhất một bước mời được — mất hẳn lối
+     vào ở mọi bước mới là mất năng lực. */
   it("lối vào Thử thách vẫn thấy được — không giấu mất năng lực", () => {
     for (const e of runnable(true)) {
-      const { mod, state } = initOf(e.simId, e.envelope);
-      expect(challengeEntryVisible(mod, state), `${e.simId}: mất lối vào`).toBe(true);
+      const { mod, config, state } = initOf(e.simId, e.envelope);
+      const total = mod.timeline?.stepCount(state) ?? 1;
+      let seen = 0;
+      for (let i = 0; i < total; i += 1) {
+        const at = mod.timeline ? mod.timeline.goToStep(state, i) : state;
+        if (challengeEntry(mod, at, config)) seen += 1;
+      }
+      expect(seen, `${e.simId}: không bước nào mời được Thử thách`).toBeGreaterThan(0);
     }
   });
 
@@ -154,13 +164,15 @@ describe("W4B-2U2 · lối vào Thử thách dẫn xuất từ capability", () =
       expect(src, `rẽ nhánh theo ngữ cảnh (${bad})`).not.toContain(bad);
     }
     expect(src).toContain("mod.predict");
+    // W4B-3A — lối vào Khám phá cũng phải suy từ năng lực, cùng một luật.
+    expect(src).toContain("mod.explore");
   });
 
   it("module KHÔNG khai predict ⇒ không lối vào, không thanh dự đoán", () => {
     const noPredict = offlineCatalog().find((e) => getSimulation(e.simId)?.predict === undefined);
     if (!noPredict) return;
     const mod = getSimulation(noPredict.simId)!;
-    expect(challengeEntryVisible(mod, {})).toBe(false);
+    expect(challengeEntry(mod, {}, {})).toBeNull();
     expect(challengeSurfaceVisible(mod, {}, true), "mở Thử thách vẫn không được bịa bề mặt")
       .toBe(false);
   });

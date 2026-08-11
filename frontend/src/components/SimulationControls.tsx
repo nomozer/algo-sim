@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { getSimulation } from "../simulations/registry";
+import type { PresentationEntry } from "../simulations/types";
 import { useAppStore } from "../state/store";
-import { challengeEntryVisible } from "./SimulationWorkspace";
+import { challengeEntry, exploreEntry } from "./SimulationWorkspace";
 import {
   IconNext,
   IconPause,
@@ -11,6 +12,47 @@ import {
   IconToEnd,
   IconToStart,
 } from "./icons";
+
+/**
+ * W4B-3A — MỘT hình thức cho MỌI lối vào phụ.
+ *
+ * Trước wave này ba chỗ dựng nút mở (shell + hai renderer miền) và chúng đã trôi
+ * khỏi nhau: shell dùng `is-active` + `aria-expanded`, hai miền dựng nút riêng
+ * kèm icon rồi tự đổi nhãn. Gom về một component để "nút phụ" chỉ còn một định
+ * nghĩa — đúng thứ `secondary-actions-w4b2w.test.ts` sinh ra để giữ.
+ */
+function SecondaryEntry({
+  entry,
+  open,
+  onToggle,
+  closeFallback,
+}: {
+  entry: PresentationEntry;
+  open: boolean;
+  onToggle: () => void;
+  closeFallback: string;
+}) {
+  /* Bước này không dùng được ⇒ MỜ, không biến mất: nút nhảy vào/ra khỏi dải
+     điều khiển mỗi lần bấm Tiến còn khó dùng hơn nút mờ (xem `PresentationEntry`).
+     Đang MỞ thì không bao giờ khoá — nếu không học sinh mắc kẹt trong chế độ
+     không có đường ra. */
+  const disabled = entry.available === false && !open;
+  return (
+    <button
+      type="button"
+      className={`sim-secondary-action${open ? " is-active" : ""}`}
+      onClick={onToggle}
+      disabled={disabled}
+      aria-expanded={open}
+      /* Câu mời-thử đi vào `title`/`aria-label` chứ không chiếm một dòng bố cục
+         (W4B-2V/C2). Đang mở thì không mời nữa — nhãn đã là "Đóng …". */
+      title={open ? undefined : entry.hint}
+      aria-label={open ? undefined : entry.hint}
+    >
+      {open ? (entry.closeLabel ?? closeFallback) : entry.label}
+    </button>
+  );
+}
 
 /**
  * Thanh điều khiển đáy — CAPABILITY-DRIVEN (M2 #4):
@@ -35,6 +77,8 @@ export function SimulationControls() {
   const mod = active ? getSimulation(active.moduleId) : undefined;
   const challengeOpen = useAppStore((s) => s.challengeOpen);
   const setChallengeOpen = useAppStore((s) => s.setChallengeOpen);
+  const exploreOpen = useAppStore((s) => s.exploreOpen);
+  const setExploreOpen = useAppStore((s) => s.setExploreOpen);
   const timeline = mod?.timeline;
 
   // Tự chạy: hẹn giờ gọi nextStep; store tự dừng khi hết timeline
@@ -82,17 +126,40 @@ export function SimulationControls() {
      một dải nội dung dưới mô hình. Đặt ở đây (thay vì trong `SimulationWorkspace`)
      vì đây đã là chỗ của "việc học sinh làm với mô phỏng" — gộp vào chứ KHÔNG
      đẻ thêm container để chứa nó. Năng lực `predict` và bên chấm `predict.check`
-     không đổi một dòng; đây là dời TRÌNH BÀY. */
-  const challengeEntry = challengeEntryVisible(mod, active.state) ? (
-    <button
-      type="button"
-      className={`sim-secondary-action${challengeOpen ? " is-active" : ""}`}
-      onClick={() => setChallengeOpen(!challengeOpen)}
-      aria-expanded={challengeOpen}
-    >
-      {challengeOpen ? "Đóng thử thách" : "Thử thách: tự dự đoán bước này"}
-    </button>
-  ) : null;
+     không đổi một dòng; đây là dời TRÌNH BÀY.
+
+     W4B-3A — nay đây là chủ sở hữu DUY NHẤT của lối vào phụ: cả Thử thách lẫn
+     Khám phá. Trước wave này hai renderer miền tự dựng lấy nút "Thí nghiệm" của
+     mình, nên cùng một vai trò có ba hiện thực và hai trong số đó nằm dưới mô
+     hình như một dải nội dung. */
+  /* Nhãn do MODULE cấp (dẫn xuất từ config đã validate), shell chỉ giữ câu mặc
+     định cho module chưa khai — nhờ vậy bài tìm kiếm mời đúng việc của nó ("tự
+     chọn nửa để tìm tiếp") mà shell không cần biết bài nào là bài nào.
+     `null` ⇒ KHÔNG dựng nút: một lối vào dẫn tới màn hình trống thì tệ hơn là
+     không có lối vào. */
+  const challenge = challengeEntry(mod, active.state, active.config);
+  const explore = exploreEntry(mod, active.state, active.config);
+
+  const secondary = (
+    <>
+      {explore && (
+        <SecondaryEntry
+          open={exploreOpen}
+          onToggle={() => setExploreOpen(!exploreOpen)}
+          entry={explore}
+          closeFallback="Đóng khám phá"
+        />
+      )}
+      {challenge && (
+        <SecondaryEntry
+          open={challengeOpen}
+          onToggle={() => setChallengeOpen(!challengeOpen)}
+          entry={challenge}
+          closeFallback="Đóng thử thách"
+        />
+      )}
+    </>
+  );
 
   // Capability-driven (không switch-case id): hiện nút bước KHI có timeline VÀ
   // thực sự có >1 bước để đi. Cảnh khám phá (1 khung) chỉ hiện Đặt lại —
@@ -106,7 +173,7 @@ export function SimulationControls() {
           Đặt lại
         </button>
         <span className="hint">Mô phỏng khám phá — thao tác trực tiếp trên sân khấu.</span>
-        {challengeEntry}
+        {secondary}
       </div>
     );
   }
@@ -167,7 +234,7 @@ export function SimulationControls() {
           />
         </label>
         <span className="hint control-hint">← → tiến/lùi · Space tự chạy</span>
-        {challengeEntry}
+        {secondary}
       </div>
       <input
         type="range"

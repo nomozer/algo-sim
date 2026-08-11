@@ -19,28 +19,47 @@ const read = (rel: string) =>
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/^\s*\/\/.*$/gm, "");
 
-/** Ba nơi dựng lối vào hành động phụ — dẫn xuất từ nguồn, không chép tay nhãn.
-    W4B-2Z §20/§23: lối vào Thử thách của shell đã rời `SimulationWorkspace`
-    sang `SimulationControls` — nó nay nằm CẠNH transport thay vì chiếm một dải
-    riêng dưới mô hình. Chủ sở hữu đổi, LUẬT giữ nguyên. */
-const OWNERS = [
-  "../components/SimulationControls.tsx",
+/**
+ * W4B-3A — TỪ BA CHỦ SỞ HỮU XUỐNG MỘT.
+ *
+ * W4B-2W gom ba chỗ dựng nút về CÙNG một class, nhưng vẫn là ba chỗ dựng — nên
+ * hai trong ba (hai renderer miền) tiếp tục đặt nút của mình NGAY DƯỚI SÂN KHẤU,
+ * và bốn lượt đo bố cục đều thấy dải `experimentTrigger`. Cùng một class không
+ * cứu được vị trí sai.
+ *
+ * Nay `SimulationControls` là chủ sở hữu DUY NHẤT: miền chỉ khai CÂU MỜI
+ * (`predict.entry` / `explore.entry`), shell quyết chỗ đặt và trạng thái mở.
+ */
+const OWNER = "../components/SimulationControls.tsx";
+/** Renderer miền — được phép dựng công cụ TRÊN sân khấu, cấm dựng LỐI VÀO. */
+const DOMAIN_RENDERERS = [
   "./domains/algorithm/ui.tsx",
   "./domains/network/ui.tsx",
 ] as const;
 
 describe("W4B-2W · một tầng hành động phụ dùng chung", () => {
-  it("cả ba chủ sở hữu đều dùng `sim-secondary-action`", () => {
-    for (const f of OWNERS) {
-      expect(read(f), `${f}: dựng lối vào phụ bằng class riêng`)
-        .toContain("sim-secondary-action");
+  it("chủ sở hữu DUY NHẤT dựng lối vào phụ, và dùng `sim-secondary-action`", () => {
+    expect(read(OWNER), "shell không dựng lối vào phụ").toContain("sim-secondary-action");
+    for (const f of DOMAIN_RENDERERS) {
+      expect(read(f), `${f}: renderer miền dựng lại lối vào phụ (dải quay lại)`)
+        .not.toContain("sim-secondary-action");
+    }
+  });
+
+  it("KHÔNG dải `experiment-trigger` nào còn được dựng ở bất kỳ đâu", () => {
+    /* Đây là bất biến trung tâm của W4B-3A, và nó phải khoá theo NGUỒN chứ không
+       theo CSS: ẩn bằng `display:none` mà vẫn giữ quyền sở hữu cũ thì bố cục
+       sạch còn kiến trúc thì không. */
+    for (const f of [OWNER, ...DOMAIN_RENDERERS]) {
+      expect(read(f), `${f}: dải experimentTrigger quay lại`)
+        .not.toContain("experiment-trigger");
     }
   });
 
   it("KHÔNG chỗ nào còn dựng lối vào phụ như một nút nội dung `btn-utility`", () => {
     /* `btn-utility` là nút của NỘI DUNG (Đặt lại, Về mạng ban đầu…). Dùng nó cho
        Thí nghiệm/Thử thách chính là thứ khiến chúng đọc thành dải nội dung. */
-    for (const f of OWNERS) {
+    for (const f of [OWNER, ...DOMAIN_RENDERERS]) {
       const src = read(f);
       expect(src, `${f}: Thí nghiệm vẫn là nút nội dung`)
         .not.toMatch(/btn-utility[^"'`]*experiment-trigger/);
@@ -62,7 +81,7 @@ describe("W4B-2W · một tầng hành động phụ dùng chung", () => {
   });
 
   it("lối vào phụ vẫn là <button> thật — lùi ưu tiên, không lùi khả dụng", () => {
-    for (const f of OWNERS) {
+    for (const f of [OWNER]) {
       const src = read(f);
       if (!src.includes("sim-secondary-action")) continue;
       /* Tìm class của NÚT, không phải của khối chứa: `sim-secondary-actions`

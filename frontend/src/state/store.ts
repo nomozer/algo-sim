@@ -46,6 +46,7 @@ export interface OpenSession {
   sampleId: string | null;
   visualMode: VisualMode;
   challengeOpen: boolean;
+  exploreOpen: boolean;
   prediction: PredictionResult | null;
 }
 
@@ -125,6 +126,25 @@ interface AppState {
    */
   challengeOpen: boolean;
   /**
+   * W4B-3A — CHẾ ĐỘ KHÁM PHÁ có mở không. TRÌNH BÀY THUẦN, cùng tầng
+   * `challengeOpen`, và cũng MÙ DOMAIN: store không biết "khám phá" ở bài này
+   * nghĩa là kéo cột hay bấm liên kết mạng.
+   *
+   * Vì sao là cờ THỨ HAI chứ không dùng lại `challengeOpen`: hai chế độ khác
+   * nhau ở chỗ AI PHÁN XÉT. Thử thách đưa cam kết của học sinh qua
+   * `predict.check` để engine phán đúng/sai; Khám phá đưa thao tác qua
+   * `module.apply` và KHÔNG phán gì cả — hệ quả tất định là câu trả lời. Gộp
+   * chúng lại là dạy học sinh rằng kéo một cột cũng là "trả lời đúng/sai".
+   *
+   * Trước wave này cờ này sống ở `useState` cục bộ trong HAI renderer miền
+   * (`domains/algorithm/ui.tsx`, `domains/network/ui.tsx`) với tên `labOpen`,
+   * nên: (1) mỗi miền tự dựng lấy một nút mở, thành một DẢI nội dung dưới mô
+   * hình; (2) chuyển phiên là mất chế độ đang mở mà không ai đo được; (3) không
+   * test nào chạm được vào nó ngoài trình duyệt (SSR luôn thấy `false` —
+   * `ARCHITECTURE_MAP §8` #13).
+   */
+  exploreOpen: boolean;
+  /**
    * M8: visual mode là TRÌNH BÀY THUẦN TÚY — chọn component vẽ, không hơn.
    * KHÔNG nằm trong engine state/SimulationSpec, KHÔNG do LLM chọn, KHÔNG ảnh
    * hưởng tính toán tất định. Đổi mode giữ nguyên active/state/cursor/prediction
@@ -177,6 +197,7 @@ interface AppState {
   toggleRight: () => void;
   setAiOpen: (v: boolean) => void;
   setChallengeOpen: (v: boolean) => void;
+  setExploreOpen: (v: boolean) => void;
   openLibrary: () => void;
 
   /** W4B-2Z §26 — mở khung soạn đề MỚI mà KHÔNG đóng phiên nào đang mở. */
@@ -233,6 +254,7 @@ export const useAppStore = create<AppState>((set, get) => {
             sampleId: st.activeSampleId,
             visualMode: st.visualMode,
             challengeOpen: st.challengeOpen,
+            exploreOpen: st.exploreOpen,
             prediction: st.prediction,
           },
     );
@@ -248,6 +270,11 @@ export const useAppStore = create<AppState>((set, get) => {
       activeSampleId: sn.sampleId,
       visualMode: sn.visualMode,
       challengeOpen: sn.challengeOpen,
+      /* W4B-3A — CHÍNH SÁCH KHÔI PHỤC, KHAI TƯỜNG MINH: chế độ Khám phá theo
+         phiên, y như Thử thách. Quay lại một bài đang dở mà chế độ tự đóng thì
+         thao tác what-if học sinh vừa làm mất luôn lối vào để làm tiếp — đúng
+         loại "làm mới trong im lặng" mà §26 sinh ra để chặn. */
+      exploreOpen: sn.exploreOpen,
       prediction: sn.prediction,
       // `playing` là trạng thái THOÁNG QUA của lần xem: quay lại một phiên mà
       // nó tự chạy tiếp là bất ngờ, còn cursor thì đã nằm trong state rồi.
@@ -292,6 +319,7 @@ export const useAppStore = create<AppState>((set, get) => {
     rightOpen: false,
     aiOpen: false,
     challengeOpen: false,
+    exploreOpen: false,
     visualMode: "2d",
 
     setProblemText: (text) => set({ problemText: text }),
@@ -359,6 +387,7 @@ export const useAppStore = create<AppState>((set, get) => {
         sampleId: sampleId ?? null,
         visualMode: "2d",
         challengeOpen: false,
+        exploreOpen: false,
         prediction: null,
       };
       set({
@@ -376,6 +405,9 @@ export const useAppStore = create<AppState>((set, get) => {
            không được đặt lại nên nó rò từ bài trước sang bài sau — với một phiên
            thì khó thấy, với nhiều phiên thì thành sai lệch đo được. */
         challengeOpen: false,
+        // W4B-3A — cùng lý do, cùng một dòng: bài MỚI luôn mở ở Quan sát, nên
+        // chế độ Khám phá của bài trước không được rò sang bài sau.
+        exploreOpen: false,
         // Chính sách M8: mô phỏng MỚI luôn mở ở 2D (mặc định); 3D là lựa chọn
         // của người dùng SAU đó, và chỉ khi module khai hỗ trợ.
         visualMode: "2d",
@@ -539,10 +571,11 @@ export const useAppStore = create<AppState>((set, get) => {
       if (!active) return;
       const mod = getSimulation(active.moduleId);
       if (!mod) return;
-      // Đặt lại = về Quan sát: Thử thách là chế độ học sinh chủ động vào.
+      // Đặt lại = về Quan sát: Thử thách và Khám phá đều là chế độ học sinh
+      // chủ động vào, nên dựng lại mô hình thì cả hai cùng đóng.
       set({
         active: { ...active, state: mod.init(active.config) },
-        playing: false, prediction: null, challengeOpen: false,
+        playing: false, prediction: null, challengeOpen: false, exploreOpen: false,
       });
     },
 
@@ -566,6 +599,7 @@ export const useAppStore = create<AppState>((set, get) => {
     toggleRight: () => set({ rightOpen: !get().rightOpen }),
     setAiOpen: (v) => set({ aiOpen: v }),
     setChallengeOpen: (v) => set({ challengeOpen: v }),
+    setExploreOpen: (v) => set({ exploreOpen: v }),
 
     // M8: CHỈ đổi trường trình bày. Không đụng active (engine state/cursor giữ
     // nguyên khối), không xoá prediction (nó gắn với BƯỚC hiện tại — bước không
@@ -591,6 +625,7 @@ export const useAppStore = create<AppState>((set, get) => {
         playing: false,
         prediction: null,
         challengeOpen: false,
+        exploreOpen: false,
         visualMode: "2d",
         view: "home",
         activeHistoryId: null,

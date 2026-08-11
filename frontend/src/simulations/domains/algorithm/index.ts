@@ -9,6 +9,7 @@ import {
   narrationWithoutPrompt,
   processLeadOf,
 } from "./decision";
+import { challengeEntryOf, exploreEntryOf, whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
@@ -197,6 +198,27 @@ export function makeAlgorithmModule(
       // W3B §14 — MỘT nguồn đếm vùng hành động, dùng chung với khe thuyết minh
       // và test bất biến. Liệt kê tay ở đây từng làm hai chỗ trôi khỏi nhau.
       presentedInStage: (s) => hasStageInteraction(s),
+
+      /* W4B-3A — CÂU MỜI do module cấp, CHỖ ĐẶT do shell quyết.
+         Dẫn xuất từ `config.algorithm_id` (định danh ngữ nghĩa đã validate),
+         KHÔNG từ tiêu đề đề bài — anti-pattern #2. */
+      entry: (s, config) =>
+        challengeEntryOf(whatIfPolicyOf((config as AlgorithmConfig).algorithm_id), {
+          inBranch: s.branch !== null && s.branch !== undefined,
+          // Mở ra thì có gì để cam kết: vùng trên sân khấu hoặc một điểm quyết định.
+          hasSurface: hasStageInteraction(s) || decisionPointOf(s) !== null,
+        }),
+    },
+
+    /* W4B-3A — KHÁM PHÁ: đổi mô hình rồi để `apply` tính lại. Không đi qua
+       `predict.check`, nên không có đúng/sai nào được phát ngôn ở đây. */
+    explore: {
+      entry: (s, config) =>
+        exploreEntryOf(whatIfPolicyOf((config as AlgorithmConfig).algorithm_id), {
+          /* Hết bài thì không còn gì để chạy tiếp trên nhánh — mời kéo lúc đó là
+             mời một thao tác không sinh hệ quả nào. */
+          canManipulate: s.cursor < activeTrace(s).steps.length - 1,
+        }),
     },
 
     // Yêu cầu #2: capability timeline — domain này là progressive nên có

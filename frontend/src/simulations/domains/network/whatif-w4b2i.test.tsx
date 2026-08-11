@@ -4,6 +4,7 @@ import { renderToString } from "react-dom/server";
 import { makeNetworkModule } from "./index";
 import { NetworkWorkspace } from "./ui";
 import { bfsRoute, isModified, isReachable, type NetworkState } from "./model";
+import { exploreEntry } from "../../../components/SimulationWorkspace";
 
 /**
  * W4B-2I — THÍ NGHIỆM CẤU TRÚC CÓ RÀNG BUỘC (network.packet_routing).
@@ -169,7 +170,13 @@ describe("W4B-2I · renderer chỉ ĐỌC — không tính định tuyến", () 
       <NetworkWorkspace config={config} state={state} busy={false} dispatch={() => {}} />,
     );
     expect(html).not.toContain('role="button"');
-    expect(html).toContain("Thí nghiệm");
+    /* W4B-3A — LỐI VÀO ĐÃ RỜI KHỎI SÂN KHẤU (đó là dải `experimentTrigger`).
+       Ở bài này nó là chế độ KHÁM PHÁ: sửa tôpô rồi để engine định tuyến lại,
+       không có `predict.check` nào can dự. Nên hỏi đúng năng lực `explore`. */
+    expect(html, "sân khấu dựng lại nút cổng").not.toContain("sim-secondary-action");
+    const entry = exploreEntry(makeNetworkModule(), state, config);
+    expect(entry, "mất lối vào Khám phá").not.toBeNull();
+    expect(entry!.label).toContain("đổi đường mạng");
   });
 
   it("không tới được ⇒ KHÔNG vẽ gói tin đứng im ở nguồn", () => {

@@ -10,6 +10,7 @@ import {
   stageInteractionsOf,
 } from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
+import { challengeEntry } from "../components/SimulationWorkspace";
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
 import type { AlgorithmSimState } from "./domains/algorithm";
@@ -202,14 +203,30 @@ describe("W4B-2B §7/§18 · Quan sát ẩn CAM KẾT, giữ QUAN HỆ", () => {
     }
   });
 
+  /* W4B-3A — CỔNG ĐỔI CHỦ, BẤT BIẾN GIỮ NGUYÊN.
+   *
+   * Cổng không còn do `AlgorithmWorkspace` dựng (đó chính là dải
+   * `experimentTrigger` đã gỡ), nên khẳng định "HTML sân khấu chứa nút" nay mô
+   * tả một sản phẩm không còn tồn tại. Ba điều đáng giữ thì giữ nguyên, chỉ hỏi
+   * đúng chủ sở hữu mới:
+   *   1. mỗi bài gác cổng vẫn CÓ một lối vào (không mất năng lực);
+   *   2. lối vào là `<button>` THẬT có `aria-expanded` (bàn phím tới được);
+   *   3. sân khấu KHÔNG được dựng lại nút ấy (chống tái phát dải).
+   */
   it("cổng nhìn thấy được và là NÚT thật (bàn phím tới được, có aria-expanded)", () => {
     for (const id of GATED) {
-      const html = observeHtml(id);
-      expect(html, `${id}: không có nút Thí nghiệm`).toContain("Thí nghiệm");
-      expect(html, `${id}: cổng không khai trạng thái mở/đóng`).toContain('aria-expanded="false"');
-      // <button> gốc ⇒ Tab tới được, Enter/Space kích hoạt được, không cần chuột
-      expect(html, `${id}: cổng không phải <button>`).toMatch(/<button[^>]*>(?:(?!<\/button>)[\s\S])*Thí nghiệm/);
+      const { config, state } = build(id);
+      const entry = challengeEntry(makeAlgorithmModule(id), state, config);
+      expect(entry, `${id}: không có lối vào`).not.toBeNull();
+      expect(entry!.label.length, `${id}: nhãn cụt`).toBeGreaterThan(14);
+      expect(observeHtml(id), `${id}: sân khấu dựng lại nút cổng`)
+        .not.toContain("sim-secondary-action");
     }
+    const controls = readFileSync(
+      new URL("../components/SimulationControls.tsx", import.meta.url), "utf-8",
+    );
+    expect(controls, "lối vào không phải <button>").toMatch(/<button[\s\S]{0,400}sim-secondary-action/);
+    expect(controls, "lối vào không khai trạng thái mở/đóng").toContain("aria-expanded={open}");
   });
 });
 
@@ -248,15 +265,41 @@ describe("W4B-2B §10 · Thí nghiệm bày LỰA CHỌN, không bày cái nào 
 describe("W4B-2B §13 · mở/đóng Thí nghiệm KHÔNG chạm engine state", () => {
   beforeEach(() => useAppStore.getState().reset());
 
-  it("`labOpen` là state CỤC BỘ — không có đường nào từ nó vào store/dispatch", () => {
+  /* W4B-3A — CỜ RỜI KHỎI COMPONENT, LUẬT KHÔNG RỜI.
+   *
+   * Bản cũ khoá "cờ phải là `useState` cục bộ". Đó là khoá HÌNH DẠNG MÃ, và nó
+   * khoá nhầm: chính vì cục bộ mà (a) mỗi miền phải tự dựng nút mở → sinh ra dải
+   * `experimentTrigger`, (b) chuyển phiên là mất chế độ, (c) SSR luôn thấy
+   * `false` nên không test nào chạm được trạng thái MỞ (`ARCHITECTURE_MAP §8`
+   * #13). Cờ nay ở store.
+   *
+   * Thứ THẬT SỰ đáng khoá vẫn nguyên: đổi chế độ TRÌNH BÀY không được có đường
+   * nào chạm engine state. Nay khoá được CHẶT HƠN bản cũ, vì cờ ở store thì
+   * kiểm được bằng hành vi chứ không chỉ bằng regex. */
+  it("cờ chế độ là TRÌNH BÀY THUẦN — không có đường nào từ nó vào engine state", () => {
     const src = readFileSync(new URL("./domains/algorithm/ui.tsx", import.meta.url), "utf-8");
-    expect(src).toMatch(/const \[labOpen, setLabOpen\] = useState\(false\)/);
-    // setLabOpen chỉ được gọi với hằng true/false, không đi kèm dispatch/submit
-    for (const m of src.matchAll(/setLabOpen\(([^)]*)\)/g)) {
-      expect(["true", "false"], `setLabOpen(${m[1]}) không phải hằng`).toContain(m[1].trim());
+    expect(src, "cờ chế độ quay lại làm state cục bộ của renderer")
+      .not.toMatch(/useState\s*\(/);
+    // Setter chỉ được gọi với hằng true/false, không đi kèm dispatch/submit.
+    for (const m of src.matchAll(/set(?:Challenge|Explore)Open\(([^)]*)\)/g)) {
+      expect(["true", "false"], `setter(${m[1]}) không phải hằng`).toContain(m[1].trim());
     }
-    expect(src).not.toMatch(/setLabOpen[\s\S]{0,120}dispatch\(/);
-    expect(src).not.toMatch(/setLabOpen[\s\S]{0,120}submitPrediction\(/);
+    expect(src).not.toMatch(/set(?:Challenge|Explore)Open[\s\S]{0,120}dispatch\(/);
+    expect(src).not.toMatch(/set(?:Challenge|Explore)Open[\s\S]{0,120}submitPrediction\(/);
+
+    // HÀNH VI: bật/tắt hai chế độ không đụng state/cursor canonical.
+    const { config, state } = build("find_max");
+    const mod = makeAlgorithmModule("find_max");
+    const st = useAppStore.getState();
+    st.loadEnvelope({
+      simulation_id: "algorithm.find_max", title: "t", config,
+    } as unknown as SimulationEnvelope);
+    const before = useAppStore.getState().active!.state;
+    useAppStore.getState().setChallengeOpen(true);
+    useAppStore.getState().setExploreOpen(true);
+    expect(useAppStore.getState().active!.state, "đổi chế độ đã dựng lại state").toBe(before);
+    expect(mod.timeline!.currentStep(useAppStore.getState().active!.state as AlgorithmSimState))
+      .toBe(mod.timeline!.currentStep(state));
   });
 
   it("đổi trạng thái TRÌNH BÀY quanh mô phỏng không đổi state/cursor canonical", () => {

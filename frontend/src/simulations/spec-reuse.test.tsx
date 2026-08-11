@@ -193,7 +193,14 @@ describe("W4B-2V §18 · ngữ cảnh không được biến thành mã trình b
   it("không renderer nào phân nhánh theo NỘI DUNG đề bài", async () => {
     const { readFileSync, readdirSync, statSync } = await import("node:fs");
     const { join } = await import("node:path");
-    const root = new URL("./domains/", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+    /* W4B-3A — QUÉT CẢ SHELL, KHÔNG CHỈ RENDERER MIỀN.
+       Bản trước chỉ đi `domains/`, nên một nhánh theo nội dung đề bài đặt trong
+       `components/SimulationWorkspace.tsx` (nơi QUYẾT ĐỊNH bày lối vào nào) đi
+       lọt trọn vẹn — tiêm lỗi chứng minh được. Shell là chỗ dễ cám dỗ nhất để
+       "chỉ rẽ một nhánh nhỏ theo đề bài", nên nó phải nằm trong tầm quét. */
+    const roots = ["./domains/", "../components/"].map((r) =>
+      new URL(r, import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"),
+    );
 
     const walk = (dir: string, out: string[] = []): string[] => {
       for (const n of readdirSync(dir)) {
@@ -210,7 +217,16 @@ describe("W4B-2V §18 · ngữ cảnh không được biến thành mã trình b
       t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
 
     const PATTERNS = [
-      /\b(summary|title)\b[^\n;]{0,80}\.(includes|startsWith|match|test)\s*\(/g,
+      /* W4B-3A: `\.` cũ bỏ lọt OPTIONAL CHAINING. Tiêm lỗi
+         `config?.problem?.summary?.includes("mạng")` đi lọt trọn vẹn phép dò
+         này — guard quét cả kho mã mà trả 0 vì regex hụt, không vì mã sạch.
+         Bait bên dưới nay có cả dạng `?.`. */
+      /* Đối số phải là HẰNG CHUỖI. Điều §18 cấm là rẽ nhánh theo NỘI DUNG ĐỀ
+         BÀI viết cứng trong mã ("nếu đề nhắc 'học sinh' thì vẽ kiểu khác").
+         So `title` với một BIẾN thì là chuyện khác hẳn — `LibraryView` lọc danh
+         mục theo ô tìm kiếm học sinh gõ, và đó là một tính năng, không phải một
+         nhánh trình bày. Guard kêu oan là guard sẽ bị tắt. */
+      /\b(summary|title)\b[^\n;]{0,80}\??\.(includes|startsWith|match|test)\s*\(\s*["'`]/g,
       /\balgorithm_id\s*===\s*["']/g,
       /\bsimulation_id\s*===\s*["']/g,
     ];
@@ -222,14 +238,27 @@ describe("W4B-2V §18 · ngữ cảnh không được biến thành mã trình b
       'if (config.problem.summary.includes("học sinh")) return <StudentBars />;',
       'if (config.algorithm_id === "binary_search") return <SpecialPage />;',
       'if (env.simulation_id === "tree.traversal") { }',
+      // W4B-3A — dạng optional chaining, chính là mẫu đã đi lọt bản trước.
+      'if (config?.problem?.summary?.includes("mạng")) return null;',
     ];
     for (const bait of BAIT) {
       const hit = PATTERNS.some((re) => { re.lastIndex = 0; return re.test(bait); });
       expect(hit, `phép dò không bắt được mẫu vi phạm: ${bait}`).toBe(true);
     }
 
+    /* MỒI ÂM — thứ phép dò KHÔNG được bắt. Không có vế này thì cách siết dễ
+       nhất luôn là siết đến mức bắt cả việc hợp lệ, rồi guard bị tắt. */
+    const CLEAN = [
+      'e.title.toLowerCase().includes(q)',            // lọc danh mục theo ô tìm kiếm
+      'DOMAIN_LABEL[e.domain].toLowerCase().includes(q)',
+    ];
+    for (const ok of CLEAN) {
+      const hit = PATTERNS.some((re) => { re.lastIndex = 0; return re.test(ok); });
+      expect(hit, `phép dò kêu oan trên mã hợp lệ: ${ok}`).toBe(false);
+    }
+
     const offenders: string[] = [];
-    for (const f of walk(root)) {
+    for (const f of roots.flatMap((r) => walk(r))) {
       const src = strip(readFileSync(f, "utf-8"));
       /* Đọc `problem.summary` / `title` rồi RẼ NHÁNH theo nội dung của nó là
          đúng thứ §17 gọi là "mã hoá ngữ cảnh thành logic renderer". Đọc để
