@@ -45,6 +45,27 @@ Cấu trúc đã trích (từ `Mục lục` của từng cuốn):
 - ~~"Mọi chủ đề trong chương trình đều mô phỏng được"~~
 - ~~"3D **luôn** giúp học tốt hơn"~~ (xem §8)
 - ~~"`practice_activity` đã hoàn thiện"~~ (xem §6)
+- ~~"Hệ có **N mô phỏng tương tác**"~~ khi N gộp cả target CHƯA ĐO ĐƯỢC — 9/23
+  target chưa có bài mẫu offline nên chỉ đọc được **năng lực khai báo**, không
+  đọc được hành vi. Đo được và khai báo phải đếm RIÊNG (W4B-3A, xem §1b).
+- ~~"Học sinh **thao tác được** với mọi mô phỏng"~~ — có `predict` **không phải**
+  là thao tác trực tiếp; có `timeline` **không phải** là mô hình tương tác.
+
+### 1b. HAI TRỤC, đừng gộp (W4B-3A)
+
+`CoverageStatus` trả lời *"đơn vị kiến thức này đã ship tới đâu"*.
+`SupportKind` trả lời *"học sinh thật sự LÀM ĐƯỢC GÌ"*. Thiếu trục thứ hai thì
+một mục chỉ-bấm-Tiến-để-xem và một mục học sinh đổi được mô hình đều hiện
+`SUPPORTED` y hệt nhau — và "có mô phỏng" đọc thành lời hứa lớn hơn sự thật.
+
+Nguồn: `app/simulation/coverage.py` (enum ĐÓNG + `support_evidence` bắt buộc).
+Bảng: `backend/scripts/curriculum_support_report.py` →
+`docs/evaluation/m17/w4b3a-after/curriculum-support.md`.
+
+Ràng buộc chéo có test (`test_coverage_matrix.py`):
+`OUT_OF_SCOPE ⇔ NOT_SIMULATION_SUITABLE` · `CAPABILITY_GAP ⇒ UNSUPPORTED` ·
+nhãn **`CURRICULUM_SUPPORT_PARTIAL` chỉ được gỡ khi KHÔNG còn unit in-scope nào
+PARTIAL/UNSUPPORTED** — hiện còn 7, nên nhãn giữ nguyên.
 
 ---
 

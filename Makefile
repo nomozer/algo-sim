@@ -5,7 +5,7 @@
 PY := backend/.venv/Scripts/python.exe
 ARTIFACTS := docs/evaluation/m17/rc1
 
-.PHONY: runtime-doctor rebuild-backend catalog-matrix archetype-matrix completeness rc1-tier1 help
+.PHONY: runtime-doctor rebuild-backend catalog-matrix archetype-matrix completeness curriculum-support rc1-tier1 help
 
 help:
 	@echo "runtime-doctor   - So khop danh tinh source <-> container dang chay"
@@ -13,6 +13,7 @@ help:
 	@echo "catalog-matrix   - Sinh ma tran catalog + conformance tu registry"
 	@echo "archetype-matrix - RC1-C: coverage 8 slot x 19 target + gap + ledger"
 	@echo "completeness     - RC1-D: probe chinh sach so luong thao tac"
+	@echo "curriculum-support - W4B-3A: bang ho tro theo chuong trinh (SupportKind)"
 	@echo "rc1-tier1        - Tier 1: toan bo suite offline (khong LLM live)"
 
 ## Phát hiện container chạy code cũ. Thoát != 0 khi lệch.
@@ -43,6 +44,13 @@ completeness:
 	$(PY) backend/scripts/semantic_completeness_report.py \
 	  --json $(ARTIFACTS)/semantic_completeness_report.json \
 	  --md $(ARTIFACTS)/semantic_completeness_report.md
+
+## W4B-3A — bảng hỗ trợ theo CHƯƠNG TRÌNH (hướng giáo viên), sinh từ coverage.py.
+##   Khác `catalog-matrix` (hướng kĩ sư) và `after-matrix` (hướng sản phẩm).
+curriculum-support:
+	$(PY) backend/scripts/curriculum_support_report.py \
+	  --json docs/evaluation/m17/w4b3a-after/curriculum-support.json \
+	  --md docs/evaluation/m17/w4b3a-after/curriculum-support.md
 
 ## Tier 1 — deterministic, không gọi LLM, không tốn HTTP budget.
 rc1-tier1:

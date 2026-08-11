@@ -16,11 +16,11 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 |---|---|---|
 | Active mainline | `main` | `git branch --show-current` |
 | Baseline | `f2b28e2` (PATCH1 impl `8bd2324` + live evidence) | `git rev-parse HEAD` |
-| `CACHE_VERSION` | **25** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+| `CACHE_VERSION` | **26** | `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 | `HISTORY_SCHEMA_VERSION` | **2** | `frontend/src/state/history.ts:33` |
-| Family / Target | **11 / 22** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
-| ↳ computation / representation | **10 / 1** — xem §0h | `result_authority` trên `FamilyMembership` |
-| Trình bày 2D / 2D+3D | **20 / 2** | `SimSpec.visual_modes`; parity `capability-descriptors.test.ts` |
+| Family / Target | **12 / 23** | `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+| ↳ computation / representation | **10 / 2** — xem §0h | `result_authority` trên `FamilyMembership` |
+| Trình bày 2D / 2D+3D | **22 / 1** | `SimSpec.visual_modes`; parity `capability-descriptors.test.ts` |
 | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8` | `git rev-parse archive/m17-w2b-deep-hardening` |
 
 Danh tính runtime (so source ↔ container) do `backend/app/runtime_identity.py` +
@@ -448,6 +448,33 @@ Curriculum coverage matrix — machine-readable, enum ĐÓNG `CoverageStatus`
 §3/§7/§7b. KHÔNG claim phủ toàn chương trình; gap/out-of-scope khai trung thực.
 Exports: `KNOWLEDGE_UNITS`, `KnowledgeUnit` (frozen dataclass), `CoverageStatus`,
 `coverage_rows()`. Tests: `test_coverage_matrix.py`.
+
+**W4B-3A — TRỤC THỨ HAI `SupportKind`** {SUPPORTED_INTERACTIVE / SUPPORTED_TRACE /
+SUPPORTED_BOUNDED_ARTIFACT / SUPPORTED_EXPLANATION / PARTIAL / UNSUPPORTED /
+NOT_SIMULATION_SUITABLE} + `support_evidence` (bắt buộc, nói rõ ĐO ĐƯỢC hay chỉ
+KHAI BÁO) + `curriculum_support_rows()`. Vì sao cần trục thứ hai: `CoverageStatus`
+trả lời *"đã ship tới đâu"*, nên một mục chỉ-bấm-Tiến-để-xem và một mục học sinh
+đổi được mô hình hiện **giống hệt nhau** là `SUPPORTED`. Ràng buộc chéo có test:
+`OUT_OF_SCOPE ⇔ NOT_SIMULATION_SUITABLE`, `CAPABILITY_GAP ⇒ UNSUPPORTED`, và một
+test canh nhãn `CURRICULUM_SUPPORT_PARTIAL` — nó chỉ được gỡ khi KHÔNG còn unit
+in-scope nào PARTIAL/UNSUPPORTED. Báo cáo:
+`scripts/curriculum_support_report.py`.
+
+### `backend/scripts/curriculum_support_report.py` · Change impact: offline
+W4B-3A — bảng hướng GIÁO VIÊN (mỗi đơn vị kiến thức được hỗ trợ tới đâu và theo
+KIỂU nào), sinh từ `coverage.py`. Khác `catalog_runtime_matrix.py` (hướng kĩ sư)
+và khác `after-matrix` (hướng sản phẩm, theo target). Cờ `--json/--md`. Artifact:
+`docs/evaluation/m17/w4b3a-after/curriculum-support.{json,md}`.
+
+### `frontend/scripts/after-matrix-w4b3a.mjs` · Change impact: offline (cần `npm run dev`)
+W4B-3A — MA TRẬN AFTER cho **toàn bộ** danh mục: ghép ba nguồn (descriptor sinh
+từ registry + module frontend đang chạy qua CDP + `measure-1920.json`). Phân loại
+trải nghiệm bằng luật KHAI TRƯỚC ở đầu file; **đếm tổng chỉ sau khi có bảng từng
+target**. Tách bạch ĐO ĐƯỢC ↔ CHỈ KHAI BÁO (9/23 target chưa có bài mẫu offline
+nên không dựng được state để đo) — cộng hai cột lại là tự cho điểm cao hơn bằng
+chứng. Ba phép suy BỊ CẤM ghi ngay trong file: `predict` ⇒ thao tác trực tiếp ·
+`timeline` ⇒ mô hình tương tác · có trong catalog ⇒ có phủ chương trình.
+Artifact: `docs/evaluation/m17/w4b3a-after/after-matrix.{json,md}`.
 Notes (M15 Task 16): `sorting` tốt nghiệp `PILOT` → `SUPPORTED` sau formalize
 thành family selector (M14) + conformance proof (M15) — note tự giới hạn claim
 (live n=4 M14 + n=2 M15 W1 — đếm case live chạm sorting gồm cả near-miss từ

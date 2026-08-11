@@ -800,14 +800,60 @@ scan HOÃN có chủ đích.
 
 ### Giới hạn CÒN LẠI (đo được, không phải "chưa kịp làm")
 
-- **`experimentTrigger` vẫn là một dải dưới mô hình ở 8 target thuật toán.**
-  Đo tại 1920: `legend, narration, experimentTrigger` (bandCount 3). Nó KHÔNG
-  phải nhãn suông — nó là CỬA mở quyền cam kết trên sân khấu
-  (`ScanActionZone`/`SearchActionZone`/`SortActionZone`), nên gỡ đi là mất năng
-  lực. Dời nó vào dải điều khiển đòi nâng state `labOpen` (đang cục bộ trong
-  `domains/algorithm/ui.tsx`) lên chủ sở hữu dùng chung — đổi kiến trúc, chưa làm.
+- ~~`experimentTrigger` vẫn là một dải dưới mô hình ở 8 target thuật toán.~~
+  **ĐÃ ĐÓNG ở W4B-3A** — xem mục dưới.
 - **`CURRICULUM_SUPPORT_PARTIAL`** giữ nguyên. **`LEARNER_IMPACT_NOT_EVALUATED`**
   giữ nguyên.
+
+## W4B-3A — tách KHÁM PHÁ khỏi THỬ THÁCH, gỡ dải cổng (2026-08-11)
+
+**Vấn đề thật không phải chỗ đặt cái nút.** Một nút tên "Thí nghiệm" do CHÍNH
+renderer miền dựng mở CÙNG LÚC hai thứ khác loại: vùng cam kết (nộp qua
+`predict.check` — engine PHÁN đúng/sai) và kéo-thả/sửa tôpô (đi qua
+`module.apply` — KHÔNG ai phán gì). Một cửa cho hai việc khác loại dạy học sinh
+rằng kéo một cột cũng là "trả lời đúng/sai".
+
+Dải `experimentTrigger` chỉ là **triệu chứng**: shell chỉ dựng lối vào Thử thách
+khi module KHÔNG tự bày cam kết trên sân khấu (`presentedInStage`), nên đúng ở
+những bước có vùng cam kết thì họ thuật toán không có cửa nào của shell và phải
+tự dựng lấy — cái nút tự dựng ấy nằm ngay dưới sân khấu.
+
+- **Phân vai sau wave**: store sở hữu `challengeOpen`/`exploreOpen` (mù domain,
+  theo phiên) · `SimulationControls` là chủ sở hữu **DUY NHẤT** của lối vào phụ ·
+  module cấp CÂU MỜI (`predict.entry` / `explore.entry`, dẫn xuất từ config đã
+  validate) · renderer miền dựng bộ điều khiển và phát `SimAction` · engine vẫn
+  là bên duy nhất phán đúng/sai.
+- **`presentedInStage` trả về đúng việc của nó**: chặn `PredictionBar` khi sân
+  khấu đã hỏi rồi — KHÔNG chặn cửa. Một cửa, nhiều nhất một bề mặt.
+- **Nút MỜ chứ không biến mất** ở bước không dùng được: số bước mời được chỉ
+  4/13 (binary_search) → 21/40 (bubble_sort), nên tự gỡ mình là nhấp nháy mỗi
+  lần bấm Tiến. Cùng thành ngữ `:disabled` với transport ngay cạnh.
+- **Đo được (Chrome thật, 4 bề rộng 1920/1536/1366/768)**: 8 target thuật toán
+  `bands 3 → 2`, `network.packet_routing` `2 → 1`; **0 dải `experiment-trigger`**
+  ở mọi target/bề rộng; 0 tràn ngang; mở Thử thách ≤1 bề mặt cam kết.
+  Artifact: `docs/evaluation/m17/w4b3a-after/`.
+- **Protocol parity ĐÓNG bằng bằng chứng trình duyệt** (trước đây PARTIAL): đổi
+  2D↔3D ở bước 3/9 của `protocol_encapsulation` giữ nguyên cursor, stepCount và
+  `getExplainContext` từng byte; quay lại 2D khôi phục đúng.
+- **Phiên**: chính sách khai tường minh — Khám phá **theo phiên** (khôi phục khi
+  quay lại, KHÔNG rò sang phiên mới, đóng khi `resetSim`). A→Khám phá→B→A giữ
+  ĐÚNG object state cũ, **0 `fetch`**.
+- **Ma trận AFTER toàn danh mục** (`after-matrix.md`, sinh từ nguồn): 23 target ·
+  12 family. Đo được trong trình duyệt **14/23** (9 target chưa có bài mẫu
+  offline ⇒ chỉ đọc được năng lực KHAI BÁO — đếm riêng, không cộng vào). Thao
+  tác trực tiếp **11 đo được** (7 sau cổng Khám phá + 4 luôn mở trên sân khấu),
+  cam kết thuật toán **8 đo được**, khai `predict` **11**.
+- **Bảng hỗ trợ theo chương trình** (`curriculum-support.md`, trục `SupportKind`
+  mới): 25 đơn vị — 8 SUPPORTED_INTERACTIVE · 2 SUPPORTED_TRACE · 1
+  SUPPORTED_BOUNDED_ARTIFACT · 5 PARTIAL · 2 UNSUPPORTED · 7
+  NOT_SIMULATION_SUITABLE. **`CURRICULUM_SUPPORT_PARTIAL` GIỮ NGUYÊN** (7 đơn vị
+  in-scope còn dang dở) — và nay có test canh, không phải lời hứa.
+- **Tiêm lỗi đã chứng minh ĐỎ 8/8** (dải quay lại · Khám phá phụ thuộc chuỗi
+  ngữ cảnh · renderer bỏ qua `apply` · renderer tự phán đúng/sai · rò chế độ
+  A→B · chuyển phiên qua `loadEnvelope` · phá parity 2D/3D · màu web lậu).
+  **Ba guard hụt bị phát hiện nhờ chính đợt tiêm lỗi và đã vá**: quét ngữ-cảnh
+  toàn kho không đi qua `components/` và bỏ lọt optional chaining; `ArrayView`
+  viết lại id trước khi nộp mà không guard nào thấy.
 
 ## 1. Baseline
 

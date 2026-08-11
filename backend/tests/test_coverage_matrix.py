@@ -7,6 +7,8 @@ import dataclasses
 import pytest
 
 from app.simulation.coverage import (
+    SupportKind,
+    curriculum_support_rows,
     KNOWLEDGE_UNITS,
     CoverageStatus,
     KnowledgeUnit,
@@ -73,3 +75,62 @@ def test_knowledge_unit_immutable():
     u = KNOWLEDGE_UNITS[0]
     with pytest.raises(dataclasses.FrozenInstanceError):
         u.status = CoverageStatus.SUPPORTED  # type: ignore[misc]
+
+
+# ── W4B-3A — TRỤC THỨ HAI: KIỂU HỖ TRỢ ────────────────────────────────────
+#
+# `CoverageStatus` trả lời "có phủ không", `SupportKind` trả lời "học sinh làm
+# được gì". Bảng chỉ có trục thứ nhất đọc thành lời hứa lớn hơn sản phẩm: một
+# mục chỉ bấm-Tiến-để-xem và một mục học sinh đổi được mô hình đều hiện
+# "SUPPORTED" y hệt nhau.
+
+
+def test_moi_unit_khai_support_kind_thuoc_enum_dong():
+    for u in KNOWLEDGE_UNITS:
+        assert isinstance(u.support_kind, SupportKind), f"{u.unit_id} support_kind ngoài enum"
+    allowed = {k.value for k in SupportKind}
+    for row in curriculum_support_rows():
+        assert row["support_kind"] in allowed
+
+
+def test_moi_unit_co_bang_chung_cho_kieu_ho_tro():
+    """Khai một KIỂU mà không nói VÌ SAO thì lần sau không ai kiểm lại được."""
+    for u in KNOWLEDGE_UNITS:
+        assert u.support_evidence.strip(), f"{u.unit_id} thiếu support_evidence"
+
+
+def test_hai_truc_khong_duoc_mau_thuan_nhau():
+    """Ràng buộc chéo — đây mới là chỗ bảng phủ hay nói dối.
+
+    Ngoài phạm vi ⇔ không phải thứ nên mô phỏng; cố ý từ chối ⇒ chưa hỗ trợ.
+    Không có chiều ngược lại: một mục PARTIAL vẫn có thể hỗ trợ theo kiểu
+    tương tác cho phần đã làm được.
+    """
+    for u in KNOWLEDGE_UNITS:
+        if u.status is CoverageStatus.OUT_OF_SCOPE:
+            assert u.support_kind is SupportKind.NOT_SIMULATION_SUITABLE, u.unit_id
+        if u.support_kind is SupportKind.NOT_SIMULATION_SUITABLE:
+            assert u.status is CoverageStatus.OUT_OF_SCOPE, u.unit_id
+        if u.status is CoverageStatus.CAPABILITY_GAP:
+            assert u.support_kind is SupportKind.UNSUPPORTED, u.unit_id
+
+
+def test_khong_duoc_tuyen_bo_phu_toan_bo_chuong_trinh():
+    """CURRICULUM_SUPPORT_PARTIAL — giữ nguyên trừ khi CHÍNH bảng chứng minh khác.
+
+    Điều kiện để bỏ nhãn PARTIAL là KHÔNG còn unit nào PARTIAL/UNSUPPORTED trong
+    phạm vi đã khoanh. Test này là chỗ phát hiện điều đó, không phải một lời hứa.
+    """
+    in_scope = [u for u in KNOWLEDGE_UNITS if u.status is not CoverageStatus.OUT_OF_SCOPE]
+    unfinished = [u.unit_id for u in in_scope
+                  if u.support_kind in (SupportKind.PARTIAL, SupportKind.UNSUPPORTED)]
+    assert unfinished, (
+        "Không còn unit PARTIAL/UNSUPPORTED nào — nếu đúng thì CẬP NHẬT nhãn "
+        "CURRICULUM_SUPPORT_PARTIAL trong docs, đừng để nó nói dè dặt hơn sự thật."
+    )
+
+
+def test_bang_curriculum_sap_theo_kieu_ho_tro_va_du_moi_unit():
+    rows = curriculum_support_rows()
+    assert len(rows) == len(KNOWLEDGE_UNITS)
+    assert {r["unit_id"] for r in rows} == {u.unit_id for u in KNOWLEDGE_UNITS}
