@@ -46,13 +46,27 @@ const CSS_NAME: Record<WebProp, string> = {
  */
 export function cssTextOf(style: WebStyle): string {
   const px = (n: number) => `${n}px`;
+  /* W4B-3F — BA BỘ CHỌN, và đó là điểm của cả wave.
+   *
+   * Một khối chữ chỉ đẻ ra được MỘT luật, nên bài "HTML/CSS" trước đây không có
+   * gì để nói về quan hệ thẻ ↔ hiển thị. Có `h1`/`p` bên trong `.trang` thì bộ
+   * chọn HẬU DUỆ trở thành thật, và học sinh đọc ra vì sao đổi `font-size` ở
+   * hai chỗ lại cho hai kết quả khác nhau. */
   return [
-    ".khoi {",
+    ".trang {",
     `  ${CSS_NAME.backgroundColor}: ${style.backgroundColor};`,
-    `  ${CSS_NAME.color}: ${style.color};`,
-    `  ${CSS_NAME.fontSize}: ${px(style.fontSize)};`,
     `  ${CSS_NAME.padding}: ${px(style.padding)};`,
     `  ${CSS_NAME.borderRadius}: ${px(style.borderRadius)};`,
+    "}",
+    "",
+    ".trang h1 {",
+    `  ${CSS_NAME.headingColor}: ${style.headingColor};`,
+    `  ${CSS_NAME.headingSize}: ${px(style.headingSize)};`,
+    "}",
+    "",
+    ".trang p {",
+    `  ${CSS_NAME.color}: ${style.color};`,
+    `  ${CSS_NAME.fontSize}: ${px(style.fontSize)};`,
     "}",
   ].join("\n");
 }

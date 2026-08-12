@@ -197,6 +197,33 @@ describe("W4B-2Z · không bịa ra trục thời gian", () => {
     expect(html).toContain("#fde68a");
   });
 
+  it("XEM TRƯỚC là một TRANG CÓ CẤU TRÚC, không phải một ô chữ", () => {
+    /* W4B-3F — ĐÂY LÀ KHIẾU NẠI GỐC, và trước wave này không guard nào canh nó.
+     *
+     * Bản cũ vẽ đúng MỘT `<div>`: đo được nội dung chỉ lấp 37% bề ngang sân khấu
+     * 1622px, và bài "HTML/CSS" không có gì để nói về quan hệ thẻ ↔ hiển thị vì
+     * một div không có tổ tiên lẫn anh em.
+     *
+     * Khoá vào CẤU TRÚC NGỮ NGHĨA, không khoá pixel: phải có tiêu đề `<h1>` và
+     * (khi đề có đoạn văn) `<p>`, cả hai NẰM TRONG khung trang. Tiêm lỗi gỡ
+     * `<p>` đi phải ĐỎ — nếu không, "trang" tụt lại thành cái ô cũ mà suite vẫn
+     * xanh. */
+    const s = initState();
+    const html = renderToString(
+      <mod.Workspace state={s} dispatch={() => {}} config={{} as never} busy={false} />,
+    );
+    const page = html.slice(html.indexOf('class="web-page"'));
+    expect(page, "trang không có tiêu đề").toContain("<h1");
+    expect(page, "tiêu đề không mang nội dung của đề").toContain(s.heading);
+    expect(s.paragraph.length, "mẫu kiểm phải có đoạn văn").toBeGreaterThan(0);
+    expect(page, "trang mất đoạn văn — quay lại thành một khối chữ").toContain("<p");
+    expect(page, "đoạn văn không mang nội dung của đề").toContain(s.paragraph);
+    // Bảng kiểu phải nói ra CÙNG phân cấp ấy — hai bộ chọn hậu duệ.
+    const css = cssTextOf(s.style);
+    expect(css).toContain(".trang h1");
+    expect(css).toContain(".trang p");
+  });
+
   it("XEM TRƯỚC vẽ ĐÚNG state — renderer không được có nguồn sự thật riêng", () => {
     /* W4B-3F — LỖ HỔNG DO TIÊM LỖI BẮT ĐƯỢC, không phải phòng xa.
      *
