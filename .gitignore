@@ -19,6 +19,16 @@ CLAUDE.md
 # Mockup phiên brainstorm (visual companion) — cục bộ, không commit.
 /.superpowers/
 
+# Impeccable (design hook): cache + config CÁ NHÂN của từng máy — không commit.
+# KHÔNG root-anchored, và đó là cố ý: thư mục này mọc ở CẢ gốc repo lẫn
+# `frontend/`, nên `/.impeccable/` sẽ bỏ lọt cái thứ hai.
+#
+# Vì sao phải nằm ở ĐÂY chứ không để nguyên như cũ: công cụ tự ghi đường loại trừ
+# vào `.git/info/exclude`, mà file đó là CỤC BỘ — nó không được commit, không đi
+# theo bản clone. Máy khác (hoặc chính máy này sau khi dựng lại `.git`) sẽ không
+# còn lớp che nào, và đúng một lệnh `git add -A` là `config.local.json` lên remote.
+.impeccable/
+
 # Claude Code local settings (permissions, machine-specific paths) — không commit.
 # Cau hinh Claude Code: chi settings.json (dung chung) duoc commit.
 # Luu y git: khong the negate mot FILE khi thu muc CHA bi loai — nen phai
