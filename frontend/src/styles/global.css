@@ -3319,3 +3319,72 @@ html {
   }
   .session-more-trigger::after { content: " ▾"; }
 }
+
+/* ── W4B-4B — CÂU TRUY VẤN LÀ THỨ HỌC SINH ĐỔI ────────────────────────────
+   Một hàng gọn đứng trên bảng: nó là CÂU HỎI, bảng bên dưới là CÂU TRẢ LỜI.
+   Không dựng thành thẻ riêng — thêm một tấm nội dung nữa thì quan hệ
+   nguồn → truy vấn → kết quả bị cắt làm ba mảnh rời. */
+.tq-query {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: var(--sp-sm) var(--sp-md);
+  background: var(--canvas-soft);
+  border-radius: var(--rounded-md);
+  font-size: 14px;
+}
+
+.tq-query-part {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+}
+
+.tq-query-label {
+  color: var(--ink-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tq-query select,
+.tq-query-value {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  padding: 2px var(--sp-xs);
+}
+
+.tq-query-value {
+  width: 88px;
+}
+
+/* Cột đang chiếu: bật/tắt đọc được KHÔNG CHỈ bằng màu — chữ đậm lên và viền
+   đổi, nên học sinh không phân biệt được màu vẫn thấy trạng thái. */
+.tq-col-toggle {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 2px var(--sp-xs);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: var(--surface);
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.tq-col-toggle.is-on {
+  border-color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.tq-col-toggle:focus-visible,
+.tq-query select:focus-visible,
+.tq-query-value:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

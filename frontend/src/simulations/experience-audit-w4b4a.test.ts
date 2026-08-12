@@ -90,10 +90,14 @@ const DOMAIN_ACTIONS: Record<string, (state: unknown) => SimAction[]> = {
       .filter(([, v]) => typeof v === "number")
       .map(([id]) => ({ type: "toggle", target: id }) as SimAction);
   },
-  /* `tree`/`database` khai `apply: (state) => state` — identity. Không có action
-     nào để thử, và đó chính là phát hiện, không phải chỗ trống của phép đo. */
+  /* W4B-4B — database nay nhận `set_param` cho truy vấn có ràng buộc. */
+  database: () => [
+    { type: "set_param", name: "filter.value", value: "0" } as SimAction,
+    { type: "set_param", name: "sort.direction", value: "asc" } as SimAction,
+  ],
+  /* `tree` vẫn khai `apply: (state) => state` — identity. Không có action nào
+     để thử, và đó chính là phát hiện, không phải chỗ trống của phép đo. */
   tree: () => [],
-  database: () => [],
 };
 
 interface Row {

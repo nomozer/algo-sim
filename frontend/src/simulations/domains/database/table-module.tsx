@@ -431,6 +431,88 @@ const labelOf = (schema: TableColumn[], name: string): string =>
 /** Giai đoạn nào của pipeline đã đi qua tính tới bước `at` — đọc từ trace,
  *  không tự suy. Dùng để hé lộ dần: projection chỉ mờ cột SAU khi tới bước
  *  chiếu; thứ tự sắp xếp chỉ hiện SAU bước sắp xếp. */
+/* ── W4B-4B — TRUY VẤN LÀ THỨ HỌC SINH ĐỔI, KHÔNG PHẢI THỨ HỌC SINH XEM ────
+ *
+ * Trước wave này module khai `apply: (state) => state` — identity. Nghĩa là bài
+ * "lọc học sinh điểm ≥ 8 rồi sắp theo điểm" chỉ còn một việc để làm: bấm Play và
+ * xem bốn bước diễn ra. Nhưng cơ chế của bài KHÔNG phải trình tự thời gian — nó
+ * là QUAN HỆ giữa câu truy vấn và tập kết quả. Bấm Play không dạy được quan hệ
+ * đó; đổi ngưỡng rồi thấy số dòng đổi theo thì có.
+ *
+ * `runTableQuery(config)` đã là chủ sở hữu tất định sẵn có, và `init` vốn đã là
+ * `{ config, ...runTableQuery(config) }`. Nên "truy vấn-trước" không cần engine
+ * mới: chỉ cần cho phép đổi CONFIG trong miền đóng rồi tính lại bằng chính hàm
+ * ấy. Không SQL, không biểu thức tự do, không JOIN, không ghi dữ liệu.
+ *
+ * MIỀN ĐÓNG, khai ngay ở đây:
+ *   filter.column     → phải là cột có trong schema
+ *   filter.op         → phải thuộc `COMPARE_OPS`
+ *   filter.value      → ép kiểu theo ĐÚNG kiểu cột (dùng lại `coerceCell`)
+ *   sort.column       → cột trong schema · sort.direction → asc | desc
+ *   projection:<cột>  → bật/tắt một cột, luôn giữ ≥ 1 cột
+ * Tên khác ⇒ `null` ⇒ `apply` trả nguyên state (fail-closed, không sửa liều).
+ */
+export const SORT_DIRECTIONS = ["asc", "desc"] as const;
+
+/** Tiền tố của action bật/tắt cột — một `set_param`, không đẻ action mới. */
+export const PROJECTION_PREFIX = "projection:";
+
+export function withQueryParam(
+  config: TableConfig,
+  name: string,
+  value: number | string | boolean,
+): TableConfig | null {
+  const colNames = config.schema.map((c) => c.name);
+
+  if (name.startsWith(PROJECTION_PREFIX)) {
+    const col = name.slice(PROJECTION_PREFIX.length);
+    if (!colNames.includes(col)) return null;
+    const current = config.projection ?? colNames;
+    const next = current.includes(col)
+      ? current.filter((c) => c !== col)
+      : colNames.filter((c) => current.includes(c) || c === col);
+    /* Chiếu về 0 cột thì bảng kết quả không còn nghĩa gì — chặn ở đây chứ không
+       để engine trả một bảng rỗng khó hiểu. */
+    if (next.length === 0) return null;
+    return { ...config, projection: next };
+  }
+
+  if (name === "filter.column" || name === "filter.op" || name === "filter.value") {
+    const base = config.filter && !config.filter.clauses
+      ? config.filter
+      : { op: ">=", column: colNames[0], value: null as Cell };
+    if (name === "filter.column") {
+      if (typeof value !== "string" || !colNames.includes(value)) return null;
+      /* Đổi cột thì giá trị cũ phải ép lại theo kiểu cột MỚI — nếu không, so
+         chuỗi với số sẽ cho kết quả vô nghĩa mà không ai báo lỗi. */
+      const type = config.schema.find((c) => c.name === value)!.type;
+      const co = coerceCell(base.value ?? null, type);
+      return { ...config, filter: { ...base, column: value, value: "value" in co ? co.value : null } };
+    }
+    if (name === "filter.op") {
+      if (typeof value !== "string" || !COMPARE_OPS.includes(value as never)) return null;
+      return { ...config, filter: { ...base, op: value } };
+    }
+    const type = config.schema.find((c) => c.name === base.column)?.type ?? "text";
+    const co = coerceCell(value, type);
+    if (!("value" in co)) return null;
+    return { ...config, filter: { ...base, value: co.value } };
+  }
+
+  if (name === "sort.column") {
+    if (typeof value !== "string") return null;
+    if (value === "") return { ...config, sort: null };
+    if (!colNames.includes(value)) return null;
+    return { ...config, sort: { column: value, direction: config.sort?.direction ?? "asc" } };
+  }
+  if (name === "sort.direction") {
+    if (typeof value !== "string" || !SORT_DIRECTIONS.includes(value as never)) return null;
+    if (!config.sort) return null;
+    return { ...config, sort: { ...config.sort, direction: value } };
+  }
+  return null;
+}
+
 function stagesReached(state: TableState, at: number) {
   const seen = (kind: string) =>
     state.steps.slice(0, at + 1).some((s) => s.kind === kind);
@@ -528,7 +610,79 @@ function stageChips(config: TableConfig, reached: ReturnType<typeof stagesReache
   return present;
 }
 
-export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState>) {
+/**
+ * W4B-4B — BỘ ĐIỀU KHIỂN TRUY VẤN. Gọn, một hàng, phụ thuộc quan hệ
+ * NGUỒN → TRUY VẤN → KẾT QUẢ chứ không phải một bảng điều khiển thứ hai.
+ *
+ * Mỗi control chỉ PHÁT `set_param`; `module.apply` gọi `runTableQuery` và trả
+ * state mới. Renderer không lọc, không sắp, không chiếu — nó đọc kết quả.
+ */
+function QueryBar({ state, dispatch, busy }: WorkspaceProps<TableConfig, TableState>) {
+  const cfg = state.config;
+  const cols = cfg.schema.map((c) => c.name);
+  /* NHÃN, KHÔNG PHẢI ID. `guard 9` bắt đúng bản đầu của bộ điều khiển này: nó in
+     thẳng `c.name` (có thể là `snake_case`) lên select và nút — định danh kỹ
+     thuật không được lọt lên bề mặt học sinh (ARCHITECTURE_MAP §8 #10). Dùng
+     lại `labelOf` sẵn có, không viết bảng nhãn thứ hai. */
+  const L = (c: string) => labelOf(cfg.schema, c);
+  const set = (name: string, value: number | string | boolean) =>
+    dispatch({ type: "set_param", name, value });
+  const f = cfg.filter && !cfg.filter.clauses ? cfg.filter : null;
+  const projected = new Set(state.projectedColumns);
+
+  return (
+    <div className="tq-query" role="group" aria-label="Câu truy vấn — đổi rồi xem kết quả tính lại">
+      <span className="tq-query-part">
+        <span className="tq-query-label">Lọc</span>
+        {/* CHỈ SỐ làm `value`, không phải tên cột: `guard 9` quét HTML thô nên
+            một `value="diem_kt"` cũng là id kỹ thuật lọt vào DOM. Giữ guard
+            nghiêm và đưa id ra khỏi markup luôn — chặt hơn là nới guard. */}
+        <select aria-label="Cột lọc" disabled={busy}
+          value={String(Math.max(0, cols.indexOf(f?.column ?? cols[0])))}
+          onChange={(e) => set("filter.column", cols[Number(e.target.value)])}>
+          {cols.map((c, i) => <option key={c} value={i}>{L(c)}</option>)}
+        </select>
+        <select aria-label="Phép so sánh" disabled={busy} value={f?.op ?? ">="}
+          onChange={(e) => set("filter.op", e.target.value)}>
+          {COMPARE_OPS.map((o) => <option key={o} value={o}>{o}</option>)}
+        </select>
+        <input aria-label="Giá trị so sánh" disabled={busy} className="tq-query-value"
+          value={f?.value === null || f?.value === undefined ? "" : String(f.value)}
+          onChange={(e) => set("filter.value", e.target.value)} />
+      </span>
+
+      <span className="tq-query-part">
+        <span className="tq-query-label">Sắp</span>
+        <select aria-label="Cột sắp xếp" disabled={busy}
+          value={cfg.sort ? String(cols.indexOf(cfg.sort.column)) : ""}
+          onChange={(e) => set("sort.column", e.target.value === "" ? "" : cols[Number(e.target.value)])}>
+          <option value="">— không sắp —</option>
+          {cols.map((c, i) => <option key={c} value={i}>{L(c)}</option>)}
+        </select>
+        <select aria-label="Chiều sắp xếp" disabled={busy || !cfg.sort}
+          value={cfg.sort?.direction ?? "asc"}
+          onChange={(e) => set("sort.direction", e.target.value)}>
+          <option value="asc">tăng dần</option>
+          <option value="desc">giảm dần</option>
+        </select>
+      </span>
+
+      <span className="tq-query-part">
+        <span className="tq-query-label">Cột hiện</span>
+        {cols.map((c) => (
+          <button key={c} type="button" disabled={busy}
+            className={`tq-col-toggle${projected.has(c) ? " is-on" : ""}`}
+            aria-pressed={projected.has(c)}
+            onClick={() => set(`${PROJECTION_PREFIX}${c}`, true)}>
+            {L(c)}
+          </button>
+        ))}
+      </span>
+    </div>
+  );
+}
+
+export function TableWorkspace({ state, config, busy, dispatch }: WorkspaceProps<TableConfig, TableState>) {
   const at = clamp(state, state.cursor);
   const step = state.steps[at];
   const schema = state.config.schema;
@@ -578,6 +732,9 @@ export function TableWorkspace({ state }: WorkspaceProps<TableConfig, TableState
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
+      {/* Câu truy vấn đứng TRƯỚC diễn tiến: học sinh đặt câu hỏi rồi mới xem
+          cách hệ trả lời. Trace bên dưới nay giải thích CHÍNH câu đang đặt. */}
+      <QueryBar state={state} config={config} busy={busy} dispatch={dispatch} />
       {chips.length > 1 && (
         <ol className="tq-stages" style={{
           display: "flex", flexWrap: "wrap", gap: "var(--sp-xs)",
@@ -726,12 +883,28 @@ export function makeTableModule(): SimulationModule<TableConfig, TableState> {
     id: "database.relational_table_query",
     domain: "database",
     title: "Truy vấn bảng dữ liệu",
-    interactionMode: "progressive",
+    /* W4B-4B — `progressive` → `hybrid`. Bài này nay có CẢ HAI: một dòng thời
+       gian giải thích cách hệ trả lời, và một câu truy vấn học sinh đổi được
+       bất cứ lúc nào ngay trên sân khấu. Đó đúng nghĩa `hybrid` mà kho mã đã
+       dùng cho `generic.rule_scene`; giữ `progressive` là khai thiếu năng lực,
+       và guard trải nghiệm bắt đúng chỗ đó. */
+    interactionMode: "hybrid",
     supportedVisualModes: ["2d"],
     renderers: { "2d": TableWorkspace },
     validateConfig: validateTableConfig,
     init: (config) => ({ config, ...runTableQuery(config), cursor: 0 }),
-    apply: (state) => state,
+
+    /* W4B-4B — đổi truy vấn ⇒ TÍNH LẠI bằng chính `runTableQuery`.
+     *
+     * Renderer KHÔNG được tự lọc/sắp/chiếu: mọi thứ nó vẽ đều đọc từ state do
+     * hàm này trả về. `cursor: 0` vì trace cũ mô tả một câu truy vấn KHÁC — giữ
+     * lại con trỏ cũ là để học sinh đứng ở "bước 3 của câu hỏi trước". */
+    apply: (state, action) => {
+      if (action.type !== "set_param") return state;
+      const next = withQueryParam(state.config, action.name, action.value);
+      if (!next) return state; // ngoài miền ⇒ fail-closed, không sửa liều
+      return { config: next, ...runTableQuery(next), cursor: 0 };
+    },
     timeline: {
       stepCount: (state) => state.steps.length,
       currentStep: (state) => state.cursor,

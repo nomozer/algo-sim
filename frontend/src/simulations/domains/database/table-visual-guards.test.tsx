@@ -55,9 +55,18 @@ describe("guard 1 — kết quả không lộ ở bước 0", () => {
   it("hàng kết quả sau sắp xếp không hiện thứ tự cuối trước bước sắp xếp", () => {
     const c = cfg({ sort: { column: "diem", direction: "desc" } });
     // bước 0: thứ tự gốc (An trước Bình trước Chi)
-    const first = html(c, 0);
-    const posAn = first.indexOf("An");
-    const posChi = first.indexOf("Chi");
+    /* W4B-4B — QUÉT TRONG BẢNG, KHÔNG QUÉT CẢ TRANG.
+     *
+     * Bản cũ `indexOf` trên toàn bộ HTML để so thứ tự hai hàng. Nó vỡ ngay khi
+     * bất kỳ chữ nào KHÁC trên sân khấu chứa tên học sinh: thêm bộ điều khiển
+     * truy vấn với nhãn "Chiều sắp xếp" là guard đỏ, vì "Chi" khớp trước cả
+     * bảng. Guard đo THỨ TỰ HÀNG thì phải đọc trong <table>, nếu không nó đo
+     * nhầm thứ khác và đỏ vì lý do sai. */
+    const full = html(c, 0);
+    const table = full.slice(full.indexOf("<table"), full.indexOf("</table>"));
+    expect(table, "không tìm thấy bảng — phép dò hỏng?").toContain("<tbody");
+    const posAn = table.indexOf("An");
+    const posChi = table.indexOf("Chi");
     expect(posAn).toBeLessThan(posChi); // chưa sắp: An (8.5) vẫn trước Chi (9.0)
   });
 });

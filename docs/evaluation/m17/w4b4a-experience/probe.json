@@ -1,5 +1,5 @@
 {
-  "when": "2026-08-12T14:14:15.974Z",
+  "when": "2026-08-12T14:33:06.352Z",
   "rows": [
     {
       "target": "algorithm.binary_search",
@@ -172,11 +172,11 @@
     {
       "target": "database.relational_table_query",
       "domain": "database",
-      "interactionMode": "progressive",
+      "interactionMode": "hybrid",
       "steps": 19,
-      "manipulable": false,
-      "actionsTried": 0,
-      "actionsThatChanged": 0,
+      "manipulable": true,
+      "actionsTried": 2,
+      "actionsThatChanged": 2,
       "declaresExplore": false,
       "declaresPredict": false,
       "presentsCommitment": false
