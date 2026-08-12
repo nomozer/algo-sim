@@ -924,6 +924,10 @@ export function makeTableModule(): SimulationModule<TableConfig, TableState> {
       };
     },
 
+    /* W4B-4D — mô hình chạy config NÀO ngay lúc này; shell so với bản đã
+       validate để nói ra khi học sinh đã kéo mô hình rời khỏi đề bài. */
+    currentConfig: (state) => state.config,
+
     getExplainContext: (state) => ({
       simulation: "database.relational_table_query",
       columns: state.config.schema.map((c) => `${c.name}:${c.type}`),

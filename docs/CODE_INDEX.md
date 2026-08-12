@@ -1021,6 +1021,20 @@ khi một vùng RỖNG hoặc hai hành động TRÙNG cột — **tất cả-ho
 vùng nửa nút là hai bề mặt cam kết. `SceneRegion` chỉ mang `id`/`label`/`indices`
 (không đáp án). Tests: `scene-interaction-w4b2i.test.tsx`.
 
+### `simulations/domains/algorithm/condition-param.ts`
+W4B-4D — MIỀN ĐÓNG của ĐIỀU KIỆN, cho hai bài có điều kiện (`count_if`,
+`sum_if`). `withConditionParam` nhận đúng hai tên (`condition.op`,
+`condition.value`), trả config MỚI hoặc `null`; `thresholdRange` chốt ngưỡng
+trong khoảng giá trị của CHÍNH dãy (ngoài khoảng thì kết quả bão hoà và mọi lần
+kéo tiếp cho cùng một đáp số). Không chuỗi biểu thức, không AND/OR.
+
+Vì sao có: `interaction-policy` khai hai bài này `mode: "hidden"` — kéo là hoán
+vị, mà tổng/đếm bất biến theo hoán vị, nên kéo ở đó là trang trí. Kết luận ấy
+vẫn đúng, nhưng nó bỏ hai bài lại với đúng một việc là cam kết từng bước, tức
+chỉ hỏi được câu BÊN TRONG một điều kiện đứng yên. Đổi ngưỡng hỏi câu còn lại.
+Bất biến (kéo vẫn tắt · hoán vị vẫn không đổi kết quả · đổi ngưỡng thì đổi) khoá
+ở `explore-ownership-w4b3a.test.ts`.
+
 ### `simulations/domains/algorithm/interaction-policy.ts` · Change impact: offline
 M9-S1 — chính sách what-if theo cơ chế (hết "một swap cho cả 8 bài"). Exports:
 `whatIfPolicyOf`, `WhatIfPolicy`, `WhatIfMode` (free: bubble/insertion/selection — `insertion_sort` GIỮ `free` dù đã gác cổng: kéo vẫn là cơ chế đang học, chỉ đổi chỗ đặt · framed:

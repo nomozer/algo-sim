@@ -342,6 +342,10 @@ export function makeBaseConvModule(): SimulationModule<BaseConvConfig, BaseConvS
       goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step) }),
     },
 
+    /* W4B-4D — mô hình chạy config NÀO ngay lúc này; shell so với bản đã
+       validate để nói ra khi học sinh đã kéo mô hình rời khỏi đề bài. */
+    currentConfig: (state) => state.config,
+
     getExplainContext: (state) => {
       const at = clampCursor(state, state.cursor);
       return {

@@ -5,6 +5,9 @@ import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
 import { offlineCatalog } from "../data/offline-catalog";
 import { challengeEntry, exploreEntry } from "../components/SimulationWorkspace";
+import { thresholdRange } from "./domains/algorithm/condition-param";
+import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
+import { activeTrace, type AlgorithmConfig, type AlgorithmSimState } from "./domains/algorithm/model";
 import { useAppStore } from "../state/store";
 
 /**
@@ -41,6 +44,17 @@ const read = (rel: string) =>
   readFileSync(new URL(rel, import.meta.url), "utf-8")
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/^\s*\/\/.*$/gm, "");
+
+/** Câu KẾT QUẢ do engine phát ở bước cuối — thứ học sinh đọc được là "đáp số". */
+function finalResult(s: AlgorithmSimState): string {
+  const trace = activeTrace(s);
+  for (let i = trace.steps.length - 1; i >= 0; i--) {
+    for (const ev of trace.steps[i].events) {
+      if (ev.type === "done") return ev.result;
+    }
+  }
+  throw new Error("trace không có bước done");
+}
 
 beforeEach(() => {
   if (listSimulations().length === 0) registerAllSimulations();
@@ -96,17 +110,61 @@ describe("W4B-3A §2 · Khám phá ≠ Thử thách", () => {
     }
   });
 
-  it("bài mà kéo là TRANG TRÍ thì KHÔNG có lối vào Khám phá (không mời hão)", () => {
-    /* `sum_if`/`count_if` khai `mode: "hidden"` — tổng/đếm bất biến theo thứ tự
-       duyệt nên đổi chỗ không nhắm cơ chế nào (COVERAGE §2.6). */
+  /**
+   * W4B-4D — CÙNG BẤT BIẾN, KHOÁ THEO TÍNH CHẤT THAY VÌ THEO KẾT LUẬN CŨ.
+   *
+   * Bản trước khoá thẳng "`sum_if`/`count_if` phải KHÔNG có lối vào Khám phá".
+   * Kết luận ấy đúng ở thời điểm viết vì lối vào duy nhất là kéo-thả, mà kéo là
+   * một HOÁN VỊ còn tổng/đếm bất biến theo hoán vị. Nhưng "kéo vô nghĩa" không
+   * kéo theo "không có gì để khám phá": hai bài này bị bỏ lại với đúng một việc
+   * là cam kết từng bước, tức chỉ hỏi được câu BÊN TRONG một điều kiện đứng yên.
+   *
+   * Bất biến thật là: MỘT LỐI VÀO KHÁM PHÁ PHẢI DẪN TỚI THAO TÁC CÓ HỆ QUẢ.
+   * Nay khoá đúng câu đó, và khoá cả tiền đề của kết luận cũ (kéo vẫn tắt, và
+   * hoán vị vẫn không đổi kết quả) — nếu ngày nào tiền đề sai thì test đỏ chứ
+   * không im lặng.
+   */
+  it("lối vào Khám phá phải dẫn tới thao tác CÓ HỆ QUẢ, không phải cánh cửa trống", () => {
     for (const id of ["algorithm.sum_if", "algorithm.count_if"]) {
       const e = offlineCatalog().find((x) => x.simId === id)!;
       const mod = getSimulation(id)!;
       const r = mod.validateConfig((e.envelope as { config: unknown }).config);
       expect(r.ok).toBe(true);
       if (!r.ok) continue;
-      expect(exploreEntry(mod, mod.init(r.config), r.config), `${id}: mời một thao tác trang trí`)
-        .toBeNull();
+      const cfg = r.config as AlgorithmConfig;
+      const s0 = mod.init(cfg) as AlgorithmSimState;
+
+      expect(exploreEntry(mod, s0, cfg), `${id}: không còn lối vào Khám phá`).not.toBeNull();
+
+      /* TIỀN ĐỀ 1 — kéo vẫn là trang trí ở hai bài này, nên `mode` phải giữ
+         `hidden`; `ui.tsx` đọc đúng cờ này để KHÔNG bật kéo khi mở Khám phá. */
+      expect(whatIfPolicyOf(cfg.algorithm_id).mode, `${id}: kéo được bật lại`).toBe("hidden");
+
+      /* TIỀN ĐỀ 2 — và đây là chỗ đo, không phải chỗ tin: đổi chỗ hai phần tử
+         KHÔNG đổi kết quả cuối. Nếu một ngày nó đổi thì lý do "kéo là trang
+         trí" đã hết đúng và phải xét lại chính sách. */
+      const swapped = mod.apply!(s0, { type: "whatif_swap", i: 0, j: 2 }) as AlgorithmSimState;
+      expect(finalResult(swapped), `${id}: hoán vị lại đổi kết quả`).toBe(finalResult(s0));
+
+      /* KẾT LUẬN — cửa dẫn tới đổi ĐIỀU KIỆN, và điều kiện thì đổi kết quả. */
+      const range = thresholdRange(cfg.data.array)!;
+      const other = cfg.data.condition!.value === range.max ? range.min : range.max;
+      const s1 = mod.apply!(s0, { type: "set_param", name: "condition.value", value: other }) as AlgorithmSimState;
+      expect(s1, `${id}: đổi ngưỡng mà state không đổi`).not.toBe(s0);
+      expect(finalResult(s1), `${id}: đổi ngưỡng mà kết quả y nguyên`).not.toBe(finalResult(s0));
+    }
+  });
+
+  it("bài KHÔNG có điều kiện thì `set_param` không mở được cửa hậu nào", () => {
+    /* Đối chứng: nếu `set_param` nhận bừa thì mọi bài đều "thao tác được" và
+       phép đo trải nghiệm mất khả năng phân biệt. */
+    const e = offlineCatalog().find((x) => x.simId === "algorithm.bubble_sort")!;
+    const mod = getSimulation("algorithm.bubble_sort")!;
+    const r = mod.validateConfig((e.envelope as { config: unknown }).config);
+    if (!r.ok) throw new Error(r.error);
+    const s0 = mod.init(r.config);
+    for (const name of ["condition.value", "condition.op", "array", "__proto__"]) {
+      expect(mod.apply!(s0, { type: "set_param", name, value: 5 }), name).toBe(s0);
     }
   });
 });

@@ -3,6 +3,7 @@ import { writeFileSync } from "node:fs";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
 import { offlineCatalog } from "../data/offline-catalog";
+import { exploreEntry } from "../components/SimulationWorkspace";
 import type { SimAction, SimulationModule } from "./types";
 
 /**
@@ -94,7 +95,20 @@ const DOMAIN_ACTIONS: Record<string, (state: unknown) => SimAction[]> = {
     { type: "set_param", name: "fontSize", value: 32 } as SimAction,
     { type: "set_param", name: "backgroundColor", value: "#fde68a" } as SimAction,
   ],
-  algorithm: () => [{ type: "whatif_swap", i: 0, j: 1 } as SimAction],
+  /* W4B-4D: `count_if`/`sum_if` nay đổi được CHÍNH ĐIỀU KIỆN. Ngưỡng lấy từ
+     dãy của bài — viết cứng một con số thì nó rơi ngoài miền ở bài khác và phép
+     đo lại báo "không thao tác được" vì lý do sai. */
+  algorithm: (s) => {
+    const st = s as { config?: { data?: { array?: number[]; condition?: unknown } } };
+    const arr = st.config?.data?.array ?? [];
+    const acts: SimAction[] = [{ type: "whatif_swap", i: 0, j: 1 } as SimAction];
+    if (st.config?.data?.condition && arr.length) {
+      acts.push({ type: "set_param", name: "condition.op", value: "<" } as SimAction);
+      acts.push({ type: "set_param", name: "condition.value", value: Math.max(...arr) } as SimAction);
+      acts.push({ type: "set_param", name: "condition.value", value: Math.min(...arr) } as SimAction);
+    }
+    return acts;
+  },
   generic: (s) => {
     const st = s as { base?: Record<string, unknown> };
     return Object.entries(st.base ?? {})
@@ -123,6 +137,17 @@ interface Row {
   actionsTried: number;
   actionsThatChanged: number;
   declaresExplore: boolean;
+  /**
+   * W4B-4D — CÁNH CỬA THẬT, khác hẳn `declaresExplore`.
+   *
+   * `declaresExplore` chỉ nói module có KHAI năng lực `explore` hay không, mà
+   * mọi module thuật toán đều khai chung một khối — nên nó bằng `true` kể cả ở
+   * bài mà `explore.entry()` trả `null` và học sinh KHÔNG hề thấy cửa nào. Đo
+   * bằng cờ đó là đo lời khai, không đo trải nghiệm; nó đã che đúng một dương
+   * tính giả: `count_if`/`sum_if` "thao tác được" bằng kéo-thả trong khi chính
+   * sách của chúng tắt kéo, nên không lối nào phát nổi action ấy.
+   */
+  hasExploreEntry: boolean;
   declaresPredict: boolean;
   presentsCommitment: boolean;
 }
@@ -166,6 +191,7 @@ beforeAll(() => {
       actionsTried: actions.length,
       actionsThatChanged: changed,
       declaresExplore: !!mod.explore,
+      hasExploreEntry: exploreEntry(mod, state, r.config) !== null,
       declaresPredict: !!mod.predict,
       presentsCommitment: commitment > 0,
     });
@@ -205,20 +231,25 @@ describe("W4B-4A · câu hỏi nghiệm thu chạy trên toàn danh mục", () =
     expect(rows.some((r) => !r.manipulable), "mọi target đều thao tác được?").toBe(true);
   });
 
-  it("mọi target khai `explore` đều PHẢI đổi được state qua `apply`", () => {
-    /* Đây là chỗ bắt "khai báo không kéo theo hành vi": một module nói nó có
-       chế độ Khám phá mà không action nào đổi được mô hình thì lối vào ấy là
-       lời hứa suông. */
-    const liars = rows.filter((r) => r.declaresExplore && !r.manipulable);
-    expect(liars.map((r) => r.target), "khai Khám phá nhưng không thao tác được").toEqual([]);
+  it("mọi target MỞ ĐƯỢC cửa Khám phá đều PHẢI đổi được state qua `apply`", () => {
+    /* Đây là chỗ bắt "khai báo không kéo theo hành vi": một module mời vào chế
+       độ Khám phá mà không action nào đổi được mô hình thì lời mời là hứa suông. */
+    const liars = rows.filter((r) => r.hasExploreEntry && !r.manipulable);
+    expect(liars.map((r) => r.target), "mời Khám phá nhưng không thao tác được").toEqual([]);
   });
 
   it("mọi target ĐỔI ĐƯỢC mô hình đều phải bày lối vào (không giấu năng lực)", () => {
-    /* Chiều ngược lại: thao tác được mà không khai `explore` thì học sinh không
-       có đường nào biết. Ngoại lệ: bài `exploratory`/`hybrid` — cả sân khấu LÀ
-       chỗ thao tác, luôn mở, không cần cổng. */
+    /* Chiều ngược lại: thao tác được mà không có CỬA thì học sinh không có đường
+       nào biết. Ngoại lệ: bài `exploratory`/`hybrid` — cả sân khấu LÀ chỗ thao
+       tác, luôn mở, không cần cổng.
+
+       W4B-4D — VẾ NÀY TỪNG ĐO NHẦM. Nó đọc `declaresExplore`, mà mọi module
+       thuật toán khai chung một khối `explore`, nên cờ ấy luôn `true` kể cả khi
+       `entry()` trả `null`. `count_if`/`sum_if` vì thế đi lọt: engine nhận
+       `whatif_swap` nên chúng tính là "thao tác được", trong khi chính sách của
+       chúng tắt kéo và không cửa nào phát nổi action đó. Đọc CỬA thì hết lọt. */
     const hidden = rows.filter(
-      (r) => r.manipulable && !r.declaresExplore
+      (r) => r.manipulable && !r.hasExploreEntry
         && r.interactionMode !== "exploratory" && r.interactionMode !== "hybrid",
     );
     expect(hidden.map((r) => r.target), "thao tác được nhưng không có lối vào").toEqual([]);
@@ -227,7 +258,7 @@ describe("W4B-4A · câu hỏi nghiệm thu chạy trên toàn danh mục", () =
   it("KHÔNG target nào chỉ-có-timeline mà bị khai là thao tác trực tiếp", () => {
     /* `reveal_sequence` hay bất kỳ chuỗi bước nào KHÔNG phải thao tác. Bắt đúng
        ca đã ship một lần: bài HTML "từng bước" ở `generic.rule_scene`. */
-    const fake = rows.filter((r) => !r.manipulable && r.declaresExplore);
+    const fake = rows.filter((r) => !r.manipulable && r.hasExploreEntry);
     expect(fake.map((r) => r.target), "chuỗi bước bị tính là thao tác").toEqual([]);
   });
 
@@ -236,7 +267,7 @@ describe("W4B-4A · câu hỏi nghiệm thu chạy trên toàn danh mục", () =
        không đổi được mô hình thì không phải mô hình tương tác. */
     for (const r of rows) {
       if (r.presentsCommitment && !r.manipulable) {
-        expect(r.declaresExplore, `${r.target}: cam kết bị bày như Khám phá`).toBe(false);
+        expect(r.hasExploreEntry, `${r.target}: cam kết bị bày như Khám phá`).toBe(false);
       }
     }
   });

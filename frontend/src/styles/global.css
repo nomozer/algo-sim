@@ -3056,6 +3056,21 @@ html {
   color: var(--ink-muted);
 }
 
+/* W4B-4D — NHÃN "ĐÃ ĐỔI SO VỚI ĐỀ BÀI".
+   Đứng cạnh dòng phụ của tiêu đề, không phải một băng cảnh báo: mô hình lệch
+   khỏi đề là chuyện BÌNH THƯỜNG khi đang khám phá, chỉ cần nói ra để con số
+   trên màn hình không bị đọc nhầm thành đáp số của bài gốc. */
+.spec-drift {
+  align-self: start;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-orange);
+  color: var(--accent-orange);
+  background: var(--surface);
+  font-size: 12px; font-weight: 600;
+  white-space: nowrap;
+}
+
 /* ── MÔ HÌNH CSS CÓ RÀNG BUỘC (W4B-2Z) ─────────────────────────────────────
    Bố cục CHIA ĐÔI: điều khiển trái, XEM TRƯỚC phải chiếm phần lớn bề ngang.
    Cơ chế của bài là quan hệ "giá trị em đặt ↔ kết quả nhìn thấy", nên hai vế

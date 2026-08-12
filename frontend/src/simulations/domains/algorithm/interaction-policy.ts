@@ -243,6 +243,18 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     mode: "hidden",
     rationale:
       "Tổng có điều kiện bất biến theo thứ tự duyệt (trừ trường hợp biên vắt qua ranh giới đã-duyệt, quá khó thấy để tự khám phá) — swap không nhắm cơ chế tích luỹ; cơ chế được nhắm bằng DỰ ĐOÁN cộng-hay-không.",
+    /* W4B-4D — KHÁM PHÁ Ở ĐÂY KHÔNG PHẢI KÉO, MÀ LÀ ĐỔI ĐIỀU KIỆN.
+     *
+     * `mode` GIỮ `hidden` và điều đó vẫn đúng từng chữ: kéo là hoán vị, mà tổng
+     * bất biến theo hoán vị. Nhưng "kéo vô nghĩa" không kéo theo "không có gì
+     * để khám phá" — hai bài này bị bỏ lại với đúng một việc là cam kết từng
+     * bước, tức chỉ trả lời được câu hỏi BÊN TRONG một điều kiện đứng yên.
+     *
+     * Thứ tự kiểm trong `ui.tsx` đặt `hidden` TRƯỚC `exploreOpen`
+     * (`dragAllowedByPolicy = mode === "hidden" ? false : exploreOpen`), nên mở
+     * Khám phá ở đây KHÔNG bật kéo — cửa này chở đúng một việc: đổi ngưỡng. */
+    exploreLabel: "Khám phá: đổi điều kiện lọc",
+    hint: "Đổi phép so sánh hoặc ngưỡng — tổng được tính lại ngay trên dãy cũ.",
     /* W4B-2C. `mode` GIỮ `hidden` — kéo ở bài này vẫn là trang trí, và thứ tự
        kiểm trong `ui.tsx` đặt `hidden` TRƯỚC cổng nên bật cờ này KHÔNG bật kéo.
        Cổng ở đây vì thế chở đúng MỘT việc: cam kết. */
@@ -257,6 +269,11 @@ const POLICIES: Record<AlgorithmId, WhatIfPolicy> = {
     mode: "hidden",
     rationale:
       "Như sum_if: biến đếm bất biến theo thứ tự duyệt; swap là trang trí. Cơ chế đếm được nhắm bằng dự đoán tăng-hay-giữ-nguyên.",
+    /* W4B-4D — như `sum_if`, cùng một lý do: cam kết hỏi "phần tử này có vào
+       nhóm không", còn đổi ngưỡng hỏi "chính điều kiện ấy chọn ra những ai" —
+       hai câu khác nhau về cùng một cơ chế. */
+    exploreLabel: "Khám phá: đổi điều kiện đếm",
+    hint: "Đổi phép so sánh hoặc ngưỡng — số đếm được tính lại ngay trên dãy cũ.",
     /* W4B-2C — như sum_if: `hidden` giữ nguyên, cổng chỉ gác cam kết. */
     experimentGated: true,
     challengeLabel: "Thí nghiệm: tự đếm phần tử",

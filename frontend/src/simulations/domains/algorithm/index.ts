@@ -9,6 +9,7 @@ import {
   narrationWithoutPrompt,
   processLeadOf,
 } from "./decision";
+import { hasCondition, withConditionParam } from "./condition-param";
 import { challengeEntryOf, exploreEntryOf, whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
@@ -142,6 +143,15 @@ export function makeAlgorithmModule(
             cursor: state.cursor + 1,
           };
         }
+        /* W4B-4D — ĐỔI ĐIỀU KIỆN rồi để engine chạy lại từ đầu.
+           Khác `whatif_swap` ở chỗ đây KHÔNG đẻ nhánh: đổi điều kiện là đổi
+           chính bài toán, nên không có "dòng chính" nào để quay về. Con trỏ về
+           0 vì trace cũ nói về một câu hỏi khác. */
+        case "set_param": {
+          const next = withConditionParam(state.config, action.name, action.value);
+          if (!next) return state;
+          return { config: next, trace: runAlgorithm(next), branch: null, cursor: 0 };
+        }
         case "exit_branch":
           return state.branch ? { ...state, branch: null, cursor: state.branch.fromStep } : state;
         default:
@@ -216,8 +226,12 @@ export function makeAlgorithmModule(
       entry: (s, config) =>
         exploreEntryOf(whatIfPolicyOf((config as AlgorithmConfig).algorithm_id), {
           /* Hết bài thì không còn gì để chạy tiếp trên nhánh — mời kéo lúc đó là
-             mời một thao tác không sinh hệ quả nào. */
-          canManipulate: s.cursor < activeTrace(s).steps.length - 1,
+             mời một thao tác không sinh hệ quả nào.
+             W4B-4D: bài có ĐIỀU KIỆN thì mở được ở MỌI bước — đổi ngưỡng chạy
+             lại cả bài từ đầu chứ không rẽ nhánh từ con trỏ, nên "đã tới bước
+             cuối" không phải lý do đóng cửa. */
+          canManipulate: hasCondition(config as AlgorithmConfig)
+            || s.cursor < activeTrace(s).steps.length - 1,
         }),
     },
 
@@ -283,6 +297,12 @@ export function makeAlgorithmModule(
     },
 
     // Yêu cầu #4: snapshot JSON sạch cho /api/explain — trạng thái THẬT của engine
+    /* W4B-4D — chỉ `count_if`/`sum_if` đổi được config (qua điều kiện), nhưng
+       khai chung cả họ là đúng: hàm trả `state.config`, và ở bài không đổi được
+       thì nó luôn bằng bản gốc nên không nhãn nào hiện. Khai theo từng bài sẽ
+       là một danh sách phải nhớ cập nhật. */
+    currentConfig: (state) => state.config,
+
     getExplainContext: (state, config) => {
       const t = activeTrace(state);
       const step = t.steps[clampStep(state, state.cursor)];

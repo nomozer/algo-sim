@@ -399,6 +399,24 @@ export interface SimulationModule<C = unknown, S = unknown> {
   narrate?(state: S, config: C): Narration | null;
 
   /**
+   * W4B-4D — CẤU HÌNH MÀ MÔ HÌNH ĐANG CHẠY, để shell biết nó đã RỜI KHỎI ĐỀ.
+   *
+   * Từ khi các bài cho đổi tham số có ràng buộc, tiêu đề của đề và mô hình trên
+   * màn hình có thể nói hai điều khác nhau: đề viết "đếm học sinh từ 8,0 trở
+   * lên" trong khi học sinh vừa kéo ngưỡng về 6, và con số cuối cùng đọc như đáp
+   * số của bài gốc. Đó không phải chuyện thẩm mỹ — màn hình đang khẳng định một
+   * điều sai.
+   *
+   * Shell so cái này với `active.config` (bản đã validate, BẤT BIẾN) và nói ra
+   * khi hai bên lệch. Module KHÔNG khai ⇒ không so, không nhãn: bài không đổi
+   * được tham số thì không bao giờ lệch được.
+   *
+   * Trả về cái gì cũng được miễn SO SÁNH ĐƯỢC bằng giá trị (shell dùng JSON) và
+   * cùng dạng với `active.config` — thường chỉ là `state.config`.
+   */
+  currentConfig?(state: S): unknown;
+
+  /**
    * Yêu cầu #4: snapshot JSON sạch (serializable, nhỏ) mô tả trạng thái thật
    * để gửi /api/explain. KHÔNG BAO GIỜ gửi Zustand/React/Three.js object.
    */

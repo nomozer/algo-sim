@@ -573,6 +573,12 @@ export function makeCharEncodingModule(): SimulationModule<CharEncodingSpec, Cha
       return { text: step.narration };
     },
 
+    /* W4B-4D — mô hình chạy config NÀO ngay lúc này; shell so với bản đã
+       validate để nói ra khi học sinh đã kéo mô hình rời khỏi đề bài. */
+    /* State ở đây gọi nó là `spec`, không phải `config` — cùng vai trò, khác
+       tên, nên khai tay chứ đừng suy từ miền khác. */
+    currentConfig: (state) => state.spec,
+
     getExplainContext: (state) => {
       const cursor = clampCursor(state, state.cursor);
       return {

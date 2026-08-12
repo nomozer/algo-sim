@@ -110,6 +110,11 @@ export function makeWebStyleModule(): SimulationModule<WebConfig, WebState> {
         : "Bấm thẳng vào một phần của trang để chọn nó, rồi đổi thuộc tính hoặc dời nó lên xuống.",
     }),
 
+    /* W4B-4D — web giữ kiểu trong STATE chứ không trong config, nên phải dựng
+       lại hình dạng config từ state để so được. Ba trường, đúng ba thứ học sinh
+       đổi: nội dung không đổi được, nên nó lấy thẳng từ state. */
+    currentConfig: (state) => ({ style: state.style }),
+
     getExplainContext: (state) => ({
       simulation_id: "web.style_model",
       heading: state.heading,

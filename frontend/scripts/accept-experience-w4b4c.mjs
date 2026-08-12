@@ -22,18 +22,26 @@ const OUT = resolve(argOf("--out", "../docs/evaluation/m17/w4b4c-experience/acce
 mkdirSync(dirname(OUT), { recursive: true });
 const VIEWPORTS = [[1920, 1080], [1536, 864], [1366, 768], [768, 900]];
 
-/** target → [action, trường trạng thái phải đổi] */
+/**
+ * target → [action, trường trạng thái phải đổi, có làm LỆCH ĐỀ không]
+ *
+ * Vế thứ ba KHÔNG suy được từ "có đổi state không". `logic.boolean_dag` đổi
+ * `values` khi bật/tắt đầu vào, nhưng tiêu đề của nó tả CÁI MẠCH chứ không tả
+ * giá trị đầu vào — bật một cảm biến không mâu thuẫn với đề, nên nhãn lệch-đề
+ * phải IM. Bản đầu của bản kiểm này bắt mọi target phải bật nhãn và báo lỗi
+ * đúng ở đó; sửa phép đo, không sửa sản phẩm.
+ */
 const CASES = [
-  ["binary.base_conversion", { type: "set_param", name: "targetBase", value: 8 }, "result"],
-  ["binary.character_encoding", { type: "set_param", name: "text", value: "B" }, "meta"],
-  ["network.graph_traversal", { type: "set_param", name: "variant", value: "dfs" }, "visitedOrder"],
-  ["tree.traversal", { type: "set_param", name: "variant", value: "postorder" }, "visitedOrder"],
-  ["database.relational_table_query", { type: "set_param", name: "sort.direction", value: "asc" }, "resultRows"],
+  ["binary.base_conversion", { type: "set_param", name: "targetBase", value: 8 }, "result", true],
+  ["binary.character_encoding", { type: "set_param", name: "text", value: "B" }, "meta", true],
+  ["network.graph_traversal", { type: "set_param", name: "variant", value: "dfs" }, "visitedOrder", true],
+  ["tree.traversal", { type: "set_param", name: "variant", value: "postorder" }, "visitedOrder", true],
+  ["database.relational_table_query", { type: "set_param", name: "sort.direction", value: "asc" }, "resultRows", true],
   /* `@firstInput` = id đầu vào ĐẦU TIÊN của mạch, giải ra trong trang.
      Viết cứng "A" thì bản kiểm này gắn với MỘT mẫu cụ thể: đổi mẫu sang mạch
      N/G/K là nó lặng lẽ phát một toggle không trúng ai và báo "không tính lại"
      — hỏng theo hướng báo động giả, đúng loại làm người ta tắt guard đi. */
-  ["logic.boolean_dag", { type: "toggle", target: "@firstInput" }, "values"],
+  ["logic.boolean_dag", { type: "toggle", target: "@firstInput" }, "values", false],
 ];
 
 const CHROME = [
@@ -79,7 +87,7 @@ for (const [w, h] of VIEWPORTS) {
   await ev(`(async()=>{${Object.values(u).map((x) => `await import(${JSON.stringify(x)});`).join("")}return 1})()`);
 
   console.log(`\n━━ ${w}×${h}`);
-  for (const [sim, action, field] of CASES) {
+  for (const [sim, action, field, driftExpected] of CASES) {
     const r = await evj(`(async()=>{
       const s=await import(${JSON.stringify(u.store)});const c=await import(${JSON.stringify(u.catalog)});
       const rg=await import(${JSON.stringify(u.sims)});const reg=await import(${JSON.stringify(u.registry)});
@@ -99,18 +107,32 @@ for (const [w, h] of VIEWPORTS) {
         if(!ins||!ins.length) return JSON.stringify({ok:false,why:'mạch không có đầu vào'});
         act.target=ins[0].id;
       }
+      /* W4B-4D — nhãn lệch-đề phải TẮT trước và BẬT sau. Đo trong DOM thật vì
+         SSR chỉ đi qua trạng thái đầu của store, nên vitest không chạm tới được.
+         PHẢI chờ React vẽ lại sau khi nạp bài: đọc ngay thì thấy nhãn CÒN SÓT
+         của bài trước và mọi target từ cái thứ hai trở đi đều "kêu oan". */
+      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+      const driftBefore=!!document.querySelector('.spec-drift');
       s.useAppStore.getState().dispatch(act);
       const st1=s.useAppStore.getState();
       const after=JSON.stringify(st1.active.state[${JSON.stringify(field)}]);
       const cur1=mod.timeline?mod.timeline.currentStep(st1.active.state):0;
+      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+      const driftAfter=!!document.querySelector('.spec-drift');
       return JSON.stringify({ok:true, changed: before!==after, sameRef: st0.active.state===st1.active.state,
-        cursorMoved: cur1!==cur0, playing: st1.playing===true, moduleId: st0.active.moduleId});
+        cursorMoved: cur1!==cur0, playing: st1.playing===true, moduleId: st0.active.moduleId,
+        driftBefore, driftAfter});
     })()`);
     if (!r.ok) { failures.push(`${w}·${sim}: ${r.why}`); console.error(`  ✗ ${sim}: ${r.why}`); continue; }
     if (r.moduleId !== sim) { failures.push(`${w}·${sim}: nạp nhầm ${r.moduleId}`); continue; }
     if (!r.changed) { failures.push(`${w}·${sim}: đổi tham số mà ${field} không đổi`); console.error(`  ✗ ${sim}: không tính lại`); }
     if (r.sameRef) { failures.push(`${w}·${sim}: state không đổi tham chiếu`); }
     if (r.playing) { failures.push(`${w}·${sim}: phải chạy Play mới đổi`); }
+    /* Nhãn lệch-đề: im lúc vừa mở, lên tiếng sau khi đổi. Vế TRƯỚC quan trọng
+       ngang vế SAU — một nhãn kêu suốt sẽ bị học sinh học cách phớt lờ. */
+    if (r.driftBefore) { failures.push(`${w}·${sim}: nhãn lệch-đề kêu oan lúc vừa mở`); }
+    if (driftExpected && !r.driftAfter) { failures.push(`${w}·${sim}: đã đổi tham số mà màn hình không nói gì`); }
+    if (!driftExpected && r.driftAfter) { failures.push(`${w}·${sim}: nhãn lệch-đề bật cho thao tác KHÔNG rời đề`); }
     rows.push({ viewport: `${w}x${h}`, target: sim, field, ...r });
     console.log(`  ${sim.padEnd(34)} tính lại=${r.changed ? "CÓ" : "KHÔNG"}  cần Play=${r.playing ? "CÓ" : "không"}`);
   }

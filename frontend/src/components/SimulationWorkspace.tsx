@@ -213,6 +213,42 @@ export function exploreEntry<S>(
 }
 
 /**
+ * W4B-4D — MÔ HÌNH ĐÃ RỜI KHỎI ĐỀ CHƯA.
+ *
+ * Hàm THUẦN, tách khỏi JSX vì đúng lý do đã ghi ở `interaction-policy.ts`: luật
+ * chôn trong JSX là luật chỉ kiểm được bằng trình duyệt.
+ *
+ * So bằng GIÁ TRỊ (JSON) chứ không bằng tham chiếu: mọi `apply` đều dựng config
+ * mới, nên so tham chiếu sẽ báo "đã đổi" ngay ở thao tác đầu tiên kể cả khi học
+ * sinh vừa đặt lại đúng giá trị cũ. Module không khai `currentConfig` ⇒ `false`:
+ * bài không đổi được tham số thì không lệch được.
+ *
+ * So theo ĐÚNG CÁC KHOÁ module khai, không so cả khối. Lý do cụ thể: `web` giữ
+ * kiểu trong state chứ không trong config, nên nó phải dựng lại hình dạng config
+ * — và nó không giữ `notes` của đề. So cả khối thì đề nào có `notes` cũng bị
+ * báo "đã đổi" ngay khi vừa mở, tức nhãn kêu suốt và học sinh học cách phớt lờ
+ * nó. Khoá module không nhắc tới là khoá học sinh không đổi được.
+ */
+export function specDrift<S>(
+  mod: { currentConfig?: (state: S) => unknown },
+  state: S,
+  baseline: unknown,
+): boolean {
+  if (!mod.currentConfig) return false;
+  try {
+    const now = mod.currentConfig(state);
+    if (typeof now !== "object" || now === null || typeof baseline !== "object" || baseline === null) {
+      return JSON.stringify(now) !== JSON.stringify(baseline);
+    }
+    const base = baseline as Record<string, unknown>;
+    return Object.entries(now as Record<string, unknown>)
+      .some(([k, v]) => JSON.stringify(v) !== JSON.stringify(base[k]));
+  } catch {
+    return false; // config không serialize được ⇒ im lặng, không doạ học sinh
+  }
+}
+
+/**
  * Vùng trung tâm — host sân khấu mô phỏng (M2 #1). KHÔNG giả định simulation
  * là thuật toán (M2 #2): mọi thứ domain-specific render qua module.Workspace
  * lấy từ registry.
@@ -255,6 +291,9 @@ export function SimulationWorkspace() {
      `learnerFacingModes` trả rỗng ⇒ không công tắc nào được dựng. */
   const modes = learnerFacingModes(mod);
   const mode = effectiveVisualMode(mod, visualMode);
+  /* W4B-4D — mô hình đã rời khỏi đề chưa. So bằng GIÁ TRỊ với bản validate bất
+     biến; module không khai `currentConfig` thì không có gì để lệch. */
+  const driftedFromSpec = specDrift(mod, active.state, active.config);
   const Stage = rendererFor(mod, mode) as ComponentType<WorkspaceProps>;
   // M17-RC1 §E — nhãn miền hiển thị cho HỌC SINH, không phải id kỹ thuật.
   // "GENERIC" vô nghĩa với người học (audit trình duyệt bắt được); các miền
@@ -281,6 +320,17 @@ export function SimulationWorkspace() {
           {mod.title} · {MODE_LABEL[mod.interactionMode]} ·{" "}
           {mod.supportedVisualModes.join(" / ").toUpperCase()}
         </span>
+        {/* W4B-4D — KHI MÔ HÌNH ĐÃ RỜI KHỎI ĐỀ, PHẢI NÓI RA.
+            Tiêu đề bên trên là ĐỀ BÀI, không phải mô hình. Từ khi đổi được tham
+            số, hai thứ ấy tách nhau: đề viết "từ 8,0 trở lên" còn học sinh vừa
+            kéo ngưỡng về 6 — và con số cuối đọc như đáp số của bài gốc. Nhãn
+            này là chỗ DUY NHẤT nói ra chênh lệch đó, cho MỌI target, nên không
+            miền nào phải tự nhớ. */}
+        {driftedFromSpec && (
+          <span className="spec-drift" title="Bấm Đặt lại để quay về đúng đề bài.">
+            Đã đổi so với đề bài
+          </span>
+        )}
         {/* M8: toggle 2D/3D CHỈ khi module thật sự có ≥2 renderer — module 2D-only
             không thấy nút nào. Đổi mode = đổi component vẽ, engine state/timeline/
             prediction giữ nguyên. */}

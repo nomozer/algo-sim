@@ -20,6 +20,12 @@ import { SearchActionZone, SearchStateView } from "../../../components/SearchAct
 import { SortActionZone } from "../../../components/SortActionZone";
 import { useAppStore } from "../../../state/store";
 import {
+  CONDITION_OPS,
+  CONDITION_OP_LABEL,
+  hasCondition,
+  thresholdRange,
+} from "./condition-param";
+import {
   commitmentSurfaceKind,
   commitmentSurfaceVisible,
   whatIfDragAllowed,
@@ -439,6 +445,47 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {canDrag && policy.hint && !(commitZone && gated) && !(sort && prediction !== null) && (
         <span className="hint">{policy.hint}</span>
       )}
+
+      {/* W4B-4D — KHÁM PHÁ CỦA HỌ CÓ-ĐIỀU-KIỆN LÀ ĐỔI CHÍNH ĐIỀU KIỆN.
+          Chỉ dựng khi bài THẬT SỰ có điều kiện (`count_if`/`sum_if`), nên đây
+          không phải một khung tương tác dùng chung áp lên mọi bài. */}
+      {exploreOpen && hasCondition(config) && (
+        <ConditionBar config={config} busy={busy} dispatch={dispatch} />
+      )}
+    </div>
+  );
+}
+
+/**
+ * W4B-4D — THANH ĐIỀU KIỆN. Hai control, đúng hai thứ engine đọc: phép so sánh
+ * và ngưỡng. Không ô nhập biểu thức, không AND/OR — miền đóng nằm ở
+ * `condition-param.ts`, đây chỉ bày đúng miền đó ra.
+ */
+function ConditionBar({ config, busy, dispatch }: Pick<Props, "config" | "busy" | "dispatch">) {
+  const cond = config.data.condition!;
+  const range = thresholdRange(config.data.array);
+  if (!range) return null;
+  const set = (name: string, value: number | string) =>
+    dispatch({ type: "set_param", name, value });
+  return (
+    <div className="param-bar" role="group" aria-label="Đổi điều kiện lọc">
+      <label>
+        Phép so sánh
+        <select value={cond.op} disabled={busy}
+          onChange={(e) => set("condition.op", e.target.value)}>
+          {CONDITION_OPS.map((op) => (
+            <option key={op} value={op}>{CONDITION_OP_LABEL[op]}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        Ngưỡng <strong>{fmt(cond.value)}</strong>
+        {/* Miền = khoảng giá trị của CHÍNH DÃY: ngoài khoảng thì kết quả bão hoà
+            và mọi lần kéo tiếp đều cho một câu trả lời. */}
+        <input type="range" min={range.min} max={range.max} step={1} value={cond.value}
+          disabled={busy} aria-label="Ngưỡng của điều kiện"
+          onChange={(e) => set("condition.value", Number(e.target.value))} />
+      </label>
     </div>
   );
 }

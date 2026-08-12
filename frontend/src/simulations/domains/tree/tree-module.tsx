@@ -586,6 +586,10 @@ export function makeTreeTraversalModule(): SimulationModule<TreeTraversalConfig,
     // (SHELL-N) chữ thuyết minh; khe do shell dựng
     narrate: (state) => ({ text: state.steps[clampCursor(state, state.cursor)].narration }),
 
+    /* W4B-4D — mô hình chạy config NÀO ngay lúc này; shell so với bản đã
+       validate để nói ra khi học sinh đã kéo mô hình rời khỏi đề bài. */
+    currentConfig: (state) => state.config,
+
     getExplainContext: (state) => {
       const at = clampCursor(state, state.cursor);
       const step = state.steps[at];
