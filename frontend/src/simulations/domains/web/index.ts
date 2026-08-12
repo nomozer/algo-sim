@@ -1,8 +1,8 @@
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
-import { applyStyleChange, cssTextOf, isModified } from "./apply";
+import { applyStyleChange, cssTextOf, htmlTextOf, isModified, moveBlock, selectNode } from "./apply";
 import { CONTENT_MAX_LENGTH, DEFAULT_STYLE, PARAGRAPH_MAX_LENGTH } from "./props";
-import type { WebConfig, WebState, WebStyle } from "./model";
+import { SELECTOR_OF, type WebBlock, type WebConfig, type WebState, type WebStyle } from "./model";
 import { WebInspector, WebWorkspace } from "./ui";
 
 /**
@@ -61,21 +61,43 @@ export function makeWebStyleModule(): SimulationModule<WebConfig, WebState> {
 
     validateConfig: validateWebConfig,
 
-    init: (config) => ({
-      heading: config.heading,
-      paragraph: config.paragraph,
-      style: { ...config.style },
-      baseline: { ...config.style },
-    }),
+    init: (config) => {
+      /* Đoạn văn rỗng KHÔNG được chiếm một ô: một ô trống thì đảo lên đảo xuống
+         chẳng thấy gì đổi, và mã HTML sẽ in ra một thẻ `<p>` không có trong
+         trang. Thân trang chỉ gồm những khối THỰC SỰ có mặt. */
+      const order: WebBlock[] = config.paragraph
+        ? ["heading", "paragraph"] : ["heading"];
+      return {
+        heading: config.heading,
+        paragraph: config.paragraph,
+        style: { ...config.style },
+        order,
+        selected: "page" as const,
+        baseline: { ...config.style },
+        baselineOrder: [...order],
+      };
+    },
 
-    /** Dùng lại `set_param` sẵn có — KHÔNG đẻ action riêng cho web. */
+    /** Dùng lại `set_param`/`move` sẵn có — KHÔNG đẻ action riêng cho web. */
     apply: (state, action: SimAction) => {
       if (action.type === "set_param") {
+        /* Chọn nút đi qua CÙNG cổng với đổi thuộc tính: một tên lạ thì cả hai
+           nhánh đều trả về state cũ, không có đường nào lọt vào miền. */
+        if (action.name === "selected") {
+          const node = typeof action.value === "string" ? selectNode(action.value) : null;
+          return node && node !== state.selected ? { ...state, selected: node } : state;
+        }
         const next = applyStyleChange(state.style, action.name, action.value);
         return next ? { ...state, style: next } : state;
       }
+      if (action.type === "move") {
+        const order = moveBlock(state.order, action.target, action.y);
+        /* Khối vừa dời thành khối đang chọn: học sinh vừa tác động lên nó thì
+           nó phải còn là thứ đang cầm, nếu không mũi tên thứ hai sẽ dời nhầm. */
+        return order ? { ...state, order, selected: action.target as WebBlock } : state;
+      }
       if (action.type === "toggle" && action.target === "reset") {
-        return { ...state, style: { ...state.baseline } };
+        return { ...state, style: { ...state.baseline }, order: [...state.baselineOrder] };
       }
       return state;
     },
@@ -84,8 +106,8 @@ export function makeWebStyleModule(): SimulationModule<WebConfig, WebState> {
 
     narrate: (state) => ({
       text: isModified(state)
-        ? "Em đang xem kết quả sau khi đổi. Bấm Về ban đầu để so sánh."
-        : "Trang bên phải gồm khung, tiêu đề và đoạn văn. Đổi thuộc tính bên trái để xem từng phần đổi theo.",
+        ? `Em đang sửa ${SELECTOR_OF[state.selected]}. Bấm Về ban đầu để so sánh với trang gốc.`
+        : "Bấm thẳng vào một phần của trang để chọn nó, rồi đổi thuộc tính hoặc dời nó lên xuống.",
     }),
 
     getExplainContext: (state) => ({
@@ -93,6 +115,10 @@ export function makeWebStyleModule(): SimulationModule<WebConfig, WebState> {
       heading: state.heading,
       paragraph: state.paragraph,
       style: state.style,
+      order: state.order,
+      selected: state.selected,
+      selector: SELECTOR_OF[state.selected],
+      html: htmlTextOf(state),
       css: cssTextOf(state.style),
       modified: isModified(state),
     }),

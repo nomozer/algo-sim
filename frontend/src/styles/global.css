@@ -3038,12 +3038,31 @@ html {
 .web-controls { display: flex; flex-direction: column; gap: var(--sp-md); }
 /* Nhóm control theo ĐÚNG bộ chọn nó ảnh hưởng: học sinh thấy "cái này sửa
    `.trang h1`" ngay ở chỗ bấm, không phải đoán từ tên thuộc tính. */
-.web-group { display: flex; flex-direction: column; gap: var(--sp-sm); }
+.web-group {
+  display: flex; flex-direction: column; gap: var(--sp-sm);
+  padding: var(--sp-sm);
+  margin: 0 calc(var(--sp-sm) * -1);
+  border-radius: var(--rounded-md);
+  border: 1px solid transparent;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+/* Nhóm ĐANG CHỌN sáng lên cùng lúc với khối trên sân khấu — hai đầu của cùng
+   một phép chọn, nên chúng phải nhìn ra là một. */
+.web-group.is-selected {
+  background: var(--canvas-soft);
+  border-color: var(--hairline);
+}
 .web-group-head {
   display: flex; align-items: baseline; gap: var(--sp-xs);
   font-size: 12px; color: var(--ink-faint);
   text-transform: uppercase; letter-spacing: 0.04em;
+  /* Là NÚT thật (đường bàn phím của phép chọn) nhưng đọc như tiêu đề nhóm. */
+  padding: 0; border: 0; background: none; cursor: pointer;
+  text-align: left; width: fit-content;
 }
+.web-group-head:hover code { color: var(--primary-active); }
+.web-group-head:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+.web-group.is-selected .web-group-head { color: var(--ink-secondary); }
 .web-group-head code {
   font-size: 12px; color: var(--primary);
   text-transform: none; letter-spacing: 0;
@@ -3110,7 +3129,58 @@ html {
   transition: background-color 0.2s ease, padding 0.2s ease, border-radius 0.2s ease;
 }
 .web-page-heading { margin: 0; font-weight: 700; line-height: 1.25; }
-.web-page-paragraph { margin: var(--sp-sm) 0 0; }
+/* Khoảng cách thuộc về CHỖ TIẾP GIÁP hai khối, không thuộc về đoạn văn: đảo thứ
+   tự thì trang phải trông cân y như cũ, chứ không phải thừa một lề ở đỉnh. */
+.web-page-paragraph { margin: 0; }
+.web-node + .web-node { margin-top: var(--sp-sm); }
+
+/* ── W4B-4D — THAO TÁC THẲNG LÊN TRANG ────────────────────────────────────
+   Trước wave này học sinh chỉ với tới trang qua cột control bên trái: muốn đổi
+   tiêu đề thì phải đọc tên thuộc tính rồi đoán nó ứng với phần nào. Nay bấm
+   thẳng vào phần cần sửa, và chính cú bấm đó dạy quan hệ THẺ ↔ BỘ CHỌN. */
+.web-node { position: relative; }
+.web-node-hit {
+  display: block;
+  border-radius: var(--rounded-sm);
+  outline: 1px dashed transparent;   /* giữ chỗ sẵn: hover không làm xê dịch gì */
+  outline-offset: 3px;
+  cursor: pointer;
+  transition: outline-color 0.15s ease;
+}
+.web-node-hit:hover { outline-color: var(--ink-faint); }
+.web-node-hit:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+.web-node.is-selected .web-node-hit { outline: 2px solid var(--primary); }
+
+/* Nhãn bộ chọn dán vào khối đang chọn — đúng thói quen của công cụ kiểm tra
+   phần tử, và nó trả lời "bảng CSS bên dưới đang nói về cái nào". */
+.web-node-tag {
+  position: absolute; top: -10px; left: 0;
+  padding: 1px 6px;
+  border-radius: var(--rounded-sm);
+  background: var(--primary); color: #fff;
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  font-size: 11px; line-height: 1.5;
+  pointer-events: none;
+}
+.web-node-tools {
+  position: absolute; top: -12px; right: 0;
+  display: flex; gap: 2px;
+}
+.web-node-move {
+  width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--rounded-sm);
+  border: 1px solid var(--hairline);
+  background: var(--surface); color: var(--ink-secondary);
+  box-shadow: var(--shadow-soft);
+  font-size: 13px; line-height: 1; cursor: pointer;
+}
+.web-node-move:hover:not(:disabled) { color: var(--primary); border-color: var(--primary); }
+.web-node-move:disabled { opacity: 0.4; cursor: not-allowed; }
+.web-node-move:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+/* Khung trang cũng chọn được — bấm vào NỀN của nó, không phải vào khối. */
+.web-page.is-selected { outline: 2px solid var(--primary); outline-offset: 2px; }
 
 /* Hai bản chiếu của cùng một state, cạnh nhau ở rộng, xếp dọc ở hẹp. */
 .web-code-pair {

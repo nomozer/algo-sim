@@ -1,7 +1,7 @@
 import type { WorkspaceProps } from "../../types";
-import { cssTextOf, isModified } from "./apply";
+import { cssTextOf, htmlTextOf, isModified } from "./apply";
 import { COLOR_CHOICES, NUMERIC_RANGE, NUMERIC_PROPS, TEXT_COLOR_CHOICES } from "./props";
-import type { WebConfig, WebState } from "./model";
+import { NODE_LABEL, SELECTOR_OF, type WebBlock, type WebConfig, type WebNode, type WebState } from "./model";
 
 /**
  * Sân khấu của mô hình CSS có ràng buộc — KHÔNG PHẢI trình soạn thảo.
@@ -33,15 +33,20 @@ type Props = WorkspaceProps<WebConfig, WebState>;
 
 /** Nhóm control theo ĐÚNG bộ chọn nó ảnh hưởng — nhãn nói ra quan hệ đó. */
 const GROUPS = [
-  { selector: ".trang", label: "Khung trang", props: ["padding", "borderRadius"] },
-  { selector: ".trang h1", label: "Tiêu đề", props: ["headingSize"] },
-  { selector: ".trang p", label: "Đoạn văn", props: ["fontSize"] },
+  { node: "page", props: ["padding", "borderRadius"], swatch: "backgroundColor", swatchLabel: "Màu nền" },
+  { node: "heading", props: ["headingSize"], swatch: "headingColor", swatchLabel: "Màu chữ tiêu đề" },
+  { node: "paragraph", props: ["fontSize"], swatch: "color", swatchLabel: "Màu chữ đoạn văn" },
 ] as const;
 
 export function WebWorkspace({ state, dispatch }: Props) {
   const s = state.style;
   const set = (name: string, value: number | string) =>
     dispatch({ type: "set_param", name, value });
+  const select = (node: WebNode) => set("selected", node);
+  /* Dời khối: phát ô ĐÍCH tuyệt đối. Renderer không tự tính hoán vị — nó chỉ
+     nói "đặt khối này vào ô kia" rồi đọc lại `state.order`. */
+  const moveTo = (block: WebBlock, slot: number) =>
+    dispatch({ type: "move", target: block, x: 0, y: slot });
 
   const swatches = (
     choices: readonly { value: string; label: string }[],
@@ -77,26 +82,75 @@ export function WebWorkspace({ state, dispatch }: Props) {
     );
   };
 
+  /* MỘT KHỐI TRÊN SÂN KHẤU — bấm thẳng vào nó để chọn.
+     Vùng bấm là `role="button"` chứ không phải `<button>` thật vì bên trong là
+     `<h1>`/`<p>` (nội dung khối), mà `<button>` chỉ chứa được nội dung câu.
+     Hai mũi tên nằm NGOÀI vùng bấm, không lồng nút trong nút. */
+  const blockNode = (b: WebBlock, i: number) => {
+    const on = state.selected === b;
+    const last = state.order.length - 1;
+    return (
+      <div key={b} className={`web-node${on ? " is-selected" : ""}`}>
+        <div className="web-node-hit" role="button" tabIndex={0}
+          aria-pressed={on}
+          aria-label={`Chọn ${NODE_LABEL[b]} (${SELECTOR_OF[b]})`}
+          onClick={() => select(b)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(b); }
+          }}>
+          {b === "heading" ? (
+            <h1 className="web-page-heading" style={{
+              color: s.headingColor, fontSize: `${s.headingSize}px`,
+            }}>{state.heading}</h1>
+          ) : (
+            <p className="web-page-paragraph" style={{
+              color: s.color, fontSize: `${s.fontSize}px`,
+            }}>{state.paragraph}</p>
+          )}
+        </div>
+
+        {on && <span className="web-node-tag">{SELECTOR_OF[b]}</span>}
+
+        {/* Dời khối: chỉ hiện khi thân trang có từ hai khối trở lên — một khối
+            thì "đổi thứ tự" là câu hỏi không có nghĩa. */}
+        {on && state.order.length > 1 && (
+          <div className="web-node-tools">
+            <button type="button" className="web-node-move"
+              aria-label={`Đưa ${NODE_LABEL[b]} lên trên`}
+              disabled={i === 0} onClick={() => moveTo(b, i - 1)}>↑</button>
+            <button type="button" className="web-node-move"
+              aria-label={`Đưa ${NODE_LABEL[b]} xuống dưới`}
+              disabled={i === last} onClick={() => moveTo(b, i + 1)}>↓</button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  /* Cột điều khiển bám theo NÚT ĐANG CHỌN. Đầu nhóm là nút thật, nên mỗi nút
+     đều có đường bàn phím kể cả khung trang (khung không tự làm vùng bấm được
+     vì các khối nằm bên trong nó). */
+  const group = (g: (typeof GROUPS)[number]) => {
+    const on = state.selected === g.node;
+    return (
+      <div key={g.node} className={`web-group${on ? " is-selected" : ""}`}>
+        <button type="button" className="web-group-head" aria-pressed={on}
+          onClick={() => select(g.node)}>
+          <code>{SELECTOR_OF[g.node]}</code> {NODE_LABEL[g.node]}
+        </button>
+        {swatches(
+          g.node === "page" ? COLOR_CHOICES : TEXT_COLOR_CHOICES,
+          g.swatch, g.swatchLabel,
+        )}
+        {g.props.map((k) => slider(k))}
+      </div>
+    );
+  };
+
   return (
     <div className="web-workspace">
       <div className="web-controls">
-        <div className="web-group">
-          <span className="web-group-head"><code>.trang</code> Khung trang</span>
-          {swatches(COLOR_CHOICES, "backgroundColor", "Màu nền")}
-          {GROUPS[0].props.map((k) => slider(k))}
-        </div>
-
-        <div className="web-group">
-          <span className="web-group-head"><code>.trang h1</code> Tiêu đề</span>
-          {swatches(TEXT_COLOR_CHOICES, "headingColor", "Màu chữ tiêu đề")}
-          {GROUPS[1].props.map((k) => slider(k))}
-        </div>
-
-        <div className="web-group">
-          <span className="web-group-head"><code>.trang p</code> Đoạn văn</span>
-          {swatches(TEXT_COLOR_CHOICES, "color", "Màu chữ đoạn văn")}
-          {GROUPS[2].props.map((k) => slider(k))}
-        </div>
+        {GROUPS.filter((g) => g.node !== "paragraph" || state.paragraph).map(group)}
 
         {isModified(state) && (
           <button type="button" className="sim-secondary-action"
@@ -108,7 +162,8 @@ export function WebWorkspace({ state, dispatch }: Props) {
 
       <div className="web-preview-area">
         {/* XEM TRƯỚC — đọc THẲNG từ state. Không iframe, không script, không
-            chuỗi style thô: từng thuộc tính là một giá trị đã kiểm miền. */}
+            chuỗi style thô: từng thuộc tính là một giá trị đã kiểm miền.
+            Đây cũng là chỗ THAO TÁC: bấm vào phần nào là chọn phần ấy. */}
         <div className="web-preview">
           {/* Thanh trình duyệt giả: nó nói "đây là một TRANG", và nó là TRANG
               TRÍ thuần — không nút nào bấm được, không trạng thái nào. */}
@@ -116,31 +171,25 @@ export function WebWorkspace({ state, dispatch }: Props) {
             <span className="web-dot" /><span className="web-dot" /><span className="web-dot" />
             <span className="web-url">trang-cua-em.html</span>
           </div>
-          <div className="web-page" style={{
-            backgroundColor: s.backgroundColor,
-            padding: `${s.padding}px`,
-            borderRadius: `${s.borderRadius}px`,
-          }}>
-            <h1 className="web-page-heading" style={{
-              color: s.headingColor, fontSize: `${s.headingSize}px`,
-            }}>{state.heading}</h1>
-            {state.paragraph && (
-              <p className="web-page-paragraph" style={{
-                color: s.color, fontSize: `${s.fontSize}px`,
-              }}>{state.paragraph}</p>
-            )}
+          {/* Bấm vào NỀN khung (không phải vào khối) thì chọn khung. Đường bàn
+              phím của khung là nút đầu nhóm `.trang` bên cột trái. */}
+          <div className={`web-page${state.selected === "page" ? " is-selected" : ""}`}
+            onClick={(e) => { if (e.target === e.currentTarget) select("page"); }}
+            style={{
+              backgroundColor: s.backgroundColor,
+              padding: `${s.padding}px`,
+              borderRadius: `${s.borderRadius}px`,
+            }}>
+            {state.order.map(blockNode)}
           </div>
         </div>
 
         {/* HAI BẢN CHIẾU CỦA CÙNG MỘT STATE: cấu trúc thẻ và bảng kiểu. Cả hai
-            SINH RA từ state — không bản nào là nguồn sự thật thứ hai. */}
+            SINH RA từ state — không bản nào là nguồn sự thật thứ hai. Dời khối
+            đổi bản TRÁI mà không đổi bản PHẢI, và đó chính là bài học: thứ tự
+            thuộc về HTML, hình thức thuộc về CSS. */}
         <div className="web-code-pair">
-          <pre className="web-css" aria-label="Cấu trúc HTML tương ứng">{
-`<div class="trang">
-  <h1>${state.heading}</h1>${state.paragraph ? `
-  <p>${state.paragraph}</p>` : ""}
-</div>`
-          }</pre>
+          <pre className="web-css" aria-label="Cấu trúc HTML tương ứng">{htmlTextOf(state)}</pre>
           <pre className="web-css" aria-label="CSS tương ứng">{cssTextOf(s)}</pre>
         </div>
       </div>
@@ -151,6 +200,14 @@ export function WebWorkspace({ state, dispatch }: Props) {
 export function WebInspector({ state }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
+      <section className="card" style={{ padding: "var(--sp-md)" }}>
+        <span className="eyebrow">ĐANG CHỌN</span>
+        {/* Nói ra bộ chọn đang cầm, cùng một chuỗi mà nhãn trên sân khấu in ra —
+            Inspector và sân khấu đọc chung một `state.selected`. */}
+        <p className="muted" style={{ margin: "var(--sp-xs) 0 0" }}>
+          {NODE_LABEL[state.selected]} — <code>{SELECTOR_OF[state.selected]}</code>
+        </p>
+      </section>
       <section className="card" style={{ padding: "var(--sp-md)" }}>
         <span className="eyebrow">THUỘC TÍNH ĐANG ĐẶT</span>
         <pre className="web-css" style={{ marginTop: "var(--sp-sm)" }}>{cssTextOf(state.style)}</pre>

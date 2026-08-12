@@ -38,10 +38,49 @@ export interface WebConfig {
   notes: string | null;
 }
 
+/**
+ * KHỐI trong thân trang. Tập ĐÓNG và cố định — học sinh sắp xếp lại các khối đã
+ * có, không tạo thẻ mới. Đó là ranh giới giữa "thao tác trực tiếp có ràng buộc"
+ * và một trình soạn thảo HTML (vẫn DEFERRED).
+ */
+export type WebBlock = "heading" | "paragraph";
+
+/** Thứ có thể CHỌN: khung trang, hoặc một khối trong thân trang. */
+export type WebNode = "page" | WebBlock;
+
+export const WEB_NODES: readonly WebNode[] = ["page", "heading", "paragraph"];
+
+/** Bộ chọn CSS ứng với từng nút — cùng chuỗi mà bảng kiểu in ra. */
+export const SELECTOR_OF: Record<WebNode, string> = {
+  page: ".trang",
+  heading: ".trang h1",
+  paragraph: ".trang p",
+};
+
+export const NODE_LABEL: Record<WebNode, string> = {
+  page: "Khung trang",
+  heading: "Tiêu đề",
+  paragraph: "Đoạn văn",
+};
+
 export interface WebState {
   heading: string;
   paragraph: string;
   style: WebStyle;
+  /**
+   * THỨ TỰ TÀI LIỆU của các khối trong `.trang`. Đây là thứ HTML sở hữu mà CSS
+   * không sở hữu: đổi thứ tự thì cấu trúc thẻ đổi còn bảng kiểu KHÔNG đổi — và
+   * chính chỗ lệch đó là bài học.
+   */
+  order: WebBlock[];
+  /**
+   * Khối/khung đang được chọn. Nằm trong state chứ không nằm trong renderer vì
+   * cả sân khấu, cột điều khiển và Inspector đều phải nói về CÙNG một nút; để
+   * renderer giữ thì sẽ có ba bản chọn khác nhau của cùng một trang.
+   */
+  selected: WebNode;
   /** Bản gốc đã validate — "Về ban đầu" là phép toán, không phải undo log. */
   baseline: WebStyle;
+  /** Thứ tự gốc, để "Về ban đầu" trả lại cả cấu trúc chứ không chỉ màu sắc. */
+  baselineOrder: WebBlock[];
 }

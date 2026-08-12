@@ -1,7 +1,7 @@
 import {
   COLOR_CHOICES, NUMERIC_RANGE, NUMERIC_PROPS, TEXT_COLOR_CHOICES, type WebProp,
 } from "./props";
-import type { WebState, WebStyle } from "./model";
+import { WEB_NODES, type WebBlock, type WebNode, type WebState, type WebStyle } from "./model";
 
 /**
  * Áp một thay đổi CÓ RÀNG BUỘC. `null` = không hợp lệ ⇒ người gọi giữ state cũ.
@@ -28,6 +28,37 @@ export function applyStyleChange(
     return value >= r.min && value <= r.max ? { ...style, [name]: value } : null;
   }
   return null; // ngoài tập đóng ⇒ fail-closed
+}
+
+/**
+ * Chọn một nút. Tên ngoài tập ⇒ `null` ⇒ người gọi giữ nguyên state, cùng luật
+ * fail-closed với mọi thứ khác trong miền này.
+ */
+export function selectNode(name: string): WebNode | null {
+  return (WEB_NODES as readonly string[]).includes(name) ? (name as WebNode) : null;
+}
+
+/**
+ * ĐỔI CHỖ MỘT KHỐI trong thân trang — miền là một HOÁN VỊ của tập khối đã có.
+ *
+ * Không thêm khối, không xoá khối, không đặt khối vào khung khác. Một trình
+ * soạn thảo HTML sẽ cho phép cả ba; ở đây `order` chỉ đi từ hoán vị này sang
+ * hoán vị khác, nên mọi state sinh ra đều là một trang hợp lệ.
+ *
+ * `slot` là CHỈ SỐ Ô ĐÍCH tuyệt đối (không phải delta), cùng ngữ nghĩa với cú
+ * kéo của `generic`: action nói "đặt nó vào đây", engine quyết định hợp lệ.
+ * Dòng chảy tài liệu chỉ có MỘT trục nên không có toạ độ ngang.
+ */
+export function moveBlock(
+  order: readonly WebBlock[], target: string, slot: number,
+): WebBlock[] | null {
+  const from = order.indexOf(target as WebBlock);
+  if (from < 0) return null;                                  // khối không có trong trang
+  if (!Number.isInteger(slot) || slot < 0 || slot >= order.length) return null;
+  if (slot === from) return null;                             // không nhúc nhích ⇒ không state mới
+  const next = order.filter((_, i) => i !== from);
+  next.splice(slot, 0, order[from]);
+  return next;
 }
 
 const CSS_NAME: Record<WebProp, string> = {
@@ -71,8 +102,25 @@ export function cssTextOf(style: WebStyle): string {
   ].join("\n");
 }
 
+/**
+ * Bản xem DẠNG THẺ — cũng SINH RA từ state, đặt cạnh `cssTextOf` cho cân.
+ *
+ * Nó ở đây chứ không ở JSX vì đúng chỗ này từng là một lỗ: nếu renderer tự ghép
+ * chuỗi HTML thì nó thành nguồn sự thật thứ hai về cấu trúc trang, và một cú
+ * đổi thứ tự có thể hiện ra ở sân khấu mà không hiện ra ở mã (hoặc ngược lại).
+ */
+export function htmlTextOf(state: WebState): string {
+  const line = (b: WebBlock) =>
+    b === "heading" ? `  <h1>${state.heading}</h1>` : `  <p>${state.paragraph}</p>`;
+  return [`<div class="trang">`, ...state.order.map(line), "</div>"].join("\n");
+}
+
 /** Đã khác bản gốc chưa — dẫn xuất, không lưu cờ. */
 export function isModified(state: WebState): boolean {
-  return (Object.keys(state.baseline) as WebProp[])
+  const styleChanged = (Object.keys(state.baseline) as WebProp[])
     .some((k) => state.style[k] !== state.baseline[k]);
+  /* Thứ tự cũng là thứ học sinh đổi được, nên "Về ban đầu" phải hiện ra khi mới
+     chỉ đảo khối — nếu chỉ soi `style` thì cú đổi cấu trúc không có đường lùi. */
+  const orderChanged = state.order.join(",") !== state.baselineOrder.join(",");
+  return styleChanged || orderChanged;
 }

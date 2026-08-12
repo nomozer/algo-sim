@@ -162,7 +162,12 @@ describe("W4B-2Z · KHÔNG phải code_experiment", () => {
 
   it("state KHÔNG mang mã nguồn — chỉ nội dung + bảy thuộc tính đã khai", () => {
     const s = initState();
-    expect(Object.keys(s).sort()).toEqual(["baseline", "heading", "paragraph", "style"]);
+    /* W4B-4D: +`order`/`baselineOrder` (thứ tự tài liệu — thứ HTML sở hữu) và
+       +`selected` (khối đang cầm). Danh sách vẫn KHOÁ CHẶT: thêm khoá nào vào
+       state cũng phải đi qua đây, nên không lén nhét được chuỗi mã vào state. */
+    expect(Object.keys(s).sort()).toEqual(
+      ["baseline", "baselineOrder", "heading", "order", "paragraph", "selected", "style"],
+    );
     expect(Object.keys(s.style).sort()).toEqual(
       /* W4B-3F: +2 thuộc tính cho `.trang h1`. Trang có cấu trúc thì tiêu đề
          và đoạn văn phải chỉnh được RIÊNG — đó chính là bài học phân cấp. */
@@ -212,7 +217,9 @@ describe("W4B-2Z · không bịa ra trục thời gian", () => {
     const html = renderToString(
       <mod.Workspace state={s} dispatch={() => {}} config={{} as never} busy={false} />,
     );
-    const page = html.slice(html.indexOf('class="web-page"'));
+    /* Khớp TIỀN TỐ: khung trang mang thêm `is-selected` khi đang được chọn, và
+       một phép cắt khớp-chính-xác sẽ trượt về -1 rồi đọc thành "không có h1". */
+    const page = html.slice(html.search(/class="web-page[" ]/));
     expect(page, "trang không có tiêu đề").toContain("<h1");
     expect(page, "tiêu đề không mang nội dung của đề").toContain(s.heading);
     expect(s.paragraph.length, "mẫu kiểm phải có đoạn văn").toBeGreaterThan(0);
