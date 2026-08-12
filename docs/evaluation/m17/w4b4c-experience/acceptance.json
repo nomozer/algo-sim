@@ -1,0 +1,270 @@
+{
+  "when": "2026-08-12T15:05:38.808Z",
+  "rows": [
+    {
+      "viewport": "1920x1080",
+      "target": "binary.base_conversion",
+      "field": "result",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.base_conversion"
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "binary.character_encoding",
+      "field": "meta",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.character_encoding"
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "network.graph_traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "network.graph_traversal"
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "tree.traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "tree.traversal"
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "database.relational_table_query",
+      "field": "resultRows",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "database.relational_table_query"
+    },
+    {
+      "viewport": "1920x1080",
+      "target": "logic.boolean_dag",
+      "field": "values",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "logic.boolean_dag"
+    },
+    {
+      "viewport": "1536x864",
+      "target": "binary.base_conversion",
+      "field": "result",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.base_conversion"
+    },
+    {
+      "viewport": "1536x864",
+      "target": "binary.character_encoding",
+      "field": "meta",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.character_encoding"
+    },
+    {
+      "viewport": "1536x864",
+      "target": "network.graph_traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "network.graph_traversal"
+    },
+    {
+      "viewport": "1536x864",
+      "target": "tree.traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "tree.traversal"
+    },
+    {
+      "viewport": "1536x864",
+      "target": "database.relational_table_query",
+      "field": "resultRows",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "database.relational_table_query"
+    },
+    {
+      "viewport": "1536x864",
+      "target": "logic.boolean_dag",
+      "field": "values",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "logic.boolean_dag"
+    },
+    {
+      "viewport": "1366x768",
+      "target": "binary.base_conversion",
+      "field": "result",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.base_conversion"
+    },
+    {
+      "viewport": "1366x768",
+      "target": "binary.character_encoding",
+      "field": "meta",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.character_encoding"
+    },
+    {
+      "viewport": "1366x768",
+      "target": "network.graph_traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "network.graph_traversal"
+    },
+    {
+      "viewport": "1366x768",
+      "target": "tree.traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "tree.traversal"
+    },
+    {
+      "viewport": "1366x768",
+      "target": "database.relational_table_query",
+      "field": "resultRows",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "database.relational_table_query"
+    },
+    {
+      "viewport": "1366x768",
+      "target": "logic.boolean_dag",
+      "field": "values",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "logic.boolean_dag"
+    },
+    {
+      "viewport": "768x900",
+      "target": "binary.base_conversion",
+      "field": "result",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.base_conversion"
+    },
+    {
+      "viewport": "768x900",
+      "target": "binary.character_encoding",
+      "field": "meta",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "binary.character_encoding"
+    },
+    {
+      "viewport": "768x900",
+      "target": "network.graph_traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "network.graph_traversal"
+    },
+    {
+      "viewport": "768x900",
+      "target": "tree.traversal",
+      "field": "visitedOrder",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "tree.traversal"
+    },
+    {
+      "viewport": "768x900",
+      "target": "database.relational_table_query",
+      "field": "resultRows",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "database.relational_table_query"
+    },
+    {
+      "viewport": "768x900",
+      "target": "logic.boolean_dag",
+      "field": "values",
+      "ok": true,
+      "changed": true,
+      "sameRef": false,
+      "cursorMoved": false,
+      "playing": false,
+      "moduleId": "logic.boolean_dag"
+    }
+  ],
+  "failures": []
+}

@@ -241,3 +241,63 @@ describe("W4B-4A · câu hỏi nghiệm thu chạy trên toàn danh mục", () =
     }
   });
 });
+
+/* ══ QUYẾT ĐỊNH GIỮ-TRACE PHẢI KHAI TƯỜNG MINH ═══════════════════════════ */
+
+/**
+ * W4B-4C — BA target CỐ Ý giữ nguyên dạng trace, kèm lý do CƠ CHẾ.
+ *
+ * Đây không phải danh sách "chưa kịp làm". Mỗi dòng là một phán quyết: cơ chế
+ * của bài LÀ tiến trình theo thời gian, nên thêm tham số cho học sinh chỉnh chỉ
+ * làm tăng con số tương tác chứ không dạy thêm gì.
+ *
+ * Danh sách này ĐƯỢC PHÉP NGẮN ĐI (một target tìm ra tham số có nghĩa thì
+ * chuyển sang tương tác và xoá khỏi đây), nhưng DÀI RA thì phải giải trình:
+ * thêm một dòng nghĩa là vừa hạ cấp một trải nghiệm.
+ */
+const KEEP_TRACE: Record<string, string> = {
+  "algorithm.bounded_control_flow":
+    "Cơ chế LÀ luồng điều khiển chạy theo thời gian: gán, rẽ nhánh, lặp có biên. " +
+    "Thứ đáng đổi là CHÍNH CHƯƠNG TRÌNH, mà cho sửa chương trình thì đây thành " +
+    "một IDE — vượt ranh giới 'không thực thi mã tuỳ ý' của đề tài. Đổi giá trị " +
+    "khởi tạo thì được, nhưng nó không dạy thêm gì so với việc xem biến biến đổi.",
+  "algorithm.scan":
+    "Quét một lượt là bài học VỀ TRÌNH TỰ: mỗi phần tử được xét đúng một lần, " +
+    "theo thứ tự. Tham số duy nhất đáng đổi là dãy đầu vào, và dựng một trình " +
+    "soạn dãy tổng quát chỉ để tăng số tương tác chính là thứ §25 cấm. Tám bài " +
+    "quét chuyên biệt đã có thao tác riêng; `scan` là catch-all cho biến thể.",
+  "network.protocol_encapsulation":
+    "Đóng gói qua từng tầng là biến đổi TUẦN TỰ có hướng: mỗi tầng bọc thêm một " +
+    "lớp lên PDU của tầng trước. Trình tự ấy CHÍNH LÀ khái niệm; cho kéo thả các " +
+    "lớp sẽ dựng ra những trạng thái không tồn tại trong giao thức thật. Giữ 2D/3D " +
+    "cùng một sự thật tất định.",
+};
+
+describe("W4B-4C · giữ-trace là QUYẾT ĐỊNH, không phải chỗ trống", () => {
+  it("mọi target không thao tác được đều phải có lý do cơ chế khai sẵn", () => {
+    const undecided = rows
+      .filter((r) => !r.manipulable)
+      .map((r) => r.target)
+      .filter((id) => !KEEP_TRACE[id]);
+    expect(undecided, "target chỉ-trace mà chưa ai quyết định").toEqual([]);
+  });
+
+  it("danh sách giữ-trace không được chứa target ĐÃ thao tác được", () => {
+    /* Chiều ngược: nếu một bài đã có tương tác thật mà vẫn nằm trong danh sách
+       này thì lý do đã lỗi thời, và một lý do lỗi thời là một lời giải thích
+       sai cho người đọc sau. */
+    const stale = Object.keys(KEEP_TRACE).filter(
+      (id) => rows.find((r) => r.target === id)?.manipulable,
+    );
+    expect(stale, "lý do giữ-trace đã lỗi thời").toEqual([]);
+  });
+
+  it("mỗi lý do phải nói về CƠ CHẾ, không phải về tiến độ công việc", () => {
+    for (const [id, why] of Object.entries(KEEP_TRACE)) {
+      expect(why.length, `${id}: lý do quá cụt để kiểm chứng`).toBeGreaterThan(80);
+      for (const excuse of ["chưa kịp", "sau này", "TODO", "tạm thời"]) {
+        expect(why, `${id}: lý do là lời hứa, không phải phán quyết`).not.toContain(excuse);
+      }
+    }
+  });
+});

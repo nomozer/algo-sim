@@ -219,6 +219,7 @@ describe("W4B-2V §18 · ngữ cảnh không được biến thành mã trình b
     const PATTERNS = [
       /* W4B-3A: `\.` cũ bỏ lọt OPTIONAL CHAINING. Tiêm lỗi
          `config?.problem?.summary?.includes("mạng")` đi lọt trọn vẹn phép dò
+      'if ((config.notes ?? "").includes("khoá")) return null;',
          này — guard quét cả kho mã mà trả 0 vì regex hụt, không vì mã sạch.
          Bait bên dưới nay có cả dạng `?.`. */
       /* Đối số phải là HẰNG CHUỖI. Điều §18 cấm là rẽ nhánh theo NỘI DUNG ĐỀ
@@ -226,7 +227,10 @@ describe("W4B-2V §18 · ngữ cảnh không được biến thành mã trình b
          So `title` với một BIẾN thì là chuyện khác hẳn — `LibraryView` lọc danh
          mục theo ô tìm kiếm học sinh gõ, và đó là một tính năng, không phải một
          nhánh trình bày. Guard kêu oan là guard sẽ bị tắt. */
-      /\b(summary|title)\b[^\n;]{0,80}\??\.(includes|startsWith|match|test)\s*\(\s*["'`]/g,
+      /* W4B-4C: `notes`/`description` cũng là CHỮ TỰ DO từ đề bài. Tiêm lỗi
+         `config.notes.includes("khoá")` để quyết định CÓ CHO TƯƠNG TÁC hay không
+         đi lọt trọn vẹn bản chỉ canh summary|title — cùng một lỗi, khác tên trường. */
+      /\b(summary|title|notes|description)\b[^\n;]{0,80}\??\.(includes|startsWith|match|test)\s*\(\s*["'`]/g,
       /\balgorithm_id\s*===\s*["']/g,
       /\bsimulation_id\s*===\s*["']/g,
     ];

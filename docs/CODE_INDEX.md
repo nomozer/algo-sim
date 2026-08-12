@@ -1445,6 +1445,30 @@ guard mà **tiêm lỗi mới lộ ra**: (1) xem trước phải là TRANG CÓ C
 lại làm FIXTURE của engine generic, không phải bài học công khai; mẫu công khai
 của generic nay là `gen-rule-library` (quy tắc hợp thành, có công tắc thật).
 
+### `frontend/scripts/accept-experience-w4b4c.mjs` · offline (cần `npm run dev`)
+W4B-4C — NGHIỆM THU TRẢI NGHIỆM: hỏi CÂU HỎI NGHIỆM THU bằng Chrome thật ở bốn
+bề rộng. Với mỗi target đã chuyển sang tương tác, nó nạp bài, phát ĐÚNG action
+mà bộ điều khiển trên màn hình phát, rồi khẳng định (a) trường kết quả ĐỔI,
+(b) `state` đổi tham chiếu, (c) **không** phải bật Play. Vế (c) là vế chính:
+một bài chỉ đổi khi chạy timeline thì vẫn là animation-first.
+Artifact: `docs/evaluation/m17/w4b4c-experience/acceptance.json`.
+
+### `simulations/experience-audit-w4b4a.test.ts` · offline
+Phép đo TRẢI NGHIỆM cho toàn danh mục, chạy bằng HÀNH VI chứ không đọc metadata:
+phát mọi action mà từng miền thật sự nhận vào `module.apply` và ghi lại target
+nào đổi được state (KHÔNG dùng timeline). Ghi bảng ra
+`docs/evaluation/m17/w4b4a-experience/probe.json`.
+
+Bốn bất biến nó giữ: khai `explore` ⇒ phải thao tác được · thao tác được ⇒ phải
+có lối vào (trừ `exploratory`/`hybrid` vốn luôn mở) · chuỗi bước KHÔNG được tính
+là thao tác · cam kết KHÔNG được tính là thao tác. Kèm `KEEP_TRACE` — danh sách
+target CỐ Ý giữ dạng trace kèm lý do CƠ CHẾ, có test bắt lý do phải nói về cơ chế
+chứ không phải tiến độ, và bắt lý do lỗi thời khi target đã có tương tác.
+
+⚠️ Bản đầu của phép đo này ĐOÁN tên action và cho ba âm tính giả. Thêm action
+mới thì phải đọc `apply` của miền đó, đừng suy từ miền khác — và mồi hai chiều
+trong file là thứ chứng minh phép đo còn phân biệt được.
+
 ### `frontend/scripts/accept-w4b3a.mjs` · Change impact: offline (cần `npm run dev`)
 W4B-3A — NGHIỆM THU TRÌNH DUYỆT ở BỐN bề rộng (1920/1536/1366/768) cho 7 target
 đại diện: 0 dải `experiment-trigger`; mọi `.sim-secondary-action` phải nằm TRONG
