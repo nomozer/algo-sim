@@ -208,8 +208,15 @@ beforeAll(() => {
 });
 
 describe("W4B-4A · câu hỏi nghiệm thu chạy trên toàn danh mục", () => {
-  it("phép đo phải thật sự chạm được danh mục", () => {
-    expect(rows.length, "không dựng được target nào — phép dò hỏng?").toBeGreaterThan(10);
+  it("phép đo phủ TOÀN BỘ registry — target nào vắng mặt là mất mẫu offline", () => {
+    /* Fault F10 bắt được lỗ này: gỡ một mẫu khỏi catalog offline thì suite vẫn
+       XANH — sàn cũ chỉ đòi `rows.length > 10`, nên một target biến mất khỏi
+       thư viện (học sinh không còn đường mở nó không cần backend) đi qua im
+       lặng, và mọi phép đo phía dưới cũng lặng lẽ thu hẹp phạm vi theo.
+       Registry là nguồn sự thật về "sản phẩm có những bài nào" ⇒ so với nó. */
+    const registered = listSimulations().map((m) => m.id).sort();
+    const measured = rows.map((r) => r.target).sort();
+    expect(measured, "target đăng ký mà không có mẫu offline dựng được").toEqual(registered);
   });
 
   it("phép đo phải PHÂN BIỆT ĐƯỢC thao-tác-được và identity", () => {
