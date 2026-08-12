@@ -555,8 +555,12 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         )}
         {!hasStructural && (
           <button
+            /* W4B-3E — `marginLeft:auto` ĐÃ GỠ. Cùng lỗi, khác chủ sở hữu: một
+               THÀNH VIÊN đẩy mình sang mép phải thì phần còn lại thành khoảng
+               chết — đo được 1390px @1920 trên `gen-rule-library`. "Thu vừa
+               hình" thuộc cùng nhóm hành động với "Quan sát/Chỉnh sửa", nên nó
+               đứng liền nhóm; muốn tách thì tách bằng NHÓM, không bằng lề. */
             className={`btn-utility${autoFit ? "" : " is-active"}`}
-            style={{ marginLeft: "auto" }}
             onClick={() => setAutoFit(!autoFit)}
             title={autoFit ? "Đang tự thu vừa hình — bấm để về khung mặc định" : "Bấm để tự thu vừa hình"}
           >

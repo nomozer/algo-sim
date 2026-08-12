@@ -816,15 +816,12 @@ html {
   gap: var(--sp-xs);
 }
 
-/* Vùng phụ đẩy sang phải CHỈ KHI không có thanh tua ăn chỗ thừa (bài khám phá
-   không có dòng thời gian). Có tua thì chính nó giữ nhịp, không cần lệnh đẩy. */
-.control-zone-aux {
-  margin-left: auto;
-}
-
-.player-controls:has(.player-progress) .control-zone-aux {
-  margin-left: 0;
-}
+/* KHÔNG có lệnh đẩy nào ở đây, và đó là chủ đích.
+   Bản đầu đặt `margin-left:auto` lên vùng phụ rồi gỡ lại khi có thanh tua —
+   tức ĐÚNG NGƯỢC: bài có tua thì tua đã đẩy hộ, bài KHÔNG có tua lại chẳng có
+   gì hấp thụ nên lệnh đẩy đẻ ra khoảng hở 1390px (đo ở `gen-rule-library`
+   @1920). Bỏ hẳn: bài có tua thì `flex:1` của tua đưa vùng phụ về mép phải; bài
+   không có tua thì các nút đứng liền nhau bên trái, không có chỗ chết nào. */
 
 /* THANH TUA ĂN HẾT CHỖ THỪA. Đây là thứ biến "khoảng chết 796px" thành một
    control có ích: `flex:1` nên nó co giãn theo bề rộng còn lại, và vì nằm TRONG
@@ -840,10 +837,6 @@ html {
 /* Hết chỗ ⇒ vùng phụ xuống dòng TRỌN VẸN và về mép trái, thay vì trôi lơ lửng
    bên phải một hàng rỗng. Có chủ đích: ≤2 tầng ở 768. */
 @media (max-width: 860px) {
-  .control-zone-aux,
-  .player-controls:has(.player-progress) .control-zone-aux {
-    margin-left: 0;
-  }
   /* Ở hẹp KHÔNG cho thanh tua chiếm trọn một dòng.
      Đo được: `flex-basis:100%` đẩy vùng phụ xuống dòng thứ ba (642px → 3 tầng,
      cao 97px). Cho nó co lại thì tua và vùng phụ chia nhau dòng hai, còn ĐÚNG
@@ -2822,6 +2815,18 @@ html {
   align-items: start;
 }
 .web-controls { display: flex; flex-direction: column; gap: var(--sp-md); }
+/* Nhóm control theo ĐÚNG bộ chọn nó ảnh hưởng: học sinh thấy "cái này sửa
+   `.trang h1`" ngay ở chỗ bấm, không phải đoán từ tên thuộc tính. */
+.web-group { display: flex; flex-direction: column; gap: var(--sp-sm); }
+.web-group-head {
+  display: flex; align-items: baseline; gap: var(--sp-xs);
+  font-size: 12px; color: var(--ink-faint);
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.web-group-head code {
+  font-size: 12px; color: var(--primary);
+  text-transform: none; letter-spacing: 0;
+}
 .web-control { display: flex; flex-direction: column; gap: var(--sp-xs); }
 .web-control-label { font-size: 13px; color: var(--ink-secondary); }
 .web-swatches { display: flex; flex-wrap: wrap; gap: var(--sp-xs); }
@@ -2841,9 +2846,11 @@ html {
 /* Nền ca-rô: cho thấy khối KẾT THÚC ở đâu, nên đổi đệm/bo góc nhìn ra ngay
    thay vì chìm vào nền trắng. */
 .web-preview {
-  display: flex; align-items: center; justify-content: center;
-  min-height: 240px; padding: var(--sp-lg);
+  display: block;
+  min-height: 240px;
   border-radius: var(--rounded-md);
+  border: 1px solid var(--hairline);
+  overflow: hidden;
   background-image:
     linear-gradient(45deg, var(--canvas-soft) 25%, transparent 25%),
     linear-gradient(-45deg, var(--canvas-soft) 25%, transparent 25%),
@@ -2852,7 +2859,44 @@ html {
   background-size: 16px 16px;
   background-position: 0 0, 0 8px, 8px -8px, -8px 0;
 }
-.web-artifact { max-width: 100%; font-weight: 600; line-height: 1.4; }
+/* Thân trang có lề riêng để khung `.trang` không dính mép khung xem trước. */
+.web-preview > .web-page { margin: var(--sp-lg); }
+/* W4B-3F — XEM TRƯỚC LÀ MỘT TRANG, KHÔNG PHẢI MỘT Ô.
+   `.web-preview` thôi căn giữa: trang web bắt đầu từ MÉP TRÊN, và một khối căn
+   giữa theo chiều dọc chính là thứ khiến sân khấu đọc thành "ô trôi giữa khoảng
+   trống" (đo được: nội dung chỉ lấp 37% bề ngang). */
+.web-browser-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--rounded-sm) var(--rounded-sm) 0 0;
+  background: var(--canvas-soft);
+  border-bottom: 1px solid var(--hairline);
+}
+.web-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--hairline);
+}
+.web-url {
+  margin-left: var(--sp-xs);
+  font-size: 12px; color: var(--ink-faint);
+}
+
+/* Khung trang: chính là `.trang` trong bảng CSS bên dưới — cùng một thứ, một
+   cái học sinh NHÌN, một cái học sinh ĐỌC. */
+.web-page {
+  max-width: 100%;
+  line-height: 1.5;
+  transition: background-color 0.2s ease, padding 0.2s ease, border-radius 0.2s ease;
+}
+.web-page-heading { margin: 0; font-weight: 700; line-height: 1.25; }
+.web-page-paragraph { margin: var(--sp-sm) 0 0; }
+
+/* Hai bản chiếu của cùng một state, cạnh nhau ở rộng, xếp dọc ở hẹp. */
+.web-code-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--sp-md);
+}
 .web-css {
   margin: 0; padding: var(--sp-sm) var(--sp-md);
   border-radius: var(--rounded-sm);
@@ -2863,6 +2907,7 @@ html {
 /* Hẹp: xếp dọc — quan hệ vẫn đọc được, không giữ bố cục desktop. */
 @media (max-width: 860px) {
   .web-workspace { grid-template-columns: 1fr; }
+  .web-code-pair { grid-template-columns: 1fr; }
 }
 
 /* ── W4B-3B — HÀNG PHIÊN ĐANG MỞ (thay CỘT của W4B-2Z §29) ────────────────

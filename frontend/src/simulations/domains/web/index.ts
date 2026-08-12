@@ -1,7 +1,7 @@
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import { applyStyleChange, cssTextOf, isModified } from "./apply";
-import { CONTENT_MAX_LENGTH, DEFAULT_STYLE } from "./props";
+import { CONTENT_MAX_LENGTH, DEFAULT_STYLE, PARAGRAPH_MAX_LENGTH } from "./props";
 import type { WebConfig, WebState, WebStyle } from "./model";
 import { WebInspector, WebWorkspace } from "./ui";
 
@@ -20,10 +20,17 @@ function validateWebConfig(raw: unknown): ConfigResult<WebConfig> {
     return { ok: false, error: "Config không phải đối tượng JSON." };
   }
   const r = raw as Record<string, unknown>;
-  const content = typeof r.content === "string" ? r.content.trim() : "";
-  if (!content) return { ok: false, error: 'Thiếu "content" (nội dung khối).' };
-  if (content.length > CONTENT_MAX_LENGTH) {
-    return { ok: false, error: `"content" tối đa ${CONTENT_MAX_LENGTH} ký tự.` };
+  const heading = typeof r.heading === "string" ? r.heading.trim() : "";
+  if (!heading) return { ok: false, error: 'Thiếu "heading" (tiêu đề trang).' };
+  if (heading.length > CONTENT_MAX_LENGTH) {
+    return { ok: false, error: `"heading" tối đa ${CONTENT_MAX_LENGTH} ký tự.` };
+  }
+  if (r.paragraph !== undefined && typeof r.paragraph !== "string") {
+    return { ok: false, error: '"paragraph" phải là chuỗi.' };
+  }
+  const paragraph = typeof r.paragraph === "string" ? r.paragraph.trim() : "";
+  if (paragraph.length > PARAGRAPH_MAX_LENGTH) {
+    return { ok: false, error: `"paragraph" tối đa ${PARAGRAPH_MAX_LENGTH} ký tự.` };
   }
 
   const rawStyle = r.style;
@@ -38,21 +45,25 @@ function validateWebConfig(raw: unknown): ConfigResult<WebConfig> {
     if (!next) return { ok: false, error: `Thuộc tính "${k}" không hỗ trợ hoặc giá trị ngoài miền.` };
     style = next;
   }
-  return { ok: true, config: { content, style, notes: typeof r.notes === "string" ? r.notes : null } };
+  return {
+    ok: true,
+    config: { heading, paragraph, style, notes: typeof r.notes === "string" ? r.notes : null },
+  };
 }
 
 export function makeWebStyleModule(): SimulationModule<WebConfig, WebState> {
   return {
     id: "web.style_model",
     domain: "web",
-    title: "Thay đổi kiểu hiển thị (CSS)",
+    title: "Trang web và kiểu hiển thị (HTML/CSS)",
     interactionMode: "exploratory",
     supportedVisualModes: ["2d"],
 
     validateConfig: validateWebConfig,
 
     init: (config) => ({
-      content: config.content,
+      heading: config.heading,
+      paragraph: config.paragraph,
       style: { ...config.style },
       baseline: { ...config.style },
     }),
@@ -74,12 +85,13 @@ export function makeWebStyleModule(): SimulationModule<WebConfig, WebState> {
     narrate: (state) => ({
       text: isModified(state)
         ? "Em đang xem kết quả sau khi đổi. Bấm Về ban đầu để so sánh."
-        : "Đổi thuộc tính bên trái và quan sát khối bên phải đổi ngay.",
+        : "Trang bên phải gồm khung, tiêu đề và đoạn văn. Đổi thuộc tính bên trái để xem từng phần đổi theo.",
     }),
 
     getExplainContext: (state) => ({
       simulation_id: "web.style_model",
-      content: state.content,
+      heading: state.heading,
+      paragraph: state.paragraph,
       style: state.style,
       css: cssTextOf(state.style),
       modified: isModified(state),

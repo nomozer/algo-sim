@@ -44,7 +44,16 @@ describe("(1)(2)(5)(6) visibility — metadata tường minh, không lọc tiêu
     expect(ids).not.toContain("gen-packet");
     // 8 algorithm + logic + binary + network(x2) + web = 13 mẫu công khai
     expect(pub).toHaveLength(publicCatalog().length);
-    expect(ids).toContain("gen-web"); // HTML/CSS là chương trình Tin học (T12 CĐ4)
+    /* W4B-3F — bài HTML/CSS công khai nay là `web-intro-page` (chủ sở hữu
+       `web.style_model`), KHÔNG còn là `gen-web`. Bản cũ là một
+       `reveal_sequence` ba bước — một trục thời gian bịa ra cho HTML, và đó
+       chính là thứ W4B-2Z đã gỡ cho phần CSS rồi bỏ sót phần cấu trúc.
+       `GENERIC_WEB_SPEC` vẫn sống làm fixture của engine generic. */
+    expect(ids).toContain("web-intro-page"); // HTML/CSS là chương trình Tin học
+    expect(ids, "bài học HTML giả-từng-bước quay lại danh mục công khai")
+      .not.toContain("gen-web");
+    // Generic vẫn phải có mẫu công khai THẬT — quy tắc hợp thành, không bước giả.
+    expect(ids).toContain("gen-rule-library");
     expect(ids).toContain("network-encapsulation"); // M10 flagship (Thư viện)
   });
 

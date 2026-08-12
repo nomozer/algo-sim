@@ -4,7 +4,10 @@
  * luật, đúng khuôn validate hai tầng của mọi domain khác.
  */
 export type WebProp =
-  | "backgroundColor" | "color" | "fontSize" | "padding" | "borderRadius";
+  | "backgroundColor" | "color" | "fontSize" | "padding" | "borderRadius"
+  /* W4B-3F — trang có CẤU TRÚC: tiêu đề có màu và cỡ RIÊNG, nên đổi cỡ chữ
+     tiêu đề khác việc đổi cỡ chữ đoạn văn. Đó chính là bài học phân cấp. */
+  | "headingColor" | "headingSize";
 
 export const COLOR_CHOICES = [
   { value: "#ffffff", label: "Trắng" },
@@ -25,15 +28,17 @@ export const TEXT_COLOR_CHOICES = [
 ] as const;
 
 export const NUMERIC_RANGE = {
-  fontSize: { min: 12, max: 48, step: 2, unit: "px", label: "Cỡ chữ" },
+  headingSize: { min: 16, max: 56, step: 2, unit: "px", label: "Cỡ chữ tiêu đề" },
+  fontSize: { min: 12, max: 48, step: 2, unit: "px", label: "Cỡ chữ đoạn văn" },
   padding: { min: 0, max: 48, step: 4, unit: "px", label: "Đệm trong" },
   borderRadius: { min: 0, max: 40, step: 2, unit: "px", label: "Bo góc" },
 } as const;
 
-export const NUMERIC_PROPS = ["fontSize", "padding", "borderRadius"] as const;
+export const NUMERIC_PROPS = ["headingSize", "fontSize", "padding", "borderRadius"] as const;
 
-/** Giới hạn nội dung — khớp `_WEB_CONTENT_MAX` của validator BE. */
+/** Giới hạn nội dung — khớp `_WEB_CONTENT_MAX` / `_WEB_PARAGRAPH_MAX` của BE. */
 export const CONTENT_MAX_LENGTH = 120;
+export const PARAGRAPH_MAX_LENGTH = 240;
 
 /**
  * Kiểu mặc định khi spec không nói gì. Ở ĐÂY vì đây là chủ sở hữu MIỀN GIÁ TRỊ:
@@ -47,6 +52,8 @@ export const CONTENT_MAX_LENGTH = 120;
 export const DEFAULT_STYLE = {
   backgroundColor: COLOR_CHOICES[4].value,   // Xanh dương nhạt
   color: TEXT_COLOR_CHOICES[0].value,        // Đen
+  headingColor: TEXT_COLOR_CHOICES[0].value, // Đen
+  headingSize: 28,
   fontSize: 20,
   padding: 16,
   borderRadius: 8,

@@ -675,7 +675,24 @@ def validate_encapsulation_config(raw) -> tuple[dict | None, str | None]:
 # `frontend/src/simulations/domains/web/props.ts` (kiểm hai tầng).
 _WEB_BG_COLORS = ("#ffffff", "#fde68a", "#fca5a5", "#a7f3d0", "#bfdbfe", "#e9d5ff", "#1f2937")
 _WEB_TEXT_COLORS = ("#1f2937", "#b91c1c", "#1d4ed8", "#047857", "#ffffff")
-_WEB_NUMERIC = {"fontSize": (12, 48), "padding": (0, 48), "borderRadius": (0, 40)}
+# W4B-3F — TRANG CÓ CẤU TRÚC, KHÔNG CÒN MỘT KHỐI.
+#
+# Trước wave này miền chỉ mô tả MỘT khối chữ, nên bài "HTML/CSS" không có gì để
+# nói về quan hệ THẺ ↔ HIỂN THỊ — thứ mà `html_css` (T12 CĐ4) thật sự dạy. Một
+# div không có tổ tiên, không có anh em, và bảng CSS chỉ ra đúng một luật.
+#
+# Nay trang có `h1` và `p` nằm trong một khung, nên:
+#   - sân khấu ĐỌC RA là một trang web, không phải một ô trôi giữa khoảng trống;
+#   - bảng CSS có BA bộ chọn thật (`.page`, `.page h1`, `.page p`);
+#   - đổi cỡ chữ tiêu đề và cỡ chữ đoạn văn là hai việc khác nhau — đó chính là
+#     bài học về phân cấp.
+# Vẫn ĐÓNG hoàn toàn: thêm hai thuộc tính, không mở thêm một đường tự do nào.
+_WEB_NUMERIC = {
+    "fontSize": (12, 48),        # .page p
+    "headingSize": (16, 56),     # .page h1
+    "padding": (0, 48),
+    "borderRadius": (0, 40),
+}
 # Mặc định phải TRÙNG với `props.ts::DEFAULT_STYLE` — không chỉ cho gọn: mẫu
 # offline chỉ đi qua validate FE, đề thật đi qua cả hai; hai bảng mặc định lệch
 # nhau nghĩa là CÙNG một config cho ra hai khối trông khác nhau.
@@ -684,9 +701,12 @@ _WEB_NUMERIC = {"fontSize": (12, 48), "padding": (0, 48), "borderRadius": (0, 40
 # đầu tiên của học sinh là đi tìm đối tượng, không phải quan sát.
 _WEB_DEFAULT_STYLE = {
     "backgroundColor": "#bfdbfe", "color": "#1f2937",
+    "headingColor": "#1f2937", "headingSize": 28,
     "fontSize": 20, "padding": 16, "borderRadius": 8,
 }
 _WEB_CONTENT_MAX = 120
+# Đoạn văn dài hơn tiêu đề — nhưng vẫn ĐÓNG, không phải ô nhập tự do.
+_WEB_PARAGRAPH_MAX = 240
 
 
 def validate_web_style_config(raw) -> tuple[dict | None, str | None]:
@@ -705,11 +725,17 @@ def validate_web_style_config(raw) -> tuple[dict | None, str | None]:
     if forbidden:
         return None, forbidden
 
-    content = raw.get("content")
-    if not isinstance(content, str) or not content.strip():
-        return None, '"content" phải là chuỗi không rỗng.'
-    if len(content) > _WEB_CONTENT_MAX:
-        return None, f'"content" tối đa {_WEB_CONTENT_MAX} ký tự.'
+    heading = raw.get("heading")
+    if not isinstance(heading, str) or not heading.strip():
+        return None, '"heading" phải là chuỗi không rỗng (tiêu đề trang).'
+    if len(heading) > _WEB_CONTENT_MAX:
+        return None, f'"heading" tối đa {_WEB_CONTENT_MAX} ký tự.'
+
+    paragraph = raw.get("paragraph", "")
+    if not isinstance(paragraph, str):
+        return None, '"paragraph" phải là chuỗi.'
+    if len(paragraph) > _WEB_PARAGRAPH_MAX:
+        return None, f'"paragraph" tối đa {_WEB_PARAGRAPH_MAX} ký tự.'
 
     style = raw.get("style", {})
     if style is None:
@@ -722,9 +748,9 @@ def validate_web_style_config(raw) -> tuple[dict | None, str | None]:
         if key == "backgroundColor":
             if value not in _WEB_BG_COLORS:
                 return None, f'"backgroundColor" phải thuộc bảng màu: {", ".join(_WEB_BG_COLORS)}.'
-        elif key == "color":
+        elif key in ("color", "headingColor"):
             if value not in _WEB_TEXT_COLORS:
-                return None, f'"color" phải thuộc bảng màu chữ: {", ".join(_WEB_TEXT_COLORS)}.'
+                return None, f'"{key}" phải thuộc bảng màu chữ: {", ".join(_WEB_TEXT_COLORS)}.'
         elif key in _WEB_NUMERIC:
             lo, hi = _WEB_NUMERIC[key]
             if not isinstance(value, int) or isinstance(value, bool) or not lo <= value <= hi:
@@ -737,7 +763,12 @@ def validate_web_style_config(raw) -> tuple[dict | None, str | None]:
         out[key] = value
 
     notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
-    return {"content": content.strip(), "style": out, "notes": notes}, None
+    return {
+        "heading": heading.strip(),
+        "paragraph": paragraph.strip(),
+        "style": out,
+        "notes": notes,
+    }, None
 
 
 def web_style_domain() -> dict:
@@ -757,4 +788,5 @@ def web_style_domain() -> dict:
         "numeric_bounds": {k: {"min": lo, "max": hi} for k, (lo, hi) in _WEB_NUMERIC.items()},
         "defaults": dict(_WEB_DEFAULT_STYLE),
         "content_max_length": _WEB_CONTENT_MAX,
+        "paragraph_max_length": _WEB_PARAGRAPH_MAX,
     }

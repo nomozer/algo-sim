@@ -17,21 +17,30 @@ export type { WebProp };
  * `eval`, không `new Function`, không iframe, không JS. Tên lạ ⇒ no-op.
  */
 export interface WebStyle {
+  /** `.trang` — khung trang */
   backgroundColor: string;
-  color: string;
-  fontSize: number;
   padding: number;
   borderRadius: number;
+  /** `.trang h1` — tiêu đề */
+  headingColor: string;
+  headingSize: number;
+  /** `.trang p` — đoạn văn */
+  color: string;
+  fontSize: number;
 }
 
 export interface WebConfig {
-  content: string;
+  /** `<h1>` — tiêu đề trang */
+  heading: string;
+  /** `<p>` — đoạn văn (có thể rỗng) */
+  paragraph: string;
   style: WebStyle;
   notes: string | null;
 }
 
 export interface WebState {
-  content: string;
+  heading: string;
+  paragraph: string;
   style: WebStyle;
   /** Bản gốc đã validate — "Về ban đầu" là phép toán, không phải undo log. */
   baseline: WebStyle;

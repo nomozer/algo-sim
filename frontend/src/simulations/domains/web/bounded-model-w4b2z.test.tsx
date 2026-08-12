@@ -24,7 +24,8 @@ import type { WebConfig, WebState } from "./model";
 const mod = makeWebStyleModule();
 
 const okConfig = (over: Record<string, unknown> = {}) => ({
-  content: "Chào các bạn",
+  heading: "Chào các bạn",
+  paragraph: "Đoạn văn giới thiệu ngắn.",
   style: { backgroundColor: "#fde68a", fontSize: 24 },
   ...over,
 });
@@ -39,7 +40,7 @@ const initState = (): WebState => {
 describe("W4B-2Z · tập thuộc tính ĐÓNG", () => {
   it("thuộc tính ngoài danh sách ⇒ null (fail-closed), không âm thầm bỏ qua", () => {
     const s = initState().style;
-    for (const bad of ["position", "content", "background", "onclick", "__proto__", "src"]) {
+    for (const bad of ["position", "heading", "background", "onclick", "__proto__", "src"]) {
       expect(applyStyleChange(s, bad, "absolute"), bad).toBeNull();
     }
   });
@@ -104,18 +105,20 @@ describe("W4B-2Z · một cổng, hai lối vào", () => {
     }
   });
 
-  it("config thiếu khoá ⇒ điền mặc định, config LUÔN đủ năm thuộc tính", () => {
-    const r = mod.validateConfig({ content: "A" });
+  it("config thiếu khoá ⇒ điền mặc định, config LUÔN đủ bảy thuộc tính", () => {
+    const r = mod.validateConfig({ heading: "A" });
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(Object.keys((r.config as WebConfig).style).sort()).toEqual(
-      ["backgroundColor", "borderRadius", "color", "fontSize", "padding"],
+      /* W4B-3F: +2 thuộc tính cho `.trang h1`. Trang có cấu trúc thì tiêu đề
+         và đoạn văn phải chỉnh được RIÊNG — đó chính là bài học phân cấp. */
+      ["backgroundColor", "borderRadius", "color", "fontSize", "headingColor", "headingSize", "padding"],
     );
   });
 
   it("content rỗng hoặc quá dài ⇒ từ chối (hệ không tự nghĩ ra nội dung)", () => {
-    expect(mod.validateConfig({ content: "   " }).ok).toBe(false);
-    expect(mod.validateConfig({ content: "x".repeat(121) }).ok).toBe(false);
+    expect(mod.validateConfig({ heading: "   " }).ok).toBe(false);
+    expect(mod.validateConfig({ heading: "x".repeat(121) }).ok).toBe(false);
   });
 
   it("hành động của học sinh cũng bị chặn y hệt — state KHÔNG đổi", () => {
@@ -157,11 +160,13 @@ describe("W4B-2Z · KHÔNG phải code_experiment", () => {
     }
   });
 
-  it("state KHÔNG mang mã nguồn — chỉ nội dung + năm thuộc tính đã khai", () => {
+  it("state KHÔNG mang mã nguồn — chỉ nội dung + bảy thuộc tính đã khai", () => {
     const s = initState();
-    expect(Object.keys(s).sort()).toEqual(["baseline", "content", "style"]);
+    expect(Object.keys(s).sort()).toEqual(["baseline", "heading", "paragraph", "style"]);
     expect(Object.keys(s.style).sort()).toEqual(
-      ["backgroundColor", "borderRadius", "color", "fontSize", "padding"],
+      /* W4B-3F: +2 thuộc tính cho `.trang h1`. Trang có cấu trúc thì tiêu đề
+         và đoạn văn phải chỉnh được RIÊNG — đó chính là bài học phân cấp. */
+      ["backgroundColor", "borderRadius", "color", "fontSize", "headingColor", "headingSize", "padding"],
     );
   });
 

@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -27,10 +28,23 @@ import { describe, expect, it } from "vitest";
  * trình duyệt giữ — CSS không kiểm được bằng cách đọc chuỗi.
  */
 
+const SRC = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+
+/** Mọi nguồn `.ts/.tsx` không-test dưới `src/` — chủ sở hữu có thể ở bất kỳ đâu. */
+function walkSrc(dir: string = SRC, out: string[] = []): string[] {
+  for (const n of readdirSync(dir)) {
+    const full = join(dir, n);
+    if (statSync(full).isDirectory()) walkSrc(full, out);
+    else if (/\.tsx?$/.test(n) && !/\.test\.tsx?$/.test(n)) out.push(full);
+  }
+  return out;
+}
+
+const read = (f: string) =>
+  readFileSync(f, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+
 const css = readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
-const tsx = readFileSync(new URL("./SimulationControls.tsx", import.meta.url), "utf-8")
-  .replace(/\/\*[\s\S]*?\*\//g, "")
-  .replace(/^\s*\/\/.*$/gm, "");
+const tsx = read(join(SRC, "components", "SimulationControls.tsx"));
 
 /** Thân của một rule CSS theo selector chính xác. */
 function ruleBody(selector: string): string {
@@ -55,6 +69,30 @@ describe("W4B-3E · lệnh đẩy thuộc về VÙNG, không thuộc về thành
     const inControls = pushers.filter((s) => s.includes("control") || s.includes("player"));
     for (const s of inControls) {
       expect(s, `lệnh đẩy đặt trên thành viên: ${s}`).toContain("control-zone-aux");
+    }
+  });
+
+  it("KHÔNG chủ sở hữu nào của `.player-controls` đẩy bằng INLINE STYLE", () => {
+    /* BLAST RADIUS — đây là chỗ Pattern Expansion trả công.
+     *
+     * `.player-controls` không chỉ do `SimulationControls` dựng: domain generic
+     * dùng lại class đó cho dải Quan sát/Chỉnh sửa của nó, và nó mang đúng lỗi
+     * cũ dưới dạng inline `style={{ marginLeft: "auto" }}` trên MỘT NÚT. Đo
+     * được: khoảng hở 1390px @1920 ở `gen-rule-library` — lớn hơn cả lỗi ban
+     * đầu, và guard chỉ-quét-CSS không thấy gì.
+     *
+     * Muốn tách nhóm thì tách bằng NHÓM (một phần tử bao), không bằng lề của
+     * một thành viên. */
+    const owners = walkSrc().filter((f) => read(f).includes('className="player-controls"'));
+    expect(owners.length, "không tìm thấy chủ sở hữu nào — phép dò hỏng?").toBeGreaterThan(1);
+    for (const f of owners) {
+      const src = read(f);
+      for (const m of src.matchAll(/marginLeft:\s*["']auto["']/g)) {
+        // Chỉ cấm khi nó nằm trên một NÚT/thành viên, không phải trên khối bao.
+        const before = src.slice(Math.max(0, m.index - 220), m.index);
+        expect(before, `${f}: thành viên tự đẩy trong dải điều khiển`)
+          .not.toMatch(/<button[^>]*$/);
+      }
     }
   });
 

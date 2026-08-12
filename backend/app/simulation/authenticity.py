@@ -116,7 +116,8 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
     # `css_text_derived_from_state` khoá đúng chỗ dễ trôi nhất: nếu chuỗi CSS
     # hiển thị được lưu riêng thì sẽ có HAI nguồn sự thật lệch nhau.
     "web.style_model": AuthenticityContract(
-        required_state_fields=("content", "style", "baseline"),
+        # W4B-3F: trang có CẤU TRÚC (h1 + p), nên state phải mang đủ hai vùng chữ.
+        required_state_fields=("heading", "paragraph", "style", "baseline"),
         required_trace_events=(),
         required_result_fields=("style",),
         renderer_semantic_requirements=(

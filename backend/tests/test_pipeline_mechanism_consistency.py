@@ -378,7 +378,9 @@ def _web_analysis(proc=_WEB_PROC):
 
 def _web_spec():
     return json.dumps({
-        "content": "Chào mừng đến với lớp 12A1",
+        # W4B-3F: trang có CẤU TRÚC — tiêu đề + đoạn văn, không còn một khối chữ.
+        "heading": "Chào mừng đến với lớp 12A1",
+        "paragraph": "Đây là trang giới thiệu của lớp.",
         "style": {"backgroundColor": "#fde68a", "fontSize": 24},
         "notes": None,
     })

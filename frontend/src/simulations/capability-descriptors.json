@@ -1202,7 +1202,8 @@
       "config_contract_version": "web-style-1",
       "authenticity": {
         "required_state_fields": [
-          "content",
+          "heading",
+          "paragraph",
           "style",
           "baseline"
         ],
@@ -1295,6 +1296,10 @@
           "min": 12,
           "max": 48
         },
+        "headingSize": {
+          "min": 16,
+          "max": 56
+        },
         "padding": {
           "min": 0,
           "max": 48
@@ -1307,11 +1312,14 @@
       "defaults": {
         "backgroundColor": "#bfdbfe",
         "color": "#1f2937",
+        "headingColor": "#1f2937",
+        "headingSize": 28,
         "fontSize": 20,
         "padding": 16,
         "borderRadius": 8
       },
-      "content_max_length": 120
+      "content_max_length": 120,
+      "paragraph_max_length": 240
     }
   }
 }

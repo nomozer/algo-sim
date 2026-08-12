@@ -187,7 +187,15 @@ export const GENERIC_REVEAL_SPEC = {
   ],
 };
 
-/** M7.12: nội dung có CẤU TRÚC (container/heading/paragraph) — hình thành từng bước. */
+/**
+ * M7.12: nội dung có CẤU TRÚC (container/heading/paragraph) — hình thành từng bước.
+ *
+ * W4B-3F — NAY LÀ FIXTURE CỦA ENGINE GENERIC, KHÔNG CÒN LÀ BÀI HỌC CÔNG KHAI.
+ * Nó vẫn chứng minh `reveal_sequence` chạy đúng (`generic.test.ts`), nhưng nó
+ * thôi được bày cho học sinh dưới tên "Trang giới thiệu": HTML không hình thành
+ * theo bước, và dựng nó thành "Bước 1/3" là bịa một trục thời gian. Bài học
+ * HTML/CSS thật nay thuộc `web.style_model` (xem mẫu `web-intro-page`).
+ */
 export const GENERIC_WEB_SPEC = {
   dsl_version: "1.0",
   title: "Trang giới thiệu (từng bước)",
@@ -215,6 +223,40 @@ export const GENERIC_WEB_SPEC = {
   ],
 };
 
+/**
+ * W4B-3F — MẪU CÔNG KHAI THẬT của `generic.rule_scene`.
+ *
+ * Trước wave này bài generic duy nhất bày cho học sinh là "Trang giới thiệu
+ * (từng bước)" — một `reveal_sequence` bịa trục thời gian cho HTML. Gỡ nó đi
+ * thì target mất mẫu công khai, và guard `library_discoverable ⟹ có mẫu` đỏ
+ * ĐÚNG: một năng lực bày trong Thư viện mà không có gì để mở là một lời hứa
+ * suông.
+ *
+ * Thay bằng thứ generic LÀM ĐƯỢC THẬT: quy tắc hợp thành. Học sinh gạt các điều
+ * kiện, engine tất định tính lại kết luận — không bước giả, không trục thời
+ * gian. Đúng đơn vị `access_control` (T10 B9 · T11 B15) và cùng cơ chế
+ * `boolean_composition` mà catalog đã khai.
+ */
+export const GENERIC_RULE_SPEC = {
+  dsl_version: "1.0",
+  title: "Quy tắc mượn sách thư viện",
+  objects: [
+    { id: "the", type: "switch", value: 1, x: 12, y: 24, label: "Có thẻ thư viện" },
+    { id: "no_qua_han", type: "switch", value: 0, x: 12, y: 52, label: "Đang nợ sách quá hạn" },
+    { id: "khong_no", type: "lamp", x: 44, y: 52, label: "Không nợ sách" },
+    { id: "duoc_muon", type: "lamp", x: 84, y: 38, label: "Được mượn sách" },
+  ],
+  rules: [
+    { type: "boolean", op: "not", inputs: ["no_qua_han"], target: "khong_no" },
+    { type: "boolean", op: "and", inputs: ["the", "khong_no"], target: "duoc_muon" },
+  ],
+  interactions: [
+    { type: "toggle", target: "the" },
+    { type: "toggle", target: "no_qua_han" },
+  ],
+  processes: [],
+};
+
 function genericEnvelope(title: string, spec: object): SimulationEnvelope {
   return {
     status: "ok",
@@ -239,8 +281,13 @@ OFFLINE_SAMPLES.push(
       visual_mode: "2d", title: "Đổi màu nền và cỡ chữ (CSS)",
       description: "Chỉnh thuộc tính, khối bên phải đổi ngay",
       config: {
-        content: "Xin chào, đây là khối của em!",
-        style: { backgroundColor: "#bfdbfe", color: "#1f2937", fontSize: 20, padding: 16, borderRadius: 8 },
+        heading: "Xin chào, đây là trang của em!",
+        paragraph: "Đổi thuộc tính bên trái để xem khung, tiêu đề và đoạn văn đổi theo.",
+        style: {
+          backgroundColor: "#bfdbfe", color: "#1f2937",
+          headingColor: "#1f2937", headingSize: 28,
+          fontSize: 20, padding: 16, borderRadius: 8,
+        },
         notes: null,
       },
       notes: null,
@@ -253,8 +300,13 @@ OFFLINE_SAMPLES.push(
       visual_mode: "2d", title: "Trang trí thẻ giới thiệu (CSS)",
       description: "Cùng cơ chế, khác dữ liệu đã kiểm định",
       config: {
-        content: "Nguyễn Văn A — Lớp 11A1",
-        style: { backgroundColor: "#fde68a", color: "#b91c1c", fontSize: 24, padding: 24, borderRadius: 20 },
+        heading: "Nguyễn Văn A — Lớp 11A1",
+        paragraph: "Sở thích: lập trình, đọc sách và chơi cờ vua.",
+        style: {
+          backgroundColor: "#fde68a", color: "#1f2937",
+          headingColor: "#b91c1c", headingSize: 32,
+          fontSize: 18, padding: 24, borderRadius: 20,
+        },
         notes: null,
       },
       notes: null,
@@ -277,6 +329,11 @@ OFFLINE_SAMPLES.push(
     visibility: "internal_fixture",
   },
   {
+    id: "gen-rule-library",
+    envelope: genericEnvelope("Quy tắc mượn sách thư viện", GENERIC_RULE_SPEC),
+    preview: "generic-rules",
+  },
+  {
     id: "gen-packet",
     envelope: genericEnvelope("Gói tin (tổng quát)", GENERIC_PACKET_SPEC),
     visibility: "internal_fixture",
@@ -288,11 +345,34 @@ OFFLINE_SAMPLES.push(
     envelope: genericEnvelope("Dựng tam giác ABC (từng bước)", GENERIC_REVEAL_SPEC),
     visibility: "internal_fixture",
   },
-  // Trang web thuộc chương trình Tin học (T12 CĐ4 HTML/CSS) → public; trung
-  // thực về bản chất: progressive structural visualization ("từng bước").
+  /* W4B-3F — "Trang giới thiệu" RỜI KHỎI `generic.rule_scene`.
+   *
+   * Bài này từng là một `reveal_sequence` ba bước: hiện khung → hiện tiêu đề →
+   * hiện đoạn văn. Đó là một TRỤC THỜI GIAN BỊA RA — HTML không "chạy" theo
+   * bước, và W4B-2Z đã gỡ đúng lỗi đó cho phần CSS rồi để lại phần cấu trúc.
+   * Hệ quả đo được: sân khấu 1622px chỉ lấp 37% bề ngang bằng MỘT ô ở bước 1.
+   *
+   * Chủ sở hữu đúng là `web.style_model` — nay nó mô hình hoá một TRANG (khung
+   * + h1 + p), nên cùng nội dung ấy thành thao tác thật: đổi thuộc tính, xem
+   * trang đổi ngay, đọc được bộ chọn nào ảnh hưởng phần nào. */
   {
-    id: "gen-web",
-    envelope: genericEnvelope("Trang giới thiệu (từng bước)", GENERIC_WEB_SPEC),
+    id: "web-intro-page",
+    envelope: {
+      status: "ok", simulation_id: "web.style_model", domain: "web",
+      visual_mode: "2d", title: "Trang giới thiệu bản thân (HTML/CSS)",
+      description: "Khung trang, tiêu đề, đoạn văn — đổi thuộc tính, xem đổi ngay",
+      config: {
+        heading: "Xin chào, tôi là học sinh lớp 11",
+        paragraph: "Đây là đoạn văn giới thiệu sở thích của tôi: lập trình, đọc sách và chơi cờ vua.",
+        style: {
+          backgroundColor: "#ffffff", color: "#1f2937",
+          headingColor: "#1d4ed8", headingSize: 32,
+          fontSize: 18, padding: 32, borderRadius: 12,
+        },
+        notes: null,
+      },
+      notes: null,
+    },
     preview: "web-structure",
   },
 );

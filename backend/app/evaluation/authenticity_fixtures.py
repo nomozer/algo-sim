@@ -54,12 +54,12 @@ _P_NONBIN = "positional_representation.non_binary_base"
 OK_ARCHETYPES = ("direct", "paraphrase", "changed_input", "boundary")
 
 
-def _web_cfg(content: str, **style: object) -> str:
+def _web_cfg(heading: str, paragraph: str = "", **style: object) -> str:
     """Config web.style_model (W4B-2Z) — đúng schema validator BE.
 
     `style` chỉ nhận khoá thuộc tập ĐÓNG; fixture truyền khoá lạ sẽ bị chính
     validator production chặn (fixture không có đường vòng riêng)."""
-    return _j({"content": content, "style": style, "notes": None})
+    return _j({"heading": heading, "paragraph": paragraph, "style": style, "notes": None})
 
 
 def _baseconv_cfg(source: int, target: int, value: str) -> str:

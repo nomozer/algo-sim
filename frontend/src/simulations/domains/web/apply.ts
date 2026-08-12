@@ -15,9 +15,9 @@ export function applyStyleChange(
     return typeof value === "string" && COLOR_CHOICES.some((c) => c.value === value)
       ? { ...style, backgroundColor: value } : null;
   }
-  if (name === "color") {
+  if (name === "color" || name === "headingColor") {
     return typeof value === "string" && TEXT_COLOR_CHOICES.some((c) => c.value === value)
-      ? { ...style, color: value } : null;
+      ? { ...style, [name]: value } : null;
   }
   if ((NUMERIC_PROPS as readonly string[]).includes(name)) {
     if (typeof value !== "number" || !Number.isInteger(value)) return null;
@@ -33,6 +33,8 @@ export function applyStyleChange(
 const CSS_NAME: Record<WebProp, string> = {
   backgroundColor: "background-color",
   color: "color",
+  headingColor: "color",
+  headingSize: "font-size",
   fontSize: "font-size",
   padding: "padding",
   borderRadius: "border-radius",
