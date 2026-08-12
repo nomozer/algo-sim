@@ -1,4 +1,5 @@
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
@@ -142,5 +143,71 @@ describe("W4B-3A §3 · lối vào suy từ capability", () => {
         expect(entry.label, `${e.simId}: nhãn lộ định danh kỹ thuật`).not.toMatch(/[a-z]+_[a-z]+|\./);
       }
     }
+  });
+});
+
+/* ══ 4. RENDERER KHÔNG ĐƯỢC GHI VÀO STATE ════════════════════════════════ */
+
+describe("W4B-3F §4 · mọi biến đổi đi qua `module.apply`, không có đường tắt", () => {
+  it("KHÔNG renderer miền nào GHI THẲNG vào state", () => {
+    /* LỖ HỔNG DO TIÊM LỖI BẮT ĐƯỢC, không phải phòng xa.
+     *
+     * Đổi `dispatch({ type: "set_param" })` trong renderer web thành
+     *     (state.style as Record<string, unknown>)[name] = value;
+     * đi lọt TOÀN BỘ suite. Lý do nó im: state bị sửa TẠI CHỖ nên mọi khẳng
+     * định đọc lại state vẫn thấy "đúng" — trong khi store không hề biết gì,
+     * nên không re-render, không vào phiên, không vào lịch sử. Đây chính là bất
+     * biến #6 (renderer không sở hữu sự thật ngữ nghĩa) và trước wave này không
+     * có guard nào canh nó.
+     *
+     * Quét theo TỪNG DÒNG: đơn giản hơn và không có bẫy khớp qua nhiều dòng.
+     */
+    const files: string[] = [];
+    const walk = (d: string) => {
+      for (const n of readdirSync(d)) {
+        const full = join(d, n);
+        if (statSync(full).isDirectory()) walk(full);
+        else if (/\.tsx?$/.test(n) && !/\.test\.tsx?$/.test(n)) files.push(full);
+      }
+    };
+    walk(new URL("./domains", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
+    expect(files.length, "không quét được file nào — phép dò hỏng?").toBeGreaterThan(5);
+
+    /** Một DÒNG có ghi vào `state` KHÔNG — xét VẾ TRÁI của phép gán.
+     *
+     * Bản đầu quét cả dòng và kêu oan ba chỗ: `base[id] = state.base[id]` (ghi
+     * vào `base`, ĐỌC state — hợp lệ) và hai dòng `state[n] = 1` trong
+     * `validate.ts`, nơi `state` là một BIẾN CỤC BỘ dò chu trình, không liên
+     * quan gì tới state của engine. Guard kêu oan là guard sẽ bị tắt.
+     */
+    const writesToState = (line: string): boolean => {
+      const eq = line.search(/[^=!<>]=(?![=>])/);
+      if (eq < 0) return false;
+      const lhs = line.slice(0, eq + 1).trim();
+      return /^\(?\s*state\b/.test(lhs);
+    };
+
+    /** NGOẠI LỆ KHAI TƯỜNG MINH: file tự khai một biến cục bộ tên `state`. */
+    const hasLocalState = (src: string) => /\b(?:const|let|var)\s+state\b/.test(src);
+
+    const offenders: string[] = [];
+    for (const f of files) {
+      const src = readFileSync(f, "utf-8")
+        .replace(/\/\*[\s\S]*?\*\//g, "")
+        .replace(/^\s*\/\/.*$/gm, "");
+      /* NGOẠI LỆ KHAI TƯỜNG MINH: file tự khai một biến CỤC BỘ tên `state`
+         (vd bản đồ dò chu trình trong `validate.ts`) — nó không liên quan gì
+         tới state của engine, và một guard kêu oan là một guard sẽ bị tắt. */
+      if (hasLocalState(src)) continue;
+      for (const line of src.split("\n")) {
+        if (writesToState(line)) {
+          offenders.push(`${f.split(/[\/]/).slice(-2).join("/")}: ${line.trim()}`);
+        }
+      }
+    }
+    expect(
+      offenders,
+      `renderer ghi thẳng vào state — bỏ qua module.apply:\n${offenders.join("\n")}`,
+    ).toEqual([]);
   });
 });

@@ -196,4 +196,31 @@ describe("W4B-2Z · không bịa ra trục thời gian", () => {
     // thuộc tính hiện tại phải nhìn thấy được ở chính chỗ đang điều khiển
     expect(html).toContain("#fde68a");
   });
+
+  it("XEM TRƯỚC vẽ ĐÚNG state — renderer không được có nguồn sự thật riêng", () => {
+    /* W4B-3F — LỖ HỔNG DO TIÊM LỖI BẮT ĐƯỢC, không phải phòng xa.
+     *
+     * Hợp đồng authenticity đã khai `artifact_reflects_style_state` từ W4B-2Z,
+     * nhưng KHÔNG test nào kiểm nó. Tiêm lỗi một dòng vào renderer —
+     *     const s = { ...state.style, headingSize: 40 };
+     * — đi lọt trọn vẹn 23 test: học sinh kéo thanh trượt lên 28, trang vẽ 40,
+     * và bảng CSS in ra 40 nên hai bản chiếu vẫn "khớp nhau" trong khi cả hai
+     * cùng SAI so với state. Đó đúng là ca xấu nhất: sai một cách nhất quán.
+     *
+     * Nên khoá vào QUAN HỆ state → pixel: mọi giá trị số/màu của state phải xuất
+     * hiện trong HTML đã dựng, và giá trị KHÔNG thuộc state thì không được. */
+    const s = initState();
+    const html = renderToString(
+      <mod.Workspace state={s} dispatch={() => {}} config={{} as never} busy={false} />,
+    );
+    for (const [k, v] of Object.entries(s.style)) {
+      const needle = typeof v === "number" ? `${v}px` : String(v);
+      expect(html, `xem trước không phản ánh ${k}=${needle}`).toContain(needle);
+    }
+    /* Đối chứng: một giá trị hợp lệ về miền nhưng KHÔNG phải state hiện tại thì
+       không được xuất hiện — nếu không, phép dò trên sẽ xanh với mọi thứ. */
+    const unused = s.style.headingSize === 40 ? "44px" : "40px";
+    expect(html, `xem trước in ${unused} — giá trị này không có trong state`)
+      .not.toContain(unused);
+  });
 });
