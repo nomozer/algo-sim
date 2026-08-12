@@ -934,6 +934,48 @@ PARTIAL · 2 UNSUPPORTED · 7 NOT_SIMULATION_SUITABLE.
 **`CURRICULUM_SUPPORT_PARTIAL` GIỮ NGUYÊN** (7 đơn vị in-scope còn dang dở).
 **`LEARNER_IMPACT_NOT_EVALUATED` GIỮ NGUYÊN.**
 
+## W4B-3E…3F — dải điều khiển có bố cục · bài HTML là một trang (2026-08-12)
+
+### 3E — dải điều khiển
+
+Đo trước khi sửa: khoảng hở **633px** giữa hai phần tử CÙNG hàng @1920 (1536:
+421 · 1366: 251). Hở **scale theo bề rộng màn hình** ⇒ nó là CHỖ THỪA, không
+phải khoảng cách ai chọn. Nguyên nhân: `.speed-control { margin-left:auto }` —
+một THÀNH VIÊN quyết bố cục cả hàng, mọi thứ sau nó bị đẩy theo.
+
+Nay ba VÙNG tường minh (transport · đặt lại+bước · tốc độ+năng lực) và thanh tua
+nằm TRONG hàng với `flex:1` để **ăn hết chỗ thừa** — ba vùng thôi thì chỉ DỜI
+chỗ trống (633 → 796). Kết quả: desktop **1 hàng, hở 16px**; 768 **2 tầng**
+(trước 3). Chữ trong dải 76 → 48; câu phím tắt và câu "mô phỏng khám phá" rời
+khỏi hàng nhưng **còn nguyên ở `aria-label`**.
+
+**Cùng lỗi ở chủ sở hữu thứ hai**: domain generic dùng lại class
+`.player-controls` và có `marginLeft:"auto"` trên MỘT NÚT — hở **1390px** @1920,
+lớn hơn lỗi gốc, và guard chỉ-quét-CSS không thấy. Guard nay đi qua MỌI file
+dựng `.player-controls`.
+
+### 3F — bài HTML/CSS
+
+Ảnh "Trang giới thiệu (từng bước)" **không phải** `web.style_model` — nó là
+`generic.rule_scene` chạy `reveal_sequence` (khung → tiêu đề → đoạn văn). HTML
+không hình thành theo thời gian, nên đó là trục thời gian BỊA — đúng thứ W4B-2Z
+đã gỡ cho phần CSS rồi bỏ sót phần cấu trúc. Đo được: **fill 37% bề ngang**.
+
+`web.style_model` không nhận nổi bài đó vì nó chỉ mô hình MỘT khối chữ. Nay mô
+hình là một TRANG: `.trang` chứa `h1` + `p`, tiêu đề có màu/cỡ riêng. Hợp đồng
+backend đi trước (nguồn), rồi mirror + descriptor + **`CACHE_VERSION` 26→27**.
+Kết quả đo: **fill 97% × 93%** @1920, và bảng CSS có **ba bộ chọn** thật.
+
+Mẫu công khai của generic nay là `gen-rule-library` (quy tắc mượn sách — công
+tắc thật, luật thật, không bước giả).
+
+**Toàn danh mục**: 23/23 target đo được, `experimentTrigger` **0**, trùng kết
+quả cuối **0**, không tràn ngang ở cả 4 bề rộng.
+
+**Tiêm lỗi lộ ra ba guard hụt** (đều đã vá): sân khấu web tụt về một ô mà suite
+vẫn xanh · renderer dựng nguồn sự thật riêng (`artifact_reflects_style_state`
+chưa ai kiểm) · renderer ghi thẳng vào state, bỏ qua `module.apply` (bất biến #6).
+
 ## 1. Baseline
 
 | | |

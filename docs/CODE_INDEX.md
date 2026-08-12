@@ -1420,6 +1420,31 @@ vị trí ngữ nghĩa hiện hai hệ đếm. Có DẤU VÂN TAY bắt buộc (
 sân khấu đã dựng, sai thì exit 2). Cờ: `--port --out`. Artifact:
 `docs/evaluation/m17/w4b2d-search-family/position-numbering/`.
 
+### `simulations/domains/web/` — W4B-3F: TRANG CÓ CẤU TRÚC
+`model.ts`/`props.ts`/`apply.ts`/`index.ts`/`ui.tsx` — mô hình `web.style_model`.
+**Hợp đồng đổi HÌNH DẠNG ở W4B-3F**: `content` (một khối chữ) → `heading` +
+`paragraph`, và style thêm `headingColor`/`headingSize`. Nguồn là backend
+(`validation/simulation.py::validate_web_style_config` + `web_style_domain()`),
+`props.ts` là MIRROR có sync-lock (`contract-parity.test.ts`) — sửa một bên mà
+quên bên kia là ĐỎ. Đổi hình dạng ⇒ **bump `CACHE_VERSION`** (đây là bề mặt LLM
+điền).
+
+**Vì sao đổi**: một `<div>` không có tổ tiên lẫn anh em, nên bài `html_css`
+(T12 CĐ4) không có gì để nói về quan hệ THẺ ↔ HIỂN THỊ, và bảng CSS chỉ ra một
+luật. Có `h1`/`p` trong `.trang` thì `cssTextOf` sinh **ba bộ chọn** (hai cái là
+bộ chọn hậu duệ) và "cỡ chữ tiêu đề" ≠ "cỡ chữ đoạn văn" — đó chính là bài học.
+Vẫn ĐÓNG: không CSS thô, không `eval`, không iframe, không `<style>`.
+
+Tests: `bounded-model-w4b2z.test.tsx` — ngoài các bất biến cũ, W4B-3F thêm hai
+guard mà **tiêm lỗi mới lộ ra**: (1) xem trước phải là TRANG CÓ CẤU TRÚC (gỡ
+`<p>` ⇒ ĐỎ); (2) xem trước phải vẽ ĐÚNG state (renderer chèn giá trị riêng ⇒
+ĐỎ — trước đó hợp đồng `artifact_reflects_style_state` chưa ai kiểm).
+
+⚠️ Bài "Trang giới thiệu" **KHÔNG còn** ở `generic.rule_scene`. Bản cũ là
+`reveal_sequence` ba bước — trục thời gian bịa cho HTML. `GENERIC_WEB_SPEC` giữ
+lại làm FIXTURE của engine generic, không phải bài học công khai; mẫu công khai
+của generic nay là `gen-rule-library` (quy tắc hợp thành, có công tắc thật).
+
 ### `frontend/scripts/accept-w4b3a.mjs` · Change impact: offline (cần `npm run dev`)
 W4B-3A — NGHIỆM THU TRÌNH DUYỆT ở BỐN bề rộng (1920/1536/1366/768) cho 7 target
 đại diện: 0 dải `experiment-trigger`; mọi `.sim-secondary-action` phải nằm TRONG

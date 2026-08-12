@@ -112,7 +112,31 @@ async function withChrome(w, h, fn) {
     await send("Page.enable"); await send("Runtime.enable");
     await send("Page.navigate", { url: APP });
     await sleep(3200);
-    await fn(ev);
+    /* Vite có thể tối ưu deps rồi RELOAD ngay giữa một lượt `evaluate`, và khi
+       đó `Runtime.evaluate` trả về `undefined` — `JSON.parse` ném, cả lượt đo
+       chết. Thử lại vài nhịp là đủ; script anh em (`accept-workspace-w4b3b`) đã
+       có lớp này, script này thì chưa. */
+    const evj = async (expr) => {
+      let last;
+      for (let i = 0; i < 4; i++) {
+        try {
+          const v = await ev(expr);
+          if (typeof v === "string") return JSON.parse(v);
+        } catch (e) { last = e; }
+        await sleep(900);
+      }
+      throw last ?? new Error("evaluate trả undefined 4 lần liên tiếp");
+    };
+    /* Warmup PHẢI dùng URL đã giải, không dùng đường dẫn trần — xem bẫy
+       hai-instance ở đầu file. */
+    const warm = await evj(RESOLVE);
+    for (let i = 0; i < 6; i++) {
+      try {
+        await ev(`(async()=>{${Object.values(warm).map((u) => `await import(${JSON.stringify(u)});`).join("")}return 1})()`);
+        break;
+      } catch { await sleep(1200); }
+    }
+    await fn(ev, evj);
   } finally {
     try { chrome.kill(); } catch { /* đã chết */ }
   }
@@ -176,21 +200,21 @@ const PROBE = `JSON.stringify((()=>{
 const fail = (msg) => { failures.push(msg); console.error(`  ✗ ${msg}`); };
 
 for (const [w, h] of VIEWPORTS) {
-  await withChrome(w, h, async (ev) => {
+  await withChrome(w, h, async (ev, evj) => {
     console.log(`\n━━ ${w}×${h}`);
-    const urls = JSON.parse(await ev(RESOLVE));
+    const urls = await evj(RESOLVE);
     if (!urls.store.includes("/src/state/store.ts")) {
       fail(`${w}: không giải được URL store từ trang`);
       return;
     }
     for (const simId of TARGETS) {
-      const loaded = JSON.parse(await ev(loadExpr(urls, simId)));
+      const loaded = await evj(loadExpr(urls, simId));
       if (!loaded.ok) { fail(`${w}·${simId}: không nạp được (${loaded.why ?? "?"})`); continue; }
       // DẤU VÂN TAY: đúng target, đúng route — sai thì mọi số sau đó vô nghĩa.
       if (loaded.moduleId !== simId) { fail(`${w}·${simId}: nạp nhầm ${loaded.moduleId}`); continue; }
       if (loaded.view !== "workspace") { fail(`${w}·${simId}: không ở workspace`); continue; }
       await sleep(420);
-      const before = JSON.parse(await ev(PROBE));
+      const before = await evj(PROBE);
       if (!before.fingerprintStage) { fail(`${w}·${simId}: không thấy sân khấu — trang sai`); continue; }
 
       // (1) không còn dải cổng
@@ -219,7 +243,7 @@ for (const [w, h] of VIEWPORTS) {
           return true;
         })()`);
         await sleep(420);
-        opened = JSON.parse(await ev(PROBE));
+        opened = await evj(PROBE);
         if (opened.commitmentSurfaces > 1) {
           fail(`${w}·${simId}: mở Thử thách ra ${opened.commitmentSurfaces} bề mặt cam kết`);
         }
@@ -234,7 +258,7 @@ for (const [w, h] of VIEWPORTS) {
     }
 
     /* ── (6) PARITY 2D↔3D: đổi CÁCH XEM không đổi SỰ THẬT ─────────────── */
-    const parity = JSON.parse(await ev(`(async()=>{
+    const parity = await evj(`(async()=>{
       const s=await import(${JSON.stringify(urls.store)});
       const c=await import(${JSON.stringify(urls.catalog)});
       const reg=await import(${JSON.stringify(urls.registry)});
@@ -253,14 +277,14 @@ for (const [w, h] of VIEWPORTS) {
       s.useAppStore.getState().setVisualMode('2d');
       const back=snap();
       return JSON.stringify({in2d,in3d,back,modes:mod.supportedVisualModes});
-    })()`));
+    })()`);
     const same = (a, b) => a.cursor === b.cursor && a.total === b.total && a.ctx === b.ctx;
     if (!same(parity.in2d, parity.in3d)) fail(`${w}: parity 2D→3D lệch sự thật tất định`);
     if (!same(parity.in2d, parity.back)) fail(`${w}: quay về 2D không khôi phục đúng sự thật`);
     console.log(`  protocol parity 2D↔3D: cursor=${parity.in2d.cursor}/${parity.in2d.total} ${same(parity.in2d, parity.in3d) ? "KHỚP" : "LỆCH"}`);
 
     /* ── (7) PHIÊN: A → Khám phá → B → quay lại A, 0 request ───────────── */
-    const sess = JSON.parse(await ev(`(async()=>{
+    const sess = await evj(`(async()=>{
       const s=await import(${JSON.stringify(urls.store)});
       const c=await import(${JSON.stringify(urls.catalog)});
       const st=s.useAppStore.getState(); st.reset();
@@ -287,7 +311,7 @@ for (const [w, h] of VIEWPORTS) {
         sessions: backA.sessions.length,
       };
       window.fetch=f; return JSON.stringify(r);
-    })()`));
+    })()`);
     if (!sess.restoredSameObject) fail(`${w}: chuyển phiên dựng lại state (mất what-if)`);
     if (!sess.exploreRestored) fail(`${w}: chế độ Khám phá không khôi phục theo phiên`);
     if (sess.exploreLeakedToB) fail(`${w}: chế độ Khám phá rò sang phiên mới`);
