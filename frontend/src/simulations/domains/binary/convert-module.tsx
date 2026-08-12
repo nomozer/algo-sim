@@ -115,7 +115,35 @@ function clampCursor(state: BaseConvState, step: number): number {
 
 type Props = WorkspaceProps<BaseConvConfig, BaseConvState>;
 
-export function BaseConvWorkspace({ state }: Props) {
+/** W4B-4C — giá trị, cơ số nguồn, cơ số đích: đổi cái nào cũng tính lại ngay. */
+function ConvParamBar({ state, busy, dispatch }: Props) {
+  const bases = CONV_BASES;
+  return (
+    <div className="param-bar" role="group" aria-label="Chọn giá trị và cơ số">
+      <label>
+        Giá trị
+        <input value={state.config.inputValue} disabled={busy} aria-label="Giá trị cần đổi"
+          onChange={(e) => dispatch({ type: "set_param", name: "inputValue", value: e.target.value })} />
+      </label>
+      <label>
+        Từ cơ số
+        <select value={state.config.sourceBase} disabled={busy}
+          onChange={(e) => dispatch({ type: "set_param", name: "sourceBase", value: Number(e.target.value) })}>
+          {bases.map((b) => <option key={b} value={b}>{b}</option>)}
+        </select>
+      </label>
+      <label>
+        Sang cơ số
+        <select value={state.config.targetBase} disabled={busy}
+          onChange={(e) => dispatch({ type: "set_param", name: "targetBase", value: Number(e.target.value) })}>
+          {bases.map((b) => <option key={b} value={b}>{b}</option>)}
+        </select>
+      </label>
+    </div>
+  );
+}
+
+export function BaseConvWorkspace({ state, config, busy, dispatch }: Props) {
   const at = clampCursor(state, state.cursor);
   const visible = state.steps.slice(0, at + 1);
   const current = state.steps[at];
@@ -126,6 +154,7 @@ export function BaseConvWorkspace({ state }: Props) {
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
+      <ConvParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
       <div className="sim-stage">
         {weights.length > 0 && (
           <table className="data-table">
@@ -224,15 +253,59 @@ export function BaseConvInspector({ state }: Props) {
 
 /* ── module ─────────────────────────────────────────────────── */
 
+/**
+ * W4B-4C — THAM SỐ ĐỔI CƠ SỐ TRONG MIỀN ĐÓNG. `null` = ngoài miền ⇒ giữ state.
+ *
+ * Ba tham số, đúng ba thứ bài học nói tới: giá trị, cơ số nguồn, cơ số đích.
+ * Không ô nhập tự do nào khác, không biểu thức, không cơ số ngoài bảng.
+ *
+ * Đổi CƠ SỐ NGUỒN là ca tinh tế: chuỗi chữ số cũ có thể không còn hợp lệ (vd
+ * "1F" ở hệ 16 chuyển sang hệ 2). Từ chối thẳng thay vì cắt bớt chữ số — cắt là
+ * lặng lẽ đổi bài toán của học sinh thành một bài khác.
+ */
+export function withConversionParam(
+  config: BaseConvConfig,
+  name: string,
+  value: number | string | boolean,
+): BaseConvConfig | null {
+  const asBase = (v: number | string | boolean): ConvBase | null => {
+    const n = Number(v);
+    return (CONV_BASES as readonly number[]).includes(n) ? (n as ConvBase) : null;
+  };
+
+  if (name === "sourceBase") {
+    const base = asBase(value);
+    if (base === null || base === config.sourceBase) return null;
+    if (!digitsValid(config.inputValue, base)) return null;
+    return { ...config, sourceBase: base, strategy: strategyOf(base, config.targetBase) };
+  }
+  if (name === "targetBase") {
+    const base = asBase(value);
+    if (base === null || base === config.targetBase) return null;
+    return { ...config, targetBase: base, strategy: strategyOf(config.sourceBase, base) };
+  }
+  if (name === "inputValue") {
+    if (typeof value !== "string") return null;
+    const digits = canonicalDigits(value.trim());
+    if (!digitsValid(digits, config.sourceBase)) return null;
+    if (parseInBase(digits, config.sourceBase) > CONV_MAX_VALUE) return null;
+    return { ...config, inputValue: digits };
+  }
+  return null;
+}
+
 export function makeBaseConvModule(): SimulationModule<BaseConvConfig, BaseConvState> {
   return {
     id: "binary.base_conversion",
     domain: "binary",
     title: "Đổi cơ số (2 · 8 · 10 · 16)",
-    interactionMode: "progressive",
+    /* W4B-4C — `progressive` → `hybrid`: nay có CẢ dòng thời gian giải thích
+       LẪN tham số học sinh đổi được bất cứ lúc nào trên sân khấu. */
+    interactionMode: "hybrid",
     supportedVisualModes: ["2d"],
 
     validateConfig: validateBaseConvConfig,
+
 
     // Timeline sinh TẠI ĐÂY — engine tất định, không từ LLM (R0)
     init: (config) => {
@@ -240,7 +313,28 @@ export function makeBaseConvModule(): SimulationModule<BaseConvConfig, BaseConvS
       return { config, decimalValue, steps, result, cursor: 0 };
     },
 
-    apply: (state) => state, // không what-if trong v1 (có chủ đích)
+    /* W4B-4C — ĐỔI CƠ SỐ LÀ THỨ HỌC SINH THỬ, KHÔNG PHẢI THỨ HỌC SINH XEM.
+     *
+     * `apply` từng là identity, nên bài đổi cơ số chỉ còn bấm Tiến qua các bước
+     * chia lấy dư của MỘT phép đổi cố định. Nhưng cơ chế ở đây là QUAN HỆ giữa
+     * giá trị, cơ số nguồn và cơ số đích — và quan hệ đó chỉ hiện ra khi đổi
+     * được một trong ba rồi thấy hai cái kia phản ứng.
+     *
+     * `buildConvSteps(config)` đã là chủ sở hữu tất định và `init` vốn chỉ gọi
+     * nó, nên tương tác không cần engine mới: sửa config trong MIỀN ĐÓNG rồi
+     * dựng lại bằng chính hàm ấy.
+     *
+     * Miền đóng: cơ số ∈ `CONV_BASES` · chữ số phải HỢP LỆ trong cơ số nguồn ·
+     * giá trị ≤ `CONV_MAX_VALUE`. Sai ⇒ trả nguyên state (fail-closed), không
+     * kẹp, không đoán — cùng luật với validator.
+     */
+    apply: (state, action) => {
+      if (action.type !== "set_param") return state;
+      const next = withConversionParam(state.config, action.name, action.value);
+      if (!next) return state;
+      const { decimalValue, steps, result } = buildConvSteps(next);
+      return { config: next, decimalValue, steps, result, cursor: 0 };
+    },
 
     timeline: {
       stepCount: (s) => s.steps.length,

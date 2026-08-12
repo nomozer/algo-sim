@@ -1,5 +1,5 @@
 {
-  "when": "2026-08-12T14:33:06.352Z",
+  "when": "2026-08-12T14:59:34.086Z",
   "rows": [
     {
       "target": "algorithm.binary_search",
@@ -136,11 +136,11 @@
     {
       "target": "binary.base_conversion",
       "domain": "binary",
-      "interactionMode": "progressive",
+      "interactionMode": "hybrid",
       "steps": 5,
-      "manipulable": false,
-      "actionsTried": 1,
-      "actionsThatChanged": 0,
+      "manipulable": true,
+      "actionsTried": 5,
+      "actionsThatChanged": 2,
       "declaresExplore": false,
       "declaresPredict": false,
       "presentsCommitment": false
@@ -148,11 +148,11 @@
     {
       "target": "binary.character_encoding",
       "domain": "binary",
-      "interactionMode": "progressive",
+      "interactionMode": "hybrid",
       "steps": 21,
-      "manipulable": false,
-      "actionsTried": 1,
-      "actionsThatChanged": 0,
+      "manipulable": true,
+      "actionsTried": 5,
+      "actionsThatChanged": 1,
       "declaresExplore": false,
       "declaresPredict": false,
       "presentsCommitment": false
@@ -163,7 +163,7 @@
       "interactionMode": "exploratory",
       "steps": 1,
       "manipulable": true,
-      "actionsTried": 5,
+      "actionsTried": 9,
       "actionsThatChanged": 5,
       "declaresExplore": false,
       "declaresPredict": false,
@@ -220,11 +220,11 @@
     {
       "target": "network.graph_traversal",
       "domain": "network",
-      "interactionMode": "progressive",
+      "interactionMode": "hybrid",
       "steps": 7,
-      "manipulable": false,
-      "actionsTried": 2,
-      "actionsThatChanged": 0,
+      "manipulable": true,
+      "actionsTried": 4,
+      "actionsThatChanged": 1,
       "declaresExplore": false,
       "declaresPredict": false,
       "presentsCommitment": false
@@ -235,7 +235,7 @@
       "interactionMode": "progressive",
       "steps": 4,
       "manipulable": true,
-      "actionsTried": 2,
+      "actionsTried": 4,
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "declaresPredict": true,
@@ -247,7 +247,7 @@
       "interactionMode": "progressive",
       "steps": 9,
       "manipulable": false,
-      "actionsTried": 2,
+      "actionsTried": 4,
       "actionsThatChanged": 0,
       "declaresExplore": false,
       "declaresPredict": true,
@@ -256,11 +256,11 @@
     {
       "target": "tree.traversal",
       "domain": "tree",
-      "interactionMode": "progressive",
+      "interactionMode": "hybrid",
       "steps": 22,
-      "manipulable": false,
-      "actionsTried": 0,
-      "actionsThatChanged": 0,
+      "manipulable": true,
+      "actionsTried": 2,
+      "actionsThatChanged": 2,
       "declaresExplore": false,
       "declaresPredict": false,
       "presentsCommitment": false

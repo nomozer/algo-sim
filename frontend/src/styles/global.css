@@ -3388,3 +3388,46 @@ html {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
+
+/* ── W4B-4C — DẢI THAM SỐ CỦA MÔ PHỎNG ────────────────────────────────────
+   Dùng chung TRÌNH BÀY (một hàng gọn trên sân khấu), KHÔNG dùng chung ngữ
+   nghĩa: mỗi miền tự khai tham số của nó và tự kiểm miền. Không có "trình sửa
+   thuộc tính vạn năng" nào ở đây — xem §47 của yêu cầu. */
+.param-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: var(--sp-sm) var(--sp-md);
+  background: var(--canvas-soft);
+  border-radius: var(--rounded-md);
+  font-size: 14px;
+}
+
+.param-bar label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  color: var(--ink-muted);
+}
+
+.param-bar select,
+.param-bar input {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  padding: 2px var(--sp-xs);
+}
+
+.param-bar input {
+  width: 96px;
+}
+
+.param-bar select:focus-visible,
+.param-bar input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

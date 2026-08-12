@@ -374,7 +374,33 @@ function labelOfNode(config: TraverseConfig, id: string): string {
   return config.nodes.find((n) => n.id === id)?.label ?? id;
 }
 
-export function TraverseWorkspace({ state }: Props) {
+/** W4B-4C — BFS hay DFS, và xuất phát từ đâu: hai lựa chọn ĐÓNG mà engine
+ *  đã tính được. Sửa tôpô KHÔNG thuộc bài này (đó là `packet_routing`). */
+function TraverseParamBar({ state, busy, dispatch }: Props) {
+  return (
+    <div className="param-bar" role="group" aria-label="Chọn cách duyệt đồ thị">
+      <label>
+        Thuật toán
+        <select value={state.config.variant} disabled={busy}
+          onChange={(e) => dispatch({ type: "set_param", name: "variant", value: e.target.value })}>
+          <option value="bfs">BFS — theo chiều rộng</option>
+          <option value="dfs">DFS — theo chiều sâu</option>
+        </select>
+      </label>
+      <label>
+        Xuất phát
+        <select value={state.config.start} disabled={busy}
+          onChange={(e) => dispatch({ type: "set_param", name: "start", value: e.target.value })}>
+          {state.config.nodes.map((n) => (
+            <option key={n.id} value={n.id}>{n.label ?? n.id}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+  );
+}
+
+export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
   const at = clampCursor(state, state.cursor);
   const step = state.steps[at];
   const long = hasLongLabel(state.config.nodes);
@@ -388,6 +414,7 @@ export function TraverseWorkspace({ state }: Props) {
     ro.observe(el);
     setAvailable(Math.round(el.getBoundingClientRect().width));
     return () => ro.disconnect();
+      <TraverseParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
   }, []);
 
   const gl = graphChartLayout(available, long);
@@ -563,12 +590,41 @@ export function TraverseInspector({ state }: Props) {
 
 /* ── module ─────────────────────────────────────────────────── */
 
+/**
+ * W4B-4C — CHỌN THUẬT TOÁN VÀ ĐIỂM XUẤT PHÁT.
+ *
+ * Bài này dạy sự KHÁC NHAU giữa BFS và DFS trên cùng một đồ thị, và ảnh hưởng
+ * của điểm xuất phát. Cả hai đều là lựa chọn ĐÓNG mà `buildTraversal` đã tính
+ * được — nên tương tác không cần sửa tôpô (sửa tôpô là việc của
+ * `packet_routing`; ở đây nó sẽ thành một trình vẽ đồ thị).
+ */
+export function withTraverseParam(
+  config: TraverseConfig,
+  name: string,
+  value: number | string | boolean,
+): TraverseConfig | null {
+  if (typeof value !== "string") return null;
+  if (name === "variant") {
+    if (!(TRAVERSE_VARIANTS as readonly string[]).includes(value)) return null;
+    if (value === config.variant) return null;
+    return { ...config, variant: value as TraverseVariant };
+  }
+  if (name === "start") {
+    if (!config.nodes.some((n) => n.id === value)) return null;
+    if (value === config.start) return null;
+    return { ...config, start: value };
+  }
+  return null;
+}
+
 export function makeTraverseModule(): SimulationModule<TraverseConfig, TraverseState> {
   return {
     id: "network.graph_traversal",
     domain: "network",
     title: "Duyệt đồ thị (BFS · DFS)",
-    interactionMode: "progressive",
+    /* W4B-4C — `progressive` → `hybrid`: nay có CẢ dòng thời gian giải thích
+       LẪN tham số học sinh đổi được bất cứ lúc nào trên sân khấu. */
+    interactionMode: "hybrid",
     supportedVisualModes: ["2d"],
 
     validateConfig: validateTraverseConfig,
@@ -586,7 +642,19 @@ export function makeTraverseModule(): SimulationModule<TraverseConfig, TraverseS
       };
     },
 
-    apply: (state) => state, // v1 không what-if (có chủ đích — M9-S3 là việc khác)
+    /* W4B-4C — đổi thuật toán / điểm xuất phát ⇒ dựng lại bằng `buildTraversal`. */
+    apply: (state, action) => {
+      if (action.type !== "set_param") return state;
+      const next = withTraverseParam(state.config, action.name, action.value);
+      if (!next) return state;
+      const { steps, visitedOrder, path, reachable } = buildTraversal(next);
+      return {
+        ...state,
+        config: next,
+        frontierKind: next.variant === "bfs" ? "queue" : "stack",
+        steps, visitedOrder, path, reachable, cursor: 0,
+      };
+    },
 
     timeline: {
       stepCount: (s) => s.steps.length,

@@ -73,11 +73,22 @@ const DOMAIN_ACTIONS: Record<string, (state: unknown) => SimAction[]> = {
       { length: n },
       (_, i) => ({ type: "toggle", target: String(i) }) as SimAction,
     );
-    return [...toggles, { type: "set_param", name: "decimal", value: 7 } as SimAction];
+    return [
+      ...toggles,
+      { type: "set_param", name: "decimal", value: 7 } as SimAction,
+      // W4B-4C: base_conversion + character_encoding nay nhận tham số có ràng buộc.
+      { type: "set_param", name: "targetBase", value: 8 } as SimAction,
+      { type: "set_param", name: "inputValue", value: "1010" } as SimAction,
+      { type: "set_param", name: "encoding", value: "unicode_codepoint" } as SimAction,
+      { type: "set_param", name: "text", value: "Bê" } as SimAction,
+    ];
   },
   network: () => [
     { type: "net_disconnect", a: "A", b: "R1" } as SimAction,
     { type: "net_reset" } as SimAction,
+    // W4B-4C: graph_traversal nay chọn được thuật toán và điểm xuất phát.
+    { type: "set_param", name: "variant", value: "dfs" } as SimAction,
+    { type: "set_param", name: "variant", value: "bfs" } as SimAction,
   ],
   web: () => [
     { type: "set_param", name: "fontSize", value: 32 } as SimAction,
@@ -95,9 +106,11 @@ const DOMAIN_ACTIONS: Record<string, (state: unknown) => SimAction[]> = {
     { type: "set_param", name: "filter.value", value: "0" } as SimAction,
     { type: "set_param", name: "sort.direction", value: "asc" } as SimAction,
   ],
-  /* `tree` vẫn khai `apply: (state) => state` — identity. Không có action nào
-     để thử, và đó chính là phát hiện, không phải chỗ trống của phép đo. */
-  tree: () => [],
+  /* W4B-4C: tree nay đổi được thứ tự duyệt trên cùng một cây. */
+  tree: () => [
+    { type: "set_param", name: "variant", value: "inorder" } as SimAction,
+    { type: "set_param", name: "variant", value: "postorder" } as SimAction,
+  ],
 };
 
 interface Row {

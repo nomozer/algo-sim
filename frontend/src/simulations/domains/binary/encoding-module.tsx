@@ -396,7 +396,28 @@ function DivisionPanel({ state, cursor }: { state: CharEncodingState; cursor: nu
   );
 }
 
-export function CharEncodingWorkspace({ state }: Props) {
+/** W4B-4C — đổi ký tự hoặc bảng mã, xem điểm mã và nhị phân đổi theo. */
+function EncodingParamBar({ state, busy, dispatch }: Props) {
+  return (
+    <div className="param-bar" role="group" aria-label="Chọn ký tự và bảng mã">
+      <label>
+        Ký tự
+        <input value={state.spec.text} disabled={busy} aria-label="Ký tự cần mã hoá"
+          onChange={(e) => dispatch({ type: "set_param", name: "text", value: e.target.value })} />
+      </label>
+      <label>
+        Bảng mã
+        <select value={state.spec.encoding} disabled={busy}
+          onChange={(e) => dispatch({ type: "set_param", name: "encoding", value: e.target.value })}>
+          <option value="ascii">ASCII</option>
+          <option value="unicode_codepoint">Unicode (điểm mã)</option>
+        </select>
+      </label>
+    </div>
+  );
+}
+
+export function CharEncodingWorkspace({ state, config, busy, dispatch }: Props) {
   const cursor = clampCursor(state, state.cursor);
   const step = stepOf(state);
   const shown = committedRowCount({ ...state, cursor });
@@ -406,6 +427,7 @@ export function CharEncodingWorkspace({ state }: Props) {
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
+      <EncodingParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
       <div>
         {`Chuỗi cần mã hoá: “${state.spec.text}” · Bảng mã: ${ENCODING_LABEL[state.spec.encoding]}`}
       </div>
@@ -474,12 +496,45 @@ export function CharEncodingInspector({ state }: Props) {
   );
 }
 
+/**
+ * W4B-4C — ĐỔI KÝ TỰ / BẢNG MÃ, XEM MÃ ĐỔI THEO.
+ *
+ * Cơ chế của bài là ánh xạ KÝ TỰ → ĐIỂM MÃ → NHỊ PHÂN. Bấm Tiến qua một chuỗi
+ * cố định chỉ cho thấy MỘT ánh xạ; gõ ký tự khác rồi thấy điểm mã đổi mới là
+ * thứ dạy được quy tắc.
+ *
+ * Miền ĐÓNG: `text` (đúng ràng buộc validator hiện hành) và `encoding` trong
+ * {ascii, unicode_codepoint}. Không mở thành phòng thí nghiệm mã hoá.
+ */
+export function withEncodingParam(
+  spec: CharEncodingSpec,
+  name: string,
+  value: number | string | boolean,
+): CharEncodingSpec | null {
+  if (typeof value !== "string") return null;
+  if (name === "encoding") {
+    if (value !== "ascii" && value !== "unicode_codepoint") return null;
+    if (value === spec.encoding) return null;
+    const next = { ...spec, encoding: value as CharEncoding };
+    // Đi qua ĐÚNG cổng validator — ASCII không nhận mọi ký tự Unicode.
+    return validateCharEncodingSpec(next).ok ? next : null;
+  }
+  if (name === "text") {
+    if (value === spec.text) return null;
+    const next = { ...spec, text: value };
+    return validateCharEncodingSpec(next).ok ? next : null;
+  }
+  return null;
+}
+
 export function makeCharEncodingModule(): SimulationModule<CharEncodingSpec, CharEncodingState> {
   return {
     id: "binary.character_encoding",
     domain: "binary",
     title: "Mã hoá ký tự",
-    interactionMode: "progressive",
+    /* W4B-4C — `progressive` → `hybrid`: nay có CẢ dòng thời gian giải thích
+       LẪN tham số học sinh đổi được bất cứ lúc nào trên sân khấu. */
+    interactionMode: "hybrid",
     supportedVisualModes: ["2d"],
 
     validateConfig: (raw): ConfigResult<CharEncodingSpec> => {
@@ -492,7 +547,14 @@ export function makeCharEncodingModule(): SimulationModule<CharEncodingSpec, Cha
       return { spec, trace: run.trace, cursor: 0, rows: run.rows, meta: run.meta };
     },
 
-    apply: (state) => state,
+    /* W4B-4C — đổi ký tự/bảng mã ⇒ chạy lại `runCharacterEncoding`. */
+    apply: (state, action) => {
+      if (action.type !== "set_param") return state;
+      const next = withEncodingParam(state.spec, action.name, action.value);
+      if (!next) return state;
+      const run = runCharacterEncoding(next);
+      return { spec: next, trace: run.trace, cursor: 0, rows: run.rows, meta: run.meta };
+    },
 
     timeline: {
       stepCount: (s) => s.trace.steps.length,

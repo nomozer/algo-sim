@@ -382,7 +382,31 @@ function clampCursor(state: TreeTraversalState, step: number): number {
 
 type Props = WorkspaceProps<TreeTraversalConfig, TreeTraversalState>;
 
-export function TreeWorkspace({ state }: Props) {
+const TREE_VARIANT_LABEL: Record<string, string> = {
+  preorder: "Trước (gốc → trái → phải)",
+  inorder: "Giữa (trái → gốc → phải)",
+  postorder: "Sau (trái → phải → gốc)",
+  level_order: "Theo mức",
+};
+
+/** W4B-4C — cùng một cây, đổi thứ tự duyệt thì dãy thăm đổi. Đó LÀ bài học. */
+function TreeParamBar({ state, busy, dispatch }: Props) {
+  return (
+    <div className="param-bar" role="group" aria-label="Chọn thứ tự duyệt cây">
+      <label>
+        Thứ tự duyệt
+        <select value={state.config.variant} disabled={busy}
+          onChange={(e) => dispatch({ type: "set_param", name: "variant", value: e.target.value })}>
+          {TREE_VARIANTS.map((v) => (
+            <option key={v} value={v}>{TREE_VARIANT_LABEL[v] ?? v}</option>
+          ))}
+        </select>
+      </label>
+    </div>
+  );
+}
+
+export function TreeWorkspace({ state, config, busy, dispatch }: Props) {
   const at = clampCursor(state, state.cursor);
   const step = state.steps[at];
   const map = nodeMap(state.config);
@@ -400,6 +424,7 @@ export function TreeWorkspace({ state }: Props) {
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
+      <TreeParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
       <div className="sim-stage">
         <svg viewBox={`0 0 ${RW} ${RH}`} style={{ width: "100%", maxWidth: RW }} role="img"
              aria-label="Cây nhị phân">
@@ -504,12 +529,36 @@ export function TreeInspector({ state }: Props) {
 
 /* ── module ── */
 
+/**
+ * W4B-4C — THỨ TỰ DUYỆT LÀ THỨ HỌC SINH ĐỔI.
+ *
+ * Cơ chế của bài chính là "cùng một cây, đổi thứ tự duyệt thì dãy thăm đổi thế
+ * nào". Bấm Tiến qua một thứ tự cố định không dạy được điều đó; đổi
+ * preorder ↔ inorder ↔ postorder trên CÙNG cái cây thì có.
+ *
+ * Miền ĐÓNG: chỉ `variant` trong `TREE_VARIANTS`. KHÔNG sửa cấu trúc cây —
+ * dựng cây tuỳ ý là một trình soạn thảo, không phải bài học này.
+ */
+export function withTreeParam(
+  config: TreeTraversalConfig,
+  name: string,
+  value: number | string | boolean,
+): TreeTraversalConfig | null {
+  if (name !== "variant") return null;
+  if (typeof value !== "string") return null;
+  if (!(TREE_VARIANTS as readonly string[]).includes(value)) return null;
+  if (value === config.variant) return null;
+  return { ...config, variant: value as TreeVariant };
+}
+
 export function makeTreeTraversalModule(): SimulationModule<TreeTraversalConfig, TreeTraversalState> {
   return {
     id: "tree.traversal",
     domain: "tree",
     title: "Duyệt cây nhị phân (preorder · inorder · postorder · level-order)",
-    interactionMode: "progressive",
+    /* W4B-4C — `progressive` → `hybrid`: nay có CẢ dòng thời gian giải thích
+       LẪN tham số học sinh đổi được bất cứ lúc nào trên sân khấu. */
+    interactionMode: "hybrid",
     supportedVisualModes: ["2d"],
 
     validateConfig: validateTreeTraversalConfig,
@@ -519,7 +568,14 @@ export function makeTreeTraversalModule(): SimulationModule<TreeTraversalConfig,
       return { config, frontierKind, steps, visitedOrder, cursor: 0 };
     },
 
-    apply: (state) => state, // v1 không what-if
+    /* W4B-4C — đổi thứ tự duyệt ⇒ dựng lại bằng chính `buildTreeTraversal`. */
+    apply: (state, action) => {
+      if (action.type !== "set_param") return state;
+      const next = withTreeParam(state.config, action.name, action.value);
+      if (!next) return state;
+      const { frontierKind, steps, visitedOrder } = buildTreeTraversal(next);
+      return { config: next, frontierKind, steps, visitedOrder, cursor: 0 };
+    },
 
     timeline: {
       stepCount: (s) => s.steps.length,
