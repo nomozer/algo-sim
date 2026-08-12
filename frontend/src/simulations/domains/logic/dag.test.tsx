@@ -409,10 +409,37 @@ describe("module: toggle tất định + timeline + inspector đọc sự thật
     const html = renderToString(
       <BoolDagWorkspace config={v.config} state={mod.init(v.config)} busy={false} dispatch={() => {}} />,
     ).replace(/<!--.*?-->/g, "");
-    expect(html).toContain("Bấm A, B hoặc C để đổi giá trị đầu vào");
+    expect(html).toContain("Bấm A, B, C để đổi giá trị đầu vào");
     expect(html).toContain("lan truyền qua các cổng");
     // nút toggle khai trạng thái bật/tắt cho công nghệ hỗ trợ
     expect(html).toContain('aria-pressed="true"'); // A = 1 trong SAMPLE
+  });
+
+  it("câu hướng dẫn DẪN XUẤT từ config — không nhắc đầu vào không tồn tại", () => {
+    /* W4B-4A — GUARD NÀY TỪNG BẢO VỆ CHÍNH LỖI.
+     *
+     * Câu hướng dẫn viết cứng "Bấm A, B hoặc C" từ thời fixture có ba đầu vào.
+     * Mẫu CÔNG KHAI hiện tại (`logic-boolean-dag`) chỉ khai A và B, nên sản
+     * phẩm bảo học sinh bấm một thứ không tồn tại — và assert cũ khoá đúng chuỗi
+     * sai ấy lại, nên suite xanh trong khi màn hình nói dối.
+     *
+     * Khoá đúng thứ đáng khoá: chữ phải ĐỔI THEO mô hình. Hai đầu vào thì nói
+     * hai, và tuyệt đối không nhắc tên nào ngoài danh sách đã khai. */
+    const mod = makeBoolDagModule();
+    const twoInput = {
+      inputs: [{ id: "A", value: 1 }, { id: "B", value: 0 }],
+      gates: [{ id: "g", op: "XOR", inputs: ["A", "B"] }],
+      output: "g",
+    };
+    const v = mod.validateConfig(twoInput);
+    if (!v.ok) throw new Error(v.error);
+    const html = renderToString(
+      <BoolDagWorkspace config={v.config} state={mod.init(v.config)} busy={false} dispatch={() => {}} />,
+    ).replace(/<!--.*?-->/g, "");
+    const affordance = html.slice(html.indexOf("stage-affordance"), html.indexOf("stage-affordance") + 220);
+    expect(affordance).toContain("Bấm A, B để đổi giá trị đầu vào");
+    expect(affordance, "câu hướng dẫn nhắc đầu vào C mà mạch không có")
+      .not.toContain("C");
   });
 });
 

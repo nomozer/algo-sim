@@ -547,9 +547,19 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
               rằng bấm được, trong khi bubble_sort ngay cạnh lại có câu hướng dẫn
               kéo-thả tường minh. Một tương tác mà học sinh phải ĐOÁN ra thì trên
               thực tế không tồn tại. Chỉ thêm chữ — cơ chế không đổi. */}
+          {/* W4B-4A — CÂU HƯỚNG DẪN PHẢI NÓI ĐÚNG MÔ HÌNH ĐANG MỞ.
+           *
+           * Câu này từng VIẾT CỨNG "Bấm A, B hoặc C" từ thời fixture có ba đầu
+           * vào. Mẫu công khai hiện tại (`logic-boolean-dag`) chỉ khai A và B,
+           * nên sản phẩm đang bảo học sinh bấm một thứ KHÔNG TỒN TẠI — và
+           * `dag.test.tsx` khoá đúng chuỗi sai đó lại, tức guard đang bảo vệ
+           * chính lỗi.
+           *
+           * Dẫn xuất từ `config.inputs` thì câu chữ không thể lệch khỏi mạch:
+           * đề hai đầu vào nói hai, đề bốn đầu vào nói bốn. */}
           <p className="stage-affordance">
-            Bấm A, B hoặc C để đổi giá trị đầu vào và quan sát tín hiệu lan
-            truyền qua các cổng.
+            Bấm {state.config.inputs.map((i) => i.id).join(", ")} để đổi giá trị
+            đầu vào và quan sát tín hiệu lan truyền qua các cổng.
           </p>
           {/* SƠ ĐỒ LÀ SÂN KHẤU CHÍNH — và là nơi DUY NHẤT có đầu vào bấm được.
               Trước đây A/B/C xuất hiện HAI lần: node trong sơ đồ (chỉ để xem) và
@@ -677,7 +687,16 @@ export function makeBoolDagModule(): SimulationModule<BoolDagConfig, BoolDagStat
   return {
     id: "logic.boolean_dag",
     domain: "logic",
-    title: "Mạch logic nhiều cổng (AND · OR · NOT · XOR)",
+    /* W4B-4A — TÊN MODULE NÓI LOẠI MÔ HÌNH, KHÔNG LIỆT KÊ NĂNG LỰC MIỀN.
+     *
+     * Tên cũ liệt kê "(AND · OR · NOT · XOR)" — đó là thứ MIỀN hỗ trợ, nhưng nó
+     * hiện ngay trên header của MỘT mô hình cụ thể. Mẫu công khai hiện tại chỉ
+     * có ĐÚNG MỘT cổng XOR, nên header vừa hứa bốn loại cổng vừa nói "nhiều
+     * cổng" cho một mạch một cổng. Học sinh đọc header là đọc về bài đang mở.
+     *
+     * Mạch cụ thể có gì thì SÂN KHẤU đã vẽ ra và `description` của đề đã nói
+     * ("Mạch XOR hai đầu vào…"). Tên module chỉ cần nói đây là loại gì. */
+    title: "Mạch logic tổ hợp",
     interactionMode: "hybrid",
     supportedVisualModes: ["2d"],
 
