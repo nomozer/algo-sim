@@ -18,7 +18,11 @@ import { dirname, join, resolve } from "node:path";
 
 const args = process.argv.slice(2);
 const argOf = (n, d) => (args.includes(n) ? args[args.indexOf(n) + 1] : d);
-const OUT = resolve(argOf("--out", "../docs/evaluation/m17/w4b4c-experience/acceptance.json"));
+/* Neo theo CHÍNH FILE NÀY, không theo cwd — chạy từ `frontend/scripts/` với
+   đường dẫn tương đối cwd đã đẻ ra một cây `frontend/docs/` lạc. */
+const OUT = resolve(argOf("--out",
+  new URL("../../docs/evaluation/m17/w4b4c-experience/acceptance.json", import.meta.url)
+    .pathname.replace(/^[/]/, "")));
 mkdirSync(dirname(OUT), { recursive: true });
 const VIEWPORTS = [[1920, 1080], [1536, 864], [1366, 768], [768, 900]];
 
