@@ -789,18 +789,68 @@ html {
 }
 
 /* ── Trình phát ──────────────────────────────────────── */
+/* W4B-3E — PLAYER LÀ MỘT KHỐI: hàng nút + thanh tiến độ cùng lề, dính nhau.
+   Trước wave này thanh tiến độ là anh em rời trong một `.stack`, nên nó đọc
+   thành một vạch trôi nổi bên dưới thay vì một phần của bộ điều khiển. */
+.player {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* BA VÙNG, KHÔNG PHẢI MỘT HÀNG PHẲNG — xem chú thích ở `SimulationControls.tsx`.
+   `gap` ở đây là khoảng cách GIỮA CÁC VÙNG (lớn), còn khoảng cách trong một vùng
+   do `.control-zone` quyết (nhỏ). Nhờ hai mức đó mà mắt đọc ra nhóm mà không cần
+   thêm đường kẻ nào. */
 .player-controls {
   display: flex;
   align-items: center;
-  gap: var(--sp-xs);
+  gap: var(--sp-md);
+  row-gap: var(--sp-xs);
   flex-wrap: wrap;
 }
 
-/* POLISH-3 — nhóm điều hướng bước đứng liền khối, tách khỏi các nhóm khác. */
-.control-group {
+.control-zone {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--sp-xs);
+}
+
+/* Vùng phụ đẩy sang phải CHỈ KHI không có thanh tua ăn chỗ thừa (bài khám phá
+   không có dòng thời gian). Có tua thì chính nó giữ nhịp, không cần lệnh đẩy. */
+.control-zone-aux {
+  margin-left: auto;
+}
+
+.player-controls:has(.player-progress) .control-zone-aux {
+  margin-left: 0;
+}
+
+/* THANH TUA ĂN HẾT CHỖ THỪA. Đây là thứ biến "khoảng chết 796px" thành một
+   control có ích: `flex:1` nên nó co giãn theo bề rộng còn lại, và vì nằm TRONG
+   hàng nên nó thôi đọc thành một vạch rời bên dưới.
+   `min-width` giữ nó luôn dùng được; hết chỗ thì cả thanh xuống dòng nguyên vẹn
+   thay vì bị bóp còn vài pixel. */
+.player-progress {
+  flex: 1 1 220px;
+  min-width: 160px;
+  margin: 0;
+}
+
+/* Hết chỗ ⇒ vùng phụ xuống dòng TRỌN VẸN và về mép trái, thay vì trôi lơ lửng
+   bên phải một hàng rỗng. Có chủ đích: ≤2 tầng ở 768. */
+@media (max-width: 860px) {
+  .control-zone-aux,
+  .player-controls:has(.player-progress) .control-zone-aux {
+    margin-left: 0;
+  }
+  /* Ở hẹp KHÔNG cho thanh tua chiếm trọn một dòng.
+     Đo được: `flex-basis:100%` đẩy vùng phụ xuống dòng thứ ba (642px → 3 tầng,
+     cao 97px). Cho nó co lại thì tua và vùng phụ chia nhau dòng hai, còn ĐÚNG
+     2 tầng như chủ đích — vẫn đủ rộng để kéo bằng ngón tay. */
+  .player-progress {
+    flex: 1 1 140px;
+  }
 }
 
 .control-divider {
@@ -818,11 +868,6 @@ html {
   margin-left: var(--sp-xs);
 }
 
-/* Gợi ý phím tắt là thông tin PHỤ — đẩy về cuối và làm nhạt để nó không tranh
-   chỗ với tiến độ/tốc độ. */
-.control-hint {
-  margin-left: var(--sp-sm);
-}
 
 /* POLISH-3 — DISABLED PHẢI ĐỌC ĐƯỢC.
    Nút bước hết đường đi (ở bước đầu/cuối) là trạng thái BÌNH THƯỜNG, gặp liên
@@ -840,11 +885,13 @@ html {
   transform: none;
 }
 
+/* W4B-3E — `margin-left:auto` ĐÃ GỠ khỏi đây. Nó là nguyên nhân đo được của
+   khoảng hở 633px @1920: một thành viên tự quyết bố cục cả hàng và đẩy mọi thứ
+   đứng sau nó. Lệnh đẩy nay nằm trên `.control-zone-aux` — một chỗ, có chủ. */
 .speed-control {
   display: flex;
   align-items: center;
   gap: var(--sp-xs);
-  margin-left: auto;
   font-size: 14px;
   color: var(--ink-muted);
 }

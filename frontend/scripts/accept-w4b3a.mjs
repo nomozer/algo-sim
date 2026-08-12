@@ -164,7 +164,7 @@ const PROBE = `JSON.stringify((()=>{
     entriesInControls: inControls,
     entryLabels: entries.map(e=>(e.textContent||'').trim()),
     entriesDisabled: entries.filter(e=>e.disabled).length,
-    transport: document.querySelectorAll('.control-group-transport').length,
+    transport: document.querySelectorAll('.control-zone-primary').length,
     commitmentSurfaces:
       document.querySelectorAll('[aria-label="Thao tác với biến tích luỹ"],[aria-label="Thao tác với bước tìm kiếm"],[aria-label="Thao tác sắp xếp"]').length
       + document.querySelectorAll('.predict-inline').length,

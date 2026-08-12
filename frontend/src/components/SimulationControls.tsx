@@ -171,13 +171,23 @@ export function SimulationControls() {
   const hasSteps = timeline !== undefined && timeline.stepCount(active.state) > 1;
   if (!hasSteps) {
     return (
-      <div className="player-controls">
-        <button className="btn-utility" onClick={resetSim}>
-          <IconReset size={14} />
-          Đặt lại
-        </button>
-        <span className="hint">Mô phỏng khám phá — thao tác trực tiếp trên sân khấu.</span>
-        {secondary}
+      /* W4B-3E — bài KHÁM PHÁ dùng CÙNG khuôn ba vùng, chỉ thiếu vùng transport.
+         Câu "Mô phỏng khám phá — thao tác trực tiếp trên sân khấu." (50 ký tự)
+         rời khỏi hàng: nó mô tả CÁCH DÙNG cả sân khấu chứ không phải một nút, và
+         chữ dài thường trực là thứ ép dải điều khiển xuống dòng. Nó thành tên
+         khả truy cập của chính dải — không mất với người đọc màn hình. */
+      <div
+        className="player-controls"
+        role="group"
+        aria-label="Mô phỏng khám phá — thao tác trực tiếp trên sân khấu"
+      >
+        <span className="control-zone control-zone-meta">
+          <button className="btn-utility" onClick={resetSim} title="Dựng lại từ đầu">
+            <IconReset size={14} />
+            Đặt lại
+          </button>
+        </span>
+        <span className="control-zone control-zone-aux">{secondary}</span>
       </div>
     );
   }
@@ -186,13 +196,34 @@ export function SimulationControls() {
   const total = timeline.stepCount(active.state);
   const last = cursor >= total - 1;
 
-  /* POLISH-3 — GOM NHÓM. Sáu nút, đúng thứ tự, đúng nhãn, không thêm bớt cái
-     nào; chỉ bọc thành các nhóm có nghĩa để mắt không phải quét một hàng phẳng:
-     [điều hướng bước + play] · [đặt lại] · [tiến độ] · [tốc độ] · [phím tắt]. */
+  /* W4B-3E — BA VÙNG TƯỜNG MINH, KHÔNG PHẢI MỘT HÀNG PHẲNG.
+   *
+   * Đo được trước wave này (Chrome thật, `.player-controls`): ở 1920 có **2 dải**
+   * con và một khoảng hở **633px** giữa hai phần tử CÙNG hàng (1536: 421px ·
+   * 1366: 251px). Khoảng hở đó không do ai thiết kế — nó là CHỖ THỪA, sinh ra vì
+   * `.speed-control` mang `margin-left:auto`: một THÀNH VIÊN tự quyết bố cục của
+   * cả hàng, và mọi thứ đứng sau nó (phím tắt, Khám phá, Thử thách) bị đẩy theo.
+   * Hở scale theo bề rộng màn hình chính là dấu hiệu của "phần còn lại", không
+   * phải của một khoảng cách có chủ đích.
+   *
+   * Nay bố cục do BA VÙNG quyết, mỗi vùng là một nhóm có nghĩa:
+   *   [lùi · CHẠY · tiến]   [đặt lại | bước x/y]   [tốc độ] [Khám phá] [Thử thách]
+   * và đúng MỘT lệnh đẩy (`margin-left:auto`) đặt trên VÙNG cuối, không đặt trên
+   * một thành viên. Thứ tự đọc = thứ tự ưu tiên: chạy > đặt lại/tiến độ > phụ.
+   *
+   * Gợi ý phím tắt rời khỏi hàng: nó là chữ dài thường trực, và chữ dài trong
+   * dải điều khiển chính là thứ ép xuống dòng. Nội dung KHÔNG mất — nó thành
+   * TÊN KHẢ TRUY CẬP của vùng transport, nên người dùng đọc màn hình vẫn nghe
+   * được, còn bố cục thì không phải gánh.
+   */
   return (
-    <div className="stack" style={{ gap: "var(--sp-xs)" }}>
+    <div className="player">
       <div className="player-controls">
-        <span className="control-group control-group-transport">
+        <span
+          className="control-zone control-zone-primary"
+          role="group"
+          aria-label="Điều khiển bước — phím mũi tên trái/phải để lùi/tiến, phím Space để tự chạy"
+        >
           <button className="btn-icon" onClick={toStart} disabled={cursor === 0} title="Về đầu">
             <IconToStart />
           </button>
@@ -215,40 +246,52 @@ export function SimulationControls() {
           </button>
         </span>
 
-        <span className="control-divider" aria-hidden="true" />
-
-        <button className="btn-utility" onClick={resetSim} title="Dựng lại từ đầu">
-          <IconReset size={14} />
-          Đặt lại
-        </button>
-
-        <span className="step-indicator">
-          Bước {cursor + 1} / {total}
+        <span className="control-zone control-zone-meta">
+          <button className="btn-utility" onClick={resetSim} title="Dựng lại từ đầu">
+            <IconReset size={14} />
+            Đặt lại
+          </button>
+          <span className="control-divider" aria-hidden="true" />
+          <span className="step-indicator">
+            Bước {cursor + 1} / {total}
+          </span>
         </span>
 
-        <label className="speed-control">
-          Tốc độ
-          <input
-            type="range"
-            min={300}
-            max={2500}
-            step={100}
-            value={2800 - speedMs}
-            onChange={(e) => setSpeedMs(2800 - Number(e.target.value))}
-          />
-        </label>
-        <span className="hint control-hint">← → tiến/lùi · Space tự chạy</span>
-        {secondary}
+        {/* TIẾN ĐỘ NẰM TRONG HÀNG, VÀ NÓ ĂN HẾT CHỖ THỪA.
+         *
+         * Đây là chỗ hai khiếu nại gặp nhau. Bản ba-vùng đầu tiên đã gỡ được
+         * việc xuống dòng (2 dải → 1) nhưng khoảng hở còn TĂNG (633 → 796px
+         * @1920): đẩy vùng phụ sang phải chỉ DỜI chỗ trống chứ không xoá nó.
+         * Chỗ trống ấy vốn có thật — một dải 1920px chỉ có dăm cái nút.
+         *
+         * Nên giao nó cho thứ THẬT SỰ CẦN bề ngang: thanh tua. Nó vừa hết là
+         * khoảng chết, vừa thôi đọc thành "một vạch tách rời" bên dưới — nó
+         * nằm ngay giữa bộ điều khiển, đúng chỗ người ta tìm nó. */}
+        <input
+          className="player-progress"
+          type="range"
+          min={0}
+          max={total - 1}
+          value={cursor}
+          onChange={(e) => goToStep(Number(e.target.value))}
+          aria-label={`Tua đến bước — đang ở bước ${cursor + 1} trên ${total}`}
+        />
+
+        <span className="control-zone control-zone-aux">
+          <label className="speed-control">
+            Tốc độ
+            <input
+              type="range"
+              min={300}
+              max={2500}
+              step={100}
+              value={2800 - speedMs}
+              onChange={(e) => setSpeedMs(2800 - Number(e.target.value))}
+            />
+          </label>
+          {secondary}
+        </span>
       </div>
-      <input
-        type="range"
-        min={0}
-        max={total - 1}
-        value={cursor}
-        onChange={(e) => goToStep(Number(e.target.value))}
-        style={{ width: "100%" }}
-        aria-label="Tua đến bước"
-      />
     </div>
   );
 }
