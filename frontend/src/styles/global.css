@@ -816,6 +816,68 @@ html {
   gap: var(--sp-xs);
 }
 
+/* ── W4B-3G — MỘT SẮC XANH, CHROME YÊN LẶNG ───────────────────────────────
+ *
+ * Bản trước đo thì đạt (1 hàng, hở 16px) nhưng NHÌN thì hỏng: năm cách vẽ nút
+ * trong cùng một hàng — tròn xám, viên thuốc xanh cỡ đại, hộp trắng có viền,
+ * hộp có đường bao, và chữ mờ không hộp. Năm cách vẽ = năm mức quan trọng, nên
+ * mắt không đọc ra cái nào dẫn.
+ *
+ * DESIGN.md của dự án đã nói sẵn luật: "chrome yên lặng, MỘT sắc xanh làm hết
+ * phần tính cách". Áp đúng thế: trong dải này CHỈ nút Chạy được tô đầy. Mọi thứ
+ * khác là ghost — phân biệt bằng khoảng cách và sắc độ chữ, không bằng khung.
+ *
+ * NHỊP: rất chặt TRONG transport (5 nút là MỘT nhạc cụ, gap 2px), rộng GIỮA các
+ * nhóm (gap 16px). Tỉ lệ 8:1 đó là thứ khiến mắt đọc ra nhóm mà không cần một
+ * đường kẻ nào — bản trước dùng 8/16 nên squint ra một hàng phẳng đều tăm tắp.
+ */
+.control-zone-primary {
+  gap: 2px;
+}
+
+/* Nút icon trong player: GHOST, không phải đĩa xám. Vẫn 40px để chạm được. */
+.player-controls .btn-icon {
+  background: none;
+  color: var(--ink-muted);
+  border-radius: var(--rounded-sm);
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.player-controls .btn-icon:hover:not(:disabled) {
+  background: var(--canvas-soft);
+  color: var(--ink);
+}
+
+/* Hết đường đi ở đầu/cuối là trạng thái BÌNH THƯỜNG, gặp liên tục — làm mờ
+   quá tay thì trông như hỏng. Nhạt đi một bậc, không phải nửa độ đục. */
+.player-controls .btn-icon:disabled {
+  color: var(--ink-faint);
+  background: none;
+}
+
+/* Nút Chạy: phần tử DUY NHẤT được tô. Thu về đúng chiều cao nhạc cụ transport
+   thay vì viên thuốc 112px lấn át cả dải. */
+.player-controls .btn-play {
+  min-width: 0;
+  height: 40px;
+  padding: 0 var(--sp-md);
+  font-size: 15px;
+  gap: 6px;
+}
+
+/* Đặt lại là TIỆN ÍCH, không phải ngang hàng với Chạy — bỏ viền và nền trắng,
+   nó thôi tranh chấp thứ bậc. */
+.player-controls .btn-utility {
+  background: none;
+  border-color: transparent;
+  color: var(--ink-muted);
+}
+
+.player-controls .btn-utility:hover {
+  background: var(--canvas-soft);
+  color: var(--ink);
+}
+
 /* KHÔNG có lệnh đẩy nào ở đây, và đó là chủ đích.
    Bản đầu đặt `margin-left:auto` lên vùng phụ rồi gỡ lại khi có thanh tua —
    tức ĐÚNG NGƯỢC: bài có tua thì tua đã đẩy hộ, bài KHÔNG có tua lại chẳng có
@@ -823,15 +885,79 @@ html {
    @1920). Bỏ hẳn: bài có tua thì `flex:1` của tua đưa vùng phụ về mép phải; bài
    không có tua thì các nút đứng liền nhau bên trái, không có chỗ chết nào. */
 
-/* THANH TUA ĂN HẾT CHỖ THỪA. Đây là thứ biến "khoảng chết 796px" thành một
-   control có ích: `flex:1` nên nó co giãn theo bề rộng còn lại, và vì nằm TRONG
-   hàng nên nó thôi đọc thành một vạch rời bên dưới.
-   `min-width` giữ nó luôn dùng được; hết chỗ thì cả thanh xuống dòng nguyên vẹn
-   thay vì bị bóp còn vài pixel. */
-.player-progress {
+/* THANH TUA ĂN HẾT CHỖ THỪA — biến "khoảng chết 796px" thành control có ích.
+   W4B-3G: tua và SỐ BƯỚC là MỘT nhóm. Số bước là NHÃN của thanh tua; để nó
+   lang thang cạnh "Đặt lại" thì mắt phải tự ghép hai thứ ở hai đầu dải. */
+.player-track {
+  /* `--p` = phần trăm đã đi, React đặt inline từ cursor/total. Khai mặc định ở
+     đây có hai lý do: giá trị lùi an toàn nếu inline style biến mất (track hiện
+     0% thay vì hỏng), và `tokens.test.ts` cần thấy MỌI `var()` có định nghĩa —
+     một `var()` trỏ vào hư vô là lỗi im lặng, trình duyệt vứt cả dòng. */
+  --p: 0;
   flex: 1 1 220px;
   min-width: 160px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.player-progress {
+  flex: 1;
+  min-width: 0;
   margin: 0;
+  /* NGÔN NGỮ RIÊNG, KHÁC HẲN THANH TỐC ĐỘ.
+     Bản trước để cả hai là `input[type=range]` mặc định nên chúng trông y hệt
+     nhau — trong khi một cái là VỊ TRÍ trong thời gian, cái kia là NHỊP chạy.
+     Track ở đây tô phần ĐÃ ĐI (`--p`), nên nó đọc được cả khi không chạm. */
+  appearance: none;
+  height: 20px;
+  background: none;
+  cursor: pointer;
+}
+
+.player-progress::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    var(--primary) 0 calc(var(--p, 0) * 1%),
+    var(--hairline) calc(var(--p, 0) * 1%) 100%
+  );
+}
+
+.player-progress::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--hairline);
+}
+
+.player-progress::-moz-range-progress {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--primary);
+}
+
+.player-progress::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  border-radius: var(--rounded-full);
+  background: var(--primary);
+  border: 2px solid var(--surface);
+}
+
+.player-progress::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--surface);
+  border-radius: var(--rounded-full);
+  background: var(--primary);
+}
+
+.player-progress:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }
 
 /* Hết chỗ ⇒ vùng phụ xuống dòng TRỌN VẸN và về mép trái, thay vì trôi lơ lửng
@@ -853,12 +979,23 @@ html {
   margin: 0 var(--sp-xs);
 }
 
+/* Số bước: NHÃN của thanh tua, không phải một con số trôi nổi. `tabular-nums`
+   giữ bề rộng cố định nên thanh tua không giật mỗi lần đổi bước. */
 .step-indicator {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--ink-secondary);
   font-variant-numeric: tabular-nums;
-  margin-left: var(--sp-xs);
+  white-space: nowrap;
+}
+
+/* Mẫu số nhạt hơn tử số: "đang ở đâu" quan trọng hơn "tổng bao nhiêu".
+   Dùng `--ink-muted` chứ KHÔNG `--ink-faint`: faint (#a39e98) trên nền trắng chỉ
+   ~2.6:1, dưới ngưỡng 4.5:1 của chữ. Sắc độ để hạ cấp, không để làm mờ tới mức
+   đọc không ra. */
+.step-of {
+  font-weight: 400;
+  color: var(--ink-muted);
 }
 
 
@@ -881,12 +1018,55 @@ html {
 /* W4B-3E — `margin-left:auto` ĐÃ GỠ khỏi đây. Nó là nguyên nhân đo được của
    khoảng hở 633px @1920: một thành viên tự quyết bố cục cả hàng và đẩy mọi thứ
    đứng sau nó. Lệnh đẩy nay nằm trên `.control-zone-aux` — một chỗ, có chủ. */
+/* TỐC ĐỘ LÀ TERTIARY — phải TRÔNG như tertiary.
+   Bản trước nó là một `input[type=range]` mặc định, tức giống hệt thanh tua, nên
+   hai control khác hẳn nghĩa lại đọc thành cùng một loại. Nay: track mảnh hơn,
+   xám, ngắn, không có phần tô — không có gì để "đọc", chỉ để chỉnh. */
 .speed-control {
   display: flex;
   align-items: center;
   gap: var(--sp-xs);
-  font-size: 14px;
+  font-size: 13px;
+  /* Cùng lý do như `.step-of`: hạ cấp bằng sắc độ, không đẩy xuống dưới ngưỡng
+     tương phản. Cái NÚM thì được nhạt — nó là hình, không phải chữ. */
   color: var(--ink-muted);
+}
+
+.speed-control input[type="range"] {
+  appearance: none;
+  width: 72px;
+  height: 16px;
+  background: none;
+  cursor: pointer;
+}
+
+.speed-control input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 1px;
+  background: var(--hairline);
+}
+
+.speed-control input[type="range"]::-moz-range-track {
+  height: 2px;
+  border-radius: 1px;
+  background: var(--hairline);
+}
+
+.speed-control input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
+  border-radius: var(--rounded-full);
+  background: var(--ink-faint);
+}
+
+.speed-control input[type="range"]::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: var(--rounded-full);
+  background: var(--ink-faint);
 }
 
 .narration-bar {

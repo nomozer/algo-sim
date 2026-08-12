@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type CSSProperties } from "react";
 import { getSimulation } from "../simulations/registry";
 import type { PresentationEntry } from "../simulations/types";
 import { useAppStore } from "../state/store";
@@ -251,10 +251,6 @@ export function SimulationControls() {
             <IconReset size={14} />
             Đặt lại
           </button>
-          <span className="control-divider" aria-hidden="true" />
-          <span className="step-indicator">
-            Bước {cursor + 1} / {total}
-          </span>
         </span>
 
         {/* TIẾN ĐỘ NẰM TRONG HÀNG, VÀ NÓ ĂN HẾT CHỖ THỪA.
@@ -267,15 +263,31 @@ export function SimulationControls() {
          * Nên giao nó cho thứ THẬT SỰ CẦN bề ngang: thanh tua. Nó vừa hết là
          * khoảng chết, vừa thôi đọc thành "một vạch tách rời" bên dưới — nó
          * nằm ngay giữa bộ điều khiển, đúng chỗ người ta tìm nó. */}
-        <input
-          className="player-progress"
-          type="range"
-          min={0}
-          max={total - 1}
-          value={cursor}
-          onChange={(e) => goToStep(Number(e.target.value))}
-          aria-label={`Tua đến bước — đang ở bước ${cursor + 1} trên ${total}`}
-        />
+        {/* TIẾN ĐỘ = MỘT NHÓM, KHÔNG PHẢI HAI PHẦN TỬ RỜI.
+         *
+         * Số bước là NHÃN của thanh tua, nên nó đứng liền thanh tua chứ không
+         * lang thang cạnh "Đặt lại". Trước wave này chúng ở hai vùng khác nhau,
+         * nên mắt phải tự ghép "Bước 1/10" với cái track ở tận đâu.
+         *
+         * `--p` là phần trăm đã đi, dùng để tô phần đã qua. Nó DẪN XUẤT từ
+         * cursor/total — trình bày thuần, không phải nguồn sự thật thứ hai. */}
+        <span
+          className="player-track"
+          style={{ "--p": total > 1 ? (cursor / (total - 1)) * 100 : 0 } as CSSProperties}
+        >
+          <span className="step-indicator">
+            Bước {cursor + 1}<span className="step-of"> / {total}</span>
+          </span>
+          <input
+            className="player-progress"
+            type="range"
+            min={0}
+            max={total - 1}
+            value={cursor}
+            onChange={(e) => goToStep(Number(e.target.value))}
+            aria-label={`Tua đến bước — đang ở bước ${cursor + 1} trên ${total}`}
+          />
+        </span>
 
         <span className="control-zone control-zone-aux">
           <label className="speed-control">
