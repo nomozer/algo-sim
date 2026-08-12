@@ -29,7 +29,11 @@ const CASES = [
   ["network.graph_traversal", { type: "set_param", name: "variant", value: "dfs" }, "visitedOrder"],
   ["tree.traversal", { type: "set_param", name: "variant", value: "postorder" }, "visitedOrder"],
   ["database.relational_table_query", { type: "set_param", name: "sort.direction", value: "asc" }, "resultRows"],
-  ["logic.boolean_dag", { type: "toggle", target: "A" }, "values"],
+  /* `@firstInput` = id đầu vào ĐẦU TIÊN của mạch, giải ra trong trang.
+     Viết cứng "A" thì bản kiểm này gắn với MỘT mẫu cụ thể: đổi mẫu sang mạch
+     N/G/K là nó lặng lẽ phát một toggle không trúng ai và báo "không tính lại"
+     — hỏng theo hướng báo động giả, đúng loại làm người ta tắt guard đi. */
+  ["logic.boolean_dag", { type: "toggle", target: "@firstInput" }, "values"],
 ];
 
 const CHROME = [
@@ -89,7 +93,13 @@ for (const [w, h] of VIEWPORTS) {
       const mod=reg.getSimulation(st0.active.moduleId);
       const before=JSON.stringify(st0.active.state[${JSON.stringify(field)}]);
       const cur0=mod.timeline?mod.timeline.currentStep(st0.active.state):0;
-      s.useAppStore.getState().dispatch(${JSON.stringify(action)});
+      const act=${JSON.stringify(action)};
+      if(act.target==='@firstInput'){
+        const ins=st0.active.state.config?.inputs;
+        if(!ins||!ins.length) return JSON.stringify({ok:false,why:'mạch không có đầu vào'});
+        act.target=ins[0].id;
+      }
+      s.useAppStore.getState().dispatch(act);
       const st1=s.useAppStore.getState();
       const after=JSON.stringify(st1.active.state[${JSON.stringify(field)}]);
       const cur1=mod.timeline?mod.timeline.currentStep(st1.active.state):0;

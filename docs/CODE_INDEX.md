@@ -1445,6 +1445,18 @@ guard mà **tiêm lỗi mới lộ ra**: (1) xem trước phải là TRANG CÓ C
 lại làm FIXTURE của engine generic, không phải bài học công khai; mẫu công khai
 của generic nay là `gen-rule-library` (quy tắc hợp thành, có công tắc thật).
 
+### `frontend/scripts/measure-dag-composition.mjs` · offline (cần `npm run dev`)
+W4B-4D — ĐO KHOẢNG TRỐNG CHẾT của sân khấu `logic.boolean_dag` ở bốn bề rộng.
+Hai phép đo KHÁC NHAU, đừng lẫn: `fillPct` đo MỰC (rect trong SVG) so với thẻ —
+sơ đồ to hay nhỏ; `gutterLeft/gutterRight/skew` đo CỤM nội dung so với thẻ —
+hình có bị dồn về một bên không. Khiếu nại "dồn sang trái" là phép đo thứ hai,
+nên một bản vá chỉ kéo `fillPct` lên vẫn hỏng đúng chỗ bị kêu.
+
+Chính nó bắt được hai lỗi mà SSR không thấy: SVG rơi về bề rộng mặc định 300px
+khi cha là `fit-content`, và khung nét đứt của cổng đầu ra bị viewBox cắt mất
+7px. Có dấu vân tay trang (không thấy sân khấu DAG ⇒ thoát != 0).
+Artifact: `docs/evaluation/m17/w4b4d-composition/`.
+
 ### `frontend/scripts/accept-experience-w4b4c.mjs` · offline (cần `npm run dev`)
 W4B-4C — NGHIỆM THU TRẢI NGHIỆM: hỏi CÂU HỎI NGHIỆM THU bằng Chrome thật ở bốn
 bề rộng. Với mỗi target đã chuyển sang tương tác, nó nạp bài, phát ĐÚNG action

@@ -1,5 +1,5 @@
 {
-  "when": "2026-08-12T15:22:27.072Z",
+  "when": "2026-08-12T15:37:30.675Z",
   "rows": [
     {
       "target": "algorithm.binary_search",
@@ -209,10 +209,10 @@
       "target": "logic.boolean_dag",
       "domain": "logic",
       "interactionMode": "hybrid",
-      "steps": 3,
+      "steps": 5,
       "manipulable": true,
-      "actionsTried": 2,
-      "actionsThatChanged": 2,
+      "actionsTried": 3,
+      "actionsThatChanged": 3,
       "declaresExplore": false,
       "declaresPredict": false,
       "presentsCommitment": false

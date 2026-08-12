@@ -1270,6 +1270,37 @@ html {
   gap: 6px;
 }
 
+/* ── W4B-4D — SÂN KHẤU MẠCH LOGIC: CỤM CĂN GIỮA, CHÚ GIẢI ĐỨNG CẠNH ────────
+   Sơ đồ mạch có bề rộng THẬT do bố cục mạch quyết định và cố ý không co giãn
+   (phóng viewBox từng biến sơ đồ thành áp phích — xem khối hằng số trong
+   `dag-module.tsx`). Hệ quả: ở màn rộng nó luôn ngắn hơn thẻ, và đo được ở
+   1920 là 1217px trống dồn hết sang PHẢI.
+
+   Cách chữa KHÔNG phải kéo giãn hình mà là dựng cụm: chú giải rời xuống-dưới
+   để về đứng CẠNH sơ đồ, rồi cả cụm căn giữa thẻ. Khoảng trắng chia đều hai
+   bên nên đọc ra là có chủ ý, và sân khấu thấp xuống một hàng. */
+.dag-stage {
+  display: flex; flex-direction: column; gap: var(--sp-sm);
+  width: fit-content; max-width: 100%;
+  margin-inline: auto;
+}
+.dag-stage-body { display: flex; flex-direction: column; gap: var(--sp-sm); }
+/* Chỉ ghép cạnh khi thẻ ĐỦ RỘNG cho cả hai — hẹp thì xếp dọc như cũ, chú giải
+   không bao giờ bị bóp thành cột chữ một từ. */
+@media (min-width: 1100px) {
+  .dag-stage-body {
+    flex-direction: row; align-items: center;
+    gap: var(--sp-xl);
+  }
+  /* Chú giải dựng dọc: bốn mục ngắn xếp thành cột đọc nhanh hơn một hàng dài,
+     và nó lấp đúng dải trống mà sơ đồ để lại. */
+  .dag-stage-body .dag-legend {
+    flex-direction: column; flex-wrap: nowrap;
+    gap: var(--sp-xs);
+    flex: 0 0 auto; max-width: 230px;
+  }
+}
+
 /* W4B-1B — nhãn NHÓM cho chú giải nhiều từ vựng (nút vs đường). Bốn mục nút
    cộng ba mục đường trong MỘT hàng đọc ra như nhiễu; tách nhóm thì mỗi hàng
    chỉ nói về một loại đối tượng. Chữ hoa nhỏ + màu nhạt hơn để nó đọc như

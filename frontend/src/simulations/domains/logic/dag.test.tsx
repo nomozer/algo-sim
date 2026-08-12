@@ -297,16 +297,28 @@ describe("module: toggle tất định + timeline + inspector đọc sự thật
     if (!v.ok) throw new Error(v.error);
     const svg = renderToString(<DagDiagram state={mod.init(v.config)} />);
     const viewBox = /viewBox="0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)"/.exec(svg);
-    const maxWidth = /max-width:\s*(\d+(?:\.\d+)?)px/.exec(svg);
     expect(viewBox).not.toBeNull();
-    expect(maxWidth).not.toBeNull();
     const vbW = Number(viewBox![1]);
-    // scale ≤ 1 — không phóng
-    expect(Number(maxWidth![1])).toBeLessThanOrEqual(vbW);
-    // …nhưng cũng KHÔNG được nhỏ như bản gốc: bố cục phải đủ rộng để là sân
-    // khấu chính. Sàn, không phải một con số cố định.
+
+    /* W4B-4D — CÙNG BẤT BIẾN, KHAI THEO CÁCH KHÁC.
+     *
+     * Trước: `width="100%"` + `max-width: <vbW>px`. Cách đó chỉ đúng khi cha có
+     * bề rộng xác định; khi cụm sân khấu chuyển sang `fit-content` để căn giữa,
+     * `100%` mất quy chiếu và Chrome vẽ sơ đồ ở bề rộng mặc định 300px — đo
+     * được trong Chrome, và SSR không thể thấy.
+     *
+     * Nay bề rộng riêng = đúng vbW, `max-width: 100%` lo phần co. Bất biến vẫn
+     * là TỈ LỆ PHÓNG ≤ 1: không lối nào cho phép vẽ rộng hơn viewBox. */
+    const widthAttr = /<svg[^>]*\swidth="(\d+(?:\.\d+)?)"/.exec(svg);
+    expect(widthAttr, "SVG không khai bề rộng riêng ⇒ cha fit-content sẽ bóp về 300px")
+      .not.toBeNull();
+    expect(Number(widthAttr![1]), "bề rộng hiển thị > viewBox ⇒ sơ đồ bị phóng")
+      .toBeLessThanOrEqual(vbW);
+    expect(svg, "không có đường CO LẠI ⇒ thẻ hẹp sẽ tràn ngang")
+      .toMatch(/max-width:\s*100%/);
+    // …và cũng KHÔNG được nhỏ như bản gốc: bố cục phải đủ rộng để là sân khấu
+    // chính. Sàn, không phải một con số cố định.
     expect(vbW).toBeGreaterThan(480);
-    expect(svg).toContain('width="100%"');
   });
 
   /**
@@ -335,10 +347,20 @@ describe("module: toggle tất định + timeline + inspector đọc sự thật
     expect(node.w).toBeLessThan(w / 3);
     // sơ đồ nằm ngang: rộng hơn cao (mạch chảy trái → phải)
     expect(w).toBeGreaterThan(h * 1.5);
-    // khoảng cách cột KHÔNG được rộng hơn chính node: dây dài hơn node thì
-    // khoảng trắng thành phần lớn nhất của hình.
-    const colGap = (w - 3 * node.w) / 2;
-    expect(colGap).toBeLessThan(node.w);
+    /* Khoảng cách cột KHÔNG được rộng hơn chính node: dây dài hơn node thì
+       khoảng trắng thành phần lớn nhất của hình.
+       W4B-4D: đo THẲNG từ toạ độ hai cột liền nhau. Bản cũ suy ngược từ bề rộng
+       viewBox (`(w - 3·nodeW)/2`), nên nó ngầm khẳng định viewBox không có lề —
+       và khi thêm lề để hết cắt khung nét đứt của cổng đầu ra thì phần lề bị
+       cộng nhầm vào "dây", báo 146px cho một COL_GAP vẫn đang là 130. */
+    const nodeXs = [...svg.matchAll(new RegExp(`<rect[^>]*\\sx="(\\d+(?:\\.\\d+)?)"[^>]*\\swidth="${node.w}"`, "g"))]
+      .map((m) => Number(m[1]));
+    const cols = [...new Set(nodeXs)].sort((a, b) => a - b);
+    expect(cols.length, "sơ đồ mẫu phải có nhiều hơn một tầng").toBeGreaterThan(1);
+    for (let i = 1; i < cols.length; i++) {
+      expect(cols[i] - (cols[i - 1] + node.w), `dây tầng ${i} dài hơn chính node`)
+        .toBeLessThan(node.w);
+    }
   });
 
   it("chú giải tín hiệu có mặt và mỗi mục có dấu hiệu NGOÀI màu", () => {

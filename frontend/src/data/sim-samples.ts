@@ -563,15 +563,38 @@ OFFLINE_SAMPLES.push(
       simulation_id: "logic.boolean_dag",
       domain: "logic",
       visual_mode: "2d",
-      title: "Cửa tự động: mở khi ĐÚNG MỘT trong hai cảm biến báo",
-      description: "Mạch XOR hai đầu vào kèm bảng chân trị đầy đủ",
+      title: "Cửa tự động: mở khi có người trong giờ mở cửa, trừ lúc đang khoá",
+      description: "Mạch tổ hợp hai tầng — AND và NOT rồi AND, tín hiệu lan từ trái sang phải",
+      /* W4B-4D — MỘT CỔNG KHÔNG PHẢI LÀ MỘT MẠCH.
+       *
+       * Mẫu cũ là đúng một cổng XOR. Nó chạy đúng, nhưng nó vô hiệu hoá chính
+       * cơ chế mà target này mang tên: `boolean_dag` nói về TỔ HỢP — tín hiệu
+       * lan qua nhiều tầng, mỗi cổng chờ đầu vào của nó xong mới tới lượt. Với
+       * một cổng thì "lan truyền" chỉ có một bước, dấu "?" chưa-tới-lượt chỉ
+       * xuất hiện đúng một lần, và bảng chi tiết các cổng có một dòng.
+       *
+       * Đo được ở 1920: sơ đồ chiếm 25% bề ngang sân khấu, 1217px bỏ trống bên
+       * phải — nhìn ra "hình bị dồn sang trái", nhưng nguyên nhân không nằm ở
+       * bố cục mà ở chỗ mô hình chỉ có 3 node để vẽ.
+       *
+       * Mạch mới vẫn nằm gọn trong hạn mức đã khai (≤4 đầu vào, ≤8 cổng) và
+       * từng cổng đọc lên được thành một câu tiếng Việt:
+       *   g1 = N AND G   — có người VÀ đang trong giờ mở cửa
+       *   g2 = NOT K     — chưa bật khoá
+       *   g3 = g1 AND g2 — hội đủ cả hai thì cửa mở
+       */
       config: {
         inputs: [
-          { id: "A", value: 1 },
-          { id: "B", value: 0 },
+          { id: "N", value: 1 },
+          { id: "G", value: 1 },
+          { id: "K", value: 0 },
         ],
-        gates: [{ id: "g", op: "XOR", inputs: ["A", "B"] }],
-        output: "g",
+        gates: [
+          { id: "g1", op: "AND", inputs: ["N", "G"] },
+          { id: "g2", op: "NOT", inputs: ["K"] },
+          { id: "g3", op: "AND", inputs: ["g1", "g2"] },
+        ],
+        output: "g3",
         notes: null,
       },
       notes: null,

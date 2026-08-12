@@ -226,8 +226,13 @@ describe("W1 · boolean_dag — bảng chi tiết là tra cứu phụ", () => {
     const vb = /viewBox="0 0 (\d+(?:\.\d+)?) (\d+(?:\.\d+)?)"/.exec(svg)!;
     const w = Number(vb[1]);
 
-    // trước W1: 3*134 + 2*96 = 594. Sau W1: 3*134 + 2*130 = 662.
-    expect(w).toBe(662);
+    /* trước W1: 3*134 + 2*96 = 594. Sau W1: 3*134 + 2*130 = 662.
+       W4B-4D: +2*16 lề trong = 694 — khung nét đứt của cổng ĐẦU RA vẽ ra ngoài
+       hộp node 7px, và viewBox không có lề thì nó bị CẮT (đo được trong Chrome:
+       mực chạm 101% bề rộng thẻ ở 768px). Con số vẫn khoá cứng vì điều đáng giữ
+       là "bề rộng tăng do BỐ CỤC, không do scale" — mà một cú phóng viewBox
+       cũng làm số này tăng, nên vế thứ hai bên dưới mới là vế phân biệt. */
+    expect(w).toBe(694);
     // node giữ nguyên 134 — bề rộng tăng do DÂY dài ra, không do scale
     expect(svg).toContain('width="134"');
   });

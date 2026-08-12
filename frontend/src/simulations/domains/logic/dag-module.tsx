@@ -300,6 +300,16 @@ const NODE_H = 62;
  */
 const COL_GAP = 130;
 const ROW_GAP = 30;
+/**
+ * LỀ TRONG viewBox — chỗ cho những nét vẽ NGOÀI hộp node.
+ *
+ * Cổng đầu ra có khung nét đứt vẽ ở `x-7 … x+NODE_W+7` và chữ "ĐẦU RA" ở
+ * `y-13`. Bề rộng viewBox trước đây tính đúng bằng dãy node, nên 7px khung nét
+ * đứt của cổng cuối nằm NGOÀI viewBox và bị cắt — đo được trong Chrome (mực vẽ
+ * chạm 101% bề rộng thẻ ở 768px), còn nhìn bằng mắt thì chỉ thấy khung hơi
+ * "cụt" ở mép phải nên nó sống sót qua nhiều wave.
+ */
+const PAD = 16;
 /** Cỡ chữ trong sơ đồ — hiển thị đúng số này vì scale ≈ 1. */
 const LABEL_FONT = 17;
 const ROLE_FONT = 11;
@@ -352,15 +362,15 @@ function layoutDag(config: BoolDagConfig): { nodes: Map<string, DagNode>; w: num
         kind: labelOfInput.has(id) ? "input" : "gate",
         label: labelOfInput.get(id) ?? gateById.get(id)!.op,
         depth: d,
-        x: d * (NODE_W + COL_GAP),
-        y: (fullH - colH) / 2 + row * (NODE_H + ROW_GAP),
+        x: PAD + d * (NODE_W + COL_GAP),
+        y: PAD + (fullH - colH) / 2 + row * (NODE_H + ROW_GAP),
       });
     });
   }
   return {
     nodes,
-    w: (maxDepth + 1) * NODE_W + maxDepth * COL_GAP,
-    h: maxRows * NODE_H + (maxRows - 1) * ROW_GAP,
+    w: 2 * PAD + (maxDepth + 1) * NODE_W + maxDepth * COL_GAP,
+    h: 2 * PAD + maxRows * NODE_H + (maxRows - 1) * ROW_GAP,
   };
 }
 
@@ -393,15 +403,17 @@ export function DagDiagram({
   return (
     <svg
       viewBox={`0 0 ${w} ${h}`}
-      width="100%"
-      /* `maxWidth: w` ở đây KHÔNG phải quay lại lỗi cũ: lỗi cũ là w quá nhỏ
-         (432), không phải bản thân việc chặn ở w. Nay w do hằng số phía trên
-         quyết định nên sơ đồ hiện ở đúng cỡ đã thiết kế (scale 1) và chỉ CO LẠI
-         khi thẻ hẹp hơn — không bao giờ bị PHÓNG lên. */
-      /* Căn TRÁI, không căn giữa: câu hướng dẫn, chú giải và bảng chi tiết đều
-         bám mép trái của thẻ. Để riêng sơ đồ căn giữa thì nó lệch ~100px so với
-         mọi thứ khác và mắt mất đường rail dọc để men theo. */
-      style={{ maxWidth: w, display: "block" }}
+      /* KÍCH THƯỚC RIÊNG = ĐÚNG BỀ RỘNG THIẾT KẾ, rồi `max-width: 100%` để co
+         lại khi thẻ hẹp. Scale vẫn ≤ 1 y như trước — không bao giờ phóng.
+         W4B-4D đổi từ `width="100%" + maxWidth: w` sang dạng này vì cách cũ chỉ
+         chạy khi cha có bề rộng XÁC ĐỊNH. Khi cụm sân khấu chuyển sang
+         `width: fit-content` để căn giữa được, `width: 100%` không còn quy chiếu
+         vào đâu và Chrome rơi về bề rộng mặc định 300px của phần tử thay thế:
+         sơ đồ 662px bị vẽ ở 300px, chữ co còn 0,45 lần — ĐO ĐƯỢC trong Chrome,
+         không suy ra được từ mã. Khai `width` thì bề rộng riêng có thật, cụm
+         `fit-content` ôm đúng sơ đồ, và không có đường nào phóng to. */
+      width={w}
+      style={{ maxWidth: "100%", height: "auto", display: "block" }}
       role="img"
       aria-label="Sơ đồ mạch logic: đầu vào nối qua các cổng tới đầu ra"
     >
@@ -539,7 +551,14 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage">
-        <div className="stack" style={{ gap: "var(--sp-sm)" }}>
+        {/* W4B-4D — BỐ CỤC SÂN KHẤU.
+            Sơ đồ có bề rộng THẬT do bố cục mạch quyết định (không co giãn, xem
+            khối hằng số ở trên), nên ở màn rộng nó luôn ngắn hơn thẻ. Trước đây
+            phần thừa dồn hết sang phải và hình đọc thành "bị đẩy sang trái";
+            nay chú giải về đứng CẠNH sơ đồ và cả cụm căn giữa, nên khoảng trắng
+            chia đều hai bên và đọc ra là có chủ ý. Hẹp thì xếp dọc lại như cũ.
+            Không phóng SVG — phóng là lỗi #2 trong khối hằng số. */}
+        <div className="dag-stage">
           {/* FIX-3 — AFFORDANCE.
               Thao tác toggle này là thao tác DUY NHẤT của module và nó chạm
               thẳng vào cơ chế ẩn (COVERAGE §2.6). Nhưng trên màn hình nó chỉ là
@@ -565,6 +584,7 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
               Trước đây A/B/C xuất hiện HAI lần: node trong sơ đồ (chỉ để xem) và
               một hàng nút bên dưới (để bấm). Hai chỗ cho một thứ vừa trùng thông
               tin vừa làm mơ hồ vùng nào bấm được. Nay chính node là control. */}
+          <div className="dag-stage-body">
           <DagDiagram state={state} dispatch={dispatch} busy={busy} />
 
           {/* PILOT — CHÚ GIẢI TÍN HIỆU.
@@ -585,6 +605,7 @@ export function BoolDagWorkspace({ state, dispatch, busy }: Props) {
             <span><i className="dot is-current" /> viền đậm = cổng đang tính</span>
             <span><i className="dot is-unknown" /> <strong>?</strong> chưa tới lượt</span>
           </p>
+          </div>
         </div>
       </div>
 
