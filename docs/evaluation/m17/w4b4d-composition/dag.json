@@ -1,0 +1,142 @@
+{
+  "when": "2026-08-12T15:39:27.324Z",
+  "target": "logic.boolean_dag",
+  "rows": [
+    {
+      "viewport": "1920x1080",
+      "stage": {
+        "x": 135,
+        "y": 186,
+        "w": 1622,
+        "h": 311
+      },
+      "group": {
+        "x": 505,
+        "y": 186,
+        "w": 882,
+        "h": 311
+      },
+      "svg": {
+        "x": 505,
+        "y": 219,
+        "w": 694,
+        "h": 278
+      },
+      "inkRight": 1190,
+      "deadRight": 567,
+      "fillPct": 65,
+      "gutterLeft": 370,
+      "gutterRight": 370,
+      "skew": 0,
+      "leftEdges": {
+        "stage": 135,
+        "svg": 505,
+        "affordance": 505,
+        "legend": 1227,
+        "details": 135
+      }
+    },
+    {
+      "viewport": "1536x864",
+      "stage": {
+        "x": 49,
+        "y": 186,
+        "w": 1410,
+        "h": 311
+      },
+      "group": {
+        "x": 313,
+        "y": 186,
+        "w": 882,
+        "h": 311
+      },
+      "svg": {
+        "x": 313,
+        "y": 219,
+        "w": 694,
+        "h": 278
+      },
+      "inkRight": 998,
+      "deadRight": 461,
+      "fillPct": 67.3,
+      "gutterLeft": 264,
+      "gutterRight": 264,
+      "skew": 0,
+      "leftEdges": {
+        "stage": 49,
+        "svg": 313,
+        "affordance": 313,
+        "legend": 1035,
+        "details": 49
+      }
+    },
+    {
+      "viewport": "1366x768",
+      "stage": {
+        "x": 49,
+        "y": 186,
+        "w": 1240,
+        "h": 311
+      },
+      "group": {
+        "x": 228,
+        "y": 186,
+        "w": 882,
+        "h": 311
+      },
+      "svg": {
+        "x": 228,
+        "y": 219,
+        "w": 694,
+        "h": 278
+      },
+      "inkRight": 913,
+      "deadRight": 376,
+      "fillPct": 69.7,
+      "gutterLeft": 179,
+      "gutterRight": 179,
+      "skew": 0,
+      "leftEdges": {
+        "stage": 49,
+        "svg": 228,
+        "affordance": 228,
+        "legend": 950,
+        "details": 49
+      }
+    },
+    {
+      "viewport": "768x900",
+      "stage": {
+        "x": 49,
+        "y": 248,
+        "w": 642,
+        "h": 320
+      },
+      "group": {
+        "x": 49,
+        "y": 248,
+        "w": 642,
+        "h": 320
+      },
+      "svg": {
+        "x": 49,
+        "y": 281,
+        "w": 642,
+        "h": 257
+      },
+      "inkRight": 683,
+      "deadRight": 8,
+      "fillPct": 98.8,
+      "gutterLeft": 0,
+      "gutterRight": 0,
+      "skew": 0,
+      "leftEdges": {
+        "stage": 49,
+        "svg": 49,
+        "affordance": 49,
+        "legend": 49,
+        "details": 49
+      }
+    }
+  ]
+}
