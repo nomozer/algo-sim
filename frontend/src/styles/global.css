@@ -896,6 +896,12 @@ html {
   --p: 0;
   flex: 1 1 220px;
   min-width: 160px;
+  /* W4B-3I — THANH TUA LÀ MỘT CONTROL, KHÔNG PHẢI MỘT CHÂN TRỜI.
+     Đo được: 853px cho một bài 10 bước — ở bước 1 nó là ~800px xám rỗng và trở
+     thành vật to nhất trên dải. Bài học ở đây có 10–40 bước RỜI RẠC, không cần
+     độ chính xác của một thanh tua video; giới hạn lại thì nó thôi tranh chấp
+     với nút Chạy, và chỗ thừa lùi về làm khoảng thở trong một khối đã có nền. */
+  max-width: 420px;
   display: flex;
   align-items: center;
   gap: var(--sp-sm);
@@ -1919,9 +1925,30 @@ html {
    *
    * Đệm dọc: trước đây `8px 0 0` — không có đáy, nên dải dính sát thứ nằm dưới.
    */
-  padding: var(--sp-sm) calc(var(--sp-lg) + 1px) var(--sp-md);
-  border-top: 1px solid var(--hairline);
-  margin-top: calc(-1 * var(--sp-md) + var(--sp-xs));
+  /* W4B-3I — DẢI ĐIỀU KHIỂN LÀ ĐÁY CỦA CHÍNH THẺ MÔ PHỎNG.
+   *
+   * Đo được trước khi sửa: thẻ bo `12px`, nền trắng; dải điều khiển bo `0px`,
+   * nền TRONG SUỐT nằm trên canvas xám — tức một băng vuông góc dán dưới một
+   * tấm bo tròn. Không có gì nói chúng thuộc về nhau, nên mắt đọc ra "chưa
+   * chỉnh" dù khoảng cách đã căn đúng.
+   *
+   * ĐÃ THỬ cách dán liền (bỏ bo góc đáy của thẻ rồi kéo dải này lên bằng
+   * `margin-top` âm) và BỎ: nó phụ thuộc việc thẻ lấp đầy đúng ô lưới của nó.
+   * Đo được ở 1366: ô `center` cao 664 nhưng thẻ chỉ cao 524, nên đáy thẻ và
+   * đỉnh dải không gặp nhau và mối nối hở một khe xám. Một mối nối chỉ đúng ở
+   * một bề rộng thì tệ hơn là không nối.
+   *
+   * Nay nó là KHAY riêng dùng CÙNG ngôn ngữ: nền trắng, viền hairline, bo
+   * `--rounded-lg` như mọi thẻ khác, bóng mềm như thẻ. Hai mặt phẳng cùng họ
+   * cách nhau một khoảng đều đọc ra là "mô phỏng + bộ điều khiển của nó", và
+   * không phụ thuộc chiều cao của bất cứ thứ gì.
+   */
+  padding: var(--sp-sm) calc(var(--sp-lg) + 1px);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  box-shadow: var(--shadow-soft);
+  margin-top: 0;
 }
 
 /* Màn hẹp: Quan sát thành DRAWER nổi trên sân khấu thay vì ép nhỏ nó. */
