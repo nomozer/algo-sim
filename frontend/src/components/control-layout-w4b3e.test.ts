@@ -122,7 +122,11 @@ describe("W4B-3E · không có văn xuôi dài thường trực trong dải đi�
        Rút gọn cả hai là lấy bố cục đổi lấy khả dụng — đúng thứ cần chặn. */
     expect(tsx, "câu mời không còn được ghép vào tên khả truy cập")
       .toMatch(/\[entry\.label,\s*entry\.hint\][\s\S]{0,80}join/);
-    expect(tsx).toMatch(/title=\{open \? undefined : full\}/);
-    expect(tsx).toMatch(/aria-label=\{open \? undefined : full\}/);
+    /* W4B-3H: biến mang chữ nay là `describe` — bằng `full` khi bấm được, và
+       bằng lời giải thích khi nút MỜ. Khoá HÀNH VI (chữ tới `title`+`aria-label`
+       và nút mờ nói được lý do), không khoá tên biến. */
+    expect(tsx).toMatch(/title=\{open \? undefined : describe\}/);
+    expect(tsx).toMatch(/aria-label=\{open \? undefined : describe\}/);
+    expect(tsx, "nút mờ không nói vì sao").toMatch(/disabled \? `\$\{entry\.label\} — \$\{why\}`/);
   });
 });

@@ -292,6 +292,11 @@ export function challengeEntryOf(
     shortLabel: "Thử thách",
     closeLabel: "Đóng thử thách",
     hint: policy.challengeTeaser,
+    /* W4B-3H — HAI lý do KHÁC NHAU khiến nút mờ, và học sinh cần biết mình gặp
+       cái nào: một cái bảo "đi tiếp đi", cái kia bảo "quay về dòng chính đã". */
+    unavailableHint: opts.inBranch
+      ? "Em đang ở nhánh thử nghiệm — quay về dòng chính rồi mới cam kết được."
+      : "Bước này thuật toán chưa phải quyết định gì — bấm Tiến tới bước có lựa chọn.",
     // Bước không có gì để cam kết ⇒ MỜ, không biến mất (xem `PresentationEntry`).
     available: !opts.inBranch && opts.hasSurface,
   };

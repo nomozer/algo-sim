@@ -43,6 +43,13 @@ function SecondaryEntry({
      bất biến "cổng tự mô tả" (PhET/CLT) giữ nguyên với cả chuột lẫn công nghệ
      hỗ trợ. Khung giải thích đầy đủ hiện ra KHI MỞ chế độ. */
   const full = [entry.label, entry.hint].filter(Boolean).join(" — ");
+  /* W4B-3H — NÚT MỜ PHẢI NÓI VÌ SAO.
+     Trước wave này nút mờ vẫn mang đúng câu mời như lúc bấm được, nên người học
+     đọc ra "hỏng" chứ không đọc ra "chưa tới lúc", và không biết làm gì để nó
+     sáng lên. Nay khi mờ thì chính câu giải thích là tên khả truy cập. */
+  const why =
+    entry.unavailableHint ?? "Bước này chưa có gì để làm — đi tới bước khác rồi thử lại.";
+  const describe = disabled ? `${entry.label} — ${why}` : full;
   return (
     <button
       type="button"
@@ -50,8 +57,8 @@ function SecondaryEntry({
       onClick={onToggle}
       disabled={disabled}
       aria-expanded={open}
-      title={open ? undefined : full}
-      aria-label={open ? undefined : full}
+      title={open ? undefined : describe}
+      aria-label={open ? undefined : describe}
     >
       {open ? (entry.closeLabel ?? closeFallback) : (entry.shortLabel ?? entry.label)}
     </button>

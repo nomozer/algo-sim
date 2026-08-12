@@ -218,6 +218,16 @@ export interface PresentationEntry {
    * trang trí). Không năng lực ⇒ không nút; có năng lực ⇒ nút luôn ở đó.
    */
   available?: boolean;
+  /**
+   * W4B-3H — VÌ SAO bước này chưa dùng được. Một nút mờ mà không nói lý do thì
+   * người học đọc ra là "hỏng", không đọc ra là "chưa tới lúc" — và họ không có
+   * cách nào biết phải làm gì để nó sáng lên.
+   *
+   * Không khai ⇒ shell dùng câu chung. Câu này đi vào `title`/`aria-label` khi
+   * nút đang mờ, nên nó tới được cả chuột lẫn công nghệ hỗ trợ mà không tốn
+   * một dòng bố cục nào.
+   */
+  unavailableHint?: string;
 }
 
 /**

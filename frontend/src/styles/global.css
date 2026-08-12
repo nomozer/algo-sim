@@ -917,7 +917,7 @@ html {
 
 .player-progress::-webkit-slider-runnable-track {
   height: 4px;
-  border-radius: 2px;
+  border-radius: var(--rounded-full);
   background: linear-gradient(
     to right,
     var(--primary) 0 calc(var(--p, 0) * 1%),
@@ -927,13 +927,13 @@ html {
 
 .player-progress::-moz-range-track {
   height: 4px;
-  border-radius: 2px;
+  border-radius: var(--rounded-full);
   background: var(--hairline);
 }
 
 .player-progress::-moz-range-progress {
   height: 4px;
-  border-radius: 2px;
+  border-radius: var(--rounded-full);
   background: var(--primary);
 }
 
@@ -982,7 +982,7 @@ html {
 /* Số bước: NHÃN của thanh tua, không phải một con số trôi nổi. `tabular-nums`
    giữ bề rộng cố định nên thanh tua không giật mỗi lần đổi bước. */
 .step-indicator {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--ink-secondary);
   font-variant-numeric: tabular-nums;
@@ -1026,7 +1026,7 @@ html {
   display: flex;
   align-items: center;
   gap: var(--sp-xs);
-  font-size: 13px;
+  font-size: 12px;
   /* Cùng lý do như `.step-of`: hạ cấp bằng sắc độ, không đẩy xuống dưới ngưỡng
      tương phản. Cái NÚM thì được nhạt — nó là hình, không phải chữ. */
   color: var(--ink-muted);
@@ -1042,13 +1042,13 @@ html {
 
 .speed-control input[type="range"]::-webkit-slider-runnable-track {
   height: 2px;
-  border-radius: 1px;
+  border-radius: var(--rounded-full);
   background: var(--hairline);
 }
 
 .speed-control input[type="range"]::-moz-range-track {
   height: 2px;
-  border-radius: 1px;
+  border-radius: var(--rounded-full);
   background: var(--hairline);
 }
 
@@ -1905,7 +1905,21 @@ html {
   /* Không viền, không nền riêng ở desktop: khối có viền riêng nằm sát dưới một
      khối có viền riêng thì đọc thành HAI thẻ. Ở màn hẹp nó thành thanh ghim
      đáy nổi trên nội dung nên PHẢI có nền — xem media query bên dưới. */
-  padding: var(--sp-xs) 0 0;
+
+  /* W4B-3H — CĂN VÀO CỘT NỘI DUNG, KHÔNG CĂN VÀO MÉP THẺ.
+   *
+   * Đo được: nội dung sân khấu bắt đầu ở x=135 (@1920) và x=49 (@1366), trong
+   * khi dải điều khiển bắt đầu ở x=110 / x=24 — **lệch đúng 25px**, vì thẻ có
+   * `padding: var(--sp-lg)` + viền 1px còn dải này thì không có gì. Nút Về-đầu
+   * vì thế thò ra ngoài cột nội dung, và cả dải đọc thành "rời khỏi mô phỏng".
+   *
+   * Lệch 25px là loại sai mắt thấy ngay mà không gọi tên được — nó chính là cảm
+   * giác "vỡ". Thụt vào đúng bằng lòng thẻ thì transport nằm thẳng cột với cột
+   * đầu tiên của dãy, và thanh tua kết thúc thẳng mép phải sân khấu.
+   *
+   * Đệm dọc: trước đây `8px 0 0` — không có đáy, nên dải dính sát thứ nằm dưới.
+   */
+  padding: var(--sp-sm) calc(var(--sp-lg) + 1px) var(--sp-md);
   border-top: 1px solid var(--hairline);
   margin-top: calc(-1 * var(--sp-md) + var(--sp-xs));
 }

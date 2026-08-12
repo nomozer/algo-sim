@@ -146,9 +146,12 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
        LẪN câu mời-thử. Khoá đúng chỗ đó, không khoá chuỗi hiển thị. */
     expect(controls, "tên khả truy cập không gộp nhãn đầy đủ + câu mời")
       .toContain("const full = [entry.label, entry.hint]");
-    expect(controls, "câu mời không tới được chuột").toContain("title={open ? undefined : full}");
+    /* W4B-3H: chữ đưa vào `title` nay là `describe` — bằng `full` khi bấm được,
+       bằng lời giải thích khi nút MỜ. Bất biến "cổng tự mô tả" giữ nguyên. */
+    expect(controls, "câu mời không tới được chuột").toContain("title={open ? undefined : describe}");
+    expect(controls, "nút mờ không nói vì sao").toContain("entry.unavailableHint");
     expect(controls, "câu mời không tới được công nghệ hỗ trợ")
-      .toContain("aria-label={open ? undefined : full}");
+      .toContain("aria-label={open ? undefined : describe}");
     for (const id of GATED) {
       expect(whatIfPolicyOf(id).challengeTeaser, `${id}: mất teaser`).toBeTruthy();
     }
