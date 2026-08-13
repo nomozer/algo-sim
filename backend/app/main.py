@@ -16,7 +16,7 @@ import os
 from datetime import datetime, timezone
 from typing import Literal
 
-from fastapi import FastAPI
+from fastapi import Cookie, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
@@ -38,6 +38,11 @@ from app.ingestion.input import IngestError, ingest_to_text
 from app.ai.pipeline import run_pipeline
 from app.learner_messages import attach_learner_reason, learner_error_message
 from app.runtime_identity import runtime_identity
+from app.accounts import service as accounts_service
+from app.accounts.policy import Role as AccountRole, entitlement_for
+from app.accounts.router import router as accounts_router
+from app.accounts.classroom_router import router as classroom_router
+from app.persistence.classroom_models import User as AccountUser
 
 app = FastAPI(title="AlgoSim backend", version="0.3.0")
 
@@ -50,6 +55,10 @@ app.add_middleware(
 )
 
 init_db()
+
+# M18 — tầng tài khoản/lớp học. Đăng ký SAU init_db để bảng có mặt trên SQLite.
+app.include_router(accounts_router)
+app.include_router(classroom_router)
 
 MISSING_KEY_MSG = (
     "Máy chủ chưa cấu hình GEMINI_API_KEY. Tạo file algo-sim/backend/.env "
@@ -165,6 +174,17 @@ def _cache_lookup(session, key: str) -> SimulationCache | None:
     return row
 
 
+def _consume_guest_trial(session, token: str | None) -> None:
+    """Ghi nhận khách vừa tiêu một lượt. Không phải khách ⇒ no-op.
+
+    Đặt ở đây (chứ không trong `accounts.service`) vì nó là luật của ĐIỂM VÀO
+    analyze: chỉ lượt chạy RA ĐƯỢC mô phỏng mới tính.
+    """
+    auth = accounts_service.load_session(session, token)
+    if auth is not None:
+        accounts_service.consume_guest_trial(session, auth)
+
+
 @app.get("/api/manifest")
 def manifest():
     """Capability manifest DSL v1 (M7 §2) — nguồn chân lý cho primitive/rule/limit."""
@@ -197,7 +217,32 @@ def diagnostics_runtime():
 
 
 @app.post("/api/analyze")
-async def analyze(body: AnalyzeBody):
+async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(default=None)):
+    """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
+
+    Khách được chạy MỘT mô phỏng thật (cùng pipeline này, không phải renderer
+    giả), rồi phải đăng nhập. Cổng đếm ở PHIÊN MÁY CHỦ chứ không ở localStorage:
+    một cờ phía client thì xoá cache là có lượt mới.
+
+    Đặt TRƯỚC ingestion có chủ đích — hết lượt thì không tiêu một byte xử lý ảnh
+    nào, và không có đường nào chạm tới LLM.
+    """
+    with SessionLocal() as session:
+        auth = accounts_service.load_session(session, algosim_session)
+        role = None
+        if auth is not None and auth.user_id is not None:
+            user = session.get(AccountUser, auth.user_id)
+            role = AccountRole(user.role) if user else None
+        used = auth.guest_trials_used if auth is not None else 0
+        ent = entitlement_for(role, guest_trials_used=used)
+        if not ent.can_run_simulation:
+            session.commit()
+            return JSONResponse(status_code=402, content={
+                "error": "Em đã dùng hết lượt mô phỏng thử. Đăng nhập để tiếp tục thực hành.",
+                "reason_code": "guest_trial_exhausted",
+            })
+        session.commit()
+
     api_key = os.getenv("GEMINI_API_KEY")
 
     # Bước 1: chuẩn hóa MỌI loại input về text (M4) — sau bước này, text/docx/
@@ -232,6 +277,7 @@ async def analyze(body: AnalyzeBody):
             row.last_used_at = datetime.now(timezone.utc)
             bump_metric(session, "exact_cache_hits")
             bump_metric(session, "estimated_llm_calls_saved", 3)
+            _consume_guest_trial(session, algosim_session)
             session.commit()
             return {**json.loads(row.envelope_json), "cached": True, "source": "exact_cache"}
 
@@ -278,6 +324,12 @@ async def analyze(body: AnalyzeBody):
             session.commit()
     # M17 W0 — lớp trình bày: envelope unsupported mang thêm learner_reason
     # (bản sao tại biên API; envelope pipeline/eval không đổi — bất biến #22).
+    # Lượt dùng thử chỉ TÍNH khi mô phỏng ra được — đề bị từ chối trung thực
+    # không ăn mất lượt duy nhất của khách.
+    if envelope.get("status") == "ok":
+        with SessionLocal() as session:
+            _consume_guest_trial(session, algosim_session)
+            session.commit()
     return attach_learner_reason(envelope)
 
 
