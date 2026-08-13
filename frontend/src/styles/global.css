@@ -3213,7 +3213,7 @@ html {
   display: flex; gap: 2px;
 }
 .web-node-move {
-  width: 24px; height: 24px;
+  width: 28px; height: 28px;
   display: flex; align-items: center; justify-content: center;
   border-radius: var(--rounded-sm);
   border: 1px solid var(--hairline);
@@ -3245,6 +3245,12 @@ html {
 @media (max-width: 860px) {
   .web-workspace { grid-template-columns: 1fr; }
   .web-code-pair { grid-template-columns: 1fr; }
+  /* W4B-4D — TRANG LÊN TRƯỚC, ĐIỀU KHIỂN XUỐNG SAU.
+     Đo ở 768: xếp dọc theo thứ tự DOM thì cả màn hình đầu chỉ có thanh trượt,
+     còn trang web nằm dưới nếp gấp. Bố cục đó đã kém từ trước, nhưng từ khi
+     chính TRANG là chỗ bấm để chọn thì nó hỏng hẳn: thao tác chính không nhìn
+     thấy được. Mô hình đứng trước, bảng điều khiển đứng sau. */
+  .web-preview-area { order: -1; }
 }
 
 /* ── W4B-3B — HÀNG PHIÊN ĐANG MỞ (thay CỘT của W4B-2Z §29) ────────────────

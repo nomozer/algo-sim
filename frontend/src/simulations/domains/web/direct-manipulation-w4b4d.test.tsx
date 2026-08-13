@@ -194,6 +194,28 @@ describe("W4B-4D · vẫn không phải trình soạn thảo", () => {
     expect(src).toContain("htmlTextOf(state)");
   });
 
+  it("ở màn hẹp, TRANG đứng trước bảng điều khiển", () => {
+    /* Đo ở 768 (ảnh trong `docs/evaluation/m17/w4b4d-composition/`): xếp dọc
+       theo thứ tự DOM thì cả màn hình đầu chỉ có thanh trượt, còn trang web —
+       thứ học sinh phải BẤM VÀO để chọn — nằm dưới nếp gấp. Bố cục đó đã kém từ
+       trước, nhưng từ khi chính trang là chỗ thao tác thì nó hỏng hẳn.
+       Khoá ở tầng nguồn: bằng chứng thật là ảnh chụp, còn dòng này giữ cho lý do
+       không bị xoá mất khi ai đó dọn media query. */
+    /* `\r` bị gỡ trước: file có CRLF trên Windows, nên một phép cắt theo "}\n}"
+       trả về -1 rồi `slice(0,2)` — khối rỗng, và assert đỏ vì lý do sai. */
+    const css = readFileSync(new URL("../../../styles/global.css", import.meta.url), "utf-8")
+      .replace(/\r/g, "");
+    /* Neo vào CHÍNH luật của miền web, không vào bề rộng: `860px` xuất hiện ở
+       nhiều khối và `indexOf` đầu tiên trỏ vào một khối khác hẳn. */
+    const start = css.indexOf(".web-workspace { grid-template-columns: 1fr; }");
+    expect(start, "không tìm thấy khối media của miền web").toBeGreaterThan(-1);
+    const narrow = css.slice(start);
+    const end = narrow.indexOf("\n}\n");
+    const block = end < 0 ? narrow.slice(0, 800) : narrow.slice(0, end);
+    expect(block, "màn hẹp không đưa trang lên trước bảng điều khiển")
+      .toMatch(/\.web-preview-area\s*\{[^}]*order:\s*-1/);
+  });
+
   it("state vẫn không mang mã: `order` chỉ chứa tên khối đã khai", () => {
     const s = act(stateOf(), { type: "move", target: "heading", x: 0, y: 1 });
     for (const b of s.order) expect(["heading", "paragraph"]).toContain(b);
