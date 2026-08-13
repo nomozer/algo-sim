@@ -29,6 +29,44 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### M18 — TẦNG LỚP HỌC: khách thử được, lớp học dùng được (2026-08-13)
+>
+> Hợp đồng còn hiệu lực: **`docs/CLASSROOM_AUTH_CONTRACT.md`**.
+> Nghiệm thu: `docs/evaluation/m18/classroom-acceptance.json`.
+>
+> Trước wave này repo **không có tí xác thực nào**: không bảng user, không
+> phiên, không router frontend. Nên đây là nền mới, và nó cố ý KHÔNG thêm
+> dependency: PBKDF2 lấy từ thư viện chuẩn, phiên là token đục trong bảng
+> (không JWT — đăng xuất phải thu hồi được ngay), điều hướng MỞ RỘNG trường
+> `view` sẵn có thay vì dựng hệ điều hướng thứ hai bằng react-router.
+>
+> - **Trước đăng nhập KHÔNG có thanh bên.** Trang chủ giữ nguyên tiêu đề + một ô
+>   nhập đề; chỉ thêm lối vào Đăng nhập/Đăng ký. Khách chạy được **một mô phỏng
+>   THẬT** qua đúng pipeline production, đếm ở phiên máy chủ chứ không ở
+>   localStorage — một cờ phía client thì xoá cache là có lượt mới. Lượt chỉ tính
+>   khi mô phỏng RA ĐƯỢC: đề bị từ chối trung thực không ăn mất cơ hội duy nhất.
+> - **Sau đăng nhập: thanh điều hướng theo VAI TRÒ**, thu gọn được, thành ngăn
+>   kéo dưới 900px. Nó nằm **NGOÀI** lưới workspace — cột 208px bị gỡ ở W4B-3B
+>   nằm TRONG lưới nên trải qua cả hàng sân khấu lẫn hàng điều khiển; đặt ngoài
+>   thì lỗi ấy không tái diễn được. `SessionTabs` không đổi một dòng.
+> - **Lớp học tối thiểu**: tạo lớp → mã 6 ký tự (bỏ `0O1IL` vì học sinh gõ tay
+>   mã đó) → học sinh vào lớp → giáo viên giao mô phỏng đang mở → học sinh làm →
+>   giáo viên quan sát. Mã thu hồi/sinh lại được và mã cũ chết ngay.
+> - **Giao bài đi qua `SimSpec.validate`** (bất biến #28). Mở bài KHÔNG gọi LLM:
+>   ba mươi học sinh mở ra MỘT mô phỏng. Lời dặn của giáo viên là CHỮ.
+> - **Quan sát bằng trạng thái CÓ CẤU TRÚC** (bất biến #27), hỏi lại mỗi 5 giây.
+>   Không chiếu màn hình, không chụp DOM, và **không trường đúng/sai nào** —
+>   correctness vẫn thuộc engine tất định.
+> - Offline: pytest **1212** (2 skip, 1 deselect) · vitest **1284 / 93 file** ·
+>   build sạch. Chrome CDP: **4 bề rộng × 3 vai SẠCH** (1920/1536/1366/768).
+>   Tiêm lỗi bỏ kiểm vai trò ⇒ nghiệm thu ĐỎ ở cả 4 bề rộng, khôi phục XANH.
+> - **CHƯA làm (không claim):** giáo viên CẤP tài khoản cho học sinh —
+>   **MISSING**, chỉ có đường học sinh tự đăng ký rồi vào lớp bằng mã · xác minh
+>   giáo viên là **mã mời dùng chung**, không phải hệ xác minh danh tính
+>   (**PARTIAL**) · lượt thử chống được xoá localStorage, KHÔNG chống được xoá
+>   cookie · quan sát gần-thời-gian-thực 5 giây, không tức thời · **chưa đo trên
+>   người học**.
+>
 > ### W4B-4 — SOÁT TRẢI NGHIỆM TOÀN DANH MỤC: thao tác được, hay chỉ xem được (2026-08-13)
 >
 > **Phán quyết: `ALGOSIM_EXPERIENCE_AUDIT_COMPLETE`** —

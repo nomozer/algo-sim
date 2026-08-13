@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { AppSidebar } from "./components/AppSidebar";
+import { AssignDialog } from "./components/AssignDialog";
 import { AssignmentsView } from "./components/AssignmentsView";
 import { AuthGate } from "./components/AuthGate";
 import { ClassesView } from "./components/ClassesView";
@@ -105,6 +106,9 @@ export default function App() {
                     Bài: <strong>{assignment.title}</strong>
                   </span>
                 )}
+                {/* Giáo viên giao ĐÚNG thứ đang xem — quyết định không tách
+                    khỏi mô phỏng nó nói về. */}
+                <AssignDialog />
                 <button className="btn-utility" onClick={newSession}
                   title="Mở thêm một mô phỏng, giữ nguyên bài đang dở">
                   + Mô phỏng mới

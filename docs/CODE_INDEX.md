@@ -1662,3 +1662,22 @@ Component KHÔNG VẼ GÌ. Chuyển state engine thành bằng chứng thực h�
 đọc từ store trình bày. Đọc màn hình thay vì đọc hợp đồng chính là lỗi §38.6.
 Gửi khi CHỮ KÝ state đổi, chặn nhịp 1500ms — `§22` cấm phát telemetry mỗi khung
 hình. Không có bài đang làm ⇒ không gửi gì (tự luyện không đẻ telemetry).
+
+### `components/AssignDialog.tsx`
+"Giao cho lớp" — từ mô phỏng ĐANG MỞ tới bài thực hành. Giao từ trong mô phỏng
+chứ không từ một trang riêng: giáo viên phải XEM được thứ mình giao, và một
+danh sách tên tách quyết định khỏi thứ nó nói về. Gửi envelope của phiên; máy
+chủ vẫn kiểm lại qua `SimSpec.validate` vì client không phải nơi luật sống.
+
+### `frontend/scripts/accept-classroom-m18.mjs` · offline (cần dev + uvicorn)
+Nghiệm thu tầng lớp học ở bốn bề rộng × ba vai. Kiểm DANH TÍNH BACKEND trước
+tiên: container Docker cũ chiếm cổng 8000 sẽ trả 404 cho mọi endpoint mới và
+làm mọi kết quả sau đó vô nghĩa (đã cắn một lần). Khẳng định: khách không có
+thanh điều hướng và bị 401 ở lớp/bài · học sinh nhận bài, bị 403 khi tạo lớp và
+khi quan sát · giáo viên thấy lớp + mã + bảng quan sát, và envelope hỏng bị
+chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
+
+### `backend/scripts/seed_classroom_fixture.py`
+Dữ liệu demo cho nghiệm thu: 1 giáo viên · 2 học sinh · 1 lớp · 1 bài. Mật khẩu
+đọc từ `ALGOSIM_FIXTURE_PASSWORD`, không có mặc định trong mã (`§34`) — chạy
+nhầm trên máy thật cũng không đẻ ra tài khoản ai cũng biết mật khẩu. Idempotent.

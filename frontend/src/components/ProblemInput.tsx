@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppStore } from "../state/store";
+import { useAuthStore } from "../state/auth";
 import { IconAttach, IconSend } from "./icons";
 import { analyzeViaServer, fetchHealth, type ServerHealth } from "../llm/client";
 import { acceptAttr, fileToPayload, kindFromFile, kindLabel } from "../llm/input";
@@ -179,7 +180,33 @@ export function ProblemInput() {
       )}
       {fileError && <div className="error-banner">{fileError}</div>}
       {serverStatus}
-      {analysisError && <div className="error-banner">{analysisError}</div>}
+      {/* M18 §5 — HẾT LƯỢT THỬ KHÔNG PHẢI LÀ MỘT LỖI.
+          Khách vừa chạy xong một mô phỏng thật; đây là lúc nói cho họ biết tài
+          khoản mở thêm được gì, chứ không phải lúc dựng một băng đỏ. Mô phỏng
+          vừa chạy KHÔNG bị xoá — nó vẫn nằm nguyên trong phiên. */}
+      {analysisError && /lượt mô phỏng thử/.test(analysisError) ? (
+        <div className="trial-gate">
+          <strong>Em đã dùng hết lượt mô phỏng thử.</strong>
+          <p>Đăng nhập để tiếp tục — tài khoản cho phép:</p>
+          <ul>
+            <li>lưu và mở lại mô phỏng đã làm</li>
+            <li>vào lớp bằng mã giáo viên đưa</li>
+            <li>nhận và làm bài thực hành</li>
+          </ul>
+          <div className="trial-gate-actions">
+            <button type="button" className="btn-primary"
+              onClick={() => useAuthStore.getState().openAuthGate("register")}>
+              Tạo tài khoản
+            </button>
+            <button type="button" className="btn-utility"
+              onClick={() => useAuthStore.getState().openAuthGate("login")}>
+              Đăng nhập
+            </button>
+          </div>
+        </div>
+      ) : analysisError ? (
+        <div className="error-banner">{analysisError}</div>
+      ) : null}
     </div>
   );
 }

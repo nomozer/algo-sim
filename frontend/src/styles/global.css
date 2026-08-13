@@ -3071,6 +3071,21 @@ html {
   white-space: nowrap;
 }
 
+
+/* M18 §5 — CỬA SAU LƯỢT THỬ. Không phải băng lỗi: khách vừa dùng xong sản phẩm,
+   đây là lời mời, và mô phỏng vừa chạy vẫn còn nguyên trên màn hình. */
+.trial-gate {
+  margin-top: var(--sp-md);
+  padding: var(--sp-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--surface);
+  font-size: 14px; color: var(--ink-secondary);
+}
+.trial-gate p { margin: var(--sp-xs) 0; }
+.trial-gate ul { margin: 0 0 var(--sp-sm); padding-left: 1.1rem; color: var(--ink-muted); }
+.trial-gate-actions { display: flex; gap: var(--sp-xs); flex-wrap: wrap; }
+
 /* ══ M18 — VỎ ỨNG DỤNG SAU ĐĂNG NHẬP ═══════════════════════════════════════
    Hai vỏ, một ứng dụng. Chưa đăng nhập: `.app-root` không có thanh bên, mọi
    thứ giữ nguyên như trước wave này. Đăng nhập rồi: thêm MỘT cột điều hướng.
