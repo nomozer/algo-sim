@@ -167,10 +167,22 @@ describe("bảng hiện DẦN, không lộ kết quả cuối", () => {
     expect(committedRowCount(st)).toBe(0);
   });
 
-  it("bước đầu KHÔNG lộ mã/nhị phân của ký tự sau", () => {
+  /* W5 §4A ĐẢO LẠI MỘT QUYẾT ĐỊNH CỦA W3 — ghi rõ để còn truy được.
+     W3 chọn KHÔNG lộ đáp án trước khi cơ chế chạy (trải nghiệm kể chuyện).
+     W5 chọn ngược: trải nghiệm CHÍNH là thăm dò — đổi đầu vào, thấy kết quả,
+     đổi tiếp — và giấu kết quả thì phá đúng vòng lặp ấy. Học sinh sửa "Tin"
+     thành "Bin" mà bảng chỉ có một hàng thì không so được thứ vừa đổi.
+     Cái KHÔNG đổi: DIỄN GIẢI vẫn không được chạy trước con trỏ. Bất biến ấy
+     chuyển về bảng chia và băng kết luận — hai test dưới khoá nó ở đó. */
+  it("W5: bảng hiện ĐỦ mọi hàng ngay ở bước đầu (bề mặt công cụ)", () => {
     const html = workspace(stateOf(spec({ text: "Tin" }), 0));
-    expect(html).not.toContain(String(toBase("i".codePointAt(0) as number, 2)));
-    expect(html).not.toContain("Đã mã hoá");
+    for (const ch of ["T", "i", "n"]) {
+      expect(html).toContain(String(toBase(ch.codePointAt(0) as number, 2)));
+    }
+  });
+
+  it("băng KẾT LUẬN vẫn chỉ hiện ở bước cuối, không hiện sớm", () => {
+    expect(workspace(stateOf(spec({ text: "Tin" }), 0))).not.toContain("Đã mã hoá");
   });
 
   it("bước cuối mới hiện kết luận và đủ ba hàng", () => {
@@ -180,15 +192,16 @@ describe("bảng hiện DẦN, không lộ kết quả cuối", () => {
     expect(workspace(last)).toContain("Đã mã hoá");
   });
 
-  it("mã chỉ xuất hiện SAU bước tra, nhị phân SAU khi ĐỌC NGƯỢC số dư", () => {
+  it("DIỄN GIẢI không chạy trước con trỏ: phép chia hé lộ dần", () => {
+    /* Bất biến gốc của W3, nay khoá ở bảng CHIA thay vì ở bảng kết quả —
+       bảng kết quả đã thành bề mặt công cụ (test trên). Nếu ai đó dựng sẵn cả
+       bảng chia từ bước 0 thì diễn giải hết là diễn giải. */
     const st = stateOf(spec({ text: "A" }));
-    expect(workspace({ ...st, cursor: at(st, "select_character") })).not.toContain("65");
-    expect(workspace({ ...st, cursor: at(st, "map_to_code") })).toContain("65");
-    // đã tra mã nhưng CHƯA chia — không được lộ dãy bit
-    expect(workspace({ ...st, cursor: at(st, "map_to_code") })).not.toContain(toBase(65, 2));
-    // đã mở cơ chế nhưng chưa chạy hết — vẫn chưa có dãy bit
-    expect(workspace({ ...st, cursor: at(st, "begin_conversion") })).not.toContain(toBase(65, 2));
-    expect(workspace({ ...st, cursor: at(st, "read_remainders") })).toContain(toBase(65, 2));
+    const divsAt = (phase: string) =>
+      st.meta.slice(0, at(st, phase) + 1).filter((m) => m.division).length;
+    expect(divsAt("select_character")).toBe(0);
+    expect(divsAt("map_to_code")).toBe(0);
+    expect(divsAt("read_remainders")).toBeGreaterThan(0);
   });
 });
 
@@ -345,9 +358,10 @@ describe("B. cơ chế THẬT — chia tới thương 0", () => {
     expect(Object.keys(st.spec)).toEqual(expect.not.arrayContaining(["rows", "binary_values"]));
   });
 
-  it("bước đầu KHÔNG chứa dãy nhị phân cuối", () => {
+  it("bước đầu chưa có phép chia nào (engine, không phải renderer)", () => {
+    /* W5: dãy bit CÓ hiện ở bảng kết quả ngay từ bước 0 — đó là bề mặt công cụ.
+       Thứ vẫn phải trống là DẤU VẾT của cơ chế: chưa chạy thì chưa có phép chia. */
     const st = stateOf(spec({ text: "A" }), 0);
-    expect(workspace(st)).not.toContain(toBase(65, 2));
     expect(st.meta[0].division).toBeUndefined();
   });
 

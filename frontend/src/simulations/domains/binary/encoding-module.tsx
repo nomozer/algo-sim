@@ -440,9 +440,24 @@ export function CharEncodingWorkspace({ state, config, busy, dispatch }: Props) 
               <th>Thập phân</th><th>Nhị phân</th>
             </tr>
           </thead>
+          {/* W5 §4A — BẢNG LÀ TRẠNG THÁI HIỆN TẠI CỦA ĐẦU VÀO, KHÔNG PHẢI BĂNG
+              HOẠT HÌNH.
+
+              Bản trước cắt `state.rows` theo `committedRowCount`, nên mở bài
+              lên chỉ thấy hàng đầu và phải bấm Tiến mới có hàng sau. Đo ở 1920:
+              dãy bit của 'T', 'i', 'n' KHÔNG có mặt trong DOM ở cursor 0.
+
+              Hệ quả sư phạm không chỉ là bất tiện: học sinh đổi "Tin" thành
+              "Bin" rồi nhìn một bảng chỉ có một hàng thì không so sánh được
+              đúng thứ vừa đổi. Bảng đầy đủ mới là thứ trả lời "chuỗi này mã hoá
+              ra gì".
+
+              Diễn giải KHÔNG mất đi: hàng nào trace đang xét thì được đánh dấu
+              `is-current`, và `DivisionPanel` bên dưới vẫn kể từng phép chia. */}
           <tbody>
-            {state.rows.slice(0, shown).map((row) => (
-              <tr key={row.index}>
+            {state.rows.map((row) => (
+              <tr key={row.index}
+                className={partial?.index === row.index ? "is-current" : undefined}>
                 <td>{row.index + 1}</td>
                 <td>{displayChar(row)}</td>
                 <td>{`U+${row.codePoint.toString(16).toUpperCase().padStart(4, "0")}`}</td>
@@ -450,19 +465,6 @@ export function CharEncodingWorkspace({ state, config, busy, dispatch }: Props) 
                 <td>{row.binary}</td>
               </tr>
             ))}
-            {partial && (
-              <tr className="is-current">
-                <td>{(partial.index ?? 0) + 1}</td>
-                <td>{displayChar({ char: partial.char ?? "", label: partial.label ?? "" })}</td>
-                <td>
-                  {partial.codePoint === undefined
-                    ? "…"
-                    : `U+${partial.codePoint.toString(16).toUpperCase().padStart(4, "0")}`}
-                </td>
-                <td>{partial.decimal ?? "…"}</td>
-                <td>{partial.binary ?? "…"}</td>
-              </tr>
-            )}
           </tbody>
         </table>
       </div>
