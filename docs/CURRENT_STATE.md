@@ -31,6 +31,8 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >
 > ### W4B-4 — SOÁT TRẢI NGHIỆM TOÀN DANH MỤC: thao tác được, hay chỉ xem được (2026-08-13)
 >
+> **Phán quyết: `ALGOSIM_EXPERIENCE_AUDIT_COMPLETE`** —
+> `docs/evaluation/m17/w4b4a-experience/VERDICT.md`.
 > Ma trận SAU: `docs/evaluation/m17/w4b4a-experience/matrix-after.md` (SINH từ
 > `probe.json`, không chép tay). Nghiệm thu Chrome:
 > `w4b4c-experience/acceptance.json`. Tiêm lỗi: `w4b4d-composition/fault-log.md`.
