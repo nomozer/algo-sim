@@ -74,7 +74,7 @@ def _analysis_json(ownership: str) -> str:
             "goal": "Tính kết quả bằng thuật toán",
             "input_description": "in",
             "output_description": "out",
-            "result_ownership": ownership,
+            "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
             "prescribed_procedure": None,
         }
     )

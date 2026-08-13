@@ -56,7 +56,7 @@ def _an(requested=None, prescribed=None, **extra):
         "relations": ["B là con trái của A"],
         "processes": [], "constraints": [], "goal": "Duyệt cây",
         "input_description": "cây", "output_description": "thứ tự",
-        "result_ownership": "provided",
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided",
     }
     if requested is not None:
         a["requested_mechanisms"] = requested

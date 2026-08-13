@@ -483,6 +483,26 @@ chối đúng — là **targeted acceptance, KHÔNG phải bằng chứng thốn
 số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
 `mechanism_gate.py`).
 
+### `simulation/scope.py` (M20 W3) · Change impact: offline
+MỘT bộ từ vựng `DomainScope` + `Simulatability` + `REQUIRES_SIMULATION`, dùng
+chung production ↔ evaluation. Ở tầng `simulation/` vì production là nơi PHÁN,
+evaluation chỉ ĐO — `evaluation/curriculum_schema.py` import xuống đây chứ không
+dựng bộ thứ hai. Hai trục KHÔNG được gộp: đề có thể thuộc phạm vi mà không đáng
+mô phỏng (đạo đức mạng), và ngoài phạm vi mà mô phỏng được (quỹ tích).
+
+### `simulation/scope_gate.py` (M20 W3) · Change impact: targeted live
+Cổng thứ NĂM, chạy TRƯỚC cổng tính toán trên **đường generic**. Bịt lỗ R0: trước
+wave này không cổng tất định nào hỏi "đề này có thuộc môn Tin học không", nên một
+đề hoá học (không đụng gap-role, `result_ownership="provided"`) chỉ bị chặn khi
+LLM tự từ chối. Nay LLM KHAI hai trường `domain_scope`/`simulatability` (bắt buộc
+trong `ANALYZE_SCHEMA`), server PHÁN.
+Đọc docstring trước khi sửa — hai quyết định dễ bị "sửa cho nhất quán" mà hỏng:
+(1) `AMBIGUOUS` **KHÔNG** bị từ chối dù cổng bên cạnh fail-closed, vì hai rủi ro
+ngược nhau (nói dối > từ chối oan); (2) `GATE_SCOPE_UNDECLARED` là lỗi hợp đồng
+prompt nên **lùi xuống cuối**, không được nuốt lời từ chối năng lực thật có nêu
+vai trò. Bốn phép tiêm lỗi đã chứng minh cả bốn tính chất đỏ được
+(`tests/test_scope_gate.py`).
+
 ### `evaluation/curriculum_schema.py` (M20 W2) · Change impact: offline
 Tầng phân loại **ỔN ĐỊNH** của benchmark chương trình, tách khỏi tầng **DẪN
 XUẤT**. Sở hữu `DomainScope` (gồm `ADJACENT_CONTEXT` — đề mang vỏ môn khác nhưng

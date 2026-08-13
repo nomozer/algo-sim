@@ -51,7 +51,7 @@ def _analysis(proc=None, ownership="algorithmic", goal="Sắp xếp dãy"):
         "objects": ["dãy"], "data": [{"description": "dãy", "values": [9, 4, 7, 2, 6]}], "relations": [],
         "processes": ["x"], "constraints": [], "goal": goal,
         "input_description": "in", "output_description": "out",
-        "result_ownership": ownership,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
     }
     if proc is not None:
         a["prescribed_procedure"] = proc

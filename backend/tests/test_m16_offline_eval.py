@@ -214,7 +214,7 @@ def _ana(*, ownership="provided", prescribed=None, roles=None) -> dict:
     a: dict = {
         "objects": ["x"], "data": [{"description": "d"}], "relations": [], "processes": [],
         "constraints": [], "goal": "g", "input_description": "i", "output_description": "o",
-        "result_ownership": ownership,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
     }
     if prescribed is not None:
         a["prescribed_procedure"] = prescribed

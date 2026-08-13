@@ -33,37 +33,16 @@ from dataclasses import dataclass
 from enum import Enum
 
 
-class DomainScope(str, Enum):
-    """Yêu cầu có thuộc phạm vi sản phẩm không.
-
-    `ADJACENT_CONTEXT` là ca thật và hay bị lẫn: đề mang bối cảnh môn khác
-    (vật lí, sinh học) nhưng CƠ CHẾ vẫn là Tin học — vd "đếm số cây cao hơn 2m"
-    là `count_if`. Xếp nó là OUT_OF_SCOPE sẽ từ chối oan; xếp là THPT_INFORMATICS
-    sẽ mất dấu rằng bề mặt đề nằm ngoài môn.
-    """
-
-    THPT_INFORMATICS = "THPT_INFORMATICS"
-    ADJACENT_CONTEXT = "ADJACENT_CONTEXT"
-    OUT_OF_SCOPE = "OUT_OF_SCOPE"
-    AMBIGUOUS = "AMBIGUOUS"
-
-
-class Simulatability(str, Enum):
-    """Kiến thức này đáng được trình bày ở DẠNG nào.
-
-    Đây là phán quyết SƯ PHẠM, độc lập với năng lực hiện có của hệ.
-    """
-
-    #: có mô hình nhân quả thao tác được (bật/tắt, đổi tham số → hệ quả tất định)
-    INTERACTIVE_MODEL = "INTERACTIVE_MODEL"
-    #: hiện vật có ràng buộc (trang web, truy vấn) — thao tác trên chính sản phẩm
-    INTERACTIVE_ARTIFACT = "INTERACTIVE_ARTIFACT"
-    #: TRÌNH TỰ mới là bài học; xem từng bước có nghĩa, thao tác thì không
-    MEANINGFUL_TRACE = "MEANINGFUL_TRACE"
-    #: giải thích được, mô phỏng không thêm gì (định nghĩa, đạo đức, hướng nghiệp)
-    EXPLANATION_ONLY = "EXPLANATION_ONLY"
-    #: không có cơ chế để mô phỏng (kĩ năng thao tác phần mềm, ghi nhớ thuần)
-    NOT_SIMULATION_SUITABLE = "NOT_SIMULATION_SUITABLE"
+# `DomainScope`/`Simulatability` KHÔNG định nghĩa ở đây: bản chính thuộc tầng
+# production (`app/simulation/scope.py`) vì production mới là nơi PHÁN — cổng
+# phạm vi đọc chính hai enum này để từ chối. Benchmark chỉ ĐO, nên nó import
+# xuống chứ không dựng bộ thứ hai; hai bộ trôi khỏi nhau ở đúng chỗ quyết định
+# "từ chối hay không" là kiểu trôi tệ nhất. Re-export để mọi import cũ còn chạy.
+from app.simulation.scope import (  # noqa: F401  (re-export có chủ đích)
+    REQUIRES_SIMULATION,
+    DomainScope,
+    Simulatability,
+)
 
 
 class CapabilityStatus(str, Enum):
@@ -73,12 +52,9 @@ class CapabilityStatus(str, Enum):
     UNIMPLEMENTED = "UNIMPLEMENTED"  # phải ra capability_gap trung thực
 
 
-#: Phán quyết dạng nào đòi hệ phải làm được gì. Dùng cho báo cáo, không phải gate.
-SIMULATABILITY_REQUIRES_SIMULATION = frozenset({
-    Simulatability.INTERACTIVE_MODEL,
-    Simulatability.INTERACTIVE_ARTIFACT,
-    Simulatability.MEANINGFUL_TRACE,
-})
+#: Tên cũ của `REQUIRES_SIMULATION`. Giữ làm alias, KHÔNG dựng lại tập thứ hai —
+#: hai tập cùng nghĩa mà lệch nhau thì cổng phạm vi và báo cáo sẽ phán khác nhau.
+SIMULATABILITY_REQUIRES_SIMULATION = REQUIRES_SIMULATION
 
 
 @dataclass(frozen=True)

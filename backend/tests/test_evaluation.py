@@ -40,7 +40,7 @@ def _analysis(item_id: str) -> dict:
         "objects": ["dãy"], "data": [{"description": "dãy", "values": [9, 4, 7, 2]}],
         "relations": [], "processes": [], "constraints": [],
         "goal": f"ITEM:{item_id}", "input_description": "i", "output_description": "o", "notes": None,
-        "result_ownership": "rule_derivable",
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "rule_derivable",
     }
 
 

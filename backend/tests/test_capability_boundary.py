@@ -194,7 +194,7 @@ TRIANGLE_ANALYSIS = {
     "process_roles": ["temporal"],
     "scene_construction": "step_by_step",
     # M13: điểm/cạnh NÊU TÊN tường minh — cảnh dựng dần, không tính toán.
-    "result_ownership": "provided",
+    "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided",
 }
 GENERIC_CLASSIFY = {"status": "ok", "simulation_id": "generic.rule_scene", "reason": None}
 TRIANGLE_SPEC = {
@@ -235,7 +235,7 @@ def test_precision_guard_web_structural_khong_gap(monkeypatch):
     """Boundary #8: web structural (structural+textual) vẫn OK như M7.12."""
     # M13: hiển thị cấu trúc trang web CHO SẴN — cảnh dựng/hiển thị, không tính toán.
     analysis = {**BASE_ANALYSIS, "objects": ["trang web", "tiêu đề"],
-                "visual_needs": ["structural", "textual"], "result_ownership": "provided"}
+                "visual_needs": ["structural", "textual"], "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided"}
     spec = {
         "dsl_version": "1.0", "title": "Trang web",
         "objects": [

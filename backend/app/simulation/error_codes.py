@@ -48,3 +48,15 @@ class ErrorCode(str, Enum):
     # (vốn chỉ dành cho cấu trúc nút–cạnh) ra mọi nhóm dữ kiện. Cùng ý nghĩa:
     # KHÔNG để LLM bịa dữ liệu thay người học.
     INPUT_INSUFFICIENT = "input_insufficient"
+    # M20 W3 — cổng PHẠM VI & KHẢ-MÔ-PHỎNG (`scope_gate.py`). Ba mã, ba lời
+    # khuyên khác nhau; gộp lại là nói sai với học sinh:
+    #   OUT_OF_SCOPE           — môn khác ⇒ "hệ không làm dạng bài này"
+    #   NOT_SIMULATION_SUITABLE — thuộc chương trình nhưng không có cơ chế để mô
+    #                             phỏng ⇒ "dạng bài này không CẦN mô phỏng".
+    #                             Gọi nó là "ngoài danh mục" làm học sinh tưởng
+    #                             chủ đề không được hỗ trợ — sai và làm nản.
+    #   SCOPE_UNDECLARED        — analyze không khai được trường phạm vi: hợp
+    #                             đồng prompt vỡ, KHÔNG phải phán quyết về đề.
+    GATE_OUT_OF_SCOPE = "gate_out_of_scope"
+    GATE_NOT_SIMULATION_SUITABLE = "gate_not_simulation_suitable"
+    GATE_SCOPE_UNDECLARED = "gate_scope_undeclared"

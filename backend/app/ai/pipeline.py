@@ -16,6 +16,11 @@ from app.simulation.completeness_gate import (
     check_requested_combination,
 )
 from app.simulation.computation_gate import check_computation_ownership
+from app.simulation.scope import DomainScope, Simulatability
+from app.simulation.scope_gate import (
+    SCOPE_FAILURE_CATEGORY,
+    check_scope_and_simulatability,
+)
 from app.simulation.pipeline_stages import stage_shortfall_message
 from app.simulation.sufficiency_gate import (
     check_input_sufficiency,
@@ -94,6 +99,19 @@ ANALYZE_SCHEMA = {
         "interaction_needs": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
         "visual_needs": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
         "temporal_needs": {"type": "ARRAY", "items": {"type": "STRING"}, "nullable": True},
+        # M20 W3: PHẠM VI + KHẢ-MÔ-PHỎNG — LLM KHAI, server PHÁN
+        # (`app/simulation/scope_gate.py`). Nằm trong `required` và có `enum`
+        # đóng: cổng fail-closed khi THIẾU trường, nên trường phải được structured
+        # output bảo đảm chứ không trông vào việc model nhớ khai. Giá trị lấy
+        # NGUYÊN từ `app/simulation/scope.py` — khoá bởi test đồng bộ.
+        "domain_scope": {
+            "type": "STRING",
+            "enum": [s.value for s in DomainScope],
+        },
+        "simulatability": {
+            "type": "STRING",
+            "enum": [s.value for s in Simulatability],
+        },
         # M13: nguồn kết quả cuối của bài — SERVER dùng để chặn "AI tự giải rồi
         # dựng cảnh minh hoạ đáp án" (computation-ownership gate). Bắt buộc +
         # fail-closed: xem app/simulation/computation_gate.py.
@@ -170,6 +188,8 @@ ANALYZE_SCHEMA = {
         "input_description",
         "output_description",
         "result_ownership",
+        "domain_scope",
+        "simulatability",
     ],
 }
 
@@ -653,6 +673,41 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
     # text đề (không keyword-patch).
     chosen = classification.get("simulation_id") if classification.get("status") == "ok" else None
     if chosen is None or chosen == "generic.rule_scene":
+        # M20 W3 — PHẠM VI phán TRƯỚC năng lực. Đề ngoài môn Tin học thì dù engine
+        # dựng được cảnh cũng không dựng; đề thuộc môn nhưng không có cơ chế để mô
+        # phỏng thì dựng cảnh chỉ là trang trí. Trước wave này, thứ duy nhất chặn
+        # một đề hoá học là việc LLM tự từ chối — tức phán quyết phạm vi do LLM sở
+        # hữu, vi phạm R0. Nay LLM KHAI, server PHÁN. Chi tiết + lý do
+        # `AMBIGUOUS` KHÔNG bị từ chối: `simulation/scope_gate.py`.
+        scope_gate = check_scope_and_simulatability(analysis)
+        _emit(observer, "gate_checked", gate="scope", fired=bool(scope_gate),
+              reason_code=scope_gate[0].value if scope_gate else None)
+
+        def _scope_refusal(verdict):
+            category = SCOPE_FAILURE_CATEGORY[verdict[0]]
+            _emit(observer, "envelope", status="unsupported", simulation_id=None,
+                  failure_category=category)
+            return {
+                "status": "unsupported",
+                "reason": verdict[1],
+                "failure_category": category,
+                "error_code": verdict[0].value,
+                "representation_plan": plan,
+                "analysis": analysis,
+            }
+
+        # `SCOPE_UNDECLARED` KHÔNG phải phán quyết về đề — nó là lỗi hợp đồng
+        # prompt. Để nó chặn ngay sẽ nuốt mất lời từ chối THẬT phía dưới: đề đòi
+        # `numeric_threshold`/`geometric_locus` đáng được nghe "hệ chưa có cơ chế
+        # này", chứ không phải "không rõ đề thuộc môn gì". Nên nó lùi xuống cuối,
+        # chạy khi và chỉ khi không cổng nào khác có gì để nói.
+        deferred_scope = None
+        if scope_gate is not None:
+            if scope_gate[0] is ErrorCode.GATE_SCOPE_UNDECLARED:
+                deferred_scope = scope_gate
+            else:
+                return _scope_refusal(scope_gate)
+
         gate_reason = check_computation_ownership(analysis, plan)
         _emit(observer, "gate_checked", gate="computation", fired=bool(gate_reason),
               reason_code=ErrorCode.GATE_RESULT_OWNERSHIP.value if gate_reason else None)
@@ -667,6 +722,10 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             _emit(observer, "envelope", status="unsupported", simulation_id=None,
                   failure_category="capability_gap")
             return env
+
+        # Không cổng nào có phán quyết thật ⇒ giờ mới nói tới lỗi hợp đồng.
+        if deferred_scope is not None:
+            return _scope_refusal(deferred_scope)
 
     if classification.get("status") != "ok":
         # W2C-C1 §L3 — GIỮ ĐÚNG BẢN CHẤT LỜI TỪ CHỐI.

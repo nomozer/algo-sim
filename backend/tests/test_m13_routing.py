@@ -9,7 +9,7 @@ def _analysis(**over):
         "entity_roles": ["relational"], "relation_roles": ["relational"],
         "process_roles": ["movement"], "interaction_needs": [],
         "visual_needs": ["relational"], "temporal_needs": ["temporal"],
-        "result_ownership": "provided",
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided",
     }
     base.update(over)
     return base

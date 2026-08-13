@@ -38,7 +38,7 @@ def _analysis(oid, ownership="rule_derivable"):
     return json.dumps({
         "objects": [], "data": [], "relations": [], "processes": [], "constraints": [],
         "goal": oid, "input_description": "i", "output_description": "o",
-        "result_ownership": ownership,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
     })
 
 

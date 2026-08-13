@@ -34,7 +34,7 @@ def _analysis(proc=None, goal="Sắp xếp dãy điểm", ownership="algorithmic
         "goal": goal,
         "input_description": "Dãy số",
         "output_description": "Dãy đã sắp xếp",
-        "result_ownership": ownership,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
     }
     if proc is not None:
         a["prescribed_procedure"] = proc

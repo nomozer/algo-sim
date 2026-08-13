@@ -25,7 +25,7 @@ VALID_ANALYSIS = {
     "notes": None,
     # M13: ANALYSIS_WEB_STATIC (bên dưới) dẫn xuất từ đây — cảnh dựng/hiển thị
     # trang web CHO SẴN, không đòi tính toán → "provided".
-    "result_ownership": "provided",
+    "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided",
 }
 FINDMAX_CLASSIFY = {"status": "ok", "simulation_id": "algorithm.find_max", "reason": None}
 FINDMAX_CONFIG = {

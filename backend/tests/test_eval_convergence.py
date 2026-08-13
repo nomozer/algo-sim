@@ -25,7 +25,7 @@ def _analysis(proc=None):
         "objects": ["dãy"], "data": [{"description": "dãy", "values": [9, 4, 7, 2, 6]}], "relations": [],
         "processes": ["sắp xếp"], "constraints": [], "goal": "Sắp xếp dãy",
         "input_description": "Dãy", "output_description": "Dãy đã sắp",
-        "result_ownership": "algorithmic",
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "algorithmic",
     }
     if proc:
         a["prescribed_procedure"] = proc

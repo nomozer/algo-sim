@@ -37,7 +37,7 @@ def _analysis(ownership="provided", roles=None, structured=True):
         "relations": [{"type": "left_child", "from": "A", "to": "B"}] if structured else [],
         "processes": [], "constraints": [], "goal": "Duyệt cây",
         "input_description": "Cây nhị phân", "output_description": "Thứ tự duyệt",
-        "result_ownership": ownership,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
     }
     if roles:
         a.update(roles)
@@ -114,7 +114,7 @@ def test_forced_route_insufficient_gate_fail_voi_analyze_live_that(monkeypatch):
         "processes": [], "constraints": [], "goal": "Mô phỏng duyệt cây preorder",
         "input_description": "không nêu cấu trúc cây",
         "output_description": "thứ tự duyệt",
-        "result_ownership": "provided",
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided",
         "prescribed_procedure": "tree_traversal.preorder",
     })
     env = _run(monkeypatch, [live_analysis, _classify("tree.traversal")])

@@ -117,7 +117,7 @@ def test_tree_normalizer_giu_nguyen_luat_da_chung_minh_live():
 def test_target_APPLICABLE_bi_chan_khi_analyze_trong():
     empty = {"objects": [], "data": [], "relations": [], "processes": [],
              "constraints": [], "goal": "làm bài", "input_description": "",
-             "output_description": "", "result_ownership": "provided"}
+             "output_description": "", "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided"}
     for sid in _ai_reachable():
         if applicability_of(sid)[0] != APPLICABLE:
             continue

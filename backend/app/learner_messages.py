@@ -39,6 +39,23 @@ _MSG_INCOMPLETE = (
     "được một. Em hãy tách thành từng lần hỏi (giữ nguyên dữ liệu, mỗi lần chọn "
     "một thao tác) để xem đầy đủ từng bước."
 )
+_MSG_OUT_OF_SCOPE = (
+    "Bài này thuộc môn học khác, không nằm trong chương trình Tin học THPT mà "
+    "AlgoSim mô phỏng. Hệ thống nói thẳng thay vì dựng một hình vẽ trông giống "
+    "mô phỏng nhưng không dựa trên cơ chế nào. Bạn thử một bài Tin học nhé — "
+    "thuật toán trên dãy số, số nhị phân, cổng logic, mạng máy tính, cơ sở dữ "
+    "liệu, hoặc trang web."
+)
+# TÁCH KHỎI `_MSG_NOT_IN_CATALOG` có chủ đích: chủ đề này CÓ trong chương trình,
+# chỉ là nó không có cơ chế để mô phỏng. Nói "chưa có trong danh mục" ở đây làm
+# học sinh tưởng hệ chưa hỗ trợ chủ đề và chờ nó được thêm vào — một lời hứa
+# không bao giờ tới, vì chẳng có gì để thêm.
+_MSG_NOT_SIMULATION_SUITABLE = (
+    "Nội dung này thuộc chương trình Tin học, nhưng nó không có cơ chế nào để "
+    "mô phỏng — đọc và hiểu là đủ, dựng cảnh chỉ thành hình trang trí. Nếu bạn "
+    "muốn thấy một quá trình diễn ra từng bước, hãy thử một bài có dữ liệu và "
+    "có thao tác trên dữ liệu đó."
+)
 _MSG_PIPELINE_FAILED = (
     "AI chưa tạo được mô phỏng hợp lệ cho đề này sau nhiều lần thử. Bạn hãy "
     "diễn đạt lại đề rõ ràng hơn — nêu rõ dữ liệu vào và kết quả cần tìm — "
@@ -51,6 +68,10 @@ def learner_reason(envelope: dict) -> str:
     ``failure_category`` (structured), không đọc text reason."""
     if envelope.get("failure_category") == "capability_gap":
         return _MSG_CAPABILITY_GAP
+    if envelope.get("failure_category") == "out_of_scope":
+        return _MSG_OUT_OF_SCOPE
+    if envelope.get("failure_category") == "not_simulation_suitable":
+        return _MSG_NOT_SIMULATION_SUITABLE
     if envelope.get("failure_category") == "insufficient_specification":
         # M17-RC1 §C2: cổng đủ-dữ-kiện đã sinh thông điệp RIÊNG theo target
         # (`learner_prompt_template` — nêu đúng thứ đang thiếu: dãy số, số cần

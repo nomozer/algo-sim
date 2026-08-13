@@ -92,9 +92,20 @@ export function UnsupportedNotice({
   // - đề MỘT truy vấn nhiều bước mà hệ dựng thiếu bước → tách ra VÔ ÍCH, phải
   //   nói rõ là chưa dựng đủ bước. Lỗi này do review ẢNH bắt được.
   const stageShortfall = unsupported.error_code === "pipeline_stage_incomplete";
+  // (M20 W3) Cổng phạm vi sinh HAI hạng mục, và gộp chúng vào "ngoài danh mục"
+  // là nói sai theo hai hướng ngược nhau:
+  // - out_of_scope: đề thuộc MÔN KHÁC. "Danh mục sẽ được mở rộng dần" ở đây là
+  //   một lời hứa sai — hệ sẽ không bao giờ thêm hoá học.
+  // - not_simulation_suitable: chủ đề CÓ trong chương trình, chỉ là không có cơ
+  //   chế để mô phỏng. Nói "ngoài danh mục" làm học sinh ngồi chờ một thứ không
+  //   bao giờ tới, vì chẳng có gì để thêm vào.
+  const outOfScope = unsupported.failure_category === "out_of_scope";
+  const notSimulatable = unsupported.failure_category === "not_simulation_suitable";
   const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
     : stageShortfall ? "CHƯA DỰNG ĐỦ CÁC BƯỚC"
     : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
+    : outOfScope ? "THUỘC MÔN HỌC KHÁC"
+    : notSimulatable ? "BÀI NÀY KHÔNG CẦN MÔ PHỎNG"
     : "NGOÀI DANH MỤC MÔ PHỎNG";
   const hint = insufficient
     ? "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."
@@ -102,6 +113,10 @@ export function UnsupportedNotice({
     ? "Nêu rõ từng bước cần làm rồi gửi lại — dạng bài nhiều bước này hệ có mô phỏng."
     : incomplete
     ? "Mỗi lần hỏi một yêu cầu (giữ nguyên dữ liệu) để xem đầy đủ từng bước của yêu cầu đó."
+    : outOfScope
+    ? "AlgoSim chỉ mô phỏng nội dung Tin học THPT — thử một bài về thuật toán, dữ liệu, mạng hoặc web."
+    : notSimulatable
+    ? "Nội dung này đọc hiểu là đủ. Muốn xem một quá trình chạy từng bước thì cần đề có dữ liệu và thao tác trên dữ liệu."
     : "Danh mục mô phỏng sẽ được mở rộng dần (nhị phân, cổng logic, mạng máy tính...).";
   return (
     <section className="card">

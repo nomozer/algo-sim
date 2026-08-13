@@ -26,7 +26,7 @@ VALID_ANALYSIS = {
     # M13: cảnh dựng/hiển thị (dãy số CHO SẴN) — không đòi cơ chế thuật toán
     # riêng ngoài engine chuyên biệt; các fixture DẪN XUẤT (**VALID_ANALYSIS)
     # bên dưới đều là cảnh dựng/hiển thị nên kế thừa "provided" là đúng ngữ nghĩa.
-    "result_ownership": "provided",
+    "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided",
 }
 
 VALID_CLASSIFY = {"status": "ok", "simulation_id": "algorithm.find_max", "reason": None}

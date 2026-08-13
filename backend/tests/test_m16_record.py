@@ -54,7 +54,7 @@ def _analysis(proc=None, ownership="algorithmic", goal="Sắp xếp dãy"):
         "relations": [],
         "processes": ["x"], "constraints": [], "goal": goal,
         "input_description": "in", "output_description": "out",
-        "result_ownership": ownership,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
     }
     if proc is not None:
         a["prescribed_procedure"] = proc
@@ -67,7 +67,7 @@ def _analysis_find_max():
         "relations": [],
         "processes": ["tìm max"], "constraints": [], "goal": "Tìm phần tử lớn nhất",
         "input_description": "dãy số", "output_description": "giá trị lớn nhất",
-        "result_ownership": "algorithmic",
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "algorithmic",
     }
     return json.dumps(a)
 
@@ -143,7 +143,7 @@ def test_observer_gate_events_loc_theo_gate_va_tat_ca():
     obs.emit("gate_checked", {"gate": "computation", "fired": True, "reason_code": "x"})
     obs.emit("gate_checked", {"gate": "mechanism", "fired": False, "reason_code": None})
     obs.emit("gate_checked", {"gate": "mechanism", "fired": True, "reason_code": "y"})
-    obs.emit("analyze_done", {"result_ownership": "provided"})  # nhiễu, không phải gate
+    obs.emit("analyze_done", {"domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "provided"})  # nhiễu, không phải gate
 
     assert len(obs.gate_events(None)) == 3
     mech = obs.gate_events("mechanism")
@@ -281,7 +281,7 @@ def test_fault_injection_thieu_classify_done_khong_doan():
     phải trả None và KHÔNG crash."""
     obs = AttemptObserver()
     obs.emit("analyze_done", {
-        "result_ownership": "algorithmic", "prescribed_procedure": None, "canonical_prescribed": None,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": "algorithmic", "prescribed_procedure": None, "canonical_prescribed": None,
     })
     obs.emit("plan_built", {"unsupported_capabilities": []})
     # classify_done CỐ Ý bỏ qua (fault injection)

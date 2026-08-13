@@ -253,7 +253,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `requested_operations` ⇒ chính sách định tuyến đổi. Envelope OK sinh dưới
     # luật cũ mang đúng những đề CSS đã bị `generic.rule_scene` nuốt — trả lại
     # mù thì bản sửa định tuyến này vô hiệu với chính các đề nó nhắm tới.
-    assert main_module.CACHE_VERSION == "27"
+    # M20 W3 (bump 27→28): `analyze.md` + `ANALYZE_SCHEMA` thêm HAI trường bắt
+    # buộc `domain_scope`/`simulatability`, và một cổng TẤT ĐỊNH mới đọc chúng
+    # để từ chối đề ngoài môn hoặc đề không có cơ chế để mô phỏng. Envelope cache
+    # sinh dưới luật cũ ra đời khi phán quyết phạm vi còn do LLM sở hữu — đúng
+    # những đề cổng này nhắm tới lại là đúng những đề đã lọt và đã được cache.
+    # Trả lại mù thì bản vá vô hiệu với chính chúng.
+    assert main_module.CACHE_VERSION == "28"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

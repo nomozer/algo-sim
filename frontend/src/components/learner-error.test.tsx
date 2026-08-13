@@ -59,6 +59,30 @@ describe("M17 W0 — UnsupportedNotice hiển thị thông điệp học sinh", 
     expect(out).toContain("NGOÀI DANH MỤC MÔ PHỎNG");
   });
 
+  it("(M20 W3) đề môn khác → 'THUỘC MÔN HỌC KHÁC', KHÔNG hứa mở rộng danh mục", () => {
+    const out = html({
+      reason: "kỹ thuật",
+      learner_reason: "Bài này thuộc môn học khác.",
+      failure_category: "out_of_scope",
+    });
+    expect(out).toContain("THUỘC MÔN HỌC KHÁC");
+    expect(out).not.toContain("NGOÀI DANH MỤC");
+    // Lời hứa sai: hệ sẽ không bao giờ thêm hoá học vào danh mục.
+    expect(out).not.toContain("mở rộng dần");
+  });
+
+  it("(M20 W3) chủ đề có trong chương trình nhưng không có cơ chế → tiêu đề riêng", () => {
+    const out = html({
+      reason: "kỹ thuật",
+      learner_reason: "Nội dung này đọc hiểu là đủ.",
+      failure_category: "not_simulation_suitable",
+    });
+    expect(out).toContain("KHÔNG CẦN MÔ PHỎNG");
+    // Nói "ngoài danh mục" ở đây làm học sinh ngồi chờ một thứ không có gì để thêm.
+    expect(out).not.toContain("NGOÀI DANH MỤC");
+    expect(out).not.toContain("mở rộng dần");
+  });
+
   it("field máy-đọc đi kèm envelope không bao giờ bị render", () => {
     const out = html({
       reason: "kỹ thuật",

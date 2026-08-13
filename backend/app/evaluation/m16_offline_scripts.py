@@ -93,7 +93,7 @@ def _analysis(
         "goal": goal,
         "input_description": "đầu vào của đề",
         "output_description": "kết quả mong muốn",
-        "result_ownership": ownership,
+        "domain_scope": "THPT_INFORMATICS", "simulatability": "MEANINGFUL_TRACE", "result_ownership": ownership,
     }
     if prescribed is not None:
         a["prescribed_procedure"] = prescribed

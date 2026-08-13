@@ -53,6 +53,27 @@ def test_learner_reason_ngoai_danh_muc_sach_token():
     assert "danh mục" in msg
 
 
+def test_M20W3_ba_hang_muc_tu_choi_cho_BA_thong_diep_khac_nhau():
+    """Cổng phạm vi sinh hai hạng mục mới, và gộp chúng vào "ngoài danh mục" là
+    nói sai theo hai hướng ngược nhau: đề môn khác thì "danh mục sẽ mở rộng dần"
+    là lời hứa sai (hệ không bao giờ thêm hoá học); đề chỉ-giải-thích thì chủ đề
+    VẪN thuộc chương trình, nói "ngoài danh mục" khiến học sinh ngồi chờ một thứ
+    không có gì để thêm."""
+    msgs = {
+        cat: learner_reason({"status": "unsupported", "reason": "kỹ thuật", "failure_category": cat})
+        for cat in ("out_of_scope", "not_simulation_suitable", None)
+    }
+    assert len(set(msgs.values())) == 3, "ba hạng mục đang dùng chung thông điệp"
+    for cat, msg in msgs.items():
+        assert _sach(msg), f"{cat} lộ token kỹ thuật: {msg}"
+
+    assert "môn học khác" in msgs["out_of_scope"]
+    # Lời hứa "danh mục sẽ được mở rộng" KHÔNG được xuất hiện ở hai ca này.
+    assert "mở rộng" not in msgs["out_of_scope"]
+    assert "mở rộng" not in msgs["not_simulation_suitable"]
+    assert "thuộc chương trình Tin học" in msgs["not_simulation_suitable"]
+
+
 def test_attach_khong_dung_den_envelope_ok():
     ok_env = {"status": "ok", "simulation_id": "algorithm.find_max", "config": {}}
     assert attach_learner_reason(ok_env) is ok_env  # nguyên vẹn, không copy thừa
