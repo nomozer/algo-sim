@@ -109,7 +109,7 @@ _ANNOTATIONS: dict[str, dict] = {
         ),
     ),
     "c-geo-complex": dict(
-        curriculum_area="Ngoài chương trình Tin học (Toán hình)",
+        curriculum_area="NOT_ANCHORED — ngoài chương trình Tin học THPT, thuộc Toán hình học",
         curriculum_topic="Quan hệ hình học dẫn xuất (chân đường cao, giao điểm, quỹ tích)",
         capability_family="capability_gap", complexity="L4", result_mode="unsupported",
         learning_objective="(không mô phỏng — hệ phải từ chối trung thực)",

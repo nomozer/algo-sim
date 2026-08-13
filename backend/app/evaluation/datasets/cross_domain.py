@@ -96,4 +96,99 @@ CROSS_DOMAIN_ITEMS: list[EvalItem] = [
             "chứng mạnh nhất cho tuyên bố tái sử dụng năng lực."
         ),
     ),
+    # ── WAVE 2A: trả nợ ĐƠN VỊ MỎNG ────────────────────────────────────────
+    # Báo cáo phủ đo theo ĐƠN VỊ chương trình, và hai đơn vị dưới ngưỡng 3 case:
+    # T10.CD2 (2) và T12CS.CD7 (1). Ba case dưới đây bổ sung đúng hai đơn vị ấy,
+    # KHÔNG thêm vào đơn vị vốn đã dày — thêm case thứ 26 cho T11CS.CD6 không
+    # làm phép đo tốt hơn chút nào.
+    EvalItem(
+        id="xd-wifi-access-rule",
+        text=(
+            "Mạng Wi-Fi của thư viện chỉ cho một thiết bị vào mạng khi thiết bị đã "
+            "đăng kí địa chỉ MAC VÀ tài khoản đang trong thời hạn. Mô phỏng quy tắc "
+            "cho phép truy cập với hai điều kiện này."
+        ),
+        group="generic",
+        expect_simulation_id="generic.rule_scene",
+        semantic={"kind": "boolean_rule", "min_inputs": 2},
+        tags=("cross_domain", "L2", "boolean_rule", "w2a_thin_unit"),
+        curriculum_area="T10.CD2 / T11.CD4",
+        curriculum_topic="Mạng máy tính, kiểm soát truy cập (Bài 9 / Bài 15)",
+        capability_family="boolean_rule",
+        complexity="L2",
+        result_mode="executable_simulation",
+        cross_domain_group="access_rule",
+        learning_objective=(
+            "Đọc được một quy tắc truy cập mạng thành phép AND hai điều kiện, và "
+            "thấy đủ cả bốn tổ hợp chứ không chỉ tổ hợp cho phép."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: quy tắc mạng viết bằng lời ('chỉ khi … và …') che mất việc "
+            "chỉ MỘT trong bốn tổ hợp đầu vào cho kết quả cho-phép. Học sinh đọc câu "
+            "đó thường nhớ điều kiện chứ không nhớ nó chặt tới mức nào. Bật/tắt từng "
+            "điều kiện và thấy ba tổ hợp còn lại đều bị chặn mới làm lộ ra độ chặt. "
+            "Cùng cơ chế với `xd-access-boolean` nhưng bề mặt là hạ tầng mạng thay vì "
+            "cửa phòng máy — đo được rằng hệ đọc cơ chế, không khớp mẫu chữ 'quẹt thẻ'."
+        ),
+    ),
+    EvalItem(
+        id="xd-library-loan-flow",
+        text=(
+            "Mô phỏng quy trình mượn sách của thư viện trường: học sinh gửi yêu cầu "
+            "tới quầy thủ thư, thủ thư tra sổ mượn trong cơ sở dữ liệu, sau đó kho "
+            "sách chuyển cuốn sách ra quầy và giao cho học sinh. Cho thấy yêu cầu "
+            "mượn đi qua từng công đoạn."
+        ),
+        group="generic",
+        expect_simulation_id="generic.rule_scene",
+        semantic={"kind": "system_flow", "min_directed": 2, "moving": True},
+        tags=("cross_domain", "L3", "system_flow", "w2a_thin_unit"),
+        curriculum_area="T12CS.CD7 / T11.CD4",
+        curriculum_topic="Hệ thống thông tin phục vụ quản lí (Bài 29)",
+        capability_family="data_flow",
+        complexity="L3",
+        result_mode="executable_simulation",
+        cross_domain_group="node_edge_flow",
+        learning_objective=(
+            "Mô tả được một nghiệp vụ quản lí quen thuộc như dữ liệu đi qua các công "
+            "đoạn xử lí và một kho lưu trữ."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: KHO DỮ LIỆU là một điểm dừng, không phải một mũi tên. Sơ đồ "
+            "tĩnh vẽ 'thủ thư → sổ mượn' giống hệt 'thủ thư → kho sách', nên học sinh "
+            "không phân biệt được cái nào là tra cứu và cái nào là luân chuyển vật lí. "
+            "Cho yêu cầu mượn chạy qua path làm lộ ra thứ tự và các điểm dừng. Cùng bộ "
+            "primitive với `xd-order-workflow` ở một nghiệp vụ khác — chứng cứ tái sử "
+            "dụng nằm ở chỗ KHÔNG phải viết thêm năng lực nào."
+        ),
+    ),
+    EvalItem(
+        id="xd-attendance-report-flow",
+        text=(
+            "Mô phỏng quy trình tổng hợp báo cáo chuyên cần: giáo viên bộ môn nhập "
+            "điểm danh từng tiết, dữ liệu được ghi vào cơ sở dữ liệu của trường, cuối "
+            "tuần bộ phận giáo vụ đọc lại và gửi báo cáo cho giáo viên chủ nhiệm."
+        ),
+        group="generic",
+        expect_simulation_id="generic.rule_scene",
+        semantic={"kind": "system_flow", "min_directed": 2, "moving": True},
+        tags=("cross_domain", "L3", "system_flow", "w2a_thin_unit"),
+        curriculum_area="T12CS.CD7",
+        curriculum_topic="Hệ thống thông tin phục vụ quản lí (Bài 29)",
+        capability_family="data_flow",
+        complexity="L3",
+        result_mode="executable_simulation",
+        cross_domain_group="node_edge_flow",
+        learning_objective=(
+            "Nhận ra dữ liệu được GHI ở một thời điểm và ĐỌC LẠI ở thời điểm khác, "
+            "chứ không đi thẳng từ người nhập tới người nhận."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: ĐỘ TRỄ giữa ghi và đọc. Đây là điểm khác biệt thật giữa một "
+            "hệ thống thông tin và một cuộc trao đổi trực tiếp, và là thứ lời văn giấu "
+            "kĩ nhất — câu 'giáo vụ đọc lại' nghe như bước kế tiếp, trong khi nó xảy "
+            "ra sau nhiều lượt ghi. Cho từng lượt điểm danh chạy vào kho rồi mới cho "
+            "lượt đọc chạy ra làm lộ ra rằng kho đứng GIỮA hai người, không nối họ."
+        ),
+    ),
 ]

@@ -572,7 +572,11 @@ M16_ITEMS: list[EvalItem] = [
         group="generic", expect="generic.rule_scene", route="generic.rule_scene",
         semantic={"kind": "progressive_reveal", "min_steps": 3},
         archetype=EP, family=SPR,
-        cap_family="structural_construction", area="T11.CD_hinhhoc", complexity="L2",
+        cap_family="structural_construction",
+        # `T11.CD_hinhhoc` KHÔNG phải mã SGK — nó được bịa ra để qua luật kết nạp.
+        area=("NOT_ANCHORED — dựng hình tam giác là nội dung hình học, không thuộc "
+              "chương trình Tin học THPT; case chứng minh DSL dựng cảnh nhiều bước"),
+        complexity="L2",
         result_mode="executable_simulation",
         learning="Hiểu một hình được LẮP GHÉP theo trình tự: điểm rồi đoạn xuất hiện dần.",
         rationale=(
@@ -587,7 +591,11 @@ M16_ITEMS: list[EvalItem] = [
         group="generic", expect="generic.rule_scene", route="generic.rule_scene",
         semantic={"kind": "moving_path", "min_len": 4},
         archetype=PP, family=SPR, live=True,
-        cap_family="movement_path", area="T11.CD_thuattoan", complexity="L1",
+        cap_family="movement_path",
+        # `T11.CD_thuattoan` KHÔNG phải mã SGK — cũng là mã bịa.
+        area=("NOT_ANCHORED — di chuyển theo đường cho sẵn, không neo vào một chủ đề "
+              "SGK cụ thể; case chứng minh primitive move_along_path"),
+        complexity="L1",
         result_mode="executable_simulation",
         learning="Nhận ra di-chuyển-theo-đường qua mô tả 'đi lần lượt qua các trạm', không có tính toán kết quả.",
         rationale=(
@@ -828,7 +836,8 @@ M16_ITEMS: list[EvalItem] = [
         group="unsupported", route=None,
         archetype=NM, family=CS, mech=MECH_PARTITION,
         gate="mechanism", error_code=EC_MECH_OWN, algorithmic=True, live=True,
-        cap_family="sorting_mechanism_gap", area="ngoài phạm vi sắp xếp đơn giản THPT — phân hoạch đệ quy",
+        cap_family="sorting_mechanism_gap",
+        area="NOT_ANCHORED — phân hoạch đệ quy, ngoài phạm vi sắp xếp đơn giản THPT",
         complexity="L4", result_mode="unsupported",
         learning="Hệ từ chối trung thực cơ chế phân hoạch đệ quy khi không executor nào sở hữu.",
         rationale=(
@@ -873,7 +882,8 @@ M16_ITEMS: list[EvalItem] = [
         ),
         group="unsupported", route=None,
         archetype=NM, family=IE, algorithmic=True, live=True,
-        cap_family="search_mechanism_gap", area="ngoài phạm vi tìm kiếm THPT — nội suy theo tỉ lệ giá trị",
+        cap_family="search_mechanism_gap",
+        area="NOT_ANCHORED — nội suy theo tỉ lệ giá trị, ngoài phạm vi tìm kiếm THPT",
         complexity="L4", result_mode="unsupported",
         learning="Hệ từ chối trung thực tìm kiếm nội suy — cơ chế đoán-vị-trí-theo-tỉ-lệ không engine nào sở hữu.",
         rationale=(
@@ -949,7 +959,7 @@ M16_ITEMS: list[EvalItem] = [
         group="unsupported", route=None,
         archetype=NM, family=GT, algorithmic=True, live=True,
         cap_family="algorithmic_computation_gap",
-        area="ngoài phạm vi công khai Tin học THPT — đồ thị có trọng số (Dijkstra)",
+        area="NOT_ANCHORED — đồ thị có trọng số (Dijkstra), ngoài phạm vi công khai Tin học THPT",
         complexity="L4", result_mode="unsupported",
         learning="Hệ từ chối trung thực đường-ngắn-nhất-có-trọng-số (Dijkstra) — packet_routing chỉ BFS không trọng số.",
         rationale=(
@@ -1065,7 +1075,8 @@ M16_ITEMS: list[EvalItem] = [
         archetype=AC, family=SPR,
         gate="computation", error_code=None, algorithmic=True, live=True,
         cap_family="representation_computation_leak",
-        area="ngoài phạm vi — vẽ được cảnh nhưng đòi TÍNH kết quả thuật toán không engine sở hữu",
+        area=("NOT_ANCHORED — vẽ được cảnh nhưng đề đòi TÍNH kết quả thuật toán mà "
+              "không engine nào sở hữu; case đo ranh giới rò tính toán"),
         complexity="L4", result_mode="unsupported",
         learning="Hệ chặn RÒ RỈ TÍNH TOÁN: cảnh vẽ được nhưng đề đòi TÍNH đường ngắn nhất có trọng số → capability_gap.",
         rationale=(

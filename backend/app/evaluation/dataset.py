@@ -100,3 +100,16 @@ DATASET: list[EvalItem] = [
         tags=("smoke", "boundary"),
     ),
 ]
+
+#: WAVE 2 — DATASET 30 CASE ĐỔI VAI, KHÔNG BỊ XOÁ.
+#:
+#: Nó KHÔNG còn là thước đo phủ chương trình: mỗi case neo vào một
+#: `expect_simulation_id` cụ thể, nên nó mô tả HIỆN THỰC HÔM NAY và trôi theo
+#: mỗi lần thêm năng lực. Vai mới của nó hẹp và có giá trị riêng: hồi quy khả
+#: năng SÁNG TÁC của đường AI trên đúng 30 đề đã có lịch sử đo — giữ nguyên để
+#: mọi con số cũ còn so sánh được.
+#:
+#: Thước đo phủ chương trình nay là `datasets/curriculum.py` + tầng phân loại ổn
+#: định ở `curriculum_schema.py` (phán quyết sư phạm) với trạng thái năng lực
+#: DẪN XUẤT từ registry lúc chạy.
+LEGACY_AI_COMPOSITION_REGRESSION = DATASET

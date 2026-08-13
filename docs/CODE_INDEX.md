@@ -483,6 +483,46 @@ chối đúng — là **targeted acceptance, KHÔNG phải bằng chứng thốn
 số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
 `mechanism_gate.py`).
 
+### `evaluation/curriculum_schema.py` (M20 W2) · Change impact: offline
+Tầng phân loại **ỔN ĐỊNH** của benchmark chương trình, tách khỏi tầng **DẪN
+XUẤT**. Sở hữu `DomainScope` (gồm `ADJACENT_CONTEXT` — đề mang vỏ môn khác nhưng
+cơ chế vẫn Tin học, để không từ chối oan), `Simulatability` (phán quyết SƯ PHẠM,
+độc lập năng lực hệ — **không** gộp với `result_mode` vốn nói về hiện thực),
+`capability_status()` đọc registry lúc chạy, và `expected_outcome()` ghép hai
+tầng. Nhờ vậy thêm target mới KHÔNG phải viết lại benchmark.
+Cũng sở hữu **neo chương trình**: `UNIT_CODE`, `NOT_ANCHORED`, `unit_codes()`,
+`check_anchor()`. Đọc comment ở đó trước khi đụng — phép đếm phủ đã sai HAI lần
+tại đúng chỗ này (đếm chuỗi thô → 14 "đơn vị" trong đó 6 là câu ghi chú; rồi rút
+regex → ghi công `T10.CD1` cho chính câu nói nó *không* neo). Trường neo nay chỉ
+nhận mã hoặc `NOT_ANCHORED — <lý do>`.
+
+### `evaluation/metamorphic.py` (M20 W2B) · Change impact: offline
+7 phép biến hình TẤT ĐỊNH giữ nguyên ngữ nghĩa (đổi tên người/thiết bị, cách nói
+tương đương, đổi số, đảo dãy, hai phép khoảng trắng) để đo hệ có đọc CƠ CHẾ hay
+chỉ khớp mẫu chữ. Hai ràng buộc dễ phá: `shift_numbers` **giữ nguyên 0 và 1** (ở
+đề logic/nhị phân chúng là giá trị bit) và `reverse_sequence` chỉ đụng dãy ≥3 số.
+`variants()` loại biến thể trùng bản gốc — giữ lại chỉ làm con số phủ to giả.
+
+### `evaluation/product_scope.py` (M20 W2C) · Change impact: offline
+`ProductScope` + `SCOPE_OVERRIDES` tách ba loại case bị trộn số: nội dung Tin học
+CÔNG KHAI (tính vào phủ) · fixture ENGINE nội bộ (chứng minh DSL, KHÔNG tính) ·
+case NGOÀI PHẠM VI (chứng minh từ chối trung thực, KHÔNG tính). Mỗi override phải
+nói VÌ SAO theo NỘI DUNG; test từ chối lý do kiểu "nó vốn nằm trong pool khác".
+
+### `backend/scripts/curriculum_benchmark_report.py` (M20 W2A) · Change impact: offline
+Báo cáo phủ theo **ĐƠN VỊ chương trình** (không theo số case), sinh từ dữ liệu +
+registry, có head stamp. Đọc đúng tập pool CHỊU luật kết nạp (`NEW_POOLS` +
+`thesis`, gồm cả `m16`); `regression` đứng ngoài vì bị đóng băng và không có
+trường neo. Artifact: `docs/evaluation/m20/curriculum-benchmark.json`.
+
+### `tests/test_curriculum_benchmark.py` (M20 W2) · Change impact: offline
+Khoá 5 nhóm: tầng ổn định vs dẫn xuất · biến hình · `DATASET` 30 case đổi VAI
+thành `LEGACY_AI_COMPOSITION_REGRESSION` (còn nguyên, hết làm thước đo phủ) ·
+tách fixture nội bộ khỏi phạm vi sản phẩm · **trường neo phải đếm được** (gồm
+ngưỡng ≥3 case/đơn vị và ≥8 đơn vị). Ba phép tiêm lỗi đã chứng minh nhóm cuối đỏ
+được: trả văn xuôi về trường neo · xoá 1 case khỏi đơn vị mỏng · bỏ kiểm tra
+sentinel trong `unit_codes()`.
+
 ### `simulation/patterns.py` · Change impact: offline
 Pattern reuse (M7.13B): chữ ký, extraction (safe allowlist), instantiate, matcher
 tất định, 4 cổng, `DbPatternStore`.

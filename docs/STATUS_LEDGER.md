@@ -52,8 +52,9 @@
 |---|---|---|---|
 | **Xuất xứ bằng chứng (dấu HEAD)** | **DONE (W0)** | `scripts/evidence.mjs`; đã gắn 3 script | — |
 | Bằng chứng cũ trước W0 | **STALE_EVIDENCE** | không mang `head` ⇒ phải sinh lại trước phán quyết cuối | W14 |
-| Dataset đánh giá AI 30 case | **DONE nhưng đổi vai** | `app/evaluation/` | **W2** → `LEGACY_AI_COMPOSITION_REGRESSION` |
-| Benchmark theo chương trình học | **OPEN** | — | **W2/W2A/W2B** |
+| Dataset đánh giá AI 30 case | **DONE, đã đổi vai (W2)** | `LEGACY_AI_COMPOSITION_REGRESSION` — còn nguyên 30 case, hết làm thước đo phủ | — |
+| Benchmark theo chương trình học | **DONE (W2/W2A/W2B/W2C)** | `curriculum_schema.py` + `metamorphic.py` + `product_scope.py`; `test_curriculum_benchmark.py` 23 test; `docs/evaluation/m20/curriculum-benchmark.json` | W3 dùng làm oracle |
+| Phép đếm phủ từng nói dối | **ĐÃ SỬA (W2A)** | đếm chuỗi thô ⇒ 14 đơn vị (6 là câu ghi chú); rút regex ⇒ `T10.CD1` 12 case. Thật: **8 đơn vị**, `T10.CD1` 9–24 tùy pool | — |
 | Cổng phạm vi + khả-mô-phỏng | **OPEN** | — | **W3** |
 | Chứng nhận từng target (4 gate) | **OPEN** | — | **W4** |
 | Kim tự tháp test (T0–T3) | **OPEN** | hiện chỉ có "chạy hết" | **W8** |
@@ -64,7 +65,8 @@
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
 |---|---|---|---|
-| Ma trận phủ chương trình | **PARTIAL** | `COVERAGE.md` + `catalog_runtime_matrix` | **W2A / W13** |
+| Ma trận phủ chương trình | **PARTIAL** | `COVERAGE.md` + `catalog_runtime_matrix` + báo cáo W2A (8 đơn vị, mọi đơn vị ≥3 case) | **W13** |
+| Đơn vị chương trình mỏng (<3 case) | **DONE (W2A)** | T10.CD2 2→3, T12CS.CD7 1→3 (3 case cross-domain mới); khoá bởi guard ngưỡng | — |
 | Tuyên bố bị cấm (không claim phủ toàn chương trình) | **DONE** | `COVERAGE.md §O` | giữ nguyên |
 | `CURRICULUM_SUPPORT_PARTIAL` | **GIỮ** | — | W13 |
 | `LEARNER_IMPACT_NOT_EVALUATED` | **GIỮ** | chưa có nghiên cứu trên người học | — |

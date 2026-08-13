@@ -1,0 +1,80 @@
+{
+  "head": "f2cdd5988c189697a799ef4c751f37f95d644ebe",
+  "generatedAt": "2026-08-13T16:32:49.473341+00:00",
+  "tool": "curriculum_benchmark_report.py",
+  "toolVersion": "1",
+  "environment": {
+    "python": "3.12.10",
+    "targets": 23
+  },
+  "unitsCovered": 8,
+  "unitCaseCounts": {
+    "T10.CD1": 24,
+    "T10.CD2": 3,
+    "T10.CD5": 12,
+    "T11.CD4": 7,
+    "T11CS.CD6": 25,
+    "T12.CD2": 17,
+    "T12.CD4": 5,
+    "T12CS.CD7": 3
+  },
+  "thinUnits": [],
+  "unanchoredCases": [
+    "cap-quicksort-gap",
+    "cap-dijkstra-gap",
+    "m15-hex-gap",
+    "m15-octal-gap",
+    "cap-base-conversion-hex",
+    "m16-nm-sort-partition",
+    "m16-nm-interpolation",
+    "m16-nm-weighted-shortest",
+    "m16-ac-computation-leak"
+  ],
+  "scopeCounts": {
+    "PUBLIC_THPT_INFORMATICS": 100,
+    "OUT_OF_SCOPE_TEST": 1,
+    "INTERNAL_ENGINE_FIXTURE": 2
+  },
+  "capabilityStatus": {
+    "SUPPORTED": 85,
+    "UNIMPLEMENTED": 15
+  },
+  "capabilityFamilies": {
+    "data_representation": 9,
+    "boolean_rule": 8,
+    "search_path": 10,
+    "conditional_accumulator": 6,
+    "structural_construction": 3,
+    "node_edge_graph+movement": 6,
+    "layered_transformation": 8,
+    "boolean_rule_chain": 4,
+    "bounded_control_flow": 2,
+    "bounded_scan": 3,
+    "tree_traversal": 1,
+    "relational_table_query": 1,
+    "web_presentation": 1,
+    "boolean_composition": 1,
+    "positional_representation": 2,
+    "sorting_movement": 9,
+    "sorting_mechanism_gap": 3,
+    "data_flow": 4,
+    "progressive_reveal+movement": 1,
+    "algorithmic_computation_gap": 2,
+    "positional_representation_base_gap": 4,
+    "weighted_sum": 1,
+    "structural_static": 1,
+    "single_pass_extreme": 5,
+    "structural_layout": 1,
+    "control_flow_loop": 1,
+    "search_mechanism_gap": 1,
+    "boolean_threshold_gap": 1,
+    "representation_computation_leak": 1
+  },
+  "complexity": {
+    "L1": 17,
+    "L2": 54,
+    "L3": 10,
+    "L4": 19
+  },
+  "metamorphicVariants": 220
+}
