@@ -164,3 +164,46 @@ describe("DESIGN.md §Elevation — không bóng tự chế", () => {
       .toContain("var(--shadow-soft)");
   });
 });
+
+/**
+ * M18-UI — CỘT TRÁI KHÔNG ĐƯỢC HỞ KHI TRANG DÀI HƠN KHUNG NHÌN.
+ *
+ * ─── LỖI ĐÃ ĐO ĐƯỢC ───────────────────────────────────────────────────────
+ *
+ * Bản đầu gộp ba việc vào một phần tử: `.app-nav` vừa `position: sticky`, vừa
+ * `height: 100vh`, vừa mang nền. Sticky KHÔNG kéo dài nền được — nó chỉ ghim
+ * phần tử trong khung nhìn. Nên trên trang Thư viện (tài liệu cao 2036px, khung
+ * nhìn 804px) cột trái chỉ được tô trắng đúng 804px, phần còn lại lộ nền xám
+ * `--canvas-soft` của body: một vệt HỞ chạy dọc suốt phần cuộn.
+ *
+ * Cách chữa là TÁCH VAI: `.app-nav-shell` là flex item nên nó cao bằng cả tài
+ * liệu (align-items: stretch mặc định) và mang màu; `.app-nav` bên trong vẫn
+ * dính. Guard này khoá đúng sự tách đó.
+ *
+ * Vì sao không kiểm bằng render: bố cục cột chỉ tồn tại khi CSS chạy thật, mà
+ * vitest không có engine bố cục. Bằng chứng thị giác nằm ở lượt đo Chrome
+ * (`docs/evaluation/m18/`); dòng này giữ cho cấu trúc không bị gộp lại.
+ */
+describe("M18-UI — nền thanh bên thuộc về VỎ, không thuộc phần tử dính", () => {
+  const rule = (sel: string) => {
+    const i = globalCss.indexOf(`${sel} {`);
+    return i < 0 ? null : globalCss.slice(i, globalCss.indexOf("}", i));
+  };
+
+  it("vỏ mang MÀU + VIỀN, và KHÔNG dính", () => {
+    const shell = rule(".app-nav-shell");
+    expect(shell, "không tìm thấy .app-nav-shell").not.toBeNull();
+    expect(shell!, "vỏ không mang nền").toContain("background:");
+    expect(shell!, "vỏ không mang viền phải").toContain("border-right:");
+    expect(shell!, "vỏ mà lại dính ⇒ nền hết cao bằng tài liệu")
+      .not.toContain("position: sticky");
+  });
+
+  it("phần dính KHÔNG mang nền — nếu mang thì nó chỉ tô được 100vh", () => {
+    const nav = rule(".app-nav");
+    expect(nav, "không tìm thấy .app-nav").not.toBeNull();
+    expect(nav!).toContain("position: sticky");
+    expect(nav!, "phần dính lại mang nền — đúng cái đã gây hở").not.toContain("background:");
+    expect(nav!, "phần dính lại mang viền phải").not.toContain("border-right:");
+  });
+});

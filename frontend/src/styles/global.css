@@ -3101,22 +3101,33 @@ html {
 .app-root { display: flex; min-height: 100vh; }
 .app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 
-.app-nav {
+/* VỎ NGOÀI mang MÀU, phần trong mới DÍNH.
+   ⚠️ Bản trước gộp làm một: `.app-nav` vừa `position: sticky` vừa
+   `height: 100vh` vừa mang nền. Sticky KHÔNG kéo dài nền — nó chỉ ghim phần tử
+   trong khung nhìn. Đo được ở trang Thư viện (tài liệu 2036px, khung nhìn
+   804px): cột trái chỉ tô trắng 804px, phần còn lại lộ nền xám
+   `--canvas-soft` của body — một vệt HỞ chạy dọc suốt phần cuộn.
+   Nền phải thuộc về phần tử cao bằng CẢ TÀI LIỆU: vỏ là flex item nên nó tự
+   cao hết (align-items: stretch mặc định). */
+.app-nav-shell {
   flex: 0 0 var(--nav-w, 216px);
   width: var(--nav-w, 216px);
+  border-right: 1px solid var(--hairline);
+  background: var(--canvas);
+  transition: flex-basis 0.16s ease, width 0.16s ease;
+}
+.app-nav {
   display: flex; flex-direction: column;
   gap: var(--sp-xs);
   padding: var(--sp-sm);
-  border-right: 1px solid var(--hairline);
-  background: var(--canvas);
+  width: 100%;
   position: sticky; top: 0; height: 100vh;
-  transition: flex-basis 0.16s ease, width 0.16s ease;
 }
 /* Thu gọn = DẢI BIỂU TƯỢNG. Nhãn biến mất khỏi hình nhưng tên khả truy cập
    chuyển sang `aria-label` (xem AppSidebar.tsx) — không thành hàng nút vô danh. */
-.app-nav.is-collapsed { --nav-w: 56px; }
-.app-nav.is-collapsed .app-nav-label { display: none; }
-.app-nav.is-collapsed .app-nav-item { justify-content: center; padding-inline: 0; }
+.app-nav-shell.is-collapsed { --nav-w: 56px; }
+.app-nav-shell.is-collapsed .app-nav-label { display: none; }
+.app-nav-shell.is-collapsed .app-nav-item { justify-content: center; padding-inline: 0; }
 
 .app-nav-toggle {
   align-self: flex-start;
@@ -3126,7 +3137,7 @@ html {
   color: var(--ink-faint); cursor: pointer;
 }
 .app-nav-toggle:hover { background: var(--canvas-soft); color: var(--ink-secondary); }
-.app-nav.is-collapsed .app-nav-toggle { align-self: center; }
+.app-nav-shell.is-collapsed .app-nav-toggle { align-self: center; }
 
 .app-nav-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
 .app-nav-foot {
@@ -3156,20 +3167,20 @@ html {
 .app-nav-scrim { display: none; }
 
 /* Trong mô phỏng, thanh bên nhường chỗ cho sân khấu (§10). */
-.app-root.nav-collapsed .app-nav { --nav-w: 56px; }
+.app-root.nav-collapsed .app-nav-shell { --nav-w: 56px; }
 
 /* Màn hẹp: NGĂN KÉO TẠM, không chiếm chỗ thường trực. */
 @media (max-width: 900px) {
-  .app-nav {
-    position: fixed; left: 0; top: 0; z-index: 40;
+  .app-nav-shell {
+    position: fixed; left: 0; top: 0; bottom: 0; z-index: 40;
     transform: translateX(-100%);
     transition: transform 0.18s ease;
     box-shadow: var(--shadow-soft);
   }
-  .app-nav.is-drawer-open { transform: none; }
-  .app-nav.is-collapsed { --nav-w: 216px; }
-  .app-nav.is-collapsed .app-nav-label { display: flex; }
-  .app-nav.is-collapsed .app-nav-item { justify-content: flex-start; padding-inline: var(--sp-xs); }
+  .app-nav-shell.is-drawer-open { transform: none; }
+  .app-nav-shell.is-collapsed { --nav-w: 216px; }
+  .app-nav-shell.is-collapsed .app-nav-label { display: flex; }
+  .app-nav-shell.is-collapsed .app-nav-item { justify-content: flex-start; padding-inline: var(--sp-xs); }
   .app-nav-scrim {
     display: block; position: fixed; inset: 0; z-index: 39;
     background: rgba(0, 0, 0, 0.28);

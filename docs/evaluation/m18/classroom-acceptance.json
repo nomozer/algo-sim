@@ -1,12 +1,12 @@
 {
-  "when": "2026-08-13T10:01:49.519Z",
+  "when": "2026-08-13T14:21:07.358Z",
   "rows": [
     {
       "viewport": "1920x1080",
       "guest": {
         "nav": {
           "x": 0,
-          "w": 216,
+          "w": 215,
           "visible": true
         },
         "navList": true,
@@ -37,7 +37,7 @@
         "rows": 2,
         "practicing": 1,
         "badAssign": 400,
-        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t10:01:13.698494+00:00\"}"
+        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t14:20:30.653883+00:00\"}"
       }
     },
     {
@@ -45,7 +45,7 @@
       "guest": {
         "nav": {
           "x": 0,
-          "w": 216,
+          "w": 215,
           "visible": true
         },
         "navList": true,
@@ -76,7 +76,7 @@
         "rows": 2,
         "practicing": 1,
         "badAssign": 400,
-        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t10:01:25.774018+00:00\"}"
+        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t14:20:42.720289+00:00\"}"
       }
     },
     {
@@ -84,7 +84,7 @@
       "guest": {
         "nav": {
           "x": 0,
-          "w": 216,
+          "w": 215,
           "visible": true
         },
         "navList": true,
@@ -115,7 +115,7 @@
         "rows": 2,
         "practicing": 1,
         "badAssign": 400,
-        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t10:01:37.653707+00:00\"}"
+        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t14:20:55.182837+00:00\"}"
       }
     },
     {
@@ -123,7 +123,7 @@
       "guest": {
         "nav": {
           "x": -216,
-          "w": 216,
+          "w": 215,
           "visible": true
         },
         "navList": true,
@@ -154,7 +154,7 @@
         "rows": 2,
         "practicing": 1,
         "badAssign": 400,
-        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t10:01:49.513382+00:00\"}"
+        "leaks": "{\"classroom\":{\"id\":1,\"name\":\"10a1 — tin học\"},\"assignments\":[{\"id\":1,\"classroomid\":1,\"title\":\"bảng chân trị của cổng and\",\"instruction\":\"bật/tắt hai đầu vào rồi ghi lại khi nào đầu ra bằng 1.\",\"simulationid\":\"logic.and_gate\",\"closed\":false,\"createdat\":\"2026-08-13t08:55:57.645600\"}],\"rows\":[{\"studentid\":2,\"studentname\":\"nguyễn văn an\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"practicing\",\"cursor\":0,\"stepcount\":0,\"exploreopen\":false,\"challengeopen\":false,\"actioncount\":6,\"commitmentcount\":2,\"updatedat\":\"2026-08-13t09:27:27.626046\"},{\"studentid\":3,\"studentname\":\"trần thị bình\",\"assignmentid\":1,\"assignmenttitle\":\"bảng chân trị của cổng and\",\"simulationid\":\"logic.and_gate\",\"status\":\"not_started\",\"cursor\":null,\"stepcount\":null,\"exploreopen\":null,\"challengeopen\":null,\"actioncount\":null,\"commitmentcount\":null,\"updatedat\":null}],\"observedat\":\"2026-08-13t14:21:07.347799+00:00\"}"
       }
     }
   ],

@@ -73,8 +73,12 @@ export function AppSidebar() {
       {/* Nền mờ CHỈ ở màn hẹp: ngăn kéo phải đóng được bằng cách bấm ra ngoài. */}
       {drawerOpen && <div className="app-nav-scrim" onClick={closeDrawer} aria-hidden="true" />}
 
-      <nav className={`app-nav${collapsed ? " is-collapsed" : ""}${drawerOpen ? " is-drawer-open" : ""}`}
-        aria-label="Điều hướng chính">
+      {/* VỎ mang MÀU và cao bằng CẢ TÀI LIỆU; `nav` bên trong mới dính.
+          Gộp làm một thì nền chỉ tô được 100vh, và trang dài hơn thế sẽ lộ một
+          vệt hở chạy dọc cột trái (đo được ở Thư viện: tài liệu 2036px, khung
+          nhìn 804px). Sticky không kéo dài nền được. */}
+      <div className={`app-nav-shell${collapsed ? " is-collapsed" : ""}${drawerOpen ? " is-drawer-open" : ""}`}>
+      <nav className="app-nav" aria-label="Điều hướng chính">
         <button type="button" className="app-nav-toggle" onClick={toggle}
           aria-expanded={!collapsed}
           aria-label={collapsed ? "Mở rộng thanh điều hướng" : "Thu gọn thanh điều hướng"}
@@ -123,6 +127,7 @@ export function AppSidebar() {
           </button>
         </div>
       </nav>
+      </div>
     </>
   );
 }
