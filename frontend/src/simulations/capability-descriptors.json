@@ -1291,6 +1291,16 @@
         "#047857",
         "#ffffff"
       ],
+      "color_pattern": "^#[0-9a-f]{6}$",
+      "color_channels": [
+        "r",
+        "g",
+        "b"
+      ],
+      "channel_bounds": {
+        "min": 0,
+        "max": 255
+      },
       "numeric_bounds": {
         "fontSize": {
           "min": 12,

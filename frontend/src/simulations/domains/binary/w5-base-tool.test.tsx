@@ -5,6 +5,7 @@ import {
   CONV_BASES,
   makeBaseConvModule,
   positionalBreakdown,
+  strategyOf,
 } from "./convert-module";
 import type { BaseConvConfig, ConvBase } from "./convert-module";
 
@@ -118,6 +119,28 @@ describe("W5 §7 — dùng được khi ẩn thanh điều khiển", () => {
     expect(next.result).toBe(oracleToBase(26, 16)); // "1A"
     expect(next.cursor).toBe(0); // tính lại, KHÔNG giữ vị trí cũ
     void config;
+  });
+
+  it("đổi cơ số thì CHIẾN LƯỢC diễn giải cũng đổi theo", () => {
+    /* LỖ NÀY DO TIÊM LỖI TÌM RA.
+       Phép tiêm §15 #6 — bỏ `strategy: strategyOf(...)` khi đổi `targetBase` —
+       đi qua sạch cả 133 test. Kết quả vẫn đúng, nên không guard nào kêu; thứ
+       hỏng là DIỄN GIẢI: 13 (cơ số 10) → cơ số 2 phải kể phép chia lấy dư, còn
+       1101 (cơ số 2) → cơ số 10 phải kể trọng số vị trí. Giữ chiến lược cũ thì
+       học sinh nghe một lời giải thích không khớp thao tác mình vừa làm — đúng
+       thứ §3C gọi là "trace phải khớp tham số hiện tại". */
+    const { state } = stateFor({ inputValue: "1101", sourceBase: 2, targetBase: 10 });
+    expect(state.config.strategy).toBe("positional_weights");
+
+    const toHex = mod.apply(state, { type: "set_param", name: "targetBase", value: 16 });
+    expect(toHex.config.strategy, "2 → 16 phải đi qua hai giai đoạn")
+      .toBe(strategyOf(2, 16));
+    expect(toHex.config.strategy).not.toBe(state.config.strategy);
+
+    const { state: dec } = stateFor({ inputValue: "13", sourceBase: 10, targetBase: 2 });
+    expect(dec.config.strategy).toBe("quotient_remainder");
+    const toBase8 = mod.apply(dec, { type: "set_param", name: "targetBase", value: 8 });
+    expect(toBase8.config.strategy).toBe(strategyOf(10, 8));
   });
 
   it("đổi giá trị KHÔNG để lại nhãn vị trí cũ", () => {

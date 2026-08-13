@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-13T17:09:16.416Z",
+  "generatedAt": "2026-08-13T19:33:31.400Z",
   "note": "head được đóng dấu bởi scripts/evidence.mjs khi chạy qua công cụ trình duyệt; bảng này sinh từ vitest nên dùng kèm commit chứa nó",
   "pipelineSources": [
     "composed",
@@ -240,6 +240,9 @@
         "{\"type\":\"toggle\",\"target\":\"reset\"}",
         "{\"type\":\"set_param\",\"name\":\"fontSize\",\"value\":32}",
         "{\"type\":\"set_param\",\"name\":\"selected\",\"value\":\"heading\"}",
+        "{\"type\":\"set_param\",\"name\":\"r\",\"value\":255}",
+        "{\"type\":\"set_param\",\"name\":\"g\",\"value\":128}",
+        "{\"type\":\"set_param\",\"name\":\"b\",\"value\":0}",
         "{\"type\":\"move\",\"target\":\"heading\",\"x\":0,\"y\":1}"
       ],
       "aiSourcesChecked": 4,

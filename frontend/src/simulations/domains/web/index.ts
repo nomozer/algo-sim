@@ -1,6 +1,8 @@
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
-import { applyStyleChange, cssTextOf, htmlTextOf, isModified, moveBlock, selectNode } from "./apply";
+import {
+  applyChannelChange, applyStyleChange, cssTextOf, htmlTextOf, isModified, moveBlock, selectNode,
+} from "./apply";
 import { CONTENT_MAX_LENGTH, DEFAULT_STYLE, PARAGRAPH_MAX_LENGTH } from "./props";
 import { SELECTOR_OF, type WebBlock, type WebConfig, type WebState, type WebStyle } from "./model";
 import { WebInspector, WebWorkspace } from "./ui";
@@ -87,6 +89,12 @@ export function makeWebStyleModule(): SimulationModule<WebConfig, WebState> {
           const node = typeof action.value === "string" ? selectNode(action.value) : null;
           return node && node !== state.selected ? { ...state, selected: node } : state;
         }
+        /* W5 §2 — ba kênh R/G/B đi qua CÙNG một `set_param`, không đẻ action mới.
+           Kênh tác động lên màu của nút ĐANG CHỌN, nên "chọn Tiêu đề rồi kéo R"
+           không bao giờ chạm tới nền — đó là lỗi #2 trong danh sách tiêm lỗi W5,
+           và nó không thể xảy ra vì chỉ có một `selected` trong state. */
+        const byChannel = applyChannelChange(state.style, state.selected, action.name, action.value);
+        if (byChannel) return { ...state, style: byChannel };
         const next = applyStyleChange(state.style, action.name, action.value);
         return next ? { ...state, style: next } : state;
       }

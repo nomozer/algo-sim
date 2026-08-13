@@ -420,7 +420,6 @@ function EncodingParamBar({ state, busy, dispatch }: Props) {
 export function CharEncodingWorkspace({ state, config, busy, dispatch }: Props) {
   const cursor = clampCursor(state, state.cursor);
   const step = stepOf(state);
-  const shown = committedRowCount({ ...state, cursor });
   const partial = partialRow({ ...state, cursor });
   const last = cursor >= state.trace.steps.length - 1;
   const done = step.events.find((e) => e.type === "done");

@@ -65,6 +65,19 @@
 | Nghiệm thu trình duyệt 4 bề rộng | **DONE** | composition + classroom + experience | W12 (mở rộng) |
 | Hook chất lượng phân biệt SVG vs HTML | **OPEN** | false positive đã xác định ở `ArrayView` | **W10** |
 
+## 4b. Wave 5 — hoạt hình → công cụ học tập
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| `binary.base_conversion` trả lời không cần Play | **DONE (W5)** | BEFORE 0 tin@cursor0, đáp án `7EA` vắng mặt → AFTER 17 tin, đọc được; 4 bề rộng | — |
+| `binary.character_encoding` bảng đủ hàng | **DONE (W5)** | BEFORE dãy bit của T/i/n vắng ở cursor 0 → AFTER đọc được; 4 bề rộng | — |
+| `web.style_model` công cụ màu RGB | **DONE (W5)** | 4 → 7 ô điều khiển; ba kênh 0–255 qua `set_param` → `module.apply` | — |
+| Miền màu nới bảy ô → 24 bit | **DONE (W5)** | validator hai tầng + `CACHE_VERSION` 28→29 (ba chỗ) | — |
+| Oracle độc lập ba target | **DONE (W5)** | `parseInt`/`toString(base)` · `codePointAt`/`toString(2)` · số học chuỗi hex | — |
+| Tiêm lỗi W5 | **11/11 BỊ BẮT** | hai phép tìm ra LỖ GUARD THẬT (cột thập phân renderer; chiến lược diễn giải sau khi đổi cơ số) — đã vá | — |
+| Quyết định W3 bị W5 đảo | **ĐÃ KHAI** | ba guard "không lộ đáp án sớm" viết lại về bảng chia + băng kết luận, không xoá | — |
+| Yêu cầu transport (đầu vào W7) | **ĐÃ GHI** | base_conversion + character_encoding: TRACE TUỲ CHỌN · web.style_model: RESET ONLY | **W7** |
+
 ## 5. Phủ chương trình
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |

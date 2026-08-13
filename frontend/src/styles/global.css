@@ -3390,6 +3390,65 @@ html {
 .web-swatch.is-active { box-shadow: 0 0 0 2px var(--primary); }
 .web-swatch:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
+/* ── W5 §2A — BÀN ĐIỀU KHIỂN BA KÊNH ──────────────────────────────────────
+ *
+ * Bố cục đọc theo CHIỀU DỌC: ba thanh xếp chồng, rồi kết quả ngay dưới. Đó là
+ * ngữ pháp của bài học — R + G + B → MỘT màu — nên nó phải là hình dạng của
+ * khối, không phải một chú thích viết thêm.
+ *
+ * Vệt màu trong lòng mỗi thanh do JS đặt (`linear-gradient` dựng từ hai kênh
+ * còn lại), không đặt được bằng CSS tĩnh: nó phụ thuộc state.
+ */
+.web-channels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+}
+
+.web-channel {
+  display: grid;
+  grid-template-columns: 3.2em 1fr 2.6em;
+  align-items: center;
+  gap: var(--sp-xs);
+}
+
+.web-channel-name { font-size: 13px; color: var(--ink-muted); }
+
+.web-channel-value {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--ink);
+}
+
+/* Thanh trượt phải để lộ vệt màu bên dưới, nên nền mặc định của trình duyệt
+   bị tắt. `appearance:none` chỉ tắt phần RÃNH; nút kéo vẫn là nút gốc. */
+.web-channel-range {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 12px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+}
+.web-channel-range:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.web-channel-result {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  flex-wrap: wrap;
+  margin-top: 2px;
+  font-size: 13px;
+}
+
+.web-channel-chip {
+  width: 22px; height: 22px;
+  border-radius: var(--rounded-sm);
+  border: 1px solid var(--hairline);
+}
+
+.web-channel-hex { color: var(--ink-muted); }
+
 .web-preview-area { display: flex; flex-direction: column; gap: var(--sp-md); min-width: 0; }
 
 /* Nền ca-rô: cho thấy khối KẾT THÚC ở đâu, nên đổi đệm/bo góc nhìn ra ngay

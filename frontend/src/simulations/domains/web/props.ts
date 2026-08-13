@@ -9,6 +9,49 @@ export type WebProp =
      tiêu đề khác việc đổi cỡ chữ đoạn văn. Đó chính là bài học phân cấp. */
   | "headingColor" | "headingSize";
 
+/**
+ * W5 §2 — MIỀN MÀU LÀ 24 BIT, KHÔNG PHẢI BẢY Ô.
+ *
+ * Mirror của `_WEB_HEX_COLOR` bên backend (kiểm hai tầng, khoá bởi
+ * `web-contract-parity.test.ts`).
+ *
+ * ⚠️ VẪN ĐÓNG: tập hợp lệ đúng bằng các chuỗi khớp mẫu này, tức chỉ có thể là
+ * MỘT MÀU. Không phải "chuỗi CSS bất kỳ" — nới sang tên màu, hàm màu hay biến
+ * CSS sẽ mở đúng cánh cửa mà tập đóng đang giữ.
+ */
+export const HEX_COLOR = /^#[0-9a-f]{6}$/i;
+
+export type Channel = "r" | "g" | "b";
+export const CHANNELS: readonly Channel[] = ["r", "g", "b"];
+export const CHANNEL_LABEL: Record<Channel, string> = { r: "Đỏ", g: "Lục", b: "Lam" };
+export const CHANNEL_MAX = 255;
+
+/**
+ * CHỦ SỞ HỮU DUY NHẤT của phép đổi hex ↔ RGB.
+ *
+ * Đặt ở đây vì cả ba nơi đều cần đúng con số này: thanh trượt, dòng
+ * `rgb(r, g, b)` in ra cho học sinh, và bảng CSS. Ba nơi tự tính là ba cơ hội
+ * để chúng nói ba giá trị khác nhau về cùng một màu — và học sinh sẽ tin cái
+ * nào? Đây chính là lỗi #4 trong danh sách tiêm lỗi của W5.
+ */
+export function rgbOf(hex: string): { r: number; g: number; b: number } | null {
+  if (!HEX_COLOR.test(hex)) return null;
+  const n = parseInt(hex.slice(1), 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+export function hexOf(r: number, g: number, b: number): string | null {
+  const ok = (v: number) => Number.isInteger(v) && v >= 0 && v <= CHANNEL_MAX;
+  if (!ok(r) || !ok(g) || !ok(b)) return null;
+  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("")}`;
+}
+
+/** Chuỗi `rgb(r, g, b)` — DẪN XUẤT, không lưu song song với hex. */
+export function rgbTextOf(hex: string): string | null {
+  const c = rgbOf(hex);
+  return c ? `rgb(${c.r}, ${c.g}, ${c.b})` : null;
+}
+
 export const COLOR_CHOICES = [
   { value: "#ffffff", label: "Trắng" },
   { value: "#fde68a", label: "Vàng" },

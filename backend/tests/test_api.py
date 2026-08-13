@@ -259,7 +259,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # sinh dưới luật cũ ra đời khi phán quyết phạm vi còn do LLM sở hữu — đúng
     # những đề cổng này nhắm tới lại là đúng những đề đã lọt và đã được cache.
     # Trả lại mù thì bản vá vô hiệu với chính chúng.
-    assert main_module.CACHE_VERSION == "28"
+    # M20 W5 (bump 28→29): miền màu của `web.style_model` nới từ BẢY ô đóng sang
+    # mọi mã hex 6 chữ số. Đây là bề mặt LLM ĐIỀN, nên envelope cache sinh dưới
+    # luật cũ mang đúng những đề mà bản nới này nhắm tới — đề CSS/màu vốn chỉ
+    # chọn được trong bảng. Trả lại mù thì học sinh vẫn nhận bản bảy-ô.
+    assert main_module.CACHE_VERSION == "29"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

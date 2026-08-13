@@ -1,7 +1,40 @@
 import {
-  COLOR_CHOICES, NUMERIC_RANGE, NUMERIC_PROPS, TEXT_COLOR_CHOICES, type WebProp,
+  CHANNELS, HEX_COLOR, NUMERIC_RANGE, NUMERIC_PROPS,
+  hexOf, rgbOf, type Channel, type WebProp,
 } from "./props";
 import { WEB_NODES, type WebBlock, type WebNode, type WebState, type WebStyle } from "./model";
+
+/**
+ * W5 §2 — THUỘC TÍNH MÀU mà một nút đang sở hữu.
+ *
+ * §2 nói học sinh chọn TEXT hay BACKGROUND. Mô hình đã có sẵn phép chọn nút
+ * (khung trang · tiêu đề · đoạn văn), nên ánh xạ vào đó thay vì dựng một bộ chọn
+ * thứ hai song song — hai bộ chọn cho cùng một câu hỏi là hai bản chọn sẽ lệch
+ * nhau (đúng lý do `selected` được đưa vào state chứ không để renderer giữ).
+ */
+export function colorPropOf(node: WebNode): WebProp {
+  if (node === "page") return "backgroundColor";
+  return node === "heading" ? "headingColor" : "color";
+}
+
+/**
+ * Đổi MỘT kênh, giữ nguyên hai kênh kia — đúng thao tác §2A đòi hỏi.
+ *
+ * Trả `null` khi ngoài miền ⇒ người gọi giữ state cũ. KHÔNG kẹp về biên: kẹp im
+ * lặng dạy học sinh rằng em đã đặt được giá trị đó (cùng luật với thuộc tính số).
+ */
+export function applyChannelChange(
+  style: WebStyle, node: WebNode, channel: string, value: number | string | boolean,
+): WebStyle | null {
+  if (!(CHANNELS as readonly string[]).includes(channel)) return null;
+  if (typeof value !== "number" || !Number.isInteger(value)) return null;
+  const prop = colorPropOf(node);
+  const current = rgbOf(style[prop] as string);
+  if (!current) return null;
+  const next = { ...current, [channel as Channel]: value };
+  const hex = hexOf(next.r, next.g, next.b);
+  return hex ? { ...style, [prop]: hex } : null;
+}
 
 /**
  * Áp một thay đổi CÓ RÀNG BUỘC. `null` = không hợp lệ ⇒ người gọi giữ state cũ.
@@ -11,13 +44,13 @@ import { WEB_NODES, type WebBlock, type WebNode, type WebState, type WebStyle } 
 export function applyStyleChange(
   style: WebStyle, name: string, value: number | string | boolean,
 ): WebStyle | null {
-  if (name === "backgroundColor") {
-    return typeof value === "string" && COLOR_CHOICES.some((c) => c.value === value)
-      ? { ...style, backgroundColor: value } : null;
-  }
-  if (name === "color" || name === "headingColor") {
-    return typeof value === "string" && TEXT_COLOR_CHOICES.some((c) => c.value === value)
-      ? { ...style, [name]: value } : null;
+  if (name === "backgroundColor" || name === "color" || name === "headingColor") {
+    /* W5: miền là MỌI mã hex 6 chữ số, không còn là bảy ô gợi ý — bài học T12.CD4
+       là quan hệ ba kênh ↔ màu, và bảy ô không có cách nào giữ hai kênh cố định
+       để xem kênh thứ ba làm gì. Chuẩn hoá chữ thường để hai tầng so được từng
+       byte. Vẫn ĐÓNG: chỉ có thể là một màu, không phải chuỗi CSS tuỳ ý. */
+    return typeof value === "string" && HEX_COLOR.test(value)
+      ? { ...style, [name]: value.toLowerCase() } : null;
   }
   if ((NUMERIC_PROPS as readonly string[]).includes(name)) {
     if (typeof value !== "number" || !Number.isInteger(value)) return null;

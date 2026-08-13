@@ -1,0 +1,119 @@
+{
+  "head": "c6ad3297b5b349c60118f306d524aad66c36ccf3",
+  "dirty": true,
+  "generatedAt": "2026-08-13T19:25:05.271Z",
+  "tool": "measure-tool-first-w5",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "viewport": 1536,
+    "label": "after-1536"
+  },
+  "question": "Ở cursor 0, DOM có hiện đúng đáp án mà engine tất định đang giữ không?",
+  "note": "Hiệu số tin@cursor0 → tin@cuối KHÔNG phải tiêu chí: §1 nói diễn giải NÊN hiện dần theo bước, nên một target lành mạnh vẫn cho hiệu số dương.",
+  "rows": [
+    {
+      "target": "web.style_model",
+      "answerAtCursor0": {
+        "applicable": false
+      },
+      "atCursor0": {
+        "dataCells": 0,
+        "dataRows": 0,
+        "infoAtoms": 25,
+        "controls": 7,
+        "svgCount": 0,
+        "stageTextLen": 0,
+        "stageHead": ""
+      },
+      "atEnd": {
+        "dataCells": 0,
+        "dataRows": 0,
+        "infoAtoms": 25,
+        "controls": 7,
+        "svgCount": 0,
+        "stageTextLen": 0,
+        "stageHead": ""
+      },
+      "cursor": {
+        "cursorBefore": null,
+        "cursorAfter": null
+      },
+      "hasTimeline": false,
+      "measurementValid": true,
+      "gatedCells": null,
+      "gatedBehindTransport": false
+    },
+    {
+      "target": "binary.base_conversion",
+      "answerAtCursor0": {
+        "applicable": true,
+        "expected": "7EA",
+        "visible": true,
+        "missing": []
+      },
+      "atCursor0": {
+        "dataCells": 0,
+        "dataRows": 0,
+        "infoAtoms": 17,
+        "controls": 3,
+        "svgCount": 0,
+        "stageTextLen": 0,
+        "stageHead": ""
+      },
+      "atEnd": {
+        "dataCells": 12,
+        "dataRows": 3,
+        "infoAtoms": 34,
+        "controls": 3,
+        "svgCount": 0,
+        "stageTextLen": 91,
+        "stageHead": "Phép chiaThươngDưChữ số2026 : 1612610A126 : 16714E7 : 160772026 (cơ số 10) = 7EA (cơ số 16)"
+      },
+      "cursor": {
+        "cursorBefore": 0,
+        "cursorAfter": 4
+      },
+      "hasTimeline": true,
+      "measurementValid": true,
+      "gatedCells": 17,
+      "gatedBehindTransport": true
+    },
+    {
+      "target": "binary.character_encoding",
+      "answerAtCursor0": {
+        "applicable": true,
+        "expected": "1010100 1101001 1101110",
+        "visible": true,
+        "missing": []
+      },
+      "atCursor0": {
+        "dataCells": 15,
+        "dataRows": 3,
+        "infoAtoms": 22,
+        "controls": 2,
+        "svgCount": 0,
+        "stageTextLen": 102,
+        "stageHead": "Vị tríKý tựMã (code point)Thập phânNhị phân1'T'U+00548410101002'i'U+006910511010013'n'U+006E1101101110"
+      },
+      "atEnd": {
+        "dataCells": 15,
+        "dataRows": 3,
+        "infoAtoms": 21,
+        "controls": 2,
+        "svgCount": 1,
+        "stageTextLen": 102,
+        "stageHead": "Vị tríKý tựMã (code point)Thập phânNhị phân1'T'U+00548410101002'i'U+006910511010013'n'U+006E1101101110"
+      },
+      "cursor": {
+        "cursorBefore": 0,
+        "cursorAfter": 20
+      },
+      "hasTimeline": true,
+      "measurementValid": true,
+      "gatedCells": -1,
+      "gatedBehindTransport": false
+    }
+  ]
+}

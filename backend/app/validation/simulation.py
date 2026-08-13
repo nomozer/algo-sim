@@ -8,6 +8,8 @@ thêm domain mới = thêm một validator, không sửa lõi.
 
 from __future__ import annotations
 
+import re
+
 ALGORITHM_IDS = [
     "find_max",
     "find_min",
@@ -670,11 +672,25 @@ def validate_encapsulation_config(raw) -> tuple[dict | None, str | None]:
 
 # ── Domain web (W4B-2Z) — thuộc tính trình bày CÓ RÀNG BUỘC ───
 
-# Bảng màu ĐÓNG. Học sinh chọn trong bảng, LLM cũng chỉ được chọn trong bảng —
-# không có đường nào đưa chuỗi CSS tự do vào state. Mirror ở
-# `frontend/src/simulations/domains/web/props.ts` (kiểm hai tầng).
+# Bảng màu GỢI Ý — ô bấm nhanh trên giao diện, KHÔNG còn là toàn bộ miền hợp lệ.
+# Mirror ở `frontend/src/simulations/domains/web/props.ts` (kiểm hai tầng).
 _WEB_BG_COLORS = ("#ffffff", "#fde68a", "#fca5a5", "#a7f3d0", "#bfdbfe", "#e9d5ff", "#1f2937")
 _WEB_TEXT_COLORS = ("#1f2937", "#b91c1c", "#1d4ed8", "#047857", "#ffffff")
+
+# M20 W5 §2 — MIỀN MÀU LÀ 24 BIT, KHÔNG PHẢI BẢY Ô.
+#
+# Bài học của T12.CD4 là "ba kênh R, G, B quyết định màu, và quan hệ đó hiện ra
+# trong CSS". Bảng bảy ô không dạy được điều đó: học sinh chọn "Xanh dương nhạt"
+# rồi không biết vì sao nó xanh, và không có cách nào giữ hai kênh cố định để
+# xem kênh thứ ba làm gì. Muốn có vòng lặp "đổi một biến → quan sát quan hệ" thì
+# miền phải liên tục trên từng kênh.
+#
+# ⚠️ VẪN ĐÓNG — và đây là ranh giới an toàn, không phải chi tiết:
+# miền mở rộng đúng bằng tập chuỗi khớp `^#[0-9a-f]{6}$`, tức chỉ có thể là MỘT
+# MÀU. Không phải "CSS tự do": không hàm, không `url()`, không `expression`,
+# không dấu chấm phẩy để thoát ra khai báo khác. Nới sang "chuỗi màu CSS bất kỳ"
+# (`red`, `rgb(...)`, `var(--x)`) sẽ mở đúng cánh cửa mà tập đóng đang giữ.
+_WEB_HEX_COLOR = re.compile(r"^#[0-9a-f]{6}$", re.IGNORECASE)
 # W4B-3F — TRANG CÓ CẤU TRÚC, KHÔNG CÒN MỘT KHỐI.
 #
 # Trước wave này miền chỉ mô tả MỘT khối chữ, nên bài "HTML/CSS" không có gì để
@@ -745,12 +761,16 @@ def validate_web_style_config(raw) -> tuple[dict | None, str | None]:
 
     out = dict(_WEB_DEFAULT_STYLE)
     for key, value in style.items():
-        if key == "backgroundColor":
-            if value not in _WEB_BG_COLORS:
-                return None, f'"backgroundColor" phải thuộc bảng màu: {", ".join(_WEB_BG_COLORS)}.'
-        elif key in ("color", "headingColor"):
-            if value not in _WEB_TEXT_COLORS:
-                return None, f'"{key}" phải thuộc bảng màu chữ: {", ".join(_WEB_TEXT_COLORS)}.'
+        if key in ("backgroundColor", "color", "headingColor"):
+            # Chuẩn hoá về CHỮ THƯỜNG để hai tầng so sánh được từng byte: "#FF0000"
+            # và "#ff0000" là một màu, nhưng là hai chuỗi — và mọi test đối chiếu
+            # ở đây đều so chuỗi.
+            if not isinstance(value, str) or not _WEB_HEX_COLOR.match(value):
+                return None, (
+                    f'"{key}" phải là mã màu 6 chữ số hex dạng "#rrggbb" '
+                    f'(ví dụ "#ff0000"). Không nhận tên màu, rgb(...) hay biến CSS.'
+                )
+            value = value.lower()
         elif key in _WEB_NUMERIC:
             lo, hi = _WEB_NUMERIC[key]
             if not isinstance(value, int) or isinstance(value, bool) or not lo <= value <= hi:
@@ -783,8 +803,13 @@ def web_style_domain() -> dict:
     hai bên khớp TỪNG GIÁ TRỊ — quên đồng bộ là ĐỎ, không phải trôi âm thầm.
     """
     return {
+        # Đổi tên nghĩa từ W5: đây là ô GỢI Ý trên giao diện, không phải toàn bộ
+        # miền hợp lệ. Miền thật là `color_pattern` bên dưới.
         "background_colors": list(_WEB_BG_COLORS),
         "text_colors": list(_WEB_TEXT_COLORS),
+        "color_pattern": _WEB_HEX_COLOR.pattern,
+        "color_channels": ["r", "g", "b"],
+        "channel_bounds": {"min": 0, "max": 255},
         "numeric_bounds": {k: {"min": lo, "max": hi} for k, (lo, hi) in _WEB_NUMERIC.items()},
         "defaults": dict(_WEB_DEFAULT_STYLE),
         "content_max_length": _WEB_CONTENT_MAX,

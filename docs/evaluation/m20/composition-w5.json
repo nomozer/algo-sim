@@ -1,0 +1,279 @@
+{
+  "head": "c6ad3297b5b349c60118f306d524aad66c36ccf3",
+  "dirty": true,
+  "generatedAt": "2026-08-13T19:26:07.832Z",
+  "tool": "audit-composition.mjs",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "viewports": [
+      1920,
+      1536,
+      1366,
+      768
+    ],
+    "targets": 12
+  },
+  "label": "w5",
+  "rows": [
+    {
+      "viewport": 1920,
+      "target": "web.style_model",
+      "stageW": 1672,
+      "frameW": 1401,
+      "hasFrame": false,
+      "inkW": 1398,
+      "inkX": 248,
+      "frameFill": 99.9,
+      "stageFill": 83.8,
+      "rails": {
+        "instruction": 247,
+        "legend": null,
+        "explanation": 247
+      },
+      "railException": null,
+      "maxRailDelta": 1,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK",
+      "frameTracksViewport": 159,
+      "frameException": "Sân khấu là một TRANG WEB trong khung xem trước. Bề rộng khả dụng chính là thứ trang phải lấp — đó là hành vi đang được dạy, không phải khoảng trống thừa. Khung chia đôi (điều khiển trái · xem trước phải) cũng cần bề ngang để hai vế 'giá trị em đặt ↔ kết quả nhìn thấy' nằm cùng tầm mắt (§13). Đây là ngoại lệ DUY NHẤT của luật khung-không-bám-cửa-sổ."
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.base_conversion",
+      "stageW": 1672,
+      "frameW": 713,
+      "hasFrame": false,
+      "inkW": 711,
+      "inkX": 581,
+      "frameFill": 99.7,
+      "stageFill": 42.6,
+      "rails": {
+        "instruction": 581,
+        "legend": null,
+        "explanation": null
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.character_encoding",
+      "stageW": 1672,
+      "frameW": 763,
+      "hasFrame": false,
+      "inkW": 761,
+      "inkX": 566,
+      "frameFill": 99.7,
+      "stageFill": 45.6,
+      "rails": {
+        "instruction": 566,
+        "legend": null,
+        "explanation": 566
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 1536,
+      "target": "web.style_model",
+      "stageW": 1460,
+      "frameW": 1401,
+      "hasFrame": false,
+      "inkW": 1398,
+      "inkX": 56,
+      "frameFill": 99.9,
+      "stageFill": 96,
+      "rails": {
+        "instruction": 55,
+        "legend": null,
+        "explanation": 55
+      },
+      "railException": null,
+      "maxRailDelta": 1,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 1536,
+      "target": "binary.base_conversion",
+      "stageW": 1460,
+      "frameW": 713,
+      "hasFrame": false,
+      "inkW": 711,
+      "inkX": 389,
+      "frameFill": 99.7,
+      "stageFill": 48.8,
+      "rails": {
+        "instruction": 389,
+        "legend": null,
+        "explanation": null
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 1536,
+      "target": "binary.character_encoding",
+      "stageW": 1460,
+      "frameW": 763,
+      "hasFrame": false,
+      "inkW": 761,
+      "inkX": 374,
+      "frameFill": 99.7,
+      "stageFill": 52.3,
+      "rails": {
+        "instruction": 374,
+        "legend": null,
+        "explanation": 374
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 1366,
+      "target": "web.style_model",
+      "stageW": 1290,
+      "frameW": 1242,
+      "hasFrame": false,
+      "inkW": 1239,
+      "inkX": 50,
+      "frameFill": 99.8,
+      "stageFill": 96.3,
+      "rails": {
+        "instruction": 49,
+        "legend": null,
+        "explanation": 49
+      },
+      "railException": null,
+      "maxRailDelta": 1,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK",
+      "frameTracksViewport": 159,
+      "frameException": "Sân khấu là một TRANG WEB trong khung xem trước. Bề rộng khả dụng chính là thứ trang phải lấp — đó là hành vi đang được dạy, không phải khoảng trống thừa. Khung chia đôi (điều khiển trái · xem trước phải) cũng cần bề ngang để hai vế 'giá trị em đặt ↔ kết quả nhìn thấy' nằm cùng tầm mắt (§13). Đây là ngoại lệ DUY NHẤT của luật khung-không-bám-cửa-sổ."
+    },
+    {
+      "viewport": 1366,
+      "target": "binary.base_conversion",
+      "stageW": 1290,
+      "frameW": 713,
+      "hasFrame": false,
+      "inkW": 711,
+      "inkX": 304,
+      "frameFill": 99.7,
+      "stageFill": 55.3,
+      "rails": {
+        "instruction": 304,
+        "legend": null,
+        "explanation": null
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 1366,
+      "target": "binary.character_encoding",
+      "stageW": 1290,
+      "frameW": 763,
+      "hasFrame": false,
+      "inkW": 761,
+      "inkX": 289,
+      "frameFill": 99.7,
+      "stageFill": 59.1,
+      "rails": {
+        "instruction": 289,
+        "legend": null,
+        "explanation": 289
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 768,
+      "target": "web.style_model",
+      "stageW": 692,
+      "frameW": 644,
+      "hasFrame": false,
+      "inkW": 642,
+      "inkX": 49,
+      "frameFill": 99.7,
+      "stageFill": 93.1,
+      "rails": {
+        "instruction": 49,
+        "legend": null,
+        "explanation": 49
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 768,
+      "target": "binary.base_conversion",
+      "stageW": 692,
+      "frameW": 644,
+      "hasFrame": false,
+      "inkW": 642,
+      "inkX": 49,
+      "frameFill": 99.7,
+      "stageFill": 93.1,
+      "rails": {
+        "instruction": 49,
+        "legend": null,
+        "explanation": null
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    },
+    {
+      "viewport": 768,
+      "target": "binary.character_encoding",
+      "stageW": 692,
+      "frameW": 644,
+      "hasFrame": false,
+      "inkW": 642,
+      "inkX": 49,
+      "frameFill": 99.7,
+      "stageFill": 93.1,
+      "rails": {
+        "instruction": 49,
+        "legend": null,
+        "explanation": 49
+      },
+      "railException": null,
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "OK"
+    }
+  ],
+  "failing": 0,
+  "total": 12
+}

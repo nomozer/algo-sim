@@ -45,13 +45,29 @@ describe("W4B-2Z · tập thuộc tính ĐÓNG", () => {
     }
   });
 
-  it("màu ngoài bảng ⇒ null, kể cả màu CSS hợp lệ", () => {
+  /* W5 §2 NỚI MIỀN MÀU TỪ BẢY Ô SANG 24 BIT — và điều đó KHÔNG nới ranh giới
+     an toàn. Miền mới đúng bằng tập chuỗi khớp `^#[0-9a-f]{6}$`, tức chỉ có thể
+     là MỘT MÀU: không hàm, không `url()`, không dấu chấm phẩy để thoát ra một
+     khai báo khác. Test này khoá đúng chỗ đó — thứ bị từ chối vẫn phải bị từ
+     chối, kể cả khi trình duyệt hiểu được nó. */
+  it("chuỗi KHÔNG phải mã hex 6 chữ số ⇒ null, kể cả màu CSS trình duyệt hiểu", () => {
     const s = initState().style;
-    // `red` là màu CSS THẬT — vẫn phải bị từ chối, vì miền là bảng đã khai
-    // chứ không phải "cái gì trình duyệt hiểu được".
-    for (const bad of ["red", "#123456", "rgb(0,0,0)", "url(x)", ""]) {
+    for (const bad of [
+      "red", "rgb(0,0,0)", "url(x)", "", "#fff", "#12345g", "#1234567",
+      "var(--primary)", "#123456; color: red", " #123456", "transparent",
+    ]) {
       expect(applyStyleChange(s, "backgroundColor", bad), bad).toBeNull();
+      expect(applyStyleChange(s, "color", bad), bad).toBeNull();
     }
+  });
+
+  it("mọi mã hex 6 chữ số hợp lệ đều nhận, và được chuẩn hoá về chữ thường", () => {
+    const s = initState().style;
+    for (const good of ["#000000", "#ffffff", "#123456", "#FF0000", "#808080"]) {
+      expect(applyStyleChange(s, "backgroundColor", good)?.backgroundColor)
+        .toBe(good.toLowerCase());
+    }
+    /* Ô gợi ý vẫn đi qua đúng cổng đó — chúng là phím tắt, không phải miền. */
     for (const c of COLOR_CHOICES) {
       expect(applyStyleChange(s, "backgroundColor", c.value)?.backgroundColor).toBe(c.value);
     }
@@ -60,12 +76,15 @@ describe("W4B-2Z · tập thuộc tính ĐÓNG", () => {
     }
   });
 
-  it("bảng màu nền và bảng màu chữ là hai miền RIÊNG, không dùng lẫn", () => {
-    const s = initState().style;
-    const bgOnly = COLOR_CHOICES.map((c) => c.value as string)
-      .filter((v) => !(TEXT_COLOR_CHOICES as readonly { value: string }[]).some((t) => t.value === v));
-    expect(bgOnly.length).toBeGreaterThan(0);
-    for (const v of bgOnly) expect(applyStyleChange(s, "color", v), v).toBeNull();
+  it("hai bảng GỢI Ý vẫn khác nhau, dù miền giá trị nay là một", () => {
+    /* Trước W5 đây là hai MIỀN riêng và test khoá điều đó. Nay cả hai cùng nhận
+       mọi mã hex — nền tối cho chữ và chữ nhạt cho nền là lựa chọn hợp lệ, chỉ
+       là xấu, và việc phán "xấu" không thuộc validator.
+       Cái CÒN LẠI đáng khoá: hai danh sách gợi ý phải khác nhau, vì chúng phục
+       vụ hai vai trò khác nhau — gộp làm một thì ô gợi ý hết ý nghĩa. */
+    const bg = COLOR_CHOICES.map((c) => c.value as string);
+    const text = TEXT_COLOR_CHOICES.map((c) => c.value as string);
+    expect(bg.filter((v) => !text.includes(v)).length).toBeGreaterThan(0);
   });
 });
 

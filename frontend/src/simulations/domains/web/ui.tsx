@@ -1,6 +1,9 @@
 import type { WorkspaceProps } from "../../types";
-import { cssTextOf, htmlTextOf, isModified } from "./apply";
-import { COLOR_CHOICES, NUMERIC_RANGE, NUMERIC_PROPS, TEXT_COLOR_CHOICES } from "./props";
+import { colorPropOf, cssTextOf, htmlTextOf, isModified } from "./apply";
+import {
+  CHANNELS, CHANNEL_LABEL, CHANNEL_MAX, COLOR_CHOICES, NUMERIC_RANGE, NUMERIC_PROPS,
+  TEXT_COLOR_CHOICES, hexOf, rgbOf, rgbTextOf, type Channel,
+} from "./props";
 import { NODE_LABEL, SELECTOR_OF, type WebBlock, type WebConfig, type WebNode, type WebState } from "./model";
 
 /**
@@ -67,6 +70,58 @@ export function WebWorkspace({ state, dispatch }: Props) {
       </div>
     </div>
   );
+
+  /**
+   * W5 §2/§2A — BÀN ĐIỀU KHIỂN BA KÊNH.
+   *
+   * Bảy ô màu gợi ý vẫn còn (chọn nhanh), nhưng chúng KHÔNG dạy được bài học
+   * của T12.CD4: học sinh bấm "Xanh dương nhạt" rồi không biết vì sao nó xanh,
+   * và không có cách nào giữ hai kênh cố định để xem kênh thứ ba làm gì.
+   *
+   * Ba dòng dưới đây đọc theo chiều dọc thành một câu:
+   *     R ─────●──  220
+   *     G ──●─────   80
+   *     B ─●──────   60      →  ▉  rgb(220, 80, 60)  #dc503c
+   * Vệt màu của từng thanh chạy từ "kênh này bằng 0" tới "kênh này bằng 255",
+   * hai kênh kia giữ nguyên — nên chính THANH TRƯỢT đã là câu trả lời cho
+   * "kéo nó thì màu đi về đâu", trước cả khi học sinh kéo.
+   */
+  const channelBar = (label: string) => {
+    const prop = colorPropOf(state.selected);
+    const hex = s[prop] as string;
+    const c = rgbOf(hex);
+    if (!c) return null;
+    const ramp = (ch: Channel) => {
+      const lo = hexOf(...(ch === "r" ? [0, c.g, c.b] : ch === "g" ? [c.r, 0, c.b] : [c.r, c.g, 0]) as [number, number, number]);
+      const hi = hexOf(...(ch === "r" ? [255, c.g, c.b] : ch === "g" ? [c.r, 255, c.b] : [c.r, c.g, 255]) as [number, number, number]);
+      return `linear-gradient(to right, ${lo}, ${hi})`;
+    };
+    return (
+      <div className="web-control web-channels" role="group"
+        aria-label={`Ba kênh màu của ${label}`}>
+        <span className="web-control-label">{label} — ba kênh</span>
+        {CHANNELS.map((ch) => (
+          <div className="web-channel" key={ch}>
+            <span className="web-channel-name">{CHANNEL_LABEL[ch]}</span>
+            <input type="range" min={0} max={CHANNEL_MAX} step={1} value={c[ch]}
+              className="web-channel-range" style={{ background: ramp(ch) }}
+              aria-label={`${CHANNEL_LABEL[ch]} của ${label}`}
+              aria-valuetext={`${c[ch]} trên ${CHANNEL_MAX}`}
+              onChange={(e) => set(ch, Number(e.target.value))} />
+            <output className="web-channel-value">{c[ch]}</output>
+          </div>
+        ))}
+        {/* KẾT QUẢ của ba kênh — đặt ngay dưới chúng để quan hệ "ba kênh → một
+            màu" đọc được bằng mắt. Cả hai dạng viết đều DẪN XUẤT từ cùng một
+            hex trong state, không phải hai giá trị lưu song song. */}
+        <div className="web-channel-result">
+          <span className="web-channel-chip" style={{ background: hex }} aria-hidden="true" />
+          <code>{rgbTextOf(hex)}</code>
+          <code className="web-channel-hex">{hex}</code>
+        </div>
+      </div>
+    );
+  };
 
   const slider = (k: (typeof NUMERIC_PROPS)[number]) => {
     const r = NUMERIC_RANGE[k];
@@ -142,6 +197,9 @@ export function WebWorkspace({ state, dispatch }: Props) {
           g.node === "page" ? COLOR_CHOICES : TEXT_COLOR_CHOICES,
           g.swatch, g.swatchLabel,
         )}
+        {/* Ba kênh chỉ hiện cho nút ĐANG CHỌN: hiện cả ba nhóm cùng lúc thì có
+            chín thanh trượt trên màn hình và không còn rõ thanh nào đổi cái gì. */}
+        {on && channelBar(g.swatchLabel)}
         {g.props.map((k) => slider(k))}
       </div>
     );

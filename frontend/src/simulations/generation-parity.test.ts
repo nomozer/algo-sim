@@ -63,6 +63,16 @@ const PROBES: SimAction[] = [
   { type: "set_param", name: "sort.direction", value: "asc" },
   { type: "set_param", name: "condition.op", value: "<" },
   { type: "set_param", name: "selected", value: "heading" },
+  /* W5 §5 — ba kênh màu phải nằm trong hợp đồng PRODUCTION, không phải state
+     riêng của bài mẫu. Nếu ai đó dựng RGB bằng useState trong renderer thì mẫu
+     đổi được còn spec AI sinh thì không, và parity ở đây sẽ đỏ. */
+  { type: "set_param", name: "r", value: 255 },
+  { type: "set_param", name: "g", value: 128 },
+  { type: "set_param", name: "b", value: 0 },
+  /* Ba tham số đổi cơ số + đầu vào mã hoá — cùng lý do. */
+  { type: "set_param", name: "sourceBase", value: 2 },
+  { type: "set_param", name: "targetBase", value: 16 },
+  { type: "set_param", name: "text", value: "Tin" },
   { type: "move", target: "heading", x: 0, y: 1 },
   { type: "net_reset" },
 ];

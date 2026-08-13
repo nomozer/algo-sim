@@ -483,6 +483,36 @@ chối đúng — là **targeted acceptance, KHÔNG phải bằng chứng thốn
 số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
 `mechanism_gate.py`).
 
+### `domains/web/props.ts` — miền màu (M20 W5) · Change impact: targeted live
+CHỦ SỞ HỮU DUY NHẤT của phép đổi hex ↔ RGB (`rgbOf`/`hexOf`/`rgbTextOf`) và của
+mẫu `HEX_COLOR`. Ba nơi cần đúng con số ấy — thanh trượt, dòng `rgb(r, g, b)`,
+bảng CSS — nên để chúng tự tính là ba cơ hội nói ba giá trị khác nhau về cùng
+một màu.
+W5 nới miền màu từ BẢY ô đóng sang mọi mã hex 6 chữ số (mirror
+`_WEB_HEX_COLOR` bên `validation/simulation.py`). ⚠️ Nới thế KHÔNG nới ranh giới
+an toàn: tập hợp lệ vẫn chỉ chứa MỘT MÀU, không hàm, không `url()`, không dấu
+chấm phẩy thoát ra khai báo khác. Nới tiếp sang tên màu / hàm màu / biến CSS sẽ
+mở đúng cánh cửa tập đóng đang giữ. `COLOR_CHOICES`/`TEXT_COLOR_CHOICES` nay là
+ô GỢI Ý, không còn là miền.
+
+### `domains/web/apply.ts::applyChannelChange` (M20 W5) · offline
+Đổi MỘT kênh, giữ hai kênh kia — thao tác §2A đòi hỏi. Kênh tác động lên màu của
+nút ĐANG CHỌN (`colorPropOf`), nên "chọn Tiêu đề rồi kéo R" không bao giờ chạm
+tới nền: chỉ có một `selected` trong state, không có bộ chọn thứ hai để lệch.
+Ngoài miền ⇒ `null` ⇒ giữ state cũ, KHÔNG kẹp về biên.
+
+### `frontend/scripts/measure-tool-first-w5.mjs` (M20 W5) · offline (cần `npm run dev`)
+Trả lời câu §7: **ở cursor 0, DOM có hiện đúng đáp án mà engine đang giữ không?**
+Đọc đáp án THẲNG từ store rồi tìm nó trong DOM — kiểm renderer có nói đúng thứ
+engine giữ (ranh giới R0); tính đúng của bản thân đáp án do oracle độc lập bên
+vitest lo.
+⚠️ Ba lần phải sửa chính phép đo trước khi tin được, ghi trong file: (1) hàm tua
+gọi `st.next()` — API không tồn tại — nên trả 'ok' mà không tua, mọi target đọc
+ra "không bị khoá"; (2) chỉ đếm `table td` nên không thấy bề mặt dựng bằng lưới
+div — đo THẺ chứ không đo THÔNG TIN; (3) phán bằng hiệu số nội dung khi tua, sai
+tiêu chí vì §1 nói diễn giải NÊN hiện dần. Artifact:
+`docs/evaluation/m20/tool-first-{before,after-*}.json`.
+
 ### `frontend/src/simulations/target-certification.test.ts` (M20 W4) · offline
 MANIFEST chứng nhận theo TARGET — **không** phải cổng chất lượng thứ tư. Wave 4
 soát ra cả bốn cổng đều đã có chủ: ngữ nghĩa → `authenticity_audit.py` · trình
