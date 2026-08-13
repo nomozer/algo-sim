@@ -1591,3 +1591,74 @@ Exports: `analyzeViaServer`, `editViaServer`, `explainViaServer`, `fetchHealth`,
 
 ### `test-setup.ts` · Change impact: offline
 Guard offline vitest: stub `fetch` → ném lỗi. Tests: `llm/offline-guard.test.ts`.
+
+## M18 — TẦNG TÀI KHOẢN VÀ LỚP HỌC
+
+> Tầng này KHÔNG sở hữu sự thật mô phỏng. Engine tất định vẫn là nơi duy nhất
+> giữ state/timeline/kết quả và là bên duy nhất phán học sinh đúng hay sai
+> (bất biến #27). Lớp học chỉ ĐỌC bằng chứng có cấu trúc.
+
+### `backend/app/accounts/` — DANH TÍNH, VAI TRÒ, QUYỀN
+
+Bốn file, bốn tầng, đi một chiều: `policy` (thuần) ← `service` (DB) ←
+`router`/`classroom_router` (HTTP).
+
+- **`passwords.py`** — PBKDF2-HMAC-SHA256 từ thư viện chuẩn, salt riêng mỗi tài
+  khoản, so constant-time. KHÔNG thêm passlib/bcrypt: cùng thuật toán, thêm một
+  dependency mật mã. Chuỗi lưu tự mô tả (`pbkdf2_sha256$vòng$salt$hash`) nên đổi
+  số vòng về sau không làm hỏng hash cũ. Định dạng hỏng ⇒ `False`, không ném lỗi
+  (một exception riêng là kênh dò tài khoản).
+- **`policy.py`** — HÀM THUẦN, test được không cần FastAPI. `resolve_signup_role`
+  (đăng ký thường LUÔN ra học sinh; vai trò giáo viên cần mã mời từ môi trường;
+  thiếu cấu hình ⇒ ĐÓNG), `entitlement_for` (khách: 1 lượt thử, không lớp, không
+  lịch sử bền), `can_observe_class` / `can_read_class`.
+- **`service.py`** — phiên (mở/tra/gắn user/đóng), tài khoản, mã lớp. `attach_user`
+  GIỮ hàng phiên đang có thay vì mở phiên mới: `guest_trials_used` nằm trên hàng
+  đó, mở mới là đăng nhập-rồi-đăng-xuất lại có lượt. Mã lớp bỏ `0O1IL` vì học
+  sinh gõ tay mã đó trên bảng.
+- **`router.py`** — `/api/auth/*` + `/api/classes*`. Sai email và sai mật khẩu
+  trả CÙNG một câu (không cho dò tài khoản). Mã lớp CHỈ hiện cho giáo viên sở
+  hữu. `Caller`/`get_caller` là dependency giải danh tính dùng chung.
+- **`classroom_router.py`** — `/api/assignments*` + `/api/classes/{id}/observe`.
+  `_validated_envelope` là CỔNG: config phải qua đúng `SimSpec.validate` của
+  target (bất biến #28). Tiến độ bị KẸP về miền hợp lệ, đếm chỉ TĂNG.
+
+### `backend/app/persistence/classroom_models.py`
+Sáu bảng: `users` · `auth_sessions` (phục vụ cả KHÁCH — chỗ đếm lượt thử) ·
+`classrooms` · `class_memberships` (unique ở tầng DB) · `assignments` (giữ
+envelope ĐÃ VALIDATE, không giữ đề để sinh lại) · `practice_sessions` (bằng chứng
+CÓ CẤU TRÚC, không phải ảnh state của renderer).
+Đặt cạnh `db.py` chứ không nhét vào: `db.py` sở hữu ngân hàng bài. Chung `Base`
+nên Alembic thấy một metadata; `alembic/env.py` phải import file này VÌ TÁC DỤNG
+PHỤ, nếu không autogenerate sẽ sinh migration XOÁ các bảng.
+
+### `state/auth.ts` · `state/classroom.ts`
+Hai store TÁCH khỏi `state/store.ts` (vốn cố ý mù domain). `auth` giữ danh tính
++ quyền đọc từ `/api/auth/me`; `classroom` là BẢN CHIẾU của lớp/bài/quan sát.
+Vai trò ở client là để VẼ, không phải quyền: sửa nó trong devtools thì thấy được
+thanh điều hướng giáo viên và không gọi nổi endpoint nào. Vì thế KHÔNG lưu bền.
+
+### `components/AppSidebar.tsx`
+Điều hướng MỨC ỨNG DỤNG, chỉ có sau đăng nhập. `itemsForRole()` export ra để test
+được danh sách theo vai mà không cần SSR (zustand trả trạng thái đầu cho server
+snapshot). Ba ràng buộc chống lặp lại cột 208px đã gỡ ở W4B-3B: nằm NGOÀI lưới
+`.app-layout`, thu gọn thành dải biểu tượng trong mô phỏng, thành ngăn kéo ở
+màn hẹp. Thu gọn thì nhãn chuyển sang `aria-label`.
+
+### `components/AuthGate.tsx`
+Hộp thoại đăng nhập/đăng ký, hai chế độ đổi tại chỗ. Ô "mã giáo viên" hiện ra khi
+chọn vai giáo viên — nó KHÔNG phải cơ chế bảo mật (giấu nút không ngăn được ai);
+`resolve_signup_role` trên máy chủ mới là bên quyết.
+
+### `components/ClassesView.tsx` · `AssignmentsView.tsx` · `ObserveView.tsx`
+Một component cho cả hai vai ở lớp/bài (cùng khái niệm, hai phía). `ObserveView`
+hỏi lại `/observe` mỗi 5 giây — repo chưa có websocket/SSE và một bảng đổi vài
+giây một lần không đáng dựng hạ tầng truyền tin thời gian thực (`§22`). Nó dọn
+interval khi đổi lớp; không dọn thì mỗi lần đổi lại thêm một vòng hỏi.
+
+### `components/PracticeReporter.tsx`
+Component KHÔNG VẼ GÌ. Chuyển state engine thành bằng chứng thực hành: `cursor`/
+`stepCount` đọc qua hợp đồng `timeline` (engine sở hữu), cờ Khám phá/Thử thách
+đọc từ store trình bày. Đọc màn hình thay vì đọc hợp đồng chính là lỗi §38.6.
+Gửi khi CHỮ KÝ state đổi, chặn nhịp 1500ms — `§22` cấm phát telemetry mỗi khung
+hình. Không có bài đang làm ⇒ không gửi gì (tự luyện không đẻ telemetry).

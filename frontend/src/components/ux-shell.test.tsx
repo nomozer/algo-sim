@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { renderToString } from "react-dom/server";
 import App from "../App";
+import { itemsForRole } from "./AppSidebar";
 import { offlineCatalog, publicCatalog } from "../data/offline-catalog";
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest } from "../state/history";
@@ -216,10 +217,42 @@ describe("(M9-UX5) AI thôi ngang hàng với mô phỏng (R0 phản chiếu lê
     expect(useAppStore.getState().rightOpen).toBe(false);
   });
 
-  it("header có mục Thư viện; điều hướng là link chữ, không phải nút pill", () => {
+  it("CHƯA đăng nhập: header mỏng, điều hướng là link chữ, KHÔNG có thanh bên", () => {
+    /* M18 — bài kiểm này đổi vì THÔNG TIN KIẾN TRÚC đổi, không phải vì nó
+       phiền. Trước wave này Thư viện/Lịch sử nằm trên header cho mọi người;
+       nay chúng là mục ỨNG DỤNG, chỉ có nghĩa khi đã có tài khoản, nên chúng
+       chuyển vào thanh bên sau đăng nhập (§3, §11, §12).
+
+       Cái phải giữ nguyên là hình thức: điều hướng vẫn là LINK CHỮ chứ không
+       phải hàng nút pill (M9-UX5), và trang chưa đăng nhập KHÔNG có thanh điều
+       hướng thường trực nào cả. */
     const html = renderToString(<App />);
     expect(html).toContain("nav-link");
-    expect(html).toContain("Thư viện");
-    expect(html).toContain("Lịch sử");
+    expect(html).toContain("Đăng nhập");
+    expect(html).toContain("Đăng ký");
+    expect(html, "trang chưa đăng nhập vẫn dựng thanh điều hướng ứng dụng")
+      .not.toContain("app-nav-list");
+  });
+
+  it("ĐÃ đăng nhập: Thư viện/Lịch sử vẫn tới được, qua thanh bên theo vai trò", () => {
+    /* Kiểm HÀM THUẦN chứ không SSR: zustand trả trạng thái ĐẦU cho server
+       snapshot, nên `renderToString` sau khi set store vẫn dựng ra trang khách
+       và assert sẽ xanh/đỏ vì lý do sai (ARCHITECTURE_MAP §8 #13). */
+    for (const role of ["student", "teacher"] as const) {
+      const labels = itemsForRole(role).map((i) => i.label);
+      expect(labels, `${role}: mất lối vào Thư viện`).toContain("Thư viện");
+      expect(labels, `${role}: mất lối vào Lịch sử`).toContain("Lịch sử");
+      expect(labels[0], `${role}: mô phỏng không còn là mục đầu`).toBe("Mô phỏng mới");
+    }
+  });
+
+  it("hai vai KHÔNG dùng chung một thanh điều hướng", () => {
+    /* Đối chứng cho bài trên: nếu hai danh sách bằng nhau thì "theo vai trò"
+       chỉ là lời nói. */
+    const student = itemsForRole("student").map((i) => i.view);
+    const teacher = itemsForRole("teacher").map((i) => i.view);
+    expect(student).not.toEqual(teacher);
+    expect(teacher, "giáo viên không có lối vào Quan sát lớp").toContain("observe");
+    expect(student, "học sinh lại quan sát được lớp").not.toContain("observe");
   });
 });

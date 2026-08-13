@@ -3071,6 +3071,206 @@ html {
   white-space: nowrap;
 }
 
+/* ══ M18 — VỎ ỨNG DỤNG SAU ĐĂNG NHẬP ═══════════════════════════════════════
+   Hai vỏ, một ứng dụng. Chưa đăng nhập: `.app-root` không có thanh bên, mọi
+   thứ giữ nguyên như trước wave này. Đăng nhập rồi: thêm MỘT cột điều hướng.
+
+   ⚠️ RÀNG BUỘC KIẾN TRÚC, không phải sở thích: cột này nằm NGOÀI
+   `.app-layout`. Cột 208px bị gỡ ở W4B-3B nằm TRONG lưới workspace nên nó trải
+   qua cả hàng sân khấu lẫn hàng điều khiển và bóp cả hai — đó mới là nguyên
+   nhân thật của việc hàng transport xuống dòng. Đặt ngoài thì lưới workspace
+   không biết nó tồn tại, và lỗi ấy không thể tái diễn. */
+.app-root { display: flex; min-height: 100vh; }
+.app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+
+.app-nav {
+  flex: 0 0 var(--nav-w, 216px);
+  width: var(--nav-w, 216px);
+  display: flex; flex-direction: column;
+  gap: var(--sp-xs);
+  padding: var(--sp-sm);
+  border-right: 1px solid var(--hairline);
+  background: var(--canvas);
+  position: sticky; top: 0; height: 100vh;
+  transition: flex-basis 0.16s ease, width 0.16s ease;
+}
+/* Thu gọn = DẢI BIỂU TƯỢNG. Nhãn biến mất khỏi hình nhưng tên khả truy cập
+   chuyển sang `aria-label` (xem AppSidebar.tsx) — không thành hàng nút vô danh. */
+.app-nav.is-collapsed { --nav-w: 56px; }
+.app-nav.is-collapsed .app-nav-label { display: none; }
+.app-nav.is-collapsed .app-nav-item { justify-content: center; padding-inline: 0; }
+
+.app-nav-toggle {
+  align-self: flex-start;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 0; background: none; border-radius: var(--rounded-sm);
+  color: var(--ink-faint); cursor: pointer;
+}
+.app-nav-toggle:hover { background: var(--canvas-soft); color: var(--ink-secondary); }
+.app-nav.is-collapsed .app-nav-toggle { align-self: center; }
+
+.app-nav-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.app-nav-foot {
+  margin-top: auto; display: grid; gap: 2px; padding-top: var(--sp-sm);
+  border-top: 1px solid var(--hairline);
+}
+
+/* Mục điều hướng: hàng gọn, KHÔNG phải thẻ lớn (§29). */
+.app-nav-item {
+  display: flex; align-items: center; gap: var(--sp-xs);
+  width: 100%; padding: 7px var(--sp-xs);
+  border: 0; background: none; border-radius: var(--rounded-sm);
+  font-size: 14px; color: var(--ink-secondary); text-align: left; cursor: pointer;
+}
+.app-nav-item:hover { background: var(--canvas-soft); color: var(--ink); }
+.app-nav-item.is-active { background: var(--canvas-soft); color: var(--ink); font-weight: 600; }
+.app-nav-item:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
+.app-nav-icon { display: flex; flex: 0 0 auto; color: var(--ink-faint); }
+.app-nav-item.is-active .app-nav-icon { color: var(--primary); }
+.app-nav-label { min-width: 0; display: flex; flex-direction: column; }
+.app-nav-label small { font-size: 11px; color: var(--ink-faint); }
+.app-nav-avatar {
+  flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--primary); color: #fff; font-size: 12px; font-weight: 700;
+}
+.app-nav-scrim { display: none; }
+
+/* Trong mô phỏng, thanh bên nhường chỗ cho sân khấu (§10). */
+.app-root.nav-collapsed .app-nav { --nav-w: 56px; }
+
+/* Màn hẹp: NGĂN KÉO TẠM, không chiếm chỗ thường trực. */
+@media (max-width: 900px) {
+  .app-nav {
+    position: fixed; left: 0; top: 0; z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.18s ease;
+    box-shadow: var(--shadow-soft);
+  }
+  .app-nav.is-drawer-open { transform: none; }
+  .app-nav.is-collapsed { --nav-w: 216px; }
+  .app-nav.is-collapsed .app-nav-label { display: flex; }
+  .app-nav.is-collapsed .app-nav-item { justify-content: flex-start; padding-inline: var(--sp-xs); }
+  .app-nav-scrim {
+    display: block; position: fixed; inset: 0; z-index: 39;
+    background: rgba(0, 0, 0, 0.28);
+  }
+}
+/* Nút mở ngăn kéo chỉ tồn tại ở màn hẹp — desktop đã có nút thu gọn. */
+.nav-drawer-btn {
+  display: none; width: 34px; height: 34px;
+  align-items: center; justify-content: center;
+  border: 0; background: none; border-radius: var(--rounded-sm);
+  color: var(--ink-secondary); cursor: pointer;
+}
+@media (max-width: 900px) { .nav-drawer-btn { display: flex; } }
+
+.nav-cta { padding: 6px 14px; font-size: 14px; }
+.nav-assignment {
+  font-size: 13px; color: var(--ink-muted);
+  max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* ── Cửa đăng nhập/đăng ký ───────────────────────────────────────────────── */
+.auth-overlay {
+  position: fixed; inset: 0; z-index: 60;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--sp-lg);
+  background: rgba(0, 0, 0, 0.32);
+}
+.auth-card {
+  width: 100%; max-width: 400px;
+  background: var(--surface); border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg); box-shadow: var(--shadow-soft);
+  padding: var(--sp-lg);
+}
+.auth-head { display: flex; align-items: center; justify-content: space-between; }
+.auth-title { font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -0.3px; }
+.auth-close {
+  width: 30px; height: 30px; border: 0; background: none; cursor: pointer;
+  font-size: 20px; line-height: 1; color: var(--ink-faint); border-radius: var(--rounded-sm);
+}
+.auth-close:hover { background: var(--canvas-soft); color: var(--ink); }
+.auth-form { display: grid; gap: var(--sp-sm); margin-top: var(--sp-md); }
+.auth-field { display: grid; gap: 4px; font-size: 13px; color: var(--ink-secondary); }
+.auth-field input {
+  padding: 9px var(--sp-sm); font-size: 14px;
+  border: 1px solid var(--hairline); border-radius: var(--rounded-sm);
+  background: var(--surface); color: var(--ink);
+}
+.auth-field input:focus-visible { outline: 2px solid var(--primary); outline-offset: -1px; }
+.auth-hint { color: var(--ink-faint); font-size: 12px; }
+.auth-roles {
+  border: 0; margin: 0; padding: 0; display: flex; gap: var(--sp-md);
+  align-items: center; flex-wrap: wrap;
+}
+.auth-roles legend { font-size: 13px; color: var(--ink-secondary); padding: 0 0 4px; }
+.auth-role { display: flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; }
+.auth-error { margin: 0; color: var(--accent-orange); font-size: 13px; }
+.auth-submit { width: 100%; justify-content: center; }
+.auth-swap {
+  margin: var(--sp-md) 0 0; font-size: 13px; color: var(--ink-muted); text-align: center;
+}
+.link-button {
+  border: 0; background: none; padding: 0; cursor: pointer;
+  color: var(--primary); font-size: inherit; text-decoration: underline;
+}
+
+/* ── Trang lớp học / bài thực hành ───────────────────────────────────────── */
+.page-stack { display: grid; gap: var(--sp-lg); }
+.page-card { padding: var(--sp-md); }
+.inline-form { display: flex; gap: var(--sp-sm); align-items: flex-end; flex-wrap: wrap; }
+.inline-field {
+  display: grid; gap: 4px; font-size: 13px; color: var(--ink-secondary);
+  flex: 1 1 220px; min-width: 0;
+}
+.inline-field input, .inline-field select {
+  padding: 8px var(--sp-sm); font-size: 14px;
+  border: 1px solid var(--hairline); border-radius: var(--rounded-sm);
+  background: var(--surface); color: var(--ink);
+}
+.code-input {
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.form-error { margin: 0; color: var(--accent-orange); font-size: 13px; }
+.form-notice { margin: 0; color: var(--accent-green); font-size: 13px; }
+.empty-note { color: var(--ink-faint); font-size: 14px; margin: 0; }
+
+.class-list, .assignment-list {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-sm);
+}
+.class-card, .assignment-card {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-md);
+  padding: var(--sp-md); background: var(--surface);
+  border: 1px solid var(--hairline); border-radius: var(--rounded-md);
+  flex-wrap: wrap;
+}
+.class-card-main, .assignment-main { display: grid; gap: 4px; min-width: 0; }
+.class-card-name, .assignment-title { font-size: 15px; }
+.class-card-actions { display: flex; gap: var(--sp-xs); }
+.class-code { display: inline-flex; align-items: center; gap: var(--sp-xs); }
+.class-code code {
+  font-size: 15px; letter-spacing: 2px; font-weight: 700;
+  padding: 3px 8px; border-radius: var(--rounded-sm);
+  background: var(--canvas-soft); color: var(--ink);
+}
+.class-code-off { font-size: 12px; color: var(--accent-orange); }
+.assignment-instruction { margin: 0; font-size: 13px; color: var(--ink-muted); }
+.assignment-progress { font-size: 12px; color: var(--ink-faint); }
+
+/* ── Bảng quan sát ───────────────────────────────────────────────────────── */
+.observe-bar { display: flex; gap: var(--sp-md); align-items: flex-end; flex-wrap: wrap; }
+.observe-stamp { font-size: 12px; color: var(--ink-faint); }
+.table-scroll { overflow-x: auto; }
+.observe-table { width: 100%; }
+.observe-table .is-idle-row { color: var(--ink-faint); }
+.observe-status { font-size: 12px; font-weight: 600; }
+.observe-status.is-practicing { color: var(--primary); }
+.observe-status.is-completed { color: var(--accent-green); }
+.observe-status.is-not_started { color: var(--ink-faint); }
+
 /* ── MÔ HÌNH CSS CÓ RÀNG BUỘC (W4B-2Z) ─────────────────────────────────────
    Bố cục CHIA ĐÔI: điều khiển trái, XEM TRƯỚC phải chiếm phần lớn bề ngang.
    Cơ chế của bài là quan hệ "giá trị em đặt ↔ kết quả nhìn thấy", nên hai vế

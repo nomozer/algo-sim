@@ -298,19 +298,54 @@ describe("(W4B-2B §7) nhãn panel phải — đổi tên có ranh giới, khôn
   /** Nơi DUY NHẤT "Quan sát" còn hợp lệ: chế độ xem của renderer generic. */
   const MODE_SWITCH_OWNER = join("simulations", "domains", "generic", "ui.tsx");
 
-  it("không component nào còn gọi panel phải là Quan sát/QUAN SÁT", () => {
+  /**
+   * M18 — GUARD NÓI ĐÚNG THỨ NÓ CANH, THAY VÌ DÀI THÊM DANH SÁCH MIỄN TRỪ.
+   *
+   * Bản trước cấm chuỗi "Quan sát" ở MỌI component rồi miễn trừ một file. Cách
+   * viết đó bắt nhầm ngay khi tầng lớp học ra đời: "Quan sát lớp" (giáo viên
+   * xem trạng thái thực hành) chẳng liên quan gì tới panel bên phải, và nếu cứ
+   * thêm ngoại lệ thì sau vài wave guard chỉ còn là một danh sách tên file.
+   *
+   * Bất biến THẬT là hẹp hơn nhiều: **file nào dựng panel bên phải thì không
+   * được gọi nó là "Quan sát"**. Nên chỉ soi những file thật sự chạm panel đó.
+   * Mọi chỗ khác dùng chữ "quan sát" theo nghĩa tiếng Việt bình thường là
+   * chuyện của chúng.
+   */
+  const RIGHT_PANEL_MARKERS = ["panel-right", "rightOpen", "toggleRight", "SimulationInspector"];
+
+  it("file nào dựng panel phải thì KHÔNG được gọi nó là Quan sát/QUAN SÁT", () => {
     const offenders: string[] = [];
+    let inspected = 0;
     for (const f of FILES) {
       if (f.path.endsWith(MODE_SWITCH_OWNER)) continue;
       const body = code(f.text); // chú thích lịch sử được phép nhắc tên cũ
+      if (!RIGHT_PANEL_MARKERS.some((m) => body.includes(m))) continue;
+      inspected += 1;
       for (const needle of ["Quan sát", "QUAN SÁT"]) {
         if (body.includes(needle)) offenders.push(`${f.path}: nhãn "${needle}"`);
       }
     }
+    /* Sàn chống guard-rỗng: nếu một ngày không file nào khớp dấu hiệu nữa thì
+       guard đã ngừng soi gì cả mà vẫn xanh. */
+    expect(inspected, "không file nào chạm panel phải — dấu hiệu đã lỗi thời?")
+      .toBeGreaterThan(1);
     expect(
       offenders,
       `panel phải nay tên "Giải thích" (W4B-2B §7):\n${offenders.join("\n")}`,
     ).toEqual([]);
+  });
+
+  it("bảng quan sát lớp KHÔNG đụng panel phải — hai bề mặt khác nhau", () => {
+    /* Đối chứng cho guard ngay trên: nếu `ObserveView` một ngày dựng panel bên
+       phải thì nó rơi vào tầm soi và chữ "Quan sát lớp" của nó thành vi phạm.
+       Bài này khoá ranh giới đó lại cho rõ. */
+    const owner = FILES.find((f) => f.path.endsWith(join("components", "ObserveView.tsx")));
+    expect(owner, "không tìm thấy ObserveView.tsx").toBeDefined();
+    const body = code(owner!.text);
+    expect(body).toContain("Quan sát lớp");
+    for (const marker of RIGHT_PANEL_MARKERS) {
+      expect(body, `ObserveView đụng vào panel phải qua "${marker}"`).not.toContain(marker);
+    }
   });
 
   it("chế độ xem của renderer generic VẪN là [Quan sát][Chỉnh sửa]", () => {

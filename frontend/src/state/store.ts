@@ -50,6 +50,18 @@ export interface OpenSession {
   prediction: PredictionResult | null;
 }
 
+/**
+ * M18 — MẶT TRÌNH BÀY. Bốn mặt cũ giữ nguyên; năm mặt mới là tầng lớp học.
+ *
+ * Vì sao MỞ RỘNG trường `view` chứ không thêm router: repo chưa từng có router,
+ * và điều hướng đã có đúng một chủ sở hữu là trường này. Thêm `react-router`
+ * để có năm màn nữa là dựng hệ điều hướng THỨ HAI cạnh hệ đang chạy — đúng
+ * loại "hai nơi làm một việc" mà M9-UX7 đã gỡ một lần.
+ */
+export type AppView =
+  | "home" | "workspace" | "library" | "history"
+  | "classes" | "assignments" | "observe" | "account";
+
 interface AppState {
   problemText: string;
   analyzing: boolean;
@@ -68,7 +80,7 @@ interface AppState {
    * xuống, Home phình theo lịch sử. Danh mục đầy đủ có NHÀ RIÊNG thì Home
    * KHÔNG BAO GIỜ phình: luôn là composer + 6 gợi ý + 1 thẻ tiếp tục.
    */
-  view: "home" | "workspace" | "library" | "history";
+  view: AppView;
   /**
    * M9-UX1: BẢN CHIẾU lịch sử bền (localStorage qua historyStore) để render.
    * Nguồn chân lý là storage; store chỉ mirror sau mỗi thao tác. reset()/goHome
@@ -106,6 +118,23 @@ interface AppState {
    * W4B-2B §8: mặc định ĐÓNG ở mọi bề rộng — xem lý do ở chỗ khởi tạo bên dưới.
    */
   rightOpen: boolean;
+  /**
+   * M18 — thanh điều hướng ứng dụng đang thu gọn chưa (desktop).
+   * TRÌNH BÀY thuần, không đụng engine — cùng nhóm với `rightOpen`.
+   */
+  sidebarCollapsed: boolean;
+  /** Màn hẹp: ngăn kéo đang mở chưa. Tách khỏi `sidebarCollapsed` vì hai bề
+   *  rộng có hai hành vi khác nhau, gộp một cờ sẽ làm desktop và mobile giẫm nhau. */
+  sidebarDrawerOpen: boolean;
+  /**
+   * M18 — BÀI THỰC HÀNH mà phiên hiện tại thuộc về. `null` = tự luyện.
+   *
+   * Đây là thứ DUY NHẤT phân biệt "đang làm bài cô giao" với "đang tự khám
+   * phá", và nó phải nằm ở store phiên vì mọi bằng chứng tiến độ đều dẫn xuất
+   * từ state mô phỏng — báo về đâu là thuộc tính của PHIÊN, không phải của
+   * trang đang xem.
+   */
+  activeAssignment: { id: number; title: string; instruction: string } | null;
   /**
    * M9-UX5 — AI KHÔNG còn ngang hàng với Quan sát.
    * Trước đây panel phải là hai tab [Quan sát][Hỏi AI]: một nửa cột phải, lúc
@@ -199,6 +228,11 @@ interface AppState {
   setChallengeOpen: (v: boolean) => void;
   setExploreOpen: (v: boolean) => void;
   openLibrary: () => void;
+  setView: (view: AppView) => void;
+  setActiveAssignment: (a: { id: number; title: string; instruction: string } | null) => void;
+  toggleSidebar: () => void;
+  openSidebarDrawer: () => void;
+  closeSidebarDrawer: () => void;
 
   /** W4B-2Z §26 — mở khung soạn đề MỚI mà KHÔNG đóng phiên nào đang mở. */
   newSession: () => void;
@@ -317,6 +351,9 @@ export const useAppStore = create<AppState>((set, get) => {
     // Hằng `WIDE_SCREEN` đã gỡ: không còn mặc định nào phụ thuộc `window` nữa,
     // nên SSR và trình duyệt khởi tạo giống hệt nhau.
     rightOpen: false,
+    sidebarCollapsed: false,
+    sidebarDrawerOpen: false,
+    activeAssignment: null,
     aiOpen: false,
     challengeOpen: false,
     exploreOpen: false,
@@ -425,6 +462,9 @@ export const useAppStore = create<AppState>((set, get) => {
         activeSessionId: null,
         view: "home",
         active: null,
+        /* M18 — rời sân khấu là rời bài: nếu giữ lại, một mô phỏng tự luyện mở
+           sau đó sẽ báo tiến độ vào bài cô giao. */
+        activeAssignment: null,
         activeHistoryId: null,
         unsupported: null,
         analysisError: null,
@@ -437,6 +477,16 @@ export const useAppStore = create<AppState>((set, get) => {
     openHistory: () => set({ view: "history", history: historyStore.list() }),
 
     openLibrary: () => set({ view: "library" }),
+
+    /* M18 — điều hướng mức ứng dụng. Đổi mặt trình bày KHÔNG đụng
+       `active`/`sessions`: rời sang "Lớp của em" rồi quay lại phải thấy đúng
+       mô phỏng đang dở, không phải một phiên mới (bất biến phiên, `§26`). */
+    setView: (view) => set(
+      view === "history" ? { view, history: historyStore.list() } : { view }),
+    setActiveAssignment: (a) => set({ activeAssignment: a }),
+    toggleSidebar: () => set({ sidebarCollapsed: !get().sidebarCollapsed }),
+    openSidebarDrawer: () => set({ sidebarDrawerOpen: true }),
+    closeSidebarDrawer: () => set({ sidebarDrawerOpen: false }),
 
     /* ── W4B-2Z §26–28 — PHIÊN ĐANG MỞ ──────────────────────────
        Cả ba thao tác dưới đây là TRÌNH BÀY + KHÔI PHỤC THUẦN: không đường nào
