@@ -24,9 +24,9 @@ import { SessionTabs } from "./components/SessionTabs";
  * nhập đề ở giữa. Người lạ vào trang chưa cần biết AlgoSim có lớp học; họ cần
  * biết nó làm được gì, và cách nhanh nhất là để họ chạy thử một cái thật.
  *
- * SAU ĐĂNG NHẬP: thêm thanh điều hướng ứng dụng theo VAI TRÒ. Nó THU GỌN được,
- * mặc định thu gọn khi đang ở trong mô phỏng, và thành ngăn kéo ở màn hẹp —
- * ba ràng buộc để sân khấu mô phỏng vẫn là thứ lớn nhất trên màn hình.
+ * SAU ĐĂNG NHẬP: thêm thanh điều hướng ứng dụng theo VAI TRÒ. Nó THU GỌN được
+ * (56px) và thành ngăn kéo ở màn hẹp, nên sân khấu mô phỏng vẫn là thứ lớn nhất
+ * trên màn hình — đo ở 1366: sân khấu 1074px kể cả khi thanh đang mở.
  *
  * Điều hướng PHIÊN (`SessionTabs`) không đổi và không dính dáng gì tới thanh
  * này: một cái nói "đang mở những bài nào", cái kia nói "đang ở mục nào của

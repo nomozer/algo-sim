@@ -18,8 +18,12 @@ import {
  * thứ đó không lặp lại lỗi cũ, có ba ràng buộc, cả ba đều có test:
  *   1. nó nằm NGOÀI lưới của workspace — không ô lưới nào của nó đi qua hàng
  *      điều khiển (đó chính là cơ chế gây lỗi cũ);
- *   2. vào trong mô phỏng thì mặc định THU GỌN thành dải biểu tượng;
+ *   2. thu gọn được thành dải biểu tượng 56px, do học sinh chủ động bấm;
  *   3. màn hẹp thì nó thành ngăn kéo TẠM, không chiếm chỗ thường trực.
+ *
+ * ⚠️ Nó KHÔNG tự thu gọn khi vào mô phỏng. Đo ở 1366: sân khấu vẫn được
+ * 1074/1348px (80%) khi thanh đang mở, nên tự động thu gọn là lấy đi quyền
+ * chọn của người dùng để đổi lấy một khoảng đã đủ rộng.
  */
 
 interface Item {
