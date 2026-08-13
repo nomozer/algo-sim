@@ -67,11 +67,16 @@ export function AssignmentsView() {
                       không phải ngôn ngữ của học sinh (anti-pattern #10). */}
                   {!isTeacher && (
                     <span className="assignment-progress">
+                      {/* Bài KHÔNG có timeline (vd cổng logic) thì `stepCount`
+                          bằng 0 — in "bước 1/1" ở đó là bịa một trục thời gian
+                          mà cơ chế không có. Nói đúng thứ biết được. */}
                       {p == null
                         ? "Chưa bắt đầu"
                         : p.completed
                           ? "Đã hoàn thành"
-                          : `Đang làm dở — bước ${p.cursor + 1}/${Math.max(1, p.stepCount)}`}
+                          : p.stepCount > 1
+                            ? `Đang làm dở — bước ${p.cursor + 1}/${p.stepCount}`
+                            : "Em đã mở bài này"}
                     </span>
                   )}
                 </div>
