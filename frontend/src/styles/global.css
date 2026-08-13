@@ -3482,6 +3482,12 @@ html {
     "center right"
     "controls right";
 }
+/* Có dải phiên thì thẻ bỏ bo góc TRÊN — hai mảnh phải đọc ra một khối, không
+   phải hai vật thể xếp chồng. */
+.app-layout.has-tabs .workspace-card {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
 
 .app-layout.has-tabs.right-closed {
   grid-template-areas:
@@ -3490,12 +3496,27 @@ html {
     "controls";
 }
 
+/* M18-UI — DẢI PHIÊN DÍNH VÀO THẺ MÔ PHỎNG, KHÔNG LƠ LỬNG.
+   Bản trước không có nền, không viền, không bo góc, nên nó trôi trong khoảng
+   trống giữa header và thẻ trắng — mắt đọc ra "rác" chứ không đọc ra bộ chuyển
+   bài. Tab của trình duyệt trông ổn vì chúng DÍNH VÀO thứ chúng chuyển.
+
+   Nay: cùng nền trắng, bo góc TRÊN, và `margin-bottom` âm đúng bằng `gap` của
+   lưới để nó liền một khối với thẻ bên dưới. Hành vi không đổi — vẫn chỉ hiện
+   khi có ≥2 phiên, và chuyển phiên vẫn là khôi phục thuần (0 fetch/init). */
 .session-tabs {
   grid-area: tabs;
   min-width: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--sp-sm);
+  padding: var(--sp-xs) var(--sp-sm) 0;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-bottom: 0;
+  border-radius: var(--rounded-lg) var(--rounded-lg) 0 0;
+  /* Triệt tiêu `gap` của lưới để dải và thẻ chạm nhau. */
+  margin-bottom: calc(var(--sp-md) * -1);
 }
 
 .session-tab-list {
@@ -3525,7 +3546,14 @@ html {
   border-bottom: 2px solid transparent;
 }
 
-.session-tab.is-active { border-bottom-color: var(--primary); }
+/* Tab đang mở nối liền xuống thẻ: nền trắng + gạch màu ở ĐỈNH, không phải
+   gạch chân — gạch chân cắt ngang đúng chỗ tab phải chạm vào sân khấu. */
+.session-tab.is-active {
+  border-bottom-color: transparent;
+  box-shadow: inset 0 2px 0 var(--primary);
+  background: var(--surface);
+  border-radius: var(--rounded-sm) var(--rounded-sm) 0 0;
+}
 
 .session-tab-open {
   flex: 1 1 auto;
