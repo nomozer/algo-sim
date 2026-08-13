@@ -1,0 +1,97 @@
+{
+  "head": "d945706bb676fc3724ebb2c9b2e34119ed3b4445",
+  "dirty": true,
+  "generatedAt": "2026-08-13T19:01:18.031Z",
+  "tool": "measure-tool-first-w5",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "viewport": 1920,
+    "label": "before"
+  },
+  "question": "Ẩn thanh điều khiển đi, học sinh còn thấy được kết quả hiện tại không?",
+  "rows": [
+    {
+      "target": "web.style_model",
+      "atCursor0": {
+        "dataCells": 0,
+        "dataRows": 0,
+        "controls": 4,
+        "svgCount": 0,
+        "stageTextLen": 0,
+        "stageHead": ""
+      },
+      "atEnd": {
+        "dataCells": 0,
+        "dataRows": 0,
+        "controls": 4,
+        "svgCount": 0,
+        "stageTextLen": 0,
+        "stageHead": ""
+      },
+      "cursor": {
+        "cursorBefore": null,
+        "cursorAfter": null
+      },
+      "hasTimeline": false,
+      "measurementValid": true,
+      "gatedCells": null,
+      "gatedBehindTransport": false
+    },
+    {
+      "target": "binary.base_conversion",
+      "atCursor0": {
+        "dataCells": 0,
+        "dataRows": 0,
+        "controls": 3,
+        "svgCount": 0,
+        "stageTextLen": 0,
+        "stageHead": ""
+      },
+      "atEnd": {
+        "dataCells": 12,
+        "dataRows": 3,
+        "controls": 3,
+        "svgCount": 0,
+        "stageTextLen": 91,
+        "stageHead": "Phép chiaThươngDưChữ số2026 : 1612610A126 : 16714E7 : 160772026 (cơ số 10) = 7EA (cơ số 16)"
+      },
+      "cursor": {
+        "cursorBefore": 0,
+        "cursorAfter": 4
+      },
+      "hasTimeline": true,
+      "measurementValid": true,
+      "gatedCells": 12,
+      "gatedBehindTransport": true
+    },
+    {
+      "target": "binary.character_encoding",
+      "atCursor0": {
+        "dataCells": 5,
+        "dataRows": 1,
+        "controls": 2,
+        "svgCount": 0,
+        "stageTextLen": 50,
+        "stageHead": "Vị tríKý tựMã (code point)Thập phânNhị phân1'T'………"
+      },
+      "atEnd": {
+        "dataCells": 15,
+        "dataRows": 3,
+        "controls": 2,
+        "svgCount": 1,
+        "stageTextLen": 102,
+        "stageHead": "Vị tríKý tựMã (code point)Thập phânNhị phân1'T'U+00548410101002'i'U+006910511010013'n'U+006E1101101110"
+      },
+      "cursor": {
+        "cursorBefore": 0,
+        "cursorAfter": 20
+      },
+      "hasTimeline": true,
+      "measurementValid": true,
+      "gatedCells": 10,
+      "gatedBehindTransport": true
+    }
+  ]
+}
