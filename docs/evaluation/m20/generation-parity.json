@@ -1,0 +1,401 @@
+{
+  "generatedAt": "2026-08-13T15:56:56.369Z",
+  "note": "head được đóng dấu bởi scripts/evidence.mjs khi chạy qua công cụ trình duyệt; bảng này sinh từ vitest nên dùng kèm commit chứa nó",
+  "pipelineSources": [
+    "composed",
+    "family_resolved",
+    "pattern_reuse",
+    "exact_cache"
+  ],
+  "rows": [
+    {
+      "target": "algorithm.find_max",
+      "domain": "algorithm",
+      "sampleId": "diem-cao-nhat",
+      "validator": "algorithm.find_max::validateConfig",
+      "moduleId": "algorithm.find_max",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.find_min",
+      "domain": "algorithm",
+      "sampleId": "nhiet-do-thap-nhat",
+      "validator": "algorithm.find_min::validateConfig",
+      "moduleId": "algorithm.find_min",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.sum_if",
+      "domain": "algorithm",
+      "sampleId": "tong-tien-tren-50",
+      "validator": "algorithm.sum_if::validateConfig",
+      "moduleId": "algorithm.sum_if",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}",
+        "{\"type\":\"set_param\",\"name\":\"condition.op\",\"value\":\"<\"}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.count_if",
+      "domain": "algorithm",
+      "sampleId": "dem-hoc-sinh-gioi",
+      "validator": "algorithm.count_if::validateConfig",
+      "moduleId": "algorithm.count_if",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}",
+        "{\"type\":\"set_param\",\"name\":\"condition.op\",\"value\":\"<\"}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.linear_search",
+      "domain": "algorithm",
+      "sampleId": "tim-ma-so",
+      "validator": "algorithm.linear_search::validateConfig",
+      "moduleId": "algorithm.linear_search",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.binary_search",
+      "domain": "algorithm",
+      "sampleId": "tra-tu-dien",
+      "validator": "algorithm.binary_search::validateConfig",
+      "moduleId": "algorithm.binary_search",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "domain": "algorithm",
+      "sampleId": "xep-hang-chieu-cao",
+      "validator": "algorithm.bubble_sort::validateConfig",
+      "moduleId": "algorithm.bubble_sort",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "domain": "algorithm",
+      "sampleId": "xep-bai-tren-tay",
+      "validator": "algorithm.insertion_sort::validateConfig",
+      "moduleId": "algorithm.insertion_sort",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "logic.and_gate",
+      "domain": "logic",
+      "sampleId": "logic-and",
+      "validator": "logic.and_gate::validateConfig",
+      "moduleId": "logic.and_gate",
+      "renderer2d": "LogicWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "exploratory",
+      "hasTimeline": false,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [
+        "{\"type\":\"toggle\",\"target\":\"A\"}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "domain": "binary",
+      "sampleId": "binary-13",
+      "validator": "binary.decimal_to_binary::validateConfig",
+      "moduleId": "binary.decimal_to_binary",
+      "renderer2d": "BinaryWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "exploratory",
+      "hasTimeline": false,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [
+        "{\"type\":\"toggle\",\"target\":\"0\"}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "network.packet_routing",
+      "domain": "network",
+      "sampleId": "network-packet",
+      "validator": "network.packet_routing::validateConfig",
+      "moduleId": "network.packet_routing",
+      "renderer2d": "NetworkWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"net_reset\"}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "domain": "network",
+      "sampleId": "network-encapsulation",
+      "validator": "network.protocol_encapsulation::validateConfig",
+      "moduleId": "network.protocol_encapsulation",
+      "renderer2d": "EncapWorkspace",
+      "visualModes": "2d/3d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": false,
+      "actionVocabulary": [],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "web.style_model",
+      "domain": "web",
+      "sampleId": "web-style-basic",
+      "validator": "web.style_model::validateConfig",
+      "moduleId": "web.style_model",
+      "renderer2d": "WebWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "exploratory",
+      "hasTimeline": false,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [
+        "{\"type\":\"toggle\",\"target\":\"reset\"}",
+        "{\"type\":\"set_param\",\"name\":\"fontSize\",\"value\":32}",
+        "{\"type\":\"set_param\",\"name\":\"selected\",\"value\":\"heading\"}",
+        "{\"type\":\"move\",\"target\":\"heading\",\"x\":0,\"y\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "generic.rule_scene",
+      "domain": "generic",
+      "sampleId": "gen-rule-library",
+      "validator": "generic.rule_scene::validateConfig",
+      "moduleId": "generic.rule_scene",
+      "renderer2d": "GenericWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "hybrid",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "domain": "algorithm",
+      "sampleId": "algo-selection-sort",
+      "validator": "algorithm.selection_sort::validateConfig",
+      "moduleId": "algorithm.selection_sort",
+      "renderer2d": "AlgorithmWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": true,
+      "hasExplore": true,
+      "actionVocabulary": [
+        "{\"type\":\"whatif_swap\",\"i\":0,\"j\":1}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "domain": "algorithm",
+      "sampleId": "algo-bounded-control-flow",
+      "validator": "algorithm.bounded_control_flow::validateConfig",
+      "moduleId": "algorithm.bounded_control_flow",
+      "renderer2d": "ProgramWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "progressive",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "binary.base_conversion",
+      "domain": "binary",
+      "sampleId": "binary-base-conversion",
+      "validator": "binary.base_conversion::validateConfig",
+      "moduleId": "binary.base_conversion",
+      "renderer2d": "BaseConvWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "hybrid",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [
+        "{\"type\":\"set_param\",\"name\":\"targetBase\",\"value\":8}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "binary.character_encoding",
+      "domain": "binary",
+      "sampleId": "binary-character-encoding",
+      "validator": "binary.character_encoding::validateConfig",
+      "moduleId": "binary.character_encoding",
+      "renderer2d": "CharEncodingWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "hybrid",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "logic.boolean_dag",
+      "domain": "logic",
+      "sampleId": "logic-boolean-dag",
+      "validator": "logic.boolean_dag::validateConfig",
+      "moduleId": "logic.boolean_dag",
+      "renderer2d": "BoolDagWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "hybrid",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "network.graph_traversal",
+      "domain": "network",
+      "sampleId": "network-graph-traversal",
+      "validator": "network.graph_traversal::validateConfig",
+      "moduleId": "network.graph_traversal",
+      "renderer2d": "TraverseWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "hybrid",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [
+        "{\"type\":\"set_param\",\"name\":\"variant\",\"value\":\"dfs\"}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "database.relational_table_query",
+      "domain": "database",
+      "sampleId": "db-table-query",
+      "validator": "database.relational_table_query::validateConfig",
+      "moduleId": "database.relational_table_query",
+      "renderer2d": "TableWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "hybrid",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [
+        "{\"type\":\"set_param\",\"name\":\"sort.direction\",\"value\":\"asc\"}"
+      ],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    },
+    {
+      "target": "tree.traversal",
+      "domain": "tree",
+      "sampleId": "tree-traversal-preorder",
+      "validator": "tree.traversal::validateConfig",
+      "moduleId": "tree.traversal",
+      "renderer2d": "TreeWorkspace",
+      "visualModes": "2d",
+      "interactionMode": "hybrid",
+      "hasTimeline": true,
+      "hasPredict": false,
+      "hasExplore": false,
+      "actionVocabulary": [],
+      "aiSourcesChecked": 4,
+      "parity": "OK"
+    }
+  ]
+}

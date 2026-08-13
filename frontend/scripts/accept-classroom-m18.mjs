@@ -13,6 +13,7 @@
  * Cần: `npm run dev` (:3000) + uvicorn (:8000) + fixture đã seed.
  */
 import { spawn } from "node:child_process";
+import { provenance } from "./evidence.mjs";
 import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -172,6 +173,8 @@ for (const [w, h] of VIEWPORTS) {
   chrome.kill();
 }
 
-writeFileSync(OUT, JSON.stringify({ when: new Date().toISOString(), rows, failures }, null, 2));
+writeFileSync(OUT, JSON.stringify({
+  ...provenance("accept-classroom-m18.mjs", { viewports: VIEWPORTS }),
+  rows, failures }, null, 2));
 console.log(`\n${failures.length === 0 ? "✔ TẤT CẢ SẠCH" : `✗ ${failures.length} lỗi`} → ${OUT}`);
 process.exit(failures.length === 0 ? 0 : 1);

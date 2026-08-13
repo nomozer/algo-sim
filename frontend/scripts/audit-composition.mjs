@@ -37,6 +37,7 @@
  * literal) — đã làm Node báo SyntaxError ba lần trong repo này.
  */
 import { spawn } from "node:child_process";
+import { provenance } from "./evidence.mjs";
 import { existsSync, mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
@@ -309,6 +310,7 @@ if (VIEWPORTS.includes(WIDE[0]) && VIEWPORTS.includes(WIDE[1])) {
 }
 
 const bad = rows.filter((r) => r.verdict !== "OK");
-writeFileSync(OUT, JSON.stringify({ when: new Date().toISOString(), label: LABEL, rows,
-  failing: bad.length, total: rows.length }, null, 2));
+writeFileSync(OUT, JSON.stringify({
+  ...provenance("audit-composition.mjs", { viewports: VIEWPORTS, targets: rows.length }),
+  label: LABEL, rows, failing: bad.length, total: rows.length }, null, 2));
 console.log(`\n${bad.length === 0 ? "✔ TẤT CẢ OK" : `✗ ${bad.length}/${rows.length} dòng chưa đạt`} → ${OUT}`);

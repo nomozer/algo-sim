@@ -1723,3 +1723,17 @@ RAIL THỨ HAI — đo được `and_gate` lệch 581px, `decimal_to_binary` 673
 Áp cho `binary/ui` · `logic/ui` · `network/ui` · `algorithm/program-module`.
 `ArrayView` giữ bề rộng tự đo từ khung chứa (nó vốn co giãn theo cột) nhưng đã
 BỎ `margin: 0 auto` cùng lý do.
+
+### `frontend/scripts/evidence.mjs`
+W0 — XUẤT XỨ CỦA BẰNG CHỨNG. `provenance(tool, env)` gắn `head` (git SHA) +
+`dirty` (cây có thay đổi chưa commit) + môi trường vào MỌI artifact sinh ra;
+`assertFresh(path)` là cổng đọc lại — artifact sinh từ commit khác bị xếp
+**STALE_EVIDENCE** và không được chống lưng cho trạng thái DONE.
+
+Vì sao cần: trước đó artifact chỉ có `when` (một dấu thời gian), nên nó có thể
+sinh từ một commit khác hẳn commit đang xét mà vẫn trông "mới". Ba artifact
+chính (`m19/after.json`, `m18/classroom-acceptance.json`,
+`m17/w4b4a-experience/probe.json`) đều KHÔNG có dấu HEAD lúc kiểm.
+
+Đã gắn vào: `audit-composition.mjs` · `accept-classroom-m18.mjs` ·
+`accept-experience-w4b4c.mjs`.
