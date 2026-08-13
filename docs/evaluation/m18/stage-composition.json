@@ -1,0 +1,83 @@
+{
+  "when": "2026-08-13T14:02:09.845Z",
+  "rows": [
+    {
+      "viewport": 1920,
+      "target": "logic.and_gate",
+      "cardW": 1672,
+      "innerW": 1624,
+      "inkW": 460,
+      "fillPct": 28.3,
+      "gutterLeft": 582,
+      "gutterRight": 582,
+      "skew": 0,
+      "railSpan": 581,
+      "overflowX": false
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.decimal_to_binary",
+      "cardW": 1672,
+      "innerW": 1624,
+      "inkW": 276,
+      "fillPct": 17,
+      "gutterLeft": 674,
+      "gutterRight": 674,
+      "skew": 0,
+      "railSpan": 673,
+      "overflowX": false
+    },
+    {
+      "viewport": 1920,
+      "target": "logic.boolean_dag",
+      "cardW": 1672,
+      "innerW": 1624,
+      "inkW": 694,
+      "fillPct": 42.7,
+      "gutterLeft": 371,
+      "gutterRight": 559,
+      "skew": 188,
+      "railSpan": 722,
+      "overflowX": false
+    },
+    {
+      "viewport": 1920,
+      "target": "network.packet_routing",
+      "cardW": 1672,
+      "innerW": 1624,
+      "inkW": 880,
+      "fillPct": 54.2,
+      "gutterLeft": 372,
+      "gutterRight": 372,
+      "skew": 0,
+      "railSpan": 371,
+      "overflowX": false
+    },
+    {
+      "viewport": 1920,
+      "target": "tree.traversal",
+      "cardW": 1672,
+      "innerW": 1624,
+      "inkW": 1597,
+      "fillPct": 98.3,
+      "gutterLeft": 1,
+      "gutterRight": 26,
+      "skew": 25,
+      "railSpan": 0,
+      "overflowX": false
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.binary_search",
+      "cardW": 1672,
+      "innerW": 1624,
+      "inkW": 969,
+      "fillPct": 59.7,
+      "gutterLeft": 328,
+      "gutterRight": 328,
+      "skew": 0,
+      "railSpan": 327,
+      "overflowX": false
+    }
+  ]
+}

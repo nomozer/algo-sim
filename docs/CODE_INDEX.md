@@ -1667,3 +1667,22 @@ chặn 400. Artifact: `docs/evaluation/m18/classroom-acceptance.json`.
 Dữ liệu demo cho nghiệm thu: 1 giáo viên · 2 học sinh · 1 lớp · 1 bài. Mật khẩu
 đọc từ `ALGOSIM_FIXTURE_PASSWORD`, không có mặc định trong mã (`§34`) — chạy
 nhầm trên máy thật cũng không đẻ ra tài khoản ai cũng biết mật khẩu. Idempotent.
+
+### `frontend/scripts/measure-stage-composition.mjs` · offline (cần `npm run dev`)
+Đo bố cục sân khấu cho **mọi** target (khác `measure-dag-composition.mjs` chỉ đo
+được `logic.boolean_dag`). Ba số mỗi target: `fillPct` (bề rộng MỰC / bề rộng
+trong thẻ) · `skew` (lệch lề trái–phải của mực) · `railSpan` (mép trái của chữ
+cách mép trái của mực bao xa — lớn = hai hệ căn lề trong cùng một thẻ).
+
+⚠️ HAI LẦN ĐO SAI TRƯỚC KHI RA SỐ ĐÚNG, ghi lại vì cả hai đều "xanh mà vô nghĩa":
+1. bản đầu lấy hộp bao của `querySelectorAll('*')` — div BỌC rộng bằng thẻ nên
+   **mọi** target ra "lấp 99.9%, lệch 0", tức báo SẠCH cho đúng bố cục đang bị
+   kêu. Nay chỉ đếm `<svg>` và phần tử LÁ thật sự có sơn.
+2. bản thứ hai đếm cả bảng `details` gập được nên `boolean_dag` báo lệch 558px
+   trong khi sơ đồ của nó đã căn giữa 0px — phép đo tự bịa ra một lỗi không có.
+
+Và một lần nữa dính bẫy **backtick trong template literal** (đã cắn hai lần ở
+`capture-*.mjs`): chú thích tiếng Việt trong khối `MEASURE` có \`...\` làm Node
+báo `SyntaxError`. Trong khối đó không được có backtick nào.
+
+Artifact: `docs/evaluation/m18/stage-composition.json`.
