@@ -501,6 +501,18 @@ nút ĐANG CHỌN (`colorPropOf`), nên "chọn Tiêu đề rồi kéo R" không
 tới nền: chỉ có một `selected` trong state, không có bộ chọn thứ hai để lệch.
 Ngoài miền ⇒ `null` ⇒ giữ state cũ, KHÔNG kẹp về biên.
 
+### `frontend/src/simulations/experience-manifest.test.ts` (M20 W6) · offline
+MANIFEST TRẢI NGHIỆM 23 target + guard "mô hình là chính, thử thách là phụ".
+Khoá bốn nhóm: thử thách đóng mặc định (đọc từ CHỦ SỞ HỮU `loadEnvelope`, không
+đoán theo module) · chính sách hiện kết quả (target công cụ không được giấu đáp
+án sau transport) · phản hồi KHÁM PHÁ không được nói giọng chấm điểm · lối vào/ra
+thử thách tiếp cận được.
+⚠️ `TRANSPORT_REASON` KHÔNG có giá trị mặc định — target chưa khai hiện
+`UNCLASSIFIED` và test đòi con số đó bằng 0. Bản đầu mặc định "có timeline ⇒
+FULL_TRACE" và cho ra 18, một con số chỉ là phép đếm thuộc tính kĩ thuật đội lốt
+phân loại sư phạm; khai đủ theo cơ chế thì thật ra là **13 / 7 / 3**.
+Artifact: `docs/evaluation/m20/experience-manifest.json`.
+
 ### `frontend/scripts/measure-tool-first-w5.mjs` (M20 W5) · offline (cần `npm run dev`)
 Trả lời câu §7: **ở cursor 0, DOM có hiện đúng đáp án mà engine đang giữ không?**
 Đọc đáp án THẲNG từ store rồi tìm nó trong DOM — kiểm renderer có nói đúng thứ

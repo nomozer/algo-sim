@@ -3449,6 +3449,18 @@ html {
 
 .web-channel-hex { color: var(--ink-muted); }
 
+/* W6 §16 — đầu khối thử thách: câu hỏi bên trái, đường THOÁT bên phải.
+   Trước W6 khối này không có đường đóng nào, nên người dùng bàn phím mở nhầm
+   là mắc kẹt tới khi đổi bước. */
+.predict-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-sm);
+}
+
+.predict-close { flex: 0 0 auto; }
+
 .web-preview-area { display: flex; flex-direction: column; gap: var(--sp-md); min-width: 0; }
 
 /* Nền ca-rô: cho thấy khối KẾT THÚC ở đâu, nên đổi đệm/bo góc nhìn ra ngay

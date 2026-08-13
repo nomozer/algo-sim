@@ -72,11 +72,26 @@
 | `binary.base_conversion` trả lời không cần Play | **DONE (W5)** | BEFORE 0 tin@cursor0, đáp án `7EA` vắng mặt → AFTER 17 tin, đọc được; 4 bề rộng | — |
 | `binary.character_encoding` bảng đủ hàng | **DONE (W5)** | BEFORE dãy bit của T/i/n vắng ở cursor 0 → AFTER đọc được; 4 bề rộng | — |
 | `web.style_model` công cụ màu RGB | **DONE (W5)** | 4 → 7 ô điều khiển; ba kênh 0–255 qua `set_param` → `module.apply` | — |
+| `web.style_model` — THAO TÁC TRỰC TIẾP | **DONE ở tầng module (5443c51)** | `direct-manipulation-w4b4d.test.tsx`: chọn nút trên sân khấu + dời khối (`move`, miền HOÁN VỊ) đi qua `module.apply`. Bằng chứng TRÌNH DUYỆT: **NO_EVIDENCE** | **W12** |
 | Miền màu nới bảy ô → 24 bit | **DONE (W5)** | validator hai tầng + `CACHE_VERSION` 28→29 (ba chỗ) | — |
 | Oracle độc lập ba target | **DONE (W5)** | `parseInt`/`toString(base)` · `codePointAt`/`toString(2)` · số học chuỗi hex | — |
-| Tiêm lỗi W5 | **11/11 BỊ BẮT** | hai phép tìm ra LỖ GUARD THẬT (cột thập phân renderer; chiến lược diễn giải sau khi đổi cơ số) — đã vá | — |
+| Tiêm lỗi W5 | **13/13 BỊ BẮT** | hai phép tìm ra LỖ GUARD THẬT (cột thập phân renderer; chiến lược diễn giải sau khi đổi cơ số) — đã vá. #12/#13 chạy ở preflight W6: đổi bảng mã chỉ-đổi-nhãn · mã sản phẩm rẽ nhánh theo nguồn envelope | — |
 | Quyết định W3 bị W5 đảo | **ĐÃ KHAI** | ba guard "không lộ đáp án sớm" viết lại về bảng chia + băng kết luận, không xoá | — |
 | Yêu cầu transport (đầu vào W7) | **ĐÃ GHI** | base_conversion + character_encoding: TRACE TUỲ CHỌN · web.style_model: RESET ONLY | **W7** |
+
+## 4c. Wave 6 — công cụ là chính, thử thách là phụ
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| Thử thách đóng mặc định | **ĐÃ CÓ TỪ W4B-2Z** | `loadEnvelope` đặt `challengeOpen/exploreOpen: false`; nay khoá bằng guard | — |
+| Tính đúng sai do engine sở hữu | **DONE** | `PredictionBar` chỉ đọc `prediction.verdict`; guard quét mã sản phẩm | — |
+| Băng phán quyết không lấn cơ chế | **DONE** | `.result-banner` giữ `width: fit-content`; guard đọc CSS | — |
+| Lối vào/ra thử thách tiếp cận được | **DONE (W6)** | **khiếm khuyết W6 tìm ra**: trước đây chỉ có `setOpened(true)` — cửa MỘT CHIỀU. Nay có nút Đóng + phím Esc + trả tiêu điểm về nút mở | — |
+| Manifest trải nghiệm 23 target | **DONE (W6)** | `experience-manifest.test.ts` → `docs/evaluation/m20/experience-manifest.json` | — |
+| Phân loại transport (đầu vào W7) | **DONE (W6)** | **13 FULL_TRACE · 7 OPTIONAL_TRACE · 3 RESET_ONLY**, mỗi target một lý do cơ chế | **W7** |
+| Con số transport từng giả | **ĐÃ SỬA (W6)** | mặc định "có timeline ⇒ FULL_TRACE" cho ra 18; bỏ mặc định, khai đủ ⇒ 13/7/3 | — |
+| Tiêm lỗi W6 | **8/8 BỊ BẮT** | thử thách tự mở · kết quả bị giấu · băng phán quyết to · khám phá chấm điểm · UI tự chấm · cửa một chiều · không trả tiêu điểm · trace-first bị hạ | — |
+| Chứng nhận tương tác toàn danh mục | **NO_EVIDENCE** | manifest MÔ TẢ hiện thực, không cấp chứng nhận | **W12** |
 
 ## 5. Phủ chương trình
 

@@ -1,0 +1,382 @@
+import { beforeAll, describe, expect, it } from "vitest";
+import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { registerAllSimulations } from "./index";
+import { getSimulation, listSimulations } from "./registry";
+import { publicCatalog } from "../data/offline-catalog";
+import type { SimulationModule } from "./types";
+
+/**
+ * WAVE 6 — MÔ HÌNH LÀ CHÍNH, THỬ THÁCH LÀ PHỤ.
+ *
+ * ─── CÂU HỎI PHẢI TRẢ LỜI ─────────────────────────────────────────────────
+ *
+ * "AlgoSim là một PHÒNG THÍ NGHIỆM Tin học, hay là một bài kiểm tra có hình
+ * minh hoạ ở trên?"
+ *
+ * Cách hỏi phải quét TOÀN danh mục chứ không xem vài ảnh chụp: mùi quiz không
+ * nằm ở một trang xấu, nó nằm ở chỗ SỞ HỮU — một thanh dự đoán mở sẵn, một tấm
+ * thẻ "Đúng/Sai" cao hơn cả cơ chế, hay một kết quả bị giấu tới khi bấm Play.
+ * Sửa từng trang là vá triệu chứng; đo theo chủ sở hữu mới thấy bán kính.
+ *
+ * ─── BỐN TẦNG (§WAVE6) ────────────────────────────────────────────────────
+ *
+ *   1. MÔ HÌNH / CÔNG CỤ        — trọng lượng thị giác cao nhất
+ *   2. TRẠNG THÁI NHÂN QUẢ      — gọn, một câu
+ *   3. GIẢI THÍCH (tuỳ chọn)    — đóng mặc định
+ *   4. THỬ THÁCH (tuỳ chọn)     — mở có chủ đích
+ *
+ * ─── BA BỀ MẶT KHÔNG ĐƯỢC LẪN ─────────────────────────────────────────────
+ *
+ *   KHÁM PHÁ  — MÔ TẢ cái vừa đổi và vì sao. Không phán đúng/sai.
+ *   CAM KẾT   — học sinh quyết định BƯỚC TIẾP THEO của chính thuật toán
+ *               (đổi chỗ / giữ nguyên / chọn nửa trái). Đây là CƠ CHẾ, không
+ *               phải một lớp trắc nghiệm dán lên trên.
+ *   THỬ THÁCH — dự đoán tuỳ chọn, mở có chủ đích, tính đúng sai do engine tất
+ *               định sở hữu (`predict.check`), UI chỉ ĐỌC.
+ *
+ * ⚠️ Manifest này MÔ TẢ hiện thực, KHÔNG cấp chứng nhận. Nợ bằng chứng toàn
+ * danh mục của Wave 4 (tương tác + phù hợp trải nghiệm, đo trong trình duyệt)
+ * vẫn là `NO_EVIDENCE` và thuộc W12 — không dòng nào ở đây xoá được nó.
+ */
+
+type TransportNeed = "FULL_TRACE" | "OPTIONAL_TRACE" | "RESET_ONLY" | "NONE" | "UNCLASSIFIED";
+
+interface Row {
+  id: string;
+  domain: string;
+  interactionMode: string;
+  /** Có công cụ/tham số học sinh đổi được không (dẫn từ hợp đồng module). */
+  tool: boolean;
+  trace: boolean;
+  challenge: boolean;
+  /** Thử thách có đóng mặc định không — đọc từ CHỦ SỞ HỮU state, không đoán. */
+  challengeDefaultClosed: boolean;
+  causalFeedback: boolean;
+  transportNeed: TransportNeed;
+  correctnessOwner: string;
+  hasOfflineSample: boolean;
+}
+
+/**
+ * NHU CẦU TRANSPORT — khai theo CƠ CHẾ, không theo "module có timeline không".
+ *
+ * Có timeline mà kết quả đọc được ngay (base_conversion sau W5) thì transport
+ * là TUỲ CHỌN: nó giải thích quá trình, không phải đường duy nhất tới đáp án.
+ * Ngược lại, đóng gói qua các tầng mạng thì TRÌNH TỰ CHÍNH LÀ bài học, nên
+ * transport là bắt buộc.
+ *
+ * Đây là đầu vào cho W7 (W7 sở hữu bề rộng/bố cục), nên nó phải nói LÝ DO.
+ */
+const TRANSPORT_REASON: Record<string, [TransportNeed, string]> = {
+  "network.protocol_encapsulation": ["FULL_TRACE",
+    "Thứ tự đóng gói qua từng tầng LÀ nội dung bài học; xem trạng thái cuối " +
+    "không nói được gì về việc tiêu đề nào được thêm ở tầng nào."],
+  "algorithm.bubble_sort": ["FULL_TRACE",
+    "Bài học là TRÌNH TỰ đổi chỗ do thuật toán quyết định, không phải dãy đã sắp."],
+  "algorithm.insertion_sort": ["FULL_TRACE",
+    "Phần đã sắp LỚN DẦN sang phải và mỗi phần tử mới được chèn vào đúng chỗ " +
+    "của nó; nhìn dãy đã sắp không cho biết nó được chèn vào đâu và đẩy ai đi."],
+  "algorithm.selection_sort": ["FULL_TRACE",
+    "Mỗi lượt QUÉT hết phần còn lại để chọn phần tử nhỏ nhất rồi mới đổi chỗ " +
+    "một lần; bỏ trình tự thì mất luôn phân biệt với sắp xếp nổi bọt."],
+  "algorithm.binary_search": ["FULL_TRACE",
+    "Khoảng tìm kiếm CO LẠI qua từng lượt; kết quả cuối giấu mất chính cơ chế."],
+  "binary.base_conversion": ["OPTIONAL_TRACE",
+    "Sau W5 kết quả và bảng trọng số đọc được ngay ở cursor 0; dòng thời gian " +
+    "chỉ còn giải thích phép chia/trọng số."],
+  "binary.character_encoding": ["OPTIONAL_TRACE",
+    "Sau W5 bảng mã hoá đầy đủ hiện ngay; trace giải thích ký tự đang xét."],
+  "web.style_model": ["RESET_ONLY",
+    "Không có tiến trình theo bước — chỉ cần đường quay về trang gốc để so sánh " +
+    "trang em vừa sửa với trang ban đầu."],
+
+  // ── §8 HỌ DUYỆT DÃY ──────────────────────────────────────────────────────
+  // Ranh giới trong họ này KHÔNG phải "có timeline hay không" (cả họ đều có),
+  // mà là: KẾT QUẢ có nói hết bài học chưa? Tìm max trả về một số, và con số
+  // ấy KHÔNG cho biết vì sao — phải thấy phép so sánh từng bước. Ngược lại
+  // đếm/tổng có điều kiện thì tập kết quả đã tự nói lên tiêu chí lọc.
+  "algorithm.find_max": ["FULL_TRACE",
+    "Kết quả là MỘT số; nó không cho biết vì sao số ấy thắng. Bài học nằm ở " +
+    "chuỗi SO SÁNH và ở việc giá trị lớn nhất được cập nhật mấy lần."],
+  "algorithm.find_min": ["FULL_TRACE",
+    "Cùng cơ chế với find_max, chỉ đảo chiều so sánh — nên cùng lý do: một số " +
+    "ở cuối không giải thích được đường đi tới nó."],
+  "algorithm.linear_search": ["FULL_TRACE",
+    "Bài học là DUYỆT LẦN LƯỢT tới khi gặp; biết vị trí tìm thấy không cho " +
+    "biết đã phải xét bao nhiêu phần tử trước đó."],
+  "algorithm.count_if": ["OPTIONAL_TRACE",
+    "Kết quả là TẬP các phần tử thoả điều kiện, và nhìn tập ấy cạnh dãy gốc là " +
+    "đã đọc ra tiêu chí lọc; trình tự duyệt chỉ giải thích thêm, không cần để hiểu."],
+  "algorithm.sum_if": ["OPTIONAL_TRACE",
+    "Như count_if — tập được cộng đã tự nói lên điều kiện; dòng thời gian giải " +
+    "thích cách tổng dồn lên, là phần bổ sung chứ không phải đường duy nhất."],
+  "algorithm.scan": ["FULL_TRACE",
+    "Cơ chế là QUÉT có trạng thái mang theo (biến tích luỹ đổi qua từng phần " +
+    "tử); chỉ nhìn giá trị cuối thì biến tích luỹ không bao giờ xuất hiện."],
+  "algorithm.bounded_control_flow": ["FULL_TRACE",
+    "Bài học là RẼ NHÁNH và ĐIỀU KIỆN DỪNG: giá trị biến sau mỗi vòng và lý do " +
+    "vòng lặp kết thúc chỉ tồn tại trong trình tự, không có trong kết quả."],
+
+  // ── §9 HỌ CÔNG CỤ ────────────────────────────────────────────────────────
+  "logic.and_gate": ["RESET_ONLY",
+    "Bật/tắt công tắc là quan hệ TỨC THÌ đầu vào → đầu ra; không có tiến trình " +
+    "nào để tua, chỉ cần đường về trạng thái ban đầu."],
+  "logic.boolean_dag": ["OPTIONAL_TRACE",
+    "Đầu ra của mạch tính được ngay khi đổi đầu vào; dòng thời gian giải thích " +
+    "TÍN HIỆU LAN qua từng cổng — hữu ích nhưng không phải đường duy nhất tới đáp án."],
+  "binary.decimal_to_binary": ["RESET_ONLY",
+    "Học sinh bật/tắt từng bit và thấy tổng đổi ngay — đây là bàn cân trọng số, " +
+    "không phải một quá trình có bước."],
+  "database.relational_table_query": ["OPTIONAL_TRACE",
+    "Bảng kết quả là câu trả lời và nó hiện ngay khi đổi bộ lọc; trình tự " +
+    "lọc → chiếu → sắp chỉ giải thích vì sao còn lại chừng ấy hàng."],
+  "generic.rule_scene": ["OPTIONAL_TRACE",
+    "Cảnh generic phục vụ nhiều cơ chế khác nhau; phần lớn cho xem trạng thái " +
+    "đầy đủ ngay, dòng thời gian chỉ cần khi cảnh được DỰNG dần theo bước."],
+
+  // ── §10 TRACE-FIRST ──────────────────────────────────────────────────────
+  "network.packet_routing": ["FULL_TRACE",
+    "Gói tin ĐI QUA từng nút theo thứ tự; thấy nó ở đích không nói được nó đã " +
+    "qua đường nào, mà chính đường đi mới là bài học định tuyến."],
+  "network.graph_traversal": ["FULL_TRACE",
+    "BFS/DFS khác nhau ĐÚNG Ở THỨ TỰ thăm đỉnh; bỏ trình tự là bỏ luôn phân " +
+    "biệt giữa hai thuật toán."],
+  "tree.traversal": ["FULL_TRACE",
+    "Bốn kiểu duyệt cây cho cùng một cây nhưng khác dãy kết quả; trình tự thăm " +
+    "nút CHÍNH LÀ định nghĩa của từng kiểu."],
+};
+
+let rows: Row[] = [];
+let mods: SimulationModule<unknown, unknown>[] = [];
+
+/**
+ * ⚠️ KHÔNG CÓ MẶC ĐỊNH — và đó là cả điểm của hàm này.
+ *
+ * Bản đầu trả `FULL_TRACE` cho mọi module có `timeline`, và bảng đọc ra "18
+ * target cần transport đầy đủ". Con số ấy GIẢ: nó chỉ là "18 module có
+ * timeline" đổi tên, không phải một phán quyết về cơ chế nào cần trình tự.
+ * Mặc định như thế biến bảng phân loại thành phép đếm thuộc tính kĩ thuật.
+ *
+ * Nên target chưa được người soát phân loại sẽ hiện `UNCLASSIFIED`, và test
+ * dưới đòi con số đó bằng 0 — tức phải khai từng target kèm lý do CƠ CHẾ.
+ */
+function transportOf(m: SimulationModule<unknown, unknown>): TransportNeed {
+  return TRANSPORT_REASON[m.id]?.[0] ?? "UNCLASSIFIED";
+}
+
+beforeAll(() => {
+  if (listSimulations().length === 0) registerAllSimulations();
+  const samples = new Set(publicCatalog().map((s) => s.simId));
+  mods = listSimulations().map((meta) => getSimulation(meta.id)!);
+  rows = mods
+    .map((m) => ({
+      id: m.id,
+      domain: m.domain,
+      interactionMode: m.interactionMode,
+      tool: Boolean(m.explore) || m.interactionMode !== "progressive",
+      trace: Boolean(m.timeline),
+      challenge: Boolean(m.predict),
+      /* Đọc từ chủ sở hữu THẬT: `loadEnvelope` đặt `challengeOpen: false` cho
+         MỌI mô phỏng mới (W4B-2Z). Nên giá trị này giống nhau ở mọi dòng — và
+         đó chính là điều đáng khoá: nó là thuộc tính của SHELL, không phải của
+         từng module, nên không module nào tự mở được. */
+      challengeDefaultClosed: true,
+      causalFeedback: Boolean(m.narrate),
+      transportNeed: transportOf(m),
+      correctnessOwner: m.predict ? "module.predict.check (engine tất định)" : "—",
+      hasOfflineSample: samples.has(m.id),
+    }))
+    .sort((a, b) => a.id.localeCompare(b.id));
+});
+
+// ── 1. THỬ THÁCH LÀ PHỤ ──────────────────────────────────────────────────────
+
+describe("W6 §3 — thử thách đóng mặc định, mô hình dùng được khi nó đóng", () => {
+  it("KHÔNG mô phỏng nào tự mở thử thách khi vừa nạp", () => {
+    /* Khoá ở CHỦ SỞ HỮU chứ không ở từng module: `challengeOpen` sống trong
+       store, và `loadEnvelope` đặt nó về false. Một module không có đường nào
+       bật nó — đó là lý do bất biến này rẻ và bền. */
+    const src = readFileSync(new URL("../state/store.ts", import.meta.url).pathname
+      .replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    /* Cắt từ phần HIỆN THỰC, không phải từ khai báo interface. Bản đầu dùng
+       `indexOf("loadEnvelope:")` và trúng dòng khai báo kiểu ở đầu file, nên
+       lát cắt dài đúng một dòng và test đỏ vì lý do sai hoàn toàn. */
+    const start = src.indexOf("loadEnvelope: (env, sampleId");
+    expect(start, "không tìm thấy phần hiện thực của loadEnvelope").toBeGreaterThan(0);
+    const load = src.slice(start, src.indexOf("loadUnsupported: (u)"));
+    expect(load, "loadEnvelope phải đóng thử thách").toMatch(/challengeOpen:\s*false/);
+    expect(load, "loadEnvelope phải đóng cả khám phá").toMatch(/exploreOpen:\s*false/);
+  });
+
+  it("mọi target có thử thách đều CÓ mô hình dùng được khi thử thách đóng", () => {
+    /* Nếu một target chỉ tương tác được qua ô dự đoán thì đóng thử thách lại là
+       học sinh không còn gì để làm — đúng định nghĩa "quiz có hình minh hoạ". */
+    const offenders = rows
+      .filter((r) => r.challenge && !r.tool && !r.trace)
+      .map((r) => r.id);
+    expect(offenders, `target chỉ dùng được qua thử thách:\n${offenders.join("\n")}`)
+      .toEqual([]);
+  });
+
+  it("tính đúng sai KHÔNG do UI thử thách sở hữu", () => {
+    /* §2/§17 #5: component thử thách tự tính đúng sai là mất ranh giới R0 —
+       chỉ engine tất định mới được phán. Quét mã sản phẩm của thanh dự đoán. */
+    const bar = readFileSync(new URL("../components/PredictionBar.tsx", import.meta.url)
+      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const body = bar.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    for (const forbidden of [/===\s*correctAnswer/, /\.answer\s*===/, /computeVerdict/]) {
+      expect(body, `PredictionBar tự tính đúng sai: ${forbidden}`).not.toMatch(forbidden);
+    }
+    expect(body, "phải ĐỌC verdict do engine phát").toMatch(/prediction\.verdict/);
+  });
+});
+
+// ── 2. KẾT QUẢ HIỆN NGAY VỚI TARGET CÔNG CỤ (chính sách W5, nâng lên toàn cục) ──
+
+describe("W6 §4 — chính sách hiện kết quả", () => {
+  it("target CÔNG CỤ không được giấu kết quả sau thanh điều khiển", () => {
+    /* Chính sách hình thành ở W5 cho ba target, nay khoá thành luật chung:
+       transport TUỲ CHỌN hoặc KHÔNG CÓ ⇒ kết quả phải đọc được không cần tua.
+       Bằng chứng trình duyệt: `measure-tool-first-w5.mjs`. */
+    const toolTargets = rows.filter((r) =>
+      r.transportNeed === "OPTIONAL_TRACE" || r.transportNeed === "RESET_ONLY");
+    expect(toolTargets.length, "không target công cụ nào ⇒ luật rỗng")
+      .toBeGreaterThanOrEqual(3);
+    for (const r of toolTargets) {
+      expect(r.tool, `${r.id} khai transport công cụ nhưng không có công cụ`).toBe(true);
+    }
+  });
+
+  it("mọi target khai FULL_TRACE đều thật sự có dòng thời gian", () => {
+    for (const r of rows.filter((x) => x.transportNeed === "FULL_TRACE")) {
+      expect(r.trace, `${r.id} đòi transport đầy đủ mà không có timeline`).toBe(true);
+    }
+  });
+
+  it("KHÔNG target nào còn chưa phân loại transport", () => {
+    /* Chỗ này thay cho một giá trị mặc định. Mặc định "có timeline ⇒ cần
+       transport đầy đủ" cho ra con số 18 nghe rất gọn nhưng không phải phán
+       quyết nào cả — nó là phép đếm thuộc tính kĩ thuật đội lốt phân loại sư
+       phạm. Đòi 0 chưa-phân-loại buộc mỗi target phải có người soát và một lý
+       do đọc được. */
+    const missing = rows.filter((r) => r.transportNeed === "UNCLASSIFIED").map((r) => r.id);
+    expect(missing, `chưa khai nhu cầu transport (kèm lý do cơ chế):\n${missing.join("\n")}`)
+      .toEqual([]);
+  });
+
+  it("mỗi ngoại lệ transport phải nêu LÝ DO CƠ CHẾ", () => {
+    for (const [id, [, why]] of Object.entries(TRANSPORT_REASON)) {
+      expect(rows.some((r) => r.id === id), `${id} không có trong danh mục`).toBe(true);
+      expect(why.length, `${id}: lý do quá ngắn để kiểm chứng`).toBeGreaterThan(60);
+      for (const lazy of ["renderer đang", "hiện tại đang", "theo lịch sử"]) {
+        expect(why, `${id}: lý do né cơ chế`).not.toContain(lazy);
+      }
+    }
+  });
+});
+
+// ── 3. PHẢN HỒI NHÂN QUẢ ≠ PHÁN QUYẾT ────────────────────────────────────────
+
+describe("W6 §5 — mô tả khác phán xét", () => {
+  it("`narrate` KHÔNG được nói giọng chấm điểm", () => {
+    /* §17 #4: phản hồi KHÁM PHÁ bị render thành phán quyết đúng/sai. `narrate`
+       mô tả trạng thái ("9 > 8,5 → xét nửa trái"); nói "Đúng"/"Sai" ở đó là
+       lấn sang bề mặt thử thách, và học sinh đang chỉ kéo thanh trượt thì
+       không có gì để đúng hay sai cả. */
+    const dir = new URL("./domains/", import.meta.url).pathname
+      .replace(/^\/([A-Za-z]:)/, "$1");
+    const files: string[] = [];
+    const walk = (d: string) => {
+      for (const e of readdirSync(d)) {
+        const p = join(d, e);
+        if (statSync(p).isDirectory()) walk(p);
+        else if (/\.tsx?$/.test(p) && !/\.test\./.test(p)) files.push(p);
+      }
+    };
+    walk(dir);
+    const offenders: string[] = [];
+    for (const f of files) {
+      const body = readFileSync(f, "utf-8")
+        .replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+      const narrate = body.match(/narrate\s*:\s*\([\s\S]*?\n\s{4}\}/);
+      if (!narrate) continue;
+      for (const judgy of ["Đúng rồi", "Sai rồi", "Chưa đúng", "Chính xác"]) {
+        if (narrate[0].includes(judgy)) offenders.push(`${f}: narrate nói "${judgy}"`);
+      }
+    }
+    expect(offenders, `phản hồi khám phá đang phán đúng/sai:\n${offenders.join("\n")}`)
+      .toEqual([]);
+  });
+
+  it("băng kết quả là DẢI GỌN, không phải tấm thẻ chiếm sân khấu", () => {
+    /* §6/§17 #3. Đo ở CSS chứ không ở ảnh: `.result-banner` phải giữ
+       `width: fit-content` — bỏ dòng đó là nó giãn hết bề ngang thẻ và trở
+       thành thứ nặng nhất trên trang. */
+    const css = readFileSync(new URL("../styles/global.css", import.meta.url).pathname
+      .replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const block = css.slice(css.indexOf("\n.result-banner {"));
+    const decl = block.slice(0, block.indexOf("}"));
+    expect(decl, "`.result-banner` phải ôm sát nội dung").toContain("width: fit-content");
+    expect(decl, "băng kết quả không được là khối chiếm dòng").not.toMatch(/display:\s*block/);
+  });
+});
+
+// ── 4. KHẢ NĂNG TIẾP CẬN CỦA LỐI VÀO/RA THỬ THÁCH (§16) ─────────────────────
+
+describe("W6 §16 — thử thách vào được thì phải ra được", () => {
+  const bar = () => readFileSync(
+    new URL("../components/PredictionBar.tsx", import.meta.url).pathname
+      .replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+
+  it("có đường ĐÓNG, không phải cửa một chiều", () => {
+    /* Khiếm khuyết W6 tìm ra: trước wave này chỉ có `setOpened(true)`. Người
+       dùng bàn phím mở nhầm thì mắc kẹt trong khối cho tới khi đổi bước. */
+    const body = bar().replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    expect(body, "phải có nút đóng").toMatch(/predict-close/);
+    expect(body, "phải đóng được bằng phím Esc").toMatch(/Escape/);
+  });
+
+  it("đóng xong TRẢ TIÊU ĐIỂM về nút mở, không thả rơi về body", () => {
+    const body = bar().replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    expect(body).toMatch(/ref=\{openBtn\}/);
+    expect(body).toMatch(/openBtn\.current\?\.focus\(\)/);
+  });
+
+  it("phán quyết KHÔNG chỉ dựa vào màu", () => {
+    /* §16: mỗi verdict phải kèm biểu tượng + chữ, và nằm trong vùng đọc-được
+       (`role="status"`) để trình đọc màn hình thông báo. */
+    const body = bar();
+    expect(body).toMatch(/role="status"/);
+    for (const v of ["correct", "incorrect", "unsupported_to_verify"]) {
+      expect(body, `${v} thiếu biểu tượng`).toMatch(new RegExp(`${v}"? &&`));
+    }
+    expect(body, "phải in cả thông điệp chữ").toMatch(/prediction\.message/);
+  });
+});
+
+// ── 5. MANIFEST ──────────────────────────────────────────────────────────────
+
+describe("W6 §20 — manifest trải nghiệm 23 target", () => {
+  it("sinh manifest và giữ nguyên nợ bằng chứng W12", () => {
+    expect(rows.length).toBeGreaterThanOrEqual(23);
+    const counts = rows.reduce<Record<string, number>>((acc, r) => {
+      acc[r.transportNeed] = (acc[r.transportNeed] ?? 0) + 1;
+      return acc;
+    }, {});
+    try {
+      const dir = new URL("../../../docs/evaluation/m20/", import.meta.url)
+        .pathname.replace(/^\/([A-Za-z]:)/, "$1");
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(join(dir, "experience-manifest.json"), JSON.stringify({
+        generatedAt: new Date().toISOString(),
+        note: "sinh từ registry qua vitest; MÔ TẢ hiện thực, KHÔNG cấp chứng nhận.",
+        interactionCertification: "NO_EVIDENCE (toàn danh mục, đo trình duyệt — W12)",
+        experienceSuitabilityCertification: "NO_EVIDENCE (W12)",
+        transportCounts: counts,
+        transportReasons: TRANSPORT_REASON,
+        rows,
+      }, null, 2), "utf-8");
+    } catch { /* thư mục chỉ-đọc trong CI */ }
+  });
+});

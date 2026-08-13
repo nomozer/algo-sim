@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { SimulationModule } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { IconCheck, IconInfo, IconPredict } from "./icons";
@@ -63,6 +63,23 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
    * là `unknown`, đọc `.cursor` sẽ là kiến thức domain lọt vào shell dùng chung.
    */
   const [opened, setOpened] = useState(false);
+  /**
+   * W6 §16 — TRẢ FOCUS VỀ CHỖ CŨ KHI ĐÓNG THỬ THÁCH.
+   *
+   * Trước wave này Thử thách là CỬA MỘT CHIỀU: chỉ có `setOpened(true)`, không
+   * có đường đóng. Người dùng bàn phím mở nhầm thì mắc kẹt trong khối cho tới
+   * khi đổi bước, và không có nơi nào để trả tiêu điểm về.
+   *
+   * Ref trỏ vào chính nút mở, nên đóng xong tiêu điểm quay lại đúng chỗ đã bấm
+   * — không nhảy về đầu trang, không biến mất.
+   */
+  const openBtn = useRef<HTMLButtonElement>(null);
+  const closeChallenge = () => {
+    setOpened(false);
+    /* Đợi React vẽ lại nút mở rồi mới focus; focus vào phần tử sắp bị gỡ là
+       cách chắc chắn nhất để tiêu điểm rơi về `<body>`. */
+    requestAnimationFrame(() => openBtn.current?.focus());
+  };
 
   // Mặc định an toàn — giống `timeline?` / `edit?`: không khai thì không có UI.
   if (!module.predict) return null;
@@ -86,6 +103,7 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
       <div className="predict-inline">
         <button
           type="button"
+          ref={openBtn}
           className="btn-utility predict-open"
           disabled={busy}
           onClick={() => setOpened(true)}
@@ -98,8 +116,17 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
   }
 
   return (
-    <section className="predict-bar" aria-label="Dự đoán bước tiếp theo">
-      <p className="predict-question">{challenge.question}</p>
+    <section className="predict-bar" aria-label="Dự đoán bước tiếp theo"
+      onKeyDown={(e) => { if (e.key === "Escape") closeChallenge(); }}>
+      <div className="predict-head">
+        <p className="predict-question">{challenge.question}</p>
+        {/* Đóng được bằng chuột LẪN bàn phím (nút thật + phím Esc). Không dùng
+            biểu tượng trần: "Đóng" đọc lên được, và nhãn nói rõ đóng cái gì. */}
+        <button type="button" className="btn-utility predict-close"
+          onClick={closeChallenge} aria-label="Đóng thử thách">
+          Đóng
+        </button>
+      </div>
 
       <div className="predict-options">
         {/* Mỗi đáp án ĐỒNG THỜI là hành động kiểm tra — không có nút nộp riêng. */}
