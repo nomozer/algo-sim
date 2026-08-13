@@ -108,3 +108,59 @@ describe("(M9-UX5) token CSS — var() hỏng là lỗi IM LẶNG, phải chặn
     ).toEqual([]);
   });
 });
+
+/**
+ * DESIGN.md §Elevation — BÓNG ĐỔ PHẢI LÀ TOKEN, KHÔNG PHẢI TỰ CHẾ.
+ *
+ * ─── LỖI ĐÃ ĐO ĐƯỢC ───────────────────────────────────────────────────────
+ *
+ * DESIGN.md khai đúng ba mức: Level 0 "hairline border, NO shadow" cho bề mặt
+ * mặc định · Level 1 = chồng BỐN lớp gần trong suốt (`--shadow-soft`) cho thẻ
+ * nổi · Level 2 (`--shadow-elevated`) cho modal/popover. Và §Don't nói thẳng:
+ * *"Don't drop heavy shadows; elevation is many near-transparent layers, never
+ * a hard cast."*
+ *
+ * Nhưng ba chỗ vẫn tự viết bóng MỘT LỚP ngoài token:
+ *   - `.composer-box` `0 1px 3px` **lúc nghỉ** — ô nhập đề nổi lên khỏi trang,
+ *     trong khi §Inputs nói bóng chỉ được thêm KHI FOCUS;
+ *   - `.starter-card:hover` và `.session-card:hover` `0 2px 10px` — đúng dạng
+ *     "hard cast" bị cấm.
+ *
+ * Không guard nào bắt: `tokens.test.ts` chỉ kiểm `var()` trỏ token có thật, mà
+ * bóng tự chế thì KHÔNG dùng `var()` nên nó vô hình với phép kiểm đó.
+ *
+ * Ngoại lệ ĐƯỢC PHÉP: `box-shadow: 0 0 0 Npx <màu>` — đó là VÒNG VIỀN (ring)
+ * để đánh dấu lựa chọn, không phải độ nổi. Nó không có blur nên không đổ bóng.
+ */
+describe("DESIGN.md §Elevation — không bóng tự chế", () => {
+  it("mọi box-shadow CÓ ĐỘ MỜ đều phải đến từ token", () => {
+    const offenders: string[] = [];
+    for (const line of globalCss.split("\n")) {
+      const m = /box-shadow:\s*([^;]+);/.exec(line);
+      if (!m) continue;
+      const value = m[1].trim();
+      if (value.includes("var(--shadow")) continue;   // token: hợp lệ
+      if (value === "none" || value.startsWith("inset")) continue;
+      // Ring: `0 0 0 Npx màu` — không blur, không phải độ nổi.
+      if (/^0\s+0\s+0\s+[\d.]+px\s/.test(value)) continue;
+      offenders.push(value);
+    }
+    expect(
+      offenders,
+      "dùng `var(--shadow-soft)` / `var(--shadow-elevated)`, hoặc bỏ hẳn " +
+        `(Level 0 = hairline, không bóng):\n${offenders.join("\n")}`,
+    ).toEqual([]);
+  });
+
+  it("ô nhập đề PHẲNG lúc nghỉ, chỉ nổi khi focus (DESIGN.md §Inputs)", () => {
+    const at = globalCss.indexOf(".composer-box {");
+    expect(at, "không tìm thấy .composer-box").toBeGreaterThan(-1);
+    const rest = ".composer-box:focus-within";
+    const block = globalCss.slice(at, globalCss.indexOf("}", at));
+    expect(block, "ô nhập mang bóng ngay lúc nghỉ").not.toContain("box-shadow:");
+    const focusAt = globalCss.indexOf(rest);
+    expect(focusAt, "mất trạng thái focus").toBeGreaterThan(-1);
+    expect(globalCss.slice(focusAt, globalCss.indexOf("}", focusAt)))
+      .toContain("var(--shadow-soft)");
+  });
+});
