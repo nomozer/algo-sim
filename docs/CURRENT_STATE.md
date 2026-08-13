@@ -29,6 +29,32 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### M19 — BỐ CỤC DÙNG CHUNG: khung theo cơ chế, một rail (2026-08-13)
+>
+> Bằng chứng: `docs/evaluation/m19/` (`before-1920.json` · `after.json`).
+> Công cụ: `frontend/scripts/audit-composition.mjs`.
+>
+> - **TRƯỚC: 23/23 target hỏng @1920.** Thẻ cứng 1624px trong khi mực 276–1597px
+>   (`decimal_to_binary` lấp 17%, `and_gate` 28%), và chữ lệch khỏi hình tới
+>   722px. Hai lỗi — khung quá khổ (A) và hai hệ căn lề (B) — cùng một nguyên
+>   nhân: thẻ là flex column STRETCH.
+> - **SAU: 92/92 dòng OK** (23 target × 4 bề rộng). Khung nay 552–1401px thay vì
+>   1624 cứng; rail lệch **0** ở mọi target trừ 1px ở `web.style_model`; không
+>   tràn ngang, không cắt hình ở bề rộng nào.
+> - **Chủ sở hữu đổi:** `.app-layout` (cột `auto`, căn giữa) + `.workspace-card`
+>   (`fit-content` + sàn `min-width`) + `.workspace-card > * { width: 100% }`
+>   + `simulations/stage-size.ts` (bề rộng SVG khai thật, bỏ `margin: 0 auto`).
+>   KHÔNG có giá trị pixel riêng cho target nào.
+> - **Hai ngoại lệ KHAI TƯỜNG MINH:** `web.style_model` được bám cửa sổ (trang
+>   web lấp bề rộng khả dụng là hành vi đang dạy) · `logic.boolean_dag` được đặt
+>   chú giải cạnh sơ đồ.
+> - **`logic.boolean_dag`: khung NGOÀI đã sửa, đồ thị TRONG không còn lệch** —
+>   rail 722 → 0, và bỏ `margin-inline: auto` của `.dag-stage` vì việc căn giữa
+>   nay thuộc về khung. Không phát hiện lỗi bố cục đồ thị bên trong.
+> - Offline: vitest **1275 / 92 file** · build sạch · pytest không đụng tới.
+> - **CHƯA làm:** nhãn giá trị vị trí (10³ 10² 10¹ 10⁰) cho `binary.base_conversion`
+>   — đó là ngữ pháp thị giác cấp miền, KHÔNG thuộc wave bề rộng này (§15).
+>
 > ### M18 — TẦNG LỚP HỌC: khách thử được, lớp học dùng được (2026-08-13)
 >
 > Hợp đồng còn hiệu lực: **`docs/CLASSROOM_AUTH_CONTRACT.md`**.
