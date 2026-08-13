@@ -26,6 +26,7 @@ export {
   digitsValid,
   divideSteps,
   parseInBase,
+  positionalBreakdown,
   strategyOf,
   toBase,
   weightSteps,
@@ -45,6 +46,7 @@ import {
   canonicalDigits,
   digitsValid,
   parseInBase,
+  positionalBreakdown,
   strategyOf,
 } from "./base-conversion";
 import type { BaseConvConfig, ConvBase, ConvStep } from "./base-conversion";
@@ -143,6 +145,59 @@ function ConvParamBar({ state, busy, dispatch }: Props) {
   );
 }
 
+/**
+ * W5 §3/§3A — BỀ MẶT CÔNG CỤ: trả lời NGAY, không đợi thanh điều khiển.
+ *
+ * ─── KHIẾM KHUYẾT NÓ SỬA (đã đo, không phải suy đoán) ─────────────────────
+ *
+ * Renderer cắt `state.steps` theo cursor, nên mở bài lên là bảng RỖNG: đo ở
+ * 1920 được **0 ô lúc mở, 12 ô sau khi tua hết**. Học sinh đổi cơ số đích rồi
+ * vẫn phải bấm Tiến mới biết kết quả — đó là hoạt hình, không phải công cụ.
+ *
+ * Nên tách đôi bề mặt, đúng ranh giới §1:
+ *   CÔNG CỤ (ở đây)      — trạng thái HIỆN TẠI của tham số hiện tại. Không cursor.
+ *   DIỄN GIẢI (bên dưới) — QUÁ TRÌNH biến đổi. Có cursor, và nên có.
+ *
+ * ─── VÌ SAO TRỌNG SỐ HIỆN Ở ĐÂY, KHÔNG PHẢI TRONG TRACE ───────────────────
+ *
+ * `bⁿ` là CẤU TRÚC của con số, không phải một bước của thuật toán: 1101 có chữ
+ * số ở vị trí 2³ dù ta có chạy phép chia nào hay không. Đặt nó sau cursor là
+ * nói rằng cấu trúc chỉ tồn tại khi bấm nút.
+ */
+function ConvToolPanel({ state }: { state: BaseConvState }) {
+  const { config } = state;
+  const { cells } = positionalBreakdown(config.inputValue, config.sourceBase);
+  return (
+    <div className="conv-tool">
+      <p className="conv-tool-result">
+        <strong>
+          {config.inputValue}
+          <sub>({config.sourceBase})</sub> = {state.result}
+          <sub>({config.targetBase})</sub>
+        </strong>
+        <span className="notes"> · giá trị thập phân {state.decimalValue}</span>
+      </p>
+      <div className="conv-positions" role="group"
+        aria-label={`Phân tích vị trí của ${config.inputValue} trong cơ số ${config.sourceBase}`}>
+        {cells.map((c) => (
+          <div className="conv-position" key={c.position}>
+            <span className="conv-digit">{c.digit}</span>
+            <span className="conv-weight">
+              {config.sourceBase}<sup>{c.position}</sup>
+            </span>
+            <span className="conv-contribution">{c.product}</span>
+          </div>
+        ))}
+        <div className="conv-position conv-position-total">
+          <span className="conv-digit" aria-hidden="true">=</span>
+          <span className="conv-weight">tổng</span>
+          <span className="conv-contribution">{state.decimalValue}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function BaseConvWorkspace({ state, config, busy, dispatch }: Props) {
   const at = clampCursor(state, state.cursor);
   const visible = state.steps.slice(0, at + 1);
@@ -155,6 +210,7 @@ export function BaseConvWorkspace({ state, config, busy, dispatch }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <ConvParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
+      <ConvToolPanel state={state} />
       <div className="sim-stage">
         {weights.length > 0 && (
           <table className="data-table">

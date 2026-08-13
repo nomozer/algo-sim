@@ -1,14 +1,14 @@
 {
   "head": "c904360ee88f5ab77efa2ed23d5d6ee6567e5a7e",
   "dirty": true,
-  "generatedAt": "2026-08-13T19:09:41.443Z",
+  "generatedAt": "2026-08-13T19:09:51.844Z",
   "tool": "measure-tool-first-w5",
   "toolVersion": "1",
   "environment": {
     "node": "v24.13.0",
     "platform": "win32",
     "viewport": 1920,
-    "label": "BEFORE"
+    "label": "AFTER"
   },
   "question": "Ở cursor 0, DOM có hiện đúng đáp án mà engine tất định đang giữ không?",
   "note": "Hiệu số tin@cursor0 → tin@cuối KHÔNG phải tiêu chí: §1 nói diễn giải NÊN hiện dần theo bước, nên một target lành mạnh vẫn cho hiệu số dương.",
@@ -18,15 +18,13 @@
       "answerAtCursor0": {
         "applicable": true,
         "expected": "7EA",
-        "visible": false,
-        "missing": [
-          "7EA"
-        ]
+        "visible": true,
+        "missing": []
       },
       "atCursor0": {
         "dataCells": 0,
         "dataRows": 0,
-        "infoAtoms": 0,
+        "infoAtoms": 17,
         "controls": 3,
         "svgCount": 0,
         "stageTextLen": 0,
@@ -35,7 +33,7 @@
       "atEnd": {
         "dataCells": 12,
         "dataRows": 3,
-        "infoAtoms": 17,
+        "infoAtoms": 34,
         "controls": 3,
         "svgCount": 0,
         "stageTextLen": 91,

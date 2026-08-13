@@ -58,6 +58,18 @@ const PROBE = `(()=>{
   };
   const dataCells = [...card.querySelectorAll('table tbody td')].filter(vis).length;
   const dataRows = [...card.querySelectorAll('table tbody tr')].filter(vis).length;
+  /* ĐƠN VỊ THÔNG TIN — thước đo CHÍNH, và nó phải độc lập với thẻ HTML.
+     Bản đầu chỉ đếm 'table td', nên khi bề mặt công cụ được dựng bằng lưới div
+     thì phép đo báo "vẫn 0 ô" cho một trang đã hiện đủ kết quả: thước đo đang
+     đo THẺ chứ không đo THÔNG TIN. Đếm phần tử LÁ có chữ, trừ đồ đạc của thẻ và
+     thanh điều khiển — thứ trả lời câu hỏi, không phải thứ mô tả câu hỏi. */
+  const FURNITURE = '.transport,.workspace-header,.stage-legend,.param-bar,.notes';
+  const infoAtoms = [...card.querySelectorAll('*')].filter((el) => {
+    if (el.children.length > 0) return false;
+    if (el.closest(FURNITURE)) return false;
+    if (!vis(el)) return false;
+    return (el.textContent || '').trim().length > 0;
+  }).length;
   /* Ô ĐIỀU KHIỂN: thứ học sinh đổi được ngay, không cần bấm Tiến. */
   const controls = [...card.querySelectorAll('input,select,button[role=switch],[role=slider]')]
     .filter(vis).filter(el => !el.closest('.transport')).length;
@@ -66,7 +78,7 @@ const PROBE = `(()=>{
   const stage = card.querySelector('.sim-stage');
   const stageText = stage ? stage.textContent.replace(/\\s+/g,' ').trim() : '';
   const svgCount = [...card.querySelectorAll('svg')].filter(vis).length;
-  return JSON.stringify({ dataCells, dataRows, controls, svgCount,
+  return JSON.stringify({ dataCells, dataRows, infoAtoms, controls, svgCount,
     stageTextLen: stageText.length, stageHead: stageText.slice(0, 110) });
 })()`;
 
@@ -117,6 +129,39 @@ const load = (sim) => ev(`(async()=>{
   return s.useAppStore.getState().active ? 'ok' : 'không ra active';})()`);
 
 /**
+ * PHÉP ĐO CHÍNH của §7 — và nó KHÔNG phải hiệu số.
+ *
+ * Bản trước phán bằng "nội dung có tăng khi tua không". Sai tiêu chí: §1 nói
+ * DIỄN GIẢI *nên* hiện dần theo bước, nên một target hoàn toàn lành mạnh vẫn
+ * cho hiệu số dương. Đo như thế thì mọi bản sửa đều trượt, kể cả bản sửa đúng.
+ *
+ * Câu hỏi thật: **ở cursor 0, học sinh đọc được KẾT QUẢ HIỆN TẠI chưa?**
+ *
+ * Cách hỏi không vòng vo: lấy đáp án từ CHÍNH engine tất định trong store, rồi
+ * kiểm chuỗi đó có nằm trong DOM đang hiện không. Đây không phải oracle tự
+ * chứng minh — nó kiểm RENDERER có nói đúng thứ ENGINE đang giữ, đúng ranh giới
+ * R0. Tính đúng của bản thân đáp án do oracle độc lập bên vitest lo.
+ */
+const ANSWER_OF = {
+  "binary.base_conversion": "st.active.state.result",
+  "binary.character_encoding": "st.active.state.rows.map(r=>r.binary).join(' ')",
+};
+
+const answerVisible = (sim) => ev(`(async()=>{
+  const s=await import(${JSON.stringify(u.store)});
+  const st=s.useAppStore.getState();
+  const expr=${JSON.stringify(ANSWER_OF[sim] ?? "")};
+  if(!expr) return JSON.stringify({applicable:false});
+  let want; try { want=eval(expr); } catch(e){ return JSON.stringify({error:String(e)}); }
+  if(want===undefined||want===null) return JSON.stringify({error:'engine không trả đáp án'});
+  const card=document.querySelector('.workspace-card');
+  const dom=card?card.innerText.replace(/\\s+/g,' '):'';
+  const parts=String(want).split(' ').filter(Boolean);
+  const missing=parts.filter(p=>!dom.includes(p));
+  return JSON.stringify({applicable:true, expected:String(want),
+    visible: missing.length===0, missing});})()`);
+
+/**
  * Tua tới bước cuối QUA STORE, không qua nút — phép đo không phụ thuộc UI.
  *
  * ⚠️ Bản đầu gọi `st.next()`, một API KHÔNG TỒN TẠI. Vòng lặp `break` ngay lập
@@ -136,7 +181,7 @@ const toEnd = () => ev(`(async()=>{
 
 const rows = [];
 console.log(`━━ ${VIEWPORT}px  [${LABEL}]  HEAD ${provenance("measure-tool-first-w5").head.slice(0, 8)}`);
-console.log("  target                          ô@cursor0  ô@cuối  điều khiển  KHOÁ SAU PLAY?");
+console.log("  target                         tin@cursor0 tin@cuối  đ.khiển  ĐÁP ÁN Ở CURSOR 0?");
 for (const sim of TARGETS) {
   /* THỬ LẠI MỘT LẦN — lượt nạp đầu tiên hay trả undefined vì CDP không kịp trả
      kết quả cho lượt import nặng (đã ghi trong audit-composition.mjs). Bỏ qua
@@ -154,6 +199,7 @@ for (const sim of TARGETS) {
     rows.push({ target: sim, error: `probe: ${beforeRaw}` }); continue;
   }
   const before = JSON.parse(beforeRaw);
+  const ans = JSON.parse(await answerVisible(sim));
   const move = JSON.parse(await toEnd());
   await sleep(600);
   const after = JSON.parse(await ev(PROBE));
@@ -163,12 +209,14 @@ for (const sim of TARGETS) {
      thì ngược lại, cho không nó một lời khen nó chưa chứng minh. */
   const noTimeline = move.cursorBefore === null && move.cursorAfter === null;
   const moved = !noTimeline && move.cursorAfter !== move.cursorBefore;
-  const gated = (after.dataCells ?? 0) - (before.dataCells ?? 0);
-  const verdict = noTimeline ? "KHÔNG CÓ TIMELINE (vốn là công cụ)"
-    : !moved ? `KHÔNG ĐO ĐƯỢC (cursor ${move.cursorBefore}→${move.cursorAfter})`
-    : gated > 0 ? `CÓ (+${gated} ô)` : "không";
-  console.log(`  ${sim.padEnd(32)} ${String(before.dataCells).padStart(8)} ${String(after.dataCells).padStart(7)} ${String(before.controls).padStart(10)}   ${verdict}`);
-  rows.push({ target: sim, atCursor0: before, atEnd: after, cursor: move,
+  const gated = (after.infoAtoms ?? 0) - (before.infoAtoms ?? 0);
+  /* PHÁN QUYẾT §7 đọc `ans`, KHÔNG đọc hiệu số. Hiệu số chỉ còn là số phụ. */
+  const verdict = ans.error ? `LỖI: ${ans.error}`
+    : !ans.applicable ? "không có đáp án đơn trị (công cụ thuần)"
+    : ans.visible ? "ĐỌC ĐƯỢC ở cursor 0"
+    : `KHOÁ SAU PLAY (thiếu: ${(ans.missing || []).slice(0, 3).join(",")})`;
+  console.log(`  ${sim.padEnd(32)} ${String(before.infoAtoms).padStart(8)} ${String(after.infoAtoms).padStart(7)} ${String(before.controls).padStart(10)}   ${verdict}`);
+  rows.push({ target: sim, answerAtCursor0: ans, atCursor0: before, atEnd: after, cursor: move,
     hasTimeline: !noTimeline, measurementValid: noTimeline || moved,
     gatedCells: moved ? gated : null,
     gatedBehindTransport: moved ? gated > 0 : (noTimeline ? false : null) });
@@ -176,7 +224,9 @@ for (const sim of TARGETS) {
 
 writeFileSync(OUT, JSON.stringify({
   ...provenance("measure-tool-first-w5", { viewport: VIEWPORT, label: LABEL }),
-  question: "Ẩn thanh điều khiển đi, học sinh còn thấy được kết quả hiện tại không?",
+  question: "Ở cursor 0, DOM có hiện đúng đáp án mà engine tất định đang giữ không?",
+  note: "Hiệu số tin@cursor0 → tin@cuối KHÔNG phải tiêu chí: §1 nói diễn giải NÊN " +
+        "hiện dần theo bước, nên một target lành mạnh vẫn cho hiệu số dương.",
   rows,
 }, null, 2), "utf-8");
 console.log(`\n→ ${OUT}`);

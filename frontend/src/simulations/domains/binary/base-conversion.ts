@@ -129,6 +129,27 @@ export function weightSteps(digits: string, base: ConvBase, steps: ConvStep[]): 
 }
 
 /**
+ * W5 §3A — PHÂN TÍCH VỊ TRÍ của một chuỗi chữ số, KHÔNG phụ thuộc dòng thời gian.
+ *
+ * Bề mặt CÔNG CỤ cần bảng trọng số ngay khi học sinh đổi tham số, còn dòng thời
+ * gian chỉ giải thích *quá trình*. Trước W5 hai thứ đó là một: renderer cắt
+ * `steps` theo cursor nên chưa bấm Tiến thì bảng rỗng — đo được ở 1920: **0 ô**
+ * lúc mở, 12 ô sau khi tua hết.
+ *
+ * Hàm này KHÔNG viết lại phép toán: nó gọi đúng `weightSteps` rồi vứt mảng
+ * steps đi. Viết một vòng lặp `base ** position` thứ hai ở renderer là dựng
+ * nguồn sự thật thứ hai cho đúng con số đang dạy.
+ */
+export function positionalBreakdown(digits: string, base: ConvBase) {
+  const steps: ConvStep[] = [];
+  const total = weightSteps(canonicalDigits(digits), base, steps);
+  return {
+    total,
+    cells: steps.filter((s): s is Extract<ConvStep, { kind: "weight" }> => s.kind === "weight"),
+  };
+}
+
+/**
  * Chia lấy dư liên tiếp — đẩy từng phép chia vào `steps` và trả kết quả DẪN RA
  * TỪ CHUỖI SỐ DƯ (đọc ngược). Không gọi `toBase`: kết quả ở đây và `toBase`
  * phải trùng nhau vì cùng một phép toán, không phải vì chép của nhau.

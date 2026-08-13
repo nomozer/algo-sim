@@ -3651,3 +3651,73 @@ html {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
+
+/* ── W5 §3A — DỤNG CỤ ĐỔI CƠ SỐ ────────────────────────────────────────────
+ *
+ * Đây là bề mặt CÔNG CỤ: nó nói trạng thái HIỆN TẠI, không nói quá trình. Nên
+ * nó nằm TRÊN sân khấu và không bao giờ phụ thuộc cursor.
+ *
+ * Ngữ pháp thị giác đọc theo CỘT, mỗi cột một chữ số:
+ *     chữ số  →  trọng số bⁿ  →  đóng góp
+ * Ba hàng thẳng nhau làm quan hệ "chữ số × trọng số = đóng góp" đọc được bằng
+ * mắt mà không cần chú giải. Bảng bốn cột cũ nói đúng chừng ấy thông tin nhưng
+ * bắt mắt đi ngang rồi tự ghép lại.
+ */
+.conv-tool {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.conv-tool-result {
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.conv-tool-result sub {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.conv-positions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-xs);
+  align-items: stretch;
+}
+
+.conv-position {
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: 2px;
+  min-width: 56px;
+  padding: var(--sp-xs);
+  text-align: center;
+  background: var(--canvas-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+}
+
+/* Tổng là KẾT QUẢ của dãy cột, không phải một cột nữa — nền khác để mắt không
+   đọc nó thành "chữ số cuối cùng". */
+.conv-position-total {
+  background: var(--surface);
+  border-style: dashed;
+}
+
+.conv-digit {
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.conv-weight {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.conv-contribution {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
