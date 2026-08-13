@@ -26,29 +26,6 @@ export interface ActiveSimulation {
   state: unknown;
 }
 
-/**
- * W4B-2Z §26 — PHIÊN ĐANG MỞ: ảnh chụp ĐỦ phần runtime RIÊNG của một mô phỏng.
- *
- * Khác hẳn Lịch sử. Lịch sử ghi "em ĐÃ từng mở bài này" (bền, localStorage,
- * mở lại = dựng lại từ envelope). Phiên ghi "bài này ĐANG mở và đang ở đúng
- * chỗ em bỏ dở" — cursor, what-if đã làm, cách xem, chế độ thử thách. Mở lại
- * từ Lịch sử luôn về bước đã ghi; chuyển phiên KHÔNG dựng lại gì cả, nó trả về
- * ĐÚNG object state cũ.
- *
- * Vì sao không nhét vào History: chuyển phiên mà phải chạy lại `init` thì mọi
- * thao tác what-if của học sinh biến mất — đó chính là lỗi cần chặn.
- */
-export interface OpenSession {
-  id: string;
-  title: string;
-  active: ActiveSimulation;
-  historyId: string | null;
-  sampleId: string | null;
-  visualMode: VisualMode;
-  challengeOpen: boolean;
-  exploreOpen: boolean;
-  prediction: PredictionResult | null;
-}
 
 /**
  * M18 — MẶT TRÌNH BÀY. Bốn mặt cũ giữ nguyên; năm mặt mới là tầng lớp học.
@@ -95,8 +72,6 @@ interface AppState {
    * phiên đang chọn; chuyển phiên = chụp bản làm việc vào phiên cũ rồi khôi
    * phục bản của phiên mới. Không gọi AI, không validate lại, không `init` lại.
    */
-  sessions: OpenSession[];
-  activeSessionId: string | null;
 
   active: ActiveSimulation | null;
   /** Chỉ có nghĩa khi module có timeline capability. */
@@ -234,12 +209,6 @@ interface AppState {
   openSidebarDrawer: () => void;
   closeSidebarDrawer: () => void;
 
-  /** W4B-2Z §26 — mở khung soạn đề MỚI mà KHÔNG đóng phiên nào đang mở. */
-  newSession: () => void;
-  /** Chuyển sang một phiên đang mở — 0 gọi AI, 0 dựng lại state. */
-  switchSession: (id: string) => void;
-  /** Đóng một phiên. Đóng phiên đang xem thì chuyển sang phiên còn lại. */
-  closeSession: (id: string) => void;
   /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active/prediction. */
   setVisualMode: (mode: VisualMode) => void;
   reset: () => void;
@@ -267,59 +236,7 @@ export const useAppStore = create<AppState>((set, get) => {
     }
   }
 
-  /**
-   * W4B-2Z §26 — chụp BẢN LÀM VIỆC hiện tại vào danh sách phiên.
-   *
-   * Trả về danh sách phiên đã cập nhật. Không có phiên đang chọn (đang ở Home,
-   * hoặc chưa mở gì) thì trả nguyên danh sách — chụp một khoảng trống sẽ đẻ ra
-   * phiên ma trong thanh bên.
-   */
-  function snapshot(): OpenSession[] {
-    const st = get();
-    if (!st.active || !st.activeSessionId) return st.sessions;
-    return st.sessions.map((sn) =>
-      sn.id !== st.activeSessionId
-        ? sn
-        : {
-            ...sn,
-            title: st.active!.envelope.title,
-            active: st.active!,
-            historyId: st.activeHistoryId,
-            sampleId: st.activeSampleId,
-            visualMode: st.visualMode,
-            challengeOpen: st.challengeOpen,
-            exploreOpen: st.exploreOpen,
-            prediction: st.prediction,
-          },
-    );
-  }
 
-  /** Đưa một phiên lên làm BẢN LÀM VIỆC. Thuần khôi phục — không dựng lại gì. */
-  function activate(sn: OpenSession): void {
-    set({
-      sessions: get().sessions,
-      activeSessionId: sn.id,
-      active: sn.active,
-      activeHistoryId: sn.historyId,
-      activeSampleId: sn.sampleId,
-      visualMode: sn.visualMode,
-      challengeOpen: sn.challengeOpen,
-      /* W4B-3A — CHÍNH SÁCH KHÔI PHỤC, KHAI TƯỜNG MINH: chế độ Khám phá theo
-         phiên, y như Thử thách. Quay lại một bài đang dở mà chế độ tự đóng thì
-         thao tác what-if học sinh vừa làm mất luôn lối vào để làm tiếp — đúng
-         loại "làm mới trong im lặng" mà §26 sinh ra để chặn. */
-      exploreOpen: sn.exploreOpen,
-      prediction: sn.prediction,
-      // `playing` là trạng thái THOÁNG QUA của lần xem: quay lại một phiên mà
-      // nó tự chạy tiếp là bất ngờ, còn cursor thì đã nằm trong state rồi.
-      playing: false,
-      view: "workspace",
-      unsupported: null,
-      analysisError: null,
-    });
-  }
-
-  let sessionSeq = 0;
 
   return {
     problemText: "",
@@ -363,8 +280,6 @@ export const useAppStore = create<AppState>((set, get) => {
     setAnalyzing: (v) => set({ analyzing: v }),
     setAnalysisError: (msg) => set({ analysisError: msg }),
 
-    sessions: [],
-    activeSessionId: null,
 
     loadEnvelope: (env, sampleId, originalInput) => {
       const mod = getSimulation(env.simulation_id);
@@ -409,29 +324,12 @@ export const useAppStore = create<AppState>((set, get) => {
         config: result.config,
         state: initialState,
       };
-      /* W4B-2Z §26 — nạp mô phỏng luôn CHIẾM một phiên: đang chọn phiên nào thì
-         thay nội dung phiên đó (phân tích lại đề trong cùng phiên), chưa chọn
-         phiên nào thì MỞ THÊM phiên mới. Nhờ vậy "+ Mô phỏng mới" rồi nạp bài
-         không đè lên bài đang mở. Chụp trước để phiên cũ không mất chỗ đang dở. */
-      const kept = snapshot();
-      const current = get().activeSessionId;
-      const sid = current ?? `s${++sessionSeq}`;
-      const entry: OpenSession = {
-        id: sid,
-        title: env.title,
-        active: nextActive,
-        historyId: item.id,
-        sampleId: sampleId ?? null,
-        visualMode: "2d",
-        challengeOpen: false,
-        exploreOpen: false,
-        prediction: null,
-      };
+      /* M18-UI — MỘT MÔ PHỎNG TẠI MỘT THỜI ĐIỂM.
+         Nhiều phiên (W4B-2Z §26) đã GỠ: mở thêm bài thứ hai không phải việc học
+         sinh làm trong một tiết, và dải tab nó sinh ra cạnh tranh chỗ với sân
+         khấu. Bài đang xem bị THAY, không bị mất — `historyStore.record` ngay
+         trên đã ghi nó vào Lịch sử, mở lại vẫn 0 gọi AI. */
       set({
-        sessions: current
-          ? kept.map((sn) => (sn.id === sid ? entry : sn))
-          : [...kept, entry],
-        activeSessionId: sid,
         active: nextActive,
         unsupported: null,
         analysisError: null,
@@ -458,8 +356,6 @@ export const useAppStore = create<AppState>((set, get) => {
        khi rời đi, nếu không quay lại phiên sẽ mất chỗ đang dở. */
     goHome: () =>
       set({
-        sessions: snapshot(),
-        activeSessionId: null,
         view: "home",
         active: null,
         /* M18 — rời sân khấu là rời bài: nếu giữ lại, một mô phỏng tự luyện mở
@@ -478,62 +374,14 @@ export const useAppStore = create<AppState>((set, get) => {
 
     openLibrary: () => set({ view: "library" }),
 
-    /* M18 — điều hướng mức ứng dụng. Đổi mặt trình bày KHÔNG đụng
-       `active`/`sessions`: rời sang "Lớp của em" rồi quay lại phải thấy đúng
-       mô phỏng đang dở, không phải một phiên mới (bất biến phiên, `§26`). */
+    /* M18 — điều hướng mức ứng dụng. Đổi mặt trình bày KHÔNG đụng `active`:
+       rời sang "Lớp của em" rồi quay lại phải thấy đúng mô phỏng đang dở. */
     setView: (view) => set(
       view === "history" ? { view, history: historyStore.list() } : { view }),
     setActiveAssignment: (a) => set({ activeAssignment: a }),
     toggleSidebar: () => set({ sidebarCollapsed: !get().sidebarCollapsed }),
     openSidebarDrawer: () => set({ sidebarDrawerOpen: true }),
     closeSidebarDrawer: () => set({ sidebarDrawerOpen: false }),
-
-    /* ── W4B-2Z §26–28 — PHIÊN ĐANG MỞ ──────────────────────────
-       Cả ba thao tác dưới đây là TRÌNH BÀY + KHÔI PHỤC THUẦN: không đường nào
-       chạm `fetch`, `analyze`, `classify`, `simulate`, cũng không gọi lại
-       `validateConfig`/`init`. Chuyển phiên trả về ĐÚNG object state cũ, nên
-       what-if của học sinh còn nguyên. Đây là bất biến ZERO-AI của §28. */
-
-    newSession: () =>
-      set({
-        sessions: snapshot(),
-        activeSessionId: null,
-        active: null,
-        activeHistoryId: null,
-        activeSampleId: null,
-        unsupported: null,
-        analysisError: null,
-        playing: false,
-        prediction: null,
-        view: "home",
-      }),
-
-    switchSession: (id) => {
-      const kept = snapshot();
-      const target = kept.find((sn) => sn.id === id);
-      if (!target || id === get().activeSessionId) return;
-      set({ sessions: kept });
-      activate(target);
-    },
-
-    closeSession: (id) => {
-      const kept = snapshot().filter((sn) => sn.id !== id);
-      if (id !== get().activeSessionId) {
-        // Đóng phiên KHÁC không được đụng tới bài đang xem.
-        set({ sessions: kept });
-        return;
-      }
-      const next = kept[kept.length - 1];
-      if (!next) {
-        set({
-          sessions: [], activeSessionId: null, active: null, activeHistoryId: null,
-          activeSampleId: null, playing: false, prediction: null, view: "home",
-        });
-        return;
-      }
-      set({ sessions: kept });
-      activate(next);
-    },
 
     reopenFromHistory: (id) => {
       const item = historyStore.list().find((x) => x.id === id);
@@ -662,12 +510,10 @@ export const useAppStore = create<AppState>((set, get) => {
     },
 
     // Dọn RUNTIME — lịch sử bền KHÔNG bị đụng (hai đời sống tách biệt, M9-UX1).
-    /* `reset` là "về trạng thái sạch" (dùng ở test và thoát hẳn) — nó ĐÓNG mọi
-       phiên. Khác `goHome`/`newSession`, hai thao tác GIỮ phiên. */
+    /* `reset` là "về trạng thái sạch" (dùng ở test và thoát hẳn). Khác
+       `goHome`: goHome giữ lịch sử hiển thị, reset dọn cả bàn làm việc. */
     reset: () =>
       set({
-        sessions: [],
-        activeSessionId: null,
         active: null,
         unsupported: null,
         analysisError: null,

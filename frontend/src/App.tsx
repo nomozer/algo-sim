@@ -15,7 +15,6 @@ import { SimulationInspector } from "./components/SimulationInspector";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
 import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
-import { SessionTabs } from "./components/SessionTabs";
 
 /**
  * M18 — HAI VỎ, MỘT ỨNG DỤNG.
@@ -28,9 +27,9 @@ import { SessionTabs } from "./components/SessionTabs";
  * (56px) và thành ngăn kéo ở màn hẹp, nên sân khấu mô phỏng vẫn là thứ lớn nhất
  * trên màn hình — đo ở 1366: sân khấu 1074px kể cả khi thanh đang mở.
  *
- * Điều hướng PHIÊN (`SessionTabs`) không đổi và không dính dáng gì tới thanh
- * này: một cái nói "đang mở những bài nào", cái kia nói "đang ở mục nào của
- * ứng dụng" (`§9`).
+ * M18-UI — NHIỀU PHIÊN ĐÃ GỠ. Mỗi lúc đúng một mô phỏng: mở bài khác là THAY
+ * bài đang xem, và bài cũ nằm lại trong Lịch sử (mở lại 0 gọi AI). Dải tab
+ * phiên cùng bộ máy `sessions`/`switchSession` đã xoá theo.
  */
 
 export default function App() {
@@ -40,8 +39,6 @@ export default function App() {
   const toggleRight = useAppStore((s) => s.toggleRight);
   const goHome = useAppStore((s) => s.goHome);
   const setView = useAppStore((s) => s.setView);
-  const newSession = useAppStore((s) => s.newSession);
-  const sessionCount = useAppStore((s) => s.sessions.length);
   const collapsed = useAppStore((s) => s.sidebarCollapsed);
   const openDrawer = useAppStore((s) => s.openSidebarDrawer);
   const assignment = useAppStore((s) => s.activeAssignment);
@@ -55,9 +52,7 @@ export default function App() {
   useEffect(() => { void refresh(); }, [refresh]);
 
   const inWorkspace = view === "workspace" && active !== null;
-  const hasTabs = sessionCount >= 2;
-  const layoutClass =
-    `app-layout${rightOpen ? "" : " right-closed"}${hasTabs ? " has-tabs" : ""}`;
+  const layoutClass = `app-layout${rightOpen ? "" : " right-closed"}`;
 
   const page =
     view === "history" ? <HistoryView />
@@ -109,8 +104,11 @@ export default function App() {
                 {/* Giáo viên giao ĐÚNG thứ đang xem — quyết định không tách
                     khỏi mô phỏng nó nói về. */}
                 <AssignDialog />
-                <button className="btn-utility" onClick={newSession}
-                  title="Mở thêm một mô phỏng, giữ nguyên bài đang dở">
+                {/* M18-UI — MỘT mô phỏng tại một thời điểm: nút này THAY bài
+                    đang xem chứ không mở thêm. Bài cũ không mất — nó đã nằm
+                    trong Lịch sử, mở lại vẫn 0 gọi AI. */}
+                <button className="btn-utility" onClick={goHome}
+                  title="Phân tích một đề khác (bài đang xem được lưu vào Lịch sử)">
                   + Mô phỏng mới
                 </button>
                 <button className={`btn-utility${rightOpen ? " is-active" : ""}`}
@@ -132,7 +130,6 @@ export default function App() {
 
         {inWorkspace ? (
           <main className={layoutClass}>
-            <SessionTabs />
             <section className="panel-center">
               <SimulationWorkspace />
             </section>

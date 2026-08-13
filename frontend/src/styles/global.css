@@ -1004,7 +1004,6 @@ html {
   color: var(--ink-muted);
 }
 
-
 /* POLISH-3 — DISABLED PHẢI ĐỌC ĐƯỢC.
    Nút bước hết đường đi (ở bước đầu/cuối) là trạng thái BÌNH THƯỜNG, gặp liên
    tục — làm mờ 40% thì vừa khó đọc vừa trông như hỏng. Xám trung tính, giữ độ
@@ -2186,7 +2185,6 @@ html {
   color: var(--primary);
 }
 
-
 /* POLISH-2 — tiêu đề mô phỏng là thứ RÕ NHẤT trong thẻ. */
 .workspace-title {
   font-size: 24px;
@@ -3071,7 +3069,6 @@ html {
   white-space: nowrap;
 }
 
-
 /* M18 §5 — CỬA SAU LƯỢT THỬ. Không phải băng lỗi: khách vừa dùng xong sản phẩm,
    đây là lời mời, và mô phỏng vừa chạy vẫn còn nguyên trên màn hình. */
 .trial-gate {
@@ -3476,214 +3473,21 @@ html {
    Nay điều hướng phiên là một HÀNG NGANG GỌN nằm đúng trên sân khấu, rộng bằng
    sân khấu, KHÔNG lấy một pixel bề ngang nào.
    Thứ bậc: sân khấu > điều khiển > quản lí phiên. */
-.app-layout.has-tabs {
-  grid-template-areas:
-    "tabs right"
-    "center right"
-    "controls right";
-}
-/* Có dải phiên thì thẻ bỏ bo góc TRÊN — hai mảnh phải đọc ra một khối, không
-   phải hai vật thể xếp chồng. */
-.app-layout.has-tabs .workspace-card {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.app-layout.has-tabs.right-closed {
-  grid-template-areas:
-    "tabs"
-    "center"
-    "controls";
-}
-
-/* M18-UI — DẢI PHIÊN DÍNH VÀO THẺ MÔ PHỎNG, KHÔNG LƠ LỬNG.
-   Bản trước không có nền, không viền, không bo góc, nên nó trôi trong khoảng
-   trống giữa header và thẻ trắng — mắt đọc ra "rác" chứ không đọc ra bộ chuyển
-   bài. Tab của trình duyệt trông ổn vì chúng DÍNH VÀO thứ chúng chuyển.
-
-   Nay: cùng nền trắng, bo góc TRÊN, và `margin-bottom` âm đúng bằng `gap` của
-   lưới để nó liền một khối với thẻ bên dưới. Hành vi không đổi — vẫn chỉ hiện
-   khi có ≥2 phiên, và chuyển phiên vẫn là khôi phục thuần (0 fetch/init). */
-.session-tabs {
-  grid-area: tabs;
-  min-width: 0;
-  display: flex;
-  align-items: flex-end;
-  gap: var(--sp-sm);
-  padding: var(--sp-xs) var(--sp-sm) 0;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  border-bottom: 0;
-  border-radius: var(--rounded-lg) var(--rounded-lg) 0 0;
-  /* Triệt tiêu `gap` của lưới để dải và thẻ chạm nhau. */
-  margin-bottom: calc(var(--sp-md) * -1);
-}
-
-.session-tab-list {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-xs);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  min-width: 0;
-  /* Tràn thì CUỘN TRONG HÀNG NÀY, không đẩy trang tràn ngang. Số tab hiện thẳng
-     đã bị chặn ở `VISIBLE_TABS` nên đây chỉ là lưới an toàn cuối. */
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.session-tab-list::-webkit-scrollbar { display: none; }
 
 /* Tab = CHỮ + gạch chân khi đang xem. Không nền lớn, không viền khối, không
    thẻ — đó là thứ khiến điều hướng đọc ngang hàng với mô phỏng. */
-.session-tab {
-  display: flex;
-  align-items: center;
-  flex: 0 1 auto;
-  min-width: 0;
-  max-width: 200px;
-  border-bottom: 2px solid transparent;
-}
 
 /* Tab đang mở nối liền xuống thẻ: nền trắng + gạch màu ở ĐỈNH, không phải
    gạch chân — gạch chân cắt ngang đúng chỗ tab phải chạm vào sân khấu. */
-.session-tab.is-active {
-  border-bottom-color: transparent;
-  box-shadow: inset 0 2px 0 var(--primary);
-  background: var(--surface);
-  border-radius: var(--rounded-sm) var(--rounded-sm) 0 0;
-}
-
-.session-tab-open {
-  flex: 1 1 auto;
-  min-width: 0;
-  background: none;
-  border: none;
-  padding: var(--sp-xxs) var(--sp-xs);
-  font: inherit;
-  font-size: 13px;
-  color: var(--ink-muted);
-  cursor: pointer;
-  /* MỘT DÒNG, cắt bằng ellipsis. Tiêu đề đề bài dài 60+ ký tự là chuyện thường;
-     cho nó xuống dòng là cách hàng điều hướng phình thành thẻ. */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left;
-}
-
-.session-tab.is-active .session-tab-open { color: var(--ink); font-weight: 600; }
-.session-tab-open:hover { color: var(--primary); }
-
-.session-tab-close,
-.session-more-close {
-  flex: 0 0 auto;
-  background: none;
-  border: none;
-  padding: 0 var(--sp-xxs);
-  font: inherit;
-  font-size: 15px;
-  line-height: 1;
-  color: var(--ink-faint);
-  cursor: pointer;
-  border-radius: var(--rounded-sm);
-}
 
 /* Cùng tín hiệu hover với nút đóng cũ — không đẻ tông màu mới cho một việc sản
    phẩm đã có cách nói. (`--danger` KHÔNG có trong `tokens.css`; dùng nó là lỗi
    IM LẶNG — trình duyệt vứt cả dòng khai báo, không cảnh báo ở đâu.) */
-.session-tab-close:hover,
-.session-more-close:hover { color: var(--ink); background: var(--canvas-soft); }
-
-.session-tab-open:focus-visible,
-.session-tab-close:focus-visible,
-.session-more-trigger:focus-visible,
-.session-more-open:focus-visible,
-.session-more-close:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
 
 /* ── `+N` (màn rộng) ↔ bộ chọn "Mô phỏng: …" (màn hẹp) ──────────────────
    MỘT nút, hai vai, đổi vai bằng CSS. Đọc `window.innerWidth` trong JS sẽ làm
    SSR và trình duyệt khởi tạo khác nhau — store đã cố ý bỏ mọi mặc định phụ
    thuộc `window`, giữ đúng nguyên tắc đó ở đây. */
-.session-more { position: relative; flex: 0 0 auto; }
-.session-more.is-empty { display: none; }
-
-.session-more-trigger {
-  background: none;
-  border: none;
-  padding: var(--sp-xxs) var(--sp-xs);
-  border-radius: var(--rounded-sm);
-  font: inherit;
-  font-size: 13px;
-  color: var(--ink-muted);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.session-more-trigger:hover { color: var(--primary); background: var(--canvas-soft); }
-.session-more-current { display: none; }
-
-.session-more-list {
-  position: absolute;
-  z-index: 30;
-  top: calc(100% + 4px);
-  left: 0;
-  min-width: 240px;
-  max-width: 320px;
-  max-height: 60vh;
-  overflow-y: auto;
-  margin: 0;
-  padding: var(--sp-xxs);
-  list-style: none;
-  background: var(--surface);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
-  box-shadow: var(--shadow-elevated);
-}
-
-.session-more-list li { display: flex; align-items: center; gap: var(--sp-xxs); }
-.session-more-list li.is-active .session-more-open { color: var(--primary); font-weight: 600; }
-
-.session-more-open {
-  flex: 1 1 auto;
-  min-width: 0;
-  background: none;
-  border: none;
-  padding: var(--sp-xs);
-  font: inherit;
-  font-size: 13px;
-  color: var(--ink);
-  cursor: pointer;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-radius: var(--rounded-sm);
-}
-
-.session-more-open:hover { background: var(--canvas-soft); }
-
-/* Màn hẹp: KHÔNG ép tab desktop vào 768px. Chỉ còn một bộ chọn gọn; danh sách
-   bung ra là lớp phủ TẠM THỜI, không phải một cột nội dung thường trực. */
-@media (max-width: 860px) {
-  .session-tab-list { display: none; }
-  .session-more,
-  .session-more.is-empty { display: block; }
-  .session-more-count { display: none; }
-  .session-more-current {
-    display: inline-block;
-    max-width: min(70vw, 320px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    vertical-align: bottom;
-  }
-  .session-more-trigger::after { content: " ▾"; }
-}
 
 /* ── W4B-4B — CÂU TRUY VẤN LÀ THỨ HỌC SINH ĐỔI ────────────────────────────
    Một hàng gọn đứng trên bảng: nó là CÂU HỎI, bảng bên dưới là CÂU TRẢ LỜI.

@@ -48,7 +48,14 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > - **Sau đăng nhập: thanh điều hướng theo VAI TRÒ**, thu gọn được, thành ngăn
 >   kéo dưới 900px. Nó nằm **NGOÀI** lưới workspace — cột 208px bị gỡ ở W4B-3B
 >   nằm TRONG lưới nên trải qua cả hàng sân khấu lẫn hàng điều khiển; đặt ngoài
->   thì lỗi ấy không tái diễn được. `SessionTabs` không đổi một dòng.
+>   thì lỗi ấy không tái diễn được.
+> - **Nhiều phiên đã GỠ (M18-UI).** `SessionTabs` + `sessions`/`switchSession`/
+>   `closeSession` + ~5.2KB CSS đã xoá: mỗi lúc đúng MỘT mô phỏng, mở bài khác là
+>   THAY bài đang xem. Bài cũ không mất — nó nằm trong Lịch sử, mở lại 0 gọi AI.
+>   Lý do: nạp mô phỏng vốn đã thay phiên, nên tab thứ hai chỉ hiện sau khi bấm
+>   "+ Mô phỏng mới" — không đường nào vào bài đi qua nó. Cái giá đã biết: mở lại
+>   từ Lịch sử dựng lại state từ envelope nên what-if học sinh tự làm không khôi
+>   phục được.
 > - **Lớp học tối thiểu**: tạo lớp → mã 6 ký tự (bỏ `0O1IL` vì học sinh gõ tay
 >   mã đó) → học sinh vào lớp → giáo viên giao mô phỏng đang mở → học sinh làm →
 >   giáo viên quan sát. Mã thu hồi/sinh lại được và mã cũ chết ngay.

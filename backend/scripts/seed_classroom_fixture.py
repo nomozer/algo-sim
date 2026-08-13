@@ -4,7 +4,7 @@
 Chạy từ `backend/`:
     .venv/Scripts/python.exe scripts/seed_classroom_fixture.py
 
-Tạo: 1 giáo viên · 2 học sinh · 1 lớp · 1 bài thực hành đã giao.
+Tạo: 1 quản trị · 1 giáo viên · 2 học sinh · 1 lớp · 1 bài thực hành đã giao.
 
 CHÍNH SÁCH MẬT KHẨU CỦA FIXTURE (`§34` — không nhét mật khẩu production vào mã):
 mật khẩu đọc từ biến môi trường `ALGOSIM_FIXTURE_PASSWORD`; không đặt thì script
@@ -35,6 +35,10 @@ from app.persistence.classroom_models import (  # noqa: E402
 )
 from app.persistence.db import Base, SessionLocal, engine  # noqa: E402
 
+#: Tài khoản quản trị demo. Vai trò TEACHER — hệ KHÔNG có vai `admin` (xem
+#: `accounts/policy.py::Role`): chưa có việc gì cho nó làm, và thêm một vai chỉ
+#: để đặt tên là thêm một nhánh quyền không ai kiểm.
+ADMIN_EMAIL = "admin@algosim.test"
 TEACHER_EMAIL = "gv.demo@algosim.test"
 STUDENT_A_EMAIL = "hs.an@algosim.test"
 STUDENT_B_EMAIL = "hs.binh@algosim.test"
@@ -72,6 +76,7 @@ def main() -> int:
     Base.metadata.create_all(engine)  # SQLite dev; Postgres do Alembic sở hữu
     password = _password()
     with SessionLocal() as session:
+        _get_or_create(session, ADMIN_EMAIL, "Quản trị (demo)", Role.TEACHER, password)
         teacher = _get_or_create(session, TEACHER_EMAIL, "Cô Lan (demo)", Role.TEACHER, password)
         an = _get_or_create(session, STUDENT_A_EMAIL, "Nguyễn Văn An", Role.STUDENT, password)
         binh = _get_or_create(session, STUDENT_B_EMAIL, "Trần Thị Bình", Role.STUDENT, password)
@@ -108,6 +113,7 @@ def main() -> int:
                 envelope_json=json.dumps(DEMO_ENVELOPE, ensure_ascii=False)))
 
         session.commit()
+        print(f"  quản trị  : {ADMIN_EMAIL}")
         print(f"  giáo viên : {TEACHER_EMAIL}")
         print(f"  học sinh  : {STUDENT_A_EMAIL} · {STUDENT_B_EMAIL}")
         print(f"  lớp       : {cls.name}  ·  mã {cls.join_code}")

@@ -810,7 +810,7 @@ W4B-3A: thêm `exploreOpen`/`setExploreOpen` — cờ TRÌNH BÀY thứ hai, cù
 `challengeOpen`, cũng mù domain. **Hai cờ chứ không một** vì hai chế độ khác
 nhau ở chỗ ai phán xét: Thử thách đưa cam kết qua `predict.check` (engine phán
 đúng/sai), Khám phá đưa thao tác qua `module.apply` (không phán gì). Cả hai:
-lưu theo phiên (`OpenSession`), reset khi `loadEnvelope`/`resetSim`/`reset`.
+reset khi `loadEnvelope`/`resetSim`/`reset` (M18-UI: không còn lưu theo phiên).
 Trước wave này cờ là `useState` cục bộ tên `labOpen` trong hai renderer miền.
 
 ### `state/history.ts` · Change impact: offline
@@ -1313,44 +1313,30 @@ chuyên biệt. Tests: `data/sample-coverage-w4b3d.test.ts` (mọi target
 `ai_reachable_public` phải có mẫu · mọi mẫu phải `validateConfig`+`init` được ·
 D≠E · `GROUP_ORDER` phủ mọi `Domain`).
 
-### `components/SessionTabs.tsx` — PHIÊN ĐANG MỞ (W4B-3B; thay `SessionRail` của W4B-2Z §29)
-HÀNG NGANG gọn ngay TRÊN sân khấu (`grid-area: tabs`, class `.has-tabs` do
-`App.tsx` gắn), **chỉ dựng khi có ≥2 phiên**. Exports: `SessionTabs`,
-`sessionLabels(titles)` (hàm thuần — hậu tố `· 1`, `· 2` CHỈ khi trùng tiêu đề;
-trình bày thuần, không đụng config/envelope, không suy nghĩa từ chuỗi).
+### ~~`components/SessionTabs.tsx`~~ — ĐÃ GỠ (M18-UI)
 
-**VÌ SAO THAY CỘT.** Bản cũ là `grid-area: rail` rộng 208px trải qua **cả hai**
-hàng `center` và `controls`:
+**Nhiều phiên mở song song đã bị xoá khỏi sản phẩm.** Cùng đi: `SessionTabs.tsx`,
+`session-tabs-w4b3b.test.tsx`, `state/sessions.test.ts`, các trường
+`sessions`/`activeSessionId` + `newSession`/`switchSession`/`closeSession` +
+`OpenSession` trong store, và ~5.2KB CSS `.session-tab*`/`.session-more*` cùng
+biến thể lưới `.app-layout.has-tabs`.
 
-    "rail center right"
-    "rail controls right"
+**Vì sao gỡ.** Mở bài thứ hai không phải việc học sinh làm trong một tiết, và
+dải tab nó sinh ra chiếm chỗ ngay trên sân khấu. Quan trọng hơn: nạp mô phỏng
+vốn đã THAY phiên đang chọn, nên tab thứ hai chỉ xuất hiện sau khi bấm
+"+ Mô phỏng mới" — tức không đường nào vào bài đi qua nó, mà nó vẫn phải được
+nuôi (bố cục, tràn tab, lớp phủ màn hẹp, guard riêng).
 
-nên nó bóp sân khấu VÀ bóp dải điều khiển đúng ngần ấy — nguyên nhân thật của
-việc hàng transport xuống dòng. Hai triệu chứng, một nguyên nhân. Thứ bậc đúng:
-**sân khấu > điều khiển > quản lí phiên**; một cột thường trực cho hạng mục thứ
-ba là đặt ngược thứ bậc.
+**Điều kiện khiến việc gỡ chấp nhận được:** bài bị thay KHÔNG mất — `loadEnvelope`
+ghi nó vào Lịch sử trước đó, và `reopenFromHistory` dựng lại từ envelope với
+**0 gọi mạng**. Đây nay là đường DUY NHẤT quay lại một bài đã mở, nên bất biến
+ZERO-AI của nó quan trọng hơn trước; khoá ở `state/workspace-lifecycle.test.ts`
+(file thay `sessions.test.ts`, giữ lại ba bất biến không chết theo tính năng:
+bài mới luôn mở ở Quan sát · Đặt lại đóng cả hai chế độ · đổi bài 0 gọi mạng).
 
-**LỖI CHỨC NĂNG BẢN CŨ.** `+ Mô phỏng mới` chỉ nằm trong đầu cột, mà cột ẩn khi
-<2 phiên ⇒ đang mở đúng MỘT bài thì **không có đường nào mở bài thứ hai**. Lối
-vào đó nay ở `App` header, cạnh "Giải thích" (chủ sở hữu sẵn có của hành động
-mức-không-gian-làm-việc) nên có mặt ở MỌI số phiên.
-
-Tràn: hiện thẳng tối đa `VISIBLE_TABS = 4` (phiên đang xem LUÔN nằm trong nhóm
-hiện thẳng), phần dư gộp vào `+N`; danh sách bung ra liệt kê **đủ** phiên nên
-không bài nào không với tới được. ≤860px: CSS ẩn hàng tab, cùng MỘT nút đổi vai
-thành bộ chọn `Mô phỏng: <tên> ▾` + lớp phủ tạm thời — **không** đọc
-`window.innerWidth` trong JS (SSR và trình duyệt phải khởi tạo giống nhau).
-
-Sở hữu state: `state/store.ts` — `sessions: OpenSession[]` + `activeSessionId`,
-với `newSession` / `switchSession` / `closeSession`. `active` là BẢN LÀM VIỆC
-của phiên đang chọn; chuyển phiên = chụp bản làm việc vào phiên cũ rồi khôi phục
-bản của phiên mới (đúng tham chiếu object cũ).
-
-**Phiên ≠ Lịch sử.** Lịch sử ghi "đã từng mở" (bền, localStorage,
-`reopenFromHistory` dựng lại từ envelope rồi tua tới `lastCursor`). Phiên ghi
-"đang mở và đang dở" — chuyển phiên KHÔNG dựng lại gì, nên what-if của học sinh
-còn nguyên. Cả hai đều ZERO-AI nhưng vì lý do khác nhau.
-Tests: `state/sessions.test.ts` (A→B→A, đóng phiên, 0 `fetch`, 0 `init`).
+⚠️ Khác biệt CÒN LẠI so với phiên: mở lại từ Lịch sử **dựng lại state từ
+envelope** rồi tua tới `lastCursor`, nên thao tác what-if học sinh tự làm không
+được khôi phục. Đó là cái giá đã biết của việc gỡ, không phải lỗi.
 
 ### `scripts/measure-composition.mjs` · offline (cần Chrome + Vite)
 **ĐO bố cục, không cảm nhận** (W4B-2T §4). Với mỗi target chạy được offline, đo
