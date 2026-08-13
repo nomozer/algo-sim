@@ -1686,3 +1686,26 @@ Và một lần nữa dính bẫy **backtick trong template literal** (đã cắ
 báo `SyntaxError`. Trong khối đó không được có backtick nào.
 
 Artifact: `docs/evaluation/m18/stage-composition.json`.
+
+### `frontend/scripts/audit-composition.mjs` · offline (cần `npm run dev`)
+M19 — SOÁT BỐ CỤC DÙNG CHUNG toàn danh mục. Thay `measure-stage-composition.mjs`
+(bản đó chỉ đo mực/thẻ, không đo KHUNG và không đo bốn rail).
+
+Mỗi dòng: sân khấu · khung cơ chế · mực có nghĩa · `frameFill` · bốn rail +
+`maxRailDelta` · tràn ngang · cắt hình · PHÁN QUYẾT. Hai lỗi tách bạch, không
+gộp thành một điểm: **A** = mực < 70% KHUNG mà khung lại chiếm > 90% sân khấu
+(cơ chế nhỏ trôi trong khung quá khổ) · **B** = rail lệch > 24px (hình và chữ
+hai hệ căn lề).
+
+⚠️ KHÔNG chấm bằng tỉ lệ lấp một mình: 17% là ĐÚNG nếu khung cũng ôm sát 17% ấy.
+Lỗi là 17% mực trong khung rộng 100%, nên mẫu số là KHUNG chứ không phải thẻ.
+
+Cách chọn "mực có nghĩa" khai ngay trong file (bắt buộc — ba lần đo trước đều
+trả về số mà vẫn sai): tính `<svg>` + phần tử LÁ có sơn; bỏ div BỌC (rộng bằng
+thẻ nên nuốt mọi phép đo) và bỏ đồ đạc của thẻ (tiêu đề, chú giải, thuyết minh,
+bảng gập, thanh tham số).
+
+Hai hiện vật đã sửa trong chính script: lỗi trong trang bị nuốt thành
+"(không trả lời)" nên bốn target hỏng đọc ra như thiếu mẫu — nay lỗi nổi lên; và
+lượt nạp nặng thỉnh thoảng không trả kịp nên có THỬ LẠI một lần, vẫn hỏng thì
+ghi dòng `KHÔNG ĐO ĐƯỢC` chứ không im lặng bỏ.

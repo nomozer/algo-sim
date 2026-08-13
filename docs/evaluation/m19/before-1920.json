@@ -1,0 +1,468 @@
+{
+  "when": "2026-08-13T14:36:50.010Z",
+  "label": "BEFORE",
+  "rows": [
+    {
+      "viewport": 1920,
+      "target": "algorithm.binary_search",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 969,
+      "inkX": 462,
+      "frameFill": 59.7,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 327,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.bounded_control_flow",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 560,
+      "inkX": 151,
+      "frameFill": 34.5,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 151,
+        "explanation": 135
+      },
+      "maxRailDelta": 81,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.bubble_sort",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 684,
+      "inkX": 604,
+      "frameFill": 42.1,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 469,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.count_if",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 969,
+      "inkX": 462,
+      "frameFill": 59.7,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 327,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.find_max",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 779,
+      "inkX": 557,
+      "frameFill": 48,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 422,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.find_min",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 684,
+      "inkX": 604,
+      "frameFill": 42.1,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 469,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.insertion_sort",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 589,
+      "inkX": 652,
+      "frameFill": 36.3,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 517,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.linear_search",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 779,
+      "inkX": 557,
+      "frameFill": 48,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 422,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.scan",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 494,
+      "inkX": 699,
+      "frameFill": 30.4,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 564,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.selection_sort",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 494,
+      "inkX": 699,
+      "frameFill": 30.4,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 564,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.sum_if",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 874,
+      "inkX": 509,
+      "frameFill": 53.8,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 232,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 374,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.base_conversion",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1622,
+      "inkX": 135,
+      "frameFill": 99.9,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 213,
+        "legend": null,
+        "explanation": null
+      },
+      "maxRailDelta": 78,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "B"
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.character_encoding",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1622,
+      "inkX": 135,
+      "frameFill": 99.9,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 213,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 78,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "B"
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.decimal_to_binary",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 276,
+      "inkX": 808,
+      "frameFill": 17,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 213,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 673,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "database.relational_table_query",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1622,
+      "inkX": 135,
+      "frameFill": 99.9,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 251,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 116,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "B"
+    },
+    {
+      "viewport": 1920,
+      "target": "generic.rule_scene",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1111,
+      "inkX": 135,
+      "frameFill": 68.4,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 135,
+        "legend": null,
+        "explanation": null
+      },
+      "maxRailDelta": 0,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A"
+    },
+    {
+      "viewport": 1920,
+      "target": "logic.and_gate",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 460,
+      "inkX": 716,
+      "frameFill": 28.3,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 195,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 581,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "logic.boolean_dag",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 694,
+      "inkX": 505,
+      "frameFill": 42.7,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 505,
+        "legend": 1227,
+        "explanation": 135
+      },
+      "maxRailDelta": 722,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "network.graph_traversal",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1597,
+      "inkX": 135,
+      "frameFill": 98.3,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 197,
+        "legend": 135,
+        "explanation": null
+      },
+      "maxRailDelta": 62,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "B"
+    },
+    {
+      "viewport": 1920,
+      "target": "network.packet_routing",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 880,
+      "inkX": 506,
+      "frameFill": 54.2,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 197,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 371,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "A+B"
+    },
+    {
+      "viewport": 1920,
+      "target": "network.protocol_encapsulation",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1622,
+      "inkX": 135,
+      "frameFill": 99.9,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 197,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 62,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "B"
+    },
+    {
+      "viewport": 1920,
+      "target": "tree.traversal",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1597,
+      "inkX": 135,
+      "frameFill": 98.3,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 183,
+        "legend": 135,
+        "explanation": 135
+      },
+      "maxRailDelta": 48,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "B"
+    },
+    {
+      "viewport": 1920,
+      "target": "web.style_model",
+      "stageW": 1672,
+      "frameW": 1624,
+      "hasFrame": false,
+      "inkW": 1621,
+      "inkX": 136,
+      "frameFill": 99.8,
+      "stageFill": 97.1,
+      "rails": {
+        "instruction": 186,
+        "legend": null,
+        "explanation": 135
+      },
+      "maxRailDelta": 50,
+      "overflowX": false,
+      "clipped": false,
+      "verdict": "B"
+    }
+  ],
+  "failing": 23,
+  "total": 23
+}
