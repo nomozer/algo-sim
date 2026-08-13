@@ -215,6 +215,47 @@ class TestTruongNeo:
         assert mong == [], f"đơn vị chương trình mỏng (<3 case): {', '.join(mong)}"
         assert len(dem) >= 8, f"số đơn vị được phủ tụt xuống {len(dem)}"
 
+    def test_W4_moi_target_deu_join_duoc_ve_don_vi_chuong_trinh(self):
+        """Join target ↔ đơn vị phải DẪN XUẤT từ case, không chép tay.
+
+        Catalog ghi neo bằng số BÀI ("T10 CĐ5 · T11CS B17"), benchmark ghi bằng
+        mã CHỦ ĐỀ ("T10.CD5") — hai hệ ký hiệu khác nhau nên join thẳng là bịa.
+        Cầu nối có sẵn: mỗi case khai CẢ mã đơn vị LẪN target.
+
+        Ngoại lệ DUY NHẤT được phép, và phải nêu lý do: `binary.base_conversion`
+        phủ cơ số 8/16, mà chính benchmark đã khai chúng NOT_ANCHORED (hợp đồng
+        engine {2,8,10,16} rộng hơn neo SGK — SGK chỉ neo nhị phân).
+        """
+        from collections import defaultdict
+
+        from app.evaluation.datasets import NEW_POOLS, POOLS as ALL_POOLS
+        from app.simulation.catalog import CATALOG
+
+        MIEN_TRU = {"binary.base_conversion"}
+
+        pools = {n: p for n, p in ALL_POOLS.items() if n in NEW_POOLS or n == "thesis"}
+        by_target: dict[str, set[str]] = defaultdict(set)
+        thay: set[str] = set()
+        for pool in pools.values():
+            for i in pool:
+                if i.id in thay or not i.expect_simulation_id:
+                    continue
+                thay.add(i.id)
+                for code in unit_codes(i.curriculum_area):
+                    by_target[i.expect_simulation_id].add(code)
+
+        thieu = sorted(set(CATALOG) - set(by_target) - MIEN_TRU)
+        assert thieu == [], (
+            "target không có case benchmark nào neo tới ⇒ không nói được nó phủ "
+            f"đơn vị chương trình nào: {thieu}")
+
+        het_mien_tru = sorted(MIEN_TRU & set(by_target))
+        assert het_mien_tru == [], (
+            f"target nay ĐÃ có bằng chứng phủ — xoá khỏi MIEN_TRU: {het_mien_tru}")
+
+        la = sorted(set(by_target) - set(CATALOG))
+        assert la == [], f"case neo tới target không có trong catalog: {la}"
+
     def test_van_xuoi_thuan_bi_TU_CHOI(self):
         """Guard phải đỏ được — đây là dạng chuỗi đã gây ra cả hai lần đếm sai."""
         assert check_anchor("ngoài phạm vi công khai Tin học THPT — không anchor SGK")

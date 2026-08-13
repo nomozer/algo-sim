@@ -58,7 +58,9 @@
 | Cổng phạm vi + khả-mô-phỏng | **DONE (W3)** | `simulation/scope_gate.py` — cổng thứ NĂM, trước đường generic; `test_scope_gate.py` 15 test + 4 phép tiêm lỗi | — |
 | Phán quyết phạm vi do LLM sở hữu (lỗ R0) | **ĐÃ BỊT (W3)** | trước W3, đề ngoài môn chỉ bị chặn khi `classify` tự từ chối; nay LLM KHAI, server PHÁN | — |
 | Lời từ chối cho học sinh | **DONE (W3)** | 3 hạng mục riêng: `out_of_scope` · `not_simulation_suitable` · ngoài danh mục — không hứa sai “sẽ mở rộng dần” | W12 (soát ảnh) |
-| Chứng nhận từng target (4 gate) | **OPEN** | — | **W4** |
+| Chứng nhận từng target | **PARTIAL (W4)** | manifest `target-certification.test.ts` — 4 cổng ĐỀU ĐÃ có chủ; ghi rõ cổng nào CHƯ A có bằng chứng tươi | W12 (sinh lại bằng chứng trình duyệt) |
+| Join target ↔ đơn vị chương trình | **DONE (W4)** | 22/23 có bằng chứng, dẫn xuất từ case; ngoại lệ `binary.base_conversion` (cơ số 8/16 ngoài neo SGK) | — |
+| Hai hệ ký hiệu neo trong cùng kho | **ĐÃ BẮC CẦU (W4)** | catalog ghi số BÀI, benchmark ghi mã CHỦ ĐỀ — join qua case thay vì chép tay SGK | W13 (hợp nhất?) |
 | Kim tự tháp test (T0–T3) | **OPEN** | hiện chỉ có "chạy hết" | **W8** |
 | Nghiệm thu trình duyệt 4 bề rộng | **DONE** | composition + classroom + experience | W12 (mở rộng) |
 | Hook chất lượng phân biệt SVG vs HTML | **OPEN** | false positive đã xác định ở `ArrayView` | **W10** |

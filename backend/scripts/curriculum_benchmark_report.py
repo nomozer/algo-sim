@@ -91,6 +91,17 @@ def main() -> int:
                 family_counts[item.capability_family] += 1
             complexity_counts[item.complexity] += 1
 
+    # W4 — JOIN target ↔ đơn vị chương trình, DẪN XUẤT chứ không chép tay.
+    # Catalog ghi neo bằng số BÀI ("T10 CĐ5 · T11CS B17"), benchmark ghi bằng mã
+    # CHỦ ĐỀ ("T10.CD5") — hai hệ ký hiệu khác nhau, join thẳng là bịa. Cầu nối
+    # có sẵn trong dữ liệu: mỗi case đã khai CẢ mã đơn vị LẪN target nó nhắm tới.
+    target_units: dict[str, list[str]] = {}
+    for sid in sorted(known):
+        codes = sorted({c for unit, items in by_unit.items() for i in items
+                        if i.expect_simulation_id == sid for c in [unit]})
+        target_units[sid] = codes
+    khong_neo = [sid for sid, c in target_units.items() if not c]
+
     units = sorted(by_unit)
     print(f"HEAD {_head()[:8]}")
     print(f"\nĐƠN VỊ CHƯƠNG TRÌNH ĐƯỢC PHỦ: {len(units)}")
@@ -114,6 +125,10 @@ def main() -> int:
     print(f"\nHỌ NĂNG LỰC: {len(family_counts)} · ĐỘ PHỨC TẠP: "
           f"{dict(sorted(complexity_counts.items()))}")
     print(f"BIẾN THỂ METAMORPHIC sinh được: {metamorphic_total}")
+    co_neo = len(target_units) - len(khong_neo)
+    print(f"\nTARGET CÓ BẰNG CHỨNG PHỦ CHƯƠNG TRÌNH: {co_neo}/{len(target_units)}")
+    if khong_neo:
+        print(f"  ⚠️ chưa có case nào neo tới: {', '.join(khong_neo)}")
     if thin:
         print(f"\n⚠️ ĐƠN VỊ MỎNG (<3 case), cần bổ sung ở W2A: {', '.join(thin)}")
 
@@ -127,6 +142,8 @@ def main() -> int:
         "environment": {"python": sys.version.split()[0], "targets": len(known)},
         "unitsCovered": len(units),
         "unitCaseCounts": {u: len(by_unit[u]) for u in units},
+        "targetUnits": target_units,
+        "targetsWithoutCurriculumEvidence": khong_neo,
         "thinUnits": thin,
         "unanchoredCases": unanchored,
         "scopeCounts": dict(scope_counts),

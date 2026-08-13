@@ -1,0 +1,358 @@
+{
+  "generatedAt": "2026-08-13T17:09:21.427Z",
+  "note": "sinh từ registry qua vitest (KHÔNG cần trình duyệt); dùng kèm commit chứa nó.",
+  "gateOwners": {
+    "semantic": "backend/app/evaluation/authenticity_audit.py",
+    "representation": "frontend/src/simulations/representation-policy-w4b2r.test.ts",
+    "interaction": "frontend/scripts/experience-audit-w4b4a (soát trải nghiệm)",
+    "composition": "frontend/scripts/audit-composition.mjs"
+  },
+  "gateEvidence": {
+    "representation": "PRESENT (khoá bởi vitest trong chính commit này)",
+    "semantic": "PRESENT (khoá bởi pytest trong chính commit này)",
+    "interaction": "NO_EVIDENCE",
+    "composition": "NO_EVIDENCE"
+  },
+  "rows": [
+    {
+      "id": "algorithm.binary_search",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.bounded_control_flow",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.bubble_sort",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.count_if",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.find_max",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.find_min",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.insertion_sort",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.linear_search",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.scan",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": false,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.selection_sort",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "algorithm.sum_if",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "binary.base_conversion",
+      "domain": "binary",
+      "interactionMode": "hybrid",
+      "declaredEntryPoints": [
+        "timeline"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "binary.character_encoding",
+      "domain": "binary",
+      "interactionMode": "hybrid",
+      "declaredEntryPoints": [
+        "timeline",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "binary.decimal_to_binary",
+      "domain": "binary",
+      "interactionMode": "exploratory",
+      "declaredEntryPoints": [
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "database.relational_table_query",
+      "domain": "database",
+      "interactionMode": "hybrid",
+      "declaredEntryPoints": [
+        "timeline",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "generic.rule_scene",
+      "domain": "generic",
+      "interactionMode": "hybrid",
+      "declaredEntryPoints": [
+        "timeline",
+        "edit",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "logic.and_gate",
+      "domain": "logic",
+      "interactionMode": "exploratory",
+      "declaredEntryPoints": [
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "logic.boolean_dag",
+      "domain": "logic",
+      "interactionMode": "hybrid",
+      "declaredEntryPoints": [
+        "timeline",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "network.graph_traversal",
+      "domain": "network",
+      "interactionMode": "hybrid",
+      "declaredEntryPoints": [
+        "timeline"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "network.packet_routing",
+      "domain": "network",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "network.protocol_encapsulation",
+      "domain": "network",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
+        "predict",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d",
+        "3d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "tree.traversal",
+      "domain": "tree",
+      "interactionMode": "hybrid",
+      "declaredEntryPoints": [
+        "timeline",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "web.style_model",
+      "domain": "web",
+      "interactionMode": "exploratory",
+      "declaredEntryPoints": [
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": true,
+      "representationVerdict": "CERTIFIED"
+    }
+  ]
+}

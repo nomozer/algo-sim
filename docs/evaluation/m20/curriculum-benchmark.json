@@ -1,6 +1,6 @@
 {
-  "head": "f2cdd5988c189697a799ef4c751f37f95d644ebe",
-  "generatedAt": "2026-08-13T16:32:49.473341+00:00",
+  "head": "689e170cc88edd5990f1c9f64dcc8966ef9929dc",
+  "generatedAt": "2026-08-13T17:06:05.622020+00:00",
   "tool": "curriculum_benchmark_report.py",
   "toolVersion": "1",
   "environment": {
@@ -18,6 +18,83 @@
     "T12.CD4": 5,
     "T12CS.CD7": 3
   },
+  "targetUnits": {
+    "algorithm.binary_search": [
+      "T11CS.CD6"
+    ],
+    "algorithm.bounded_control_flow": [
+      "T10.CD5"
+    ],
+    "algorithm.bubble_sort": [
+      "T11CS.CD6"
+    ],
+    "algorithm.count_if": [
+      "T10.CD5"
+    ],
+    "algorithm.find_max": [
+      "T11CS.CD6"
+    ],
+    "algorithm.find_min": [
+      "T11CS.CD6"
+    ],
+    "algorithm.insertion_sort": [
+      "T11CS.CD6"
+    ],
+    "algorithm.linear_search": [
+      "T11CS.CD6"
+    ],
+    "algorithm.scan": [
+      "T10.CD5"
+    ],
+    "algorithm.selection_sort": [
+      "T11CS.CD6"
+    ],
+    "algorithm.sum_if": [
+      "T10.CD5"
+    ],
+    "binary.base_conversion": [],
+    "binary.character_encoding": [
+      "T10.CD1"
+    ],
+    "binary.decimal_to_binary": [
+      "T10.CD1"
+    ],
+    "database.relational_table_query": [
+      "T11.CD4"
+    ],
+    "generic.rule_scene": [
+      "T10.CD1",
+      "T10.CD2",
+      "T11.CD4",
+      "T12.CD2",
+      "T12.CD4",
+      "T12CS.CD7"
+    ],
+    "logic.and_gate": [
+      "T10.CD1"
+    ],
+    "logic.boolean_dag": [
+      "T10.CD1"
+    ],
+    "network.graph_traversal": [
+      "T12.CD2"
+    ],
+    "network.packet_routing": [
+      "T12.CD2"
+    ],
+    "network.protocol_encapsulation": [
+      "T12.CD2"
+    ],
+    "tree.traversal": [
+      "T11CS.CD6"
+    ],
+    "web.style_model": [
+      "T12.CD4"
+    ]
+  },
+  "targetsWithoutCurriculumEvidence": [
+    "binary.base_conversion"
+  ],
   "thinUnits": [],
   "unanchoredCases": [
     "cap-quicksort-gap",

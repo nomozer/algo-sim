@@ -1,0 +1,392 @@
+{
+  "generatedAt": "2026-08-13T17:03:40.287Z",
+  "note": "sinh từ registry qua vitest (KHÔNG cần trình duyệt); dùng kèm commit chứa nó. `capabilities` là hợp đồng module khai, không phải số thao tác đếm được.",
+  "rows": [
+    {
+      "id": "algorithm.binary_search",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.bounded_control_flow",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.bubble_sort",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.count_if",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.find_max",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.find_min",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.insertion_sort",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.linear_search",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.scan",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.selection_sort",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "algorithm.sum_if",
+      "domain": "algorithm",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "binary.base_conversion",
+      "domain": "binary",
+      "interactionMode": "hybrid",
+      "capabilities": [
+        "timeline"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "binary.character_encoding",
+      "domain": "binary",
+      "interactionMode": "hybrid",
+      "capabilities": [
+        "timeline",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "binary.decimal_to_binary",
+      "domain": "binary",
+      "interactionMode": "exploratory",
+      "capabilities": [
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "database.relational_table_query",
+      "domain": "database",
+      "interactionMode": "hybrid",
+      "capabilities": [
+        "timeline",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "generic.rule_scene",
+      "domain": "generic",
+      "interactionMode": "hybrid",
+      "capabilities": [
+        "timeline",
+        "edit",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "logic.and_gate",
+      "domain": "logic",
+      "interactionMode": "exploratory",
+      "capabilities": [
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "logic.boolean_dag",
+      "domain": "logic",
+      "interactionMode": "hybrid",
+      "capabilities": [
+        "timeline",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "network.graph_traversal",
+      "domain": "network",
+      "interactionMode": "hybrid",
+      "capabilities": [
+        "timeline"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "network.packet_routing",
+      "domain": "network",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "explore",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "network.protocol_encapsulation",
+      "domain": "network",
+      "interactionMode": "progressive",
+      "capabilities": [
+        "timeline",
+        "predict",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d",
+        "3d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "MANIPULABLE",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "tree.traversal",
+      "domain": "tree",
+      "interactionMode": "hybrid",
+      "capabilities": [
+        "timeline",
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    },
+    {
+      "id": "web.style_model",
+      "domain": "web",
+      "interactionMode": "exploratory",
+      "capabilities": [
+        "narrate"
+      ],
+      "declaredVisualModes": [
+        "2d"
+      ],
+      "renderableVisualModes": [],
+      "hasOfflineSample": false,
+      "interactionGate": "TRACE_ONLY",
+      "representationGate": "DECLARED_WITHOUT_RENDERER"
+    }
+  ]
+}

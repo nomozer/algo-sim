@@ -483,6 +483,19 @@ chối đúng — là **targeted acceptance, KHÔNG phải bằng chứng thốn
 số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
 `mechanism_gate.py`).
 
+### `frontend/src/simulations/target-certification.test.ts` (M20 W4) · offline
+MANIFEST chứng nhận theo TARGET — **không** phải cổng chất lượng thứ tư. Wave 4
+soát ra cả bốn cổng đều đã có chủ: ngữ nghĩa → `authenticity_audit.py` · trình
+bày → `representation-policy-w4b2r.test.ts` · tương tác → soát trải nghiệm
+W4B-4A · chỗ đứng → `audit-composition.mjs`. Thứ thiếu là **ai phủ target nào và
+bằng chứng còn tươi không** — bốn cổng chạy độc lập nên không ai trả lời được, và
+đó chính là chỗ một target hỏng lặng lẽ đi qua. Manifest ghi rõ `NO_EVIDENCE` /
+`STALE_EVIDENCE`, KHÔNG gộp thành "đạt". Artifact:
+`docs/evaluation/m20/target-certification.json`.
+⚠️ Khoá một phân biệt đã suýt ship sai trong chính wave này: `explore`/`predict`
+là **lối vào KHAI**, không phải thao tác — lấy chúng làm thước đo cho ra 11
+target "chỉ xem" trong khi probe theo hình dạng miền chỉ thấy 3.
+
 ### `simulation/scope.py` (M20 W3) · Change impact: offline
 MỘT bộ từ vựng `DomainScope` + `Simulatability` + `REQUIRES_SIMULATION`, dùng
 chung production ↔ evaluation. Ở tầng `simulation/` vì production là nơi PHÁN,
