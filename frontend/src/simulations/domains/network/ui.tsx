@@ -1,3 +1,4 @@
+import { stageSvgSize } from "../../stage-size";
 import { useEffect, useRef, useState } from "react";
 import type { WorkspaceProps } from "../../types";
 import { routeEdgeViews, type EdgeStatus } from "./edge-view";
@@ -172,7 +173,7 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage" ref={boxRef}>
-        <svg viewBox={`0 0 ${width} ${height}`} width="100%" style={{ maxWidth: width, display: "block", margin: "0 auto" }}>
+        <svg viewBox={`0 0 ${width} ${height}`} {...stageSvgSize(width)}>
           {/* Liên kết — trạng thái theo TIẾN TRÌNH gói tin, không phải tĩnh.
               Trước W4B-1B mọi cạnh trên tuyến tô như nhau ở MỌI bước, nên bước
               1 và bước cuối vẽ giống hệt: học sinh không thấy đoạn nào đã đi,

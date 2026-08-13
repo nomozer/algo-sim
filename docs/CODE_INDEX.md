@@ -1709,3 +1709,17 @@ Hai hiện vật đã sửa trong chính script: lỗi trong trang bị nuốt t
 "(không trả lời)" nên bốn target hỏng đọc ra như thiếu mẫu — nay lỗi nổi lên; và
 lượt nạp nặng thỉnh thoảng không trả kịp nên có THỬ LẠI một lần, vẫn hỏng thì
 ghi dòng `KHÔNG ĐO ĐƯỢC` chứ không im lặng bỏ.
+
+### `simulations/stage-size.ts`
+M19 — MỘT LUẬT KÍCH THƯỚC SVG SÂN KHẤU, một chủ sở hữu. `stageSvgSize(w)` trả
+`width={w}` + `max-width: 100%` (co được, KHÔNG phóng được).
+
+Vì sao gom: sáu renderer cùng viết `width="100%"` + `maxWidth: w`, dạng đó KHÔNG
+khai bề rộng riêng nên khi cha là `fit-content` thì `100%` không có gì quy chiếu
+và Chrome rơi về 300px mặc định (`boolean_dag` đã dính: sơ đồ 662px vẽ ở 300px).
+Nó cũng buộc phải kèm `margin: 0 auto` để trông cân, và chính cú căn giữa đó tạo
+RAIL THỨ HAI — đo được `and_gate` lệch 581px, `decimal_to_binary` 673px.
+
+Áp cho `binary/ui` · `logic/ui` · `network/ui` · `algorithm/program-module`.
+`ArrayView` giữ bề rộng tự đo từ khung chứa (nó vốn co giãn theo cột) nhưng đã
+BỎ `margin: 0 auto` cùng lý do.

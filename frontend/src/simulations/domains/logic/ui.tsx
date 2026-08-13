@@ -1,3 +1,4 @@
+import { stageSvgSize } from "../../stage-size";
 import type { WorkspaceProps } from "../../types";
 import { andOutput, type Bit, type LogicConfig, type LogicState } from "./model";
 
@@ -34,7 +35,7 @@ export function LogicWorkspace({ state, dispatch }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage">
-        <svg viewBox="0 0 460 240" width="100%" style={{ maxWidth: 460, display: "block", margin: "0 auto" }}>
+        <svg viewBox="0 0 460 240" {...stageSvgSize(460)}>
           {/* Dây từ hai công tắc vào cổng */}
           <path d="M80 70 H180 V96 H210" fill="none" stroke={wireA} strokeWidth={3} />
           <path d="M80 170 H180 V144 H210" fill="none" stroke={wireB} strokeWidth={3} />

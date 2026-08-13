@@ -1,3 +1,4 @@
+import { stageSvgSize } from "../../stage-size";
 import { PseudocodeView } from "../../../components/PseudocodeView";
 import { VarsView, formatVarValue } from "../../../components/VarsView";
 import { IconCheck } from "../../../components/icons";
@@ -168,7 +169,7 @@ function LoopAxis({
   const boundX = x(shape.bound);
 
   return (
-    <svg viewBox={`0 0 ${W} 96`} width="100%" style={{ maxWidth: W, display: "block" }}
+    <svg viewBox={`0 0 ${W} 96`} {...stageSvgSize(W)}
          role="img" aria-label={`Trục giá trị của ${shape.varName}, biên dừng ${shape.bound}`}>
       {/* vùng còn thoả điều kiện (bên trái biên với <=/<) — nền rất nhạt */}
       <rect x={PAD} y={30} width={Math.max(0, boundX - PAD)} height={16}

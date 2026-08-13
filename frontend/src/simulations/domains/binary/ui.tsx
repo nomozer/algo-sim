@@ -1,3 +1,4 @@
+import { stageSvgSize } from "../../stage-size";
 import type { WorkspaceProps } from "../../types";
 import {
   binaryString,
@@ -25,7 +26,7 @@ export function BinaryWorkspace({ state, dispatch }: Props) {
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
       <div className="sim-stage" style={{ padding: "var(--sp-md) 0" }}>
-        <svg viewBox={`0 0 ${width} 150`} width="100%" style={{ maxWidth: width, display: "block", margin: "0 auto" }}>
+        <svg viewBox={`0 0 ${width} 150`} {...stageSvgSize(width)}>
           {state.bits.map((bit, i) => {
             const x = i * (CELL + GAP);
             return (

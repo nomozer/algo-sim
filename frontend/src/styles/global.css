@@ -1287,7 +1287,9 @@ html {
 .dag-stage {
   display: flex; flex-direction: column; gap: var(--sp-sm);
   width: fit-content; max-width: 100%;
-  margin-inline: auto;
+  /* M19 — bỏ `margin-inline: auto`. Căn giữa ở đây đúng khi thẻ còn cứng
+     1624px; nay KHUNG ôm nội dung và tự căn giữa, nên căn thêm lần nữa chỉ đẩy
+     sơ đồ lệch khỏi rail của chữ (đo được 58px). Một nơi căn giữa, không hai. */
 }
 .dag-stage-body { display: flex; flex-direction: column; gap: var(--sp-sm); }
 /* Chỉ ghép cạnh khi thẻ ĐỦ RỘNG cho cả hai — hẹp thì xếp dọc như cũ, chú giải
@@ -1849,7 +1851,14 @@ html {
    ba nơi và panel trái là bản sao thứ ba. Sân khấu nhận lại toàn bộ chỗ đó. */
 .app-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
+  /* M19 — CỘT NỘI DUNG THEO NỘI DUNG, KHÔNG THEO MÀN HÌNH.
+     `1fr` ép cột giữa nuốt mọi bề rộng còn lại, nên thẻ mô phỏng luôn 1624px
+     bất kể cơ chế to nhỏ. Nay `auto`: cột rộng bằng thứ rộng nhất trong nó —
+     và vì cả THẺ lẫn KHAY ĐIỀU KHIỂN cùng nằm trong cột này, chúng tự bằng
+     nhau, giữ đúng quyết định W4B-3H (điều khiển căn theo cột nội dung).
+     `justify-content: center` căn cả cụm khi màn rộng hơn nội dung. */
+  grid-template-columns: minmax(0, auto) 300px;
+  justify-content: center;
 
   /* ── W4B-2A A0 — HÀNG NỘI DUNG CAO THEO NỘI DUNG ────────────────────────
      Trước đây hàng giữa là `minmax(0, 1fr)`, nên nó **nuốt trọn** phần chiều
@@ -1910,7 +1919,9 @@ html {
 
 /* Đóng panel Quan sát → sân khấu chiếm trọn. */
 .app-layout.right-closed {
-  grid-template-columns: minmax(0, 1fr);
+  /* M19 — cũng `auto`, nếu không thì biến thể ĐANG DÙNG MẶC ĐỊNH (panel phải
+     đóng) ghi đè lại `1fr` và cột lại nuốt hết bề rộng. */
+  grid-template-columns: minmax(0, auto);
   grid-template-areas:
     "center"
     "controls";
@@ -2115,13 +2126,36 @@ html {
    (boolean_dag: 3 chip + bảng 3 dòng) để lại một mảng trắng chiếm gần nửa màn
    hình BÊN TRONG thẻ — trông như giao diện hỏng chứ không như thẻ ngắn.
    Nay: nội dung quyết định chiều cao, có sàn để thẻ không bị bẹp. */
+/* ══ M19 — KHUNG CƠ CHẾ: BỀ RỘNG THEO NỘI DUNG, MỘT RAIL DUY NHẤT ══════════
+   Đo được ở 1920 TRƯỚC khi sửa (23/23 target hỏng): thẻ luôn 1624px trong khi
+   mực dao động 276px (17%) đến 1597px (98%), và chữ lệch khỏi hình tới 722px.
+   Hai lỗi, một nguyên nhân: thẻ là flex column STRETCH nên mọi con giãn hết
+   bề rộng, rồi từng renderer tự căn giữa hình bên trong lớp giãn ấy.
+
+   Nay thẻ ÔM nội dung (`fit-content`) và tự căn giữa trong cột. Hệ quả:
+     - cơ chế nhỏ ⇒ thẻ nhỏ, không còn khoảng rỗng trong thẻ (lỗi A);
+     - thẻ ôm sát hình ⇒ mép trái của hình CHÍNH LÀ mép trái của thẻ, nên chữ
+       (vốn giãn hết thẻ) tự nằm cùng rail (lỗi B).
+
+   `min-width` là SÀN SƯ PHẠM (§5): không để thẻ bóp sát từng pixel SVG, phải
+   còn chỗ cho nhãn, chú giải và một câu thuyết minh đọc được. */
 .workspace-card {
   flex: 0 1 auto;
   min-height: 320px;
   display: flex;
   flex-direction: column;
   gap: var(--sp-md);
+  width: fit-content;
+  min-width: min(100%, 560px);
+  max-width: 100%;
 }
+/* MỘT RAIL: mọi con giãn đúng bằng thẻ, không con nào tự căn giữa. */
+.workspace-card > * { width: 100%; }
+/* Chữ KHÔNG được quyết bề rộng khung: một câu dài sẽ kéo `fit-content` ra rất
+   rộng. Chặn ở một khổ đọc được thì khung do HÌNH quyết, chữ chỉ xuống dòng. */
+.workspace-title,
+.narration-bar,
+.workspace-header .hint { max-width: 68ch; }
 
 /* POLISH-2 — PHÂN CẤP: tiêu đề đứng riêng một dòng, mô tả ngắn xuống dòng dưới
    và nhẹ hơn hẳn, badge miền nhỏ để không cạnh tranh với tiêu đề. */

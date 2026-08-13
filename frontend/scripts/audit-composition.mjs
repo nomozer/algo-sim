@@ -104,7 +104,18 @@ const MEASURE = `(()=>{
     return {x: Math.round(r.left + (parseFloat(cs.paddingLeft)||0)),
             w: Math.round(r.width - (parseFloat(cs.paddingLeft)||0) - (parseFloat(cs.paddingRight)||0))}; };
 
-  const stageEl = document.querySelector('.panel-center') || card.parentElement;
+  /* KHẢ DỤNG = bề rộng lưới, KHÔNG phải cột. Sau khi cột co theo nội dung,
+     '.panel-center' CHÍNH LÀ khung, nên lấy nó làm mẫu số biến "khung chiếm
+     >90% sân khấu" thành luôn đúng và phán quyết A tự vô hiệu. */
+  const stageEl = document.querySelector('.app-layout') || card.parentElement;
+  /* Chữ CŨNG là nội dung cơ chế và nó có quyền quyết bề rộng khung (một câu
+     thuyết minh dài hơn hình là chuyện bình thường). Nên mẫu số của "khung có
+     rỗng không" phải là max(hình, khối chữ rộng nhất), không phải hình một mình. */
+  let textW = 0;
+  for (const sel of ['.stage-affordance','.narration-bar','.stage-legend','.workspace-header']) {
+    const el = card.querySelector(sel);
+    if (el) textW = Math.max(textW, Math.round(el.getBoundingClientRect().width));
+  }
   const clipped = [...card.querySelectorAll('svg')].some(s => {
     const p = s.parentElement; if (!p) return false;
     return s.getBoundingClientRect().right > p.getBoundingClientRect().right + 1;
@@ -117,8 +128,12 @@ const MEASURE = `(()=>{
     hasFrame: frame !== card,
     ink: L === Infinity ? null : {x: Math.round(L), w: Math.round(R - L)},
     inkNodes: nodes,
+    textW,
     rails: {
-      instruction: leftOf('.stage-affordance') ?? leftOf('.workspace-title'),
+      /* KHỐI tiêu đề, KHÔNG phải thẻ h2: tiêu đề nằm SAU huy hiệu miền trên
+         cùng một dòng nên mép trái của nó thụt 60-79px một cách hợp lệ. Lấy h2
+         làm rail khiến audit báo lệch ở gần như mọi target vì lý do sai. */
+      instruction: leftOf('.stage-affordance') ?? leftOf('.workspace-header'),
       legend: leftOf('.stage-legend'),
       explanation: leftOf('.narration-bar'),
     },
@@ -126,6 +141,35 @@ const MEASURE = `(()=>{
     clipped,
   });
 })()`;
+
+/**
+ * NGOẠI LỆ RAIL — §7 cho phép "documented mechanism-specific reason".
+ *
+ * Chỉ MỘT mục, và nó phải nói về CƠ CHẾ chứ không phải "renderer đang thế".
+ * Thêm dòng ở đây = tự khai vừa nới một bất biến, nên phải giải trình.
+ */
+/**
+ * NGOẠI LỆ KHUNG — §12/§13. Khung được phép BÁM CỬA SỔ nếu chính bề rộng khả
+ * dụng là thứ cơ chế đang trình bày. Lý do phải nói về CƠ CHẾ; "renderer đang
+ * để width:100%" KHÔNG phải lý do.
+ */
+const FRAME_EXCEPTIONS = {
+  "web.style_model":
+    "Sân khấu là một TRANG WEB trong khung xem trước. Bề rộng khả dụng chính " +
+    "là thứ trang phải lấp — đó là hành vi đang được dạy, không phải khoảng " +
+    "trống thừa. Khung chia đôi (điều khiển trái · xem trước phải) cũng cần bề " +
+    "ngang để hai vế 'giá trị em đặt ↔ kết quả nhìn thấy' nằm cùng tầm mắt " +
+    "(§13). Đây là ngoại lệ DUY NHẤT của luật khung-không-bám-cửa-sổ.",
+};
+
+const RAIL_EXCEPTIONS = {
+  "logic.boolean_dag":
+    "Chú giải tín hiệu đặt CẠNH sơ đồ, không đặt dưới: sơ đồ mạch có bề rộng " +
+    "cố định do bố cục mạch quyết định (không co giãn), nên ở màn rộng nó luôn " +
+    "ngắn hơn khung. Đặt chú giải bên phải lấp đúng dải trống ấy và rút ngắn " +
+    "sân khấu một hàng — đo được ở W4B-4D: lệch lề 0px ở cả bốn bề rộng. " +
+    "Đặt chú giải xuống dưới sẽ trả lại khoảng trống bên phải.",
+};
 
 const rows = [];
 for (const w of VIEWPORTS) {
@@ -195,28 +239,73 @@ for (const w of VIEWPORTS) {
     const m = JSON.parse(await ev(MEASURE));
     if (m.error || !m.ink) { console.log(`  ${sim.padEnd(34)} ${m.error ?? "không đo được mực"}`); continue; }
 
-    const frameFill = +((m.ink.w / m.frame.w) * 100).toFixed(1);
+    const contentW = Math.max(m.ink.w, m.textW || 0);
+    const frameFill = +((contentW / m.frame.w) * 100).toFixed(1);
+    const inkFill = +((m.ink.w / m.frame.w) * 100).toFixed(1);
     const stageFill = +((m.frame.w / m.stage.w) * 100).toFixed(1);
-    const deltas = Object.values(m.rails).filter((x) => x !== null)
+    const exception = RAIL_EXCEPTIONS[sim] ?? null;
+    const rails = { ...m.rails };
+    // Ngoại lệ chỉ miễn ĐÚNG rail chú giải, không miễn cả target.
+    if (exception) rails.legend = null;
+    const deltas = Object.values(rails).filter((x) => x !== null)
       .map((x) => Math.abs(x - m.ink.x));
     const maxRailDelta = deltas.length ? Math.max(...deltas) : 0;
     /* PHÁN QUYẾT — hai lỗi tách bạch, không gộp thành một điểm số.
        A: khung rộng hơn nhiều so với mực nó bọc (mực < 70% khung) VÀ khung
           chiếm gần hết sân khấu ⇒ cơ chế nhỏ trôi trong khung quá khổ.
        B: rail lệch > 24px (một bậc spacing) ⇒ hình và chữ hai hệ căn lề. */
-    const failA = frameFill < 70 && stageFill > 90;
+    /* LỖI A đo bằng một câu FALSIFIABLE: **khung có bám theo cửa sổ không?**
+       Bản trước so mực/khung, và khi đưa chữ vào mẫu số thì chữ luôn giãn đầy
+       khung nên tỉ lệ luôn ~100% — luật A trở thành không thể sai, tức vô dụng.
+       Khung do NỘI DUNG quyết thì bề rộng của nó GIỐNG NHAU ở 1920 và 1366;
+       khung do MÀN HÌNH quyết thì nó nở ra theo. So chéo bề rộng là dấu hiệu
+       trực tiếp, và nó đỏ được (tiêm lỗi cột `1fr` ⇒ 1624 vs 1242). Phép so
+       chạy ở lượt tổng hợp cuối, nên ở đây chỉ ghi nhận số. */
+    const failA = false;
     const failB = maxRailDelta > 24;
     const verdict = m.overflowX ? "TRÀN" : m.clipped ? "CẮT"
       : failA && failB ? "A+B" : failA ? "A" : failB ? "B" : "OK";
 
     rows.push({ viewport: w, target: sim, stageW: m.stage.w, frameW: m.frame.w,
       hasFrame: m.hasFrame, inkW: m.ink.w, inkX: m.ink.x, frameFill, stageFill,
-      rails: m.rails, maxRailDelta, overflowX: m.overflowX, clipped: m.clipped, verdict });
+      rails: m.rails, railException: exception, maxRailDelta, overflowX: m.overflowX, clipped: m.clipped, verdict });
     console.log(`  ${sim.padEnd(34)} ${String(m.stage.w).padStart(5)} ${String(m.frame.w).padStart(6)}`
       + ` ${String(m.ink.w).padStart(5)} ${String(frameFill).padStart(7)}%`
       + ` ${String(maxRailDelta).padStart(5)} ${m.overflowX ? " CÓ " : "  · "} ${m.clipped ? "CÓ" : " ·"}  ${verdict}`);
   }
   chrome.kill();
+}
+
+/* HẬU KIỂM CHÉO BỀ RỘNG — lỗi A. Chỉ so hai bề rộng RỘNG (1920 vs 1366): ở
+   768 khung co lại là đúng (`max-width: 100%`), không phải bám cửa sổ. */
+const WIDE = [1920, 1366];
+if (VIEWPORTS.includes(WIDE[0]) && VIEWPORTS.includes(WIDE[1])) {
+  const byTarget = new Map();
+  for (const r of rows) {
+    if (!WIDE.includes(r.viewport) || !r.frameW) continue;
+    if (!byTarget.has(r.target)) byTarget.set(r.target, {});
+    byTarget.get(r.target)[r.viewport] = r.frameW;
+  }
+  for (const [target, w] of byTarget) {
+    const delta = Math.abs((w[1920] ?? 0) - (w[1366] ?? 0));
+    if (delta > 24 && FRAME_EXCEPTIONS[target]) {
+      for (const r of rows) {
+        if (r.target === target && WIDE.includes(r.viewport)) {
+          r.frameTracksViewport = delta;
+          r.frameException = FRAME_EXCEPTIONS[target];
+        }
+      }
+      console.log(`  ~ ${target}: khung bám cửa sổ ${delta}px — NGOẠI LỆ ĐÃ KHAI`);
+    } else if (delta > 24) {
+      for (const r of rows) {
+        if (r.target === target && WIDE.includes(r.viewport)) {
+          r.frameTracksViewport = delta;
+          r.verdict = r.verdict === "OK" ? "A" : r.verdict + "+A";
+        }
+      }
+      console.log(`  ✗ ${target}: khung bám cửa sổ (1920 vs 1366 lệch ${delta}px)`);
+    }
+  }
 }
 
 const bad = rows.filter((r) => r.verdict !== "OK");

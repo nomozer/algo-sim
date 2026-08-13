@@ -389,7 +389,11 @@ export function ArrayView({
          là bề rộng bố cục vừa tính lại từ khung chứa, nên viewBox vẫn khớp đúng
          pixel hiển thị và `scale ≈ 1` được bảo toàn (test khoá ở dag.test.tsx
          cùng luật). Hình lớn hơn vì BỐ CỤC lớn hơn, không vì SVG bị phóng. */
-      style={{ maxWidth: width, display: "block", margin: "0 auto", touchAction: "none" }}
+      /* M19 — KHÔNG còn `margin: 0 auto`. Căn giữa ở đây từng đúng khi thẻ luôn
+         rộng 1624px; nay khung ÔM nội dung nên căn giữa chỉ tạo ra rail thứ
+         hai (hình ở giữa, chữ ở mép trái — đo được lệch 68–191px ở tám bài
+         thuật toán). Việc căn giữa nay thuộc về khung, không thuộc về hình. */
+      style={{ maxWidth: width, display: "block", touchAction: "none" }}
       /* Có vùng bấm ⇒ KHÔNG còn là `img`. `role="img"` biến mọi con thành trang
          trí với công nghệ hỗ trợ, nên các vùng bấm sẽ tàng hình với trình đọc
          màn hình — một hàng nút thì "dễ tiếp cận", còn sân khấu tương tác lại
