@@ -29,6 +29,72 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### W4B-4 — SOÁT TRẢI NGHIỆM TOÀN DANH MỤC: thao tác được, hay chỉ xem được (2026-08-13)
+>
+> Ma trận SAU: `docs/evaluation/m17/w4b4a-experience/matrix-after.md` (SINH từ
+> `probe.json`, không chép tay). Nghiệm thu Chrome:
+> `w4b4c-experience/acceptance.json`. Tiêm lỗi: `w4b4d-composition/fault-log.md`.
+> Commit: `211628c`→`dc67e2f`.
+>
+> Câu hỏi nghiệm thu, hỏi cho từng target: *"Bỏ hết Play/Next/đúng-sai đi, học
+> sinh còn thao tác được lên mô hình và quan sát hệ quả tất định không?"*
+>
+> - **Phép đo chạy bằng HÀNH VI, không đọc metadata.** `experience-audit-w4b4a.
+>   test.ts` phát ĐÚNG action mà từng miền nhận vào `module.apply` rồi ghi target
+>   nào đổi được state **không dùng timeline**. Bản đầu ĐOÁN tên action và cho
+>   **3 âm tính giả** — một phép đo sai im lặng đọc y hệt một phép đo sạch, nên
+>   mồi hai chiều nằm ngay trong file.
+> - **15 → 20 / 23 thao tác được** (đo từng bước: `211628c` 15 · `a49f951` 16 ·
+>   `27c93d2` 20). Chuyển sang tương tác có ràng buộc: `database.
+>   relational_table_query` (truy vấn là thứ ĐỔI, không phải thứ XEM),
+>   `binary.base_conversion`, `binary.character_encoding`,
+>   `network.graph_traversal`, `tree.traversal`.
+> - **3 target CỐ Ý giữ trace, lý do CƠ CHẾ khoá trong `KEEP_TRACE`**
+>   (`bounded_control_flow` · `scan` · `protocol_encapsulation`). Guard hai
+>   chiều: không-thao-tác-được mà thiếu lý do là ĐỎ, và lý do còn sót khi target
+>   đã có tương tác cũng ĐỎ (giải thích lỗi thời đánh lừa người đọc sau). Lý do
+>   phải nói về CƠ CHẾ — "chưa kịp"/"TODO" bị từ chối.
+> - **`count_if`/`sum_if`: con số không đổi nhưng NGHĨA đổi.** Chúng đã tính là
+>   "thao tác được" từ baseline 15 — bằng `whatif_swap` mà chính sách của chúng
+>   TẮT, tức **dương tính giả**. Phép đo đọc `!!mod.explore` (mọi module thuật
+>   toán khai chung một khối) thay vì CỬA thật `explore.entry()`. Nay đọc cửa, và
+>   hai bài có tương tác thật: **đổi chính ĐIỀU KIỆN** (`condition-param.ts`, miền
+>   đóng). Tiền đề cũ vẫn giữ và nay được ĐO: kéo vẫn tắt, và hoán vị vẫn không
+>   đổi kết quả cuối.
+> - **`web.style_model` thao tác THẲNG lên trang**: bấm vào phần nào là chọn phần
+>   ấy (khối ↔ bộ chọn ↔ nhóm control sáng cùng lúc), và dời được khối trong thân
+>   trang — miền là một HOÁN VỊ của tập khối đã có, không thêm/xoá thẻ. Dời khối
+>   đổi HTML mà **không** đổi CSS: chỗ lệch đó chính là bài học, và nó là test.
+> - **`logic.boolean_dag`: một cổng không phải một mạch.** Đo được 1920: sơ đồ
+>   chiếm **25%** bề ngang thẻ, 1217px trống dồn sang phải. Nguyên nhân KHÔNG ở
+>   bố cục — mẫu công khai là đúng một cổng XOR, nên target mang tên "tổ hợp" chỉ
+>   có 3 node và 1 bước lan truyền. Mẫu mới 3 đầu vào / 3 cổng / 2 tầng; chú giải
+>   về đứng cạnh sơ đồ, cả cụm căn giữa → **lệch lề 0px ở cả 4 bề rộng**, mực lấp
+>   **65%**. Hai lỗi Chrome-only lộ ra khi đo: SVG rơi về bề rộng mặc định 300px
+>   dưới cha `fit-content`, và khung nét đứt cổng đầu ra bị viewBox cắt 7px (có
+>   từ lâu).
+> - **Nhãn "Đã đổi so với đề bài"** (`specDrift`, shell sở hữu): từ khi đổi được
+>   tham số, tiêu đề (ĐỀ BÀI) và mô hình có thể nói hai điều khác nhau — đề viết
+>   "từ 8,0 trở lên" trong khi học sinh vừa kéo ngưỡng về 6. So theo ĐÚNG các
+>   khoá module khai (`currentConfig`), so bằng GIÁ TRỊ nên quay về giá trị cũ là
+>   nhãn tắt. Chrome xác nhận: im lúc mở, lên tiếng sau khi đổi, và **im** với
+>   `logic` (bật một đầu vào không mâu thuẫn với đề).
+> - Offline: pytest **1148** (2 skip, 1 deselect) · vitest **1280 / 93 file** ·
+>   build sạch · `catalog_runtime_matrix` **23 target, conformance/ownership/
+>   parity 0, PASS**. Chrome CDP: nghiệm thu **6 target × 4 viewport SẠCH**
+>   (1920/1536/1366/768) — tính lại KHÔNG cần Play.
+> - **Tiêm lỗi 11 mutation, 8 bị bắt, 2 LỖ THẬT được vá, 1 mutant tương đương.**
+>   Đợt chạy đầu vô giá trị (runner làm cả 92 file fail lúc collect ⇒ mọi fault
+>   "đỏ" vì lý do sai; lượt đối chứng không tiêm gì cũng đỏ y hệt). Hai lỗ:
+>   ngưỡng ngoài miền bị **KẸP** thay vì từ chối lọt qua 1276 test (luật
+>   "từ-chối-không-kẹp" chỉ sống trong comment) → `condition-param.test.ts`; và
+>   **gỡ hẳn một target khỏi catalog offline** lọt qua vì sàn đo là
+>   `rows.length > 10` → nay phép đo phải phủ ĐÚNG registry.
+> - **CHƯA làm (không claim):** chưa đo trên người học · 3 target giữ trace là
+>   quyết định, không phải "đã xong" · nhãn lệch-đề chỉ nói CÓ lệch, không nói
+>   lệch ở đâu · `web` dời khối chưa có đường kéo-thả (hai nút mũi tên, bàn phím
+>   tới được) · chưa soát lại 7 target `ENGINE_CONTRACT_MISSING` (nợ từ W4B-2R).
+>
 > ### W4B-2S — biểu diễn phù hợp sư phạm + vai trò miền chở bằng hình (2026-08-10)
 >
 > Chính sách: `docs/PEDAGOGICAL_REPRESENTATION_POLICY.md`.

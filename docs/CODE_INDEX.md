@@ -1434,6 +1434,20 @@ vị trí ngữ nghĩa hiện hai hệ đếm. Có DẤU VÂN TAY bắt buộc (
 sân khấu đã dựng, sai thì exit 2). Cờ: `--port --out`. Artifact:
 `docs/evaluation/m17/w4b2d-search-family/position-numbering/`.
 
+### `simulations/domains/web/` — W4B-4D: THAO TÁC THẲNG LÊN TRANG
+`apply.ts` thêm `selectNode` (fail-closed) · `moveBlock(order, target, slot)`
+(miền = một HOÁN VỊ của tập khối đã có; `slot` là chỉ số ô ĐÍCH tuyệt đối, không
+phải delta — dòng chảy tài liệu một trục nên không có toạ độ ngang) ·
+`htmlTextOf(state)` (bản chiếu cấu trúc, SINH từ state — ở đây chứ không ở JSX
+vì renderer tự ghép chuỗi HTML là nguồn sự thật thứ hai). `model.ts` thêm
+`order`/`baselineOrder`/`selected` + `SELECTOR_OF`/`NODE_LABEL`.
+
+Bài học nằm ở chỗ hai bản chiếu LỆCH nhau: **dời khối đổi HTML mà KHÔNG đổi
+CSS** — thứ tự thuộc HTML, hình thức thuộc CSS. Khoá ở
+`direct-manipulation-w4b4d.test.tsx` (đã mồi: viết cứng thứ tự trong JSX ⇒ ĐỎ).
+`selected` nằm trong ENGINE state chứ không trong renderer vì sân khấu, cột
+control và Inspector phải nói về CÙNG một nút.
+
 ### `simulations/domains/web/` — W4B-3F: TRANG CÓ CẤU TRÚC
 `model.ts`/`props.ts`/`apply.ts`/`index.ts`/`ui.tsx` — mô hình `web.style_model`.
 **Hợp đồng đổi HÌNH DẠNG ở W4B-3F**: `content` (một khối chữ) → `heading` +
@@ -1549,6 +1563,15 @@ hình thức cho cả hai). Trước wave này ba nơi dựng nút — shell + h
 miền — và hai nơi sau đặt nút ngay dưới sân khấu, tức dải `experimentTrigger`
 mà bốn lượt đo bố cục đều bắt được. **Renderer miền không được chứa
 `sim-secondary-action`** (khoá ở `secondary-actions-w4b2w.test.ts`).
+
+**W4B-4D — `specDrift(mod, state, baseline)`**: mô hình đã RỜI KHỎI đề bài chưa.
+Hàm THUẦN (luật chôn trong JSX là luật chỉ kiểm được bằng trình duyệt), so
+`mod.currentConfig(state)` với `active.config` (bản validate BẤT BIẾN). Hai luật
+dễ làm sai: so bằng **GIÁ TRỊ** chứ không tham chiếu (mọi `apply` dựng config
+mới ⇒ so tham chiếu là nhãn kêu vĩnh viễn), và chỉ so **các khoá module khai**
+(`web` không giữ `notes` của đề ⇒ so cả khối thì mọi đề có `notes` đều "đã đổi"
+ngay khi vừa mở). Module không khai `currentConfig` ⇒ luôn `false`.
+Nhãn `.spec-drift` dựng trong `workspace-header`. Bất biến #25.
 
 `SimulationWorkspace` export hai bộ chọn THUẦN mà `SimulationControls` gọi:
 `challengeEntry(mod, state, config)` và `exploreEntry(mod, state, config)` →
