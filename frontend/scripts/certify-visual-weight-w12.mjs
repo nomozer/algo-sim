@@ -58,8 +58,11 @@ const MEASURE = `(()=>{
   /* Bề mặt CƠ CHẾ không chỉ là svg: cảnh 3D là <canvas> (không đọc được bên
      trong), và mô hình trang web là DOM thật (.web-page). Bản đầu chỉ đếm svg
      nên gán 0% cho web.style_model và "1 bộ phận" cho cảnh 3D — hai kết luận
-     sai về sản phẩm, do phép đo mù chứ không do màn hình nghèo. */
-  for (const g of card.querySelectorAll('svg,canvas,.web-page,.web-preview')) {
+     sai về sản phẩm, do phép đo mù chứ không do màn hình nghèo.
+     LẦN THỨ BA cùng lỗi ấy: protocol_encapsulation sau khi trả về 2D dựng
+     bằng KHỐI HTML (.encap-pdu la goi tin, .encap-medium la duong truyen),
+     nên phép đo lại đọc 0.0%. Cơ chế không phải lúc nào cũng là svg. */
+  for (const g of card.querySelectorAll('svg,canvas,.web-page,.web-preview,.encap-pdu,.encap-medium')) {
     if (!vis(g) || furniture(g)) continue;
     const r = g.getBoundingClientRect();
     inkArea += Math.round(r.width * r.height);

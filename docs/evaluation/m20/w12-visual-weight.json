@@ -1,12 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "f193b7b57b1caaf6",
+  "sourceFingerprint": "c1a50ad41d0928b0",
   "dirtyRelevantSources": [
     "frontend/scripts/certify-visual-weight-w12.mjs"
   ],
-  "head": "69e90acfeebd99ed7177d47a0f5e34936a525480",
+  "head": "ebc1eed7a5f89c3923495c8c53d783cdce174384",
   "dirty": true,
-  "generatedAt": "2026-08-14T13:25:34.439Z",
+  "generatedAt": "2026-08-14T17:47:01.436Z",
   "tool": "certify-visual-weight-w12",
   "toolVersion": "1",
   "environment": {
@@ -21,7 +21,7 @@
   },
   "limitation": "Đo BỀ MẶT, không đo hiểu biết. LEARNER_IMPACT_NOT_EVALUATED giữ nguyên.",
   "serverStarts": 1,
-  "passed": 23,
+  "passed": 22,
   "total": 23,
   "rows": [
     {
@@ -246,14 +246,16 @@
     },
     {
       "target": "network.protocol_encapsulation",
-      "inkArea": 353600,
+      "inkArea": 17249,
       "glyphs": 1,
       "proseChars": 99,
-      "cardArea": 587763,
-      "inkShare": 0.602,
+      "cardArea": 597833,
+      "inkShare": 0.029,
       "tables": 0,
-      "problems": [],
-      "verdict": "HÌNH LÀ CHÍNH"
+      "problems": [
+        "hình chỉ chiếm 2.9% thẻ"
+      ],
+      "verdict": "CHỮ LÀ CHÍNH"
     },
     {
       "target": "tree.traversal",
