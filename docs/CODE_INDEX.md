@@ -540,7 +540,7 @@ ghi lại để lần sau không lặp:
    Cho ra "13 bước engine, 1 bước màn", một kết luận sai về sản phẩm.
 Nay dấu vân = chữ CẢ THẺ (trừ đồ đạc) + `fill`/`class` của mọi phần tử SVG.
 Vẫn KHÔNG bắt được vị trí/kích thước — giới hạn, không phải đã phủ.
-Số hiện tại: **19 TOOL_PASS · 4 TRACE_PASS · 0 EXPERIENCE_FAIL**. Chênh
+Số hiện tại: **20 TOOL_PASS · 3 TRACE_PASS · 0 EXPERIENCE_FAIL**. Chênh
 engine/màn còn lại (40→14, 33→14…) là trần 14 bước của vòng lặp, không phải lỗi.
 
 ### `frontend/scripts/certify-visual-weight-w12.mjs` (M20 W12) · offline (cần `npm run dev`)

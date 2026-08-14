@@ -1,13 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "92eb13d67f2de580",
+  "sourceFingerprint": "c05eb564282193f8",
   "dirtyRelevantSources": [
-    "frontend/scripts/browser-runner.mjs",
-    "frontend/scripts/certify-experience-w12.mjs"
+    "frontend/src/simulations/action-probe.ts"
   ],
-  "head": "a23c5c1925dcc736fd5e28df45587bf7065713e9",
+  "head": "02a84b649fa2e074b502c02d8816a46e843edd91",
   "dirty": true,
-  "generatedAt": "2026-08-14T10:08:07.898Z",
+  "generatedAt": "2026-08-14T13:51:09.667Z",
   "tool": "certify-experience-w12",
   "toolVersion": "1",
   "environment": {
@@ -19,8 +18,8 @@
   "method": "đổi đầu vào ⇒ TOOL_PASS · tua THAY THẾ ⇒ TRACE_PASS · tua chỉ THÊM DỒN ⇒ EXPERIENCE_FAIL",
   "serverStarts": 1,
   "tally": {
-    "TOOL_PASS": 19,
-    "TRACE_PASS": 4
+    "TOOL_PASS": 20,
+    "TRACE_PASS": 3
   },
   "rows": [
     {
@@ -181,7 +180,7 @@
       "stepsDistinct": 5,
       "traceSteps": 5,
       "appendOnly": false,
-      "stageAtStart": "HỆ CƠ SỐĐổi năm 2026  ang hệ thập lục phânĐổi cơ  ố (2 · 8 · 10 · 16) · kết hợp · 2DGiá trịTừ cơ  ố281016Sang cơ  ố2810162026(10) = 7EA(16) · giá trị thập phân 2026210320000102021012061006=tổng2026Đổi 2026 từ hệ thập phâ"
+      "stageAtStart": "HỆ CƠ SỐĐổi năm 2026  ang hệ thập lục phânĐổi cơ  ố (2 · 8 · 10 · 16) · kết hợp · 2DGiá trịTừ cơ  ố281016Sang cơ  ố2810162026(10) = 7EA(16) · giá trị thập phân 2026210320000102021012061006=tổng2026Phép chiaThươngDưChữ  ố"
     },
     {
       "target": "binary.character_encoding",
@@ -219,7 +218,7 @@
         "value": "ten"
       },
       "candidatesTried": 1,
-      "stepsDistinct": 14,
+      "stepsDistinct": 7,
       "traceSteps": 19,
       "appendOnly": false,
       "stageAtStart": "TRUY VẤN BẢNGLọc học  inh có điểm từ 8 trở lên rồi  ắp theo điểmTruy vấn bảng dữ liệu · kết hợp · 2DLọcHọ tênĐiểmTổ=!=>>=<<=contain Sắp— không  ắp —Họ tênĐiểmTổtăng dầngiảm dầnCột hiệnHọ tênĐiểmTổ1.Lọc2.Chọn cột3.Sắp xếp"
@@ -279,9 +278,13 @@
     },
     {
       "target": "network.packet_routing",
-      "verdict": "TRACE_PASS",
-      "inputAccepted": null,
-      "candidatesTried": 0,
+      "verdict": "TOOL_PASS",
+      "inputAccepted": {
+        "type": "net_disconnect",
+        "a": "client",
+        "b": "router"
+      },
+      "candidatesTried": 1,
       "stepsDistinct": 4,
       "traceSteps": 4,
       "appendOnly": false,

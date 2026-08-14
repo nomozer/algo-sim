@@ -18,6 +18,7 @@
  *   `whatif_swap {from,to}`  → thật là `{i,j}`            (types.ts)
  *   `toggle {id}`            → thật là `{target}`          (types.ts)
  *   `set_param 'decimalValue'` → thật là `'decimal'`       (binary/index.ts)
+ *   `links: [{a,b}]`          → cũng có dạng `[[a,b]]`     (network/model.ts)
  *
  * Bài học ghi lại ở đây vì đây là chỗ người sau sẽ thêm target mới: **tên
  * action nằm trong `module.apply`, KHÔNG suy được từ tên field trong config.**
@@ -68,9 +69,18 @@ export function candidateActions(config: unknown): SimAction[] {
     }
   }
   if (arr(cfg.links) && cfg.links.length) {
+    /* HAI HÌNH DẠNG, và bản đầu chỉ biết một. `network.packet_routing` khai liên
+       kết là MẢNG CẶP `["client","router"]`, không phải object `{a,b}` — nên
+       phép kiểm `l.a && l.b` trượt, không sinh ứng viên nào, và bản soát ghi
+       target này là "không đổi được đầu vào".
+       Dò tay trên trình duyệt: bấm một vùng ngắt liên kết ⇒ links 3→2 và
+       route → [] (không tới được). Sản phẩm ĐÚNG, phép đo SAI — lần thứ TƯ
+       cùng một họ lỗi trong wave này (xem đầu file). */
     const l = cfg.links[0];
     if (obj(l) && str(l.a) && str(l.b)) {
       out.push({ type: "net_disconnect", a: l.a, b: l.b });
+    } else if (arr(l) && l.length >= 2 && str(l[0]) && str(l[1])) {
+      out.push({ type: "net_disconnect", a: l[0], b: l[1] });
     }
   }
   if (arr(cfg.inputs) && cfg.inputs.length) {

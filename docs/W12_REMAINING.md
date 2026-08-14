@@ -39,6 +39,28 @@ Nên MỌI việc 3D dưới đây có chung một điều kiện xuất xưởn
 
 Chưa qua đủ 5 điều kiện thì **giữ 2D**, đừng khai `primary: "3d"`.
 
+## VIỆC 1 — `network.packet_routing` 3D · **TIỀN ĐỀ ĐÃ ĐỔ, ĐỌC TRƯỚC KHI LÀM**
+
+Lý do dựng 3D cho target này là "nó không tương tác được". **Sai.** Dò tay trên
+trình duyệt (bấm chuột thật, không gọi hàm tắt):
+
+```
+TRƯỚC  links=[[client,router],[router,isp],[isp,server]]  route=[client,router,isp,server]
+BẤM    "Ngắt liên kết client — router"
+SAU    links=[[router,isp],[isp,server]]                  route=[]   ← không tới được
+```
+
+Engine tính lại tất định, và **kịch bản nghiệm thu ở mục "Nghiệm thu" bên dưới
+đã đạt sẵn ở 2D**. Bản soát ghi `—` vì bộ dò của tôi kiểm `l.a && l.b` trong khi
+`links` là **mảng cặp** — lần thứ TƯ cùng họ lỗi. Đã sửa ở `action-probe.ts`;
+số nay là **20 TOOL_PASS · 3 TRACE_PASS**.
+
+⇒ **3D ở đây là nâng cấp SƯ PHẠM, không phải sửa lỗi thiếu tương tác.** Cân nhắc
+theo VIỆC 0: nếu chưa qua đủ 5 điều kiện đọc-được thì 2D hiện tại **đã đủ dùng**,
+và việc này có thể hoãn sang sau khoá luận mà không mất bằng chứng nào.
+
+### Nếu vẫn làm, phần dưới giữ nguyên giá trị
+
 ## VIỆC 1 — `network.packet_routing` sang 3D sư phạm
 
 **Vì sao.** Người dùng nêu bốn lần. Màn hiện tại là bốn biểu tượng đứng yên trên
