@@ -269,7 +269,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # bao giờ nói được về kiểu của `<h1>` — mất đúng bài học phân cấp mà bản mẫu
     # dựng ra để dạy. Đây là bề mặt LLM ĐIỀN, nên envelope cache sinh dưới schema
     # cũ mang đúng những đề mà bản vá này nhắm tới; trả lại mù thì bản vá vô hiệu.
-    assert main_module.CACHE_VERSION == "30"
+    # M20 (bump 30→31): schema web đưa cho LLM vẫn mô tả hợp đồng CŨ `content`,
+    # trong khi validator đã chuyển sang `heading` + `paragraph` từ W4B-3F và
+    # fail-closed với khoá lạ ⇒ MỌI spec web do AI sinh đều bị từ chối, tức
+    # `web.style_model` không tới được qua đường sinh. Envelope cache sinh dưới
+    # schema cũ mang đúng những đề mà bản vá này nhắm tới; trả lại mù thì vá vô hiệu.
+    assert main_module.CACHE_VERSION == "31"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

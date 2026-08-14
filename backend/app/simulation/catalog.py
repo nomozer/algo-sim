@@ -1537,9 +1537,20 @@ def catalog_text() -> str:
 _WEB_STYLE_SCHEMA: dict = {
     "type": "object",
     "additionalProperties": False,
-    "required": ["content"],
+    # M20 — DI TRÚ DỞ DANG, và đây là lỗi nặng nhất tìm được trong W12.
+    # W4B-3F đổi hợp đồng web từ `content` (một khối chữ) sang `heading` +
+    # `paragraph` — validator ĐÃ chuyển, schema đưa cho LLM thì KHÔNG. Hệ quả:
+    # LLM được bảo hãy điền `content`, validator không nhận `content` và
+    # fail-closed với khoá lạ ⇒ **mọi spec web do AI sinh đều bị từ chối**, tức
+    # `web.style_model` không tới được qua đường sinh của chính hệ thống.
+    # Lỗi `headingSize`/`headingColor` sửa trước đó chỉ là triệu chứng bề mặt
+    # của cùng một lần di trú này.
+    # Giới hạn độ dài lấy đúng `_WEB_CONTENT_MAX` / `_WEB_PARAGRAPH_MAX`.
+    # Khoá chống tái phát: `tests/test_web_contract_sync.py`.
+    "required": ["heading"],
     "properties": {
-        "content": {"type": "string", "minLength": 1, "maxLength": 120},
+        "heading": {"type": "string", "minLength": 1, "maxLength": 120},
+        "paragraph": {"type": "string", "maxLength": 240},
         "style": {
             "type": "object",
             "additionalProperties": False,
