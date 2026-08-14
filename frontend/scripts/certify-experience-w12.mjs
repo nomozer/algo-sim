@@ -107,6 +107,32 @@ const CANDIDATES = `((cfg) => {
     const k = Object.keys(cfg.style)[0];
     if (k) out.push({ type: 'set_param', name: k, value: '#123456' });
   }
+  /* Ba nhóm dưới đây thiếu ở bản đầu, và mỗi cái thiếu đều làm một target đọc
+     ra THẤP hơn sự thật — đọc chủ sở hữu thay vì suy từ tên field:
+       convert-module.tsx  → inputValue / sourceBase / targetBase
+       logic/ui.tsx        → toggle {target:'A'|'B'} (chữ CỐ ĐỊNH, không từ cfg)
+       generic/ui.tsx      → toggle/move theo objects[].id  */
+  if (cfg.inputValue !== undefined) {
+    out.push({ type: 'set_param', name: 'inputValue',
+      value: String(cfg.inputValue) === '1' ? '10' : '1' });
+  }
+  if (typeof cfg.targetBase === 'number') {
+    out.push({ type: 'set_param', name: 'targetBase', value: cfg.targetBase === 2 ? 8 : 2 });
+  }
+  if (cfg.inputA !== undefined || cfg.gate !== undefined || cfg.kind === 'and') {
+    out.push({ type: 'toggle', target: 'A' });
+    out.push({ type: 'toggle', target: 'B' });
+  }
+  if (Array.isArray(cfg.objects) && cfg.objects.length) {
+    const o = cfg.objects[0];
+    if (o && o.id) {
+      out.push({ type: 'toggle', target: o.id });
+      out.push({ type: 'move', target: o.id, x: 50, y: 50 });
+    }
+  }
+  if (typeof cfg.decimalValue === 'number') {
+    out.push({ type: 'set_param', name: 'decimalValue', value: cfg.decimalValue + 1 });
+  }
   if (typeof cfg.value === 'number') {
     out.push({ type: 'set_param', name: 'value', value: cfg.value + 1 });
   }
@@ -120,7 +146,7 @@ const targets = JSON.parse(await session.eval(`(async()=>{
   .filter((t) => !ONLY || t === ONLY);
 
 console.log(`━━ SOÁT TRẢI NGHIỆM · ${targets.length} target · khởi động ${session.timings.startup}ms\n`);
-console.log("  target                          đổi đầu vào  kiểu tua      bước  phán quyết");
+console.log("  target                          đổi đầu vào   engine  màn   phán quyết");
 
 const rows = [];
 for (const sim of targets) {
@@ -155,6 +181,16 @@ for (const sim of targets) {
   /* ── 2. TUA LÀ THAY THẾ HAY CHỈ THÊM DỒN ──────────────────────────────── */
   await session.loadTarget(sim);
   await sleep(300);
+  /* SỐ BƯỚC ENGINE KHAI — khác hẳn số chữ phân biệt trên màn. Chênh giữa hai
+     con số này chính là thứ phát hiện được "trace có mà không hiện". */
+  const traceSteps = Number(await session.eval(`(async()=>{
+    const s=await import(${JSON.stringify(session.mods.store)});
+    const a=s.useAppStore.getState().active;
+    const st=a && a.state;
+    if(!st) return 0;
+    if(st.trace && Array.isArray(st.trace.steps)) return st.trace.steps.length;
+    if(Array.isArray(st.steps)) return st.steps.length;
+    return 0;})()`)) || 0;
   const texts = [];
   for (let step = 0; step < 14; step += 1) {
     texts.push(await session.eval(STAGE_TEXT));
@@ -181,17 +217,29 @@ for (const sim of targets) {
     if (!distinct[i].includes(distinct[i - 1])) appendOnly = false;
   }
 
+  /* "KHÔNG ĐỦ DỮ KIỆN" là một chỗ TRỐN nếu để nguyên: hai target rơi vào đó và
+     cả hai đều có câu trả lời rõ khi hỏi thêm một câu. Nên tách ra theo ĐÚNG
+     cái thiếu, và mỗi nhãn là một việc phải làm chứ không phải một dấu hỏi:
+
+       không đổi được + KHÔNG có timeline      ⇒ STATIC_ILLUSTRATION
+         (một bức hình, không phải mô phỏng — decimal_to_binary: state chỉ có
+          {bits, bitWidth}, không trace, apply không nhận gì)
+       không đổi được + CÓ timeline nhưng sân khấu không đổi ⇒ TRACE_NOT_VISIBLE
+         (engine có 4 bước, màn hình có 1 — tiến trình KHÔNG tới được mắt học
+          sinh, nên lý do tồn tại của một TRACE_MODEL không thành lập) */
   const verdict = accepted ? "TOOL_PASS"
+    : traceSteps < 2 ? "STATIC_ILLUSTRATION"
+    : distinct.length < 2 ? "TRACE_NOT_VISIBLE"
     : distinct.length < 3 ? "KHÔNG ĐỦ DỮ KIỆN"
     : appendOnly ? "EXPERIENCE_FAIL"
     : "TRACE_PASS";
 
-  console.log(`  ${sim.padEnd(32)}${(accepted ? " ✔ " + accepted.type : " ✘").padEnd(13)}` +
-    `${(appendOnly ? "THÊM DỒN" : "thay thế").padEnd(14)}${String(distinct.length).padStart(4)}  ${verdict}`);
+  console.log(`  ${sim.padEnd(32)}${(accepted ? " ✔ " + accepted.type : " ✘").padEnd(14)}` +
+    `${String(traceSteps).padStart(6)}${String(distinct.length).padStart(7)}   ${verdict}`);
   rows.push({
     target: sim, verdict,
     inputAccepted: accepted, candidatesTried: tried.length,
-    stepsDistinct: distinct.length, appendOnly,
+    stepsDistinct: distinct.length, traceSteps, appendOnly,
     stageAtStart: texts[0] ? texts[0].slice(0, 220) : "",
   });
 }

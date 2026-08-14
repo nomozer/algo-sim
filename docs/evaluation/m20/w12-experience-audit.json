@@ -1,10 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "6435260a71b03e01",
-  "dirtyRelevantSources": [],
-  "head": "15486ea00f0a1994a7ca0dc5c4fbf36884c2b30b",
-  "dirty": false,
-  "generatedAt": "2026-08-14T09:40:13.768Z",
+  "sourceFingerprint": "c78e88f4c216726d",
+  "dirtyRelevantSources": [
+    "frontend/scripts/certify-experience-w12.mjs"
+  ],
+  "head": "ab4d8a6ecec78d27f63d5ee237ac59a2cf618613",
+  "dirty": true,
+  "generatedAt": "2026-08-14T09:49:28.590Z",
   "tool": "certify-experience-w12",
   "toolVersion": "1",
   "environment": {
@@ -16,9 +18,10 @@
   "method": "đổi đầu vào ⇒ TOOL_PASS · tua THAY THẾ ⇒ TRACE_PASS · tua chỉ THÊM DỒN ⇒ EXPERIENCE_FAIL",
   "serverStarts": 1,
   "tally": {
-    "TOOL_PASS": 13,
+    "TOOL_PASS": 15,
     "TRACE_PASS": 6,
-    "KHÔNG ĐỦ DỮ KIỆN": 4
+    "TRACE_NOT_VISIBLE": 1,
+    "STATIC_ILLUSTRATION": 1
   },
   "rows": [
     {
@@ -31,6 +34,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 1,
+      "traceSteps": 13,
       "appendOnly": false,
       "stageAtStart": "415,52636,5475868,57989,591010 đang xét / so sánh đã tìm thấy nửa đã bị loại"
     },
@@ -40,6 +44,7 @@
       "inputAccepted": null,
       "candidatesTried": 0,
       "stepsDistinct": 12,
+      "traceSteps": 12,
       "appendOnly": false,
       "stageAtStart": "x = 2lượt 1Kiểm tra điều kiệnbiên 14214x <= 14ĐÚNG→ vào thân vòng lặpKiểm tra→Thực hiện→Cập nhật↩ quay lại kiểm tra⇥ thoát đang xét đã đi qua biên dừng"
     },
@@ -53,6 +58,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 6,
+      "traceSteps": 40,
       "appendOnly": false,
       "stageAtStart": "1721158218031654175516061687 đang xét / so sánh đang đổi chỗ phần đã sắp xong"
     },
@@ -66,6 +72,7 @@
       },
       "candidatesTried": 2,
       "stepsDistinct": 9,
+      "traceSteps": 17,
       "appendOnly": false,
       "stageAtStart": "biến đếm08,216,529,137,84855,968,777,289,496,810 đang xét / so sánh đã được đếm đã duyệt qua"
     },
@@ -79,6 +86,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 3,
+      "traceSteps": 10,
       "appendOnly": false,
       "stageAtStart": "max7,57,5An19Bình26,5Chi38Dũng45,5Em58,5Giang67Hà76Khang8 đang xét / so sánh max hiện tại đã chọn làm max đã duyệt qua"
     },
@@ -92,6 +100,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 5,
+      "traceSteps": 10,
       "appendOnly": false,
       "stageAtStart": "min2828Thứ 2126Thứ 3231Thứ 4324Thứ 5427Thứ 6530Thứ 7625CN7 đang xét / so sánh min hiện tại đã chọn làm min đã duyệt qua"
     },
@@ -105,6 +114,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 8,
+      "traceSteps": 33,
       "appendOnly": false,
       "stageAtStart": "713293448526 đang xét / so sánh phần đã sắp xong"
     },
@@ -118,15 +128,17 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 1,
+      "traceSteps": 8,
       "appendOnly": false,
       "stageAtStart": "10512132178315442315189612271678 đang xét / so sánh đã tìm thấy đã duyệt qua"
     },
     {
       "target": "algorithm.scan",
-      "verdict": "KHÔNG ĐỦ DỮ KIỆN",
+      "verdict": "TRACE_NOT_VISIBLE",
       "inputAccepted": null,
       "candidatesTried": 0,
       "stepsDistinct": 1,
+      "traceSteps": 4,
       "appendOnly": false,
       "stageAtStart": "3162238455"
     },
@@ -140,6 +152,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 2,
+      "traceSteps": 24,
       "appendOnly": false,
       "stageAtStart": "9142732465 đang xét / so sánh đang đổi chỗ phần đã sắp xong"
     },
@@ -153,6 +166,7 @@
       },
       "candidatesTried": 2,
       "stepsDistinct": 9,
+      "traceSteps": 16,
       "appendOnly": false,
       "stageAtStart": "tổng0451120280330495515066072581109 đang xét / so sánh đã được cộng vào tổng đã duyệt qua"
     },
@@ -160,8 +174,9 @@
       "target": "binary.base_conversion",
       "verdict": "TRACE_PASS",
       "inputAccepted": null,
-      "candidatesTried": 0,
+      "candidatesTried": 2,
       "stepsDistinct": 5,
+      "traceSteps": 5,
       "appendOnly": false,
       "stageAtStart": ""
     },
@@ -175,15 +190,17 @@
       },
       "candidatesTried": 2,
       "stepsDistinct": 1,
+      "traceSteps": 21,
       "appendOnly": false,
       "stageAtStart": "Vị tríKý tựMã (code point)Thập phânNhị phân1'T'U+00548410101002'i'U+006910511010013'n'U+006E1101101110"
     },
     {
       "target": "binary.decimal_to_binary",
-      "verdict": "KHÔNG ĐỦ DỮ KIỆN",
+      "verdict": "STATIC_ILLUSTRATION",
       "inputAccepted": null,
-      "candidatesTried": 0,
+      "candidatesTried": 1,
       "stepsDistinct": 1,
+      "traceSteps": 0,
       "appendOnly": false,
       "stageAtStart": "81+841+420011+1"
     },
@@ -193,24 +210,33 @@
       "inputAccepted": null,
       "candidatesTried": 1,
       "stepsDistinct": 5,
+      "traceSteps": 19,
       "appendOnly": false,
       "stageAtStart": "Trạng tháiHọ tênĐiểmTổĐang xétAn7.51Bình92Chi6.51Dũng82Em8.51"
     },
     {
       "target": "generic.rule_scene",
-      "verdict": "KHÔNG ĐỦ DỮ KIỆN",
-      "inputAccepted": null,
-      "candidatesTried": 0,
+      "verdict": "TOOL_PASS",
+      "inputAccepted": {
+        "type": "toggle",
+        "target": "a"
+      },
+      "candidatesTried": 2,
       "stepsDistinct": 1,
+      "traceSteps": 0,
       "appendOnly": false,
       "stageAtStart": "A → Đầu raB → Đầu raANDA0B0Đầu ra0"
     },
     {
       "target": "logic.and_gate",
-      "verdict": "KHÔNG ĐỦ DỮ KIỆN",
-      "inputAccepted": null,
-      "candidatesTried": 0,
+      "verdict": "TOOL_PASS",
+      "inputAccepted": {
+        "type": "toggle",
+        "target": "A"
+      },
+      "candidatesTried": 2,
       "stepsDistinct": 1,
+      "traceSteps": 0,
       "appendOnly": false,
       "stageAtStart": "AND0Đầu raA = 0B = 0"
     },
@@ -223,6 +249,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 4,
+      "traceSteps": 5,
       "appendOnly": false,
       "stageAtStart": "Bấm N, G, K để đổi giá trị đầu vào và quan sát tín hiệu lan truyền qua các cổng.N1G1K0AND?NOT?ĐẦU RAAND? tín hiệu 1 tín hiệu 0 viền đậm = cổng đang tính ? chưa tới lượt"
     },
@@ -236,6 +263,7 @@
       },
       "candidatesTried": 2,
       "stepsDistinct": 7,
+      "traceSteps": 7,
       "appendOnly": false,
       "stageAtStart": "Đường A – B: chưa xétĐường A – C: chưa xétĐường B – D: chưa xétĐường C – D: chưa xétĐường D – E: chưa xétABCDEHàng đợi (FIFO)1 phần tửđầuAFIFO — vào ở cuối, ra ở đầu (trái → phải)đã thăm(chưa có)Nút đang xử lý đã thăm đa"
     },
@@ -245,6 +273,7 @@
       "inputAccepted": null,
       "candidatesTried": 0,
       "stepsDistinct": 4,
+      "traceSteps": 4,
       "appendOnly": false,
       "stageAtStart": "Đường client – router: chưa tớiĐường router – isp: chưa tớiĐường isp – server: chưa tớiMáy khách (client) — nguồnclientMáy kháchRouter (router)routerRouterNhà mạng (isp)ispISPMáy chủ (server) — đíchserverMáy chủNgắt liên"
     },
@@ -254,6 +283,7 @@
       "inputAccepted": null,
       "candidatesTried": 0,
       "stepsDistinct": 9,
+      "traceSteps": 9,
       "appendOnly": false,
       "stageAtStart": "MÁY GỬITầng Ứng dụngDữ liệu ứng dụngTầng Giao vậnTầng Liên mạngTầng Truy cập mạngMÁY NHẬNTầng Ứng dụngTầng Giao vậnTầng Liên mạngTầng Truy cập mạng"
     },
@@ -263,6 +293,7 @@
       "inputAccepted": null,
       "candidatesTried": 1,
       "stepsDistinct": 14,
+      "traceSteps": 22,
       "appendOnly": false,
       "stageAtStart": "tráiphảitráiphảitráiphảiGốcTài liệuHình ảnhBài tậpĐề thiẢnh lớpẢnh sân trườngNgăn xếp (LIFO)1 phần tửđỉnhGốcLIFO — đẩy vào và lấy ra đều ở đỉnh (trên cùng)đã thăm(chưa có) đang xử lý đã thăm đang chờ trong ngăn xếp chưa "
     },
@@ -276,6 +307,7 @@
       },
       "candidatesTried": 1,
       "stepsDistinct": 1,
+      "traceSteps": 0,
       "appendOnly": false,
       "stageAtStart": ".trang Khung trangMàu nềnMàu nền — ba kênhĐỏ191Lục219Lam254rgb(191, 219, 254)#bfdbfeĐệm trong 16pxBo góc 8px.trang h1 Tiêu đềMàu chữ tiêu đềCỡ chữ tiêu đề 28px.trang p Đoạn vănMàu chữ đoạn vănCỡ chữ đoạn văn 20pxtrang-cu"
     }

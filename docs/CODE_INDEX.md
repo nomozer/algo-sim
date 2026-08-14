@@ -525,7 +525,15 @@ dòng, đáp án có sẵn) khỏi **thay thế** (giá trị bị đổi, vùng
 đoán `whatif_swap {from,to}` / `toggle {id}` thì action bị **nuốt lặng lẽ** và
 `find_max` đọc ra TRACE_PASS trong khi nó là công cụ — đoán sai ở đây luôn đánh
 giá THẤP sản phẩm. Hợp đồng thật: `{i,j}` · `{target}` · `{a,b}`.
-Số hiện tại: **13 TOOL_PASS · 6 TRACE_PASS · 0 EXPERIENCE_FAIL · 4 chưa kết luận**.
+⚠️ "KHÔNG ĐỦ DỮ KIỆN" là chỗ TRỐN nếu để nguyên — bốn target từng rơi vào đó,
+cả bốn đều có câu trả lời rõ khi hỏi thêm một câu. Nay tách theo ĐÚNG cái thiếu,
+và mỗi nhãn là một việc phải làm: `STATIC_ILLUSTRATION` (không timeline, không
+nhận action ⇒ một bức hình) · `TRACE_NOT_VISIBLE` (engine có N bước, màn hình có
+1 ⇒ tiến trình không tới được mắt học sinh).
+⚠️ Đo CHỮ trên sân khấu, nên đổi thuần thị giác (màu cột, vị trí) KHÔNG tính.
+Cột `engine` vs `màn` để lộ khoảng chênh ấy thay vì giấu nó.
+Số hiện tại: **15 TOOL_PASS · 6 TRACE_PASS · 1 TRACE_NOT_VISIBLE
+(`algorithm.scan`) · 1 STATIC_ILLUSTRATION (`binary.decimal_to_binary`)**.
 
 ### `frontend/scripts/certify-scroll-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
 Hỏi: vỏ ứng dụng có đọc thành MỘT khối liền, và máng cuộn có ổn định không?
