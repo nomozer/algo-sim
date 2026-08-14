@@ -120,7 +120,10 @@
 | T0 thực đo | **DONE (W8)** | renderer 3,2s · engine 3,4s · chủ sở hữu chung 4,9s · tài liệu 3,0s · hợp đồng backend 26s (leo thang đúng) | — |
 | Tiêm lỗi W8 | **8/8 BỊ BẮT** | 3 guard từng KHỚP RỖNG rồi báo đạt — đúng lỗi wave này tồn tại để chống, xuất hiện trong chính guard chống nó | — |
 | Live AI tách tầng | **DONE (W8)** | guard cấm `ALLOW_LIVE_AI` xuất hiện trong bộ chọn tất định | — |
-| Gộp server trình duyệt (§21) | **OPEN** | chưa làm | **W12** |
+| Xuất xứ bằng chứng v2 | **DONE (W8 closure)** | mô hình W0 TỰ MÂU THUẪN: artifact ghi `head=A`, commit xong HEAD thành B ⇒ STALE vĩnh viễn. Nay buộc vào `sourceFingerprint` (loại trừ `docs/`) — commit bằng chứng không đổi dấu vân tay | — |
+| Năm trạng thái xuất xứ | **DONE (W8 closure)** | FRESH · STALE_SOURCE · DIRTY_SOURCE · INCOMPATIBLE_TOOL · UNKNOWN_PROVENANCE; thiếu trường KHÔNG mặc định thành FRESH | — |
+| `binary.base_conversion` | **SUPPORTING_CAPABILITY** | catalog neo `T10 B4` (nhị phân, đã được `decimal_to_binary` phủ); case duy nhất tự khai NOT_ANCHORED cho cơ số 16. KHÔNG bịa mã SGK để đạt 23/23 | — |
+| Gộp server trình duyệt (§21) | **OPEN** | chưa làm — W12 mới biết cần kịch bản nào | **W12** |
 | Phân tầng benchmark (§24) | **OPEN** | chưa làm | **W12** |
 | Gộp test trùng / property (§25–26) | **OPEN** | chưa làm | — |
 

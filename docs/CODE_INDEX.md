@@ -520,6 +520,14 @@ khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng m�
 đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
 `docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
+### `frontend/src/evidence-provenance.test.ts` (M20 W8 closure) · offline
+Khoá hợp đồng xuất xứ v2 và chứng minh vòng TỰ THAM CHIẾU đã bị phá.
+⚠️ Có một test tồn tại vì lỗi thật: `sourceFingerprint` bản đầu chạy `git
+ls-files` với cwd của tiến trình (`frontend/`) nên không khớp file nào, và dấu
+vân tay ra sha256("") — GIỐNG HỆT ở mọi trạng thái nguồn, tức `STALE_SOURCE`
+không bao giờ kích hoạt được. Các test khác vẫn xanh vì chúng so hàm với chính
+nó. Test "dấu vân tay PHÂN BIỆT ĐƯỢC" là chỗ bắt được nó.
+
 ### `frontend/scripts/impact.mjs` (M20 W8) · T0 IMPACT GATE · offline
 Chọn test theo file vừa đổi và **in ra lý do từng lựa chọn**. Ghép ba nguồn: sở
 hữu theo thư mục · sổ `SHARED_OWNERS` (mỗi dòng phải nói vì sao bán kính rộng) ·

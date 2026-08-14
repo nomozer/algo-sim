@@ -231,6 +231,19 @@ class TestTruongNeo:
         from app.evaluation.datasets import NEW_POOLS, POOLS as ALL_POOLS
         from app.simulation.catalog import CATALOG
 
+        # W8 §8 — PHÂN LOẠI CÓ BẰNG CHỨNG, không phải miễn trừ trần.
+        #
+        # `binary.base_conversion` = SUPPORTING_CAPABILITY, dẫn từ hai nguồn đã
+        # có trong kho:
+        #   · catalog neo nó vào "T10 B4" (Bài 4 — hệ NHỊ PHÂN), và phần nhị
+        #     phân của T10.CD1 đã có `binary.decimal_to_binary` phủ;
+        #   · case benchmark duy nhất chạm nó (`cap-base-conversion-hex`) tự
+        #     khai NOT_ANCHORED với lý do "cơ số 16 nằm trong hợp đồng engine
+        #     {2,8,10,16} nhưng ngoài neo SGK".
+        #
+        # Nên nó KHÔNG phải một đơn vị chương trình riêng: nó mở rộng NĂNG LỰC
+        # của một đơn vị đã được phủ. Bịa một mã SGK để đạt 23/23 sẽ là đúng
+        # kiểu thổi phồng mà W2 vừa phải sửa hai lần.
         MIEN_TRU = {"binary.base_conversion"}
 
         pools = {n: p for n, p in ALL_POOLS.items() if n in NEW_POOLS or n == "thesis"}
