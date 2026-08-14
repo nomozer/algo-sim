@@ -179,6 +179,58 @@ người học.
 | `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
 | Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
+## W12 — trạng thái theo TỪNG CHIỀU (2026-08-15, `28a0c20`)
+
+**`ALGOSIM_WAVE12_BROWSER_CERTIFICATION_PARTIAL`.**
+
+### COMPLETE / ĐÓNG BĂNG — không soát lại trừ khi có hồi quy
+
+| chiều | bằng chứng |
+|---|---|
+| hợp đồng sinh đặc tả | `test_web_contract_sync.py` · `CACHE_VERSION` 30 ba chủ sở hữu |
+| hành vi sinh, **6/6 họ** | `test_web_generated_behavior.py` · `..._families.py` · `..._db_network.py` |
+| soát hợp đồng cả catalog | `test_catalog_contract_audit.py` (23/23 dẫn từ `CATALOG`) |
+| preflight PDF + soát OCR | 5/5 IMAGE_ONLY · 804 trang · 15/15 mẫu → 0 ký tự · không công cụ OCR nào |
+
+### BLOCKED_EXTERNAL_EVIDENCE — **nhánh đóng băng, KHÔNG chặn phần còn lại**
+
+```
+CURRICULUM_SOURCE_PRESENT  = YES (5/5)
+CURRICULUM_SOURCE_FORMAT   = IMAGE_ONLY
+CURRICULUM_TARGETED_OCR    = UNAVAILABLE
+CURRICULUM_BLOCKER         = CURRICULUM_EXTRACTION_REQUIRES_EXTERNAL_EVIDENCE
+```
+
+Thiếu cụ thể: mục lục 5 quyển + các trang bài để neo 24 mục công khai.
+**Không** chạm engine tất định, hành vi trình duyệt, hay hợp đồng sinh.
+
+### PARTIAL — việc độc lập còn lại, theo thứ tự thi hành
+
+1. parity mẫu↔AI ở mức trường lõi (23 target)
+2. phân loại trải nghiệm cuối + teaching-tool audit cả catalog
+3. chứng nhận tương tác trình duyệt thật (INTERACTIVE_MODEL) + discoverability
+4. chứng nhận BOUNDED_PARAMETER_TOOL + TRACE_MODEL
+5. soát animation-only + quiz-first
+6. chính sách biểu diễn công khai · `packet_routing` · `protocol_encapsulation`
+7. parity 2D↔3D nội bộ
+8. thao tác trực tiếp HTML/CSS · tiếp cận · tiếp nối lớp học
+9. ma trận viewport tươi · hồi quy cuộn · walkthrough dạy học
+10. ma trận lỗi cuối · provenance · T3 kỹ thuật
+
+Hạ tầng đã đủ: `browser-runner.mjs` · `certify-{viewports,experience,visual-weight,scroll}-w12.mjs`
+· `canonical_config.py` · mẫu FAULT/CONTROL ở `test_web_contract_sync.py`.
+
+### Giữ nguyên
+
+`CURRICULUM_SUPPORT_PARTIAL` · `LEARNER_IMPACT_NOT_EVALUATED` ·
+`WAVE4_INTERACTION_CERTIFICATION = NO_EVIDENCE` · `WAVE6_BROWSER_EXPERIENCE = PARTIAL`
+
+### Rủi ro kỹ thuật đã ghi nhận (không phải khiếm khuyết tất định)
+
+`GENERATION_CONTRACT_RESIDUAL_ENGINEERING_RISK` — schema thuật toán dùng chung
+không diễn đạt được `required` theo từng target. Validator vẫn fail-closed nên
+runtime an toàn; giá phải trả là một lượt sinh hỏng, không phải mô phỏng sai.
+
 ## W12 — trạng thái đóng (2026-08-14, `1647af3`)
 
 **Verdict: `ALGOSIM_WAVE12_BROWSER_CERTIFICATION_PARTIAL`.**
