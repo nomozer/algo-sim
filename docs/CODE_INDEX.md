@@ -543,6 +543,16 @@ TRACE_MODEL → hạ cấp target thao tác được vì phép đo hẹp. Nay c�
 `PROBE_LIMITED` (chưa kết luận). Artifact:
 `docs/evaluation/m20/w12-interaction-semantics.json`.
 
+### `frontend/scripts/certify-viewports-w12.mjs` (M20 W12-C) · offline (cần `npm run dev`)
+23 target × 4 bề rộng = 92 dòng, dùng lại `browser-runner.mjs`. Hỏi câu KHÁC với
+`audit-composition.mjs`: **ở bề rộng này học sinh có DÙNG ĐƯỢC target không** —
+sân khấu hiện · affordance chính thấy được · thử thách đóng sẵn · tràn/cắt/chồng.
+⚠️ Đếm affordance phải gồm CUE CON TRỎ trên SVG: cột `ArrayView` là một `rect`
+gắn pointer handler và React gắn listener ở gốc nên không lộ ra DOM. Bản đầu chỉ
+tìm `input/button/[tabindex]` và đọc ra 0 affordance cho mọi target thuật toán —
+một kết luận sai vì thước đo hẹp.
+Artifact: `docs/evaluation/m20/w12-viewport-matrix.json`.
+
 ### `frontend/scripts/quiz-dominance-w12.mjs` (M20 W12-A) · offline (cần `npm run dev`)
 Hỏi: khi mở thử thách, CƠ CHẾ còn là khối lớn nhất trên màn hình không? Đo tỉ lệ
 `chiều cao khối thử thách / chiều cao sân khấu` — không đo bề rộng, vì cả hai
