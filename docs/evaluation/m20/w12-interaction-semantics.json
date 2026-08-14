@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T07:51:52.651Z",
+  "generatedAt": "2026-08-14T07:58:17.288Z",
   "kind": "DESCRIPTIVE_MANIFEST",
   "note": "Dẫn từ hợp đồng module + affordance trong renderer miền. KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
   "gateQuestion": "Khi ĐÓNG thử thách, học sinh thao tác lên cái gì?",
@@ -7,13 +7,14 @@
     {
       "id": "algorithm.binary_search",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -21,7 +22,7 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.bounded_control_flow",
@@ -32,7 +33,8 @@
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": false,
       "hasTimeline": true,
@@ -41,13 +43,14 @@
     {
       "id": "algorithm.bubble_sort",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -55,18 +58,19 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.count_if",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -74,18 +78,19 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.find_max",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -93,18 +98,19 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.find_min",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -112,18 +118,19 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.insertion_sort",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -131,18 +138,19 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.linear_search",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -150,7 +158,7 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.scan",
@@ -161,7 +169,8 @@
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": false,
       "hasTimeline": true,
@@ -170,13 +179,14 @@
     {
       "id": "algorithm.selection_sort",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -184,18 +194,19 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "algorithm.sum_if",
       "domain": "algorithm",
-      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "manipulatesWhenChallengeClosed": "whatif_swap (đổi ĐẦU VÀO, không phải quyết định cơ chế)",
       "stageActions": [
         "exit_branch",
         "set_param",
         "whatif_swap"
       ],
-      "modelActions": [
+      "mechanismActions": [],
+      "inputActions": [
         "whatif_swap"
       ],
       "acceptedByModule": [
@@ -203,7 +214,7 @@
       ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "INTERACTIVE_MODEL"
+      "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
     {
       "id": "binary.base_conversion",
@@ -213,9 +224,10 @@
         "set_param",
         "toggle"
       ],
-      "modelActions": [
+      "mechanismActions": [
         "set_param"
       ],
+      "inputActions": [],
       "acceptedByModule": [
         "set_param"
       ],
@@ -231,9 +243,10 @@
         "set_param",
         "toggle"
       ],
-      "modelActions": [
+      "mechanismActions": [
         "set_param"
       ],
+      "inputActions": [],
       "acceptedByModule": [
         "set_param"
       ],
@@ -249,9 +262,10 @@
         "set_param",
         "toggle"
       ],
-      "modelActions": [
+      "mechanismActions": [
         "toggle"
       ],
+      "inputActions": [],
       "acceptedByModule": [
         "toggle"
       ],
@@ -266,7 +280,8 @@
       "stageActions": [
         "set_param"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": false,
       "hasTimeline": true,
@@ -280,7 +295,8 @@
         "move",
         "toggle"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": false,
       "hasTimeline": true,
@@ -293,9 +309,10 @@
       "stageActions": [
         "toggle"
       ],
-      "modelActions": [
+      "mechanismActions": [
         "toggle"
       ],
+      "inputActions": [],
       "acceptedByModule": [
         "toggle"
       ],
@@ -310,7 +327,8 @@
       "stageActions": [
         "toggle"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": false,
       "hasTimeline": true,
@@ -326,9 +344,10 @@
         "net_reset",
         "set_param"
       ],
-      "modelActions": [
+      "mechanismActions": [
         "set_param"
       ],
+      "inputActions": [],
       "acceptedByModule": [
         "set_param"
       ],
@@ -346,7 +365,8 @@
         "net_reset",
         "set_param"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": true,
       "hasTimeline": true,
@@ -362,7 +382,8 @@
         "net_reset",
         "set_param"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": true,
       "hasTimeline": true,
@@ -375,7 +396,8 @@
       "stageActions": [
         "set_param"
       ],
-      "modelActions": [],
+      "mechanismActions": [],
+      "inputActions": [],
       "acceptedByModule": [],
       "hasChallenge": false,
       "hasTimeline": true,
@@ -390,10 +412,11 @@
         "set_param",
         "toggle"
       ],
-      "modelActions": [
+      "mechanismActions": [
         "move",
         "set_param"
       ],
+      "inputActions": [],
       "acceptedByModule": [
         "move",
         "set_param"

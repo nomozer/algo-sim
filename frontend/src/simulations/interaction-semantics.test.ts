@@ -60,11 +60,60 @@ function stageActionsOf(domain: string): string[] {
   return [...found].sort();
 }
 
-/** Action nào là THAO TÁC MÔ HÌNH (đổi state miền), theo hợp đồng từng miền. */
-const MODEL_ACTIONS = new Set([
-  "whatif_swap", "set_param", "toggle", "move",
-  "net_connect", "net_disconnect", "net_reset",
-]);
+/**
+ * BA CÂU HỎI TÁCH BẠCH — và câu (B) là câu bị bỏ qua ở lượt trước.
+ *
+ *   (A) Mô hình có thao tác được không?
+ *   (B) Thao tác ấy có LIÊN QUAN tới cơ chế đang dạy không?
+ *   (C) Nó có phải hành động CHÍNH và THẤY ĐƯỢC trên UI thật không?
+ *
+ * `find_max` trả lời (A) là CÓ — kéo cột phát `whatif_swap`, state đổi thật.
+ * Nhưng (B) là KHÔNG: `whatif_swap` sắp xếp lại DỮ LIỆU VÀO, trong khi cơ chế
+ * đang dạy là "ứng viên có lớn hơn max hiện tại không". Đổi thứ tự đầu vào
+ * không cho học sinh tác động lên chính phép so sánh ấy.
+ *
+ * Nên một action đổi được state KHÔNG tự động là bằng chứng cho "mô phỏng
+ * tương tác". Phải hỏi nó đụng tới ĐỐI TƯỢNG HỌC hay chỉ đụng ĐẦU VÀO của
+ * đối tượng ấy.
+ */
+const ACTION_ROLE: Record<string, "INPUT" | "MECHANISM"> = {
+  /* Sắp xếp lại dãy = đổi ĐỀ BÀI, không phải tham gia vào phép quét. */
+  whatif_swap: "INPUT",
+  /* Đổi điều kiện/tham số = cũng đổi đề bài. Với target mà THAM SỐ CHÍNH LÀ bài
+     học (đổi cơ số, đổi chuỗi mã hoá, đổi bộ lọc) thì vai trò được nâng lên
+     MECHANISM bằng bảng `MECHANISM_PARAM_TARGETS` bên dưới. */
+  set_param: "INPUT",
+  /* Bật/tắt công tắc logic, bật/tắt bit: quan hệ vào→ra CHÍNH LÀ bài học. */
+  toggle: "MECHANISM",
+  /* Dời khối trong trang: cấu trúc tài liệu chính là thứ đang dạy. */
+  move: "MECHANISM",
+  /* Nối/ngắt liên kết mạng: topology chính là thứ định tuyến phụ thuộc vào. */
+  net_connect: "MECHANISM",
+  net_disconnect: "MECHANISM",
+  net_reset: "MECHANISM",
+};
+
+/**
+ * Target mà THAM SỐ chính là đối tượng học — ở đó `set_param` được nâng vai trò.
+ *
+ * Mỗi dòng phải nói vì sao, nếu không bảng này thành cách lách để mọi target
+ * đều "tương tác".
+ */
+const MECHANISM_PARAM_TARGETS: Record<string, string> = {
+  "binary.base_conversion":
+    "Cơ số nguồn/đích và giá trị LÀ bài học (quan hệ chữ số ↔ trọng số), không phải đầu vào của một cơ chế khác.",
+  "binary.character_encoding":
+    "Chuỗi ký tự và bảng mã LÀ bài học — đổi chúng là đổi chính thứ đang được mã hoá.",
+  "database.relational_table_query":
+    "Bộ lọc/chiếu/sắp LÀ truy vấn đang được dạy; đổi chúng là thực hiện chính thao tác của bài.",
+  "web.style_model":
+    "Thuộc tính trình bày LÀ quan hệ CSS đang dạy — đổi padding/màu là thực hiện bài học.",
+  "network.graph_traversal":
+    "Chọn BFS/DFS là chọn chính thuật toán đang so sánh, không phải đổi dữ liệu vào.",
+  "tree.traversal":
+    "Chọn kiểu duyệt là chọn chính định nghĩa đang dạy — bốn kiểu cho bốn dãy kết quả khác nhau.",
+};
+
 /** Action chỉ điều hướng nhánh — không đổi bài toán, nhưng vẫn là state miền. */
 const BRANCH_ACTIONS = new Set(["exit_branch"]);
 
@@ -76,7 +125,10 @@ interface Row {
   stageActions: string[];
   /** Action mà CHÍNH module này nhận (thử `apply`, so state). */
   acceptedByModule: string[];
-  modelActions: string[];
+  /** Đụng ĐỐI TƯỢNG HỌC. */
+  mechanismActions: string[];
+  /** Chỉ đổi ĐẦU VÀO của cơ chế. */
+  inputActions: string[];
   hasChallenge: boolean;
   hasTimeline: boolean;
   primaryType: string;
@@ -142,20 +194,29 @@ function acceptedByModule(m: SimulationModule<unknown, unknown>, candidates: str
 
 function classify(m: SimulationModule<unknown, unknown>, stage: string[]): Row {
   const accepted = acceptedByModule(m, stage);
+  const roleOf = (a: string) =>
+    a === "set_param" && MECHANISM_PARAM_TARGETS[m.id] ? "MECHANISM" : ACTION_ROLE[a];
+  const mechanismActions = accepted.filter((a) => roleOf(a) === "MECHANISM");
+  const inputActions = accepted.filter((a) => roleOf(a) === "INPUT");
   /* `apply: (state) => state` — module tự khai nó không nhận action nào. Đó là
      bằng chứng TRỰC TIẾP, khác hẳn việc probe của tôi không trúng. */
   const identityApply = /^\s*\(state[^)]*\)\s*=>\s*state\s*$/.test(
     m.apply.toString().replace(/\/\*[\s\S]*?\*\//g, "").trim());
-  const modelActions = accepted.filter((a) => MODEL_ACTIONS.has(a));
   const branchOnly = accepted.filter((a) => BRANCH_ACTIONS.has(a));
   const hasChallenge = Boolean(m.predict);
   const hasTimeline = Boolean(m.timeline);
 
   let primaryType: string;
   let answer: string;
-  if (modelActions.length) {
+  if (mechanismActions.length) {
+    /* Học sinh tác động lên CHÍNH đối tượng đang học. */
     primaryType = "INTERACTIVE_MODEL";
-    answer = modelActions.join(" · ");
+    answer = mechanismActions.join(" · ");
+  } else if (inputActions.length) {
+    /* Đổi được đề bài rồi xem engine chạy lại — hữu ích và thật, nhưng KHÔNG
+       phải thao tác lên cơ chế. Gọi đúng tên nó (§12). */
+    primaryType = "BOUNDED_PARAMETER_TOOL";
+    answer = `${inputActions.join(" · ")} (đổi ĐẦU VÀO, không phải quyết định cơ chế)`;
   } else if (branchOnly.length) {
     primaryType = "COMMITMENT_TRACE";
     answer = "quyết định nhánh của cơ chế";
@@ -178,7 +239,8 @@ function classify(m: SimulationModule<unknown, unknown>, stage: string[]): Row {
   return {
     id: m.id, domain: m.domain,
     manipulatesWhenChallengeClosed: answer,
-    stageActions: stage, modelActions,
+    stageActions: stage,
+    mechanismActions, inputActions,
     acceptedByModule: accepted,
     hasChallenge, hasTimeline, primaryType,
   };
@@ -229,9 +291,12 @@ describe("W12-B0 — bốn loại hành động, phân loại trung thực", () 
     }
   });
 
-  it("target khai INTERACTIVE_MODEL phải có action đổi state MIỀN", () => {
+  it("target khai INTERACTIVE_MODEL phải đụng ĐỐI TƯỢNG HỌC, không chỉ đầu vào", () => {
+    /* Đây là bất biến trung tâm của W12-B0.5. Một action đổi được state KHÔNG
+       tự động chứng minh "mô phỏng tương tác": phải hỏi nó đụng tới đối tượng
+       đang dạy hay chỉ đụng đầu vào của đối tượng ấy. */
     for (const r of rows.filter((x) => x.primaryType === "INTERACTIVE_MODEL")) {
-      expect(r.modelActions.length, `${r.id} khai interactive mà không có action miền`)
+      expect(r.mechanismActions.length, `${r.id} khai interactive mà chỉ đổi đầu vào`)
         .toBeGreaterThan(0);
     }
   });
@@ -239,9 +304,17 @@ describe("W12-B0 — bốn loại hành động, phân loại trung thực", () 
   it("`algorithm.find_max` — ca tham chiếu: mô hình và thử thách TÁCH BẠCH", () => {
     const fm = rows.find((r) => r.id === "algorithm.find_max")!;
     expect(fm.hasChallenge, "find_max phải CÓ thử thách").toBe(true);
-    expect(fm.modelActions, "và phải có thao tác mô hình ĐỘC LẬP với thử thách")
-      .toContain("whatif_swap");
-    expect(fm.primaryType).toBe("INTERACTIVE_MODEL");
+    /* PHÂN LOẠI ĐÃ ĐỔI, và đó là điểm của W12-B0.5.
+       `whatif_swap` đổi state thật, nhưng nó SẮP XẾP LẠI DỮ LIỆU VÀO — trong
+       khi cơ chế đang dạy là "ứng viên có lớn hơn max hiện tại không". Đổi thứ
+       tự đầu vào không cho học sinh tác động lên chính phép so sánh ấy.
+       Quyết định promote/keep hiện CHỈ sống trong `predict` (thử thách), không
+       có đường nào qua `module.apply` — nên `find_max` chưa phải mô phỏng
+       tương tác theo nghĩa cơ chế. */
+    expect(fm.inputActions, "kéo cột là thao tác ĐẦU VÀO").toContain("whatif_swap");
+    expect(fm.mechanismActions, "chưa có action nào chạm tới quyết định của thuật toán")
+      .toEqual([]);
+    expect(fm.primaryType).toBe("BOUNDED_PARAMETER_TOOL");
     /* Đường thao tác: kéo cột trong ArrayView → onSwap → dispatch(whatif_swap)
        → apply → nhánh. Đóng thử thách lại, đường ấy vẫn còn. */
     const av = readFileSync(new URL("../components/ArrayView.tsx", import.meta.url)
