@@ -510,6 +510,23 @@ W7, dải điều khiển phân loại bằng `timeline.stepCount(state) > 1`, �
 diễn kĩ thuật §9 cấm: `base_conversion` có 12 bước nên được dòng thời gian đầy
 đủ, dù sau W5 kết quả của nó đọc được ngay. Số hiện tại: **13 / 7 / 3**.
 
+### `frontend/scripts/certify-experience-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
+Hỏi: **ĐÓNG thử thách rồi, học sinh làm được gì có nghĩa trên màn này?** — tầng
+thứ ba, khác hai tầng đã có: `interaction-semantics.test.ts` hỏi *module nhận
+action gì* (hợp đồng), `certify-viewports-w12.mjs` hỏi *affordance có thấy được
+không* (bề mặt).
+Phân loại: đổi được đầu vào ⇒ `TOOL_PASS` · không đổi được nhưng tua THAY THẾ ⇒
+`TRACE_PASS` · không đổi được và tua chỉ THÊM DỒN ⇒ **`EXPERIENCE_FAIL`**.
+⚠️ "Tua thì màn hình đổi" KHÔNG phân biệt được gì — trình chiếu cũng đổi. Nên
+phép đo tách **thêm dồn** (bước sau chứa trọn bước trước = bảng in dần từng
+dòng, đáp án có sẵn) khỏi **thay thế** (giá trị bị đổi, vùng xét co lại = cơ chế
+đang chạy).
+⚠️ Ứng viên action sinh từ config, và hình dạng phải ĐỌC `simulations/types.ts`:
+đoán `whatif_swap {from,to}` / `toggle {id}` thì action bị **nuốt lặng lẽ** và
+`find_max` đọc ra TRACE_PASS trong khi nó là công cụ — đoán sai ở đây luôn đánh
+giá THẤP sản phẩm. Hợp đồng thật: `{i,j}` · `{target}` · `{a,b}`.
+Số hiện tại: **13 TOOL_PASS · 6 TRACE_PASS · 0 EXPERIENCE_FAIL · 4 chưa kết luận**.
+
 ### `frontend/scripts/certify-scroll-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
 Hỏi: vỏ ứng dụng có đọc thành MỘT khối liền, và máng cuộn có ổn định không?
 5 màn × 4 bề rộng trên `browser-runner.mjs`: home · library · history ·
