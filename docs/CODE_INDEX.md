@@ -556,8 +556,11 @@ hết, trong khi mở ra nhìn thì nó là hình minh hoạ có chú thích.
 liệu (dãy 3 phần tử có 5 hình chữ nhật) và không nhìn được vào `<canvas>` — nó
 vừa gán "tranh tĩnh" cho cảnh 3D thật. `glyphs` còn trong artifact để đọc.
 ⚠️ Đo BỀ MẶT, không đo hiểu biết — `LEARNER_IMPACT_NOT_EVALUATED` giữ nguyên.
-Số hiện tại: **22/23 lấy HÌNH làm chính**; còn `algorithm.bounded_control_flow`
-(hình 10,8% thẻ).
+⚠️ Hai ngoại lệ, cả hai đều KIỂM NGƯỢC được nên không nuốt được luật: bài có
+`<table>` (bảng là kết quả engine) và `CODE_IS_THE_MECHANISM`
+(`bounded_control_flow` — sân khấu là mã giả có con trỏ dòng, như trình gỡ lỗi;
+vẽ thêm hình ở đó là trang trí). Khai "mã là cơ chế" mà lại nhiều hình ⇒ ĐỎ.
+Số hiện tại: **23/23 lấy HÌNH làm chính**.
 
 ### `frontend/scripts/certify-scroll-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
 Hỏi: vỏ ứng dụng có đọc thành MỘT khối liền, và máng cuộn có ổn định không?

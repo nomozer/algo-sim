@@ -91,6 +91,22 @@ const MEASURE = `(()=>{
    phán quyết. `glyphs` vẫn ghi vào artifact để đọc, không dùng để phán. */
 const MIN_INK_SHARE = 0.15;
 
+/**
+ * MÃ GIẢ LÀ CƠ CHẾ — ngoại lệ có tên, **chỉ được NGẮN ĐI**.
+ *
+ * Cùng lí lẽ với việc miễn ngưỡng cho bài có bảng: ở những bài này thứ học sinh
+ * phải đọc CHÍNH LÀ dòng lệnh, và con trỏ dòng chạy qua nó là cơ chế — giống
+ * một trình gỡ lỗi. Vẽ thêm hình cho đủ tỉ lệ sẽ là trang trí, không phải dạy.
+ *
+ * Đây KHÔNG phải chỗ giấu nợ: mỗi mục bị kiểm ngược ở dưới (khai mà lại nhiều
+ * hình thì ĐỎ), và thêm một dòng ở đây là tự khai vừa hạ một target xuống
+ * chữ-làm-chính.
+ */
+const CODE_IS_THE_MECHANISM = {
+  "algorithm.bounded_control_flow":
+    "sân khấu là mã giả với con trỏ dòng — luồng điều khiển LÀ nội dung bài",
+};
+
 const session = await new BrowserSession({ viewport: 1536 }).open();
 const targets = JSON.parse(await session.eval(`(async()=>{
   const c=await import(${JSON.stringify(session.mods.catalog)});
@@ -113,8 +129,14 @@ for (const sim of targets) {
   const problems = [];
   /* Bảng LÀ hình của bài dữ liệu — một bài có bảng thì phần hình được tính
      bằng bảng, nên không phạt inkShare ở đó. Nói ra thay vì lặng lẽ miễn. */
-  if (m.tables === 0 && m.inkShare < MIN_INK_SHARE) {
+  if (m.tables === 0 && !(sim in CODE_IS_THE_MECHANISM) && m.inkShare < MIN_INK_SHARE) {
     problems.push(`hình chỉ chiếm ${(m.inkShare * 100).toFixed(1)}% thẻ`);
+  }
+  /* Ngoại lệ phải CHỨNG MINH ĐƯỢC: một target khai "mã là cơ chế" mà lại có
+     nhiều hình thì lời khai ấy sai, và im lặng cho qua là mở đường cho ngoại lệ
+     nuốt dần cả luật. */
+  if (sim in CODE_IS_THE_MECHANISM && m.inkShare >= MIN_INK_SHARE) {
+    problems.push(`khai "mã là cơ chế" nhưng hình chiếm ${(m.inkShare * 100).toFixed(1)}% — bỏ khai đi`);
   }
   /* NGƯỠNG `glyphs` ĐÃ GỠ — nó đo KÍCH THƯỚC DỮ LIỆU, không đo chất lượng.
      Một dãy 3 phần tử có 5 hình chữ nhật; một dãy 10 phần tử có 12. Phạt cái

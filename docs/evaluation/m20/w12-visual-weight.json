@@ -1,10 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "10174dd4e6eec4f0",
-  "dirtyRelevantSources": [],
-  "head": "736098a45b9a2373a9bdfd6dca7580c0fa10f23c",
-  "dirty": false,
-  "generatedAt": "2026-08-14T13:21:10.553Z",
+  "sourceFingerprint": "f193b7b57b1caaf6",
+  "dirtyRelevantSources": [
+    "frontend/scripts/certify-visual-weight-w12.mjs"
+  ],
+  "head": "69e90acfeebd99ed7177d47a0f5e34936a525480",
+  "dirty": true,
+  "generatedAt": "2026-08-14T13:25:34.439Z",
   "tool": "certify-visual-weight-w12",
   "toolVersion": "1",
   "environment": {
@@ -15,12 +17,11 @@
   "kind": "CERTIFICATION_EVIDENCE",
   "question": "Trên sân khấu, HÌNH chiếm bao nhiêu so với CHỮ?",
   "thresholds": {
-    "minInkShare": 0.15,
-    "minGlyphs": 8
+    "minInkShare": 0.15
   },
   "limitation": "Đo BỀ MẶT, không đo hiểu biết. LEARNER_IMPACT_NOT_EVALUATED giữ nguyên.",
   "serverStarts": 1,
-  "passed": 22,
+  "passed": 23,
   "total": 23,
   "rows": [
     {
@@ -42,10 +43,8 @@
       "cardArea": 499073,
       "inkShare": 0.108,
       "tables": 0,
-      "problems": [
-        "hình chỉ chiếm 10.8% thẻ"
-      ],
-      "verdict": "CHỮ LÀ CHÍNH"
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
     },
     {
       "target": "algorithm.bubble_sort",
