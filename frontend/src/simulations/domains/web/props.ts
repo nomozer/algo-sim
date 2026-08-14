@@ -70,11 +70,29 @@ export const TEXT_COLOR_CHOICES = [
   { value: "#ffffff", label: "Trắng" },
 ] as const;
 
+/**
+ * Mỗi thuộc tính số khai LUÔN nó thuộc BỘ CHỌN nào.
+ *
+ * ─── VÌ SAO `node` NẰM Ở ĐÂY, KHÔNG NẰM Ở `ui.tsx` ────────────────────────
+ *
+ * Trước W12, `ui.tsx` giữ một hằng số `GROUPS` viết tay liệt kê lại đúng những
+ * thuộc tính này kèm bộ chọn của chúng. Hệ quả: bề mặt công cụ KHÔNG dẫn từ
+ * đăng kí — thêm một thuộc tính vào `NUMERIC_PROPS` mà quên sửa `GROUPS` thì
+ * học sinh không có ô điều khiển nào cho nó, và không gì báo.
+ *
+ * Điều đó chạm thẳng luận điểm đề tài: nếu bề mặt tương tác là hằng số viết
+ * tay thì một đặc tả do LLM đề xuất KHÔNG quyết định được gì ở tầng ấy — nó chỉ
+ * điền vào một khuôn cứng. Người dùng hỏi đúng câu này: "mô phỏng sinh sau có
+ * ra được các tính năng như vậy không?"
+ *
+ * Nay `node` là dữ kiện của chính đăng kí, `ui.tsx` nhóm theo nó, và
+ * `web-prop-registry.test.ts` khoá: mọi thuộc tính phải có đúng một ô điều khiển.
+ */
 export const NUMERIC_RANGE = {
-  headingSize: { min: 16, max: 56, step: 2, unit: "px", label: "Cỡ chữ tiêu đề" },
-  fontSize: { min: 12, max: 48, step: 2, unit: "px", label: "Cỡ chữ đoạn văn" },
-  padding: { min: 0, max: 48, step: 4, unit: "px", label: "Đệm trong" },
-  borderRadius: { min: 0, max: 40, step: 2, unit: "px", label: "Bo góc" },
+  headingSize: { node: "heading", min: 16, max: 56, step: 2, unit: "px", label: "Cỡ chữ tiêu đề" },
+  fontSize: { node: "paragraph", min: 12, max: 48, step: 2, unit: "px", label: "Cỡ chữ đoạn văn" },
+  padding: { node: "page", min: 0, max: 48, step: 4, unit: "px", label: "Đệm trong" },
+  borderRadius: { node: "page", min: 0, max: 40, step: 2, unit: "px", label: "Bo góc" },
 } as const;
 
 export const NUMERIC_PROPS = ["headingSize", "fontSize", "padding", "borderRadius"] as const;

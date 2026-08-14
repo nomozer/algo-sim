@@ -34,12 +34,26 @@ import { NODE_LABEL, SELECTOR_OF, type WebBlock, type WebConfig, type WebNode, t
  */
 type Props = WorkspaceProps<WebConfig, WebState>;
 
-/** Nhóm control theo ĐÚNG bộ chọn nó ảnh hưởng — nhãn nói ra quan hệ đó. */
-const GROUPS = [
-  { node: "page", props: ["padding", "borderRadius"], swatch: "backgroundColor", swatchLabel: "Màu nền" },
-  { node: "heading", props: ["headingSize"], swatch: "headingColor", swatchLabel: "Màu chữ tiêu đề" },
-  { node: "paragraph", props: ["fontSize"], swatch: "color", swatchLabel: "Màu chữ đoạn văn" },
-] as const;
+/**
+ * Nhóm control DẪN TỪ ĐĂNG KÍ, không liệt kê lại bằng tay.
+ *
+ * Bản trước ghi cứng cả ba nhóm ở đây, nên `NUMERIC_PROPS` và bề mặt công cụ là
+ * hai danh sách rời: thêm thuộc tính vào đăng kí mà quên sửa chỗ này thì học
+ * sinh không chạm được vào nó, và không test nào đỏ. Nay chỉ SWATCH là dữ kiện
+ * riêng của UI (nó là màu, không phải thuộc tính số); phần còn lại đọc `node`
+ * từ `NUMERIC_RANGE`.
+ */
+const SWATCH_OF = {
+  page: { swatch: "backgroundColor", swatchLabel: "Màu nền" },
+  heading: { swatch: "headingColor", swatchLabel: "Màu chữ tiêu đề" },
+  paragraph: { swatch: "color", swatchLabel: "Màu chữ đoạn văn" },
+} as const;
+
+const GROUPS = (["page", "heading", "paragraph"] as const).map((node) => ({
+  node,
+  props: NUMERIC_PROPS.filter((p) => NUMERIC_RANGE[p].node === node),
+  ...SWATCH_OF[node],
+}));
 
 export function WebWorkspace({ state, dispatch }: Props) {
   const s = state.style;

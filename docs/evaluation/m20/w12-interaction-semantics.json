@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T13:02:12.352Z",
+  "generatedAt": "2026-08-14T13:07:50.972Z",
   "kind": "DESCRIPTIVE_MANIFEST",
   "note": "Dẫn từ hợp đồng module + affordance trong renderer miền. KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
   "gateQuestion": "Khi ĐÓNG thử thách, học sinh thao tác lên cái gì?",
