@@ -158,6 +158,16 @@ người học.
 | Hạng mục THỨ BA do guard tìm ra | **ĐÃ KHAI (W10)** | `.web-page` chạy `padding` — thuộc tính bố cục HTML nhưng CHÍNH LÀ state mô phỏng đang dạy; cấm nó là cấm bài học | — |
 | Tiêm lỗi W10 | **5/5 BỊ BẮT** | HTML chạy height · HTML chạy margin · inline `<div>` chạy width · ngoại lệ wildcard · gỡ hình học SVG | — |
 
+## 4g. Wave 12 — chứng nhận trình duyệt (ĐANG DỞ)
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| Runner dùng chung một server | **DONE (W12)** | `browser-runner.mjs` — 23 kịch bản, `serverStarts: 1`; cách ly bằng `store.reset()` + xoá lưu trữ, không khởi động lại tiến trình | — |
+| Chứng nhận tương tác 23 target | **14/23 CERTIFIED** | `certify-w12.mjs` → `w12-interaction.json`, mang `sourceFingerprint`. Luật: hành động → SimAction → apply → state tất định đổi → hệ quả DOM | **W12 tiếp** |
+| 9 target còn lại | **PROBE_UNVERIFIED** | **KHÔNG phải khiếm khuyết sản phẩm.** Probe chưa dùng đúng từ vựng action của miền (`logic` chỉ nhận `toggle`, `network` nhận `net_*`, `tree`/`database` chưa đọc hợp đồng). Phải đọc hợp đồng rồi chạy lại trước khi kết luận bất cứ điều gì | **W12 tiếp** |
+| `WAVE4_INTERACTION_CERTIFICATION` | **NO_EVIDENCE — không đổi** | chỉ nâng khi đủ 23/23 có bằng chứng tươi | **W12** |
+| `WAVE6_BROWSER_EXPERIENCE` | **PARTIAL — không đổi** | chín màn trải nghiệm chưa chạy | **W12** |
+
 ## 5. Phủ chương trình
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |

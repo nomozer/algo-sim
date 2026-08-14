@@ -520,6 +520,23 @@ khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng m�
 đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
 `docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
+### `frontend/scripts/browser-runner.mjs` (M20 W12) · offline (cần `npm run dev`)
+MỘT vòng đời trình duyệt cho NHIỀU kịch bản: mở Chrome một lần, chờ trang một
+lần, dọn state giữa các kịch bản bằng `store.reset()` + xoá lưu trữ, đóng một
+lần. Cách ly bằng DỌN STATE, không bằng khởi động lại tiến trình. Có bộ đếm
+`serverStarts` xuất ra artifact để một bản sửa vô ý quay lại kiểu
+một-server-mỗi-kịch-bản không lọt im lặng. Cấp sẵn `loadTarget`/`snapshot`/
+`dispatch`/`clickText`/`scenario`.
+
+### `frontend/scripts/certify-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
+Chứng nhận tương tác trong trình duyệt THẬT theo luật: hành động → SimAction →
+`module.apply` → **state tất định đổi** → hệ quả nhìn thấy trong DOM. Một cú bấm
+không đủ, một hoạt hình không đủ, trả lời thử thách không đủ.
+⚠️ Phân biệt `CERTIFIED` với `PROBE_UNVERIFIED`: state không đổi có thể là target
+không nhận action ấy HOẶC probe chưa đúng từ vựng miền. Gộp hai ca thành "hỏng"
+là đổ lỗi cho sản phẩm vì phép đo hẹp — Wave 1 đã ghi rằng bộ thăm dò chung chỉ
+là CẬN DƯỚI. Artifact: `docs/evaluation/m20/w12-interaction.json`.
+
 ### `frontend/src/styles/transition-semantics.test.ts` (M20 W10) · offline
 Phân biệt HÌNH HỌC DỮ LIỆU (SVG) với CHUYỂN ĐỘNG BỐ CỤC (HTML). `height` trên
 `<rect>` encode giá trị mảng — cho chạy là cách kể "giá trị vừa đổi bao nhiêu";

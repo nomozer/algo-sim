@@ -1,0 +1,384 @@
+{
+  "provenanceVersion": 2,
+  "sourceFingerprint": "a6be21d018269e2d",
+  "dirtyRelevantSources": [],
+  "head": "543228ed4abf1fcfe67c3306c5766ae43989a13c",
+  "dirty": false,
+  "generatedAt": "2026-08-14T07:23:34.569Z",
+  "tool": "certify-w12",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "viewport": 1920
+  },
+  "kind": "CERTIFICATION_EVIDENCE",
+  "rule": "hành động → SimAction → module.apply → state tất định đổi → hệ quả trong DOM",
+  "serverStarts": 1,
+  "timings": {
+    "startup": 3619,
+    "scenarios": [
+      {
+        "name": "algorithm.binary_search",
+        "ms": 848
+      },
+      {
+        "name": "algorithm.bounded_control_flow",
+        "ms": 822
+      },
+      {
+        "name": "algorithm.bubble_sort",
+        "ms": 848
+      },
+      {
+        "name": "algorithm.count_if",
+        "ms": 848
+      },
+      {
+        "name": "algorithm.find_max",
+        "ms": 835
+      },
+      {
+        "name": "algorithm.find_min",
+        "ms": 826
+      },
+      {
+        "name": "algorithm.insertion_sort",
+        "ms": 825
+      },
+      {
+        "name": "algorithm.linear_search",
+        "ms": 2042
+      },
+      {
+        "name": "algorithm.scan",
+        "ms": 821
+      },
+      {
+        "name": "algorithm.selection_sort",
+        "ms": 820
+      },
+      {
+        "name": "algorithm.sum_if",
+        "ms": 836
+      },
+      {
+        "name": "binary.base_conversion",
+        "ms": 823
+      },
+      {
+        "name": "binary.character_encoding",
+        "ms": 829
+      },
+      {
+        "name": "binary.decimal_to_binary",
+        "ms": 825
+      },
+      {
+        "name": "database.relational_table_query",
+        "ms": 819
+      },
+      {
+        "name": "generic.rule_scene",
+        "ms": 824
+      },
+      {
+        "name": "logic.and_gate",
+        "ms": 820
+      },
+      {
+        "name": "logic.boolean_dag",
+        "ms": 821
+      },
+      {
+        "name": "network.graph_traversal",
+        "ms": 850
+      },
+      {
+        "name": "network.packet_routing",
+        "ms": 833
+      },
+      {
+        "name": "network.protocol_encapsulation",
+        "ms": 824
+      },
+      {
+        "name": "tree.traversal",
+        "ms": 817
+      },
+      {
+        "name": "web.style_model",
+        "ms": 842
+      }
+    ],
+    "cleanup": 1
+  },
+  "passed": 14,
+  "total": 23,
+  "probeUnverified": [
+    "algorithm.bounded_control_flow",
+    "algorithm.scan",
+    "binary.base_conversion",
+    "database.relational_table_query",
+    "generic.rule_scene",
+    "logic.boolean_dag",
+    "network.packet_routing",
+    "network.protocol_encapsulation",
+    "tree.traversal"
+  ],
+  "rows": [
+    {
+      "target": "algorithm.binary_search",
+      "name": "algorithm.binary_search",
+      "ms": 848,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "name": "algorithm.bounded_control_flow",
+      "ms": 822,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "exit_branch",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "name": "algorithm.bubble_sort",
+      "ms": 848,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.count_if",
+      "name": "algorithm.count_if",
+      "ms": 848,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.find_max",
+      "name": "algorithm.find_max",
+      "ms": 835,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.find_min",
+      "name": "algorithm.find_min",
+      "ms": 826,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "name": "algorithm.insertion_sort",
+      "ms": 825,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.linear_search",
+      "name": "algorithm.linear_search",
+      "ms": 2042,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.scan",
+      "name": "algorithm.scan",
+      "ms": 821,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "whatif_swap",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "name": "algorithm.selection_sort",
+      "ms": 820,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "algorithm.sum_if",
+      "name": "algorithm.sum_if",
+      "ms": 836,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "whatif_swap",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "binary.base_conversion",
+      "name": "binary.base_conversion",
+      "ms": 823,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "set_param",
+      "stateChanged": false,
+      "domSeen": true,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "binary.character_encoding",
+      "name": "binary.character_encoding",
+      "ms": 829,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "set_param",
+      "stateChanged": true,
+      "domSeen": true,
+      "note": ""
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "name": "binary.decimal_to_binary",
+      "ms": 825,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "toggle",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "database.relational_table_query",
+      "name": "database.relational_table_query",
+      "ms": 819,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "set_param",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "generic.rule_scene",
+      "name": "generic.rule_scene",
+      "ms": 824,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "toggle",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "logic.and_gate",
+      "name": "logic.and_gate",
+      "ms": 820,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "toggle",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "logic.boolean_dag",
+      "name": "logic.boolean_dag",
+      "ms": 821,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "toggle",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "network.graph_traversal",
+      "name": "network.graph_traversal",
+      "ms": 850,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "set_param",
+      "stateChanged": true,
+      "domSeen": null,
+      "note": ""
+    },
+    {
+      "target": "network.packet_routing",
+      "name": "network.packet_routing",
+      "ms": 833,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "net_disconnect",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "name": "network.protocol_encapsulation",
+      "ms": 824,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "toggle",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "tree.traversal",
+      "name": "tree.traversal",
+      "ms": 817,
+      "pass": false,
+      "status": "PROBE_UNVERIFIED",
+      "action": "set_param",
+      "stateChanged": false,
+      "domSeen": null,
+      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+    },
+    {
+      "target": "web.style_model",
+      "name": "web.style_model",
+      "ms": 842,
+      "pass": true,
+      "status": "CERTIFIED",
+      "action": "set_param",
+      "stateChanged": true,
+      "domSeen": true,
+      "note": ""
+    }
+  ]
+}
