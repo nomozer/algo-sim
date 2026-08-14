@@ -127,6 +127,37 @@
 | Phân tầng benchmark (§24) | **OPEN** | chưa làm | **W12** |
 | Gộp test trùng / property (§25–26) | **OPEN** | chưa làm | — |
 
+## 0. KHOÁ PHẠM VI ĐỀ TÀI — ràng buộc cho mọi wave còn lại
+
+**Lõi đề tài**: yêu cầu học bằng ngôn ngữ tự nhiên → LLM đề xuất *spec ứng viên
+có ràng buộc* → validate năng lực/phạm vi tất định → engine tất định → biểu diễn
+2D/3D tương tác khi có vai trò sư phạm → học sinh thao tác/quan sát cơ chế →
+trace/giải thích/thử thách tuỳ chọn → bối cảnh lớp học nhẹ.
+
+**KHÔNG phải mục tiêu** (nếu một ý tưởng rơi vào đây, nó thuộc
+`POST_THESIS_BACKLOG`, không phải wave mới): LMS đầy đủ · quản lý trường học ·
+điểm danh · học phí · sổ điểm · thời khoá biểu · diễn đàn · nền tảng soạn khoá
+học · IDE HTML/CSS/JS tuỳ ý · IDE lập trình tuỳ ý · hệ mô phỏng cho mọi môn ·
+sinh hình tuỳ ý không ràng buộc · thay thế giáo viên · chứng minh cải thiện kết
+quả học tập khi chưa có nghiên cứu trên người học.
+
+**Tầng lớp học ĐÓNG BĂNG ở mức**: đăng nhập · lớp · giao mô phỏng đã hỗ trợ ·
+học sinh luyện tập · giáo viên quan sát trạng thái có cấu trúc.
+
+**Kỷ luật tuyên bố**: chỉ nói điều có bằng chứng. Giữ
+`CURRICULUM_SUPPORT_PARTIAL` khi phủ chương trình còn dở, và
+`LEARNER_IMPACT_NOT_EVALUATED` vì kho này không chứa nghiên cứu đối chứng trên
+người học.
+
+## 4f. Wave 10 — guard ngữ nghĩa chuyển động
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| Phân biệt hình học SVG ↔ bố cục HTML | **DONE (W10)** | `transition-semantics.test.ts` — đọc NGỮ CẢNH PHẦN TỬ, không cấm theo tên thuộc tính | — |
+| `ArrayView` giữ chuyển động dạy học | **DONE (W10)** | cột `<rect>` chạy `y`/`height` vì chúng encode giá trị mảng | — |
+| Hạng mục THỨ BA do guard tìm ra | **ĐÃ KHAI (W10)** | `.web-page` chạy `padding` — thuộc tính bố cục HTML nhưng CHÍNH LÀ state mô phỏng đang dạy; cấm nó là cấm bài học | — |
+| Tiêm lỗi W10 | **5/5 BỊ BẮT** | HTML chạy height · HTML chạy margin · inline `<div>` chạy width · ngoại lệ wildcard · gỡ hình học SVG | — |
+
 ## 5. Phủ chương trình
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |

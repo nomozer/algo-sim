@@ -520,6 +520,16 @@ khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng m�
 đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
 `docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
+### `frontend/src/styles/transition-semantics.test.ts` (M20 W10) · offline
+Phân biệt HÌNH HỌC DỮ LIỆU (SVG) với CHUYỂN ĐỘNG BỐ CỤC (HTML). `height` trên
+`<rect>` encode giá trị mảng — cho chạy là cách kể "giá trị vừa đổi bao nhiêu";
+`height` trên `<div>` đẩy mọi thứ bên dưới. Luật đọc NGỮ CẢNH PHẦN TỬ, không cấm
+theo tên thuộc tính (cấm theo tên sẽ chặn nhầm `ArrayView`) và không miễn theo
+tên file (miễn theo file thì bản vá HTML sau đó cũng lọt).
+⚠️ Guard tìm ra một HẠNG MỤC THỨ BA brief không lường: `.web-page` chạy `padding`
+— thuộc tính bố cục HTML nhưng chính nó LÀ state mô phỏng đang dạy. Ngoại lệ khai
+theo BỘ CHỌN kèm lý do ≥80 ký tự nói vì sao không đẩy chỗ nhìn.
+
 ### `frontend/src/evidence-provenance.test.ts` (M20 W8 closure) · offline
 Khoá hợp đồng xuất xứ v2 và chứng minh vòng TỰ THAM CHIẾU đã bị phá.
 ⚠️ Có một test tồn tại vì lỗi thật: `sourceFingerprint` bản đầu chạy `git
