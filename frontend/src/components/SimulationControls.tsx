@@ -1,5 +1,6 @@
-import { useEffect, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { getSimulation } from "../simulations/registry";
+import { transportModeOf } from "../simulations/transport-policy";
 import type { PresentationEntry } from "../simulations/types";
 import { useAppStore } from "../state/store";
 import { challengeEntry, exploreEntry } from "./SimulationWorkspace";
@@ -91,6 +92,11 @@ export function SimulationControls() {
   const exploreOpen = useAppStore((s) => s.exploreOpen);
   const setExploreOpen = useAppStore((s) => s.setExploreOpen);
   const timeline = mod?.timeline;
+  /* W7 §7 — DÒNG THỜI GIAN TUỲ CHỌN: gập mặc định.
+     Trạng thái TRÌNH BÀY thuần, sống trong component — mở/đóng nó KHÔNG được
+     đụng tới state công cụ (§16: "tool state stays authoritative"). Đưa vào
+     store là mở đường cho một lượt set() vô tình chạm vào `active`. */
+  const [traceOpen, setTraceOpen] = useState(false);
 
   // Tự chạy: hẹn giờ gọi nextStep; store tự dừng khi hết timeline
   useEffect(() => {
@@ -175,8 +181,29 @@ export function SimulationControls() {
   // Capability-driven (không switch-case id): hiện nút bước KHI có timeline VÀ
   // thực sự có >1 bước để đi. Cảnh khám phá (1 khung) chỉ hiện Đặt lại —
   // không "step giả". Áp dụng cho cả generic exploratory lẫn module chuyên biệt.
-  const hasSteps = timeline !== undefined && timeline.stepCount(active.state) > 1;
-  if (!hasSteps) {
+  /* ── W7 §9 — CHẾ ĐỘ ĐẾN TỪ CHÍNH SÁCH, KHÔNG TỪ THUỘC TÍNH KĨ THUẬT ──────
+   *
+   * Trước wave này dòng dưới là toàn bộ phép phân loại:
+   *     timeline !== undefined && timeline.stepCount(state) > 1
+   * tức "có nhiều hơn một bước ⇒ hiện đủ bộ điều khiển". Đó đúng là kiểu suy
+   * §9 cấm: `base_conversion` có 12 bước nên nó được một dòng thời gian đầy đủ,
+   * dù sau W5 kết quả của nó đọc được ngay và trình tự chỉ còn để giải thích.
+   *
+   * Nay chế độ do `transport-policy.ts` khai theo CƠ CHẾ. `stepCount` vẫn được
+   * dùng, nhưng chỉ để trả lời một câu hẹp hơn nhiều: "có gì để tua không" —
+   * một dòng thời gian một bước thì không dựng nút bước dù chính sách nói gì.
+   */
+  const declaredMode = transportModeOf(active.moduleId);
+  const stepsAvailable = timeline !== undefined && timeline.stepCount(active.state) > 1;
+  /* Target chưa khai chính sách: lùi về hành vi cũ thay vì giấu mất điều khiển
+     của một mô phỏng đang chạy được. Guard ở `experience-manifest.test.ts` đòi
+     con số chưa-khai bằng 0, nên nhánh này là lưới an toàn, không phải mặc định
+     được phép sống lâu. */
+  const mode = declaredMode ?? (stepsAvailable ? "FULL_TRACE" : "RESET_ONLY");
+  const showFullTransport = stepsAvailable
+    && (mode === "FULL_TRACE" || (mode === "OPTIONAL_TRACE" && traceOpen));
+
+  if (!showFullTransport) {
     return (
       /* W4B-3E — bài KHÁM PHÁ dùng CÙNG khuôn ba vùng, chỉ thiếu vùng transport.
          Câu "Mô phỏng khám phá — thao tác trực tiếp trên sân khấu." (50 ký tự)
@@ -193,6 +220,15 @@ export function SimulationControls() {
             <IconReset size={14} />
             Đặt lại
           </button>
+          {/* W7 §7 — LỐI VÀO DÒNG THỜI GIAN, chỉ cho target CÔNG CỤ.
+              RESET_ONLY không dựng nút này: cơ chế của nó không có tiến trình
+              nào để xem, nên một nút "Xem cách thực hiện" ở đó là lời hứa suông. */}
+          {mode === "OPTIONAL_TRACE" && stepsAvailable && (
+            <button className="btn-utility" onClick={() => setTraceOpen(true)}
+              title="Xem từng bước của phép biến đổi">
+              Xem cách thực hiện
+            </button>
+          )}
         </span>
         <span className="control-zone control-zone-aux">{secondary}</span>
       </div>
@@ -297,6 +333,13 @@ export function SimulationControls() {
         </span>
 
         <span className="control-zone control-zone-aux">
+          {/* Mở được thì phải đóng được — cùng luật với Thử thách ở W6. */}
+          {mode === "OPTIONAL_TRACE" && (
+            <button className="btn-utility" onClick={() => setTraceOpen(false)}
+              title="Ẩn dòng thời gian, quay lại công cụ">
+              Ẩn các bước
+            </button>
+          )}
           <label className="speed-control">
             Tốc độ
             <input

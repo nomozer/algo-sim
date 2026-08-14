@@ -501,6 +501,31 @@ nút ĐANG CHỌN (`colorPropOf`), nên "chọn Tiêu đề rồi kéo R" không
 tới nền: chỉ có một `selected` trong state, không có bộ chọn thứ hai để lệch.
 Ngoài miền ⇒ `null` ⇒ giữ state cũ, KHÔNG kẹp về biên.
 
+### `frontend/src/simulations/transport-policy.ts` (M20 W7) · Change impact: offline
+NGUỒN DUY NHẤT của chế độ transport: `FULL_TRACE` · `OPTIONAL_TRACE` ·
+`RESET_ONLY`, khai cho cả 23 target kèm LÝ DO CƠ CHẾ. `SimulationControls` đọc
+nó; `experience-manifest.test.ts` import lại từ đây thay vì giữ bản thứ hai.
+⚠️ `transportModeOf` trả `null` cho target chưa khai — KHÔNG có mặc định. Trước
+W7, dải điều khiển phân loại bằng `timeline.stepCount(state) > 1`, đúng kiểu suy
+diễn kĩ thuật §9 cấm: `base_conversion` có 12 bước nên được dòng thời gian đầy
+đủ, dù sau W5 kết quả của nó đọc được ngay. Số hiện tại: **13 / 7 / 3**.
+
+### `frontend/scripts/measure-transport-w7.mjs` (M20 W7) · offline (cần `npm run dev`)
+Hỏi: cơ chế to nhỏ khác nhau thì khay điều khiển có đổi bề rộng theo không? Đo
+độ LỆCH bề rộng qua nhiều target thay vì so với một con số ma. Đo ở HEAD
+104c752: cơ chế lệch 849px, khay lệch **đúng 849px** — bám 1:1; sau W7 khay lệch
+**0px**.
+⚠️ Đếm HÀNG bằng TÂM DỌC có dung sai, không bằng mép trên: `align-items: center`
+khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng một hàng, và bản
+đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
+`docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
+
+### `frontend/src/components/transport-w7.test.tsx` (M20 W7) · offline
+Khoá ba nhóm: chế độ đến từ chính sách (gồm phép gán `declaredMode ??` — lỗ do
+tiêm lỗi tìm ra) · bề rộng khay tách khỏi cơ chế (đòi SÀN ở **cả hai** biến thể
+lưới — lỗ thứ hai do tiêm lỗi tìm ra) · dòng thời gian tuỳ chọn mở được thì đóng
+được và không đụng store.
+
 ### `frontend/src/simulations/experience-manifest.test.ts` (M20 W6) · offline
 MANIFEST TRẢI NGHIỆM 23 target + guard "mô hình là chính, thử thách là phụ".
 Khoá bốn nhóm: thử thách đóng mặc định (đọc từ CHỦ SỞ HỮU `loadEnvelope`, không

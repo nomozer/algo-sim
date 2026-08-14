@@ -51,6 +51,18 @@
   --sp-lg: 24px;
   --sp-xl: 28px;
   --sp-xxl: 32px;
+
+  /* W7 — CHÍNH SÁCH BỀ RỘNG KHAY ĐIỀU KHIỂN, ở tầng WORKSPACE.
+   *
+   * Khay không được co giãn theo cơ chế (đo được ở HEAD 104c752: cơ chế trải
+   * 600→1449px thì khay trải đúng 849px y hệt). Nó là mặt phẳng điều khiển
+   * chung, nên bề rộng của nó là một quyết định sản phẩm — MỘT chỗ, không phải
+   * hệ quả phụ của bố cục lưới.
+   *
+   * 1120px chọn theo phép đo, không theo cảm tính: ở 950px dải gãy làm BA hàng
+   * ngay tại 1920 vì ba cụm (điều khiển · thanh tua · tốc độ) không đủ chỗ.
+   */
+  --transport-max: 1120px;
   /* M9-UX5: thang cách rộng hơn cho trang chủ — trước đây CSS gọi var(--sp-2xl)
      mà token này KHÔNG TỒN TẠI: trình duyệt vứt im lặng cả dòng khai báo, làm
      mất margin/padding (composer lệch trái, tiêu đề dí sát ô nhập). */

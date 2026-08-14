@@ -1857,7 +1857,13 @@ html {
      và vì cả THẺ lẫn KHAY ĐIỀU KHIỂN cùng nằm trong cột này, chúng tự bằng
      nhau, giữ đúng quyết định W4B-3H (điều khiển căn theo cột nội dung).
      `justify-content: center` căn cả cụm khi màn rộng hơn nội dung. */
-  grid-template-columns: minmax(0, auto) 300px;
+  /* W7 — CỘT NỘI DUNG CÓ SÀN BẰNG CHÍNH SÁCH KHAY.
+     `minmax(0, auto)` để cột co đúng bằng thẻ, nên khay (đặt `width: 100%`)
+     cũng co theo — đo được: cơ chế 600px thì khay cũng 600px. Đặt sàn bằng
+     `--transport-max` khiến cột luôn đủ rộng cho khay, còn thẻ vẫn `fit-content`
+     và tự căn giữa trong đó. `min(100%, …)` để màn hẹp hơn chính sách thì cột
+     lùi về đúng bề rộng khả dụng thay vì đẻ ra tràn ngang. */
+  grid-template-columns: minmax(min(100%, var(--transport-max)), auto) 300px;
   justify-content: center;
 
   /* ── W4B-2A A0 — HÀNG NỘI DUNG CAO THEO NỘI DUNG ────────────────────────
@@ -1921,7 +1927,7 @@ html {
 .app-layout.right-closed {
   /* M19 — cũng `auto`, nếu không thì biến thể ĐANG DÙNG MẶC ĐỊNH (panel phải
      đóng) ghi đè lại `1fr` và cột lại nuốt hết bề rộng. */
-  grid-template-columns: minmax(0, auto);
+  grid-template-columns: minmax(min(100%, var(--transport-max)), auto);
   grid-template-areas:
     "center"
     "controls";
@@ -1933,6 +1939,11 @@ html {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  /* W7 — cột nay có thể RỘNG HƠN thẻ (vì khay đặt sàn bề rộng cho cột), nên
+     thẻ phải tự căn giữa trong đó. Không có dòng này thì một cơ chế hẹp sẽ
+     dính mép trái còn khay nằm giữa — hai tâm lệch nhau, đúng thứ W4B-3H đã
+     sửa một lần. */
+  align-items: center;
 }
 
 .panel-right {
@@ -1990,6 +2001,29 @@ html {
    * cách nhau một khoảng đều đọc ra là "mô phỏng + bộ điều khiển của nó", và
    * không phụ thuộc chiều cao của bất cứ thứ gì.
    */
+  /* ── W7 — KHAY THUỘC WORKSPACE, KHÔNG THUỘC KHUNG CƠ CHẾ ─────────────────
+   *
+   * ĐẢO một quyết định của M19/W4B-3H, và nói rõ để còn truy được.
+   *
+   * M19 cố ý đặt cả thẻ lẫn khay vào cùng một cột `auto` để hai bên **tự bằng
+   * nhau** — lúc ấy đó là cách rẻ nhất để giữ W4B-3H (điều khiển căn theo cột
+   * nội dung, không lệch 25px so với mép thẻ).
+   *
+   * Đo ở 1920 (HEAD 104c752): bề rộng cơ chế trải 600 → 1449px, và khay trải
+   * **đúng 849px y hệt** — bám 1:1. Hệ quả cho học sinh: đổi từ cổng AND sang
+   * bài CSS thì dải điều khiển phình gấp 2,4 lần. Nút Chạy nhảy chỗ giữa hai
+   * bài, và không còn mặt phẳng ổn định nào để tì mắt vào.
+   *
+   * Nay khay có bề rộng RIÊNG theo chính sách workspace và tự căn giữa. Thứ
+   * W4B-3H thật sự cần — khay không lệch so với cơ chế — vẫn giữ được, vì cả
+   * hai cùng căn GIỮA trong một cột: chúng thẳng TÂM thay vì thẳng MÉP TRÁI.
+   * Thẳng tâm bền hơn: nó đúng ở mọi bề rộng cơ chế, còn thẳng mép trái chỉ
+   * đúng khi hai bên rộng bằng nhau.
+   */
+  width: min(100%, var(--transport-max));
+  justify-self: center;
+  margin-inline: auto;
+
   padding: var(--sp-sm) calc(var(--sp-lg) + 1px);
   background: var(--surface);
   border: 1px solid var(--hairline);

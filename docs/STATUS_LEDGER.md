@@ -93,6 +93,19 @@
 | Tiêm lỗi W6 | **8/8 BỊ BẮT** | thử thách tự mở · kết quả bị giấu · băng phán quyết to · khám phá chấm điểm · UI tự chấm · cửa một chiều · không trả tiêu điểm · trace-first bị hạ | — |
 | Chứng nhận tương tác toàn danh mục | **NO_EVIDENCE** | manifest MÔ TẢ hiện thực, không cấp chứng nhận | **W12** |
 
+## 4d. Wave 7 — khay điều khiển thuộc workspace
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| Khay tách khỏi bề rộng cơ chế | **DONE (W7)** | BEFORE cơ chế lệch 849px / khay lệch 849px → AFTER khay lệch **0px**; 4 bề rộng | — |
+| Chế độ transport từ CHÍNH SÁCH | **DONE (W7)** | `transport-policy.ts` — 23 target khai đủ, `transportModeOf` không có mặc định | — |
+| Suy diễn `stepCount` bị bỏ | **DONE (W7)** | trước W7 dải phân loại bằng `stepCount > 1`; nay đọc chính sách, guard khoá phép gán | — |
+| Dòng thời gian tuỳ chọn gập mặc định | **DONE (W7)** | "Xem cách thực hiện" / "Ẩn các bước"; trạng thái TRÌNH BÀY, không vào store | — |
+| Soát transport toàn danh mục | **DONE (W7)** | 23/23 khay đúng 1120px, 1 hàng, 0 tràn, 0 hở >24px | — |
+| Tiêm lỗi W7 | **8/8 BỊ BẮT** | hai phép tìm ra LỖ GUARD THẬT: phép gán chế độ; sàn cột chỉ khoá một biến thể | — |
+| Quyết định M19 bị W7 đảo | **ĐÃ KHAI** | M19 cố ý buộc khay bằng cột nội dung; W7 đổi sang thẳng TÂM thay vì thẳng MÉP | — |
+| Nghiệm thu trải nghiệm trình duyệt (W6) | **PARTIAL — không đổi** | W7 chỉ chứng minh transport, không chứng minh thứ tự tầng thị giác | **W12** |
+
 ## 5. Phủ chương trình
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |

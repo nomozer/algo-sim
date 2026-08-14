@@ -1,0 +1,783 @@
+{
+  "head": "104c752c17aaf9616e9e52e01adc587b75579c28",
+  "dirty": true,
+  "generatedAt": "2026-08-14T02:59:38.285Z",
+  "tool": "measure-transport-w7",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "label": "after-4vp"
+  },
+  "question": "Cơ chế to nhỏ khác nhau thì khay điều khiển có đổi bề rộng theo không?",
+  "rows": [
+    {
+      "viewport": 1920,
+      "target": "logic.and_gate",
+      "mechanism": {
+        "x": 646,
+        "w": 600,
+        "h": 462
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.binary_search",
+      "mechanism": {
+        "x": 483,
+        "w": 927,
+        "h": 485
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "tree.traversal",
+      "mechanism": {
+        "x": 466,
+        "w": 961,
+        "h": 709
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.base_conversion",
+      "mechanism": {
+        "x": 566,
+        "w": 761,
+        "h": 647
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.character_encoding",
+      "mechanism": {
+        "x": 541,
+        "w": 811,
+        "h": 486
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "web.style_model",
+      "mechanism": {
+        "x": 222,
+        "w": 1449,
+        "h": 823
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1536,
+      "target": "logic.and_gate",
+      "mechanism": {
+        "x": 454,
+        "w": 600,
+        "h": 462
+      },
+      "dock": {
+        "x": 194,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 0,
+        "w": 1508,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 74.3
+    },
+    {
+      "viewport": 1536,
+      "target": "algorithm.binary_search",
+      "mechanism": {
+        "x": 291,
+        "w": 927,
+        "h": 485
+      },
+      "dock": {
+        "x": 194,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1508,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 74.3
+    },
+    {
+      "viewport": 1536,
+      "target": "tree.traversal",
+      "mechanism": {
+        "x": 274,
+        "w": 961,
+        "h": 709
+      },
+      "dock": {
+        "x": 194,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1508,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 74.3
+    },
+    {
+      "viewport": 1536,
+      "target": "binary.base_conversion",
+      "mechanism": {
+        "x": 374,
+        "w": 761,
+        "h": 647
+      },
+      "dock": {
+        "x": 194,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1508,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 74.3
+    },
+    {
+      "viewport": 1536,
+      "target": "binary.character_encoding",
+      "mechanism": {
+        "x": 349,
+        "w": 811,
+        "h": 486
+      },
+      "dock": {
+        "x": 194,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1508,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 74.3
+    },
+    {
+      "viewport": 1536,
+      "target": "web.style_model",
+      "mechanism": {
+        "x": 30,
+        "w": 1449,
+        "h": 823
+      },
+      "dock": {
+        "x": 194,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 0,
+        "w": 1508,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 74.3
+    },
+    {
+      "viewport": 1366,
+      "target": "logic.and_gate",
+      "mechanism": {
+        "x": 369,
+        "w": 600,
+        "h": 462
+      },
+      "dock": {
+        "x": 109,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 0,
+        "w": 1338,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 83.7
+    },
+    {
+      "viewport": 1366,
+      "target": "algorithm.binary_search",
+      "mechanism": {
+        "x": 206,
+        "w": 927,
+        "h": 485
+      },
+      "dock": {
+        "x": 109,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1338,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 83.7
+    },
+    {
+      "viewport": 1366,
+      "target": "tree.traversal",
+      "mechanism": {
+        "x": 189,
+        "w": 961,
+        "h": 709
+      },
+      "dock": {
+        "x": 109,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1338,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 83.7
+    },
+    {
+      "viewport": 1366,
+      "target": "binary.base_conversion",
+      "mechanism": {
+        "x": 289,
+        "w": 761,
+        "h": 647
+      },
+      "dock": {
+        "x": 109,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1338,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 83.7
+    },
+    {
+      "viewport": 1366,
+      "target": "binary.character_encoding",
+      "mechanism": {
+        "x": 264,
+        "w": 811,
+        "h": 486
+      },
+      "dock": {
+        "x": 109,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 0,
+        "w": 1338,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 83.7
+    },
+    {
+      "viewport": 1366,
+      "target": "web.style_model",
+      "mechanism": {
+        "x": 24,
+        "w": 1290,
+        "h": 823
+      },
+      "dock": {
+        "x": 109,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 0,
+        "w": 1338,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 83.7
+    },
+    {
+      "viewport": 768,
+      "target": "logic.and_gate",
+      "mechanism": {
+        "x": 70,
+        "w": 600,
+        "h": 462
+      },
+      "dock": {
+        "x": 24,
+        "w": 692,
+        "h": 56
+      },
+      "shell": {
+        "x": 0,
+        "w": 740,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 93.5
+    },
+    {
+      "viewport": 768,
+      "target": "algorithm.binary_search",
+      "mechanism": {
+        "x": 24,
+        "w": 692,
+        "h": 518
+      },
+      "dock": {
+        "x": 24,
+        "w": 692,
+        "h": 99
+      },
+      "shell": {
+        "x": 0,
+        "w": 740,
+        "h": 927
+      },
+      "rows": 2,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 93.5
+    },
+    {
+      "viewport": 768,
+      "target": "tree.traversal",
+      "mechanism": {
+        "x": 24,
+        "w": 692,
+        "h": 709
+      },
+      "dock": {
+        "x": 24,
+        "w": 692,
+        "h": 92
+      },
+      "shell": {
+        "x": 0,
+        "w": 740,
+        "h": 989
+      },
+      "rows": 2,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 93.5
+    },
+    {
+      "viewport": 768,
+      "target": "binary.base_conversion",
+      "mechanism": {
+        "x": 24,
+        "w": 692,
+        "h": 647
+      },
+      "dock": {
+        "x": 24,
+        "w": 692,
+        "h": 92
+      },
+      "shell": {
+        "x": 0,
+        "w": 740,
+        "h": 927
+      },
+      "rows": 2,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 93.5
+    },
+    {
+      "viewport": 768,
+      "target": "binary.character_encoding",
+      "mechanism": {
+        "x": 24,
+        "w": 692,
+        "h": 486
+      },
+      "dock": {
+        "x": 24,
+        "w": 692,
+        "h": 92
+      },
+      "shell": {
+        "x": 0,
+        "w": 740,
+        "h": 927
+      },
+      "rows": 2,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 93.5
+    },
+    {
+      "viewport": 768,
+      "target": "web.style_model",
+      "mechanism": {
+        "x": 24,
+        "w": 692,
+        "h": 1674
+      },
+      "dock": {
+        "x": 24,
+        "w": 692,
+        "h": 56
+      },
+      "shell": {
+        "x": 0,
+        "w": 740,
+        "h": 1918
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 93.5
+    }
+  ]
+}

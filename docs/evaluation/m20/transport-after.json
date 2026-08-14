@@ -1,0 +1,207 @@
+{
+  "head": "104c752c17aaf9616e9e52e01adc587b75579c28",
+  "dirty": true,
+  "generatedAt": "2026-08-14T03:04:18.339Z",
+  "tool": "measure-transport-w7",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "label": "after-mode"
+  },
+  "question": "Cơ chế to nhỏ khác nhau thì khay điều khiển có đổi bề rộng theo không?",
+  "rows": [
+    {
+      "viewport": 1920,
+      "target": "logic.and_gate",
+      "mechanism": {
+        "x": 646,
+        "w": 600,
+        "h": 462
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "algorithm.binary_search",
+      "mechanism": {
+        "x": 483,
+        "w": 927,
+        "h": 485
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "tree.traversal",
+      "mechanism": {
+        "x": 466,
+        "w": 961,
+        "h": 709
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 66
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 4,
+      "maxDeadGap": 16,
+      "controls": {
+        "play": true,
+        "step": 4,
+        "reset": true,
+        "seek": true,
+        "speed": true,
+        "stepCount": true
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.base_conversion",
+      "mechanism": {
+        "x": 566,
+        "w": 761,
+        "h": 647
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "binary.character_encoding",
+      "mechanism": {
+        "x": 541,
+        "w": 811,
+        "h": 486
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    },
+    {
+      "viewport": 1920,
+      "target": "web.style_model",
+      "mechanism": {
+        "x": 222,
+        "w": 1449,
+        "h": 823
+      },
+      "dock": {
+        "x": 386,
+        "w": 1120,
+        "h": 56
+      },
+      "shell": {
+        "x": 86,
+        "w": 1720,
+        "h": 927
+      },
+      "rows": 1,
+      "zones": 1,
+      "maxDeadGap": 0,
+      "controls": {
+        "play": false,
+        "step": 0,
+        "reset": true,
+        "seek": false,
+        "speed": false,
+        "stepCount": false
+      },
+      "overflowX": false,
+      "dockShellRatio": 65.1
+    }
+  ]
+}
