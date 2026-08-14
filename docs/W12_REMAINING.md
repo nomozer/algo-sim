@@ -1,6 +1,6 @@
 # W12_REMAINING.md — hai việc còn lại, đủ chi tiết để thi hành ngay
 
-> Trạng thái tại `1647af3` · cây sạch · pytest 1255 · vitest 1423 · build xanh.
+> Trạng thái tại `13bbad3` · cây sạch · pytest 1255 · vitest 1423 · build xanh.
 > File này tồn tại vì hai việc dưới đây **không bắt đầu được bằng nửa phiên**:
 > một cái cần dựng renderer mới, một cái cần nguồn dữ liệu ngoài kho mã.
 
@@ -14,7 +14,7 @@
 | trải nghiệm (công cụ vs chỉ lộ dần) | `w12-experience-audit.json` — 19 TOOL · 4 TRACE · 0 FAIL |
 | **sức nặng thị giác** | `w12-visual-weight.json` — **23/23 lấy hình làm chính** |
 | bề mặt công cụ CSS dẫn từ đặc tả | `domains/web/prop-registry.test.ts` |
-| `protocol_encapsulation` → 3D công khai | `representation-intent-w4b2v.test.ts` |
+| ~~`protocol_encapsulation` → 3D công khai~~ | **ĐÃ TRẢ VỀ 2D** (`a5faf03`) — xem VIỆC 0 |
 | lớp CSS không có luật | `styles/class-coverage.test.ts` (+ 10 nợ đóng băng) |
 
 ---
