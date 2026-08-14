@@ -467,12 +467,17 @@ html {
   gap: var(--sp-xs);
 }
 
+/* W12 — BỎ NẸP MÀU DÀY TRÊN MẶT ĐÃ CÓ VIỀN.
+   Một thẻ vừa có viền hairline kín vừa có nẹp 3px màu ở một cạnh đọc ra như
+   nhãn dán, và nó là kiểu cũ. Giữ nguyên nẹp ở KHỐI CHỮ CHÚ DẪN
+   (`.error-banner`, `.narration-bar`, `.feedback-bar`) — ở đó vạch trái là quy
+   ước chữ nghĩa lâu đời và màu đang CHỞ NGHĨA (lỗi · lời học sinh · phản hồi).
+   Phân biệt là: mặt phẳng có viền kín thì bỏ, khối chữ thì giữ. */
 .session-card {
   display: flex;
   align-items: stretch;
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-left: 3px solid var(--primary);
   border-radius: var(--rounded-md);
   overflow: hidden;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -2255,8 +2260,8 @@ html {
   gap: var(--sp-sm);
   flex-wrap: wrap;
   padding: 6px 12px;
+  /* Cùng luật với `.session-card`: viền kín rồi thì không nẹp màu thêm. */
   border: 1px solid var(--hairline);
-  border-left: 3px solid var(--primary);
   border-radius: var(--rounded-md);
   background: var(--surface);
   font-size: 14px;
