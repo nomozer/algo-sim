@@ -19,6 +19,26 @@
 
 ---
 
+## VIỆC 0 — 3D PHẢI ĐỌC ĐƯỢC TRƯỚC KHI BÀY RA (bài học đắt, đọc trước)
+
+Tôi đã chuyển `protocol_encapsulation` sang 3D công khai bằng **một lời khai**
+và **không nhìn kết quả**. Trên màn thật: nhãn tầng chồng nhãn MÁY GỬI, chữ trên
+khối PDU không đọc nổi, bốn phiến gần nằm ngang nên mất hẳn cảm giác BỌC NHAU —
+tức mất đúng lí do 3D tồn tại. Đã **trả về 2D** (`a5faf03`).
+
+**Cơ chế công tắc rẻ, nên dễ tưởng việc thiết kế cũng rẻ. Không phải.**
+
+Nên MỌI việc 3D dưới đây có chung một điều kiện xuất xưởng:
+
+1. `certify-visual-weight-w12.mjs` — vẫn HÌNH LÀ CHÍNH.
+2. `certify-viewports-w12.mjs` — dùng được ở **cả bốn bề rộng**, gồm 768px.
+3. **Nhãn không chồng nhau** ở góc máy mặc định — đo bằng bbox, không bằng cảm nhận.
+4. Chữ nhỏ nhất trên cảnh ≥ 12px sau chiếu.
+5. Quan hệ mà chiều sâu sinh ra để nói (bọc nhau / tuyến thay thế) **nhìn ra được**
+   ở góc mặc định, không cần xoay.
+
+Chưa qua đủ 5 điều kiện thì **giữ 2D**, đừng khai `primary: "3d"`.
+
 ## VIỆC 1 — `network.packet_routing` sang 3D sư phạm
 
 **Vì sao.** Người dùng nêu bốn lần. Màn hiện tại là bốn biểu tượng đứng yên trên
