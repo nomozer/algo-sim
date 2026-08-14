@@ -179,6 +179,39 @@ người học.
 | `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
 | Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
+## W12 — XUẤT XỨ BẰNG CHỨNG: KHÔNG ARTIFACT NÀO FRESH (2026-08-15, `9609cc6`)
+
+Đo bằng chính hợp đồng provenance (`sourceFingerprint` hiện tại `551c75b4…`):
+
+| artifact | trạng thái |
+|---|---|
+| `w12-experience-audit.json` · `w12-visual-weight-faults.json` | **STALE_SOURCE** |
+| `w12-interaction.json` · `w12-quiz-dominance.json` · `w12-scroll-shell.json` · `w12-viewport-matrix.json` · `w12-visual-weight.json` | **DIRTY_SOURCE** — đo trên mã chưa commit |
+| `w12-interaction-semantics.json` | **UNKNOWN_PROVENANCE** — sinh trước hợp đồng v2 |
+
+**Luật `chỉ FRESH mới đỡ được COMPLETE` ⇒ hiện KHÔNG chiều trình duyệt nào
+được phép khai COMPLETE**, kể cả những chiều có con số đẹp (23/23 sức nặng thị
+giác, 92/92 viewport, 20/20 cuộn). Con số vẫn đúng với lúc đo; cái thiếu là
+**chứng minh chúng đúng với nguồn HIỆN TẠI**.
+
+### Nguyên nhân, và nó mang tính cấu trúc
+
+`sourceFingerprint` phủ `frontend/scripts` — nên **commit chính script vừa sinh
+artifact sẽ làm artifact ấy STALE ngay lập tức**. Cùng họ với lỗi tự-tham-chiếu
+đã sửa một lần ở W8 (`assertFresh` đòi `head === gitHead()`, khiến artifact vừa
+commit vĩnh viễn cũ). Lần ấy sửa bằng cách loại `docs/` khỏi vân tay; lần này
+lộ ra vế còn lại.
+
+### Hệ quả vận hành — thứ tự BẮT BUỘC
+
+1. Đóng băng nguồn (`src/` + `scripts/`), commit hết.
+2. **Rồi mới** chạy lại toàn bộ script chứng nhận trong MỘT lượt.
+3. Commit **chỉ artifact** — `docs/` không nằm trong vân tay nên bước này
+   không tự huỷ kết quả.
+
+Chạy chứng nhận trước khi source đóng băng là **lãng phí**: mọi artifact sinh ra
+đều DIRTY, và một bản chứng nhận DIRTY không đỡ được bất kỳ tuyên bố nào.
+
 ## W12 — trạng thái theo TỪNG CHIỀU (2026-08-15, `28a0c20`)
 
 **`ALGOSIM_WAVE12_BROWSER_CERTIFICATION_PARTIAL`.**
