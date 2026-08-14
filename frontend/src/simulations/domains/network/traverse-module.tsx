@@ -414,7 +414,6 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
     ro.observe(el);
     setAvailable(Math.round(el.getBoundingClientRect().width));
     return () => ro.disconnect();
-      <TraverseParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
   }, []);
 
   const gl = graphChartLayout(available, long);
@@ -538,6 +537,15 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
           </p>
         )}
       </div>
+      {/* W12 §9 — CÔNG CỤ CỦA BÀI, trả về đúng cây render.
+          Trước wave này dòng JSX gọi `TraverseParamBar` nằm SAU câu `return`
+          của `useEffect` ở trên: cú pháp hợp lệ, TypeScript không kêu, tên
+          không "unused" vì vẫn được nhắc — nên nó im lặng không bao giờ render.
+          Hệ quả: `network.graph_traversal` là BOUNDED_PARAMETER_TOOL mà học
+          sinh không có cách nào đổi BFS↔DFS hay điểm xuất phát. Không unit test
+          nào bắt được (không test nào hỏi "control có trên màn hình không");
+          chỗ phát hiện là phép đo affordance trên trình duyệt thật. */}
+      <TraverseParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
       <p className="notes">{step.narration}</p>
     </div>
   );

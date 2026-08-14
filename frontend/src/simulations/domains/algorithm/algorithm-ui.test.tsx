@@ -77,7 +77,9 @@ describe("gating swap trong AlgorithmWorkspace", () => {
   it("bubble_sort: Quan sát KHÔNG bày cam kết, KHÔNG mời kéo — lối vào ở dải phụ", () => {
     const h = html("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1);
     expect(h).not.toContain("Thao tác sắp xếp");
-    expect(h).not.toContain("Kéo một cột");
+    /* W12 §6: vùng CAM KẾT vẫn nằm sau lối vào (dòng trên) — thứ đổi là CÔNG CỤ.
+       Thử thách đóng ⇒ kéo dùng được ngay, nên `cursor:grab` PHẢI có mặt. */
+    expect(h, "thử thách đóng mà không có con trỏ kéo").toContain("cursor:grab");
     expect(h, "câu mời quay lại thành dải dưới mô hình").not.toContain("tự đổi chỗ từng cặp");
     expect(textOf(entries("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1).challenge))
       .toContain("tự đổi chỗ từng cặp");
@@ -86,7 +88,7 @@ describe("gating swap trong AlgorithmWorkspace", () => {
   it("selection_sort: cùng một luật — không còn bài sắp xếp nào hở vùng cam kết", () => {
     const h = html("selection_sort", { array: [3, 1, 2], order: "asc" }, 1);
     expect(h).not.toContain("Thao tác sắp xếp");
-    expect(h).not.toContain("Kéo một cột");
+    expect(h, "thử thách đóng mà không có con trỏ kéo").toContain("cursor:grab");
     expect(textOf(entries("selection_sort", { array: [3, 1, 2], order: "asc" }, 1).challenge))
       .toContain("tự chọn phần tử mỗi lượt");
   });
@@ -118,7 +120,9 @@ describe("gating swap trong AlgorithmWorkspace", () => {
 
   it("find_max (challenge): có lối vào phá bất biến, không kéo tự do mặc định", () => {
     const h = html("find_max", { array: [7.5, 9, 6] }, 1);
-    expect(h).not.toContain("Kéo một cột");
+    /* W12 §10 — hồi quy đúng target khởi nguồn quan sát của người dùng. */
+    expect(h, "find_max mặc định không có affordance nào ngoài ô dự đoán")
+      .toContain("cursor:grab");
     expect(entries("find_max", { array: [7.5, 9, 6] }, 1).challenge).not.toBeNull();
   });
 
@@ -139,7 +143,7 @@ describe("gating swap trong AlgorithmWorkspace", () => {
        hiện SAU khi học sinh mở Thí nghiệm — bản render đó do runner trình duyệt
        phủ (labOpen là useState cục bộ). */
     const h = html("linear_search", { array: [4, 9, 7], target: 9 }, 1);
-    expect(h, "Quan sát vẫn mời kéo").not.toContain("Kéo =");
+    expect(h, "thử thách đóng mà không có con trỏ kéo").toContain("cursor:grab");
     expect(textOf(entries("linear_search", { array: [4, 9, 7], target: 9 }, 1).challenge))
       .toContain("tự đi từng bước tìm");
     /* W4B-2V/C: khung CHI PHÍ chuyển từ `framing` (đoạn 310 ký tự) sang `hint`

@@ -46,7 +46,14 @@ describe("network renderer 2D — tự lo bố cục", () => {
        (`<path>` từ `nodeGlyph`), còn `<circle>` chỉ còn dành cho gói tin và
        vòng ngắm đích — nhờ vậy gói tin phân biệt được với thiết bị bằng HÌNH,
        không phải bằng màu. */
-    expect(html.match(/<line/g) ?? []).toHaveLength(3);
+    /* W12 §6: mỗi liên kết nay có THÊM một vùng bấm trong suốt (`LinkHandle`,
+       stroke transparent, rộng 18px) vì công cụ không còn nằm sau cổng Khám
+       phá. Nên đếm tổng `<line>` sẽ ra 6 và không còn nói lên điều gì — tách
+       hai vai ra mới là phép đo đúng: 3 nét NHÌN THẤY + 3 vùng bấm. */
+    const allLines = html.match(/<line[^>]*>/g) ?? [];
+    const hitAreas = allLines.filter((l) => l.includes('stroke="transparent"'));
+    expect(allLines.length - hitAreas.length, "nét liên kết nhìn thấy được").toBe(3);
+    expect(hitAreas, "vùng bấm ngắt liên kết").toHaveLength(3);
     // 4 thiết bị × (1 outline + ≥0 chi tiết) ⇒ ít nhất 4 path.
     expect((html.match(/<path/g) ?? []).length).toBeGreaterThanOrEqual(4);
     // gói tin (1) + vòng ngắm đích (2) — KHÔNG còn vòng tròn nào là thiết bị.

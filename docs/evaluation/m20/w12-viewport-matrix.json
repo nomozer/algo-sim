@@ -1,10 +1,20 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "d4f6985ac3a3d8c4",
-  "dirtyRelevantSources": [],
-  "head": "3212f45e19a62c06b82e6e0bfd813a43b5643bd5",
-  "dirty": false,
-  "generatedAt": "2026-08-14T08:20:28.398Z",
+  "sourceFingerprint": "75540b23b167cf29",
+  "dirtyRelevantSources": [
+    "frontend/scripts/certify-viewports-w12.mjs",
+    "frontend/src/simulations/domains/algorithm/algorithm-ui.test.tsx",
+    "frontend/src/simulations/domains/algorithm/interaction-policy.ts",
+    "frontend/src/simulations/domains/algorithm/ui.tsx",
+    "frontend/src/simulations/domains/network/render.test.tsx",
+    "frontend/src/simulations/domains/network/traverse-module.tsx",
+    "frontend/src/simulations/domains/network/ui.tsx",
+    "frontend/src/simulations/domains/network/whatif-w4b2i.test.tsx",
+    "frontend/src/simulations/interaction-family-sorting-w3b.test.tsx"
+  ],
+  "head": "99548af346a284b9689c6d14c1c9c665f836aed4",
+  "dirty": true,
+  "generatedAt": "2026-08-14T08:57:42.417Z",
   "tool": "certify-viewports-w12",
   "toolVersion": "1",
   "environment": {
@@ -15,7 +25,7 @@
   "kind": "CERTIFICATION_EVIDENCE",
   "question": "Ở bề rộng này, học sinh có DÙNG ĐƯỢC target không?",
   "serverStarts": 4,
-  "passed": 39,
+  "passed": 92,
   "total": 92,
   "rows": [
     {
@@ -23,17 +33,16 @@
       "target": "algorithm.binary_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 10,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
@@ -45,114 +54,107 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.bubble_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.count_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.find_max",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.find_min",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.insertion_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 6,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.linear_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
@@ -164,46 +166,43 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.selection_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 5,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 5,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "algorithm.sum_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
@@ -215,6 +214,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -230,6 +230,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -245,6 +246,7 @@
       "dragAffordances": 20,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -260,6 +262,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -275,6 +278,7 @@
       "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -290,6 +294,7 @@
       "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -305,6 +310,7 @@
       "dragAffordances": 12,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -315,34 +321,32 @@
       "target": "network.graph_traversal",
       "stageVisible": true,
       "stageH": 429,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
       "target": "network.packet_routing",
       "stageVisible": true,
       "stageH": 180,
-      "affordances": 0,
-      "controlAffordances": 0,
-      "dragAffordances": 0,
+      "affordances": 9,
+      "controlAffordances": 3,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1920,
@@ -354,6 +358,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -369,6 +374,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -384,6 +390,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -394,17 +401,16 @@
       "target": "algorithm.binary_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 10,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
@@ -416,114 +422,107 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.bubble_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.count_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.find_max",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.find_min",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.insertion_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 6,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.linear_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
@@ -535,46 +534,43 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.selection_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 5,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 5,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "algorithm.sum_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
@@ -586,6 +582,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -601,6 +598,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -616,6 +614,7 @@
       "dragAffordances": 20,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -631,6 +630,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -646,6 +646,7 @@
       "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -661,6 +662,7 @@
       "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -676,6 +678,7 @@
       "dragAffordances": 12,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -686,34 +689,32 @@
       "target": "network.graph_traversal",
       "stageVisible": true,
       "stageH": 429,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
       "target": "network.packet_routing",
       "stageVisible": true,
       "stageH": 180,
-      "affordances": 0,
-      "controlAffordances": 0,
-      "dragAffordances": 0,
+      "affordances": 9,
+      "controlAffordances": 3,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1536,
@@ -725,6 +726,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -740,6 +742,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -755,6 +758,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -765,17 +769,16 @@
       "target": "algorithm.binary_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 10,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
@@ -787,114 +790,107 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.bubble_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.count_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.find_max",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.find_min",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.insertion_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 6,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.linear_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
@@ -906,46 +902,43 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.selection_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 5,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 5,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "algorithm.sum_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
@@ -957,6 +950,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -972,6 +966,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -987,6 +982,7 @@
       "dragAffordances": 20,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1002,6 +998,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1017,6 +1014,7 @@
       "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1032,6 +1030,7 @@
       "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1047,6 +1046,7 @@
       "dragAffordances": 12,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1057,34 +1057,32 @@
       "target": "network.graph_traversal",
       "stageVisible": true,
       "stageH": 429,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
       "target": "network.packet_routing",
       "stageVisible": true,
       "stageH": 180,
-      "affordances": 0,
-      "controlAffordances": 0,
-      "dragAffordances": 0,
+      "affordances": 9,
+      "controlAffordances": 3,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 1366,
@@ -1096,6 +1094,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1111,6 +1110,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1126,6 +1126,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": false,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1136,17 +1137,16 @@
       "target": "algorithm.binary_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 10,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
@@ -1158,114 +1158,107 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.bubble_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.count_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.find_max",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.find_min",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
+      "affordances": 7,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 7,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.insertion_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 6,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.linear_search",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 8,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
@@ -1277,46 +1270,43 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.selection_sort",
       "stageVisible": true,
       "stageH": 286,
-      "affordances": 0,
+      "affordances": 5,
       "controlAffordances": 0,
-      "dragAffordances": 0,
+      "dragAffordances": 5,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "algorithm.sum_if",
       "stageVisible": true,
       "stageH": 326,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "affordance kéo bị hoãn theo luật cam kết (interaction-policy §15) — bước mặc định chỉ còn ô dự đoán nhìn thấy được"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
@@ -1328,6 +1318,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1343,6 +1334,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1358,6 +1350,7 @@
       "dragAffordances": 20,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1373,6 +1366,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1388,6 +1382,7 @@
       "dragAffordances": 10,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1403,6 +1398,7 @@
       "dragAffordances": 8,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1418,6 +1414,7 @@
       "dragAffordances": 12,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1428,34 +1425,32 @@
       "target": "network.graph_traversal",
       "stageVisible": true,
       "stageH": 429,
-      "affordances": 0,
-      "controlAffordances": 0,
+      "affordances": 2,
+      "controlAffordances": 2,
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
       "target": "network.packet_routing",
       "stageVisible": true,
       "stageH": 180,
-      "affordances": 0,
-      "controlAffordances": 0,
-      "dragAffordances": 0,
+      "affordances": 9,
+      "controlAffordances": 3,
+      "dragAffordances": 6,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "không có affordance nào ngoài transport"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     },
     {
       "viewport": 768,
@@ -1467,6 +1462,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1482,6 +1478,7 @@
       "dragAffordances": 0,
       "challengeOpen": false,
       "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
       "problems": [],
@@ -1496,13 +1493,12 @@
       "controlAffordances": 29,
       "dragAffordances": 0,
       "challengeOpen": false,
-      "overlap": true,
+      "overlap": false,
+      "dockPinned": true,
       "clipped": false,
       "overflowX": false,
-      "problems": [
-        "sân khấu chồng khay"
-      ],
-      "verdict": "HỎNG"
+      "problems": [],
+      "verdict": "ĐẠT"
     }
   ]
 }

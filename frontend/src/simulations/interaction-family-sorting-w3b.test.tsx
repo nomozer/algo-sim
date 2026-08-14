@@ -359,7 +359,7 @@ describe("W3B-sort · kéo là thí nghiệm, nút là cam kết — không lẫ
      (ARCHITECTURE_MAP §8 #13 — SSR chỉ đi qua trạng thái đầu). Hành vi thật
      trong trình duyệt do §16 bảo chứng. */
   it("(22)(23) luật: khoá kéo khi còn cam kết chờ, mở lại sau khi đã chốt", () => {
-    const base = { policyAllows: true, busy: false, last: false };
+    const base = { policyAllows: true, busy: false, last: false, challengeOpen: true };
     for (const id of SORT) {
       const { state } = build(id);
       const decision = at(state, firstSortDecision(state));
@@ -380,11 +380,19 @@ describe("W3B-sort · kéo là thí nghiệm, nút là cam kết — không lẫ
       expect(whatIfDragAllowed(decision, { ...base, last: true, answered: true })).toBe(false);
       expect(whatIfDragAllowed(decision, { ...base, policyAllows: false, answered: true }))
         .toBe(false);
+
+      /* W12 §6 (Policy B) — THỬ THÁCH ĐÓNG thì đúng bước quyết định ấy vẫn kéo
+         được, dù chưa chốt gì. Lý do §15 tồn tại là "đừng cho né cam kết", mà
+         cam kết chỉ sống trong Thử thách; đóng nó lại thì không còn gì để né.
+         Đây cũng là ĐỐI CHỨNG DƯƠNG của lỗi C trong ma trận W12-E: siết lại
+         thành chặn-khi-đóng thì dòng này ĐỎ. */
+      expect(whatIfDragAllowed(decision, { ...base, challengeOpen: false, answered: false }),
+        `${id}: thử thách đóng ⇒ công cụ dùng được`).toBe(true);
     }
   });
 
   it("(22b) target ngoài cụm sắp xếp KHÔNG bị luật mới siết", () => {
-    const base = { policyAllows: true, busy: false, last: false, answered: false };
+    const base = { policyAllows: true, busy: false, last: false, answered: false, challengeOpen: true };
     const mod = makeAlgorithmModule("find_max");
     const r = mod.validateConfig({
       problem: { summary: "s", input: "i", output: "o" }, algorithm_id: "find_max",
@@ -397,7 +405,14 @@ describe("W3B-sort · kéo là thí nghiệm, nút là cam kết — không lẫ
     }
   });
 
-  it("(23b) DOM ở bước quyết định chưa chốt: không con trỏ kéo, không lời mời kéo", () => {
+  it("(23b) W12 §6 — DOM ở bước quyết định, THỬ THÁCH ĐÓNG: công cụ kéo hiện ra", () => {
+    /* TIỀN ĐỀ ĐỔI, có chủ đích — và đây là chỗ ghi lại vì sao.
+       Trước W12: bước quyết định KHÔNG mời kéo, kể cả khi không có câu hỏi nào
+       đang chờ. Đo trên trình duyệt (ma trận 23×4) cho thấy hệ quả thật: 52/92
+       dòng đọc ra "không có affordance", vì `renderToString` và trang thật đều
+       dựng ở trạng thái THỬ THÁCH ĐÓNG. Học sinh mở bài ra chỉ thấy ô dự đoán.
+       Nay: đóng thử thách ⇒ không có cam kết nào để né ⇒ công cụ phải dùng được.
+       Luật hoãn-khi-đang-chờ vẫn sống, kiểm ở (22) trên hàm thuần. */
     for (const id of SORT) {
       const { config, state } = build(id);
       const html = renderToString(
@@ -406,8 +421,7 @@ describe("W3B-sort · kéo là thí nghiệm, nút là cam kết — không lẫ
           busy={false} dispatch={() => {}}
         />,
       );
-      expect(invitesDrag(html), `${id}: vẫn mời kéo khi chưa cam kết`).toBe(false);
-      expect(html, id).not.toContain("Kéo một cột");
+      expect(invitesDrag(html), `${id}: thử thách đóng mà vẫn không mời kéo`).toBe(true);
     }
   });
 

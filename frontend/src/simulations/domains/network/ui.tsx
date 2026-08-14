@@ -15,6 +15,7 @@ import {
 } from "./model";
 import { IconExperiment, IconReset } from "../../../components/icons";
 import { useAppStore } from "../../../state/store";
+import { toolAffordanceOpen } from "../../tool-affordance";
 
 /**
  * UI domain network — nút + link + chấm gói tin chạy theo bước.
@@ -138,10 +139,15 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
    * dưới sân khấu — đo được là dải `experimentTrigger` (bandCount 2 ở
    * `network.packet_routing`, cả bốn bề rộng). */
   const exploreOpen = useAppStore((s) => s.exploreOpen);
+  const challengeOpen = useAppStore((s) => s.challengeOpen);
   const setExploreOpen = useAppStore((s) => s.setExploreOpen);
   const gone = removedLinks(state);
   const modified = isModified(state);
-  const editable = exploreOpen && !busy;
+  /* W12 §6 (Policy B) — luật dùng chung ở `tool-affordance.ts`, không chép tay.
+     Trước wave này vùng bấm ngắt/nối liên kết chỉ dựng khi `exploreOpen`, nên
+     hai target mạng — cả hai đều `INTERACTIVE_MODEL` — mở ra không có affordance
+     nào nhìn thấy được. Nay thử thách đóng là đủ. */
+  const editable = toolAffordanceOpen({ exploreOpen, challengeOpen, busy });
 
   /** Một liên kết bấm được. `onAct` chỉ PHÁT action — engine tính lại, không phải đây. */
   const LinkHandle = ({ a, b, label, onAct }: {

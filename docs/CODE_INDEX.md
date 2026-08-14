@@ -510,6 +510,20 @@ W7, dải điều khiển phân loại bằng `timeline.stepCount(state) > 1`, �
 diễn kĩ thuật §9 cấm: `base_conversion` có 12 bước nên được dòng thời gian đầy
 đủ, dù sau W5 kết quả của nó đọc được ngay. Số hiện tại: **13 / 7 / 3**.
 
+### `frontend/src/simulations/tool-affordance.ts` (M20 W12) · Change impact: offline
+NGUỒN DUY NHẤT của câu hỏi "công cụ thao tác của học sinh có được hiện ra
+không". `toolAffordanceOpen({exploreOpen, challengeOpen, busy})` — hàm THUẦN,
+kiểm được không cần Chrome. Cả `domains/algorithm/ui.tsx` (kéo cột) và
+`domains/network/ui.tsx` (ngắt/nối liên kết) đọc nó.
+⚠️ Trước W12 hai miền chép tay CÙNG một luật (`exploreOpen && !busy`), nên công
+cụ nằm sau một nút học sinh phải tự biết bấm: đo trên trình duyệt được **52/92**
+dòng ma trận bề rộng "không có affordance". Luật nay là W12 §6 Policy B — thử
+thách ĐÓNG thì công cụ dùng được; MỞ thì có thể siết để câu hỏi đang chờ không
+bị chính học sinh vô hiệu hoá. `mode: "hidden"` của `interaction-policy.ts` vẫn
+thắng tuyệt đối (kéo ở `sum_if`/`count_if` là trang trí).
+⚠️ Bật affordance KHÔNG nâng hạng ngữ nghĩa: `whatif_swap` vẫn là
+INPUT_MANIPULATION (W12 §8) — phân loại thuộc `interaction-semantics.test.ts`.
+
 ### `frontend/scripts/measure-transport-w7.mjs` (M20 W7) · offline (cần `npm run dev`)
 Hỏi: cơ chế to nhỏ khác nhau thì khay điều khiển có đổi bề rộng theo không? Đo
 độ LỆCH bề rộng qua nhiều target thay vì so với một con số ma. Đo ở HEAD

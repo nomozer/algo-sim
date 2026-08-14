@@ -164,12 +164,18 @@ describe("W4B-2I · renderer chỉ ĐỌC — không tính định tuyến", () 
     }
   });
 
-  it("Quan sát: KHÔNG có liên kết nào bấm được (cổng đóng)", () => {
+  it("W12 §6 — THỬ THÁCH ĐÓNG: liên kết bấm được ngay, không cần mở Khám phá", () => {
+    /* TIỀN ĐỀ ĐỔI, có chủ đích. Trước W12 vùng bấm chỉ dựng khi `exploreOpen`,
+       nên hai target mạng — cả hai đều `INTERACTIVE_MODEL` — mở ra KHÔNG có
+       affordance nào (đo được: 8/92 dòng ma trận bề rộng). Luật mới ở
+       `tool-affordance.ts`: thử thách đóng ⇒ không có cam kết nào để né ⇒ công
+       cụ phải dùng được. Đây cũng là đối chứng dương của lỗi C (W12-E). */
     const { config, state } = build();
     const html = renderToString(
       <NetworkWorkspace config={config} state={state} busy={false} dispatch={() => {}} />,
     );
-    expect(html).not.toContain('role="button"');
+    expect(html, "không còn vùng bấm liên kết nào").toContain('role="button"');
+    expect(html, "vùng bấm mất con trỏ mời gọi").toContain("cursor:pointer");
     /* W4B-3A — LỐI VÀO ĐÃ RỜI KHỎI SÂN KHẤU (đó là dải `experimentTrigger`).
        Ở bài này nó là chế độ KHÁM PHÁ: sửa tôpô rồi để engine định tuyến lại,
        không có `predict.check` nào can dự. Nên hỏi đúng năng lực `explore`. */

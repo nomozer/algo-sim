@@ -32,6 +32,7 @@ import {
   whatIfPolicyOf,
 } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
+import { toolAffordanceOpen } from "../../tool-affordance";
 import {
   IconBack,
   IconInfo,
@@ -174,7 +175,18 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
    * kéo cũng đã nằm sau một cổng; nay cổng đó có tên đúng và có chủ sở hữu
    * dùng chung.
    */
-  const dragAllowedByPolicy = policy.mode === "hidden" ? false : exploreOpen;
+  /* W12 §6 (Policy B) — kéo KHÔNG còn đòi mở Khám phá trước.
+     Trước wave này cổng là `exploreOpen`, nên affordance chính của họ thuật
+     toán nằm sau một nút mà học sinh phải biết bấm; đo được 52/92 dòng ma trận
+     bề rộng đọc ra "không có affordance". Nay điều kiện là THỬ THÁCH ĐANG ĐÓNG:
+     công cụ dùng được ngay, và chỉ nhường chỗ khi có một câu hỏi đang chờ. */
+  /* W12 §6 (Policy B) — cùng luật, cùng chủ sở hữu với miền mạng.
+     `mode: "hidden"` vẫn thắng tuyệt đối: ở `sum_if`/`count_if` kéo là trang
+     trí (thuật toán không đổi chỗ gì), nên công cụ của hai bài đó là ĐIỀU KIỆN,
+     không phải cột. */
+  const dragAllowedByPolicy = policy.mode === "hidden"
+    ? false
+    : toolAffordanceOpen({ exploreOpen, challengeOpen, busy });
 
   const decision = decisionPointOf(state);
   const consequence = decision ? null : consequenceOf(state);
@@ -197,6 +209,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
     busy,
     last,
     answered: prediction !== null,
+    challengeOpen,
   });
 
   /* Đúng MỘT mô hình tương tác sống ở một bước (`stageInteractionsOf`), nên
@@ -449,7 +462,12 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       {/* W4B-4D — KHÁM PHÁ CỦA HỌ CÓ-ĐIỀU-KIỆN LÀ ĐỔI CHÍNH ĐIỀU KIỆN.
           Chỉ dựng khi bài THẬT SỰ có điều kiện (`count_if`/`sum_if`), nên đây
           không phải một khung tương tác dùng chung áp lên mọi bài. */}
-      {exploreOpen && hasCondition(config) && (
+      {/* W12 §6/§19 — LẦN THỨ BA của cùng một mẫu hỏng, nên sửa ở cùng chủ sở
+          hữu. `sum_if`/`count_if` là BOUNDED_PARAMETER_TOOL: công cụ của chúng
+          KHÔNG phải cột kéo (`mode: "hidden"` — thứ tự dãy không đổi kết quả)
+          mà chính là thanh điều kiện này. Để nó sau `exploreOpen` nghĩa là hai
+          bài ấy mở ra không có công cụ nào — đúng thứ ma trận bề rộng đo được. */}
+      {toolAffordanceOpen({ exploreOpen, challengeOpen, busy }) && hasCondition(config) && (
         <ConditionBar config={config} busy={busy} dispatch={dispatch} />
       )}
     </div>

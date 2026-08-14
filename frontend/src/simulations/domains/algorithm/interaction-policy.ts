@@ -408,19 +408,37 @@ export function commitmentSurfaceKind(
  * nên một luật chôn trong JSX là một luật không test được ngoài Chrome).
  */
 export interface DragGateInput {
-  /** Mode của bài cho phép kéo ở thời điểm này chưa (gồm cả nút thí nghiệm đã mở). */
+  /** Mode của bài cho phép kéo ở thời điểm này chưa. */
   policyAllows: boolean;
   busy: boolean;
   /** Đang ở bước cuối — không còn gì để chạy tiếp trên nhánh. */
   last: boolean;
   /** Học sinh đã chốt cam kết ở bước này chưa. */
   answered: boolean;
+  /**
+   * Thử thách có ĐANG MỞ không.
+   *
+   * W12 §6 (Policy B) — thử thách ĐÓNG thì công cụ phải dùng được.
+   *
+   * Đo được ở HEAD 99548af: 52/92 dòng ma trận bề rộng đọc ra "không có
+   * affordance", và truy ra là vì kéo đòi `exploreOpen` — tức học sinh phải MỞ
+   * Khám phá trước mới thấy con trỏ `grab`. Ở bước mặc định, thứ duy nhất nhìn
+   * thấy được trên họ thuật toán vì thế là ô dự đoán, và màn hình đọc ra
+   * quiz-first.
+   *
+   * Lý do gốc của cổng ấy là "đừng cho né cam kết". Nhưng cam kết chỉ tồn tại
+   * KHI THỬ THÁCH ĐANG MỞ — đóng nó lại thì không còn gì để né, nên hoãn kéo
+   * lúc ấy không phục vụ mục đích nào.
+   */
+  challengeOpen: boolean;
 }
 
 export function whatIfDragAllowed(state: AlgorithmSimState, input: DragGateInput): boolean {
   // R3.3a giữ nguyên: chỉ khi đang dừng, chưa ở nhánh, chưa hết bài.
   if (!input.policyAllows || input.busy || input.last || state.branch) return false;
-  // §15: bước sắp xếp còn cam kết đang chờ ⇒ hoãn kéo.
-  if (sortInteractionOf(state) !== null && !input.answered) return false;
+  /* §15 thu hẹp lại đúng phạm vi nó phục vụ: chỉ hoãn khi có một cam kết ĐANG
+     CHỜ THẬT, tức thử thách đang mở và học sinh chưa chốt. Thử thách đóng thì
+     kéo là thí nghiệm thuần và không cướp mất quyết định của ai. */
+  if (input.challengeOpen && sortInteractionOf(state) !== null && !input.answered) return false;
   return true;
 }

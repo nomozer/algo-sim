@@ -179,6 +179,51 @@ người học.
 | `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
 | Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
+## W12 §6 — Policy B: công cụ hiện ra khi thử thách ĐÓNG (2026-08-14)
+
+**Quan sát khởi nguồn (của người dùng).** `algorithm.find_max` đọc ra: nhìn hình
+→ đọc câu hỏi → bấm một trong hai nút. Tức một bài kiểm tra, không phải công cụ.
+
+**Đo trước khi sửa.** `certify-viewports-w12.mjs` (23 target × 4 bề rộng, HEAD
+`99548af`): **39/92** dòng ĐẠT.
+
+**Nguyên nhân — một luật bị chép tay ba lần.** Ba nơi cùng đòi `exploreOpen`
+trước khi dựng công cụ, mà trang vừa mở thì cờ đó `false`:
+
+| nơi | công cụ bị giấu |
+|---|---|
+| `domains/algorithm/ui.tsx` | kéo cột (`whatif_swap`) |
+| `domains/network/ui.tsx` | vùng bấm ngắt/nối liên kết |
+| `domains/algorithm/ui.tsx` — `ConditionBar` | ngưỡng + phép so sánh (`set_param`) |
+
+Lý do gốc của cổng là "đừng cho né cam kết", nhưng cam kết chỉ tồn tại KHI THỬ
+THÁCH ĐANG MỞ. Nay cả ba đi qua **`simulations/tool-affordance.ts`**.
+
+**Một bug thứ hai, chỉ trình duyệt mới thấy.** Trong `traverse-module.tsx`, dòng
+JSX gọi `TraverseParamBar` nằm SAU câu `return` của một `useEffect`: cú pháp hợp
+lệ, tên không "unused", TypeScript im — nên control BFS↔DFS **không bao giờ được
+render**. `network.graph_traversal` là công cụ tham số mà học sinh không có cách
+nào đổi tham số. Không unit test nào bắt được vì không test nào hỏi "control có
+trên màn hình không".
+
+**Ba lỗi TIÊU CHÍ của chính phép đo, sửa luôn** — mỗi cái đều xác minh bằng dò
+tận nơi, không suy đoán:
+
+1. `getBoundingClientRect` trên `<line>` ngang trả `150×0` (Chrome không cộng
+   stroke) ⇒ ba vùng bấm liên kết bấm được của `packet_routing` bị vứt đi.
+2. Đòi affordance ở target **TRACE_MODEL** (`apply` đồng nhất) — 0 affordance ở
+   đó là ĐÚNG. Danh sách nay ĐỌC TỪ bảng phân loại, vì bản viết tay của tôi sai
+   ngay lần đầu (ghi nhầm `tree.traversal`).
+3. Khay điều khiển `position: sticky` nổi trên nội dung dài bị đọc là "chồng
+   lấn" — đó chính là việc của neo (quyết định W7).
+
+**Sau khi sửa: 92/92.** Diễn tiến đo được: 39 → 67 (Policy B ở miền thuật toán)
+→ 75 (miền mạng + thanh điều kiện) → 87 → 91 → 92 (ba lỗi tiêu chí).
+
+**KHÔNG nâng hạng target nào** (W12 §8): `whatif_swap` vẫn là INPUT_MANIPULATION.
+Bảng ngữ nghĩa giữ nguyên **11 INTERACTIVE_MODEL · 9 BOUNDED_PARAMETER_TOOL ·
+3 TRACE_MODEL · PROBE_LIMITED = 0**.
+
 | `WAVE4_INTERACTION_CERTIFICATION` | **NO_EVIDENCE — không đổi** | chỉ nâng khi đủ 23/23 có bằng chứng tươi | **W12** |
 | `WAVE6_BROWSER_EXPERIENCE` | **PARTIAL — không đổi** | chín màn trải nghiệm chưa chạy | **W12** |
 
