@@ -4,6 +4,38 @@ Tài liệu này gom các chính sách vận hành mà **người đóng góp** 
 README để README tập trung vào đề tài. Nếu tài liệu mâu thuẫn với code/test:
 **code/test thắng** — sửa tài liệu.
 
+## Vòng lặp sửa code — ĐỪNG chạy full suite sau mỗi lần sửa
+
+Full suite là cổng **trước khi commit**, không phải phản hồi khi đang nghĩ. Chạy
+nó sau mỗi lần sửa thì mỗi lần sửa mất hàng chục giây và mạch làm việc đứt —
+đây là lỗi thói quen, không phải giới hạn của kho mã.
+
+```bash
+# --- FRONTEND: watch, chỉ chạy lại file liên quan (~1s) ---
+cd frontend && npx vitest                       # để chạy nền, sửa tới đâu đỏ tới đó
+cd frontend && npx vitest related src/simulations/domains/algorithm/ui.tsx
+cd frontend && npx vitest run -t "<tên test>"   # lọc theo tên
+
+# --- BACKEND: chỉ chạy cái vừa đỏ ---
+cd backend && .venv/Scripts/python.exe -m pytest -q -x --lf
+cd backend && .venv/Scripts/python.exe -m pytest -q tests/test_dsl.py
+
+# --- CỔNG TRƯỚC COMMIT (chỗ DUY NHẤT cần full) ---
+cd backend && .venv/Scripts/python.exe -m pytest -q
+cd frontend && npx vitest run && npm run build
+```
+
+Bộ chọn theo tác động (T0, W8) trả lời "sửa file này thì phải chạy gì":
+
+```bash
+cd frontend && node scripts/impact.mjs --files src/styles/global.css
+```
+
+⚠️ Script trình duyệt (`certify-*.mjs`, `audit-*.mjs`) **không** thuộc vòng lặp
+này — mỗi lượt vài phút và cần Chrome. Chạy khi cần **bằng chứng**, không chạy
+để lấy phản hồi. Việc chúng hỏi mà vitest không hỏi được thì đã có cổng offline
+tương ứng (vd `simulations/experience-gate.test.ts`).
+
 ## Cơ sở dữ liệu & migration
 
 **PostgreSQL 16** chạy trong Docker (service `db`, dữ liệu bền trong volume
