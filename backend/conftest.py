@@ -53,3 +53,31 @@ def block_real_network(monkeypatch):
 
     monkeypatch.setattr(httpx.AsyncHTTPTransport, "handle_async_request", blocked_async)
     monkeypatch.setattr(httpx.HTTPTransport, "handle_request", blocked_sync)
+
+# ── W8 §17/§18 — CHI PHÍ KDF TRONG TEST ─────────────────────────────────────
+#
+# ĐO ĐƯỢC ở HEAD b7ca150: `pytest` đầy đủ mất 57s, trong đó
+# `test_classroom_api.py` 27,9s + `test_auth_api.py` 10,3s + `test_guest_trial.py`
+# 2,0s = **40s/50s**. Không phải vài test chậm — là 365ms mỗi lần băm mật khẩu
+# (PBKDF2 600.000 vòng theo khuyến nghị OWASP) nhân với mỗi lượt đăng ký/đăng
+# nhập trong fixture.
+#
+# 600.000 vòng là ĐÚNG cho production và KHÔNG đổi. Trong test nó là
+# EXPENSIVE_FIXTURE: thứ các test ấy chứng minh là CƠ CHẾ (salt riêng, KDF có
+# tham số, không lưu thô, phiên hết hạn, phân quyền), không phải độ chậm.
+#
+# An toàn vì số vòng được ghi vào chính chuỗi lưu và `verify_password` đọc lại
+# từ đó — hash sinh ở số vòng nào cũng verify được, kể cả hash production cũ.
+#
+# Mức production được khoá RIÊNG bởi `tests/test_kdf_cost.py`, và test đó KHÔNG
+# đi qua fixture này.
+
+
+@pytest.fixture(autouse=True)
+def cheap_kdf(monkeypatch, request):
+    """Hạ số vòng PBKDF2 cho mọi test, TRỪ test khoá mức production."""
+    if request.node.get_closest_marker("real_kdf_cost"):
+        return
+    from app.accounts import passwords
+
+    monkeypatch.setattr(passwords, "DEFAULT_ITERATIONS", 1_000)

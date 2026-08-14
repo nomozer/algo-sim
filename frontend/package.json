@@ -8,7 +8,20 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "audit:layout": "node scripts/audit-layout.mjs"
+    "audit:layout": "node scripts/audit-layout.mjs",
+    "test:impact": "node scripts/impact.mjs",
+    "test:domain:algorithm": "vitest run src/simulations/domains/algorithm/",
+    "test:domain:binary": "vitest run src/simulations/domains/binary/",
+    "test:domain:logic": "vitest run src/simulations/domains/logic/",
+    "test:domain:network": "vitest run src/simulations/domains/network/",
+    "test:domain:database": "vitest run src/simulations/domains/database/",
+    "test:domain:web": "vitest run src/simulations/domains/web/",
+    "test:domain:generic": "vitest run src/simulations/domains/generic/",
+    "test:domain:tree": "vitest run src/simulations/domains/tree/",
+    "test:domain:shared-ui": "vitest run src/components/ src/styles/",
+    "test:domain:classroom": "vitest run src/state/",
+    "test:wave": "vitest run && tsc -b && vite build",
+    "test:full": "node scripts/full-gate.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

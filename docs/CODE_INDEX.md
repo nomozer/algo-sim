@@ -520,6 +520,31 @@ khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng m�
 đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
 `docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
+### `frontend/scripts/impact.mjs` (M20 W8) · T0 IMPACT GATE · offline
+Chọn test theo file vừa đổi và **in ra lý do từng lựa chọn**. Ghép ba nguồn: sở
+hữu theo thư mục · sổ `SHARED_OWNERS` (mỗi dòng phải nói vì sao bán kính rộng) ·
+leo thang bảo thủ.
+⚠️ LUẬT: thay đổi mã sản phẩm KHÔNG BAO GIỜ được chọn 0 test — không tra ra chủ
+thì trả `IMPACT_MAPPING_MISSING` và leo lên gate rộng. Guard kiến trúc
+(`code-index-sync`, `tokens`, `ui-hygiene`) không import file bị đổi nên đồ thị
+import không chọn được chúng; chúng phải khai theo sở hữu — đó là lý do bộ chọn
+không dùng `vitest --related` một mình. Cờ `--files a,b` cho tập giả định để
+`test-tiers.test.ts` kiểm được chính bộ chọn.
+
+### `frontend/scripts/full-gate.mjs` (M20 W8) · T3 · offline
+Chủ sở hữu DUY NHẤT của nhãn `FULL_PRODUCT_GATE_PASS`. Danh sách cổng con nằm
+trong mảng `GATES` và bị `test-tiers.test.ts` khoá — bỏ một cổng mà vẫn phát
+nhãn là chứng nhận một HEAD chưa được kiểm.
+
+### `frontend/src/test-tiers.test.ts` (M20 W8) · offline
+Kiểm chính bộ chọn theo HAI CHIỀU (thiếu: chủ sở hữu dùng chung thu về một test
+hẹp ⇒ đỏ · thừa: renderer lẻ kéo cả kho ⇒ đỏ) và khoá ngữ nghĩa nhãn: chỉ T3
+được nói `FULL_PRODUCT_GATE_PASS`.
+⚠️ Ba guard trong file này từng **khớp rỗng rồi báo đạt** — soi comment thay vì
+mảng cổng, mẫu thiếu `
+` nên match rỗng, soi phần "Đã đổi" thay vì phần chọn.
+Mỗi guard nay tự kiểm rằng nó tìm thấy thứ cần soi trước khi khẳng định.
+
 ### `frontend/scripts/runtime-zero-ai-w7.mjs` (M20 W7 closure) · offline (cần `npm run dev`)
 ĐẾM request thật thay vì suy từ cấu trúc mã. Bọc `window.fetch` và `module.init`
 của mọi module trong registry, chụp số đếm trước/sau từng hành động. Có PHÉP THỬ

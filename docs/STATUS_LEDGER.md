@@ -109,6 +109,21 @@
 | Dòng thời gian gập lại khi đổi bài | **DONE (W7 closure)** | khiếm khuyết do harness runtime tìm ra: `SimulationControls` không remount nên trace mở ở bài A còn mở ở bài B | — |
 | Nghiệm thu trải nghiệm trình duyệt (W6) | **PARTIAL — không đổi** | W7 chỉ chứng minh transport, không chứng minh thứ tự tầng thị giác | **W12** |
 
+## 4e. Wave 8 — kim tự tháp test
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| Hợp đồng 4 tầng | **DONE (W8)** | `docs/TEST_TIERS.md` + `test-tiers.test.ts` khoá ngữ nghĩa nhãn | — |
+| Bộ chọn T0 | **DONE (W8)** | `impact.mjs` — ba nguồn, in lý do, leo thang khi không tra ra chủ | — |
+| Luật không-chọn-rỗng | **DONE (W8)** | mã sản phẩm luôn chọn ≥1 đơn vị; `IMPACT_MAPPING_MISSING` leo thang | — |
+| **pytest 57s → 15,6s** | **DONE (W8)** | nguyên nhân đo được: 365ms/lần băm × mỗi lượt đăng ký; hạ vòng KDF TRONG TEST, mức production khoá bởi `test_kdf_cost.py` (marker `real_kdf_cost`) | — |
+| T0 thực đo | **DONE (W8)** | renderer 3,2s · engine 3,4s · chủ sở hữu chung 4,9s · tài liệu 3,0s · hợp đồng backend 26s (leo thang đúng) | — |
+| Tiêm lỗi W8 | **8/8 BỊ BẮT** | 3 guard từng KHỚP RỖNG rồi báo đạt — đúng lỗi wave này tồn tại để chống, xuất hiện trong chính guard chống nó | — |
+| Live AI tách tầng | **DONE (W8)** | guard cấm `ALLOW_LIVE_AI` xuất hiện trong bộ chọn tất định | — |
+| Gộp server trình duyệt (§21) | **OPEN** | chưa làm | **W12** |
+| Phân tầng benchmark (§24) | **OPEN** | chưa làm | **W12** |
+| Gộp test trùng / property (§25–26) | **OPEN** | chưa làm | — |
+
 ## 5. Phủ chương trình
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |

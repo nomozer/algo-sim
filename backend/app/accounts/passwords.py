@@ -45,12 +45,26 @@ def check_password_policy(password: str) -> None:
         raise WeakPasswordError(f"Mật khẩu phải có ít nhất {MIN_PASSWORD_LENGTH} ký tự.")
 
 
-def hash_password(password: str, *, iterations: int = DEFAULT_ITERATIONS) -> str:
+def hash_password(password: str, *, iterations: int | None = None) -> str:
     """Băm mật khẩu kèm salt ngẫu nhiên RIÊNG cho từng tài khoản.
 
     Salt riêng là thứ khiến một bảng cầu vồng dựng sẵn vô dụng, và khiến hai
     người dùng đặt cùng mật khẩu vẫn cho hai chuỗi hash khác nhau.
+
+    ⚠️ `iterations=None` đọc `DEFAULT_ITERATIONS` LÚC GỌI, không phải lúc định
+    nghĩa hàm. Khác biệt nhỏ ấy là thứ cho phép test hạ chi phí KDF xuống mà
+    KHÔNG đụng gì tới production: một giá trị mặc định gắn ở chữ ký hàm thì
+    monkeypatch hằng số không có tác dụng.
+
+    Vì sao được phép hạ trong test: số vòng được GHI VÀO chính chuỗi lưu
+    (`pbkdf2_sha256$<iterations>$…`) và `verify_password` đọc lại từ đó, nên
+    hash sinh ở bất kỳ số vòng nào cũng verify được. Thứ test cần chứng minh là
+    CƠ CHẾ (có salt riêng, có KDF chậm, không lưu thô), không phải chờ 365ms
+    mỗi lần tạo tài khoản. Mức production được khoá riêng bởi
+    `test_kdf_cost_production_khong_bi_ha`.
     """
+    if iterations is None:
+        iterations = DEFAULT_ITERATIONS
     check_password_policy(password)
     salt = secrets.token_bytes(_SALT_BYTES)
     digest = hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, iterations)
