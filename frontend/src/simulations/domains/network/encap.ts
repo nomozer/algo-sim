@@ -69,11 +69,22 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
      * khi kịp hiểu cơ chế.
      */
     representation: {
-      primary: "2d",
-      alternate: "ALTERNATE_FOR_EXPLANATION",
+      /* W12 §3 — 3D LÀ BIỂU DIỄN CHÍNH CÔNG KHAI, và 2D lùi về nội bộ.
+         Đóng gói TCP/IP dạy một quan hệ KHÔNG GIAN: mỗi tầng BỌC gói của tầng
+         trên. 2D phải diễn đạt quan hệ bọc-nhau bằng hai cột xếp chồng — học
+         sinh đọc ra "bốn ô nằm cạnh nhau", tức đúng thứ mà chiều sâu sinh ra để
+         nói. Người dùng đã yêu cầu điều này nhiều lần; quyết định là của họ.
+         Bỏ luôn công tắc: `learnerFacingModes` trả rỗng khi `alternate` là
+         NO_ALTERNATE_NEEDED, nên học sinh không phải trả lời câu hỏi "bài này
+         nên đọc ở 2D hay 3D" mà chính họ chưa có cơ sở để trả lời.
+         2D KHÔNG bị gỡ — nó còn nguyên cho parity renderer và bằng chứng hồi
+         quy (`encap-render3d.test.tsx`, `render-parity.test.tsx`). */
+      primary: "3d",
+      alternate: "NO_ALTERNATE_NEEDED",
       alternateReason:
         "Chiều sâu cho thấy quan hệ BỌC NHAU giữa các tầng — thứ 2D phải diễn " +
-        "đạt bằng xếp chồng. Là góc nhìn làm rõ thêm, không phải cách đọc chính.",
+        "đạt bằng xếp chồng. 2D giữ lại làm biểu diễn NỘI BỘ cho parity, không " +
+        "bày cho học sinh.",
     },
 
     validateConfig: validateEncapConfig,
