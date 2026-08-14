@@ -1,0 +1,282 @@
+{
+  "provenanceVersion": 2,
+  "sourceFingerprint": "10174dd4e6eec4f0",
+  "dirtyRelevantSources": [],
+  "head": "736098a45b9a2373a9bdfd6dca7580c0fa10f23c",
+  "dirty": false,
+  "generatedAt": "2026-08-14T13:21:10.553Z",
+  "tool": "certify-visual-weight-w12",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "viewport": 1536
+  },
+  "kind": "CERTIFICATION_EVIDENCE",
+  "question": "Trên sân khấu, HÌNH chiếm bao nhiêu so với CHỮ?",
+  "thresholds": {
+    "minInkShare": 0.15,
+    "minGlyphs": 8
+  },
+  "limitation": "Đo BỀ MẶT, không đo hiểu biết. LEARNER_IMPACT_NOT_EVALUATED giữ nguyên.",
+  "serverStarts": 1,
+  "passed": 22,
+  "total": 23,
+  "rows": [
+    {
+      "target": "algorithm.binary_search",
+      "inkArea": 226996,
+      "glyphs": 10,
+      "proseChars": 213,
+      "cardArea": 482373,
+      "inkShare": 0.471,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "inkArea": 53760,
+      "glyphs": 6,
+      "proseChars": 137,
+      "cardArea": 499073,
+      "inkShare": 0.108,
+      "tables": 0,
+      "problems": [
+        "hình chỉ chiếm 10.8% thẻ"
+      ],
+      "verdict": "CHỮ LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "inkArea": 183312,
+      "glyphs": 7,
+      "proseChars": 273,
+      "cardArea": 585295,
+      "inkShare": 0.313,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.count_if",
+      "inkArea": 243344,
+      "glyphs": 10,
+      "proseChars": 155,
+      "cardArea": 605523,
+      "inkShare": 0.402,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.find_max",
+      "inkArea": 208772,
+      "glyphs": 8,
+      "proseChars": 256,
+      "cardArea": 540182,
+      "inkShare": 0.386,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.find_min",
+      "inkArea": 183312,
+      "glyphs": 7,
+      "proseChars": 258,
+      "cardArea": 540427,
+      "inkShare": 0.339,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "inkArea": 157852,
+      "glyphs": 6,
+      "proseChars": 265,
+      "cardArea": 513517,
+      "inkShare": 0.307,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.linear_search",
+      "inkArea": 208772,
+      "glyphs": 8,
+      "proseChars": 195,
+      "cardArea": 521744,
+      "inkShare": 0.4,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.scan",
+      "inkArea": 132392,
+      "glyphs": 5,
+      "proseChars": 54,
+      "cardArea": 432354,
+      "inkShare": 0.306,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "inkArea": 132392,
+      "glyphs": 5,
+      "proseChars": 295,
+      "cardArea": 456001,
+      "inkShare": 0.29,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "algorithm.sum_if",
+      "inkArea": 234232,
+      "glyphs": 9,
+      "proseChars": 173,
+      "cardArea": 669277,
+      "inkShare": 0.35,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "binary.base_conversion",
+      "inkArea": 0,
+      "glyphs": 0,
+      "proseChars": 210,
+      "cardArea": 492327,
+      "inkShare": 0,
+      "tables": 1,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "binary.character_encoding",
+      "inkArea": 0,
+      "glyphs": 0,
+      "proseChars": 46,
+      "cardArea": 393987,
+      "inkShare": 0,
+      "tables": 1,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "inkArea": 41400,
+      "glyphs": 4,
+      "proseChars": 106,
+      "cardArea": 241411,
+      "inkShare": 0.171,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "database.relational_table_query",
+      "inkArea": 144,
+      "glyphs": 1,
+      "proseChars": 79,
+      "cardArea": 463303,
+      "inkShare": 0,
+      "tables": 1,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "generic.rule_scene",
+      "inkArea": 161588,
+      "glyphs": 9,
+      "proseChars": 110,
+      "cardArea": 364463,
+      "inkShare": 0.443,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "logic.and_gate",
+      "inkArea": 110400,
+      "glyphs": 9,
+      "proseChars": 140,
+      "cardArea": 276828,
+      "inkShare": 0.399,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "logic.boolean_dag",
+      "inkArea": 192932,
+      "glyphs": 12,
+      "proseChars": 252,
+      "cardArea": 598736,
+      "inkShare": 0.322,
+      "tables": 1,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "network.graph_traversal",
+      "inkArea": 213200,
+      "glyphs": 10,
+      "proseChars": 222,
+      "cardArea": 670276,
+      "inkShare": 0.318,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "network.packet_routing",
+      "inkArea": 97600,
+      "glyphs": 24,
+      "proseChars": 70,
+      "cardArea": 250140,
+      "inkShare": 0.39,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "inkArea": 353600,
+      "glyphs": 1,
+      "proseChars": 99,
+      "cardArea": 587763,
+      "inkShare": 0.602,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "tree.traversal",
+      "inkArea": 164948,
+      "glyphs": 13,
+      "proseChars": 263,
+      "cardArea": 681072,
+      "inkShare": 0.242,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    },
+    {
+      "target": "web.style_model",
+      "inkArea": 387056,
+      "glyphs": 2,
+      "proseChars": 206,
+      "cardArea": 1192244,
+      "inkShare": 0.325,
+      "tables": 0,
+      "problems": [],
+      "verdict": "HÌNH LÀ CHÍNH"
+    }
+  ]
+}

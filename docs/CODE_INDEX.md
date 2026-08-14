@@ -543,6 +543,22 @@ Vẫn KHÔNG bắt được vị trí/kích thước — giới hạn, không ph
 Số hiện tại: **19 TOOL_PASS · 4 TRACE_PASS · 0 EXPERIENCE_FAIL**. Chênh
 engine/màn còn lại (40→14, 33→14…) là trần 14 bước của vòng lặp, không phải lỗi.
 
+### `frontend/scripts/certify-visual-weight-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
+Hỏi câu mà MỌI tiêu chí W12 khác bỏ sót: **trên sân khấu, HÌNH chiếm bao nhiêu
+so với CHỮ?** Các tiêu chí trước chỉ hỏi "đổi đầu vào thì kết quả có tính lại
+không" — nên `network.packet_routing` (4 biểu tượng đứng yên + 4 bước chữ) đạt
+hết, trong khi mở ra nhìn thì nó là hình minh hoạ có chú thích.
+Đo `inkShare` (diện tích svg/canvas/`.web-page` trên diện tích thẻ) và
+`proseChars` (chỉ khối văn xuôi; KHÔNG tính nhãn trong hình, KHÔNG tính ô bảng
+— bảng LÀ kết quả engine, phạt nó là phạt nhầm). Bài có bảng được miễn ngưỡng
+`inkShare`, và điều đó ghi rõ chứ không miễn lặng lẽ.
+⚠️ Ngưỡng `MIN_GLYPHS` của bản đầu ĐÃ GỠ vì nó SAI hai đường: đo kích thước dữ
+liệu (dãy 3 phần tử có 5 hình chữ nhật) và không nhìn được vào `<canvas>` — nó
+vừa gán "tranh tĩnh" cho cảnh 3D thật. `glyphs` còn trong artifact để đọc.
+⚠️ Đo BỀ MẶT, không đo hiểu biết — `LEARNER_IMPACT_NOT_EVALUATED` giữ nguyên.
+Số hiện tại: **22/23 lấy HÌNH làm chính**; còn `algorithm.bounded_control_flow`
+(hình 10,8% thẻ).
+
 ### `frontend/scripts/certify-scroll-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
 Hỏi: vỏ ứng dụng có đọc thành MỘT khối liền, và máng cuộn có ổn định không?
 5 màn × 4 bề rộng trên `browser-runner.mjs`: home · library · history ·
