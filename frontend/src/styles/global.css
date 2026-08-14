@@ -1151,7 +1151,11 @@ html {
 
 .error-banner {
   background: var(--canvas-soft);
-  border-left: 3px solid var(--accent-orange);
+  /* W12 — BỎ NẸP TRÁI. Người dùng đã nêu hai lần rằng không muốn kiểu này, và
+     lượt trước tôi giữ lại với lí do "vạch trái trên khối chú dẫn là quy ước".
+     Rút lại: nghĩa ở các khối này KHÔNG nằm ở vạch — mỗi khối đã có component
+     riêng, nhãn riêng, nền riêng, nên bỏ vạch không làm mất phân biệt nào
+     (§24 vẫn giữ: phản hồi không chỉ-bằng-màu). Nền tô là đủ. */
   border-radius: var(--rounded-md);
   padding: var(--sp-sm) var(--sp-md);
   font-size: 14px;
@@ -1192,7 +1196,11 @@ html {
 }
 
 .narration-bar.is-user {
-  border-left: 3px solid var(--accent-purple-deep);
+  /* W12 — BỎ NẸP TRÁI. Người dùng đã nêu hai lần rằng không muốn kiểu này, và
+     lượt trước tôi giữ lại với lí do "vạch trái trên khối chú dẫn là quy ước".
+     Rút lại: nghĩa ở các khối này KHÔNG nằm ở vạch — mỗi khối đã có component
+     riêng, nhãn riêng, nền riêng, nên bỏ vạch không làm mất phân biệt nào
+     (§24 vẫn giữ: phản hồi không chỉ-bằng-màu). Nền tô là đủ. */
   background: #f6effd;
   /* giữ chữ như narration thường (--ink-secondary kế thừa), chỉ dấu viền tím */
 }
@@ -1206,7 +1214,11 @@ html {
    Tách lớp để cái nào ở đâu là rõ ràng, thay vì cả ba mượn một tên. */
 .feedback-bar {
   background: #f6effd;
-  border-left: 3px solid var(--accent-purple-deep);
+  /* W12 — BỎ NẸP TRÁI. Người dùng đã nêu hai lần rằng không muốn kiểu này, và
+     lượt trước tôi giữ lại với lí do "vạch trái trên khối chú dẫn là quy ước".
+     Rút lại: nghĩa ở các khối này KHÔNG nằm ở vạch — mỗi khối đã có component
+     riêng, nhãn riêng, nền riêng, nên bỏ vạch không làm mất phân biệt nào
+     (§24 vẫn giữ: phản hồi không chỉ-bằng-màu). Nền tô là đủ. */
   border-radius: var(--rounded-md);
   padding: var(--sp-sm) var(--sp-md);
   font-size: 15px;
@@ -1555,7 +1567,6 @@ html {
   flex-wrap: wrap;
   gap: var(--sp-xs) var(--sp-sm);
   border-radius: var(--rounded-md);
-  border-left: 3px solid var(--hairline);
   background: var(--canvas-soft);
   padding: var(--sp-xs) var(--sp-sm);
   font-size: 14px;
@@ -2960,7 +2971,6 @@ html {
   padding: var(--sp-sm) var(--sp-md);
   background: var(--surface);
   border: 1px solid var(--hairline);
-  border-left: 3px solid var(--hairline);
   border-radius: var(--rounded-md);
   font-size: 15px;
   line-height: 1.5;
