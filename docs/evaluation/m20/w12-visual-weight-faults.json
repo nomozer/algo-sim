@@ -1,0 +1,47 @@
+{
+  "provenanceVersion": 2,
+  "sourceFingerprint": "762e50db87aae3ed",
+  "dirtyRelevantSources": [],
+  "head": "ccc281df28791f4731eb8356f40c385a77f6e6a9",
+  "dirty": false,
+  "generatedAt": "2026-08-14T17:55:27.999Z",
+  "tool": "faultcheck-visual-weight-w12",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "target": "network.protocol_encapsulation"
+  },
+  "kind": "CERTIFICATION_EVIDENCE",
+  "question": "Phép đo sức nặng thị giác có còn ĐỎ được sau ba lần nới selector không?",
+  "threshold": 0.15,
+  "rows": [
+    {
+      "case": "CONTROL",
+      "mutation": "không",
+      "mutationObserved": true,
+      "owners": 8,
+      "inkShare": 0.39,
+      "expected": "GREEN",
+      "actual": "GREEN"
+    },
+    {
+      "case": "FAULT_A_hide_mechanism",
+      "mutation": ".encap-layer display:none (8 → 0 còn hiện)",
+      "mutationObserved": true,
+      "owners": 0,
+      "inkShare": 0,
+      "expected": "RED",
+      "actual": "RED"
+    },
+    {
+      "case": "FAULT_B_inflate_blank_wrapper",
+      "mutation": ".encap-2d minHeight 18 → 900",
+      "mutationObserved": true,
+      "owners": 0,
+      "inkShare": 0,
+      "expected": "NOT_GREEN",
+      "actual": "NOT_GREEN"
+    }
+  ]
+}
