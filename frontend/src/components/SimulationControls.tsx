@@ -97,6 +97,15 @@ export function SimulationControls() {
      đụng tới state công cụ (§16: "tool state stays authoritative"). Đưa vào
      store là mở đường cho một lượt set() vô tình chạm vào `active`. */
   const [traceOpen, setTraceOpen] = useState(false);
+  /* Đổi mô phỏng ⇒ gập lại. `SimulationControls` KHÔNG remount khi học sinh mở
+     bài khác, nên nếu không có dòng này thì mở dòng thời gian ở bài A sẽ khiến
+     bài B mở sẵn — trái đúng luật "mô phỏng mới mở ở chế độ quan sát" mà W6 đã
+     chốt cho Thử thách/Khám phá.
+     Đo được bằng `runtime-zero-ai-w7.mjs`: nạp base_conversion, mở trace, rồi
+     nạp character_encoding thì nút "Xem cách thực hiện" biến mất vì dải đã ở
+     trạng thái mở. */
+  const activeModuleId = active?.moduleId;
+  useEffect(() => { setTraceOpen(false); }, [activeModuleId]);
 
   // Tự chạy: hẹn giờ gọi nextStep; store tự dừng khi hết timeline
   useEffect(() => {

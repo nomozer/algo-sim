@@ -104,6 +104,9 @@
 | Soát transport toàn danh mục | **DONE (W7)** | 23/23 khay đúng 1120px, 1 hàng, 0 tràn, 0 hở >24px | — |
 | Tiêm lỗi W7 | **8/8 BỊ BẮT** | hai phép tìm ra LỖ GUARD THẬT: phép gán chế độ; sàn cột chỉ khoá một biến thể | — |
 | Quyết định M19 bị W7 đảo | **ĐÃ KHAI** | M19 cố ý buộc khay bằng cột nội dung; W7 đổi sang thẳng TÂM thay vì thẳng MÉP | — |
+| Tiêm lỗi W7 | **11/11 CÓ BẰNG CHỨNG** | 5 phép tĩnh (W7) + 6 phép bổ sung ở closure: mở trace reset state · mở trace gọi fetch · trace cũ sống sót · hở 16→**169px** · mobile tràn · Đặt lại gọi mạng | — |
+| ZERO-AI runtime | **DONE (W7 closure)** | `runtime-zero-ai-w7.mjs` 23/23: mở/đóng trace, trace theo tham số, Đặt lại — fetch delta 0, init delta 0, state trùng khớp | — |
+| Dòng thời gian gập lại khi đổi bài | **DONE (W7 closure)** | khiếm khuyết do harness runtime tìm ra: `SimulationControls` không remount nên trace mở ở bài A còn mở ở bài B | — |
 | Nghiệm thu trải nghiệm trình duyệt (W6) | **PARTIAL — không đổi** | W7 chỉ chứng minh transport, không chứng minh thứ tự tầng thị giác | **W12** |
 
 ## 5. Phủ chương trình

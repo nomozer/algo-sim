@@ -1,0 +1,136 @@
+{
+  "head": "2fd7fa77de86c2281277e7aa65e4f3f9ba63efb7",
+  "dirty": true,
+  "generatedAt": "2026-08-14T03:42:15.155Z",
+  "tool": "runtime-zero-ai-w7",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32"
+  },
+  "question": "Mở/đóng dòng thời gian và Đặt lại có gây gọi AI/khởi tạo lại không? — ĐẾM, không suy từ mã.",
+  "results": [
+    {
+      "scenario": "bộ đếm fetch thật sự đếm được (phép thử dương tính)",
+      "pass": true,
+      "note": "0 → 1"
+    },
+    {
+      "scenario": "binary.base_conversion — mở/đóng/mở dòng thời gian: ZERO fetch",
+      "pass": true,
+      "note": "fetch 1 → 1",
+      "fetchDelta": 0
+    },
+    {
+      "scenario": "binary.base_conversion — mở/đóng KHÔNG khởi tạo lại module",
+      "pass": true,
+      "note": "init 2 → 2",
+      "initDelta": 0
+    },
+    {
+      "scenario": "binary.base_conversion — state công cụ giữ NGUYÊN",
+      "pass": true,
+      "note": "trùng khớp"
+    },
+    {
+      "scenario": "binary.character_encoding — mở/đóng/mở dòng thời gian: ZERO fetch",
+      "pass": true,
+      "note": "fetch 1 → 1",
+      "fetchDelta": 0
+    },
+    {
+      "scenario": "binary.character_encoding — mở/đóng KHÔNG khởi tạo lại module",
+      "pass": true,
+      "note": "init 3 → 3",
+      "initDelta": 0
+    },
+    {
+      "scenario": "binary.character_encoding — state công cụ giữ NGUYÊN",
+      "pass": true,
+      "note": "trùng khớp"
+    },
+    {
+      "scenario": "base_conversion — trace theo tham số MỚI (26 → cơ số 16)",
+      "pass": true,
+      "note": "mong đợi \"1A\" trong DOM"
+    },
+    {
+      "scenario": "base_conversion — KHÔNG còn dấu vết 13/cơ số 2",
+      "pass": true,
+      "note": "không thấy 1101"
+    },
+    {
+      "scenario": "base_conversion — DÒNG THỜI GIAN nối với tham số hiện tại",
+      "pass": true,
+      "note": "decimal 26, bước chia đầu 26 : 16, đích 16"
+    },
+    {
+      "scenario": "base_conversion — đổi tham số + mở trace: ZERO fetch",
+      "pass": true,
+      "note": "fetch 1 → 1"
+    },
+    {
+      "scenario": "character_encoding — bảng theo chuỗi MỚI (Bin)",
+      "pass": true,
+      "note": "mong đợi 1000010"
+    },
+    {
+      "scenario": "character_encoding — KHÔNG còn hàng của Tin",
+      "pass": true,
+      "note": "không thấy 1010100"
+    },
+    {
+      "scenario": "character_encoding — đổi đầu vào + mở trace: ZERO fetch",
+      "pass": true,
+      "note": "fetch 1 → 1"
+    },
+    {
+      "scenario": "algorithm.binary_search — Đặt lại: ZERO fetch",
+      "pass": true,
+      "note": "fetch 1 → 1",
+      "fetchDelta": 0
+    },
+    {
+      "scenario": "algorithm.binary_search — Đặt lại KHÔNG đổi target/module",
+      "pass": true,
+      "note": "algorithm.binary_search → algorithm.binary_search"
+    },
+    {
+      "scenario": "algorithm.binary_search — Đặt lại trả về trạng thái ban đầu đã khai",
+      "pass": true,
+      "note": "trùng khớp"
+    },
+    {
+      "scenario": "binary.base_conversion — Đặt lại: ZERO fetch",
+      "pass": true,
+      "note": "fetch 1 → 1",
+      "fetchDelta": 0
+    },
+    {
+      "scenario": "binary.base_conversion — Đặt lại KHÔNG đổi target/module",
+      "pass": true,
+      "note": "binary.base_conversion → binary.base_conversion"
+    },
+    {
+      "scenario": "binary.base_conversion — Đặt lại trả về trạng thái ban đầu đã khai",
+      "pass": true,
+      "note": "trùng khớp"
+    },
+    {
+      "scenario": "web.style_model — Đặt lại: ZERO fetch",
+      "pass": true,
+      "note": "fetch 1 → 1",
+      "fetchDelta": 0
+    },
+    {
+      "scenario": "web.style_model — Đặt lại KHÔNG đổi target/module",
+      "pass": true,
+      "note": "web.style_model → web.style_model"
+    },
+    {
+      "scenario": "web.style_model — Đặt lại trả về trạng thái ban đầu đã khai",
+      "pass": true,
+      "note": "trùng khớp"
+    }
+  ]
+}

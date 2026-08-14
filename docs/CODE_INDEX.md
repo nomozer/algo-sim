@@ -520,6 +520,18 @@ khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng m�
 đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
 `docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
+### `frontend/scripts/runtime-zero-ai-w7.mjs` (M20 W7 closure) · offline (cần `npm run dev`)
+ĐẾM request thật thay vì suy từ cấu trúc mã. Bọc `window.fetch` và `module.init`
+của mọi module trong registry, chụp số đếm trước/sau từng hành động. Có PHÉP THỬ
+DƯƠNG TÍNH mỗi lượt chạy (gọi fetch một lần có chủ đích) để "delta 0" nghĩa là
+"không có gọi", không phải "bộ đếm không gắn được".
+Phủ: mở/đóng dòng thời gian · trace theo tham số hiện tại · Đặt lại — mỗi cái
+kiểm cả fetch, `init`, và ảnh chụp state.
+⚠️ Khẳng định "trace theo tham số mới" phải NỐI với giá trị hiện tại (bước chia
+đầu = `decimalValue`, chia cho `targetBase`), không so với hằng số: bản đầu tìm
+dấu vết "cơ số 2" nhưng mẫu offline vốn đã là cơ số 16 nên phép tiêm giữ
+`state.steps` đi qua sạch 23/23. Artifact: `docs/evaluation/m20/w7-runtime.json`.
+
 ### `frontend/src/components/transport-w7.test.tsx` (M20 W7) · offline
 Khoá ba nhóm: chế độ đến từ chính sách (gồm phép gán `declaredMode ??` — lỗ do
 tiêm lỗi tìm ra) · bề rộng khay tách khỏi cơ chế (đòi SÀN ở **cả hai** biến thể
