@@ -43,17 +43,34 @@ const OUT = resolve(argOf("--out",
 const ONLY = argOf("--target", null);
 mkdirSync(dirname(OUT), { recursive: true });
 
-/** Chữ trên SÂN KHẤU, bỏ đồ đạc dùng chung (thanh tua, thử thách, tiêu đề). */
+/**
+ * DẤU VÂN của bề mặt học sinh nhìn thấy — CHỮ cộng THUỘC TÍNH THỊ GIÁC.
+ *
+ * Hai lần sửa, cả hai vì phép đo cắt mất chỗ có thay đổi:
+ *
+ * 1. Chỉ lấy .sim-stage thì mất dải quan sát. Ở binary_search/linear_search,
+ *    các chip đổi theo bước (phần tử giữa · vùng xét · đã so sánh) sống trong
+ *    .search-observe, vốn là ANH EM của .sim-stage chứ không nằm trong nó. Đo
+ *    kiểu ấy cho ra "13 bước engine, 1 bước màn" — một kết luận sai về sản phẩm.
+ * 2. Chỉ lấy chữ thì mất màu. ScanWorkspace chỉ vẽ ArrayView: giá trị và chỉ số
+ *    đứng yên, thứ đổi là CỘT NÀO ĐANG XÉT — mã bằng fill/class. Với một bài mà
+ *    nội dung học là "duyệt tới đâu rồi", màu CHÍNH LÀ nội dung.
+ *
+ * Nên lấy cả thẻ (trừ đồ đạc dùng chung) và nối thêm fill/class của mọi phần tử
+ * SVG. Vẫn không bắt được vị trí/kích thước — ghi rõ giới hạn thay vì lờ đi.
+ */
 const STAGE_TEXT = `(()=>{
   const card = document.querySelector('.workspace-card');
   if (!card) return '';
-  const stage = card.querySelector('.sim-stage') || card.querySelector('.web-workspace')
-    || card.querySelector('.conv-tool') || card;
-  const clone = stage.cloneNode(true);
+  const clone = card.cloneNode(true);
   for (const el of clone.querySelectorAll('.transport,.player,.predict-bar,.predict-inline')) {
     el.remove();
   }
-  return (clone.innerText || clone.textContent || '').replace(/\\s+/g, ' ').trim();
+  const text = (clone.innerText || clone.textContent || '').replace(/\s+/g, ' ').trim();
+  const paint = [...clone.querySelectorAll('svg *')]
+    .map((el) => (el.getAttribute('fill') || '') + '/' + (el.getAttribute('class') || ''))
+    .join(',');
+  return text + ' ¶ ' + paint;
 })()`;
 
 /**
@@ -130,8 +147,14 @@ const CANDIDATES = `((cfg) => {
       out.push({ type: 'move', target: o.id, x: 50, y: 50 });
     }
   }
+  /* TÊN ACTION KHÁC TÊN FIELD CONFIG. binary.decimal_to_binary khai config
+     decimalValue nhưng apply nhận set_param name:'decimal' và toggle
+     target:'<chỉ số bit>'. Đoán theo tên config làm nó đọc ra
+     STATIC_ILLUSTRATION — trong khi narrate của chính module nói thẳng
+     "Bấm vào từng bit để bật/tắt". Lần thứ BA cùng một lỗi trong wave này. */
   if (typeof cfg.decimalValue === 'number') {
-    out.push({ type: 'set_param', name: 'decimalValue', value: cfg.decimalValue + 1 });
+    out.push({ type: 'toggle', target: '0' });
+    out.push({ type: 'set_param', name: 'decimal', value: cfg.decimalValue + 1 });
   }
   if (typeof cfg.value === 'number') {
     out.push({ type: 'set_param', name: 'value', value: cfg.value + 1 });

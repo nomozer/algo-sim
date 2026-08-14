@@ -1,12 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "c78e88f4c216726d",
+  "sourceFingerprint": "d1ab6049b0ac63ec",
   "dirtyRelevantSources": [
     "frontend/scripts/certify-experience-w12.mjs"
   ],
-  "head": "ab4d8a6ecec78d27f63d5ee237ac59a2cf618613",
+  "head": "19a23cbe19554f60948dbe32cddebae05217f679",
   "dirty": true,
-  "generatedAt": "2026-08-14T09:49:28.590Z",
+  "generatedAt": "2026-08-14T09:56:07.186Z",
   "tool": "certify-experience-w12",
   "toolVersion": "1",
   "environment": {
@@ -18,10 +18,8 @@
   "method": "đổi đầu vào ⇒ TOOL_PASS · tua THAY THẾ ⇒ TRACE_PASS · tua chỉ THÊM DỒN ⇒ EXPERIENCE_FAIL",
   "serverStarts": 1,
   "tally": {
-    "TOOL_PASS": 15,
-    "TRACE_PASS": 6,
-    "TRACE_NOT_VISIBLE": 1,
-    "STATIC_ILLUSTRATION": 1
+    "TOOL_PASS": 19,
+    "TRACE_PASS": 4
   },
   "rows": [
     {
@@ -33,10 +31,10 @@
         "j": 1
       },
       "candidatesTried": 1,
-      "stepsDistinct": 1,
+      "stepsDistinct": 13,
       "traceSteps": 13,
       "appendOnly": false,
-      "stageAtStart": "415,52636,5475868,57989,591010 đang xét / so sánh đã tìm thấy nửa đã bị loại"
+      "stageAtStart": "THUẬT TOÁNTìm điểm 8,5 trong  ổ điểm đã  ắp thứ tự tăng dầnTìm kiếm nhị phân · từng bước · 2D415,52636,5475868,57989,591010 đang xét /  o  ánh đã tìm thấy nửa đã bị loạiKéo = thí nghiệm: phá thứ tự đã  ắp, xem còn tìm đú"
     },
     {
       "target": "algorithm.bounded_control_flow",
@@ -46,7 +44,7 @@
       "stepsDistinct": 12,
       "traceSteps": 12,
       "appendOnly": false,
-      "stageAtStart": "x = 2lượt 1Kiểm tra điều kiệnbiên 14214x <= 14ĐÚNG→ vào thân vòng lặpKiểm tra→Thực hiện→Cập nhật↩ quay lại kiểm tra⇥ thoát đang xét đã đi qua biên dừng"
+      "stageAtStart": "THUẬT TOÁNCộng dồn 3 cho tới khi vượt 14Chạy từng bước đoạn chương trình · từng bước · 2Dx = 2lượt 1Kiểm tra điều kiệnbiên 14214x <= 14ĐÚNG→ vào thân vòng lặpKiểm tra→Thực hiện→Cập nhật↩ quay lại kiểm tra⇥ thoát đang xét"
     },
     {
       "target": "algorithm.bubble_sort",
@@ -57,24 +55,24 @@
         "j": 1
       },
       "candidatesTried": 1,
-      "stepsDistinct": 6,
+      "stepsDistinct": 14,
       "traceSteps": 40,
       "appendOnly": false,
-      "stageAtStart": "1721158218031654175516061687 đang xét / so sánh đang đổi chỗ phần đã sắp xong"
+      "stageAtStart": "THUẬT TOÁNSắp xếp 7 bạn theo chiều cao tăng dần bằng phương pháp nổi bọtSắp xếp nổi bọt · từng bước · 2D1721158218031654175516061687 đang xét /  o  ánh đang đổi chỗ phần đã  ắp xongKéo một cột thả lên cột khác để thử \"nế"
     },
     {
       "target": "algorithm.count_if",
       "verdict": "TOOL_PASS",
       "inputAccepted": {
-        "type": "whatif_swap",
-        "i": 0,
-        "j": 1
+        "type": "set_param",
+        "name": "condition.value",
+        "value": 9
       },
       "candidatesTried": 2,
-      "stepsDistinct": 9,
+      "stepsDistinct": 14,
       "traceSteps": 17,
       "appendOnly": false,
-      "stageAtStart": "biến đếm08,216,529,137,84855,968,777,289,496,810 đang xét / so sánh đã được đếm đã duyệt qua"
+      "stageAtStart": "THUẬT TOÁNĐếm  ố học  inh đạt điểm trung bình môn từ 8,0 trở lênĐếm theo điều kiện · từng bước · 2Dbiến đếm08,216,529,137,84855,968,777,289,496,810 đang xét /  o  ánh đã được đếm đã duyệt quaPhép  o  ánhlớn hơnlớn hơn ho"
     },
     {
       "target": "algorithm.find_max",
@@ -85,10 +83,10 @@
         "j": 1
       },
       "candidatesTried": 1,
-      "stepsDistinct": 3,
+      "stepsDistinct": 10,
       "traceSteps": 10,
       "appendOnly": false,
-      "stageAtStart": "max7,57,5An19Bình26,5Chi38Dũng45,5Em58,5Giang67Hà76Khang8 đang xét / so sánh max hiện tại đã chọn làm max đã duyệt qua"
+      "stageAtStart": "THUẬT TOÁNTìm học  inh có điểm kiểm tra cao nhất trong tổ 8 bạnTìm giá trị lớn nhất · từng bước · 2Dmax7,57,5An19Bình26,5Chi38Dũng45,5Em58,5Giang67Hà76Khang8 đang xét /  o  ánh max hiện tại đã chọn làm max đã duyệt quaKé"
     },
     {
       "target": "algorithm.find_min",
@@ -99,10 +97,10 @@
         "j": 1
       },
       "candidatesTried": 1,
-      "stepsDistinct": 5,
+      "stepsDistinct": 10,
       "traceSteps": 10,
       "appendOnly": false,
-      "stageAtStart": "min2828Thứ 2126Thứ 3231Thứ 4324Thứ 5427Thứ 6530Thứ 7625CN7 đang xét / so sánh min hiện tại đã chọn làm min đã duyệt qua"
+      "stageAtStart": "THUẬT TOÁNTìm ngày có nhiệt độ trung bình thấp nhất trong tuầnTìm giá trị nhỏ nhất · từng bước · 2Dmin2828Thứ 2126Thứ 3231Thứ 4324Thứ 5427Thứ 6530Thứ 7625CN7 đang xét /  o  ánh min hiện tại đã chọn làm min đã duyệt quaKé"
     },
     {
       "target": "algorithm.insertion_sort",
@@ -113,10 +111,10 @@
         "j": 1
       },
       "candidatesTried": 1,
-      "stepsDistinct": 8,
+      "stepsDistinct": 14,
       "traceSteps": 33,
       "appendOnly": false,
-      "stageAtStart": "713293448526 đang xét / so sánh phần đã sắp xong"
+      "stageAtStart": "THUẬT TOÁNSắp xếp các quân bài tăng dần bằng phương pháp chènSắp xếp chèn · từng bước · 2D713293448526 đang xét /  o  ánh phần đã  ắp xongKéo một cột thả lên cột khác để thử \"nếu đổi chỗ thì  ao?\" — quan  át thứ tự dời/c"
     },
     {
       "target": "algorithm.linear_search",
@@ -127,20 +125,20 @@
         "j": 1
       },
       "candidatesTried": 1,
-      "stepsDistinct": 1,
+      "stepsDistinct": 8,
       "traceSteps": 8,
       "appendOnly": false,
-      "stageAtStart": "10512132178315442315189612271678 đang xét / so sánh đã tìm thấy đã duyệt qua"
+      "stageAtStart": "THUẬT TOÁNTìm thí  inh có  ố báo danh 189 trong danh  ách phòng thiTìm kiếm tuần tự · từng bước · 2D10512132178315442315189612271678 đang xét /  o  ánh đã tìm thấy đã duyệt quaKéo = thí nghiệm, không phải bước thuật toán"
     },
     {
       "target": "algorithm.scan",
-      "verdict": "TRACE_NOT_VISIBLE",
+      "verdict": "TRACE_PASS",
       "inputAccepted": null,
       "candidatesTried": 0,
-      "stepsDistinct": 1,
+      "stepsDistinct": 4,
       "traceSteps": 4,
       "appendOnly": false,
-      "stageAtStart": "3162238455"
+      "stageAtStart": "THUẬT TOÁNNgày đầu tiên nhiệt độ vượt 4 độ  o với trung bìnhQuét dãy một lượt · từng bước · 2D3162238455Khởi tạo nguong = 4. ¶ /,var(--accent-sky-tint)/,var(--ink)/,var(--ink-faint)/,/,var(--accent-sky-tint)/,var(--ink)/"
     },
     {
       "target": "algorithm.selection_sort",
@@ -151,34 +149,38 @@
         "j": 1
       },
       "candidatesTried": 1,
-      "stepsDistinct": 2,
+      "stepsDistinct": 14,
       "traceSteps": 24,
       "appendOnly": false,
-      "stageAtStart": "9142732465 đang xét / so sánh đang đổi chỗ phần đã sắp xong"
+      "stageAtStart": "THUẬT TOÁNXếp hạng 5 vận động viên theo thời gian chạySắp xếp chọn · từng bước · 2D9142732465 đang xét /  o  ánh đang đổi chỗ phần đã  ắp xongKéo một cột thả lên cột khác để thử \"nếu đổi chỗ thì  ao?\" — vị trí phần tử nh"
     },
     {
       "target": "algorithm.sum_if",
       "verdict": "TOOL_PASS",
       "inputAccepted": {
-        "type": "whatif_swap",
-        "i": 0,
-        "j": 1
+        "type": "set_param",
+        "name": "condition.value",
+        "value": 81
       },
       "candidatesTried": 2,
-      "stepsDistinct": 9,
+      "stepsDistinct": 14,
       "traceSteps": 16,
       "appendOnly": false,
-      "stageAtStart": "tổng0451120280330495515066072581109 đang xét / so sánh đã được cộng vào tổng đã duyệt qua"
+      "stageAtStart": "THUẬT TOÁNTính tổng tiền các đơn hàng có giá trị từ 80 nghìn đồng trở lênTính tổng theo điều kiện · từng bước · 2Dtổng0451120280330495515066072581109 đang xét /  o  ánh đã được cộng vào tổng đã duyệt quaPhép  o  ánhlớn h"
     },
     {
       "target": "binary.base_conversion",
-      "verdict": "TRACE_PASS",
-      "inputAccepted": null,
+      "verdict": "TOOL_PASS",
+      "inputAccepted": {
+        "type": "set_param",
+        "name": "inputValue",
+        "value": "1"
+      },
       "candidatesTried": 2,
       "stepsDistinct": 5,
       "traceSteps": 5,
       "appendOnly": false,
-      "stageAtStart": ""
+      "stageAtStart": "HỆ CƠ SỐĐổi năm 2026  ang hệ thập lục phânĐổi cơ  ố (2 · 8 · 10 · 16) · kết hợp · 2DGiá trịTừ cơ  ố281016Sang cơ  ố2810162026(10) = 7EA(16) · giá trị thập phân 2026210320000102021012061006=tổng2026Đổi 2026 từ hệ thập phâ"
     },
     {
       "target": "binary.character_encoding",
@@ -189,30 +191,37 @@
         "value": "Tina"
       },
       "candidatesTried": 2,
-      "stepsDistinct": 1,
+      "stepsDistinct": 14,
       "traceSteps": 21,
       "appendOnly": false,
-      "stageAtStart": "Vị tríKý tựMã (code point)Thập phânNhị phân1'T'U+00548410101002'i'U+006910511010013'n'U+006E1101101110"
+      "stageAtStart": "HỆ CƠ SỐChữ \"Tin\" được máy tính lưu thành các bit nàoMã hoá ký tự · kết hợp · 2DKý tựBảng mãASCIIUnicode (điểm mã)Chuỗi cần mã hoá: “Tin” · Bảng mã: ASCIIVị tríKý tựMã (code point)Thập phânNhị phân1'T'U+00548410101002'i'"
     },
     {
       "target": "binary.decimal_to_binary",
-      "verdict": "STATIC_ILLUSTRATION",
-      "inputAccepted": null,
-      "candidatesTried": 1,
+      "verdict": "TOOL_PASS",
+      "inputAccepted": {
+        "type": "toggle",
+        "target": "0"
+      },
+      "candidatesTried": 2,
       "stepsDistinct": 1,
       "traceSteps": 0,
       "appendOnly": false,
-      "stageAtStart": "81+841+420011+1"
+      "stageAtStart": "HỆ CƠ SỐĐổi 13  ang nhị phânĐổi thập phân  ang nhị phân · khám phá · 2D81+841+420011+1Bấm vào từng bit để bật/tắt. Nhị phân 1101 = 13 (hệ thập phân). ¶ /,var(--ink-muted)/,var(--primary)/,#fff/,var(--ink-faint)/,/,var(--"
     },
     {
       "target": "database.relational_table_query",
-      "verdict": "TRACE_PASS",
-      "inputAccepted": null,
+      "verdict": "TOOL_PASS",
+      "inputAccepted": {
+        "type": "set_param",
+        "name": "filter.column",
+        "value": "ten"
+      },
       "candidatesTried": 1,
-      "stepsDistinct": 5,
+      "stepsDistinct": 14,
       "traceSteps": 19,
       "appendOnly": false,
-      "stageAtStart": "Trạng tháiHọ tênĐiểmTổĐang xétAn7.51Bình92Chi6.51Dũng82Em8.51"
+      "stageAtStart": "TRUY VẤN BẢNGLọc học  inh có điểm từ 8 trở lên rồi  ắp theo điểmTruy vấn bảng dữ liệu · kết hợp · 2DLọcHọ tênĐiểmTổ=!=>>=<<=contain Sắp— không  ắp —Họ tênĐiểmTổtăng dầngiảm dầnCột hiệnHọ tênĐiểmTổ1.Lọc2.Chọn cột3.Sắp xếp"
     },
     {
       "target": "generic.rule_scene",
@@ -225,7 +234,7 @@
       "stepsDistinct": 1,
       "traceSteps": 0,
       "appendOnly": false,
-      "stageAtStart": "A → Đầu raB → Đầu raANDA0B0Đầu ra0"
+      "stageAtStart": "MÔ PHỎNG THEO MÔ TẢCổng AND (tổng quát)Mô phỏng tổng quát (AI tự dựng) · kết hợp · 2DQuan  átKhung mặc địnhA → Đầu raB → Đầu raANDA0B0Đầu ra0Bấm vào các công tắc để thay đổi trạng thái và quan  át kết quả. ¶ /,/,var(--in"
     },
     {
       "target": "logic.and_gate",
@@ -238,7 +247,7 @@
       "stepsDistinct": 1,
       "traceSteps": 0,
       "appendOnly": false,
-      "stageAtStart": "AND0Đầu raA = 0B = 0"
+      "stageAtStart": "LOGICCổng logic ANDCổng logic AND · khám phá · 2DAND0Đầu raA = 0B = 0Bấm vào công tắc A hoặc B để bật/tắt. AND chỉ cho đầu ra 1 khi cả hai đầu vào đều là 1. Hiện tại: 0 AND 0 = 0. ¶ none/,none/,var(--surface)/,var(--prim"
     },
     {
       "target": "logic.boolean_dag",
@@ -248,10 +257,10 @@
         "target": "N"
       },
       "candidatesTried": 1,
-      "stepsDistinct": 4,
+      "stepsDistinct": 5,
       "traceSteps": 5,
       "appendOnly": false,
-      "stageAtStart": "Bấm N, G, K để đổi giá trị đầu vào và quan sát tín hiệu lan truyền qua các cổng.N1G1K0AND?NOT?ĐẦU RAAND? tín hiệu 1 tín hiệu 0 viền đậm = cổng đang tính ? chưa tới lượt"
+      "stageAtStart": "LOGICCửa tự động: mở khi có người trong giờ mở cửa, trừ lúc đang khoáMạch logic tổ hợp · kết hợp · 2DBấm N, G, K để đổi giá trị đầu vào và quan  át tín hiệu lan truyền qua các cổng.N1G1K0AND?NOT?ĐẦU RAAND? tín hiệu 1 tín"
     },
     {
       "target": "network.graph_traversal",
@@ -265,7 +274,7 @@
       "stepsDistinct": 7,
       "traceSteps": 7,
       "appendOnly": false,
-      "stageAtStart": "Đường A – B: chưa xétĐường A – C: chưa xétĐường B – D: chưa xétĐường C – D: chưa xétĐường D – E: chưa xétABCDEHàng đợi (FIFO)1 phần tửđầuAFIFO — vào ở cuối, ra ở đầu (trái → phải)đã thăm(chưa có)Nút đang xử lý đã thăm đa"
+      "stageAtStart": "MẠNGTìm đường ít chặng nhất giữa hai điểm trong mạng lướiDuyệt đồ thị (BFS · DFS) · kết hợp · 2DĐường A – B: chưa xétĐường A – C: chưa xétĐường B – D: chưa xétĐường C – D: chưa xétĐường D – E: chưa xétABCDEHàng đợi (FIFO"
     },
     {
       "target": "network.packet_routing",
@@ -275,7 +284,7 @@
       "stepsDistinct": 4,
       "traceSteps": 4,
       "appendOnly": false,
-      "stageAtStart": "Đường client – router: chưa tớiĐường router – isp: chưa tớiĐường isp – server: chưa tớiMáy khách (client) — nguồnclientMáy kháchRouter (router)routerRouterNhà mạng (isp)ispISPMáy chủ (server) — đíchserverMáy chủNgắt liên"
+      "stageAtStart": "MẠNGĐường đi của gói tinĐịnh tuyến gói tin · từng bước · 2DĐường client – router: chưa tớiĐường router – i p: chưa tớiĐường i p –  erver: chưa tớiMáy khách (client) — nguồnclientMáy kháchRouter (router)routerRouterNhà mạ"
     },
     {
       "target": "network.protocol_encapsulation",
@@ -285,17 +294,21 @@
       "stepsDistinct": 9,
       "traceSteps": 9,
       "appendOnly": false,
-      "stageAtStart": "MÁY GỬITầng Ứng dụngDữ liệu ứng dụngTầng Giao vậnTầng Liên mạngTầng Truy cập mạngMÁY NHẬNTầng Ứng dụngTầng Giao vậnTầng Liên mạngTầng Truy cập mạng"
+      "stageAtStart": "MẠNGDữ liệu được đóng gói qua các tầng TCP/IP như thế nào?Đóng gói dữ liệu qua các tầng TCP/IP · từng bước · 2D / 3DCách xem2D3DMÁY GỬITầng Ứng dụngDữ liệu ứng dụngTầng Giao vậnTầng Liên mạngTầng Truy cập mạngMÁY NHẬNTần"
     },
     {
       "target": "tree.traversal",
-      "verdict": "TRACE_PASS",
-      "inputAccepted": null,
+      "verdict": "TOOL_PASS",
+      "inputAccepted": {
+        "type": "set_param",
+        "name": "variant",
+        "value": "inorder"
+      },
       "candidatesTried": 1,
       "stepsDistinct": 14,
       "traceSteps": 22,
       "appendOnly": false,
-      "stageAtStart": "tráiphảitráiphảitráiphảiGốcTài liệuHình ảnhBài tậpĐề thiẢnh lớpẢnh sân trườngNgăn xếp (LIFO)1 phần tửđỉnhGốcLIFO — đẩy vào và lấy ra đều ở đỉnh (trên cùng)đã thăm(chưa có) đang xử lý đã thăm đang chờ trong ngăn xếp chưa "
+      "stageAtStart": "CÂYDuyệt cây thư mục theo thứ tự trướcDuyệt cây nhị phân (preorder · inorder · po torder · level-order) · kết hợp · 2DThứ tự duyệtTrước (gốc → trái → phải)Giữa (trái → gốc → phải)Sau (trái → phải → gốc)Theo mứctráiphảitr"
     },
     {
       "target": "web.style_model",
@@ -309,7 +322,7 @@
       "stepsDistinct": 1,
       "traceSteps": 0,
       "appendOnly": false,
-      "stageAtStart": ".trang Khung trangMàu nềnMàu nền — ba kênhĐỏ191Lục219Lam254rgb(191, 219, 254)#bfdbfeĐệm trong 16pxBo góc 8px.trang h1 Tiêu đềMàu chữ tiêu đềCỡ chữ tiêu đề 28px.trang p Đoạn vănMàu chữ đoạn vănCỡ chữ đoạn văn 20pxtrang-cu"
+      "stageAtStart": "WEBĐổi màu nền và cỡ chữ (CSS)Trang web và kiểu hiển thị (HTML/CSS) · khám phá · 2D.trang Khung trangMàu nềnMàu nền — ba kênhĐỏ191Lục219Lam254rgb(191, 219, 254)#bfdbfeĐệm trong 16pxBo góc 8px.trang h1 Tiêu đềMàu chữ tiêu"
     }
   ]
 }

@@ -525,15 +525,23 @@ dòng, đáp án có sẵn) khỏi **thay thế** (giá trị bị đổi, vùng
 đoán `whatif_swap {from,to}` / `toggle {id}` thì action bị **nuốt lặng lẽ** và
 `find_max` đọc ra TRACE_PASS trong khi nó là công cụ — đoán sai ở đây luôn đánh
 giá THẤP sản phẩm. Hợp đồng thật: `{i,j}` · `{target}` · `{a,b}`.
-⚠️ "KHÔNG ĐỦ DỮ KIỆN" là chỗ TRỐN nếu để nguyên — bốn target từng rơi vào đó,
-cả bốn đều có câu trả lời rõ khi hỏi thêm một câu. Nay tách theo ĐÚNG cái thiếu,
-và mỗi nhãn là một việc phải làm: `STATIC_ILLUSTRATION` (không timeline, không
-nhận action ⇒ một bức hình) · `TRACE_NOT_VISIBLE` (engine có N bước, màn hình có
-1 ⇒ tiến trình không tới được mắt học sinh).
-⚠️ Đo CHỮ trên sân khấu, nên đổi thuần thị giác (màu cột, vị trí) KHÔNG tính.
-Cột `engine` vs `màn` để lộ khoảng chênh ấy thay vì giấu nó.
-Số hiện tại: **15 TOOL_PASS · 6 TRACE_PASS · 1 TRACE_NOT_VISIBLE
-(`algorithm.scan`) · 1 STATIC_ILLUSTRATION (`binary.decimal_to_binary`)**.
+⚠️ PHÉP ĐO NÀY ĐÃ SAI BỐN LẦN, và **cả bốn lần đều đánh giá THẤP sản phẩm** —
+ghi lại để lần sau không lặp:
+1. So `st.cursor` (không tồn tại ở tầng store) ⇒ mọi vòng lặp thoát ngay bước
+   đầu, báo "1 bước" cho cả 23 target.
+2. Đoán hình dạng action (`whatif_swap {from,to}`, `toggle {id}`) ⇒ action bị
+   **nuốt lặng lẽ**. Hợp đồng thật ở `simulations/types.ts`: `{i,j}`, `{target}`.
+3. Đoán TÊN action theo TÊN field config: `decimal_to_binary` khai
+   `decimalValue` nhưng `apply` nhận `set_param {name:'decimal'}` — đọc ra
+   `STATIC_ILLUSTRATION` cho một bài mà `narrate` nói thẳng "bấm từng bit".
+4. Chỉ đo CHỮ trong `.sim-stage` ⇒ mất hai thứ: dải quan sát
+   (`.search-observe` là ANH EM của `.sim-stage`, và chính nó đổi theo bước) và
+   MÀU (`ScanWorkspace` chỉ vẽ `ArrayView` — cột nào đang xét mã bằng `fill`).
+   Cho ra "13 bước engine, 1 bước màn", một kết luận sai về sản phẩm.
+Nay dấu vân = chữ CẢ THẺ (trừ đồ đạc) + `fill`/`class` của mọi phần tử SVG.
+Vẫn KHÔNG bắt được vị trí/kích thước — giới hạn, không phải đã phủ.
+Số hiện tại: **19 TOOL_PASS · 4 TRACE_PASS · 0 EXPERIENCE_FAIL**. Chênh
+engine/màn còn lại (40→14, 33→14…) là trần 14 bước của vòng lặp, không phải lỗi.
 
 ### `frontend/scripts/certify-scroll-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
 Hỏi: vỏ ứng dụng có đọc thành MỘT khối liền, và máng cuộn có ổn định không?
