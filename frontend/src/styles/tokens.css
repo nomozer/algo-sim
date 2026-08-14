@@ -15,6 +15,14 @@
   --ink-muted: #615d59;
   --ink-faint: #a39e98;
   --hairline: #e6e6e6;
+
+  /* ── W12 §4 — THANH CUỘN PHẢI THẤY ĐƯỢC ──────────────────────────────────
+     Ba mức, không phải hai: có mặt · vùng cuộn được hover · chính thanh hover.
+     Mức nền phải đủ để nhận ra mà không cạnh tranh với nội dung — nó là thứ
+     thay cho `transparent`, vốn biến máng đã giữ chỗ thành một khe hở. */
+  --scroll-thumb: rgba(15, 23, 42, 0.22);
+  --scroll-thumb-strong: rgba(15, 23, 42, 0.34);
+  --scroll-thumb-hover: rgba(15, 23, 42, 0.48);
   --accent-sky: #62aef0;
   /* Sắc NHẠT của --accent-sky, dùng cho cột dãy ở trạng thái NHÀN RỖI (chưa
      xét). W4B-2U2 §13: trước đây là literal `#dcebfa` trong `ArrayView`

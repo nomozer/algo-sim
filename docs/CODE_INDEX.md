@@ -510,6 +510,21 @@ W7, dải điều khiển phân loại bằng `timeline.stepCount(state) > 1`, �
 diễn kĩ thuật §9 cấm: `base_conversion` có 12 bước nên được dòng thời gian đầy
 đủ, dù sau W5 kết quả của nó đọc được ngay. Số hiện tại: **13 / 7 / 3**.
 
+### `frontend/scripts/certify-scroll-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
+Hỏi: vỏ ứng dụng có đọc thành MỘT khối liền, và máng cuộn có ổn định không?
+5 màn × 4 bề rộng trên `browser-runner.mjs`: home · library · history ·
+workspace gọn · workspace rất dài — cố ý phủ cả trang KHÔNG cuộn lẫn trang cuộn.
+Khẳng định: header trải hết bề rộng vỏ · máng đúng bằng bề rộng thanh cuộn đã
+khai (10px) · không tràn ngang · **máng giống nhau giữa trang ngắn và trang
+dài** (không nhảy ngang — phép so này mới là câu hỏi thật; đo một màn thì không
+bao giờ phát hiện được nhảy).
+⚠️ KHÔNG đo được thumb có nhìn thấy hay không: CDP không đọc computed style của
+`::-webkit-scrollbar-thumb`. Việc đó do `styles/scrollbar-ownership.test.ts`
+khoá ở mức mã nguồn — ranh giới này ghi thẳng vào artifact, không để một con số
+trông-như-đã-phủ.
+⚠️ KHÔNG đảo quyết định W4B-1A (cuộn thuộc về TÀI LIỆU, không phải panel): vùng
+cuộn nội bộ từng giấu 170px nội dung học mà không có tín hiệu ở mức trang.
+
 ### `frontend/src/simulations/tool-affordance.ts` (M20 W12) · Change impact: offline
 NGUỒN DUY NHẤT của câu hỏi "công cụ thao tác của học sinh có được hiện ra
 không". `toolAffordanceOpen({exploreOpen, challengeOpen, busy})` — hàm THUẦN,

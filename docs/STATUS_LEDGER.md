@@ -179,6 +179,48 @@ người học.
 | `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
 | Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
+## W12 §A — quyền sở hữu cuộn của vỏ ứng dụng (2026-08-14)
+
+**Triệu chứng người dùng chụp được.** Thanh cuộn gần như tàng hình · một khe dọc
+xấu cạnh header · mép trang và mép header không đọc thành một vỏ liền.
+
+**Không đảo quyết định cũ.** Mẫu "vỏ cố định + main tự cuộn" mà brief §3 nêu
+nghe đúng, nhưng **W4B-1A đã đo và cố ý đi hướng ngược**: vùng cuộn nội bộ giấu
+170px nội dung học ở 1920×768 mà `page_scrollable_y` vẫn `false` — học sinh
+không có tín hiệu nào ở mức trang. Chủ sở hữu cuộn đúng vẫn là TÀI LIỆU, và §3
+cho phép giữ nếu đã có chủ sở hữu đúng.
+
+**Nguyên nhân thật, đo bằng chuỗi bố cục.**
+
+```
+innerW 1902 · html clientWidth 1902 · body 1892 ← hụt đúng 10px
+```
+
+`html { scrollbar-gutter: stable }` giữ 10px ở content box của html, nên body —
+và header bên trong nó — hẹp hơn 10px. Dải ấy lộ nền `--canvas-soft` cạnh header
+`--canvas`, chạy suốt chiều cao tài liệu.
+
+Nó đọc ra là KHE HỞ chứ không phải máng cuộn vì `scrollbar-color: transparent
+transparent` + thumb webkit `background: transparent`: **mặc định không thấy
+gì**. "Mảnh, chìm" đã trượt thành "vô hình" — đúng thứ W12 §4 cấm.
+
+**Sửa.** Ba mức đậm dần qua token (`--scroll-thumb` · `-strong` · `-hover`),
+có mặt sẵn ở mức mờ. Giữ nguyên `scrollbar-gutter: stable` — bỏ nó đi để "hết
+khe hở" là đổi một lỗi thị giác lấy lỗi nhảy ngang mà §5 cấm.
+
+**Một lỗi TIÊU CHÍ của chính phép đo.** Bản đầu so header với
+`de.clientWidth` (padding-box, không phản ánh việc giữ chỗ) nên báo HỎNG 20/20 —
+tức đòi header phủ luôn cả máng cuộn, điều không trang cuộn-tài-liệu nào làm
+được. Đo lại bằng body: header **trải hết vỏ** ở mọi dòng.
+
+**Kết quả:** `certify-scroll-w12.mjs` — **20/20** (5 màn × 4 bề rộng), máng
+đúng 10px và **giống nhau giữa trang ngắn (985px, không cuộn) và trang dài
+(2045px, cuộn)** ⇒ không nhảy ngang; 0 tràn ngang.
+
+⚠️ Thumb có thấy được không thì trình duyệt không trả lời được (CDP không đọc
+computed style của pseudo-element). Khoá ở `styles/scrollbar-ownership.test.ts`,
+kèm đối chứng dương dựng lại đúng bản CSS cũ.
+
 ## W12 §6 — Policy B: công cụ hiện ra khi thử thách ĐÓNG (2026-08-14)
 
 **Quan sát khởi nguồn (của người dùng).** `algorithm.find_max` đọc ra: nhìn hình
