@@ -154,11 +154,45 @@ function acceptedByModule(m: SimulationModule<unknown, unknown>, candidates: str
   const parsed = m.validateConfig((entry.envelope as { config: unknown }).config);
   if (!parsed.ok) return [];
   const base = m.init(parsed.config);
+  /* PROBE DẪN TỪ CONFIG THẬT, KHÔNG ĐOÁN TÊN.
+     Năm target từng đọc ra `PROBE_LIMITED` chỉ vì tôi đoán id: logic dùng
+     `N/G/K` chứ không phải `A`, mạng dùng `client/router/isp/server` chứ không
+     phải `A/B`, tree dùng tham số `variant` chứ không phải `order`, generic
+     dùng `a/b` chứ không phải `0`. Đọc thẳng từ config đã validate thì không
+     còn chỗ cho phỏng đoán. */
+  const cfg = parsed.config as Record<string, unknown>;
+  const firstId = (arr: unknown, key = "id") =>
+    Array.isArray(arr) && arr.length && typeof arr[0] === "object"
+      ? String((arr[0] as Record<string, unknown>)[key]) : null;
+  const derived: unknown[] = [];
+  const inputId = firstId(cfg.inputs) ?? firstId(cfg.objects);
+  if (inputId) derived.push({ type: "toggle", target: inputId });
+  const links = cfg.links;
+  if (Array.isArray(links) && Array.isArray(links[0])) {
+    /* Trường là `a`/`b`, KHÔNG phải `from`/`to` — đọc từ hợp đồng miền
+       (`network/index.ts`), không suy từ tên tiếng Anh nghe hợp lý. */
+    derived.push({ type: "net_disconnect", a: String(links[0][0]), b: String(links[0][1]) });
+  }
+  if (typeof cfg.variant === "string") {
+    const other = cfg.variant === "preorder" ? "inorder" : "preorder";
+    derived.push({ type: "set_param", name: "variant", value: other });
+  }
+  if (Array.isArray(cfg.schema)) {
+    const col = firstId(cfg.schema, "name");
+    if (col) derived.push({ type: "set_param", name: "filter.column", value: col });
+  }
+  const objs = cfg.objects;
+  if (Array.isArray(objs)) {
+    const sw = objs.find((o) => (o as Record<string, unknown>).type === "switch");
+    if (sw) derived.push({ type: "toggle", target: String((sw as Record<string, unknown>).id) });
+  }
+
   /* Nhiều giá trị cho mỗi action: một probe đơn lẻ trúng đúng giá trị hiện tại
      sẽ là no-op hợp lệ và bị đọc nhầm thành "không nhận action". */
   const probes: Record<string, unknown[]> = {
     whatif_swap: [{ type: "whatif_swap", i: 0, j: 1 }, { type: "whatif_swap", i: 1, j: 2 }],
     set_param: [
+      ...derived.filter((d) => (d as { type: string }).type === "set_param"),
       { type: "set_param", name: "targetBase", value: 8 },
       { type: "set_param", name: "targetBase", value: 2 },
       { type: "set_param", name: "text", value: "Zz" },
@@ -172,12 +206,14 @@ function acceptedByModule(m: SimulationModule<unknown, unknown>, candidates: str
       { type: "set_param", name: "selected", value: "heading" },
       { type: "set_param", name: "encoding", value: "unicode_codepoint" },
     ],
-    toggle: [{ type: "toggle", target: "A" }, { type: "toggle", target: "0" },
+    toggle: [...derived.filter((d) => (d as { type: string }).type === "toggle"),
+      { type: "toggle", target: "A" }, { type: "toggle", target: "0" },
       { type: "toggle", target: "1" }, { type: "toggle", target: "reset" }],
     move: [{ type: "move", target: "heading", x: 0, y: 1 },
       { type: "move", target: "paragraph", x: 0, y: 0 }],
-    net_connect: [{ type: "net_connect", from: "A", to: "C" }],
-    net_disconnect: [{ type: "net_disconnect", from: "A", to: "B" }],
+    net_connect: [{ type: "net_connect", a: "A", b: "C" }],
+    net_disconnect: [...derived.filter((d) => (d as { type: string }).type === "net_disconnect"),
+      { type: "net_disconnect", a: "A", b: "B" }],
     net_reset: [{ type: "net_reset" }],
     exit_branch: [{ type: "exit_branch" }],
   };

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T07:58:17.288Z",
+  "generatedAt": "2026-08-14T08:06:41.271Z",
   "kind": "DESCRIPTIVE_MANIFEST",
   "note": "Dẫn từ hợp đồng module + affordance trong renderer miền. KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
   "gateQuestion": "Khi ĐÓNG thử thách, học sinh thao tác lên cái gì?",
@@ -276,31 +276,39 @@
     {
       "id": "database.relational_table_query",
       "domain": "database",
-      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "manipulatesWhenChallengeClosed": "set_param",
       "stageActions": [
         "set_param"
       ],
-      "mechanismActions": [],
+      "mechanismActions": [
+        "set_param"
+      ],
       "inputActions": [],
-      "acceptedByModule": [],
+      "acceptedByModule": [
+        "set_param"
+      ],
       "hasChallenge": false,
       "hasTimeline": true,
-      "primaryType": "PROBE_LIMITED"
+      "primaryType": "INTERACTIVE_MODEL"
     },
     {
       "id": "generic.rule_scene",
       "domain": "generic",
-      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "manipulatesWhenChallengeClosed": "toggle",
       "stageActions": [
         "move",
         "toggle"
       ],
-      "mechanismActions": [],
+      "mechanismActions": [
+        "toggle"
+      ],
       "inputActions": [],
-      "acceptedByModule": [],
+      "acceptedByModule": [
+        "toggle"
+      ],
       "hasChallenge": false,
       "hasTimeline": true,
-      "primaryType": "PROBE_LIMITED"
+      "primaryType": "INTERACTIVE_MODEL"
     },
     {
       "id": "logic.and_gate",
@@ -323,16 +331,20 @@
     {
       "id": "logic.boolean_dag",
       "domain": "logic",
-      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "manipulatesWhenChallengeClosed": "toggle",
       "stageActions": [
         "toggle"
       ],
-      "mechanismActions": [],
+      "mechanismActions": [
+        "toggle"
+      ],
       "inputActions": [],
-      "acceptedByModule": [],
+      "acceptedByModule": [
+        "toggle"
+      ],
       "hasChallenge": false,
       "hasTimeline": true,
-      "primaryType": "PROBE_LIMITED"
+      "primaryType": "INTERACTIVE_MODEL"
     },
     {
       "id": "network.graph_traversal",
@@ -358,19 +370,23 @@
     {
       "id": "network.packet_routing",
       "domain": "network",
-      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "manipulatesWhenChallengeClosed": "net_disconnect",
       "stageActions": [
         "net_connect",
         "net_disconnect",
         "net_reset",
         "set_param"
       ],
-      "mechanismActions": [],
+      "mechanismActions": [
+        "net_disconnect"
+      ],
       "inputActions": [],
-      "acceptedByModule": [],
+      "acceptedByModule": [
+        "net_disconnect"
+      ],
       "hasChallenge": true,
       "hasTimeline": true,
-      "primaryType": "PROBE_LIMITED"
+      "primaryType": "INTERACTIVE_MODEL"
     },
     {
       "id": "network.protocol_encapsulation",
@@ -392,16 +408,20 @@
     {
       "id": "tree.traversal",
       "domain": "tree",
-      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "manipulatesWhenChallengeClosed": "set_param",
       "stageActions": [
         "set_param"
       ],
-      "mechanismActions": [],
+      "mechanismActions": [
+        "set_param"
+      ],
       "inputActions": [],
-      "acceptedByModule": [],
+      "acceptedByModule": [
+        "set_param"
+      ],
       "hasChallenge": false,
       "hasTimeline": true,
-      "primaryType": "PROBE_LIMITED"
+      "primaryType": "INTERACTIVE_MODEL"
     },
     {
       "id": "web.style_model",

@@ -1,10 +1,13 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "a6be21d018269e2d",
-  "dirtyRelevantSources": [],
-  "head": "543228ed4abf1fcfe67c3306c5766ae43989a13c",
-  "dirty": false,
-  "generatedAt": "2026-08-14T07:23:34.569Z",
+  "sourceFingerprint": "2111b53a5153408b",
+  "dirtyRelevantSources": [
+    "frontend/scripts/certify-w12.mjs",
+    "frontend/src/simulations/interaction-semantics.test.ts"
+  ],
+  "head": "afe5cb8a591654cd3a198fa57bc255365c6f9341",
+  "dirty": true,
+  "generatedAt": "2026-08-14T08:06:09.344Z",
   "tool": "certify-w12",
   "toolVersion": "1",
   "environment": {
@@ -16,51 +19,51 @@
   "rule": "hành động → SimAction → module.apply → state tất định đổi → hệ quả trong DOM",
   "serverStarts": 1,
   "timings": {
-    "startup": 3619,
+    "startup": 3580,
     "scenarios": [
       {
         "name": "algorithm.binary_search",
-        "ms": 848
+        "ms": 853
       },
       {
         "name": "algorithm.bounded_control_flow",
-        "ms": 822
+        "ms": 413
       },
       {
         "name": "algorithm.bubble_sort",
-        "ms": 848
+        "ms": 822
       },
       {
         "name": "algorithm.count_if",
-        "ms": 848
-      },
-      {
-        "name": "algorithm.find_max",
         "ms": 835
       },
       {
+        "name": "algorithm.find_max",
+        "ms": 819
+      },
+      {
         "name": "algorithm.find_min",
-        "ms": 826
+        "ms": 832
       },
       {
         "name": "algorithm.insertion_sort",
-        "ms": 825
+        "ms": 826
       },
       {
         "name": "algorithm.linear_search",
-        "ms": 2042
+        "ms": 2038
       },
       {
         "name": "algorithm.scan",
-        "ms": 821
+        "ms": 415
       },
       {
         "name": "algorithm.selection_sort",
-        "ms": 820
+        "ms": 827
       },
       {
         "name": "algorithm.sum_if",
-        "ms": 836
+        "ms": 827
       },
       {
         "name": "binary.base_conversion",
@@ -68,69 +71,59 @@
       },
       {
         "name": "binary.character_encoding",
-        "ms": 829
-      },
-      {
-        "name": "binary.decimal_to_binary",
-        "ms": 825
-      },
-      {
-        "name": "database.relational_table_query",
-        "ms": 819
-      },
-      {
-        "name": "generic.rule_scene",
-        "ms": 824
-      },
-      {
-        "name": "logic.and_gate",
         "ms": 820
       },
       {
+        "name": "binary.decimal_to_binary",
+        "ms": 822
+      },
+      {
+        "name": "database.relational_table_query",
+        "ms": 828
+      },
+      {
+        "name": "generic.rule_scene",
+        "ms": 829
+      },
+      {
+        "name": "logic.and_gate",
+        "ms": 828
+      },
+      {
         "name": "logic.boolean_dag",
-        "ms": 821
+        "ms": 834
       },
       {
         "name": "network.graph_traversal",
-        "ms": 850
+        "ms": 843
       },
       {
         "name": "network.packet_routing",
-        "ms": 833
+        "ms": 837
       },
       {
         "name": "network.protocol_encapsulation",
-        "ms": 824
+        "ms": 418
       },
       {
         "name": "tree.traversal",
-        "ms": 817
+        "ms": 838
       },
       {
         "name": "web.style_model",
-        "ms": 842
+        "ms": 837
       }
     ],
     "cleanup": 1
   },
-  "passed": 14,
+  "passed": 23,
   "total": 23,
-  "probeUnverified": [
-    "algorithm.bounded_control_flow",
-    "algorithm.scan",
-    "binary.base_conversion",
-    "database.relational_table_query",
-    "generic.rule_scene",
-    "logic.boolean_dag",
-    "network.packet_routing",
-    "network.protocol_encapsulation",
-    "tree.traversal"
-  ],
+  "probeUnverified": [],
   "rows": [
     {
       "target": "algorithm.binary_search",
       "name": "algorithm.binary_search",
-      "ms": 848,
+      "ms": 853,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -141,18 +134,18 @@
     {
       "target": "algorithm.bounded_control_flow",
       "name": "algorithm.bounded_control_flow",
-      "ms": 822,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
-      "action": "exit_branch",
+      "ms": 413,
+      "pass": true,
+      "status": "TRACE_MODEL",
+      "action": "—",
       "stateChanged": false,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": "Rẽ nhánh và điều kiện dừng nằm trong trình tự; `apply` đồng nhất."
     },
     {
       "target": "algorithm.bubble_sort",
       "name": "algorithm.bubble_sort",
-      "ms": 848,
+      "ms": 822,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -163,7 +156,7 @@
     {
       "target": "algorithm.count_if",
       "name": "algorithm.count_if",
-      "ms": 848,
+      "ms": 835,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -174,7 +167,7 @@
     {
       "target": "algorithm.find_max",
       "name": "algorithm.find_max",
-      "ms": 835,
+      "ms": 819,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -185,7 +178,7 @@
     {
       "target": "algorithm.find_min",
       "name": "algorithm.find_min",
-      "ms": 826,
+      "ms": 832,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -196,7 +189,7 @@
     {
       "target": "algorithm.insertion_sort",
       "name": "algorithm.insertion_sort",
-      "ms": 825,
+      "ms": 826,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -207,7 +200,7 @@
     {
       "target": "algorithm.linear_search",
       "name": "algorithm.linear_search",
-      "ms": 2042,
+      "ms": 2038,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -218,18 +211,18 @@
     {
       "target": "algorithm.scan",
       "name": "algorithm.scan",
-      "ms": 821,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
-      "action": "whatif_swap",
+      "ms": 415,
+      "pass": true,
+      "status": "TRACE_MODEL",
+      "action": "—",
       "stateChanged": false,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": "Quét có biến tích luỹ; `apply` đồng nhất — không có quyết định nào để học sinh tham gia trong hợp đồng hiện tại."
     },
     {
       "target": "algorithm.selection_sort",
       "name": "algorithm.selection_sort",
-      "ms": 820,
+      "ms": 827,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -240,7 +233,7 @@
     {
       "target": "algorithm.sum_if",
       "name": "algorithm.sum_if",
-      "ms": 836,
+      "ms": 827,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -252,17 +245,17 @@
       "target": "binary.base_conversion",
       "name": "binary.base_conversion",
       "ms": 823,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
+      "pass": true,
+      "status": "CERTIFIED",
       "action": "set_param",
-      "stateChanged": false,
+      "stateChanged": true,
       "domSeen": true,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": ""
     },
     {
       "target": "binary.character_encoding",
       "name": "binary.character_encoding",
-      "ms": 829,
+      "ms": 820,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
@@ -273,7 +266,7 @@
     {
       "target": "binary.decimal_to_binary",
       "name": "binary.decimal_to_binary",
-      "ms": 825,
+      "ms": 822,
       "pass": true,
       "status": "CERTIFIED",
       "action": "toggle",
@@ -284,29 +277,29 @@
     {
       "target": "database.relational_table_query",
       "name": "database.relational_table_query",
-      "ms": 819,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
+      "ms": 828,
+      "pass": true,
+      "status": "CERTIFIED",
       "action": "set_param",
-      "stateChanged": false,
+      "stateChanged": true,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": ""
     },
     {
       "target": "generic.rule_scene",
       "name": "generic.rule_scene",
-      "ms": 824,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
+      "ms": 829,
+      "pass": true,
+      "status": "CERTIFIED",
       "action": "toggle",
-      "stateChanged": false,
+      "stateChanged": true,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": ""
     },
     {
       "target": "logic.and_gate",
       "name": "logic.and_gate",
-      "ms": 820,
+      "ms": 828,
       "pass": true,
       "status": "CERTIFIED",
       "action": "toggle",
@@ -317,18 +310,18 @@
     {
       "target": "logic.boolean_dag",
       "name": "logic.boolean_dag",
-      "ms": 821,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
+      "ms": 834,
+      "pass": true,
+      "status": "CERTIFIED",
       "action": "toggle",
-      "stateChanged": false,
+      "stateChanged": true,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": ""
     },
     {
       "target": "network.graph_traversal",
       "name": "network.graph_traversal",
-      "ms": 850,
+      "ms": 843,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
@@ -339,40 +332,40 @@
     {
       "target": "network.packet_routing",
       "name": "network.packet_routing",
-      "ms": 833,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
+      "ms": 837,
+      "pass": true,
+      "status": "CERTIFIED",
       "action": "net_disconnect",
-      "stateChanged": false,
+      "stateChanged": true,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": ""
     },
     {
       "target": "network.protocol_encapsulation",
       "name": "network.protocol_encapsulation",
-      "ms": 824,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
-      "action": "toggle",
+      "ms": 418,
+      "pass": true,
+      "status": "TRACE_MODEL",
+      "action": "—",
       "stateChanged": false,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": "Thứ tự đóng gói qua các tầng LÀ bài học; `apply` đồng nhất."
     },
     {
       "target": "tree.traversal",
       "name": "tree.traversal",
-      "ms": 817,
-      "pass": false,
-      "status": "PROBE_UNVERIFIED",
+      "ms": 838,
+      "pass": true,
+      "status": "CERTIFIED",
       "action": "set_param",
-      "stateChanged": false,
+      "stateChanged": true,
       "domSeen": null,
-      "note": "state không đổi — CHƯA phân biệt được 'target không nhận action này' với 'probe chưa đúng từ vựng miền'. Cần đọc hợp đồng action của miền rồi chạy lại; KHÔNG được đọc thành khiếm khuyết sản phẩm."
+      "note": ""
     },
     {
       "target": "web.style_model",
       "name": "web.style_model",
-      "ms": 842,
+      "ms": 837,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
