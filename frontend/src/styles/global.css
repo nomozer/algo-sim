@@ -2445,7 +2445,15 @@ html {
 }
 
 /* ── Bảng chân trị (domain logic) ────────────────────────── */
-.truth-table {
+/* ⚠️ `.data-table` KHÔNG có luật nào cho tới W12 — bốn bảng dùng nó render
+   thành CHỮ CHẠY LIỀN, không viền, không đệm, cột không thẳng hàng. Đây là lỗi
+   IM LẶNG cùng họ với `var(--token)` trỏ hụt (`ARCHITECTURE_MAP §8` #11): trình
+   duyệt không cảnh báo, không test nào đỏ, và nó sống qua nhiều milestone.
+   Hai lớp cùng là "bảng dữ liệu tất định của engine" nên dùng chung một luật —
+   gộp selector thay vì chép một bản thứ hai sẽ lệch. */
+.truth-table,
+.data-table,
+.tq-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: var(--sp-sm);
@@ -2454,19 +2462,27 @@ html {
 }
 
 .truth-table th,
-.truth-table td {
+.truth-table td,
+.data-table th,
+.data-table td,
+.tq-table th,
+.tq-table td {
   border: 1px solid var(--hairline);
   padding: 4px 8px;
   text-align: center;
 }
 
-.truth-table th {
+.truth-table th,
+.data-table th,
+.tq-table th {
   background: var(--canvas-soft);
   font-size: 12px;
   color: var(--ink-muted);
 }
 
-.truth-table tr.is-current td {
+.truth-table tr.is-current td,
+.data-table tr.is-current td,
+.tq-table tr.is-current td {
   background: #e8f2fd;
 }
 

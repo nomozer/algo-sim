@@ -209,6 +209,14 @@ export function BaseConvWorkspace({ state, config, busy, dispatch }: Props) {
      Nay bảng hiện đủ; con trỏ chỉ DỜI VỆT SÁNG (`isCurrent` bên dưới). */
   const divides = state.steps.filter((s): s is Extract<ConvStep, { kind: "divide" }> => s.kind === "divide");
   const weights = state.steps.filter((s): s is Extract<ConvStep, { kind: "weight" }> => s.kind === "weight");
+  /* VỆT SÁNG — thứ tôi QUÊN khi bỏ phép cắt theo con trỏ, và nó biến thanh tua
+     thành nút chết: trước đó "hiện thêm một dòng" là phản hồi DUY NHẤT của việc
+     tua, nên bỏ cắt mà không thêm dấu hiện tại thì bấm Tiến không đổi gì.
+     Người dùng bắt được ngay ở `base_conversion` bước 3/5.
+     Chỉ số = số dòng cùng loại đã đi qua, trừ một. */
+  const seen = state.steps.slice(0, at + 1);
+  const currentDivide = seen.filter((s) => s.kind === "divide").length - 1;
+  const currentWeight = seen.filter((s) => s.kind === "weight").length - 1;
   const resultStep = state.steps.find((s): s is Extract<ConvStep, { kind: "result" }> => s.kind === "result");
   const collected = divides.map((d) => d.digit).reverse().join("");
 
@@ -229,7 +237,7 @@ export function BaseConvWorkspace({ state, config, busy, dispatch }: Props) {
             </thead>
             <tbody>
               {weights.map((w, i) => (
-                <tr key={i}>
+                <tr key={i} className={i === currentWeight ? "is-current" : undefined}>
                   <td>{w.digit}</td>
                   <td>
                     {state.config.sourceBase}^{w.position} = {w.weight}
@@ -253,7 +261,7 @@ export function BaseConvWorkspace({ state, config, busy, dispatch }: Props) {
             </thead>
             <tbody>
               {divides.map((d, i) => (
-                <tr key={i}>
+                <tr key={i} className={i === currentDivide ? "is-current" : undefined}>
                   <td>
                     {d.value} : {d.base}
                   </td>
