@@ -200,11 +200,16 @@ function ConvToolPanel({ state }: { state: BaseConvState }) {
 
 export function BaseConvWorkspace({ state, config, busy, dispatch }: Props) {
   const at = clampCursor(state, state.cursor);
-  const visible = state.steps.slice(0, at + 1);
   const current = state.steps[at];
-  const divides = visible.filter((s): s is Extract<ConvStep, { kind: "divide" }> => s.kind === "divide");
-  const weights = visible.filter((s): s is Extract<ConvStep, { kind: "weight" }> => s.kind === "weight");
-  const resultStep = visible.find((s): s is Extract<ConvStep, { kind: "result" }> => s.kind === "result");
+  /* W12 — BẢNG LÀ KẾT QUẢ, KHÔNG PHẢI BĂNG HOẠT HÌNH.
+     Cùng đúng một lỗi vừa sửa ở `encoding-module.tsx`, và cùng một miền: bảng
+     bị cắt theo con trỏ nên mở bài lên chỉ thấy dòng đầu, phải bấm mới thấy bài
+     nói gì. Người dùng gọi tên nó là "in ra từng bước hơn là mô phỏng", và nói
+     thêm "mấy cái cũng thế" — quét ra thì đúng, đây là chỗ thứ hai.
+     Nay bảng hiện đủ; con trỏ chỉ DỜI VỆT SÁNG (`isCurrent` bên dưới). */
+  const divides = state.steps.filter((s): s is Extract<ConvStep, { kind: "divide" }> => s.kind === "divide");
+  const weights = state.steps.filter((s): s is Extract<ConvStep, { kind: "weight" }> => s.kind === "weight");
+  const resultStep = state.steps.find((s): s is Extract<ConvStep, { kind: "result" }> => s.kind === "result");
   const collected = divides.map((d) => d.digit).reverse().join("");
 
   return (

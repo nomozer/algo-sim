@@ -350,13 +350,38 @@ export function divisionsSoFar(state: CharEncodingState, upTo: number): Division
     .map((x) => x.division as DivisionState);
 }
 
+/**
+ * TOÀN BỘ phép chia của ký tự đang xét — KHÔNG cắt theo con trỏ.
+ *
+ * W5 §4A đã sửa đúng lỗi này cho BẢNG KÝ TỰ ("bảng là trạng thái hiện tại của
+ * đầu vào, không phải băng hoạt hình") nhưng dừng lại ở đó, nên tầng dưới —
+ * bảng chia — vẫn in dần từng dòng. Người dùng chụp lại đúng cảnh ấy ở bước
+ * 7/21: bốn dòng chia đã hiện, phần còn lại phải bấm mới thấy.
+ *
+ * Đó là anti-pattern #10 ở dạng thuần nhất: vá một bề mặt, quên bề mặt anh em
+ * ngay dưới nó.
+ *
+ * Nay bảng hiện đủ ngay khi mở bài; tua chỉ DỜI VỆT SÁNG. Diễn giải không mất —
+ * dòng nào đang xét vẫn được `is-current`, và thuyết minh vẫn kể từng phép chia.
+ * Trace đổi vai: từ thứ chắn đường thành thứ chỉ chỗ.
+ */
+export function allDivisionsOf(state: CharEncodingState, cursor: number): DivisionState[] {
+  const m = state.meta[Math.max(0, Math.min(cursor, state.meta.length - 1))];
+  if (!m || m.charIndex < 0) return [];
+  return state.meta
+    .filter((x) => x.charIndex === m.charIndex && x.division)
+    .map((x) => x.division as DivisionState);
+}
+
 /** Bảng chia lấy dư — chỉ hiện khi cơ chế đang chạy cho ký tự chi tiết. */
 function DivisionPanel({ state, cursor }: { state: CharEncodingState; cursor: number }) {
   const m = state.meta[cursor];
   const active = m.phase === "begin_conversion" || m.phase === "divide_step" ||
                  m.phase === "read_remainders";
   if (!active) return null;
-  const rows = divisionsSoFar(state, cursor);
+  const rows = allDivisionsOf(state, cursor);
+  /* Dòng ĐANG xét = dòng cuối trong phần đã đi qua, không phải dòng cuối bảng. */
+  const currentIndex = divisionsSoFar(state, cursor).length - 1;
   const row = state.rows[m.charIndex];
   const collected = rows.length ? rows[rows.length - 1].collected : [];
   const finished = m.phase === "read_remainders";
@@ -371,8 +396,8 @@ function DivisionPanel({ state, cursor }: { state: CharEncodingState; cursor: nu
           <tr><th>Số bị chia</th><th>: 2</th><th>Thương</th><th>Số dư</th></tr>
         </thead>
         <tbody>
-          {rows.map((d) => (
-            <tr key={d.stepIndex} className={d.stepIndex === rows.length - 1 ? "is-current" : undefined}>
+          {rows.map((d, i) => (
+            <tr key={d.stepIndex} className={i === currentIndex ? "is-current" : undefined}>
               <td>{d.value}</td><td>{d.base}</td><td>{d.quotient}</td><td>{d.digit}</td>
             </tr>
           ))}

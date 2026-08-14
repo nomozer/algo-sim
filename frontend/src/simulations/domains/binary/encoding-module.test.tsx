@@ -433,10 +433,17 @@ describe("E. renderer chỉ đọc trace — không tự chia", () => {
     const forged: CharEncodingState = {
       ...st,
       cursor: cur,
-      meta: st.meta.map((m, k) => k === cur
+      /* Bịa MỌI dòng chia của ký tự này, không chỉ dòng đang xét.
+         W12: bảng nay hiện ĐỦ ngay khi mở bài (trace chỉ dời vệt sáng), nên nếu
+         chỉ bịa một dòng thì các dòng THẬT còn lại vẫn hiện — và thương thật 32
+         xuất hiện, làm khẳng định dưới đỏ vì một lý do KHÔNG PHẢI lỗi: renderer
+         vẫn đang đọc nguyên xi, chỉ là đọc nhiều dòng hơn trước.
+         Bịa hết thì mọi ô trong bảng bắt buộc phải đến từ bản bịa, và phép
+         chứng minh "renderer KHÔNG tự tính" giữ nguyên sức nặng. */
+      meta: st.meta.map((m) => (m.division
         ? { ...m, division: { value: 65, base: 2, quotient: 30, remainder: 5,
                               digit: "5", stepIndex: 0, collected: ["5"] } }
-        : m),
+        : m)),
     };
     // So Ô BẢNG, không so cả trang: thuyết minh vẫn là câu THẬT trong trace
     // (ta chỉ bịa `meta.division`), nên "32" xuất hiện ở băng thuyết minh là ĐÚNG.
