@@ -179,6 +179,25 @@ người học.
 | `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
 | Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
+## W12 — trạng thái đóng (2026-08-14, `1647af3`)
+
+**Verdict: `ALGOSIM_WAVE12_BROWSER_CERTIFICATION_PARTIAL`.**
+
+Blocker **đúng hai mục**, chi tiết thi hành ở `docs/W12_REMAINING.md`:
+
+1. `network.packet_routing` chưa có renderer 3D — cần dựng cảnh + đường chọn
+   liên kết phát `net_disconnect` + đường bàn phím tương đương.
+2. Benchmark theo đơn vị chương trình — chặn bởi **thiếu danh sách mã SGK có
+   thẩm quyền**, không phải bởi code. KHÔNG tự chế mã (`COVERAGE.md §15`).
+
+Đã đóng: cuộn 20/20 · viewport 92/92 · ngữ nghĩa 11/9/3 · trải nghiệm 19 TOOL /
+4 TRACE / 0 FAIL · **sức nặng thị giác 23/23** · bề mặt công cụ CSS dẫn từ đặc
+tả · `protocol_encapsulation` 3D công khai · rò rỉ liên môn 0.
+
+Giữ nguyên: `CURRICULUM_SUPPORT_PARTIAL` · `LEARNER_IMPACT_NOT_EVALUATED` ·
+`WAVE4_INTERACTION_CERTIFICATION = NO_EVIDENCE` ·
+`WAVE6_BROWSER_EXPERIENCE = PARTIAL`.
+
 ## W12 §A — quyền sở hữu cuộn của vỏ ứng dụng (2026-08-14)
 
 **Triệu chứng người dùng chụp được.** Thanh cuộn gần như tàng hình · một khe dọc
