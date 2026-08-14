@@ -1547,6 +1547,17 @@ _WEB_STYLE_SCHEMA: dict = {
                 "backgroundColor": {"type": "string"},
                 "color": {"type": "string"},
                 "fontSize": {"type": "integer", "minimum": 12, "maximum": 48},
+                # M20 — HAI TRƯỜNG NÀY TỪNG BỊ BỎ QUÊN, và đó là lỗi chí mạng
+                # của luận điểm đề tài chứ không phải thiếu sót nhỏ.
+                # `_WEB_NUMERIC` chấp nhận chúng, UI có ô điều khiển cho chúng,
+                # comment bump 26→27 gọi thẳng chúng là "bề mặt LLM điền" — mà
+                # schema đưa cho LLM lại KHÔNG có. Hệ quả: mọi bài CSS do AI
+                # sinh KHÔNG BAO GIỜ cho học sinh đổi kiểu chữ TIÊU ĐỀ, tức mất
+                # đúng bài học phân cấp (`.trang h1` khác `.trang p`) mà bản mẫu
+                # dựng ra để dạy. Bản mẫu làm được, bài AI sinh thì không.
+                # Khoá chống tái phát: `tests/test_web_contract_sync.py`.
+                "headingColor": {"type": "string"},
+                "headingSize": {"type": "integer", "minimum": 16, "maximum": 56},
                 "padding": {"type": "integer", "minimum": 0, "maximum": 48},
                 "borderRadius": {"type": "integer", "minimum": 0, "maximum": 40},
             },
