@@ -69,7 +69,17 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
      * khi kịp hiểu cơ chế.
      */
     representation: {
-      /* W12 §3 — 3D LÀ BIỂU DIỄN CHÍNH CÔNG KHAI, và 2D lùi về nội bộ.
+      /* W12 §3 — ĐÃ THỬ 3D CÔNG KHAI VÀ ĐÃ TRẢ LẠI. Ghi để không thử lại mù.
+         Tôi đổi `primary` sang "3d" bằng đúng một lời khai rồi KHÔNG kiểm cảnh
+         3D có đọc được không. Kết quả trên màn thật: nhãn tầng chồng lên nhãn
+         MÁY GỬI, chữ trên khối PDU không đọc nổi, bốn phiến gần như nằm ngang
+         nên mất hẳn cảm giác BỌC NHAU — tức mất đúng lí do 3D tồn tại.
+         Bài học: chuyển biểu diễn công khai là việc THIẾT KẾ, không phải việc
+         khai báo. Cơ chế công tắc rẻ nên dễ tưởng việc kia cũng rẻ.
+         3D quay lại khi cảnh đọc được ở cả bốn bề rộng — cùng hạng mục với
+         `packet_routing` 3D ở `docs/W12_REMAINING.md`.
+
+         Vị thế cũ (đang dùng lại):
          Đóng gói TCP/IP dạy một quan hệ KHÔNG GIAN: mỗi tầng BỌC gói của tầng
          trên. 2D phải diễn đạt quan hệ bọc-nhau bằng hai cột xếp chồng — học
          sinh đọc ra "bốn ô nằm cạnh nhau", tức đúng thứ mà chiều sâu sinh ra để
@@ -79,8 +89,8 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
          nên đọc ở 2D hay 3D" mà chính họ chưa có cơ sở để trả lời.
          2D KHÔNG bị gỡ — nó còn nguyên cho parity renderer và bằng chứng hồi
          quy (`encap-render3d.test.tsx`, `render-parity.test.tsx`). */
-      primary: "3d",
-      alternate: "NO_ALTERNATE_NEEDED",
+      primary: "2d",
+      alternate: "ALTERNATE_FOR_EXPLANATION",
       alternateReason:
         "Chiều sâu cho thấy quan hệ BỌC NHAU giữa các tầng — thứ 2D phải diễn " +
         "đạt bằng xếp chồng. 2D giữ lại làm biểu diễn NỘI BỘ cho parity, không " +

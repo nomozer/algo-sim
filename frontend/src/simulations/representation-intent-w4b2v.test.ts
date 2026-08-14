@@ -119,19 +119,19 @@ describe("W4B-2V · trạng thái hiện tại của danh mục (mô tả, khôn
        riêng rằng phép quét có thật sự nhìn thấy danh mục. */
     expect(mods().length, "không quét được module nào ⇒ mọi khẳng định trên vô nghĩa")
       .toBeGreaterThan(20);
-    expect(exposed.map((m) => m.id)).toEqual([]);
+    expect(exposed.map((m) => m.id)).toEqual(["network.protocol_encapsulation"]);
   });
 
-  it("W12 §3 — `protocol_encapsulation`: 3D là biểu diễn CÔNG KHAI, 2D lùi về nội bộ", () => {
+  it("`protocol_encapsulation`: 2D là biểu diễn chính — 3D CHƯA đọc được, xem encap.ts", () => {
     /* TIỀN ĐỀ ĐỔI theo quyết định sản phẩm của người dùng, nêu lại nhiều lần:
        đóng gói TCP/IP dạy quan hệ BỌC NHAU — một quan hệ không gian mà 2D phải
        diễn đạt bằng xếp chồng, và học sinh đọc ra "bốn ô cạnh nhau".
        2D KHÔNG bị gỡ: nó còn nguyên cho parity renderer (`render-parity`,
        `encap-render3d`) — chỉ thôi không bày cho học sinh. */
     const m = getSimulation("network.protocol_encapsulation")!;
-    expect(primaryRepresentationOf(m)).toBe("3d");
-    expect(alternateStatusOf(m)).toBe("NO_ALTERNATE_NEEDED");
-    expect(learnerFacingModes(m), "công tắc 2D/3D vẫn còn bày cho học sinh").toEqual([]);
+    expect(primaryRepresentationOf(m)).toBe("2d");
+    expect(alternateStatusOf(m)).toBe("ALTERNATE_FOR_EXPLANATION");
+    expect(learnerFacingModes(m).sort(), "mất công tắc chọn cách xem").toEqual(["2d", "3d"]);
     /* Năng lực KỸ THUẬT vẫn hai mode — đó là điều kiện để parity nội bộ chạy. */
     expect(availableVisualModes(m).sort()).toEqual(["2d", "3d"]);
   });
