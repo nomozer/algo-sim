@@ -3155,10 +3155,15 @@ html {
    huy hiệu dạt hẳn mép trái trong khi dãy nằm giữa, tức trạng thái lại rời khỏi
    đối tượng nó mô tả. `margin-inline: auto` trên phần tử `flex` bề rộng
    `fit-content` là cách căn giữa không cần đụng vào layout của sân khấu. */
+/* ⚠️ KHÔNG `margin-inline: auto` — xem lý do ở `ArrayView.tsx`.
+   M19 đã gỡ `margin: 0 auto` khỏi chính SVG vì căn giữa tạo ra RAIL THỨ HAI:
+   hình ở giữa, chữ ở mép trái, đo được lệch 68–191px ở tám bài thuật toán.
+   Cái chip này bị bỏ sót ở lượt ấy nên vẫn căn giữa — đo lại ở `find_max` 8 cột:
+   svg tâm 687, chip tâm 739, **lệch 52px**. Mắt đọc ra ngay mà khó gọi tên.
+   Nay chip về đúng rail trái cùng svg / chú giải / gợi ý. */
 .acc-badge {
   display: flex;
   width: fit-content;
-  margin-inline: auto;
   margin-bottom: var(--sp-xs);
   align-items: baseline;
   gap: var(--sp-xs);
