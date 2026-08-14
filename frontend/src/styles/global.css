@@ -2845,16 +2845,41 @@ html {
   gap: 6px;
 }
 
+/* ── W12-A — THỬ THÁCH LÀ HOẠT ĐỘNG GẮN VÀO CÔNG CỤ, KHÔNG PHẢI MỘT TRANG ──
+ *
+ * Đo được ở 1920 (HEAD daf9b28): với `network.packet_routing`, khối thử thách
+ * cao 111px trong khi CƠ CHẾ chỉ cao 180px — tỉ lệ **0,62**. Mắt đọc ra "một
+ * bài kiểm tra dán dưới một hình minh hoạ", đúng như báo cáo từ màn hình thật.
+ *
+ * Guard W6 không bắt được vì nó chỉ soi `.result-banner` có `fit-content`
+ * không. Băng phán quyết gọn thật, nhưng CÁI HỘP CHỨA nó thì không — đo sai
+ * tầng.
+ *
+ * Sửa ở chủ sở hữu DÙNG CHUNG, không vá riêng cho network: dải ngang biết xuống
+ * dòng thay vì cột dọc, nên câu hỏi · lựa chọn · nút đóng nằm CÙNG MỘT HÀNG khi
+ * còn chỗ. Đệm và khoảng cách lùi một bậc. Ở màn hẹp nó tự xuống dòng và giữ
+ * nguyên thứ bậc.
+ */
 .predict-bar {
-  margin-top: var(--sp-md);
-  padding: var(--sp-md) var(--sp-lg);
+  margin-top: var(--sp-sm);
+  padding: var(--sp-sm) var(--sp-md);
   background: var(--canvas-soft);
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-md);
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   gap: var(--sp-sm);
 }
+
+/* Câu hỏi giãn lấy chỗ còn lại; nút đóng bị đẩy về cuối hàng bởi chính nó,
+   không bởi một thành viên khác tự quyết bố cục cả hàng (bài học W4B-3E). */
+.predict-bar > .predict-question { flex: 1 1 16ch; }
+.predict-bar > .predict-close { margin-left: auto; }
+
+/* Phán quyết luôn xuống dòng riêng: nó là CÂU TRẢ LỜI, không phải một lựa chọn
+   nữa — đặt cùng hàng với các nút sẽ làm mắt đọc nó thành nút thứ tư. */
+.predict-bar > .predict-result { flex: 1 0 100%; }
 
 .predict-question {
   margin: 0;

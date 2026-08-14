@@ -1,0 +1,403 @@
+{
+  "provenanceVersion": 2,
+  "sourceFingerprint": "13b17a504212f236",
+  "dirtyRelevantSources": [
+    "frontend/src/components/PredictionBar.tsx",
+    "frontend/src/styles/global.css"
+  ],
+  "head": "daf9b284eb188f5a8c28ad9d21474c2456c60c7c",
+  "dirty": true,
+  "generatedAt": "2026-08-14T07:40:08.458Z",
+  "tool": "quiz-dominance-w12",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "viewport": 1920
+  },
+  "kind": "CERTIFICATION_EVIDENCE",
+  "question": "Khi mở thử thách, cơ chế còn là khối lớn nhất trên màn hình không?",
+  "thresholds": {
+    "fail": 0.5,
+    "minor": 0.3
+  },
+  "serverStarts": 1,
+  "rows": [
+    {
+      "target": "algorithm.binary_search",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 286,
+        "w": 877,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 468,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 241,
+        "w": 750,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 557,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 286,
+        "w": 1028,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 474,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.count_if",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 326,
+        "w": 935,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 526,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.find_max",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 326,
+        "w": 914,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 526,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.find_min",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 326,
+        "w": 914,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 621,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 344,
+        "w": 896,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 594,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.linear_search",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 286,
+        "w": 952,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 519,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.scan",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 268,
+        "w": 876,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 450,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 286,
+        "w": 790,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 536,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "algorithm.sum_if",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 326,
+        "w": 1039,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 526,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "binary.base_conversion",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 180,
+        "w": 711,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 647,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "binary.character_encoding",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 180,
+        "w": 761,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 486,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 182,
+        "w": 584,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 381,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "database.relational_table_query",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 183,
+        "w": 892,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 495,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "generic.rule_scene",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 269,
+        "w": 696,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 489,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "logic.and_gate",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 240,
+        "w": 550,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 462,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "logic.boolean_dag",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 311,
+        "w": 998,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 549,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "network.graph_traversal",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 474,
+        "w": 911,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 676,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "network.packet_routing",
+      "opened": "mở ở bước 0",
+      "stage": {
+        "h": 180,
+        "w": 1045,
+        "rows": 0
+      },
+      "challenge": {
+        "h": 61,
+        "w": 1045,
+        "rows": 0
+      },
+      "inline": null,
+      "rows": 1,
+      "verdictChars": 0,
+      "cardH": 441,
+      "ratio": 0.34,
+      "quizDominance": "MINOR"
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "opened": "mở ở bước 0",
+      "stage": {
+        "h": 262,
+        "w": 1218,
+        "rows": 0
+      },
+      "challenge": {
+        "h": 61,
+        "w": 1218,
+        "rows": 0
+      },
+      "inline": null,
+      "rows": 1,
+      "verdictChars": 0,
+      "cardH": 561,
+      "ratio": 0.23,
+      "quizDominance": "NONE"
+    },
+    {
+      "target": "tree.traversal",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 482,
+        "w": 911,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 748,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    },
+    {
+      "target": "web.style_model",
+      "opened": "không có lối vào",
+      "stage": {
+        "h": 729,
+        "w": 1399,
+        "rows": 0
+      },
+      "challenge": null,
+      "inline": null,
+      "rows": 0,
+      "verdictChars": 0,
+      "cardH": 823,
+      "ratio": null,
+      "quizDominance": "KHÔNG CÓ THỬ THÁCH"
+    }
+  ]
+}

@@ -236,6 +236,29 @@ describe("W6 §5 — mô tả khác phán xét", () => {
       .toEqual([]);
   });
 
+  it("W12-A: TOÀN BỘ khối thử thách gọn, không chỉ băng phán quyết", () => {
+    /* GUARD W6 ĐO SAI TẦNG, và một màn hình thật đã cho thấy điều đó.
+       W6 chỉ đòi `.result-banner` có `fit-content`. Băng ấy gọn thật, nhưng
+       CÁI HỘP CHỨA nó — câu hỏi, dãy lựa chọn, đệm — vẫn cao 111px trong khi cơ
+       chế của `network.packet_routing` chỉ cao 180px (tỉ lệ 0,62). Mắt đọc ra
+       "bài kiểm tra dán dưới hình minh hoạ".
+       Nay `.predict-bar` là dải NGANG biết xuống dòng, nên câu hỏi · lựa chọn ·
+       nút đóng nằm cùng một hàng khi còn chỗ. Đo lại: 61px, tỉ lệ 0,34. */
+    const css = readFileSync(new URL("../styles/global.css", import.meta.url).pathname
+      .replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const NL = String.fromCharCode(10);
+    const block = css.slice(css.indexOf(`${NL}.predict-bar {`));
+    const decl = block.slice(0, block.indexOf(`${NL}}`));
+    expect(decl.length, "không tìm thấy khối .predict-bar — mẫu hỏng, không phải đạt")
+      .toBeGreaterThan(60);
+    expect(decl, "khối thử thách phải là dải NGANG biết xuống dòng")
+      .toMatch(/flex-wrap:\s*wrap/);
+    expect(decl, "cột dọc ép nó thành nhiều hàng cứng")
+      .not.toMatch(/flex-direction:\s*column/);
+    /* Đệm phải lùi một bậc so với bản cũ (`--sp-md --sp-lg`). */
+    expect(decl).toMatch(/padding:\s*var\(--sp-sm\)\s+var\(--sp-md\)/);
+  });
+
   it("băng kết quả là DẢI GỌN, không phải tấm thẻ chiếm sân khấu", () => {
     /* §6/§17 #3. Đo ở CSS chứ không ở ảnh: `.result-banner` phải giữ
        `width: fit-content` — bỏ dòng đó là nó giãn hết bề ngang thẻ và trở

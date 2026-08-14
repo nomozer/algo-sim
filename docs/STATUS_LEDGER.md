@@ -165,6 +165,9 @@ người học.
 | Runner dùng chung một server | **DONE (W12)** | `browser-runner.mjs` — 23 kịch bản, `serverStarts: 1`; cách ly bằng `store.reset()` + xoá lưu trữ, không khởi động lại tiến trình | — |
 | Chứng nhận tương tác 23 target | **14/23 CERTIFIED** | `certify-w12.mjs` → `w12-interaction.json`, mang `sourceFingerprint`. Luật: hành động → SimAction → apply → state tất định đổi → hệ quả DOM | **W12 tiếp** |
 | 9 target còn lại | **PROBE_UNVERIFIED** | **KHÔNG phải khiếm khuyết sản phẩm.** Probe chưa dùng đúng từ vựng action của miền (`logic` chỉ nhận `toggle`, `network` nhận `net_*`, `tree`/`database` chưa đọc hợp đồng). Phải đọc hợp đồng rồi chạy lại trước khi kết luận bất cứ điều gì | **W12 tiếp** |
+| Mùi quiz — `packet_routing` | **ĐÃ SỬA (W12-A)** | đo được 111px/180px = **0,62** (thử thách gần bằng ⅔ cơ chế). Sửa ở CHỦ SỞ HỮU CHUNG `.predict-bar` (dải ngang biết xuống dòng), không vá riêng network → **0,34**, 2 hàng → 1 hàng | — |
+| Guard W6 đo sai tầng | **ĐÃ SỬA (W12-A)** | W6 chỉ soi `.result-banner` có `fit-content`; băng gọn thật nhưng HỘP CHỨA nó thì không. Guard mới đo cả khối | — |
+| Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
 | `WAVE4_INTERACTION_CERTIFICATION` | **NO_EVIDENCE — không đổi** | chỉ nâng khi đủ 23/23 có bằng chứng tươi | **W12** |
 | `WAVE6_BROWSER_EXPERIENCE` | **PARTIAL — không đổi** | chín màn trải nghiệm chưa chạy | **W12** |
 

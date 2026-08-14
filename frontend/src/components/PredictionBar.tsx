@@ -118,15 +118,11 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
   return (
     <section className="predict-bar" aria-label="Dự đoán bước tiếp theo"
       onKeyDown={(e) => { if (e.key === "Escape") closeChallenge(); }}>
-      <div className="predict-head">
-        <p className="predict-question">{challenge.question}</p>
-        {/* Đóng được bằng chuột LẪN bàn phím (nút thật + phím Esc). Không dùng
-            biểu tượng trần: "Đóng" đọc lên được, và nhãn nói rõ đóng cái gì. */}
-        <button type="button" className="btn-utility predict-close"
-          onClick={closeChallenge} aria-label="Đóng thử thách">
-          Đóng
-        </button>
-      </div>
+      {/* W12-A — câu hỏi · lựa chọn · nút đóng là ANH EM trong một dải ngang
+          biết xuống dòng. Bọc câu hỏi + nút đóng trong một hàng riêng (bản
+          trước) ép khối thử thách thành hai hàng cứng, và đo được nó cao bằng
+          0,62 lần cơ chế ở `network.packet_routing`. */}
+      <p className="predict-question">{challenge.question}</p>
 
       <div className="predict-options">
         {/* Mỗi đáp án ĐỒNG THỜI là hành động kiểm tra — không có nút nộp riêng. */}
@@ -142,6 +138,13 @@ export function PredictionBar({ module, state, busy }: PredictionBarProps) {
           </button>
         ))}
       </div>
+
+      {/* Đóng được bằng chuột LẪN bàn phím (nút thật + phím Esc). Không dùng
+          biểu tượng trần: "Đóng" đọc lên được, và nhãn nói rõ đóng cái gì. */}
+      <button type="button" className="btn-utility predict-close"
+        onClick={closeChallenge} aria-label="Đóng thử thách">
+        Đóng
+      </button>
 
       {prediction && (
         <p className={`predict-result is-${prediction.verdict}`} role="status">

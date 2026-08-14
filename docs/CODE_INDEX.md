@@ -528,6 +528,18 @@ lần. Cách ly bằng DỌN STATE, không bằng khởi động lại tiến tr
 một-server-mỗi-kịch-bản không lọt im lặng. Cấp sẵn `loadTarget`/`snapshot`/
 `dispatch`/`clickText`/`scenario`.
 
+### `frontend/scripts/quiz-dominance-w12.mjs` (M20 W12-A) · offline (cần `npm run dev`)
+Hỏi: khi mở thử thách, CƠ CHẾ còn là khối lớn nhất trên màn hình không? Đo tỉ lệ
+`chiều cao khối thử thách / chiều cao sân khấu` — không đo bề rộng, vì cả hai
+nằm cùng cột nên bề rộng luôn bằng nhau và phép so sẽ không bao giờ phân biệt
+được gì (lỗi "luật không thể sai" đã gặp ở M19).
+⚠️ Bản đầu đo ngay ở cursor 0 và chỉ chạm được 2/23 target — `predict.challenge`
+trả null ở phần lớn các bước, nên 21 target còn lại bị đọc nhầm thành "không có
+thử thách". Nay tiến từng bước tới khi lối vào hiện ra.
+Đo được ở HEAD daf9b28: `network.packet_routing` 111px/180px = **0,62** (FAIL).
+Sau bản sửa chủ sở hữu chung: 61px/180px = **0,34**, 0 FAIL.
+Artifact: `docs/evaluation/m20/w12-quiz-dominance.json`.
+
 ### `frontend/scripts/certify-w12.mjs` (M20 W12) · offline (cần `npm run dev`)
 Chứng nhận tương tác trong trình duyệt THẬT theo luật: hành động → SimAction →
 `module.apply` → **state tất định đổi** → hệ quả nhìn thấy trong DOM. Một cú bấm
