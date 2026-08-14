@@ -1,12 +1,13 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "d1ab6049b0ac63ec",
+  "sourceFingerprint": "92eb13d67f2de580",
   "dirtyRelevantSources": [
+    "frontend/scripts/browser-runner.mjs",
     "frontend/scripts/certify-experience-w12.mjs"
   ],
-  "head": "19a23cbe19554f60948dbe32cddebae05217f679",
+  "head": "a23c5c1925dcc736fd5e28df45587bf7065713e9",
   "dirty": true,
-  "generatedAt": "2026-08-14T09:56:07.186Z",
+  "generatedAt": "2026-08-14T10:08:07.898Z",
   "tool": "certify-experience-w12",
   "toolVersion": "1",
   "environment": {

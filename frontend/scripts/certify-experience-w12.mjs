@@ -73,94 +73,10 @@ const STAGE_TEXT = `(()=>{
   return text + ' ¶ ' + paint;
 })()`;
 
-/**
- * Sinh danh sách action ỨNG VIÊN từ chính config đã validate.
- *
- * KHÔNG đoán tên field — ĐỌC `simulations/types.ts`. Bản đầu của khối này đoán
- * `whatif_swap {from,to}` và `toggle {id}`; hợp đồng thật là `{i,j}` và
- * `{target}`. Hậu quả không phải một lỗi ồn ào mà là một action bị NUỐT LẶNG LẼ
- * rồi `find_max` đọc ra TRACE_PASS trong khi nó là công cụ. Đoán sai ở đây luôn
- * đi theo hướng đánh giá THẤP sản phẩm.
- * Mỗi ứng viên chỉ được dựng khi field tương ứng CÓ MẶT.
- * Thử lần lượt, giữ cái đầu tiên làm đổi được state — đó là câu trả lời trung
- * thực cho "học sinh có đường nào đổi đầu vào không", thay vì một danh sách
- * recipe viết tay sẽ lệch ngay khi thêm target.
- */
-const CANDIDATES = `((cfg) => {
-  const out = [];
-  const d = cfg && cfg.data ? cfg.data : {};
-  if (d.condition && typeof d.condition.value === 'number') {
-    out.push({ type: 'set_param', name: 'condition.value', value: d.condition.value + 1 });
-  }
-  if (Array.isArray(d.array) && d.array.length > 1) {
-    out.push({ type: 'whatif_swap', i: 0, j: 1 });
-  }
-  if (typeof cfg.variant === 'string') {
-    const alt = { bfs: 'dfs', dfs: 'bfs', preorder: 'inorder', inorder: 'postorder', postorder: 'preorder' };
-    if (alt[cfg.variant]) out.push({ type: 'set_param', name: 'variant', value: alt[cfg.variant] });
-  }
-  if (Array.isArray(cfg.nodes) && cfg.nodes.length > 1 && typeof cfg.start === 'string') {
-    const other = cfg.nodes.find((n) => n.id !== cfg.start);
-    if (other) out.push({ type: 'set_param', name: 'start', value: other.id });
-  }
-  if (Array.isArray(cfg.links) && cfg.links.length) {
-    const l = cfg.links[0];
-    if (l && l.a && l.b) out.push({ type: 'net_disconnect', a: l.a, b: l.b });
-  }
-  if (Array.isArray(cfg.inputs) && cfg.inputs.length) {
-    out.push({ type: 'toggle', target: cfg.inputs[0].id });
-  }
-  if (typeof cfg.text === 'string' && cfg.text.length) {
-    out.push({ type: 'set_param', name: 'text', value: cfg.text + 'a' });
-  }
-  if (typeof cfg.encoding === 'string') {
-    out.push({ type: 'set_param', name: 'encoding',
-      value: cfg.encoding === 'ascii' ? 'utf8' : 'ascii' });
-  }
-  if (Array.isArray(cfg.schema) && cfg.schema.length) {
-    out.push({ type: 'set_param', name: 'filter.column', value: cfg.schema[0].name });
-  }
-  if (cfg.style && typeof cfg.style === 'object') {
-    const k = Object.keys(cfg.style)[0];
-    if (k) out.push({ type: 'set_param', name: k, value: '#123456' });
-  }
-  /* Ba nhóm dưới đây thiếu ở bản đầu, và mỗi cái thiếu đều làm một target đọc
-     ra THẤP hơn sự thật — đọc chủ sở hữu thay vì suy từ tên field:
-       convert-module.tsx  → inputValue / sourceBase / targetBase
-       logic/ui.tsx        → toggle {target:'A'|'B'} (chữ CỐ ĐỊNH, không từ cfg)
-       generic/ui.tsx      → toggle/move theo objects[].id  */
-  if (cfg.inputValue !== undefined) {
-    out.push({ type: 'set_param', name: 'inputValue',
-      value: String(cfg.inputValue) === '1' ? '10' : '1' });
-  }
-  if (typeof cfg.targetBase === 'number') {
-    out.push({ type: 'set_param', name: 'targetBase', value: cfg.targetBase === 2 ? 8 : 2 });
-  }
-  if (cfg.inputA !== undefined || cfg.gate !== undefined || cfg.kind === 'and') {
-    out.push({ type: 'toggle', target: 'A' });
-    out.push({ type: 'toggle', target: 'B' });
-  }
-  if (Array.isArray(cfg.objects) && cfg.objects.length) {
-    const o = cfg.objects[0];
-    if (o && o.id) {
-      out.push({ type: 'toggle', target: o.id });
-      out.push({ type: 'move', target: o.id, x: 50, y: 50 });
-    }
-  }
-  /* TÊN ACTION KHÁC TÊN FIELD CONFIG. binary.decimal_to_binary khai config
-     decimalValue nhưng apply nhận set_param name:'decimal' và toggle
-     target:'<chỉ số bit>'. Đoán theo tên config làm nó đọc ra
-     STATIC_ILLUSTRATION — trong khi narrate của chính module nói thẳng
-     "Bấm vào từng bit để bật/tắt". Lần thứ BA cùng một lỗi trong wave này. */
-  if (typeof cfg.decimalValue === 'number') {
-    out.push({ type: 'toggle', target: '0' });
-    out.push({ type: 'set_param', name: 'decimal', value: cfg.decimalValue + 1 });
-  }
-  if (typeof cfg.value === 'number') {
-    out.push({ type: 'set_param', name: 'value', value: cfg.value + 1 });
-  }
-  return out;
-})`;
+/* Ứng viên action KHÔNG sống ở đây — chủ sở hữu là
+   `src/simulations/action-probe.ts`, cùng bộ mà `experience-gate.test.ts` dùng.
+   Giữ một bản sao trong file này là tái lập đúng lỗi vừa sửa ở
+   `tool-affordance.ts`: một luật chép tay hai nơi thì lệch ở một nơi. */
 
 const session = await new BrowserSession({ viewport: 1536 }).open();
 const targets = JSON.parse(await session.eval(`(async()=>{
@@ -183,10 +99,10 @@ for (const sim of targets) {
   /* ── 1. ĐỔI ĐẦU VÀO CÓ TÍNH LẠI KHÔNG ─────────────────────────────────── */
   const tried = JSON.parse(await session.eval(`(async()=>{
     const s=await import(${JSON.stringify(session.mods.store)});
+    const p=await import(${JSON.stringify(session.mods.probe)});
     const st=s.useAppStore.getState();
     const cfg=st.active && st.active.config;
-    const cands=(${CANDIDATES})(cfg||{});
-    return JSON.stringify(cands);})()`));
+    return JSON.stringify(p.candidateActions(cfg||{}));})()`));
 
   let accepted = null;
   let after = before;

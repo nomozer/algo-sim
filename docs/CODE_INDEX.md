@@ -558,6 +558,25 @@ trông-như-đã-phủ.
 ⚠️ KHÔNG đảo quyết định W4B-1A (cuộn thuộc về TÀI LIỆU, không phải panel): vùng
 cuộn nội bộ từng giấu 170px nội dung học mà không có tín hiệu ở mức trang.
 
+### `frontend/src/simulations/action-probe.ts` (M20 W12) · Change impact: offline
+NGUỒN DUY NHẤT của câu "học sinh có đường nào đổi đầu vào bài này không".
+`candidateActions(config)` dẫn ứng viên từ config đã validate; dùng bởi CẢ
+`experience-gate.test.ts` (offline, <1s) lẫn `scripts/certify-experience-w12.mjs`
+(trình duyệt, qua `session.mods.probe`).
+⚠️ TÊN ACTION KHÔNG SUY ĐƯỢC TỪ TÊN FIELD CONFIG — nó nằm trong `module.apply`.
+Đã sai ba lần trong W12 và **cả ba đều đánh giá THẤP sản phẩm**, vì action sai
+hình dạng không ném lỗi mà bị `apply` trả về state cũ, đọc y hệt "bài này không
+tương tác được": `whatif_swap {from,to}`→`{i,j}` · `toggle {id}`→`{target}` ·
+`set_param 'decimalValue'`→`'decimal'`. Thêm target mới thì MỞ MODULE RA ĐỌC.
+
+### `frontend/src/simulations/experience-gate.test.ts` (M20 W12) · cổng offline
+Hỏi câu tối thiểu một mô phỏng phải trả lời được: có ít nhất MỘT action đổi được
+state, HOẶC một dòng thời gian > 1 bước. Không có cả hai ⇒ **một bức hình**.
+Chạy trong vitest nên nó có mặt lúc ai đó thêm target mới; bản chứng nhận trình
+duyệt đầy đủ hơn nhưng cần Chrome và vài phút.
+⚠️ Cổng này KHÔNG nhìn bề mặt ⇒ không phân biệt được "trace có mà không hiện".
+Có đối chứng dương (module đồng nhất không timeline) + guard chống bộ dò rỗng.
+
 ### `frontend/src/simulations/tool-affordance.ts` (M20 W12) · Change impact: offline
 NGUỒN DUY NHẤT của câu hỏi "công cụ thao tác của học sinh có được hiện ra
 không". `toolAffordanceOpen({exploreOpen, challengeOpen, busy})` — hàm THUẦN,

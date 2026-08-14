@@ -85,7 +85,7 @@ export class BrowserSession {
       const h=performance.getEntriesByType('resource').map(e=>e.name).filter(n=>n.includes(s));
       return h.length?h[h.length-1]:new URL(s,location.origin).href;};
       return JSON.stringify({store:pick('/src/state/store.ts'),catalog:pick('/src/data/offline-catalog.ts'),
-      registry:pick('/src/simulations/registry.ts'),sims:pick('/src/simulations/index.ts')});})()`));
+      registry:pick('/src/simulations/registry.ts'),sims:pick('/src/simulations/index.ts'),probe:pick('/src/simulations/action-probe.ts')});})()`));
     await this.eval(`(async()=>{${Object.values(this.mods)
       .map((x) => `await import(${JSON.stringify(x)});`).join("")}return 1})()`);
     this.timings.startup = Date.now() - t0;
