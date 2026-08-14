@@ -1,0 +1,258 @@
+import { describe, expect, it } from "vitest";
+import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { registerAllSimulations } from "./index";
+import { getSimulation, listSimulations } from "./registry";
+import { publicCatalog } from "../data/offline-catalog";
+import type { SimulationModule } from "./types";
+
+/**
+ * W12-B0 — BỐN LOẠI HÀNH ĐỘNG, KHÔNG GỘP MỌI CÚ BẤM THÀNH "TƯƠNG TÁC".
+ *
+ * ─── VÌ SAO WAVE NÀY TỒN TẠI ──────────────────────────────────────────────
+ *
+ * Màn hình `algorithm.find_max` đọc ra: nhìn mô hình → đọc câu hỏi → bấm một
+ * trong hai nút → engine chấm. Đó là ĐÁNH GIÁ BÁM CƠ CHẾ, và nó tốt — nhưng nó
+ * KHÔNG phải thao tác mô hình. Con số "14 CERTIFIED" ở lượt trước không phân
+ * biệt hai thứ ấy, nên nó chưa nói được điều người đọc tưởng nó nói.
+ *
+ * ─── CÂU HỎI CỔNG (§20) ───────────────────────────────────────────────────
+ *
+ *   "Khi ĐÓNG thử thách, học sinh thao tác lên cái gì?"
+ *
+ * "Một phương án trả lời" KHÔNG phải câu trả lời hợp lệ — nó thuộc THỬ THÁCH.
+ *
+ * ─── BỐN LOẠI ─────────────────────────────────────────────────────────────
+ *
+ *   MODEL_MANIPULATION  đổi state MIỀN có thẩm quyền
+ *   MECHANISM_COMMITMENT quyết định của chính thuật toán
+ *   TRACE_CONTROL       điều khiển quan sát tiến trình
+ *   CHALLENGE           dự đoán / chấm — KHÔNG BAO GIỜ tính là thao tác mô hình
+ */
+
+const SIMS = new URL(".", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
+
+/**
+ * AFFORDANCE TRÊN SÂN KHẤU — quét mã renderer của MIỀN để biết action nào
+ * thật sự có đường bấm/kéo, không chỉ tồn tại trong `apply`.
+ *
+ * §14 gọi ca ngược lại là `AFFORDANCE_MISSING`: `apply` nhận một action mà học
+ * sinh không có cách nào phát ra nó. Một chứng nhận đọc `apply` mà không đọc
+ * renderer sẽ bỏ lọt đúng ca ấy.
+ */
+function stageActionsOf(domain: string): string[] {
+  const dir = join(SIMS, "domains", domain);
+  let files: string[] = [];
+  try {
+    files = readdirSync(dir).filter((f) => /\.tsx?$/.test(f) && !/\.test\./.test(f))
+      .map((f) => join(dir, f));
+  } catch { return []; }
+  const found = new Set<string>();
+  for (const f of files) {
+    if (statSync(f).isDirectory()) continue;
+    const body = readFileSync(f, "utf-8")
+      .replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    for (const m of body.matchAll(/dispatch\(\s*\{\s*type:\s*"([a-z_]+)"/g)) found.add(m[1]);
+    /* `ArrayView` nhận `onSwap` rồi renderer miền mới dispatch — bắt cả cầu nối
+       ấy, nếu không một affordance thật sẽ đọc thành thiếu. */
+    if (/onSwap=\{/.test(body)) found.add("whatif_swap");
+  }
+  return [...found].sort();
+}
+
+/** Action nào là THAO TÁC MÔ HÌNH (đổi state miền), theo hợp đồng từng miền. */
+const MODEL_ACTIONS = new Set([
+  "whatif_swap", "set_param", "toggle", "move",
+  "net_connect", "net_disconnect", "net_reset",
+]);
+/** Action chỉ điều hướng nhánh — không đổi bài toán, nhưng vẫn là state miền. */
+const BRANCH_ACTIONS = new Set(["exit_branch"]);
+
+interface Row {
+  id: string;
+  domain: string;
+  /** Câu trả lời cho câu hỏi cổng §20. */
+  manipulatesWhenChallengeClosed: string;
+  stageActions: string[];
+  /** Action mà CHÍNH module này nhận (thử `apply`, so state). */
+  acceptedByModule: string[];
+  modelActions: string[];
+  hasChallenge: boolean;
+  hasTimeline: boolean;
+  primaryType: string;
+}
+
+/**
+ * Action nào MODULE NÀY thật sự nhận — thử `apply` rồi so state.
+ *
+ * ⚠️ Bản đầu chỉ quét thư mục miền, nên mọi target trong một miền thừa hưởng
+ * mọi action tìm thấy ở bất kỳ file nào của miền ấy. Kết quả: 23/23
+ * INTERACTIVE_MODEL — một con số sai, vì `algorithm.scan` và
+ * `algorithm.bounded_control_flow` có `apply: (state) => state` (không nhận
+ * action nào) mà vẫn được ghi là thao tác được nhờ `whatif_swap` của file khác.
+ *
+ * Nên phép kiểm phải HAI VẾ: action đổi được state của CHÍNH module này, VÀ có
+ * affordance phát ra nó trong renderer miền.
+ */
+function acceptedByModule(m: SimulationModule<unknown, unknown>, candidates: string[]): string[] {
+  /* Config lấy từ CHÍNH danh mục mẫu đã validate — không viết fixture tay. Một
+     fixture tay là một hợp đồng thứ hai sẽ trôi khỏi sản phẩm. */
+  const entry = publicCatalog().find((e) => e.simId === m.id);
+  if (!entry) return [];
+  const parsed = m.validateConfig((entry.envelope as { config: unknown }).config);
+  if (!parsed.ok) return [];
+  const base = m.init(parsed.config);
+  /* Nhiều giá trị cho mỗi action: một probe đơn lẻ trúng đúng giá trị hiện tại
+     sẽ là no-op hợp lệ và bị đọc nhầm thành "không nhận action". */
+  const probes: Record<string, unknown[]> = {
+    whatif_swap: [{ type: "whatif_swap", i: 0, j: 1 }, { type: "whatif_swap", i: 1, j: 2 }],
+    set_param: [
+      { type: "set_param", name: "targetBase", value: 8 },
+      { type: "set_param", name: "targetBase", value: 2 },
+      { type: "set_param", name: "text", value: "Zz" },
+      { type: "set_param", name: "order", value: "postorder" },
+      { type: "set_param", name: "order", value: "inorder" },
+      { type: "set_param", name: "variant", value: "dfs" },
+      { type: "set_param", name: "variant", value: "bfs" },
+      { type: "set_param", name: "r", value: 7 },
+      { type: "set_param", name: "threshold", value: 999 },
+      { type: "set_param", name: "condition", value: ">= 999" },
+      { type: "set_param", name: "selected", value: "heading" },
+      { type: "set_param", name: "encoding", value: "unicode_codepoint" },
+    ],
+    toggle: [{ type: "toggle", target: "A" }, { type: "toggle", target: "0" },
+      { type: "toggle", target: "1" }, { type: "toggle", target: "reset" }],
+    move: [{ type: "move", target: "heading", x: 0, y: 1 },
+      { type: "move", target: "paragraph", x: 0, y: 0 }],
+    net_connect: [{ type: "net_connect", from: "A", to: "C" }],
+    net_disconnect: [{ type: "net_disconnect", from: "A", to: "B" }],
+    net_reset: [{ type: "net_reset" }],
+    exit_branch: [{ type: "exit_branch" }],
+  };
+  const ok: string[] = [];
+  for (const name of candidates) {
+    for (const a of probes[name] ?? []) {
+      let next;
+      try { next = m.apply(base, a as never); } catch { continue; }
+      if (next !== base && JSON.stringify(next) !== JSON.stringify(base)) { ok.push(name); break; }
+    }
+  }
+  return ok;
+}
+
+function classify(m: SimulationModule<unknown, unknown>, stage: string[]): Row {
+  const accepted = acceptedByModule(m, stage);
+  /* `apply: (state) => state` — module tự khai nó không nhận action nào. Đó là
+     bằng chứng TRỰC TIẾP, khác hẳn việc probe của tôi không trúng. */
+  const identityApply = /^\s*\(state[^)]*\)\s*=>\s*state\s*$/.test(
+    m.apply.toString().replace(/\/\*[\s\S]*?\*\//g, "").trim());
+  const modelActions = accepted.filter((a) => MODEL_ACTIONS.has(a));
+  const branchOnly = accepted.filter((a) => BRANCH_ACTIONS.has(a));
+  const hasChallenge = Boolean(m.predict);
+  const hasTimeline = Boolean(m.timeline);
+
+  let primaryType: string;
+  let answer: string;
+  if (modelActions.length) {
+    primaryType = "INTERACTIVE_MODEL";
+    answer = modelActions.join(" · ");
+  } else if (branchOnly.length) {
+    primaryType = "COMMITMENT_TRACE";
+    answer = "quyết định nhánh của cơ chế";
+  } else if (hasTimeline) {
+    /* PHÂN BIỆT HAI CA KHÁC HẲN NHAU — và đây là chỗ tôi đã suýt sai lần thứ ba.
+       (a) `apply` là hàm đồng nhất ⇒ module THẬT SỰ không nhận action nào, nên
+           TRACE_MODEL là phán quyết đúng và xác nhận được.
+       (b) `apply` có nhận action, nhưng probe của tôi không trúng giá trị thật
+           (id nút logic, id nút mạng, tên tham số bảng) ⇒ CHƯA kết luận được.
+       Gộp (b) vào TRACE_MODEL là hạ cấp một target thao tác được chỉ vì phép đo
+       hẹp — cùng lỗi đã phải sửa ở lượt "9 PROBE_UNVERIFIED". */
+    primaryType = identityApply ? "TRACE_MODEL" : "PROBE_LIMITED";
+    answer = identityApply
+      ? "chỉ dòng thời gian (đã xác nhận: `apply` là hàm đồng nhất)"
+      : "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật";
+  } else {
+    primaryType = "AFFORDANCE_MISSING";
+    answer = "KHÔNG CÓ — cần soát lại";
+  }
+  return {
+    id: m.id, domain: m.domain,
+    manipulatesWhenChallengeClosed: answer,
+    stageActions: stage, modelActions,
+    acceptedByModule: accepted,
+    hasChallenge, hasTimeline, primaryType,
+  };
+}
+
+let rows: Row[] = [];
+
+describe("W12-B0 — bốn loại hành động, phân loại trung thực", () => {
+  it("dựng bảng 23 dòng và trả lời câu hỏi cổng cho từng target", () => {
+    if (listSimulations().length === 0) registerAllSimulations();
+    const domains = new Set(listSimulations().map((m) => m.domain));
+    const byDomain = new Map([...domains].map((d) => [d, stageActionsOf(d)]));
+    rows = listSimulations()
+      .map((meta) => classify(getSimulation(meta.id)!, byDomain.get(meta.domain) ?? []))
+      .sort((a, b) => a.id.localeCompare(b.id));
+    expect(rows.length).toBeGreaterThanOrEqual(23);
+
+    try {
+      const dir = new URL("../../../docs/evaluation/m20/", import.meta.url)
+        .pathname.replace(/^\/([A-Za-z]:)/, "$1");
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(join(dir, "w12-interaction-semantics.json"), JSON.stringify({
+        generatedAt: new Date().toISOString(),
+        kind: "DESCRIPTIVE_MANIFEST",
+        note: "Dẫn từ hợp đồng module + affordance trong renderer miền. " +
+              "KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
+        gateQuestion: "Khi ĐÓNG thử thách, học sinh thao tác lên cái gì?",
+        rows,
+      }, null, 2), "utf-8");
+    } catch { /* CI chỉ-đọc */ }
+  });
+
+  it("KHÔNG target nào rơi vào AFFORDANCE_MISSING", () => {
+    /* §14: `apply` nhận một action mà học sinh không có đường phát ra nó. Một
+       chứng nhận chỉ đọc `apply` sẽ bỏ lọt đúng ca ấy. */
+    const missing = rows.filter((r) => r.primaryType === "AFFORDANCE_MISSING").map((r) => r.id);
+    expect(missing, `target không có affordance nào trên sân khấu:\n${missing.join("\n")}`)
+      .toEqual([]);
+  });
+
+  it("thử thách KHÔNG BAO GIỜ là câu trả lời cho câu hỏi cổng", () => {
+    /* Đây là bất biến trung tâm của W12-B0. `find_max` có hai nút "Đặt 9 làm
+       max mới"/"Giữ max = 7.5" — chúng nuôi `predict.check`, không đi qua
+       `module.apply`, nên chúng thuộc THỬ THÁCH. Thao tác mô hình thật của nó
+       là kéo cột trong `ArrayView` → `whatif_swap` → nhánh what-if. */
+    for (const r of rows) {
+      expect(r.manipulatesWhenChallengeClosed, `${r.id}`).not.toMatch(/dự đoán|phương án|trả lời/i);
+    }
+  });
+
+  it("target khai INTERACTIVE_MODEL phải có action đổi state MIỀN", () => {
+    for (const r of rows.filter((x) => x.primaryType === "INTERACTIVE_MODEL")) {
+      expect(r.modelActions.length, `${r.id} khai interactive mà không có action miền`)
+        .toBeGreaterThan(0);
+    }
+  });
+
+  it("`algorithm.find_max` — ca tham chiếu: mô hình và thử thách TÁCH BẠCH", () => {
+    const fm = rows.find((r) => r.id === "algorithm.find_max")!;
+    expect(fm.hasChallenge, "find_max phải CÓ thử thách").toBe(true);
+    expect(fm.modelActions, "và phải có thao tác mô hình ĐỘC LẬP với thử thách")
+      .toContain("whatif_swap");
+    expect(fm.primaryType).toBe("INTERACTIVE_MODEL");
+    /* Đường thao tác: kéo cột trong ArrayView → onSwap → dispatch(whatif_swap)
+       → apply → nhánh. Đóng thử thách lại, đường ấy vẫn còn. */
+    const av = readFileSync(new URL("../components/ArrayView.tsx", import.meta.url)
+      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    expect(av, "ArrayView phải có đường kéo phát onSwap").toMatch(/onPointerDown/);
+    expect(av).toMatch(/onSwap\(drag\.from, drag\.target\)/);
+  });
+
+  it("tính đúng sai của thử thách do ENGINE sở hữu, không do UI", () => {
+    const idx = readFileSync(join(SIMS, "domains/algorithm/index.ts"), "utf-8");
+    expect(idx, "`predict` phải dẫn từ điểm quyết định của trace")
+      .toMatch(/decisionPointOf\(s\)/);
+  });
+});

@@ -1,0 +1,406 @@
+{
+  "generatedAt": "2026-08-14T07:51:52.651Z",
+  "kind": "DESCRIPTIVE_MANIFEST",
+  "note": "Dẫn từ hợp đồng module + affordance trong renderer miền. KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
+  "gateQuestion": "Khi ĐÓNG thử thách, học sinh thao tác lên cái gì?",
+  "rows": [
+    {
+      "id": "algorithm.binary_search",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.bounded_control_flow",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "chỉ dòng thời gian (đã xác nhận: `apply` là hàm đồng nhất)",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "TRACE_MODEL"
+    },
+    {
+      "id": "algorithm.bubble_sort",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.count_if",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.find_max",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.find_min",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.insertion_sort",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.linear_search",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.scan",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "chỉ dòng thời gian (đã xác nhận: `apply` là hàm đồng nhất)",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "TRACE_MODEL"
+    },
+    {
+      "id": "algorithm.selection_sort",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "algorithm.sum_if",
+      "domain": "algorithm",
+      "manipulatesWhenChallengeClosed": "whatif_swap",
+      "stageActions": [
+        "exit_branch",
+        "set_param",
+        "whatif_swap"
+      ],
+      "modelActions": [
+        "whatif_swap"
+      ],
+      "acceptedByModule": [
+        "whatif_swap"
+      ],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "binary.base_conversion",
+      "domain": "binary",
+      "manipulatesWhenChallengeClosed": "set_param",
+      "stageActions": [
+        "set_param",
+        "toggle"
+      ],
+      "modelActions": [
+        "set_param"
+      ],
+      "acceptedByModule": [
+        "set_param"
+      ],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "binary.character_encoding",
+      "domain": "binary",
+      "manipulatesWhenChallengeClosed": "set_param",
+      "stageActions": [
+        "set_param",
+        "toggle"
+      ],
+      "modelActions": [
+        "set_param"
+      ],
+      "acceptedByModule": [
+        "set_param"
+      ],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "binary.decimal_to_binary",
+      "domain": "binary",
+      "manipulatesWhenChallengeClosed": "toggle",
+      "stageActions": [
+        "set_param",
+        "toggle"
+      ],
+      "modelActions": [
+        "toggle"
+      ],
+      "acceptedByModule": [
+        "toggle"
+      ],
+      "hasChallenge": false,
+      "hasTimeline": false,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "database.relational_table_query",
+      "domain": "database",
+      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "stageActions": [
+        "set_param"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "PROBE_LIMITED"
+    },
+    {
+      "id": "generic.rule_scene",
+      "domain": "generic",
+      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "stageActions": [
+        "move",
+        "toggle"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "PROBE_LIMITED"
+    },
+    {
+      "id": "logic.and_gate",
+      "domain": "logic",
+      "manipulatesWhenChallengeClosed": "toggle",
+      "stageActions": [
+        "toggle"
+      ],
+      "modelActions": [
+        "toggle"
+      ],
+      "acceptedByModule": [
+        "toggle"
+      ],
+      "hasChallenge": false,
+      "hasTimeline": false,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "logic.boolean_dag",
+      "domain": "logic",
+      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "stageActions": [
+        "toggle"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "PROBE_LIMITED"
+    },
+    {
+      "id": "network.graph_traversal",
+      "domain": "network",
+      "manipulatesWhenChallengeClosed": "set_param",
+      "stageActions": [
+        "net_connect",
+        "net_disconnect",
+        "net_reset",
+        "set_param"
+      ],
+      "modelActions": [
+        "set_param"
+      ],
+      "acceptedByModule": [
+        "set_param"
+      ],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "network.packet_routing",
+      "domain": "network",
+      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "stageActions": [
+        "net_connect",
+        "net_disconnect",
+        "net_reset",
+        "set_param"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "PROBE_LIMITED"
+    },
+    {
+      "id": "network.protocol_encapsulation",
+      "domain": "network",
+      "manipulatesWhenChallengeClosed": "chỉ dòng thời gian (đã xác nhận: `apply` là hàm đồng nhất)",
+      "stageActions": [
+        "net_connect",
+        "net_disconnect",
+        "net_reset",
+        "set_param"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": true,
+      "hasTimeline": true,
+      "primaryType": "TRACE_MODEL"
+    },
+    {
+      "id": "tree.traversal",
+      "domain": "tree",
+      "manipulatesWhenChallengeClosed": "CHƯA KẾT LUẬN — `apply` có nhận action, probe chưa trúng giá trị thật",
+      "stageActions": [
+        "set_param"
+      ],
+      "modelActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "PROBE_LIMITED"
+    },
+    {
+      "id": "web.style_model",
+      "domain": "web",
+      "manipulatesWhenChallengeClosed": "move · set_param",
+      "stageActions": [
+        "move",
+        "set_param",
+        "toggle"
+      ],
+      "modelActions": [
+        "move",
+        "set_param"
+      ],
+      "acceptedByModule": [
+        "move",
+        "set_param"
+      ],
+      "hasChallenge": false,
+      "hasTimeline": false,
+      "primaryType": "INTERACTIVE_MODEL"
+    }
+  ]
+}

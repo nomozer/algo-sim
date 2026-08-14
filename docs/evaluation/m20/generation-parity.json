@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-14T07:42:15.910Z",
+  "generatedAt": "2026-08-14T07:51:49.255Z",
   "note": "head được đóng dấu bởi scripts/evidence.mjs khi chạy qua công cụ trình duyệt; bảng này sinh từ vitest nên dùng kèm commit chứa nó",
   "pipelineSources": [
     "composed",

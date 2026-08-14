@@ -528,6 +528,21 @@ lần. Cách ly bằng DỌN STATE, không bằng khởi động lại tiến tr
 một-server-mỗi-kịch-bản không lọt im lặng. Cấp sẵn `loadTarget`/`snapshot`/
 `dispatch`/`clickText`/`scenario`.
 
+### `frontend/src/simulations/interaction-semantics.test.ts` (M20 W12-B0) · offline
+Trả lời câu hỏi cổng cho từng target: **"khi ĐÓNG thử thách, học sinh thao tác
+lên cái gì?"** — "một phương án trả lời" KHÔNG phải câu trả lời hợp lệ, nó thuộc
+THỬ THÁCH.
+Phân loại theo HAI VẾ: action phải đổi được state của CHÍNH module (thử `apply`,
+so state, config lấy từ danh mục mẫu đã validate) VÀ có affordance phát ra nó
+trong renderer miền (§14 `AFFORDANCE_MISSING`).
+⚠️ Hai lần đếm sai đã ghi trong file: (1) quét cả thư mục miền nên mọi target
+thừa hưởng mọi action của miền → 23/23 "interactive", trong khi `algorithm.scan`
+có `apply: (state) => state`; (2) gộp "probe chưa trúng giá trị thật" vào
+TRACE_MODEL → hạ cấp target thao tác được vì phép đo hẹp. Nay có ba mức:
+`INTERACTIVE_MODEL` · `TRACE_MODEL` (xác nhận bằng `apply` đồng nhất) ·
+`PROBE_LIMITED` (chưa kết luận). Artifact:
+`docs/evaluation/m20/w12-interaction-semantics.json`.
+
 ### `frontend/scripts/quiz-dominance-w12.mjs` (M20 W12-A) · offline (cần `npm run dev`)
 Hỏi: khi mở thử thách, CƠ CHẾ còn là khối lớn nhất trên màn hình không? Đo tỉ lệ
 `chiều cao khối thử thách / chiều cao sân khấu` — không đo bề rộng, vì cả hai

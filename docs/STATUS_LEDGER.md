@@ -167,6 +167,9 @@ người học.
 | 9 target còn lại | **PROBE_UNVERIFIED** | **KHÔNG phải khiếm khuyết sản phẩm.** Probe chưa dùng đúng từ vựng action của miền (`logic` chỉ nhận `toggle`, `network` nhận `net_*`, `tree`/`database` chưa đọc hợp đồng). Phải đọc hợp đồng rồi chạy lại trước khi kết luận bất cứ điều gì | **W12 tiếp** |
 | Mùi quiz — `packet_routing` | **ĐÃ SỬA (W12-A)** | đo được 111px/180px = **0,62** (thử thách gần bằng ⅔ cơ chế). Sửa ở CHỦ SỞ HỮU CHUNG `.predict-bar` (dải ngang biết xuống dòng), không vá riêng network → **0,34**, 2 hàng → 1 hàng | — |
 | Guard W6 đo sai tầng | **ĐÃ SỬA (W12-A)** | W6 chỉ soi `.result-banner` có `fit-content`; băng gọn thật nhưng HỘP CHỨA nó thì không. Guard mới đo cả khối | — |
+| Ngữ nghĩa tương tác 23 target | **15 / 3 / 5** | `INTERACTIVE_MODEL` 15 · `TRACE_MODEL` 3 (xác nhận `apply` đồng nhất) · `PROBE_LIMITED` 5 (chưa kết luận). Câu hỏi cổng: "đóng thử thách rồi, học sinh thao tác lên cái gì?" | **W12 tiếp** |
+| `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
+| Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
 | `WAVE4_INTERACTION_CERTIFICATION` | **NO_EVIDENCE — không đổi** | chỉ nâng khi đủ 23/23 có bằng chứng tươi | **W12** |
 | `WAVE6_BROWSER_EXPERIENCE` | **PARTIAL — không đổi** | chín màn trải nghiệm chưa chạy | **W12** |
