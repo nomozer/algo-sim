@@ -48,3 +48,44 @@ export declare function assertFresh(path: string): {
   reason: string | null;
   data: unknown;
 };
+
+/* ─── LƯỢT CHỨNG NHẬN — nguồn phải đứng yên từ đầu tới cuối lượt ─────────── */
+
+export declare const SWEEP_VALID: "CERTIFICATION_SWEEP_VALID";
+export declare const SWEEP_INVALID: "CERTIFICATION_SWEEP_INVALID";
+export declare const SWEEP_FAULTS: {
+  DIRTY_AT_START: "SOURCE_DIRTY_AT_SWEEP_START";
+  DIRTY_AT_END: "SOURCE_DIRTY_AT_SWEEP_END";
+  HEAD_MOVED: "HEAD_MOVED_DURING_SWEEP";
+  FINGERPRINT_CHANGED: "SOURCE_FINGERPRINT_CHANGED_DURING_SWEEP";
+};
+
+export interface SweepBegin {
+  tool: string;
+  startedAt: string;
+  headBefore: string;
+  sourceFingerprintBefore: string;
+  dirtyBefore: string[];
+}
+
+export interface SweepRecord extends SweepBegin {
+  endedAt: string;
+  headAfter: string;
+  sourceFingerprintAfter: string;
+  dirtyAfter: string[];
+}
+
+export declare function sweepBegin(tool: string): SweepBegin;
+export declare function sweepEnd(begin: SweepBegin): SweepRecord;
+export declare function sweepVerdict(sweep: unknown): {
+  state: typeof SWEEP_VALID | typeof SWEEP_INVALID;
+  faults: string[];
+};
+
+export declare function crossCheckFreshness(paths: string[]): {
+  rows: { path: string; state: ProvenanceState; sourceFingerprint: string | null }[];
+  counts: Record<string, number>;
+  uniqueFingerprints: number;
+  fingerprints: string[];
+  ok: boolean;
+};

@@ -718,6 +718,21 @@ Chủ sở hữu DUY NHẤT của nhãn `FULL_PRODUCT_GATE_PASS`. Danh sách c�
 trong mảng `GATES` và bị `test-tiers.test.ts` khoá — bỏ một cổng mà vẫn phát
 nhãn là chứng nhận một HEAD chưa được kiểm.
 
+### `frontend/scripts/certify-sweep-w12.mjs` (M20 W12) · LƯỢT CHỨNG NHẬN · cần Chrome
+Chủ sở hữu của bất biến **source-freeze**: chụp `HEAD`/`sourceFingerprint`/cây
+bẩn ở HAI đầu lượt, chạy toàn bộ cổng con W12 (`GATES` — 1 DERIVED + 7 BROWSER),
+rồi đòi nguồn y nguyên và `uniqueFingerprints === 1`. Vi phạm ⇒
+`CERTIFICATION_SWEEP_INVALID`, thoát != 0.
+
+Vì sao cần dù mọi cổng con đã có `provenance()`: `provenanceVerdict` phán MỘT
+artifact tại MỘT thời điểm, nên bảy artifact đo trên bảy trạng thái nguồn khác
+nhau vẫn qua được từng cổng rồi được cộng thành một tuyên bố COMPLETE về một sản
+phẩm chưa từng tồn tại. Đo được điều đó phải nhìn cả LƯỢT. Khoá bởi
+`src/certification-sweep.test.ts` (tiêm lỗi từng ca + chặn cổng con rụng im lặng).
+
+Primitive nằm ở `evidence.mjs`: `sweepBegin/sweepEnd/sweepVerdict`,
+`crossCheckFreshness`, `SWEEP_FAULTS`.
+
 ### `frontend/src/test-tiers.test.ts` (M20 W8) · offline
 Kiểm chính bộ chọn theo HAI CHIỀU (thiếu: chủ sở hữu dùng chung thu về một test
 hẹp ⇒ đỏ · thừa: renderer lẻ kéo cả kho ⇒ đỏ) và khoá ngữ nghĩa nhãn: chỉ T3

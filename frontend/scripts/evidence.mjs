@@ -168,6 +168,106 @@ export function provenanceVerdict(data) {
 }
 
 /**
+ * ─── LƯỢT CHỨNG NHẬN (W12) — VÌ SAO CẦN THÊM MỘT TẦNG NỮA ─────────────────
+ *
+ * `provenanceVerdict` phán được MỘT artifact. Nó không phán được thứ đã làm hỏng
+ * cả bộ bằng chứng W12: **quy trình**.
+ *
+ *     sửa mã  →  chạy chứng nhận trên cây bẩn  →  commit mã
+ *             →  artifact lập tức STALE_SOURCE / DIRTY_SOURCE
+ *
+ * Mỗi artifact riêng lẻ vẫn "đúng số" lúc đo, nên không cổng nào kêu. Cái sai
+ * nằm ở chỗ bảy artifact được đo trên BẢY trạng thái nguồn khác nhau rồi ghép
+ * lại thành một tuyên bố COMPLETE. Đo được điều đó thì phải chụp nguồn ở HAI
+ * đầu của lượt chạy và đòi chúng bằng nhau.
+ *
+ * Mã lý do là hằng số để test tiêm được từng ca một; một cổng chỉ trả true/false
+ * thì không chứng minh được nó đỏ vì ĐÚNG lý do.
+ */
+export const SWEEP_VALID = "CERTIFICATION_SWEEP_VALID";
+export const SWEEP_INVALID = "CERTIFICATION_SWEEP_INVALID";
+
+export const SWEEP_FAULTS = {
+  DIRTY_AT_START: "SOURCE_DIRTY_AT_SWEEP_START",
+  DIRTY_AT_END: "SOURCE_DIRTY_AT_SWEEP_END",
+  HEAD_MOVED: "HEAD_MOVED_DURING_SWEEP",
+  FINGERPRINT_CHANGED: "SOURCE_FINGERPRINT_CHANGED_DURING_SWEEP",
+};
+
+/** Chụp nguồn TRƯỚC lượt chứng nhận. Cây bẩn ở đây là hỏng ngay từ đầu. */
+export function sweepBegin(tool) {
+  return {
+    tool,
+    startedAt: new Date().toISOString(),
+    headBefore: gitHead(),
+    sourceFingerprintBefore: sourceFingerprint(),
+    dirtyBefore: dirtyRelevantSources(),
+  };
+}
+
+/** Chụp nguồn SAU lượt chứng nhận, trên cùng khối `begin`. */
+export function sweepEnd(begin) {
+  return {
+    ...begin,
+    endedAt: new Date().toISOString(),
+    headAfter: gitHead(),
+    sourceFingerprintAfter: sourceFingerprint(),
+    dirtyAfter: dirtyRelevantSources(),
+  };
+}
+
+/**
+ * Bốn điều kiện, mỗi cái một mã lý do. Nguồn KHÔNG được nhúc nhích giữa lượt —
+ * đầu ra chứng nhận chỉ được rơi vào `docs/evaluation/`.
+ */
+export function sweepVerdict(sweep) {
+  const faults = [];
+  if (!sweep || typeof sweep !== "object") {
+    return { state: SWEEP_INVALID, faults: ["SWEEP_RECORD_MISSING"] };
+  }
+  if (sweep.dirtyBefore?.length) {
+    faults.push(`${SWEEP_FAULTS.DIRTY_AT_START}: ${sweep.dirtyBefore.slice(0, 3).join(", ")}`);
+  }
+  if (sweep.dirtyAfter?.length) {
+    faults.push(`${SWEEP_FAULTS.DIRTY_AT_END}: ${sweep.dirtyAfter.slice(0, 3).join(", ")}`);
+  }
+  if (sweep.headBefore !== sweep.headAfter) {
+    faults.push(`${SWEEP_FAULTS.HEAD_MOVED}: ${sweep.headBefore} → ${sweep.headAfter}`);
+  }
+  if (sweep.sourceFingerprintBefore !== sweep.sourceFingerprintAfter) {
+    faults.push(
+      `${SWEEP_FAULTS.FINGERPRINT_CHANGED}: ` +
+      `${sweep.sourceFingerprintBefore} → ${sweep.sourceFingerprintAfter}`,
+    );
+  }
+  return { state: faults.length ? SWEEP_INVALID : SWEEP_VALID, faults };
+}
+
+/**
+ * KIỂM CHÉO NHIỀU ARTIFACT — chặn bộ bằng chứng TRỘN dấu vân tay.
+ *
+ * Bảy artifact cùng FRESH vẫn có thể là bảy trạng thái nguồn khác nhau nếu đọc
+ * từng cái một ở những thời điểm khác nhau. Điều kiện của một bộ chứng nhận là
+ * `uniqueFingerprints === 1`.
+ */
+export function crossCheckFreshness(paths) {
+  const rows = paths.map((p) => {
+    const r = assertFresh(p);
+    return { path: p, state: r.state, sourceFingerprint: r.data?.sourceFingerprint ?? null };
+  });
+  const fps = new Set(rows.filter((r) => r.sourceFingerprint).map((r) => r.sourceFingerprint));
+  const counts = {};
+  for (const r of rows) counts[r.state] = (counts[r.state] ?? 0) + 1;
+  return {
+    rows,
+    counts,
+    uniqueFingerprints: fps.size,
+    fingerprints: [...fps],
+    ok: rows.every((r) => r.state === "FRESH") && fps.size === 1,
+  };
+}
+
+/**
  * Đọc lại một artifact và phán nó có chứng nhận được mã nguồn HIỆN TẠI không.
  * Trả `{ ok, state, reason, data }` — người gọi quyết định thoát hay báo cáo.
  */

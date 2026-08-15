@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
 import { publicCatalog } from "../data/offline-catalog";
+import { provenance } from "../../scripts/evidence.mjs";
 import type { SimulationModule } from "./types";
 
 /**
@@ -298,8 +299,13 @@ describe("W12-B0 — bốn loại hành động, phân loại trung thực", () 
       const dir = new URL("../../../docs/evaluation/m20/", import.meta.url)
         .pathname.replace(/^\/([A-Za-z]:)/, "$1");
       mkdirSync(dir, { recursive: true });
+      /* XUẤT XỨ, KHÔNG CHỈ DẤU THỜI GIAN.
+         Artifact này là ĐẦU VÀO của `certify-viewports-w12.mjs`, nhưng suốt W12
+         nó chỉ có `generatedAt` ⇒ `UNKNOWN_PROVENANCE`. Một lượt chứng nhận
+         không được nhận đầu vào mà chính nó không phán được trạng thái nguồn —
+         nếu không, một mắt xích của bộ bằng chứng vĩnh viễn nằm ngoài cổng. */
       writeFileSync(join(dir, "w12-interaction-semantics.json"), JSON.stringify({
-        generatedAt: new Date().toISOString(),
+        ...provenance("interaction-semantics.test", { targets: rows.length }),
         kind: "DESCRIPTIVE_MANIFEST",
         note: "Dẫn từ hợp đồng module + affordance trong renderer miền. " +
               "KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
