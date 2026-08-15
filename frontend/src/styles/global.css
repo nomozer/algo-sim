@@ -825,12 +825,35 @@ html {
    `gap` ở đây là khoảng cách GIỮA CÁC VÙNG (lớn), còn khoảng cách trong một vùng
    do `.control-zone` quyết (nhỏ). Nhờ hai mức đó mà mắt đọc ra nhóm mà không cần
    thêm đường kẻ nào. */
+/* ── W12 — KHAY ĐIỀU KHIỂN XUỐNG DÒNG THÌ PHẢI CÓ NEO ────────────────────
+ *
+ * Bản trước là `flex-wrap` trần: khi chật, cụm phụ (Ẩn các bước · Tốc độ ·
+ * Khám phá · Thử thách) rớt xuống dòng hai và bắt đầu từ mép trái, không thẳng
+ * hàng với thứ gì ở dòng trên — đọc ra "lệch" chứ không đọc ra "một nhóm khác".
+ *
+ * Và nó không chỉ xấu: khay là `position: sticky; bottom: 0`, còn khoảng bù
+ * `.panel-center { padding-bottom }` được tính theo khay MỘT DÒNG (đo 90px ở
+ * 1024, 119px ở 768). Rớt thành hai dòng là khay cao vượt khoảng bù, và nó ĐÈ
+ * LÊN dải tham số cuối thẻ — chụp được ở `sum_if`: khay phủ mất chính ô
+ * "Phép so sánh / Ngưỡng" mà học sinh cần để thao tác.
+ *
+ * Nên hai dòng nay là CÓ CHỦ ĐÍCH, không phải tai nạn: một lưới hai hàng, cùng
+ * một mép trái, hàng phụ tự canh đều. Khoảng bù ở dưới tăng theo. */
 .player-controls {
   display: flex;
   align-items: center;
   gap: var(--sp-md);
-  row-gap: var(--sp-xs);
+  row-gap: var(--sp-sm);
   flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Cụm phụ luôn chiếm trọn một hàng riêng và canh cùng mép trái với hàng chính,
+   thay vì "rớt xuống chỗ nào còn trống". */
+.player-controls .control-zone-aux {
+  flex: 1 0 100%;
+  justify-content: flex-start;
+  gap: var(--sp-md);
 }
 
 .control-zone {
@@ -1097,10 +1120,24 @@ html {
   background: var(--ink-faint);
 }
 
+/* ── W12 — THUYẾT MINH LÀ MỘT DÒNG CHỮ, KHÔNG PHẢI MỘT BONG BÓNG ─────────
+ *
+ * Bản trước là khối bo tròn nền xám nổi trên nền trắng. Hai vấn đề:
+ *
+ *   1. Nó đọc thành BONG BÓNG HỘI THOẠI — tông của một trợ lý đang nói chuyện,
+ *      trong khi đây là lời giải thích cơ chế do engine tất định sinh ra.
+ *   2. Nó là hình khối lớn thứ hai trên thẻ, cạnh tranh trực tiếp với sân khấu.
+ *      Sức nặng thị giác phải thuộc về CƠ CHẾ (`certify-visual-weight-w12`);
+ *      một khối nền đặc cùng cỡ kéo mắt khỏi chỗ cần nhìn.
+ *
+ * Nay là dải phẳng có VẠCH TRÁI — đúng khuôn đã khai ở đầu file cho
+ * `.error-banner` / `.narration-bar` / `.feedback-bar`: vạch trái đánh dấu
+ * "đây là một dải thông tin" mà không dựng thêm một khối nền nào. */
 .narration-bar {
-  background: var(--canvas-soft);
-  border-radius: var(--rounded-md);
-  padding: var(--sp-sm) var(--sp-md);
+  background: none;
+  border-left: 2px solid var(--hairline);
+  border-radius: 0;
+  padding: var(--sp-xs) 0 var(--sp-xs) var(--sp-md);
   font-size: 15px;
   color: var(--ink-secondary);
   min-height: 46px;
@@ -2107,7 +2144,11 @@ html {
      một khoảng thở. Guard `accept-sorting.mjs` khẳng định thanh không chồng lên
      vùng hành động ở cả ba viewport — nó sẽ đỏ nếu thanh cao vượt số này. */
   .panel-center {
-    padding-bottom: 140px;
+    /* W12 — KHAY NAY LUÔN HAI HÀNG (cụm phụ chiếm trọn một hàng riêng), nên
+       khoảng bù tính theo hàng cao nhất chứ không theo khay một dòng. Thiếu vế
+       này thì khay đè lên dải tham số cuối thẻ — đã chụp được ở `sum_if`, nơi
+       nó phủ mất chính ô "Phép so sánh / Ngưỡng". */
+    padding-bottom: 190px;
   }
 
   .panel-right {
