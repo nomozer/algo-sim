@@ -1,0 +1,372 @@
+{
+  "provenanceVersion": 2,
+  "sourceFingerprint": "edffcbdc0d7461a8",
+  "dirtyRelevantSources": [],
+  "head": "35203d515045b3293dfac5d91455d64723099a5b",
+  "dirty": false,
+  "generatedAt": "2026-08-15T18:13:35.838Z",
+  "tool": "certify-representation-w12",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "targets": 23
+  },
+  "policyStatement": "MỘT biểu diễn công khai cho mỗi target, do hệ chọn theo cơ chế. Renderer thay thế được giữ NỘI BỘ cho parity/kiểm thử. Công tắc cho học sinh chỉ sống khi có nhu cầu sư phạm đủ mạnh để biện minh việc bắt người học chọn — hiện KHÔNG target nào đạt ngưỡng đó.",
+  "rows": [
+    {
+      "target": "algorithm.binary_search",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.bounded_control_flow",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.bubble_sort",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.count_if",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.find_max",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.find_min",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.insertion_sort",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.linear_search",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.scan",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.selection_sort",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "algorithm.sum_if",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "binary.base_conversion",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "binary.character_encoding",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "binary.decimal_to_binary",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "database.relational_table_query",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "generic.rule_scene",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "logic.and_gate",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "logic.boolean_dag",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "network.graph_traversal",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "network.packet_routing",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "network.protocol_encapsulation",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d",
+        "3d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": "3d",
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": "pedagogical",
+      "meaningOfZ": "độ sâu tầng giao thức (Application → Network Access)",
+      "policyProblems": []
+    },
+    {
+      "target": "tree.traversal",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    },
+    {
+      "target": "web.style_model",
+      "currentPublicMode": "2d",
+      "availableModes": [
+        "2d"
+      ],
+      "learnerFacingModes": [],
+      "internalAlternate": null,
+      "alternateStatus": "NO_ALTERNATE_NEEDED",
+      "threeDRole": null,
+      "meaningOfZ": null,
+      "policyProblems": []
+    }
+  ],
+  "dualPublicCount": 0,
+  "violators": [],
+  "parity": [
+    {
+      "target": "network.protocol_encapsulation",
+      "load": "ok",
+      "publicMode": "2d",
+      "internalAlternate": "3d",
+      "modes": [
+        "2d",
+        "3d"
+      ],
+      "renderers": [
+        {
+          "mode": "2d",
+          "kind": "function",
+          "hasRenderer": true
+        },
+        {
+          "mode": "3d",
+          "kind": "object",
+          "hasRenderer": true
+        }
+      ],
+      "STATE_PARITY": true,
+      "CURSOR_PARITY": true,
+      "RESULT_PARITY": true,
+      "ACTION_PARITY": true,
+      "cursorBefore": 0,
+      "cursorAfter": 1,
+      "stepCount": 9,
+      "verdict": "PARITY_PASS"
+    }
+  ],
+  "faults": [
+    {
+      "name": "PUBLIC_DUAL_MODE_WITHOUT_POLICY",
+      "mutation": "gán alternate=ALTERNATE_FOR_EXPLANATION cho bản sao của encap",
+      "mutationObserved": "YES",
+      "detail": "learnerFacingModes: thật=0 · sau tiêm=2",
+      "expected": "RED",
+      "actual": "RED",
+      "ok": true
+    },
+    {
+      "name": "RENDERER_PARITY_STATE_DIVERGENCE",
+      "mutation": "ép bản thay thế đọc state có cursor=999",
+      "mutationObserved": "YES",
+      "expected": "RED",
+      "actual": "RED",
+      "ok": true
+    }
+  ],
+  "ok": true
+}

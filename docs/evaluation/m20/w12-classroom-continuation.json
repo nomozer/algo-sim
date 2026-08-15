@@ -1,0 +1,122 @@
+{
+  "provenanceVersion": 2,
+  "sourceFingerprint": "edffcbdc0d7461a8",
+  "dirtyRelevantSources": [],
+  "head": "35203d515045b3293dfac5d91455d64723099a5b",
+  "dirty": false,
+  "generatedAt": "2026-08-15T18:14:01.570Z",
+  "tool": "certify-classroom-continuation-w12",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "user": "hs.an@algosim.test"
+  },
+  "question": "Học sinh rời workspace rồi đăng nhập lại — bài đang dở có trở lại không?",
+  "scope": "AUTH · CLASS · ASSIGN · PRACTICE · OBSERVE · CONTINUE",
+  "steps": [
+    {
+      "step": "ROUTE_CHECK",
+      "authMeStatus": "200",
+      "present": true
+    },
+    {
+      "step": "LOGIN",
+      "ok": true,
+      "user": "hs.an@algosim.test",
+      "role": "student"
+    },
+    {
+      "step": "ASSIGNMENT_LIST",
+      "count": 1,
+      "first": {
+        "id": 1,
+        "title": "Bảng chân trị của cổng AND",
+        "simulationId": "logic.and_gate",
+        "myPractice": {
+          "cursor": 1,
+          "stepCount": 4,
+          "completed": false,
+          "updatedAt": "2026-08-15T17:56:31.613745"
+        }
+      }
+    },
+    {
+      "step": "OPEN_ASSIGNMENT",
+      "got": true,
+      "hasEnvelope": true,
+      "simulationId": "logic.and_gate"
+    },
+    {
+      "step": "PRACTICE_ACTION",
+      "loaded": true,
+      "stateChanged": true,
+      "stepCount": null
+    },
+    {
+      "step": "REPORT_PROGRESS",
+      "sent": "ok",
+      "cursor": 1
+    },
+    {
+      "step": "LEAVE",
+      "loggedOut": true,
+      "meStatus": 200,
+      "anonEntitlement": false,
+      "localStorageKeys": 0
+    },
+    {
+      "step": "RETURN",
+      "login": {
+        "ok": true,
+        "user": "hs.an@algosim.test",
+        "role": "student"
+      },
+      "restoredPractice": {
+        "cursor": 1,
+        "stepCount": 4,
+        "completed": false,
+        "updatedAt": "2026-08-15T18:13:59.985173"
+      }
+    }
+  ],
+  "result": {
+    "leaveWasReal": true,
+    "ok": true,
+    "reason": null,
+    "cursorReported": 1,
+    "cursorRestored": 1,
+    "practiceBefore": {
+      "cursor": 1,
+      "stepCount": 4,
+      "completed": false,
+      "updatedAt": "2026-08-15T17:56:31.613745"
+    },
+    "practiceAfter": {
+      "cursor": 1,
+      "stepCount": 4,
+      "completed": false,
+      "updatedAt": "2026-08-15T18:13:59.985173"
+    }
+  },
+  "faults": [
+    {
+      "name": "CLASSROOM_PERSISTENCE_REMOVED",
+      "mutation": "đã chặn POST /progress",
+      "mutationObserved": "YES",
+      "detail": "tiến độ trên máy chủ sau khi chặn: {\"cursor\":1,\"stepCount\":4,\"completed\":false,\"updatedAt\":\"2026-08-15T18:13:59.985173\"}",
+      "expected": "RED",
+      "actual": "RED",
+      "ok": true
+    },
+    {
+      "name": "CLASSROOM_RESTORE_MISMATCH",
+      "mutation": "so tiến độ trở lại (1) với kỳ vọng sai (2)",
+      "mutationObserved": "YES",
+      "expected": "RED",
+      "actual": "RED",
+      "ok": true
+    }
+  ],
+  "ok": true
+}

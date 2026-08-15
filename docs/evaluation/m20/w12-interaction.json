@@ -1,10 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "de3007604b68ca47",
+  "sourceFingerprint": "edffcbdc0d7461a8",
   "dirtyRelevantSources": [],
-  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "head": "35203d515045b3293dfac5d91455d64723099a5b",
   "dirty": false,
-  "generatedAt": "2026-08-15T17:15:46.419Z",
+  "generatedAt": "2026-08-15T18:08:28.308Z",
   "tool": "certify-w12",
   "toolVersion": "1",
   "environment": {
@@ -16,19 +16,19 @@
   "rule": "hành động → SimAction → module.apply → state tất định đổi → hệ quả trong DOM",
   "serverStarts": 1,
   "timings": {
-    "startup": 3620,
+    "startup": 3606,
     "scenarios": [
       {
         "name": "algorithm.binary_search",
-        "ms": 864
+        "ms": 852
       },
       {
         "name": "algorithm.bounded_control_flow",
-        "ms": 413
+        "ms": 415
       },
       {
         "name": "algorithm.bubble_sort",
-        "ms": 823
+        "ms": 836
       },
       {
         "name": "algorithm.count_if",
@@ -36,79 +36,79 @@
       },
       {
         "name": "algorithm.find_max",
-        "ms": 821
-      },
-      {
-        "name": "algorithm.find_min",
-        "ms": 825
-      },
-      {
-        "name": "algorithm.insertion_sort",
-        "ms": 834
-      },
-      {
-        "name": "algorithm.linear_search",
-        "ms": 819
-      },
-      {
-        "name": "algorithm.scan",
-        "ms": 416
-      },
-      {
-        "name": "algorithm.selection_sort",
-        "ms": 835
-      },
-      {
-        "name": "algorithm.sum_if",
-        "ms": 831
-      },
-      {
-        "name": "binary.base_conversion",
-        "ms": 820
-      },
-      {
-        "name": "binary.character_encoding",
-        "ms": 824
-      },
-      {
-        "name": "binary.decimal_to_binary",
-        "ms": 833
-      },
-      {
-        "name": "database.relational_table_query",
         "ms": 823
       },
       {
-        "name": "generic.rule_scene",
-        "ms": 822
+        "name": "algorithm.find_min",
+        "ms": 828
       },
       {
-        "name": "logic.and_gate",
-        "ms": 825
+        "name": "algorithm.insertion_sort",
+        "ms": 824
       },
       {
-        "name": "logic.boolean_dag",
-        "ms": 840
+        "name": "algorithm.linear_search",
+        "ms": 2020
       },
       {
-        "name": "network.graph_traversal",
-        "ms": 838
+        "name": "algorithm.scan",
+        "ms": 415
       },
       {
-        "name": "network.packet_routing",
-        "ms": 835
-      },
-      {
-        "name": "network.protocol_encapsulation",
-        "ms": 423
-      },
-      {
-        "name": "tree.traversal",
+        "name": "algorithm.selection_sort",
         "ms": 834
       },
       {
+        "name": "algorithm.sum_if",
+        "ms": 833
+      },
+      {
+        "name": "binary.base_conversion",
+        "ms": 824
+      },
+      {
+        "name": "binary.character_encoding",
+        "ms": 828
+      },
+      {
+        "name": "binary.decimal_to_binary",
+        "ms": 830
+      },
+      {
+        "name": "database.relational_table_query",
+        "ms": 834
+      },
+      {
+        "name": "generic.rule_scene",
+        "ms": 821
+      },
+      {
+        "name": "logic.and_gate",
+        "ms": 834
+      },
+      {
+        "name": "logic.boolean_dag",
+        "ms": 819
+      },
+      {
+        "name": "network.graph_traversal",
+        "ms": 823
+      },
+      {
+        "name": "network.packet_routing",
+        "ms": 831
+      },
+      {
+        "name": "network.protocol_encapsulation",
+        "ms": 416
+      },
+      {
+        "name": "tree.traversal",
+        "ms": 822
+      },
+      {
         "name": "web.style_model",
-        "ms": 825
+        "ms": 823
       }
     ],
     "cleanup": 1
@@ -120,7 +120,7 @@
     {
       "target": "algorithm.binary_search",
       "name": "algorithm.binary_search",
-      "ms": 864,
+      "ms": 852,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -131,7 +131,7 @@
     {
       "target": "algorithm.bounded_control_flow",
       "name": "algorithm.bounded_control_flow",
-      "ms": 413,
+      "ms": 415,
       "pass": true,
       "status": "TRACE_MODEL",
       "action": "—",
@@ -142,7 +142,7 @@
     {
       "target": "algorithm.bubble_sort",
       "name": "algorithm.bubble_sort",
-      "ms": 823,
+      "ms": 836,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -164,7 +164,7 @@
     {
       "target": "algorithm.find_max",
       "name": "algorithm.find_max",
-      "ms": 821,
+      "ms": 823,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -175,7 +175,7 @@
     {
       "target": "algorithm.find_min",
       "name": "algorithm.find_min",
-      "ms": 825,
+      "ms": 828,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -186,7 +186,7 @@
     {
       "target": "algorithm.insertion_sort",
       "name": "algorithm.insertion_sort",
-      "ms": 834,
+      "ms": 824,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -197,7 +197,7 @@
     {
       "target": "algorithm.linear_search",
       "name": "algorithm.linear_search",
-      "ms": 819,
+      "ms": 2020,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -208,7 +208,7 @@
     {
       "target": "algorithm.scan",
       "name": "algorithm.scan",
-      "ms": 416,
+      "ms": 415,
       "pass": true,
       "status": "TRACE_MODEL",
       "action": "—",
@@ -219,7 +219,7 @@
     {
       "target": "algorithm.selection_sort",
       "name": "algorithm.selection_sort",
-      "ms": 835,
+      "ms": 834,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -230,7 +230,7 @@
     {
       "target": "algorithm.sum_if",
       "name": "algorithm.sum_if",
-      "ms": 831,
+      "ms": 833,
       "pass": true,
       "status": "CERTIFIED",
       "action": "whatif_swap",
@@ -241,7 +241,7 @@
     {
       "target": "binary.base_conversion",
       "name": "binary.base_conversion",
-      "ms": 820,
+      "ms": 824,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
@@ -252,7 +252,7 @@
     {
       "target": "binary.character_encoding",
       "name": "binary.character_encoding",
-      "ms": 824,
+      "ms": 828,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
@@ -263,7 +263,7 @@
     {
       "target": "binary.decimal_to_binary",
       "name": "binary.decimal_to_binary",
-      "ms": 833,
+      "ms": 830,
       "pass": true,
       "status": "CERTIFIED",
       "action": "toggle",
@@ -274,7 +274,7 @@
     {
       "target": "database.relational_table_query",
       "name": "database.relational_table_query",
-      "ms": 823,
+      "ms": 834,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
@@ -285,7 +285,7 @@
     {
       "target": "generic.rule_scene",
       "name": "generic.rule_scene",
-      "ms": 822,
+      "ms": 821,
       "pass": true,
       "status": "CERTIFIED",
       "action": "toggle",
@@ -296,7 +296,7 @@
     {
       "target": "logic.and_gate",
       "name": "logic.and_gate",
-      "ms": 825,
+      "ms": 834,
       "pass": true,
       "status": "CERTIFIED",
       "action": "toggle",
@@ -307,7 +307,7 @@
     {
       "target": "logic.boolean_dag",
       "name": "logic.boolean_dag",
-      "ms": 840,
+      "ms": 819,
       "pass": true,
       "status": "CERTIFIED",
       "action": "toggle",
@@ -318,7 +318,7 @@
     {
       "target": "network.graph_traversal",
       "name": "network.graph_traversal",
-      "ms": 838,
+      "ms": 823,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
@@ -329,7 +329,7 @@
     {
       "target": "network.packet_routing",
       "name": "network.packet_routing",
-      "ms": 835,
+      "ms": 831,
       "pass": true,
       "status": "CERTIFIED",
       "action": "net_disconnect",
@@ -340,7 +340,7 @@
     {
       "target": "network.protocol_encapsulation",
       "name": "network.protocol_encapsulation",
-      "ms": 423,
+      "ms": 416,
       "pass": true,
       "status": "TRACE_MODEL",
       "action": "—",
@@ -351,7 +351,7 @@
     {
       "target": "tree.traversal",
       "name": "tree.traversal",
-      "ms": 834,
+      "ms": 822,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",
@@ -362,7 +362,7 @@
     {
       "target": "web.style_model",
       "name": "web.style_model",
-      "ms": 825,
+      "ms": 823,
       "pass": true,
       "status": "CERTIFIED",
       "action": "set_param",

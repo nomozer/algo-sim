@@ -1,10 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "de3007604b68ca47",
+  "sourceFingerprint": "edffcbdc0d7461a8",
   "dirtyRelevantSources": [],
-  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "head": "35203d515045b3293dfac5d91455d64723099a5b",
   "dirty": false,
-  "generatedAt": "2026-08-15T17:16:46.405Z",
+  "generatedAt": "2026-08-15T18:09:31.397Z",
   "tool": "certify-experience-w12",
   "toolVersion": "1",
   "environment": {
@@ -205,7 +205,7 @@
       "stepsDistinct": 1,
       "traceSteps": 0,
       "appendOnly": false,
-      "stageAtStart": "HỆ CƠ SỐĐổi 13  ang nhị phânĐổi thập phân  ang nhị phân · khám phá · 2D81+841+420011+1Bấm vào từng bit để bật/tắt. Nhị phân 1101 = 13 (hệ thập phân). ¶ /,var(--ink-muted)/,var(--primary)/,#fff/,var(--ink-faint)/,/,var(--"
+      "stageAtStart": "HỆ CƠ SỐĐổi 13  ang nhị phânĐổi thập phân  ang nhị phân · khám phá · 2D81+841+420011+1Bấm vào từng bit để bật/tắt. Nhị phân 1101 = 13 (hệ thập phân). ¶ /sim-affordance,var(--ink-muted)/,var(--primary)/,#fff/,var(--ink-fa"
     },
     {
       "target": "database.relational_table_query",
@@ -216,7 +216,7 @@
         "value": "ten"
       },
       "candidatesTried": 1,
-      "stepsDistinct": 9,
+      "stepsDistinct": 14,
       "traceSteps": 19,
       "appendOnly": false,
       "stageAtStart": "TRUY VẤN BẢNGLọc học  inh có điểm từ 8 trở lên rồi  ắp theo điểmTruy vấn bảng dữ liệu · kết hợp · 2DLọcHọ tênĐiểmTổ=!=>>=<<=contain Sắp— không  ắp —Họ tênĐiểmTổtăng dầngiảm dầnCột hiệnHọ tênĐiểmTổ1.Lọc2.Chọn cột3.Sắp xếp"
@@ -296,7 +296,7 @@
       "stepsDistinct": 9,
       "traceSteps": 9,
       "appendOnly": false,
-      "stageAtStart": "MẠNGDữ liệu được đóng gói qua các tầng TCP/IP như thế nào?Đóng gói dữ liệu qua các tầng TCP/IP · từng bước · 2D / 3DCách xem2D3DMÁY GỬITầng Ứng dụngDữ liệu ứng dụngTầng Giao vậnTầng Liên mạngTầng Truy cập mạngMÁY NHẬNTần"
+      "stageAtStart": "MẠNGDữ liệu được đóng gói qua các tầng TCP/IP như thế nào?Đóng gói dữ liệu qua các tầng TCP/IP · từng bước · 2D / 3DMÁY GỬITầng Ứng dụngDữ liệu ứng dụngTầng Giao vậnTầng Liên mạngTầng Truy cập mạngMÁY NHẬNTầng Ứng dụngTầ"
     },
     {
       "target": "tree.traversal",

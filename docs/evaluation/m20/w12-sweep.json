@@ -1,24 +1,24 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "de3007604b68ca47",
+  "sourceFingerprint": "edffcbdc0d7461a8",
   "dirtyRelevantSources": [],
-  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "head": "35203d515045b3293dfac5d91455d64723099a5b",
   "dirty": false,
-  "generatedAt": "2026-08-15T17:20:12.633Z",
+  "generatedAt": "2026-08-15T18:14:01.963Z",
   "tool": "certify-sweep-w12",
   "toolVersion": "1",
   "environment": {
     "node": "v24.13.0",
     "platform": "win32",
-    "gates": 8
+    "gates": 12
   },
-  "startedAt": "2026-08-15T17:15:22.004Z",
-  "headBefore": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
-  "sourceFingerprintBefore": "de3007604b68ca47",
+  "startedAt": "2026-08-15T18:08:02.739Z",
+  "headBefore": "35203d515045b3293dfac5d91455d64723099a5b",
+  "sourceFingerprintBefore": "edffcbdc0d7461a8",
   "dirtyBefore": [],
-  "endedAt": "2026-08-15T17:20:12.334Z",
-  "headAfter": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
-  "sourceFingerprintAfter": "de3007604b68ca47",
+  "endedAt": "2026-08-15T18:14:01.585Z",
+  "headAfter": "35203d515045b3293dfac5d91455d64723099a5b",
+  "sourceFingerprintAfter": "edffcbdc0d7461a8",
   "dirtyAfter": [],
   "verdict": {
     "state": "CERTIFICATION_SWEEP_VALID",
@@ -37,21 +37,21 @@
       "kind": "BROWSER",
       "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-interaction.json",
       "ok": true,
-      "seconds": 21.7
+      "seconds": 22.9
     },
     {
       "name": "trải nghiệm (công cụ vs chỉ lộ dần)",
       "kind": "BROWSER",
       "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-experience-audit.json",
       "ok": true,
-      "seconds": 60
+      "seconds": 63.1
     },
     {
       "name": "sức nặng thị giác",
       "kind": "BROWSER",
       "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-visual-weight.json",
       "ok": true,
-      "seconds": 15.9
+      "seconds": 15.8
     },
     {
       "name": "tiêm lỗi sức nặng thị giác",
@@ -72,14 +72,42 @@
       "kind": "BROWSER",
       "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-scroll-shell.json",
       "ok": true,
-      "seconds": 28.2
+      "seconds": 28.1
     },
     {
       "name": "mùi quiz",
       "kind": "BROWSER",
       "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-quiz-dominance.json",
       "ok": true,
-      "seconds": 96.7
+      "seconds": 105.4
+    },
+    {
+      "name": "khả năng tiếp cận (phím thật)",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-a11y.json",
+      "ok": true,
+      "seconds": 25.4
+    },
+    {
+      "name": "biểu diễn công khai + parity 2D↔3D",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-representation.json",
+      "ok": true,
+      "seconds": 4.5
+    },
+    {
+      "name": "kịch bản dạy học (thử thách đóng)",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-teaching-walkthrough.json",
+      "ok": true,
+      "seconds": 20.2
+    },
+    {
+      "name": "tiếp nối lớp học (cần backend + seed)",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-classroom-continuation.json",
+      "ok": true,
+      "seconds": 5.5
     }
   ],
   "crossCheck": {
@@ -87,50 +115,70 @@
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-interaction-semantics.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
       },
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-interaction.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
       },
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-experience-audit.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
       },
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-visual-weight.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
       },
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-visual-weight-faults.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
       },
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-viewport-matrix.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
       },
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-scroll-shell.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
       },
       {
         "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-quiz-dominance.json",
         "state": "FRESH",
-        "sourceFingerprint": "de3007604b68ca47"
+        "sourceFingerprint": "edffcbdc0d7461a8"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-a11y.json",
+        "state": "FRESH",
+        "sourceFingerprint": "edffcbdc0d7461a8"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-representation.json",
+        "state": "FRESH",
+        "sourceFingerprint": "edffcbdc0d7461a8"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-teaching-walkthrough.json",
+        "state": "FRESH",
+        "sourceFingerprint": "edffcbdc0d7461a8"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-classroom-continuation.json",
+        "state": "FRESH",
+        "sourceFingerprint": "edffcbdc0d7461a8"
       }
     ],
     "counts": {
-      "FRESH": 8
+      "FRESH": 12
     },
     "uniqueFingerprints": 1,
     "fingerprints": [
-      "de3007604b68ca47"
+      "edffcbdc0d7461a8"
     ],
     "ok": true
   },

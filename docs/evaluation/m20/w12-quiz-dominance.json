@@ -1,10 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "de3007604b68ca47",
+  "sourceFingerprint": "edffcbdc0d7461a8",
   "dirtyRelevantSources": [],
-  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "head": "35203d515045b3293dfac5d91455d64723099a5b",
   "dirty": false,
-  "generatedAt": "2026-08-15T17:20:12.320Z",
+  "generatedAt": "2026-08-15T18:13:05.911Z",
   "tool": "quiz-dominance-w12",
   "toolVersion": "1",
   "environment": {
@@ -64,7 +64,7 @@
       "inline": null,
       "rows": 0,
       "verdictChars": 0,
-      "cardH": 486,
+      "cardH": 509,
       "ratio": null,
       "quizDominance": "KHÔNG CÓ THỬ THÁCH"
     },
@@ -80,7 +80,7 @@
       "inline": null,
       "rows": 0,
       "verdictChars": 0,
-      "cardH": 526,
+      "cardH": 581,
       "ratio": null,
       "quizDominance": "KHÔNG CÓ THỬ THÁCH"
     },
@@ -96,7 +96,7 @@
       "inline": null,
       "rows": 0,
       "verdictChars": 0,
-      "cardH": 526,
+      "cardH": 621,
       "ratio": null,
       "quizDominance": "KHÔNG CÓ THỬ THÁCH"
     },
@@ -128,7 +128,7 @@
       "inline": null,
       "rows": 0,
       "verdictChars": 0,
-      "cardH": 543,
+      "cardH": 594,
       "ratio": null,
       "quizDominance": "KHÔNG CÓ THỬ THÁCH"
     },
@@ -176,7 +176,7 @@
       "inline": null,
       "rows": 0,
       "verdictChars": 0,
-      "cardH": 521,
+      "cardH": 559,
       "ratio": null,
       "quizDominance": "KHÔNG CÓ THỬ THÁCH"
     },
@@ -248,7 +248,7 @@
       "target": "database.relational_table_query",
       "opened": "không có lối vào",
       "stage": {
-        "h": 181,
+        "h": 182,
         "w": 892,
         "rows": 0
       },
@@ -256,7 +256,7 @@
       "inline": null,
       "rows": 0,
       "verdictChars": 0,
-      "cardH": 493,
+      "cardH": 494,
       "ratio": null,
       "quizDominance": "KHÔNG CÓ THỬ THÁCH"
     },
@@ -312,7 +312,7 @@
       "target": "network.graph_traversal",
       "opened": "không có lối vào",
       "stage": {
-        "h": 432,
+        "h": 474,
         "w": 911,
         "rows": 0
       },
@@ -320,7 +320,7 @@
       "inline": null,
       "rows": 0,
       "verdictChars": 0,
-      "cardH": 700,
+      "cardH": 743,
       "ratio": null,
       "quizDominance": "KHÔNG CÓ THỬ THÁCH"
     },
@@ -349,18 +349,18 @@
       "opened": "mở ở bước 0",
       "stage": {
         "h": 262,
-        "w": 1218,
+        "w": 1112,
         "rows": 0
       },
       "challenge": {
         "h": 61,
-        "w": 1218,
+        "w": 1112,
         "rows": 0
       },
       "inline": null,
       "rows": 1,
       "verdictChars": 0,
-      "cardH": 561,
+      "cardH": 550,
       "ratio": 0.23,
       "quizDominance": "NONE"
     },
