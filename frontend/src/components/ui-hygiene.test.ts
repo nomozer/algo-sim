@@ -348,12 +348,25 @@ describe("(W4B-2B §7) nhãn panel phải — đổi tên có ranh giới, khôn
     }
   });
 
-  it("chế độ xem của renderer generic VẪN là [Quan sát][Chỉnh sửa]", () => {
+  it("renderer generic KHÔNG còn bày cặp tab [Quan sát][Chỉnh sửa] cho học sinh", () => {
+    /* W12 — ĐẢO CHIỀU CÓ CHỦ ĐÍCH. Bài này trước đây khoá SỰ TỒN TẠI của cặp
+       tab; nay nó khoá SỰ VẮNG MẶT, vì cặp tab ấy sai bản chất sản phẩm:
+
+         · chỗ học sinh thao tác thật lại mang nhãn "Quan sát" — đúng cái từ
+           bảo các em chỉ được nhìn;
+         · "Chỉnh sửa" TẮT tương tác học tập để bật công cụ sửa ĐẶC TẢ (thêm
+           nút, nối, xoá) — việc soạn bài, không phải việc học.
+
+       Năng lực sửa đặc tả KHÔNG bị gỡ (`editMode` vẫn còn, mặc định `false`),
+       chỉ thôi có cửa trên bề mặt người học. Guard soi MÃ NGUỒN nên nó bắt được
+       cả trường hợp ai đó dựng lại cặp nút bằng chuỗi khác cách viết. */
     const owner = FILES.find((f) => f.path.endsWith(MODE_SWITCH_OWNER));
     expect(owner, `không tìm thấy ${MODE_SWITCH_OWNER}`).toBeDefined();
     const body = code(owner!.text);
-    expect(body).toContain("Quan sát");
-    expect(body).toContain("Chỉnh sửa");
+    expect(body, "cặp tab chế độ đã quay lại bề mặt học sinh")
+      .not.toMatch(/>\s*Chỉnh sửa\s*</);
+    expect(body, "cặp tab chế độ đã quay lại bề mặt học sinh")
+      .not.toMatch(/>\s*Quan sát\s*</);
   });
 
   it("panel phải tự xưng là GIẢI THÍCH ở đúng component sở hữu nó", () => {

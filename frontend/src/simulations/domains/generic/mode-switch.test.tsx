@@ -68,7 +68,15 @@ describe("mode switch — không đụng engine/mạng", () => {
     expect(state.pos.C).toEqual({ x: 44, y: 33 }); // vị trí đã kéo còn nguyên
   });
 
-  it("M7.14D.1: nút Chỉnh sửa CHỈ hiện khi policy có công cụ thật", () => {
+  it("W12: KHÔNG cảnh nào bày cặp tab chế độ — thao tác trực tiếp luôn bật", () => {
+    /* ĐẢO CHIỀU CÓ CHỦ ĐÍCH. Bài cũ khoá luật "nút Chỉnh sửa chỉ hiện khi policy
+       có công cụ thật" — một luật đúng cho một sản phẩm CÓ chế độ sửa trên bề
+       mặt học sinh. W12 bỏ chính chế độ đó: gõ vào để thêm/sửa đặc tả là việc
+       SOẠN BÀI, không phải việc học.
+
+       Điều phải giữ và nay được khoá chặt hơn: THAO TÁC TRỰC TIẾP không được
+       mất theo. Trước đây nó sống ở nhánh `!editMode`, tức một cú bấm nhầm sang
+       "Chỉnh sửa" là tắt mất bài học. */
     const render = (s: SimulationSpec) =>
       renderToString(
         <GenericWorkspace
@@ -79,8 +87,8 @@ describe("mode switch — không đụng engine/mạng", () => {
         />,
       );
 
-    // spatial → có Chỉnh sửa
-    expect(render(TRIANGLE)).toContain("Chỉnh sửa");
+    // KHÔNG cảnh nào còn cặp tab — kể cả cảnh giàu công cụ nhất (spatial).
+    expect(render(TRIANGLE)).not.toContain("Chỉnh sửa");
 
     // structural → có Chỉnh sửa
     const web = spec({
@@ -94,7 +102,7 @@ describe("mode switch — không đụng engine/mạng", () => {
       interactions: [],
       processes: [],
     });
-    expect(render(web)).toContain("Chỉnh sửa");
+    expect(render(web)).not.toContain("Chỉnh sửa");
 
     // value_only (switch/lamp) → KHÔNG có Chỉnh sửa, nhưng Quan sát vẫn còn
     const gate = spec({
@@ -111,8 +119,11 @@ describe("mode switch — không đụng engine/mạng", () => {
     });
     const gateHtml = render(gate);
     expect(gateHtml).not.toContain("Chỉnh sửa");
-    expect(gateHtml).toContain("Quan sát");
-    expect(gateHtml).toContain("Bấm vào các công tắc"); // tương tác trực tiếp vẫn còn
+    expect(gateHtml).not.toContain("Quan sát");
+    /* VẾ QUAN TRỌNG NHẤT: bỏ chế độ mà mất luôn tương tác thì là đổi một lỗi
+       lấy một lỗi nặng hơn. Lời mời thao tác phải còn nguyên. */
+    expect(gateHtml, "bỏ cặp tab đã làm mất luôn thao tác trực tiếp")
+      .toContain("Bấm vào các công tắc");
 
     // observation (move_along_path) → KHÔNG có Chỉnh sửa
     const packet = spec({

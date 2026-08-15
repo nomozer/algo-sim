@@ -233,7 +233,11 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
      giá trị/logic không có công cụ cấu trúc; cảnh có move_along_path khóa topology. */
   const replaceSimulation = useAppStore((s) => s.replaceSimulation);
   const policy = editPolicyOf(spec);
-  const [editMode, setEditMode] = useState(false);
+  /* W12 — CHẾ ĐỘ SỬA ĐẶC TẢ KHÔNG CÒN LỐI VÀO TRÊN BỀ MẶT HỌC SINH.
+     Hằng số `false` thay cho `useState`: mọi nhánh sửa đặc tả bên dưới còn
+     nguyên (chúng thuộc về vai trò SOẠN BÀI), nhưng không có cửa nào để học
+     sinh rơi vào. Xem chú thích tại chỗ dựng dải điều khiển. */
+  const editMode = false;
   const [editTool, setEditTool] = useState<EditTool>(null);
   const [contentType, setContentType] = useState<string>(policy.addableTypes[0] ?? "paragraph");
   const [connectFrom, setConnectFrom] = useState<string | null>(null);
@@ -243,7 +247,9 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
   // M7.14D.1: không quảng bá chế độ Chỉnh sửa RỖNG. Cảnh value_only/observation
   // chỉ có edit_text → không có công cụ nào trên sân khấu → ẩn nút Chỉnh sửa;
   // tương tác trực tiếp (toggle/kéo) vẫn chạy bình thường. Suy từ policy thật.
-  const canEdit = hasMeaningfulEditAffordance(policy);
+  /* Giữ lời gọi để `edit-policy` vẫn là chủ sở hữu câu hỏi "cảnh này có công cụ
+     sửa nào có nghĩa không" — vai trò soạn bài sẽ đọc lại nó. */
+  void hasMeaningfulEditAffordance(policy);
 
   function disarm() {
     setEditTool(null);
@@ -538,27 +544,24 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           không làm nhảy layout. Fit View chỉ có ở cảnh spatial (structural
           render theo luồng tài liệu, không cần thu khung) — không nhồi action
           vô nghĩa chỉ để lấp chỗ. */}
+      {/* W12 — BỎ CẶP TAB [Quan sát][Chỉnh sửa] KHỎI BỀ MẶT HỌC SINH.
+       *
+       * Đây là hệ mô phỏng TƯƠNG TÁC. Hai nhãn cũ nói ngược với việc chúng làm:
+       * chỗ học sinh thao tác thật lại mang tên "Quan sát" — đúng cái từ bảo
+       * các em chỉ được nhìn — còn "Chỉnh sửa" thì TẮT tương tác học tập để bật
+       * công cụ sửa đặc tả (thêm nút, nối, xoá). Gõ vào để thêm/sửa đặc tả là
+       * việc SOẠN BÀI, không phải việc học; bày nó cho học sinh là sai bản chất
+       * đề tài.
+       *
+       * Nên bỏ CHẾ ĐỘ, không bỏ năng lực: `editMode` giữ nguyên trong state và
+       * mặc định `false`, nên toàn bộ nhánh sửa đặc tả (`editClickable`,
+       * `EditBar`, patch flow) còn nguyên cho vai trò soạn bài về sau. Thao tác
+       * học tập — bật/tắt, kéo — vốn đã chạy khi `!editMode`, nên nay nó LUÔN
+       * bật, không còn cửa nào để lỡ tắt.
+       *
+       * Cùng khuôn với cách `protocol_encapsulation` lùi 3D về nội bộ: giữ khả
+       * năng, thôi bắt người học chọn. */}
       <div className="player-controls" style={{ flexWrap: "wrap", gap: 6 }}>
-        <button
-          className={`btn-utility${!editMode ? " is-active" : ""}`}
-          aria-pressed={!editMode}
-          onClick={() => {
-            setEditMode(false);
-            disarm();
-          }}
-        >
-          Quan sát
-        </button>
-        {canEdit && (
-          <button
-            className={`btn-utility${editMode ? " is-active" : ""}`}
-            aria-pressed={editMode}
-            disabled={busy}
-            onClick={() => setEditMode(true)}
-          >
-            Chỉnh sửa
-          </button>
-        )}
         {!hasStructural && (
           <button
             /* W4B-3E — `marginLeft:auto` ĐÃ GỠ. Cùng lỗi, khác chủ sở hữu: một
