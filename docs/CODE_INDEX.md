@@ -743,6 +743,19 @@ khi có helper dùng chung (`tabIndex` + `aria-label` "Đầu vào …, giá tr�
 để đổi" + Enter/Space, vì `<g>` không phải `<button>` thật). Chỗ kia là
 `network/ui.tsx::LinkHandle`. Vòng tiêu điểm ở `.dag-input:focus-visible`.
 
+### `frontend/src/core/var-label.ts` (M20 · Product Experience) · offline
+`varLabel(name)` / `varPhrase(name, fallback)` — đổi TÊN BIẾN ENGINE sang cụm
+tiếng Việt đọc lên được. Bảng chỉ phủ biến do chính engine đặt (`tong`, `dem`,
+`max`, `min`, `can_tim`, `gia_tri_chen`, `giua`, `vi_tri_cuc_tri`, `vt`); tên do
+ĐẶC TẢ cấp (`seed.varName`, LLM sinh) trả `null` ⇒ bên gọi phải nói bằng khái
+niệm, không đoán cách viết có dấu (bỏ dấu là ánh xạ mất thông tin: `tong` có thể
+là tổng/tông/tống).
+
+Đóng lỗi thật quét được toàn danh mục: `core/scan.ts` và `core/algorithms.ts`
+nội suy thẳng tên biến vào câu thuyết minh, nên `algorithm.scan` đọc ra
+**"Khởi tạo nguong = 4."** trên màn học sinh. `ui-hygiene` không bắt được vì nó
+soi chuỗi TĨNH trong mã, còn đây là chuỗi nội suy LÚC CHẠY.
+
 ### `frontend/src/simulations/svg-affordance.ts` (M20 W12) · offline
 `svgAffordance({label,onAct,pressed})` trả PROPS cho một hình SVG bấm được:
 `role="button"` + `tabIndex` + `aria-label` + `aria-pressed` + Enter/Space (có

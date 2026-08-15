@@ -13,6 +13,7 @@
  * hằng số đầu vào — nó KHÔNG sở hữu thuật toán, chỉ chọn cấu hình trong không
  * gian đã đóng. Đây KHÔNG phải ngôn ngữ lập trình.
  */
+import { varPhrase } from "./var-label";
 import { fmt, TraceBuilder, type WhatIfSwap } from "./trace-builder";
 import type { ConditionOp, Trace, TraceEvent } from "./types";
 
@@ -255,7 +256,11 @@ export function runScan(spec: ScanSpec, whatIf?: WhatIfSwap): Trace {
   } else {
     acc = seed.value;
     b.setVar(seed.varName, acc);
-    b.step([{ type: "assign_var", name: seed.varName, value: acc }], `Khởi tạo ${seed.varName} = ${fmt(acc)}.`, false, 1);
+    /* `seed.varName` do ĐẶC TẢ cấp (LLM sinh), nên nó có thể là bất cứ chuỗi
+       nào — đo được trên màn thật: "Khởi tạo nguong = 4." `varPhrase` trả cụm
+       trung tính cho tên lạ thay vì ném định danh không dấu cho học sinh. */
+    b.step([{ type: "assign_var", name: seed.varName, value: acc }],
+      `Khởi tạo ${varPhrase(seed.varName, "giá trị so sánh")} = ${fmt(acc)}.`, false, 1);
     start = 0;
   }
 
