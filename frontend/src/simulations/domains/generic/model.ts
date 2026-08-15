@@ -318,7 +318,24 @@ function isTechnicalLabel(label: string | undefined, id: string): boolean {
 export function displayLabel(spec: SimulationSpec, id: string): string {
   const o = spec.objects.find((x) => x.id === id);
   if (!o) return id; // sau validate không xảy ra; giữ để total
-  if (!isTechnicalLabel(o.label, id)) return o.label!;
+  /* HAI TRƯỜNG, MỘT Ý ĐỊNH — LỖ HỔNG HỢP ĐỒNG ĐÃ XOÁ CHỮ CỦA HỌC SINH.
+   *
+   * `manifest.py` xếp `label` cùng họ `textual` với `heading`/`paragraph`/`text`,
+   * và ba loại kia được khai rõ **"text" là nội dung**. Riêng `label` KHÔNG nói
+   * trường nào mang nội dung. LLM làm theo ba anh em cùng họ và điền `text`;
+   * hàm này chỉ đọc `label` nên xếp là "thiếu nhãn" rồi thay bằng tên loại +
+   * số thứ tự.
+   *
+   * Hệ quả đo được trên một đề thật ("mô phỏng cho tôi hệ màu rgb"): đặc tả
+   * mang đúng "Kênh Đỏ (R)" · "Kênh Xanh lá (G)" · "Kênh Xanh dương (B)" ·
+   * "Màu sắc kết quả", còn màn hình hiện "Nhãn 1..4". Không phải LLM sinh ẩu,
+   * cũng không phải thiếu năng lực — nội dung CÓ SẴN và bị vứt ở bước cuối.
+   *
+   * Nhận CẢ HAI trường là cách sửa rẻ nhất và tương thích ngược: mọi envelope
+   * đã nằm trong cache đọc lại được ngay, không phải sinh lại (không tốn lượt
+   * gọi AI, không phải bump CACHE_VERSION). */
+  const authored = o.label ?? o.text;
+  if (!isTechnicalLabel(authored, id)) return authored!;
   const sameType = spec.objects.filter((x) => x.type === o.type);
   const base = TYPE_DISPLAY_VI[o.type] ?? o.type;
   return sameType.length > 1 ? `${base} ${sameType.findIndex((x) => x.id === id) + 1}` : base;
