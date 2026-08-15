@@ -179,6 +179,47 @@ người học.
 | `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
 | Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
+## W12 — BỐN CHIỀU CÒN LẠI ĐÃ ĐÓNG (2026-08-16)
+
+| chiều | trạng thái | bằng chứng |
+|---|---|---|
+| Khả năng tiếp cận trình duyệt | **DONE** | `w12-a11y.json` — 6/6 bề mặt, phím THẬT qua CDP; Escape đóng thử thách + trả tiêu điểm về nút mở; 4/4 tiêm lỗi đỏ đúng chỗ |
+| Tiếp nối lớp học | **DONE** | `w12-classroom-continuation.json` — đăng nhập → luyện → ĐĂNG XUẤT + xoá sạch lưu trữ → quay lại → tiến độ về từ MÁY CHỦ; 2/2 tiêm lỗi |
+| Kịch bản dạy học | **DONE** | `w12-teaching-walkthrough.json` — 11/11 dùng được KHI thử thách đóng |
+| Biểu diễn công khai + parity 2D↔3D | **DONE** | `w12-representation.json` — 23 target, **0** bày công tắc cho học sinh, 0 vi phạm; `protocol_encapsulation` parity 2D↔3D đạt trên trình duyệt |
+
+**Lỗi sản phẩm THẬT tìm ra và đã sửa** (không phải lỗi phép đo):
+
+1. **Affordance cơ chế nằm ngoài bàn phím.** `logic.and_gate` có 13 phần tử
+   focus được trên màn, KHÔNG cái nào là công tắc A/B. Cùng họ ở
+   `binary.decimal_to_binary` và `generic.rule_scene`. Idiom "một `<g>` có
+   `cursor:pointer` + `onClick`" được dựng ở năm chỗ, làm ĐÚNG ở hai. Gom về
+   `simulations/svg-affordance.ts`.
+2. **Không có vòng tiêu điểm** cho chính những affordance vừa nối bàn phím —
+   vào được cơ chế mà không thấy mình đang ở đâu. Thêm `.sim-affordance:focus-visible`.
+3. **Công tắc 2D/3D bày cho học sinh mà không có luật.**
+   `protocol_encapsulation` khai `primary: "2d"` nhưng `alternate:
+   ALTERNATE_FOR_EXPLANATION`, trong khi chính lời khai lý do lại mô tả 2D là
+   "biểu diễn nội bộ" — một cấu hình không mô tả sản phẩm nào. Nay 3D là bản
+   NỘI BỘ, học sinh không bị hỏi chọn cách xem.
+
+**PACKET_ROUTING_3D_DEFERRED.** Lý do kỹ thuật, không phải thẩm mỹ: renderer 3D
+DUY NHẤT trong kho là `encap-ui3d.tsx`, dựng cho trục Z = tầng giao thức. Định
+tuyến cần Z = TUYẾN THAY THẾ — một ngữ nghĩa khác, tức renderer mới chứ không
+phải một lời khai. Và 2D hiện tại đã chứng nhận đủ chuỗi tương tác có thẩm
+quyền (`net_disconnect` → `module.apply` → tính lại tuyến → hệ quả nhìn thấy),
+có đường bàn phím, dùng được ở cả bốn bề rộng. Bày 3D trang trí mà không có
+tương tác có thẩm quyền là đúng thứ `PUBLIC_3D_INTERACTION_FAIL` cấm.
+
+**PRIMARY_CAPABILITY_PARITY_CERTIFICATION = NOT_CURRENTLY_EVIDENCED.** Hai con
+số `10/23` và `13/23` từng được mang theo qua nhiều báo cáo. Grep toàn kho:
+không mã, không test, không artifact nào sinh ra chúng — chúng sống sót vì lượt
+trước đã nói ra chúng. Cổng parity CÓ THẬT là `generation-parity.test.ts`, và nó
+chứng minh một trục KHÁC: **nguồn spec (mẫu vs AI) không chọn đường đi**, 22
+target × 4 nguồn pipeline. Artifact nay có provenance + danh tính target. Không
+dựng lại 23 fixture chỉ để cứu một thống kê — mục tiêu là toàn vẹn bằng chứng.
+Khoá bởi `certification-sweep.test.ts`.
+
 ## W12 — ĐÃ GIẢI: MỘT LƯỢT, MỘT DẤU VÂN TAY (2026-08-16, `80c7c05`)
 
 > Mục ngay dưới (`9609cc6`) là **chẩn đoán**, giữ lại để đọc *vì sao*. Trạng

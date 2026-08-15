@@ -6,6 +6,7 @@ import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
 import { availableVisualModes, rendererFor } from "./renderer";
 import { publicCatalog } from "../data/offline-catalog";
+import { provenance } from "../../scripts/evidence.mjs";
 import type { SimAction, SimulationModule } from "./types";
 
 /**
@@ -222,10 +223,20 @@ describe("WAVE 1 · bài mẫu và bài AI giải ra CÙNG một module/renderer
       const dir = new URL("../../../docs/evaluation/m20/", import.meta.url)
         .pathname.replace(/^\/([A-Za-z]:)/, "$1");
       mkdirSync(dir, { recursive: true });
+      /* W12 §8 — XUẤT XỨ, VÀ DANH TÍNH, KHÔNG CHỈ MỘT CON SỐ.
+         Bản trước chỉ có `generatedAt` nên artifact này nằm ngoài mọi cổng
+         provenance — và một báo cáo đã mang theo hai con số
+         `PRIMARY_CAPABILITY_PARITY_CERTIFIED = 10/23` /
+         `UNVERIFIED = 13/23` mà KHÔNG file nào trong kho sinh ra. Cách chữa
+         không phải dựng lại 23 fixture để cứu con số, mà là nói rõ cổng NÀY
+         chứng minh trục nào, trên những target NÀO. */
       writeFileSync(join(dir, "generation-parity.json"),
-        JSON.stringify({ generatedAt: new Date().toISOString(),
-          note: "head được đóng dấu bởi scripts/evidence.mjs khi chạy qua công cụ trình duyệt; " +
-                "bảng này sinh từ vitest nên dùng kèm commit chứa nó",
+        JSON.stringify({ ...provenance("generation-parity.test", { targets: rows.length }),
+          axis: "GENERATION_PARITY — nguồn spec (mẫu vs AI) KHÔNG chọn đường đi",
+          notThisAxis: "KHÔNG phải PRIMARY_CAPABILITY_PARITY: cổng này không xếp hạng " +
+                "năng lực từng target, nên đừng đọc nó thành 'x/23 target đã chứng nhận'.",
+          certifiedTargets: rows.map((r) => r.target).sort(),
+          certifiedCount: rows.length,
           pipelineSources: PIPELINE_SOURCES, rows }, null, 2), "utf-8");
     } catch { /* thư mục chỉ-đọc trong CI — bảng vẫn kiểm được */ }
   });

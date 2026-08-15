@@ -733,6 +733,66 @@ phẩm chưa từng tồn tại. Đo được điều đó phải nhìn cả LƯ
 Primitive nằm ở `evidence.mjs`: `sweepBegin/sweepEnd/sweepVerdict`,
 `crossCheckFreshness`, `SWEEP_FAULTS`.
 
+### `frontend/src/simulations/domains/logic/dag-module.tsx`
+Chủ sở hữu target `logic.boolean_dag`: model mạch logic (đầu vào → cổng → đầu
+ra theo thứ tự phụ thuộc), `apply` nhận `toggle` theo ID đầu vào THẬT (`N`/`G`/`K`,
+không phải `A`), timeline lan truyền giá trị, và renderer SVG kèm bảng chân trị.
+
+Đây là MỘT trong hai chỗ tự nối đúng hợp đồng bàn phím cho affordance SVG trước
+khi có helper dùng chung (`tabIndex` + `aria-label` "Đầu vào …, giá trị …, bấm
+để đổi" + Enter/Space, vì `<g>` không phải `<button>` thật). Chỗ kia là
+`network/ui.tsx::LinkHandle`. Vòng tiêu điểm ở `.dag-input:focus-visible`.
+
+### `frontend/src/simulations/svg-affordance.ts` (M20 W12) · offline
+`svgAffordance({label,onAct,pressed})` trả PROPS cho một hình SVG bấm được:
+`role="button"` + `tabIndex` + `aria-label` + `aria-pressed` + Enter/Space (có
+`stopPropagation` vì Space là phím tắt Tự chạy toàn cục) + lớp `.sim-affordance`
+(vòng tiêu điểm ở `global.css`).
+
+Vì sao trả props chứ không phải component: chỗ gọi trải vào `<g>`/`<line>`/`<rect>`
+có hình học riêng, và bọc thêm một `<g>` sẽ làm lệch phép đo hình học đã chứng
+nhận (`audit-composition.mjs`, `certify-visual-weight-w12.mjs`).
+
+Đóng lỗi thật: idiom "`<g>` có `cursor:pointer` + `onClick`" dựng ở 5 chỗ, đúng
+ở 2. `logic.and_gate` có 13 phần tử focus được, không cái nào là công tắc A/B.
+`network/ui.tsx::LinkHandle` và `logic/dag-module.tsx` là nguồn gốc của khuôn và
+KHÔNG bị viết lại (đổi mã đã chứng nhận để cho đối xứng = đánh đổi rủi ro hồi
+quy lấy cái đẹp). Khoá bởi `scripts/certify-a11y-w12.mjs`.
+
+### `frontend/scripts/certify-a11y-w12.mjs` (M20 W12) · cần Chrome
+Khả năng tiếp cận đo bằng PHÍM THẬT qua CDP `Input.dispatchKeyEvent` — sự kiện
+tự dựng (`isTrusted:false`) không chứng minh được người dùng bàn phím đi được.
+Sáu bề mặt đại diện; mỗi ca đòi đủ chuỗi focus → Enter thật → STATE ĐỔI, cộng
+`ACCESSIBLE_NAME` · `VISIBLE_FOCUS` (`outline-style !== none`) ·
+`STATE_NOT_COLOR_ONLY` · Escape đóng thử thách + trả tiêu điểm · 768px.
+Tiêm lỗi: `A11Y_NAME_REMOVED` · `A11Y_KEYBOARD_PATH_REMOVED` ·
+`CHALLENGE_ESCAPE_BROKEN` (thay khối bằng bản sao rời fiber) + CONTROL.
+
+### `frontend/scripts/certify-representation-w12.mjs` (M20 W12) · cần Chrome
+Hai câu hỏi một chủ đề: mỗi target bày ĐÚNG MỘT cách xem cho học sinh, và target
+còn renderer nội bộ thì hai renderer đọc cùng một sự thật. Sinh bảng 23 dòng
+(mode công khai · mode khả dụng · bày cho học sinh · bản nội bộ · vi phạm) +
+parity 2D↔3D. Tiêm lỗi `PUBLIC_DUAL_MODE_WITHOUT_POLICY` ·
+`RENDERER_PARITY_STATE_DIVERGENCE`.
+⚠️ Renderer 3D là chunk NẠP LƯỜI ⇒ nó là object, không phải function.
+
+### `frontend/scripts/certify-teaching-walkthrough-w12.mjs` (M20 W12) · cần Chrome
+Câu hỏi nghiệm thu duy nhất: bỏ thử thách đi, giáo viên còn phơi bày được cơ chế
+không? 11 kịch bản, từ vựng action lấy NGUYÊN từ `certify-w12.mjs::PLAN`.
+⚠️ Phạm vi đo là `.workspace-card`, KHÔNG phải `.sim-stage` — cơ chế của
+`web.style_model` là DOM thật, của ba target cơ số/bảng là `<table>`, của
+`protocol_encapsulation` là `.encap-layer`. Tiêm lỗi
+`TEACHING_WALKTHROUGH_CHALLENGE_ONLY`.
+⚠️ KHÔNG dùng để nói bất cứ điều gì về kết quả học tập.
+
+### `frontend/scripts/certify-classroom-continuation-w12.mjs` (M20 W12) · cần Chrome + backend
+Rời đi rồi quay lại: đăng nhập → mở bài đã giao → thao tác THẬT → ghi tiến độ →
+ĐĂNG XUẤT + xoá sạch `localStorage` → đăng nhập lại → tiến độ trở lại. Xoá lưu
+trữ là bắt buộc, nếu không phép đo sẽ xanh nhờ LỊCH SỬ CỤC BỘ — cơ chế khác hẳn.
+⚠️ `/api/auth/me` trả 200 kèm `user: null` cho khách, KHÔNG trả 401.
+⚠️ Cần container backend MỚI (bản cũ không phục vụ `/api/auth/*`) + seed fixture.
+Tiêm lỗi `CLASSROOM_PERSISTENCE_REMOVED` · `CLASSROOM_RESTORE_MISMATCH`.
+
 ### `frontend/src/test-tiers.test.ts` (M20 W8) · offline
 Kiểm chính bộ chọn theo HAI CHIỀU (thiếu: chủ sở hữu dùng chung thu về một test
 hẹp ⇒ đỏ · thừa: renderer lẻ kéo cả kho ⇒ đỏ) và khoá ngữ nghĩa nhãn: chỉ T3

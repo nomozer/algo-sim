@@ -2702,6 +2702,28 @@ html {
   border-radius: var(--rounded-sm);
 }
 
+/* ── W12 §19 — VÒNG TIÊU ĐIỂM CHO AFFORDANCE SVG DÙNG CHUNG ──────────────
+   `simulations/svg-affordance.ts` gắn lớp này cho mọi hình SVG bấm được
+   (công tắc logic, bit nhị phân, nối/xoá ở rule_scene). Trước bản vá chúng
+   tới được bằng Tab nhưng `outline-style` vẫn là `none` — vào được cơ chế mà
+   không thấy mình đang ở đâu. Cùng luật với `.dag-input` / `.net-link-handle`,
+   viết một lần thay vì chép lần thứ ba. */
+.sim-affordance:focus {
+  outline: none;
+}
+
+.sim-affordance:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--rounded-sm);
+}
+
+.sim-affordance:focus-visible rect,
+.sim-affordance:focus-visible circle {
+  stroke: var(--primary);
+  stroke-width: 3;
+}
+
 .scan-actions {
   display: flex;
   flex-wrap: wrap;

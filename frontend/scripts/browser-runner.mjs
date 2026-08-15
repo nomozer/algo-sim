@@ -161,6 +161,39 @@ export class BrowserSession {
       b.click(); return 'ok';})()`);
   }
 
+  /**
+   * PHÍM THẬT qua CDP `Input.dispatchKeyEvent` — không phải `new KeyboardEvent`.
+   *
+   * Khác biệt không phải hình thức: một `KeyboardEvent` tự dựng rồi
+   * `dispatchEvent` là sự kiện KHÔNG TIN CẬY (`isTrusted === false`), nó bỏ qua
+   * hành vi mặc định của trình duyệt và không chứng minh được rằng người dùng
+   * bàn phím thật sẽ kích hoạt được affordance. W12 §11 đã ghi: hành động tổng
+   * hợp đoán ra không phải bằng chứng trình duyệt.
+   */
+  async pressKey(key) {
+    const map = {
+      Enter: { windowsVirtualKeyCode: 13, text: "\r" },
+      " ": { windowsVirtualKeyCode: 32, text: " " },
+      Escape: { windowsVirtualKeyCode: 27 },
+      Tab: { windowsVirtualKeyCode: 9 },
+    };
+    const k = map[key] ?? {};
+    await this._send("Input.dispatchKeyEvent", { type: "keyDown", key, ...k });
+    if (k.text) await this._send("Input.dispatchKeyEvent", { type: "char", key, ...k });
+    await this._send("Input.dispatchKeyEvent", { type: "keyUp", key, ...k });
+    return "ok";
+  }
+
+  /** Đưa tiêu điểm vào một phần tử và trả về `document.activeElement` sau đó. */
+  async focusSelector(selector) {
+    return this.eval(`(()=>{
+      const e=document.querySelector(${JSON.stringify(selector)});
+      if(!e) return 'không thấy';
+      e.focus();
+      const a=document.activeElement;
+      return a===e ? 'ok' : 'tiêu điểm rơi vào: '+a.tagName.toLowerCase();})()`);
+  }
+
   /** Chạy một kịch bản và ghi thời gian. */
   async scenario(name, fn) {
     const t0 = Date.now();

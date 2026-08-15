@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { editViaServer } from "../../../llm/client";
+import { svgAffordance } from "../../svg-affordance";
 import { useAppStore } from "../../../state/store";
 import type { WorkspaceProps } from "../../types";
 import { EditBar, type EditTool } from "./EditBar";
@@ -429,13 +430,18 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               onPointerCancel: onDragEnd,
             }
           : editClickable
-            ? {
-                style: { cursor: "pointer" } as React.CSSProperties,
-                onClick: (e: React.MouseEvent) => {
-                  e.stopPropagation();
-                  onObjectEditClick(o.id);
-                },
-              }
+            ? /* W12 §19 — nối/xoá là THAO TÁC LÊN MÔ HÌNH, nên phải có đường bàn
+                 phím. (Kéo ở nhánh trên chỉ đổi `state.pos` — vị trí trình bày —
+                 nên nó không cần bản tương đương ngữ nghĩa; điều đó được ghi
+                 thẳng vào artifact là `DRAG_IS_PRESENTATION_ONLY` thay vì khai
+                 khống một đường bàn phím không tồn tại.) */
+              svgAffordance({
+                label: editTool === "connect"
+                  ? `Nối từ ${dl || o.id}`
+                  : `Xoá ${dl || o.id}`,
+                onAct: () => onObjectEditClick(o.id),
+                pressed: isConnectFrom,
+              })
             : {};
         // M7.14: nhãn flip khi sát mép khung nhìn hiện hành — không bị cắt chữ
         const flipX = p.x + 11 > vb.x + vb.w - 46;

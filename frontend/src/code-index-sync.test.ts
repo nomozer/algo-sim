@@ -58,7 +58,6 @@ const KNOWN_GAPS = [
   "components/VarsView.tsx",
   "llm/input.ts",
   "simulations/domains/database/table-module.tsx",
-  "simulations/domains/logic/dag-module.tsx",
   "simulations/domains/network/edge-view.ts",
   "simulations/domains/network/traverse-module.tsx",
   "simulations/domains/tree/tree-module.tsx",

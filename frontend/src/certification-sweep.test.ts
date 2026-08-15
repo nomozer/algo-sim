@@ -152,6 +152,27 @@ describe("W12 — danh sách cổng con không được rụng trong im lặng",
     expect(data.sourceFingerprintAfter).toMatch(/^[0-9a-f]{16}$/);
   });
 
+  it("UNSUPPORTED_PARITY_NUMBER_TREATED_AS_CERTIFIED — số không nguồn không được nằm trong sổ", () => {
+    /* LỖI CÓ THẬT. Một báo cáo mang theo `PRIMARY_CAPABILITY_PARITY_CERTIFIED
+       = 10/23` và `UNVERIFIED = 13/23` suốt nhiều lượt. Grep toàn kho: KHÔNG
+       file nào — mã, test, artifact — sinh ra hai con số ấy. Chúng sống sót chỉ
+       vì lượt trước đã nói ra chúng.
+
+       Luật: một nhãn định lượng chỉ được nằm trong sổ trạng thái khi có cổng
+       chạy được sinh ra nó. Không có thì phải mang chữ NOT_CURRENTLY_EVIDENCED
+       ngay cạnh — dựng lại 23 fixture chỉ để cứu một thống kê lịch sử là làm
+       ngược mục tiêu (toàn vẹn bằng chứng, không phải bảo tồn con số). */
+    const ledger = readFileSync(
+      new URL("../../docs/STATUS_LEDGER.md", import.meta.url)
+        .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+    const LABEL = "PRIMARY_CAPABILITY_PARITY";
+    for (const line of ledger.split("\n")) {
+      if (!line.includes(LABEL)) continue;
+      expect(line, `nhãn ${LABEL} xuất hiện mà không kèm NOT_CURRENTLY_EVIDENCED:\n${line}`)
+        .toContain("NOT_CURRENTLY_EVIDENCED");
+    }
+  });
+
   it("artifact của lượt nằm NGOÀI dấu vân tay nguồn — không tự vô hiệu hoá", () => {
     const before = sourceFingerprint();
     for (const g of GATES as { out: string }[]) {

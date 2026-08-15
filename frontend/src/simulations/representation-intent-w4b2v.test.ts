@@ -112,14 +112,20 @@ describe("W4B-2V · trạng thái hiện tại của danh mục (mô tả, khôn
       expect(m.representation?.alternate).not.toBe("NO_ALTERNATE_NEEDED");
       expect((m.representation?.alternateReason ?? "").length).toBeGreaterThan(20);
     }
-    /* W12 §3: KHÔNG target nào còn bày công tắc cho học sinh.
-       `protocol_encapsulation` — target duy nhất từng bày — nay khai 3D là biểu
-       diễn chính, 2D lùi về nội bộ. Danh sách rỗng là kết quả MONG MUỐN, nhưng
-       một danh sách rỗng cũng làm vòng lặp trên chạy 0 lần, nên phải khẳng định
-       riêng rằng phép quét có thật sự nhìn thấy danh mục. */
+    /* W12 §6 — `PUBLIC_DUAL_MODE_WITHOUT_POLICY` LÀ ĐỎ.
+       Chính sách sản phẩm: MỘT biểu diễn công khai cho mỗi target, do hệ chọn
+       theo cơ chế. Công tắc chỉ được sống nếu có nhu cầu sư phạm đủ mạnh để
+       biện minh cho việc BẮT HỌC SINH CHỌN — và hiện không target nào có.
+       `protocol_encapsulation` là target duy nhất từng bày; nó đã lùi 3D về
+       nội bộ (`encap.ts`), nên danh sách này rỗng.
+
+       Danh sách rỗng cũng làm vòng lặp trên chạy 0 lần, nên phải khẳng định
+       riêng rằng phép quét thật sự nhìn thấy danh mục — nếu không, "không ai vi
+       phạm" và "không quét được ai" trông giống hệt nhau. */
     expect(mods().length, "không quét được module nào ⇒ mọi khẳng định trên vô nghĩa")
       .toBeGreaterThan(20);
-    expect(exposed.map((m) => m.id)).toEqual(["network.protocol_encapsulation"]);
+    expect(exposed.map((m) => m.id),
+      "một target đang bắt học sinh chọn cách xem mà không có luật cho phép").toEqual([]);
   });
 
   it("`protocol_encapsulation`: 2D là biểu diễn chính — 3D CHƯA đọc được, xem encap.ts", () => {
@@ -130,8 +136,12 @@ describe("W4B-2V · trạng thái hiện tại của danh mục (mô tả, khôn
        `encap-render3d`) — chỉ thôi không bày cho học sinh. */
     const m = getSimulation("network.protocol_encapsulation")!;
     expect(primaryRepresentationOf(m)).toBe("2d");
-    expect(alternateStatusOf(m)).toBe("ALTERNATE_FOR_EXPLANATION");
-    expect(learnerFacingModes(m).sort(), "mất công tắc chọn cách xem").toEqual(["2d", "3d"]);
+    /* W12 §6 — 3D là biểu diễn NỘI BỘ: dựng được, chạy parity được, KHÔNG bày
+       cho học sinh chọn. Cảnh 3D chưa qua 5 điều kiện đọc-được ở
+       `W12_REMAINING.md` VIỆC 0, và một cách xem chưa đọc được thì không phải
+       một lựa chọn có nghĩa để đặt trước mặt người học. */
+    expect(alternateStatusOf(m)).toBe("NO_ALTERNATE_NEEDED");
+    expect(learnerFacingModes(m), "học sinh vẫn đang bị hỏi 2D hay 3D").toEqual([]);
     /* Năng lực KỸ THUẬT vẫn hai mode — đó là điều kiện để parity nội bộ chạy. */
     expect(availableVisualModes(m).sort()).toEqual(["2d", "3d"]);
   });

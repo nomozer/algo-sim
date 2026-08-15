@@ -1,4 +1,5 @@
 import { stageSvgSize } from "../../stage-size";
+import { svgAffordance } from "../../svg-affordance";
 import type { WorkspaceProps } from "../../types";
 import { andOutput, type Bit, type LogicConfig, type LogicState } from "./model";
 
@@ -14,9 +15,16 @@ const OFF = "var(--hairline)";
 const WIRE_ON = "var(--accent-green)";
 const WIRE_OFF = "var(--ink-faint)";
 
+/* W12 §19 — công tắc này LÀ bài học (đổi đầu vào rồi đọc đầu ra), nên nó phải
+   vào được bằng bàn phím. Trước bản vá, đo trên trình duyệt thật: 13 phần tử
+   focus được trên màn `and_gate`, KHÔNG cái nào là A hay B. */
 function Switch({ label, value, y, onToggle }: { label: string; value: Bit; y: number; onToggle: () => void }) {
   return (
-    <g style={{ cursor: "pointer" }} onClick={onToggle}>
+    <g {...svgAffordance({
+      label: `Đầu vào ${label}, giá trị ${value}, bấm để đổi`,
+      onAct: onToggle,
+      pressed: value === 1,
+    })}>
       <rect x={16} y={y - 18} width={64} height={36} rx={18} fill={value === 1 ? ON : OFF} />
       <circle cx={value === 1 ? 62 : 34} cy={y} r={14} fill="#fff" />
       <text x={48} y={y - 28} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink)">

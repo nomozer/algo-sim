@@ -1,4 +1,5 @@
 import { stageSvgSize } from "../../stage-size";
+import { svgAffordance } from "../../svg-affordance";
 import type { WorkspaceProps } from "../../types";
 import {
   binaryString,
@@ -30,7 +31,14 @@ export function BinaryWorkspace({ state, dispatch }: Props) {
           {state.bits.map((bit, i) => {
             const x = i * (CELL + GAP);
             return (
-              <g key={i} style={{ cursor: "pointer" }} onClick={() => dispatch({ type: "toggle", target: String(i) })}>
+              <g key={i} {...svgAffordance({
+                /* Nhãn nói GIÁ TRỊ VỊ TRÍ, không nói "ô thứ i" — thứ học sinh
+                   đang học là bit này đáng bao nhiêu, và trình đọc màn hình chỉ
+                   nhận được đúng chuỗi này. */
+                label: `Bit giá trị ${pv[i]}, đang là ${bit}, bấm để đổi`,
+                onAct: () => dispatch({ type: "toggle", target: String(i) }),
+                pressed: bit === 1,
+              })}>
                 <text x={x + CELL / 2} y={20} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-muted)">
                   {pv[i]}
                 </text>

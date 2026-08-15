@@ -90,11 +90,27 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
          2D KHÔNG bị gỡ — nó còn nguyên cho parity renderer và bằng chứng hồi
          quy (`encap-render3d.test.tsx`, `render-parity.test.tsx`). */
       primary: "2d",
-      alternate: "ALTERNATE_FOR_EXPLANATION",
-      alternateReason:
-        "Chiều sâu cho thấy quan hệ BỌC NHAU giữa các tầng — thứ 2D phải diễn " +
-        "đạt bằng xếp chồng. 2D giữ lại làm biểu diễn NỘI BỘ cho parity, không " +
-        "bày cho học sinh.",
+      /* W12 §6 — MỘT BIỂU DIỄN CÔNG KHAI, CHẤM HẾT.
+       *
+       * Trước wave này khai `ALTERNATE_FOR_EXPLANATION`, nên `learnerFacingModes`
+       * trả về CẢ HAI mode và `SimulationWorkspace` dựng công tắc `[2D] [3D]`
+       * cho học sinh. Hai bằng chứng cho thấy điều đó sai:
+       *
+       *   1. Lý do khai ngay bên trên nói ngược lại chính cấu hình: nó mô tả 2D
+       *      là "biểu diễn NỘI BỘ cho parity, không bày cho học sinh", trong khi
+       *      `primary` lại là `"2d"`. Đó là tàn dư từ lần thử 3D công khai đã bị
+       *      trả lại — một lời khai không còn mô tả sản phẩm nào cả.
+       *   2. Cảnh 3D chưa qua 5 điều kiện đọc-được ở `W12_REMAINING.md` VIỆC 0
+       *      (nhãn chồng nhau, chữ PDU không đọc nổi). Bày cho học sinh một cách
+       *      xem mà chính ta biết là chưa đọc được, rồi bắt các em CHỌN giữa hai
+       *      cách xem khi chưa hiểu cơ chế, là đem chi tiết cài đặt lên làm
+       *      quyết định của người học.
+       *
+       * 3D KHÔNG bị gỡ: `supportedVisualModes` vẫn có nó, và
+       * `encap-render3d.test.tsx` + `render-parity.test.tsx` + chứng nhận parity
+       * trình duyệt vẫn dựng nó. Nó là biểu diễn NỘI BỘ — đúng vị thế mà lời khai
+       * cũ nhầm lẫn gán cho 2D. */
+      alternate: "NO_ALTERNATE_NEEDED",
     },
 
     validateConfig: validateEncapConfig,

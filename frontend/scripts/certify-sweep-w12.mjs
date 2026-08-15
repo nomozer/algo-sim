@@ -72,6 +72,18 @@ export const GATES = [
     cmd: ["node", ["scripts/certify-scroll-w12.mjs"]], out: artifact("w12-scroll-shell.json") },
   { name: "mùi quiz", kind: "BROWSER",
     cmd: ["node", ["scripts/quiz-dominance-w12.mjs"]], out: artifact("w12-quiz-dominance.json") },
+  { name: "khả năng tiếp cận (phím thật)", kind: "BROWSER",
+    cmd: ["node", ["scripts/certify-a11y-w12.mjs"]], out: artifact("w12-a11y.json") },
+  { name: "biểu diễn công khai + parity 2D↔3D", kind: "BROWSER",
+    cmd: ["node", ["scripts/certify-representation-w12.mjs"]], out: artifact("w12-representation.json") },
+  { name: "kịch bản dạy học (thử thách đóng)", kind: "BROWSER",
+    cmd: ["node", ["scripts/certify-teaching-walkthrough-w12.mjs"]],
+    out: artifact("w12-teaching-walkthrough.json") },
+  /* ⚠️ Cổng DUY NHẤT cần backend + fixture lớp học. Nó nằm cuối vì hỏng ở đây
+     có nguyên nhân khác hẳn (container cũ, chưa seed) với hỏng ở bảy cổng trên. */
+  { name: "tiếp nối lớp học (cần backend + seed)", kind: "BROWSER",
+    cmd: ["node", ["scripts/certify-classroom-continuation-w12.mjs"]],
+    out: artifact("w12-classroom-continuation.json") },
 ];
 
 /* Chạy trực tiếp thì thi hành; `import` thì chỉ lấy `GATES` cho test. */
