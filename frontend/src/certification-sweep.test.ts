@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import {
   SWEEP_FAULTS,
   SWEEP_INVALID,
   SWEEP_VALID,
   crossCheckFreshness,
+  provenanceVerdict,
   sourceFingerprint,
   sweepBegin,
   sweepEnd,
@@ -133,6 +134,22 @@ describe("W12 — danh sách cổng con không được rụng trong im lặng",
     expect(kinds.has("DERIVED")).toBe(true);
     expect(kinds.has("BROWSER")).toBe(true);
     expect(GATES.filter((g: { kind: string }) => g.kind === "BROWSER").length).toBeGreaterThanOrEqual(7);
+  });
+
+  it("bản ghi LƯỢT cũng phải phán được — không được nằm ngoài chính cổng của mình", () => {
+    /* LỖI CÓ THẬT, bắt ở lượt cuối đầu tiên: `w12-sweep.json` có
+       `sourceFingerprintBefore/After` nhưng không có khối phẳng, nên
+       `provenanceVerdict` đọc vào trả UNKNOWN_PROVENANCE. Artifact chứng minh
+       kỷ luật xuất xứ mà chính nó không phán được là một cổng tự miễn trừ. */
+    const p = new URL("../../docs/evaluation/m20/w12-sweep.json", import.meta.url)
+      .pathname.replace(/^\/([A-Za-z]:)/, "$1");
+    if (!existsSync(p)) return; // chưa chạy lượt nào — không bịa phán quyết
+    const data = JSON.parse(readFileSync(p, "utf-8"));
+    expect(provenanceVerdict(data).state,
+      "bản ghi lượt thiếu khối provenance phẳng").not.toBe("UNKNOWN_PROVENANCE");
+    /* Và hai đầu Before/After KHÔNG được bị khối phẳng đè mất. */
+    expect(data.sourceFingerprintBefore).toMatch(/^[0-9a-f]{16}$/);
+    expect(data.sourceFingerprintAfter).toMatch(/^[0-9a-f]{16}$/);
   });
 
   it("artifact của lượt nằm NGOÀI dấu vân tay nguồn — không tự vô hiệu hoá", () => {

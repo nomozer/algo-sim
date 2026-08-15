@@ -39,7 +39,9 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { crossCheckFreshness, sweepBegin, sweepEnd, sweepVerdict, SWEEP_VALID } from "./evidence.mjs";
+import {
+  crossCheckFreshness, provenance, sweepBegin, sweepEnd, sweepVerdict, SWEEP_VALID,
+} from "./evidence.mjs";
 
 const FRONTEND = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const REPO = new URL("../..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
@@ -91,7 +93,9 @@ async function main() {
   if (begin.dirtyBefore.length) {
     const rec = sweepEnd(begin);
     const v = sweepVerdict(rec);
-    writeFileSync(OUT, JSON.stringify({ ...rec, verdict: v, gates: [], crossCheck: null }, null, 2), "utf-8");
+    writeFileSync(OUT, JSON.stringify({
+      ...provenance("certify-sweep-w12", { gates: 0 }), ...rec, verdict: v, gates: [], crossCheck: null,
+    }, null, 2), "utf-8");
     console.error(`  ${v.state}\n  ${v.faults.join("\n  ")}`);
     process.exit(1);
   }
@@ -125,7 +129,15 @@ async function main() {
 
   const gatesOk = results.every((r) => r.ok);
   const ok = gatesOk && verdict.state === SWEEP_VALID && crossCheck.ok;
+  /* BẢN GHI LƯỢT CŨNG PHẢI PHÁN ĐƯỢC.
+     Lượt đầu tiên chạy file này sinh ra một `w12-sweep.json` mà chính
+     `provenanceVerdict` đọc vào ra `UNKNOWN_PROVENANCE`: nó có `headBefore/After`
+     và `sourceFingerprintBefore/After` nhưng không có khối phẳng mà cổng đọc.
+     Tức artifact CHỨNG MINH kỷ luật xuất xứ lại nằm ngoài chính cổng ấy — đúng
+     họ lỗi wave này tồn tại để diệt. `provenance()` đặt TRƯỚC `record` để
+     `sourceFingerprint` phẳng không đè mất hai đầu Before/After. */
   writeFileSync(OUT, JSON.stringify({
+    ...provenance("certify-sweep-w12", { gates: GATES.length }),
     ...record, verdict, gates: results, crossCheck, ok,
   }, null, 2), "utf-8");
   console.log(`\n→ ${OUT}`);
