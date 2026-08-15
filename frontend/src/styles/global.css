@@ -1326,6 +1326,12 @@ html {
   stroke: var(--hairline);
 }
 
+/* PHASE A — CHÚ GIẢI CŨNG LÀ CHỮ, cũng không được quyết bề rộng cơ chế.
+   Sau khi chặn tiêu đề/thuyết minh, chú giải trở thành đứa con rộng nhất còn
+   lại: đo được `selection_sort` cơ chế 494px trong thẻ 767px và `boolean_dag`
+   694px trong 932px — chênh lệch đúng bằng độ dài dải "đang xét / so sánh · đã
+   được cộng vào tổng · đã duyệt qua". Cùng cách chữa: đóng góp 0 vào phép đo
+   nội tại, xuống dòng khi hẹp (đã có `flex-wrap`). */
 .stage-legend {
   display: flex;
   flex-wrap: wrap;
@@ -1333,6 +1339,8 @@ html {
   margin: 0;
   font-size: 12px;
   color: var(--ink-muted);
+  width: 0;
+  min-width: 100%;
 }
 
 .stage-legend span {
@@ -2254,8 +2262,41 @@ html {
 }
 /* MỘT RAIL: mọi con giãn đúng bằng thẻ, không con nào tự căn giữa. */
 .workspace-card > * { width: 100%; }
-/* Chữ KHÔNG được quyết bề rộng khung: một câu dài sẽ kéo `fit-content` ra rất
-   rộng. Chặn ở một khổ đọc được thì khung do HÌNH quyết, chữ chỉ xuống dòng. */
+/* ── PHASE A — CHỮ KHÔNG ĐƯỢC QUYẾT BỀ RỘNG CƠ CHẾ ───────────────────────
+ *
+ * Ý định cũ đúng, liều lượng sai. `max-width: 68ch` vẫn cho một câu dài ĐÓNG
+ * GÓP tới 68 ký tự vào phép đo `fit-content`, tức ~600–700px — nên tiêu đề vẫn
+ * là đứa con rộng nhất và vẫn quyết bề rộng thẻ.
+ *
+ * Đo được trên cả 23 target ở 1536 (soát trình duyệt thật, không suy đoán):
+ *
+ *   cân (lệch 0)   6/23  — đứa con rộng nhất CHÍNH LÀ cơ chế
+ *   lệch trái     16/23  — đứa con rộng nhất là TIÊU ĐỀ hoặc THUYẾT MINH
+ *   lệch phải      1/23  (web.style_model)
+ *
+ *   algorithm.scan   cơ chế 494px trong thẻ 926px  → lệch −191
+ *   bubble_sort                                    → lệch −172
+ *   decimal_to_binary  cơ chế chiếm 43,6% bề rộng thẻ
+ *
+ * Nên chữ phải đóng góp **0** vào phép đo nội tại: `width: 0` làm nó không kéo
+ * `fit-content`, `min-width: 100%` trả nó về đúng bề rộng thẻ khi vẽ. Kết quả:
+ * thẻ ôm CƠ CHẾ, chữ xuống dòng theo — đúng tiền đề mà M19 dựa vào khi cố ý bỏ
+ * `margin: 0 auto`, chứ không phải dựng lại phép căn giữa mà M19 đã diệt.
+ *
+ * `max-width: 68ch` GIỮ LẠI: nó vẫn là trần khổ đọc cho thẻ rộng (khi cơ chế
+ * rộng hơn 68ch thì chữ không nên trải hết). Hai luật khác việc nhau. */
+/* ⚠️ ÁP LÊN KHỐI CON TRỰC TIẾP CỦA THẺ, KHÔNG ÁP LÊN CHỮ BÊN TRONG FLEX.
+   Bản đầu đặt `width: 0` thẳng lên `.workspace-title` — nhưng tiêu đề là FLEX
+   ITEM của `.workspace-header`, nên `width: 0` làm nó vỡ dòng và header cao từ
+   43px lên 103px. Đo được ở `web.style_model`: thẻ cao thêm 45px và tràn qua
+   khay điều khiển, đúng thứ `certify-viewports-w12` bắt được.
+   Chặn ở CONTAINER thì bố cục bên trong header không bị đụng tới. */
+.workspace-header,
+.narration-bar {
+  width: 0;
+  min-width: 100%;
+}
+
 .workspace-title,
 .narration-bar,
 .workspace-header .hint { max-width: 68ch; }
