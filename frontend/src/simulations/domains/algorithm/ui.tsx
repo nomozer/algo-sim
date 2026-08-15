@@ -468,7 +468,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           mà chính là thanh điều kiện này. Để nó sau `exploreOpen` nghĩa là hai
           bài ấy mở ra không có công cụ nào — đúng thứ ma trận bề rộng đo được. */}
       {toolAffordanceOpen({ exploreOpen, challengeOpen, busy }) && hasCondition(config) && (
-        <ConditionBar config={config} busy={busy} dispatch={dispatch} />
+        <ConditionBar config={config} state={state} busy={busy} dispatch={dispatch} />
       )}
     </div>
   );
@@ -479,9 +479,27 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
  * và ngưỡng. Không ô nhập biểu thức, không AND/OR — miền đóng nằm ở
  * `condition-param.ts`, đây chỉ bày đúng miền đó ra.
  */
-function ConditionBar({ config, busy, dispatch }: Pick<Props, "config" | "busy" | "dispatch">) {
-  const cond = config.data.condition!;
-  const range = thresholdRange(config.data.array);
+function ConditionBar({ config, state, busy, dispatch }: Pick<Props, "config" | "state" | "busy" | "dispatch">) {
+  /* ĐỌC ĐIỀU KIỆN TỪ ENGINE, KHÔNG TỪ ĐỀ GỐC.
+   *
+   * `config` (prop) là config ĐÃ VALIDATE của envelope và nó ĐÔNG CỨNG có chủ
+   * đích: `store.dispatch` chỉ thay `active.state`, còn `active.config` giữ
+   * nguyên để `specDrift` biết mô hình đã rời khỏi đề chưa. Nhưng `set_param`
+   * ghi điều kiện mới vào `state.config`, và ĐÓ mới là thứ engine dùng để chấm.
+   *
+   * Trước bản vá, hai nguồn ấy lệch nhau ngay khi học sinh đổi phép so sánh:
+   *
+   *   học sinh chọn ">"  → engine dùng ">"  → ô chọn NHẢY VỀ ">=" của đề gốc
+   *   thử thách hỏi "80 có được cộng vào tổng không?"
+   *   màn hình nói  "Phép so sánh: lớn hơn hoặc bằng · Ngưỡng 80"
+   *   engine chấm   80 > 80 = Sai  →  ai trả lời "Cộng vào tổng" bị chấm SAI
+   *
+   * Tức học sinh bị chấm theo một giá trị KHÔNG NHÌN THẤY ĐƯỢC, trong khi thứ
+   * nhìn thấy được lại nói ngược lại. Engine là nơi duy nhất có thẩm quyền phán
+   * đúng/sai (`CORRECTNESS.md`), nên bề mặt điều khiển phải soi đúng engine. */
+  const cond = state.config.data.condition!;
+  const range = thresholdRange(state.config.data.array);
+  void config;
   if (!range) return null;
   const set = (name: string, value: number | string) =>
     dispatch({ type: "set_param", name, value });
