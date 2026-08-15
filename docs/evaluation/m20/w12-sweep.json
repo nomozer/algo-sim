@@ -1,0 +1,138 @@
+{
+  "provenanceVersion": 2,
+  "sourceFingerprint": "de3007604b68ca47",
+  "dirtyRelevantSources": [],
+  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "dirty": false,
+  "generatedAt": "2026-08-15T17:20:12.633Z",
+  "tool": "certify-sweep-w12",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "gates": 8
+  },
+  "startedAt": "2026-08-15T17:15:22.004Z",
+  "headBefore": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "sourceFingerprintBefore": "de3007604b68ca47",
+  "dirtyBefore": [],
+  "endedAt": "2026-08-15T17:20:12.334Z",
+  "headAfter": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "sourceFingerprintAfter": "de3007604b68ca47",
+  "dirtyAfter": [],
+  "verdict": {
+    "state": "CERTIFICATION_SWEEP_VALID",
+    "faults": []
+  },
+  "gates": [
+    {
+      "name": "ngữ nghĩa tương tác (dẫn từ hợp đồng)",
+      "kind": "DERIVED",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-interaction-semantics.json",
+      "ok": true,
+      "seconds": 2.6
+    },
+    {
+      "name": "tương tác trình duyệt thật",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-interaction.json",
+      "ok": true,
+      "seconds": 21.7
+    },
+    {
+      "name": "trải nghiệm (công cụ vs chỉ lộ dần)",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-experience-audit.json",
+      "ok": true,
+      "seconds": 60
+    },
+    {
+      "name": "sức nặng thị giác",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-visual-weight.json",
+      "ok": true,
+      "seconds": 15.9
+    },
+    {
+      "name": "tiêm lỗi sức nặng thị giác",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-visual-weight-faults.json",
+      "ok": true,
+      "seconds": 6.1
+    },
+    {
+      "name": "ma trận bề rộng",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-viewport-matrix.json",
+      "ok": true,
+      "seconds": 59
+    },
+    {
+      "name": "quyền sở hữu cuộn của vỏ",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-scroll-shell.json",
+      "ok": true,
+      "seconds": 28.2
+    },
+    {
+      "name": "mùi quiz",
+      "kind": "BROWSER",
+      "out": "D:/Documents/projects/algo-sim/docs/evaluation/m20/w12-quiz-dominance.json",
+      "ok": true,
+      "seconds": 96.7
+    }
+  ],
+  "crossCheck": {
+    "rows": [
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-interaction-semantics.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-interaction.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-experience-audit.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-visual-weight.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-visual-weight-faults.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-viewport-matrix.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-scroll-shell.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      },
+      {
+        "path": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\m20\\w12-quiz-dominance.json",
+        "state": "FRESH",
+        "sourceFingerprint": "de3007604b68ca47"
+      }
+    ],
+    "counts": {
+      "FRESH": 8
+    },
+    "uniqueFingerprints": 1,
+    "fingerprints": [
+      "de3007604b68ca47"
+    ],
+    "ok": true
+  },
+  "ok": true
+}

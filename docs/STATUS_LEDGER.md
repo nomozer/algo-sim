@@ -179,6 +179,44 @@ người học.
 | `find_max` — ca tham chiếu | **ĐÃ LÀM RÕ (W12-B0)** | hai nút "Đặt 9 làm max mới"/"Giữ max = 7.5" là THỬ THÁCH (nuôi `predict.check`). Thao tác mô hình thật là kéo cột `ArrayView` → `whatif_swap` → nhánh what-if, còn nguyên khi đóng thử thách | — |
 | Con số "14 CERTIFIED" cũ | **ĐÃ HUỶ** | nó chưa phân biệt thao tác mô hình với trả lời dự đoán | — |
 | Quét mùi quiz 23 target | **PARTIAL** | 2/23 chạm được bề mặt thử thách sau khi tiến bước; 21 target còn lại CHƯA kết luận được — không đọc thành "không có thử thách" | **W12 tiếp** |
+## W12 — ĐÃ GIẢI: MỘT LƯỢT, MỘT DẤU VÂN TAY (2026-08-16, `80c7c05`)
+
+> Mục ngay dưới (`9609cc6`) là **chẩn đoán**, giữ lại để đọc *vì sao*. Trạng
+> thái hiện hành là mục này.
+
+**`FINAL_SOURCE_HEAD = 80c7c05` · `FINAL_SOURCE_FINGERPRINT = de3007604b68ca47`**
+
+| | |
+|---|---|
+| artifact W12 FRESH | **9/9** (8 cổng con + chính bản ghi lượt) |
+| `UNIQUE_CERTIFICATION_SOURCE_FINGERPRINT_COUNT` | **1** |
+| STALE_SOURCE · DIRTY_SOURCE · UNKNOWN_PROVENANCE | **0 · 0 · 0** |
+| phán quyết lượt | `CERTIFICATION_SWEEP_VALID` — HEAD và vân tay y nguyên hai đầu, `DIRTY_AFTER` rỗng |
+
+Bằng chứng: `docs/evaluation/m20/w12-sweep.json`. Công cụ:
+`frontend/scripts/certify-sweep-w12.mjs`, khoá bởi `src/certification-sweep.test.ts`.
+
+**Cái đã đổi về CHẤT.** Hệ quả vận hành ở mục dưới trước đây là *lời nhắc* — và
+nó bị bỏ qua đúng như mọi lời nhắc khác trong kho này. Nay nó là **cổng**: một
+lượt chứng nhận chụp `HEAD` + vân tay + cây bẩn ở hai đầu, và mọi vi phạm có mã
+lý do riêng (`SOURCE_DIRTY_AT_SWEEP_START` · `SOURCE_DIRTY_AT_SWEEP_END` ·
+`HEAD_MOVED_DURING_SWEEP` · `SOURCE_FINGERPRINT_CHANGED_DURING_SWEEP`). Nhắc thì
+trôi, đỏ thì không.
+
+**Hai lỗi đường ống bắt được trong lúc làm, cả hai đều là cổng tự miễn trừ:**
+
+1. `w12-interaction-semantics.json` là **đầu vào** của `certify-viewports-w12.mjs`
+   nhưng chỉ có `generatedAt` ⇒ `UNKNOWN_PROVENANCE` vĩnh viễn. Một mắt xích của
+   bộ bằng chứng nằm ngoài mọi cổng.
+2. `w12-sweep.json` — artifact *chứng minh* kỷ luật xuất xứ — cũng
+   `UNKNOWN_PROVENANCE` ở lượt cuối đầu tiên. Guard mới đã **đỏ thật** trên chính
+   bản ghi hỏng ấy trước khi nó bị bỏ đi.
+
+**Kết quả sản phẩm không đổi khi đo lại trên nguồn sạch** — 20 TOOL_PASS ·
+3 TRACE_PASS · 23/23 sức nặng thị giác · 92/92 viewport · 20/20 cuộn ·
+23/23 tương tác · 0 FAIL mùi quiz · 3/3 tiêm lỗi. Tức các con số lịch sử vốn
+đúng; thứ thiếu đúng là **chứng minh chúng thuộc về nguồn hiện tại**, và nay có.
+
 ## W12 — XUẤT XỨ BẰNG CHỨNG: KHÔNG ARTIFACT NÀO FRESH (2026-08-15, `9609cc6`)
 
 Đo bằng chính hợp đồng provenance (`sourceFingerprint` hiện tại `551c75b4…`):

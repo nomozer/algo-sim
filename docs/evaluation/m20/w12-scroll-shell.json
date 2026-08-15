@@ -1,13 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "3715750649ea335a",
-  "dirtyRelevantSources": [
-    "frontend/src/styles/global.css",
-    "frontend/src/styles/tokens.css"
-  ],
-  "head": "5de32824d355ef8d1fc57ba5f85ab72748102d99",
-  "dirty": true,
-  "generatedAt": "2026-08-14T09:13:16.471Z",
+  "sourceFingerprint": "de3007604b68ca47",
+  "dirtyRelevantSources": [],
+  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "dirty": false,
+  "generatedAt": "2026-08-15T17:18:35.593Z",
   "tool": "certify-scroll-w12",
   "toolVersion": "1",
   "environment": {

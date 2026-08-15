@@ -1,10 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "c1a50ad41d0928b0",
+  "sourceFingerprint": "de3007604b68ca47",
   "dirtyRelevantSources": [],
-  "head": "ebc1eed7a5f89c3923495c8c53d783cdce174384",
+  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
   "dirty": false,
-  "generatedAt": "2026-08-14T17:45:26.125Z",
+  "generatedAt": "2026-08-15T17:16:46.405Z",
   "tool": "certify-experience-w12",
   "toolVersion": "1",
   "environment": {
@@ -216,7 +216,7 @@
         "value": "ten"
       },
       "candidatesTried": 1,
-      "stepsDistinct": 14,
+      "stepsDistinct": 9,
       "traceSteps": 19,
       "appendOnly": false,
       "stageAtStart": "TRUY VẤN BẢNGLọc học  inh có điểm từ 8 trở lên rồi  ắp theo điểmTruy vấn bảng dữ liệu · kết hợp · 2DLọcHọ tênĐiểmTổ=!=>>=<<=contain Sắp— không  ắp —Họ tênĐiểmTổtăng dầngiảm dầnCột hiệnHọ tênĐiểmTổ1.Lọc2.Chọn cột3.Sắp xếp"

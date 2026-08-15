@@ -1,5 +1,17 @@
 {
-  "generatedAt": "2026-08-14T17:23:12.476Z",
+  "provenanceVersion": 2,
+  "sourceFingerprint": "de3007604b68ca47",
+  "dirtyRelevantSources": [],
+  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "dirty": false,
+  "generatedAt": "2026-08-15T17:20:38.085Z",
+  "tool": "interaction-semantics.test",
+  "toolVersion": "1",
+  "environment": {
+    "node": "v24.13.0",
+    "platform": "win32",
+    "targets": 23
+  },
   "kind": "DESCRIPTIVE_MANIFEST",
   "note": "Dẫn từ hợp đồng module + affordance trong renderer miền. KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
   "gateQuestion": "Khi ĐÓNG thử thách, học sinh thao tác lên cái gì?",

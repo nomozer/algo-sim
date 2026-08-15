@@ -1,10 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "762e50db87aae3ed",
+  "sourceFingerprint": "de3007604b68ca47",
   "dirtyRelevantSources": [],
-  "head": "ccc281df28791f4731eb8356f40c385a77f6e6a9",
+  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
   "dirty": false,
-  "generatedAt": "2026-08-14T17:55:27.999Z",
+  "generatedAt": "2026-08-15T17:17:08.395Z",
   "tool": "faultcheck-visual-weight-w12",
   "toolVersion": "1",
   "environment": {

@@ -1,12 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "1f4f8011eae3f8e8",
-  "dirtyRelevantSources": [
-    "frontend/scripts/certify-visual-weight-w12.mjs"
-  ],
-  "head": "bd324d10d9fe47cdeb4aec58ef61f0bab1326b0d",
-  "dirty": true,
-  "generatedAt": "2026-08-14T17:50:23.242Z",
+  "sourceFingerprint": "de3007604b68ca47",
+  "dirtyRelevantSources": [],
+  "head": "80c7c051360d033cf7242d6e8e7e6553d0b0a023",
+  "dirty": false,
+  "generatedAt": "2026-08-15T17:17:02.259Z",
   "tool": "certify-visual-weight-w12",
   "toolVersion": "1",
   "environment": {
