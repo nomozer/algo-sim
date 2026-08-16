@@ -466,12 +466,23 @@ function runInsertionSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
         false,
         4,
       );
+      /* W5T — NÓI VÌ SAO, giống họ nổi bọt. Bước so sánh ngay trên vừa hỏi "có
+         phải dời không?"; bản cũ trả lời bằng "Dời xong, ô trống lùi về…" — mô
+         tả kết quả mà không trả lời câu hỏi. Giá trị lấy TRƯỚC khi `set` ghi đè. */
+      const moved = b.at(j);
+      const rel = order === "desc" ? "<" : ">";
       b.set(j + 1, b.at(j));
       // "ô trống" (mang định danh quân bài đang rút) lùi từ j+1 về j —
       // giữ ids là hoán vị để renderer hoạt cảnh đúng, không trùng key
       b.moveId(j, j + 1);
       b.setIdAt(j, keyId);
-      b.step([{ type: "shift", from: j, to: j + 1 }], `Dời xong, ô trống lùi về vị trí ${j + 1}.`, false, 5);
+      b.step(
+        [{ type: "shift", from: j, to: j + 1 }],
+        `Vì ${fmt(moved)} ${rel} ${fmt(key)} nên ${fmt(moved)} phải nhường chỗ — dời sang phải. `
+          + `Ô trống lùi về vị trí ${j + 1}.`,
+        false,
+        5,
+      );
       j--;
     }
     if (j >= 0) {
