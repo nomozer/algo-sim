@@ -1,12 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "4caabcd7e0cd982f",
+  "sourceFingerprint": "fad234fc3e77e336",
   "dirtyRelevantSources": [
-    "frontend/src/simulations/stage-size.ts"
+    "frontend/src/components/ArrayView.tsx"
   ],
-  "head": "55e9df7df96fa22508402595599b55033387e698",
+  "head": "064e35614164010bfb0cf1cceb21108b7a618a65",
   "dirty": true,
-  "generatedAt": "2026-08-16T03:44:14.816Z",
+  "generatedAt": "2026-08-16T03:52:39.886Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
