@@ -655,6 +655,24 @@ Khoá bởi `dag.test.tsx` hai test `W5E — …` (kèm phân loại ba khẳng 
 thành OLD_PRODUCT_CONTRACT / STILL_VALID_INVARIANT). Tiêm lỗi đã chạy: bảng mở
 theo toggle ⇒ ĐỎ · cờ không bật ⇒ ĐỎ.
 
+### `frontend/src/simulations/generic-semantic-fit-w5m.test.ts` (W5M) · offline
+Phase M bước 1 — nâng câu của `COVERAGE.md` (*"bài không có cơ chế ẩn thì mô
+phỏng chỉ là trang trí"*) thành cổng chạy được: **cảnh generic CÔNG KHAI phải
+khai ít nhất một `rules`** (boolean / weighted_sum). Tiêu chí dẫn xuất từ chính
+DSL, không phán đoán thẩm mỹ: có `rules` ⇒ đổi đầu vào thì engine tính lại; chỉ
+có `processes` (reveal/move) ⇒ hé lộ frame dựng sẵn = MINH HOẠ
+(`SIMULATION_VS_ILLUSTRATION_CONTRACT.md`).
+Kiểm kê tại thời điểm viết: `GENERIC_RULE_SPEC` (công khai, boolean not+and) ·
+`GENERIC_AND_SPEC` + `GENERIC_BINARY_SPEC` (nội bộ, có rules, parity) ·
+`GENERIC_PACKET_SPEC` + `GENERIC_REVEAL_SPEC` (nội bộ, reveal-only). Mọi cảnh
+reveal-only đều là fixture NỘI BỘ ⇒ tầng bài mẫu đang trung thực; W4B-3F đã gỡ
+ca công khai duy nhất trước đó.
+⚠️ **LỖ HỔNG CÒN LẠI — W5M bước 2:** đường AI. Spec do LLM sinh với `rules` rỗng
++ `processes` reveal KHÔNG đi qua `OFFLINE_SAMPLES` nên test này không với tới.
+Cổng cho đường đó phải nằm ở validator generic phía server
+(`dsl/validator.py`): reveal-only ⇒ `capability_gap`, không dựng cảnh.
+Có đối chứng: danh mục phải chứa CẢ hai loại, nếu không cổng xanh vì rỗng.
+
 ### `frontend/src/core/predicate.ts` (W5C) · Change impact: offline
 CHỦ SỞ HỮU DUY NHẤT của "sáu phép so sánh `> >= < <= == !=` nghĩa là gì".
 `compareNumbers(x, op, y)` + `includesBoundary(op)` — hàm THUẦN trên hai SỐ.
