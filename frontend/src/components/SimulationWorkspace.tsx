@@ -17,6 +17,7 @@ import type {
 import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
 import { PredictionBar } from "./PredictionBar";
+import { SimulationInspector } from "./SimulationInspector";
 
 /**
  * M8: toggle 2D/3D — component THUẦN theo props (export để test SSR được:
@@ -271,6 +272,9 @@ export function SimulationWorkspace() {
   const dispatch = useAppStore((s) => s.dispatch);
   const visualMode = useAppStore((s) => s.visualMode);
   const challengeOpen = useAppStore((s) => s.challengeOpen);
+  /* Cùng một cờ store như trước, chỉ đổi CHỖ dựng: nút "Giải thích" ở header nay
+     thu/mở cột hai của thẻ thay vì bật/tắt một khay riêng của shell. */
+  const rightOpen = useAppStore((s) => s.rightOpen);
   const setVisualMode = useAppStore((s) => s.setVisualMode);
 
   if (unsupported) {
@@ -368,9 +372,26 @@ export function SimulationWorkspace() {
       </div>
       {/* Suspense: renderer 3D được code-split (React.lazy) — chờ tải chunk
           Three.js thì hiện placeholder; renderer 2D đồng bộ, không suspend. */}
-      <Suspense fallback={<div className="empty-state">Đang tải chế độ hiển thị…</div>}>
-        <Stage config={active.config} state={active.state} busy={playing} dispatch={dispatch} />
-      </Suspense>
+      {/* W5AC — GIẢI THÍCH LÀ CỘT HAI CỦA THẺ, KHÔNG PHẢI KHAY THỨ BA.
+          Trước wave này nó là `aside.panel-right` rộng CỐ ĐỊNH 300px ở shell. Ba
+          điều đo được nói rằng chỗ đó sai: (a) 300px hẹp hơn chính nội dung của
+          nó — bảng chân trị 4 cột bị cụt; (b) nó giành đúng phần bề ngang mà sân
+          khấu đang đói (thẻ kẹt 560–674px trong màn 1536); (c) nó là VÙNG THỨ BA
+          cạnh sidebar + sân khấu, nên mắt phải nhảy qua một rãnh và một đường
+          viền để nối cơ chế với biểu diễn hình thức của nó.
+          Đặt cạnh nhau trong CÙNG một khung nhìn chính là bước bắc cầu cần dạy —
+          và nhờ cột hai có nội dung thật, thẻ rộng ra bằng nội dung chứ không
+          phải bằng khoảng trắng. */}
+      <div className={`workspace-body${rightOpen ? " has-explain" : ""}`}>
+        <Suspense fallback={<div className="empty-state">Đang tải chế độ hiển thị…</div>}>
+          <Stage config={active.config} state={active.state} busy={playing} dispatch={dispatch} />
+        </Suspense>
+        {rightOpen && (
+          <div className="workspace-explain">
+            <SimulationInspector />
+          </div>
+        )}
+      </div>
       {/* (SHELL-N) Thuyết minh: KHE của shell, chữ của module. Nằm NGOÀI renderer
           nên 2D và 3D tự nhiên kể cùng một câu — không còn hai dòng song song
           phải giữ đồng bộ bằng tay. */}

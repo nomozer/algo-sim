@@ -2047,10 +2047,10 @@ html {
      CHƯA đăng nhập và chỉ soi `.workspace-card`, nên nó không bao giờ thấy).
      `100% - var(--panel-right-w)` là phần thật sự còn lại. Dùng chung một token
      cho cả sàn lẫn cột phải để hai con số không thể trôi khỏi nhau. */
-  --panel-right-w: 300px;
-  grid-template-columns:
-    minmax(min(100% - var(--panel-right-w), var(--transport-max)), auto)
-    var(--panel-right-w);
+  /* W5AC — MỘT CỘT NỘI DUNG. Khay phải 300px đã nhập vào thẻ thành cột hai, nên
+     lưới shell không còn vế thứ hai để trừ: cả lớp lỗi "tổng sàn > khung" ở trên
+     biến mất theo cấu trúc chứ không phải nhờ một phép trừ phải nhớ. */
+  grid-template-columns: minmax(min(100%, var(--transport-max)), auto);
   justify-content: center;
 
   /* ── W4B-2A A0 — HÀNG NỘI DUNG CAO THEO NỘI DUNG ────────────────────────
@@ -2390,6 +2390,39 @@ html {
 }
 /* MỘT RAIL: mọi con giãn đúng bằng thẻ, không con nào tự căn giữa. */
 .workspace-card > * { width: 100%; }
+
+/* ── W5AC — THÂN THẺ: CƠ CHẾ | GIẢI THÍCH ────────────────────────────────
+ *
+ * `align-items: start` để cột giải thích KHÔNG bị kéo cao bằng sân khấu (bảng
+ * chân trị 4 hàng cạnh một sơ đồ cao 400px thì kéo dài ra chỉ tạo khoảng trắng).
+ *
+ * Cột hai `minmax(260px, 340px)`: sàn 260px vì bảng chân trị 4 cột không vừa
+ * hơn thế — đúng chỗ bản cũ 300px cố định làm cụt chữ; trần 340px để nó không
+ * ăn lấn phần bề ngang của chính cơ chế.
+ *
+ * `minmax(0, …)` ở cột một là bắt buộc: mặc định `auto` lấy MIN-CONTENT làm sàn,
+ * nên một sân khấu SVG rộng sẽ đẩy lưới tràn ra thay vì co lại — đúng lớp lỗi
+ * đã ship ở `.dag-stage` (`ARCHITECTURE_MAP §8`).
+ */
+.workspace-body { display: grid; grid-template-columns: minmax(0, 1fr); }
+.workspace-body.has-explain {
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  gap: var(--sp-lg);
+  align-items: start;
+}
+/* Đường phân cách là KHOẢNG CÁCH + một nét mảnh, không phải một cái hộp nữa:
+   thêm khung cho cột này là quay lại đúng cảm giác "vùng thứ ba" vừa gỡ bỏ. */
+.workspace-explain {
+  border-left: 1px solid var(--hairline);
+  padding-left: var(--sp-lg);
+  min-width: 0;
+}
+/* Màn hẹp: cột hai XUỐNG DƯỚI sân khấu chứ không biến mất — nội dung hình thức
+   vẫn là nửa bài học, không phải thứ trang trí bỏ được khi chật. */
+@media (max-width: 1100px) {
+  .workspace-body.has-explain { grid-template-columns: minmax(0, 1fr); }
+  .workspace-explain { border-left: none; padding-left: 0; border-top: 1px solid var(--hairline); padding-top: var(--sp-md); }
+}
 /* ── PHASE A — CHỮ KHÔNG ĐƯỢC QUYẾT BỀ RỘNG CƠ CHẾ ───────────────────────
  *
  * Ý định cũ đúng, liều lượng sai. `max-width: 68ch` vẫn cho một câu dài ĐÓNG

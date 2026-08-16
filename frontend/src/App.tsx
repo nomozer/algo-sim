@@ -11,7 +11,6 @@ import { LibraryView } from "./components/LibraryView";
 import { ObserveView } from "./components/ObserveView";
 import { PracticeReporter } from "./components/PracticeReporter";
 import { SimulationControls } from "./components/SimulationControls";
-import { SimulationInspector } from "./components/SimulationInspector";
 import { SimulationWorkspace } from "./components/SimulationWorkspace";
 import { useAppStore } from "./state/store";
 import { useAuthStore } from "./state/auth";
@@ -140,11 +139,9 @@ export default function App() {
             <section className="panel-center">
               <SimulationWorkspace />
             </section>
-            {rightOpen && (
-              <aside className="panel-right">
-                <SimulationInspector />
-              </aside>
-            )}
+            {/* W5AC — KHÔNG còn `aside.panel-right`: nội dung Giải thích nay là
+                CỘT HAI bên trong thẻ (`SimulationWorkspace`), cạnh chính cơ chế
+                nó giải thích. Xem lý do đo được ở chú thích trong workspace. */}
             <footer className="panel-controls">
               <SimulationControls />
             </footer>
