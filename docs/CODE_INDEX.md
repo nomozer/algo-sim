@@ -655,6 +655,23 @@ Khoá bởi `dag.test.tsx` hai test `W5E — …` (kèm phân loại ba khẳng 
 thành OLD_PRODUCT_CONTRACT / STILL_VALID_INVARIANT). Tiêm lỗi đã chạy: bảng mở
 theo toggle ⇒ ĐỎ · cờ không bật ⇒ ĐỎ.
 
+### `frontend/src/simulations/state-text-consistency-w5n.test.ts` (W5N) · offline
+Phase N phần KIỂM ĐƯỢC OFFLINE. Khoá ca đã SHIP HAI LẦN (`ddb24f1`): bề mặt đọc
+CONFIG GỐC của đề thay vì STATE của engine, nên học sinh chọn ">" mà ô chọn nhảy
+về ">=" và bị chấm theo giá trị không nhìn thấy được. Kiểm: sau `set_param`,
+`state.config` (thứ engine THẬT SỰ chấm) mang ngưỡng MỚI, còn config gốc của
+envelope KHÔNG bị ghi đè (nó là mốc cho `specDrift`).
+⚠️ **KHÔNG có phép quét "một bất biến cho cả 24" — đã thử HAI lần, cả hai bắt
+nhầm**, và lý do ghi đầy đủ trong file: (1) "thuyết minh phải đổi" sai vì thuyết
+minh mô tả BƯỚC HIỆN TẠI (đổi "Tin"→"Tina" thì bước 0 vẫn là ký tự T); (2)
+"`currentConfig` phải đổi" sai vì `whatif_swap` tạo NHÁNH thử nghiệm — đề chưa
+bị sửa nên `currentConfig` đứng yên là ĐÚNG, nếu không `specDrift` kêu oan mỗi
+lần kéo thử. Quan hệ thao-tác ↔ config khác nhau theo miền một cách chính đáng.
+⚠️ Phần còn lại của Phase N (`WRONG_HIGHLIGHT`, `WRONG_LEGEND`,
+`WRONG_SELECTED_STATE`) sống trong SVG ⇒ CHỈ đo được bằng `certify-*.mjs` trên
+Chrome. Đừng dựng phép quét rộng rồi cấy ngoại lệ cho tới lúc nó hết nghĩa.
+Tiêm lỗi đã chạy: cho `set_param` giữ ngưỡng cũ ⇒ ĐỎ 2/4.
+
 ### `frontend/src/simulations/generic-semantic-fit-w5m.test.ts` (W5M) · offline
 Phase M bước 1 — nâng câu của `COVERAGE.md` (*"bài không có cơ chế ẩn thì mô
 phỏng chỉ là trang trí"*) thành cổng chạy được: **cảnh generic CÔNG KHAI phải
