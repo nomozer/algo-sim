@@ -1,12 +1,13 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "6d6fd892a7eb9c9a",
+  "sourceFingerprint": "cbf79cfbc7151fd5",
   "dirtyRelevantSources": [
+    "frontend/scripts/audit-composition.mjs",
     "frontend/src/styles/global.css"
   ],
-  "head": "37d465033cb17336b03e756484b762318468b384",
+  "head": "880b33feb49d2c223ca6f453e0b5818291eefe7f",
   "dirty": true,
-  "generatedAt": "2026-08-16T14:44:28.406Z",
+  "generatedAt": "2026-08-16T14:58:11.132Z",
   "tool": "audit-composition.mjs",
   "toolVersion": "1",
   "environment": {
@@ -412,7 +413,7 @@
       "stageFill": 43.3,
       "rails": {
         "instruction": 585,
-        "legend": 1307,
+        "legend": 585,
         "explanation": 585
       },
       "railException": "Chú giải tín hiệu đặt CẠNH sơ đồ, không đặt dưới: sơ đồ mạch có bề rộng cố định do bố cục mạch quyết định (không co giãn), nên ở màn rộng nó luôn ngắn hơn khung. Đặt chú giải bên phải lấp đúng dải trống ấy và rút ngắn sân khấu một hàng — đo được ở W4B-4D: lệch lề 0px ở cả bốn bề rộng. Đặt chú giải xuống dưới sẽ trả lại khoảng trống bên phải.",
@@ -918,7 +919,7 @@
       "stageFill": 49.6,
       "rails": {
         "instruction": 393,
-        "legend": 1115,
+        "legend": 393,
         "explanation": 393
       },
       "railException": "Chú giải tín hiệu đặt CẠNH sơ đồ, không đặt dưới: sơ đồ mạch có bề rộng cố định do bố cục mạch quyết định (không co giãn), nên ở màn rộng nó luôn ngắn hơn khung. Đặt chú giải bên phải lấp đúng dải trống ấy và rút ngắn sân khấu một hàng — đo được ở W4B-4D: lệch lề 0px ở cả bốn bề rộng. Đặt chú giải xuống dưới sẽ trả lại khoảng trống bên phải.",
@@ -1422,7 +1423,7 @@
       "stageFill": 56.1,
       "rails": {
         "instruction": 308,
-        "legend": 1030,
+        "legend": 308,
         "explanation": 308
       },
       "railException": "Chú giải tín hiệu đặt CẠNH sơ đồ, không đặt dưới: sơ đồ mạch có bề rộng cố định do bố cục mạch quyết định (không co giãn), nên ở màn rộng nó luôn ngắn hơn khung. Đặt chú giải bên phải lấp đúng dải trống ấy và rút ngắn sân khấu một hàng — đo được ở W4B-4D: lệch lề 0px ở cả bốn bề rộng. Đặt chú giải xuống dưới sẽ trả lại khoảng trống bên phải.",

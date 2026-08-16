@@ -1460,6 +1460,16 @@ html {
   .dag-stage-body {
     flex-direction: row; align-items: center;
     gap: var(--sp-xl);
+    /* W6A — XẾP NGANG CHỈ KHI ĐỦ CHỖ, KHÔNG PHẢI KHI CỬA SỔ RỘNG.
+     *
+     * Media query đọc bề rộng CỬA SỔ, còn thứ quyết định có xếp ngang được hay
+     * không là bề rộng THẺ. Đo được (probe CDP): thẻ 722px trong khi sơ đồ 694
+     * + chú giải 722 = 1416 ⇒ `scrollWidth` 1444, tràn đúng 722px — thanh cuộn
+     * ngang trong sân khấu và chú giải bị cắt mất chữ.
+     *
+     * `flex-wrap: wrap` cho hàng tự rơi về xếp dọc khi không đủ chỗ, nên không
+     * còn ngưỡng cửa sổ nào phải đoán: đủ chỗ thì ngang, không đủ thì dọc. */
+    flex-wrap: wrap;
   }
   /* W5Z — SƠ ĐỒ KHÔNG ĐƯỢC CO VỀ 0 KHI XẾP NGANG.
    *
