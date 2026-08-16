@@ -1,14 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "24202c5ad908a140",
+  "sourceFingerprint": "1abc89cf723c27fb",
   "dirtyRelevantSources": [
-    "frontend/src/core/algorithms.ts",
-    "frontend/src/core/program.ts",
-    "frontend/src/core/scan.ts"
+    "frontend/src/core/predicate-family-w5c.test.ts"
   ],
-  "head": "de579a7076a07ab22ca8d957a13ddc8ae68ca599",
+  "head": "0c3e396b6864bbd681c1a58eef067fdd58f9f3ad",
   "dirty": true,
-  "generatedAt": "2026-08-16T02:11:05.744Z",
+  "generatedAt": "2026-08-16T02:13:25.365Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { compareNumbers, includesBoundary } from "./predicate";
 import { runAlgorithm } from "./algorithms";
 import { runScan, SCAN_VERSION } from "./scan";
-import type { AnalysisOk, ConditionOp } from "./types";
+import type { AnalysisOk, ConditionOp, Trace } from "./types";
 
 /**
  * W5C (Phase C) — HỌ VỊ TỪ: SÁU TOÁN TỬ, MỘT NGHĨA, KIỂM Ở RANH GIỚI.
@@ -70,10 +70,10 @@ function sumIfAnalysis(array: number[], op: ConditionOp, value: number): Analysi
 }
 
 /** Đáp số cuối mà engine công bố — thứ học sinh đọc là "kết quả". */
-function finalResultText(steps: { events: { type: string; result?: string }[] }[]): string {
-  for (let i = steps.length - 1; i >= 0; i -= 1) {
-    for (const ev of steps[i].events) {
-      if (ev.type === "done") return ev.result as string;
+function finalResultText(trace: Trace): string {
+  for (let i = trace.steps.length - 1; i >= 0; i -= 1) {
+    for (const ev of trace.steps[i].events) {
+      if (ev.type === "done") return ev.result;
     }
   }
   throw new Error("trace không có bước done");
@@ -85,7 +85,7 @@ describe("W5C §2 · `sum_if`: đáp số của engine khớp phép so sánh, K�
   it.each(OPS)("%s: tổng bằng đúng tổng các phần tử thoả", (op) => {
     const trace = runAlgorithm(sumIfAnalysis(ARRAY, op, T));
     const expected = ARRAY.filter((v) => compareNumbers(v, op, T)).reduce((a, b) => a + b, 0);
-    expect(finalResultText(trace.steps), `${op}: đáp số không khớp phép so sánh`)
+    expect(finalResultText(trace), `${op}: đáp số không khớp phép so sánh`)
       .toContain(String(expected));
   });
 
@@ -93,8 +93,8 @@ describe("W5C §2 · `sum_if`: đáp số của engine khớp phép so sánh, K�
     /* Đây là ca đã được nêu đích danh trong đặc tả Phase C. Giữ nó riêng, viết
        thẳng con số, để nếu ngày nào nó hỏng thì thông báo lỗi nói đúng câu
        chuyện thay vì "tham số thứ hai của bảng". */
-    const withBoundary = finalResultText(runAlgorithm(sumIfAnalysis(ARRAY, ">=", T)).steps);
-    const withoutBoundary = finalResultText(runAlgorithm(sumIfAnalysis(ARRAY, ">", T)).steps);
+    const withBoundary = finalResultText(runAlgorithm(sumIfAnalysis(ARRAY, ">=", T)));
+    const withoutBoundary = finalResultText(runAlgorithm(sumIfAnalysis(ARRAY, ">", T)));
     expect(withBoundary).toContain(String(EQUAL + ABOVE));
     expect(withoutBoundary).toContain(String(ABOVE));
     expect(withBoundary, "`>=` và `>` cho cùng đáp số ⇒ ranh giới đang bị bỏ qua")
@@ -121,7 +121,7 @@ describe("W5C §3 · `algorithm.scan` đồng ý với `sum_if` ở TỪNG phầ
 
     const expected = ARRAY.filter((v) => compareNumbers(v, op, T));
     const total = expected.reduce((a, b) => a + b, 0);
-    expect(finalResultText(scanTrace.steps), `${op}: scan lệch khỏi phép so sánh chung`)
+    expect(finalResultText(scanTrace), `${op}: scan lệch khỏi phép so sánh chung`)
       .toContain(String(total));
   });
 });
