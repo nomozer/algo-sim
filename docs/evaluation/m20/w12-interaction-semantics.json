@@ -1,18 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "63426aa08b43c407",
+  "sourceFingerprint": "bc3d3d0c4e9a9bf5",
   "dirtyRelevantSources": [
-    "backend/app/simulation/catalog.py",
-    "backend/tests/test_base_conversion.py",
-    "frontend/src/components/ux-shell.test.tsx",
-    "frontend/src/data/catalog.test.tsx",
-    "frontend/src/data/offline-catalog.ts",
-    "frontend/src/simulations/capability-descriptors.json",
-    "frontend/src/simulations/interaction-semantics.test.ts"
+    "frontend/src/styles/global.css"
   ],
-  "head": "adbfd743ce1eea0c77596b8d28cbcc3a77e575f6",
+  "head": "3d63c60f7644e227bcfd904a07f6b674b8f6d737",
   "dirty": true,
-  "generatedAt": "2026-08-16T12:36:42.467Z",
+  "generatedAt": "2026-08-16T12:56:14.926Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

@@ -2273,7 +2273,17 @@ html {
   flex-direction: column;
   gap: var(--sp-md);
   width: fit-content;
-  min-width: min(100%, 560px);
+  /* W5Q — SÀN BỀ RỘNG, ĐO ĐƯỢC CHỨ KHÔNG ĐOÁN.
+     `audit-composition.mjs` ở 1920: chỗ khả dụng 1672px mà thẻ chỉ 512–719px
+     (dùng 31% bề ngang) trong khi mực lấp 99,6% thẻ. Nguyên nhân là vòng đo:
+     thẻ `fit-content` ôm theo sân khấu, còn sân khấu tính bề rộng từ chỗ khả
+     dụng ĐO BÊN TRONG thẻ — hai bên chờ nhau nên chốt ở sàn cũ 560px.
+     Nâng sàn phá vòng đó mà KHÔNG đụng `fit-content`: `ResizeObserver` thấy
+     chỗ rộng hơn ⇒ `arrayChartLayout` giãn cột tới trần mật độ ⇒ `fit-content`
+     lại ôm theo mực. Khác hẳn `width: 100%` (đã thử, đã lùi ở `df55c0c`): cách
+     đó bỏ `fit-content` nên `.dag-stage` mất quy chiếu và SVG mạch logic co
+     về 0. */
+  min-width: min(100%, 1040px);
   max-width: 100%;
 }
 /* MỘT RAIL: mọi con giãn đúng bằng thẻ, không con nào tự căn giữa. */
