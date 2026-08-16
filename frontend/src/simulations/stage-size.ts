@@ -25,10 +25,27 @@
 /** Props kích thước cho một `<svg>` sân khấu có `viewBox` rộng `width`. */
 export function stageSvgSize(width: number): {
   width: number;
-  style: { maxWidth: string; height: string; display: string };
+  style: { maxWidth: string; height: string; display: string; marginInline: string };
 } {
   return {
     width,
-    style: { maxWidth: "100%", height: "auto", display: "block" },
+    /* W5H/3 — CĂN GIỮA KHI SÂN KHẤU HẸP HƠN THẺ.
+     *
+     * `arrayChartLayout` kẹp bề rộng cột ở trần mật độ, nên khi thẻ rộng hơn
+     * mức biểu đồ dùng được thì phần dư dồn hết sang PHẢI: đo trên sản phẩm là
+     * 52px trái / 190px phải — hình đọc ra lệch.
+     *
+     * `margin-inline: auto` chia đều phần dư. Sân khấu nào đã lấp kín thẻ thì
+     * phần dư bằng 0 nên không đổi gì.
+     *
+     * ⚠️ M19 từng GỠ `margin: 0 auto` khỏi đây, và việc đưa lại KHÔNG phải quên
+     * bài học đó. Lúc ấy thẻ là `fit-content` — thẻ luôn bằng đúng sân khấu, nên
+     * căn giữa không chia được gì mà chỉ tạo hệ căn lề thứ hai chọi với thẻ.
+     * Nay thẻ lấy bề rộng từ cột chứa (W5H), thẻ RỘNG HƠN sân khấu là chuyện
+     * thường, nên phần dư có thật và phải được chia.
+     *
+     * ⚠️ ĐÁNH ĐỔI ĐÃ CHỌN: biểu đồ thôi thẳng hàng với tiêu đề và chú giải bên
+     * dưới. Chủ đề tài chọn lề cân hơn là thẳng rail. */
+    style: { maxWidth: "100%", height: "auto", display: "block", marginInline: "auto" },
   };
 }
