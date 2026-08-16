@@ -145,27 +145,52 @@ gõ, không đo cái kiến trúc làm được. Chiều sâu mới đo được
 thuộc trọng tâm dùng CHUNG một `interaction-policy`, một chủ sở hữu vị từ, một
 engine điểm-quyết-định, một khe thuyết minh.
 
-**BA TẦNG PHẠM VI — mọi tài liệu và mọi tuyên bố phải theo:**
+**TIÊU ĐIỂM = BA ĐIỂM NGHẼN NHẬN THỨC (chốt 2026-08-16)**
 
-| Tầng | Nội dung | Vai trò |
-|---|---|---|
-| **Trọng tâm (14)** | quét dãy một lượt (6) · sắp xếp so sánh (3) · loại nửa khoảng (1) · luồng điều khiển hữu hạn (1) · duyệt cây (1) · duyệt & định tuyến đồ thị (2) | chương chính · demo · đánh giá |
-| **Bằng chứng mở rộng (10)** | biểu diễn theo vị trí (4, gồm `color.rgb_model`) · tổ hợp logic (3) · PDU theo tầng (1) · truy vấn bảng (1) · trình bày web (1) | **một mục ngắn**, KHÔNG phải một chương |
-| **Ngoài phạm vi** | LMS · IDE tự do · sinh hình không ràng buộc · chứng minh cải thiện kết quả học tập | `POST_THESIS_BACKLOG.md` |
+Khung tổ chức của luận văn KHÔNG phải "độ phủ chương trình" mà là **điểm nghẽn
+nhận thức**: chỗ trực giác học sinh hỏng, nên mới đáng bỏ công trực quan hoá.
+Khung này trả lời được câu "vì sao cái này đáng mô phỏng?" — điều mà khung độ
+phủ không trả lời nổi — và nó khớp gốc hình học động: KÉO để thấy bất biến,
+đúng ở chỗ nghĩ thầm không ra.
 
-Ranh giới trọng tâm KHÔNG do ai vẽ cho khớp tên: cả 14 target đều neo vào
-**T10 CĐ5 / T11CS B17–B22** (cụm thuật toán), còn 10 target kia neo vào cụm biểu
-diễn dữ liệu T10 B3–B9 và các chuyên đề T11/T12. Ranh giới rơi ra từ chính bảng
-`curriculum_anchor`.
+⚠️ **CÁCH PHÁT BIỂU BẮT BUỘC.** Nói *"ba điểm nghẽn LỚN NHẤT"* là tuyên bố THỰC
+NGHIỆM, mà kho này giữ nhãn `LEARNER_IMPACT_NOT_EVALUATED` — không có khảo sát
+trên người học. Phát biểu đúng: *"ba điểm nghẽn được CHỌN theo yêu cầu cần đạt
+của chương trình GDPT 2018 và các khó khăn đã ghi nhận trong tài liệu về người
+mới học lập trình"*. Chọn có căn cứ, không tự phong.
 
-Tuyên bố được phép cho tầng giữa, và chỉ tuyên bố này: *"thêm một miền tốn một
-`SimSpec` + một dòng đăng ký, không sửa dòng pipeline nào"* — số đo là W5A
-(`color.rgb_model`): 23 sổ đăng ký đòi khai báo, 0 dòng pipeline đổi.
+| # | Điểm nghẽn | Vì sao trực giác hỏng | Target (13) |
+|---|---|---|---|
+| 1 | **Trạng thái tích luỹ qua vòng lặp** | không giữ nổi "max đến giờ" / "tổng đến giờ" trong đầu khi duyệt, và không thấy nó đổi lúc nào | `find_max` `find_min` `sum_if` `count_if` `linear_search` `scan` `bounded_control_flow` |
+| 2 | **Bất biến & tiền điều kiện** | không hiểu vì sao tìm nhị phân ĐÒI dãy đã sắp; không thấy thuật toán KHÔNG nhìn lại vùng đã duyệt | `binary_search` `bubble_sort` `insertion_sort` `selection_sort` |
+| 3 | **Thứ tự duyệt quyết định kết quả** | cùng một cây/đồ thị, đổi kiểu duyệt ra dãy khác — thứ tự LÀ định nghĩa | `tree.traversal` `network.graph_traversal` |
 
-⚠️ `algorithm.bounded_control_flow` neo **T10 B16–B19** (rẽ nhánh, lặp), tức
-NGAY TRƯỚC cụm thuật toán. Đang xếp vào trọng tâm và gọi là *"thực thi thuật
-toán ở mức câu lệnh"*; nếu hội đồng vặn thì đẩy ra tầng giữa, trọng tâm còn 13
-và ranh giới neo sạch tuyệt đối.
+Bộ ba này KHÔNG được gán cho vừa: mỗi nghẽn ứng đúng một tương tác ĐÃ CÓ trong
+`interaction-policy.ts` — đổi ngưỡng/điều kiện (1) · kéo cột vào vùng đã duyệt,
+phá thứ tự đã sắp (2) · đổi kiểu duyệt (3). Nó mô tả thứ hệ ĐÃ LÀM ĐƯỢC, không
+phải thứ hứa sẽ làm.
+
+**TẦNG HAI — 11 target, GIỮ TRONG HỆ, CẮT KHỎI TIÊU ĐIỂM**
+
+`decimal_to_binary` `base_conversion` `character_encoding` `color.rgb_model` ·
+`and_gate` `boolean_dag` `generic.rule_scene` · `protocol_encapsulation` ·
+`relational_table_query` · `web.style_model` · `network.packet_routing`
+
+⚠️ **CẮT KHỎI TIÊU ĐIỂM ≠ XOÁ KHỎI HỆ.** Không demo, không chương, không đo —
+một bảng phụ lục nửa trang là đủ. Nhưng KHÔNG xoá code, vì xoá là mất đúng ba
+thứ đang đứng vững: (a) bằng chứng mở rộng — luận cứ kiến trúc mạnh nhất, số đo
+W5A: thêm miền tốn một `SimSpec` + một dòng đăng ký, 0 dòng pipeline; (b) ranh
+giới TỪ CHỐI — `generic.rule_scene` chính là chỗ chứng minh đúng-hoặc-
+`capability_gap`, xoá nó thì Phase M không còn đối tượng; (c) 24 target đang bị
+khoá bởi test đếm, migration và artifact chứng nhận, nên xoá là một wave gỡ rối
+mà KHÔNG thêm một chữ nào cho quyển luận văn.
+Loãng đề tài là do KỂ CHUYỆN dàn trải, không phải do code tồn tại.
+
+`network.packet_routing` xuống tầng hai vì định tuyến không nằm gọn trong ba
+nghẽn trên; nhét vào nghẽn 3 là làm hỏng sự sạch của bộ ba để lấy một con số.
+
+**NGOÀI PHẠM VI:** LMS · IDE tự do · sinh hình không ràng buộc · chứng minh cải
+thiện kết quả học tập → `POST_THESIS_BACKLOG.md`.
 
 
 **Lõi đề tài**: yêu cầu học bằng ngôn ngữ tự nhiên → LLM đề xuất *spec ứng viên

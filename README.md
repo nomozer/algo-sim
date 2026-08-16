@@ -27,6 +27,26 @@ Thứ đáng mô phỏng là **cơ chế ẩn** đó. Bài không có cơ chế 
 là trang trí — nguyên tắc này được ghi trong [docs/COVERAGE.md](docs/COVERAGE.md)
 và ràng buộc những gì AlgoSim nhận mô phỏng.
 
+## 2b. Tiêu điểm — ba điểm nghẽn nhận thức
+
+Đề tài **không** tổ chức theo độ phủ chương trình mà theo **điểm nghẽn nhận
+thức**: chỗ trực giác học sinh hỏng, nên mới đáng bỏ công trực quan hoá. Ba
+điểm nghẽn được **chọn** theo yêu cầu cần đạt của chương trình GDPT 2018 và các
+khó khăn đã ghi nhận với người mới học lập trình — không tuyên bố đây là ba khó
+khăn "lớn nhất", vì kho này không chứa nghiên cứu trên người học.
+
+| # | Điểm nghẽn | Học sinh thao tác gì để thấy |
+|---|---|---|
+| 1 | **Trạng thái tích luỹ qua vòng lặp** — không giữ nổi "max đến giờ" trong đầu | đổi ngưỡng/phép so sánh, xem biến tích luỹ đổi theo |
+| 2 | **Bất biến & tiền điều kiện** — vì sao tìm nhị phân *đòi* dãy đã sắp | kéo cột vào vùng đã duyệt · phá thứ tự đã sắp |
+| 3 | **Thứ tự duyệt quyết định kết quả** — thứ tự *là* định nghĩa | đổi kiểu duyệt, so bốn dãy kết quả |
+
+**13 target** thuộc ba nghẽn này là trọng tâm. **11 target còn lại** (hệ cơ số,
+mã ký tự, màu RGB, logic, CSDL, HTML/CSS, đóng gói giao thức, định tuyến, cảnh
+generic) vẫn nằm trong hệ nhưng **không thuộc tiêu điểm** — chúng phục vụ đúng
+một tuyên bố hẹp: *kiến trúc mở rộng sang miền mới tốn một `SimSpec` + một dòng
+đăng ký, không sửa dòng pipeline nào*. Chi tiết và lý do: `docs/STATUS_LEDGER.md §0`.
+
 ## 3. Vì sao không để LLM sinh code / hoạt hình tự do?
 
 Đây là câu hỏi trung tâm. Ba luận điểm:
