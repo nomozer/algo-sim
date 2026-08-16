@@ -269,6 +269,52 @@ html {
   opacity: 0.75;
 }
 
+/* W5W — CHIP TỆP ĐÍNH KÈM, nằm TRONG khung soạn và trên ô nhập.
+   Gọn theo nội dung (`fit-content`) chứ không full-width: nó là phần PHỤ của
+   đề bài, không được lấn ô nhập — đúng lỗi của khối `file-chip` cũ nằm ngoài. */
+.composer-file {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  max-width: 100%;
+  width: fit-content;
+  margin: 0 4px var(--sp-xs);
+  padding: 6px 8px 6px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas-soft);
+}
+
+.composer-file-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Tên tệp dài không được đẩy nút gỡ ra khỏi khung. */
+.composer-file-info strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.composer-file-remove {
+  flex: 0 0 auto;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: var(--rounded-sm);
+  color: var(--ink-muted);
+}
+
+.composer-file-remove:hover { background: var(--surface); color: var(--ink); }
+.composer-file-remove:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+
 .composer-text {
   width: 100%;
   border: none;
@@ -2551,56 +2597,6 @@ html {
 /* ── Tệp đầu vào (M4) — nút tải tệp nay là icon 📎 trong pill (M9-UX4);
       `.upload-row` đã gỡ cùng vỏ composer cũ. ─────────────────────────── */
 
-.file-chip {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-sm);
-  background: var(--canvas-soft);
-  border: 1px solid var(--hairline);
-  border-radius: var(--rounded-md);
-  padding: var(--sp-xs) var(--sp-sm);
-}
-
-.file-chip-info {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  font-size: 14px;
-}
-
-.file-chip-info strong {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.file-chip-remove {
-  background: transparent;
-  color: var(--ink-muted);
-  font-size: 20px;
-  line-height: 1;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--rounded-full);
-  flex-shrink: 0;
-}
-
-.file-chip-remove:hover {
-  background: rgba(0, 0, 0, 0.06);
-  color: var(--ink);
-}
-
-/* ── Bảng chân trị (domain logic) ────────────────────────── */
-/* ⚠️ `.data-table` KHÔNG có luật nào cho tới W12 — bốn bảng dùng nó render
-   thành CHỮ CHẠY LIỀN, không viền, không đệm, cột không thẳng hàng. Đây là lỗi
-   IM LẶNG cùng họ với `var(--token)` trỏ hụt (`ARCHITECTURE_MAP §8` #11): trình
-   duyệt không cảnh báo, không test nào đỏ, và nó sống qua nhiều milestone.
-   Hai lớp cùng là "bảng dữ liệu tất định của engine" nên dùng chung một luật —
-   gộp selector thay vì chép một bản thứ hai sẽ lệch. */
-.truth-table,
-.data-table,
 .tq-table {
   width: 100%;
   border-collapse: collapse;

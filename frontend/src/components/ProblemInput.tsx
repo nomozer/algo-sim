@@ -143,6 +143,28 @@ const COMPOSER_MAX_H = 320;
           style={{ display: "none" }}
         />
 
+        {/* W5W — TỆP ĐÍNH KÈM NẰM TRONG KHUNG SOẠN, TRÊN Ô NHẬP.
+            Trước đây nó là một khối full-width nằm NGOÀI `.composer-box`, nên
+            mắt đọc thành hai vật thể rời trong khi tệp là MỘT PHẦN của đề bài
+            sắp gửi. Khối ấy còn nặng hơn cả ô nhập, tức phần phụ lấn phần chính.
+            Nay là một chip gọn bên trong cùng một khung — một vật thể, một biên. */}
+        {file && (
+          <div className="composer-file">
+            <span className="composer-file-info">
+              <strong>{file.name}</strong>
+              <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>
+            </span>
+            <button
+              className="composer-file-remove"
+              onClick={removeFile}
+              title="Bỏ tệp"
+              aria-label={`Bỏ tệp ${file.name}`}
+            >
+              ×
+            </button>
+          </div>
+        )}
+
         <textarea
           ref={textRef}
           className="composer-text"
@@ -175,17 +197,6 @@ const COMPOSER_MAX_H = 320;
         </div>
       </div>
 
-      {file && (
-        <div className="file-chip">
-          <span className="file-chip-info">
-            <strong>{file.name}</strong>
-            <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>
-          </span>
-          <button className="file-chip-remove" onClick={removeFile} title="Bỏ tệp">
-            ×
-          </button>
-        </div>
-      )}
       {fileError && <div className="error-banner">{fileError}</div>}
       {serverStatus}
       {/* M18 §5 — HẾT LƯỢT THỬ KHÔNG PHẢI LÀ MỘT LỖI.
