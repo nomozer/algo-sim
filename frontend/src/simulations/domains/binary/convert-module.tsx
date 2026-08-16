@@ -367,7 +367,9 @@ export function makeBaseConvModule(): SimulationModule<BaseConvConfig, BaseConvS
   return {
     id: "binary.base_conversion",
     domain: "binary",
-    title: "Đổi cơ số (2 · 8 · 10 · 16)",
+    /* W5Z — cơ số nguồn/đích do thanh tham số ngay dưới sân khấu chọn
+       ("Chọn giá trị và cơ số"), nên liệt kê lại ở phụ đề chỉ tốn một dòng. */
+    title: "Đổi cơ số",
     /* W4B-4C — `progressive` → `hybrid`: nay có CẢ dòng thời gian giải thích
        LẪN tham số học sinh đổi được bất cứ lúc nào trên sân khấu. */
     interactionMode: "hybrid",

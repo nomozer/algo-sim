@@ -629,7 +629,10 @@ export function makeTraverseModule(): SimulationModule<TraverseConfig, TraverseS
   return {
     id: "network.graph_traversal",
     domain: "network",
-    title: "Duyệt đồ thị (BFS · DFS)",
+    /* W5Z — ô chọn ngay dưới sân khấu đã ghi "BFS — theo chiều rộng" / "DFS —
+       theo chiều sâu", kèm nghĩa tiếng Việt. Phụ đề nhắc lại hai từ viết tắt
+       trần là bớt thông tin đi chứ không thêm. */
+    title: "Duyệt đồ thị",
     /* W4B-4C — `progressive` → `hybrid`: nay có CẢ dòng thời gian giải thích
        LẪN tham số học sinh đổi được bất cứ lúc nào trên sân khấu. */
     interactionMode: "hybrid",

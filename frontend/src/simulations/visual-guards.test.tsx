@@ -68,6 +68,15 @@ describe("VIS-002 — badge miền phải là tiếng Việt cho học sinh", ()
     expect(src).not.toBeNull();  // ?raw PHẢI hoạt động, không bỏ qua êm
     // badge phải đi qua ánh xạ, KHÔNG dùng thẳng domain.toUpperCase()
     expect(src).not.toMatch(/eyebrow">\{mod\.domain\.toUpperCase\(\)\}/);
-    expect(src).toContain("domainBadge");
+    /* W5Z — ánh xạ nay do `components/header-identity.ts` sở hữu (bảng
+       `Record<Domain, string>` TOÀN PHẦN, không còn fallback `toUpperCase()`).
+       Guard này soi MÃ NGUỒN nên phải trỏ đúng tên mới; phần "bảng có đủ mọi
+       miền đã đăng ký không" thì `components/header-identity.test.ts` kiểm bằng
+       dữ liệu thật, còn "thiếu miền" thì `tsc -b` chặn ngay từ biên dịch. */
+    expect(src).toContain("DOMAIN_BADGE");
+    expect(src).toContain("header-identity");
+    /* Và không được có bảng nhãn THỨ HAI dựng tại chỗ — đó đúng là cách bề mặt
+       tách đôi rồi mỗi nơi nói một kiểu. */
+    expect(src).not.toMatch(/const\s+VI\s*:\s*Record<\s*string/);
   });
 });

@@ -2117,6 +2117,19 @@ giải URL từ chính trang (`performance.getEntriesByType('resource')`).
 `measure-composition.mjs` KHÔNG có lớp bảo vệ đó — nó thất bại ồn ào (null
 `querySelectorAll`), nên gặp lỗi đó thì **restart `npm run dev`**, đừng sửa số.
 
+### `components/header-identity.ts` · offline
+**Chủ sở hữu DẢI NHẬN DIỆN đầu thẻ mô phỏng** — hai trong ba dòng đầu tiên học
+sinh đọc. Export `DOMAIN_BADGE: Record<Domain, string>` (nhãn miền tiếng Việt,
+**toàn phần** — thêm miền mà quên nhãn ⇒ `tsc -b` GÃY, thay cho bảng
+`Record<string, string>` cũ có fallback `domain.toUpperCase()` từng để lọt
+`web`→"WEB" và `geometry`→"GEOMETRY") và `headerSubtitle(modTitle, envelopeTitle)`
+trả `string | null` — `null` khi phụ đề lặp nguyên văn tiêu đề (chuẩn hoá hoa/
+thường + khoảng trắng), để **shell** không dựng `<span>` thay vì bắt 24 module tự
+nhớ. Trả `null` chứ không phải chuỗi rỗng: span rỗng vẫn ăn khoảng cách lưới.
+Khoá bởi `components/header-identity.test.ts` (quét cả 24 target: nhãn đủ mọi
+miền đã đăng ký · phụ đề không lặp tiêu đề · không liệt kê biến thể mà control
+đã bày bằng tiếng Việt · trần 40 ký tự) và `visual-guards.test.tsx` VIS-002.
+
 ### `components/SimulationWorkspace.tsx` · `SimulationControls.tsx` · offline
 Host sân khấu; thanh điều khiển **capability-driven** (có `timeline` mới hiện
 Next/Prev/Play) — tiền lệ cho EditPolicy. M8: Stage = `rendererFor(mod, mode)`

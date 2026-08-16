@@ -555,7 +555,11 @@ export function makeTreeTraversalModule(): SimulationModule<TreeTraversalConfig,
   return {
     id: "tree.traversal",
     domain: "tree",
-    title: "Duyệt cây nhị phân (preorder · inorder · postorder · level-order)",
+    /* W5Z — KHÔNG liệt kê biến thể ở đây. Ô chọn ngay dưới sân khấu đã bày đủ
+       bốn thứ tự BẰNG TIẾNG VIỆT ("Trước (gốc → trái → phải)"…), nên bản liệt kê
+       này vừa thừa vừa nói tiếng Anh đúng chỗ bề mặt phải nói tiếng Việt — cùng
+       một khái niệm mang hai tên trên cùng một màn hình. */
+    title: "Duyệt cây nhị phân",
     /* W4B-4C — `progressive` → `hybrid`: nay có CẢ dòng thời gian giải thích
        LẪN tham số học sinh đổi được bất cứ lúc nào trên sân khấu. */
     interactionMode: "hybrid",

@@ -1,4 +1,5 @@
 import { Suspense, type ComponentType, type CSSProperties } from "react";
+import { DOMAIN_BADGE, headerSubtitle } from "./header-identity";
 import { getSimulation } from "../simulations/registry";
 import {
   effectiveVisualMode,
@@ -305,22 +306,9 @@ export function SimulationWorkspace() {
      biến; module không khai `currentConfig` thì không có gì để lệch. */
   const driftedFromSpec = specDrift(mod, active.state, active.config);
   const Stage = rendererFor(mod, mode) as ComponentType<WorkspaceProps>;
-  // M17-RC1 §E — nhãn miền hiển thị cho HỌC SINH, không phải id kỹ thuật.
-  // "GENERIC" vô nghĩa với người học (audit trình duyệt bắt được); các miền
-  // khác đổi sang tiếng Việt cho nhất quán. Không đổi `mod.domain`.
-  function domainBadge(domain: string): string {
-    const VI: Record<string, string> = {
-      generic: "MÔ PHỎNG THEO MÔ TẢ",
-      algorithm: "THUẬT TOÁN",
-      network: "MẠNG",
-      tree: "CÂY",
-      binary: "HỆ CƠ SỐ",
-      logic: "LOGIC",
-      database: "TRUY VẤN BẢNG",
-      color: "MÀU SẮC",
-    };
-    return VI[domain] ?? domain.toUpperCase();
-  }
+  // M17-RC1 §E + W5Z — nhãn miền và luật phụ đề nay do `header-identity.ts` sở
+  // hữu (hàm thuần ⇒ khoá được bằng test không cần DOM). Không đổi `mod.domain`.
+  const subtitle = headerSubtitle(mod.title, active.envelope.title);
 
   /* W5Y — SÀN BỀ RỘNG SUY THEO TỪNG TARGET, KHÔNG PHẢI HẰNG SỐ.
    *
@@ -343,7 +331,7 @@ export function SimulationWorkspace() {
   return (
     <section className="card card-elevated workspace-card" style={cardStyle}>
       <div className="workspace-header">
-        <span className="eyebrow">{domainBadge(mod.domain)}</span>
+        <span className="eyebrow">{DOMAIN_BADGE[mod.domain]}</span>
         <h2 className="workspace-title">{active.envelope.title}</h2>
         {/* W5J — DÒNG NÀY NÓI VỀ BÀI HỌC, KHÔNG NÓI VỀ HỆ THỐNG.
             Trước đây nó ghép ba thứ khác loại: tên cơ chế · `interactionMode` ·
@@ -353,8 +341,15 @@ export function SimulationWorkspace() {
             Hai mảnh sau là taxonomy nội bộ rò lên bề mặt: "từng bước" nói lại
             đúng thứ khay điều khiển đã bày (Bước 1/13, thanh tua, nút Tiến), còn
             "2D" là NĂNG LỰC hệ thống — bài nào thật sự có hai cách xem thì đã có
-            công tắc "Cách xem" riêng nói hộ. */}
-        <span className="hint">{mod.title}</span>
+            công tắc "Cách xem" riêng nói hộ.
+
+            W5Z — VÀ KHI NÓ KHÔNG BẮC ĐƯỢC CÂY CẦU NÀO THÌ ĐỪNG DỰNG NÓ. Có đề mà
+            đề bài CHÍNH LÀ tên cơ chế ("Cổng logic AND", "Mô hình màu RGB"): khi
+            ấy dòng này lặp lại nguyên văn tiêu đề ngay bên dưới tiêu đề, đọc như
+            lỗi hiển thị chứ không phải lời giảng. Ẩn nó là việc của SHELL, không
+            phải của từng miền — nếu để miền tự lo thì đúng 24 module phải nhớ
+            cùng một luật, và đó là cách bề mặt sinh ra "mỗi cái một kiểu". */}
+        {subtitle && <span className="hint">{subtitle}</span>}
         {/* W4B-4D — KHI MÔ HÌNH ĐÃ RỜI KHỎI ĐỀ, PHẢI NÓI RA.
             Tiêu đề bên trên là ĐỀ BÀI, không phải mô hình. Từ khi đổi được tham
             số, hai thứ ấy tách nhau: đề viết "từ 8,0 trở lên" còn học sinh vừa
