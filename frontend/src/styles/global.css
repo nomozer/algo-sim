@@ -1461,6 +1461,22 @@ html {
     flex-direction: row; align-items: center;
     gap: var(--sp-xl);
   }
+  /* W5Z — SƠ ĐỒ KHÔNG ĐƯỢC CO VỀ 0 KHI XẾP NGANG.
+   *
+   * ĐO ĐƯỢC trong Chrome thật (probe qua CDP, không suy đoán): ở 1920/1536/1366
+   * `svg` là 0 × 0 trong khi `.dag-stage-body` vẫn 722 × 96; ở 768 (xếp dọc) thì
+   * svg 642 × 257 bình thường. Tức sơ đồ mạch BIẾN MẤT ở mọi bề rộng lớn — đúng
+   * ảnh người dùng gửi, và guard cũ im lặng vì nó coi "không đo được" là đạt.
+   *
+   * Nguyên nhân: `<svg>` làm FLEX ITEM theo hàng ngang không có bề rộng nội tại
+   * mà thuật toán flex dùng được (`width` là presentation attribute, còn CSS chỉ
+   * có `max-width: 100%`), nên `flex-shrink: 1` mặc định bóp nó về 0. Ở
+   * `flex-direction: column` thì trục chính là dọc nên không xảy ra — vì thế lỗi
+   * chỉ hiện từ 1100px trở lên.
+   *
+   * `flex: 0 0 auto` cấm co: sơ đồ giữ đúng bề rộng thiết kế, chú giải bên cạnh
+   * co lại nếu chật. `max-width: 100%` vẫn còn nên không bao giờ tràn. */
+  .dag-stage-body > svg { flex: 0 0 auto; }
   /* Chú giải dựng dọc: bốn mục ngắn xếp thành cột đọc nhanh hơn một hàng dài,
      và nó lấp đúng dải trống mà sơ đồ để lại. */
   .dag-stage-body .dag-legend {

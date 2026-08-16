@@ -1,13 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "6fb8f622021dea9b",
+  "sourceFingerprint": "6d6fd892a7eb9c9a",
   "dirtyRelevantSources": [
-    "frontend/src/components/SimulationWorkspace.tsx",
     "frontend/src/styles/global.css"
   ],
-  "head": "907ebea92d098d9cc5d45fdf4ad6197a9e903b75",
+  "head": "37d465033cb17336b03e756484b762318468b384",
   "dirty": true,
-  "generatedAt": "2026-08-16T14:39:28.215Z",
+  "generatedAt": "2026-08-16T14:44:41.871Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
