@@ -14,10 +14,14 @@
  * Nên test này khoá LUẬT, không khoá pixel: chỗ nào nhìn thấy được thì
  * `certify-viewports-w12.mjs` đo; ở đây kiểm điều kiện sinh ra nó.
  */
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { toolAffordanceOpen } from "./tool-affordance";
 import { whatIfDragAllowed, whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { makeAlgorithmModule } from "./domains/algorithm/index";
+import { registerAllSimulations } from "./index";
+import { listSimulations } from "./registry";
+import { offlineCatalog } from "../data/offline-catalog";
+import { useAppStore } from "../state/store";
 import type { AlgorithmId } from "../core/types";
 import type { AlgorithmSimState } from "./domains/algorithm/model";
 
@@ -116,5 +120,70 @@ describe("W12 §11 — quét CẢ HỌ thuật toán, không kết luận từ m
     /* Cùng kỉ luật với `KNOWN_GAPS` của `code-index-sync.test.ts`: một ngoại lệ
        không có trần thì sẽ lớn dần cho tới khi luật không còn nghĩa. */
     expect(Object.keys(DRAG_IS_DECORATION)).toEqual(["sum_if", "count_if"]);
+  });
+});
+
+/* ══ W12-B · ĐÓNG THỬ THÁCH KHÔNG ĐƯỢC ĐỤNG VÀO SỰ THẬT ═══════════════════
+ *
+ * Hợp đồng Khám phá/Thử thách đòi bốn điều, và ba đã có chủ khoá:
+ *
+ *   THỬ THÁCH ĐÓNG  ⇒ công cụ chính còn nguyên   → `toolAffordanceOpen` (trên)
+ *   HAI CỜ ĐỘC LẬP                               → `explore-ownership-w4b3a §2`
+ *   ĐÓNG KHÁM PHÁ   ⇒ chỉ đổi hiển thị           → `explore-ownership-w4b3a §1`
+ *   ĐÓNG THỬ THÁCH  ⇒ KHÔNG đổi state canonical  → CHƯA AI KHOÁ (ở đây)
+ *
+ * Vì sao điều thứ tư nguy hiểm hơn ba điều kia: `challengeOpen` là cờ DUY NHẤT
+ * nằm cạnh `prediction` trong store, nên một lần "dọn dẹp cho sạch" (xoá dự
+ * đoán ⇒ dựng lại state ⇒ mất cursor) là sửa đúng một dòng và không test nào
+ * đỏ. Học sinh sẽ thấy mô phỏng nhảy về bước 0 mỗi lần đóng thử thách.
+ *
+ * Quét CẢ danh mục chứ không một bài: bất biến này thuộc store (mù domain), nên
+ * một bài xanh không nói gì về 22 bài kia — và store là chỗ dễ thêm nhánh theo
+ * miền nhất.
+ */
+describe("W12-B · chế độ là TRÌNH BÀY, không phải sự thật", () => {
+  beforeEach(() => {
+    if (listSimulations().length === 0) registerAllSimulations();
+  });
+
+  /* Danh mục mẫu có NHIỀU bài cho cùng một target (mỗi target ≥1 đề), nên quét
+     theo `simId` duy nhất — quét theo số bài mẫu sẽ đo nhầm một đại lượng khác
+     và trôi mỗi lần ai đó thêm một đề. */
+  const CATALOG = [...new Set(offlineCatalog().map((x) => x.simId))].sort();
+
+  it("danh mục mẫu vẫn phủ đủ 23 target — quét hẹp đi là quét mù", () => {
+    expect(CATALOG.length).toBe(23);
+  });
+
+  it.each(CATALOG)("%s: mở rồi đóng Thử thách KHÔNG dựng lại state canonical", (simId) => {
+    const e = offlineCatalog().find((x) => x.simId === simId)!;
+    useAppStore.getState().loadEnvelope(e.envelope);
+
+    const before = useAppStore.getState().active!;
+    useAppStore.getState().setChallengeOpen(true);
+    expect(useAppStore.getState().active!.state, `${simId}: MỞ thử thách đã dựng lại state`)
+      .toBe(before.state);
+
+    useAppStore.getState().setChallengeOpen(false);
+    const after = useAppStore.getState().active!;
+    // So bằng THAM CHIẾU: state canonical không được dựng lại, kể cả thành một
+    // đối tượng "bằng giá trị" — dựng lại là mất mọi thứ engine đang giữ.
+    expect(after.state, `${simId}: ĐÓNG thử thách đã dựng lại state`).toBe(before.state);
+    expect(after.config, `${simId}: đóng thử thách đã đụng config`).toBe(before.config);
+    expect(useAppStore.getState().challengeOpen).toBe(false);
+  });
+
+  it("(đối chứng) một `setChallengeOpen` có 'dọn dẹp' sẽ làm luật này ĐỎ", () => {
+    /* Bản cài sai hợp lý nhất — đóng thử thách thì dựng lại mô hình cho sạch —
+       phải phá được khẳng định ở trên. Không dựng lại được cảnh đó thì test
+       trên chỉ đang mô tả chính nó (`ARCHITECTURE_MAP §8` #14). */
+    const e = offlineCatalog().find((x) => x.simId === "algorithm.find_max")!;
+    useAppStore.getState().loadEnvelope(e.envelope);
+    const before = useAppStore.getState().active!.state;
+
+    // Đây CHÍNH LÀ thứ luật cấm, gọi thẳng qua API công khai của store.
+    useAppStore.getState().resetSim();
+    expect(useAppStore.getState().active!.state, "đối chứng vô nghĩa: dựng lại mà state y nguyên")
+      .not.toBe(before);
   });
 });

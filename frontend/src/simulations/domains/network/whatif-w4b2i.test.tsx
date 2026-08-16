@@ -185,6 +185,41 @@ describe("W4B-2I · renderer chỉ ĐỌC — không tính định tuyến", () 
     expect(entry!.label).toContain("đổi đường mạng");
   });
 
+  /**
+   * W12-B §2 — LỐI VỀ PHẢI ĐI CÙNG LỐI ĐI.
+   *
+   * Đây là hệ quả CHƯA ĐƯỢC KHOÁ của chính Policy B, không phải phòng xa: từ
+   * khi ngắt liên kết dùng được với Thử thách đóng, học sinh đổi được mô hình ở
+   * màn mặc định — nhưng `net_reset` vẫn nằm sau `exploreOpen`. Tức có một
+   * đường đi mà không có đường về, và cách duy nhất dựng lại mạng gốc là Đặt
+   * lại cả bài (mất luôn vị trí đang xem).
+   *
+   * ĐỐI CHỨNG: `renderToString` luôn thấy `exploreOpen === false`
+   * (`ARCHITECTURE_MAP §8` #13), nên bản cài cũ (`{exploreOpen && …}`) làm
+   * khẳng định dưới đây ĐỎ. Test này không mô tả lại chính nó.
+   */
+  it("W12-B — mạng đã bị đổi ⇒ lối về có mặt, kể cả khi chưa mở Khám phá", () => {
+    const { mod, config, state } = build();
+    const cut = mod.apply(state, { type: "net_disconnect", a: "R1", b: "R2" }) as NetworkState;
+    expect(isModified(cut), "tiền đề hỏng: ngắt liên kết mà mô hình không đổi").toBe(true);
+
+    const html = renderToString(
+      <NetworkWorkspace config={config} state={cut} busy={false} dispatch={() => {}} />,
+    );
+    expect(html, "đổi được mạng nhưng không có đường về").toContain("Về mạng ban đầu");
+  });
+
+  it("W12-B — mạng CHƯA đổi ⇒ không dựng dải nào (màn mặc định vẫn sạch)", () => {
+    /* Đối chứng ngược: nếu lối về dựng vô điều kiện thì màn mặc định lại mọc
+       thêm một dải ngay dưới sân khấu — đúng thứ W4B-3A đã gỡ đi. */
+    const { config, state } = build();
+    const html = renderToString(
+      <NetworkWorkspace config={config} state={state} busy={false} dispatch={() => {}} />,
+    );
+    expect(html, "chưa đổi gì mà đã mời về ban đầu").not.toContain("Về mạng ban đầu");
+    expect(html, "màn mặc định mọc lại dải thí nghiệm").not.toContain("experiment-tool");
+  });
+
   it("không tới được ⇒ KHÔNG vẽ gói tin đứng im ở nguồn", () => {
     /* Chấm gói tin đứng yên tại nguồn đọc thành "đang chờ gửi", trong khi sự
        thật là không có đường để đi. Vắng mặt nó + liên kết nét đứt là hai kênh

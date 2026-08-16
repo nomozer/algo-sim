@@ -1,10 +1,14 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "edffcbdc0d7461a8",
-  "dirtyRelevantSources": [],
-  "head": "35203d515045b3293dfac5d91455d64723099a5b",
-  "dirty": false,
-  "generatedAt": "2026-08-15T18:14:28.038Z",
+  "sourceFingerprint": "cea97b63389d8bf5",
+  "dirtyRelevantSources": [
+    "frontend/src/simulations/domains/network/ui.tsx",
+    "frontend/src/simulations/domains/network/whatif-w4b2i.test.tsx",
+    "frontend/src/simulations/tool-affordance.test.ts"
+  ],
+  "head": "ddb24f1fe9998f2a2e589e2cf9894716d7edaa34",
+  "dirty": true,
+  "generatedAt": "2026-08-16T01:42:42.750Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

@@ -316,12 +316,26 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
           `SimulationControls`. Câu mời ("tự đổi đường mạng" + teaser đứt cáp)
           nay do module khai ở `explore.entry`, nên nó vẫn là câu của bài này —
           chỉ không còn chiếm một dải riêng ngay dưới sân khấu. */}
-      {exploreOpen && (
+      {/* W12-B §2 — LỐI VỀ PHẢI ĐI CÙNG LỐI ĐI.
+          Policy B (`tool-affordance.ts`) cho ngắt/nối liên kết ngay khi Thử
+          thách đóng, KHÔNG cần mở Khám phá trước. Nhưng dải này — nơi chứa "Về
+          mạng ban đầu" — vẫn đòi `exploreOpen`, nên có đúng một đường đi mà
+          không có đường về: học sinh cắt vài liên kết ở màn mặc định rồi không
+          còn cách nào dựng lại mạng gốc ngoài Đặt lại cả bài.
+
+          Nên điều kiện tách làm hai theo đúng hai việc dải này làm:
+            - LỜI MỜI (câu "bấm vào một liên kết…") thuộc về Khám phá;
+            - LỐI VỀ (`net_reset`) thuộc về TRẠNG THÁI MÔ HÌNH — mạng đã bị đổi
+              thì lối về phải có mặt, bất kể học sinh vào bằng cửa nào.
+          Màn mặc định vì thế vẫn sạch: chưa đổi gì thì không dải nào được dựng. */}
+      {(exploreOpen || modified) && (
         <div className="experiment-tool" role="group" aria-label="Thí nghiệm với đường mạng">
           <IconExperiment size={14} />
-          <span className="scene-bound-note">
-            Bấm vào một liên kết trên sân khấu để ngắt hoặc nối lại.
-          </span>
+          {exploreOpen && (
+            <span className="scene-bound-note">
+              Bấm vào một liên kết trên sân khấu để ngắt hoặc nối lại.
+            </span>
+          )}
           {modified && (
             <button
               className="btn-utility"
@@ -331,14 +345,16 @@ export function NetworkWorkspace({ state, busy, dispatch }: Props) {
               Về mạng ban đầu
             </button>
           )}
-          <button
-            className="btn-utility experiment-tool-close"
-            onClick={() => setExploreOpen(false)}
-            aria-label="Đóng khám phá"
-            aria-expanded
-          >
-            ×
-          </button>
+          {exploreOpen && (
+            <button
+              className="btn-utility experiment-tool-close"
+              onClick={() => setExploreOpen(false)}
+              aria-label="Đóng khám phá"
+              aria-expanded
+            >
+              ×
+            </button>
+          )}
         </div>
       )}
       {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` ở `index.ts`. */}
