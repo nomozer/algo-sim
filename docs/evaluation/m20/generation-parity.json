@@ -1,12 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "31a1efd41cb3f30f",
+  "sourceFingerprint": "bdd392cd9fd2d460",
   "dirtyRelevantSources": [
-    "frontend/src/components/SimulationWorkspace.tsx"
+    "frontend/src/styles/global.css"
   ],
-  "head": "8b4d1ece6a90ac9bf521554c1837f4886760b2a1",
+  "head": "e464645ad25f1d105f539ec1cf80e1382609d2dc",
   "dirty": true,
-  "generatedAt": "2026-08-16T04:57:53.424Z",
+  "generatedAt": "2026-08-16T05:10:26.130Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
