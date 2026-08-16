@@ -133,29 +133,18 @@ describe("W5E · khai `OPTIONAL_TRACE` thì phải TRẢ LỜI được ngay", (
   );
 });
 
-/* ══ CA CỤ THỂ: mạch logic — CHƯA ĐÓNG, chờ một quyết định sư phạm ═══════
+/* ══ CA CỤ THỂ: mạch logic — ĐÃ ĐÓNG (W5E) ══════════════════════════════
  *
- * `logic.boolean_dag` là ca Phase E thật, và nó ĐÃ ĐƯỢC XÁC NHẬN bằng mã:
- * `apply` trả `initFromValues(...)` mà hàm đó đặt `cursor: 0`, nên bật một đầu
+ * Lỗi: `apply` trả `initFromValues(...)` vốn đặt `cursor: 0`, nên bật một đầu
  * vào — thao tác Khám phá DUY NHẤT của bài — đẩy cả mạch về `?` dù
  * `nodeOutputs` ngay lúc ấy đã giữ trọn đáp án tất định.
  *
- * ─── VÌ SAO CHƯA SỬA ──────────────────────────────────────────────────────
+ * Sửa bằng cách TÁCH HAI TÍN HIỆU (`BoolDagState.exploreReveal`), vì sân khấu
+ * và bảng chân trị làm hai việc khác nhau mà trước đó cùng đọc mỗi `cursor`:
+ *   sân khấu      → trả lời câu học sinh vừa hỏi (bộ đầu vào ĐANG đặt);
+ *   bảng chân trị → giữ hé lộ dần, vì học sinh CHƯA hỏi các bộ còn lại.
  *
- * Bản vá hiển nhiên (nhảy con trỏ tới bước cuối sau toggle) làm ĐỎ
- * `dag.test.tsx::"toggle KHÔNG mở sớm bảng chân trị…"`, và test ấy KHÔNG phải
- * hợp đồng cũ cần migrate — nó khoá một chủ ý sư phạm có nguồn (audit
- * 2026-08-03, `DESIGN_BRIEF §3.3` hé lộ dần): cột "Ra" của bảng chân trị chỉ mở
- * ở bước cuối để học sinh còn cơ hội tự suy luận.
- *
- * Hai thứ đó KHÁC NHAU và đang bị cùng một `cursor` điều khiển:
- *   SÂN KHẤU  hiện giá trị của CHÍNH bộ đầu vào học sinh vừa đặt → trả lời câu
- *             hỏi vừa được hỏi. Đúng theo Phase E.
- *   BẢNG CHÂN TRỊ  mở cả 2^n hàng → tiết lộ mọi ca học sinh CHƯA hỏi. Đó đúng
- *             là thứ audit kia bảo vệ.
- *
- * Tách chúng ra cần một quyết định: bảng chân trị mở theo ĐIỀU KIỆN NÀO khi con
- * trỏ không còn là tín hiệu duy nhất. Đó là quyết định sư phạm của chủ đề tài,
- * không phải chi tiết cài đặt — nên nó được nêu ra chứ không bị một bản vá lặng
- * lẽ quyết hộ.
+ * Khoá tại `domains/logic/dag.test.tsx` (nơi có sẵn fixture + render SSR của
+ * miền): hai test `W5E — …`, kèm phân loại ba khẳng định cũ thành
+ * OLD_PRODUCT_CONTRACT / STILL_VALID_INVARIANT.
  */

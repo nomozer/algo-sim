@@ -533,16 +533,61 @@ describe("boolean_dag: node đầu vào LÀ control (một bộ duy nhất)", ()
     expect(html).not.toContain("dag-input");
   });
 
-  it("toggle KHÔNG mở sớm bảng chân trị và KHÔNG lộ cổng chưa tới lượt", () => {
+  /**
+   * W5E — HỢP ĐỒNG ĐÃ ĐỔI, và ba khẳng định cũ được phân loại chứ không vá cho xanh:
+   *
+   *   `cursor === 0` sau toggle                → OLD_PRODUCT_CONTRACT (viết lại)
+   *   sân khấu còn `?` sau toggle              → OLD_PRODUCT_CONTRACT (viết lại)
+   *   bảng chân trị vẫn ẩn cột "Ra"            → STILL_VALID_INVARIANT (giữ nguyên)
+   *
+   * Vì sao đổi: bật công tắc là thao tác Khám phá DUY NHẤT của bài, tức một câu
+   * hỏi. Trả lời nó bằng `?` trong khi `nodeOutputs` đã giữ trọn đáp án tất định
+   * là để màn hình nói ngược lại engine.
+   *
+   * Vì sao khẳng định thứ ba KHÔNG đổi: nó bảo vệ một thứ KHÁC HẲN. Học sinh vừa
+   * hỏi về MỘT bộ đầu vào; mở cả bảng là tiết lộ những bộ họ chưa hỏi — đúng chủ
+   * ý hé lộ dần mà audit 2026-08-03 dựng ra (DESIGN_BRIEF §3.3). Bản vá W5E tách
+   * hai tín hiệu (`exploreReveal`) chính là để giữ được khẳng định này.
+   */
+  it("W5E — toggle TRẢ LỜI trên sân khấu nhưng KHÔNG mở sớm bảng chân trị", () => {
     const toggled = mod.apply(s0, { type: "toggle", target: "A" });
-    // sân khấu: quay về bước đầu → cả 3 cổng vẫn "?"
-    expect(toggled.cursor).toBe(0);
-    expect((ws(toggled).match(/>\?</g) ?? []).length).toBeGreaterThanOrEqual(cfg.gates.length);
-    // Observer: cột "Ra" vẫn ẩn tới bước cuối
+
+    // MỚI: con trỏ nhảy tới bước cuối để sân khấu nói được giá trị mới.
+    expect(toggled.cursor).toBe(toggled.steps.length - 1);
+    expect(toggled.exploreReveal, "cờ tách tín hiệu không được bật").toBe(true);
+
+    /* MỚI: không còn cổng nào bị giấu — cả mạch nói giá trị của bộ đầu vào mới.
+       Còn đúng MỘT `?` trên sân khấu và nó là mục CHÚ GIẢI ("? chưa tới lượt"),
+       tức phần giải thích KÝ HIỆU chứ không phải một giá trị bị giấu. Khoá con
+       số 1 thay vì nới thành `<= 1`: nới ra thì một cổng thật bị giấu sẽ lọt. */
+    const q = (ws(toggled).match(/>\?</g) ?? []).length;
+    expect(q, "sân khấu còn giấu cổng sau toggle (ngoài mục chú giải)").toBe(1);
+    /* Đối chứng: lúc MỞ BÀI thì đúng là có cổng bị giấu, nên phép đếm này phân
+       biệt được hai trạng thái — không phải một khẳng định luôn đúng. */
+    expect((ws(s0).match(/>\?</g) ?? []).length, "phép đếm không phân biệt được gì")
+      .toBeGreaterThan(q);
+
+    // GIỮ NGUYÊN: cột "Ra" của bảng chân trị vẫn ẩn — học sinh chưa hỏi các bộ kia.
     const insp = renderToString(
       <BoolDagInspector config={cfg} state={toggled} busy={false} dispatch={() => {}} />,
     ).replace(/<!--.*?-->/g, "");
-    expect((insp.match(/>\?</g) ?? []).length).toBe(toggled.truthTable.length);
+    expect((insp.match(/>\?</g) ?? []).length, "toggle làm lộ sớm cả bảng chân trị")
+      .toBe(toggled.truthTable.length);
+  });
+
+  it("W5E — ĐI BỘ tới bước cuối thì bảng chân trị mở như cũ", () => {
+    /* Nửa còn lại của luật: `exploreReveal` chỉ hoãn việc mở bảng, không khoá
+       nó vĩnh viễn. Thiếu khẳng định này thì bản vá có thể lặng lẽ biến bảng
+       chân trị thành thứ không bao giờ mở được nữa. */
+    const toggled = mod.apply(s0, { type: "toggle", target: "A" });
+    const walked = mod.timeline!.goToStep(toggled, toggled.steps.length - 1);
+
+    expect(walked.exploreReveal, "đi bộ trên trace mà cờ Khám phá còn bật").toBe(false);
+    const insp = renderToString(
+      <BoolDagInspector config={cfg} state={walked} busy={false} dispatch={() => {}} />,
+    ).replace(/<!--.*?-->/g, "");
+    expect((insp.match(/>\?</g) ?? []).length, "đi hết trace rồi mà bảng vẫn không mở")
+      .toBe(0);
   });
 
   it("Đặt lại: init lại từ config gốc → giá trị đầu vào và cursor như ban đầu", () => {

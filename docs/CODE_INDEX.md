@@ -636,11 +636,24 @@ target (`sum_if`/`count_if`/`base_conversion`/`character_encoding`/
 vẫn báo xanh (đã bị đúng một lần trong chính wave này).
 ⚠️ `NO_SHELL_NARRATION` = target không dùng khe thuyết minh shell nên phép đo đọc
 không được; chỉ được NGẮN ĐI.
-⚠️ **CÒN MỞ:** `logic.boolean_dag` là lỗi Phase E đã xác nhận (`apply` →
-`initFromValues` → `cursor: 0` ⇒ bật công tắc là cả mạch về `?`) nhưng CHƯA sửa —
-bản vá con-trỏ-nhảy-cuối làm đỏ `dag.test.tsx`, và test đó khoá chủ ý sư phạm hé
-lộ dần (`DESIGN_BRIEF §3.3`) chứ không phải hợp đồng cũ. Cần quyết định: bảng
-chân trị mở theo điều kiện nào khi `cursor` không còn là tín hiệu duy nhất.
+⚠️ Ca `logic.boolean_dag` ĐÃ ĐÓNG: xem `BoolDagState.exploreReveal` bên dưới.
+
+### `domains/logic/dag-module.tsx::BoolDagState.exploreReveal` (W5E) · offline
+Tách hai tín hiệu vốn cùng đọc mỗi `cursor`. Lỗi gốc: `apply` trả
+`initFromValues(...)` vốn đặt `cursor: 0`, nên bật một đầu vào — thao tác Khám
+phá DUY NHẤT của bài — đẩy cả mạch về `?` dù `nodeOutputs` lúc ấy đã giữ trọn
+đáp án tất định.
+Nay toggle đặt `cursor = steps.length - 1` (SÂN KHẤU trả lời câu vừa hỏi) và
+`exploreReveal = true`; `goToStep` luôn đưa cờ về `false`.
+⚠️ **VIỆC DUY NHẤT của cờ là GIỮ BẢNG CHÂN TRỊ ĐÓNG** — học sinh mới hỏi về MỘT
+bộ đầu vào, mở cả 2^n hàng là tiết lộ những bộ chưa hỏi (chủ ý hé lộ dần, audit
+2026-08-03 + `DESIGN_BRIEF §3.3`). Sân khấu KHÔNG cần cờ: con trỏ ở bước cuối đã
+làm `evaluated` chứa mọi cổng. Bản đầu có thêm nhánh `exploreReveal` trong
+`valueOf` và TIÊM LỖI chứng minh nó là mã CHẾT (gỡ đi, không test nào đỏ) — đừng
+thêm lại.
+Khoá bởi `dag.test.tsx` hai test `W5E — …` (kèm phân loại ba khẳng định cũ
+thành OLD_PRODUCT_CONTRACT / STILL_VALID_INVARIANT). Tiêm lỗi đã chạy: bảng mở
+theo toggle ⇒ ĐỎ · cờ không bật ⇒ ĐỎ.
 
 ### `frontend/src/core/predicate.ts` (W5C) · Change impact: offline
 CHỦ SỞ HỮU DUY NHẤT của "sáu phép so sánh `> >= < <= == !=` nghĩa là gì".

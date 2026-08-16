@@ -66,6 +66,25 @@ export interface BoolDagState {
   /** Bảng chân trị đủ 2^n hàng — engine tính (authoritative). */
   truthTable: TruthRow[];
   cursor: number;
+  /**
+   * W5E — HỌC SINH VỪA TỰ ĐẶT MỘT BỘ ĐẦU VÀO MỚI.
+   *
+   * Tách tín hiệu vì SÂN KHẤU và BẢNG CHÂN TRỊ làm hai việc khác nhau nhưng
+   * trước W5E cùng đọc mỗi `cursor`:
+   *   sân khấu      hiện giá trị của CHÍNH bộ đầu vào đang đặt → TRẢ LỜI câu
+   *                 học sinh vừa hỏi bằng cách bật công tắc;
+   *   bảng chân trị mở cả 2^n hàng → TIẾT LỘ những ca học sinh CHƯA hỏi, đúng
+   *                 thứ chủ ý hé lộ dần bảo vệ (DESIGN_BRIEF §3.3).
+   *
+   * `true` chỉ sau một `toggle` của học sinh. Mọi `goToStep` đưa về `false` —
+   * đi bộ trên trace là quay lại mạch kể chuyện, và tới bước cuối bằng cách ấy
+   * thì bảng chân trị mở như cũ.
+   *
+   * VIỆC DUY NHẤT của cờ này là GIỮ BẢNG CHÂN TRỊ ĐÓNG. Sân khấu đã tự trả lời
+   * nhờ con trỏ nhảy tới bước cuối; một nhánh `exploreReveal` trong `valueOf`
+   * là mã chết (đã tiêm lỗi để chứng minh: gỡ đi, không test nào đỏ).
+   */
+  exploreReveal: boolean;
 }
 
 function applyOp(op: DagOp, vals: Bit[]): Bit {
@@ -395,6 +414,10 @@ export function DagDiagram({
   /** Giá trị ĐÃ BIẾT của một node; null = chưa tới lượt (hiện "?"). */
   const valueOf = (id: string): Bit | null => {
     if (nodes.get(id)?.kind === "input") return state.values[id];
+    /* W5E — sân khấu trả lời sau toggle nhờ CON TRỎ đã nhảy tới bước cuối, nên
+       `evaluated` chứa mọi cổng. KHÔNG thêm nhánh `exploreReveal` ở đây: bản
+       đầu có, và tiêm lỗi chứng minh nó là mã CHẾT (gỡ đi mà không test nào
+       đỏ). `exploreReveal` chỉ có đúng một việc — giữ bảng chân trị đóng. */
     return evaluated.has(id) ? state.nodeOutputs[id] : null;
   };
   const wireColor = (v: Bit | null) =>
@@ -657,7 +680,9 @@ export function BoolDagInspector({ state }: Props) {
   // đầu ra bằng "?" cũng vô nghĩa. Mở ở BƯỚC CUỐI, dùng lại đúng idiom "?" của
   // bảng cổng. Dẫn xuất thuần từ cursor — không thêm state trình bày.
   const at = clampCursor(state, state.cursor);
-  const revealed = at === state.steps.length - 1;
+  /* W5E — `exploreReveal` KHÔNG mở bảng: học sinh mới hỏi về MỘT bộ đầu vào,
+     chưa hỏi về những bộ còn lại. Bảng chỉ mở khi đi hết trace. */
+  const revealed = at === state.steps.length - 1 && !state.exploreReveal;
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
       <p className="notes">Bảng chân trị (engine sinh đủ {state.truthTable.length} hàng):</p>
@@ -701,6 +726,7 @@ function initFromValues(config: BoolDagConfig, values: Record<string, Bit>): Boo
     steps: buildSteps(config, evalOrder, nodeOutputs),
     truthTable: buildTruthTable(config, evalOrder),
     cursor: 0,
+    exploreReveal: false,
   };
 }
 
@@ -736,7 +762,14 @@ export function makeBoolDagModule(): SimulationModule<BoolDagConfig, BoolDagStat
             ...state.values,
             [action.target]: (state.values[action.target] === 1 ? 0 : 1) as Bit,
           };
-          return initFromValues(state.config, values);
+          /* W5E — BẬT MỘT CÔNG TẮC LÀ MỘT CÂU HỎI, VÀ NÓ PHẢI ĐƯỢC TRẢ LỜI.
+             Trước đây `apply` trả thẳng `initFromValues(...)` vốn đặt
+             `cursor: 0`, nên thao tác Khám phá DUY NHẤT của bài đẩy cả mạch về
+             `?` dù `nodeOutputs` lúc ấy đã giữ trọn đáp án. Con trỏ nhảy tới
+             bước cuối để sân khấu nói được giá trị mới; `exploreReveal` giữ cho
+             bảng chân trị KHÔNG mở theo (xem chỗ khai trường ấy). */
+          const next = initFromValues(state.config, values);
+          return { ...next, cursor: next.steps.length - 1, exploreReveal: true };
         }
       }
       return state;
@@ -745,7 +778,9 @@ export function makeBoolDagModule(): SimulationModule<BoolDagConfig, BoolDagStat
     timeline: {
       stepCount: (s) => s.steps.length,
       currentStep: (s) => s.cursor,
-      goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step) }),
+      /* Đi bộ trên trace ⇒ quay lại mạch kể chuyện: hé lộ dần có hiệu lực trở
+         lại, và tới bước cuối bằng cách này thì bảng chân trị mở như cũ. */
+      goToStep: (s, step) => ({ ...s, cursor: clampCursor(s, step), exploreReveal: false }),
     },
 
     // (SHELL-N) chữ thuyết minh; khe do shell dựng

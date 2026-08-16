@@ -1,10 +1,14 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "b9371b51b3790570",
-  "dirtyRelevantSources": [],
-  "head": "b6ceb114c86b8ceff83802ec7dc0a55e55005bfd",
-  "dirty": false,
-  "generatedAt": "2026-08-16T02:57:01.991Z",
+  "sourceFingerprint": "87c756cabe603833",
+  "dirtyRelevantSources": [
+    "frontend/src/simulations/domains/logic/dag-module.tsx",
+    "frontend/src/simulations/domains/logic/dag.test.tsx",
+    "frontend/src/simulations/explore-vs-trace-w5e.test.ts"
+  ],
+  "head": "706b64e1ee63bf36f8755cb3f35ebd8331379811",
+  "dirty": true,
+  "generatedAt": "2026-08-16T03:10:07.336Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
