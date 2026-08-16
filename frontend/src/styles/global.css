@@ -2038,7 +2038,19 @@ html {
      `--transport-max` khiến cột luôn đủ rộng cho khay, còn thẻ vẫn `fit-content`
      và tự căn giữa trong đó. `min(100%, …)` để màn hẹp hơn chính sách thì cột
      lùi về đúng bề rộng khả dụng thay vì đẻ ra tràn ngang. */
-  grid-template-columns: minmax(min(100%, var(--transport-max)), auto) 300px;
+  /* W5AB — SÀN CỘT NỘI DUNG PHẢI TRỪ CỘT PHẢI, KHÔNG THÌ TRÀN NGANG.
+     Bản cũ: `minmax(min(100%, var(--transport-max)), auto) 300px`. `100%` ở đây
+     là bề rộng TOÀN LƯỚI, không phải phần còn lại — nên khi khung hẹp hơn
+     `--transport-max`, tổng sàn hai cột thành `100% + 300px` và lưới rộng hơn
+     khung: trang đẻ thanh cuộn ngang, còn panel "Giải thích" bị đẩy ra ngoài mép
+     phải và cụt chữ (đo được khi ĐĂNG NHẬP — `audit-composition.mjs` chỉ chạy lúc
+     CHƯA đăng nhập và chỉ soi `.workspace-card`, nên nó không bao giờ thấy).
+     `100% - var(--panel-right-w)` là phần thật sự còn lại. Dùng chung một token
+     cho cả sàn lẫn cột phải để hai con số không thể trôi khỏi nhau. */
+  --panel-right-w: 300px;
+  grid-template-columns:
+    minmax(min(100% - var(--panel-right-w), var(--transport-max)), auto)
+    var(--panel-right-w);
   justify-content: center;
 
   /* ── W4B-2A A0 — HÀNG NỘI DUNG CAO THEO NỘI DUNG ────────────────────────
