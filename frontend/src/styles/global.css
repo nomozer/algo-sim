@@ -2317,27 +2317,6 @@ html {
 .narration-bar,
 .workspace-header .hint { max-width: 68ch; }
 
-/* W5F — BADGE VÀ TIÊU ĐỀ Ở CÙNG MỘT DÒNG, BẤT KỂ THẺ RỘNG BAO NHIÊU.
- *
- * Triệu chứng: cùng một bài, cùng một tiêu đề, hiện HAI kiểu — thẻ hẹp thì
- * badge trơ một mình ở dòng đầu còn tiêu đề rớt xuống dưới; thẻ rộng (vd khi có
- * dải "Nhánh thử nghiệm" kéo thẻ ra) thì hai thứ nằm cùng dòng.
- *
- * Nguyên nhân: tiêu đề là FLEX ITEM với base = max-content, nên hễ
- * `badge + tiêu đề` không vừa thì CẢ item xuống dòng thay vì chữ tự ngắt trong
- * chỗ của nó. Tức bề rộng của thẻ đang quyết định BỐ CỤC CHỮ.
- *
- * `flex: 1 1 0` + `min-width: 0` cho tiêu đề nhận phần còn lại và ngắt chữ bên
- * TRONG dòng của nó.
- *
- * ⚠️ KHÔNG dùng `width: 0` ở đây — đã cháy một lần: `width: 0` thẳng lên
- * `.workspace-title` làm chính nó vỡ dòng và header cao 43px → 103px
- * (`web.style_model`, `certify-viewports-w12` bắt được). `flex-basis: 0` khác
- * `width: 0` ở chỗ nó chỉ đặt cơ sở phân phối, không ép bề rộng dùng. */
-.workspace-title {
-  flex: 1 1 0;
-  min-width: 0;
-}
 
 /* POLISH-2 — PHÂN CẤP: tiêu đề đứng riêng một dòng, mô tả ngắn xuống dòng dưới
    và nhẹ hơn hẳn, badge miền nhỏ để không cạnh tranh với tiêu đề. */
