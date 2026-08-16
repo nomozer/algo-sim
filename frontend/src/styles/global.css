@@ -2272,33 +2272,7 @@ html {
   display: flex;
   flex-direction: column;
   gap: var(--sp-md);
-  /* ── W5H — PHÁ VÒNG LẶP THẺ ↔ SÂN KHẤU ────────────────────────────────
-   *
-   * `fit-content` làm thẻ rộng bằng đứa con rộng nhất. Nhưng đứa con rộng nhất
-   * là SVG sân khấu, mà SVG lại khai bề rộng do `arrayChartLayout` tính TỪ chỗ
-   * khả dụng đo bằng `ResizeObserver` — và chỗ khả dụng ấy nằm TRONG thẻ. Hai
-   * bên chờ nhau:
-   *
-   *     vẽ lần đầu: available = 0  →  cột lấy COL_MIN  →  SVG hẹp
-   *                 →  thẻ co theo SVG hẹp  →  observer báo lại bề rộng hẹp
-   *                 →  ĐỨNG YÊN ở đó, không bao giờ lớn lên
-   *
-   * Triệu chứng đo được trên sản phẩm: cùng một bài, mở bình thường thì cột
-   * thấp bé và tiêu đề xuống dòng; vào nhánh thử nghiệm thì rộng hẳn ra — vì
-   * dải "Nhánh thử nghiệm" là đứa con RỘNG HƠN SVG, nó kéo thẻ ra trước, rồi
-   * observer mới thấy chỗ. Tức bề rộng sân khấu đang do một dải thông báo
-   * KHÔNG LIÊN QUAN quyết định.
-   *
-   * Nay thẻ lấy bề rộng từ CỘT CHỨA NÓ (`.app-layout` đã kẹp bằng
-   * `--transport-max`), còn sân khấu lấp vào — một chiều phụ thuộc, không vòng.
-   *
-   * ⚠️ KHÔNG quay lại pixel cứng: M19 bỏ `fit-content` vào đây vì thẻ 1624px
-   * cứng để lại mực 276–1597px. Khác biệt là ở chỗ NAY sân khấu thật sự lấp đầy
-   * (observer đọc được bề rộng thật nên `COL` giãn tới `COL_MAX`), nên không có
-   * khoảng chết nào để lại. Bất biến Phase A giữ nguyên: chữ vẫn bị `68ch` chặn
-   * nên nó không quyết bề rộng cơ chế.
-   * ⚠️ Cần soát lại bằng `npm run audit:layout` + `audit-composition.mjs`. */
-  width: 100%;
+  width: fit-content;
   min-width: min(100%, 560px);
   max-width: 100%;
 }
