@@ -29,6 +29,13 @@ export function ProblemInput() {
   const analysisError = useAppStore((s) => s.analysisError);
   const [health, setHealth] = useState<ServerHealth | null | "loading">("loading");
   const [file, setFile] = useState<File | null>(null);
+  /* W5X — XEM TRƯỚC ẢNH ĐÃ DÁN.
+     Dùng `URL.createObjectURL` chứ KHÔNG đọc thành `data:` URL: ảnh đề bài của
+     học sinh có thể vài MB, mà `data:` sẽ nhét trọn base64 vào React state rồi
+     vào cả DOM. `objectURL` chỉ là một con trỏ — nhưng nó GIỮ tệp trong bộ nhớ
+     tới khi được thu hồi, nên phải `revokeObjectURL` khi đổi/bỏ tệp. Không thu
+     hồi thì mỗi lần chọn lại một ảnh là rò thêm một tệp. */
+  const [preview, setPreview] = useState<string | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLTextAreaElement>(null);
@@ -86,6 +93,19 @@ const COMPOSER_MAX_H = 320;
     }
     setFile(picked);
   }
+
+  /* Sinh và THU HỒI ảnh xem trước theo vòng đời của `file`. Đặt trong `useEffect`
+     chứ không trong `onPickFile`: tệp còn bị bỏ bằng `removeFile` và bị thay khi
+     chọn tệp khác, nên nơi duy nhất thấy đủ mọi lối đổi là hiệu ứng theo `file`. */
+  useEffect(() => {
+    if (!file || kindFromFile(file.name) !== "image") {
+      setPreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [file]);
 
   function removeFile() {
     setFile(null);
@@ -150,6 +170,11 @@ const COMPOSER_MAX_H = 320;
             Nay là một chip gọn bên trong cùng một khung — một vật thể, một biên. */}
         {file && (
           <div className="composer-file">
+            {/* Ảnh thì xem trước được; `.docx`/`.py` thì không có gì để xem nên
+                KHÔNG dựng ô rỗng — chip chỉ còn tên tệp và loại. */}
+            {preview && (
+              <img className="composer-file-thumb" src={preview} alt={`Xem trước ${file.name}`} />
+            )}
             <span className="composer-file-info">
               <strong>{file.name}</strong>
               <span className="hint">{kindLabel(kindFromFile(file.name) ?? "text")}</span>

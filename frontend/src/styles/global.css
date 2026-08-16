@@ -285,6 +285,18 @@ html {
   background: var(--canvas-soft);
 }
 
+/* W5X — ô xem trước ảnh trong chip. `object-fit: cover` để ảnh đề dạng dọc hay
+   ngang đều lấp kín ô vuông mà không méo. */
+.composer-file-thumb {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--rounded-sm);
+  border: 1px solid var(--hairline);
+  object-fit: cover;
+  display: block;
+}
+
 .composer-file-info {
   display: flex;
   flex-direction: column;
