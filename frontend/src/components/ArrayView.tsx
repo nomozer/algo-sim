@@ -389,19 +389,11 @@ export function ArrayView({
          là bề rộng bố cục vừa tính lại từ khung chứa, nên viewBox vẫn khớp đúng
          pixel hiển thị và `scale ≈ 1` được bảo toàn (test khoá ở dag.test.tsx
          cùng luật). Hình lớn hơn vì BỐ CỤC lớn hơn, không vì SVG bị phóng. */
-      /* M19 gỡ `margin: 0 auto` với lý do đúng CỦA LÚC ĐÓ: khung `fit-content`
-         ÔM lấy nội dung, nên khung và hình luôn bằng nhau và căn giữa chỉ tạo
-         ra rail thứ hai (hình ở giữa, chữ ở mép trái — đo được lệch 68–191px).
-
-         W5H đổi tiền đề đó: khung nay lấy bề rộng từ CỘT chứa nó, còn bố cục
-         biểu đồ vẫn bị kẹp ở trần mật độ (`MAX_COL_W`). Nên khung RỘNG HƠN hình
-         là chuyện thường, và phần dư — đo được 52px trái / 190px phải — dồn hết
-         sang một bên. Căn giữa nay có việc thật để làm: chia đôi phần dư.
-
-         Rail thứ hai mà M19 lo vẫn còn: cột 1 thôi thẳng hàng với tiêu đề và
-         chú giải. Đó là ĐÁNH ĐỔI ĐÃ ĐƯỢC CHỦ ĐỀ TÀI CHỌN — lề cân hơn thẳng
-         rail. Hình lấp kín khung thì phần dư bằng 0 nên không đổi gì. */
-      style={{ maxWidth: width, display: "block", marginInline: "auto", touchAction: "none" }}
+      /* M19 — KHÔNG còn `margin: 0 auto`. Căn giữa ở đây từng đúng khi thẻ luôn
+         rộng 1624px; nay khung ÔM nội dung nên căn giữa chỉ tạo ra rail thứ
+         hai (hình ở giữa, chữ ở mép trái — đo được lệch 68–191px ở tám bài
+         thuật toán). Việc căn giữa nay thuộc về khung, không thuộc về hình. */
+      style={{ maxWidth: width, display: "block", touchAction: "none" }}
       /* Có vùng bấm ⇒ KHÔNG còn là `img`. `role="img"` biến mọi con thành trang
          trí với công nghệ hỗ trợ, nên các vùng bấm sẽ tàng hình với trình đọc
          màn hình — một hàng nút thì "dễ tiếp cận", còn sân khấu tương tác lại
