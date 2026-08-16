@@ -189,6 +189,37 @@ Loãng đề tài là do KỂ CHUYỆN dàn trải, không phải do code tồn 
 `network.packet_routing` xuống tầng hai vì định tuyến không nằm gọn trong ba
 nghẽn trên; nhét vào nghẽn 3 là làm hỏng sự sạch của bộ ba để lấy một con số.
 
+**TIÊU ĐỀ XUỐNG 2 DÒNG — ĐO XONG, GIẢ THUYẾT HIỂN NHIÊN ĐÃ BỊ LOẠI**
+
+Đo trên app thật, 24 target × 4 bề rộng (probe CDP qua `audit-composition.mjs`):
+**7 target xuống 2 dòng ở CẢ ba bề rộng desktop** — `bubble_sort`,
+`insertion_sort`, `scan`, `character_encoding`, `boolean_dag`,
+`graph_traversal`, `protocol_encapsulation`. KHÔNG phải bệnh riêng của một bài.
+
+Số liệu quyết định:
+
+    title 706/706   max-width 938.7px   header 706
+
+⚠️ **`max-width: 68ch` KHÔNG PHẢI thủ phạm** — 938px luôn RỘNG HƠN header (≤722),
+nên nó chưa bao giờ bó tiêu đề. Sửa nó là sửa vào chỗ không có bệnh.
+
+Ràng buộc thật là **BỀ RỘNG THẺ**: tiêu đề đã dùng trọn header (706/706) mà vẫn
+cần ~740px. Thiếu chưa tới 40px.
+
+**Ngã ba phải quyết trước khi sửa** (không tự chọn được vì hai luật chọi nhau):
+
+- Cho thẻ rộng ra đủ chứa tiêu đề ⇒ đụng Phase A ("chữ KHÔNG được quyết bề rộng
+  khung"). Nhưng lưu ý: brief mới chỉ cấm chữ đổi **HÌNH HỌC SÂN KHẤU**, mà nới
+  thẻ thì sân khấu giữ nguyên kích thước — nên hai luật CÓ THỂ cùng đúng nếu
+  tách "bề rộng thẻ" khỏi "bề rộng sân khấu".
+- Hoặc giảm cỡ chữ tiêu đề (24px) ⇒ đổi thang chữ toàn sản phẩm.
+- Hoặc chấp nhận 2 dòng cho tiêu đề dài thật (brief cho phép).
+
+⚠️ KHÔNG dùng `white-space: nowrap` — brief cấm, và nó đẻ tràn ở 768px.
+
+Bản vá phải đo lại CẢ 7 target × 4 bề rộng + chụp ảnh đối chứng bằng
+`capture-phase-evidence.mjs`.
+
 **BỐ CỤC — GUARD M19 ĐANG ĐO SAI ĐẠI LƯỢNG (đo được 2026-08-16)**
 
 `audit-composition.mjs` chạy trên app thật, 24 target × 4 bề rộng: **96/96 OK**.
