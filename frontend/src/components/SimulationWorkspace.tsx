@@ -52,12 +52,6 @@ export function VisualModeToggle({
   );
 }
 
-const MODE_LABEL: Record<string, string> = {
-  progressive: "từng bước",
-  exploratory: "khám phá",
-  hybrid: "kết hợp",
-};
-
 /**
  * (M17 W0) Thông báo "ngoài danh mục" cho HỌC SINH — component THUẦN theo
  * props (export để test SSR như VisualModeToggle). Ưu tiên `learner_reason`
@@ -332,10 +326,16 @@ export function SimulationWorkspace() {
       <div className="workspace-header">
         <span className="eyebrow">{domainBadge(mod.domain)}</span>
         <h2 className="workspace-title">{active.envelope.title}</h2>
-        <span className="hint">
-          {mod.title} · {MODE_LABEL[mod.interactionMode]} ·{" "}
-          {mod.supportedVisualModes.join(" / ").toUpperCase()}
-        </span>
+        {/* W5J — DÒNG NÀY NÓI VỀ BÀI HỌC, KHÔNG NÓI VỀ HỆ THỐNG.
+            Trước đây nó ghép ba thứ khác loại: tên cơ chế · `interactionMode` ·
+            `supportedVisualModes`. Chỉ mảnh ĐẦU có ích cho học sinh — đề nói
+            "sổ điểm", cơ chế là "tìm giá trị lớn nhất", và bắc được cây cầu ấy
+            chính là bước trừu tượng hoá cần dạy.
+            Hai mảnh sau là taxonomy nội bộ rò lên bề mặt: "từng bước" nói lại
+            đúng thứ khay điều khiển đã bày (Bước 1/13, thanh tua, nút Tiến), còn
+            "2D" là NĂNG LỰC hệ thống — bài nào thật sự có hai cách xem thì đã có
+            công tắc "Cách xem" riêng nói hộ. */}
+        <span className="hint">{mod.title}</span>
         {/* W4B-4D — KHI MÔ HÌNH ĐÃ RỜI KHỎI ĐỀ, PHẢI NÓI RA.
             Tiêu đề bên trên là ĐỀ BÀI, không phải mô hình. Từ khi đổi được tham
             số, hai thứ ấy tách nhau: đề viết "từ 8,0 trở lên" còn học sinh vừa
