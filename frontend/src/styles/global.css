@@ -2355,7 +2355,11 @@ html {
      lại ôm theo mực. Khác hẳn `width: 100%` (đã thử, đã lùi ở `df55c0c`): cách
      đó bỏ `fit-content` nên `.dag-stage` mất quy chiếu và SVG mạch logic co
      về 0. */
-  min-width: min(100%, 1040px);
+  /* W5Y — sàn suy theo TARGET (`--stage-min` do `SimulationWorkspace` khai từ
+     `rendererFitOf().semanticMaxWidth`), không phải hằng số. Target không khai
+     ⇒ rơi về 560px như trước W5Q. Xem chú thích dài ở `SimulationWorkspace`. */
+  --stage-min: 560px;
+  min-width: min(100%, var(--stage-min));
   max-width: 100%;
 }
 /* MỘT RAIL: mọi con giãn đúng bằng thẻ, không con nào tự căn giữa. */

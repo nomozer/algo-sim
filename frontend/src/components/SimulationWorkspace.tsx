@@ -1,4 +1,4 @@
-import { Suspense, type ComponentType } from "react";
+import { Suspense, type ComponentType, type CSSProperties } from "react";
 import { getSimulation } from "../simulations/registry";
 import {
   effectiveVisualMode,
@@ -13,6 +13,7 @@ import type {
   VisualMode,
   WorkspaceProps,
 } from "../simulations/types";
+import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
 import { PredictionBar } from "./PredictionBar";
 
@@ -321,8 +322,26 @@ export function SimulationWorkspace() {
     return VI[domain] ?? domain.toUpperCase();
   }
 
+  /* W5Y — SÀN BỀ RỘNG SUY THEO TỪNG TARGET, KHÔNG PHẢI HẰNG SỐ.
+   *
+   * `semanticMaxWidth` = bố cục ở bề rộng vô hạn, tức mức nội dung THẬT SỰ dùng
+   * được. Đặt nó làm SÀN: nội dung thích ứng (biểu đồ cột) có chỗ để giãn tới
+   * trần mật độ, còn nội dung cố định (4 bit, một cổng AND) KHÔNG bị ép rộng ra
+   * — thẻ `fit-content` ôm đúng nó. Đó là "khung theo cơ chế" mà M19 chốt, và là
+   * thứ sàn phẳng 1040px của W5Q đã phá: nó ép mọi thẻ về 992px nên `decimal_to
+   * _binary` thừa 716px chết (đo được, 6 target cùng bệnh).
+   *
+   * ⚠️ SÀN chứ không phải TRẦN. `074fea5` dùng đúng con số này làm `max-width`
+   * và tính thiếu vài px padding ⇒ cắt mất cột cuối, phải revert. Sàn thì không
+   * thể cắt: nội dung luôn được phép vượt qua nó. Cùng một dữ kiện, dùng đúng
+   * chiều thì lớp lỗi ấy biến mất. */
+  const stageMin = rendererFitOf(mod.id, active.state, mode).semanticMaxWidth;
+  const cardStyle = stageMin
+    ? ({ "--stage-min": `calc(${stageMin}px + 2 * var(--sp-lg) + 24px)` } as CSSProperties)
+    : undefined;
+
   return (
-    <section className="card card-elevated workspace-card">
+    <section className="card card-elevated workspace-card" style={cardStyle}>
       <div className="workspace-header">
         <span className="eyebrow">{domainBadge(mod.domain)}</span>
         <h2 className="workspace-title">{active.envelope.title}</h2>
