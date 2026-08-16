@@ -238,7 +238,28 @@ for (const w of VIEWPORTS) {
     }
     await sleep(650);
     const m = JSON.parse(await ev(MEASURE));
-    if (m.error || !m.ink) { console.log(`  ${sim.padEnd(34)} ${m.error ?? "không đo được mực"}`); continue; }
+    /* W5S — KHÔNG ĐO ĐƯỢC LÀ ĐỎ, KHÔNG PHẢI BỎ QUA.
+     *
+     * Bản trước `continue` ở đây, nên dòng không đo được KHÔNG BAO GIỜ vào
+     * `rows` và vì thế không bao giờ bị `bad` đếm. Hệ quả thật, không phải giả
+     * định: `logic.boolean_dag` báo "không đo được mực" ở CẢ 1920/1536/1366 mà
+     * bản tổng kết vẫn in "✔ TẤT CẢ OK" — đúng target người dùng chụp được ảnh
+     * mất hẳn sơ đồ, và guard chưa từng hé một tiếng.
+     *
+     * Một phép đo không đọc được đối tượng thì nó KHÔNG BIẾT target đó đạt hay
+     * không. Im lặng cho qua là tự nhận nhầm "không biết" thành "đạt" — kiểu nói
+     * dối tệ nhất một cổng có thể làm (`TEST_TIERS.md`). */
+    if (m.error || !m.ink) {
+      const why = m.error ?? "không đo được mực";
+      console.log(`  ${sim.padEnd(34)} ${why.padEnd(28)} ✗ KHÔNG_ĐO_ĐƯỢC`);
+      rows.push({
+        viewport: w, target: sim, stageW: m.stage?.w ?? null, frameW: m.frame?.w ?? null,
+        inkW: null, frameFill: null, inkFill: null, stageFill: null,
+        maxRailDelta: null, overflowX: null, clipped: null,
+        verdict: "KHÔNG_ĐO_ĐƯỢC", reason: why,
+      });
+      continue;
+    }
 
     const contentW = Math.max(m.ink.w, m.textW || 0);
     const frameFill = +((contentW / m.frame.w) * 100).toFixed(1);

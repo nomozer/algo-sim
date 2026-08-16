@@ -1,12 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "e7bbe922c27cde38",
+  "sourceFingerprint": "d6cf1f7fa1e26d76",
   "dirtyRelevantSources": [
-    "frontend/src/components/ArrayView.tsx"
+    "frontend/scripts/audit-composition.mjs"
   ],
-  "head": "f8f572288416d7b5d0c7fe9e5424ed098fd60eb2",
+  "head": "5bf0f465c82888d961888e1383327a2717ceed99",
   "dirty": true,
-  "generatedAt": "2026-08-16T12:59:30.489Z",
+  "generatedAt": "2026-08-16T13:05:19.019Z",
   "tool": "audit-composition.mjs",
   "toolVersion": "1",
   "environment": {
@@ -18,7 +18,7 @@
       1366,
       768
     ],
-    "targets": 93
+    "targets": 96
   },
   "label": "",
   "rows": [
@@ -399,6 +399,21 @@
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
+    },
+    {
+      "viewport": 1920,
+      "target": "logic.boolean_dag",
+      "stageW": 1672,
+      "frameW": 992,
+      "inkW": null,
+      "frameFill": null,
+      "inkFill": null,
+      "stageFill": null,
+      "maxRailDelta": null,
+      "overflowX": null,
+      "clipped": null,
+      "verdict": "KHÔNG_ĐO_ĐƯỢC",
+      "reason": "không đo được mực"
     },
     {
       "viewport": 1920,
@@ -887,6 +902,21 @@
     },
     {
       "viewport": 1536,
+      "target": "logic.boolean_dag",
+      "stageW": 1460,
+      "frameW": 992,
+      "inkW": null,
+      "frameFill": null,
+      "inkFill": null,
+      "stageFill": null,
+      "maxRailDelta": null,
+      "overflowX": null,
+      "clipped": null,
+      "verdict": "KHÔNG_ĐO_ĐƯỢC",
+      "reason": "không đo được mực"
+    },
+    {
+      "viewport": 1536,
       "target": "network.graph_traversal",
       "stageW": 1460,
       "frameW": 992,
@@ -1367,6 +1397,21 @@
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
+    },
+    {
+      "viewport": 1366,
+      "target": "logic.boolean_dag",
+      "stageW": 1290,
+      "frameW": 992,
+      "inkW": null,
+      "frameFill": null,
+      "inkFill": null,
+      "stageFill": null,
+      "maxRailDelta": null,
+      "overflowX": null,
+      "clipped": null,
+      "verdict": "KHÔNG_ĐO_ĐƯỢC",
+      "reason": "không đo được mực"
     },
     {
       "viewport": 1366,
@@ -1980,6 +2025,6 @@
       "verdict": "OK"
     }
   ],
-  "failing": 4,
-  "total": 93
+  "failing": 7,
+  "total": 96
 }
