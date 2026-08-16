@@ -1,12 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "bc3d3d0c4e9a9bf5",
+  "sourceFingerprint": "e7bbe922c27cde38",
   "dirtyRelevantSources": [
-    "frontend/src/styles/global.css"
+    "frontend/src/components/ArrayView.tsx"
   ],
-  "head": "3d63c60f7644e227bcfd904a07f6b674b8f6d737",
+  "head": "f8f572288416d7b5d0c7fe9e5424ed098fd60eb2",
   "dirty": true,
-  "generatedAt": "2026-08-16T12:55:39.627Z",
+  "generatedAt": "2026-08-16T12:59:30.489Z",
   "tool": "audit-composition.mjs",
   "toolVersion": "1",
   "environment": {
@@ -91,8 +91,8 @@
       "stageW": 1672,
       "frameW": 992,
       "hasFrame": false,
-      "inkW": 959,
-      "inkX": 451,
+      "inkW": 963,
+      "inkX": 463,
       "frameFill": 99.8,
       "stageFill": 59.3,
       "rails": {
@@ -101,7 +101,7 @@
         "explanation": 451
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -197,7 +197,7 @@
       "frameW": 992,
       "hasFrame": false,
       "inkW": 494,
-      "inkX": 451,
+      "inkX": 699,
       "frameFill": 99.8,
       "stageFill": 59.3,
       "rails": {
@@ -206,10 +206,10 @@
         "explanation": 451
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 248,
       "overflowX": false,
       "clipped": false,
-      "verdict": "OK"
+      "verdict": "B"
     },
     {
       "viewport": 1920,
@@ -238,8 +238,8 @@
       "stageW": 1672,
       "frameW": 992,
       "hasFrame": false,
-      "inkW": 874,
-      "inkX": 451,
+      "inkW": 920,
+      "inkX": 463,
       "frameFill": 99.8,
       "stageFill": 59.3,
       "rails": {
@@ -248,7 +248,7 @@
         "explanation": 451
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -576,8 +576,8 @@
       "stageW": 1460,
       "frameW": 992,
       "hasFrame": false,
-      "inkW": 959,
-      "inkX": 259,
+      "inkW": 963,
+      "inkX": 271,
       "frameFill": 99.8,
       "stageFill": 67.9,
       "rails": {
@@ -586,7 +586,7 @@
         "explanation": 259
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -682,7 +682,7 @@
       "frameW": 992,
       "hasFrame": false,
       "inkW": 494,
-      "inkX": 259,
+      "inkX": 507,
       "frameFill": 99.8,
       "stageFill": 67.9,
       "rails": {
@@ -691,10 +691,10 @@
         "explanation": 259
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 248,
       "overflowX": false,
       "clipped": false,
-      "verdict": "OK"
+      "verdict": "B"
     },
     {
       "viewport": 1536,
@@ -723,8 +723,8 @@
       "stageW": 1460,
       "frameW": 992,
       "hasFrame": false,
-      "inkW": 874,
-      "inkX": 259,
+      "inkW": 920,
+      "inkX": 271,
       "frameFill": 99.8,
       "stageFill": 67.9,
       "rails": {
@@ -733,7 +733,7 @@
         "explanation": 259
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1059,8 +1059,8 @@
       "stageW": 1290,
       "frameW": 992,
       "hasFrame": false,
-      "inkW": 959,
-      "inkX": 174,
+      "inkW": 963,
+      "inkX": 186,
       "frameFill": 99.8,
       "stageFill": 76.9,
       "rails": {
@@ -1069,7 +1069,7 @@
         "explanation": 174
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1165,7 +1165,7 @@
       "frameW": 992,
       "hasFrame": false,
       "inkW": 494,
-      "inkX": 174,
+      "inkX": 422,
       "frameFill": 99.8,
       "stageFill": 76.9,
       "rails": {
@@ -1174,10 +1174,10 @@
         "explanation": 174
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 248,
       "overflowX": false,
       "clipped": false,
-      "verdict": "OK"
+      "verdict": "B"
     },
     {
       "viewport": 1366,
@@ -1206,8 +1206,8 @@
       "stageW": 1290,
       "frameW": 992,
       "hasFrame": false,
-      "inkW": 874,
-      "inkX": 174,
+      "inkW": 920,
+      "inkX": 186,
       "frameFill": 99.8,
       "stageFill": 76.9,
       "rails": {
@@ -1216,7 +1216,7 @@
         "explanation": 174
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1544,8 +1544,8 @@
       "stageW": 692,
       "frameW": 644,
       "hasFrame": false,
-      "inkW": 612,
-      "inkX": 49,
+      "inkW": 615,
+      "inkX": 61,
       "frameFill": 99.7,
       "stageFill": 93.1,
       "rails": {
@@ -1554,7 +1554,7 @@
         "explanation": 49
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1650,7 +1650,7 @@
       "frameW": 644,
       "hasFrame": false,
       "inkW": 494,
-      "inkX": 49,
+      "inkX": 123,
       "frameFill": 99.7,
       "stageFill": 93.1,
       "rails": {
@@ -1659,10 +1659,10 @@
         "explanation": 49
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 74,
       "overflowX": false,
       "clipped": false,
-      "verdict": "OK"
+      "verdict": "B"
     },
     {
       "viewport": 768,
@@ -1691,8 +1691,8 @@
       "stageW": 692,
       "frameW": 644,
       "hasFrame": false,
-      "inkW": 607,
-      "inkX": 49,
+      "inkW": 613,
+      "inkX": 61,
       "frameFill": 99.7,
       "stageFill": 93.1,
       "rails": {
@@ -1701,7 +1701,7 @@
         "explanation": 49
       },
       "railException": null,
-      "maxRailDelta": 0,
+      "maxRailDelta": 12,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1980,6 +1980,6 @@
       "verdict": "OK"
     }
   ],
-  "failing": 0,
+  "failing": 4,
   "total": 93
 }

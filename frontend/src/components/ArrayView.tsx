@@ -393,7 +393,18 @@ export function ArrayView({
          rộng 1624px; nay khung ÔM nội dung nên căn giữa chỉ tạo ra rail thứ
          hai (hình ở giữa, chữ ở mép trái — đo được lệch 68–191px ở tám bài
          thuật toán). Việc căn giữa nay thuộc về khung, không thuộc về hình. */
-      style={{ maxWidth: width, display: "block", touchAction: "none" }}
+      /* W5R — CĂN GIỮA PHẦN DƯ. `arrayChartLayout` kẹp bề rộng cột ở trần mật
+         độ, nên khi thẻ rộng hơn mức biểu đồ dùng được (vd 8 cột trong thẻ
+         992px) phần dư dồn hết sang PHẢI và hình đọc ra lệch trái.
+
+         M19 gỡ `margin: 0 auto` khỏi đây với lý do đúng CỦA LÚC ĐÓ: thẻ
+         `fit-content` luôn bằng đúng hình nên căn giữa chẳng chia được gì mà chỉ
+         đẻ rail thứ hai. W5Q đổi tiền đề — sàn thẻ nay 1040px nên thẻ RỘNG HƠN
+         hình là chuyện thường, phần dư có thật và phải được chia.
+
+         Hình lấp kín thẻ thì phần dư bằng 0 nên không đổi gì. `maxWidth` giữ
+         nguyên ⇒ KHÔNG BAO GIỜ cắt cột (khác bản trần bề rộng đã lùi ở 55e9df7). */
+      style={{ maxWidth: width, display: "block", marginInline: "auto", touchAction: "none" }}
       /* Có vùng bấm ⇒ KHÔNG còn là `img`. `role="img"` biến mọi con thành trang
          trí với công nghệ hỗ trợ, nên các vùng bấm sẽ tàng hình với trình đọc
          màn hình — một hàng nút thì "dễ tiếp cận", còn sân khấu tương tác lại
