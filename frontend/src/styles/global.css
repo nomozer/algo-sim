@@ -1425,6 +1425,19 @@ html {
      sơ đồ lệch khỏi rail của chữ (đo được 58px). Một nơi căn giữa, không hai. */
 }
 .dag-stage-body { display: flex; flex-direction: column; gap: var(--sp-sm); }
+
+/* W6D — CHÚ GIẢI MẠCH: hàng ngang tự xuống dòng, MỘT luật cho mọi bề rộng.
+   Trước đây nó chỉ có luật trong `@media (min-width: 1100px)` (dựng cột để lấp
+   dải trống cạnh sơ đồ) và KHÔNG có luật nền — nên khi override ấy bị gỡ, class
+   không còn kiểu nào và `class-coverage.test.ts` đỏ đúng việc của nó. */
+.dag-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-xs) var(--sp-md);
+  font-size: 13px;
+  color: var(--ink-muted);
+}
 /* Chỉ ghép cạnh khi thẻ ĐỦ RỘNG cho cả hai — hẹp thì xếp dọc như cũ, chú giải
    không bao giờ bị bóp thành cột chữ một từ. */
 @media (min-width: 1100px) {
@@ -1458,13 +1471,17 @@ html {
    * `flex: 0 0 auto` cấm co: sơ đồ giữ đúng bề rộng thiết kế, chú giải bên cạnh
    * co lại nếu chật. `max-width: 100%` vẫn còn nên không bao giờ tràn. */
   .dag-stage-body > svg { flex: 0 0 auto; }
-  /* Chú giải dựng dọc: bốn mục ngắn xếp thành cột đọc nhanh hơn một hàng dài,
-     và nó lấp đúng dải trống mà sơ đồ để lại. */
-  .dag-stage-body .dag-legend {
-    flex-direction: column; flex-wrap: nowrap;
-    gap: var(--sp-xs);
-    flex: 0 0 auto; max-width: 230px;
-  }
+  /* W6D — CHÚ GIẢI THÔI DỰNG DỌC.
+   *
+   * Dựng cột chỉ đúng khi chú giải nằm CẠNH sơ đồ và lấp dải trống bên phải nó.
+   * Nhưng W6A cho hàng `flex-wrap: wrap`, nên khi sơ đồ + chú giải không vừa một
+   * hàng thì chú giải rơi XUỐNG DƯỚI — mà vẫn giữ dạng cột. Chụp ở 1920 thấy
+   * đúng cảnh đó: bốn mục xếp dọc ở góc trái, khối cao thêm vô ích và bên phải
+   * trống hẳn một mảng.
+   *
+   * Bỏ hẳn override: chú giải là hàng ngang tự xuống dòng ở MỌI bề rộng — vừa
+   * cạnh sơ đồ thì nằm cạnh, không vừa thì nằm dưới dưới dạng hàng, đúng như nó
+   * vẫn hiển thị ở 768px và ở đó nhìn cân. Một luật, không có ngưỡng phải nhớ. */
 }
 
 /* W4B-1B — nhãn NHÓM cho chú giải nhiều từ vựng (nút vs đường). Bốn mục nút

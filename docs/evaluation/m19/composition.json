@@ -1,13 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "cbf79cfbc7151fd5",
+  "sourceFingerprint": "b61aff27bc58ee44",
   "dirtyRelevantSources": [
-    "frontend/scripts/audit-composition.mjs",
     "frontend/src/styles/global.css"
   ],
-  "head": "880b33feb49d2c223ca6f453e0b5818291eefe7f",
+  "head": "404f53bf15de976e8257cd8e3f7e4c1dd7a67512",
   "dirty": true,
-  "generatedAt": "2026-08-16T14:58:11.132Z",
+  "generatedAt": "2026-08-16T16:19:52.479Z",
   "tool": "audit-composition.mjs",
   "toolVersion": "1",
   "environment": {
@@ -30,13 +29,13 @@
       "frameW": 993,
       "hasFrame": false,
       "inkW": 991,
-      "inkX": 451,
+      "inkX": 448,
       "frameFill": 99.8,
       "stageFill": 59.4,
       "rails": {
-        "instruction": 451,
-        "legend": 451,
-        "explanation": 451
+        "instruction": 448,
+        "legend": 448,
+        "explanation": 448
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -51,13 +50,13 @@
       "frameW": 594,
       "hasFrame": false,
       "inkW": 560,
-      "inkX": 666,
+      "inkX": 664,
       "frameFill": 99.7,
       "stageFill": 35.5,
       "rails": {
-        "instruction": 650,
-        "legend": 666,
-        "explanation": 650
+        "instruction": 648,
+        "legend": 664,
+        "explanation": 648
       },
       "railException": null,
       "maxRailDelta": 16,
@@ -72,13 +71,13 @@
       "frameW": 708,
       "hasFrame": false,
       "inkW": 706,
-      "inkX": 593,
+      "inkX": 591,
       "frameFill": 99.7,
       "stageFill": 42.3,
       "rails": {
-        "instruction": 593,
-        "legend": 593,
-        "explanation": 593
+        "instruction": 591,
+        "legend": 591,
+        "explanation": 591
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -93,13 +92,13 @@
       "frameW": 993,
       "hasFrame": false,
       "inkW": 963,
-      "inkX": 463,
+      "inkX": 460,
       "frameFill": 99.8,
       "stageFill": 59.4,
       "rails": {
-        "instruction": 451,
-        "legend": 451,
-        "explanation": 451
+        "instruction": 448,
+        "legend": 448,
+        "explanation": 448
       },
       "railException": null,
       "maxRailDelta": 12,
@@ -114,13 +113,13 @@
       "frameW": 803,
       "hasFrame": false,
       "inkW": 801,
-      "inkX": 546,
+      "inkX": 543,
       "frameFill": 99.8,
       "stageFill": 48,
       "rails": {
-        "instruction": 546,
-        "legend": 546,
-        "explanation": 546
+        "instruction": 543,
+        "legend": 543,
+        "explanation": 543
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -135,13 +134,13 @@
       "frameW": 708,
       "hasFrame": false,
       "inkW": 706,
-      "inkX": 593,
+      "inkX": 591,
       "frameFill": 99.7,
       "stageFill": 42.3,
       "rails": {
-        "instruction": 593,
-        "legend": 593,
-        "explanation": 593
+        "instruction": 591,
+        "legend": 591,
+        "explanation": 591
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -156,13 +155,13 @@
       "frameW": 613,
       "hasFrame": false,
       "inkW": 611,
-      "inkX": 641,
+      "inkX": 638,
       "frameFill": 99.7,
       "stageFill": 36.7,
       "rails": {
-        "instruction": 641,
-        "legend": 641,
-        "explanation": 641
+        "instruction": 638,
+        "legend": 638,
+        "explanation": 638
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -177,13 +176,13 @@
       "frameW": 803,
       "hasFrame": false,
       "inkW": 801,
-      "inkX": 546,
+      "inkX": 543,
       "frameFill": 99.8,
       "stageFill": 48,
       "rails": {
-        "instruction": 546,
-        "legend": 546,
-        "explanation": 546
+        "instruction": 543,
+        "legend": 543,
+        "explanation": 543
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -198,16 +197,16 @@
       "frameW": 518,
       "hasFrame": false,
       "inkW": 489,
-      "inkX": 702,
+      "inkX": 699,
       "frameFill": 99.6,
       "stageFill": 31,
       "rails": {
-        "instruction": 688,
+        "instruction": 686,
         "legend": null,
-        "explanation": 688
+        "explanation": 686
       },
       "railException": null,
-      "maxRailDelta": 14,
+      "maxRailDelta": 13,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -219,13 +218,13 @@
       "frameW": 719,
       "hasFrame": false,
       "inkW": 717,
-      "inkX": 587,
+      "inkX": 585,
       "frameFill": 99.7,
       "stageFill": 43,
       "rails": {
-        "instruction": 587,
-        "legend": 587,
-        "explanation": 587
+        "instruction": 585,
+        "legend": 585,
+        "explanation": 585
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -240,13 +239,13 @@
       "frameW": 898,
       "hasFrame": false,
       "inkW": 869,
-      "inkX": 510,
+      "inkX": 508,
       "frameFill": 99.8,
       "stageFill": 53.7,
       "rails": {
-        "instruction": 498,
-        "legend": 498,
-        "explanation": 498
+        "instruction": 496,
+        "legend": 496,
+        "explanation": 496
       },
       "railException": null,
       "maxRailDelta": 12,
@@ -261,11 +260,11 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 303,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
+        "instruction": 689,
         "legend": null,
         "explanation": null
       },
@@ -282,13 +281,13 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
+        "instruction": 689,
         "legend": null,
-        "explanation": 691
+        "explanation": 689
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -303,13 +302,13 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 276,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
+        "instruction": 689,
         "legend": null,
-        "explanation": 691
+        "explanation": 689
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -324,13 +323,13 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
+        "instruction": 689,
         "legend": null,
-        "explanation": 691
+        "explanation": 689
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -345,16 +344,16 @@
       "frameW": 865,
       "hasFrame": false,
       "inkW": 862,
-      "inkX": 515,
+      "inkX": 512,
       "frameFill": 99.8,
       "stageFill": 51.7,
       "rails": {
-        "instruction": 514,
+        "instruction": 512,
         "legend": null,
-        "explanation": 514
+        "explanation": 512
       },
       "railException": null,
-      "maxRailDelta": 1,
+      "maxRailDelta": 0,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -366,11 +365,11 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
+        "instruction": 689,
         "legend": null,
         "explanation": null
       },
@@ -387,13 +386,13 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 460,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
+        "instruction": 689,
         "legend": null,
-        "explanation": 691
+        "explanation": 689
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -408,13 +407,13 @@
       "frameW": 724,
       "hasFrame": false,
       "inkW": 694,
-      "inkX": 585,
+      "inkX": 583,
       "frameFill": 99.7,
       "stageFill": 43.3,
       "rails": {
-        "instruction": 585,
-        "legend": 585,
-        "explanation": 585
+        "instruction": 583,
+        "legend": 583,
+        "explanation": 583
       },
       "railException": "Chú giải tín hiệu đặt CẠNH sơ đồ, không đặt dưới: sơ đồ mạch có bề rộng cố định do bố cục mạch quyết định (không co giãn), nên ở màn rộng nó luôn ngắn hơn khung. Đặt chú giải bên phải lấp đúng dải trống ấy và rút ngắn sân khấu một hàng — đo được ở W4B-4D: lệch lề 0px ở cả bốn bề rộng. Đặt chú giải xuống dưới sẽ trả lại khoảng trống bên phải.",
       "maxRailDelta": 0,
@@ -429,12 +428,12 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 486,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
-        "legend": 691,
+        "instruction": 689,
+        "legend": 689,
         "explanation": null
       },
       "railException": null,
@@ -450,13 +449,13 @@
       "frameW": 612,
       "hasFrame": false,
       "inkW": 610,
-      "inkX": 641,
+      "inkX": 639,
       "frameFill": 99.7,
       "stageFill": 36.6,
       "rails": {
-        "instruction": 641,
+        "instruction": 639,
         "legend": null,
-        "explanation": 641
+        "explanation": 639
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -471,13 +470,13 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
+        "instruction": 689,
         "legend": null,
-        "explanation": 691
+        "explanation": 689
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -492,13 +491,13 @@
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 691,
+      "inkX": 689,
       "frameFill": 99.6,
       "stageFill": 30.6,
       "rails": {
-        "instruction": 691,
-        "legend": 691,
-        "explanation": 691
+        "instruction": 689,
+        "legend": 689,
+        "explanation": 689
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -513,36 +512,36 @@
       "frameW": 1401,
       "hasFrame": false,
       "inkW": 1398,
-      "inkX": 248,
+      "inkX": 245,
       "frameFill": 99.9,
       "stageFill": 83.8,
       "rails": {
-        "instruction": 247,
+        "instruction": 244,
         "legend": null,
-        "explanation": 247
+        "explanation": 244
       },
       "railException": null,
       "maxRailDelta": 1,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK",
-      "frameTracksViewport": 159,
+      "frameTracksViewport": 164,
       "frameException": "Sân khấu là một TRANG WEB trong khung xem trước. Bề rộng khả dụng chính là thứ trang phải lấp — đó là hành vi đang được dạy, không phải khoảng trống thừa. Khung chia đôi (điều khiển trái · xem trước phải) cũng cần bề ngang để hai vế 'giá trị em đặt ↔ kết quả nhìn thấy' nằm cùng tầm mắt (§13). Đây là ngoại lệ DUY NHẤT của luật khung-không-bám-cửa-sổ."
     },
     {
       "viewport": 1536,
       "target": "algorithm.binary_search",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 993,
       "hasFrame": false,
       "inkW": 991,
-      "inkX": 259,
+      "inkX": 256,
       "frameFill": 99.8,
-      "stageFill": 68,
+      "stageFill": 68.2,
       "rails": {
-        "instruction": 259,
-        "legend": 259,
-        "explanation": 259
+        "instruction": 256,
+        "legend": 256,
+        "explanation": 256
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -553,17 +552,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.bounded_control_flow",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 594,
       "hasFrame": false,
       "inkW": 560,
-      "inkX": 474,
+      "inkX": 472,
       "frameFill": 99.7,
-      "stageFill": 40.7,
+      "stageFill": 40.8,
       "rails": {
-        "instruction": 458,
-        "legend": 474,
-        "explanation": 458
+        "instruction": 456,
+        "legend": 472,
+        "explanation": 456
       },
       "railException": null,
       "maxRailDelta": 16,
@@ -574,17 +573,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.bubble_sort",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 708,
       "hasFrame": false,
       "inkW": 706,
-      "inkX": 401,
+      "inkX": 399,
       "frameFill": 99.7,
-      "stageFill": 48.5,
+      "stageFill": 48.7,
       "rails": {
-        "instruction": 401,
-        "legend": 401,
-        "explanation": 401
+        "instruction": 399,
+        "legend": 399,
+        "explanation": 399
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -595,17 +594,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.count_if",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 993,
       "hasFrame": false,
       "inkW": 963,
-      "inkX": 271,
+      "inkX": 268,
       "frameFill": 99.8,
-      "stageFill": 68,
+      "stageFill": 68.2,
       "rails": {
-        "instruction": 259,
-        "legend": 259,
-        "explanation": 259
+        "instruction": 256,
+        "legend": 256,
+        "explanation": 256
       },
       "railException": null,
       "maxRailDelta": 12,
@@ -616,17 +615,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.find_max",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 803,
       "hasFrame": false,
       "inkW": 801,
-      "inkX": 354,
+      "inkX": 351,
       "frameFill": 99.8,
-      "stageFill": 55,
+      "stageFill": 55.2,
       "rails": {
-        "instruction": 354,
-        "legend": 354,
-        "explanation": 354
+        "instruction": 351,
+        "legend": 351,
+        "explanation": 351
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -637,17 +636,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.find_min",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 708,
       "hasFrame": false,
       "inkW": 706,
-      "inkX": 401,
+      "inkX": 399,
       "frameFill": 99.7,
-      "stageFill": 48.5,
+      "stageFill": 48.7,
       "rails": {
-        "instruction": 401,
-        "legend": 401,
-        "explanation": 401
+        "instruction": 399,
+        "legend": 399,
+        "explanation": 399
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -658,17 +657,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.insertion_sort",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 613,
       "hasFrame": false,
       "inkW": 611,
-      "inkX": 449,
+      "inkX": 446,
       "frameFill": 99.7,
-      "stageFill": 42,
+      "stageFill": 42.1,
       "rails": {
-        "instruction": 449,
-        "legend": 449,
-        "explanation": 449
+        "instruction": 446,
+        "legend": 446,
+        "explanation": 446
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -679,17 +678,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.linear_search",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 803,
       "hasFrame": false,
       "inkW": 801,
-      "inkX": 354,
+      "inkX": 351,
       "frameFill": 99.8,
-      "stageFill": 55,
+      "stageFill": 55.2,
       "rails": {
-        "instruction": 354,
-        "legend": 354,
-        "explanation": 354
+        "instruction": 351,
+        "legend": 351,
+        "explanation": 351
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -700,20 +699,20 @@
     {
       "viewport": 1536,
       "target": "algorithm.scan",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 518,
       "hasFrame": false,
       "inkW": 489,
-      "inkX": 510,
+      "inkX": 507,
       "frameFill": 99.6,
-      "stageFill": 35.5,
+      "stageFill": 35.6,
       "rails": {
-        "instruction": 496,
+        "instruction": 494,
         "legend": null,
-        "explanation": 496
+        "explanation": 494
       },
       "railException": null,
-      "maxRailDelta": 14,
+      "maxRailDelta": 13,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -721,17 +720,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.selection_sort",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 719,
       "hasFrame": false,
       "inkW": 717,
-      "inkX": 395,
+      "inkX": 393,
       "frameFill": 99.7,
-      "stageFill": 49.2,
+      "stageFill": 49.4,
       "rails": {
-        "instruction": 395,
-        "legend": 395,
-        "explanation": 395
+        "instruction": 393,
+        "legend": 393,
+        "explanation": 393
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -742,17 +741,17 @@
     {
       "viewport": 1536,
       "target": "algorithm.sum_if",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 898,
       "hasFrame": false,
       "inkW": 869,
-      "inkX": 318,
+      "inkX": 316,
       "frameFill": 99.8,
-      "stageFill": 61.5,
+      "stageFill": 61.7,
       "rails": {
-        "instruction": 306,
-        "legend": 306,
-        "explanation": 306
+        "instruction": 304,
+        "legend": 304,
+        "explanation": 304
       },
       "railException": null,
       "maxRailDelta": 12,
@@ -763,15 +762,15 @@
     {
       "viewport": 1536,
       "target": "binary.base_conversion",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 303,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
+        "instruction": 497,
         "legend": null,
         "explanation": null
       },
@@ -784,17 +783,17 @@
     {
       "viewport": 1536,
       "target": "binary.character_encoding",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
+        "instruction": 497,
         "legend": null,
-        "explanation": 499
+        "explanation": 497
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -805,17 +804,17 @@
     {
       "viewport": 1536,
       "target": "binary.decimal_to_binary",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 276,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
+        "instruction": 497,
         "legend": null,
-        "explanation": 499
+        "explanation": 497
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -826,17 +825,17 @@
     {
       "viewport": 1536,
       "target": "color.rgb_model",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
+        "instruction": 497,
         "legend": null,
-        "explanation": 499
+        "explanation": 497
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -847,20 +846,20 @@
     {
       "viewport": 1536,
       "target": "database.relational_table_query",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 865,
       "hasFrame": false,
       "inkW": 862,
-      "inkX": 323,
+      "inkX": 320,
       "frameFill": 99.8,
-      "stageFill": 59.2,
+      "stageFill": 59.5,
       "rails": {
-        "instruction": 322,
+        "instruction": 320,
         "legend": null,
-        "explanation": 322
+        "explanation": 320
       },
       "railException": null,
-      "maxRailDelta": 1,
+      "maxRailDelta": 0,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -868,15 +867,15 @@
     {
       "viewport": 1536,
       "target": "generic.rule_scene",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
+        "instruction": 497,
         "legend": null,
         "explanation": null
       },
@@ -889,17 +888,17 @@
     {
       "viewport": 1536,
       "target": "logic.and_gate",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 460,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
+        "instruction": 497,
         "legend": null,
-        "explanation": 499
+        "explanation": 497
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -910,17 +909,17 @@
     {
       "viewport": 1536,
       "target": "logic.boolean_dag",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 724,
       "hasFrame": false,
       "inkW": 694,
-      "inkX": 393,
+      "inkX": 391,
       "frameFill": 99.7,
-      "stageFill": 49.6,
+      "stageFill": 49.8,
       "rails": {
-        "instruction": 393,
-        "legend": 393,
-        "explanation": 393
+        "instruction": 391,
+        "legend": 391,
+        "explanation": 391
       },
       "railException": "Chú giải tín hiệu đặt CẠNH sơ đồ, không đặt dưới: sơ đồ mạch có bề rộng cố định do bố cục mạch quyết định (không co giãn), nên ở màn rộng nó luôn ngắn hơn khung. Đặt chú giải bên phải lấp đúng dải trống ấy và rút ngắn sân khấu một hàng — đo được ở W4B-4D: lệch lề 0px ở cả bốn bề rộng. Đặt chú giải xuống dưới sẽ trả lại khoảng trống bên phải.",
       "maxRailDelta": 0,
@@ -931,16 +930,16 @@
     {
       "viewport": 1536,
       "target": "network.graph_traversal",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 486,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
-        "legend": 499,
+        "instruction": 497,
+        "legend": 497,
         "explanation": null
       },
       "railException": null,
@@ -952,17 +951,17 @@
     {
       "viewport": 1536,
       "target": "network.packet_routing",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 612,
       "hasFrame": false,
       "inkW": 610,
-      "inkX": 449,
+      "inkX": 447,
       "frameFill": 99.7,
-      "stageFill": 41.9,
+      "stageFill": 42.1,
       "rails": {
-        "instruction": 449,
+        "instruction": 447,
         "legend": null,
-        "explanation": 449
+        "explanation": 447
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -973,17 +972,17 @@
     {
       "viewport": 1536,
       "target": "network.protocol_encapsulation",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
+        "instruction": 497,
         "legend": null,
-        "explanation": 499
+        "explanation": 497
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -994,17 +993,17 @@
     {
       "viewport": 1536,
       "target": "tree.traversal",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 499,
+      "inkX": 497,
       "frameFill": 99.6,
-      "stageFill": 35.1,
+      "stageFill": 35.2,
       "rails": {
-        "instruction": 499,
-        "legend": 499,
-        "explanation": 499
+        "instruction": 497,
+        "legend": 497,
+        "explanation": 497
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1015,17 +1014,17 @@
     {
       "viewport": 1536,
       "target": "web.style_model",
-      "stageW": 1460,
+      "stageW": 1455,
       "frameW": 1401,
       "hasFrame": false,
       "inkW": 1398,
-      "inkX": 56,
+      "inkX": 53,
       "frameFill": 99.9,
-      "stageFill": 96,
+      "stageFill": 96.3,
       "rails": {
-        "instruction": 55,
+        "instruction": 52,
         "legend": null,
-        "explanation": 55
+        "explanation": 52
       },
       "railException": null,
       "maxRailDelta": 1,
@@ -1036,17 +1035,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.binary_search",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 993,
       "hasFrame": false,
       "inkW": 991,
-      "inkX": 174,
+      "inkX": 171,
       "frameFill": 99.8,
-      "stageFill": 77,
+      "stageFill": 77.3,
       "rails": {
-        "instruction": 174,
-        "legend": 174,
-        "explanation": 174
+        "instruction": 171,
+        "legend": 171,
+        "explanation": 171
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1057,17 +1056,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.bounded_control_flow",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 594,
       "hasFrame": false,
       "inkW": 560,
-      "inkX": 389,
+      "inkX": 387,
       "frameFill": 99.7,
-      "stageFill": 46,
+      "stageFill": 46.2,
       "rails": {
-        "instruction": 373,
-        "legend": 389,
-        "explanation": 373
+        "instruction": 371,
+        "legend": 387,
+        "explanation": 371
       },
       "railException": null,
       "maxRailDelta": 16,
@@ -1078,17 +1077,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.bubble_sort",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 708,
       "hasFrame": false,
       "inkW": 706,
-      "inkX": 316,
+      "inkX": 314,
       "frameFill": 99.7,
-      "stageFill": 54.9,
+      "stageFill": 55.1,
       "rails": {
-        "instruction": 316,
-        "legend": 316,
-        "explanation": 316
+        "instruction": 314,
+        "legend": 314,
+        "explanation": 314
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1099,17 +1098,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.count_if",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 993,
       "hasFrame": false,
       "inkW": 963,
-      "inkX": 186,
+      "inkX": 183,
       "frameFill": 99.8,
-      "stageFill": 77,
+      "stageFill": 77.3,
       "rails": {
-        "instruction": 174,
-        "legend": 174,
-        "explanation": 174
+        "instruction": 171,
+        "legend": 171,
+        "explanation": 171
       },
       "railException": null,
       "maxRailDelta": 12,
@@ -1120,17 +1119,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.find_max",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 803,
       "hasFrame": false,
       "inkW": 801,
-      "inkX": 269,
+      "inkX": 266,
       "frameFill": 99.8,
-      "stageFill": 62.2,
+      "stageFill": 62.5,
       "rails": {
-        "instruction": 269,
-        "legend": 269,
-        "explanation": 269
+        "instruction": 266,
+        "legend": 266,
+        "explanation": 266
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1141,17 +1140,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.find_min",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 708,
       "hasFrame": false,
       "inkW": 706,
-      "inkX": 316,
+      "inkX": 314,
       "frameFill": 99.7,
-      "stageFill": 54.9,
+      "stageFill": 55.1,
       "rails": {
-        "instruction": 316,
-        "legend": 316,
-        "explanation": 316
+        "instruction": 314,
+        "legend": 314,
+        "explanation": 314
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1162,17 +1161,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.insertion_sort",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 613,
       "hasFrame": false,
       "inkW": 611,
-      "inkX": 364,
+      "inkX": 361,
       "frameFill": 99.7,
-      "stageFill": 47.5,
+      "stageFill": 47.7,
       "rails": {
-        "instruction": 364,
-        "legend": 364,
-        "explanation": 364
+        "instruction": 361,
+        "legend": 361,
+        "explanation": 361
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1183,17 +1182,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.linear_search",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 803,
       "hasFrame": false,
       "inkW": 801,
-      "inkX": 269,
+      "inkX": 266,
       "frameFill": 99.8,
-      "stageFill": 62.2,
+      "stageFill": 62.5,
       "rails": {
-        "instruction": 269,
-        "legend": 269,
-        "explanation": 269
+        "instruction": 266,
+        "legend": 266,
+        "explanation": 266
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1204,20 +1203,20 @@
     {
       "viewport": 1366,
       "target": "algorithm.scan",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 518,
       "hasFrame": false,
       "inkW": 489,
-      "inkX": 425,
+      "inkX": 422,
       "frameFill": 99.6,
-      "stageFill": 40.2,
+      "stageFill": 40.3,
       "rails": {
-        "instruction": 411,
+        "instruction": 409,
         "legend": null,
-        "explanation": 411
+        "explanation": 409
       },
       "railException": null,
-      "maxRailDelta": 14,
+      "maxRailDelta": 13,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1225,17 +1224,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.selection_sort",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 719,
       "hasFrame": false,
       "inkW": 717,
-      "inkX": 310,
+      "inkX": 308,
       "frameFill": 99.7,
-      "stageFill": 55.7,
+      "stageFill": 56,
       "rails": {
-        "instruction": 310,
-        "legend": 310,
-        "explanation": 310
+        "instruction": 308,
+        "legend": 308,
+        "explanation": 308
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1246,17 +1245,17 @@
     {
       "viewport": 1366,
       "target": "algorithm.sum_if",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 898,
       "hasFrame": false,
       "inkW": 869,
-      "inkX": 233,
+      "inkX": 231,
       "frameFill": 99.8,
-      "stageFill": 69.6,
+      "stageFill": 69.9,
       "rails": {
-        "instruction": 221,
-        "legend": 221,
-        "explanation": 221
+        "instruction": 219,
+        "legend": 219,
+        "explanation": 219
       },
       "railException": null,
       "maxRailDelta": 12,
@@ -1267,15 +1266,15 @@
     {
       "viewport": 1366,
       "target": "binary.base_conversion",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 303,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
+        "instruction": 412,
         "legend": null,
         "explanation": null
       },
@@ -1288,17 +1287,17 @@
     {
       "viewport": 1366,
       "target": "binary.character_encoding",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
+        "instruction": 412,
         "legend": null,
-        "explanation": 414
+        "explanation": 412
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1309,17 +1308,17 @@
     {
       "viewport": 1366,
       "target": "binary.decimal_to_binary",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 276,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
+        "instruction": 412,
         "legend": null,
-        "explanation": 414
+        "explanation": 412
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1330,17 +1329,17 @@
     {
       "viewport": 1366,
       "target": "color.rgb_model",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
+        "instruction": 412,
         "legend": null,
-        "explanation": 414
+        "explanation": 412
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1351,20 +1350,20 @@
     {
       "viewport": 1366,
       "target": "database.relational_table_query",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 865,
       "hasFrame": false,
       "inkW": 862,
-      "inkX": 238,
+      "inkX": 235,
       "frameFill": 99.8,
-      "stageFill": 67.1,
+      "stageFill": 67.3,
       "rails": {
-        "instruction": 237,
+        "instruction": 235,
         "legend": null,
-        "explanation": 237
+        "explanation": 235
       },
       "railException": null,
-      "maxRailDelta": 1,
+      "maxRailDelta": 0,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1372,15 +1371,15 @@
     {
       "viewport": 1366,
       "target": "generic.rule_scene",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
+        "instruction": 412,
         "legend": null,
         "explanation": null
       },
@@ -1393,17 +1392,17 @@
     {
       "viewport": 1366,
       "target": "logic.and_gate",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 460,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
+        "instruction": 412,
         "legend": null,
-        "explanation": 414
+        "explanation": 412
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1414,17 +1413,17 @@
     {
       "viewport": 1366,
       "target": "logic.boolean_dag",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 724,
       "hasFrame": false,
       "inkW": 694,
-      "inkX": 308,
+      "inkX": 306,
       "frameFill": 99.7,
-      "stageFill": 56.1,
+      "stageFill": 56.3,
       "rails": {
-        "instruction": 308,
-        "legend": 308,
-        "explanation": 308
+        "instruction": 306,
+        "legend": 306,
+        "explanation": 306
       },
       "railException": "Chú giải tín hiệu đặt CẠNH sơ đồ, không đặt dưới: sơ đồ mạch có bề rộng cố định do bố cục mạch quyết định (không co giãn), nên ở màn rộng nó luôn ngắn hơn khung. Đặt chú giải bên phải lấp đúng dải trống ấy và rút ngắn sân khấu một hàng — đo được ở W4B-4D: lệch lề 0px ở cả bốn bề rộng. Đặt chú giải xuống dưới sẽ trả lại khoảng trống bên phải.",
       "maxRailDelta": 0,
@@ -1435,16 +1434,16 @@
     {
       "viewport": 1366,
       "target": "network.graph_traversal",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 486,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
-        "legend": 414,
+        "instruction": 412,
+        "legend": 412,
         "explanation": null
       },
       "railException": null,
@@ -1456,17 +1455,17 @@
     {
       "viewport": 1366,
       "target": "network.packet_routing",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 612,
       "hasFrame": false,
       "inkW": 610,
-      "inkX": 364,
+      "inkX": 362,
       "frameFill": 99.7,
-      "stageFill": 47.4,
+      "stageFill": 47.6,
       "rails": {
-        "instruction": 364,
+        "instruction": 362,
         "legend": null,
-        "explanation": 364
+        "explanation": 362
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1477,17 +1476,17 @@
     {
       "viewport": 1366,
       "target": "network.protocol_encapsulation",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
+        "instruction": 412,
         "legend": null,
-        "explanation": 414
+        "explanation": 412
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1498,17 +1497,17 @@
     {
       "viewport": 1366,
       "target": "tree.traversal",
-      "stageW": 1290,
+      "stageW": 1285,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 414,
+      "inkX": 412,
       "frameFill": 99.6,
-      "stageFill": 39.7,
+      "stageFill": 39.8,
       "rails": {
-        "instruction": 414,
-        "legend": 414,
-        "explanation": 414
+        "instruction": 412,
+        "legend": 412,
+        "explanation": 412
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1519,10 +1518,10 @@
     {
       "viewport": 1366,
       "target": "web.style_model",
-      "stageW": 1290,
-      "frameW": 1242,
+      "stageW": 1285,
+      "frameW": 1237,
       "hasFrame": false,
-      "inkW": 1239,
+      "inkW": 1234,
       "inkX": 50,
       "frameFill": 99.8,
       "stageFill": 96.3,
@@ -1536,19 +1535,19 @@
       "overflowX": false,
       "clipped": false,
       "verdict": "OK",
-      "frameTracksViewport": 159,
+      "frameTracksViewport": 164,
       "frameException": "Sân khấu là một TRANG WEB trong khung xem trước. Bề rộng khả dụng chính là thứ trang phải lấp — đó là hành vi đang được dạy, không phải khoảng trống thừa. Khung chia đôi (điều khiển trái · xem trước phải) cũng cần bề ngang để hai vế 'giá trị em đặt ↔ kết quả nhìn thấy' nằm cùng tầm mắt (§13). Đây là ngoại lệ DUY NHẤT của luật khung-không-bám-cửa-sổ."
     },
     {
       "viewport": 768,
       "target": "algorithm.binary_search",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1563,17 +1562,17 @@
     {
       "viewport": 768,
       "target": "algorithm.bounded_control_flow",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 594,
       "hasFrame": false,
       "inkW": 560,
-      "inkX": 90,
+      "inkX": 88,
       "frameFill": 99.7,
-      "stageFill": 85.8,
+      "stageFill": 86.5,
       "rails": {
-        "instruction": 74,
-        "legend": 90,
-        "explanation": 74
+        "instruction": 72,
+        "legend": 88,
+        "explanation": 72
       },
       "railException": null,
       "maxRailDelta": 16,
@@ -1584,13 +1583,13 @@
     {
       "viewport": 768,
       "target": "algorithm.bubble_sort",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1605,13 +1604,13 @@
     {
       "viewport": 768,
       "target": "algorithm.count_if",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 615,
+      "inkW": 613,
       "inkX": 61,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1626,13 +1625,13 @@
     {
       "viewport": 768,
       "target": "algorithm.find_max",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1647,13 +1646,13 @@
     {
       "viewport": 768,
       "target": "algorithm.find_min",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1668,17 +1667,17 @@
     {
       "viewport": 768,
       "target": "algorithm.insertion_sort",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 613,
       "hasFrame": false,
       "inkW": 611,
-      "inkX": 65,
+      "inkX": 62,
       "frameFill": 99.7,
-      "stageFill": 88.6,
+      "stageFill": 89.2,
       "rails": {
-        "instruction": 65,
-        "legend": 65,
-        "explanation": 65
+        "instruction": 62,
+        "legend": 62,
+        "explanation": 62
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1689,13 +1688,13 @@
     {
       "viewport": 768,
       "target": "algorithm.linear_search",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1710,20 +1709,20 @@
     {
       "viewport": 768,
       "target": "algorithm.scan",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 518,
       "hasFrame": false,
       "inkW": 489,
-      "inkX": 126,
+      "inkX": 123,
       "frameFill": 99.6,
-      "stageFill": 74.9,
+      "stageFill": 75.4,
       "rails": {
-        "instruction": 112,
+        "instruction": 110,
         "legend": null,
-        "explanation": 112
+        "explanation": 110
       },
       "railException": null,
-      "maxRailDelta": 14,
+      "maxRailDelta": 13,
       "overflowX": false,
       "clipped": false,
       "verdict": "OK"
@@ -1731,13 +1730,13 @@
     {
       "viewport": 768,
       "target": "algorithm.selection_sort",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1752,13 +1751,13 @@
     {
       "viewport": 768,
       "target": "algorithm.sum_if",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 613,
+      "inkW": 610,
       "inkX": 61,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1773,15 +1772,15 @@
     {
       "viewport": 768,
       "target": "binary.base_conversion",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 303,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
+        "instruction": 113,
         "legend": null,
         "explanation": null
       },
@@ -1794,17 +1793,17 @@
     {
       "viewport": 768,
       "target": "binary.character_encoding",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
+        "instruction": 113,
         "legend": null,
-        "explanation": 115
+        "explanation": 113
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1815,17 +1814,17 @@
     {
       "viewport": 768,
       "target": "binary.decimal_to_binary",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 276,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
+        "instruction": 113,
         "legend": null,
-        "explanation": 115
+        "explanation": 113
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1836,17 +1835,17 @@
     {
       "viewport": 768,
       "target": "color.rgb_model",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
+        "instruction": 113,
         "legend": null,
-        "explanation": 115
+        "explanation": 113
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1857,13 +1856,13 @@
     {
       "viewport": 768,
       "target": "database.relational_table_query",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 641,
+      "inkW": 636,
       "inkX": 50,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": null,
@@ -1878,15 +1877,15 @@
     {
       "viewport": 768,
       "target": "generic.rule_scene",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
+        "instruction": 113,
         "legend": null,
         "explanation": null
       },
@@ -1899,17 +1898,17 @@
     {
       "viewport": 768,
       "target": "logic.and_gate",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 460,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
+        "instruction": 113,
         "legend": null,
-        "explanation": 115
+        "explanation": 113
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1920,13 +1919,13 @@
     {
       "viewport": 768,
       "target": "logic.boolean_dag",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": 49,
@@ -1941,16 +1940,16 @@
     {
       "viewport": 768,
       "target": "network.graph_traversal",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 486,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
-        "legend": 115,
+        "instruction": 113,
+        "legend": 113,
         "explanation": null
       },
       "railException": null,
@@ -1962,17 +1961,17 @@
     {
       "viewport": 768,
       "target": "network.packet_routing",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 612,
       "hasFrame": false,
       "inkW": 610,
-      "inkX": 65,
+      "inkX": 63,
       "frameFill": 99.7,
-      "stageFill": 88.4,
+      "stageFill": 89.1,
       "rails": {
-        "instruction": 65,
+        "instruction": 63,
         "legend": null,
-        "explanation": 65
+        "explanation": 63
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -1983,17 +1982,17 @@
     {
       "viewport": 768,
       "target": "network.protocol_encapsulation",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
+        "instruction": 113,
         "legend": null,
-        "explanation": 115
+        "explanation": 113
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -2004,17 +2003,17 @@
     {
       "viewport": 768,
       "target": "tree.traversal",
-      "stageW": 692,
+      "stageW": 687,
       "frameW": 512,
       "hasFrame": false,
       "inkW": 510,
-      "inkX": 115,
+      "inkX": 113,
       "frameFill": 99.6,
-      "stageFill": 74,
+      "stageFill": 74.5,
       "rails": {
-        "instruction": 115,
-        "legend": 115,
-        "explanation": 115
+        "instruction": 113,
+        "legend": 113,
+        "explanation": 113
       },
       "railException": null,
       "maxRailDelta": 0,
@@ -2025,13 +2024,13 @@
     {
       "viewport": 768,
       "target": "web.style_model",
-      "stageW": 692,
-      "frameW": 644,
+      "stageW": 687,
+      "frameW": 639,
       "hasFrame": false,
-      "inkW": 642,
+      "inkW": 637,
       "inkX": 49,
       "frameFill": 99.7,
-      "stageFill": 93.1,
+      "stageFill": 93,
       "rails": {
         "instruction": 49,
         "legend": null,
