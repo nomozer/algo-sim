@@ -672,6 +672,18 @@ lần kéo thử. Quan hệ thao-tác ↔ config khác nhau theo miền một c�
 Chrome. Đừng dựng phép quét rộng rồi cấy ngoại lệ cho tới lúc nó hết nghĩa.
 Tiêm lỗi đã chạy: cho `set_param` giữ ngưỡng cũ ⇒ ĐỎ 2/4.
 
+### `frontend/scripts/capture-phase-evidence.mjs` (W6) · cần `npm run dev` + Chrome
+Chụp CLIP theo `.workspace-card` ở MỘT trạng thái xác định (`--target`,
+`--viewport`, `--act`). Ghép với `git checkout <ref> -- <file>` (Vite HMR nạp lại
+ngay, không cần dựng lại) thì có cặp TRƯỚC/SAU trên cùng máy, cùng bề rộng, cùng
+đề — khác biệt duy nhất là bản vá. Dùng để chứng minh một pha có HẬU QUẢ HỌC SINH
+NHÌN THẤY, chứ không chỉ có hợp đồng/test đã đổi.
+⚠️ URL module lấy từ `performance.getEntriesByType('resource')`, KHÔNG `import()`
+đường trần: Vite băm URL theo phiên nên import trần tạo instance THỨ HAI với store
+rỗng. ⚠️ Phải nạp trước bốn module rồi mới dùng — lượt `import()` đầu của module
+nặng có thể chưa trả kịp qua CDP, và khi ấy `Runtime.evaluate` trả `undefined`
+CHỨ KHÔNG ném. Cả hai đều từng làm script im lặng hỏng.
+
 ### `frontend/src/simulations/generic-semantic-fit-w5m.test.ts` (W5M) · offline
 Phase M bước 1 — nâng câu của `COVERAGE.md` (*"bài không có cơ chế ẩn thì mô
 phỏng chỉ là trang trí"*) thành cổng chạy được: **cảnh generic CÔNG KHAI phải

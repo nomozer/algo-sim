@@ -1,12 +1,13 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "cbf79cfbc7151fd5",
+  "sourceFingerprint": "9ca002095b2d908c",
   "dirtyRelevantSources": [
-    "frontend/src/styles/global.css"
+    "frontend/src/styles/global.css",
+    "frontend/src/styles/scrollbar-ownership.test.ts"
   ],
-  "head": "880b33feb49d2c223ca6f453e0b5818291eefe7f",
+  "head": "c2b626e10f17be3bd1f785630c7e6abc6ae16693",
   "dirty": true,
-  "generatedAt": "2026-08-16T14:58:29.491Z",
+  "generatedAt": "2026-08-16T16:08:44.389Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

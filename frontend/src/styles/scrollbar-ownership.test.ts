@@ -47,21 +47,37 @@ function declOf(source: string, selector: string, prop: string): string | null {
 }
 
 describe("W12 §4 — thanh cuộn không được tàng hình", () => {
-  it("thumb webkit có màu ở trạng thái MẶC ĐỊNH, không chỉ khi hover", () => {
-    const bg = declOf(GLOBAL, "::-webkit-scrollbar-thumb", "background-color")
+  /**
+   * W6B — HỢP ĐỒNG ĐỔI: thanh cuộn nay dùng MẶC ĐỊNH của trình duyệt.
+   *
+   * Bất biến gốc — "thanh cuộn không được tàng hình" — KHÔNG đổi, nhưng nó nay
+   * được bảo đảm bởi hệ điều hành thay vì bởi CSS của ta. Hai khẳng định cũ
+   * (thumb webkit phải có màu · `scrollbar-color` không được trong suốt) vì thế
+   * HẾT ĐỐI TƯỢNG: không còn khai báo nào để kiểm.
+   *
+   * Khoá điều đúng cho hợp đồng mới: KHÔNG được có bất kỳ ghi đè nào có thể làm
+   * thanh cuộn tàng hình trở lại. Đó mới là thứ từng hỏng — bản trước W12 đặt
+   * `scrollbar-color: transparent transparent` và thumb webkit trong suốt, nên
+   * máng đã giữ chỗ đọc ra thành một khe hở trống.
+   */
+  it("KHÔNG ghi đè nào có thể làm thanh cuộn tàng hình trở lại", () => {
+    const thumb = declOf(GLOBAL, "::-webkit-scrollbar-thumb", "background-color")
       ?? declOf(GLOBAL, "::-webkit-scrollbar-thumb", "background");
-    /* Trống nghĩa là selector đã đổi tên — phải ĐỎ, không được lặng lẽ đạt.
-       Đây là cùng cái bẫy đã làm ba guard W8 "đạt" khi chúng khớp rỗng. */
-    expect(bg, "không tìm thấy ::-webkit-scrollbar-thumb — selector đã đổi?").not.toBeNull();
-    expect(bg, "thumb trong suốt ⇒ máng đã giữ chỗ sẽ đọc thành khe hở").not.toBe("transparent");
-  });
+    expect(thumb, "đã vẽ lại thumb — nếu cố ý thì phải khoá lại màu mặc định ở đây")
+      .toBeNull();
 
-  it("Firefox: `scrollbar-color` mặc định cũng không trong suốt", () => {
     const color = declOf(GLOBAL, "*", "scrollbar-color");
-    expect(color, "không tìm thấy khai báo scrollbar-color").not.toBeNull();
-    expect(color, "Firefox vẫn tàng hình dù webkit đã sửa — đúng hình dạng "
-      + "anti-pattern #10: vá một bề mặt, quên bề mặt anh em")
-      .not.toMatch(/^transparent\s+transparent$/);
+    expect(color, "đã ghi đè `scrollbar-color` — chính là đường làm nó tàng hình")
+      .toBeNull();
+
+    /* Nút mũi tên hai đầu là tín hiệu "cuộn được" của hệ điều hành. Bản trước
+       ẩn chúng đi cho gọn; nay không được ẩn nữa. */
+    /* Bóc chú thích trước khi khớp — cùng quy ước với mọi guard quét nguồn
+       khác trong repo. Không bóc thì chính đoạn chú thích mô tả BẢN CŨ sẽ làm
+       guard đỏ, tức guard tự vấp vào tài liệu của mình. */
+    const code = GLOBAL.replace(/\/\*[\s\S]*?\*\//g, "");
+    expect(code, "vẫn ẩn nút mũi tên của thanh cuộn hệ điều hành")
+      .not.toMatch(/::-webkit-scrollbar-button\s*\{[^}]*display:\s*none/);
   });
 
   it("ba mức đậm dần đều có định nghĩa (var() trỏ hụt là lỗi IM LẶNG)", () => {

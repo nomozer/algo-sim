@@ -52,52 +52,23 @@ button:disabled {
    Nay thumb có mặt sẵn ở mức mờ, đậm dần theo hover. Máng lại đọc đúng là máng.
    Máng vẫn trong suốt: giữ chỗ là việc của `scrollbar-gutter`, không phải việc
    của màu. */
-* {
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: var(--scroll-thumb) transparent;
-}
-
-*:hover {
-  scrollbar-color: var(--scroll-thumb-strong) transparent; /* Firefox */
-}
-
+/* ── W6B — THANH CUỘN DÙNG MẶC ĐỊNH CỦA TRÌNH DUYỆT ──────────────────────
+ *
+ * Bản trước tự vẽ thanh cuộn: thumb `rgba(15,23,42,.22)`, bo tròn, KHÔNG có nút
+ * mũi tên hai đầu (`::-webkit-scrollbar-button { display: none }`), track trong
+ * suốt. Nhìn gọn hơn, nhưng nó bỏ mất ba tín hiệu mà thanh cuộn hệ điều hành
+ * vẫn có: track thấy được, hai nút mũi tên, và tương phản đủ để nhận ra ngay là
+ * "cuộn được". Với học sinh — người dùng chưa quen giao diện — ba tín hiệu ấy
+ * đáng giá hơn vẻ gọn.
+ *
+ * Nay trả về mặc định: không ghi đè `scrollbar-color`, không ghi đè thumb/track/
+ * button. `scrollbar-gutter: stable` GIỮ LẠI — nó chừa sẵn chỗ cho thanh cuộn
+ * nên nội dung không nhảy ngang khi thanh xuất hiện/biến mất, và đó là chuyện
+ * bố cục chứ không phải chuyện thẩm mỹ.
+ *
+ * Ba token `--scroll-thumb*` vẫn còn trong `tokens.css` nhưng THÔI ĐƯỢC DÙNG. */
 html {
   scrollbar-gutter: stable;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--scroll-thumb);
-  border-radius: 999px;
-  border: 3px solid transparent;
-  background-clip: content-box;
-  transition: background-color 0.2s ease;
-}
-
-/* Rê chuột vào vùng cuộn được → đậm lên; rê thẳng vào thanh → đậm nhất. */
-:hover::-webkit-scrollbar-thumb {
-  background-color: var(--scroll-thumb-strong);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scroll-thumb-hover);
-}
-
-/* Không có nút mũi tên hai đầu — chúng là thứ khiến thanh cuộn Windows nặng nề. */
-::-webkit-scrollbar-button {
-  display: none;
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
 }
 
 /* ── Khung trang ─────────────────────────────────────── */
