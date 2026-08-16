@@ -3444,6 +3444,34 @@ html {
 .app-nav-shell.is-collapsed .app-nav-label { display: none; }
 .app-nav-shell.is-collapsed .app-nav-item { justify-content: center; padding-inline: 0; }
 
+/* W6C — hàng đầu cột điều hướng: tên sản phẩm + nút thu gọn.
+   `space-between` để nút luôn nằm sát mép phải cột, kể cả khi tên ngắn — nút là
+   thứ người dùng tìm bằng vị trí, không bằng nội dung. */
+.app-nav-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-xs);
+}
+
+/* Thu gọn thì tên biến mất nên nút phải tự căn giữa cột. */
+.app-nav-shell.is-collapsed .app-nav-head { justify-content: center; }
+
+.app-nav-brand {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--ink);
+  padding: 2px 4px;
+  border-radius: var(--rounded-sm);
+}
+.app-nav-brand:hover { background: var(--canvas-soft); }
+.app-nav-brand:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
 .app-nav-toggle {
   align-self: flex-start;
   width: 32px; height: 32px;

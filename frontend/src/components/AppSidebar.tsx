@@ -79,12 +79,27 @@ export function AppSidebar() {
           nhìn 804px). Sticky không kéo dài nền được. */}
       <div className={`app-nav-shell${collapsed ? " is-collapsed" : ""}${drawerOpen ? " is-drawer-open" : ""}`}>
       <nav className="app-nav" aria-label="Điều hướng chính">
-        <button type="button" className="app-nav-toggle" onClick={toggle}
-          aria-expanded={!collapsed}
-          aria-label={collapsed ? "Mở rộng thanh điều hướng" : "Thu gọn thanh điều hướng"}
-          title={collapsed ? "Mở rộng" : "Thu gọn"}>
-          <IconPanel side="left" size={16} />
-        </button>
+        {/* W6C — TÊN SẢN PHẨM VỀ ĐẦU CỘT TRÁI.
+            Trước đây `AlgoSim` nằm ở thanh trên còn đầu cột chỉ có mỗi nút thu
+            gọn, nên góc trên trái trống một khoảng bằng cả chiều cao thanh —
+            mắt không có mỏ neo. Gộp tên + nút thành MỘT hàng đầu cột (khuôn
+            quen thuộc của các ứng dụng có cột điều hướng).
+            Thu gọn thì chỉ còn nút: tên không đủ chỗ, và giữ nó lại sẽ bị cắt. */}
+        <div className="app-nav-head">
+          {!collapsed && (
+            <button type="button" className="app-nav-brand"
+              onClick={() => { setView("home"); closeDrawer(); }}
+              title="Về trang chủ">
+              AlgoSim
+            </button>
+          )}
+          <button type="button" className="app-nav-toggle" onClick={toggle}
+            aria-expanded={!collapsed}
+            aria-label={collapsed ? "Mở rộng thanh điều hướng" : "Thu gọn thanh điều hướng"}
+            title={collapsed ? "Mở rộng" : "Thu gọn"}>
+            <IconPanel side="left" size={16} />
+          </button>
+        </div>
 
         <ul className="app-nav-list">
           {items.map((it) => (

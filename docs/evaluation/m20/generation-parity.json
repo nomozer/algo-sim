@@ -1,13 +1,14 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "9ca002095b2d908c",
+  "sourceFingerprint": "dd34b47e4b1090e1",
   "dirtyRelevantSources": [
-    "frontend/src/styles/global.css",
-    "frontend/src/styles/scrollbar-ownership.test.ts"
+    "frontend/src/App.tsx",
+    "frontend/src/components/AppSidebar.tsx",
+    "frontend/src/styles/global.css"
   ],
-  "head": "c2b626e10f17be3bd1f785630c7e6abc6ae16693",
+  "head": "8e9474efd01dba55f4ff954490db09d242254721",
   "dirty": true,
-  "generatedAt": "2026-08-16T16:08:44.389Z",
+  "generatedAt": "2026-08-16T16:14:20.524Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

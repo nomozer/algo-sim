@@ -78,9 +78,16 @@ export default function App() {
               <IconPanel side="left" size={18} />
             </button>
           )}
-          <button className="nav-wordmark" onClick={goHome} title="Về trang chủ">
-            AlgoSim
-          </button>
+          {/* W6C — ĐĂNG NHẬP RỒI thì tên sản phẩm sống ở ĐẦU CỘT TRÁI
+              (`AppSidebar`), nên giữ thêm một bản ở thanh trên là nói cùng một
+              điều hai lần trên cùng một màn hình — và bản ở đây còn nằm lệch
+              khỏi cột, đọc ra như hai hệ điều hướng. Chưa đăng nhập thì KHÔNG có
+              cột trái, nên thanh trên vẫn là chỗ duy nhất mang tên. */}
+          {!user && (
+            <button className="nav-wordmark" onClick={goHome} title="Về trang chủ">
+              AlgoSim
+            </button>
+          )}
 
           <nav className="nav-links">
             {/* CHƯA đăng nhập: header mỏng, hai hành động, không mục ứng dụng nào. */}
