@@ -2346,13 +2346,9 @@ html {
 
 /* POLISH-2 — PHÂN CẤP: tiêu đề đứng riêng một dòng, mô tả ngắn xuống dòng dưới
    và nhẹ hơn hẳn, badge miền nhỏ để không cạnh tranh với tiêu đề. */
-/* W5K — BADGE CĂN THEO TÂM, KHÔNG THEO BASELINE.
-   `baseline` đặt baseline CHỮ trong badge trùng baseline tiêu đề 24px. Nhưng
-   badge là một viên thuốc có padding + viền, nên phần hộp của nó thò xuống dưới
-   baseline ấy và mắt đọc ra tụt. Căn theo tâm cho hai khối cùng trục ngang. */
 .workspace-header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--sp-xs) var(--sp-sm);
   flex-wrap: wrap;
   border-bottom: 1px solid var(--hairline);
