@@ -39,6 +39,7 @@ export const GROUP_ORDER: Domain[] = [
   "tree",
   "logic",
   "web",
+  "color",
   "database",
   "geometry",
   "generic",

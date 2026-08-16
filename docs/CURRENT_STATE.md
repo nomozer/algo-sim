@@ -13,11 +13,11 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **31** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **32** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
-> | Family / Target | **12 / 23** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
+> | Family / Target | **12 / 24** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **2 biểu diễn** (`representation` — `structural_progressive_representation`, `web_presentation`). **Không** đếm phẳng cả 12 là "mô phỏng thuật toán" |
-> | Trình bày 2D / 3D | **22 chỉ 2D · 1 có 2D+3D** (`network.protocol_encapsulation`) — W4B-2R: chính sách biểu diễn chọn theo CƠ CHẾ, `architectural_poc` không đủ tư cách bày toggle. Nguồn: `SimSpec.visual_modes` + `renderer.ts::representationPolicyOf`; guard toàn danh mục ở `representation-policy-w4b2r.test.ts` |
+> | Trình bày 2D / 3D | **23 chỉ 2D · 1 có 2D+3D** (`network.protocol_encapsulation`) — W4B-2R: chính sách biểu diễn chọn theo CƠ CHẾ, `architectural_poc` không đủ tư cách bày toggle. Nguồn: `SimSpec.visual_modes` + `renderer.ts::representationPolicyOf`; guard toàn danh mục ở `representation-policy-w4b2r.test.ts` |
 > | Archive (read-only) | `archive/m17-w2b-deep-hardening` → `feb12d8`, tag `m17-w2b-deep-hardening-archive` |
 >
 > ### Bốn tài liệu CANONICAL — mọi agent phải đọc trước khi sửa code

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-16T01:42:44.518Z",
+  "generatedAt": "2026-08-16T02:05:18.526Z",
   "note": "sinh từ registry qua vitest; MÔ TẢ hiện thực, KHÔNG cấp chứng nhận.",
   "interactionCertification": "NO_EVIDENCE (toàn danh mục, đo trình duyệt — W12)",
   "experienceSuitabilityCertification": "NO_EVIDENCE (W12)",
   "transportCounts": {
     "FULL_TRACE": 13,
     "OPTIONAL_TRACE": 7,
-    "RESET_ONLY": 3
+    "RESET_ONLY": 4
   },
   "transportReasons": {
     "network.protocol_encapsulation": [
@@ -96,6 +96,10 @@
     "binary.decimal_to_binary": [
       "RESET_ONLY",
       "Học sinh bật/tắt từng bit và thấy tổng đổi ngay — đây là bàn cân trọng số, không phải một quá trình có bước."
+    ],
+    "color.rgb_model": [
+      "RESET_ONLY",
+      "Trộn màu là quan hệ TỨC THÌ ba-vào-một: kéo một kênh thì ô màu đổi ngay. Không có tiến trình nào để tua, chỉ cần đường về màu của đề bài."
     ],
     "web.style_model": [
       "RESET_ONLY",
@@ -275,6 +279,19 @@
     {
       "id": "binary.decimal_to_binary",
       "domain": "binary",
+      "interactionMode": "exploratory",
+      "tool": true,
+      "trace": false,
+      "challenge": false,
+      "challengeDefaultClosed": true,
+      "causalFeedback": true,
+      "transportNeed": "RESET_ONLY",
+      "correctnessOwner": "—",
+      "hasOfflineSample": true
+    },
+    {
+      "id": "color.rgb_model",
+      "domain": "color",
       "interactionMode": "exploratory",
       "tool": true,
       "trace": false,

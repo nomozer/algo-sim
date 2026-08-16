@@ -140,6 +140,15 @@ AUTHENTICITY_CONTRACTS: dict[str, AuthenticityContract] = {
         required_result_fields=("decimalOf", "binaryString"),
         renderer_semantic_requirements=("place_values_row", "bit_cells"),
     ),
+    # W5A — RGB: exploratory, KHÔNG có trace (đổi kênh là quan hệ tức thì).
+    # `required_result_fields` là hai CÁCH VIẾT của cùng một màu mà học sinh phải
+    # đọc được cạnh ô màu — thiếu chúng thì bài chỉ còn ba thanh trượt vô danh.
+    "color.rgb_model": AuthenticityContract(
+        required_state_fields=("red", "green", "blue"),
+        required_trace_events=(),
+        required_result_fields=("cssColor", "hexColor"),
+        renderer_semantic_requirements=("channel_sliders", "color_swatch"),
+    ),
     # M17 W1 — base conversion tổng quát: progressive, step kinds là event
     # thật của engine (divide 10→X, weight X→10, cả hai + stage khi X→Y).
     "binary.base_conversion": AuthenticityContract(

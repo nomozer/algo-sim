@@ -648,6 +648,51 @@
         "near_miss_mechanisms": []
       }
     },
+    "color.rgb_model": {
+      "domain": "color",
+      "executor_id": "color.rgb_model",
+      "visual_modes": [
+        "2d"
+      ],
+      "reachability": [
+        "registered",
+        "library_discoverable",
+        "ai_reachable_public"
+      ],
+      "curriculum_anchor": "T10 B3 (biểu diễn hình ảnh) · T12 CĐ4 (mã màu HTML/CSS)",
+      "known_gaps": [],
+      "family_memberships": [
+        {
+          "family_id": "positional_representation",
+          "result_authority": "computation",
+          "variant_id": null,
+          "family_spec_version": null,
+          "mechanism_id": null,
+          "owned_mechanisms": [
+            "positional_representation.rgb_channel_composition"
+          ]
+        }
+      ],
+      "config_contract_version": "color-cfg-1",
+      "authenticity": {
+        "required_state_fields": [
+          "red",
+          "green",
+          "blue"
+        ],
+        "required_trace_events": [],
+        "required_result_fields": [
+          "cssColor",
+          "hexColor"
+        ],
+        "renderer_semantic_requirements": [
+          "channel_sliders",
+          "color_swatch"
+        ],
+        "generic_allowed": false,
+        "near_miss_mechanisms": []
+      }
+    },
     "network.packet_routing": {
       "domain": "network",
       "executor_id": "network.packet_routing",
@@ -1261,6 +1306,7 @@
     "logic.boolean_dag",
     "binary.decimal_to_binary",
     "binary.base_conversion",
+    "color.rgb_model",
     "network.packet_routing",
     "network.graph_traversal",
     "tree.traversal",

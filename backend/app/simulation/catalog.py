@@ -89,6 +89,7 @@ from app.validation.simulation import (
     validate_base_conversion_config,
     validate_binary_config,
     validate_boolean_dag_config,
+    validate_color_config,
     validate_encapsulation_config,
     validate_logic_config,
     validate_web_style_config,
@@ -567,6 +568,64 @@ CATALOG["binary.base_conversion"] = SimSpec(
     reachability=_R_FULL,
     curriculum_anchor="T10 B4",
     config_contract_version="baseconv-1.0",
+)
+
+
+# ── Domain color (W5A) — mô hình màu RGB ──────────────────────
+#
+# VÌ SAO TARGET NÀY TỒN TẠI. Đề "màu RGB" xưa nay rơi vào `generic.rule_scene`
+# và bị dựng thành các bước hé lộ đối tượng — tức học sinh xem một cảnh kể về
+# màu thay vì TRỘN màu. Cơ chế ẩn thật của bài này là ba đại lượng độc lập 0..255
+# cộng ánh sáng lại thành một màu nhìn thấy được; không có kênh kéo được và
+# không có ô màu đổi theo thì cơ chế ấy chưa từng xuất hiện trên màn hình.
+#
+# `visual_modes=("2d",)`: màu là thuộc tính bề mặt, không có chiều thứ ba nào
+# mang nghĩa — bày toggle 3D ở đây là hỏi một câu học sinh không có cơ sở trả lời
+# (chính sách W4B-2R).
+
+_COLOR_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "red": {"type": "INTEGER"},
+        "green": {"type": "INTEGER"},
+        "blue": {"type": "INTEGER"},
+        "notes": {"type": "STRING", "nullable": True},
+    },
+    "required": ["red", "green", "blue"],
+    # Hợp đồng ĐÓNG ngay từ tầng schema: không để LLM điền `hex`/`colorName`
+    # rồi bị validator từ chối ở lượt sau (một vòng retry tiêu quota để học lại
+    # điều schema nói được từ đầu).
+    "additionalProperties": False,
+}
+
+_COLOR_CONTRACT = """HỢP ĐỒNG CONFIG (color.rgb_model):
+- red, green, blue: BA số nguyên, mỗi số từ 0 đến 255 — cường độ của một kênh.
+- Đề nêu một màu bằng tên (đỏ, trắng, vàng…) → quy về ba kênh tương ứng (đỏ = 255,0,0; trắng = 255,255,255; vàng = 255,255,0).
+- Đề KHÔNG nêu màu cụ thể → cho một màu trộn để học sinh thấy cả ba kênh cùng làm việc (vd 120, 90, 200).
+- KHÔNG sinh mã HEX, tên màu, ô màu hay bước nào — engine tất định tính màu kết quả, HEX và rgb() từ ba kênh."""
+
+CATALOG["color.rgb_model"] = SimSpec(
+    simulation_id="color.rgb_model",
+    domain="color",
+    visual_modes=("2d",),
+    description=(
+        "mô hình màu RGB — học sinh kéo cường độ ba kênh đỏ/lục/lam trong khoảng "
+        "0–255 và thấy ngay màu kết quả cùng cách viết rgb() và mã HEX; dùng cho "
+        "đề về biểu diễn màu, trộn màu ánh sáng, mã màu trong HTML/CSS"
+    ),
+    config_schema=_COLOR_SCHEMA,
+    contract=_COLOR_CONTRACT,
+    validate=validate_color_config,
+    make_title=lambda config, analysis: "Mô hình màu RGB",
+    family_memberships=(
+        FamilyMembership(
+            FamilyId.POSITIONAL_REPRESENTATION, ResultAuthority.COMPUTATION,
+            owned_mechanisms=("positional_representation.rgb_channel_composition",),
+        ),
+    ),
+    reachability=_R_FULL,
+    curriculum_anchor="T10 B3 (biểu diễn hình ảnh) · T12 CĐ4 (mã màu HTML/CSS)",
+    config_contract_version="color-cfg-1",
 )
 
 

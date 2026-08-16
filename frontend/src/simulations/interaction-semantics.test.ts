@@ -109,6 +109,8 @@ const MECHANISM_PARAM_TARGETS: Record<string, string> = {
     "Bộ lọc/chiếu/sắp LÀ truy vấn đang được dạy; đổi chúng là thực hiện chính thao tác của bài.",
   "web.style_model":
     "Thuộc tính trình bày LÀ quan hệ CSS đang dạy — đổi padding/màu là thực hiện bài học.",
+  "color.rgb_model":
+    "Ba kênh 0..255 LÀ cơ chế đang dạy — màu là kết quả của chính chúng, không phải đầu vào của một quá trình nào khác.",
   "network.graph_traversal":
     "Chọn BFS/DFS là chọn chính thuật toán đang so sánh, không phải đổi dữ liệu vào.",
   "tree.traversal":
@@ -196,6 +198,15 @@ function acceptedByModule(m: SimulationModule<unknown, unknown>, candidates: str
       ...derived.filter((d) => (d as { type: string }).type === "set_param"),
       { type: "set_param", name: "targetBase", value: 8 },
       { type: "set_param", name: "targetBase", value: 2 },
+      /* W5A — ba kênh màu. HAI giá trị cho mỗi kênh vì lý do ghi ngay dưới
+         đây: một probe trúng đúng trị hiện tại là no-op hợp lệ và sẽ bị đọc
+         nhầm thành "module không nhận action". */
+      { type: "set_param", name: "red", value: 0 },
+      { type: "set_param", name: "red", value: 255 },
+      { type: "set_param", name: "green", value: 0 },
+      { type: "set_param", name: "green", value: 255 },
+      { type: "set_param", name: "blue", value: 0 },
+      { type: "set_param", name: "blue", value: 255 },
       { type: "set_param", name: "text", value: "Zz" },
       { type: "set_param", name: "order", value: "postorder" },
       { type: "set_param", name: "order", value: "inorder" },

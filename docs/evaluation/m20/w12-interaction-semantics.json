@@ -1,20 +1,45 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "cea97b63389d8bf5",
+  "sourceFingerprint": "729cf8180c02bd7b",
   "dirtyRelevantSources": [
-    "frontend/src/simulations/domains/network/ui.tsx",
-    "frontend/src/simulations/domains/network/whatif-w4b2i.test.tsx",
-    "frontend/src/simulations/tool-affordance.test.ts"
+    "backend/app/ai/skills/analyze.md",
+    "backend/app/evaluation/authenticity_fixtures.py",
+    "backend/app/evaluation/datasets/curriculum.py",
+    "backend/app/main.py",
+    "backend/app/simulation/authenticity.py",
+    "backend/app/simulation/catalog.py",
+    "backend/app/simulation/input_requirements.py",
+    "backend/app/simulation/mechanisms.py",
+    "backend/app/simulation/operations.py",
+    "backend/app/validation/simulation.py",
+    "backend/tests/test_analyze_prescribed_procedure.py",
+    "backend/tests/test_api.py",
+    "backend/tests/test_family_registry.py",
+    "frontend/src/components/LibraryView.tsx",
+    "frontend/src/components/SimulationWorkspace.tsx",
+    "frontend/src/components/transport-w7.test.tsx",
+    "frontend/src/data/offline-catalog.ts",
+    "frontend/src/data/sim-samples.ts",
+    "frontend/src/simulations/action-probe.ts",
+    "frontend/src/simulations/capability-descriptors.json",
+    "frontend/src/simulations/domains/web/props.ts",
+    "frontend/src/simulations/experience-audit-w4b4a.test.ts",
+    "frontend/src/simulations/index.ts",
+    "frontend/src/simulations/interaction-semantics.test.ts",
+    "frontend/src/simulations/tool-affordance.test.ts",
+    "frontend/src/simulations/transport-policy.ts",
+    "frontend/src/simulations/types.ts",
+    "frontend/src/styles/global.css"
   ],
-  "head": "ddb24f1fe9998f2a2e589e2cf9894716d7edaa34",
+  "head": "f0a96d5037fa0900ad1a4161b8fcae516b5a4ac9",
   "dirty": true,
-  "generatedAt": "2026-08-16T01:42:42.671Z",
+  "generatedAt": "2026-08-16T02:05:17.431Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
     "node": "v24.13.0",
     "platform": "win32",
-    "targets": 23
+    "targets": 24
   },
   "kind": "DESCRIPTIVE_MANIFEST",
   "note": "Dẫn từ hợp đồng module + affordance trong renderer miền. KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
@@ -284,6 +309,24 @@
       "inputActions": [],
       "acceptedByModule": [
         "toggle"
+      ],
+      "hasChallenge": false,
+      "hasTimeline": false,
+      "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "color.rgb_model",
+      "domain": "color",
+      "manipulatesWhenChallengeClosed": "set_param",
+      "stageActions": [
+        "set_param"
+      ],
+      "mechanismActions": [
+        "set_param"
+      ],
+      "inputActions": [],
+      "acceptedByModule": [
+        "set_param"
       ],
       "hasChallenge": false,
       "hasTimeline": false,

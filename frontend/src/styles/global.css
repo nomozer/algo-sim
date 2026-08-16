@@ -3660,6 +3660,96 @@ html {
 
 .web-channel-hex { color: var(--ink-muted); }
 
+/* ── W5A · color.rgb_model — BA NGUYÊN NHÂN, MỘT KẾT QUẢ ────────────────────
+   Bố cục đọc theo một chiều: ba thanh trượt ở trên, ô màu lớn ở dưới. Ô màu
+   KHÔNG phải chỉ báo nhỏ cạnh bộ điều khiển — nó là thứ bài học nói về, nên nó
+   chiếm chỗ tương xứng (khác hẳn `.web-channel-chip`, vốn là chỉ báo phụ của
+   một thuộc tính CSS trong một bài khác). */
+.rgb-stage {
+  max-width: 640px;
+  width: 100%;
+}
+
+.rgb-channels {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.rgb-channel {
+  display: grid;
+  grid-template-columns: 3.4em 1fr 5em;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.rgb-channel-name {
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+/* Thanh trượt phải để lộ vệt màu bên dưới, nên nền mặc định của trình duyệt bị
+   tắt. `appearance:none` chỉ tắt phần RÃNH; nút kéo vẫn là nút gốc. */
+.rgb-channel-range {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 16px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  width: 100%;
+}
+.rgb-channel-range:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.rgb-channel-number {
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  padding: 4px 6px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: var(--surface);
+  color: var(--ink);
+}
+.rgb-channel-number:focus-visible { outline: 2px solid var(--primary); outline-offset: 1px; }
+
+.rgb-result {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  align-items: center;
+}
+
+.rgb-swatch {
+  width: 100%;
+  min-height: 180px;
+  border-radius: var(--rounded-md);
+  border: 1px solid var(--hairline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tên màu chỉ hiện ở tám đỉnh khối màu (xem `cornerNameOf`) — màu chữ do
+   `readableInkOn` chọn nên nó đọc được ở CẢ hai đầu của miền độ sáng. */
+.rgb-swatch-name {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.rgb-codes {
+  display: flex;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 15px;
+}
+
+/* Hai cách viết, hai sức nặng: `rgb(...)` là ba số học sinh vừa kéo nên nó
+   đứng trước bằng mực chính; hex là cùng ba số ấy viết theo cơ số 16. */
+.rgb-code-css { color: var(--ink); font-weight: 600; }
+.rgb-code-hex { color: var(--ink-muted); }
+
 /* W6 §16 — đầu khối thử thách: câu hỏi bên trái, đường THOÁT bên phải.
    Trước W6 khối này không có đường đóng nào, nên người dùng bàn phím mở nhầm
    là mắc kẹt tới khi đổi bước. */

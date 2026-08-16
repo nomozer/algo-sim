@@ -1,15 +1,15 @@
 {
-  "head": "35203d515045b3293dfac5d91455d64723099a5b",
-  "generatedAt": "2026-08-15T18:14:38.145366+00:00",
+  "head": "f0a96d5037fa0900ad1a4161b8fcae516b5a4ac9",
+  "generatedAt": "2026-08-16T02:05:28.966277+00:00",
   "tool": "curriculum_benchmark_report.py",
   "toolVersion": "1",
   "environment": {
     "python": "3.12.10",
-    "targets": 23
+    "targets": 24
   },
   "unitsCovered": 8,
   "unitCaseCounts": {
-    "T10.CD1": 24,
+    "T10.CD1": 25,
     "T10.CD2": 3,
     "T10.CD5": 12,
     "T11.CD4": 7,
@@ -57,6 +57,9 @@
       "T10.CD1"
     ],
     "binary.decimal_to_binary": [
+      "T10.CD1"
+    ],
+    "color.rgb_model": [
       "T10.CD1"
     ],
     "database.relational_table_query": [
@@ -108,12 +111,12 @@
     "m16-ac-computation-leak"
   ],
   "scopeCounts": {
-    "PUBLIC_THPT_INFORMATICS": 100,
+    "PUBLIC_THPT_INFORMATICS": 101,
     "OUT_OF_SCOPE_TEST": 1,
     "INTERNAL_ENGINE_FIXTURE": 2
   },
   "capabilityStatus": {
-    "SUPPORTED": 85,
+    "SUPPORTED": 86,
     "UNIMPLEMENTED": 15
   },
   "capabilityFamilies": {
@@ -131,7 +134,7 @@
     "relational_table_query": 1,
     "web_presentation": 1,
     "boolean_composition": 1,
-    "positional_representation": 2,
+    "positional_representation": 3,
     "sorting_movement": 9,
     "sorting_mechanism_gap": 3,
     "data_flow": 4,
@@ -148,10 +151,10 @@
     "representation_computation_leak": 1
   },
   "complexity": {
-    "L1": 17,
+    "L1": 18,
     "L2": 54,
     "L3": 10,
     "L4": 19
   },
-  "metamorphicVariants": 220
+  "metamorphicVariants": 221
 }

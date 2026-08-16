@@ -67,6 +67,15 @@ const DOMAIN_ACTIONS: Record<string, (state: unknown) => SimAction[]> = {
       ? []
       : ([{ type: "toggle", target: "A" }, { type: "toggle", target: "B" }] as SimAction[]);
   },
+  /* W5A — ba kênh màu. Dò CẢ BA: một bản cài chỉ nhận đúng kênh đầu vẫn cho
+     `manipulable = true` nếu chỉ dò một, tức hai phần ba bộ điều khiển có thể
+     đã chết mà phép đo vẫn báo sạch. Giá trị dò cố ý KHÁC mẫu mở đầu
+     (220/80/60) để không có kênh nào "đổi" thành chính nó. */
+  color: () => ([
+    { type: "set_param", name: "red", value: 10 },
+    { type: "set_param", name: "green", value: 200 },
+    { type: "set_param", name: "blue", value: 255 },
+  ] as SimAction[]),
   binary: (s) => {
     const st = s as { bits?: unknown[] };
     const n = Array.isArray(st.bits) ? st.bits.length : 0;

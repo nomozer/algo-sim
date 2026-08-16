@@ -483,11 +483,13 @@ chối đúng — là **targeted acceptance, KHÔNG phải bằng chứng thốn
 số ≠ 2 (M15 W1: hex/octal → `capability_gap` có 2 lớp phòng thủ, xem
 `mechanism_gate.py`).
 
-### `domains/web/props.ts` — miền màu (M20 W5) · Change impact: targeted live
-CHỦ SỞ HỮU DUY NHẤT của phép đổi hex ↔ RGB (`rgbOf`/`hexOf`/`rgbTextOf`) và của
-mẫu `HEX_COLOR`. Ba nơi cần đúng con số ấy — thanh trượt, dòng `rgb(r, g, b)`,
-bảng CSS — nên để chúng tự tính là ba cơ hội nói ba giá trị khác nhau về cùng
-một màu.
+### `domains/web/props.ts` — miền màu (M20 W5 · W5A) · Change impact: targeted live
+Khai `WebProp` + `COLOR_CHOICES`/`TEXT_COLOR_CHOICES` (ô GỢI Ý) và RE-EXPORT
+phép toán màu từ `simulations/color-channels.ts`.
+⚠️ W5A ĐÃ DỜI chủ sở hữu: `rgbOf`/`hexOf`/`rgbTextOf`/`HEX_COLOR` không còn
+định nghĩa ở đây. Lý do — `color.rgb_model` cần đúng những con số ấy, và một
+miền import từ miền khác sẽ đảo hướng phụ thuộc `domains/* ← shared`. Re-export
+giữ mọi nơi đang import khỏi phải đổi, và giữ đúng MỘT bản của phép toán.
 W5 nới miền màu từ BẢY ô đóng sang mọi mã hex 6 chữ số (mirror
 `_WEB_HEX_COLOR` bên `validation/simulation.py`). ⚠️ Nới thế KHÔNG nới ranh giới
 an toàn: tập hợp lệ vẫn chỉ chứa MỘT MÀU, không hàm, không `url()`, không dấu
@@ -619,6 +621,40 @@ bị chính học sinh vô hiệu hoá. `mode: "hidden"` của `interaction-poli
 thắng tuyệt đối (kéo ở `sum_if`/`count_if` là trang trí).
 ⚠️ Bật affordance KHÔNG nâng hạng ngữ nghĩa: `whatif_swap` vẫn là
 INPUT_MANIPULATION (W12 §8) — phân loại thuộc `interaction-semantics.test.ts`.
+
+### `frontend/src/simulations/color-channels.ts` (W5A) · Change impact: offline
+CHỦ SỞ HỮU DUY NHẤT của phép toán BA KÊNH ↔ MỘT MÀU, dùng chung cho
+`web.style_model` và `color.rgb_model`. Giữ `Channel`/`CHANNELS`/`CHANNEL_LABEL`/
+`CHANNEL_MAX`, mẫu `HEX_COLOR`, `rgbOf`/`hexOf`/`rgbTextOf`/`cssColorOf`,
+`isChannelValue`/`clampChannel`, `channelRamp` (vệt màu của thanh trượt) và
+`readableInkOn` (chọn màu CHỮ đặt trên ô màu theo luma BT.601).
+⚠️ Nâng từ `domains/web/props.ts` trong W5A — trước đó phép toán thuộc sở hữu
+của MỘT miền, nên miền thứ hai chỉ có hai lối: import chéo miền (đảo hướng phụ
+thuộc) hoặc chép lại (hai bản `hexOf`, và ngày chúng lệch thì hai màn hình nói
+hai giá trị khác nhau về cùng một màu).
+⚠️ `channelRamp` giữ HAI kênh kia cố định — đó là điều kiện để vệt màu nói thật
+về màu sắp nhận được; một vệt đỏ-thuần cố định sẽ nói dối.
+⚠️ `clampChannel` dùng ở BIÊN NHẬN (thanh trượt/ô số), KHÔNG dùng để chữa config
+sai — kẹp im lặng ở đó biến một đề hỏng thành mô phỏng trông như đúng.
+
+### `frontend/src/simulations/domains/color/` — `color.rgb_model` (W5A) · offline
+Miền MÀU, target thứ 24. `model.ts` giữ ba số và DẪN XUẤT mọi cách viết khác
+(`cssColorOfState`/`hexColorOfState`/`cornerNameOf`/`isGray`/`dominantChannel`);
+`ui.tsx` dựng ba thanh trượt có vệt màu + ô số nhập được, rồi ô màu lớn mang
+`rgb(...)` và `#rrggbb`; `index.ts` khai module exploratory (KHÔNG timeline,
+KHÔNG `predict`) + `explore.entry` + `narrate` + `currentConfig`.
+⚠️ Vì sao là target riêng chứ không phải `generic.rule_scene`: cảnh generic chở
+được câu chuyện VỀ màu nhưng không chở được phép TRỘN — không có đại lượng liên
+tục nào để kéo, và ô màu không thể là CHÍNH kết quả đang được tính. Định tuyến
+đề RGB sang generic là `SEMANTIC_MISUSE` (Phase M).
+⚠️ `cornerNameOf` chỉ đặt tên ở TÁM ĐỈNH khối màu. Gọi `rgb(200,90,40)` là "nâu"
+là phán quyết thẩm mỹ do renderer bịa ra — cả bài học dựng trên nguyên tắc mọi
+thứ hiện ra đều dẫn xuất tất định từ ba con số.
+⚠️ KHÔNG có `predict`: trộn màu là quan hệ tức thì ba-vào-một, không có "bước
+tiếp theo" nào để cam kết. Transport khai `RESET_ONLY` cùng lý do.
+Bên backend: `catalog.py::CATALOG["color.rgb_model"]` +
+`validation/simulation.py::validate_color_config` + cơ chế
+`positional_representation.rgb_channel_composition`.
 
 ### `frontend/scripts/measure-transport-w7.mjs` (M20 W7) · offline (cần `npm run dev`)
 Hỏi: cơ chế to nhỏ khác nhau thì khay điều khiển có đổi bề rộng theo không? Đo

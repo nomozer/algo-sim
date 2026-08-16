@@ -24,6 +24,7 @@ export type Domain =
   | "tree"
   | "database"
   | "web"
+  | "color"
   | "geometry"
   | "generic";
 

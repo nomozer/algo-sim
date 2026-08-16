@@ -322,6 +322,7 @@ export function SimulationWorkspace() {
       binary: "HỆ CƠ SỐ",
       logic: "LOGIC",
       database: "TRUY VẤN BẢNG",
+      color: "MÀU SẮC",
     };
     return VI[domain] ?? domain.toUpperCase();
   }

@@ -44,6 +44,10 @@ def test_enum_dong_dung_sau_gia_tri():
         # `binary.character_encoding` sở hữu ⇒ mechanism gate luôn gap. Enum nay
         # splat thẳng từ taxonomy (anti-pattern #1).
         "positional_representation.character_code_mapping",
+        # W5A — cơ chế TRỘN BA KÊNH màu. Cùng lý do splat-từ-taxonomy: không
+        # phơi ra thì analyze không phát được cơ chế mà `color.rgb_model` sở
+        # hữu, và mọi đề màu RGB lại rơi về `generic.rule_scene`.
+        "positional_representation.rgb_channel_composition",
         # M17 W2A — cơ chế duyệt cây (nuôi route-consistency gate)
         "tree_traversal.preorder",
         "tree_traversal.inorder",

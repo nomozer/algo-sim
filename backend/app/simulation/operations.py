@@ -112,6 +112,12 @@ SEMANTIC_OPERATION_MAP: dict[str, SemanticRequirement] = {
     # W3 — mã hoá ký tự: tra mã rồi biểu diễn mã đó theo cơ số
     "positional_representation:character_encoding":
         SemanticRequirement("text.encode_characters"),
+    # W5A — trộn ba kênh thành một màu. KHÔNG phải `number.convert_base` dù mỗi
+    # kênh viết được bằng hex: phép học sinh làm ở đây là GHÉP ba đại lượng, còn
+    # đổi cơ số là viết lại MỘT đại lượng theo cách khác. Gộp chúng thì một đề
+    # "đổi 200 sang hệ 16" sẽ hấp thụ được đề "màu nào khi R=200".
+    "positional_representation:rgb_model":
+        SemanticRequirement("color.compose_rgb"),
     # duyệt cây — CÙNG operation, KHÁC variant ⇒ không gộp
     "tree_traversal:preorder": SemanticRequirement("tree.traverse", "preorder"),
     "tree_traversal:inorder": SemanticRequirement("tree.traverse", "inorder"),
@@ -303,6 +309,7 @@ _LABELS: dict[str, str] = {
     "positional_representation:decimal_to_binary": "đổi số thập phân sang nhị phân",
     "positional_representation:base_conversion": "đổi cơ số tổng quát",
     "positional_representation:character_encoding": "tra mã ký tự rồi đổi sang nhị phân",
+    "positional_representation:rgb_model": "trộn ba kênh màu đỏ, lục, lam",
     "tree_traversal:preorder": "duyệt cây theo thứ tự trước",
     "tree_traversal:inorder": "duyệt cây theo thứ tự giữa",
     "tree_traversal:postorder": "duyệt cây theo thứ tự sau",

@@ -18,8 +18,8 @@ VALID_FAMILY_IDS = {f.value for f in FamilyId}
 def test_catalog_20_runtime_target_sau_m17_w2b():
     # 14 (M15/M16) + 4 (W1) + tree.traversal (W2A) + database.relational_table_query
     # (W2B) + algorithm.bounded_control_flow (W2C) + binary.character_encoding (W3)
-    # + web.style_model (W4B-2Z)
-    assert len(CATALOG) == 23
+    # + web.style_model (W4B-2Z) + color.rgb_model (W5A)
+    assert len(CATALOG) == 24
 
 
 def test_moi_entry_co_metadata_descriptor_day_du():
@@ -61,7 +61,8 @@ def test_llm_choices_an_sort_concrete_hien_selector_token():
     assert "algorithm.bounded_control_flow" in choices  # W2C choice doc lap
     assert "binary.character_encoding" in choices  # W3 choice doc lap
     assert "web.style_model" in choices  # W4B-2Z choice doc lap
-    assert len(choices) == 21  # +web.style_model (W4B-2Z)
+    assert "color.rgb_model" in choices  # W5A choice doc lap
+    assert len(choices) == 22  # +color.rgb_model (W5A)
     assert len(choices) == len(set(choices))  # không trùng
 
 

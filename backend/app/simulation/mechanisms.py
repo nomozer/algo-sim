@@ -28,6 +28,18 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
         # KHÔNG dùng binary_positional_weights: nó gắn với decimal_to_binary vốn
         # chặn ở 0–255 / 8 bit, không chở nổi BMP (tới 65535).
         "positional_representation.character_code_mapping",
+        # W5A — GHÉP BA KÊNH 0..255 THÀNH MỘT MÀU.
+        #
+        # Vì sao nằm trong POSITIONAL_REPRESENTATION chứ không đẻ family mới: cơ
+        # chế ẩn ở đây đúng là biểu diễn theo VỊ TRÍ — mỗi kênh là một byte, và
+        # ba byte đứng theo thứ tự R,G,B mới ra một màu (cặp chữ số hex của mỗi
+        # kênh là chính cách viết vị trí ấy). Đẻ family mới sẽ tách nó khỏi
+        # `non_binary_base`, đúng cái nó phải dùng để giải thích #RRGGBB.
+        #
+        # Nhưng KHÔNG dùng lại `binary_positional_weights`: cơ chế đó gắn với
+        # decimal_to_binary (một số, một bàn cân bit), còn ở đây bài học là BA
+        # đại lượng độc lập TRỘN lại — thứ không tồn tại trong bài kia.
+        "positional_representation.rgb_channel_composition",
     ),
     FamilyId.INTERVAL_ELIMINATION: ("interval_elimination.halve_sorted_interval",),
     # M17 W2B — truy vấn BẢNG QUAN HỆ hữu hạn. Cơ chế ẩn ở đây KHÁC

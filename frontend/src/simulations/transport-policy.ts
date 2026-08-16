@@ -103,6 +103,9 @@ export const TRANSPORT_POLICY: Record<string, readonly [TransportMode, string]> 
   "binary.decimal_to_binary": ["RESET_ONLY",
     "Học sinh bật/tắt từng bit và thấy tổng đổi ngay — đây là bàn cân trọng số, " +
     "không phải một quá trình có bước."],
+  "color.rgb_model": ["RESET_ONLY",
+    "Trộn màu là quan hệ TỨC THÌ ba-vào-một: kéo một kênh thì ô màu đổi ngay. " +
+    "Không có tiến trình nào để tua, chỉ cần đường về màu của đề bài."],
   "web.style_model": ["RESET_ONLY",
     "Không có tiến trình theo bước — chỉ cần đường quay về trang gốc để so sánh " +
     "trang em vừa sửa với trang ban đầu."],

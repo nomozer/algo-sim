@@ -106,6 +106,17 @@ INPUT_REQUIREMENTS: dict[str, InputRequirements] = {
             "25) rồi thử lại."
         ),
     ),
+    # W5A — màu: đề PHẢI nêu được màu (tên màu hoặc ba trị số). "Vẽ một hình
+    # đẹp" không đủ dữ kiện, và hệ KHÔNG tự nghĩ ra màu thay học sinh.
+    "color.rgb_model": InputRequirements(
+        required_grounded_inputs=(InputKind.NUMERIC_VALUE,),
+        accepted_evidence_types=("data.values", "data.description_numeric_tokens"),
+        insufficiency_error_code=ErrorCode.INPUT_INSUFFICIENT,
+        learner_prompt_template=(
+            "Đề chưa cho biết màu cần dựng. Em hãy nêu tên màu (ví dụ: vàng) "
+            "hoặc ba trị số đỏ/lục/lam (ví dụ: 255, 200, 0) rồi thử lại."
+        ),
+    ),
     "binary.base_conversion": InputRequirements(
         required_grounded_inputs=(InputKind.CONVERSION_PARAMETERS,),
         optional_inputs=(InputKind.NUMERIC_VALUE,),

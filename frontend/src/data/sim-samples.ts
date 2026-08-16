@@ -39,6 +39,23 @@ export const OFFLINE_SAMPLES: OfflineSample[] = [
       notes: null,
     },
   },
+  /* W5A — mô hình màu RGB. Màu mở đầu CỐ Ý là một màu TRỘN chứ không phải một
+     đỉnh của khối màu: mở ra thấy `rgb(220, 80, 60)` thì câu hỏi "ba số này làm
+     nên màu gì" đã có mặt sẵn, còn mở ra thấy đỏ thuần thì bài trông như đã
+     xong và không mời kéo gì cả. */
+  {
+    id: "color-rgb",
+    envelope: {
+      status: "ok",
+      simulation_id: "color.rgb_model",
+      domain: "color",
+      visual_mode: "2d",
+      title: "Mô hình màu RGB",
+      description: "Ba kênh đỏ · lục · lam trộn thành một màu",
+      config: { red: 220, green: 80, blue: 60, notes: null },
+      notes: null,
+    },
+  },
   {
     id: "binary-13",
     envelope: {

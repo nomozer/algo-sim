@@ -151,8 +151,9 @@ describe("W12-B · chế độ là TRÌNH BÀY, không phải sự thật", () =
      và trôi mỗi lần ai đó thêm một đề. */
   const CATALOG = [...new Set(offlineCatalog().map((x) => x.simId))].sort();
 
-  it("danh mục mẫu vẫn phủ đủ 23 target — quét hẹp đi là quét mù", () => {
-    expect(CATALOG.length).toBe(23);
+  it("danh mục mẫu vẫn phủ đủ 24 target — quét hẹp đi là quét mù", () => {
+    // 23 (W12) + `color.rgb_model` (W5A).
+    expect(CATALOG.length).toBe(24);
   });
 
   it.each(CATALOG)("%s: mở rồi đóng Thử thách KHÔNG dựng lại state canonical", (simId) => {

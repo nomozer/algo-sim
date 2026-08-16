@@ -34,11 +34,14 @@ describe("W7 §9 — chế độ transport là chính sách sư phạm", () => {
     expect(missing, `target chưa khai chế độ transport:\n${missing.join("\n")}`).toEqual([]);
   });
 
-  it("giữ đúng 13 / 7 / 3 như Wave 6 đã chốt", () => {
+  it("giữ đúng 13 / 7 / 4 (Wave 6 chốt 13/7/3; W5A thêm color.rgb_model)", () => {
     const counts = Object.values(TRANSPORT_POLICY).reduce<Record<string, number>>(
       (acc, [mode]) => ({ ...acc, [mode]: (acc[mode] ?? 0) + 1 }), {});
-    expect(counts).toEqual({ FULL_TRACE: 13, OPTIONAL_TRACE: 7, RESET_ONLY: 3 });
-    expect(Object.keys(TRANSPORT_POLICY)).toHaveLength(23);
+    /* W5A — `color.rgb_model` vào RESET_ONLY, KHÔNG vào OPTIONAL_TRACE: trộn
+       màu không có tiến trình nào để giải thích thêm, nên một lối vào 'xem
+       cách thực hiện' ở đó sẽ mở ra khoảng trống. */
+    expect(counts).toEqual({ FULL_TRACE: 13, OPTIONAL_TRACE: 7, RESET_ONLY: 4 });
+    expect(Object.keys(TRANSPORT_POLICY)).toHaveLength(24);
   });
 
   it("mỗi khai báo phải nêu LÝ DO CƠ CHẾ kiểm chứng được", () => {

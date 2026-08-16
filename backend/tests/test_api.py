@@ -274,7 +274,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # fail-closed với khoá lạ ⇒ MỌI spec web do AI sinh đều bị từ chối, tức
     # `web.style_model` không tới được qua đường sinh. Envelope cache sinh dưới
     # schema cũ mang đúng những đề mà bản vá này nhắm tới; trả lại mù thì vá vô hiệu.
-    assert main_module.CACHE_VERSION == "31"
+    # W5A (bump 31→32): thêm family-member/target AI-reachable `color.rgb_model`
+    # + phơi `positional_representation.rgb_channel_composition` vào enum
+    # `prescribed_procedure` kèm luật phát trong `analyze.md` ⇒ chính sách định
+    # tuyến đổi. Envelope OK sinh dưới luật cũ mang đúng những đề màu RGB đã bị
+    # `generic.rule_scene` nuốt (dựng thành các bước hé lộ thay vì ba kênh trộn
+    # được) — trả lại mù thì bản sửa định tuyến này vô hiệu với chính các đề nó
+    # nhắm tới.
+    assert main_module.CACHE_VERSION == "32"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

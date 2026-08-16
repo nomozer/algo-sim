@@ -130,5 +130,14 @@ export function candidateActions(config: unknown): SimAction[] {
   if (num(cfg.value)) {
     out.push({ type: "set_param", name: "value", value: cfg.value + 1 });
   }
+  /* W5A — ba kênh màu. Dò cả BA chứ không riêng `red`: một bản cài chỉ nhận
+     đúng kênh đầu vẫn sẽ xanh nếu chỉ dò một, và "đổi được màu" khi ấy là một
+     câu nói quá — hai phần ba bộ điều khiển có thể đã chết mà không ai biết.
+     Cộng 1 sẽ tràn khi kênh đang ở 255, nên đi xuống ở đầu trên của miền. */
+  for (const ch of ["red", "green", "blue"] as const) {
+    if (num(cfg[ch])) {
+      out.push({ type: "set_param", name: ch, value: cfg[ch] === 255 ? 254 : cfg[ch] + 1 });
+    }
+  }
   return out;
 }

@@ -50,6 +50,7 @@ _P_PARTITION = "partition_recursive"
 _P_OTHER = "other_unspecified"
 _P_BINW = "positional_representation.binary_positional_weights"
 _P_NONBIN = "positional_representation.non_binary_base"
+_P_RGB = "positional_representation.rgb_channel_composition"
 
 OK_ARCHETYPES = ("direct", "paraphrase", "changed_input", "boundary")
 
@@ -65,6 +66,11 @@ def _web_cfg(heading: str, paragraph: str = "", **style: object) -> str:
 def _baseconv_cfg(source: int, target: int, value: str) -> str:
     """Config binary.base_conversion (M17 W1) — đúng schema validator BE."""
     return _j({"sourceBase": source, "targetBase": target, "inputValue": value})
+
+
+def _color_cfg(red: int, green: int, blue: int) -> str:
+    """Config color.rgb_model (W5A) — đúng schema validator BE."""
+    return _j({"red": red, "green": green, "blue": blue})
 
 
 def _booldag_cfg(inputs: list, gates: list, output: str) -> str:
@@ -691,6 +697,40 @@ TARGET_FIXTURES: dict[str, TargetFixture] = {
                 _analysis(goal="Biểu diễn 300 nhị phân (vượt phạm vi)", prescribed=_P_BINW),
                 [_classify(_BINARY)],
                 [_binary_cfg(300, 8), _binary_cfg(255, 8)],
+            ),
+        },
+    ),
+    # W5A — mô hình màu RGB. Bốn đề đi vào cùng một cơ chế bằng bốn lối nói
+    # khác nhau: gọi tên màu, cho thẳng ba trị số, hỏi trộn hai kênh, và một đề
+    # vượt biên (300) để chứng minh validator chặn chứ không kẹp lặng lẽ.
+    "color.rgb_model": TargetFixture(
+        prompts={
+            "direct": "Màu vàng trong hệ màu RGB gồm những thành phần nào? Hãy cho xem màu đó.",
+            "paraphrase": "Cho ba kênh đỏ 120, lục 90, lam 200 — màu thu được trông thế nào?",
+            "changed_input": "Trộn đỏ 255 với lục 255 mà không có lam thì ra màu gì?",
+            "boundary": "Đặt kênh đỏ bằng 300, lục 0, lam 0 (vượt phạm vi một kênh).",
+        },
+        scripts={
+            "direct": CaseScript(
+                _analysis(goal="Thành phần RGB của màu vàng", prescribed=_P_RGB),
+                [_classify("color.rgb_model")],
+                [_color_cfg(255, 255, 0)],
+            ),
+            "paraphrase": CaseScript(
+                _analysis(goal="Màu từ ba kênh 120/90/200", prescribed=_P_RGB),
+                [_classify("color.rgb_model")],
+                [_color_cfg(120, 90, 200)],
+            ),
+            "changed_input": CaseScript(
+                _analysis(goal="Trộn đỏ và lục ở mức tối đa", prescribed=_P_RGB),
+                [_classify("color.rgb_model")],
+                [_color_cfg(255, 255, 0)],
+            ),
+            # contract-error retry: attempt1 giữ 300 (validator từ chối) → attempt2 hợp lệ
+            "boundary": CaseScript(
+                _analysis(goal="Kênh đỏ 300 (vượt phạm vi)", prescribed=_P_RGB),
+                [_classify("color.rgb_model")],
+                [_color_cfg(300, 0, 0), _color_cfg(255, 0, 0)],
             ),
         },
     ),

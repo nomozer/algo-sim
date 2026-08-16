@@ -1,5 +1,5 @@
 {
-  "when": "2026-08-16T01:42:43.515Z",
+  "when": "2026-08-16T02:05:19.504Z",
   "rows": [
     {
       "target": "algorithm.binary_search",
@@ -180,6 +180,19 @@
       "actionsThatChanged": 5,
       "declaresExplore": false,
       "hasExploreEntry": false,
+      "declaresPredict": false,
+      "presentsCommitment": false
+    },
+    {
+      "target": "color.rgb_model",
+      "domain": "color",
+      "interactionMode": "exploratory",
+      "steps": 1,
+      "manipulable": true,
+      "actionsTried": 3,
+      "actionsThatChanged": 3,
+      "declaresExplore": true,
+      "hasExploreEntry": true,
       "declaresPredict": false,
       "presentsCommitment": false
     },

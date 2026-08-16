@@ -639,6 +639,34 @@ CURRICULUM_ITEMS: list[EvalItem] = [
             "không tuyên bố gì về byte UTF-8."
         ),
     ),
+    # ── W5A — mô hình màu RGB ────────────────────────────────────────────────
+    EvalItem(
+        id="cur-t10-rgb-color-model",
+        text=(
+            "Trong hệ màu RGB, màu vàng được tạo ra từ những thành phần nào? "
+            "Nếu giảm dần thành phần lục thì màu thu được thay đổi ra sao?"
+        ),
+        group="specialized",
+        expect_simulation_id="color.rgb_model",
+        tags=("curriculum", "m17_anchor"),
+        curriculum_area="T10.CD1",
+        curriculum_topic="Số hoá hình ảnh — hệ màu RGB (Bài 3) · mã màu HTML/CSS (T12 CĐ4)",
+        capability_family="positional_representation",
+        complexity="L1",
+        result_mode="executable_simulation",
+        learning_objective=(
+            "Nói được một màu trên màn hình là TỔ HỢP của ba cường độ 0–255, và "
+            "dự đoán được màu đổi theo hướng nào khi tăng hoặc giảm một kênh."
+        ),
+        pedagogical_rationale=(
+            "Cơ chế ẩn: màu không phải một thuộc tính nguyên khối mà là TỔNG của "
+            "ba nguồn sáng độc lập — điều mà bảng mã màu in sẵn giấu đi hoàn "
+            "toàn, vì nó chỉ ghép sẵn từng cặp mã ↔ ô màu. Kéo một kênh rồi thấy "
+            "ô màu đổi ngay là cách duy nhất để 'vàng = đỏ + lục' thôi là một câu "
+            "phải học thuộc. Ràng buộc phạm vi: chỉ RGB cộng màu (ánh sáng), "
+            "KHÔNG tuyên bố gì về CMYK hay không gian màu in ấn."
+        ),
+    ),
     # ── W4B-1B — hai target catalog chưa từng có ca đánh giá tường minh ──────
     # Reconciliation (xem docs/evaluation/m17/w4b1b-edge-state/): inventory
     # runtime cho 19/22 target có `expect_simulation_id`. Hai ca dưới đây đóng

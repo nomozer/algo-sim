@@ -38,13 +38,23 @@ CÁC TRƯỜNG TRÍCH XUẤT:
     số 8/4/2/1.
   - "positional_representation.non_binary_base": đầu vào **ĐÃ LÀ MỘT SỐ** và đề
     yêu cầu cơ số KHÁC 2 (thập lục phân/16, bát phân/8, hay cơ số bất kỳ khác 2).
+  - "positional_representation.rgb_channel_composition": đề nói về **MÀU** trong
+    hệ RGB — thành phần đỏ/lục/lam của một màu, trộn màu ánh sáng, mã màu dùng
+    trong HTML/CSS, hay "màu gì khi R=…, G=…, B=…".
+    · Dấu hiệu quyết định là **BA đại lượng cùng lúc** (ba kênh), khác hẳn hai
+      giá trị trên vốn nói về MỘT đại lượng viết lại theo cơ số khác.
+    · Đề nói thêm "viết mã màu dạng #RRGGBB" hay "đổi 255 sang hex" trong ngữ
+      cảnh màu thì **VẪN giữ giá trị này** — không đổi sang non_binary_base:
+      phần viết hex nằm trong hợp đồng của chính năng lực màu và do engine lo.
+    · Đề đổi cơ số một con số KHÔNG dính tới màu (ví dụ "đổi 200 sang hệ 16")
+      thì KHÔNG phải giá trị này.
   - RANH GIỚI KÝ TỰ CHỮ SỐ: một ký tự chữ số (ví dụ ký tự '7' đặt trong dấu nháy,
     hoặc đề nói rõ "ký tự"/"chuỗi") vẫn là **KÝ TỰ**; còn một con số dùng để đổi
     hệ (ví dụ đổi số 7 sang nhị phân) là **SỐ**. Đừng quyết chỉ vì token trông
     giống chữ số — đọc xem đề gọi nó là ký tự hay là số.
   - KHÔNG xác định được đầu vào là ký tự hay số → **để null**, đừng đoán, đừng
     bịa dữ kiện; cổng đủ-dữ-kiện và kiểm định sẽ xử lý.
-  - Bài không thuộc ba trường hợp trên → giữ nguyên quy tắc cũ (null / giá trị
+  - Bài không thuộc bốn trường hợp trên → giữ nguyên quy tắc cũ (null / giá trị
     sắp xếp ở trên).
   - TUYỆT ĐỐI không đưa code point, giá trị thập phân hay dãy bit vào bất kỳ
     trường nào — engine tự tra mã và tự đổi.

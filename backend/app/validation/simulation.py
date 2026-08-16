@@ -207,6 +207,35 @@ def validate_binary_config(raw) -> tuple[dict | None, str | None]:
     return {"decimalValue": dec, "bitWidth": width, "notes": notes}, None
 
 
+# ── Domain color (W5A) ────────────────────────────────────────
+
+COLOR_CHANNELS = ("red", "green", "blue")
+COLOR_CHANNEL_MAX = 255
+
+
+def validate_color_config(raw) -> tuple[dict | None, str | None]:
+    """color.rgb_model — BA kênh nguyên 0..255.
+
+    Vì sao validator KHÔNG nhận `hex`/`colorName`/`preview`: màu kết quả là thứ
+    engine TÍNH từ ba kênh, nên nhận thêm một cách nói khác về cùng giá trị là
+    mở đúng cửa hậu mà M5 §6 đóng — LLM sẽ có hai đường để nói "màu gì", và khi
+    hai đường lệch nhau thì không ai là nguồn sự thật. Ba số, một sự thật.
+    """
+    if not isinstance(raw, dict):
+        return None, "Config không phải đối tượng JSON."
+    forbidden = check_forbidden_keys(raw)
+    if forbidden:
+        return None, forbidden
+    channels: dict[str, int] = {}
+    for name in COLOR_CHANNELS:
+        v = raw.get(name)
+        if not isinstance(v, int) or isinstance(v, bool) or v < 0 or v > COLOR_CHANNEL_MAX:
+            return None, f'"{name}" phải là số nguyên từ 0 đến {COLOR_CHANNEL_MAX}.'
+        channels[name] = v
+    notes = raw.get("notes") if isinstance(raw.get("notes"), str) and raw.get("notes") else None
+    return {**channels, "notes": notes}, None
+
+
 # ── binary.base_conversion (M17 W1) ───────────────────────────
 
 CONV_BASES = (2, 8, 10, 16)

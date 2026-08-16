@@ -1,5 +1,6 @@
 import { registerAlgorithmDomain } from "./domains/algorithm";
 import { registerBinaryDomain } from "./domains/binary";
+import { registerColorDomain } from "./domains/color";
 import { registerDatabaseDomain } from "./domains/database/table-module";
 import { registerGenericDomain } from "./domains/generic";
 import { registerWebDomain } from "./domains/web";
@@ -26,6 +27,7 @@ export function registerAllSimulations(): void {
   registerNetworkDomain();
   registerTreeDomain(); // M17 W2A — duyệt cây nhị phân
   registerDatabaseDomain(); // M17 W2B — truy vấn bảng quan hệ
+  registerColorDomain(); // W5A — mô hình màu RGB
   registerGenericDomain();
   registerWebDomain();
 }

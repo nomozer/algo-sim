@@ -34,6 +34,7 @@ export const DOMAIN_COLOR: Record<Domain, string> = {
   tree: "var(--accent-green)",
   database: "var(--accent-teal)",
   web: "var(--accent-orange)",
+  color: "var(--accent-sky)",
   geometry: "var(--secondary)",
   generic: "var(--accent-orange-deep)",
 };
@@ -46,6 +47,7 @@ export const DOMAIN_LABEL: Record<Domain, string> = {
   tree: "Cây",
   database: "CSDL",
   web: "Web",
+  color: "Màu sắc",
   geometry: "Hình học",
   generic: "Tổng quát",
 };
