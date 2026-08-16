@@ -2117,6 +2117,32 @@ giải URL từ chính trang (`performance.getEntriesByType('resource')`).
 `measure-composition.mjs` KHÔNG có lớp bảo vệ đó — nó thất bại ồn ào (null
 `querySelectorAll`), nên gặp lỗi đó thì **restart `npm run dev`**, đừng sửa số.
 
+### `simulations/renderer-fit.ts` · offline
+**Chủ sở hữu KHAI BÁO hợp đồng vừa-khung của renderer** — để runner đo không phải
+hard-code theo `moduleId`. Phân mỗi target vào một `RendererFitClass`
+(`adaptive_layout` · `canvas_fill` · `fixed_semantic_size`) kèm `semanticMaxWidth`
+(trần bề rộng theo trạng thái HIỆN TẠI) và `maxWidthPerItem` (ràng buộc mật độ,
+khai RIÊNG nên nới trần cài đặt sẽ làm nó đỏ). Hỏng theo **hai** hướng chứ không
+một: `UNDER_UTILIZED` (khung rộng ra mà hình đứng yên) và `OVER_EXPANDED` (hình
+phình quá mật độ ngữ nghĩa) — nên cổng chấm KHÔNG được là "hình phải chiếm ≥X%".
+Export `ARRAY_VIEW_TARGETS`, `CANVAS_TARGETS`, `FIXED_SIZE_TARGETS`,
+`TABLE_TARGETS`, `ARRAY_MAX_WIDTH_PER_ITEM`, `rendererFitOf()`.
+**`SimulationWorkspace` đọc `semanticMaxWidth` để nâng sàn `--stage-min` của thẻ**,
+nên target KHÔNG khai trần sẽ kẹt ở sàn mặc định 560px (đo được: `tree.traversal`
+560px vs `algorithm.find_max` 1443px — nguồn của "mỗi target một bề rộng").
+⚠ File này được `SimulationWorkspace` import THẲNG ⇒ **không được import renderer
+miền** (nạp lười qua `<Suspense>`); lấy hình học qua module lá, xem bên dưới.
+
+### `simulations/domains/tree/layout-size.ts` · offline
+**Hình học khung vẽ cây, tách thành module LÁ** (không import registry/React/
+store) để `renderer-fit.ts` đọc được TRẦN bề rộng mà **không kéo renderer nạp-lười
+vào bundle shell** — `SimulationWorkspace` import thẳng `renderer-fit`, nên import
+`tree-module` ở đó là phá code-splitting của `<Suspense>`. Export `TREE_SLOT_W`
+(86 — một làn nút, đủ nhãn ~12 ký tự), `TREE_LEVEL_H` (78), `treeLayoutSize(config)`
+→ `{w, h}`. Giá trị `w` **chính là trần ngữ nghĩa**: renderer vẽ `maxWidth: w` nên
+cây giãn tới đây rồi dừng. Một nguồn cho cả renderer lẫn cổng chấm — không có con
+số chép tay ở nơi thứ hai để trôi.
+
 ### `components/header-identity.ts` · offline
 **Chủ sở hữu DẢI NHẬN DIỆN đầu thẻ mô phỏng** — hai trong ba dòng đầu tiên học
 sinh đọc. Export `DOMAIN_BADGE: Record<Domain, string>` (nhãn miền tiếng Việt,

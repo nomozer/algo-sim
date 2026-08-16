@@ -61,7 +61,6 @@ const KNOWN_GAPS = [
   "simulations/domains/network/edge-view.ts",
   "simulations/domains/network/traverse-module.tsx",
   "simulations/domains/tree/tree-module.tsx",
-  "simulations/renderer-fit.ts",
   "capture-tree-visual.mjs",
   "capture-w2b-patch.mjs",
   "capture-w2c-program.mjs",

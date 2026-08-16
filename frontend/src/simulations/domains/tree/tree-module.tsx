@@ -1,4 +1,5 @@
 import { registerSimulation } from "../../registry";
+import { treeLayoutSize } from "./layout-size";
 import { TraversalFrontier, frontierDelta } from "../../../components/TraversalFrontier";
 import type { ConfigResult, SimulationModule, WorkspaceProps } from "../../types";
 
@@ -327,27 +328,14 @@ export function validateTreeTraversalConfig(raw: unknown): ConfigResult<TreeTrav
  * Khuyết", "Sương Mai") → nhãn tràn khỏi nút và chồng lên nhau. Nay bề rộng cấp
  * theo SỐ NÚT (mỗi nút một làn đủ rộng) và chiều cao theo ĐỘ SÂU.
  */
-const SLOT_W = 86;   // bề rộng một làn nút (đủ cho nhãn ~12 ký tự)
-const LEVEL_H = 78;  // khoảng cách giữa hai tầng
+/* W5AA — hình học khung vẽ nay ở `./layout-size` (module LÁ, không import
+   registry/React) để `renderer-fit.ts` đọc được TRẦN bề rộng mà không phải kéo
+   cả renderer nạp-lười này vào bundle shell. Một nguồn cho cả hai: trần mà cổng
+   chấm dùng luôn đúng bằng trần renderer thật sự vẽ. */
 /** Nhãn ngắn vẽ TRONG nút; nhãn dài vẽ DƯỚI nút (không bóp méo vòng tròn). */
 const INLINE_LABEL_MAX = 2;
 
-function layoutSize(config: TreeTraversalConfig): { w: number; h: number } {
-  const map = nodeMap(config);
-  let maxDepth = 0;
-  const walk = (id: string, d: number) => {
-    maxDepth = Math.max(maxDepth, d);
-    const n = map.get(id);
-    if (!n) return;
-    if (n.left) walk(n.left, d + 1);
-    if (n.right) walk(n.right, d + 1);
-  };
-  walk(config.rootId, 0);
-  return {
-    w: Math.max(360, config.nodes.length * SLOT_W),
-    h: Math.max(190, (maxDepth + 1) * LEVEL_H + 40),
-  };
-}
+const layoutSize = treeLayoutSize;
 
 function treeLayout(config: TreeTraversalConfig): Map<string, { x: number; y: number; depth: number }> {
   const map = nodeMap(config);

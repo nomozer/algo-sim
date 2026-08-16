@@ -1,4 +1,5 @@
 import { arrayChartLayout } from "../components/ArrayView";
+import { TREE_SLOT_W, treeLayoutSize } from "./domains/tree/layout-size";
 import { useAppStore } from "../state/store";
 
 /**
@@ -144,6 +145,19 @@ export function rendererFitOf(
     return { simulationId, cls: "adaptive_layout", semanticMaxWidth: null,
              maxWidthPerItem: null, itemCount: null,
              reason: "bảng HTML width:100% - đã bám khung theo CSS, hợp đồng riêng" };
+  }
+  /* W5AA — LỚP SVG TỰ TÍNH KHUNG: khai TRẦN để thẻ nâng sàn được.
+     Trước wave này chỉ nhóm `ArrayView` khai `semanticMaxWidth`, nên 14 target
+     còn lại rơi về sàn mặc định 560px trong khi `algorithm.find_max` ra 1443px —
+     đo được, và đúng là thứ người dùng thấy là "mỗi cái một design riêng".
+     Renderer cây đã tự chặn (`maxWidth: w`), nên nâng sàn KHÔNG làm nó phình:
+     cây giãn tới trần của chính nó rồi dừng. */
+  if (simulationId === "tree.traversal") {
+    const config = (state as { config?: unknown } | null)?.config;
+    const w = config ? treeLayoutSize(config as Parameters<typeof treeLayoutSize>[0]).w : null;
+    return { simulationId, cls: "adaptive_layout", semanticMaxWidth: w,
+             maxWidthPerItem: TREE_SLOT_W, itemCount: null,
+             reason: "SVG cây — trần suy từ chính hàm bố cục (layout-size.ts), renderer tự chặn maxWidth" };
   }
   if (FIXED_SIZE_TARGETS.has(simulationId)) {
     return { simulationId, cls: "fixed_semantic_size", semanticMaxWidth: null,
