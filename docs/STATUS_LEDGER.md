@@ -189,6 +189,35 @@ Loãng đề tài là do KỂ CHUYỆN dàn trải, không phải do code tồn 
 `network.packet_routing` xuống tầng hai vì định tuyến không nằm gọn trong ba
 nghẽn trên; nhét vào nghẽn 3 là làm hỏng sự sạch của bộ ba để lấy một con số.
 
+**BỐ CỤC — GUARD M19 ĐANG ĐO SAI ĐẠI LƯỢNG (đo được 2026-08-16)**
+
+`audit-composition.mjs` chạy trên app thật, 24 target × 4 bề rộng: **96/96 OK**.
+Nhưng đọc cột số thì thấy nó xanh vì đo nhầm thứ:
+
+| ở 1920px | |
+|---|---|
+| chỗ khả dụng (`stage`) | 1672px |
+| bề rộng thẻ (`khung`) | 512–719px |
+| mực lấp trong thẻ | 99,6% |
+
+Guard đo **mực / khung** (M19 sinh ra để sửa "thẻ 1624px cứng mà mực 276px"), nên
+nó không hề đo **khung / chỗ khả dụng**. Thẻ dùng ~31% bề ngang mà vẫn OK.
+Triệu chứng người dùng — cột bé tí, thừa mênh mông hai bên — nằm NGOÀI tầm đo.
+
+⚠️ Đây là lý do bốn commit bố cục đã phải lùi ở `df55c0c`: tôi sửa theo mắt vì
+guard không nói gì, rồi `.workspace-card: width 100%` làm SVG mạch logic co về 0
+(`.dag-stage` là `width: fit-content`, còn `dag-module.tsx:429` đã cảnh báo sẵn
+lớp lỗi này).
+
+**Việc phải làm, theo thứ tự:**
+1. Thêm cột **khung/stage** vào `audit-composition.mjs` + ngưỡng khai tường minh
+   (target nào được phép hẹp, vì sao). Không có phép đo thì mọi bản vá sau đều
+   là mò.
+2. Chỉ khi có cột đó mới sửa bề rộng thẻ — và phải xem cả `logic.boolean_dag`
+   trong cùng lượt đo, vì nó là target vỡ trước tiên.
+
+Artifact: `docs/evaluation/m19/composition.json` (lượt đo này).
+
 **VIỆC CÒN LẠI ĐỂ TIÊU ĐIỂM THÀNH THẬT (W5P — chưa làm)**
 
 Quyết định ba tầng hiện MỚI NẰM Ở TÀI LIỆU. Thư viện vẫn bày đủ 11 target tầng
