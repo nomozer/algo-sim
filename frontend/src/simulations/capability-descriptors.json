@@ -464,7 +464,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B5 · T10 B9",
@@ -507,7 +506,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B5 · T12CS B22–24",
@@ -560,7 +558,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B4",
@@ -604,7 +601,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B4",
@@ -656,7 +652,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B3 (biểu diễn hình ảnh) · T12 CĐ4 (mã màu HTML/CSS)",
@@ -701,7 +696,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 CĐ2 · T12 CĐ2",
@@ -872,7 +866,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T11 CĐ CSDL (bảng, truy vấn cơ bản)",
@@ -1053,7 +1046,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T10 B3 · T10 B6 (mã hoá văn bản)",
@@ -1109,7 +1101,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T12 B4 · 12CS B22–24",
@@ -1166,7 +1157,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T11 B10 · T12CS B29 · T12 CĐ4",
@@ -1227,7 +1217,6 @@
       ],
       "reachability": [
         "registered",
-        "library_discoverable",
         "ai_reachable_public"
       ],
       "curriculum_anchor": "T12 CĐ4 · HTML/CSS",

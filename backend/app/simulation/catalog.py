@@ -1662,3 +1662,33 @@ CATALOG["web.style_model"] = SimSpec(
     curriculum_anchor="T12 CĐ4 · HTML/CSS",
     config_contract_version="web-style-1",
 )
+
+
+# ── W5P — TIÊU ĐIỂM KHOÁ LUẬN: chỉ 13 target được QUẢNG BÁ ở Thư viện ──────
+#
+# Ba điểm nghẽn nhận thức (`STATUS_LEDGER §0`) là khung tổ chức của đề tài. Mọi
+# target khác vẫn ĐĂNG KÝ đầy đủ và vẫn `AI_REACHABLE_PUBLIC` — học sinh gõ đề
+# màu RGB thì hệ vẫn phải dựng được, TỪ CHỐI lúc ấy mới là sai. Thứ bị cắt là
+# QUẢNG BÁ, không phải NĂNG LỰC.
+#
+# Đặt ở CUỐI file và suy từ một danh sách, thay vì sửa `reachability` rải rác ở
+# 11 entry: tiering là quyết định SẢN PHẨM đổi theo phạm vi đề tài, nên nó phải
+# đọc được ở đúng một chỗ.
+FOCUS_SIMULATION_IDS: frozenset[str] = frozenset({
+    # Nghẽn 1 — trạng thái tích luỹ qua vòng lặp
+    "algorithm.find_max", "algorithm.find_min", "algorithm.sum_if", "algorithm.count_if",
+    "algorithm.linear_search", "algorithm.scan", "algorithm.bounded_control_flow",
+    # Nghẽn 2 — bất biến & tiền điều kiện
+    "algorithm.binary_search", "algorithm.bubble_sort", "algorithm.insertion_sort",
+    "algorithm.selection_sort",
+    # Nghẽn 3 — thứ tự duyệt quyết định kết quả
+    "tree.traversal", "network.graph_traversal",
+})
+
+for _sid, _spec in CATALOG.items():
+    if _sid in FOCUS_SIMULATION_IDS:
+        continue
+    if ReachabilityLevel.LIBRARY_DISCOVERABLE in _spec.reachability:
+        _spec.reachability = tuple(
+            r for r in _spec.reachability if r is not ReachabilityLevel.LIBRARY_DISCOVERABLE
+        )

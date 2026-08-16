@@ -131,7 +131,9 @@ describe("(M9-UX5) Thư viện — nhà riêng của danh mục đầy đủ", (
     expect(html).toContain("Thư viện mô phỏng");
     // (chữ hoa là do CSS text-transform; DOM giữ nguyên tiếng Việt có dấu)
     expect(html).toContain("Thuật toán");
-    expect(html).toContain("Nhị phân");
+    /* W5P — Thư viện thu về 13 target tiêu điểm, nên nhóm hiện ra là Thuật
+       toán / Cây / Mạng chứ không còn Nhị phân. */
+    expect(html).toContain("Thuật toán");
   });
 
   it("KHÔNG rò fixture nội bộ hay chuỗi kĩ thuật (luật phạm vi M9-UX2/UX3)", () => {

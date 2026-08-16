@@ -85,5 +85,9 @@ def test_catalog_entry_descriptor_day_du():
     # ĐÚNG SỰ THẬT. Chốt cũ ("chưa có mẫu") mô tả một trạng thái không còn tồn
     # tại; giữ nó lại sẽ khoá kho mã vào một giới hạn đã được gỡ.
     assert ReachabilityLevel.AI_REACHABLE_PUBLIC in spec.reachability
-    assert ReachabilityLevel.LIBRARY_DISCOVERABLE in spec.reachability
+    # W5P — `binary.base_conversion` thuộc TẦNG HAI (ngoài ba điểm nghẽn), nên
+    # nó thôi được quảng bá ở Thư viện. Vẫn AI tới được: học sinh gõ đề đổi cơ
+    # số thì hệ vẫn phải dựng được, từ chối lúc ấy mới là sai.
+    assert ReachabilityLevel.LIBRARY_DISCOVERABLE not in spec.reachability
+    assert ReachabilityLevel.AI_REACHABLE_PUBLIC in spec.reachability
     assert CONV_BASES == (2, 8, 10, 16)

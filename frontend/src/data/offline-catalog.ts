@@ -80,8 +80,44 @@ export function offlineCatalog(): CatalogEntry[] {
 }
 
 /** Danh mục HỌC SINH THẤY — chỉ mẫu public (Tin học THPT). */
+/**
+ * W5P — TIÊU ĐIỂM KHOÁ LUẬN: 13 target thuộc BA ĐIỂM NGHẼN nhận thức.
+ *
+ * Mirror của `FOCUS_SIMULATION_IDS` bên `backend/app/simulation/catalog.py`
+ * (cùng khuôn hai tầng như mọi hợp đồng khác trong repo).
+ *
+ * Nó khai TIÊU ĐIỂM, không khai NĂNG LỰC: 11 target ngoài danh sách vẫn đăng ký
+ * đầy đủ, vẫn AI tới được, vẫn chạy trong test/regression — chỉ thôi được QUẢNG
+ * BÁ ở Thư viện. Nguồn phán quyết: `docs/STATUS_LEDGER.md §0`.
+ */
+export const FOCUS_SIM_IDS: readonly string[] = [
+  "algorithm.find_max",
+  "algorithm.find_min",
+  "algorithm.sum_if",
+  "algorithm.count_if",
+  "algorithm.linear_search",
+  "algorithm.scan",
+  "algorithm.bounded_control_flow",
+  "algorithm.binary_search",
+  "algorithm.bubble_sort",
+  "algorithm.insertion_sort",
+  "algorithm.selection_sort",
+  "tree.traversal",
+  "network.graph_traversal",
+];
+
+/**
+ * Bài Thư viện bày cho học sinh = mẫu công khai VÀ thuộc tiêu điểm.
+ *
+ * Hai điều kiện là hai câu hỏi khác nhau, cố ý giữ tách: `visibility` nói "mẫu
+ * này có phải fixture nội bộ không", `FOCUS_SIM_IDS` nói "target này có thuộc
+ * tiêu điểm khoá luận không". Gộp lại thì đổi phạm vi đề tài sẽ phải đi sửa
+ * metadata của từng mẫu.
+ */
 export function publicCatalog(): CatalogEntry[] {
-  return offlineCatalog().filter((e) => e.visibility === "public");
+  return offlineCatalog().filter(
+    (e) => e.visibility === "public" && FOCUS_SIM_IDS.includes(e.simId),
+  );
 }
 
 /** Gợi ý khám phá trên Home — bộ NHỎ chọn lọc, không đổ cả danh mục dài. */
@@ -89,9 +125,9 @@ const STARTER_SIM_IDS = [
   "algorithm.find_max",
   "algorithm.binary_search",
   "algorithm.bubble_sort",
-  "binary.decimal_to_binary",
-  "network.packet_routing",
-  "logic.and_gate",
+  "algorithm.linear_search",
+  "tree.traversal",
+  "network.graph_traversal",
 ];
 
 export function starterEntries(): CatalogEntry[] {

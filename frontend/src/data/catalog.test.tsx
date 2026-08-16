@@ -10,7 +10,7 @@ import { progressOf, SessionCard } from "../components/SessionCard";
 import { registerAllSimulations } from "../simulations";
 import { __resetHistoryForTest, historyStore, type HistoryItem } from "../state/history";
 import { useAppStore } from "../state/store";
-import { offlineCatalog, publicCatalog, starterEntries } from "./offline-catalog";
+import { offlineCatalog, publicCatalog, starterEntries, FOCUS_SIM_IDS } from "./offline-catalog";
 import { OFFLINE_SAMPLES } from "./sim-samples";
 
 /**
@@ -42,19 +42,29 @@ describe("(1)(2)(5)(6) visibility — metadata tường minh, không lọc tiêu
     expect(ids).not.toContain("gen-and");
     expect(ids).not.toContain("gen-binary");
     expect(ids).not.toContain("gen-packet");
-    // 8 algorithm + logic + binary + network(x2) + web = 13 mẫu công khai
     expect(pub).toHaveLength(publicCatalog().length);
     /* W4B-3F — bài HTML/CSS công khai nay là `web-intro-page` (chủ sở hữu
        `web.style_model`), KHÔNG còn là `gen-web`. Bản cũ là một
        `reveal_sequence` ba bước — một trục thời gian bịa ra cho HTML, và đó
        chính là thứ W4B-2Z đã gỡ cho phần CSS rồi bỏ sót phần cấu trúc.
        `GENERIC_WEB_SPEC` vẫn sống làm fixture của engine generic. */
-    expect(ids).toContain("web-intro-page"); // HTML/CSS là chương trình Tin học
+    /* W5P — `web.style_model` nay thuộc TẦNG HAI (ngoài ba điểm nghẽn), nên nó
+       thôi được quảng bá ở Thư viện. Vẫn đăng ký, vẫn AI tới được, vẫn có mẫu
+       để test — chỉ không còn nằm trong `publicCatalog()`. */
+    expect(ids).not.toContain("web-intro-page");
     expect(ids, "bài học HTML giả-từng-bước quay lại danh mục công khai")
       .not.toContain("gen-web");
-    // Generic vẫn phải có mẫu công khai THẬT — quy tắc hợp thành, không bước giả.
-    expect(ids).toContain("gen-rule-library");
-    expect(ids).toContain("network-encapsulation"); // M10 flagship (Thư viện)
+    /* W5P — `generic.rule_scene` và `network.protocol_encapsulation` cùng thuộc
+       TẦNG HAI. Khẳng định cũ ("generic vẫn phải có mẫu công khai") sinh ra khi
+       mọi target đăng ký đều bày ở Thư viện; nay Thư viện chỉ bày 13 target
+       tiêu điểm, nên nó hết đối tượng chứ không bị nới lỏng.
+       Điều PHẢI đúng nay là: danh mục công khai ⊆ tiêu điểm. */
+    expect(ids).not.toContain("gen-rule-library");
+    expect(ids).not.toContain("network-encapsulation");
+    for (const e of pub) {
+      expect(FOCUS_SIM_IDS, `${e.id}: bài ngoài tiêu điểm lọt vào Thư viện`)
+        .toContain(e.simId);
+    }
   });
 
   it("(3) fixture nội bộ VẪN trong offlineCatalog đầy đủ (test/dev dùng được)", () => {
@@ -70,13 +80,18 @@ describe("(1)(2)(5)(6) visibility — metadata tường minh, không lọc tiêu
     const starters = starterEntries();
     expect(starters.every((e) => e.visibility === "public")).toBe(true);
     expect(starters.map((e) => e.simId)).toEqual([
-      "algorithm.find_max",
-      "algorithm.binary_search",
-      "algorithm.bubble_sort",
-      "binary.decimal_to_binary",
-      "network.packet_routing",
-      "logic.and_gate",
+      // W5P — sáu bài gợi ý nay TRẢI ĐỀU ba điểm nghẽn, không còn trỏ sang
+      // tầng hai (`decimal_to_binary`, `packet_routing`, `and_gate`).
+      "algorithm.find_max",        // nghẽn 1
+      "algorithm.binary_search",   // nghẽn 2
+      "algorithm.bubble_sort",     // nghẽn 2
+      "algorithm.linear_search",   // nghẽn 1
+      "tree.traversal",            // nghẽn 3
+      "network.graph_traversal",   // nghẽn 3
     ]);
+    for (const e of starters) {
+      expect(FOCUS_SIM_IDS, `${e.id}: bài gợi ý ngoài tiêu điểm`).toContain(e.simId);
+    }
   });
 });
 

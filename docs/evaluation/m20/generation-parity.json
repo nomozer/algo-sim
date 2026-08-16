@@ -1,16 +1,24 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "fbe86b623916d538",
-  "dirtyRelevantSources": [],
-  "head": "c9b51ec4a909c4629fd28e28a3a50350d411f615",
-  "dirty": false,
-  "generatedAt": "2026-08-16T12:23:47.457Z",
+  "sourceFingerprint": "63426aa08b43c407",
+  "dirtyRelevantSources": [
+    "backend/app/simulation/catalog.py",
+    "backend/tests/test_base_conversion.py",
+    "frontend/src/components/ux-shell.test.tsx",
+    "frontend/src/data/catalog.test.tsx",
+    "frontend/src/data/offline-catalog.ts",
+    "frontend/src/simulations/capability-descriptors.json",
+    "frontend/src/simulations/interaction-semantics.test.ts"
+  ],
+  "head": "adbfd743ce1eea0c77596b8d28cbcc3a77e575f6",
+  "dirty": true,
+  "generatedAt": "2026-08-16T12:36:42.611Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
     "node": "v24.13.0",
     "platform": "win32",
-    "targets": 23
+    "targets": 12
   },
   "axis": "GENERATION_PARITY — nguồn spec (mẫu vs AI) KHÔNG chọn đường đi",
   "notThisAxis": "KHÔNG phải PRIMARY_CAPABILITY_PARITY: cổng này không xếp hạng năng lực từng target, nên đừng đọc nó thành 'x/23 target đã chứng nhận'.",
@@ -25,21 +33,10 @@
     "algorithm.linear_search",
     "algorithm.selection_sort",
     "algorithm.sum_if",
-    "binary.base_conversion",
-    "binary.character_encoding",
-    "binary.decimal_to_binary",
-    "color.rgb_model",
-    "database.relational_table_query",
-    "generic.rule_scene",
-    "logic.and_gate",
-    "logic.boolean_dag",
     "network.graph_traversal",
-    "network.packet_routing",
-    "network.protocol_encapsulation",
-    "tree.traversal",
-    "web.style_model"
+    "tree.traversal"
   ],
-  "certifiedCount": 23,
+  "certifiedCount": 12,
   "pipelineSources": [
     "composed",
     "family_resolved",
@@ -194,132 +191,6 @@
       "parity": "OK"
     },
     {
-      "target": "logic.and_gate",
-      "domain": "logic",
-      "sampleId": "logic-and",
-      "validator": "logic.and_gate::validateConfig",
-      "moduleId": "logic.and_gate",
-      "renderer2d": "LogicWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "exploratory",
-      "hasTimeline": false,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [
-        "{\"type\":\"toggle\",\"target\":\"A\"}"
-      ],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "color.rgb_model",
-      "domain": "color",
-      "sampleId": "color-rgb",
-      "validator": "color.rgb_model::validateConfig",
-      "moduleId": "color.rgb_model",
-      "renderer2d": "ColorWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "exploratory",
-      "hasTimeline": false,
-      "hasPredict": false,
-      "hasExplore": true,
-      "actionVocabulary": [],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "binary.decimal_to_binary",
-      "domain": "binary",
-      "sampleId": "binary-13",
-      "validator": "binary.decimal_to_binary::validateConfig",
-      "moduleId": "binary.decimal_to_binary",
-      "renderer2d": "BinaryWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "exploratory",
-      "hasTimeline": false,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [
-        "{\"type\":\"toggle\",\"target\":\"0\"}"
-      ],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "network.packet_routing",
-      "domain": "network",
-      "sampleId": "network-packet",
-      "validator": "network.packet_routing::validateConfig",
-      "moduleId": "network.packet_routing",
-      "renderer2d": "NetworkWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "progressive",
-      "hasTimeline": true,
-      "hasPredict": true,
-      "hasExplore": true,
-      "actionVocabulary": [
-        "{\"type\":\"net_reset\"}"
-      ],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "network.protocol_encapsulation",
-      "domain": "network",
-      "sampleId": "network-encapsulation",
-      "validator": "network.protocol_encapsulation::validateConfig",
-      "moduleId": "network.protocol_encapsulation",
-      "renderer2d": "EncapWorkspace",
-      "visualModes": "2d/3d",
-      "interactionMode": "progressive",
-      "hasTimeline": true,
-      "hasPredict": true,
-      "hasExplore": false,
-      "actionVocabulary": [],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "web.style_model",
-      "domain": "web",
-      "sampleId": "web-style-basic",
-      "validator": "web.style_model::validateConfig",
-      "moduleId": "web.style_model",
-      "renderer2d": "WebWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "exploratory",
-      "hasTimeline": false,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [
-        "{\"type\":\"toggle\",\"target\":\"reset\"}",
-        "{\"type\":\"set_param\",\"name\":\"fontSize\",\"value\":32}",
-        "{\"type\":\"set_param\",\"name\":\"selected\",\"value\":\"heading\"}",
-        "{\"type\":\"set_param\",\"name\":\"r\",\"value\":255}",
-        "{\"type\":\"set_param\",\"name\":\"g\",\"value\":128}",
-        "{\"type\":\"set_param\",\"name\":\"b\",\"value\":0}",
-        "{\"type\":\"move\",\"target\":\"heading\",\"x\":0,\"y\":1}"
-      ],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "generic.rule_scene",
-      "domain": "generic",
-      "sampleId": "gen-rule-library",
-      "validator": "generic.rule_scene::validateConfig",
-      "moduleId": "generic.rule_scene",
-      "renderer2d": "GenericWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "hybrid",
-      "hasTimeline": true,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
       "target": "algorithm.selection_sort",
       "domain": "algorithm",
       "sampleId": "algo-selection-sort",
@@ -354,56 +225,6 @@
       "parity": "OK"
     },
     {
-      "target": "binary.base_conversion",
-      "domain": "binary",
-      "sampleId": "binary-base-conversion",
-      "validator": "binary.base_conversion::validateConfig",
-      "moduleId": "binary.base_conversion",
-      "renderer2d": "BaseConvWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "hybrid",
-      "hasTimeline": true,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [
-        "{\"type\":\"set_param\",\"name\":\"targetBase\",\"value\":8}"
-      ],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "binary.character_encoding",
-      "domain": "binary",
-      "sampleId": "binary-character-encoding",
-      "validator": "binary.character_encoding::validateConfig",
-      "moduleId": "binary.character_encoding",
-      "renderer2d": "CharEncodingWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "hybrid",
-      "hasTimeline": true,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "logic.boolean_dag",
-      "domain": "logic",
-      "sampleId": "logic-boolean-dag",
-      "validator": "logic.boolean_dag::validateConfig",
-      "moduleId": "logic.boolean_dag",
-      "renderer2d": "BoolDagWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "hybrid",
-      "hasTimeline": true,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
       "target": "network.graph_traversal",
       "domain": "network",
       "sampleId": "network-graph-traversal",
@@ -417,24 +238,6 @@
       "hasExplore": false,
       "actionVocabulary": [
         "{\"type\":\"set_param\",\"name\":\"variant\",\"value\":\"dfs\"}"
-      ],
-      "aiSourcesChecked": 4,
-      "parity": "OK"
-    },
-    {
-      "target": "database.relational_table_query",
-      "domain": "database",
-      "sampleId": "db-table-query",
-      "validator": "database.relational_table_query::validateConfig",
-      "moduleId": "database.relational_table_query",
-      "renderer2d": "TableWorkspace",
-      "visualModes": "2d",
-      "interactionMode": "hybrid",
-      "hasTimeline": true,
-      "hasPredict": false,
-      "hasExplore": false,
-      "actionVocabulary": [
-        "{\"type\":\"set_param\",\"name\":\"sort.direction\",\"value\":\"asc\"}"
       ],
       "aiSourcesChecked": 4,
       "parity": "OK"

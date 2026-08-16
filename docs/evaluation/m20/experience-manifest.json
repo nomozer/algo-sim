@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-16T12:23:46.366Z",
+  "generatedAt": "2026-08-16T12:36:42.319Z",
   "note": "sinh từ registry qua vitest; MÔ TẢ hiện thực, KHÔNG cấp chứng nhận.",
   "interactionCertification": "NO_EVIDENCE (toàn danh mục, đo trình duyệt — W12)",
   "experienceSuitabilityCertification": "NO_EVIDENCE (W12)",
@@ -261,7 +261,7 @@
       "causalFeedback": false,
       "transportNeed": "OPTIONAL_TRACE",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "binary.character_encoding",
@@ -274,7 +274,7 @@
       "causalFeedback": true,
       "transportNeed": "OPTIONAL_TRACE",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "binary.decimal_to_binary",
@@ -287,7 +287,7 @@
       "causalFeedback": true,
       "transportNeed": "RESET_ONLY",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "color.rgb_model",
@@ -300,7 +300,7 @@
       "causalFeedback": true,
       "transportNeed": "RESET_ONLY",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "database.relational_table_query",
@@ -313,7 +313,7 @@
       "causalFeedback": true,
       "transportNeed": "OPTIONAL_TRACE",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "generic.rule_scene",
@@ -326,7 +326,7 @@
       "causalFeedback": true,
       "transportNeed": "OPTIONAL_TRACE",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "logic.and_gate",
@@ -339,7 +339,7 @@
       "causalFeedback": true,
       "transportNeed": "RESET_ONLY",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "logic.boolean_dag",
@@ -352,7 +352,7 @@
       "causalFeedback": true,
       "transportNeed": "OPTIONAL_TRACE",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "network.graph_traversal",
@@ -378,7 +378,7 @@
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
       "correctnessOwner": "module.predict.check (engine tất định)",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "network.protocol_encapsulation",
@@ -391,7 +391,7 @@
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
       "correctnessOwner": "module.predict.check (engine tất định)",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     },
     {
       "id": "tree.traversal",
@@ -417,7 +417,7 @@
       "causalFeedback": true,
       "transportNeed": "RESET_ONLY",
       "correctnessOwner": "—",
-      "hasOfflineSample": true
+      "hasOfflineSample": false
     }
   ]
 }

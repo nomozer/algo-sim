@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-16T12:23:52.296Z",
+  "generatedAt": "2026-08-16T12:36:46.607Z",
   "note": "sinh từ registry qua vitest (KHÔNG cần trình duyệt); dùng kèm commit chứa nó.",
   "gateOwners": {
     "semantic": "backend/app/evaluation/authenticity_audit.py",
@@ -196,7 +196,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -210,7 +210,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -223,7 +223,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -237,7 +237,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -251,7 +251,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -266,7 +266,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -279,7 +279,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -293,7 +293,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -322,7 +322,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -338,7 +338,7 @@
         "2d",
         "3d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     },
     {
@@ -365,7 +365,7 @@
       "visualModes": [
         "2d"
       ],
-      "hasOfflineSample": true,
+      "hasOfflineSample": false,
       "representationVerdict": "CERTIFIED"
     }
   ]

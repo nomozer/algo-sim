@@ -3,7 +3,11 @@ import { mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "n
 import { join } from "node:path";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
-import { publicCatalog } from "../data/offline-catalog";
+/* W5P — dùng CẢ danh mục, không riêng bài được quảng bá: đây là phép phân loại
+   NGỮ NGHĨA của năng lực. Sau khi Thư viện thu về 13 target tiêu điểm,
+   `publicCatalog()` không còn cấu hình cho 11 target kia nên bộ dò mất đầu vào
+   và báo `AFFORDANCE_MISSING` oan — đo sai đại lượng, không phải lỗi sản phẩm. */
+import { offlineCatalog } from "../data/offline-catalog";
 import { provenance } from "../../scripts/evidence.mjs";
 import type { SimulationModule } from "./types";
 
@@ -152,7 +156,7 @@ interface Row {
 function acceptedByModule(m: SimulationModule<unknown, unknown>, candidates: string[]): string[] {
   /* Config lấy từ CHÍNH danh mục mẫu đã validate — không viết fixture tay. Một
      fixture tay là một hợp đồng thứ hai sẽ trôi khỏi sản phẩm. */
-  const entry = publicCatalog().find((e) => e.simId === m.id);
+  const entry = offlineCatalog().find((e) => e.simId === m.id);
   if (!entry) return [];
   const parsed = m.validateConfig((entry.envelope as { config: unknown }).config);
   if (!parsed.ok) return [];
