@@ -1,12 +1,14 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "940b6de9dababf9c",
+  "sourceFingerprint": "52262ba49b25e8e0",
   "dirtyRelevantSources": [
-    "frontend/src/styles/global.css"
+    "frontend/src/components/SimulationControls.tsx",
+    "frontend/src/components/control-layout-w4b3e.test.ts",
+    "frontend/src/simulations/experiment-tool-mode.test.tsx"
   ],
-  "head": "d0c18b19d879c9ae3cb416790e81300d994bd95b",
+  "head": "e4ea299d2e5c73279418b300e358390946e9a249",
   "dirty": true,
-  "generatedAt": "2026-08-16T03:16:19.731Z",
+  "generatedAt": "2026-08-16T03:26:52.996Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

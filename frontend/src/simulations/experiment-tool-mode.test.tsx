@@ -146,10 +146,15 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
        LẪN câu mời-thử. Khoá đúng chỗ đó, không khoá chuỗi hiển thị. */
     expect(controls, "tên khả truy cập không gộp nhãn đầy đủ + câu mời")
       .toContain("const full = [entry.label, entry.hint]");
-    /* W4B-3H: chữ đưa vào `title` nay là `describe` — bằng `full` khi bấm được,
-       bằng lời giải thích khi nút MỜ. Bất biến "cổng tự mô tả" giữ nguyên. */
     expect(controls, "câu mời không tới được chuột").toContain("title={open ? undefined : describe}");
-    expect(controls, "nút mờ không nói vì sao").toContain("entry.unavailableHint");
+    /* W5G — HỢP ĐỒNG ĐỔI: không còn nút mờ thường trực. Lối vào không dùng được
+       thì VẮNG MẶT, nên `unavailableHint` thôi được đọc và khẳng định cũ ("nút
+       mờ phải nói vì sao") trở thành vô nghĩa — giữ nó lại là giữ một guard chỉ
+       còn quét một chuỗi trong chú thích. */
+    expect(controls, "lối vào không dùng được vẫn còn được dựng")
+      .toContain("if (entry.available === false && !open) return null;");
+    expect(controls, "còn khoá nút phụ bằng `disabled` ⇒ nút mờ quay lại")
+      .not.toContain("disabled={disabled}");
     expect(controls, "câu mời không tới được công nghệ hỗ trợ")
       .toContain("aria-label={open ? undefined : describe}");
     for (const id of GATED) {

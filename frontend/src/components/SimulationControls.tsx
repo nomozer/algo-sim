@@ -33,30 +33,47 @@ function SecondaryEntry({
   onToggle: () => void;
   closeFallback: string;
 }) {
-  /* Bước này không dùng được ⇒ MỜ, không biến mất: nút nhảy vào/ra khỏi dải
-     điều khiển mỗi lần bấm Tiến còn khó dùng hơn nút mờ (xem `PresentationEntry`).
-     Đang MỞ thì không bao giờ khoá — nếu không học sinh mắc kẹt trong chế độ
-     không có đường ra. */
-  const disabled = entry.available === false && !open;
+  /* W5G — KHÔNG CÒN NÚT MỜ THƯỜNG TRỰC.
+   *
+   * Luật cũ: lối vào không dùng được thì render MỜ chứ không biến mất, để khay
+   * khỏi nhấp nháy khi đi từng bước. Cái giá lớn hơn cái lợi: ở `binary_search`,
+   * phần lớn trong 13 bước thuật toán không phải quyết định gì, nên "Thử thách"
+   * ngồi mờ gần như suốt — một nút vĩnh viễn không bấm được, đặt NGANG HÀNG với
+   * công cụ chính, không dạy gì cả.
+   *
+   * Nó cũng chọi với luận điểm: đây là hệ MÔ PHỎNG TƯƠNG TÁC, vòng lặp chính
+   * phải là thao tác → hệ quả tất định. Để một lối vào chấm điểm đứng ngang hàng
+   * thường trực chính là thứ W12 đo được (52/92 dòng đọc ra "một bài kiểm tra
+   * chứ không phải một công cụ"). Phase B mới gỡ CÁI CHỐT, chưa gỡ THỨ BẬC.
+   *
+   * Nay: không có gì để cam kết ⇒ VẮNG MẶT. Có ⇒ HIỆN RA — và chính việc nút
+   * xuất hiện trở thành tín hiệu dạy học ("bước này thuật toán phải quyết định
+   * gì đó") thay vì là đồ đạc.
+   *
+   * ĐÁNH ĐỔI KHAI TƯỜNG MINH: khay có thể nhấp nháy khi đi từng bước. Chấp nhận
+   * — một nút xuất hiện ĐÚNG LÚC mang nhiều thông tin hơn một nút luôn ở đó và
+   * luôn mờ. Năng lực `predict`/`predict.check` KHÔNG đổi một dòng: trục "học
+   * sinh được sai, chỉ engine phán sai" (`CORRECTNESS.md`) còn nguyên. Đây là
+   * dời TRÌNH BÀY, không dời SỰ THẬT.
+   *
+   * `!open` là điều kiện bắt buộc: đang MỞ thì không bao giờ gỡ, nếu không học
+   * sinh mắc kẹt trong một chế độ không có đường ra. */
+  if (entry.available === false && !open) return null;
   /* W4B-3B — CHỮ ĐẦY ĐỦ KHÔNG MẤT, CHỈ THÔI CHIẾM CHỖ.
      Nhãn hiển thị rút gọn ("Khám phá"/"Thử thách") để dải điều khiển không
      xuống dòng ở 1366; tên khả truy cập vẫn là câu đầy đủ + câu mời-thử, nên
      bất biến "cổng tự mô tả" (PhET/CLT) giữ nguyên với cả chuột lẫn công nghệ
      hỗ trợ. Khung giải thích đầy đủ hiện ra KHI MỞ chế độ. */
   const full = [entry.label, entry.hint].filter(Boolean).join(" — ");
-  /* W4B-3H — NÚT MỜ PHẢI NÓI VÌ SAO.
-     Trước wave này nút mờ vẫn mang đúng câu mời như lúc bấm được, nên người học
-     đọc ra "hỏng" chứ không đọc ra "chưa tới lúc", và không biết làm gì để nó
-     sáng lên. Nay khi mờ thì chính câu giải thích là tên khả truy cập. */
-  const why =
-    entry.unavailableHint ?? "Bước này chưa có gì để làm — đi tới bước khác rồi thử lại.";
-  const describe = disabled ? `${entry.label} — ${why}` : full;
+  /* W5G — `unavailableHint` KHÔNG còn được đọc ở đây, và đó là hệ quả đúng: lối
+     vào không dùng được thì VẮNG MẶT, nên không còn nút mờ nào để giải thích.
+     Thông tin "chưa tới lúc" nay do chính sự vắng mặt mang. */
+  const describe = full;
   return (
     <button
       type="button"
       className={`sim-secondary-action${open ? " is-active" : ""}`}
       onClick={onToggle}
-      disabled={disabled}
       aria-expanded={open}
       title={open ? undefined : describe}
       aria-label={open ? undefined : describe}
