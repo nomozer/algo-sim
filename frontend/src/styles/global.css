@@ -2404,9 +2404,22 @@ html {
  * nên một sân khấu SVG rộng sẽ đẩy lưới tràn ra thay vì co lại — đúng lớp lỗi
  * đã ship ở `.dag-stage` (`ARCHITECTURE_MAP §8`).
  */
-.workspace-body { display: grid; grid-template-columns: minmax(0, 1fr); }
+/* ⚠ `auto`, KHÔNG phải `1fr`. Thẻ là `width: fit-content`, nên không có "không
+   gian tự do" để `1fr` chia — cột một co về min-content và sân khấu bị bóp nhỏ
+   hơn cả lúc chưa có cột hai (đo được: cây còn ~300px trong thẻ 751px). `auto`
+   lấy MAX-CONTENT, mà max-content của sân khấu chính là trần ngữ nghĩa nó tự
+   khai (`maxWidth: w`) — nên cây giãn đúng tới trần rồi dừng. */
+.workspace-body { display: grid; grid-template-columns: minmax(0, auto); }
 .workspace-body.has-explain {
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  /* Sàn cột một lấy từ `--stage-min` — token mà `SimulationWorkspace` đã suy từ
+     `rendererFitOf().semanticMaxWidth`. Bắt buộc phải có sàn TƯỜNG MINH: sân
+     khấu đặt `width: 100%`, mà bề rộng phần trăm KHÔNG đóng góp gì vào
+     max-content, nên cả `1fr` lẫn `auto` đều để cột co về min-content và cây bị
+     bóp còn ~300px trong thẻ 751px (đã đo, đã thấy trên ảnh). */
+  /* Sàn là PIXEL thuần, không `min(100%, …)`: thẻ `fit-content` lấy bề rộng TỪ
+     lưới này, nên `100%` ở đây quy chiếu ngược vào thứ chưa biết — vòng lặp đó
+     làm cột hai bị ép về 0 và biến mất (đã đo). */
+  grid-template-columns: minmax(var(--stage-min), auto) minmax(260px, 340px);
   gap: var(--sp-lg);
   align-items: start;
 }
