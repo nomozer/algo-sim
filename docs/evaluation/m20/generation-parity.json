@@ -1,12 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "fad234fc3e77e336",
+  "sourceFingerprint": "610011097d6e8564",
   "dirtyRelevantSources": [
-    "frontend/src/components/ArrayView.tsx"
+    "frontend/src/styles/global.css"
   ],
-  "head": "064e35614164010bfb0cf1cceb21108b7a618a65",
+  "head": "c681c2ac1447e7a91a05d6deae6d8343c4cf276c",
   "dirty": true,
-  "generatedAt": "2026-08-16T03:52:39.886Z",
+  "generatedAt": "2026-08-16T03:58:11.658Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

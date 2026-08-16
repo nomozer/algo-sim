@@ -2403,8 +2403,28 @@ html {
   font-size: 14px;
 }
 
+/* ── W5I — HỆ QUẢ LÀ LỜI GIẢI THÍCH, KHÔNG PHẢI MỘT Ô NHẬP ────────────────
+ *
+ * Bản trước để `is-consequence` kế thừa hộp viền kín của `.decision-strip` rồi
+ * tô thêm `border-left-color` — một vệt xanh 1px trên viền xám kín. Nó chọi
+ * thẳng với luật ghi ngay trên chính `.decision-strip` ("viền kín rồi thì không
+ * nẹp màu thêm"), và ở kích thước ấy màu không đọc ra tín hiệu, chỉ đọc ra lỗi.
+ *
+ * Repo đã có khuôn sẵn cho đúng loại dải này — `.narration-bar` /
+ * `.error-banner` dùng VẠCH TRÁI trên nền êm, không dùng hộp. Hệ quả của một
+ * bước là văn xuôi giải thích, cùng họ với chúng, nên dùng lại đúng khuôn đó
+ * thay vì đẻ hình thức thứ ba.
+ *
+ * Vạch 3px mới đủ mang màu; nền `canvas-soft` tách khối khỏi sân khấu mà không
+ * cần viền; chữ lên `--ink-secondary` vì đây là câu để ĐỌC, không phải nhãn phụ. */
 .decision-strip.is-consequence {
-  border-left-color: var(--accent-green);
+  border: none;
+  border-left: 3px solid var(--accent-green);
+  border-radius: 0 var(--rounded-md) var(--rounded-md) 0;
+  background: var(--canvas-soft);
+  color: var(--ink-secondary);
+  padding: var(--sp-sm) var(--sp-md);
+  line-height: 1.5;
 }
 
 .decision-expression {
