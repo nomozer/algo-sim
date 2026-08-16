@@ -15,8 +15,8 @@
 
 ## 1. Sản phẩm là gì
 
-**Tên đề tài:** *Hệ thống mô phỏng tương tác 2D/3D kết hợp LLM phân tích bài
-toán bằng ngôn ngữ tự nhiên hỗ trợ dạy học môn Tin học THPT.*
+**Tên đề tài:** *Hệ mô phỏng thuật toán tương tác kết hợp LLM phân tích bài
+toán có lời văn, hỗ trợ dạy học môn Tin học THPT.*
 
 Học sinh **dán một đề bài bằng tiếng Việt**. LLM (Gemini) **chỉ đọc hiểu đề và
 điền một bản đặc tả đã kiểm định**. Sau đó **một engine tất định chạy trên

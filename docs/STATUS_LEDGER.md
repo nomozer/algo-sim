@@ -129,6 +129,45 @@
 
 ## 0. KHOÁ PHẠM VI ĐỀ TÀI — ràng buộc cho mọi wave còn lại
 
+### TÊN ĐỀ TÀI CANONICAL (chốt 2026-08-16)
+
+> **Hệ mô phỏng thuật toán tương tác kết hợp LLM phân tích bài toán có lời văn,
+> hỗ trợ dạy học môn Tin học THPT**
+
+Đây là tên GỐC, tra được ở `docs/RULES.md` v0.3 và bị xoá ở commit `1f95e92`
+(*"M9-UX1 … vệ sinh RULES"*). Nó **không bị thay bằng một quyết định phạm vi** —
+nó rụng kèm một lượt dọn tài liệu, rồi bản rộng ở README (`0621910`) sống một
+mình. Phạm vi nới ra do TRÔI. Khôi phục là trả về chỗ cũ, không phải đổi hướng.
+
+Vì sao tên hẹp đúng hơn tên rộng: hệ **không sinh** mô phỏng mới (R0 — điều đề
+tài cố ý từ chối), nên mỗi miền đều dựng tay. Bề rộng vì thế đo LƯỢNG CODE đã
+gõ, không đo cái kiến trúc làm được. Chiều sâu mới đo được kiến trúc: 14 target
+thuộc trọng tâm dùng CHUNG một `interaction-policy`, một chủ sở hữu vị từ, một
+engine điểm-quyết-định, một khe thuyết minh.
+
+**BA TẦNG PHẠM VI — mọi tài liệu và mọi tuyên bố phải theo:**
+
+| Tầng | Nội dung | Vai trò |
+|---|---|---|
+| **Trọng tâm (14)** | quét dãy một lượt (6) · sắp xếp so sánh (3) · loại nửa khoảng (1) · luồng điều khiển hữu hạn (1) · duyệt cây (1) · duyệt & định tuyến đồ thị (2) | chương chính · demo · đánh giá |
+| **Bằng chứng mở rộng (10)** | biểu diễn theo vị trí (4, gồm `color.rgb_model`) · tổ hợp logic (3) · PDU theo tầng (1) · truy vấn bảng (1) · trình bày web (1) | **một mục ngắn**, KHÔNG phải một chương |
+| **Ngoài phạm vi** | LMS · IDE tự do · sinh hình không ràng buộc · chứng minh cải thiện kết quả học tập | `POST_THESIS_BACKLOG.md` |
+
+Ranh giới trọng tâm KHÔNG do ai vẽ cho khớp tên: cả 14 target đều neo vào
+**T10 CĐ5 / T11CS B17–B22** (cụm thuật toán), còn 10 target kia neo vào cụm biểu
+diễn dữ liệu T10 B3–B9 và các chuyên đề T11/T12. Ranh giới rơi ra từ chính bảng
+`curriculum_anchor`.
+
+Tuyên bố được phép cho tầng giữa, và chỉ tuyên bố này: *"thêm một miền tốn một
+`SimSpec` + một dòng đăng ký, không sửa dòng pipeline nào"* — số đo là W5A
+(`color.rgb_model`): 23 sổ đăng ký đòi khai báo, 0 dòng pipeline đổi.
+
+⚠️ `algorithm.bounded_control_flow` neo **T10 B16–B19** (rẽ nhánh, lặp), tức
+NGAY TRƯỚC cụm thuật toán. Đang xếp vào trọng tâm và gọi là *"thực thi thuật
+toán ở mức câu lệnh"*; nếu hội đồng vặn thì đẩy ra tầng giữa, trọng tâm còn 13
+và ranh giới neo sạch tuyệt đối.
+
+
 **Lõi đề tài**: yêu cầu học bằng ngôn ngữ tự nhiên → LLM đề xuất *spec ứng viên
 có ràng buộc* → validate năng lực/phạm vi tất định → engine tất định → biểu diễn
 2D/3D tương tác khi có vai trò sư phạm → học sinh thao tác/quan sát cơ chế →

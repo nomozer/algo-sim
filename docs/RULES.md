@@ -76,8 +76,13 @@ Post-flight phải ghi: **reused modules · created modules · duplicate check r
 
 Tên đề tài (giữ nguyên chính xác):
 
-> **Hệ thống mô phỏng tương tác 2D/3D kết hợp LLM phân tích bài toán bằng ngôn
-> ngữ tự nhiên hỗ trợ dạy học môn Tin học THPT**
+> **Hệ mô phỏng thuật toán tương tác kết hợp LLM phân tích bài toán có lời
+> văn, hỗ trợ dạy học môn Tin học THPT**
+>
+> ⚠️ ĐÂY LÀ TÊN CANONICAL. Bản rộng cũ ("mô phỏng tương tác 2D/3D … ngôn ngữ
+> tự nhiên") đã bị thay 2026-08-16: nó KHÔNG phải một quyết định phạm vi mà là
+> hệ quả của việc tên gốc rụng kèm commit `1f95e92` ("vệ sinh RULES"), rồi bản
+> rộng ở README sống một mình. Xem `STATUS_LEDGER §0`.
 
 ### 3a. Phạm vi cốt lõi
 

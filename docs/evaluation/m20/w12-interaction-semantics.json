@@ -1,12 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "bdd392cd9fd2d460",
-  "dirtyRelevantSources": [
-    "frontend/src/styles/global.css"
-  ],
-  "head": "e464645ad25f1d105f539ec1cf80e1382609d2dc",
-  "dirty": true,
-  "generatedAt": "2026-08-16T05:10:25.856Z",
+  "sourceFingerprint": "70f1aec84ce6d0a7",
+  "dirtyRelevantSources": [],
+  "head": "c9c476bbfec0b68ead61bc3a09e9f0edd261c022",
+  "dirty": false,
+  "generatedAt": "2026-08-16T11:00:10.250Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
