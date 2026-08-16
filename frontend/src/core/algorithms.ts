@@ -383,11 +383,24 @@ function runBubbleSort(a: AnalysisOk, whatIf?: WhatIfSwap): Trace {
         3,
       );
       if (wrong) {
+        /* W5T — THUYẾT MINH PHẢI NÓI VÌ SAO, KHÔNG CHỈ NÓI KẾT QUẢ.
+           Bản cũ ("Đổi chỗ: dãy bây giờ có X đứng trước Y") mô tả TRẠNG THÁI
+           SAU, nên học sinh đọc xong vẫn không biết vì sao lại đổi. Bước so
+           sánh ngay trước đó ĐẶT CÂU HỎI ("có cần đổi chỗ không?") mà bước này
+           không trả lời nó.
+           Nay câu đọc thành ba mảnh liền mạch: đang xét gì · vì sao · dẫn tới
+           hành động nào — đúng chuỗi nhân quả mà `nghẽn 2` (bất biến & tiền
+           điều kiện) cần. Giá trị lấy TRƯỚC khi `swap` chạy, nếu không nó sẽ nói
+           ngược. */
+        const left = b.at(j);
+        const right = b.at(j + 1);
+        const rel = order === "desc" ? "<" : ">";
         b.swap(j, j + 1);
         swaps++;
         b.step(
           [{ type: "swap", i: j, j: j + 1 }],
-          `Đổi chỗ: dãy bây giờ có ${fmt(b.at(j))} đứng trước ${fmt(b.at(j + 1))}.`,
+          `Vì ${fmt(left)} ${rel} ${fmt(right)} nên hai phần tử này sai thứ tự — đổi chỗ. `
+            + `Dãy bây giờ có ${fmt(b.at(j))} đứng trước ${fmt(b.at(j + 1))}.`,
           false,
           4,
         );
