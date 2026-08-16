@@ -189,6 +189,35 @@ Loãng đề tài là do KỂ CHUYỆN dàn trải, không phải do code tồn 
 `network.packet_routing` xuống tầng hai vì định tuyến không nằm gọn trong ba
 nghẽn trên; nhét vào nghẽn 3 là làm hỏng sự sạch của bộ ba để lấy một con số.
 
+**VIỆC CÒN LẠI ĐỂ TIÊU ĐIỂM THÀNH THẬT (W5P — chưa làm)**
+
+Quyết định ba tầng hiện MỚI NẰM Ở TÀI LIỆU. Thư viện vẫn bày đủ 11 target tầng
+hai cho học sinh, nên sản phẩm vẫn loãng đúng như trước khi chốt. Cách làm đã
+thử và ĐÃ BIẾT chính xác cần gì:
+
+Khai MỘT danh sách `FOCUS_SIM_IDS` (13 target) ở `data/offline-catalog.ts`, rồi
+`publicCatalog()` lọc theo `visibility === "public" && FOCUS_SIM_IDS.includes(...)`.
+KHÔNG rải 13 cờ `visibility` khắp `sim-samples.ts`: tiering là quyết định SẢN
+PHẨM đổi theo phạm vi đề tài, rải thành cờ thì mỗi lần đổi phải sửa mười mấy chỗ
+và không ai đọc ra ý định.
+
+Bốn guard sẽ đỏ, và cả bốn đều mã hoá GIẢ ĐỊNH CŨ (mọi target đăng ký đều bày ở
+Thư viện) — phải migrate chứ không vá:
+
+1. `catalog.test.tsx::starterEntries` — `STARTER_SIM_IDS` đang chứa ba target
+   tầng hai (`binary.decimal_to_binary`, `network.packet_routing`,
+   `logic.and_gate`); thay bằng target tiêu điểm.
+2. `capability-descriptors.test.ts::library_discoverable ⟹ có mẫu công khai` —
+   BACKEND còn khai `ReachabilityLevel.LIBRARY_DISCOVERABLE` cho 11 target tầng
+   hai. Phải bỏ mức đó trong `catalog.py` rồi chạy
+   `scripts/generate_capability_descriptors.py`. GIỮ `AI_REACHABLE_PUBLIC`:
+   học sinh gõ đề màu RGB thì hệ vẫn phải dựng được — từ chối lúc ấy mới là sai.
+3. `ux-shell.test.tsx` ×3 — đếm thẻ Trang chủ/Thư viện.
+4. `interaction-semantics.test.ts` — quét qua danh mục công khai.
+
+⚠️ Đây là một cuộc DI TRÚ, không phải một dòng sửa: nó chạm backend catalog +
+artifact sinh lại + 4 file test. Làm trọn một lượt, đừng bỏ dở.
+
 **NGOÀI PHẠM VI:** LMS · IDE tự do · sinh hình không ràng buộc · chứng minh cải
 thiện kết quả học tập → `POST_THESIS_BACKLOG.md`.
 
