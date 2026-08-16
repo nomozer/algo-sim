@@ -1,12 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "1abc89cf723c27fb",
-  "dirtyRelevantSources": [
-    "frontend/src/core/predicate-family-w5c.test.ts"
-  ],
-  "head": "0c3e396b6864bbd681c1a58eef067fdd58f9f3ad",
-  "dirty": true,
-  "generatedAt": "2026-08-16T02:13:25.365Z",
+  "sourceFingerprint": "b9371b51b3790570",
+  "dirtyRelevantSources": [],
+  "head": "b6ceb114c86b8ceff83802ec7dc0a55e55005bfd",
+  "dirty": false,
+  "generatedAt": "2026-08-16T02:57:01.991Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

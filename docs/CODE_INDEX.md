@@ -622,6 +622,26 @@ thắng tuyệt đối (kéo ở `sum_if`/`count_if` là trang trí).
 ⚠️ Bật affordance KHÔNG nâng hạng ngữ nghĩa: `whatif_swap` vẫn là
 INPUT_MANIPULATION (W12 §8) — phân loại thuộc `interaction-semantics.test.ts`.
 
+### `frontend/src/simulations/explore-vs-trace-w5e.test.ts` (W5E) · offline
+Khoá luật Phase E: **KHÁM PHÁ = trạng thái hiện tại đầy đủ · TRACE = tiêu điểm
+giải thích**. Con trỏ được chọn *kể tới đâu*, KHÔNG được biến một giá trị engine
+đã tính thành "chưa biết" sau khi học sinh vừa hỏi.
+⚠️ Phép đo là đối chiếu KHAI BÁO ↔ HÀNH VI: target khai `OPTIONAL_TRACE` tức hứa
+"kết quả đọc được ngay" ⇒ sau một thao tác, thuyết minh không được còn nói "chưa
+biết". KHÔNG quét bằng "con trỏ có về 0 không" — bản đầu quét thế và bắt NHẦM 5
+target (`sum_if`/`count_if`/`base_conversion`/`character_encoding`/
+`relational_table_query`) vốn đọc được kết quả ngay ở bước 0.
+⚠️ `registerAllSimulations()` gọi ở TẦNG MODULE, không ở `beforeEach`:
+`it.each(targets())` dựng lúc THU THẬP nên registry rỗng lúc ấy sinh ĐÚNG 0 ca mà
+vẫn báo xanh (đã bị đúng một lần trong chính wave này).
+⚠️ `NO_SHELL_NARRATION` = target không dùng khe thuyết minh shell nên phép đo đọc
+không được; chỉ được NGẮN ĐI.
+⚠️ **CÒN MỞ:** `logic.boolean_dag` là lỗi Phase E đã xác nhận (`apply` →
+`initFromValues` → `cursor: 0` ⇒ bật công tắc là cả mạch về `?`) nhưng CHƯA sửa —
+bản vá con-trỏ-nhảy-cuối làm đỏ `dag.test.tsx`, và test đó khoá chủ ý sư phạm hé
+lộ dần (`DESIGN_BRIEF §3.3`) chứ không phải hợp đồng cũ. Cần quyết định: bảng
+chân trị mở theo điều kiện nào khi `cursor` không còn là tín hiệu duy nhất.
+
 ### `frontend/src/core/predicate.ts` (W5C) · Change impact: offline
 CHỦ SỞ HỮU DUY NHẤT của "sáu phép so sánh `> >= < <= == !=` nghĩa là gì".
 `compareNumbers(x, op, y)` + `includesBoundary(op)` — hàm THUẦN trên hai SỐ.
