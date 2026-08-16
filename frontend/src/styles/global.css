@@ -2300,7 +2300,28 @@ html {
    * ⚠️ Cần soát lại bằng `npm run audit:layout` + `audit-composition.mjs`. */
   width: 100%;
   min-width: min(100%, 560px);
-  max-width: 100%;
+  /* ── W5H/2 — THẺ KHÔNG ĐƯỢC RỘNG HƠN MỨC SÂN KHẤU DÙNG ĐƯỢC ───────────
+   *
+   * Phá vòng lặp xong thì lộ ra chuyện thứ hai: `arrayChartLayout` kẹp bề rộng
+   * cột ở `MAX_COL_W`, nên khi cột CHẠM TRẦN, biểu đồ dừng lại còn thẻ vẫn kéo
+   * tới hết cột chứa → thừa một khoảng chết bên phải, hình đọc ra lệch trái.
+   *
+   * Ba lối, hai lối sai:
+   *   căn giữa biểu đồ  → chú giải và thuyết minh vẫn căn trái ⇒ HAI hệ căn lề,
+   *                       đúng lỗi M19 vừa dẹp (rail lệch 722px);
+   *   nới `MAX_COL_W`   → cột phình to lố, và cái trần ấy có lý do sư phạm
+   *                       (hai cột kề nhau phải bắt được trong một lần nhìn);
+   *   ĐÚNG: thẻ dừng ở đúng chỗ sân khấu dùng hết.
+   *
+   * `--stage-max` do `SimulationWorkspace` khai, lấy từ `rendererFitOf().
+   * semanticMaxWidth` — hợp đồng ĐÃ CÓ SẴN, không đẻ nguồn sự thật thứ hai và
+   * không có pixel cứng nào theo target. Cộng thêm padding thẻ hai bên và
+   * `SAFE_PAD` của chính biểu đồ. Target không khai trần ⇒ `100%` như cũ. */
+  /* Mặc định khai NGAY ĐÂY để `tokens.test.ts` thấy được token (guard bắt
+     `var()` trỏ vào hư vô — lỗi im lặng vì trình duyệt vứt cả dòng). Style
+     inline của `SimulationWorkspace` đè lên khi target có khai trần. */
+  --stage-max: 100%;
+  max-width: min(100%, var(--stage-max));
 }
 /* MỘT RAIL: mọi con giãn đúng bằng thẻ, không con nào tự căn giữa. */
 .workspace-card > * { width: 100%; }

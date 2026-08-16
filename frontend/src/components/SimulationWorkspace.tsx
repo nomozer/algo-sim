@@ -1,4 +1,4 @@
-import { Suspense, type ComponentType } from "react";
+import { Suspense, type ComponentType, type CSSProperties } from "react";
 import { getSimulation } from "../simulations/registry";
 import {
   effectiveVisualMode,
@@ -13,6 +13,7 @@ import type {
   VisualMode,
   WorkspaceProps,
 } from "../simulations/types";
+import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
 import { PredictionBar } from "./PredictionBar";
 
@@ -327,8 +328,18 @@ export function SimulationWorkspace() {
     return VI[domain] ?? domain.toUpperCase();
   }
 
+  /* W5H/2 — TRẦN BỀ RỘNG THẺ = trần ngữ nghĩa của sân khấu.
+     `semanticMaxWidth` là bề rộng biểu đồ khi cột đã chạm trần mật độ; rộng hơn
+     thế thì phần dư là khoảng chết, không phải chỗ dùng được. Cộng padding thẻ
+     hai bên + `SAFE_PAD` của biểu đồ. Target không khai trần ⇒ không đặt biến,
+     CSS rơi về `100%`. */
+  const stageMax = rendererFitOf(mod.id, active.state, mode).semanticMaxWidth;
+  const cardStyle = stageMax
+    ? ({ "--stage-max": `calc(${stageMax}px + 2 * var(--sp-lg) + 24px)` } as CSSProperties)
+    : undefined;
+
   return (
-    <section className="card card-elevated workspace-card">
+    <section className="card card-elevated workspace-card" style={cardStyle}>
       <div className="workspace-header">
         <span className="eyebrow">{domainBadge(mod.domain)}</span>
         <h2 className="workspace-title">{active.envelope.title}</h2>
