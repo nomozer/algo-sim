@@ -1,6 +1,19 @@
 {
   "description": "Cau hinh DUNG CHUNG cua du an (commit vao git). Cau hinh CA NHAN (permissions.allow, additionalDirectories, duong dan tuyet doi cua may) thuoc .claude/settings.local.json va KHONG duoc commit.",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/code-index-guard.mjs\"",
+            "timeout": 15,
+            "statusMessage": "CODE_INDEX guard: tra chu so huu + ban kinh anh huong"
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [

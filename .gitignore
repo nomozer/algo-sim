@@ -35,4 +35,8 @@ CLAUDE.md
 # loai NOI DUNG (/.claude/*) roi mo lai dung mot file.
 /.claude/*
 !/.claude/settings.json
+# `settings.json` TRO SANG script hook — de no bi loai thi ban clone moi se goi
+# mot file khong ton tai va hook bao loi o MOI lan sua file. Mo lai ca thu muc.
+!/.claude/hooks/
+!/.claude/hooks/**
 
