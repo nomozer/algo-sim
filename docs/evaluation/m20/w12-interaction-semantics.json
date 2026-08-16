@@ -1,12 +1,13 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "3a7dde00f9355de0",
+  "sourceFingerprint": "b3205c83ae7bdb1b",
   "dirtyRelevantSources": [
-    "frontend/src/core/algorithms.ts"
+    "frontend/src/components/ProblemInput.tsx",
+    "frontend/src/styles/global.css"
   ],
-  "head": "6b52bf4576ccfe44036def28f3e09cfdd515d752",
+  "head": "7463d1374e65c33207ebe5212c2a1079c63fc6a6",
   "dirty": true,
-  "generatedAt": "2026-08-16T14:18:32.809Z",
+  "generatedAt": "2026-08-16T14:21:40.770Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

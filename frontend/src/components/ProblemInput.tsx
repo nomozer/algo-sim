@@ -47,9 +47,17 @@ export function ProblemInput() {
   const canAnalyze = !analyzing && (file !== null || problemText.trim().length >= 10);
 
   // Pill cao dần theo nội dung (tới ~6 dòng). DOM thuần, không state, không store.
+/** Trần chiều cao ô nhập — MỘT nguồn, dùng cho cả JS lẫn CSS (`--composer-max`).
+ *
+ * W5V — trước đây có HAI trần cho cùng một hành vi: JS kẹp 148px còn CSS kẹp
+ * 200px. Chữ vượt 148 là bị cuộn trong khi hộp vẫn còn chỗ, nên phần đầu đề bài
+ * khuất đi mà nhìn thì tưởng ô chưa đầy. Hai con số cho một luật thì luôn có một
+ * con số sai, và ở đây nó sai theo hướng giấu mất chữ người dùng vừa gõ. */
+const COMPOSER_MAX_H = 320;
+
   function autoGrow(el: HTMLTextAreaElement) {
     el.style.height = "auto";
-    el.style.height = `${Math.min(el.scrollHeight, 148)}px`;
+    el.style.height = `${Math.min(el.scrollHeight, COMPOSER_MAX_H)}px`;
   }
 
   function onChangeText(e: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -138,7 +146,7 @@ export function ProblemInput() {
         <textarea
           ref={textRef}
           className="composer-text"
-          rows={2}
+          rows={1}
           placeholder="Nhập đề bài Tin học của em, hoặc tải lên tệp đề…"
           value={problemText}
           onChange={onChangeText}

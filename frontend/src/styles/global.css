@@ -280,8 +280,12 @@ html {
   line-height: 1.5;
   padding: 4px 4px 0;
   resize: none;
-  min-height: 46px;
-  max-height: 200px;
+  /* W5V — ô BẮT ĐẦU GỌN rồi nở theo chữ, thay vì mở sẵn một hộp rỗng cao 46px.
+     Trần phải KHỚP `COMPOSER_MAX_H` trong `ProblemInput.tsx`: trước đây JS kẹp
+     148 còn đây kẹp 200, nên chữ vượt 148 bị cuộn trong khi hộp vẫn còn chỗ —
+     phần đầu đề bài khuất mà nhìn tưởng ô chưa đầy. */
+  min-height: 28px;
+  max-height: 320px;
   overflow-y: auto;
 }
 
@@ -799,7 +803,11 @@ html {
 .decision-strip .icon,
 .branch-banner .icon {
   flex: 0 0 auto;
-  margin-top: 2px;
+  /* W5U — 2px → 4px. Icon 14px phải rơi vào GIỮA DÒNG CHỮ ĐẦU, mà chiều cao
+     dòng ở các dải này là ~21px (14px × 1.5, và W5I nâng `line-height` của dải
+     hệ quả lên đúng 1.5) ⇒ lệch tâm = (21−14)/2 ≈ 3,5px, làm tròn 4. Giá trị 2
+     đúng cho `line-height` cũ ~17px và đã trôi khi dải đổi kiểu chữ. */
+  margin-top: 4px;
 }
 
 .notes {
