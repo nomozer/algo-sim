@@ -848,11 +848,27 @@ html {
   justify-content: flex-start;
 }
 
-/* Cụm phụ luôn chiếm trọn một hàng riêng và canh cùng mép trái với hàng chính,
-   thay vì "rớt xuống chỗ nào còn trống". */
+/* W5F — CỤM PHỤ ĐI CÙNG HÀNG KHI CÒN CHỖ, XUỐNG HÀNG KHI HẾT.
+ *
+ * Bản trước ép `flex: 1 0 100%` — luôn chiếm trọn một hàng riêng. Ý định đúng
+ * (đừng để nó "rớt xuống chỗ nào còn trống") nhưng cách làm quá tay: ở màn
+ * rộng, hàng chính còn thừa hàng trăm px mà tốc độ/Khám phá/Thử thách vẫn bị
+ * đẩy xuống dưới, nên khay đọc thành hai tầng lệch nhau.
+ *
+ * `flex: 0 1 auto` + `margin-left: auto` cho đúng hành vi mong muốn: cùng hàng
+ * và dồn về mép phải khi đủ chỗ; `flex-wrap` của hàng cha tự cho nó xuống hàng
+ * khi hết chỗ (1366×768 với hai nhãn phụ — đúng ca W4B-3B đã đo). Không có
+ * breakpoint nào phải nhớ.
+ *
+ * `margin-left: auto` KHÔNG mâu thuẫn với ghi chú "không có lệnh đẩy nào" bên
+ * dưới: ghi chú đó nói về bản cũ đặt lệnh đẩy khi cụm phụ ở HÀNG RIÊNG, nơi
+ * không có gì hấp thụ nên đẻ khoảng hở 1390px. Ở cùng hàng thì thanh tua
+ * (`flex: 1`) đã ăn hết chỗ thừa trước, nên đẩy chỉ còn tác dụng khi KHÔNG có
+ * thanh tua — đúng lúc cần. */
 .player-controls .control-zone-aux {
-  flex: 1 0 100%;
-  justify-content: flex-start;
+  flex: 0 1 auto;
+  margin-left: auto;
+  justify-content: flex-end;
   gap: var(--sp-md);
 }
 
@@ -2300,6 +2316,28 @@ html {
 .workspace-title,
 .narration-bar,
 .workspace-header .hint { max-width: 68ch; }
+
+/* W5F — BADGE VÀ TIÊU ĐỀ Ở CÙNG MỘT DÒNG, BẤT KỂ THẺ RỘNG BAO NHIÊU.
+ *
+ * Triệu chứng: cùng một bài, cùng một tiêu đề, hiện HAI kiểu — thẻ hẹp thì
+ * badge trơ một mình ở dòng đầu còn tiêu đề rớt xuống dưới; thẻ rộng (vd khi có
+ * dải "Nhánh thử nghiệm" kéo thẻ ra) thì hai thứ nằm cùng dòng.
+ *
+ * Nguyên nhân: tiêu đề là FLEX ITEM với base = max-content, nên hễ
+ * `badge + tiêu đề` không vừa thì CẢ item xuống dòng thay vì chữ tự ngắt trong
+ * chỗ của nó. Tức bề rộng của thẻ đang quyết định BỐ CỤC CHỮ.
+ *
+ * `flex: 1 1 0` + `min-width: 0` cho tiêu đề nhận phần còn lại và ngắt chữ bên
+ * TRONG dòng của nó.
+ *
+ * ⚠️ KHÔNG dùng `width: 0` ở đây — đã cháy một lần: `width: 0` thẳng lên
+ * `.workspace-title` làm chính nó vỡ dòng và header cao 43px → 103px
+ * (`web.style_model`, `certify-viewports-w12` bắt được). `flex-basis: 0` khác
+ * `width: 0` ở chỗ nó chỉ đặt cơ sở phân phối, không ép bề rộng dùng. */
+.workspace-title {
+  flex: 1 1 0;
+  min-width: 0;
+}
 
 /* POLISH-2 — PHÂN CẤP: tiêu đề đứng riêng một dòng, mô tả ngắn xuống dòng dưới
    và nhẹ hơn hẳn, badge miền nhỏ để không cạnh tranh với tiêu đề. */
