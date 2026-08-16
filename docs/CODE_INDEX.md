@@ -622,6 +622,24 @@ thắng tuyệt đối (kéo ở `sum_if`/`count_if` là trang trí).
 ⚠️ Bật affordance KHÔNG nâng hạng ngữ nghĩa: `whatif_swap` vẫn là
 INPUT_MANIPULATION (W12 §8) — phân loại thuộc `interaction-semantics.test.ts`.
 
+### `frontend/src/core/predicate.ts` (W5C) · Change impact: offline
+CHỦ SỞ HỮU DUY NHẤT của "sáu phép so sánh `> >= < <= == !=` nghĩa là gì".
+`compareNumbers(x, op, y)` + `includesBoundary(op)` — hàm THUẦN trên hai SỐ.
+⚠️ Trước W5C cùng sáu toán tử được cài BA LẦN: `algorithms.ts::testCondition`
+(sum_if/count_if), `scan.ts::opHolds` (algorithm.scan), và nhánh `compare` của
+`program.ts` (bounded_control_flow). Ba bản đồng ý nhau vì MAY, không vì có gì
+bắt chúng thế — và một lần đổi `>=` thành `>` ở một bản chỉ chấm sai đúng những
+học sinh ở NGƯỠNG, tức chỗ bài học nằm ("từ 8,0 trở lên" ≠ "trên 8,0"). Cả ba
+nay uỷ quyền xuống đây.
+⚠️ `switch` cố ý KHÔNG có `default` — vét cạn để tsc đỏ khi thêm toán tử thứ
+bảy. Đó chính là bẫy `program.ts` từng mắc: `default` cũ trả `l >= r`, nên mọi
+op không khớp lặng lẽ thành `>=`. Nay op lạ thì NÉM.
+⚠️ `program.ts` giữ riêng `==`/`!=`: ở đó hai vế có thể là bool/chuỗi, nên đó là
+so sánh đồng nhất chứ không phải so sánh SỐ. Chỉ so sánh THỨ TỰ uỷ quyền xuống.
+Khoá bởi `core/predicate-family-w5c.test.ts`: bảng chân trị 6 op × 3 quan hệ
+VIẾT TAY (sinh từ code sẽ là test tự xác nhận) + đối chiếu đáp số engine + guard
+chống mọc bản cài thứ tư.
+
 ### `frontend/src/simulations/color-channels.ts` (W5A) · Change impact: offline
 CHỦ SỞ HỮU DUY NHẤT của phép toán BA KÊNH ↔ MỘT MÀU, dùng chung cho
 `web.style_model` và `color.rgb_model`. Giữ `Channel`/`CHANNELS`/`CHANNEL_LABEL`/

@@ -1,5 +1,6 @@
 import type { AnalysisOk, Condition, Trace } from "./types";
 import { TraceBuilder, fmt, type WhatIfSwap } from "./trace-builder";
+import { compareNumbers } from "./predicate";
 
 /**
  * Engine tất định — Lớp 1 RULES.
@@ -55,21 +56,10 @@ export const OP_TEXT: Record<Condition["op"], string> = {
   "!=": "khác",
 };
 
+/* W5C — ngữ nghĩa toán tử thuộc `core/predicate.ts` (một chủ sở hữu cho cả ba
+   engine). Ở đây chỉ còn việc nối điều kiện của bài vào phép so sánh ấy. */
 function testCondition(v: number, c: Condition): boolean {
-  switch (c.op) {
-    case ">":
-      return v > c.value;
-    case ">=":
-      return v >= c.value;
-    case "<":
-      return v < c.value;
-    case "<=":
-      return v <= c.value;
-    case "==":
-      return v === c.value;
-    case "!=":
-      return v !== c.value;
-  }
+  return compareNumbers(v, c.op, c.value);
 }
 
 /* ── find_max / find_min ─────────────────────────────────── */

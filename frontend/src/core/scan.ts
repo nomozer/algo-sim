@@ -16,6 +16,7 @@
 import { varPhrase } from "./var-label";
 import { fmt, TraceBuilder, type WhatIfSwap } from "./trace-builder";
 import type { ConditionOp, Trace, TraceEvent } from "./types";
+import { compareNumbers } from "./predicate";
 
 export const SCAN_VERSION = "1.0";
 
@@ -206,21 +207,10 @@ function relation(x: number, y: number): "<" | ">" | "==" {
   return x > y ? ">" : x < y ? "<" : "==";
 }
 
+/* W5C — uỷ quyền xuống `core/predicate.ts`. Trước đó đây là bản cài THỨ HAI của
+   cùng sáu toán tử, và không gì bắt nó phải đồng ý với `algorithms.ts`. */
 function opHolds(x: number, y: number, op: ConditionOp): boolean {
-  switch (op) {
-    case ">":
-      return x > y;
-    case ">=":
-      return x >= y;
-    case "<":
-      return x < y;
-    case "<=":
-      return x <= y;
-    case "==":
-      return x === y;
-    case "!=":
-      return x !== y;
-  }
+  return compareNumbers(x, op, y);
 }
 
 /**

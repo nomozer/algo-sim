@@ -1,5 +1,6 @@
 import { TraceBuilder } from "./trace-builder";
 import type { Trace, TraceEvent } from "./types";
+import { compareNumbers } from "./predicate";
 
 /**
  * M17 W2C — LUỒNG ĐIỀU KHIỂN HỮU HẠN: interpreter tất định, engine-owned.
@@ -861,14 +862,20 @@ export function runProgram(spec: ProgramSpec): ProgramRunResult {
             return l === r;
           case "!=":
             return l !== r;
+          /* W5C — SO SÁNH THỨ TỰ uỷ quyền xuống `core/predicate.ts`.
+             `==`/`!=` ở TRÊN giữ nguyên và cố ý không uỷ quyền: ở đây hai vế có
+             thể là bool hoặc chuỗi, nên chúng là phép so sánh đồng nhất chứ
+             không phải phép so sánh SỐ.
+             ⚠️ Nhánh `default` cũ đã bị bỏ: nó nuốt MỌI op không khớp thành
+             `>=` — tức một toán tử mới thêm vào enum sẽ lặng lẽ chạy sai thay
+             vì đỏ. Nay bốn op thứ tự được liệt kê hết, còn op lạ thì ném. */
           case "<":
-            return (l as number) < (r as number);
           case "<=":
-            return (l as number) <= (r as number);
           case ">":
-            return (l as number) > (r as number);
+          case ">=":
+            return compareNumbers(l as number, n.op, r as number);
           default:
-            return (l as number) >= (r as number);
+            throw new Error(`Toán tử so sánh chưa được cài: '${n.op}'.`);
         }
       }
       default: {
