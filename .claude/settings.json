@@ -12,6 +12,17 @@
             "statusMessage": "CODE_INDEX guard: tra chu so huu + ban kinh anh huong"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PROJECT_DIR:-.}/.claude/hooks/bash-source-write-guard.mjs\"",
+            "timeout": 15,
+            "statusMessage": "Guard: sua ma nguon phai di qua Edit/Write"
+          }
+        ]
       }
     ],
     "SessionStart": [
