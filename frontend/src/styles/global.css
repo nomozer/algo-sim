@@ -69,6 +69,22 @@ button:disabled {
  * Ba token `--scroll-thumb*` vẫn còn trong `tokens.css` nhưng THÔI ĐƯỢC DÙNG. */
 html {
   scrollbar-gutter: stable;
+  /* W13-UI — SÁNG/TỐI THEO SẢN PHẨM, KHÔNG THEO TRÌNH DUYỆT.
+   *
+   * `8e9474e` trả thanh cuộn về mặc định hệ điều hành, và lý do đó vẫn đúng
+   * (track thấy được, hai nút mũi tên, tương phản thật). Nhưng "mặc định" thì
+   * lấy tông từ TRÌNH DUYỆT: máy đang để dark mode sẽ vẽ thanh cuộn ĐEN cạnh
+   * một giao diện SÁNG — bảng màu của kho này chỉ có một tông sáng, không hề có
+   * nhánh `prefers-color-scheme`.
+   *
+   * Chữa bằng `color-scheme`, KHÔNG phải bằng cách tự vẽ lại thanh cuộn: khai
+   * báo này chỉ nói cho trình duyệt biết trang thuộc tông nào, nên thanh cuộn
+   * (và cả control gốc: select, input, ô cuộn con) được HỆ ĐIỀU HÀNH vẽ ở bản
+   * SÁNG — giữ nguyên ba tín hiệu mà `8e9474e` đòi, chỉ bỏ cái lệch tông.
+   *
+   * Ngày nào kho có chế độ tối thật thì đổi thành `light dark` cùng lúc với
+   * việc thêm nhánh token, không phải trước. */
+  color-scheme: light;
 }
 
 /* ── Khung trang ─────────────────────────────────────── */
