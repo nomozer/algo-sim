@@ -1,11 +1,11 @@
 {
   "protocol_version": "1.0-scientific",
   "d_test_sha256": "dd56344a5fc3d1fd11c87a4bd89ef666e6a3c035d5cefc6355292a7770c94fbc",
-  "git_commit_sha": "a359602507a390d6be507afee53e952b2a519548",
+  "git_commit_sha": "edbd4a3aa6b4cb155635957b327663176756e026",
   "model_target": "gemini-2.5-flash",
   "temperature": 0.1,
   "cache_enabled": false,
   "total_tasks": 10,
-  "sealed_at": "2026-08-18T17:39:38.912043+00:00",
+  "sealed_at": "2026-08-18T17:45:47.503059+00:00",
   "status": "SEALED_FOR_FINAL_RUN"
 }
