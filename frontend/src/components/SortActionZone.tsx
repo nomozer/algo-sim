@@ -1,61 +1,50 @@
 import type {
-  MechanismAction,
   SortFact,
   SortInteractionModel,
 } from "../simulations/domains/algorithm/decision";
-import { IconCheck, IconPredict, IconSearch } from "./icons";
+import { IconSearch } from "./icons";
 
 /**
- * SortActionZone — VÙNG HÀNH ĐỘNG CỦA CỤM SẮP XẾP (W3B §9).
+ * SortActionZone — DẢI DỮ KIỆN CƠ CHẾ CỦA CỤM SẮP XẾP (W3B §9, rút gọn ở W13).
  *
- * Cụm thứ ba, và là cụm CUỐI trong phạm vi đề tài. Ba bài — nổi bọt, chọn,
- * chèn — cùng một khuôn trình bày nhưng ba cơ chế khác nhau (`kind`), nên nhãn
- * hành động nói bằng ngôn ngữ của từng cơ chế chứ không phải "Có/Không".
+ * Ba bài — nổi bọt, chọn, chèn — cùng một khuôn trình bày nhưng ba cơ chế khác
+ * nhau (`kind`), nên chữ nói bằng ngôn ngữ của từng cơ chế.
  *
- * VÌ SAO CAM KẾT LÀ NÚT CHỨ KHÔNG PHẢI KÉO:
- * kéo cột đã có nghĩa từ trước — THÍ NGHIỆM what-if, fork sang nhánh. Nếu cam
- * kết cũng là kéo thì cùng một cử chỉ, trên cùng hai cột, ở cùng một bước lại
- * mang hai nghĩa và cho hai kết cục khác nhau (một cái được chấm, một cái đẻ
- * nhánh). Tách bằng hình thức: nút = làm đúng bước thuật toán; kéo = thử xem
- * "nếu khác đi thì sao". Trong lúc chưa cam kết, kéo bị khoá (`ui.tsx`) để hai
- * nghĩa không tranh nhau.
+ * W13 — TỪ VÙNG CAM KẾT THÀNH DẢI DỮ KIỆN.
  *
- * RANH GIỚI — giống hệt `ScanActionZone`/`SearchActionZone`:
- * - `SortInteractionModel` cố ý KHÔNG mang `correctActionId`/`evidence`/kết quả
- *   cuối; có chúng thì đáp án nằm sẵn trong DOM trước khi học sinh hành động;
- * - chấm đi qua `predict.check` của module — không có đường chấm thứ hai;
- * - hành động sai KHÔNG đổi state canonical, chỉ sinh dữ liệu phản hồi.
+ * Trước đây khối này còn chở hai nút ("Đổi chỗ hai phần tử này" / "Giữ nguyên
+ * thứ tự"), một dòng mời ("Em hãy làm bước này: chọn một trong hai") và một dòng
+ * phán quyết đúng/sai từ `predict.check`. Toàn bộ phần ấy đã gỡ: đây là hệ mô
+ * phỏng tương tác, học sinh tác động lên mô hình rồi đọc hệ quả tất định, chứ
+ * không trả lời câu hỏi để lấy điểm.
+ *
+ * Thứ Ở LẠI là trạng thái cơ chế — engine đang xét cặp nào, giá trị bao nhiêu,
+ * cần sắp theo chiều nào. Nó ở lại vì `SIMULATION_SURFACE_COMPOSITION_CONTRACT
+ * §EXPLAIN` đòi: đóng panel Giải thích lại, học sinh vẫn phải nhận ra *cái gì
+ * đang hoạt động · vừa đổi gì*. Giấu nó vào panel là bắt học sinh xem một hoạt
+ * hình mà không giải thích nổi thứ tự các bước.
+ *
+ * RANH GIỚI GIỮ NGUYÊN: `SortInteractionModel` cố ý KHÔNG mang đáp án hay kết
+ * quả cuối — trước là để đáp án khỏi nằm sẵn trong DOM, nay là vì không còn đáp
+ * án nào tồn tại. Component này chỉ ĐỌC model do `decision.ts` dựng từ trace.
  */
 
 interface SortActionZoneProps {
   model: SortInteractionModel;
-  /** Đã chốt một hành động chưa — khoá nút để không nộp hai lần cho một bước. */
-  answered: boolean;
-  busy: boolean;
-  onAct: (actionId: string) => void;
-  /**
-   * Phản hồi sau khi chốt: do ENGINE sinh, component chỉ hiển thị. `answerId`
-   * là lựa chọn CỦA HỌC SINH, không phải đáp án — `expectedId` cố ý vắng mặt
-   * khỏi kiểu này (xem `ScanActionZone`).
-   */
-  feedback?: { verdict: string; message: string; answerId?: string } | null;
-  /** Bài chưa gác cổng thì zone tự hỏi; bài gác cổng để công cụ hỏi. */
-  showPrompt?: boolean;
   /**
    * W4B-2V/C2 — HÌNH HỌC, không phải nội dung.
-   * `"panel"` = thẻ cũ (nền + viền + padding, xếp dọc) cho bài CHƯA gác cổng,
-   * nơi vùng cam kết là một phần thường trực của Quan sát.
-   * `"tool"`  = một hàng inline không nền không viền, để nó nằm GỌN TRONG
-   * `.experiment-tool` thay vì thành tấm nội dung thứ hai.
+   * `"panel"` = thẻ (nền + viền + padding, xếp dọc).
+   * `"tool"`  = một hàng inline không nền không viền.
+   *
+   * W13 giữ tham số này dù mọi chỗ gọi đang truyền `"panel"`: nó là trục HÌNH
+   * HỌC dùng chung của ba dải, và bố cục hẹp sẽ cần `"tool"` trở lại.
    */
   chrome?: "panel" | "tool";
 }
 
-export function SortActionZone({
-  model, answered, busy, onAct, feedback = null, showPrompt = true, chrome = "panel",
-}: SortActionZoneProps) {
+export function SortActionZone({ model, chrome = "panel" }: SortActionZoneProps) {
   return (
-    <section className={`action-zone sort-action is-${chrome}`} aria-label="Thao tác sắp xếp">
+    <section className={`action-zone sort-action is-${chrome}`} aria-label="Trạng thái sắp xếp">
       <p className="sort-title">
         <IconSearch size={13} />
         {model.title}
@@ -70,41 +59,6 @@ export function SortActionZone({
         ))}
         <span className="sort-expression">{model.expression}</span>
       </div>
-
-      {/* W4B-2V/C: ở bài GÁC CỔNG, khay Thí nghiệm đã hỏi đúng câu này rồi —
-          in lại ở đây là hai kênh nói một điều. Bài CHƯA gác không có khay
-          nên mặc định `true` giữ nguyên hành vi cũ cho chúng. */}
-      {showPrompt && <p className="sort-instruction">Em hãy làm bước này: chọn một trong hai.</p>}
-
-      <div className="sort-actions">
-        {model.actions.map((a: MechanismAction) => {
-          const chosen = answered && feedback?.answerId === a.id;
-          const state = answered ? (chosen ? " is-chosen" : " is-notchosen") : "";
-          return (
-            <button
-              key={a.id}
-              type="button"
-              className={`btn-choice sort-act is-${a.tone}${state}`}
-              disabled={busy || answered}
-              aria-pressed={answered ? chosen : undefined}
-              data-chosen={answered ? String(chosen) : undefined}
-              onClick={() => onAct(a.id)}
-            >
-              {a.label}
-              {chosen && <> <span className="scan-act-mark">em đã chọn</span></>}
-            </button>
-          );
-        })}
-      </div>
-
-      {feedback && (
-        <p className={`predict-result is-${feedback.verdict}`} role="status">
-          {feedback.verdict === "correct" && <IconCheck size={15} />}
-          {/* Làm sai = cơ hội học, không phải lỗi hệ thống (CORRECTNESS.md §4). */}
-          {feedback.verdict !== "correct" && <IconPredict size={15} />}
-          <span>{feedback.message}</span>
-        </p>
-      )}
     </section>
   );
 }

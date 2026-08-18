@@ -47,6 +47,19 @@ PRIMITIVE_ROLES: dict[str, set[str]] = {
     "switch": {"interactive", "logical", "numeric"},
     "lamp": {"logical", "numeric"},
     "value_box": {"numeric"},
+    "slider": {"interactive", "numeric"},
+    "color_swatch": {"numeric"},
+    "array_strip": {"numeric"},
+    "metric_gauge": {"numeric"},
+    "bar_chart": {"numeric"},
+    "table_grid": {"numeric"},
+    "stack_view": {"numeric"},
+    "queue_view": {"numeric"},
+    "tree_element": {"numeric"},
+    "bit_register": {"logical", "numeric"},
+    "logic_gate": {"logical"},
+    "pointer": {"numeric"},
+    "coordinate_plane": {"numeric"},
     "node": {"relational"},
     "edge": {"relational"},
     "moving_entity": {"movement"},
@@ -60,12 +73,16 @@ PRIMITIVE_ROLES: dict[str, set[str]] = {
     # rule types
     "boolean": {"logical"},
     "weighted_sum": {"numeric"},
+    "formula": {"numeric"},
     # interaction types (M7.13A) — tương tác cũng cover vai trò "interactive"
     "toggle": {"interactive"},
     "drag": {"interactive"},
+    "set_param": {"interactive"},
+    "button_action": {"interactive"},
     # process types
     "reveal_sequence": {"temporal"},
     "move_along_path": {"movement", "temporal"},
+    "step_sequence": {"temporal"},
 }
 
 MANIFEST: dict = {
@@ -74,6 +91,19 @@ MANIFEST: dict = {
         "switch": "công tắc bật/tắt (value 0/1); người học toggle được",
         "lamp": "đèn hiển thị giá trị 0/1 (thường là target của rule)",
         "value_box": "ô hiển thị một con số (thường là target của rule)",
+        "slider": "thanh trượt chỉnh giá trị số (value, min, max, step, unit); người học kéo/chỉnh được",
+        "color_swatch": "ô hiển thị mẫu màu trực quan (nhận giá trị màu hex/rgb hoặc tính từ rule)",
+        "array_strip": "dải ô mảng hiển thị danh sách phần tử (items)",
+        "metric_gauge": "đồng hồ đo / thanh tiến độ hiển thị tỉ lệ phần trăm hoặc đại lượng",
+        "bar_chart": "biểu đồ cột trực quan hiển thị dãy giá trị số (bars: [{id?, value, label?, color?}], max_val)",
+        "table_grid": "bảng dữ liệu 2 chiều (headers: chuỗi[], rows: giá_trị[][], highlighted_cells?)",
+        "stack_view": "ngăn xếp LIFO với đỉnh top (items: mảng giá trị, capacity?)",
+        "queue_view": "hàng đợi FIFO với đầu front và đuôi rear (items: mảng giá trị, capacity?)",
+        "tree_element": "nút cây nhị phân hoặc phân cấp (value, left?, right?, parent?, label?)",
+        "bit_register": "thanh ghi bit nhị phân (bits: [0/1] hoặc value: số, size: 4/8/16, show_decimal?, show_hex?)",
+        "logic_gate": "biểu tượng cổng logic chuẩn ANSI/IEEE (gate_type: and/or/not/xor/nand/nor, inputs: [id], target: id)",
+        "pointer": "con trỏ chỉ mục thuật toán i, j, mid, top... (target_id, index?, label, color?)",
+        "coordinate_plane": "hệ tọa độ Oxy mặt phẳng Descartes (min_x, max_x, min_y, max_y, show_grid?)",
         "node": (
             "nút/đỉnh — điểm hình học (không node_type) HOẶC một thành phần có vai trò "
             "(node_type, chuỗi tự do): mạng (client/router/server/switch/isp) hoặc "
@@ -94,10 +124,13 @@ MANIFEST: dict = {
     "rule_types": {
         "boolean": "giá trị dẫn xuất bằng phép logic (op: and/or/not/xor) trên inputs",
         "weighted_sum": "giá trị dẫn xuất bằng tổng inputs nhân weights tương ứng",
+        "formula": "giá trị dẫn xuất bằng biểu thức toán/chuỗi/màu an toàn (expression, inputs, target)",
     },
     "bool_ops": ["and", "or", "not", "xor"],
     "interaction_types": {
         "toggle": "bật/tắt giá trị 0/1 của một object CÓ \"value\" khởi tạo (không phải target của rule)",
+        "set_param": "chỉnh giá trị của slider / tham số số",
+        "button_action": "nút bấm tương tác kích hoạt thao tác / bước tiếp theo",
         "drag": (
             "kéo-thả một object trong canvas — vị trí do engine sở hữu, "
             "cạnh nối (edge) tự bám theo hai đầu; constraints tùy chọn: bounds/axis/snap"
@@ -118,6 +151,7 @@ MANIFEST: dict = {
     "process_types": {
         "move_along_path": "thực thể entity đi qua path (danh sách node) — engine bung thành các bước",
         "reveal_sequence": "hình thành cảnh TỪNG BƯỚC — mỗi step hé lộ thêm object; visibility tích lũy tất định",
+        "step_sequence": "chuỗi các bước mô phỏng diễn tiến thuật toán (steps: [{action, targets?, state?, indices?, pointer_id?, to_index?, narration?}])",
     },
     "limits": {
         "max_objects": 20,
@@ -223,6 +257,15 @@ def manifest_capability_summary() -> str:
         "để quyết định — KHÔNG dựa vào tên môn học):\n"
         f"- Đối tượng ({objs}). Ánh xạ ngôn ngữ tự nhiên: ĐIỂM → node; ĐOẠN THẲNG / CẠNH / "
         "đường nối hai điểm → edge; ô/hộp giá trị số → value_box; công tắc / bit → switch; "
+        "thanh trượt / tham số điều chỉnh (kênh màu, thanh cuộn giá trị) → slider; "
+        "ô hiển thị màu sắc trực quan → color_swatch; mảng ô giá trị → array_strip; "
+        "đồng hồ đo tỉ lệ / thanh tiến độ → metric_gauge; biểu đồ cột sắp xếp → bar_chart; "
+        "bảng dữ liệu 2D / CSDL / quy hoạch động / bảng chân trị → table_grid; "
+        "ngăn xếp LIFO → stack_view; hàng đợi FIFO → queue_view; cây nhị phân / phân cấp → tree_node; "
+        "thanh ghi nhị phân (chuyển đổi cơ số Dec/Bin/Hex, phép toán bit) → bit_register; "
+        "cổng logic chuẩn ANSI/IEEE (AND/OR/NOT/XOR/NAND/NOR) → logic_gate; "
+        "con trỏ thuật toán (i, j, mid, top, front...) → pointer; "
+        "hệ trục tọa độ Descartes Oxy → coordinate_plane; "
         "đèn / đầu ra 0-1 → lamp; nhãn chữ ngắn → label; gói tin / vật di chuyển → moving_entity; "
         "KHUNG CHỨA / BỐ CỤC / phần trang → container; NHÓM → group; TIÊU ĐỀ → heading; "
         "ĐOẠN VĂN → paragraph; DÒNG CHỮ → text.\n"
@@ -233,19 +276,15 @@ def manifest_capability_summary() -> str:
         f'yêu cầu / phản hồi giữa chúng → edge có "directed": true (vẽ mũi tên from → to). '
         f"Dữ liệu ĐI QUA các công đoạn → moving_entity + move_along_path. "
         f"Từ vựng node_type gợi ý: hệ thống ({sysv}); mạng ({netv}).\n"
-        f"- Quy tắc dẫn xuất ({rules}): logic and/or/not/xor; tổng có trọng số.\n"
-        f"- Tiến trình ({procs}): move_along_path (vật đi theo đường); reveal_sequence "
-        "(HÌNH THÀNH CẢNH TỪNG BƯỚC — tạo/hiện đối tượng lần lượt, ví dụ dựng hình học bằng cách "
-        "hiện các điểm rồi vẽ dần các đoạn thẳng).\n"
-        "- Tương tác: toggle (bật/tắt công tắc có value 0/1); drag (học sinh KÉO/DI CHUYỂN "
-        "một điểm/node, các cạnh nối tự cập nhật theo — dùng khi đề muốn thao tác trực tiếp lên hình; "
-        "KHÔNG dùng toggle cho điểm/node).\n"
-        "→ Nếu bài mô tả được bằng các năng lực trên — KỂ CẢ bài Toán/hình học dựng hình TƯỜNG MINH "
-        "(vẽ các điểm/đoạn được nêu tên), mạch logic, đồ thị nút-cạnh, NỘI DUNG CÓ CẤU TRÚC/BỐ CỤC "
-        "(trang web, tài liệu có tiêu đề/đoạn văn/khung chứa), SƠ ĐỒ HỆ THỐNG THÔNG TIN "
-        "(người dùng/chức năng/kho dữ liệu/luồng dữ liệu — kể cả khi đề hỏi 'phân tích hệ thống', "
-        "'xác định người dùng, dữ liệu lưu trữ, đầu vào, đầu ra, chức năng, mô tả hoạt động'), "
-        "hay quá trình hình thành từng bước — thì chọn generic.rule_scene. "
+        f"- Quy tắc dẫn xuất ({rules}): logic and/or/not/xor; tổng có trọng số; công thức biểu thức formula "
+        "(tính toán phản ứng như pha màu rgb_to_hex(r,g,b), phép toán bitwise bit_and/bit_or/shift_left, clamp, min, max).\n"
+        f"- Tiến trình ({procs}): move_along_path (vật đi theo đường); reveal_sequence (hình thành cảnh từng bước); "
+        "step_sequence (DIỄN TIẾN THUẬT TOÁN TỪNG BƯỚC — highlight, swap đổi chỗ phần tử, di chuyển con trỏ pointer, gán giá trị).\n"
+        "- Tương tác: toggle (bật/tắt công tắc có value 0/1); set_param (chỉnh slider / tham số số); "
+        "button_action (nút bấm thao tác); drag (học sinh KÉO/DI CHUYỂN một điểm/node, các cạnh nối tự cập nhật theo).\n"
+        "→ Nếu bài mô tả được bằng các năng lực trên — KỂ CẢ bài Thuật toán sắp xếp/tìm kiếm, Cấu trúc dữ liệu, "
+        "Chuyển đổi cơ số / phép toán nhị phân, Bảng CSDL / quy hoạch động, mô hình màu sắc RGB / tham số liên tục, "
+        "mạch logic, đồ thị nút-cạnh, NỘI DUNG CÓ CẤU TRÚC/BỐ CỤC, hay SƠ ĐỒ HỆ THỐNG THÔNG TIN — thì chọn generic.rule_scene. "
         "CHỈ trả unsupported khi cần năng lực THẬT SỰ CHƯA CÓ trong danh sách trên: "
         "QUAN HỆ HÌNH HỌC PHẢI TÍNH (chân đường cao/hình chiếu, đường dựng vuông góc, giao điểm, "
         "đường tròn ngoại tiếp/qua các điểm, tiếp tuyến, quỹ tích/điểm di động kéo theo hệ); "
@@ -268,7 +307,16 @@ def manifest_contract_text() -> str:
         "Bạn mô tả mô phỏng bằng đối tượng/quy tắc/tương tác/tiến trình; engine tất định tự tính diễn biến.\n\n"
         f"dsl_version PHẢI là \"{DSL_VERSION}\".\n\n"
         f"object_types cho phép (chỉ dùng trong danh sách này):\n{obj_lines}\n"
-        "  Toạ độ x,y trong 0–100 để bố trí; switch có \"value\" khởi tạo 0/1; edge có \"from\"/\"to\".\n"
+        "  Toạ độ x,y trong 0–100 để bố trí; switch có \"value\" khởi tạo 0/1; slider có \"value\", \"min\", \"max\", \"step\"; edge có \"from\"/\"to\".\n"
+        "  color_swatch nhận màu qua rule target hoặc trường \"color\" (vd \"#ff0000\").\n"
+        "  bar_chart: \"bars\": [{\"id\": str, \"value\": số, \"label\": str, \"color\": str}], \"max_val\": số.\n"
+        "  table_grid: \"headers\": [str], \"rows\": [[giá_trị]], \"highlighted_cells\": [{\"row\": số, \"col\": số, \"color\": str}].\n"
+        "  stack_view / queue_view: \"items\": [giá_trị], \"capacity\": số.\n"
+        "  tree_element: \"value\": giá_trị, \"left\": id_con_trái, \"right\": id_con_phải, \"parent\": id_cha.\n"
+        "  bit_register: \"bits\": [0, 1, ...], \"size\": 8|16, \"show_decimal\": bool, \"show_hex\": bool.\n"
+        "  logic_gate: \"gate_type\": \"and\"|\"or\"|\"not\"|\"xor\"|\"nand\"|\"nor\", \"inputs\": [id], \"target\": id.\n"
+        "  pointer: \"target_id\": id_object, \"index\": chỉ_số_trong_mảng, \"label\": nhãn_con_trỏ (vd \"i\", \"pivot\").\n"
+        "  coordinate_plane: \"min_x\": số, \"max_x\": số, \"min_y\": số, \"max_y\": số, \"show_grid\": bool.\n"
         f"  node có \"node_type\" (chuỗi tự do) — mạng: {'/'.join(vocab['network'])}; "
         f"hệ thống thông tin: {'/'.join(vocab['system'])}; điểm hình học thì BỎ TRỐNG node_type.\n"
         "  edge có \"directed\": true khi CHIỀU mang ý nghĩa (luồng dữ liệu, yêu cầu → phản hồi, "
@@ -282,52 +330,33 @@ def manifest_contract_text() -> str:
         f"container/group gom nội dung bằng cách cho mỗi object CON một \"parent\" = id của container/group "
         f"chứa nó (lồng nhau, KHÔNG chu trình, độ sâu ≤ {lim['max_nesting_depth']}).\n\n"
         f"rule_types (giá trị DẪN XUẤT, có \"target\" là id một object):\n{rule_lines}\n"
-        "  boolean cần \"op\" và \"inputs\"; weighted_sum cần \"inputs\" và \"weights\" cùng độ dài.\n"
+        "  boolean cần \"op\" và \"inputs\"; weighted_sum cần \"inputs\" và \"weights\" cùng độ dài;\n"
+        "  formula cần \"expression\" (biểu thức toán/chuỗi/bit) và \"inputs\" (danh sách id object đầu vào).\n"
+        "  Ví dụ formula: {\"type\": \"formula\", \"expression\": \"rgb_to_hex(r, g, b)\", \"inputs\": [\"r\", \"g\", \"b\"], \"target\": \"swatch_color\"}.\n"
+        "  Mỗi giá trị dẫn xuất (target) chỉ do đúng MỘT rule sở hữu (cấm hai rule cùng target).\n"
         "  ĐIỀU KIỆN GHÉP/LỒNG NHAU — target của một rule ĐƯỢC PHÉP làm input của rule khác; "
         "engine tự tính lan truyền qua chuỗi. Khi đề có điều kiện ghép (một phần điều kiện phải "
         "tính TRƯỚC rồi mới kết hợp tiếp), hãy TÁCH thành chuỗi rule qua một object trung gian: "
-        "thêm một lamp/value_box làm target của rule con, rồi dùng id đó trong inputs của rule "
-        "ngoài. KHÔNG ép phẳng nhiều mức điều kiện vào một rule duy nhất — sai ngữ nghĩa. "
-        "Ví dụ trừu tượng: rule con {\"op\": \"and\", \"inputs\": [\"dk1\", \"dk2\"], \"target\": \"kq_phu\"} "
-        "(kq_phu là một lamp trung gian), rule ngoài {\"op\": \"or\", \"inputs\": [\"dk3\", \"kq_phu\"], "
-        "\"target\": \"den_chinh\"}. Mỗi target chỉ được đúng MỘT rule sở hữu; không tạo chu trình. "
-        "\"value\" khởi tạo chỉ đặt cho ĐẦU VÀO nguồn (switch học sinh bật/tắt) — KHÔNG gắn "
+        "thêm một lamp/value_box làm target của rule con (vd: kq_phu), rồi dùng id đó trong inputs của rule "
+        "ngoài. KHÔNG ép phẳng nhiều mức điều kiện vào một rule duy nhất — sai ngữ nghĩa.\n"
+        "\"value\" khởi tạo chỉ đặt cho ĐẦU VÀO nguồn (switch/slider học sinh chỉnh) — KHÔNG gắn "
         "\"value\" cho object trung gian/đèn dẫn xuất (engine tự tính) hay label trang trí.\n\n"
         f"interaction_types:\n{inter_lines}\n"
-        "  toggle chỉ áp cho object CÓ \"value\" khởi tạo (0/1) và KHÔNG phải target của rule. "
-        "KHÔNG dùng toggle cho node/điểm — muốn học sinh DI CHUYỂN/KÉO điểm thì dùng drag.\n"
+        "  toggle chỉ áp cho object CÓ \"value\" khởi tạo (0/1) và KHÔNG phải target của rule.\n"
+        "  set_param dùng cho slider/input số.\n"
+        "  button_action dùng cho nút bấm kích hoạt thao tác.\n"
         f"  drag chỉ áp cho object type {'/'.join(sorted(MANIFEST['drag_target_types']))}; "
         "KHÔNG drag vật đang được process điều khiển. \"constraints\" tùy chọn: "
-        '{"bounds": {"min_x", "max_x", "min_y", "max_y"} trong 0–100, "axis": "x"|"y", "snap": số > 0}. '
-        "Chỉ thêm drag khi bài CẦN học sinh thao tác trực tiếp (kéo điểm để quan sát) — không thêm bừa.\n\n"
+        '{"bounds": {"min_x", "max_x", "min_y", "max_y"} trong 0–100, "axis": "x"|"y", "snap": số > 0}.\n\n'
         f"process_types:\n{proc_lines}\n"
         "  move_along_path: {entity: id moving_entity, path: [id node]}.\n"
-        "  reveal_sequence: {steps: [{objects: [id object], narration?}]} — dùng khi cảnh phải HÌNH THÀNH TỪNG BƯỚC "
-        "(vd dựng hình: bước 1 hé lộ điểm A,B; bước 2 hé lộ đoạn AB; bước 3 điểm C; bước 4 đoạn AC; bước 5 đoạn BC). "
-        "Object không nằm trong reveal step nào sẽ hiện ngay từ đầu.\n\n"
-        f"GIỚI HẠN — ĐẾM CHO ĐÚNG: edge, moving_entity, heading, paragraph, label… TẤT CẢ đều nằm "
-        f"trong \"objects\" nên đều TÍNH vào giới hạn {lim['max_objects']}. Một sơ đồ 6 thành phần "
-        f"nối bằng 6 luồng đã tốn 12 object. Hãy chọn các thành phần CHÍNH và GỘP chi tiết phụ "
-        f"(sơ đồ hệ thống: tối đa ~6 thành phần + các luồng giữa chúng); đừng vẽ mọi chi tiết rồi vượt hạn mức.\n"
-        "  TIẾT KIỆM OBJECT — hai lỗi thường gặp làm vượt hạn mức:\n"
-        "  (a) Muốn ghi chữ trên một CẠNH thì dùng chính trường \"label\" CỦA EDGE ĐÓ "
-        "(vd {\"id\":\"f1\",\"type\":\"edge\",\"from\":\"a\",\"to\":\"b\",\"directed\":true,\"label\":\"gửi yêu cầu\"}) — "
-        "TUYỆT ĐỐI KHÔNG tạo thêm object \"label\" riêng cho mỗi cạnh.\n"
-        "  (b) Sơ đồ đã có \"title\" ở cấp cao nhất → KHÔNG cần thêm heading/paragraph/container trang trí.\n"
+        "  reveal_sequence: {steps: [{objects: [id object], narration?}]}.\n"
+        "  step_sequence: {steps: [{action: \"highlight\"|\"swap\"|\"set_value\"|\"move_pointer\", targets?, state?, indices?, pointer_id?, to_index?, narration?}]}.\n\n"
         f"GIỚI HẠN: tối đa {lim['max_objects']} object, {lim['max_rules']} rule, "
         f"{lim['max_interactions']} interaction, {lim['max_processes']} process, path ≤ {lim['max_path']} nút, "
-        f"reveal_sequence ≤ {lim['max_reveal_steps']} bước.\n\n"
-        "Ví dụ: cổng AND = 2 switch + 1 lamp + rule boolean op=and. "
-        "Đổi nhị phân = switch bit + value_box + rule weighted_sum (weights là mảng TRÊN RULE, vd [8,4,2,1]). "
-        "Gói tin = node + edge + moving_entity + process move_along_path. "
-        "Dựng hình tam giác = point/line (label) + reveal_sequence hé lộ dần. "
-        "Trang web/tài liệu có bố cục = container + heading(text) + paragraph(text), "
-        "mỗi con đặt parent = id container; muốn HÌNH THÀNH TỪNG BƯỚC thì thêm reveal_sequence. "
-        "Sơ đồ HỆ THỐNG THÔNG TIN = node(node_type actor/process/data_store/input/output) + "
-        "edge directed=true cho từng LUỒNG DỮ LIỆU; muốn cho thấy dữ liệu CHẠY QUA các công đoạn "
-        "thì thêm moving_entity + move_along_path đi theo đúng các node đó.\n"
+        f"reveal_sequence ≤ {lim['max_reveal_steps']} bước, step_sequence ≤ {lim['max_reveal_steps']} bước.\n"
         "TUYỆT ĐỐI KHÔNG dùng object/rule/interaction/process ngoài manifest. "
-        "KHÔNG sinh steps/timeline/state/frames/kết quả — engine tự dựng."
+        "Engine tất định sẽ tự tính toán timeline hoạt cảnh và cập nhật trạng thái trực quan từ các bước trong processes."
     )
 
 
@@ -374,6 +403,7 @@ def value_provider_types(role: str) -> set[str]:
 RULE_IO_ROLES = {
     "weighted_sum": {"input_role": "numeric", "output_role": "numeric"},
     "boolean": {"input_role": "logical", "output_role": "logical"},
+    "formula": {"input_role": "numeric", "output_role": "numeric"},
 }
 
 # M13 Task 12b: field object được nhận khi add_object qua SimulationPatch v1.
@@ -382,6 +412,10 @@ RULE_IO_ROLES = {
 # từng lệch (backend có, frontend không — M8-PRE S2 không được mirror sang patch.ts).
 PATCH_ADD_FIELDS: tuple[str, ...] = (
     "id", "type", "x", "y", "label", "text", "parent", "value", "node_type", "from", "to", "directed",
+    "min", "max", "step", "unit", "color", "items", "expression",
+    "bars", "max_val", "headers", "rows", "highlighted_cells", "capacity",
+    "bits", "size", "show_decimal", "show_hex", "gate_type", "target_id", "index",
+    "min_x", "max_x", "min_y", "max_y", "show_grid", "left", "right",
 )
 
 

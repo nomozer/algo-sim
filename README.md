@@ -1,4 +1,4 @@
-# AlgoSim — Hệ mô phỏng thuật toán tương tác kết hợp LLM phân tích bài toán có lời văn, hỗ trợ dạy học môn Tin học THPT
+# AlgoSim — Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán bằng ngôn ngữ tự nhiên, hỗ trợ dạy học môn Tin học THPT
 
 **[Chạy nhanh](#11-chạy-dự-án) · [Kiến trúc](#4-kiến-trúc-và-ranh-giới-r0) · [Phạm vi](#8-right-or-refuse-và-capability_gap) · [Tài liệu](#12-tài-liệu-dành-cho-developer)**
 

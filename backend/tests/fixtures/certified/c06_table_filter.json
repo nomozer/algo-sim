@@ -1,0 +1,61 @@
+{
+  "id": "c06_table_filter",
+  "category": "certified",
+  "problem_text": "Cho bảng điểm học sinh gồm các cột 'Họ tên', 'Điểm Toán', 'Điểm Văn', 'ĐTB'. Hãy mô phỏng quá trình lọc các học sinh có Điểm Trung Bình từ 8.0 trở lên.",
+  "expected_oracle": {
+    "oracle_func": "oracle_table_filter",
+    "inputs": [
+      ["Họ tên", "Điểm Toán", "Điểm Văn", "ĐTB"],
+      [
+        ["An", 8.5, 8.0, 8.25],
+        ["Bình", 7.0, 6.5, 6.75],
+        ["Chi", 9.0, 9.5, 9.25],
+        ["Dũng", 6.0, 7.5, 6.75]
+      ],
+      "ĐTB",
+      8.0
+    ],
+    "expected_result": {
+      "matching_row_indices": [0, 2],
+      "matching_count": 2
+    }
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Lọc danh sách học sinh có ĐTB >= 8.0",
+    "objects": [
+      {
+        "id": "student_table",
+        "type": "table_grid",
+        "headers": ["Họ tên", "Điểm Toán", "Điểm Văn", "ĐTB"],
+        "rows": [
+          ["An", 8.5, 8.0, 8.25],
+          ["Bình", 7.0, 6.5, 6.75],
+          ["Chi", 9.0, 9.5, 9.25],
+          ["Dũng", 6.0, 7.5, 6.75]
+        ],
+        "highlighted_cells": [],
+        "label": "Bảng điểm tổng hợp"
+      },
+      {"id": "count_box", "type": "value_box", "value": 0, "label": "Số HS Giỏi (ĐTB >= 8.0)"}
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "highlight", "targets": ["student_table"], "narration": "Khởi tạo bảng điểm 4 học sinh. Tiêu chí: ĐTB >= 8.0."},
+          {"action": "highlight", "targets": ["student_table"], "indices": [0], "state": "active", "narration": "Xét dòng 1 (An): ĐTB = 8.25 >= 8.0 -> Thỏa mãn điều kiện! Tăng biến đếm lên 1."},
+          {"action": "highlight", "targets": ["count_box"], "value": 1, "narration": "Cập nhật số HS Giỏi = 1."},
+          {"action": "highlight", "targets": ["student_table"], "indices": [1], "narration": "Xét dòng 2 (Bình): ĐTB = 6.75 < 8.0 -> Không thỏa mãn, bỏ qua."},
+          {"action": "highlight", "targets": ["student_table"], "indices": [2], "state": "active", "narration": "Xét dòng 3 (Chi): ĐTB = 9.25 >= 8.0 -> Thỏa mãn điều kiện! Tăng biến đếm lên 2."},
+          {"action": "highlight", "targets": ["count_box"], "value": 2, "narration": "Cập nhật số HS Giỏi = 2."},
+          {"action": "highlight", "targets": ["student_table"], "indices": [3], "narration": "Xét dòng 4 (Dũng): ĐTB = 6.75 < 8.0 -> Không thỏa mãn, bỏ qua."},
+          {"action": "highlight", "targets": ["count_box"], "value": 2, "state": "active", "narration": "Kết thúc: Có 2 học sinh đạt ĐTB >= 8.0 là An và Chi."}
+        ]
+      }
+    ],
+    "notes": "Mô phỏng duyệt và lọc bảng dữ liệu hai chiều theo điều kiện ngưỡng."
+  }
+}

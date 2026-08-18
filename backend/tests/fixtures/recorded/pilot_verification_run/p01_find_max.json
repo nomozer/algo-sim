@@ -1,0 +1,169 @@
+{
+  "task_id": "p01_find_max",
+  "problem_text": "Cho danh sách số nguyên gồm: 14, 28, 9, 35, 21. Hãy mô phỏng thuật toán quét một lượt từ đầu đến cuối để tìm giá trị lớn nhất.",
+  "prompt_hash": "95b7598445ea8e4f0fab0643eb5ddf69ff642949f5d9c52d7e2c05b70ba16120",
+  "git_commit": "c7b796ff921e33678a1fdb9efc6062f24f78b105",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:34:05.773802+00:00",
+  "duration_sec": 13.78466010093689,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 13.78466010093689
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.find_max",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "Mô phỏng thuật toán tìm giá trị lớn nhất trong danh sách số nguyên.",
+    "description": "Một danh sách các số nguyên. → Giá trị số nguyên lớn nhất tìm được trong danh sách.",
+    "config": {
+      "problem": {
+        "summary": "Mô phỏng thuật toán tìm giá trị lớn nhất trong danh sách số nguyên.",
+        "input": "Một danh sách các số nguyên.",
+        "output": "Giá trị số nguyên lớn nhất tìm được trong danh sách."
+      },
+      "algorithm_id": "find_max",
+      "data": {
+        "array": [
+          14,
+          28,
+          9,
+          35,
+          21
+        ],
+        "labels": null,
+        "target": null,
+        "condition": null,
+        "order": null
+      },
+      "data_generated": false,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "danh sách số nguyên"
+      ],
+      "data": [
+        {
+          "description": "danh sách số nguyên",
+          "labels": null,
+          "values": [
+            14,
+            28,
+            9,
+            35,
+            21
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "quét một lượt từ đầu đến cuối danh sách",
+        "tìm giá trị lớn nhất"
+      ],
+      "constraints": [
+        "quét một lượt từ đầu đến cuối"
+      ],
+      "goal": "Tìm giá trị lớn nhất trong danh sách số nguyên.",
+      "input_description": "Một danh sách các số nguyên.",
+      "output_description": "Giá trị số nguyên lớn nhất tìm được trong danh sách.",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [],
+      "requested_operations": [
+        "single_pass_scan:find_max"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "single_pass_scan"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "r01_insufficient_input",
+  "category": "refusals",
+  "problem_text": "Hãy mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (Pre-order traversal).",
+  "expected_refusal": {
+    "status": "unsupported",
+    "failure_category": "insufficient_specification",
+    "reason_contains": "dữ kiện"
+  }
+}

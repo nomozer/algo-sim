@@ -1,0 +1,52 @@
+{
+  "id": "c04_athlete_sorting",
+  "category": "certified",
+  "problem_text": "Cho thời gian chạy (giây) của 7 vận động viên: 12.4, 11.8, 12.9, 11.2, 12.0, 11.5, 12.1. Mô phỏng quá trình sắp xếp thời gian tăng dần để xếp hạng.",
+  "expected_oracle": {
+    "oracle_func": "oracle_sort_athletes",
+    "inputs": [[12.4, 11.8, 12.9, 11.2, 12.0, 11.5, 12.1]],
+    "expected_result": {
+      "sorted_times": [11.2, 11.5, 11.8, 12.0, 12.1, 12.4, 12.9],
+      "fastest": 11.2,
+      "slowest": 12.9
+    }
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Sắp xếp thời gian chạy của 7 vận động viên",
+    "objects": [
+      {
+        "id": "athletes_chart",
+        "type": "bar_chart",
+        "bars": [
+          {"id": "v1", "value": 12.4, "label": "VĐV 1 (12.4s)"},
+          {"id": "v2", "value": 11.8, "label": "VĐV 2 (11.8s)"},
+          {"id": "v3", "value": 12.9, "label": "VĐV 3 (12.9s)"},
+          {"id": "v4", "value": 11.2, "label": "VĐV 4 (11.2s)"},
+          {"id": "v5", "value": 12.0, "label": "VĐV 5 (12.0s)"},
+          {"id": "v6", "value": 11.5, "label": "VĐV 6 (11.5s)"},
+          {"id": "v7", "value": 12.1, "label": "VĐV 7 (12.1s)"}
+        ],
+        "max_val": 15,
+        "label": "Thời gian hoàn thành (giây)"
+      },
+      {"id": "fastest_box", "type": "value_box", "value": 11.2, "label": "Thành tích tốt nhất (s)"},
+      {"id": "status_box", "type": "value_box", "value": "Sắp xếp tăng dần", "label": "Tiến trình"}
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "highlight", "targets": ["athletes_chart"], "narration": "Khởi tạo danh sách thời gian thi đấu của 7 VĐV."},
+          {"action": "swap", "targets": ["athletes_chart"], "indices": [0, 1], "narration": "So sánh 12.4s và 11.8s: 12.4 > 11.8 -> Đổi chỗ VĐV 1 và VĐV 2."},
+          {"action": "swap", "targets": ["athletes_chart"], "indices": [1, 3], "narration": "Tìm phần tử nhỏ nhất: Đổi chỗ đưa 11.2s lên vị trí đầu tiên."},
+          {"action": "highlight", "targets": ["fastest_box"], "value": 11.2, "state": "active", "narration": "Xác định thành tích nhanh nhất là 11.2s (VĐV 4)."},
+          {"action": "highlight", "targets": ["athletes_chart"], "state": "sorted", "narration": "Hoàn tất sắp xếp thời gian tăng dần: [11.2, 11.5, 11.8, 12.0, 12.1, 12.4, 12.9]."}
+        ]
+      }
+    ],
+    "notes": "Mô phỏng sắp xếp thời gian thi đấu của vận động viên theo thứ tự tăng dần."
+  }
+}

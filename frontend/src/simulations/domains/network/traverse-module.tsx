@@ -269,7 +269,7 @@ type Props = WorkspaceProps<TraverseConfig, TraverseState>;
 
 const W = 420;
 const H = 260;
-const NODE_R = 16;
+const NODE_R = 18;
 
 /* ── W4B-2A — BỐ CỤC ĐỒ THỊ THÍCH ỨNG THEO BỀ RỘNG KHẢ DỤNG ────────────────
  *
@@ -435,10 +435,11 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
   const edgeStatuses = usedStatuses(edgeViews).filter((s) => s !== "idle");
 
   return (
-    <div className="stack" style={{ gap: "var(--sp-md)" }}>
-      <div className="sim-stage" ref={boxRef}>
+    <div className="traverse-layout-split" style={{ display: "grid", gridTemplateColumns: "minmax(380px, 1.4fr) minmax(280px, 1fr)", gap: "var(--sp-xl)", alignItems: "start" }}>
+      {/* CỘT TRÁI: ĐỒ THỊ VÀ CHÚ GIẢI */}
+      <div className="sim-stage" ref={boxRef} style={{ display: "flex", flexDirection: "column", gap: "var(--sp-sm)", minWidth: 0 }}>
         <svg viewBox={`0 0 ${gl.width} ${gl.height}`}
-             style={{ width: "100%", maxWidth: gl.width }} role="img"
+             style={{ width: "100%", maxWidth: gl.width, minHeight: 240, margin: "0 auto" }} role="img"
              aria-label="Đồ thị duyệt">
           {edgeViews.map((ev, i) => {
             const pa = pos.get(ev.from)!;
@@ -472,16 +473,24 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
                 <circle
                   cx={p.x} cy={p.y} r={NODE_R}
                   fill={isCur ? "var(--accent-orange)" : isVisited ? "var(--accent-green)" : inFrontier ? "var(--primary)" : "var(--surface)"}
-                  stroke="var(--ink-faint)"
+                  stroke={isCur || isVisited || inFrontier ? "none" : "var(--hairline)"}
+                  strokeWidth={1.5}
                 />
                 {/* Nhãn ngắn nằm TRONG nút; nhãn dài xuống DƯỚI nút để chữ
                     không bị chính nút cắt ngang (M17-RC1 §E). */}
-                <text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={11}>
+                <text
+                  x={p.x}
+                  y={p.y + 5}
+                  textAnchor="middle"
+                  fontSize={13}
+                  fontWeight="600"
+                  fill={isCur || isVisited || inFrontier ? "var(--on-primary)" : "var(--ink)"}
+                >
                   {long ? n.id : (n.label ?? n.id)}
                 </text>
                 {long && (n.label ?? n.id) !== n.id && (
-                  <text x={p.x} y={p.y + LABEL_DY} textAnchor="middle" fontSize={10}
-                        fill="var(--ink-muted)">
+                  <text x={p.x} y={p.y + LABEL_DY} textAnchor="middle" fontSize={12} fontWeight="600"
+                        fill="var(--ink)">
                     {n.label}
                   </text>
                 )}
@@ -489,23 +498,6 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
             );
           })}
         </svg>
-
-        {/* FRONTIER-VIS: hàng đợi/ngăn xếp là ĐỐI TƯỢNG CƠ CHẾ, nằm ngay trên
-            sân khấu cạnh đồ thị — không đẩy xuống panel Quan sát, vì nó chính là
-            thứ quyết định thứ tự duyệt. Dòng chữ "Hàng đợi: C, D" cũ đã bỏ: nó
-            lặp lại đúng thông tin này mà không cho thấy đầu/cuối. */}
-        <TraversalFrontier
-          mode={state.frontierKind}
-          items={step.frontierAfter.map((id) => ({ id, label: labelOfNode(state.config, id) }))}
-          delta={frontierDelta(at > 0 ? state.steps[at - 1].frontierAfter : null, step.frontierAfter)}
-          activeId={current}
-          label={state.frontierKind === "queue" ? "Hàng đợi (FIFO)" : "Ngăn xếp (LIFO)"}
-        />
-
-        <p className="frontier-visited">
-          <span className="frontier-tag is-done">đã thăm</span>
-          {step.visitedSoFar.length > 0 ? step.visitedSoFar.join(" → ") : "(chưa có)"}
-        </p>
 
         {/* Chú giải TÁCH HAI NHÓM: nút và đường. Gộp 4 mục nút với 3 mục đường
             vào một hàng thành 7 mục đọc như nhiễu — hai từ vựng khác nhau cho
@@ -537,16 +529,29 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
           </p>
         )}
       </div>
-      {/* W12 §9 — CÔNG CỤ CỦA BÀI, trả về đúng cây render.
-          Trước wave này dòng JSX gọi `TraverseParamBar` nằm SAU câu `return`
-          của `useEffect` ở trên: cú pháp hợp lệ, TypeScript không kêu, tên
-          không "unused" vì vẫn được nhắc — nên nó im lặng không bao giờ render.
-          Hệ quả: `network.graph_traversal` là BOUNDED_PARAMETER_TOOL mà học
-          sinh không có cách nào đổi BFS↔DFS hay điểm xuất phát. Không unit test
-          nào bắt được (không test nào hỏi "control có trên màn hình không");
-          chỗ phát hiện là phép đo affordance trên trình duyệt thật. */}
-      <TraverseParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
-      <p className="notes">{step.narration}</p>
+
+      {/* CỘT PHẢI: TRẠNG THÁI HÀNG ĐỢI/NGĂN XẾP + ĐÃ THĂM + CÔNG CỤ THAM SỐ + THUYẾT MINH */}
+      <div className="traverse-side-panel" style={{ display: "flex", flexDirection: "column", gap: "var(--sp-sm)", minWidth: 0 }}>
+        {/* FRONTIER-VIS: hàng đợi/ngăn xếp là ĐỐI TƯỢNG CƠ CHẾ, nằm ngay trên
+            sân khấu cạnh đồ thị */}
+        <TraversalFrontier
+          mode={state.frontierKind}
+          items={step.frontierAfter.map((id) => ({ id, label: labelOfNode(state.config, id) }))}
+          delta={frontierDelta(at > 0 ? state.steps[at - 1].frontierAfter : null, step.frontierAfter)}
+          activeId={current}
+          label={state.frontierKind === "queue" ? "Hàng đợi (FIFO)" : "Ngăn xếp (LIFO)"}
+        />
+
+        <p className="frontier-visited">
+          <span className="frontier-tag is-done">đã thăm</span>
+          {step.visitedSoFar.length > 0 ? step.visitedSoFar.join(" → ") : "(chưa có)"}
+        </p>
+
+        {/* W12 §9 — CÔNG CỤ CỦA BÀI */}
+        <TraverseParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
+
+        <p className="notes">{step.narration}</p>
+      </div>
     </div>
   );
 }

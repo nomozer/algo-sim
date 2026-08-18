@@ -62,7 +62,7 @@ def test_roles_of_primitive():
 
 def test_primitives_for_role_sorted():
     assert primitives_for_role("relational") == ["edge", "node"]
-    assert primitives_for_role("temporal") == ["move_along_path", "reveal_sequence"]
+    assert primitives_for_role("temporal") == ["move_along_path", "reveal_sequence", "step_sequence"]
     assert primitives_for_role("structural") == ["container", "group"]  # M7.12
     assert primitives_for_role("textual") == ["heading", "label", "paragraph", "text"]
 

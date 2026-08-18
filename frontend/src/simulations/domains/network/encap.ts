@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import type { ConfigResult, SimulationModule } from "../../types";
 import {
-  buildEncapState, currentStep, LAYER_LABEL, PROTOCOL_PIECES, pieceForComponents,
+  buildEncapState, currentStep,
   type EncapConfig, type EncapState,
 } from "./encap-model";
 import { EncapWorkspace, EncapInspector } from "./encap-ui";
@@ -122,59 +122,6 @@ export function makeEncapsulationModule(): SimulationModule<EncapConfig, EncapSt
       currentStep: (s) => s.cursor,
       goToStep: (s, step) => ({ ...s, cursor: Math.max(0, Math.min(step, s.steps.length - 1)) }),
     },
-
-    /**
-     * Nhịp DỰ ĐOÁN — hỏi tại điểm quyết định (add ở máy gửi, remove ở máy nhận).
-     * Ground truth = delta của bước KẾ TIẾP (engine đã dựng). LINK+FCS là MỘT
-     * đáp án gộp. Chấm là hàm thuần, KHÔNG đụng canonical state.
-     */
-    predict: {
-      challenge: (s) => {
-        const next = s.steps[s.cursor + 1];
-        if (!next) return null;
-        if (next.delta.kind === "add") {
-          return {
-            question: "Theo em, tầng kế tiếp sẽ THÊM phần thông tin giao thức nào?",
-            options: PROTOCOL_PIECES.map((p) => ({ id: p.id, label: p.label })),
-          };
-        }
-        if (next.delta.kind === "remove") {
-          return {
-            question: "Ở máy nhận, phần thông tin giao thức nào được GỠ tiếp theo?",
-            options: PROTOCOL_PIECES.map((p) => ({ id: p.id, label: p.label })),
-          };
-        }
-        return null;
-      },
-      check: (s, answerId) => {
-        const next = s.steps[s.cursor + 1];
-        if (!next || (next.delta.kind !== "add" && next.delta.kind !== "remove")) {
-          return {
-            verdict: "unsupported_to_verify",
-            answerId,
-            message: "Ở bước này không có phần thông tin giao thức nào được thêm hoặc gỡ để dự đoán.",
-          };
-        }
-        const expected = pieceForComponents(next.delta.componentIds)!;
-        const layerName = next.delta.layer ? LAYER_LABEL[next.delta.layer] : "";
-        const verb = next.delta.kind === "add" ? "thêm" : "gỡ";
-        if (answerId === expected.id) {
-          return {
-            verdict: "correct",
-            answerId,
-            expectedId: expected.id,
-            message: `Chính xác. Ở bước kế tiếp, ${layerName} ${verb} ${expected.label.toLowerCase()}.`,
-          };
-        }
-        return {
-          verdict: "incorrect",
-          answerId,
-          expectedId: expected.id,
-          message: `Chưa đúng. Ở bước kế tiếp, ${layerName} ${verb} ${expected.label.toLowerCase()}.`,
-        };
-      },
-    },
-
     // (SHELL-N) MỘT nguồn chữ cho cả `encap-ui.tsx` (2D) lẫn `encap-ui3d.tsx` (3D).
     narrate: (state) => ({ text: currentStep(state).narration }),
 

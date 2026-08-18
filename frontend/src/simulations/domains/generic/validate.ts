@@ -2,14 +2,18 @@ import type { ConfigResult } from "../../types";
 import dslContract from "./dsl-contract.json";
 import {
   BOOL_OPS,
+  buildTimeline,
   CONTAINER_TYPES,
   DRAG_TARGET_TYPES,
+  GenericExecutionError,
+  initialBase,
   INTERACTION_TYPES,
   OBJECT_TYPES,
   PROCESS_TYPES,
   RULE_TYPES,
   SUPPORTED_DSL_VERSIONS,
   TEXT_CONTENT_TYPES,
+  valuesOf,
   type BoolOp,
   type DragConstraints,
   type InteractionType,
@@ -240,12 +244,27 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
       };
     }
     const obj: SpecObject = { id: o.id, type: o.type as ObjectType };
-    for (const key of ["x", "y", "value"] as const) {
+    for (const key of ["x", "y", "min", "max", "step", "max_val", "capacity", "size", "index", "min_x", "max_x", "min_y", "max_y"] as const) {
       if (typeof o[key] === "number" && Number.isFinite(o[key])) obj[key] = o[key] as number;
     }
-    for (const key of ["label", "node_type", "from", "to", "text", "parent"] as const) {
+    if ((typeof o.value === "number" && Number.isFinite(o.value)) || typeof o.value === "string") {
+      obj.value = o.value;
+    }
+    for (const key of ["label", "node_type", "from", "to", "text", "parent", "unit", "color", "target", "target_id", "left", "right"] as const) {
       if (typeof o[key] === "string") obj[key] = o[key] as string;
     }
+    if (typeof o.gate_type === "string") {
+      obj.gate_type = o.gate_type as SpecObject["gate_type"];
+    }
+    for (const key of ["show_decimal", "show_hex", "show_grid"] as const) {
+      if (typeof o[key] === "boolean") obj[key] = o[key] as boolean;
+    }
+    if (Array.isArray(o.items)) obj.items = o.items as (number | string)[];
+    if (Array.isArray(o.bits)) obj.bits = o.bits as number[];
+    if (Array.isArray(o.bars)) obj.bars = o.bars as any[];
+    if (Array.isArray(o.headers)) obj.headers = o.headers.map(String);
+    if (Array.isArray(o.rows)) obj.rows = o.rows as (number | string)[][];
+    if (Array.isArray(o.highlighted_cells)) obj.highlighted_cells = o.highlighted_cells as any[];
     // M8-PRE (S2): mirror backend — chỉ edge, chỉ bool THẬT (không nhận 0/1/chuỗi).
     if (o.type === "edge" && typeof o.directed === "boolean") obj.directed = o.directed;
     objects.push(obj);
@@ -281,8 +300,9 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
       }
     }
     if (o.parent !== undefined) {
-      if (!byId[o.parent] || !CONTAINER_TYPES.has(byId[o.parent].type)) {
-        return { ok: false, error: `"${o.id}" có "parent" phải là id của container/group hợp lệ.` };
+      const allowed = o.type === "tree_element" ? new Set([...CONTAINER_TYPES, "tree_element"]) : CONTAINER_TYPES;
+      if (!byId[o.parent] || !allowed.has(byId[o.parent].type)) {
+        return { ok: false, error: `"${o.id}" có "parent" phải là id của container/group/tree_element hợp lệ.` };
       }
     }
   }
@@ -323,6 +343,11 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
         return { ok: false, error: `boolean rule cần "op" thuộc ${BOOL_OPS.join("/")}.` };
       }
       rule.op = r.op as BoolOp;
+    } else if (rule.type === "formula") {
+      if (typeof r.expression !== "string" || !r.expression.trim()) {
+        return { ok: false, error: `formula rule cần "expression" không rỗng.` };
+      }
+      rule.expression = r.expression.trim();
     } else {
       const weights = Array.isArray(r.weights) ? r.weights : [];
       if (weights.length !== inputs.length || !weights.every((w) => typeof w === "number")) {
@@ -433,6 +458,16 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
           error: `toggle "${it.target}" vô nghĩa vì object không có "value" khởi tạo — muốn học sinh DI CHUYỂN/KÉO điểm thì dùng interaction drag.`,
         };
       }
+    } else if (it.type === "set_param") {
+      if (targets.has(it.target)) {
+        return { ok: false, error: `Không thể set_param "${it.target}" vì nó là giá trị dẫn xuất từ rule.` };
+      }
+      const targetType = byId[it.target].type;
+      if (!["slider", "switch", "value_box", "bit_register"].includes(targetType)) {
+        return { ok: false, error: `set_param chỉ áp cho slider/switch/value_box/bit_register — "${it.target}" là ${targetType}.` };
+      }
+    } else if (it.type === "button_action") {
+      // valid target exists
     } else {
       // drag (M7.13A) — allowlist target + constraints, song song validator Python
       const targetType = byId[it.target].type;
@@ -485,6 +520,36 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
       processes.push({ type: "reveal_sequence", steps: revealSteps });
       continue;
     }
+    if (p.type === "step_sequence") {
+      const steps = p.steps;
+      if (!Array.isArray(steps) || steps.length < 1 || steps.length > MAX_REVEAL_STEPS) {
+        return { ok: false, error: `step_sequence "steps" phải có 1–${MAX_REVEAL_STEPS} bước.` };
+      }
+      const stepActions: any[] = [];
+      for (const st of steps) {
+        if (!isObj(st) || typeof st.action !== "string") {
+          return { ok: false, error: `Mỗi bước trong step_sequence cần trường "action".` };
+        }
+        const step: any = { action: st.action };
+        if (Array.isArray(st.targets)) {
+          for (const tid of st.targets) {
+            if (typeof tid !== "string" || !ids.has(tid)) {
+              return { ok: false, error: `step_sequence tham chiếu target không tồn tại: "${String(tid)}".` };
+            }
+          }
+          step.targets = st.targets;
+        }
+        if (Array.isArray(st.indices)) step.indices = st.indices;
+        if (typeof st.state === "string") step.state = st.state;
+        if (typeof st.pointer_id === "string") step.pointer_id = st.pointer_id;
+        if (typeof st.to_index === "number") step.to_index = st.to_index;
+        if (st.value !== undefined) step.value = st.value;
+        if (typeof st.narration === "string") step.narration = st.narration;
+        stepActions.push(step);
+      }
+      processes.push({ type: "step_sequence", steps: stepActions });
+      continue;
+    }
     // move_along_path
     if (typeof p.entity !== "string" || byId[p.entity]?.type !== "moving_entity") {
       return { ok: false, error: `Process cần "entity" là một moving_entity có thật.` };
@@ -504,18 +569,74 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
   const ownErr = ownershipConflict(interactions, processes);
   if (ownErr) return { ok: false, error: ownErr };
 
+  const validSpec: SimulationSpec = {
+    dsl_version: typeof raw.dsl_version === "string" && raw.dsl_version ? raw.dsl_version : "1.0",
+    title: raw.title,
+    objects,
+    rules,
+    interactions,
+    processes,
+    notes: typeof raw.notes === "string" ? raw.notes : null,
+  };
+
+  const pedErr = validatePedagogicalQuality(validSpec);
+  if (pedErr) return { ok: false, error: pedErr };
+
   return {
     ok: true,
-    config: {
-      dsl_version: typeof raw.dsl_version === "string" && raw.dsl_version ? raw.dsl_version : "1.0",
-      title: raw.title,
-      objects,
-      rules,
-      interactions,
-      processes,
-      notes: typeof raw.notes === "string" ? raw.notes : null,
-    },
+    config: validSpec,
   };
+}
+
+export function validatePedagogicalQuality(spec: SimulationSpec): string | null {
+  const objs = spec.objects ?? [];
+  const procs = spec.processes ?? [];
+
+  // 1. Rich Primitives quality checks
+  for (const o of objs) {
+    if (o.type === "bar_chart") {
+      const bars = o.bars ?? [];
+      if (!Array.isArray(bars) || bars.length < 2) {
+        return `Biểu đồ cột "${o.id}" cần ít nhất 2 cột để so sánh/sắp xếp.`;
+      }
+    } else if (o.type === "bit_register") {
+      const size = o.size ?? 8;
+      if (size !== 8 && size !== 16) {
+        return `Thanh ghi bit "${o.id}" có kích thước không hợp lệ (chỉ nhận 8 hoặc 16 bit).`;
+      }
+    } else if (o.type === "tree_element") {
+      if (o.left === o.id || o.right === o.id) {
+        return `Nút cây "${o.id}" không thể tự trỏ tới chính nó làm con.`;
+      }
+    }
+  }
+
+  // 3. Step sequence narration quality
+  for (const p of procs) {
+    if (p.type === "step_sequence") {
+      const steps = (p as any).steps ?? [];
+      for (let idx = 0; idx < steps.length; idx++) {
+        const narration = steps[idx]?.narration;
+        if (!narration || String(narration).trim().length < 3) {
+          return `Bước ${idx + 1} trong step_sequence thiếu thuyết minh sư phạm (narration).`;
+        }
+      }
+    }
+  }
+
+  // 4. Safe AST Dry-Run
+  try {
+    const base = initialBase(spec);
+    valuesOf(spec, base);
+    buildTimeline(spec);
+  } catch (e: any) {
+    if (e instanceof GenericExecutionError) {
+      return `Lỗi tính toán khi chạy thử mô phỏng: ${e.detail}`;
+    }
+    return `Lỗi thực thi quy tắc mô phỏng: ${e?.message ?? String(e)}`;
+  }
+
+  return null;
 }
 
 function ruleTargetsOf(rules: SpecRule[]): Set<string> {

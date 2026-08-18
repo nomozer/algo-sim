@@ -12,13 +12,11 @@ import {
   decisionPointOf,
   scanInteractionOf,
   searchInteractionOf,
-  searchSceneRegions,
   sortInteractionOf,
 } from "./decision";
 import { ScanActionZone } from "../../../components/ScanActionZone";
-import { SearchActionZone, SearchStateView } from "../../../components/SearchActionZone";
+import { SearchStateView } from "../../../components/SearchStateView";
 import { SortActionZone } from "../../../components/SortActionZone";
-import { useAppStore } from "../../../state/store";
 import {
   CONDITION_OPS,
   CONDITION_OP_LABEL,
@@ -26,8 +24,6 @@ import {
   thresholdRange,
 } from "./condition-param";
 import {
-  commitmentSurfaceKind,
-  commitmentSurfaceVisible,
   whatIfDragAllowed,
   whatIfPolicyOf,
 } from "./interaction-policy";
@@ -35,7 +31,6 @@ import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } 
 import { toolAffordanceOpen } from "../../tool-affordance";
 import {
   IconBack,
-  IconInfo,
   IconCheck,
   IconExperiment,
   IconPredict,
@@ -127,42 +122,34 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
 
   const policy = whatIfPolicyOf(config.algorithm_id);
 
-  /* W4B-3A — HAI CHẾ ĐỘ, HAI CỜ, MỘT CHỦ SỞ HỮU DÙNG CHUNG.
+  /* W4B-3A — CỜ CHẾ ĐỘ SỐNG Ở STORE, LỐI VÀO DO SHELL DỰNG.
    *
-   * Trước wave này cả hai nằm sau MỘT `useState` cục bộ tên `labOpen`, và nút mở
-   * nó do chính file này dựng — nên dưới sân khấu luôn thừa một dải
-   * `experimentTrigger`, và chuyển phiên là mất chế độ đang mở.
+   * Trước wave đó nó là `useState` cục bộ tên `labOpen` và nút mở do chính file
+   * này dựng — nên dưới sân khấu luôn thừa một dải `experimentTrigger`, và
+   * chuyển phiên là mất chế độ đang mở.
    *
-   * Nay cờ sống ở store (mù domain, theo phiên) và LỐI VÀO do
-   * `SimulationControls` dựng. Chỗ này chỉ ĐỌC — nó không còn quyền quyết định
-   * chế độ nào đang mở, đúng phân vai: shell sở hữu "có mở không", renderer
-   * miền sở hữu "mở ra thì thấy bộ điều khiển gì".
+   * Nay cờ sống ở store (mù domain, theo phiên) và lối vào do
+   * `SimulationControls` dựng. Chỗ này chỉ ĐỌC — đúng phân vai: shell sở hữu
+   * "có mở không", renderer miền sở hữu "mở ra thì thấy bộ điều khiển gì".
    *
-   * Vì sao hai cờ chứ không một: Thử thách đưa cam kết qua `predict.check` để
-   * engine PHÁN đúng/sai; Khám phá đưa thao tác qua `module.apply` và không
-   * phán gì. Một cửa cho hai việc khác loại thì học sinh học sai cả hai.
+   * W13 — trước đây có cờ thứ hai (`challengeOpen`) cho chế độ Thử thách, tách
+   * ra vì Thử thách đưa cam kết qua `predict.check` để engine PHÁN đúng/sai còn
+   * Khám phá đưa thao tác qua `module.apply` và không phán gì. Thử thách đã gỡ,
+   * nên chỉ còn một cờ và không còn hai loại thao tác để lẫn với nhau.
    */
-  const challengeOpen = useAppStore((s) => s.challengeOpen);
-  const exploreOpen = useAppStore((s) => s.exploreOpen);
-  const setChallengeOpen = useAppStore((s) => s.setChallengeOpen);
 
-  /* W4B-2B §5 — CỔNG THÍ NGHIỆM, DẪN XUẤT TỪ POLICY, KHÔNG TỪ `algorithm_id`.
+  /* W13 — DẢI DỮ KIỆN CƠ CHẾ LÀ THƯỜNG TRỰC.
    *
-   * `experimentGated` là cờ KHAI BÁO ở `interaction-policy.ts`. Ở đây chỉ đọc —
-   * không có `if (moduleId === "algorithm.find_max")` nào trong shell, đúng
-   * anti-pattern #2 (mọi quyết định suy từ capability/cấu trúc, không từ tên bài).
+   * `commitmentSurfaceVisible(policy, challengeOpen)` từng giấu dải này sau cổng
+   * Thử thách, vì hồi đó nó CHỞ HAI NÚT CAM KẾT — bày sẵn thì màn mặc định đọc
+   * thành một câu hỏi. Nay nút đã gỡ, thứ còn lại thuần tuý là *engine đang so
+   * cặp nào, giá trị bao nhiêu, cần sắp theo chiều nào*.
    *
-   * Cổng áp cho HAI thứ, và đó là điểm mới của wave này:
-   *  - kéo-thả (trước nay `mode: "challenge"` đã gác);
-   *  - VÙNG CAM KẾT (`ScanActionZone`/`SortActionZone`) — trước nay render vô
-   *    điều kiện mỗi khi bước là điểm quyết định.
+   * Thông tin ấy KHÔNG được giấu: nó là trạng thái cơ chế, và
+   * `SIMULATION_SURFACE_COMPOSITION_CONTRACT §EXPLAIN` đòi đóng panel lại thì
+   * học sinh vẫn phải nhận ra "cái gì đang hoạt động · vừa đổi gì". Giấu nó đi
+   * là bắt học sinh xem một hoạt hình không giải thích được.
    */
-  const gated = policy.experimentGated === true;
-  /**
-   * Vùng cam kết chỉ ẩn ở bài ĐƯỢC GÁC. Bài khác giữ nguyên hành vi cũ —
-   * đây là pilot hai bài, không phải rollout cả họ (§25).
-   */
-  const commitmentVisible = commitmentSurfaceVisible(policy, challengeOpen);
 
   /* W4B-3A — KÉO THUỘC VỀ KHÁM PHÁ, KHÔNG THUỘC VỀ THỬ THÁCH.
    *
@@ -186,7 +173,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
      không phải cột. */
   const dragAllowedByPolicy = policy.mode === "hidden"
     ? false
-    : toolAffordanceOpen({ exploreOpen, challengeOpen, busy });
+    : toolAffordanceOpen({ busy });
 
   const decision = decisionPointOf(state);
   const consequence = decision ? null : consequenceOf(state);
@@ -196,59 +183,34 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
   const search = searchInteractionOf(state);
   const sort = sortInteractionOf(state);
 
-  /* Nhánh DỰ ĐOÁN (không phải state canonical) đọc/ghi qua store — đúng khuôn
-     `PredictionBar` đã dùng từ M8-PRE-LIP: kết quả chấm sống ở `store.prediction`,
-     `active.state` không hề bị đụng tới. */
-  const prediction = useAppStore((s) => s.prediction);
-  const submitPrediction = useAppStore((s) => s.submitPrediction);
-
-  // Luật kéo-vs-cam-kết (W3B §15) sống ở `interaction-policy.ts` — hàm thuần,
-  // kiểm được không cần trình duyệt. Ở đây chỉ cung cấp dữ kiện thời điểm.
+  // Luật kéo (W3B §15) sống ở `interaction-policy.ts` — hàm thuần, kiểm được
+  // không cần trình duyệt. Ở đây chỉ cung cấp dữ kiện thời điểm.
   const canDrag = whatIfDragAllowed(state, {
     policyAllows: dragAllowedByPolicy,
     busy,
     last,
-    answered: prediction !== null,
-    challengeOpen,
   });
 
-  /* Đúng MỘT mô hình tương tác sống ở một bước (`stageInteractionsOf`), nên
-     chọn ở đây thay vì dựng ba nhánh JSX song song. `chrome` dẫn xuất từ
-     `gated` — capability, không phải tên bài. */
-  const zoneProps = {
-    answered: prediction !== null,
-    busy,
-    onAct: (actionId: string) => submitPrediction(actionId),
-    feedback: prediction,
-    showPrompt: !gated,
-    chrome: (gated ? "tool" : "panel") as "tool" | "panel",
-  };
+  /* W13 — DẢI DỮ KIỆN, KHÔNG CÒN VÙNG CAM KẾT.
+   *
+   * Đúng MỘT mô hình tương tác sống ở một bước (`stageInteractionsOf`), nên chọn
+   * ở đây thay vì dựng ba nhánh JSX song song.
+   *
+   * Ba component này trước đây chở *tiêu đề + chip dữ kiện + hai nút cam kết +
+   * dòng phán quyết*. Nay chỉ còn nửa đầu, nên `answered`/`onAct`/`feedback`/
+   * `showPrompt` đều hết đối tượng. `chrome` ở lại vì nó là HÌNH HỌC (thẻ có nền
+   * hay một hàng inline), không phải ngữ nghĩa. */
+  const stripProps = { chrome: "panel" as const };
 
-  /* W4B-2I — HÀNH ĐỘNG VỀ ĐÚNG CHỖ NÓ TÁC ĐỘNG.
-   *
-   * Vùng bấm chỉ dựng khi vùng cam kết ĐANG được phép hiện: nó LÀ vùng cam kết,
-   * chỉ khác hình thức. Dựng nó ở Quan sát sẽ là đúng thứ cổng sinh ra để chặn.
-   *
-   * `searchSceneRegions` trả `null` khi không gắn được (nửa rỗng, hai hành động
-   * trùng cột) ⇒ hàng nút cũ quay lại nguyên vẹn cho bước đó. Không có trạng
-   * thái lai nửa-vùng-nửa-nút. */
-  const sceneRegions =
-    search && commitmentVisible
-      ? searchSceneRegions(search, config.data.array.length)
+  /* Họ TÌM KIẾM không có mặt ở đây, và đó là kết quả chứ không phải sót:
+     `SearchActionZone` sau khi gỡ nút thì RỖNG — W4B-2V đã dời toàn bộ dữ kiện
+     quan sát của họ này sang `SearchStateView` (dựng riêng bên dưới), nên phần
+     còn lại của nó thuần tuý là quyền hành động được chấm. Component đã xoá. */
+  const factStrip = scan
+    ? <ScanActionZone model={scan} {...stripProps} />
+    : sort
+      ? <SortActionZone model={sort} {...stripProps} />
       : null;
-  /* Hình thức bề mặt cam kết do HÀM THUẦN quyết, không do JSX — xem lý do ở
-     `commitmentSurfaceKind` (một lần tiêm lỗi đã đi lọt vì luật nằm trong JSX). */
-  const surface = commitmentSurfaceKind(commitmentVisible, sceneRegions !== null);
-
-  const commitZone = !commitmentVisible
-    ? null
-    : scan
-      ? <ScanActionZone model={scan} {...zoneProps} />
-      : search
-        ? <SearchActionZone model={search} {...zoneProps} actionsHidden={surface === "scene"} />
-        : sort
-          ? <SortActionZone model={sort} {...zoneProps} />
-          : null;
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -306,11 +268,6 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           interactive={canDrag}
           onSwap={(i, j) => dispatch({ type: "whatif_swap", i, j })}
           gapIndex={hold?.gapIndex ?? null}
-          regions={sceneRegions}
-          /* Cùng đường nộp với hàng nút: `submitPrediction` → `predict.check`.
-             Sân khấu KHÔNG tự chấm, không có bên chấm thứ hai. */
-          onRegionAct={(actionId) => submitPrediction(actionId)}
-          regionsDisabled={busy || prediction !== null}
         />
         {/* Chú giải suy TỪ TRACE (không phải từ bước hiện tại) nên nó đứng yên
             suốt timeline. Trước W1 nó gắn với `hold` — tức chỉ hiện ở sắp xếp
@@ -324,53 +281,21 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
       </div>
 
       {/* W4B-2V — TRẠNG THÁI QUAN SÁT ĐỨNG NGOÀI CỔNG.
-          Điều kiện là `search` thuần, KHÔNG kèm `commitmentVisible`: cổng gác
-          quyền hành động, không gác thông tin về cơ chế. */}
+          Nguyên tắc ấy nay áp cho MỌI dải: cổng từng gác quyền hành động, không
+          gác thông tin về cơ chế — và W13 gỡ nốt cổng. */}
       {search && <SearchStateView model={search} relation={decision?.expression ?? null} />}
 
-      {/* W4B-2V/C2 — MỘT KHỐI CAM KẾT, BỌC TRONG CÔNG CỤ KHI ĐÃ GÁC CỔNG.
+      {/* W13 — DẢI DỮ KIỆN CƠ CHẾ, THƯỜNG TRỰC, KHÔNG BỌC TRONG KHAY NÀO.
        *
-       * Trước đây ba họ dựng ba `<section className="action-zone">` rời, và
-       * `.action-zone` là một THẺ: `background: canvas-soft` + `border` +
-       * `padding md lg` + `flex-direction: column`, trên phần tử block ⇒ trải
-       * gần hết bề ngang. Rút chữ ở wave trước làm nó NHỎ HƠN nhưng vẫn là một
-       * tấm nội dung thứ hai. Đây mới là chỗ phải đổi.
+       * Trước đây khối này bị bọc trong `.experiment-tool` kèm một nút `×` đóng
+       * Thử thách, vì nó CHỞ CAM KẾT — mà cam kết thì phải có đường thoát. Nay
+       * nó chỉ nói *engine đang so cặp nào*, tức trạng thái cơ chế: không có gì
+       * để thoát, và một cái khay có nút đóng quanh nó chỉ dạy học sinh rằng
+       * thông tin này là tuỳ chọn.
        *
-       * Ba mô hình loại trừ nhau (bất biến COMMITMENT_SURFACE_COUNT ≤ 1), nên
-       * gom được thành một biểu thức — và nhờ vậy CHỈ MỘT chỗ quyết định
-       * "chrome nào": bài gác cổng dùng chrome CÔNG CỤ, bài chưa gác giữ nguyên
-       * thẻ cũ (chúng không có Thí nghiệm; vùng cam kết của chúng là một phần
-       * thường trực của Quan sát).
-       */}
-      {commitZone && (gated ? (
-        <div
-          className="experiment-tool"
-          role="group"
-          /* `framing` không còn là một HÀNG chữ; nó thành TÊN KHẢ TRUY CẬP của
-             công cụ. Người dùng đọc màn hình vẫn nghe được mục đích, người nhìn
-             thì đọc thẳng nhãn nút — không ai phải đọc hai lần. */
-          aria-label={policy.framing}
-        >
-          <IconExperiment size={14} />
-          {commitZone}
-          {canDrag && policy.hint && (
-            /* §13 — phân biệt CAM KẾT ↔ WHAT-IF không được mất, nhưng cũng
-               không được chiếm một hàng chữ full-width. Chip nhỏ, nội dung đầy
-               đủ nằm ở `title` + `aria-label`. */
-            <span className="experiment-tool-note" title={policy.hint} aria-label={policy.hint}>
-              <IconInfo size={12} /> what-if
-            </span>
-          )}
-          <button
-            className="btn-utility experiment-tool-close"
-            onClick={() => setChallengeOpen(false)}
-            aria-label="Đóng thử thách"
-            aria-expanded
-          >
-            ×
-          </button>
-        </div>
-      ) : commitZone)}
+       * Ba mô hình loại trừ nhau (bất biến COMMITMENT_SURFACE_COUNT ≤ 1) nên vẫn
+       * là một biểu thức, một chỗ quyết định hình thức. */}
+      {factStrip}
 
       {/* Dải nhân quả — cùng nguồn decision.ts với ô dự đoán (M9-S1 §4, §8).
           KHÔNG dựng khi đã có vùng hành động: `ScanActionZone` mang sẵn state
@@ -383,16 +308,15 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           ("Dũng — vị trí 4", "8 > 9 ?"), tức là cổng Thí nghiệm vô tình lấy đi
           một dữ kiện thuần quan sát. Quan hệ thuộc về Quan sát; chỉ NÚT CAM KẾT
           mới thuộc về Thí nghiệm. */}
-      {/* W4B-2V — DẢI NHÂN QUẢ KHÔNG DỰNG CHO HỌ TÌM KIẾM NỮA.
-          W4B-2D dùng `!(search && commitmentVisible)`, tức quan hệ hiện ở Quan
-          sát rồi BIẾN MẤT khi mở Thí nghiệm — dải tắt, mà vùng cam kết không hề
-          mang `expression`. Đó là cùng một lỗi ở chiều ngược lại: một dữ kiện
-          quan sát bị buộc vào công tắc của cổng. Nay `SearchStateView` là chủ
-          sở hữu DUY NHẤT của quan hệ ở họ này — luôn hiện, và không có hai kênh
-          nói cùng một điều. Tiền đề cũng đã về đó, nên khối
-          `SearchPrecondition` độc lập của W4B-2D không còn cần.
-          Scan/sort giữ nguyên hành vi cũ. */}
-      {decision && !(scan && commitmentVisible) && !search && !(sort && commitmentVisible) && (
+      {/* W13 — ĐIỀU KIỆN NAY ĐỌC "DẢI DỮ KIỆN CÓ ĐANG DỰNG KHÔNG", hết phụ thuộc
+          vào cổng. Trước đây nó là `!(scan && commitmentVisible)`, tức cùng một
+          quan hệ lúc hiện lúc không tuỳ theo Thí nghiệm đang mở hay đóng — một
+          dữ kiện thuần quan sát bị buộc vào công tắc của cổng. Cổng đã gỡ, nên
+          luật còn đúng một câu: dải nhân quả KHÔNG dựng khi đã có bề mặt khác
+          nói cùng điều đó (`ScanActionZone`/`SortActionZone` mang sẵn phép so
+          sánh; `SearchStateView` là chủ sở hữu quan hệ ở họ tìm kiếm). Không bao
+          giờ hai kênh nói một điều. */}
+      {decision && !scan && !search && !sort && (
         <div className="decision-strip">
           <span className="decision-consideration">
             <IconSearch size={14} />
@@ -439,25 +363,14 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
        * biến PhET/CLT giữ nguyên — cổng vẫn TỰ MÔ TẢ, teaser vẫn đi kèm, chỉ
        * không còn chiếm một dải toàn chiều ngang dưới mô hình.
        */}
-      {/* Gợi ý kéo KHÔNG được mời làm việc đang bị khoá, và sau khi đã cam kết
-          thì phải nói rõ kéo là THỬ NGHIỆM — khác hẳn việc vừa làm bằng nút. */}
-      {canDrag && sort && prediction !== null && (
-        <span className="hint">
-          Em có thể kéo hai cột để THỬ một nhánh khác — đó là thí nghiệm, không
-          phải bước của thuật toán.
-        </span>
-      )}
-      {/* W4B-3A — CHẾ ĐỘ KHÁM PHÁ ĐỨNG MỘT MÌNH THÌ PHẢI TỰ NÓI ĐƯỢC.
+      {/* W13 — MỘT hàng gợi ý, không còn hai.
        *
-       * Chip "what-if" sống trong `.experiment-tool`, mà công cụ đó là bao của
-       * vùng CAM KẾT — nó chỉ dựng khi Thử thách đang mở. Nên khi học sinh chỉ
-       * mở Khám phá, sân khấu cho kéo được nhưng không câu nào nói kéo để làm
-       * gì, và W4B-2D §7 (kéo KHÔNG phải "bước tiếp theo của thuật toán") mất
-       * chỗ đứng. Hàng gợi ý này lấp đúng khoảng đó, và tự tắt khi chip đã nói
-       * hộ hoặc khi hàng "sau cam kết" ở trên đã nói. */}
-      {canDrag && policy.hint && !(commitZone && gated) && !(sort && prediction !== null) && (
-        <span className="hint">{policy.hint}</span>
-      )}
+       * Trước đây chỗ này có hai `.hint` loại trừ nhau: một câu cho trạng thái
+       * "đã cam kết xong, kéo giờ là thí nghiệm", một câu cho "chỉ mở Khám phá".
+       * Phân biệt ấy chỉ tồn tại vì kéo phải sống cạnh một hành động ĐƯỢC CHẤM;
+       * bỏ chấm thì kéo luôn mang đúng một nghĩa — thử một nhánh khác và xem hệ
+       * quả — nên một câu là đủ, và nó do policy của bài cấp. */}
+      {canDrag && policy.hint && <span className="hint">{policy.hint}</span>}
 
       {/* W4B-4D — KHÁM PHÁ CỦA HỌ CÓ-ĐIỀU-KIỆN LÀ ĐỔI CHÍNH ĐIỀU KIỆN.
           Chỉ dựng khi bài THẬT SỰ có điều kiện (`count_if`/`sum_if`), nên đây
@@ -467,7 +380,7 @@ export function AlgorithmWorkspace({ config, state, busy, dispatch }: Props) {
           KHÔNG phải cột kéo (`mode: "hidden"` — thứ tự dãy không đổi kết quả)
           mà chính là thanh điều kiện này. Để nó sau `exploreOpen` nghĩa là hai
           bài ấy mở ra không có công cụ nào — đúng thứ ma trận bề rộng đo được. */}
-      {toolAffordanceOpen({ exploreOpen, challengeOpen, busy }) && hasCondition(config) && (
+      {toolAffordanceOpen({ busy }) && hasCondition(config) && (
         <ConditionBar config={config} state={state} busy={busy} dispatch={dispatch} />
       )}
     </div>

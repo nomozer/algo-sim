@@ -1,5 +1,5 @@
 {
-  "when": "2026-08-16T16:20:39.101Z",
+  "when": "2026-08-18T17:33:29.194Z",
   "rows": [
     {
       "target": "algorithm.binary_search",
@@ -11,8 +11,8 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.bounded_control_flow",
@@ -37,8 +37,8 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.count_if",
@@ -50,8 +50,8 @@
       "actionsThatChanged": 2,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.find_max",
@@ -63,8 +63,8 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.find_min",
@@ -76,8 +76,8 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.insertion_sort",
@@ -89,8 +89,8 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.linear_search",
@@ -102,8 +102,8 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.scan",
@@ -128,8 +128,8 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "algorithm.sum_if",
@@ -141,8 +141,8 @@
       "actionsThatChanged": 4,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
-      "presentsCommitment": true
+      "declaresPredict": false,
+      "presentsCommitment": false
     },
     {
       "target": "binary.base_conversion",
@@ -271,7 +271,7 @@
       "actionsThatChanged": 1,
       "declaresExplore": true,
       "hasExploreEntry": true,
-      "declaresPredict": true,
+      "declaresPredict": false,
       "presentsCommitment": false
     },
     {
@@ -284,7 +284,7 @@
       "actionsThatChanged": 0,
       "declaresExplore": false,
       "hasExploreEntry": false,
-      "declaresPredict": true,
+      "declaresPredict": false,
       "presentsCommitment": false
     },
     {

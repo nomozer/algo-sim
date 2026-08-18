@@ -155,9 +155,15 @@ export function rendererFitOf(
   if (simulationId === "tree.traversal") {
     const config = (state as { config?: unknown } | null)?.config;
     const w = config ? treeLayoutSize(config as Parameters<typeof treeLayoutSize>[0]).w : null;
-    return { simulationId, cls: "adaptive_layout", semanticMaxWidth: w,
+    const totalWidth = w ? w + 360 : null;
+    return { simulationId, cls: "adaptive_layout", semanticMaxWidth: totalWidth,
              maxWidthPerItem: TREE_SLOT_W, itemCount: null,
-             reason: "SVG cây — trần suy từ chính hàm bố cục (layout-size.ts), renderer tự chặn maxWidth" };
+             reason: "SVG cây — trần suy từ chính hàm bố cục (layout-size.ts) + cột trạng thái side-by-side" };
+  }
+  if (simulationId === "network.graph_traversal") {
+    return { simulationId, cls: "adaptive_layout", semanticMaxWidth: 960,
+             maxWidthPerItem: null, itemCount: null,
+             reason: "SVG đồ thị — bố cục 2 cột side-by-side (đồ thị + hàng đợi/ngăn xếp)" };
   }
   if (FIXED_SIZE_TARGETS.has(simulationId)) {
     return { simulationId, cls: "fixed_semantic_size", semanticMaxWidth: null,

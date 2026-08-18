@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-16T16:20:38.416Z",
+  "generatedAt": "2026-08-18T17:33:29.368Z",
   "note": "sinh từ registry qua vitest; MÔ TẢ hiện thực, KHÔNG cấp chứng nhận.",
   "interactionCertification": "NO_EVIDENCE (toàn danh mục, đo trình duyệt — W12)",
   "experienceSuitabilityCertification": "NO_EVIDENCE (W12)",
@@ -113,11 +113,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -139,11 +139,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -152,11 +152,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "OPTIONAL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -165,11 +165,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -178,11 +178,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -191,11 +191,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -204,11 +204,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -230,11 +230,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -243,11 +243,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "OPTIONAL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": true
     },
     {
@@ -373,11 +373,11 @@
       "interactionMode": "progressive",
       "tool": true,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": false
     },
     {
@@ -386,11 +386,11 @@
       "interactionMode": "progressive",
       "tool": false,
       "trace": true,
-      "challenge": true,
+      "challenge": false,
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "FULL_TRACE",
-      "correctnessOwner": "module.predict.check (engine tất định)",
+      "correctnessOwner": "—",
       "hasOfflineSample": false
     },
     {

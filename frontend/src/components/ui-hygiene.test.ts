@@ -137,12 +137,12 @@ describe("(SHELL-N) chỉ SHELL được dựng khe thuyết minh", () => {
  */
 describe("AI không có control learner-facing trong workspace", () => {
   const WORKSPACE_FILES = FILES.filter((f) =>
-    /[/\\](SimulationWorkspace|SimulationInspector|SimulationControls|PredictionBar)\.tsx$/
+    /[/\\](SimulationWorkspace|SimulationInspector|SimulationControls)\.tsx$/
       .test(f.path),
   );
 
   it("có tìm đúng các tệp workspace (guard không rỗng vô nghĩa)", () => {
-    expect(WORKSPACE_FILES.length).toBe(4);
+    expect(WORKSPACE_FILES.length).toBe(3);
   });
 
   it('không tệp workspace nào render "Hỏi AI" hay accordion AI', () => {

@@ -124,39 +124,3 @@ describe("(M10) module đóng gói — hợp đồng + validate", () => {
   });
 });
 
-describe("(M10) prediction — bám delta thật của bước kế tiếp", () => {
-  const base = emod.init({ payloadLabel: "Dữ liệu ứng dụng", appProtocol: null, notes: null });
-  const at = (i: number) => ({ ...base, cursor: i });
-
-  it("ở bước đóng gói: hỏi 'thêm gì', đáp án đúng = mảnh của bước kế", () => {
-    const ch = emod.predict!.challenge(at(0));
-    expect(ch).not.toBeNull();
-    expect(ch!.question).toContain("THÊM");
-    expect(ch!.options.map((o) => o.id)).toEqual(["tcp", "ip", "link+fcs"]);
-    expect(emod.predict!.check(at(0), "tcp").verdict).toBe("correct");
-    expect(emod.predict!.check(at(0), "ip").verdict).toBe("incorrect");
-  });
-
-  it("ở Network Access: LINK+FCS là MỘT đáp án gộp đúng", () => {
-    expect(emod.predict!.check(at(2), "link+fcs").verdict).toBe("correct");
-    expect(emod.predict!.check(at(2), "link+fcs").expectedId).toBe("link+fcs");
-  });
-
-  it("ở bước mở gói: hỏi 'gỡ gì', gỡ LINK+FCS trước", () => {
-    const ch = emod.predict!.challenge(at(4));
-    expect(ch!.question).toContain("GỠ");
-    expect(emod.predict!.check(at(4), "link+fcs").verdict).toBe("correct");
-  });
-
-  it("bước truyền tin / đã xong → không có challenge", () => {
-    expect(emod.predict!.challenge(at(3))).toBeNull(); // kế tiếp là transmit
-    expect(emod.predict!.challenge(at(8))).toBeNull(); // hết bước
-    expect(emod.predict!.check(at(3), "tcp").verdict).toBe("unsupported_to_verify");
-  });
-
-  it("(bất biến) check là hàm THUẦN — không đụng state", () => {
-    const before = JSON.stringify(at(1));
-    emod.predict!.check(at(1), "ip");
-    expect(JSON.stringify(at(1))).toBe(before);
-  });
-});

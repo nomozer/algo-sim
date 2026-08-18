@@ -12,12 +12,15 @@ from app.simulation.dsl.manifest import (
 
 
 def test_numeric_providers_dan_xuat_tu_manifest():
-    # Snapshot CÓ Ý THỨC: đổi manifest thì test này phải được cập nhật kèm lý do.
-    assert value_provider_types("numeric") == {"switch", "lamp", "value_box"}
+    # Snapshot CÓ Ý THỨC: mở rộng manifest với các visual primitives mới
+    assert value_provider_types("numeric") == {
+        "switch", "lamp", "value_box", "slider", "color_swatch", "array_strip", "metric_gauge",
+        "bar_chart", "table_grid", "stack_view", "queue_view", "tree_element", "bit_register", "pointer", "coordinate_plane"
+    }
 
 
 def test_logical_providers_dan_xuat_tu_manifest():
-    assert value_provider_types("logical") == {"switch", "lamp"}
+    assert value_provider_types("logical") == {"switch", "lamp", "bit_register", "logic_gate"}
 
 
 def test_relational_khong_phai_value_provider():

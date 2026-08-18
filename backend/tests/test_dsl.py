@@ -811,3 +811,262 @@ def test_simulate_generic_retry_khi_spec_sai(monkeypatch):
     assert env["status"] == "ok"
     assert len(calls) == 4  # analyze + classify + 2 lần simulate
     assert "bị từ chối vì" in calls[3]  # prompt retry chứa lỗi validation
+
+
+def test_formula_rgb_mixing_spec_hop_le():
+    """Kiểm tra mô hình màu RGB sinh từ generic DSL bằng slider + color_swatch + formula."""
+    rgb_spec = {
+        "dsl_version": "1.0",
+        "title": "Mô hình màu RGB",
+        "objects": [
+            {"id": "r", "type": "slider", "value": 255, "min": 0, "max": 255, "step": 1, "label": "Đỏ"},
+            {"id": "g", "type": "slider", "value": 128, "min": 0, "max": 255, "step": 1, "label": "Xanh lá"},
+            {"id": "b", "type": "slider", "value": 0, "min": 0, "max": 255, "step": 1, "label": "Xanh dương"},
+            {"id": "swatch", "type": "color_swatch", "label": "Màu pha trộn"},
+        ],
+        "rules": [
+            {"type": "formula", "expression": "rgb_to_hex(r, g, b)", "inputs": ["r", "g", "b"], "target": "swatch"}
+        ],
+        "interactions": [
+            {"type": "set_param", "target": "r"},
+            {"type": "set_param", "target": "g"},
+            {"type": "set_param", "target": "b"},
+        ],
+        "processes": [],
+    }
+    cfg, err = validate_generic_config(rgb_spec)
+    assert err is None, err
+    assert len(cfg["objects"]) == 4
+    assert cfg["rules"][0]["expression"] == "rgb_to_hex(r, g, b)"
+
+    # Test engine evaluation
+    from app.simulation.generic_engine import initial_base, values_of
+    base = initial_base(cfg)
+    vals = values_of(cfg, base)
+    assert vals["swatch"] == "#ff8000"
+
+
+def test_formula_math_expressions():
+    """Kiểm tra tính toán biểu thức toán học và logic trong formula rule."""
+    math_spec = {
+        "dsl_version": "1.0",
+        "title": "Biểu thức toán",
+        "objects": [
+            {"id": "x", "type": "slider", "value": 15, "min": 0, "max": 100},
+            {"id": "y", "type": "slider", "value": 5, "min": 0, "max": 100},
+            {"id": "out", "type": "value_box", "label": "Kết quả"},
+        ],
+        "rules": [
+            {"type": "formula", "expression": "clamp(x * 2 + y, 0, 50)", "inputs": ["x", "y"], "target": "out"}
+        ],
+        "interactions": [{"type": "set_param", "target": "x"}],
+        "processes": [],
+    }
+    cfg, err = validate_generic_config(math_spec)
+    assert err is None, err
+    from app.simulation.generic_engine import initial_base, values_of
+    base = initial_base(cfg)
+    vals = values_of(cfg, base)
+    assert vals["out"] == 35  # clamp(15*2 + 5, 0, 50) == 35
+
+
+def test_sorting_bar_chart_and_step_sequence_spec():
+    """Kiểm tra mô phỏng thuật toán sắp xếp với bar_chart, pointer và step_sequence."""
+    sort_spec = {
+        "dsl_version": "1.0",
+        "title": "Mô phỏng Bubble Sort",
+        "objects": [
+            {
+                "id": "chart",
+                "type": "bar_chart",
+                "bars": [
+                    {"id": "b0", "value": 45, "label": "45"},
+                    {"id": "b1", "value": 12, "label": "12"},
+                    {"id": "b2", "value": 89, "label": "89"},
+                ],
+                "max_val": 100,
+            },
+            {"id": "ptr_i", "type": "pointer", "target_id": "chart", "index": 0, "label": "i"},
+            {"id": "ptr_j", "type": "pointer", "target_id": "chart", "index": 1, "label": "j"},
+        ],
+        "rules": [],
+        "interactions": [{"type": "button_action", "target": "chart", "label": "Chạy tiếp"}],
+        "processes": [
+            {
+                "type": "step_sequence",
+                "steps": [
+                    {"action": "highlight", "targets": ["chart"], "indices": [0, 1], "state": "comparing", "narration": "So sánh phần tử 45 và 12"},
+                    {"action": "swap", "targets": ["chart"], "indices": [0, 1], "narration": "Đổi chỗ 45 và 12 vì 45 > 12"},
+                    {"action": "move_pointer", "pointer_id": "ptr_i", "to_index": 1, "narration": "Tăng chỉ số con trỏ i"},
+                ],
+            }
+        ],
+    }
+    cfg, err = validate_generic_config(sort_spec)
+    assert err is None, err
+    assert len(cfg["objects"]) == 3
+    assert cfg["processes"][0]["type"] == "step_sequence"
+    assert len(cfg["processes"][0]["steps"]) == 3
+
+    # Test timeline generation
+    from app.simulation.generic_engine import build_timeline
+    timeline = build_timeline(cfg)
+    assert len(timeline) == 3
+    assert timeline[1]["stepAction"]["action"] == "swap"
+
+
+def test_binary_register_bitwise_and_conversion_spec():
+    """Kiểm tra thanh ghi nhị phân bit_register và các phép toán bitwise/chuyển đổi cơ số."""
+    bin_spec = {
+        "dsl_version": "1.0",
+        "title": "Phép toán Bitwise AND và Chuyển đổi Cơ số",
+        "objects": [
+            {"id": "reg_a", "type": "bit_register", "value": 12, "size": 8, "show_decimal": True, "show_hex": True},
+            {"id": "reg_b", "type": "bit_register", "value": 10, "size": 8, "show_decimal": True, "show_hex": True},
+            {"id": "reg_out", "type": "bit_register", "size": 8, "show_decimal": True, "show_hex": True},
+        ],
+        "rules": [
+            {"type": "formula", "expression": "bit_and(reg_a, reg_b)", "inputs": ["reg_a", "reg_b"], "target": "reg_out"}
+        ],
+        "interactions": [
+            {"type": "set_param", "target": "reg_a"},
+            {"type": "set_param", "target": "reg_b"},
+        ],
+        "processes": [],
+    }
+    cfg, err = validate_generic_config(bin_spec)
+    assert err is None, err
+    from app.simulation.generic_engine import initial_base, values_of
+    base = initial_base(cfg)
+    assert base["reg_a"] == 12
+    assert base["reg_b"] == 10
+    vals = values_of(cfg, base)
+    assert vals["reg_out"] == 8  # 12 & 10 = 1100 & 1010 = 1000 = 8
+
+
+def test_data_structures_stack_queue_tree_spec():
+    """Kiểm tra ngăn xếp, hàng đợi và cây nhị phân."""
+    ds_spec = {
+        "dsl_version": "1.0",
+        "title": "Cấu trúc dữ liệu",
+        "objects": [
+            {"id": "s", "type": "stack_view", "items": [10, 20, 30], "capacity": 5, "label": "Ngăn xếp LIFO"},
+            {"id": "q", "type": "queue_view", "items": ["A", "B", "C"], "capacity": 5, "label": "Hàng đợi FIFO"},
+            {"id": "t_root", "type": "tree_element", "value": 50, "left": "t_l", "right": "t_r", "label": "Gốc"},
+            {"id": "t_l", "type": "tree_element", "value": 25, "parent": "t_root", "label": "Trái"},
+            {"id": "t_r", "type": "tree_element", "value": 75, "parent": "t_root", "label": "Phải"},
+        ],
+        "rules": [],
+        "interactions": [],
+        "processes": [],
+    }
+    cfg, err = validate_generic_config(ds_spec)
+    assert err is None, err
+    assert len(cfg["objects"]) == 5
+
+
+def test_table_grid_database_spec():
+    """Kiểm tra bảng 2 chiều table_grid cho CSDL / ma trận."""
+    db_spec = {
+        "dsl_version": "1.0",
+        "title": "Bảng dữ liệu Học Sinh",
+        "objects": [
+            {
+                "id": "tbl",
+                "type": "table_grid",
+                "headers": ["Mã HS", "Họ Tên", "Điểm Toán", "Điểm Tin"],
+                "rows": [
+                    ["HS01", "Nguyễn Văn A", 9.0, 9.5],
+                    ["HS02", "Trần Thị B", 8.5, 9.0],
+                ],
+                "highlighted_cells": [{"row": 0, "col": 3, "color": "#22c55e"}],
+            }
+        ],
+        "rules": [],
+        "interactions": [],
+        "processes": [],
+    }
+    cfg, err = validate_generic_config(db_spec)
+    assert err is None, err
+    assert cfg["objects"][0]["headers"][1] == "Họ Tên"
+    assert len(cfg["objects"][0]["rows"]) == 2
+
+
+def test_pedagogical_quality_bar_chart_and_tree_checks():
+    """M20 QA: Biểu đồ cột cần >= 2 cột và cây không tự trỏ chính nó."""
+    one_bar_spec = {
+        "dsl_version": "1.0",
+        "title": "Cột đơn",
+        "objects": [
+            {"id": "c", "type": "bar_chart", "bars": [{"id": "b1", "value": 10}]},
+        ],
+        "rules": [],
+        "interactions": [],
+        "processes": [],
+    }
+    cfg, err = validate_generic_config(one_bar_spec)
+    assert cfg is None
+    assert "cần ít nhất 2 cột" in err
+
+    self_tree_spec = {
+        "dsl_version": "1.0",
+        "title": "Cây chu trình",
+        "objects": [
+            {"id": "t", "type": "tree_element", "left": "t"},
+        ],
+        "rules": [],
+        "interactions": [],
+        "processes": [],
+    }
+    cfg2, err2 = validate_generic_config(self_tree_spec)
+    assert cfg2 is None
+    assert "không thể tự trỏ tới chính nó" in err2
+
+
+def test_pedagogical_quality_step_sequence_narration_required():
+    """M20 QA: Mỗi bước trong step_sequence bắt buộc phải có narration sư phạm."""
+    no_narration_spec = {
+        "dsl_version": "1.0",
+        "title": "Sắp xếp thiếu narration",
+        "objects": [
+            {
+                "id": "c",
+                "type": "bar_chart",
+                "bars": [{"id": "b1", "value": 10}, {"id": "b2", "value": 20}],
+            }
+        ],
+        "rules": [],
+        "interactions": [],
+        "processes": [
+            {
+                "type": "step_sequence",
+                "steps": [
+                    {"action": "swap", "targets": ["c"], "indices": [0, 1], "narration": ""}
+                ],
+            }
+        ],
+    }
+    cfg, err = validate_generic_config(no_narration_spec)
+    assert cfg is None
+    assert "thiếu thuyết minh sư phạm" in err
+
+
+def test_pedagogical_quality_dry_run_catches_eval_error():
+    """M20 QA: Server Dry-Run phát hiện công thức lỗi cú pháp hoặc hàm không tồn tại."""
+    bad_formula_spec = {
+        "dsl_version": "1.0",
+        "title": "Công thức lỗi",
+        "objects": [
+            {"id": "a", "type": "slider", "value": 10},
+            {"id": "out", "type": "value_box"},
+        ],
+        "rules": [
+            {"type": "formula", "expression": "unknown_func(a) + * 2", "inputs": ["a"], "target": "out"}
+        ],
+        "interactions": [],
+        "processes": [],
+    }
+    cfg, err = validate_generic_config(bad_formula_spec)
+    assert cfg is None
+    assert "Lỗi" in err
+

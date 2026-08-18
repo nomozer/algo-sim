@@ -79,6 +79,7 @@ FAMILY_MECHANISMS: dict[FamilyId, tuple[str, ...]] = {
     FamilyId.STRUCTURAL_PROGRESSIVE_REPRESENTATION: (
         "structural_progressive_representation.reveal_sequence",
         "structural_progressive_representation.move_along_path",
+        "structural_progressive_representation.step_sequence",
     ),
     # M17 W2A — duyệt cây nhị phân bounded (4 biến thể). Prefix = family_id
     # (bắt buộc theo canonical convention: mechanism_family() phải khớp family).

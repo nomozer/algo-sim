@@ -106,11 +106,11 @@ def test_drag_trong_manifest_va_validator_dan_xuat():
 
 def test_temporal_process_family_dan_xuat_tu_taxonomy():
     """Điều chỉnh #1: họ temporal process suy từ role taxonomy, KHÔNG hard-code
-    tên — reveal_sequence VÀ move_along_path đều thuộc họ này."""
+    tên — reveal_sequence, move_along_path VÀ step_sequence đều thuộc họ này."""
     from app.simulation.dsl.manifest import PRIMITIVE_ROLES, temporal_process_types
 
     family = temporal_process_types()
-    assert family == {"reveal_sequence", "move_along_path"}
+    assert family == {"reveal_sequence", "move_along_path", "step_sequence"}
     for p in family:
         assert "temporal" in PRIMITIVE_ROLES[p]
 
@@ -120,6 +120,7 @@ def test_interaction_cover_vai_tro_interactive():
 
     assert roles_of_primitive("toggle") == {"interactive"}
     assert roles_of_primitive("drag") == {"interactive"}
+    assert roles_of_primitive("button_action") == {"interactive"}
 
 
 def test_contract_va_capability_summary_co_drag():

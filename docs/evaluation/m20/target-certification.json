@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-16T16:20:41.714Z",
+  "generatedAt": "2026-08-18T17:33:31.471Z",
   "note": "sinh từ registry qua vitest (KHÔNG cần trình duyệt); dùng kèm commit chứa nó.",
   "gateOwners": {
     "semantic": "backend/app/evaluation/authenticity_audit.py",
@@ -20,7 +20,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -50,7 +49,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -66,7 +64,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -82,7 +79,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -98,7 +94,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -114,7 +109,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -130,7 +124,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -160,7 +153,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -176,7 +168,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -315,7 +306,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "explore",
         "narrate"
       ],
@@ -331,7 +321,6 @@
       "interactionMode": "progressive",
       "declaredEntryPoints": [
         "timeline",
-        "predict",
         "narrate"
       ],
       "visualModes": [

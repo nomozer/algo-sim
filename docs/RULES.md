@@ -76,13 +76,28 @@ Post-flight phải ghi: **reused modules · created modules · duplicate check r
 
 Tên đề tài (giữ nguyên chính xác):
 
-> **Hệ mô phỏng thuật toán tương tác kết hợp LLM phân tích bài toán có lời
-> văn, hỗ trợ dạy học môn Tin học THPT**
+> **Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán bằng ngôn ngữ
+> tự nhiên, hỗ trợ dạy học môn Tin học THPT**
 >
-> ⚠️ ĐÂY LÀ TÊN CANONICAL. Bản rộng cũ ("mô phỏng tương tác 2D/3D … ngôn ngữ
-> tự nhiên") đã bị thay 2026-08-16: nó KHÔNG phải một quyết định phạm vi mà là
-> hệ quả của việc tên gốc rụng kèm commit `1f95e92` ("vệ sinh RULES"), rồi bản
-> rộng ở README sống một mình. Xem `STATUS_LEDGER §0`.
+> ⚠️ ĐÂY LÀ TÊN CANONICAL (chốt 2026-08-18). Mọi bản khác **đã hết hiệu lực**:
+> bản hẹp 2026-08-16 (*"Hệ mô phỏng thuật toán … bài toán có lời văn"*), kèm cả
+> lập luận "tên hẹp ⇒ phạm vi hẹp" từng treo ở `STATUS_LEDGER §0`; bản có cụm
+> *"2D/3D"*; và bản dùng động từ *"cấu hình theo"*.
+>
+> **Động từ của LLM là "phân tích", CẤM đổi thành "sinh"/"tự sinh".** Hệ **không
+> sinh mô phỏng mới** — LLM chỉ đọc đề và điền một đặc tả đã kiểm định, mỗi miền
+> mô phỏng đều dựng tay (`catalog.py` + `simulations/`), đề không khớp danh mục
+> thì bị từ chối bằng `capability_gap` (ranh giới R0; README §6: *"không tuyên
+> bố sinh mô phỏng phổ quát"*). "Phân tích" đúng vì nó là tên bước có thật trong
+> pipeline (`analyze`); "sinh" thì tự bác bỏ luận điểm của chính đề tài.
+>
+> Tên **bỏ cụm "2D/3D"** có chủ đích: danh mục là **23 target chỉ 2D · 1 có
+> 2D+3D** (`CURRENT_STATE.md`), và W4B-2R đã phán 3D thua trên 10 tiêu chí ở
+> hầu hết cơ chế. 3D vẫn là năng lực có thật, chỉ không còn được quảng cáo ngang
+> hàng 2D ngay ở tên.
+>
+> **Phạm vi KHÔNG còn suy ra từ tên.** Task được xếp loại theo §3a–3d bên dưới,
+> không theo việc nó có nằm trong "thuật toán/bài toán lời văn" hay không.
 
 ### 3a. Phạm vi cốt lõi
 

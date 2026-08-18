@@ -9,14 +9,12 @@ import {
 import type {
   ExploreCapability,
   Narration,
-  PredictionCapability,
   PresentationEntry,
   VisualMode,
   WorkspaceProps,
 } from "../simulations/types";
 import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
-import { PredictionBar } from "./PredictionBar";
 import { SimulationInspector } from "./SimulationInspector";
 
 /**
@@ -150,64 +148,17 @@ export function NarrationSlot({ narration }: { narration: Narration | null }) {
   );
 }
 
-/**
- * W4B-2U2 §13 — CÓ BÀY BỀ MẶT THỬ THÁCH KHÔNG. Hàm THUẦN, và nó phải thuần vì
- * một lý do đã có tiền lệ trong kho: `SimulationWorkspace` đọc store, mà zustand
- * v5 dùng `useSyncExternalStore` nên **SSR luôn trả trạng thái ĐẦU**
- * (`ARCHITECTURE_MAP §8` #8). Test `renderToString(<SimulationWorkspace/>)` sau
- * khi `loadEnvelope` sẽ thấy **empty-state**, và mọi khẳng định kiểu "không chứa
- * chuỗi X" sẽ XANH vì màn hình rỗng — xanh vì lý do sai.
+/* W13 — `challengeSurfaceVisible` / `challengeEntry` / `DEFAULT_CHALLENGE` ĐÃ GỠ.
  *
- * Cùng khuôn `commitmentSurfaceVisible` / `commitmentSurfaceKind`: luật sống ở
- * hàm thuần, production và test gọi CÙNG một nguồn.
- *
- * `predict` là NĂNG LỰC; `challengeOpen` là TRÌNH BÀY. Module tự bày cam kết
- * trên sân khấu (`presentedInStage`) thì shell không dựng bề mặt thứ hai.
+ * Ba hàm này trả lời "có bày bề mặt Thử thách không" và "cửa vào tên là gì".
+ * Không còn Thử thách thì không còn câu hỏi nào để trả lời. Lối vào duy nhất
+ * còn lại là Khám phá (`exploreEntry` bên dưới) — cùng khuôn hàm thuần, cùng lý
+ * do phải thuần: `SimulationWorkspace` đọc store, mà zustand v5 dùng
+ * `useSyncExternalStore` nên SSR luôn trả TRẠNG THÁI ĐẦU (`ARCHITECTURE_MAP §8`
+ * #8). Test `renderToString(<SimulationWorkspace/>)` sau `loadEnvelope` sẽ thấy
+ * empty-state, và mọi khẳng định kiểu "không chứa chuỗi X" sẽ XANH vì màn hình
+ * rỗng — xanh vì lý do sai. Luật phải sống ở hàm thuần để kiểm được.
  */
-export function challengeSurfaceVisible<S>(
-  mod: { predict?: { presentedInStage?: (state: S) => boolean } },
-  state: S,
-  challengeOpen: boolean,
-): boolean {
-  if (!mod.predict) return false;
-  if (mod.predict.presentedInStage?.(state)) return false;
-  return challengeOpen;
-}
-
-/**
- * Có dựng LỐI VÀO Thử thách không — dẫn xuất từ NĂNG LỰC, không từ tên bài.
- *
- * W4B-3A — SỬA MỘT LẦN LẪN LỘN CỬA VỚI PHÒNG.
- *
- * Bản trước trả `false` khi module tự bày cam kết trên sân khấu
- * (`presentedInStage`). Ý định đúng — không được có HAI bề mặt hỏi cùng một câu
- * — nhưng chỗ áp sai: nó tắt cả CÁI CỬA, không chỉ bề mặt thứ hai. Hệ quả đo
- * được ở 8 target thuật toán: đúng những bước có vùng cam kết thì shell không
- * dựng lối vào nào, nên `domains/algorithm/ui.tsx` phải tự dựng lấy một nút mở
- * — và nút tự dựng ấy CHÍNH LÀ dải `experimentTrigger` nằm dưới mô hình.
- *
- * Nay: cửa suy từ năng lực `predict` (một cửa, ở dải hành động phụ), còn
- * `presentedInStage` giữ nguyên trách nhiệm THẬT của nó ở
- * `challengeSurfaceVisible` — chặn `PredictionBar` khi sân khấu đã hỏi rồi.
- * Một cửa, nhiều nhất một bề mặt.
- */
-export function challengeEntry<S>(
-  mod: { predict?: PredictionCapability<S> },
-  state: S,
-  config: unknown,
-): PresentationEntry | null {
-  if (!mod.predict) return null;
-  // Module chưa khai câu mời ⇒ câu mặc định của shell (tương thích ngược).
-  if (!mod.predict.entry) return DEFAULT_CHALLENGE;
-  return mod.predict.entry(state, config);
-}
-
-/** Câu mời mặc định khi module không khai `predict.entry`. */
-export const DEFAULT_CHALLENGE: PresentationEntry = {
-  label: "Thử thách: tự dự đoán bước này",
-  shortLabel: "Thử thách",
-  closeLabel: "Đóng thử thách",
-};
 
 /**
  * Có dựng LỐI VÀO Khám phá không — cũng dẫn xuất từ năng lực.
@@ -271,7 +222,6 @@ export function SimulationWorkspace() {
   const playing = useAppStore((s) => s.playing);
   const dispatch = useAppStore((s) => s.dispatch);
   const visualMode = useAppStore((s) => s.visualMode);
-  const challengeOpen = useAppStore((s) => s.challengeOpen);
   /* Cùng một cờ store như trước, chỉ đổi CHỖ dựng: nút "Giải thích" ở header nay
      thu/mở cột hai của thẻ thay vì bật/tắt một khay riêng của shell. */
   const rightOpen = useAppStore((s) => s.rightOpen);
@@ -396,39 +346,11 @@ export function SimulationWorkspace() {
           nên 2D và 3D tự nhiên kể cùng một câu — không còn hai dòng song song
           phải giữ đồng bộ bằng tay. */}
       <NarrationSlot narration={mod.narrate?.(active.state, active.config) ?? null} />
-      {/* M8-PRE-LIP: một UI dự đoán DÙNG CHUNG — module không khai `predict` thì
-          không render gì. M8: nằm NGOÀI renderer nên tự nhiên renderer-independent —
-          2D hay 3D đều cùng PredictionBar này, không có bản 3D riêng. */}
-      {/* `key` theo BƯỚC HIỆN TẠI (đọc qua hợp đồng `timeline`, không thò vào
-          state của domain): mỗi bước là một lần mount mới, nên checkpoint LUÔN
-          bắt đầu ở trạng thái thu gọn — kể cả khi học sinh rời bước rồi quay
-          lại đúng bước đó. Không có nó thì "thu gọn mặc định" chỉ đúng ở lần
-          gặp đầu tiên. */}
-      {/* INTERACTION-FAMILY W1: module có thể khai rằng bước này ĐÃ được trình
-          bày ngay trên sân khấu (vd cụm quét dãy dùng `ScanActionZone`). Khi đó
-          shell không dựng UI dùng chung nữa — một cam kết, một hình thức. Module
-          không khai thì hành vi giữ nguyên như cũ. */}
-      {/* W4B-2U2 §13 — THỬ THÁCH LÀ CHẾ ĐỘ, KHÔNG PHẢI ĐỒ ĐẠC THƯỜNG TRỰC.
-       *
-       * Trước wave này, hễ module khai `predict` là thanh dự đoán nằm sẵn trong
-       * Quan sát ở cả 11 target — nên sản phẩm đọc thành hỏi-đáp dù nó chưa bao
-       * giờ chặn playback. Nay `challengeOpen` (trình bày thuần) quyết định BÀY
-       * hay không; NĂNG LỰC `predict` và bên chấm `predict.check` không đổi một
-       * dòng. Đây là dời TRÌNH BÀY, không dời SỰ THẬT. */}
-      {challengeSurfaceVisible(mod, active.state, challengeOpen) && (
-        <PredictionBar
-          key={mod.timeline ? mod.timeline.currentStep(active.state) : "static"}
-          module={mod}
-          state={active.state}
-          busy={playing}
-        />
-      )}
-
-      {/* W4B-2Z §20/§23 — LỐI VÀO THỬ THÁCH ĐÃ RỜI KHỎI CỘT NỘI DUNG.
-          Nó nay nằm trong dải điều khiển (`SimulationControls`) cùng hàng với
-          transport, nên dưới mô hình bớt hẳn một dải toàn chiều ngang. Trước
-          đây dù đã là nút nhỏ, nó vẫn CHIẾM một hàng riêng ngay dưới sân khấu —
-          mắt vẫn đọc thành MÔ HÌNH → DẢI → DẢI. */}
+      {/* W13 — KHÔNG CÒN THANH DỰ ĐOÁN Ở ĐÂY.
+          Chỗ này từng là `PredictionBar`: một câu hỏi + các lựa chọn + phán
+          quyết đúng/sai, dựng khi module khai `predict`. Năng lực ấy đã gỡ hẳn —
+          học sinh tác động lên mô hình qua Khám phá (`explore` → `apply`) và
+          đọc hệ quả tất định, không ai chấm điểm. */}
     </section>
   );
 }

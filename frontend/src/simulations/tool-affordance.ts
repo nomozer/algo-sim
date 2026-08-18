@@ -25,16 +25,22 @@
  * THỬ THÁCH ĐANG MỞ. Đóng nó lại thì không còn gì để né, nên cổng lúc ấy không
  * phục vụ mục đích nào — nó chỉ giấu công cụ đi.
  *
- * ─── LUẬT MỚI (W12 §6, Policy B) ───────────────────────────────────────────
+ * ─── LUẬT W12 §6 (Policy B), NAY ĐÃ TỰ TIÊU ────────────────────────────────
+ *
+ * W12 chữa nửa vời vì còn phải sống chung với Thử thách:
  *
  *   Thử thách ĐÓNG  → công cụ dùng được, không cần mở gì trước.
- *   Thử thách MỞ    → công cụ có thể bị siết, để một câu hỏi đang chờ không bị
- *                     chính học sinh làm cho vô nghĩa giữa chừng.
- *   Đóng thử thách  → công cụ trở lại NGAY.
+ *   Thử thách MỞ    → công cụ bị siết, để một câu hỏi đang chờ không bị chính
+ *                     học sinh làm cho vô nghĩa giữa chừng.
  *
- * `exploreOpen` KHÔNG bị gỡ: mở Khám phá vẫn bật công cụ kể cả khi thử thách
- * đang mở — đó là hành động cố ý của học sinh, khác hẳn việc chưa biết nút ấy
- * tồn tại.
+ * W13 gỡ hẳn Thử thách, nên vế thứ hai KHÔNG CÒN ĐỐI TƯỢNG và biểu thức co lại
+ * còn đúng một điều: **engine đang chạy thì công cụ nghỉ**. Không còn chế độ nào
+ * phải mở trước mới thao tác được.
+ *
+ * Vì sao vẫn giữ hàm này thay vì viết `!busy` tại chỗ: nó là CHỦ SỞ HỮU DUY NHẤT
+ * của câu hỏi "khi nào công cụ hiện ra", dùng chung bởi hai miền. Chép `!busy`
+ * ra hai nơi là dựng lại đúng cái trùng lặp mà file này sinh ra để xoá — và lần
+ * trước, cái trùng lặp ấy tốn 52/92 dòng ma trận mới phát hiện ra.
  *
  * ─── ĐIỀU NÀY KHÔNG NÂNG HẠNG BẤT KỲ TARGET NÀO ────────────────────────────
  *
@@ -45,11 +51,7 @@
  */
 
 export interface ToolAffordanceInput {
-  /** Học sinh đã tự mở lối vào Khám phá chưa. */
-  exploreOpen: boolean;
-  /** Thử thách có đang mở không — nơi duy nhất một cam kết có thể đang chờ. */
-  challengeOpen: boolean;
-  /** Engine đang chạy: mọi công cụ đều nghỉ, luật cũ giữ nguyên. */
+  /** Engine đang chạy: mọi công cụ đều nghỉ, luật này có từ đầu và không đổi. */
   busy: boolean;
 }
 
@@ -61,6 +63,5 @@ export interface ToolAffordanceInput {
  * đầu, nên một luật chôn trong JSX là một luật chỉ Chrome mới kiểm được).
  */
 export function toolAffordanceOpen(input: ToolAffordanceInput): boolean {
-  if (input.busy) return false;
-  return input.exploreOpen || !input.challengeOpen;
+  return !input.busy;
 }

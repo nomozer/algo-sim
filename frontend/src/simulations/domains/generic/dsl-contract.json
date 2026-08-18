@@ -1,12 +1,26 @@
 {
   "value_providers": {
     "numeric": [
+      "array_strip",
+      "bar_chart",
+      "bit_register",
+      "color_swatch",
+      "coordinate_plane",
       "lamp",
+      "metric_gauge",
+      "pointer",
+      "queue_view",
+      "slider",
+      "stack_view",
       "switch",
+      "table_grid",
+      "tree_element",
       "value_box"
     ],
     "logical": [
+      "bit_register",
       "lamp",
+      "logic_gate",
       "switch"
     ]
   },
@@ -18,11 +32,31 @@
     "boolean": {
       "input_role": "logical",
       "output_role": "logical"
+    },
+    "formula": {
+      "input_role": "numeric",
+      "output_role": "numeric"
     }
   },
   "object_roles": {
+    "array_strip": [
+      "numeric"
+    ],
+    "bar_chart": [
+      "numeric"
+    ],
+    "bit_register": [
+      "logical",
+      "numeric"
+    ],
+    "color_swatch": [
+      "numeric"
+    ],
     "container": [
       "structural"
+    ],
+    "coordinate_plane": [
+      "numeric"
     ],
     "edge": [
       "relational"
@@ -40,6 +74,12 @@
       "logical",
       "numeric"
     ],
+    "logic_gate": [
+      "logical"
+    ],
+    "metric_gauge": [
+      "numeric"
+    ],
     "moving_entity": [
       "movement"
     ],
@@ -49,13 +89,32 @@
     "paragraph": [
       "textual"
     ],
+    "pointer": [
+      "numeric"
+    ],
+    "queue_view": [
+      "numeric"
+    ],
+    "slider": [
+      "interactive",
+      "numeric"
+    ],
+    "stack_view": [
+      "numeric"
+    ],
     "switch": [
       "interactive",
       "logical",
       "numeric"
     ],
+    "table_grid": [
+      "numeric"
+    ],
     "text": [
       "textual"
+    ],
+    "tree_element": [
+      "numeric"
     ],
     "value_box": [
       "numeric"
@@ -68,15 +127,42 @@
     }
   ],
   "patch_add_fields": [
+    "bars",
+    "bits",
+    "capacity",
+    "color",
     "directed",
+    "expression",
     "from",
+    "gate_type",
+    "headers",
+    "highlighted_cells",
     "id",
+    "index",
+    "items",
     "label",
+    "left",
+    "max",
+    "max_val",
+    "max_x",
+    "max_y",
+    "min",
+    "min_x",
+    "min_y",
     "node_type",
     "parent",
+    "right",
+    "rows",
+    "show_decimal",
+    "show_grid",
+    "show_hex",
+    "size",
+    "step",
+    "target_id",
     "text",
     "to",
     "type",
+    "unit",
     "value",
     "x",
     "y"

@@ -44,6 +44,7 @@ def _emit(observer, event_type: str, **data) -> None:
     if observer is not None:
         observer.emit(event_type, data)
 from app.simulation.dsl.manifest import manifest_capability_summary
+from app.simulation.dsl.executor import execute_simulation
 from app.simulation.patterns import (
     deterministic_fill,
     instantiate,
@@ -406,6 +407,15 @@ async def stage_simulate(
                 )
                 _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=ErrorCode.SEMANTIC_INCOMPAT.value, message=last_error)
                 prompt = f"{base}\n\nLần trước bị từ chối vì: {last_error}\nHãy sửa lại."
+                continue
+
+        # [CEGIS Gate] Thực thi dry-run kiểm chứng bất biến và visual binding
+        if simulation_id == "generic.rule_scene":
+            exec_report = execute_simulation(config)
+            if not exec_report.ok:
+                last_error = exec_report.error or "Vi phạm bất biến thực thi mô phỏng."
+                _emit(observer, "simulate_attempt", n=_attempt, ok=False, error_code=exec_report.error_code, message=last_error)
+                prompt = f"{base}\n\nLần trước bị từ chối do vi phạm kiểm chứng thực thi ({exec_report.error_code}):\n{last_error}\nHãy sửa lại đặc tả cho đúng."
                 continue
 
         _emit(observer, "simulate_attempt", n=_attempt, ok=True, error_code=None, message="")

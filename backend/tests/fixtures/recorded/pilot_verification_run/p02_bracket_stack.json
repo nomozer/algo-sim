@@ -1,0 +1,275 @@
+{
+  "task_id": "p02_bracket_stack",
+  "problem_text": "Mô phỏng thuật toán kiểm tra chuỗi dấu ngoặc tròn '()(())' có hợp lệ hay không sử dụng Ngăn xếp (Stack).",
+  "prompt_hash": "42b1b2ac02851c9efe430a3cc3f6f625e16e2e4198dd97ebb3f1e6c129e621b2",
+  "git_commit": "c7b796ff921e33678a1fdb9efc6062f24f78b105",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:34:40.893974+00:00",
+  "duration_sec": 35.11820363998413,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 35.11820363998413
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Kiểm tra chuỗi dấu ngoặc tròn hợp lệ bằng Stack",
+    "description": "Một chuỗi các ký tự dấu ngoặc tròn. → Kết quả cho biết chuỗi dấu ngoặc tròn có hợp lệ hay không (Đúng/Sai).",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Kiểm tra chuỗi dấu ngoặc tròn hợp lệ bằng Stack",
+      "objects": [
+        {
+          "id": "heading_title",
+          "type": "heading",
+          "text": "Kiểm tra chuỗi dấu ngoặc tròn '()(())' hợp lệ bằng Ngăn xếp (Stack)"
+        },
+        {
+          "id": "paragraph_intro",
+          "type": "paragraph",
+          "text": "Thuật toán sử dụng ngăn xếp để kiểm tra tính hợp lệ của một chuỗi dấu ngoặc tròn. Khi gặp dấu '(', ta đẩy vào ngăn xếp. Khi gặp dấu ')', ta lấy ra một phần tử từ ngăn xếp. Nếu ngăn xếp rỗng khi gặp ')', hoặc ngăn xếp không rỗng sau khi duyệt hết chuỗi, thì chuỗi không hợp lệ."
+        },
+        {
+          "id": "input_string_label",
+          "type": "label",
+          "text": "Chuỗi đầu vào:"
+        },
+        {
+          "id": "input_string",
+          "type": "array_strip",
+          "label": "Chuỗi",
+          "text": "Chuỗi dấu ngoặc"
+        },
+        {
+          "id": "char_pointer",
+          "type": "pointer",
+          "label": "Ký tự hiện tại"
+        },
+        {
+          "id": "stack_label",
+          "type": "label",
+          "text": "Ngăn xếp:"
+        },
+        {
+          "id": "paren_stack",
+          "type": "stack_view",
+          "label": "Ngăn xếp"
+        },
+        {
+          "id": "result_label",
+          "type": "label",
+          "text": "Kết quả:"
+        },
+        {
+          "id": "result_box",
+          "type": "value_box",
+          "label": "Trạng thái"
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "action": "highlight",
+              "narration": "Khởi tạo chuỗi đầu vào '()(())', ngăn xếp rỗng và con trỏ duyệt chuỗi. Con trỏ đang ở vị trí trước ký tự đầu tiên."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt ký tự đầu tiên: '('. Đây là dấu ngoặc mở, ta đẩy nó vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Đẩy ký tự '(' vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt ký tự tiếp theo: ')'. Đây là dấu ngoặc đóng. Ngăn xếp không rỗng, ta lấy ra một phần tử."
+            },
+            {
+              "action": "highlight",
+              "narration": "Lấy một phần tử từ ngăn xếp. Ngăn xếp hiện tại: rỗng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt ký tự tiếp theo: '('. Đây là dấu ngoặc mở, ta đẩy nó vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Đẩy ký tự '(' vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt ký tự tiếp theo: '('. Đây là dấu ngoặc mở, ta đẩy nó vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Đẩy ký tự '(' vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt ký tự tiếp theo: ')'. Đây là dấu ngoặc đóng. Ngăn xếp không rỗng, ta lấy ra một phần tử."
+            },
+            {
+              "action": "highlight",
+              "narration": "Lấy một phần tử từ ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt ký tự cuối cùng: ')'. Đây là dấu ngoặc đóng. Ngăn xếp không rỗng, ta lấy ra một phần tử."
+            },
+            {
+              "action": "highlight",
+              "narration": "Lấy một phần tử từ ngăn xếp. Ngăn xếp hiện tại: rỗng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Đã duyệt hết chuỗi. Con trỏ trở về vị trí ban đầu. Kiểm tra ngăn xếp. Ngăn xếp rỗng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Vì ngăn xếp rỗng sau khi duyệt hết chuỗi, chuỗi dấu ngoặc '()(())' là hợp lệ."
+            }
+          ]
+        }
+      ],
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "chuỗi dấu ngoặc tròn",
+        "ký tự dấu ngoặc",
+        "Ngăn xếp (Stack)"
+      ],
+      "data": [
+        {
+          "description": "Chuỗi dấu ngoặc tròn cần kiểm tra",
+          "labels": null,
+          "values": null
+        }
+      ],
+      "relations": [
+        "ký tự là một phần của chuỗi",
+        "ký tự được thêm vào ngăn xếp",
+        "ký tự được lấy ra khỏi ngăn xếp"
+      ],
+      "processes": [
+        "duyệt qua từng ký tự của chuỗi",
+        "thêm ký tự '(' vào ngăn xếp",
+        "lấy ký tự khỏi ngăn xếp khi gặp ký tự ')'",
+        "kiểm tra sự khớp nhau của các cặp dấu ngoặc",
+        "kiểm tra ngăn xếp rỗng sau khi duyệt hết chuỗi"
+      ],
+      "constraints": [
+        "chuỗi chỉ chứa các ký tự '(' và ')'"
+      ],
+      "goal": "Mô phỏng thuật toán kiểm tra chuỗi dấu ngoặc tròn '()(())' có hợp lệ hay không sử dụng Ngăn xếp (Stack).",
+      "input_description": "Một chuỗi các ký tự dấu ngoặc tròn.",
+      "output_description": "Kết quả cho biết chuỗi dấu ngoặc tròn có hợp lệ hay không (Đúng/Sai).",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [],
+      "requested_operations": [
+        "single_pass_scan:scan",
+        "bounded_control_flow:conditional",
+        "bounded_control_flow:loop"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "step_by_step_construction",
+        "nodes_edges"
+      ],
+      "scene_construction": "step_by_step",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "temporal"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "progressive",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

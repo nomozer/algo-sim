@@ -363,8 +363,8 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
   }
 
   function renderObject(o: SpecObject, role: ObjectRole) {
-    const p = pos[o.id];
-    const v = values[o.id] ?? 0;
+    const p = pos[o.id] ?? { x: 50, y: 50 };
+    const v = values[o.id] !== undefined ? values[o.id] : (o.value ?? 0);
     const current = role === "current";
     const popCls = current ? "gen-pop" : undefined;
     // M13 Task 11: nhãn CHÍNH không bao giờ là id kỹ thuật thô (xem displayLabel).
@@ -407,7 +407,9 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           </g>
         );
       }
-      case "value_box":
+      case "value_box": {
+        const strV = String(v ?? "");
+        const fontSize = strV.length > 8 ? 12 : (strV.length > 4 ? 15 : 20);
         return (
           <g key={o.id} className={popCls}>
             {o.label && (
@@ -415,12 +417,422 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                 {dl}
               </text>
             )}
-            <rect x={p.x - 34} y={p.y - 20} width={68} height={40} rx={8} fill="var(--surface)" stroke="var(--primary)" strokeWidth={current ? 3 : 2} />
-            <text x={p.x} y={p.y + 7} textAnchor="middle" fontSize={20} fontWeight={700} fill="var(--ink)">
-              {v}
+            <rect x={p.x - 42} y={p.y - 20} width={84} height={40} rx={8} fill="var(--surface)" stroke="var(--primary)" strokeWidth={current ? 3 : 2} />
+            <text x={p.x} y={p.y + 7} textAnchor="middle" fontSize={fontSize} fontWeight={700} fill="var(--ink)">
+              {strV}
             </text>
           </g>
         );
+      }
+      case "slider": {
+        const min = o.min ?? 0;
+        const max = o.max ?? 100;
+        const numV = typeof v === "number" ? v : Number(v) || min;
+        const pct = Math.max(0, Math.min(1, (numV - min) / (max - min || 1)));
+        const sliderWidth = 140;
+        const trackX = p.x - sliderWidth / 2;
+        const thumbX = trackX + pct * sliderWidth;
+        return (
+          <g key={o.id} className={popCls}>
+            {o.label && (
+              <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <rect x={trackX} y={p.y - 4} width={sliderWidth} height={8} rx={4} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} />
+            <rect x={trackX} y={p.y - 4} width={pct * sliderWidth} height={8} rx={4} fill="var(--primary)" />
+            <circle cx={thumbX} cy={p.y} r={10} fill="#fff" stroke="var(--primary)" strokeWidth={3} style={{ cursor: "ew-resize" }} />
+            <text x={p.x} y={p.y + 24} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
+              {numV} {o.unit ?? ""}
+            </text>
+          </g>
+        );
+      }
+      case "color_swatch": {
+        const colorStr = typeof v === "string" ? v : (o.color ?? "#3b82f6");
+        const swatchW = 110;
+        const swatchH = 80;
+        return (
+          <g key={o.id} className={popCls}>
+            {o.label && (
+              <text x={p.x} y={p.y - swatchH / 2 - 10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <rect
+              x={p.x - swatchW / 2}
+              y={p.y - swatchH / 2}
+              width={swatchW}
+              height={swatchH}
+              rx={12}
+              fill={colorStr}
+              stroke="var(--ink-faint)"
+              strokeWidth={2}
+              style={{ transition: "fill 0.15s ease", filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.15))" }}
+            />
+            <rect
+              x={p.x - swatchW / 2}
+              y={p.y + swatchH / 2 - 26}
+              width={swatchW}
+              height={26}
+              rx={6}
+              fill="rgba(0,0,0,0.65)"
+            />
+            <text
+              x={p.x}
+              y={p.y + swatchH / 2 - 9}
+              textAnchor="middle"
+              fontSize={12}
+              fontWeight={700}
+              fontFamily="monospace"
+              fill="#ffffff"
+            >
+              {colorStr.toUpperCase()}
+            </text>
+          </g>
+        );
+      }
+      case "array_strip": {
+        const items = Array.isArray(o.items) ? o.items : [v];
+        const cellW = 34;
+        const cellH = 34;
+        const totalW = items.length * cellW;
+        const startX = p.x - totalW / 2;
+        return (
+          <g key={o.id} className={popCls}>
+            {o.label && (
+              <text x={p.x} y={p.y - cellH / 2 - 8} textAnchor="middle" fontSize={12} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            {items.map((item, i) => (
+              <g key={i} transform={`translate(${startX + i * cellW}, ${p.y - cellH / 2})`}>
+                <rect width={cellW} height={cellH} rx={4} fill="var(--surface)" stroke="var(--primary)" strokeWidth={1.5} />
+                <text x={cellW / 2} y={cellH / 2 + 5} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
+                  {String(item)}
+                </text>
+                <text x={cellW / 2} y={cellH + 12} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
+                  [{i}]
+                </text>
+              </g>
+            ))}
+          </g>
+        );
+      }
+      case "metric_gauge": {
+        const min = o.min ?? 0;
+        const max = o.max ?? 100;
+        const numV = typeof v === "number" ? v : Number(v) || min;
+        const pct = Math.max(0, Math.min(1, (numV - min) / (max - min || 1)));
+        const gaugeW = 120;
+        const gaugeH = 14;
+        return (
+          <g key={o.id} className={popCls}>
+            {o.label && (
+              <text x={p.x} y={p.y - gaugeH - 4} textAnchor="middle" fontSize={12} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <rect x={p.x - gaugeW / 2} y={p.y} width={gaugeW} height={gaugeH} rx={gaugeH / 2} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} />
+            <rect x={p.x - gaugeW / 2} y={p.y} width={pct * gaugeW} height={gaugeH} rx={gaugeH / 2} fill="var(--accent-teal)" />
+            <text x={p.x} y={p.y + gaugeH + 16} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
+              {numV} {o.unit ?? ""} ({Math.round(pct * 100)}%)
+            </text>
+          </g>
+        );
+      }
+      case "bar_chart": {
+        const bars = o.bars && o.bars.length > 0 ? o.bars : [
+          { id: "b0", value: typeof v === "number" ? v : 50, label: dl }
+        ];
+        const maxVal = o.max_val ?? Math.max(10, ...bars.map((b) => Number(b.value) || 0));
+        const chartW = Math.min(320, bars.length * 44 + 40);
+        const chartH = 120;
+        const barW = Math.max(16, Math.floor((chartW - 40) / bars.length) - 8);
+        const stepAct = frame.stepAction;
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x - chartW / 2}, ${p.y - chartH / 2})`}>
+            {o.label && (
+              <text x={chartW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <line x1={10} y1={chartH - 20} x2={chartW - 10} y2={chartH - 20} stroke="var(--ink-faint)" strokeWidth={2} />
+            {bars.map((b, i) => {
+              const bVal = Number(b.value) || 0;
+              const bH = Math.max(4, (bVal / maxVal) * (chartH - 40));
+              const bx = 20 + i * (barW + 8);
+              const by = chartH - 20 - bH;
+              const isTargeted = stepAct?.targets?.includes(o.id) && stepAct?.indices?.includes(i);
+              let barColor = b.color ?? "var(--primary)";
+              if (isTargeted) {
+                if (stepAct?.action === "swap") barColor = "var(--accent-purple)";
+                else if (stepAct?.state === "comparing") barColor = "var(--accent-orange)";
+                else if (stepAct?.state === "sorted") barColor = "var(--accent-green)";
+              }
+              return (
+                <g key={b.id ?? i}>
+                  <rect
+                    x={bx}
+                    y={by}
+                    width={barW}
+                    height={bH}
+                    rx={4}
+                    fill={barColor}
+                    stroke={isTargeted ? "#fff" : "transparent"}
+                    strokeWidth={isTargeted ? 2 : 0}
+                    style={{ transition: "all 0.25s ease" }}
+                  />
+                  <text x={bx + barW / 2} y={by - 5} textAnchor="middle" fontSize={11} fontWeight={700} fill="var(--ink)">
+                    {bVal}
+                  </text>
+                  <text x={bx + barW / 2} y={chartH - 6} textAnchor="middle" fontSize={10} fill="var(--ink-muted)">
+                    {b.label ?? `[${i}]`}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
+        );
+      }
+      case "table_grid": {
+        const headers = o.headers ?? ["Cột 1", "Cột 2"];
+        const rows = o.rows ?? [];
+        const cellW = 60;
+        const cellH = 24;
+        const gridW = headers.length * cellW;
+        const gridH = (rows.length + 1) * cellH;
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x - gridW / 2}, ${p.y - gridH / 2})`}>
+            {o.label && (
+              <text x={gridW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            {headers.map((h, ci) => (
+              <g key={`h-${ci}`} transform={`translate(${ci * cellW}, 0)`}>
+                <rect width={cellW} height={cellH} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} />
+                <text x={cellW / 2} y={cellH / 2 + 4} textAnchor="middle" fontSize={11} fontWeight={700} fill="var(--ink)">
+                  {h}
+                </text>
+              </g>
+            ))}
+            {rows.map((row, ri) =>
+              (Array.isArray(row) ? row : [row]).map((cell, ci) => {
+                const isHighlight = o.highlighted_cells?.some((hc) => hc.row === ri && hc.col === ci);
+                const highlightColor = o.highlighted_cells?.find((hc) => hc.row === ri && hc.col === ci)?.color ?? "var(--accent-teal)";
+                return (
+                  <g key={`r-${ri}-${ci}`} transform={`translate(${ci * cellW}, ${(ri + 1) * cellH})`}>
+                    <rect
+                      width={cellW}
+                      height={cellH}
+                      fill={isHighlight ? highlightColor : "var(--surface)"}
+                      fillOpacity={isHighlight ? 0.35 : 1}
+                      stroke="var(--ink-faint)"
+                      strokeWidth={1}
+                    />
+                    <text x={cellW / 2} y={cellH / 2 + 4} textAnchor="middle" fontSize={11} fill="var(--ink)">
+                      {String(cell)}
+                    </text>
+                  </g>
+                );
+              })
+            )}
+          </g>
+        );
+      }
+      case "stack_view": {
+        const items = Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []);
+        const itemH = 22;
+        const boxW = 80;
+        const boxH = Math.max(80, (o.capacity ?? Math.max(4, items.length)) * itemH + 20);
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${p.y - boxH / 2})`}>
+            {o.label && (
+              <text x={boxW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <path
+              d={`M 0,0 L 0,${boxH} L ${boxW},${boxH} L ${boxW},0`}
+              fill="none"
+              stroke="var(--primary)"
+              strokeWidth={2.5}
+            />
+            {items.map((it, i) => {
+              const iy = boxH - (i + 1) * itemH - 4;
+              return (
+                <g key={i} transform={`translate(6, ${iy})`}>
+                  <rect width={boxW - 12} height={itemH - 3} rx={3} fill="var(--surface)" stroke="var(--primary)" strokeWidth={1} />
+                  <text x={(boxW - 12) / 2} y={(itemH - 3) / 2 + 4} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
+                    {String(it)}
+                  </text>
+                  {i === items.length - 1 && (
+                    <text x={boxW + 6} y={(itemH - 3) / 2 + 4} fontSize={10} fontWeight={700} fill="var(--accent-orange)">
+                      ← TOP
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+          </g>
+        );
+      }
+      case "queue_view": {
+        const items = Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []);
+        const itemW = 34;
+        const boxH = 36;
+        const boxW = Math.max(120, (o.capacity ?? Math.max(4, items.length)) * itemW + 20);
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${p.y - boxH / 2})`}>
+            {o.label && (
+              <text x={boxW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <line x1={0} y1={0} x2={boxW} y2={0} stroke="var(--accent-teal)" strokeWidth={2.5} />
+            <line x1={0} y1={boxH} x2={boxW} y2={boxH} stroke="var(--accent-teal)" strokeWidth={2.5} />
+            <text x={-6} y={boxH / 2 + 4} textAnchor="end" fontSize={9} fontWeight={700} fill="var(--accent-teal)">
+              FRONT
+            </text>
+            <text x={boxW + 6} y={boxH / 2 + 4} textAnchor="start" fontSize={9} fontWeight={700} fill="var(--accent-teal)">
+              REAR
+            </text>
+            {items.map((it, i) => (
+              <g key={i} transform={`translate(${10 + i * itemW}, 4)`}>
+                <rect width={itemW - 4} height={boxH - 8} rx={4} fill="var(--surface)" stroke="var(--accent-teal)" strokeWidth={1} />
+                <text x={(itemW - 4) / 2} y={(boxH - 8) / 2 + 4} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
+                  {String(it)}
+                </text>
+              </g>
+            ))}
+          </g>
+        );
+      }
+      case "tree_element": {
+        const valStr = o.value !== undefined ? String(o.value) : (dl || "Node");
+        const leftPos = o.left && pos[o.left] ? pos[o.left] : null;
+        const rightPos = o.right && pos[o.right] ? pos[o.right] : null;
+        return (
+          <g key={o.id} className={popCls}>
+            {leftPos && (
+              <line x1={p.x} y1={p.y} x2={leftPos.x} y2={leftPos.y} stroke="var(--primary)" strokeWidth={2} />
+            )}
+            {rightPos && (
+              <line x1={p.x} y1={p.y} x2={rightPos.x} y2={rightPos.y} stroke="var(--primary)" strokeWidth={2} />
+            )}
+            <circle cx={p.x} cy={p.y} r={20} fill="var(--surface)" stroke="var(--primary)" strokeWidth={2.5} />
+            <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
+              {valStr}
+            </text>
+            {o.label && (
+              <text x={p.x} y={p.y - 24} textAnchor="middle" fontSize={11} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+          </g>
+        );
+      }
+      case "bit_register": {
+        const numVal = typeof v === "number" ? v : Number(v) || 0;
+        const size = o.size === 16 ? 16 : 8;
+        const bits: number[] = Array.isArray(o.bits) && o.bits.length === size
+          ? o.bits
+          : Array.from({ length: size }, (_, i) => (numVal >> (size - 1 - i)) & 1);
+        const cellW = 20;
+        const cellH = 26;
+        const regW = size * cellW;
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x - regW / 2}, ${p.y - cellH / 2})`}>
+            {o.label && (
+              <text x={regW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            {bits.map((b, i) => (
+              <g key={i} transform={`translate(${i * cellW}, 0)`}>
+                <rect
+                  width={cellW}
+                  height={cellH}
+                  fill={b === 1 ? "var(--primary)" : "var(--surface)"}
+                  stroke="var(--ink-faint)"
+                  strokeWidth={1}
+                />
+                <text
+                  x={cellW / 2}
+                  y={cellH / 2 + 5}
+                  textAnchor="middle"
+                  fontSize={12}
+                  fontWeight={700}
+                  fill={b === 1 ? "#fff" : "var(--ink)"}
+                >
+                  {b}
+                </text>
+                <text x={cellW / 2} y={cellH + 12} textAnchor="middle" fontSize={8} fill="var(--ink-muted)">
+                  {size - 1 - i}
+                </text>
+              </g>
+            ))}
+            {(o.show_decimal !== false || o.show_hex) && (
+              <text x={regW / 2} y={cellH + 28} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink-secondary)">
+                {o.show_decimal !== false ? `Dec: ${numVal} ` : ""}
+                {o.show_hex ? ` Hex: 0x${numVal.toString(16).toUpperCase()}` : ""}
+              </text>
+            )}
+          </g>
+        );
+      }
+      case "logic_gate": {
+        const gateType = (o.gate_type ?? "and").toLowerCase();
+        const gateW = 60;
+        const gateH = 40;
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x - gateW / 2}, ${p.y - gateH / 2})`}>
+            {o.label && (
+              <text x={gateW / 2} y={-8} textAnchor="middle" fontSize={12} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <rect width={gateW} height={gateH} rx={8} fill="var(--surface)" stroke="var(--primary)" strokeWidth={2} />
+            <text x={gateW / 2} y={gateH / 2 + 5} textAnchor="middle" fontSize={13} fontWeight={700} fill="var(--primary)">
+              {gateType.toUpperCase()}
+            </text>
+          </g>
+        );
+      }
+      case "pointer": {
+        const ptrLabel = o.label ?? "ptr";
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x}, ${p.y})`}>
+            <path d="M 0,-10 L -6,-20 L 6,-20 Z" fill={o.color ?? "var(--accent-orange)"} />
+            <rect x={-14} y={-38} width={28} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
+            <text x={0} y={-25} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">
+              {ptrLabel}
+            </text>
+          </g>
+        );
+      }
+      case "coordinate_plane": {
+        const planeW = 180;
+        const planeH = 180;
+        const cx = planeW / 2;
+        const cy = planeH / 2;
+        return (
+          <g key={o.id} className={popCls} transform={`translate(${p.x - planeW / 2}, ${p.y - planeH / 2})`}>
+            {o.label && (
+              <text x={planeW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+                {dl}
+              </text>
+            )}
+            <rect width={planeW} height={planeH} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} rx={6} />
+            <line x1={10} y1={cy} x2={planeW - 10} y2={cy} stroke="var(--ink-secondary)" strokeWidth={1.5} />
+            <line x1={cx} y1={planeH - 10} x2={cx} y2={10} stroke="var(--ink-secondary)" strokeWidth={1.5} />
+            <text x={planeW - 8} y={cy + 4} fontSize={11} fontWeight={700} fill="var(--ink)">x</text>
+            <text x={cx + 5} y={14} fontSize={11} fontWeight={700} fill="var(--ink)">y</text>
+            <text x={cx - 8} y={cy + 12} fontSize={9} fill="var(--ink-muted)">O</text>
+          </g>
+        );
+      }
       case "node": {
         // M7.13A: node có drag khai trong spec → kéo được (engine đã kiểm quyền)
         const canDrag = draggable.has(o.id) && !busy && !editMode;
@@ -777,6 +1189,19 @@ const TYPE_LABEL: Record<string, string> = {
   switch: "công tắc",
   lamp: "đèn",
   value_box: "ô giá trị",
+  slider: "thanh trượt",
+  color_swatch: "mẫu màu",
+  array_strip: "dải mảng",
+  metric_gauge: "đồng hồ đo",
+  bar_chart: "biểu đồ cột",
+  table_grid: "bảng dữ liệu",
+  stack_view: "ngăn xếp",
+  queue_view: "hàng đợi",
+  tree_element: "nút cây",
+  bit_register: "thanh ghi bit",
+  logic_gate: "cổng logic",
+  pointer: "con trỏ",
+  coordinate_plane: "hệ tọa độ",
   moving_entity: "vật di chuyển",
   label: "nhãn",
   container: "khung chứa",
@@ -811,14 +1236,63 @@ function ObjChips({ spec, objs }: { spec: SimulationSpec; objs: SpecObject[] }) 
   );
 }
 
-export function GenericInspector({ config: spec, state }: Props) {
+export function GenericInspector({ config: spec, state, dispatch }: Props) {
   const values = valuesOf(spec, state.base);
   const groups = inspectorGroups(state);
   const progressive = state.timeline.length > 1;
-  const withValue = spec.objects.filter((o) => o.value !== undefined || o.type === "lamp" || o.type === "value_box");
+  const sliders = spec.objects.filter((o) => o.type === "slider");
+  const buttons = spec.interactions.filter((it) => it.type === "button_action");
+  const withValue = spec.objects.filter(
+    (o) => o.type !== "slider" && (o.value !== undefined || o.type === "lamp" || o.type === "value_box" || o.type === "color_swatch" || o.type === "metric_gauge" || o.type === "bit_register")
+  );
 
   return (
     <div className="stack" style={{ gap: "var(--sp-sm)" }}>
+      {buttons.length > 0 && (
+        <section className="card" style={{ padding: "var(--sp-md)" }}>
+          <span className="eyebrow">THAO TÁC / HÀNH ĐỘNG</span>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: "var(--sp-sm)" }}>
+            {buttons.map((it, i) => (
+              <button
+                key={i}
+                className="btn-primary"
+                onClick={() => dispatch({ type: "step", delta: 1 })}
+              >
+                {it.label ?? `Thực hiện ${displayLabel(spec, it.target)}`}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {sliders.length > 0 && (
+        <section className="card" style={{ padding: "var(--sp-md)" }}>
+          <span className="eyebrow">ĐIỀU KHIỂN THAM SỐ</span>
+          <div className="stack" style={{ gap: "var(--sp-sm)", marginTop: "var(--sp-sm)" }}>
+            {sliders.map((s) => {
+              const curVal = Number(values[s.id] ?? s.min ?? 0);
+              return (
+                <div key={s.id} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, fontWeight: 600 }}>
+                    <span>{displayLabel(spec, s.id)}</span>
+                    <span style={{ color: "var(--primary)" }}>{curVal} {s.unit ?? ""}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={s.min ?? 0}
+                    max={s.max ?? 100}
+                    step={s.step ?? 1}
+                    value={curVal}
+                    onChange={(e) => dispatch({ type: "set_param", name: s.id, value: Number(e.target.value) })}
+                    style={{ width: "100%", cursor: "pointer" }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       <section className="card" style={{ padding: "var(--sp-md)" }}>
         <span className="eyebrow">ĐỐI TƯỢNG</span>
         {progressive ? (
@@ -864,7 +1338,13 @@ export function GenericInspector({ config: spec, state }: Props) {
               const inputLabels = (r.inputs ?? []).map((id) => displayLabel(spec, id));
               return (
                 <li key={i}>
-                  {targetLabel} = {r.type === "boolean" ? `${r.op?.toUpperCase()}(${inputLabels.join(", ")})` : `Σ(${inputLabels.join(", ")} × trọng số)`}
+                  {targetLabel} = {
+                    r.type === "boolean"
+                      ? `${r.op?.toUpperCase()}(${inputLabels.join(", ")})`
+                      : r.type === "formula"
+                        ? `${r.expression}`
+                        : `Σ(${inputLabels.join(", ")} × trọng số)`
+                  }
                 </li>
               );
             })}
@@ -885,11 +1365,24 @@ export function GenericInspector({ config: spec, state }: Props) {
   );
 }
 
-function FragmentRow({ label, value }: { label: string; value: number }) {
+function FragmentRow({ label, value }: { label: string; value: number | string }) {
+  const isColor = typeof value === "string" && value.startsWith("#");
   return (
     <>
       <span className="analysis-label">{label}</span>
-      <span>
+      <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+        {isColor && (
+          <span
+            style={{
+              display: "inline-block",
+              width: 14,
+              height: 14,
+              borderRadius: 3,
+              backgroundColor: value,
+              border: "1px solid var(--ink-faint)",
+            }}
+          />
+        )}
         <strong>{value}</strong>
       </span>
     </>

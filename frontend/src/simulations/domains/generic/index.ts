@@ -54,8 +54,19 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
           return { ...state, base: { ...state.base, [action.target]: cur >= 1 ? 0 : 1 } };
         }
       }
+      if (action.type === "set_param") {
+        if (action.name in state.base) {
+          const val = typeof action.value === "number" ? action.value : Number(action.value);
+          return { ...state, base: { ...state.base, [action.name]: Number.isFinite(val) ? val : action.value } };
+        }
+      }
       if (action.type === "move") {
         return applyMove(state, action.target, action.x, action.y);
+      }
+      if (action.type === "step") {
+        const delta = typeof action.delta === "number" ? action.delta : 1;
+        const next = Math.max(0, Math.min(state.cursor + delta, state.timeline.length - 1));
+        return { ...state, cursor: next };
       }
       return state;
     },

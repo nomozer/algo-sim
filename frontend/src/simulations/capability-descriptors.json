@@ -1180,7 +1180,8 @@
           "mechanism_id": null,
           "owned_mechanisms": [
             "structural_progressive_representation.move_along_path",
-            "structural_progressive_representation.reveal_sequence"
+            "structural_progressive_representation.reveal_sequence",
+            "structural_progressive_representation.step_sequence"
           ]
         }
       ],

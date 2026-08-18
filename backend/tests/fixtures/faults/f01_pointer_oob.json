@@ -1,0 +1,30 @@
+{
+  "id": "f01_pointer_oob",
+  "category": "faults",
+  "expected_violation": {
+    "gate": "invariant",
+    "violation_code": "INDEX_OUT_OF_BOUNDS",
+    "step_index": 2,
+    "expected_message_contains": "vượt quá độ dài"
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Lỗi con trỏ vượt biên mảng",
+    "objects": [
+      {"id": "arr", "type": "array_strip", "items": [10, 20, 30, 40], "label": "Mảng"},
+      {"id": "ptr", "type": "pointer", "target": "arr", "index": 0, "label": "Con trỏ"}
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 0, "narration": "Bước 0: i = 0"},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 2, "narration": "Bước 1: i = 2"},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 9, "narration": "Bước 2: i = 9 (LỖI: mảng chỉ có 4 phần tử 0..3)"}
+        ]
+      }
+    ]
+  }
+}

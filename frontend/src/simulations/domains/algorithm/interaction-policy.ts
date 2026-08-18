@@ -1,6 +1,5 @@
 import type { AlgorithmId } from "../../../core/types";
 import type { PresentationEntry } from "../../types";
-import { sortInteractionOf } from "./decision";
 import type { AlgorithmSimState } from "./model";
 
 /**
@@ -413,32 +412,18 @@ export interface DragGateInput {
   busy: boolean;
   /** Đang ở bước cuối — không còn gì để chạy tiếp trên nhánh. */
   last: boolean;
-  /** Học sinh đã chốt cam kết ở bước này chưa. */
-  answered: boolean;
-  /**
-   * Thử thách có ĐANG MỞ không.
-   *
-   * W12 §6 (Policy B) — thử thách ĐÓNG thì công cụ phải dùng được.
-   *
-   * Đo được ở HEAD 99548af: 52/92 dòng ma trận bề rộng đọc ra "không có
-   * affordance", và truy ra là vì kéo đòi `exploreOpen` — tức học sinh phải MỞ
-   * Khám phá trước mới thấy con trỏ `grab`. Ở bước mặc định, thứ duy nhất nhìn
-   * thấy được trên họ thuật toán vì thế là ô dự đoán, và màn hình đọc ra
-   * quiz-first.
-   *
-   * Lý do gốc của cổng ấy là "đừng cho né cam kết". Nhưng cam kết chỉ tồn tại
-   * KHI THỬ THÁCH ĐANG MỞ — đóng nó lại thì không còn gì để né, nên hoãn kéo
-   * lúc ấy không phục vụ mục đích nào.
-   */
-  challengeOpen: boolean;
 }
 
+/**
+ * W13 — §15 ("hoãn kéo khi có cam kết đang chờ") ĐÃ HẾT ĐỐI TƯỢNG.
+ *
+ * Luật đó tồn tại để học sinh không né được một câu hỏi đang chờ bằng cách kéo
+ * cột. Không còn câu hỏi nào, nên không còn gì để né — và hai tham số
+ * `answered` / `challengeOpen` mất luôn nghĩa.
+ *
+ * Điều còn lại là R3.3a, vốn không dính gì tới chấm điểm: kéo là what-if trên
+ * dòng chính, nên chỉ cho phép khi engine đang dừng, chưa ở nhánh, chưa hết bài.
+ */
 export function whatIfDragAllowed(state: AlgorithmSimState, input: DragGateInput): boolean {
-  // R3.3a giữ nguyên: chỉ khi đang dừng, chưa ở nhánh, chưa hết bài.
-  if (!input.policyAllows || input.busy || input.last || state.branch) return false;
-  /* §15 thu hẹp lại đúng phạm vi nó phục vụ: chỉ hoãn khi có một cam kết ĐANG
-     CHỜ THẬT, tức thử thách đang mở và học sinh chưa chốt. Thử thách đóng thì
-     kéo là thí nghiệm thuần và không cướp mất quyết định của ai. */
-  if (input.challengeOpen && sortInteractionOf(state) !== null && !input.answered) return false;
-  return true;
+  return !(!input.policyAllows || input.busy || input.last || state.branch);
 }

@@ -22,9 +22,9 @@ import type { TreeTraversalConfig } from "./tree-module";
  */
 
 /** Bề rộng một làn nút (đủ cho nhãn ~12 ký tự tiếng Việt). */
-export const TREE_SLOT_W = 86;
+export const TREE_SLOT_W = 96;
 /** Khoảng cách giữa hai tầng. */
-export const TREE_LEVEL_H = 78;
+export const TREE_LEVEL_H = 84;
 
 /**
  * Khung vẽ CO GIÃN theo cây thật (M17-VR1 hồi quy): khung cố định 460×300 chỉ
@@ -47,7 +47,7 @@ export function treeLayoutSize(config: TreeTraversalConfig): { w: number; h: num
   };
   walk(config.rootId, 0);
   return {
-    w: Math.max(360, config.nodes.length * TREE_SLOT_W),
-    h: Math.max(190, (maxDepth + 1) * TREE_LEVEL_H + 40),
+    w: Math.max(460, config.nodes.length * TREE_SLOT_W),
+    h: Math.max(220, (maxDepth + 1) * TREE_LEVEL_H + 40),
   };
 }

@@ -1,0 +1,28 @@
+{
+  "id": "f02_stack_underflow",
+  "category": "faults",
+  "expected_violation": {
+    "gate": "invariant",
+    "violation_code": "STACK_UNDERFLOW",
+    "step_index": 1,
+    "expected_message_contains": "ngăn xếp rỗng"
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Lỗi pop trên ngăn xếp rỗng",
+    "objects": [
+      {"id": "my_stack", "type": "stack_view", "items": [], "capacity": 5, "label": "Stack"}
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "highlight", "targets": ["my_stack"], "narration": "Khởi tạo stack rỗng."},
+          {"action": "pop", "targets": ["my_stack"], "narration": "LỖI: Pop khi stack không có phần tử nào!"}
+        ]
+      }
+    ]
+  }
+}

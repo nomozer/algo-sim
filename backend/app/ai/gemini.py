@@ -81,6 +81,20 @@ def load_skill(name: str) -> str:
     return _skill_cache[name]
 
 
+def _sanitize_gemini_schema(obj: Any) -> Any:
+    """Loại bỏ các trường JSON Schema không được Gemini API chấp nhận (như additionalProperties, $schema)."""
+    if isinstance(obj, dict):
+        cleaned = {}
+        for k, v in obj.items():
+            if k in ("additionalProperties", "$schema", "$defs", "definitions", "default"):
+                continue
+            cleaned[k] = _sanitize_gemini_schema(v)
+        return cleaned
+    elif isinstance(obj, list):
+        return [_sanitize_gemini_schema(item) for item in obj]
+    return obj
+
+
 async def call_gemini(
     api_key: str,
     system_prompt: str,
@@ -101,7 +115,7 @@ async def call_gemini(
     generation_config: dict = {"temperature": temperature}
     if response_schema is not None:
         generation_config["responseMimeType"] = "application/json"
-        generation_config["responseSchema"] = response_schema
+        generation_config["responseSchema"] = _sanitize_gemini_schema(response_schema)
 
     parts: list[dict] = []
     if image is not None:
@@ -118,11 +132,18 @@ async def call_gemini(
     if budget:
         budget.note_call()
 
-    async with httpx.AsyncClient(timeout=60.0) as client:
+    async with httpx.AsyncClient(timeout=120.0) as client:
         for attempt in range(max_attempts):
             if budget:
                 budget.note_request(is_retry=attempt > 0)  # vượt trần → BudgetExceeded
-            res = await client.post(url, json=payload)
+            try:
+                res = await client.post(url, json=payload)
+            except (httpx.TimeoutException, httpx.NetworkError) as e:
+                if attempt < max_attempts - 1:
+                    await asyncio.sleep(BACKOFF_BASE_SECONDS * (2 ** attempt))
+                    continue
+                raise RuntimeError(f"Gemini API timeout hoặc lỗi mạng: {e}")
+
             if res.status_code == 200:
                 break
             if res.status_code in TRANSIENT_STATUS:

@@ -269,12 +269,29 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
                 f'"weights" TRÊN RULE, vd {{"type": "weighted_sum", "inputs": [...], "weights": [8,4,2,1]}}.'
             )
         obj = {"id": o["id"], "type": o["type"]}
-        for key in ("x", "y", "value"):
+        for key in ("x", "y", "min", "max", "step", "max_val", "capacity", "size", "index", "min_x", "max_x", "min_y", "max_y"):
             if _is_num(o.get(key)):
                 obj[key] = o[key]
-        for key in ("label", "node_type", "from", "to", "text", "parent"):
+        if _is_num(o.get("value")) or isinstance(o.get("value"), str):
+            obj["value"] = o["value"]
+        for key in ("label", "node_type", "from", "to", "text", "parent", "unit", "color", "gate_type", "target", "target_id", "left", "right"):
             if isinstance(o.get(key), str):
                 obj[key] = o[key]
+        for key in ("show_decimal", "show_hex", "show_grid"):
+            if isinstance(o.get(key), bool):
+                obj[key] = o[key]
+        if isinstance(o.get("items"), list):
+            obj["items"] = list(o["items"])
+        if isinstance(o.get("bits"), list):
+            obj["bits"] = list(o["bits"])
+        if isinstance(o.get("bars"), list):
+            obj["bars"] = list(o["bars"])
+        if isinstance(o.get("headers"), list):
+            obj["headers"] = [str(h) for h in o["headers"]]
+        if isinstance(o.get("rows"), list):
+            obj["rows"] = [list(r) if isinstance(r, list) else [r] for r in o["rows"]]
+        if isinstance(o.get("highlighted_cells"), list):
+            obj["highlighted_cells"] = list(o["highlighted_cells"])
         # M8-PRE (S2): edge có CHIỀU — chỉ giữ khi là bool THẬT (không nhận 0/1,
         # không nhận chuỗi) và chỉ trên edge; renderer vẽ mũi tên from → to.
         if o["type"] == "edge" and isinstance(o.get("directed"), bool):
@@ -313,8 +330,9 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
                 return None, f'"text" của "{o["id"]}" quá dài (tối đa {MAX_TEXT_LEN} ký tự).'
         parent = o.get("parent")
         if parent is not None:
-            if parent not in by_id or by_id[parent]["type"] not in CONTAINER_TYPES:
-                return None, f'"{o["id"]}" có "parent" phải là id của container/group hợp lệ.'
+            allowed_parent_types = CONTAINER_TYPES | {"tree_element"} if o["type"] == "tree_element" else CONTAINER_TYPES
+            if parent not in by_id or by_id[parent]["type"] not in allowed_parent_types:
+                return None, f'"{o["id"]}" có "parent" phải là id của container/group/tree_element hợp lệ.'
     # chu trình chứa + độ sâu lồng nhau
     for o in objects:
         depth, cur, seen = 0, o["id"], {o["id"]}
@@ -345,6 +363,18 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
             if r.get("op") not in BOOL_OPS:
                 return None, f'boolean rule cần "op" thuộc {"/".join(sorted(BOOL_OPS))}.'
             rule["op"] = r["op"]
+        elif r["type"] == "formula":
+            expr = r.get("expression")
+            if not isinstance(expr, str) or not expr.strip():
+                return None, 'formula rule cần "expression" không rỗng.'
+            rule["expression"] = expr.strip()
+            if not rule["inputs"]:
+                try:
+                    parsed_expr = ast.parse(rule["expression"], mode="eval")
+                    extracted_names = [node.id for node in ast.walk(parsed_expr) if isinstance(node, ast.Name)]
+                    rule["inputs"] = [n for n in extracted_names if n in ids]
+                except Exception:
+                    pass
         else:
             weights = r.get("weights") if isinstance(r.get("weights"), list) else []
             if len(weights) != len(inputs) or not all(_is_num(w) for w in weights):
@@ -367,27 +397,13 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
         return None, "Rule có phụ thuộc vòng (circular dependency)."
 
     # ── M13 §3.2 + blocker 3: operand coherence VỚI role-typing ──
-    # INVALID_SOURCE: type không phải provider của role rule cần, hoặc provider
-    #   nhưng không khai value; HOẶC derived target có output_role KHÔNG THỎA
-    #   input_role của rule tiêu thụ theo role_satisfies() (subtyping một chiều
-    #   logical→numeric; mọi cặp khác vẫn DENY mặc định — M13 hotfix).
-    # UNRESOLVED_DERIVED_SOURCE (hợp lệ ở tầng validate): input là target của rule
-    #   khác VÀ output_role thỏa input_role — thứ tự khai báo tự do, runtime defer
-    #   theo bound.
     target_output_role = {r["target"]: M.RULE_IO_ROLES[r["type"]]["output_role"] for r in rules}
     object_roles = M.dsl_semantic_contract()["object_roles"]
     for r in rules:
-        # Ràng buộc 2: target object phải CHẤP NHẬN (qua role_satisfies) output
-        # role của rule — weighted_sum (numeric) không được ghi vào node/edge
-        # (relational); boolean (logical) GIỜ được ghi vào value_box (numeric)
-        # vì logical satisfies numeric (M13 hotfix — FP live boolean→value_box).
         out_role = M.RULE_IO_ROLES[r["type"]]["output_role"]
         target_obj = by_id[r["target"]]
         target_roles = M.PRIMITIVE_ROLES.get(target_obj["type"], set())
         if not any(M.role_satisfies(out_role, tr) for tr in target_roles):
-            # Gợi ý DẪN XUẤT từ contract — không hardcode "value_box/lamp":
-            # type nào thật sự nhận được out_role (qua role_satisfies) mới liệt kê,
-            # nên không bao giờ gợi ý đúng type vừa bị từ chối (tự mâu thuẫn).
             valid_types = sorted(
                 t for t, roles in object_roles.items()
                 if any(M.role_satisfies(out_role, tr) for tr in roles)
@@ -410,7 +426,7 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
                         f'"{out}" không tương thích với "{need}" theo hợp đồng vai trò. '
                         f'Dùng nguồn đúng vai trò.'
                     )
-                continue  # derived + role thỏa → defer lúc chạy
+                continue
             o = by_id[inp]
             if o["type"] not in providers or "value" not in o:
                 return None, (
@@ -437,13 +453,18 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
         if it["type"] == "toggle":
             if it["target"] in rule_targets:
                 return None, f'Không thể toggle "{it["target"]}" vì nó là giá trị dẫn xuất từ rule.'
-            # M7.13A: toggle chỉ có nghĩa trên object CÓ value (0/1) — toggle một
-            # node/điểm là interaction chết; muốn di chuyển điểm phải dùng drag.
             if "value" not in by_id[it["target"]]:
                 return None, (
                     f'toggle "{it["target"]}" vô nghĩa vì object không có "value" khởi tạo — '
                     "muốn học sinh DI CHUYỂN/KÉO điểm thì dùng interaction drag."
                 )
+        elif it["type"] == "set_param":
+            if it["target"] in rule_targets:
+                return None, f'Không thể set_param "{it["target"]}" vì nó là giá trị dẫn xuất từ rule.'
+            if by_id[it["target"]]["type"] not in ("slider", "switch", "value_box", "bit_register"):
+                return None, f'set_param chỉ áp cho slider/switch/value_box/bit_register — "{it["target"]}" là {by_id[it["target"]]["type"]}.'
+        elif it["type"] == "button_action":
+            pass
         else:  # drag (M7.13A)
             target_type = by_id[it["target"]]["type"]
             if target_type not in DRAG_TARGET_TYPES:
@@ -488,6 +509,45 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
             processes.append({"type": "reveal_sequence", "steps": norm_steps})
             continue
 
+        if p["type"] == "step_sequence":
+            steps = p.get("steps") or p.get("actions") or p.get("sequence") or p.get("items")
+            if not isinstance(steps, list):
+                steps = [steps] if isinstance(steps, dict) else []
+            if len(steps) > MAX_REVEAL_STEPS:
+                steps = steps[:MAX_REVEAL_STEPS]
+            if not steps:
+                return None, f'step_sequence "steps" phải có 1–{MAX_REVEAL_STEPS} bước.'
+            norm_steps: list[dict] = []
+            for st in steps:
+                if not isinstance(st, dict):
+                    continue
+                act = st.get("action") or st.get("type") or st.get("op") or "highlight"
+                step = {"action": str(act)}
+                raw_tgts = st.get("targets") if isinstance(st.get("targets"), list) else ([st["target"]] if "target" in st and isinstance(st["target"], str) else [])
+                for tid in raw_tgts:
+                    if tid not in ids:
+                        return None, f'step_sequence tham chiếu đối tượng không tồn tại: "{tid}".'
+                if raw_tgts:
+                    step["targets"] = list(raw_tgts)
+                if "indices" in st and isinstance(st["indices"], list):
+                    step["indices"] = list(st["indices"])
+                if "state" in st and isinstance(st["state"], str):
+                    step["state"] = st["state"]
+                if "pointer_id" in st and isinstance(st["pointer_id"], str):
+                    step["pointer_id"] = st["pointer_id"]
+                if "to_index" in st and _is_num(st["to_index"]):
+                    step["to_index"] = st["to_index"]
+                if "value" in st:
+                    step["value"] = st["value"]
+                narr = st.get("narration") or st.get("explanation") or st.get("description") or st.get("note")
+                if isinstance(narr, str) and narr.strip():
+                    step["narration"] = narr.strip()
+                norm_steps.append(step)
+            if not norm_steps:
+                return None, 'step_sequence "steps" phải có ít nhất 1 bước hợp lệ.'
+            processes.append({"type": "step_sequence", "steps": norm_steps})
+            continue
+
         # move_along_path
         if by_id.get(p.get("entity", ""), {}).get("type") != "moving_entity":
             return None, 'Process cần "entity" là một moving_entity có thật.'
@@ -504,7 +564,7 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
     if own_err:
         return None, own_err
 
-    return {
+    valid_spec = {
         "dsl_version": raw["dsl_version"] if isinstance(raw.get("dsl_version"), str) and raw.get("dsl_version") else "1.0",
         "title": raw["title"],
         "objects": objects,
@@ -512,4 +572,61 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
         "interactions": interactions,
         "processes": processes,
         "notes": raw["notes"] if isinstance(raw.get("notes"), str) and raw.get("notes") else None,
-    }, None
+    }
+
+    ok_ped, ped_err = validate_pedagogical_quality(valid_spec)
+    if not ok_ped:
+        return None, ped_err
+
+    return valid_spec, None
+
+
+def validate_pedagogical_quality(spec: dict) -> tuple[bool, str | None]:
+    """Kiểm tra chất lượng sư phạm & tính tương tác/diễn tiến của mô phỏng (M20 QA Gate).
+
+    Nguyên tắc:
+    1. Semantic Richness: Các primitive đặc thù phải có cấu trúc hợp lệ (bar_chart >= 2 bars, table_grid có headers, tree_element không chu trình).
+    2. Step Sequence Narration: Mọi bước trong step_sequence bắt buộc có thuyết minh sư phạm.
+    3. Server-side AST Dry-Run: Chạy thử tính toán để đảm bảo 100% không lỗi runtime.
+    """
+    from app.simulation import generic_engine as GE
+
+    objs = spec.get("objects", [])
+    procs = spec.get("processes", [])
+
+    # 1. Rich Primitives quality checks
+    for o in objs:
+        otype = o.get("type")
+        if otype == "bar_chart":
+            bars = o.get("bars", [])
+            if not isinstance(bars, list) or len(bars) < 2:
+                return False, f'Biểu đồ cột "{o.get("id")}" cần ít nhất 2 cột để so sánh/sắp xếp.'
+        elif otype == "bit_register":
+            size = o.get("size", 8)
+            if size not in (8, 16):
+                return False, f'Thanh ghi bit "{o.get("id")}" có kích thước không hợp lệ (chỉ nhận 8 hoặc 16 bit).'
+        elif otype == "tree_element":
+            oid = o.get("id")
+            if o.get("left") == oid or o.get("right") == oid:
+                return False, f'Nút cây "{oid}" không thể tự trỏ tới chính nó làm con.'
+
+    # 2. Step sequence narration quality
+    for p in procs:
+        if p.get("type") == "step_sequence":
+            for idx, step in enumerate(p.get("steps", [])):
+                narration = step.get("narration")
+                if not narration or len(str(narration).strip()) < 3:
+                    return False, f'Bước {idx + 1} trong step_sequence thiếu thuyết minh sư phạm (narration).'
+
+    # 3. AST Dry-Run
+    try:
+        base = GE.initial_base(spec)
+        GE.values_of(spec, base)
+        GE.build_timeline(spec)
+    except GE.GenericEvaluationError as e:
+        return False, f"Lỗi tính toán khi chạy thử mô phỏng: {e.detail}"
+    except Exception as e:
+        return False, f"Lỗi thực thi quy tắc mô phỏng: {str(e)}"
+
+    return True, None
+

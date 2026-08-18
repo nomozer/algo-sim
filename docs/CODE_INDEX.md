@@ -1954,14 +1954,20 @@ vẫn phải sở hữu `state k → k+1 → result`), bảng sở hữu rendere
 hiện tại 11/3/8 của 22 target. Đọc trước khi thêm target mới hoặc khi định cho
 renderer "tự tính" thứ gì.
 
-### `components/SearchActionZone.tsx` — HAI export, HAI trách nhiệm · offline
-`SearchStateView` = **trạng thái quan sát** của bước tìm kiếm (tiền đề · chip vị
-trí/đích/vùng xét · quan hệ · khối chi phí) — render **NGOÀI** cổng Thí nghiệm.
-`SearchActionZone` = **chỉ** điều khiển cam kết (lời nhắc · nút · phản hồi), do
-`commitmentSurfaceVisible` gác. Tách ở W4B-2V vì gác cả cụm làm mất trạng thái
-quan sát (hồi quy W4B-2D). Luật: **cổng gác quyền hành động, không gác thông
-tin.** Dải nhân quả KHÔNG dựng cho họ tìm kiếm nữa — `SearchStateView` là chủ sở
-hữu duy nhất của quan hệ ở họ này.
+### `components/SearchStateView.tsx` — dữ kiện bước tìm kiếm · offline
+Hai export: `SearchStateView` = **trạng thái quan sát** của bước tìm kiếm (tiền
+đề · chip vị trí/đích/vùng xét · quan hệ · khối chi phí); `SearchPrecondition` =
+dòng tiền đề, tách riêng để hai nơi không chép cùng một câu.
+
+**W13 — `SearchActionZone.tsx` ĐÃ XOÁ, đừng đi tìm.** File cũ có hai export, hai
+trách nhiệm: trạng thái (nay ở đây) và điều khiển cam kết (lời nhắc · nút · phản
+hồi đúng/sai). W4B-2V đã tách trách nhiệm thứ nhất ra vì gác cả cụm làm mất
+trạng thái quan sát (hồi quy W4B-2D); W13 gỡ hình thức hỏi-đáp nên trách nhiệm
+thứ hai **rỗng hẳn** — không rút gọn được, mà là hết lý do tồn tại.
+
+Luật rút ra, vẫn còn hiệu lực: **cổng gác quyền hành động, không gác thông tin.**
+Dải nhân quả KHÔNG dựng cho họ tìm kiếm — `SearchStateView` là chủ sở hữu duy
+nhất của quan hệ ở họ này.
 
 ### `generic/narration-boundary.characterization.test.tsx` · offline · **ĐẶC TẢ**
 ⚠️ Mô tả hành vi **HIỆN TẠI**, kể cả hành vi đáng lo — KHÔNG phải hợp đồng mong

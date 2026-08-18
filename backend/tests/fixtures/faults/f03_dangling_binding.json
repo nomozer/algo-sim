@@ -1,0 +1,27 @@
+{
+  "id": "f03_dangling_binding",
+  "category": "faults",
+  "expected_violation": {
+    "gate": "binding",
+    "violation_code": "DANGLING_TARGET_REF",
+    "step_index": 0,
+    "expected_message_contains": "không tồn tại"
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Lỗi tham chiếu target không tồn tại",
+    "objects": [
+      {"id": "box_a", "type": "value_box", "value": 10, "label": "Hộp A"}
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "highlight", "targets": ["ghost_element_999"], "narration": "LỖI: ghost_element_999 không có trong objects!"}
+        ]
+      }
+    ]
+  }
+}

@@ -3,7 +3,6 @@ import type { AnalysisUnsupported } from "../core/types";
 import { getSimulation } from "../simulations/registry";
 import { historyStore, type HistoryItem } from "./history";
 import type {
-  PredictionResult,
   SimAction,
   SimulationEnvelope,
   TimelineCapability,
@@ -79,13 +78,6 @@ interface AppState {
   speedMs: number;
 
   /**
-   * M8-PRE-LIP: kết quả chấm dự đoán của người học — DỮ LIỆU KẾT QUẢ, giữ TÁCH
-   * KHỎI engine state để mô phỏng canonical KHÔNG BAO GIỜ bị thao tác học sinh
-   * làm sai lệch. Tự xoá mỗi khi state/bước đổi (dự đoán gắn với một thời điểm).
-   */
-  prediction: PredictionResult | null;
-
-  /**
    * Trạng thái panel (tổng quát, không dính domain — M2 #3, #8).
    * M9-UX7: panel TRÁI đã GỠ HẲN — sau khi có trang Thư viện, danh mục tồn tại ở
    * ba nơi (Home / Thư viện / panel trái). Panel trái là bản sao thứ ba; đổi bài
@@ -119,26 +111,15 @@ interface AppState {
    */
   aiOpen: boolean;
   /**
-   * W4B-2U2 §13 — CHẾ ĐỘ THỬ THÁCH có mở không. TRÌNH BÀY THUẦN, sống cạnh
-   * `rightOpen`/`aiOpen`, KHÔNG bao giờ vào engine state hay spec.
+   * W4B-3A — CHẾ ĐỘ KHÁM PHÁ có mở không. TRÌNH BÀY THUẦN, sống cạnh
+   * `rightOpen`/`aiOpen`, KHÔNG bao giờ vào engine state hay spec; và cũng MÙ
+   * DOMAIN: store không biết "khám phá" ở bài này nghĩa là kéo cột hay bấm liên
+   * kết mạng.
    *
-   * Vì sao cần: `predict` là NĂNG LỰC của module, nhưng trước wave này hễ module
-   * khai `predict` là `PredictionBar` hiện THƯỜNG TRỰC trong Quan sát — nên mọi
-   * bài đều đọc thành hỏi-đáp. Đo được: 11 target khai `predict`.
-   * Nó CHƯA TỪNG chặn playback (`nextStep` không đọc `prediction`); lỗi là SỰ
-   * HIỆN DIỆN, không phải cái chốt. Cờ này tách *có năng lực* khỏi *đang bày ra*.
-   */
-  challengeOpen: boolean;
-  /**
-   * W4B-3A — CHẾ ĐỘ KHÁM PHÁ có mở không. TRÌNH BÀY THUẦN, cùng tầng
-   * `challengeOpen`, và cũng MÙ DOMAIN: store không biết "khám phá" ở bài này
-   * nghĩa là kéo cột hay bấm liên kết mạng.
-   *
-   * Vì sao là cờ THỨ HAI chứ không dùng lại `challengeOpen`: hai chế độ khác
-   * nhau ở chỗ AI PHÁN XÉT. Thử thách đưa cam kết của học sinh qua
-   * `predict.check` để engine phán đúng/sai; Khám phá đưa thao tác qua
-   * `module.apply` và KHÔNG phán gì cả — hệ quả tất định là câu trả lời. Gộp
-   * chúng lại là dạy học sinh rằng kéo một cột cũng là "trả lời đúng/sai".
+   * W13 — trước đây có cờ chị em `challengeOpen` cho chế độ Thử thách (cam kết
+   * đi qua `predict.check` để engine phán đúng/sai). Năng lực đó đã bị gỡ hẳn:
+   * sản phẩm là hệ mô phỏng tương tác, không phải hệ hỏi-đáp. Nay chỉ còn MỘT
+   * chế độ thao tác, và nó không phán gì cả — hệ quả tất định là câu trả lời.
    *
    * Trước wave này cờ này sống ở `useState` cục bộ trong HAI renderer miền
    * (`domains/algorithm/ui.tsx`, `domains/network/ui.tsx`) với tên `labOpen`,
@@ -151,8 +132,8 @@ interface AppState {
   /**
    * M8: visual mode là TRÌNH BÀY THUẦN TÚY — chọn component vẽ, không hơn.
    * KHÔNG nằm trong engine state/SimulationSpec, KHÔNG do LLM chọn, KHÔNG ảnh
-   * hưởng tính toán tất định. Đổi mode giữ nguyên active/state/cursor/prediction
-   * (dự đoán gắn với BƯỚC, không gắn với renderer). Mặc định "2d"; nạp mô
+   * hưởng tính toán tất định. Đổi mode giữ nguyên active/state/cursor.
+   * Mặc định "2d"; nạp mô
    * phỏng mới thì quay về "2d" (chính sách M8: 2D là mặc định).
    */
   visualMode: VisualMode;
@@ -174,12 +155,6 @@ interface AppState {
 
   /** Tương tác người học → module.apply (what-if, toggle, tham số...). */
   dispatch: (action: SimAction) => void;
-  /**
-   * M8-PRE-LIP: nộp dự đoán → module.predict.check (ENGINE chấm, KHÔNG LLM).
-   * NO-OP nếu module không khai capability. KHÔNG đụng engine state.
-   */
-  submitPrediction: (answerId: string) => void;
-  clearPrediction: () => void;
   /** Điều khiển timeline — NO-OP nếu module không có capability (M2 #4). */
   goToStep: (step: number) => void;
   nextStep: () => void;
@@ -200,7 +175,6 @@ interface AppState {
   setSpeedMs: (ms: number) => void;
   toggleRight: () => void;
   setAiOpen: (v: boolean) => void;
-  setChallengeOpen: (v: boolean) => void;
   setExploreOpen: (v: boolean) => void;
   openLibrary: () => void;
   setView: (view: AppView) => void;
@@ -209,7 +183,7 @@ interface AppState {
   openSidebarDrawer: () => void;
   closeSidebarDrawer: () => void;
 
-  /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active/prediction. */
+  /** M8: đổi renderer — CHỈ đổi trường trình bày, không đụng active. */
   setVisualMode: (mode: VisualMode) => void;
   reset: () => void;
 }
@@ -225,9 +199,8 @@ export const useAppStore = create<AppState>((set, get) => {
     const mod = getSimulation(active.moduleId);
     if (!mod?.timeline) return;
     const next = fn(mod.timeline, active.state);
-    // Đổi bước → dự đoán cũ hết hiệu lực (nó gắn với MỘT thời điểm cụ thể).
     if (next !== active.state) {
-      set({ active: { ...active, state: next }, prediction: null });
+      set({ active: { ...active, state: next } });
       // M9-UX1: ghi tiến độ TRÌNH BÀY vào lịch sử bền (cursor là tất định nên
       // goToStep khôi phục đúng). Chỉ storage — không set() để khỏi re-render.
       if (activeHistoryId) {
@@ -250,7 +223,6 @@ export const useAppStore = create<AppState>((set, get) => {
     active: null,
     playing: false,
     speedMs: 1200,
-    prediction: null,
     // W4B-2B §8 — panel PHẢI (Giải thích) ĐÓNG mặc định ở MỌI bề rộng.
     //
     // Trước đây nó mở sẵn trên màn ≥1100px với lý do "biến/mã giả là biểu diễn
@@ -272,7 +244,6 @@ export const useAppStore = create<AppState>((set, get) => {
     sidebarDrawerOpen: false,
     activeAssignment: null,
     aiOpen: false,
-    challengeOpen: false,
     exploreOpen: false,
     visualMode: "2d",
 
@@ -335,13 +306,10 @@ export const useAppStore = create<AppState>((set, get) => {
         analysisError: null,
         activeSampleId: sampleId ?? null,
         playing: false,
-        prediction: null,
-        /* W4B-2Z: mô phỏng MỚI luôn mở ở chế độ Quan sát. Trước đây `challengeOpen`
-           không được đặt lại nên nó rò từ bài trước sang bài sau — với một phiên
-           thì khó thấy, với nhiều phiên thì thành sai lệch đo được. */
-        challengeOpen: false,
-        // W4B-3A — cùng lý do, cùng một dòng: bài MỚI luôn mở ở Quan sát, nên
-        // chế độ Khám phá của bài trước không được rò sang bài sau.
+        /* W4B-2Z: mô phỏng MỚI luôn mở ở chế độ Quan sát — cờ chế độ không được
+           rò từ bài trước sang bài sau (với một phiên thì khó thấy, với nhiều
+           phiên thì thành sai lệch đo được).
+           W4B-3A — cùng lý do, cùng một dòng, nay chỉ còn một chế độ. */
         exploreOpen: false,
         // Chính sách M8: mô phỏng MỚI luôn mở ở 2D (mặc định); 3D là lựa chọn
         // của người dùng SAU đó, và chỉ khi module khai hỗ trợ.
@@ -366,7 +334,6 @@ export const useAppStore = create<AppState>((set, get) => {
         analysisError: null,
         activeSampleId: null,
         playing: false,
-        prediction: null,
         history: historyStore.list(),
       }),
 
@@ -391,8 +358,6 @@ export const useAppStore = create<AppState>((set, get) => {
       if (get().active) {
         if (item.lastCursor !== null) get().goToStep(item.lastCursor);
         if (item.visualMode) get().setVisualMode(item.visualMode);
-        // goToStep xoá prediction (đúng ngữ nghĩa); tiến độ đã khôi phục xong.
-        set({ prediction: null });
       }
     },
 
@@ -421,21 +386,8 @@ export const useAppStore = create<AppState>((set, get) => {
       const mod = getSimulation(active.moduleId);
       if (!mod) return;
       const next = mod.apply(active.state, action);
-      if (next !== active.state) set({ active: { ...active, state: next }, prediction: null });
+      if (next !== active.state) set({ active: { ...active, state: next } });
     },
-
-    submitPrediction: (answerId) => {
-      const { active } = get();
-      if (!active) return;
-      const mod = getSimulation(active.moduleId);
-      // Module không khai capability → KHÔNG có dự đoán (mặc định an toàn).
-      if (!mod?.predict) return;
-      // ENGINE chấm. `check` là hàm thuần → engine state KHÔNG hề bị đụng:
-      // kết quả sống ở `prediction`, tách khỏi `active.state` (canonical).
-      set({ prediction: mod.predict.check(active.state, answerId) });
-    },
-
-    clearPrediction: () => set({ prediction: null }),
 
     goToStep: (step) => withTimeline((tl, s) => tl.goToStep(s, step)),
 
@@ -469,11 +421,11 @@ export const useAppStore = create<AppState>((set, get) => {
       if (!active) return;
       const mod = getSimulation(active.moduleId);
       if (!mod) return;
-      // Đặt lại = về Quan sát: Thử thách và Khám phá đều là chế độ học sinh
-      // chủ động vào, nên dựng lại mô hình thì cả hai cùng đóng.
+      // Đặt lại = về Quan sát: Khám phá là chế độ học sinh chủ động vào, nên
+      // dựng lại mô hình thì nó đóng theo.
       set({
         active: { ...active, state: mod.init(active.config) },
-        playing: false, prediction: null, challengeOpen: false, exploreOpen: false,
+        playing: false, exploreOpen: false,
       });
     },
 
@@ -488,7 +440,6 @@ export const useAppStore = create<AppState>((set, get) => {
           envelope: { ...active.envelope, config },
         },
         playing: false,
-        prediction: null,
       });
     },
 
@@ -496,12 +447,10 @@ export const useAppStore = create<AppState>((set, get) => {
     setSpeedMs: (ms) => set({ speedMs: ms }),
     toggleRight: () => set({ rightOpen: !get().rightOpen }),
     setAiOpen: (v) => set({ aiOpen: v }),
-    setChallengeOpen: (v) => set({ challengeOpen: v }),
     setExploreOpen: (v) => set({ exploreOpen: v }),
 
     // M8: CHỈ đổi trường trình bày. Không đụng active (engine state/cursor giữ
-    // nguyên khối), không xoá prediction (nó gắn với BƯỚC hiện tại — bước không
-    // đổi thì dự đoán còn nguyên hiệu lực), không rebuild, không gọi mạng.
+    // nguyên khối), không rebuild, không gọi mạng.
     setVisualMode: (mode) => {
       set({ visualMode: mode });
       // M9-UX1: visual mode là tiến độ trình bày an toàn → ghi vào lịch sử.
@@ -519,8 +468,6 @@ export const useAppStore = create<AppState>((set, get) => {
         analysisError: null,
         activeSampleId: null,
         playing: false,
-        prediction: null,
-        challengeOpen: false,
         exploreOpen: false,
         visualMode: "2d",
         view: "home",

@@ -255,9 +255,9 @@ def test_add_object_truong_weight_bi_reject_neu_ten_truong():
 
 def test_add_object_truong_la_khac_weight_cung_bi_reject_cung_duong():
     """Chứng minh preflight là allowlist chung — KHÔNG hardcode riêng "weight"."""
-    res = _apply(TRIANGLE, [{"op": "add_object", "object": {"id": "D", "type": "node", "color": "red"}}])
+    res = _apply(TRIANGLE, [{"op": "add_object", "object": {"id": "D", "type": "node", "custom_field": "xyz"}}])
     assert res["status"] == "structurally_invalid"
-    assert "color" in res["error"]
+    assert "custom_field" in res["error"]
 
 
 def test_add_object_reject_khong_mutate_spec_goc():

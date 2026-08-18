@@ -1,12 +1,59 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "b61aff27bc58ee44",
+  "sourceFingerprint": "289bdd91477ce3e3",
   "dirtyRelevantSources": [
+    "backend/app/ai/gemini.py",
+    "backend/app/ai/pipeline.py",
+    "backend/app/ai/skills/analyze.md",
+    "backend/app/ai/skills/classify.md",
+    "backend/app/ai/skills/simulate.md",
+    "backend/app/evaluation/__init__.py",
+    "backend/app/simulation/dsl/manifest.py",
+    "backend/app/simulation/dsl/validator.py",
+    "backend/app/simulation/generic_engine.py",
+    "backend/app/simulation/mechanisms.py",
+    "backend/tests/test_dsl.py",
+    "backend/tests/test_manifest.py",
+    "backend/tests/test_manifest_providers.py",
+    "backend/tests/test_patch.py",
+    "backend/tests/test_representation.py",
+    "frontend/src/components/ObserveView.tsx",
+    "frontend/src/components/PracticeReporter.tsx",
+    "frontend/src/components/PredictionBar.tsx",
+    "frontend/src/components/ScanActionZone.tsx",
+    "frontend/src/components/SearchActionZone.tsx",
+    "frontend/src/components/SimulationControls.tsx",
+    "frontend/src/components/SimulationWorkspace.tsx",
+    "frontend/src/components/SortActionZone.tsx",
+    "frontend/src/components/ui-hygiene.test.ts",
+    "frontend/src/simulations/capability-descriptors.json",
+    "frontend/src/simulations/domains/algorithm/index.ts",
+    "frontend/src/simulations/domains/algorithm/interaction-policy.ts",
+    "frontend/src/simulations/domains/algorithm/ui.tsx",
+    "frontend/src/simulations/domains/generic/dsl-contract.json",
+    "frontend/src/simulations/domains/generic/generic.test.ts",
+    "frontend/src/simulations/domains/generic/index.ts",
+    "frontend/src/simulations/domains/generic/model.ts",
+    "frontend/src/simulations/domains/generic/patch.test.ts",
+    "frontend/src/simulations/domains/generic/ui.tsx",
+    "frontend/src/simulations/domains/generic/validate.ts",
+    "frontend/src/simulations/domains/network/encap.test.ts",
+    "frontend/src/simulations/domains/network/encap.ts",
+    "frontend/src/simulations/domains/network/index.ts",
+    "frontend/src/simulations/domains/network/traverse-module.tsx",
+    "frontend/src/simulations/domains/network/ui.tsx",
+    "frontend/src/simulations/domains/tree/layout-size.ts",
+    "frontend/src/simulations/domains/tree/tree-module.tsx",
+    "frontend/src/simulations/renderer-fit.ts",
+    "frontend/src/simulations/tool-affordance.ts",
+    "frontend/src/simulations/types.ts",
+    "frontend/src/state/classroom.ts",
+    "frontend/src/state/store.ts",
     "frontend/src/styles/global.css"
   ],
-  "head": "404f53bf15de976e8257cd8e3f7e4c1dd7a67512",
+  "head": "c7b796ff921e33678a1fdb9efc6062f24f78b105",
   "dirty": true,
-  "generatedAt": "2026-08-16T16:20:37.443Z",
+  "generatedAt": "2026-08-18T17:33:30.906Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
@@ -34,7 +81,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -70,7 +117,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -90,7 +137,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -110,7 +157,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -130,7 +177,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -150,7 +197,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -170,7 +217,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -206,7 +253,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -226,7 +273,7 @@
       "acceptedByModule": [
         "whatif_swap"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "BOUNDED_PARAMETER_TOOL"
     },
@@ -329,6 +376,8 @@
       "manipulatesWhenChallengeClosed": "toggle",
       "stageActions": [
         "move",
+        "set_param",
+        "step",
         "toggle"
       ],
       "mechanismActions": [
@@ -416,7 +465,7 @@
       "acceptedByModule": [
         "net_disconnect"
       ],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "INTERACTIVE_MODEL"
     },
@@ -433,7 +482,7 @@
       "mechanismActions": [],
       "inputActions": [],
       "acceptedByModule": [],
-      "hasChallenge": true,
+      "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "TRACE_MODEL"
     },

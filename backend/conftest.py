@@ -19,9 +19,34 @@ Thoát guard: chỉ khi ALLOW_LIVE_AI=1 (dùng cho live eval, không dùng trong
 """
 
 import os
+import socket
+import sys
 
 import httpx
 import pytest
+
+# Fix WinError 10013 on Windows ephemeral port bind in asyncio self-pipe
+if sys.platform == "win32":
+    _orig_socketpair = getattr(socket, "socketpair", None)
+    def _windows_fixed_socketpair(family=socket.AF_INET, type=socket.SOCK_STREAM, proto=0):
+        for port in range(49152, 49999):
+            lsock = socket.socket(family, type, proto)
+            lsock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                lsock.bind(("127.0.0.1", port))
+                lsock.listen(1)
+                csock = socket.socket(family, type, proto)
+                csock.connect(("127.0.0.1", port))
+                ssock, _ = lsock.accept()
+                lsock.close()
+                return ssock, csock
+            except OSError:
+                lsock.close()
+                continue
+        if _orig_socketpair:
+            return _orig_socketpair(family, type, proto)
+        raise OSError("No available port found for socketpair")
+    socket.socketpair = _windows_fixed_socketpair
 
 BLOCK_MESSAGE = "Real Gemini API call blocked during offline tests."
 

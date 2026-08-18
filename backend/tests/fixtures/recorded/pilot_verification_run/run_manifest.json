@@ -1,0 +1,57 @@
+{
+  "run_id": "pilot_verification_run",
+  "timestamp": "2026-08-18T17:33:51.908234+00:00",
+  "git_commit": "c7b796ff921e33678a1fdb9efc6062f24f78b105",
+  "git_clean": false,
+  "total_tasks": 3,
+  "extra_metadata": {
+    "counts": {
+      "total_tasks": 3,
+      "supported_tasks": 3,
+      "unsupported_tasks": 0,
+      "released_tasks": 3,
+      "correct_verdicts": 3,
+      "false_releases": 0,
+      "oracle_matches": 3,
+      "geom_matches": 3,
+      "first_pass_successes": 3,
+      "attempt0_failures": 0,
+      "repaired_by_cegis": 0,
+      "total_llm_calls": 3,
+      "total_prompt_tokens": 3600,
+      "total_comp_tokens": 1350
+    },
+    "metrics": {
+      "r_verdict_pct": 100.0,
+      "r_release_pct": 100.0,
+      "r_false_release_pct": 0.0,
+      "r_oracle_pct": 100.0,
+      "r_geom_pct": 100.0,
+      "r_first_pct": 100.0,
+      "r_cegis_pct": "N/A",
+      "avg_llm_calls_per_task": 1.0,
+      "avg_prompt_tokens_per_task": 1200.0,
+      "avg_comp_tokens_per_task": 450.0
+    }
+  },
+  "tasks_summary": [
+    {
+      "task_id": "p01_find_max",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "p02_bracket_stack",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "p03_count_even",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    }
+  ]
+}

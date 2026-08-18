@@ -32,15 +32,14 @@ const MIN_INTERVAL_MS = 1500;
 
 /** Chữ ký state — đổi thì mới đáng gửi. */
 function signatureOf(body: ProgressBody): string {
-  return [body.cursor, body.stepCount, body.exploreOpen, body.challengeOpen,
-    body.actionCount, body.commitmentCount, body.completed].join("|");
+  return [body.cursor, body.stepCount, body.exploreOpen,
+    body.actionCount, body.completed].join("|");
 }
 
 export function readProgress(
   mod: SimulationModule | undefined,
   state: unknown,
-  flags: { exploreOpen: boolean; challengeOpen: boolean; actionCount: number;
-    commitmentCount: number },
+  flags: { exploreOpen: boolean; actionCount: number },
 ): ProgressBody {
   let cursor = 0;
   let stepCount = 0;
@@ -54,9 +53,11 @@ export function readProgress(
     cursor,
     stepCount,
     exploreOpen: flags.exploreOpen,
-    challengeOpen: flags.challengeOpen,
+    /* W13 — SỐ LẦN THÍ NGHIỆM là tín hiệu tham gia duy nhất còn lại. Trước đây
+       cạnh nó có `commitmentCount` (số lần chốt một câu trả lời được chấm); bỏ
+       quiz thì bỏ luôn, và bảng quan sát vì thế còn ĐÚNG một loại bằng chứng:
+       em này có động tay vào mô hình hay chỉ bấm chạy. */
     actionCount: flags.actionCount,
-    commitmentCount: flags.commitmentCount,
     /* "Xong" = đã tới bước cuối của timeline do ENGINE dựng. Bài không có
        timeline thì không có khái niệm xong theo bước ⇒ để false, không bịa. */
     completed: stepCount > 1 && cursor >= stepCount - 1,
@@ -71,35 +72,28 @@ export function PracticeReporter() {
   const assignment = useAppStore((s) => s.activeAssignment);
   const active = useAppStore((s) => s.active);
   const exploreOpen = useAppStore((s) => s.exploreOpen);
-  const challengeOpen = useAppStore((s) => s.challengeOpen);
   const report = useClassroomStore((s) => s.reportProgress);
 
   const lastSig = useRef<string>("");
   const lastSent = useRef<number>(0);
   const actions = useRef<number>(0);
-  const commitments = useRef<number>(0);
   const timer = useRef<number | null>(null);
 
   /* Đổi bài ⇒ đếm lại từ đầu. Không reset thì số thao tác của bài trước chảy
      sang bài sau và bảng quan sát nói một điều không xảy ra. */
   useEffect(() => {
     actions.current = 0;
-    commitments.current = 0;
     lastSig.current = "";
   }, [assignment?.id]);
 
   const stateRef = active?.state;
   useEffect(() => { if (stateRef !== undefined) actions.current += 1; }, [stateRef]);
 
-  const prediction = useAppStore((s) => s.prediction);
-  useEffect(() => { if (prediction) commitments.current += 1; }, [prediction]);
-
   useEffect(() => {
     if (!assignment || !active) return;
     const mod = getSimulation(active.moduleId) as SimulationModule | undefined;
     const body = readProgress(mod, active.state, {
-      exploreOpen, challengeOpen,
-      actionCount: actions.current, commitmentCount: commitments.current,
+      exploreOpen, actionCount: actions.current,
     });
     const sig = signatureOf(body);
     if (sig === lastSig.current) return;
@@ -116,7 +110,7 @@ export function PracticeReporter() {
     if (timer.current) window.clearTimeout(timer.current);
     timer.current = window.setTimeout(send, MIN_INTERVAL_MS - since);
     return () => { if (timer.current) window.clearTimeout(timer.current); };
-  }, [assignment, active, exploreOpen, challengeOpen, prediction, report]);
+  }, [assignment, active, exploreOpen, report]);
 
   return null;
 }

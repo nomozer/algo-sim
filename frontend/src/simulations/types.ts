@@ -54,7 +54,8 @@ export type SimAction =
   | { type: "net_connect"; a: string; b: string }
   | { type: "net_disconnect"; a: string; b: string }
   /** Về đúng topology đã validate lúc nạp — không phải "undo" từng bước. */
-  | { type: "net_reset" };
+  | { type: "net_reset" }
+  | { type: "step"; delta?: number };
 
 /**
  * Capability tùy chọn (yêu cầu #2): chỉ mô phỏng progressive/hybrid khai báo.
@@ -99,80 +100,23 @@ export interface EditCapability<C = unknown, S = unknown> {
   policyOf(config: C, state: S): EditPolicyLike;
 }
 
-/* ── PredictionCapability (M8-PRE-LIP) ────────────────────────────────────
+/* ── W13 — KHÔNG CÒN `PredictionCapability` ───────────────────────────────
  *
- * BẰNG CHỨNG TƯƠNG TÁC HỌC TẬP, KHÔNG PHẢI practice_activity đầy đủ.
- * Vòng lặp: Quan sát → Dự đoán/Chọn → Nộp → ENGINE TẤT ĐỊNH chấm → phản hồi là
- * DỮ LIỆU KẾT QUẢ (không phải chat) → mô phỏng canonical KHÔNG đổi.
+ * Từ M8-PRE-LIP tới W12, module khai được một nhịp *hỏi → nộp → engine chấm
+ * đúng/sai*. W4B-2U2 đã DỜI nó ra sau cổng Thử thách; W13 **gỡ hẳn**.
  *
- * Cùng khuôn `timeline?` / `edit?`: module KHÔNG khai → UI KHÔNG có affordance
- * dự đoán (mặc định an toàn, không module nào phải sửa).
+ * Lý do là ranh giới sản phẩm, không phải kĩ thuật: đây là hệ **mô phỏng tương
+ * tác**, nơi học sinh tác động lên mô hình rồi ĐỌC hệ quả tất định — không phải
+ * hệ hỏi-đáp có chấm điểm. Một câu hỏi hai lựa chọn dạy học sinh đoán đáp án;
+ * `explore` → `apply` bắt học sinh đổi chính mô hình rồi nhìn cơ chế trả lời.
  *
- * RÀNG BUỘC CỨNG:
- * - `challenge` và `check` là HÀM THUẦN, chấm bằng ENGINE/TRACE có sẵn.
- * - TUYỆT ĐỐI KHÔNG gọi LLM (CORRECTNESS.md §1.6: LLM không bao giờ là judge).
- * - Không chứng minh được đúng/sai → "unsupported_to_verify", KHÔNG phán bừa.
- * - `check` KHÔNG được đổi state canonical (học sinh sai vẫn không phá dòng chính).
+ * Thay bằng: `explore?` (lối vào + câu mời) + `apply` của từng miền. Không bề
+ * mặt học sinh nào còn phát ngôn đúng/sai — khoá bởi `no-verdict.test.ts`.
+ *
+ * ⚠️ ĐỪNG khôi phục "cho gọn". `InteractionFeedback` của miền generic là thứ
+ * KHÁC: engine phản hồi một thao tác có phạm vi hợp lệ (bất biến #11/#12), nó
+ * ở lại.
  */
-
-export interface PredictionOption {
-  id: string;
-  label: string;
-}
-
-export interface PredictionChallenge {
-  /** Câu hỏi TẤT ĐỊNH sinh từ state hiện tại. */
-  question: string;
-  /** 2 lựa chọn (có/không) hay N lựa chọn (chọn nút) — contract không bó vào một kiểu. */
-  options: PredictionOption[];
-}
-
-export type PredictionVerdict = "correct" | "incorrect" | "unsupported_to_verify";
-
-export interface PredictionResult {
-  verdict: PredictionVerdict;
-  /** Đáp án học sinh chọn. */
-  answerId: string;
-  /** Đáp án chuẩn — CHỈ đặt khi engine CHỨNG MINH được. */
-  expectedId?: string;
-  /** Giải thích TẤT ĐỊNH (do engine dựng, không phải hội thoại). */
-  message: string;
-}
-
-export interface PredictionCapability<S = unknown> {
-  /** null = ở trạng thái này không có gì để dự đoán (hết bước / không phải điểm quyết định). */
-  challenge(state: S): PredictionChallenge | null;
-  /** Chấm TẤT ĐỊNH, PURE — không đổi state canonical. */
-  check(state: S, answerId: string): PredictionResult;
-  /**
-   * Optional (INTERACTION-FAMILY W1) — bước này đã được trình bày NGAY TRÊN SÂN
-   * KHẤU, nên shell KHÔNG dựng UI dự đoán dùng chung nữa.
-   *
-   * Dùng khi cùng một cam kết được diễn đạt bằng HÀNH ĐỘNG lên chính đối tượng
-   * (vd đặt phần tử vào ô tích luỹ) thay vì bằng một câu hỏi Có/Không: đó vẫn là
-   * một dự đoán, chỉ khác hình thức, nên nó vẫn đi qua `check` — engine tất định
-   * vẫn là bên duy nhất phán đúng/sai (bất biến #11).
-   *
-   * KHÔNG khai = shell dựng UI dùng chung như cũ. Không được để hai hình thức
-   * cùng hỏi một câu trên một màn hình.
-   */
-  presentedInStage?(state: S): boolean;
-
-  /**
-   * W4B-3A — NHÃN CỦA LỐI VÀO THỬ THÁCH, do module cấp.
-   *
-   * Shell sở hữu *chỗ đặt* lối vào (dải hành động phụ cạnh transport) và *cờ
-   * mở/đóng*; module sở hữu *câu mời*. Trước wave này shell viết cứng một câu
-   * ("Thử thách: tự dự đoán bước này") cho mọi target, nên họ thuật toán phải
-   * tự dựng lấy một nút thứ hai mới nói được đúng cơ chế của mình ("tự chọn nửa
-   * để tìm tiếp") — và cái nút thứ hai ấy chính là dải `experimentTrigger`.
-   *
-   * DẪN XUẤT TỪ CONFIG/STATE, không từ tiêu đề đề bài (anti-pattern #2).
-   * `null` = ở trạng thái này không có gì để mời. Không khai = shell dùng câu
-   * mặc định (tương thích ngược).
-   */
-  entry?(state: S, config: unknown): PresentationEntry | null;
-}
 
 /**
  * Câu mời của một lối vào phụ. Chỉ TRÌNH BÀY — không mang ngữ nghĩa, không
@@ -232,20 +176,15 @@ export interface PresentationEntry {
 }
 
 /**
- * W4B-3A — KHÁM PHÁ (thao tác trực tiếp lên mô hình), TÁCH KHỎI THỬ THÁCH.
+ * W4B-3A — KHÁM PHÁ: thao tác trực tiếp lên mô hình.
  *
- * VÌ SAO LÀ MỘT NĂNG LỰC RIÊNG, không gộp vào `predict`. Hai thứ này khác nhau
- * ở chỗ AI PHÁN XÉT:
+ * W13 — nay là năng lực tương tác học tập DUY NHẤT. Năng lực chị em của nó
+ * (`predict`: học sinh cam kết một quyết định rồi engine phán đúng/sai) đã bị
+ * gỡ hẳn, vì đây là hệ mô phỏng tương tác chứ không phải hệ hỏi-đáp.
  *
- * - `predict` = học sinh CAM KẾT một quyết định của thuật toán, và
- *   `predict.check` (engine tất định) phán đúng/sai;
- * - `explore` = học sinh ĐỔI mô hình (kéo đổi chỗ, ngắt một liên kết mạng), rồi
- *   `module.apply` tính lại hệ quả. KHÔNG có đúng/sai nào được phán — hệ quả
- *   tất định LÀ câu trả lời.
- *
- * Trước wave này cả hai nằm sau CÙNG một nút "Thí nghiệm" do domain tự dựng, nên
- * sản phẩm không có chỗ nào nói được rằng chúng là hai việc khác nhau — và một
- * nút mở hai thứ khác loại thì học sinh học sai luôn cả hai.
+ * Nguyên tắc còn lại: học sinh ĐỔI mô hình (kéo đổi chỗ, ngắt một liên kết
+ * mạng, đổi điều kiện lọc), rồi `module.apply` tính lại hệ quả. KHÔNG có đúng/
+ * sai nào được phán — **hệ quả tất định LÀ câu trả lời**.
  *
  * Năng lực này KHÔNG sở hữu ngữ nghĩa: nó chỉ khai *có chế độ khám phá không* và
  * *mời bằng câu gì*. Bộ điều khiển cụ thể (kéo cột, bấm liên kết) vẫn do renderer
@@ -377,16 +316,13 @@ export interface SimulationModule<C = unknown, S = unknown> {
   edit?: EditCapability<C, S>;
 
   /**
-   * Optional (M8-PRE-LIP) — nhịp DỰ ĐOÁN của người học. Không khai = UI không
-   * hiện ô dự đoán. Ground truth lấy từ chính engine tất định (trace/BFS).
-   */
-  predict?: PredictionCapability<S>;
-
-  /**
    * Optional (W4B-3A) — chế độ KHÁM PHÁ: học sinh đổi mô hình, `apply` tính lại.
    * Không khai = không có lối vào khám phá (mặc định an toàn, cùng khuôn
-   * `timeline?` / `predict?`). Khai KHÔNG tạo ra thao tác nào — thao tác vẫn do
+   * `timeline?` / `edit?`). Khai KHÔNG tạo ra thao tác nào — thao tác vẫn do
    * renderer miền dựng; đây chỉ là lối vào và câu mời.
+   *
+   * W13 — đây nay là ĐƯỜNG DUY NHẤT để học sinh tác động lên mô hình. Không có
+   * đường thứ hai nào đi qua chấm điểm.
    */
   explore?: ExploreCapability<S>;
 
@@ -395,7 +331,7 @@ export interface SimulationModule<C = unknown, S = unknown> {
    * `null` = bước này không có gì để nói (vd bước cuối đã có băng kết quả nói
    * đúng câu đó rồi — hiện hai lần làm học sinh tưởng là hai thông tin khác).
    * Module KHÔNG khai = shell không dựng khe (mặc định an toàn, cùng khuôn
-   * `timeline?` / `predict?`).
+   * `timeline?` / `explore?`).
    */
   narrate?(state: S, config: C): Narration | null;
 

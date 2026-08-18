@@ -1,0 +1,60 @@
+{
+  "id": "c03_order_count_range",
+  "category": "certified",
+  "problem_text": "Cho danh sách giá trị đơn hàng gồm: 50, 120, 85, 200, 150, 90, 60 (nghìn đồng). Hãy đếm xem có bao nhiêu đơn hàng nằm trong khoảng [80, 150] nghìn đồng.",
+  "expected_oracle": {
+    "oracle_func": "oracle_count_in_range",
+    "inputs": [[50, 120, 85, 200, 150, 90, 60], 80, 150],
+    "expected_result": {
+      "count": 4,
+      "matching_indices": [1, 2, 4, 5],
+      "matching_values": [120, 85, 150, 90]
+    }
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Đếm số đơn hàng có giá trị trong khoảng [80k - 150k]",
+    "objects": [
+      {
+        "id": "orders_chart",
+        "type": "bar_chart",
+        "bars": [
+          {"id": "o1", "value": 50, "label": "ĐH1 (50k)"},
+          {"id": "o2", "value": 120, "label": "ĐH2 (120k)"},
+          {"id": "o3", "value": 85, "label": "ĐH3 (85k)"},
+          {"id": "o4", "value": 200, "label": "ĐH4 (200k)"},
+          {"id": "o5", "value": 150, "label": "ĐH5 (150k)"},
+          {"id": "o6", "value": 90, "label": "ĐH6 (90k)"},
+          {"id": "o7", "value": 60, "label": "ĐH7 (60k)"}
+        ],
+        "max_val": 220,
+        "label": "Giá trị các đơn hàng"
+      },
+      {"id": "count_box", "type": "value_box", "value": 0, "label": "Số đơn thỏa mãn"},
+      {"id": "ptr", "type": "pointer", "target": "orders_chart", "index": 0, "label": "Xét đơn hàng"}
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "highlight", "targets": ["count_box"], "value": 0, "narration": "Khởi tạo biến đếm count = 0."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 0, "narration": "Xét ĐH1 (50k): 50 < 80 (không thỏa [80..150]), bỏ qua."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 1, "state": "comparing", "narration": "Xét ĐH2 (120k): 80 <= 120 <= 150 (thỏa mãn!), tăng count lên 1."},
+          {"action": "highlight", "targets": ["count_box"], "value": 1, "narration": "Đã cập nhật count = 1."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 2, "state": "comparing", "narration": "Xét ĐH3 (85k): 80 <= 85 <= 150 (thỏa mãn!), tăng count lên 2."},
+          {"action": "highlight", "targets": ["count_box"], "value": 2, "narration": "Đã cập nhật count = 2."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 3, "narration": "Xét ĐH4 (200k): 200 > 150 (không thỏa), bỏ qua."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 4, "state": "comparing", "narration": "Xét ĐH5 (150k): 80 <= 150 <= 150 (thỏa mãn!), tăng count lên 3."},
+          {"action": "highlight", "targets": ["count_box"], "value": 3, "narration": "Đã cập nhật count = 3."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 5, "state": "comparing", "narration": "Xét ĐH6 (90k): 80 <= 90 <= 150 (thỏa mãn!), tăng count lên 4."},
+          {"action": "highlight", "targets": ["count_box"], "value": 4, "narration": "Đã cập nhật count = 4."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 6, "narration": "Xét ĐH7 (60k): 60 < 80 (không thỏa), bỏ qua."},
+          {"action": "highlight", "targets": ["count_box"], "value": 4, "state": "active", "narration": "Kết thúc duyệt: Tổng cộng có 4 đơn hàng nằm trong khoảng [80k, 150k]."}
+        ]
+      }
+    ],
+    "notes": "Mô phỏng đếm các phần tử thỏa mãn điều kiện khoảng giá trị."
+  }
+}

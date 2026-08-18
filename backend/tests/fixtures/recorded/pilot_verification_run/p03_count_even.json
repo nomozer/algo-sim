@@ -1,0 +1,173 @@
+{
+  "task_id": "p03_count_even",
+  "problem_text": "Cho mảng số nguyên gồm: 3, 8, 12, 5, 7, 10, 4. Hãy mô phỏng thuật toán đếm xem có bao nhiêu số chẵn trong mảng.",
+  "prompt_hash": "113f69f9c1e7c1dab16fc7091051e497da34eefc9f6d3ab6424df86751787bcb",
+  "git_commit": "c7b796ff921e33678a1fdb9efc6062f24f78b105",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:35:01.241672+00:00",
+  "duration_sec": 20.346694231033325,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 20.346694231033325
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.count_if",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "Mô phỏng thuật toán đếm số chẵn trong một mảng số nguyên.",
+    "description": "Một mảng các số nguyên. → Số lượng các số chẵn có trong mảng.",
+    "config": {
+      "problem": {
+        "summary": "Mô phỏng thuật toán đếm số chẵn trong một mảng số nguyên.",
+        "input": "Một mảng các số nguyên.",
+        "output": "Tổng số lượng các số chẵn có trong mảng."
+      },
+      "algorithm_id": "count_if",
+      "data": {
+        "array": [
+          3,
+          8,
+          12,
+          5,
+          7,
+          10,
+          4
+        ],
+        "labels": null,
+        "target": null,
+        "condition": {
+          "op": "==",
+          "value": 0
+        },
+        "order": null
+      },
+      "data_generated": false,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "mảng số nguyên"
+      ],
+      "data": [
+        {
+          "description": "mảng số nguyên",
+          "labels": null,
+          "values": [
+            3,
+            8,
+            12,
+            5,
+            7,
+            10,
+            4
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "đếm số chẵn trong mảng"
+      ],
+      "constraints": [],
+      "goal": "Đếm xem có bao nhiêu số chẵn trong mảng.",
+      "input_description": "Một mảng các số nguyên.",
+      "output_description": "Số lượng các số chẵn có trong mảng.",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [],
+      "relation_roles": [],
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "single_pass_scan:count_if"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "static_scene",
+        "numeric"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric",
+        "temporal"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

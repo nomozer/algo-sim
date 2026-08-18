@@ -4,13 +4,12 @@ import { runAlgorithm } from "../../../core/algorithms";
 import { registerSimulation } from "../../registry";
 import type { ConfigResult, SimAction, SimulationModule } from "../../types";
 import {
-  decisionPointOf,
   hasStageInteraction,
   narrationWithoutPrompt,
   processLeadOf,
 } from "./decision";
 import { hasCondition, withConditionParam } from "./condition-param";
-import { challengeEntryOf, exploreEntryOf, whatIfPolicyOf } from "./interaction-policy";
+import { exploreEntryOf, whatIfPolicyOf } from "./interaction-policy";
 import { activeTrace, clampStep, type AlgorithmConfig, type AlgorithmSimState } from "./model";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
 import { makeScanModule } from "./scan-module";
@@ -159,66 +158,17 @@ export function makeAlgorithmModule(
       }
     },
 
-    /**
-     * M9-S1 — nhịp DỰ ĐOÁN THEO CƠ CHẾ, một nguồn duy nhất: `decisionPointOf`.
+    /* W13 — KHỐI `predict` ĐÃ GỠ.
      *
-     * Mỗi thuật toán được hỏi ĐÚNG cơ chế của nó (cập nhật max? cộng vào tổng?
-     * nửa nào bị loại? có đổi chỗ? có dời không?) tại điểm quyết định thật của
-     * trace; đáp án chuẩn và bằng chứng nhân quả DẪN XUẤT từ sự kiện kế tiếp.
-     * Cùng nguồn dữ liệu nuôi dải nhân quả trong Workspace → hỏi, chấm và
-     * trình bày không bao giờ lệch nhau. KHÔNG LLM, không network.
+     * Từ M9-S1 tới W12, mỗi thuật toán được HỎI đúng cơ chế của nó tại điểm
+     * quyết định (`decisionPointOf`), rồi engine chấm đúng/sai. Nay bỏ: đây là
+     * hệ mô phỏng tương tác, học sinh tác động lên mô hình và đọc hệ quả tất
+     * định, chứ không trả lời câu hỏi để lấy phán quyết.
+     *
+     * `decisionPointOf` KHÔNG mất — nó vẫn là nguồn duy nhất của dải dữ kiện cơ
+     * chế trên sân khấu (`title` / `facts` / `expression`). Thứ bị gỡ là
+     * `options` / `expectedId` / `evidence` — tức phần đáp án.
      */
-    predict: {
-      challenge: (s) => {
-        const d = decisionPointOf(s);
-        if (!d) return null;
-        return { question: d.question, options: d.options };
-      },
-      check: (s, answerId) => {
-        const d = decisionPointOf(s);
-        if (!d) {
-          return {
-            verdict: "unsupported_to_verify",
-            answerId,
-            message: "Ở bước này không có điểm quyết định nào để dự đoán.",
-          };
-        }
-        if (!d.options.some((o) => o.id === answerId)) {
-          return {
-            verdict: "unsupported_to_verify",
-            answerId,
-            message: "Câu trả lời không hợp lệ.",
-          };
-        }
-        const verdict = answerId === d.expectedId ? "correct" : "incorrect";
-        return {
-          verdict,
-          answerId,
-          expectedId: d.expectedId,
-          message: (verdict === "correct" ? "Chính xác. " : "Chưa đúng. ") + d.evidence,
-        };
-      },
-      /**
-       * INTERACTION-FAMILY W1 — cụm quét dãy trình bày cam kết NGAY TRÊN SÂN
-       * KHẤU (`ScanActionZone`), nên shell không dựng PredictionBar ở bước đó.
-       * Một cam kết, một hình thức: bày cả hai là hỏi cùng một câu hai lần.
-       * Bước không phải điểm quyết định → `scanInteractionOf` trả null → shell
-       * quay lại hành vi cũ, không target nào khác bị ảnh hưởng.
-       */
-      // W3B §14 — MỘT nguồn đếm vùng hành động, dùng chung với khe thuyết minh
-      // và test bất biến. Liệt kê tay ở đây từng làm hai chỗ trôi khỏi nhau.
-      presentedInStage: (s) => hasStageInteraction(s),
-
-      /* W4B-3A — CÂU MỜI do module cấp, CHỖ ĐẶT do shell quyết.
-         Dẫn xuất từ `config.algorithm_id` (định danh ngữ nghĩa đã validate),
-         KHÔNG từ tiêu đề đề bài — anti-pattern #2. */
-      entry: (s, config) =>
-        challengeEntryOf(whatIfPolicyOf((config as AlgorithmConfig).algorithm_id), {
-          inBranch: s.branch !== null && s.branch !== undefined,
-          // Mở ra thì có gì để cam kết: vùng trên sân khấu hoặc một điểm quyết định.
-          hasSurface: hasStageInteraction(s) || decisionPointOf(s) !== null,
-        }),
-    },
 
     /* W4B-3A — KHÁM PHÁ: đổi mô hình rồi để `apply` tính lại. Không đi qua
        `predict.check`, nên không có đúng/sai nào được phát ngôn ở đây. */

@@ -1,0 +1,75 @@
+{
+  "id": "c02_bracket_stack",
+  "category": "certified",
+  "problem_text": "Mô phỏng thuật toán kiểm tra chuỗi dấu ngoặc hợp lệ '{[()]}' sử dụng cấu trúc dữ liệu Ngăn xếp (Stack).",
+  "expected_oracle": {
+    "oracle_func": "oracle_bracket_validator",
+    "inputs": ["{[()]}"],
+    "expected_result": {
+      "is_valid": true,
+      "error_at_index": null
+    }
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Kiểm tra đóng mở ngoặc hợp lệ bằng Stack",
+    "objects": [
+      {
+        "id": "input_strip",
+        "type": "array_strip",
+        "items": ["{", "[", "(", ")", "]", "}"],
+        "label": "Chuỗi ký tự đầu vào"
+      },
+      {
+        "id": "ptr",
+        "type": "pointer",
+        "target": "input_strip",
+        "index": 0,
+        "label": "Con trỏ i"
+      },
+      {
+        "id": "char_box",
+        "type": "value_box",
+        "value": "{",
+        "label": "Ký tự hiện tại"
+      },
+      {
+        "id": "stack",
+        "type": "stack_view",
+        "items": [],
+        "capacity": 6,
+        "label": "Ngăn xếp (Stack)"
+      },
+      {
+        "id": "result_box",
+        "type": "value_box",
+        "value": "Đang kiểm tra...",
+        "label": "Kết quả kiểm tra"
+      }
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "highlight", "targets": ["input_strip", "stack"], "narration": "Khởi tạo chuỗi đầu vào '{[()]}'. Ngăn xếp khởi tạo rỗng."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 0, "value": "{", "narration": "Xét ký tự '{': Là dấu mở ngoặc, đưa '{' vào ngăn xếp."},
+          {"action": "push", "targets": ["stack"], "value": "{", "narration": "Đã đẩy '{' vào Stack."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 1, "value": "[", "narration": "Xét ký tự '[': Là dấu mở ngoặc, đưa '[' vào ngăn xếp."},
+          {"action": "push", "targets": ["stack"], "value": "[", "narration": "Đã đẩy '[' vào Stack."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 2, "value": "(", "narration": "Xét ký tự '(': Là dấu mở ngoặc, đưa '(' vào ngăn xếp."},
+          {"action": "push", "targets": ["stack"], "value": "(", "narration": "Đã đẩy '(' vào Stack."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 3, "value": ")", "narration": "Xét ký tự ')': Là dấu đóng ngoặc, kiểm tra đỉnh stack thấy '(' khớp cặp! Pop '(' ra khỏi stack."},
+          {"action": "pop", "targets": ["stack"], "narration": "Đã lấy '(' ra khỏi Stack."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 4, "value": "]", "narration": "Xét ký tự ']': Khớp với '[' ở đỉnh stack. Pop '[' ra khỏi stack."},
+          {"action": "pop", "targets": ["stack"], "narration": "Đã lấy '[' ra khỏi Stack."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 5, "value": "}", "narration": "Xét ký tự '}': Khớp với '{' ở đỉnh stack. Pop '{' ra khỏi stack."},
+          {"action": "pop", "targets": ["stack"], "narration": "Đã lấy '{' ra khỏi Stack."},
+          {"action": "highlight", "targets": ["result_box"], "value": "Hợp lệ", "state": "success", "narration": "Chuỗi đã duyệt hết và Stack hoàn toàn rỗng. Kết luận: Chuỗi dấu ngoặc HỢP LỆ!"}
+        ]
+      }
+    ],
+    "notes": "Mô phỏng sử dụng stack để kiểm tra ngoặc với dữ liệu chuỗi ký tự chuẩn."
+  }
+}

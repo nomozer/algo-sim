@@ -1,0 +1,27 @@
+{
+  "id": "f04_type_incoherent",
+  "category": "faults",
+  "expected_violation": {
+    "gate": "type",
+    "violation_code": "INCOMPATIBLE_ROLE_ASSIGNMENT",
+    "expected_message_contains": "không nhận được vai trò"
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Lỗi gán vai trò không tương thích",
+    "objects": [
+      {"id": "sw1", "type": "switch", "value": 1, "label": "Công tắc 1"},
+      {"id": "node_target", "type": "node", "label": "Nút mạng"}
+    ],
+    "rules": [
+      {
+        "type": "boolean",
+        "op": "and",
+        "inputs": ["sw1"],
+        "target": "node_target"
+      }
+    ],
+    "interactions": [],
+    "processes": []
+  }
+}

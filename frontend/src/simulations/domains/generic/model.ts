@@ -12,6 +12,19 @@ export const OBJECT_TYPES = [
   "switch",
   "lamp",
   "value_box",
+  "slider",
+  "color_swatch",
+  "array_strip",
+  "metric_gauge",
+  "bar_chart",
+  "table_grid",
+  "stack_view",
+  "queue_view",
+  "tree_element",
+  "bit_register",
+  "logic_gate",
+  "pointer",
+  "coordinate_plane",
   "node",
   "edge",
   "moving_entity",
@@ -38,23 +51,36 @@ export const STRUCTURAL_TYPES = new Set<string>([
   "text",
 ]);
 
-export const RULE_TYPES = ["boolean", "weighted_sum"] as const;
+export const RULE_TYPES = ["boolean", "weighted_sum", "formula"] as const;
 export type RuleType = (typeof RULE_TYPES)[number];
 
 export const BOOL_OPS = ["and", "or", "not", "xor"] as const;
 export type BoolOp = (typeof BOOL_OPS)[number];
 
-export const INTERACTION_TYPES = ["toggle", "drag"] as const;
+export const INTERACTION_TYPES = ["toggle", "drag", "set_param", "button_action"] as const;
 export type InteractionType = (typeof INTERACTION_TYPES)[number];
 
 /** Type được phép làm target của drag (M7.13A) — v1 chỉ node; song song manifest. */
 export const DRAG_TARGET_TYPES = new Set<string>(["node"]);
 
-export const PROCESS_TYPES = ["move_along_path", "reveal_sequence"] as const;
+export const PROCESS_TYPES = ["move_along_path", "reveal_sequence", "step_sequence"] as const;
 export type ProcessType = (typeof PROCESS_TYPES)[number];
 
 /** Họ process DIỄN BIẾN theo thời gian — song song manifest.temporal_process_types(). */
-export const TEMPORAL_PROCESS_TYPES = new Set<string>(["move_along_path", "reveal_sequence"]);
+export const TEMPORAL_PROCESS_TYPES = new Set<string>(["move_along_path", "reveal_sequence", "step_sequence"]);
+
+export interface BarItem {
+  id?: string;
+  value: number;
+  label?: string;
+  color?: string;
+}
+
+export interface CellHighlight {
+  row: number;
+  col: number;
+  color?: string;
+}
 
 export interface SpecObject {
   id: string;
@@ -63,6 +89,32 @@ export interface SpecObject {
   y?: number;
   label?: string;
   value?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  unit?: string;
+  color?: string;
+  items?: (number | string)[];
+  bars?: BarItem[];
+  max_val?: number;
+  headers?: string[];
+  rows?: (number | string)[][];
+  highlighted_cells?: CellHighlight[];
+  capacity?: number;
+  bits?: number[];
+  size?: number;
+  show_decimal?: boolean;
+  show_hex?: boolean;
+  gate_type?: "and" | "or" | "not" | "xor" | "nand" | "nor";
+  target_id?: string;
+  index?: number;
+  min_x?: number;
+  max_x?: number;
+  min_y?: number;
+  max_y?: number;
+  show_grid?: boolean;
+  left?: string;
+  right?: string;
   node_type?: string;
   from?: string;
   to?: string;
@@ -70,7 +122,7 @@ export interface SpecObject {
   directed?: boolean;
   /** Nội dung chữ cho heading/paragraph/text (M7.12). */
   text?: string;
-  /** id của container/group chứa object này (lồng nhau — M7.12). */
+  /** id của container/group/tree_element chứa object này (lồng nhau — M7.12). */
   parent?: string;
 }
 
@@ -79,6 +131,7 @@ export interface SpecRule {
   op?: BoolOp;
   inputs?: string[];
   weights?: number[];
+  expression?: string;
   target: string;
 }
 
@@ -116,7 +169,23 @@ export interface RevealProcess {
   steps: RevealStep[];
 }
 
-export type SpecProcess = MoveProcess | RevealProcess;
+export interface StepAction {
+  action: "highlight" | "swap" | "set_value" | "move_pointer" | string;
+  targets?: string[];
+  state?: string;
+  indices?: number[];
+  pointer_id?: string;
+  to_index?: number;
+  value?: any;
+  narration?: string;
+}
+
+export interface StepSequenceProcess {
+  type: "step_sequence";
+  steps: StepAction[];
+}
+
+export type SpecProcess = MoveProcess | RevealProcess | StepSequenceProcess;
 
 export interface SimulationSpec {
   dsl_version: string;
@@ -134,6 +203,7 @@ export interface Frame {
   visibleIds: string[];
   entityPos: Record<string, string>; // entityId → nodeId
   narration: string;
+  stepAction?: StepAction;
 }
 
 /**
@@ -196,24 +266,266 @@ export function ruleTargets(spec: SimulationSpec): Set<string> {
 }
 
 /** Giá trị gốc ban đầu: object có value và KHÔNG phải target của rule nào. */
-export function initialBase(spec: SimulationSpec): Record<string, number> {
+export function initialBase(spec: SimulationSpec): Record<string, any> {
   const targets = ruleTargets(spec);
-  const base: Record<string, number> = {};
+  const base: Record<string, any> = {};
   for (const o of spec.objects) {
-    if (o.value !== undefined && !targets.has(o.id)) base[o.id] = o.value;
+    if (targets.has(o.id)) continue;
+    if (o.value !== undefined) {
+      base[o.id] = o.value;
+    } else if (o.type === "slider") {
+      base[o.id] = o.min ?? 0;
+    } else if (o.type === "bit_register" && Array.isArray(o.bits)) {
+      const bits = o.bits;
+      base[o.id] = bits.reduce((acc, b, idx) => acc + Number(b) * Math.pow(2, bits.length - 1 - idx), 0);
+    }
   }
   return base;
 }
 
 /**
- * M13: mọi input PHẢI đã có trong `values` — thiếu là lỗi typed, không bao
- * giờ coi ngầm là 0. Nhánh `invalid_numeric_source` này KHÔNG reachable qua
- * `valuesOf` bình thường (nó chỉ gọi evalRule khi mọi input đã resolve —
- * xem vòng lặp bên dưới); giữ lại cho parity với backend + phòng thủ nếu
- * evalRule bị gọi trực tiếp từ nơi khác trong tương lai.
+ * Trình thông dịch biểu thức an toàn tất định (Safe Recursive Descent Parser).
+ * Hỗ trợ toán tử số học/so sánh (+, -, *, /, %, ==, !=, <, <=, >, >=), logic
+ * và các hàm an toàn (rgb_to_hex, clamp, min, max, abs, round, floor, ceil, if_else).
+ * Tuyệt đối KHÔNG dùng eval() hay Function().
  */
-function evalRule(rule: SpecRule, values: Record<string, number>): number {
-  const inputs: number[] = [];
+export function evaluateSafeExpression(
+  expr: string,
+  env: Record<string, any>,
+): any {
+  let pos = 0;
+  const str = expr.trim();
+
+  function peek(): string {
+    while (pos < str.length && /\s/.test(str[pos])) pos++;
+    return pos < str.length ? str[pos] : "";
+  }
+
+  function consume(char?: string): string {
+    peek();
+    if (char && str[pos] !== char) {
+      throw new GenericExecutionError("invalid_numeric_source", `Cần ký tự '${char}', nhưng gặp '${str[pos]}'`);
+    }
+    return str[pos++];
+  }
+
+  function parseExpression(): any {
+    return parseComparison();
+  }
+
+  function parseComparison(): any {
+    let left = parseAdditive();
+    while (true) {
+      const p = peek();
+      if (p === "=" && str[pos + 1] === "=") {
+        pos += 2;
+        const right = parseAdditive();
+        left = left === right ? 1 : 0;
+      } else if (p === "!" && str[pos + 1] === "=") {
+        pos += 2;
+        const right = parseAdditive();
+        left = left !== right ? 1 : 0;
+      } else if (p === "<" && str[pos + 1] === "=") {
+        pos += 2;
+        const right = parseAdditive();
+        left = Number(left) <= Number(right) ? 1 : 0;
+      } else if (p === ">" && str[pos + 1] === "=") {
+        pos += 2;
+        const right = parseAdditive();
+        left = Number(left) >= Number(right) ? 1 : 0;
+      } else if (p === "<") {
+        pos += 1;
+        const right = parseAdditive();
+        left = Number(left) < Number(right) ? 1 : 0;
+      } else if (p === ">") {
+        pos += 1;
+        const right = parseAdditive();
+        left = Number(left) > Number(right) ? 1 : 0;
+      } else {
+        break;
+      }
+    }
+    return left;
+  }
+
+  function parseAdditive(): any {
+    let left = parseMultiplicative();
+    while (true) {
+      const p = peek();
+      if (p === "+" && str[pos + 1] !== "+") {
+        consume("+");
+        const right = parseMultiplicative();
+        if (typeof left === "string" || typeof right === "string") {
+          left = String(left) + String(right);
+        } else {
+          left = Number(left) + Number(right);
+        }
+      } else if (p === "-" && str[pos + 1] !== "-") {
+        consume("-");
+        const right = parseMultiplicative();
+        left = Number(left) - Number(right);
+      } else {
+        break;
+      }
+    }
+    return left;
+  }
+
+  function parseMultiplicative(): any {
+    let left = parseUnary();
+    while (true) {
+      const p = peek();
+      if (p === "*") {
+        consume("*");
+        const right = parseUnary();
+        left = Number(left) * Number(right);
+      } else if (p === "/") {
+        consume("/");
+        const right = parseUnary();
+        left = Number(left) / Number(right);
+      } else if (p === "%") {
+        consume("%");
+        const right = parseUnary();
+        left = Number(left) % Number(right);
+      } else {
+        break;
+      }
+    }
+    return left;
+  }
+
+  function parseUnary(): any {
+    const p = peek();
+    if (p === "-") {
+      consume("-");
+      return -Number(parseUnary());
+    }
+    if (p === "+") {
+      consume("+");
+      return Number(parseUnary());
+    }
+    return parsePrimary();
+  }
+
+  function parsePrimary(): any {
+    const p = peek();
+    if (p === "(") {
+      consume("(");
+      const val = parseExpression();
+      consume(")");
+      return val;
+    }
+    // String literal: '...' or "..."
+    if (p === "'" || p === '"') {
+      const quote = consume();
+      let res = "";
+      while (pos < str.length && str[pos] !== quote) {
+        res += str[pos++];
+      }
+      consume(quote);
+      return res;
+    }
+    // Number literal
+    if (/[\d.]/.test(p)) {
+      let numStr = "";
+      while (pos < str.length && /[\d.]/.test(str[pos])) {
+        numStr += str[pos++];
+      }
+      return parseFloat(numStr);
+    }
+    // Identifier or function call
+    if (/[a-zA-Z_]/.test(p)) {
+      let ident = "";
+      while (pos < str.length && /[a-zA-Z0-9_]/.test(str[pos])) {
+        ident += str[pos++];
+      }
+      if (peek() === "(") {
+        consume("(");
+        const args: any[] = [];
+        if (peek() !== ")") {
+          args.push(parseExpression());
+          while (peek() === ",") {
+            consume(",");
+            args.push(parseExpression());
+          }
+        }
+        consume(")");
+        switch (ident) {
+          case "rgb_to_hex": {
+            const r = Math.max(0, Math.min(255, Math.round(Number(args[0] ?? 0))));
+            const g = Math.max(0, Math.min(255, Math.round(Number(args[1] ?? 0))));
+            const b = Math.max(0, Math.min(255, Math.round(Number(args[2] ?? 0))));
+            return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+          }
+          case "clamp": {
+            const val = Number(args[0] ?? 0);
+            const lo = Number(args[1] ?? 0);
+            const hi = Number(args[2] ?? 0);
+            return Math.max(lo, Math.min(hi, val));
+          }
+          case "min":
+            return Math.min(...args.map(Number));
+          case "max":
+            return Math.max(...args.map(Number));
+          case "abs":
+            return Math.abs(Number(args[0] ?? 0));
+          case "round":
+            return Math.round(Number(args[0] ?? 0));
+          case "floor":
+            return Math.floor(Number(args[0] ?? 0));
+          case "ceil":
+            return Math.ceil(Number(args[0] ?? 0));
+          case "if_else":
+            return args[0] ? args[1] : args[2];
+          case "bit_and":
+            return (Number(args[0] ?? 0) | 0) & (Number(args[1] ?? 0) | 0);
+          case "bit_or":
+            return (Number(args[0] ?? 0) | 0) | (Number(args[1] ?? 0) | 0);
+          case "bit_xor":
+            return (Number(args[0] ?? 0) | 0) ^ (Number(args[1] ?? 0) | 0);
+          case "bit_not":
+            return (~(Number(args[0] ?? 0) | 0)) & ((1 << (Number(args[1] ?? 8) | 0)) - 1);
+          case "shift_left":
+            return (Number(args[0] ?? 0) | 0) << (Number(args[1] ?? 0) | 0);
+          case "shift_right":
+            return (Number(args[0] ?? 0) | 0) >> (Number(args[1] ?? 0) | 0);
+          case "bin":
+            return ((Number(args[0] ?? 0) | 0) & ((1 << (Number(args[1] ?? 8) | 0)) - 1)).toString(2).padStart(Number(args[1] ?? 8), "0");
+          case "hex":
+            return "0x" + Number(args[0] ?? 0).toString(16);
+          case "dec":
+            return parseInt(String(args[0] ?? "0"), 2);
+          case "sum":
+            return Array.isArray(args[0]) ? args[0].reduce((s, x) => s + Number(x), 0) : Number(args[0] ?? 0);
+          case "len":
+            return Array.isArray(args[0]) || typeof args[0] === "string" ? args[0].length : 0;
+          case "get":
+            return Array.isArray(args[0]) && args[0][Number(args[1] ?? 0)] !== undefined ? args[0][Number(args[1] ?? 0)] : 0;
+          default:
+            throw new GenericExecutionError("invalid_numeric_source", `Hàm không hỗ trợ: "${ident}"`);
+        }
+      }
+      if (ident in env) {
+        return env[ident];
+      }
+      throw new GenericExecutionError("invalid_numeric_source", `Biến chưa có giá trị hoặc không xác định: "${ident}"`);
+    }
+    throw new GenericExecutionError("invalid_numeric_source", `Ký tự không hợp lệ tại vị trí ${pos}: "${str[pos]}"`);
+  }
+
+  const res = parseExpression();
+  if (pos < str.length) {
+    throw new GenericExecutionError("invalid_numeric_source", `Ký tự thừa sau biểu thức: "${str.slice(pos)}"`);
+  }
+  return res;
+}
+
+/**
+ * M13: mọi input PHẢI đã có trong `values` — thiếu là lỗi typed, không bao
+ * giờ coi ngầm là 0.
+ */
+function evalRule(rule: SpecRule, values: Record<string, any>): any {
+  const inputs: any[] = [];
   for (const id of rule.inputs ?? []) {
     if (!(id in values)) {
       throw new GenericExecutionError("invalid_numeric_source", `input "${id}" chưa có giá trị`);
@@ -221,7 +533,7 @@ function evalRule(rule: SpecRule, values: Record<string, number>): number {
     inputs.push(values[id]);
   }
   if (rule.type === "boolean") {
-    const bits = inputs.map((v) => (v >= 1 ? 1 : 0));
+    const bits = inputs.map((v) => (typeof v === "number" && v >= 1 ? 1 : 0));
     switch (rule.op) {
       case "and":
         return bits.every((b) => b === 1) ? 1 : 0;
@@ -235,12 +547,19 @@ function evalRule(rule: SpecRule, values: Record<string, number>): number {
         return 0;
     }
   }
+  if (rule.type === "formula") {
+    const env: Record<string, any> = {};
+    for (const id of rule.inputs ?? []) {
+      if (id in values) env[id] = values[id];
+    }
+    return evaluateSafeExpression(rule.expression ?? "", env);
+  }
   // weighted_sum
   const weights = rule.weights ?? [];
   if (weights.length !== inputs.length) {
     throw new GenericExecutionError("missing_weight", `rule "${rule.target}" thiếu weight`);
   }
-  const result = inputs.reduce((sum, v, i) => sum + v * weights[i], 0);
+  const result = inputs.reduce((sum, v, i) => sum + Number(v) * weights[i], 0);
   if (!Number.isFinite(result)) {
     throw new GenericExecutionError("non_finite_numeric_value", `rule "${rule.target}" ra ${result}`);
   }
@@ -249,22 +568,9 @@ function evalRule(rule: SpecRule, values: Record<string, number>): number {
 
 /**
  * Giá trị đầy đủ = base + giá trị dẫn xuất, áp rule đến khi ổn định.
- *
- * M13 §3.4 — BA TRẠNG THÁI: KHÔNG seed target = 0 nữa (trước đây xoá nhòa
- * "chưa resolve" với "đã tính ra 0" — đúng gốc sự cố "Dijkstra" giả). Một
- * target chưa resolve là UNRESOLVED (vắng mặt trong `values`); rule chỉ
- * chạy khi MỌI input đã resolve. DAG hợp lệ hội tụ trong ≤ len(rules) lượt
- * (validator đã cấm chu trình); còn sót sau bound → lỗi typed thay vì hoá 0
- * im lặng.
- *
- * Thuật toán PORT ĐÚNG bản Python đã merge (`generic_engine.py:values_of`,
- * đã qua review Task 4 — bản snippet cũ trong plan có bug `pending = still`
- * đặt SAU `if (!pending.length) break`, khiến MỌI spec có ≥1 rule bắn oan
- * `unresolved_dependency_after_bound`). Ở đây `pending = still` luôn chạy
- * TRƯỚC break/progress check.
  */
-export function valuesOf(spec: SimulationSpec, base: Record<string, number>): Record<string, number> {
-  const values: Record<string, number> = { ...base };
+export function valuesOf(spec: SimulationSpec, base: Record<string, any>): Record<string, any> {
+  const values: Record<string, any> = { ...base };
   const rules = spec.rules;
   let pending: SpecRule[] = [...rules];
   for (let iter = 0; iter <= rules.length; iter++) {
@@ -278,7 +584,7 @@ export function valuesOf(spec: SimulationSpec, base: Record<string, number>): Re
       }
     }
     const progressed = still.length < pending.length;
-    pending = still; // PHẢI cập nhật TRƯỚC break/progress check (Task 4 bug fix)
+    pending = still;
     if (pending.length === 0) break;
     if (!progressed) {
       const missing = new Set<string>();
@@ -299,8 +605,12 @@ export function valuesOf(spec: SimulationSpec, base: Record<string, number>): Re
 
 /** M13 workstream C: tên hiển thị learner-facing — id nội bộ KHÔNG BAO GIỜ là nhãn chính. */
 const TYPE_DISPLAY_VI: Record<string, string> = {
-  switch: "Công tắc", lamp: "Đèn", value_box: "Ô giá trị", node: "Điểm",
-  edge: "Đoạn nối", moving_entity: "Vật di chuyển", label: "Nhãn", container: "Khung",
+  switch: "Công tắc", lamp: "Đèn", value_box: "Ô giá trị", slider: "Thanh trượt",
+  color_swatch: "Mẫu màu", array_strip: "Dải mảng", metric_gauge: "Đồng hồ đo",
+  bar_chart: "Biểu đồ cột", table_grid: "Bảng dữ liệu", stack_view: "Ngăn xếp",
+  queue_view: "Hàng đợi", tree_element: "Nút cây", bit_register: "Thanh ghi bit",
+  logic_gate: "Cổng logic", pointer: "Con trỏ", coordinate_plane: "Hệ tọa độ",
+  node: "Điểm", edge: "Đoạn nối", moving_entity: "Vật di chuyển", label: "Nhãn", container: "Khung",
   group: "Nhóm", heading: "Tiêu đề", paragraph: "Đoạn văn", text: "Chữ",
 };
 
@@ -318,22 +628,6 @@ function isTechnicalLabel(label: string | undefined, id: string): boolean {
 export function displayLabel(spec: SimulationSpec, id: string): string {
   const o = spec.objects.find((x) => x.id === id);
   if (!o) return id; // sau validate không xảy ra; giữ để total
-  /* HAI TRƯỜNG, MỘT Ý ĐỊNH — LỖ HỔNG HỢP ĐỒNG ĐÃ XOÁ CHỮ CỦA HỌC SINH.
-   *
-   * `manifest.py` xếp `label` cùng họ `textual` với `heading`/`paragraph`/`text`,
-   * và ba loại kia được khai rõ **"text" là nội dung**. Riêng `label` KHÔNG nói
-   * trường nào mang nội dung. LLM làm theo ba anh em cùng họ và điền `text`;
-   * hàm này chỉ đọc `label` nên xếp là "thiếu nhãn" rồi thay bằng tên loại +
-   * số thứ tự.
-   *
-   * Hệ quả đo được trên một đề thật ("mô phỏng cho tôi hệ màu rgb"): đặc tả
-   * mang đúng "Kênh Đỏ (R)" · "Kênh Xanh lá (G)" · "Kênh Xanh dương (B)" ·
-   * "Màu sắc kết quả", còn màn hình hiện "Nhãn 1..4". Không phải LLM sinh ẩu,
-   * cũng không phải thiếu năng lực — nội dung CÓ SẴN và bị vứt ở bước cuối.
-   *
-   * Nhận CẢ HAI trường là cách sửa rẻ nhất và tương thích ngược: mọi envelope
-   * đã nằm trong cache đọc lại được ngay, không phải sinh lại (không tốn lượt
-   * gọi AI, không phải bump CACHE_VERSION). */
   const authored = o.label ?? o.text;
   if (!isTechnicalLabel(authored, id)) return authored!;
   const sameType = spec.objects.filter((x) => x.type === o.type);
@@ -359,10 +653,8 @@ function managedByReveal(spec: SimulationSpec): Set<string> {
 /**
  * Dựng timeline từ processes (M7.7).
  * - Không có process → một khung TĨNH, mọi object visible (tương thích ngược).
- * - Có reveal_sequence → visibility hình thành từng bước, TÍCH LŨY tất định:
- *   visible(k) = visible(k-1) ∪ objects(step k). Object KHÔNG nằm trong reveal
- *   nào là "nền", visible ngay từ đầu.
- * - Process chạy theo ĐÚNG thứ tự khai báo trong spec.
+ * - Có reveal_sequence → visibility hình thành từng bước, TÍCH LŨY tất định.
+ * - Có step_sequence → các bước diễn tiến thuật toán (highlight, swap, move_pointer).
  * visibleIds luôn sắp theo thứ tự khai báo object → serializable, tất định.
  */
 export function buildTimeline(spec: SimulationSpec): Frame[] {
@@ -388,6 +680,15 @@ export function buildTimeline(spec: SimulationSpec): Frame[] {
           visibleIds: orderVisible(visible),
           entityPos: { ...entityPos },
           narration: step.narration ?? `Hé lộ: ${step.objects.map((id) => objLabel(spec, id)).join(", ")}.`,
+        });
+      }
+    } else if (proc.type === "step_sequence") {
+      for (const step of proc.steps) {
+        frames.push({
+          visibleIds: [...allIds],
+          entityPos: { ...entityPos },
+          narration: step.narration ?? spec.title,
+          stepAction: { ...step },
         });
       }
     } else {
@@ -458,17 +759,15 @@ export function positionOf(obj: SpecObject, index: number): { x: number; y: numb
 
 /* ── Vị trí state-owned + drag (M7.13A) ───────────────────────── */
 
+import { computeSemanticLayout } from "./layout-compiler";
+
 /**
  * Layout khởi tạo (tọa độ domain 0–100) cho mọi object KHÔNG thuộc họ
  * structural (họ đó layout theo luồng tài liệu, không có tọa độ tự do).
- * Đây là logic dựng map `pos` cũ của renderer, dời vào engine để state sở hữu.
+ * Áp dụng Semantic Layout Compiler để tự động phân vùng không gian không chồng chéo.
  */
 export function layoutPositions(spec: SimulationSpec): Record<string, { x: number; y: number }> {
-  const pos: Record<string, { x: number; y: number }> = {};
-  spec.objects.forEach((o, i) => {
-    if (!STRUCTURAL_TYPES.has(o.type)) pos[o.id] = positionOf(o, i);
-  });
-  return pos;
+  return computeSemanticLayout(spec);
 }
 
 /** Các object có interaction drag khai trong spec. */

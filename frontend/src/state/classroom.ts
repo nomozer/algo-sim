@@ -50,9 +50,12 @@ export interface ObserveRow {
   cursor: number | null;
   stepCount: number | null;
   exploreOpen: boolean | null;
-  challengeOpen: boolean | null;
+  /* W13 — cạnh đây từng có `challengeOpen` + `commitmentCount` (số lần học sinh
+     chốt một câu trả lời được chấm). Bỏ quiz thì bỏ luôn: bảng quan sát nay chở
+     ĐÚNG MỘT loại bằng chứng tham gia — em này có động tay vào mô hình hay chỉ
+     bấm chạy. Bất biến #27 (bảng đọc bằng chứng, không phán đúng/sai) vì thế
+     chặt hơn trước, không lỏng đi. */
   actionCount: number | null;
-  commitmentCount: number | null;
   updatedAt: string | null;
 }
 
@@ -91,9 +94,7 @@ export interface ProgressBody {
   cursor: number;
   stepCount: number;
   exploreOpen: boolean;
-  challengeOpen: boolean;
   actionCount: number;
-  commitmentCount: number;
   completed: boolean;
 }
 

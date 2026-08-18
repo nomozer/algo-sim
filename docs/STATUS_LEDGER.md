@@ -129,23 +129,50 @@
 
 ## 0. KHOÁ PHẠM VI ĐỀ TÀI — ràng buộc cho mọi wave còn lại
 
-### TÊN ĐỀ TÀI CANONICAL (chốt 2026-08-16)
+### TÊN ĐỀ TÀI CANONICAL (chốt 2026-08-18)
 
-> **Hệ mô phỏng thuật toán tương tác kết hợp LLM phân tích bài toán có lời văn,
-> hỗ trợ dạy học môn Tin học THPT**
+> **Hệ thống mô phỏng tương tác kết hợp LLM phân tích bài toán bằng ngôn ngữ
+> tự nhiên, hỗ trợ dạy học môn Tin học THPT**
 
-Đây là tên GỐC, tra được ở `docs/RULES.md` v0.3 và bị xoá ở commit `1f95e92`
-(*"M9-UX1 … vệ sinh RULES"*). Nó **không bị thay bằng một quyết định phạm vi** —
-nó rụng kèm một lượt dọn tài liệu, rồi bản rộng ở README (`0621910`) sống một
-mình. Phạm vi nới ra do TRÔI. Khôi phục là trả về chỗ cũ, không phải đổi hướng.
+Tên này **thay** mọi bản trước: bản hẹp 2026-08-16 (*"Hệ mô phỏng thuật toán …
+bài toán có lời văn"*), bản có cụm *"2D/3D"*, và bản dùng động từ *"cấu hình
+theo"* — cả ba đều dùng trong ngày 2026-08-18. Đều là quyết định của chủ đề tài,
+không phải một lượt dọn tài liệu — đừng "khôi phục" bản cũ khi thấy chúng ở file
+đông cứng.
 
-Vì sao tên hẹp đúng hơn tên rộng: hệ **không sinh** mô phỏng mới (R0 — điều đề
-tài cố ý từ chối), nên mỗi miền đều dựng tay. Bề rộng vì thế đo LƯỢNG CODE đã
-gõ, không đo cái kiến trúc làm được. Chiều sâu mới đo được kiến trúc: 14 target
-thuộc trọng tâm dùng CHUNG một `interaction-policy`, một chủ sở hữu vị từ, một
-engine điểm-quyết-định, một khe thuyết minh.
+**Hai điểm trong tên là ràng buộc, không phải văn phong.**
+
+- *"LLM phân tích"* — **KHÔNG được đổi thành "sinh"/"tự sinh"**. Hệ không sinh
+  mô phỏng mới: LLM đọc đề rồi điền đặc tả đã kiểm định, miền mô phỏng dựng tay,
+  đề lệch danh mục bị từ chối bằng `capability_gap`. README §6 đã cấm sẵn tuyên
+  bố *"sinh mô phỏng phổ quát"*; tên mà nói "sinh" thì tự phản chứng ranh giới
+  R0. "Phân tích" an toàn vì nó là tên bước thật trong pipeline (`analyze`).
+- *bỏ "2D/3D"* — có chủ đích, vì số thật là **23 target chỉ 2D · 1 có 2D+3D**
+  (`network.protocol_encapsulation`) và W4B-2R đã phán 3D thua 10/10 tiêu chí ở
+  hầu hết cơ chế. 3D vẫn là năng lực có thật và vẫn được kể trong thân luận văn;
+  chỉ không đứng ngang hàng 2D ở tên nữa.
+
+⚠️ **PHẠM VI KHÔNG CÒN SUY RA TỪ TÊN.** Lập luận cũ ở mục này (*"tên hẹp đúng
+hơn vì bề rộng chỉ đo LƯỢNG CODE, chiều sâu mới đo kiến trúc"*) **đã bị gỡ cùng
+lượt đổi tên**: nó từng được dùng để chặn wave mới, và nay không còn hiệu lực.
+Việc xếp loại task quay về đúng `docs/RULES.md §3b–3d` (CORE · SUPPORTING ·
+DEEP_HARDENING · OUT_OF_SCOPE), tức là xét *task đó phục vụ gì*, không xét nó có
+nằm trong chữ "thuật toán"/"bài toán lời văn" hay không.
+
+Hai thứ **vẫn còn hiệu lực** vì chúng chưa bao giờ dựa vào tên, đừng nhân lượt
+mở này mà bỏ luôn:
+
+- danh sách **KHÔNG phải mục tiêu** + tầng lớp học đóng băng ở cuối §0 (LMS ·
+  IDE tuỳ ý · mô phỏng cho mọi môn · chứng minh cải thiện kết quả học tập…) —
+  ý tưởng rơi vào đó vẫn thuộc `POST_THESIS_BACKLOG.md`;
+- **kỷ luật tuyên bố**: mở phạm vi không sinh thêm bằng chứng. Wave mới vẫn phải
+  mang bằng chứng chạy được mới được ghi DONE.
 
 **TIÊU ĐIỂM = BA ĐIỂM NGHẼN NHẬN THỨC (chốt 2026-08-16)**
+
+⚠️ Sau lượt đổi tên 2026-08-18, mục này là **khung KỂ CHUYỆN của quyển luận
+văn**, không còn là trần phạm vi: nó quyết định chương nào được viết sâu, không
+quyết định wave nào được phép mở.
 
 Khung tổ chức của luận văn KHÔNG phải "độ phủ chương trình" mà là **điểm nghẽn
 nhận thức**: chỗ trực giác học sinh hỏng, nên mới đáng bỏ công trực quan hoá.

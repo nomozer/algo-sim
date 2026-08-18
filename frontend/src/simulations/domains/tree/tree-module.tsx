@@ -411,10 +411,10 @@ export function TreeWorkspace({ state, config, busy, dispatch }: Props) {
   }
 
   return (
-    <div className="stack" style={{ gap: "var(--sp-md)" }}>
-      <TreeParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
-      <div className="sim-stage">
-        <svg viewBox={`0 0 ${RW} ${RH}`} style={{ width: "100%", maxWidth: RW }} role="img"
+    <div className="tree-layout-split" style={{ display: "grid", gridTemplateColumns: "minmax(380px, 1.4fr) minmax(280px, 1fr)", gap: "var(--sp-xl)", alignItems: "start" }}>
+      {/* CỘT TRÁI: CÂY NHỊ PHÂN VÀ CHÚ GIẢI */}
+      <div className="sim-stage" style={{ display: "flex", flexDirection: "column", gap: "var(--sp-sm)", minWidth: 0 }}>
+        <svg viewBox={`0 0 ${RW} ${RH}`} style={{ width: "100%", maxWidth: RW, minHeight: 220, margin: "0 auto" }} role="img"
              aria-label="Cây nhị phân">
           {edges.map((e, i) => {
             const a = pos.get(e.from)!;
@@ -424,9 +424,9 @@ export function TreeWorkspace({ state, config, busy, dispatch }: Props) {
               <g key={i}>
                 <line x1={a.x} y1={a.y} x2={b.x} y2={b.y}
                       stroke={onPath ? "var(--accent-orange)" : "var(--ink-faint)"}
-                      strokeWidth={onPath ? 3 : 1.5} />
-                <text x={(a.x + b.x) / 2} y={(a.y + b.y) / 2 - 3} textAnchor="middle" fontSize={9}
-                      fill="var(--ink-muted)">{e.side === "L" ? "trái" : "phải"}</text>
+                      strokeWidth={onPath ? 3.5 : 2} />
+                <text x={(a.x + b.x) / 2} y={(a.y + b.y) / 2 - 4} textAnchor="middle" fontSize={11}
+                      fill="var(--ink-muted)" fontWeight="500">{e.side === "L" ? "trái" : "phải"}</text>
               </g>
             );
           })}
@@ -436,25 +436,41 @@ export function TreeWorkspace({ state, config, busy, dispatch }: Props) {
             const isVisited = visited.has(n.id);
             return (
               <g key={n.id}>
-                <circle cx={p.x} cy={p.y} r={16}
+                <circle cx={p.x} cy={p.y} r={20}
                         fill={isCur ? "var(--accent-orange)" : isVisited ? "var(--accent-green)" : "var(--surface)"}
-                        stroke={n.id === state.config.rootId ? "var(--primary)" : "var(--ink-faint)"}
-                        strokeWidth={n.id === state.config.rootId ? 2.5 : 1.5} />
+                        stroke={isCur || isVisited ? "none" : n.id === state.config.rootId ? "var(--primary)" : "var(--hairline)"}
+                        strokeWidth={n.id === state.config.rootId && !isCur && !isVisited ? 2 : 1.5} />
                 {/* Nhãn NGẮN nằm trong nút; nhãn DÀI (tên tiếng Việt) đặt DƯỚI
                     nút để không tràn ra ngoài vòng tròn và đè nút bên cạnh. */}
                 {n.label.length <= INLINE_LABEL_MAX ? (
-                  <text x={p.x} y={p.y + 4} textAnchor="middle" fontSize={11}>{n.label}</text>
+                  <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize={13} fontWeight="600"
+                        fill={isCur || isVisited ? "var(--on-primary)" : "var(--ink)"}>{n.label}</text>
                 ) : (
-                  <text x={p.x} y={p.y + 30} textAnchor="middle" fontSize={11}
-                        fill="var(--ink-secondary)">{n.label}</text>
+                  <>
+                    <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize={13} fontWeight="600"
+                          fill={isCur || isVisited ? "var(--on-primary)" : "var(--ink)"}>{n.id}</text>
+                    <text x={p.x} y={p.y + 34} textAnchor="middle" fontSize={12} fontWeight="600"
+                          fill="var(--ink)">{n.label}</text>
+                  </>
                 )}
               </g>
             );
           })}
         </svg>
-        {/* FRONTIER-VIS: ngăn xếp là thứ QUYẾT ĐỊNH thứ tự duyệt — vẽ thành
-            chồng thật, đỉnh nằm trên. Cùng primitive với graph, chỉ đổi mode và
-            nhãn: 4 biến thể (pre/in/post + level) dùng chung một component. */}
+
+        <p className="stage-legend">
+          <span><i className="dot is-current" /> đang xử lý</span>
+          <span><i className="dot is-done" /> đã thăm</span>
+          <span><i className="dot is-frontier" /> đang chờ trong {state.frontierKind === "stack" ? "ngăn xếp" : "hàng đợi"}</span>
+          <span><i className="dot is-idle" /> chưa xét</span>
+        </p>
+      </div>
+
+      {/* CỘT PHẢI: NGĂN XẾP/HÀNG ĐỢI + ĐÃ THĂM + THANH CÔNG CỤ + KẾT QUẢ */}
+      <div className="tree-side-panel" style={{ display: "flex", flexDirection: "column", gap: "var(--sp-sm)", minWidth: 0 }}>
+        <TreeParamBar state={state} config={config} busy={busy} dispatch={dispatch} />
+
+        {/* FRONTIER-VIS: ngăn xếp là thứ QUYẾT ĐỊNH thứ tự duyệt */}
         <TraversalFrontier
           mode={state.frontierKind}
           items={step.frontierAfter.map((id) => ({ id, label: labelOf(map, id) }))}
@@ -470,17 +486,10 @@ export function TreeWorkspace({ state, config, busy, dispatch }: Props) {
             : "(chưa có)"}
         </p>
 
-        <p className="stage-legend">
-          <span><i className="dot is-current" /> đang xử lý</span>
-          <span><i className="dot is-done" /> đã thăm</span>
-          <span><i className="dot is-frontier" /> đang chờ trong {state.frontierKind === "stack" ? "ngăn xếp" : "hàng đợi"}</span>
-          <span><i className="dot is-idle" /> chưa xét</span>
-        </p>
+        {last && (
+          <p><strong>Thứ tự duyệt {state.config.variant}: {state.visitedOrder.map((id) => labelOf(map, id)).join(" → ")}</strong></p>
+        )}
       </div>
-      {/* (SHELL-N) Thuyết minh do shell dựng — xem `narrate` bên dưới. */}
-      {last && (
-        <p><strong>Thứ tự duyệt {state.config.variant}: {state.visitedOrder.map((id) => labelOf(map, id)).join(" → ")}</strong></p>
-      )}
     </div>
   );
 }

@@ -37,9 +37,13 @@ function whereLabel(r: ObserveRow): string {
     bits.push(`bước ${r.cursor + 1}/${r.stepCount}`);
   }
   if (r.exploreOpen) bits.push("Khám phá");
-  if (r.challengeOpen) bits.push("Thử thách");
-  if (r.commitmentCount) bits.push(`${r.commitmentCount} lần cam kết`);
-  if (!bits.length && r.actionCount) bits.push(`${r.actionCount} thao tác`);
+  /* W13 — SỐ LẦN THÍ NGHIỆM, không còn "số lần cam kết".
+     Trước đây dòng này ưu tiên đếm số lần học sinh chốt một câu trả lời được
+     chấm, và chỉ khi KHÔNG có cam kết nào mới nói tới thao tác. Nay quiz đã gỡ
+     nên chỉ còn một tín hiệu, và nó luôn được nói ra: giáo viên cần phân biệt
+     "em này có động tay vào mô hình" với "em này chỉ bấm chạy" — đó là toàn bộ
+     mục đích của cột này. Vẫn KHÔNG có trường nào nói đúng/sai (bất biến #27). */
+  if (r.actionCount) bits.push(`${r.actionCount} lần thí nghiệm`);
   return bits.length ? bits.join(" · ") : "vừa mở bài";
 }
 

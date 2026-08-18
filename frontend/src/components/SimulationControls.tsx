@@ -3,7 +3,7 @@ import { getSimulation } from "../simulations/registry";
 import { transportModeOf } from "../simulations/transport-policy";
 import type { PresentationEntry } from "../simulations/types";
 import { useAppStore } from "../state/store";
-import { challengeEntry, exploreEntry } from "./SimulationWorkspace";
+import { exploreEntry } from "./SimulationWorkspace";
 import {
   IconNext,
   IconPause,
@@ -83,6 +83,13 @@ function SecondaryEntry({
   );
 }
 
+const SPEED_STEPS = [
+  { label: "0.5x", ms: 1600 },
+  { label: "1x", ms: 800 },
+  { label: "1.5x", ms: 500 },
+  { label: "2x", ms: 300 },
+] as const;
+
 /**
  * Thanh điều khiển đáy — CAPABILITY-DRIVEN (M2 #4):
  * - module có timeline → đủ bộ về-đầu / lùi / chạy-dừng / tiến / đến-cuối +
@@ -104,8 +111,6 @@ export function SimulationControls() {
   const setSpeedMs = useAppStore((s) => s.setSpeedMs);
 
   const mod = active ? getSimulation(active.moduleId) : undefined;
-  const challengeOpen = useAppStore((s) => s.challengeOpen);
-  const setChallengeOpen = useAppStore((s) => s.setChallengeOpen);
   const exploreOpen = useAppStore((s) => s.exploreOpen);
   const setExploreOpen = useAppStore((s) => s.setExploreOpen);
   const timeline = mod?.timeline;
@@ -114,6 +119,8 @@ export function SimulationControls() {
      đụng tới state công cụ (§16: "tool state stays authoritative"). Đưa vào
      store là mở đường cho một lượt set() vô tình chạm vào `active`. */
   const [traceOpen, setTraceOpen] = useState(false);
+  const [barCollapsed, setBarCollapsed] = useState(false);
+
   /* Đổi mô phỏng ⇒ gập lại. `SimulationControls` KHÔNG remount khi học sinh mở
      bài khác, nên nếu không có dòng này thì mở dòng thời gian ở bài A sẽ khiến
      bài B mở sẵn — trái đúng luật "mô phỏng mới mở ở chế độ quan sát" mà W6 đã
@@ -122,7 +129,7 @@ export function SimulationControls() {
      nạp character_encoding thì nút "Xem cách thực hiện" biến mất vì dải đã ở
      trạng thái mở. */
   const activeModuleId = active?.moduleId;
-  useEffect(() => { setTraceOpen(false); }, [activeModuleId]);
+  useEffect(() => { setTraceOpen(false); setBarCollapsed(false); }, [activeModuleId]);
 
   // Tự chạy: hẹn giờ gọi nextStep; store tự dừng khi hết timeline
   useEffect(() => {
@@ -145,8 +152,9 @@ export function SimulationControls() {
       //     và câu trả lời mất trắng.
       // Nên guard theo NĂNG LỰC "tự xử lý Enter/Space", không theo một thuộc
       // tính cụ thể: control gốc và control giả đều tự lo phím của mình.
-      const target = e.target as Element | null;
-      if (target?.closest?.('button, a[href], select, [role="button"]')) return;
+      if ((e.target as HTMLElement | null)?.closest?.('button, [role="button"], input, select, textarea')) {
+        return;
+      }
       if (e.key === "ArrowRight") {
         e.preventDefault();
         useAppStore.getState().nextStep();
@@ -180,9 +188,12 @@ export function SimulationControls() {
      chọn nửa để tìm tiếp") mà shell không cần biết bài nào là bài nào.
      `null` ⇒ KHÔNG dựng nút: một lối vào dẫn tới màn hình trống thì tệ hơn là
      không có lối vào. */
-  const challenge = challengeEntry(mod, active.state, active.config);
   const explore = exploreEntry(mod, active.state, active.config);
 
+  /* W13 — MỘT lối vào, không phải hai. Cạnh Khám phá từng có cửa "Thử thách"
+     (mở thanh dự đoán có chấm điểm); năng lực đó đã gỡ, nên dải hành động phụ
+     nay chỉ còn đúng một cửa và không còn phải giải thích cho học sinh hai chế
+     độ khác loại nhau ở chỗ nào. */
   const secondary = (
     <>
       {explore && (
@@ -191,14 +202,6 @@ export function SimulationControls() {
           onToggle={() => setExploreOpen(!exploreOpen)}
           entry={explore}
           closeFallback="Đóng khám phá"
-        />
-      )}
-      {challenge && (
-        <SecondaryEntry
-          open={challengeOpen}
-          onToggle={() => setChallengeOpen(!challengeOpen)}
-          entry={challenge}
-          closeFallback="Đóng thử thách"
         />
       )}
     </>
@@ -229,6 +232,22 @@ export function SimulationControls() {
   const showFullTransport = stepsAvailable
     && (mode === "FULL_TRACE" || (mode === "OPTIONAL_TRACE" && traceOpen));
 
+  if (barCollapsed) {
+    return (
+      <div className="player player-floating-bar">
+        <button
+          type="button"
+          className="btn-floating-toggle"
+          onClick={() => setBarCollapsed(false)}
+          title="Mở thanh điều khiển"
+        >
+          <IconPlay size={14} />
+          <span>Hiện thanh điều khiển</span>
+        </button>
+      </div>
+    );
+  }
+
   if (!showFullTransport) {
     return (
       /* W4B-3E — bài KHÁM PHÁ dùng CÙNG khuôn ba vùng, chỉ thiếu vùng transport.
@@ -256,7 +275,18 @@ export function SimulationControls() {
             </button>
           )}
         </span>
-        <span className="control-zone control-zone-aux">{secondary}</span>
+        <span className="control-zone control-zone-aux">
+          {secondary}
+          <button
+            type="button"
+            className="btn-utility"
+            onClick={() => setBarCollapsed(true)}
+            title="Thu nhỏ thanh điều khiển"
+            style={{ padding: "4px 8px", fontSize: 11 }}
+          >
+            Ẩn thanh
+          </button>
+        </span>
       </div>
     );
   }
@@ -366,18 +396,35 @@ export function SimulationControls() {
               Ẩn các bước
             </button>
           )}
-          <label className="speed-control">
-            Tốc độ
-            <input
-              type="range"
-              min={300}
-              max={2500}
-              step={100}
-              value={2800 - speedMs}
-              onChange={(e) => setSpeedMs(2800 - Number(e.target.value))}
-            />
-          </label>
+          <div className="speed-control" role="group" aria-label="Tốc độ phát">
+            <span className="speed-label">Tốc độ:</span>
+            <div className="speed-pills">
+              {SPEED_STEPS.map((s) => {
+                const isActive = Math.abs(speedMs - s.ms) < 100;
+                return (
+                  <button
+                    key={s.label}
+                    type="button"
+                    className={`btn-speed-pill${isActive ? " is-active" : ""}`}
+                    onClick={() => setSpeedMs(s.ms)}
+                    title={`Đặt tốc độ ${s.label}`}
+                  >
+                    {s.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           {secondary}
+          <button
+            type="button"
+            className="btn-utility"
+            onClick={() => setBarCollapsed(true)}
+            title="Thu nhỏ thanh điều khiển"
+            style={{ padding: "4px 8px", fontSize: 11 }}
+          >
+            Ẩn thanh
+          </button>
         </span>
       </div>
     </div>

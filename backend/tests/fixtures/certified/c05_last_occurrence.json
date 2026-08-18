@@ -1,0 +1,47 @@
+{
+  "id": "c05_last_occurrence",
+  "category": "certified",
+  "problem_text": "Cho mảng các số nguyên [2, 5, 8, 5, 9, 3, 5, 1]. Mô phỏng thuật toán tìm vị trí (chỉ số index) xuất hiện cuối cùng của giá trị x = 5.",
+  "expected_oracle": {
+    "oracle_func": "oracle_last_occurrence",
+    "inputs": [[2, 5, 8, 5, 9, 3, 5, 1], 5],
+    "expected_result": {
+      "target": 5,
+      "last_index": 6
+    }
+  },
+  "spec": {
+    "dsl_version": "1.0",
+    "title": "Tìm vị trí cuối cùng của giá trị x = 5",
+    "objects": [
+      {
+        "id": "num_strip",
+        "type": "array_strip",
+        "items": [2, 5, 8, 5, 9, 3, 5, 1],
+        "label": "Mảng số nguyên"
+      },
+      {"id": "target_box", "type": "value_box", "value": 5, "label": "Giá trị cần tìm (x)"},
+      {"id": "result_box", "type": "value_box", "value": -1, "label": "Vị trí cuối cùng (last_idx)"},
+      {"id": "ptr", "type": "pointer", "target": "num_strip", "index": 0, "label": "Con trỏ i"}
+    ],
+    "rules": [],
+    "interactions": [],
+    "processes": [
+      {
+        "type": "step_sequence",
+        "steps": [
+          {"action": "highlight", "targets": ["target_box"], "narration": "Mục tiêu: Tìm chỉ số xuất hiện cuối cùng của giá trị x = 5. Khởi tạo last_idx = -1."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 1, "state": "comparing", "narration": "Tại i = 1: A[1] = 5 == x. Cập nhật last_idx = 1."},
+          {"action": "highlight", "targets": ["result_box"], "value": 1, "narration": "last_idx tạm thời = 1."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 3, "state": "comparing", "narration": "Tại i = 3: A[3] = 5 == x. Ghi đè cập nhật last_idx = 3."},
+          {"action": "highlight", "targets": ["result_box"], "value": 3, "narration": "last_idx tạm thời = 3."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 6, "state": "comparing", "narration": "Tại i = 6: A[6] = 5 == x. Ghi đè cập nhật last_idx = 6."},
+          {"action": "highlight", "targets": ["result_box"], "value": 6, "narration": "last_idx tạm thời = 6."},
+          {"action": "move_pointer", "pointer_id": "ptr", "to_index": 7, "narration": "Tại i = 7: A[7] = 1 != 5, duyệt hết mảng."},
+          {"action": "highlight", "targets": ["result_box"], "value": 6, "state": "active", "narration": "Kết luận: Vị trí cuối cùng xuất hiện giá trị 5 là tại chỉ số index 6."}
+        ]
+      }
+    ],
+    "notes": "Mô phỏng tìm vị trí xuất hiện cuối cùng bằng quét một lượt và ghi đè chỉ số."
+  }
+}

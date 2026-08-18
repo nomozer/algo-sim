@@ -169,12 +169,12 @@ describe("patch v1 — add_object trường lạ fail-closed (Task 12b, song son
     if (res.status === "structurally_invalid") expect(res.error).toContain("weight");
   });
 
-  it('field lạ khác weight (vd "color") bị reject qua CÙNG đường — không hardcode weight', () => {
+  it('field lạ khác weight (vd "custom_field") bị reject qua CÙNG đường — không hardcode weight', () => {
     const res = validateAndApplyPatch(TRIANGLE, {
-      operations: [{ op: "add_object", object: { id: "D", type: "node", color: "red" } }] as never,
+      operations: [{ op: "add_object", object: { id: "D", type: "node", custom_field: "abc" } }] as never,
     });
     expect(res.status).toBe("structurally_invalid");
-    if (res.status === "structurally_invalid") expect(res.error).toContain("color");
+    if (res.status === "structurally_invalid") expect(res.error).toContain("custom_field");
   });
 
   it("patch bị reject → config canonical KHÔNG đổi (deep-equal trước/sau)", () => {

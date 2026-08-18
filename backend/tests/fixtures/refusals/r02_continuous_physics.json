@@ -1,0 +1,10 @@
+{
+  "id": "r02_continuous_physics",
+  "category": "refusals",
+  "problem_text": "Mô phỏng dao động cơ học của con lắc đơn phi tuyến tính bằng cách giải hệ phương trình vi phân liên tục bậc hai d^2θ/dt^2 + (g/L)sin(θ) = 0 theo thời gian thực.",
+  "expected_refusal": {
+    "status": "unsupported",
+    "failure_category": "capability_gap",
+    "reason_contains": "năng lực"
+  }
+}

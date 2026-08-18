@@ -1,0 +1,84 @@
+[
+  {
+    "id": "h01_max_score_scan",
+    "problem_text": "Cho danh sách điểm số của học sinh gồm: 8.5, 9.2, 7.8, 9.6, 8.9. Hãy mô phỏng thuật toán quét tuần tự từ đầu đến cuối để tìm điểm số cao nhất.",
+    "oracle_func": "oracle_find_max",
+    "oracle_inputs": [[8.5, 9.2, 7.8, 9.6, 8.9]],
+    "is_supported": true,
+    "archetype": "single_pass_scan"
+  },
+  {
+    "id": "h02_nested_bracket_stack",
+    "problem_text": "Mô phỏng thuật toán kiểm tra chuỗi dấu ngoặc '({[]})' có hợp lệ hay không sử dụng cấu trúc dữ liệu Ngăn xếp (Stack).",
+    "oracle_func": "oracle_bracket_validator",
+    "oracle_inputs": ["({[]})"],
+    "is_supported": true,
+    "archetype": "stack_lilo"
+  },
+  {
+    "id": "h03_price_range_counter",
+    "problem_text": "Cho danh sách giá sản phẩm gồm: 150, 80, 220, 110, 190, 95 (nghìn đồng). Hãy mô phỏng thuật toán đếm xem có bao nhiêu sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng.",
+    "oracle_func": "oracle_count_in_range",
+    "oracle_inputs": [[150, 80, 220, 110, 190, 95], 100, 200],
+    "is_supported": true,
+    "archetype": "range_counter"
+  },
+  {
+    "id": "h04_running_time_sort",
+    "problem_text": "Cho thời gian chạy (giây) của 5 vận động viên gồm: 12.5, 11.2, 14.1, 10.8, 13.0. Hãy mô phỏng thuật toán sắp xếp các thành tích này theo thứ tự tăng dần.",
+    "oracle_func": "oracle_sort_athletes",
+    "oracle_inputs": [[12.5, 11.2, 14.1, 10.8, 13.0]],
+    "is_supported": true,
+    "archetype": "comparison_sort"
+  },
+  {
+    "id": "h05_search_last_occurrence",
+    "problem_text": "Cho dãy số nguyên gồm: 2, 5, 8, 5, 3, 5, 1. Hãy mô phỏng thuật toán tìm vị trí (chỉ số index) xuất hiện cuối cùng của số 5 trong dãy.",
+    "oracle_func": "oracle_last_occurrence",
+    "oracle_inputs": [[2, 5, 8, 5, 3, 5, 1], 5],
+    "is_supported": true,
+    "archetype": "search_last_index"
+  },
+  {
+    "id": "h06_grade_table_filter",
+    "problem_text": "Cho bảng điểm học sinh gồm 4 bạn: An (8.5), Bình (7.0), Chi (9.0), Dũng (6.5). Hãy mô phỏng thuật toán lọc và làm nổi bật các học sinh có điểm từ 8.0 trở lên.",
+    "oracle_func": "oracle_table_filter",
+    "oracle_inputs": [[["An", 8.5], ["Bình", 7.0], ["Chi", 9.0], ["Dũng", 6.5]], 1, 8.0],
+    "is_supported": true,
+    "archetype": "table_grid_filter"
+  },
+  {
+    "id": "h07_temperature_scan_avg",
+    "problem_text": "Cho nhiệt độ 7 ngày trong tuần: 24, 26, 25, 29, 28, 31, 27 độ C. Hãy tính nhiệt độ trung bình tuần và mô phỏng quét tìm ngày đầu tiên có nhiệt độ cao hơn mức trung bình.",
+    "oracle_func": "oracle_temperature_scan",
+    "oracle_inputs": [[24, 26, 25, 29, 28, 31, 27]],
+    "is_supported": true,
+    "archetype": "average_and_threshold"
+  },
+  {
+    "id": "h08_even_numbers_counter",
+    "problem_text": "Cho danh sách số nguyên gồm: 15, 22, 34, 19, 48, 51, 60. Hãy mô phỏng thuật toán đếm số lượng số chẵn trong danh sách.",
+    "oracle_func": "oracle_even_count",
+    "oracle_inputs": [[15, 22, 34, 19, 48, 51, 60]],
+    "is_supported": true,
+    "archetype": "filter_and_count"
+  },
+  {
+    "id": "h09_refusal_missing_tree",
+    "problem_text": "Hãy mô phỏng thuật toán đếm số nút lá và tìm đường đi dài nhất trên cây nhị phân đã cho.",
+    "oracle_func": "oracle_find_max",
+    "oracle_inputs": [[]],
+    "is_supported": false,
+    "expected_refusal_category": "insufficient_specification",
+    "archetype": "honest_refusal_missing_data"
+  },
+  {
+    "id": "h10_refusal_continuous_physics",
+    "problem_text": "Hãy mô phỏng phương trình vi phân chuyển động x''(t) + 4*x(t) = 0 của con lắc lò xo theo thời gian liên tục với điều kiện ban đầu x(0)=1, x'(0)=0.",
+    "oracle_func": "oracle_find_max",
+    "oracle_inputs": [[]],
+    "is_supported": false,
+    "expected_refusal_category": "capability_gap",
+    "archetype": "honest_refusal_capability_gap"
+  }
+]

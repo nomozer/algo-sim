@@ -1236,3 +1236,237 @@ describe("M13 Task 11: render-test — Inspector không rò id kỹ thuật runt
     expect(html).toContain("Đoạn nối");
   });
 });
+
+describe("Universal Meta-Engine: Slider, Color Swatch, Safe Expression & RGB Mixing", () => {
+  const mod = makeGenericModule();
+
+  it("định nghĩa spec pha màu RGB với 3 slider + 1 color_swatch + 1 formula", () => {
+    const raw = {
+      dsl_version: "1.0",
+      title: "Mô hình phối màu RGB",
+      objects: [
+        { id: "r", type: "slider", value: 255, min: 0, max: 255, step: 1, label: "Kênh Đỏ" },
+        { id: "g", type: "slider", value: 128, min: 0, max: 255, step: 1, label: "Kênh Xanh lá" },
+        { id: "b", type: "slider", value: 0, min: 0, max: 255, step: 1, label: "Kênh Xanh dương" },
+        { id: "swatch", type: "color_swatch", label: "Màu kết quả" },
+      ],
+      rules: [
+        { type: "formula", expression: "rgb_to_hex(r, g, b)", inputs: ["r", "g", "b"], target: "swatch" },
+      ],
+      interactions: [
+        { type: "set_param", target: "r" },
+        { type: "set_param", target: "g" },
+        { type: "set_param", target: "b" },
+      ],
+      processes: [],
+    };
+
+    const validated = mod.validateConfig(raw);
+    expect(validated.ok).toBe(true);
+    if (!validated.ok) return;
+
+    const state = mod.init(validated.config);
+    expect(state.base.r).toBe(255);
+    expect(state.base.g).toBe(128);
+    expect(state.base.b).toBe(0);
+
+    const values = valuesOf(validated.config, state.base);
+    expect(values.swatch).toBe("#ff8000");
+
+    // Action: Thay đổi slider G từ 128 thành 0 -> Màu đỏ thuần (#ff0000)
+    const state2 = mod.apply(state, { type: "set_param", name: "g", value: 0 });
+    const values2 = valuesOf(validated.config, state2.base);
+    expect(values2.swatch).toBe("#ff0000");
+
+    // Action: Thay đổi slider B thành 255 -> Màu tím Magenta (#ff00ff)
+    const state3 = mod.apply(state2, { type: "set_param", name: "b", value: 255 });
+    const values3 = valuesOf(validated.config, state3.base);
+    expect(values3.swatch).toBe("#ff00ff");
+  });
+
+  it("Safe Expression Evaluator: tính toán chính xác các hàm toán học & điều kiện", () => {
+    const raw = {
+      dsl_version: "1.0",
+      title: "Tính toán đa năng",
+      objects: [
+        { id: "x", type: "slider", value: 10, min: 0, max: 100 },
+        { id: "y", type: "slider", value: 20, min: 0, max: 100 },
+        { id: "sum_out", type: "value_box" },
+        { id: "clamped_out", type: "value_box" },
+        { id: "cond_out", type: "value_box" },
+      ],
+      rules: [
+        { type: "formula", expression: "x + y * 2", inputs: ["x", "y"], target: "sum_out" },
+        { type: "formula", expression: "clamp(x * 5, 0, 30)", inputs: ["x"], target: "clamped_out" },
+        { type: "formula", expression: "if_else(x > 5, 100, 0)", inputs: ["x"], target: "cond_out" },
+      ],
+      interactions: [],
+      processes: [],
+    };
+
+    const validated = mod.validateConfig(raw);
+    expect(validated.ok).toBe(true);
+    if (!validated.ok) return;
+
+    const base = initialBase(validated.config);
+    const values = valuesOf(validated.config, base);
+    expect(values.sum_out).toBe(50); // 10 + 20 * 2 = 50
+    expect(values.clamped_out).toBe(30); // clamp(50, 0, 30) = 30
+    expect(values.cond_out).toBe(100); // 10 > 5 -> 100
+  });
+
+  it("Mô phỏng Bubble Sort với bar_chart, pointer và step_sequence", () => {
+    const raw = {
+      dsl_version: "1.0",
+      title: "Mô phỏng Bubble Sort",
+      objects: [
+        {
+          id: "chart",
+          type: "bar_chart",
+          bars: [
+            { id: "b0", value: 45, label: "45" },
+            { id: "b1", value: 12, label: "12" },
+            { id: "b2", value: 89, label: "89" },
+          ],
+          max_val: 100,
+        },
+        { id: "ptr_i", type: "pointer", target_id: "chart", index: 0, label: "i" },
+        { id: "ptr_j", type: "pointer", target_id: "chart", index: 1, label: "j" },
+      ],
+      rules: [],
+      interactions: [{ type: "button_action", target: "chart", label: "Tiếp tục" }],
+      processes: [
+        {
+          type: "step_sequence",
+          steps: [
+            { action: "highlight", targets: ["chart"], indices: [0, 1], state: "comparing", narration: "So sánh 45 và 12" },
+            { action: "swap", targets: ["chart"], indices: [0, 1], narration: "Đổi chỗ 45 và 12" },
+          ],
+        },
+      ],
+    };
+
+    const validated = mod.validateConfig(raw);
+    expect(validated.ok).toBe(true);
+    if (!validated.ok) return;
+
+    const state = mod.init(validated.config);
+    expect(state.timeline.length).toBe(2);
+    expect(state.timeline[0].stepAction?.action).toBe("highlight");
+    expect(state.timeline[1].stepAction?.action).toBe("swap");
+
+    // Action: click step button -> cursor increments
+    const nextState = mod.apply(state, { type: "step", delta: 1 });
+    expect(nextState.cursor).toBe(1);
+  });
+
+  it("Thanh ghi nhị phân bit_register & phép toán bitwise/chuyển đổi cơ số", () => {
+    const raw = {
+      dsl_version: "1.0",
+      title: "Phép toán Bitwise AND",
+      objects: [
+        { id: "reg_a", type: "bit_register", value: 12, size: 8, show_decimal: true, show_hex: true },
+        { id: "reg_b", type: "bit_register", value: 10, size: 8, show_decimal: true, show_hex: true },
+        { id: "reg_out", type: "bit_register", size: 8, show_decimal: true, show_hex: true },
+      ],
+      rules: [
+        { type: "formula", expression: "bit_and(reg_a, reg_b)", inputs: ["reg_a", "reg_b"], target: "reg_out" },
+      ],
+      interactions: [
+        { type: "set_param", target: "reg_a" },
+        { type: "set_param", target: "reg_b" },
+      ],
+      processes: [],
+    };
+
+    const validated = mod.validateConfig(raw);
+    expect(validated.ok).toBe(true);
+    if (!validated.ok) return;
+
+    const state = mod.init(validated.config);
+    const values = valuesOf(validated.config, state.base);
+    expect(values.reg_out).toBe(8); // 12 & 10 = 8
+  });
+
+  it("Cấu trúc dữ liệu stack_view, queue_view, tree_element & table_grid", () => {
+    const raw = {
+      dsl_version: "1.0",
+      title: "Cấu trúc dữ liệu & Bảng",
+      objects: [
+        { id: "s", type: "stack_view", items: [10, 20, 30], capacity: 5 },
+        { id: "q", type: "queue_view", items: ["A", "B", "C"], capacity: 5 },
+        { id: "t_root", type: "tree_element", value: 50, left: "t_l", right: "t_r" },
+        { id: "t_l", type: "tree_element", value: 25, parent: "t_root" },
+        { id: "t_r", type: "tree_element", value: 75, parent: "t_root" },
+        {
+          id: "tbl",
+          type: "table_grid",
+          headers: ["STT", "Tên"],
+          rows: [[1, "An"], [2, "Bình"]],
+          highlighted_cells: [{ row: 0, col: 1, color: "#22c55e" }],
+        },
+      ],
+      rules: [],
+      interactions: [],
+      processes: [],
+    };
+
+    const validated = mod.validateConfig(raw);
+    expect(validated.ok).toBe(true);
+    if (!validated.ok) return;
+
+    expect(validated.config.objects.length).toBe(6);
+  });
+
+  it("M20 QA Gate: Kiểm tra tính hoàn thiện của các hạt nhân trực quan", () => {
+    // 1. Biểu đồ cột chỉ có 1 cột -> bị từ chối
+    const oneBarSpec = {
+      dsl_version: "1.0",
+      title: "Cột đơn",
+      objects: [
+        { id: "c", type: "bar_chart", bars: [{ id: "b1", value: 10 }] },
+      ],
+      rules: [],
+      interactions: [],
+      processes: [],
+    };
+    const r1 = mod.validateConfig(oneBarSpec);
+    expect(r1.ok).toBe(false);
+    if (!r1.ok) expect(r1.error).toContain("cần ít nhất 2 cột");
+
+    // 2. Cây tự trỏ chính nó -> bị từ chối
+    const selfTreeSpec = {
+      dsl_version: "1.0",
+      title: "Cây chu trình",
+      objects: [
+        { id: "t", type: "tree_element", left: "t" },
+      ],
+      rules: [],
+      interactions: [],
+      processes: [],
+    };
+    const r2 = mod.validateConfig(selfTreeSpec);
+    expect(r2.ok).toBe(false);
+    if (!r2.ok) expect(r2.error).toContain("không thể tự trỏ tới chính nó");
+
+    // 3. step_sequence thiếu narration -> bị từ chối
+    const noNarrationSpec = {
+      dsl_version: "1.0",
+      title: "Sắp xếp",
+      objects: [
+        { id: "c", type: "bar_chart", bars: [{ id: "b1", value: 10 }, { id: "b2", value: 20 }] },
+      ],
+      rules: [],
+      interactions: [],
+      processes: [
+        {
+          type: "step_sequence",
+          steps: [{ action: "swap", targets: ["c"], indices: [0, 1], narration: "" }],
+        },
+      ],
+    };
+    const r3 = mod.validateConfig(noNarrationSpec);
+    expect(r3.ok).toBe(false);
+    if (!r3.ok) expect(r3.error).toContain("thiếu thuyết minh sư phạm");
+  });
+});
