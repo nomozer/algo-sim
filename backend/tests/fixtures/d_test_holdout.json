@@ -43,7 +43,7 @@
     "id": "h06_grade_table_filter",
     "problem_text": "Cho bảng điểm học sinh gồm 4 bạn: An (8.5), Bình (7.0), Chi (9.0), Dũng (6.5). Hãy mô phỏng thuật toán lọc và làm nổi bật các học sinh có điểm từ 8.0 trở lên.",
     "oracle_func": "oracle_table_filter",
-    "oracle_inputs": [[["An", 8.5], ["Bình", 7.0], ["Chi", 9.0], ["Dũng", 6.5]], 1, 8.0],
+    "oracle_inputs": [["Học sinh", "Điểm"], [["An", 8.5], ["Bình", 7.0], ["Chi", 9.0], ["Dũng", 6.5]], "Điểm", 8.0],
     "is_supported": true,
     "archetype": "table_grid_filter"
   },
