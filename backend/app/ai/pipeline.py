@@ -982,10 +982,17 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
             "analysis": analysis,
         }
     if config is None:
-        raise RuntimeError(
-            f"Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: {error}). "
-            "Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại."
-        )
+        _emit(observer, "envelope", status="error", simulation_id=None, failure_category="synthesis_exhausted")
+        return {
+            "status": "error",
+            "reason": (
+                f"Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: {error}). "
+                "Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại."
+            ),
+            "failure_category": "synthesis_exhausted",
+            "representation_plan": plan,
+            "analysis": analysis,
+        }
 
     # M17-RC1 §D PHA 2 — spec ĐÃ VALIDATE có bỏ sót yêu cầu nào không? Chạy
     # TRƯỚC khi phát envelope (tức trước executor FE). Bất biến: status=ok ⟹

@@ -72,7 +72,10 @@ async def test_final_evaluation_run_001():
         
         print(f"\n[{idx}/10] Đang xử lý: {task_id} ...")
         start_time = time.time()
-        envelope = await run_pipeline(problem_text, api_key)
+        try:
+            envelope = await run_pipeline(problem_text, api_key)
+        except Exception as e:
+            envelope = {"status": "error", "reason": str(e), "failure_category": "pipeline_exception"}
         duration = time.time() - start_time
         
         status = envelope.get("status")
