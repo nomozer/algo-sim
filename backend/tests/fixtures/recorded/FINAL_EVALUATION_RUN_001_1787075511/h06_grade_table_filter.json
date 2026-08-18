@@ -1,0 +1,254 @@
+{
+  "task_id": "h06_grade_table_filter",
+  "problem_text": "Cho bảng điểm học sinh gồm 4 bạn: An (8.5), Bình (7.0), Chi (9.0), Dũng (6.5). Hãy mô phỏng thuật toán lọc và làm nổi bật các học sinh có điểm từ 8.0 trở lên.",
+  "prompt_hash": "150f13d931f066824a8191d96f2cb769e32291ccf7a4c347c839aab176363816",
+  "git_commit": "6e76c965d8a183d0753998e906e69e6b4f649555",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:54:50.632725+00:00",
+  "duration_sec": 18.114559650421143,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 18.114559650421143
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "database.relational_table_query",
+    "domain": "database",
+    "visual_mode": "2d",
+    "title": "Truy vấn bảng dữ liệu",
+    "description": "Bảng điểm học sinh gồm tên và điểm. → Danh sách các học sinh thỏa mãn điều kiện lọc được làm nổi bật.",
+    "config": {
+      "specVersion": "table-1.0",
+      "schema": [
+        {
+          "name": "Tên học sinh",
+          "type": "text",
+          "label": "Tên học sinh",
+          "nullable": null
+        },
+        {
+          "name": "Điểm",
+          "type": "number",
+          "label": "Điểm",
+          "nullable": null
+        }
+      ],
+      "rows": [
+        {
+          "Tên học sinh": "An",
+          "Điểm": 8.5
+        },
+        {
+          "Tên học sinh": "Bình",
+          "Điểm": 7.0
+        },
+        {
+          "Tên học sinh": "Chi",
+          "Điểm": 9.0
+        },
+        {
+          "Tên học sinh": "Dũng",
+          "Điểm": 6.5
+        }
+      ],
+      "normalizations": [],
+      "filter": {
+        "op": ">=",
+        "column": "Điểm",
+        "value": 8.0
+      },
+      "projection": null,
+      "sort": null,
+      "limit": null,
+      "aggregate": null,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "bảng điểm học sinh",
+        "học sinh An",
+        "học sinh Bình",
+        "học sinh Chi",
+        "học sinh Dũng",
+        "điểm số"
+      ],
+      "data": [
+        {
+          "description": "Điểm của An",
+          "labels": [
+            "An"
+          ],
+          "values": [
+            8.5
+          ]
+        },
+        {
+          "description": "Điểm của Bình",
+          "labels": [
+            "Bình"
+          ],
+          "values": [
+            7.0
+          ]
+        },
+        {
+          "description": "Điểm của Chi",
+          "labels": [
+            "Chi"
+          ],
+          "values": [
+            9.0
+          ]
+        },
+        {
+          "description": "Điểm của Dũng",
+          "labels": [
+            "Dũng"
+          ],
+          "values": [
+            6.5
+          ]
+        }
+      ],
+      "relations": [
+        "An có điểm 8.5",
+        "Bình có điểm 7.0",
+        "Chi có điểm 9.0",
+        "Dũng có điểm 6.5"
+      ],
+      "processes": [
+        "lọc học sinh",
+        "làm nổi bật học sinh"
+      ],
+      "constraints": [
+        "điểm từ 8.0 trở lên"
+      ],
+      "goal": "Làm nổi bật các học sinh có điểm từ 8.0 trở lên.",
+      "input_description": "Bảng điểm học sinh gồm tên và điểm.",
+      "output_description": "Danh sách các học sinh thỏa mãn điều kiện lọc được làm nổi bật.",
+      "result_ownership": "provided",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric",
+        "relational"
+      ],
+      "interaction_needs": null,
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": null,
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "relational_table_query:filter",
+        "single_pass_scan:scan"
+      ],
+      "requested_requirements": [
+        {
+          "operation": "relational_table_query:filter",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "filter_column": "điểm",
+          "filter_op": ">=",
+          "filter_value": "8.0",
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        }
+      ],
+      "required_capabilities": [
+        "static_scene",
+        "numeric",
+        "relational"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "relational",
+        "numeric",
+        "temporal"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "relational",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "edge",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "node",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "relational": [
+          "edge",
+          "node"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

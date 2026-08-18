@@ -74,7 +74,7 @@ def compute_semantic_layout_py(spec: dict[str, Any]) -> dict[str, dict[str, floa
     """Python port của computeSemanticLayout."""
     pos: dict[str, dict[str, float]] = {}
     objects = spec.get("objects", [])
-    structural = {"container", "group", "heading", "paragraph", "text", "pointer", "edge"}
+    structural = {"container", "group", "heading", "paragraph", "text", "pointer", "edge", "label"}
     active = [o for o in objects if isinstance(o, dict) and o.get("type") not in structural]
 
     input_objs = []
@@ -121,13 +121,13 @@ def compute_semantic_layout_py(spec: dict[str, Any]) -> dict[str, dict[str, floa
             base_x = 22.0 + col * 26.0 if has_struct else 30.0 + col * 38.0
             pos[o["id"]] = {"x": base_x, "y": start_y + row * 24.0}
 
-    start_out_y = min(84.0, 52.0 + ((len(state_objs) + 1) // 2) * 22.0) if state_objs else (65.0 if input_objs else 45.0)
+    start_out_y = (start_y + ((len(state_objs) + 1) // 2) * 20.0) if state_objs else (68.0 if input_objs else 45.0)
     for idx, o in enumerate(output_objs):
         if o["id"] not in pos:
             col = idx % 2
             row = idx // 2
             base_x = 26.0 + col * 28.0 if has_struct else (50.0 if (col == 0 and len(output_objs) == 1) else 50.0 + (col * 34.0 - 17.0))
-            pos[o["id"]] = {"x": base_x, "y": start_out_y + row * 20.0}
+            pos[o["id"]] = {"x": base_x, "y": start_out_y + row * 18.0}
 
     for idx, o in enumerate(other_objs):
         if o["id"] not in pos:

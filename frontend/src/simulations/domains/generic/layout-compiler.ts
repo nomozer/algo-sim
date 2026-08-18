@@ -140,17 +140,16 @@ export function computeSemanticLayout(spec: SimulationSpec): Record<string, { x:
 
   // 5. Tính tọa độ cho Output Zone (Bottom-Left / Bottom-Center)
   if (outputObjs.length > 0) {
-    const startY = stateObjs.length > 0 
-      ? Math.min(84, 52 + Math.ceil(stateObjs.length / 2) * 22)
-      : (inputObjs.length > 0 ? 65 : 45);
-
-    outputObjs.forEach((o, idx) => {
-      if (pos[o.id]) return;
+    const hasStruct = structObjs.length > 0;
+    const startOutY = stateObjs.length > 0 ? startY + Math.ceil(stateObjs.length / 2) * 20 : inputObjs.length > 0 ? 68 : 45;
+  outputObjs.forEach((o, idx) => {
+    if (!pos[o.id]) {
       const col = idx % 2;
       const row = Math.floor(idx / 2);
-      const baseX = structObjs.length > 0 ? 26 + col * 28 : 50 + (col === 0 && outputObjs.length === 1 ? 0 : col * 34 - 17);
-      pos[o.id] = { x: baseX, y: startY + row * 20 };
-    });
+      const baseX = hasStruct ? 26 + col * 28 : (col === 0 && outputObjs.length === 1 ? 50 : 50 + (col * 34 - 17));
+      pos[o.id] = { x: baseX, y: startOutY + row * 18 };
+    }
+  });
   }
 
   // 6. Các đối tượng còn lại (fallback lưới đều)

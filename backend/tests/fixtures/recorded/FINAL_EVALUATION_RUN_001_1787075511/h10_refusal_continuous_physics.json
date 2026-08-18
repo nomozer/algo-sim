@@ -1,0 +1,130 @@
+{
+  "task_id": "h10_refusal_continuous_physics",
+  "problem_text": "Hãy mô phỏng phương trình vi phân chuyển động x''(t) + 4*x(t) = 0 của con lắc lò xo theo thời gian liên tục với điều kiện ban đầu x(0)=1, x'(0)=0.",
+  "prompt_hash": "7574f7dd28ea94ef805a038f4c4014c252c35f1f2e8f551b637c1d60dcc57664",
+  "git_commit": "6e76c965d8a183d0753998e906e69e6b4f649555",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:58:47.260175+00:00",
+  "duration_sec": 10.358157396316528,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "unsupported",
+      "duration": 10.358157396316528
+    }
+  ],
+  "final_envelope": {
+    "status": "unsupported",
+    "reason": "Bài này thuộc môn khác, không nằm trong chương trình Tin học THPT mà hệ mô phỏng — hệ từ chối trung thực thay vì dựng một cảnh trông giống mô phỏng.",
+    "failure_category": "out_of_scope",
+    "error_code": "gate_out_of_scope",
+    "representation_plan": {
+      "semantic_roles": [
+        "arbitrary_algorithm",
+        "continuous_motion",
+        "movement",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "move_along_path",
+        "moving_entity",
+        "reveal_sequence",
+        "step_sequence"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "arbitrary_algorithm": [],
+        "continuous_motion": [],
+        "movement": [
+          "move_along_path",
+          "moving_entity"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": [
+        "arbitrary_algorithm",
+        "continuous_motion"
+      ]
+    },
+    "analysis": {
+      "objects": [
+        "con lắc lò xo",
+        "phương trình vi phân"
+      ],
+      "data": [
+        {
+          "description": "phương trình vi phân chuyển động",
+          "labels": null,
+          "values": null
+        },
+        {
+          "description": "điều kiện ban đầu x(0)",
+          "labels": null,
+          "values": [
+            1
+          ]
+        },
+        {
+          "description": "điều kiện ban đầu x'(0)",
+          "labels": null,
+          "values": [
+            0
+          ]
+        }
+      ],
+      "relations": [
+        "x''(t) + 4*x(t) = 0 mô tả chuyển động của con lắc lò xo"
+      ],
+      "processes": [
+        "mô phỏng chuyển động theo thời gian liên tục"
+      ],
+      "constraints": [
+        "phương trình vi phân x''(t) + 4*x(t) = 0",
+        "điều kiện ban đầu x(0)=1",
+        "điều kiện ban đầu x'(0)=0"
+      ],
+      "goal": "Mô phỏng chuyển động của con lắc lò xo theo thời gian liên tục.",
+      "input_description": "Phương trình vi phân mô tả chuyển động và các điều kiện ban đầu của con lắc lò xo.",
+      "output_description": "Sự thay đổi vị trí của con lắc lò xo theo thời gian.",
+      "result_ownership": "algorithmic",
+      "domain_scope": "OUT_OF_SCOPE",
+      "simulatability": "NOT_SIMULATION_SUITABLE",
+      "entity_roles": [
+        "movement"
+      ],
+      "interaction_needs": null,
+      "notes": "Đề bài yêu cầu giải và mô phỏng phương trình vi phân, đây là kiến thức thuộc lĩnh vực Vật lý/Toán học cao cấp, không thuộc phạm vi Tin học THPT.",
+      "prescribed_procedure": null,
+      "process_roles": [
+        "continuous_motion",
+        "arbitrary_algorithm"
+      ],
+      "relation_roles": null,
+      "requested_mechanisms": null,
+      "requested_operations": null,
+      "requested_requirements": null,
+      "required_capabilities": [
+        "movement",
+        "continuous_motion",
+        "arbitrary_algorithm"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "movement"
+      ]
+    }
+  }
+}

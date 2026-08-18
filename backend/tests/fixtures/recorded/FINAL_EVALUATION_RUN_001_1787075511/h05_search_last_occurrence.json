@@ -1,0 +1,281 @@
+{
+  "task_id": "h05_search_last_occurrence",
+  "problem_text": "Cho dãy số nguyên gồm: 2, 5, 8, 5, 3, 5, 1. Hãy mô phỏng thuật toán tìm vị trí (chỉ số index) xuất hiện cuối cùng của số 5 trong dãy.",
+  "prompt_hash": "874f4c1d9097508642e37da3d4411b41382c0919105b43d849614a13e8eedc34",
+  "git_commit": "6e76c965d8a183d0753998e906e69e6b4f649555",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:54:32.516178+00:00",
+  "duration_sec": 61.60248613357544,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 61.60248613357544
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Tìm vị trí xuất hiện cuối cùng của số trong dãy",
+    "description": "Một dãy số nguyên và một số nguyên cần tìm. → Vị trí (chỉ số index) xuất hiện cuối cùng của số cần tìm trong dãy.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Tìm vị trí xuất hiện cuối cùng của số trong dãy",
+      "objects": [
+        {
+          "id": "heading_title",
+          "type": "heading",
+          "text": "Tìm vị trí xuất hiện cuối cùng của số 5 trong dãy"
+        },
+        {
+          "id": "array_data",
+          "type": "array_strip",
+          "label": "Dãy số"
+        },
+        {
+          "id": "target_value_box",
+          "type": "value_box",
+          "value": 5,
+          "label": "Số cần tìm"
+        },
+        {
+          "id": "current_index_box",
+          "type": "value_box",
+          "value": 0,
+          "label": "Chỉ số hiện tại (i)"
+        },
+        {
+          "id": "last_found_index_box",
+          "type": "value_box",
+          "value": -1,
+          "label": "Vị trí cuối cùng tìm thấy"
+        },
+        {
+          "id": "result_box",
+          "type": "value_box",
+          "label": "Kết quả cuối cùng"
+        },
+        {
+          "id": "pointer_i",
+          "type": "pointer",
+          "label": "i"
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "action": "highlight",
+              "narration": "Bắt đầu thuật toán. Khởi tạo 'Vị trí cuối cùng tìm thấy' là -1 (chưa tìm thấy) và con trỏ 'i' ở vị trí đầu tiên (chỉ số 0)."
+            },
+            {
+              "action": "highlight",
+              "narration": "Dãy số nguyên gồm: 2, 5, 8, 5, 3, 5, 1. Số cần tìm là 5."
+            },
+            {
+              "action": "highlight",
+              "narration": "Khởi tạo 'Vị trí cuối cùng tìm thấy' là -1. Con trỏ 'i' bắt đầu từ chỉ số 0."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt phần tử tại chỉ số i = 0 (giá trị 2). So sánh 2 với 5. Không bằng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tăng con trỏ 'i' lên 1. Chỉ số hiện tại là 1."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt phần tử tại chỉ số i = 1 (giá trị 5). So sánh 5 với 5. Bằng nhau! Cập nhật 'Vị trí cuối cùng tìm thấy' thành 1."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tăng con trỏ 'i' lên 1. Chỉ số hiện tại là 2."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt phần tử tại chỉ số i = 2 (giá trị 8). So sánh 8 với 5. Không bằng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tăng con trỏ 'i' lên 1. Chỉ số hiện tại là 3."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt phần tử tại chỉ số i = 3 (giá trị 5). So sánh 5 với 5. Bằng nhau! Cập nhật 'Vị trí cuối cùng tìm thấy' thành 3."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tăng con trỏ 'i' lên 1. Chỉ số hiện tại là 4."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt phần tử tại chỉ số i = 4 (giá trị 3). So sánh 3 với 5. Không bằng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tăng con trỏ 'i' lên 1. Chỉ số hiện tại là 5."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt phần tử tại chỉ số i = 5 (giá trị 5). So sánh 5 với 5. Bằng nhau! Cập nhật 'Vị trí cuối cùng tìm thấy' thành 5."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tăng con trỏ 'i' lên 1. Chỉ số hiện tại là 6."
+            },
+            {
+              "action": "highlight",
+              "narration": "Duyệt phần tử tại chỉ số i = 6 (giá trị 1). So sánh 1 với 5. Không bằng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tăng con trỏ 'i' lên 1. Chỉ số hiện tại là 7. Con trỏ 'i' đã vượt quá giới hạn của dãy (kích thước dãy là 7). Thuật toán kết thúc vòng lặp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Giá trị cuối cùng của 'Vị trí cuối cùng tìm thấy' là 5. Đây là chỉ số xuất hiện cuối cùng của số 5 trong dãy."
+            }
+          ]
+        }
+      ],
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "dãy số nguyên",
+        "số 5"
+      ],
+      "data": [
+        {
+          "description": "Dãy số nguyên",
+          "labels": null,
+          "values": [
+            2,
+            5,
+            8,
+            5,
+            3,
+            5,
+            1
+          ]
+        },
+        {
+          "description": "Số cần tìm",
+          "labels": null,
+          "values": [
+            5
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "tìm vị trí xuất hiện cuối cùng của một số trong dãy"
+      ],
+      "constraints": [
+        "tìm vị trí cuối cùng"
+      ],
+      "goal": "Mô phỏng thuật toán tìm vị trí (chỉ số index) xuất hiện cuối cùng của số 5 trong dãy.",
+      "input_description": "Một dãy số nguyên và một số nguyên cần tìm.",
+      "output_description": "Vị trí (chỉ số index) xuất hiện cuối cùng của số cần tìm trong dãy.",
+      "result_ownership": "rule_derivable",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [],
+      "requested_operations": [
+        "single_pass_scan:linear_search"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "single_pass_scan"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

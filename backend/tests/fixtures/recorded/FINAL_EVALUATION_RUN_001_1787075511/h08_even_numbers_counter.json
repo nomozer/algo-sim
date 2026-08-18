@@ -1,0 +1,143 @@
+{
+  "task_id": "h08_even_numbers_counter",
+  "problem_text": "Cho danh sách số nguyên gồm: 15, 22, 34, 19, 48, 51, 60. Hãy mô phỏng thuật toán đếm số lượng số chẵn trong danh sách.",
+  "prompt_hash": "69e1cede121b945cc91c9a3d376cb9f2a92513b53dab1c29129879b13241d746",
+  "git_commit": "6e76c965d8a183d0753998e906e69e6b4f649555",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:58:11.721532+00:00",
+  "duration_sec": 111.25547933578491,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "error",
+      "duration": 111.25547933578491
+    }
+  ],
+  "final_envelope": {
+    "status": "error",
+    "reason": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: \"item_0\" có \"parent\" phải là id của container/group/tree_element hợp lệ.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
+    "failure_category": "synthesis_exhausted",
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "danh sách số nguyên",
+        "số chẵn"
+      ],
+      "data": [
+        {
+          "description": "danh sách số nguyên",
+          "labels": null,
+          "values": [
+            15,
+            22,
+            34,
+            19,
+            48,
+            51,
+            60
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "đếm số lượng số chẵn trong danh sách"
+      ],
+      "constraints": [],
+      "goal": "Mô phỏng thuật toán đếm số lượng số chẵn trong danh sách.",
+      "input_description": "Một danh sách các số nguyên.",
+      "output_description": "Số lượng các số chẵn có trong danh sách.",
+      "result_ownership": "rule_derivable",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [
+        "bounded_control_flow.bounded_loop",
+        "bounded_control_flow.conditional_branch"
+      ],
+      "requested_operations": [
+        "single_pass_scan:count_if"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "step_by_step_construction"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    }
+  }
+}

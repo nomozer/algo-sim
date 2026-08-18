@@ -1,0 +1,179 @@
+{
+  "task_id": "h03_price_range_counter",
+  "problem_text": "Cho danh sách giá sản phẩm gồm: 150, 80, 220, 110, 190, 95 (nghìn đồng). Hãy mô phỏng thuật toán đếm xem có bao nhiêu sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng.",
+  "prompt_hash": "461eebcb0471ce478e4b695223aed6e5a5292acf08813fe107d18a3d85e46b5a",
+  "git_commit": "6e76c965d8a183d0753998e906e69e6b4f649555",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T17:53:19.391681+00:00",
+  "duration_sec": 31.063994646072388,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 31.063994646072388
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.count_if",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "Mô phỏng thuật toán đếm số sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng.",
+    "description": "Danh sách giá sản phẩm → Số lượng sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng",
+    "config": {
+      "problem": {
+        "summary": "Mô phỏng thuật toán đếm số sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng.",
+        "input": "Danh sách giá sản phẩm.",
+        "output": "Số lượng sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng."
+      },
+      "algorithm_id": "count_if",
+      "data": {
+        "array": [
+          150,
+          80,
+          220,
+          110,
+          190,
+          95
+        ],
+        "labels": null,
+        "target": null,
+        "condition": {
+          "op": ">=",
+          "value": 100
+        },
+        "order": null
+      },
+      "data_generated": false,
+      "notes": "Trường 'data.condition' trong schema chỉ hỗ trợ một điều kiện đơn. Để mô phỏng việc đếm trong khoảng [100, 200], thuật toán sẽ sử dụng cả hai điều kiện (giá >= 100 VÀ giá <= 200) như mô tả trong 'problem.summary', mặc dù 'data.condition' chỉ hiển thị điều kiện dưới (>= 100)."
+    },
+    "notes": "Trường 'data.condition' trong schema chỉ hỗ trợ một điều kiện đơn. Để mô phỏng việc đếm trong khoảng [100, 200], thuật toán sẽ sử dụng cả hai điều kiện (giá >= 100 VÀ giá <= 200) như mô tả trong 'problem.summary', mặc dù 'data.condition' chỉ hiển thị điều kiện dưới (>= 100).",
+    "analysis": {
+      "objects": [
+        "danh sách giá sản phẩm",
+        "sản phẩm"
+      ],
+      "data": [
+        {
+          "description": "giá sản phẩm",
+          "labels": null,
+          "values": [
+            150,
+            80,
+            220,
+            110,
+            190,
+            95
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "đếm sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng"
+      ],
+      "constraints": [
+        "giá sản phẩm trong khoảng từ 100 đến 200 nghìn đồng"
+      ],
+      "goal": "Mô phỏng thuật toán đếm xem có bao nhiêu sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng.",
+      "input_description": "Danh sách giá sản phẩm",
+      "output_description": "Số lượng sản phẩm có giá trong khoảng từ 100 đến 200 nghìn đồng",
+      "result_ownership": "provided",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "numeric_threshold",
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [],
+      "requested_operations": [
+        "single_pass_scan:count_if"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "static_scene"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "numeric_threshold",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "numeric_threshold": [],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": [
+        "numeric_threshold"
+      ]
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}
