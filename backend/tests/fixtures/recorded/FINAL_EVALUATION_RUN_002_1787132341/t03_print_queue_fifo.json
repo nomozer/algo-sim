@@ -1,0 +1,201 @@
+{
+  "task_id": "t03_print_queue_fifo",
+  "problem_text": "Cho hàng đợi in ấn ban đầu gồm 3 tài liệu: DocA, DocB, DocC. Hãy mô phỏng thuật toán thêm tài liệu DocD vào hàng đợi và lần lượt in 2 tài liệu đầu tiên theo nguyên tắc FIFO (vào trước ra trước).",
+  "prompt_hash": "6238228ac553961524ef40a2b7bd56a1e895ee4035ccea3ef625403e1bfcbce4",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:41:20.757531+00:00",
+  "duration_sec": 71.99655795097351,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 71.99655795097351
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Mô phỏng Hàng đợi In ấn (FIFO)",
+    "description": "Hàng đợi in ấn ban đầu gồm các tài liệu → Trạng thái của hàng đợi sau các thao tác và danh sách các tài liệu đã được in",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Mô phỏng Hàng đợi In ấn (FIFO)",
+      "objects": [
+        {
+          "id": "heading_queue",
+          "type": "heading",
+          "text": "Hàng đợi in ấn"
+        },
+        {
+          "id": "print_queue",
+          "type": "queue_view",
+          "label": "Hàng đợi"
+        },
+        {
+          "id": "heading_current_doc",
+          "type": "heading",
+          "text": "Tài liệu đang in"
+        },
+        {
+          "id": "current_doc_box",
+          "type": "value_box",
+          "label": "Đang in"
+        },
+        {
+          "id": "heading_printed_docs",
+          "type": "heading",
+          "text": "Các tài liệu đã in"
+        },
+        {
+          "id": "printed_docs_box",
+          "type": "value_box",
+          "label": "Đã in"
+        },
+        {
+          "id": "result_box",
+          "type": "value_box",
+          "label": "Kết quả"
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "action": "highlight",
+              "narration": "Khởi tạo hàng đợi in ấn với các tài liệu DocA, DocB, DocC. DocA là tài liệu đầu tiên sẽ được xử lý."
+            },
+            {
+              "action": "highlight",
+              "narration": "Thêm tài liệu DocD vào cuối hàng đợi in ấn. Theo nguyên tắc FIFO, DocD sẽ chờ sau DocC."
+            },
+            {
+              "action": "highlight",
+              "narration": "Lấy tài liệu đầu tiên (DocA) ra khỏi hàng đợi để in theo nguyên tắc FIFO (vào trước ra trước)."
+            },
+            {
+              "action": "highlight",
+              "narration": "DocA hiện đang được xử lý. Hàng đợi bây giờ bắt đầu bằng DocB."
+            },
+            {
+              "action": "highlight",
+              "narration": "DocA đã được in xong và được thêm vào danh sách các tài liệu đã in."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tiếp tục in tài liệu thứ hai. Tài liệu đầu tiên còn lại trong hàng đợi (DocB) được lấy ra."
+            },
+            {
+              "action": "highlight",
+              "narration": "DocB hiện đang được xử lý. Hàng đợi bây giờ bắt đầu bằng DocC."
+            },
+            {
+              "action": "highlight",
+              "narration": "DocB đã được in xong. Danh sách các tài liệu đã in là DocA, DocB."
+            },
+            {
+              "action": "highlight",
+              "narration": "Quá trình mô phỏng hoàn tất. Hai tài liệu đầu tiên đã được in. Hàng đợi hiện tại còn lại DocC và DocD."
+            }
+          ]
+        }
+      ],
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "hàng đợi in ấn",
+        "tài liệu DocA",
+        "tài liệu DocB",
+        "tài liệu DocC",
+        "tài liệu DocD"
+      ],
+      "data": [
+        {
+          "description": "Các tài liệu ban đầu trong hàng đợi",
+          "labels": [
+            "DocA",
+            "DocB",
+            "DocC"
+          ],
+          "values": null
+        }
+      ],
+      "relations": [
+        "DocA ở trước DocB trong hàng đợi",
+        "DocB ở trước DocC trong hàng đợi"
+      ],
+      "processes": [
+        "thêm tài liệu DocD vào hàng đợi",
+        "in 2 tài liệu đầu tiên"
+      ],
+      "constraints": [
+        "nguyên tắc FIFO (vào trước ra trước)"
+      ],
+      "goal": "mô phỏng thuật toán thêm tài liệu DocD vào hàng đợi và lần lượt in 2 tài liệu đầu tiên theo nguyên tắc FIFO",
+      "input_description": "Hàng đợi in ấn ban đầu gồm các tài liệu",
+      "output_description": "Trạng thái của hàng đợi sau các thao tác và danh sách các tài liệu đã được in",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "temporal"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [],
+      "requested_operations": [
+        "single_pass_scan:scan",
+        "bounded_control_flow:output"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "step_by_step_construction",
+        "temporal"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": []
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "move_along_path",
+        "reveal_sequence",
+        "step_sequence"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

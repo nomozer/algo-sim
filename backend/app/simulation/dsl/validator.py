@@ -581,18 +581,33 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
     return valid_spec, None
 
 
-def validate_pedagogical_quality(spec: dict) -> tuple[bool, str | None]:
-    """Kiểm tra chất lượng sư phạm & tính tương tác/diễn tiến của mô phỏng (M20 QA Gate).
+def validate_pedagogical_quality(spec: dict, envelope_title: str | None = None) -> tuple[bool, str | None]:
+    """Kiểm tra chất lượng sư phạm & tính tương tác/diễn tiến của mô phỏng (M20 QA Gate + G1-G5).
 
     Nguyên tắc:
     1. Semantic Richness: Các primitive đặc thù phải có cấu trúc hợp lệ (bar_chart >= 2 bars, table_grid có headers, tree_element không chu trình).
-    2. Step Sequence Narration: Mọi bước trong step_sequence bắt buộc có thuyết minh sư phạm.
-    3. Server-side AST Dry-Run: Chạy thử tính toán để đảm bảo 100% không lỗi runtime.
+    2. G1 & G2 Data Fidelity & Visual Binding Integrity: Không dummy coercion, target reference toàn vẹn.
+    3. G4 Content Hygiene: Không lặp tiêu đề trong canvas, không nhãn rỗng/trùng lặp.
+    4. Step Sequence Narration: Mọi bước trong step_sequence bắt buộc có thuyết minh sư phạm.
+    5. Server-side AST Dry-Run: Chạy thử tính toán để đảm bảo 100% không lỗi runtime.
     """
     from app.simulation import generic_engine as GE
+    from app.simulation.dsl.semantic_types import validate_visual_binding_types
+    from app.simulation.dsl.hygiene import check_content_hygiene
 
     objs = spec.get("objects", [])
     procs = spec.get("processes", [])
+
+    # G1 & G2: Type & Binding checks
+    base_state = spec.get("state", {})
+    type_violations = validate_visual_binding_types(objects=objs, state=base_state)
+    if type_violations:
+        return False, f"Vi phạm Visual Binding / Type Fidelity: {type_violations[0].message}"
+
+    # G4: Content Hygiene
+    hygiene_report = check_content_hygiene(objects=objs, envelope_title=envelope_title)
+    if not hygiene_report.ok:
+        return False, f"Vi phạm Content Hygiene: {hygiene_report.violations[0].message}"
 
     # 1. Rich Primitives quality checks
     for o in objs:
@@ -629,4 +644,5 @@ def validate_pedagogical_quality(spec: dict) -> tuple[bool, str | None]:
         return False, f"Lỗi thực thi quy tắc mô phỏng: {str(e)}"
 
     return True, None
+
 

@@ -1,0 +1,182 @@
+{
+  "task_id": "t04_height_selection_sort",
+  "problem_text": "Cho danh sách chiều cao (cm) của 5 học sinh gồm: 158, 172, 165, 160, 170. Hãy mô phỏng thuật toán sắp xếp chọn (Selection Sort) để sắp danh sách theo thứ tự tăng dần.",
+  "prompt_hash": "9388f6bdef5fde9ef26a4a92c38ac163084033096e4fc40ba5b63abdaf3f4f41",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:41:31.741446+00:00",
+  "duration_sec": 10.980912923812866,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 10.980912923812866
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.selection_sort",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "sắp danh sách theo thứ tự tăng dần",
+    "description": "danh sách chiều cao của học sinh → danh sách chiều cao đã sắp xếp tăng dần",
+    "config": {
+      "problem": {
+        "summary": "sắp danh sách theo thứ tự tăng dần",
+        "input": "danh sách chiều cao của học sinh",
+        "output": "danh sách chiều cao đã sắp xếp tăng dần"
+      },
+      "algorithm_id": "selection_sort",
+      "data": {
+        "array": [
+          158,
+          172,
+          165,
+          160,
+          170
+        ],
+        "labels": null,
+        "target": null,
+        "condition": null,
+        "order": "asc"
+      },
+      "data_generated": false,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "danh sách chiều cao",
+        "học sinh"
+      ],
+      "data": [
+        {
+          "description": "chiều cao của 5 học sinh",
+          "labels": null,
+          "values": [
+            158,
+            172,
+            165,
+            160,
+            170
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "sắp xếp chọn (Selection Sort)"
+      ],
+      "constraints": [
+        "sắp danh sách theo thứ tự tăng dần"
+      ],
+      "goal": "sắp danh sách theo thứ tự tăng dần",
+      "input_description": "danh sách chiều cao của học sinh",
+      "output_description": "danh sách chiều cao đã sắp xếp tăng dần",
+      "result_ownership": "provided",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": "select_extreme_repeated",
+      "process_roles": [
+        "temporal",
+        "movement"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [
+        "select_extreme_repeated"
+      ],
+      "requested_operations": [
+        "comparison_sort:selection"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "step_by_step_construction",
+        "movement",
+        "numeric"
+      ],
+      "scene_construction": "step_by_step",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric",
+        "temporal"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "movement",
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "moving_entity",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "progressive",
+      "mapping_intent": {
+        "movement": [
+          "move_along_path",
+          "moving_entity"
+        ],
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "family_resolved",
+    "family_id": "comparison_sort",
+    "variant": "selection"
+  }
+}

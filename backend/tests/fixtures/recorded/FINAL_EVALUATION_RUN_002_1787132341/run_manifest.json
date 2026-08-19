@@ -1,0 +1,99 @@
+{
+  "run_id": "FINAL_EVALUATION_RUN_002_1787132341",
+  "timestamp": "2026-08-19T09:39:01.182701+00:00",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "git_clean": true,
+  "total_tasks": 10,
+  "extra_metadata": {
+    "counts": {
+      "total_tasks": 10,
+      "supported_tasks": 8,
+      "unsupported_tasks": 2,
+      "released_tasks": 7,
+      "correct_verdicts": 9,
+      "false_releases": 0,
+      "oracle_matches": 7,
+      "geom_matches": 7,
+      "first_pass_successes": 7,
+      "attempt0_failures": 0,
+      "repaired_by_cegis": 0,
+      "total_llm_calls": 10,
+      "total_prompt_tokens": 14500,
+      "total_comp_tokens": 5200
+    },
+    "metrics": {
+      "r_verdict_pct": 90.0,
+      "r_release_pct": 87.5,
+      "r_false_release_pct": 0.0,
+      "r_oracle_pct": 100.0,
+      "r_geom_pct": 100.0,
+      "r_first_pct": 87.5,
+      "r_cegis_pct": "N/A",
+      "avg_llm_calls_per_task": 1.0,
+      "avg_prompt_tokens_per_task": 1450.0,
+      "avg_comp_tokens_per_task": 520.0
+    }
+  },
+  "tasks_summary": [
+    {
+      "task_id": "t01_min_power_scan",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t02_mixed_bracket_stack",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t03_print_queue_fifo",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t04_height_selection_sort",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t05_frequency_counter",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t06_excellent_student_filter",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t07_exam_score_avg_scan",
+      "status": "error",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t08_odd_numbers_counter",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t09_refusal_missing_preorder_tree",
+      "status": "unsupported",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "t10_refusal_3d_cube_rotation",
+      "status": "unsupported",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    }
+  ]
+}

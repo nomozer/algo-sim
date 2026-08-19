@@ -1,0 +1,120 @@
+{
+  "task_id": "t09_refusal_missing_preorder_tree",
+  "problem_text": "Hãy mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (Pre-order Traversal) và in danh sách các nút được thăm.",
+  "prompt_hash": "e5dc38e412b40e95ef4fead8c6768776a2445604782c110304086e77600f102d",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:44:24.430456+00:00",
+  "duration_sec": 10.09716534614563,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "unsupported",
+      "duration": 10.09716534614563
+    }
+  ],
+  "final_envelope": {
+    "status": "unsupported",
+    "reason": "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể (các nút có tên và quan hệ con trái/con phải giữa chúng). Hãy mô tả rõ cây (ví dụ: gốc A, A có con trái B và con phải C…) rồi thử lại — hệ không tự dựng cây thay bạn.",
+    "failure_category": "insufficient_specification",
+    "error_code": "structure_insufficient",
+    "input_sufficiency": {
+      "target_id": "tree.traversal",
+      "required_grounded_inputs": [
+        "tree_structure"
+      ],
+      "missing_inputs": [
+        "tree_structure"
+      ],
+      "satisfied_inputs": [],
+      "generated_defaults_allowed": false
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "relational",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "edge",
+        "move_along_path",
+        "node",
+        "reveal_sequence",
+        "step_sequence"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "relational": [
+          "edge",
+          "node"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "cây nhị phân",
+        "nút"
+      ],
+      "data": [],
+      "relations": [
+        "quan hệ cha-con giữa các nút của cây"
+      ],
+      "processes": [
+        "duyệt cây nhị phân",
+        "thăm nút",
+        "in danh sách các nút"
+      ],
+      "constraints": [
+        "duyệt theo thứ tự trước (Pre-order Traversal)"
+      ],
+      "goal": "in danh sách các nút được thăm",
+      "input_description": "Một cây nhị phân",
+      "output_description": "Danh sách các nút được thăm theo thứ tự trước",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "relational"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": "tree_traversal.preorder",
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [
+        "relational"
+      ],
+      "requested_mechanisms": [
+        "tree_traversal.preorder"
+      ],
+      "requested_operations": [
+        "tree_traversal:preorder"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "nodes_edges",
+        "temporal"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "relational",
+        "temporal"
+      ]
+    }
+  }
+}

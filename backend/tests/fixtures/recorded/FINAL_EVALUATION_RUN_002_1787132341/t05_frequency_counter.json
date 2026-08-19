@@ -1,0 +1,182 @@
+{
+  "task_id": "t05_frequency_counter",
+  "problem_text": "Cho dãy số nguyên gồm: 7, 3, 7, 8, 7, 2, 9. Hãy mô phỏng thuật toán quét tuần tự để đếm số lần xuất hiện của số 7 trong dãy.",
+  "prompt_hash": "92070aa3efdd53ff6537f335c4925be234157aa371b4b5dccaf9f07741f445b1",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:41:44.741088+00:00",
+  "duration_sec": 12.997258424758911,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 12.997258424758911
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.count_if",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "Mô phỏng thuật toán quét tuần tự để đếm số lần xuất hiện của một số trong dãy số nguyên.",
+    "description": "Một dãy số nguyên và một số nguyên cần đếm. → Số lần xuất hiện của số nguyên đã cho trong dãy.",
+    "config": {
+      "problem": {
+        "summary": "Mô phỏng thuật toán quét tuần tự để đếm số lần xuất hiện của một số trong dãy số nguyên.",
+        "input": "Một dãy số nguyên và một số nguyên cần đếm.",
+        "output": "Số lần xuất hiện của số nguyên đã cho trong dãy."
+      },
+      "algorithm_id": "count_if",
+      "data": {
+        "array": [
+          7,
+          3,
+          7,
+          8,
+          7,
+          2,
+          9
+        ],
+        "labels": null,
+        "target": null,
+        "condition": {
+          "op": "==",
+          "value": 7
+        },
+        "order": null
+      },
+      "data_generated": false,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "dãy số nguyên",
+        "số 7"
+      ],
+      "data": [
+        {
+          "description": "dãy số nguyên",
+          "labels": null,
+          "values": [
+            7,
+            3,
+            7,
+            8,
+            7,
+            2,
+            9
+          ]
+        },
+        {
+          "description": "số cần đếm",
+          "labels": null,
+          "values": [
+            7
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "quét tuần tự dãy số",
+        "đếm số lần xuất hiện"
+      ],
+      "constraints": [
+        "sử dụng thuật toán quét tuần tự"
+      ],
+      "goal": "đếm số lần xuất hiện của số 7 trong dãy",
+      "input_description": "Một dãy số nguyên và một số nguyên cần đếm.",
+      "output_description": "Số lần xuất hiện của số nguyên đã cho trong dãy.",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "single_pass_scan:count_if"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "single_pass_scan"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": []
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

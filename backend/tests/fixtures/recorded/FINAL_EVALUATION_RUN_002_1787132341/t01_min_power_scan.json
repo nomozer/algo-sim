@@ -1,0 +1,172 @@
+{
+  "task_id": "t01_min_power_scan",
+  "problem_text": "Cho mảng tiêu thụ điện (kWh) của 6 hộ gia đình gồm: 45, 12, 89, 32, 67, 23. Hãy mô phỏng thuật toán quét tuần tự để tìm lượng điện tiêu thụ nhỏ nhất.",
+  "prompt_hash": "38617abb59204b15558a96b705cf4900ae365cb81a2d1c59712f68111f72de18",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:39:14.312337+00:00",
+  "duration_sec": 13.00861120223999,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 13.00861120223999
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.find_min",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "Mô phỏng thuật toán quét tuần tự để tìm lượng điện tiêu thụ nhỏ nhất.",
+    "description": "Một mảng các số nguyên dương biểu thị lượng điện tiêu thụ của các hộ gia đình. → Giá trị nhỏ nhất trong mảng.",
+    "config": {
+      "problem": {
+        "summary": "Mô phỏng thuật toán quét tuần tự để tìm lượng điện tiêu thụ nhỏ nhất.",
+        "input": "Một mảng các số nguyên dương biểu thị lượng điện tiêu thụ của các hộ gia đình.",
+        "output": "Giá trị nhỏ nhất trong mảng."
+      },
+      "algorithm_id": "find_min",
+      "data": {
+        "array": [
+          45,
+          12,
+          89,
+          32,
+          67,
+          23
+        ],
+        "labels": null,
+        "target": null,
+        "condition": null,
+        "order": null
+      },
+      "data_generated": false,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "mảng tiêu thụ điện",
+        "hộ gia đình"
+      ],
+      "data": [
+        {
+          "description": "lượng điện tiêu thụ (kWh) của 6 hộ gia đình",
+          "labels": null,
+          "values": [
+            45,
+            12,
+            89,
+            32,
+            67,
+            23
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "quét tuần tự mảng để tìm giá trị nhỏ nhất"
+      ],
+      "constraints": [
+        "mảng gồm 6 hộ gia đình"
+      ],
+      "goal": "Tìm lượng điện tiêu thụ nhỏ nhất trong mảng đã cho.",
+      "input_description": "Một mảng các số nguyên dương biểu thị lượng điện tiêu thụ của các hộ gia đình.",
+      "output_description": "Giá trị nhỏ nhất trong mảng.",
+      "result_ownership": "rule_derivable",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "single_pass_scan:find_min"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "single_pass_scan",
+        "numeric"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "task_id": "t10_refusal_3d_cube_rotation",
+  "problem_text": "Hãy mô phỏng việc quay một khối lập phương 3 chiều quanh trục tọa độ Z với góc quay thay đổi liên tục theo thời gian thực.",
+  "prompt_hash": "fb524cf9531fd89c68364bf847b02b368778ddea99679f57cee7d76d425f00c3",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:44:34.969657+00:00",
+  "duration_sec": 10.538200855255127,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "unsupported",
+      "duration": 10.538200855255127
+    }
+  ],
+  "final_envelope": {
+    "status": "unsupported",
+    "reason": "Bài cần cơ chế chưa có engine tất định sở hữu (continuous_motion) — hệ từ chối trung thực thay vì dựng cảnh xấp xỉ.",
+    "failure_category": "capability_gap",
+    "representation_plan": {
+      "semantic_roles": [
+        "continuous_motion",
+        "movement",
+        "relational",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "edge",
+        "move_along_path",
+        "moving_entity",
+        "node",
+        "reveal_sequence",
+        "step_sequence"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "continuous_motion": [],
+        "movement": [
+          "move_along_path",
+          "moving_entity"
+        ],
+        "relational": [
+          "edge",
+          "node"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": [
+        "continuous_motion"
+      ]
+    },
+    "analysis": {
+      "objects": [
+        "khối lập phương 3 chiều",
+        "trục tọa độ Z"
+      ],
+      "data": [],
+      "relations": [
+        "khối lập phương quay quanh trục tọa độ Z"
+      ],
+      "processes": [
+        "quay khối lập phương",
+        "góc quay thay đổi liên tục theo thời gian thực"
+      ],
+      "constraints": [
+        "quay quanh trục tọa độ Z",
+        "góc quay thay đổi liên tục theo thời gian thực"
+      ],
+      "goal": "Mô phỏng việc quay một khối lập phương 3 chiều quanh trục tọa độ Z với góc quay thay đổi liên tục theo thời gian thực.",
+      "input_description": "Một khối lập phương 3 chiều và trục tọa độ Z.",
+      "output_description": "Sự quay của khối lập phương quanh trục tọa độ Z.",
+      "result_ownership": "rule_derivable",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "INTERACTIVE_MODEL",
+      "entity_roles": [
+        "movement"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "movement",
+        "temporal",
+        "continuous_motion"
+      ],
+      "relation_roles": [
+        "relational"
+      ],
+      "requested_mechanisms": null,
+      "requested_operations": null,
+      "requested_requirements": null,
+      "required_capabilities": [
+        "movement",
+        "points_lines"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "points_lines"
+      ]
+    }
+  }
+}

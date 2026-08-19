@@ -1,0 +1,164 @@
+{
+  "task_id": "t07_exam_score_avg_scan",
+  "problem_text": "Cho điểm kiểm tra 5 bài của một học sinh: 6, 8, 7, 9, 10. Hãy tính điểm trung bình và mô phỏng quét tìm bài kiểm tra đầu tiên có điểm cao hơn mức trung bình đó.",
+  "prompt_hash": "d3351805638896dc60a04acfa3f21eb5346c3707c327f49b34240a3af8688254",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:44:02.258086+00:00",
+  "duration_sec": 112.53571105003357,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "error",
+      "duration": 112.53571105003357
+    }
+  ],
+  "final_envelope": {
+    "status": "error",
+    "reason": "Không sinh được cấu hình mô phỏng hợp lệ sau 3 lần thử (lỗi cuối: formula rule cần \"expression\" không rỗng.). Hãy diễn đạt lại đề rõ ràng hơn rồi thử lại.",
+    "failure_category": "synthesis_exhausted",
+    "representation_plan": {
+      "semantic_roles": [
+        "logical",
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "boolean",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "logic_gate",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "logical": [
+          "bit_register",
+          "boolean",
+          "lamp",
+          "logic_gate",
+          "switch"
+        ],
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "điểm kiểm tra",
+        "học sinh",
+        "bài kiểm tra",
+        "điểm trung bình"
+      ],
+      "data": [
+        {
+          "description": "điểm kiểm tra của học sinh",
+          "labels": null,
+          "values": [
+            6,
+            8,
+            7,
+            9,
+            10
+          ]
+        }
+      ],
+      "relations": [
+        "điểm kiểm tra thuộc về học sinh",
+        "điểm của bài kiểm tra so sánh với điểm trung bình"
+      ],
+      "processes": [
+        "tính điểm trung bình",
+        "quét tìm bài kiểm tra đầu tiên có điểm cao hơn mức trung bình"
+      ],
+      "constraints": [
+        "số lượng bài kiểm tra là 5",
+        "tìm bài kiểm tra đầu tiên thỏa mãn điều kiện"
+      ],
+      "goal": "Tìm bài kiểm tra đầu tiên có điểm cao hơn mức trung bình.",
+      "input_description": "Điểm kiểm tra của một học sinh.",
+      "output_description": "Điểm trung bình và bài kiểm tra đầu tiên có điểm cao hơn mức trung bình.",
+      "result_ownership": "provided",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "relation_roles": [
+        "logical"
+      ],
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "relational_table_query:avg",
+        "single_pass_scan:linear_search"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "static_scene",
+        "temporal",
+        "numeric"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric",
+        "temporal"
+      ]
+    }
+  }
+}

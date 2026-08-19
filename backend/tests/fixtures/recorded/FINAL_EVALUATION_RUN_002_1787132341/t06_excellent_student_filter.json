@@ -1,0 +1,253 @@
+{
+  "task_id": "t06_excellent_student_filter",
+  "problem_text": "Cho bảng điểm gồm 4 học sinh: An (8.0), Bình (9.5), Chi (9.2), Dũng (7.5). Hãy mô phỏng thuật toán lọc và làm nổi bật các học sinh có điểm từ 9.0 trở lên.",
+  "prompt_hash": "a4a8d40b4185f5b703b87f482c68c74df8b2bda3c082bad29135f3ab866a6016",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:42:09.721375+00:00",
+  "duration_sec": 24.9782874584198,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 24.9782874584198
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "database.relational_table_query",
+    "domain": "database",
+    "visual_mode": "2d",
+    "title": "Truy vấn bảng dữ liệu",
+    "description": "Một bảng điểm gồm danh sách học sinh và điểm số tương ứng. → Danh sách các học sinh có điểm từ 9.0 trở lên, được làm nổi bật.",
+    "config": {
+      "specVersion": "table-1.0",
+      "schema": [
+        {
+          "name": "Học sinh",
+          "type": "text",
+          "label": "Học sinh",
+          "nullable": null
+        },
+        {
+          "name": "Điểm",
+          "type": "number",
+          "label": "Điểm số",
+          "nullable": null
+        }
+      ],
+      "rows": [
+        {
+          "Học sinh": "An",
+          "Điểm": 8.0
+        },
+        {
+          "Học sinh": "Bình",
+          "Điểm": 9.5
+        },
+        {
+          "Học sinh": "Chi",
+          "Điểm": 9.2
+        },
+        {
+          "Học sinh": "Dũng",
+          "Điểm": 7.5
+        }
+      ],
+      "normalizations": [],
+      "filter": {
+        "op": ">=",
+        "column": "Điểm",
+        "value": 9.0
+      },
+      "projection": null,
+      "sort": null,
+      "limit": null,
+      "aggregate": null,
+      "notes": "Lọc các học sinh có điểm từ 9.0 trở lên."
+    },
+    "notes": "Lọc các học sinh có điểm từ 9.0 trở lên.",
+    "analysis": {
+      "objects": [
+        "bảng điểm",
+        "học sinh An",
+        "học sinh Bình",
+        "học sinh Chi",
+        "học sinh Dũng",
+        "điểm số"
+      ],
+      "data": [
+        {
+          "description": "Điểm của học sinh An",
+          "labels": [
+            "An"
+          ],
+          "values": [
+            8.0
+          ]
+        },
+        {
+          "description": "Điểm của học sinh Bình",
+          "labels": [
+            "Bình"
+          ],
+          "values": [
+            9.5
+          ]
+        },
+        {
+          "description": "Điểm của học sinh Chi",
+          "labels": [
+            "Chi"
+          ],
+          "values": [
+            9.2
+          ]
+        },
+        {
+          "description": "Điểm của học sinh Dũng",
+          "labels": [
+            "Dũng"
+          ],
+          "values": [
+            7.5
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "lọc học sinh theo điểm",
+        "làm nổi bật học sinh"
+      ],
+      "constraints": [
+        "điểm từ 9.0 trở lên"
+      ],
+      "goal": "Mô phỏng thuật toán lọc và làm nổi bật các học sinh có điểm từ 9.0 trở lên.",
+      "input_description": "Một bảng điểm gồm danh sách học sinh và điểm số tương ứng.",
+      "output_description": "Danh sách các học sinh có điểm từ 9.0 trở lên, được làm nổi bật.",
+      "result_ownership": "rule_derivable",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric",
+        "textual"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [
+        "bounded_control_flow.bounded_loop",
+        "bounded_control_flow.conditional_branch"
+      ],
+      "requested_operations": [
+        "relational_table_query:filter"
+      ],
+      "requested_requirements": [
+        {
+          "operation": "relational_table_query:filter",
+          "aggregate_column": null,
+          "aggregate_func": null,
+          "filter_column": "Điểm",
+          "filter_op": ">=",
+          "filter_value": "9.0",
+          "limit": null,
+          "projection_columns": null,
+          "query_group": 0,
+          "sort_column": null,
+          "sort_direction": null
+        }
+      ],
+      "required_capabilities": [
+        "static_scene",
+        "logic_rule"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric",
+        "textual"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal",
+        "textual"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "heading",
+        "label",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "paragraph",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "text",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ],
+        "textual": [
+          "heading",
+          "label",
+          "paragraph",
+          "text"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

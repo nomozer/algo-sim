@@ -1,0 +1,262 @@
+{
+  "task_id": "t02_mixed_bracket_stack",
+  "problem_text": "Mô phỏng thuật toán kiểm tra chuỗi dấu ngoặc '[()]{}' có hợp lệ hay không sử dụng cấu trúc dữ liệu Ngăn xếp (Stack).",
+  "prompt_hash": "c96ec7f84b2e5756391f32cc22eb1ed46ccbf252d4bc087e14ce88477172c2d7",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:40:08.744243+00:00",
+  "duration_sec": 54.428486585617065,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 54.428486585617065
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Kiểm tra chuỗi dấu ngoặc hợp lệ bằng Stack",
+    "description": "Một chuỗi ký tự chứa các loại dấu ngoặc đơn, vuông, nhọn → Kết quả là chuỗi hợp lệ (true) hoặc không hợp lệ (false)",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Kiểm tra chuỗi dấu ngoặc hợp lệ bằng Stack",
+      "objects": [
+        {
+          "id": "heading_title",
+          "type": "heading",
+          "text": "Kiểm tra chuỗi dấu ngoặc hợp lệ bằng Stack"
+        },
+        {
+          "id": "paragraph_intro",
+          "type": "paragraph",
+          "text": "Mô phỏng thuật toán kiểm tra tính hợp lệ của chuỗi dấu ngoặc (ví dụ: '[]{}()') sử dụng cấu trúc dữ liệu Ngăn xếp (Stack). Chuỗi hợp lệ khi mỗi dấu ngoặc mở có một dấu ngoặc đóng tương ứng và chúng được lồng đúng cách."
+        },
+        {
+          "id": "label_input",
+          "type": "label",
+          "text": "Chuỗi đầu vào:"
+        },
+        {
+          "id": "input_array",
+          "type": "array_strip",
+          "label": "Chuỗi",
+          "text": "Chuỗi đầu vào"
+        },
+        {
+          "id": "pointer_i",
+          "type": "pointer",
+          "label": "i"
+        },
+        {
+          "id": "label_stack",
+          "type": "label",
+          "text": "Ngăn xếp (Stack):"
+        },
+        {
+          "id": "bracket_stack",
+          "type": "stack_view",
+          "label": "Stack"
+        },
+        {
+          "id": "label_result",
+          "type": "label",
+          "text": "Kết quả:"
+        },
+        {
+          "id": "result_box",
+          "type": "value_box",
+          "label": "Trạng thái"
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "action": "highlight",
+              "narration": "Khởi tạo chuỗi dấu ngoặc '[()]{}', ngăn xếp rỗng và con trỏ 'i' tại vị trí đầu tiên của chuỗi. Kết quả ban đầu là 'Đang xử lý'. Các dấu ngoặc mở sẽ được đẩy vào ngăn xếp, dấu ngoặc đóng sẽ được so sánh với đỉnh ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' di chuyển đến ký tự đầu tiên: '['. Ký tự này được đánh dấu."
+            },
+            {
+              "action": "highlight",
+              "narration": "Ký tự '[' là một dấu ngoặc mở. Đẩy nó vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' di chuyển đến ký tự tiếp theo: '('. Ký tự này được đánh dấu."
+            },
+            {
+              "action": "highlight",
+              "narration": "Ký tự '(' là một dấu ngoặc mở. Đẩy nó vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' di chuyển đến ký tự tiếp theo: ')'. Ký tự này được đánh dấu."
+            },
+            {
+              "action": "highlight",
+              "narration": "Ký tự ')' là một dấu ngoặc đóng. Ngăn xếp không rỗng. Lấy phần tử trên cùng của ngăn xếp là '('. So sánh với ')'. Chúng khớp nhau, nên phần tử '(' được loại bỏ khỏi ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' di chuyển đến ký tự tiếp theo: ']'. Ký tự này được đánh dấu."
+            },
+            {
+              "action": "highlight",
+              "narration": "Ký tự ']' là một dấu ngoặc đóng. Ngăn xếp không rỗng. Lấy phần tử trên cùng của ngăn xếp là '['. So sánh với ']'. Chúng khớp nhau, nên phần tử '[' được loại bỏ khỏi ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' di chuyển đến ký tự tiếp theo: '{'. Ký tự này được đánh dấu."
+            },
+            {
+              "action": "highlight",
+              "narration": "Ký tự '{' là một dấu ngoặc mở. Đẩy nó vào ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' di chuyển đến ký tự tiếp theo: '}'. Ký tự này được đánh dấu."
+            },
+            {
+              "action": "highlight",
+              "narration": "Ký tự '}' là một dấu ngoặc đóng. Ngăn xếp không rỗng. Lấy phần tử trên cùng của ngăn xếp là '{'. So sánh với '}'. Chúng khớp nhau, nên phần tử '{' được loại bỏ khỏi ngăn xếp."
+            },
+            {
+              "action": "highlight",
+              "narration": "Đã duyệt hết chuỗi. Con trỏ 'i' di chuyển ra ngoài chuỗi. Việc đánh dấu ký tự hiện tại được xóa."
+            },
+            {
+              "action": "highlight",
+              "narration": "Kiểm tra ngăn xếp. Ngăn xếp hiện tại rỗng."
+            },
+            {
+              "action": "highlight",
+              "narration": "Vì ngăn xếp rỗng, tất cả các dấu ngoặc mở đều có dấu ngoặc đóng tương ứng và được lồng đúng cách. Kết luận: Chuỗi dấu ngoặc là Hợp lệ."
+            }
+          ]
+        }
+      ],
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "chuỗi dấu ngoặc",
+        "Ngăn xếp (Stack)"
+      ],
+      "data": [
+        {
+          "description": "chuỗi dấu ngoặc ví dụ",
+          "labels": null,
+          "values": null
+        }
+      ],
+      "relations": [
+        "dấu ngoặc mở khớp với dấu ngoặc đóng tương ứng",
+        "Ngăn xếp hoạt động theo nguyên tắc LIFO (Vào sau Ra trước)"
+      ],
+      "processes": [
+        "duyệt từng ký tự trong chuỗi",
+        "thêm dấu ngoặc mở vào Ngăn xếp",
+        "kiểm tra dấu ngoặc đóng với phần tử trên cùng của Ngăn xếp",
+        "loại bỏ phần tử khỏi Ngăn xếp",
+        "kiểm tra Ngăn xếp rỗng khi kết thúc duyệt chuỗi"
+      ],
+      "constraints": [
+        "dấu ngoặc phải khớp loại",
+        "dấu ngoặc phải được lồng đúng cách"
+      ],
+      "goal": "Xác định chuỗi dấu ngoặc có hợp lệ hay không",
+      "input_description": "Một chuỗi ký tự chứa các loại dấu ngoặc đơn, vuông, nhọn",
+      "output_description": "Kết quả là chuỗi hợp lệ (true) hoặc không hợp lệ (false)",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "input",
+        "temporary_storage"
+      ],
+      "interaction_needs": [],
+      "notes": "Đề bài cung cấp ví dụ chuỗi '[()]{}' nhưng không yêu cầu xử lý cụ thể chuỗi này, chỉ dùng làm minh họa.",
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [
+        "logical"
+      ],
+      "requested_mechanisms": [],
+      "requested_operations": [
+        "single_pass_scan:scan"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "step_by_step_construction",
+        "logic_rule",
+        "nodes_edges"
+      ],
+      "scene_construction": "step_by_step",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "relational"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "logical",
+        "relational",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "bit_register",
+        "boolean",
+        "edge",
+        "lamp",
+        "logic_gate",
+        "move_along_path",
+        "node",
+        "reveal_sequence",
+        "step_sequence",
+        "switch"
+      ],
+      "scene_mode": "progressive",
+      "mapping_intent": {
+        "logical": [
+          "bit_register",
+          "boolean",
+          "lamp",
+          "logic_gate",
+          "switch"
+        ],
+        "relational": [
+          "edge",
+          "node"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

@@ -29,6 +29,7 @@ import {
 } from "./model";
 import { validateAndApplyPatch, type PatchOp } from "./patch";
 import { validateGenericConfig } from "./validate";
+import { resolveSemanticAnchor } from "./anchor-resolver";
 
 /**
  * Renderer 2D tổng quát — vẽ theo primitive của SimulationSpec đã validate.
@@ -163,7 +164,12 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     return { height, els: [box, ...childEls] };
   }
 
-  const structuralRootsVisible = structuralRoots(spec).filter((o) => isObjectRenderable(frame, o));
+  const hasInteractive = spec.objects.some(
+    (o) => !STRUCTURAL_TYPES.has(o.type) && o.type !== "label"
+  );
+  const structuralRootsVisible = structuralRoots(spec)
+    .filter((o) => isObjectRenderable(frame, o))
+    .filter((o) => !(hasInteractive && o.type === "heading"));
   const structuralEls: React.ReactElement[] = [];
   let flowY = FLOW_MARGIN;
   for (const root of structuralRootsVisible) {
@@ -493,10 +499,15 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       }
       case "array_strip": {
-        const items = Array.isArray(o.items) ? o.items : [v];
-        const cellW = 34;
+        const items = Array.isArray(o.items)
+          ? o.items
+          : typeof o.text === "string"
+          ? Array.from(o.text)
+          : (v !== undefined && v !== 0 ? [v] : [" "]);
+        const count = Math.max(1, items.length);
+        const cellW = Math.min(38, Math.max(28, Math.floor((VW * 0.7) / count)));
         const cellH = 34;
-        const totalW = items.length * cellW;
+        const totalW = count * cellW;
         const startX = p.x - totalW / 2;
         return (
           <g key={o.id} className={popCls}>
@@ -505,17 +516,35 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                 {dl}
               </text>
             )}
-            {items.map((item, i) => (
-              <g key={i} transform={`translate(${startX + i * cellW}, ${p.y - cellH / 2})`}>
-                <rect width={cellW} height={cellH} rx={4} fill="var(--surface)" stroke="var(--primary)" strokeWidth={1.5} />
-                <text x={cellW / 2} y={cellH / 2 + 5} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
-                  {String(item)}
-                </text>
-                <text x={cellW / 2} y={cellH + 12} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
-                  [{i}]
-                </text>
-              </g>
-            ))}
+            {items.map((item, i) => {
+              const strVal = String(item ?? "");
+              const isChar = strVal.length === 1 && !/\d/.test(strVal);
+              return (
+                <g key={i} transform={`translate(${startX + i * cellW}, ${p.y - cellH / 2})`}>
+                  <rect
+                    width={cellW}
+                    height={cellH}
+                    rx={4}
+                    fill={isChar ? "var(--canvas-soft)" : "var(--surface)"}
+                    stroke="var(--primary)"
+                    strokeWidth={1.5}
+                  />
+                  <text
+                    x={cellW / 2}
+                    y={cellH / 2 + 5}
+                    textAnchor="middle"
+                    fontSize={isChar ? 14 : 12}
+                    fontWeight={700}
+                    fill="var(--ink)"
+                  >
+                    {strVal}
+                  </text>
+                  <text x={cellW / 2} y={cellH + 12} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
+                    [{i}]
+                  </text>
+                </g>
+              );
+            })}
           </g>
         );
       }
@@ -645,9 +674,11 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         const items = Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []);
         const itemH = 22;
         const boxW = 80;
-        const boxH = Math.max(80, (o.capacity ?? Math.max(4, items.length)) * itemH + 20);
+        const capacity = o.capacity ?? Math.max(4, items.length);
+        const boxH = Math.max(80, capacity * itemH + 20);
+        const safeY = Math.max(boxH / 2 + 28, p.y);
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${p.y - boxH / 2})`}>
+          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${safeY - boxH / 2})`}>
             {o.label && (
               <text x={boxW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
                 {dl}
@@ -682,16 +713,18 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         const items = Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []);
         const itemW = 34;
         const boxH = 36;
-        const boxW = Math.max(120, (o.capacity ?? Math.max(4, items.length)) * itemW + 20);
+        const capacity = o.capacity ?? Math.max(4, items.length);
+        const boxW = Math.max(120, capacity * itemW + 20);
+        const safeY = Math.max(boxH / 2 + 28, p.y);
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${p.y - boxH / 2})`}>
+          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${safeY - boxH / 2})`}>
             {o.label && (
               <text x={boxW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
                 {dl}
               </text>
             )}
-            <line x1={0} y1={0} x2={boxW} y2={0} stroke="var(--accent-teal)" strokeWidth={2.5} />
-            <line x1={0} y1={boxH} x2={boxW} y2={boxH} stroke="var(--accent-teal)" strokeWidth={2.5} />
+            <line x1={0} y1={0} x2={boxW} y2={0} stroke="var(--primary)" strokeWidth={2} />
+            <line x1={0} y1={boxH} x2={boxW} y2={boxH} stroke="var(--primary)" strokeWidth={2} />
             <text x={-6} y={boxH / 2 + 4} textAnchor="end" fontSize={9} fontWeight={700} fill="var(--accent-teal)">
               FRONT
             </text>

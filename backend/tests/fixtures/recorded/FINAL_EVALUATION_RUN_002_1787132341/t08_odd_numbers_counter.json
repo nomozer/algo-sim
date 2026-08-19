@@ -1,0 +1,173 @@
+{
+  "task_id": "t08_odd_numbers_counter",
+  "problem_text": "Cho danh sách số nguyên gồm: 14, 27, 35, 42, 59, 68, 71. Hãy mô phỏng thuật toán đếm số lượng số lẻ trong danh sách.",
+  "prompt_hash": "469bdfa4d2738a3db02b8f86c6365198334389dd4e0c8e89972d71eb8c4af180",
+  "git_commit": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-19T09:44:14.332307+00:00",
+  "duration_sec": 12.07322359085083,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 12.07322359085083
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.count_if",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "Đếm số lượng số lẻ trong danh sách số nguyên.",
+    "description": "Một danh sách các số nguyên. → Số lượng các số lẻ trong danh sách.",
+    "config": {
+      "problem": {
+        "summary": "Đếm số lượng số lẻ trong danh sách số nguyên.",
+        "input": "Một danh sách các số nguyên.",
+        "output": "Số lượng các số lẻ trong danh sách."
+      },
+      "algorithm_id": "count_if",
+      "data": {
+        "array": [
+          14,
+          27,
+          35,
+          42,
+          59,
+          68,
+          71
+        ],
+        "labels": null,
+        "target": null,
+        "condition": {
+          "op": "!=",
+          "value": 0
+        },
+        "order": null
+      },
+      "data_generated": false,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "danh sách số nguyên"
+      ],
+      "data": [
+        {
+          "description": "danh sách số nguyên",
+          "labels": null,
+          "values": [
+            14,
+            27,
+            35,
+            42,
+            59,
+            68,
+            71
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "đếm số lượng số lẻ trong danh sách"
+      ],
+      "constraints": [],
+      "goal": "Đếm số lượng số lẻ trong danh sách đã cho.",
+      "input_description": "Một danh sách các số nguyên.",
+      "output_description": "Số lượng các số lẻ trong danh sách.",
+      "result_ownership": "provided",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "numeric"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "single_pass_scan:count_if"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "single_pass_scan"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}
