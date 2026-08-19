@@ -50,8 +50,8 @@ PILOT_DATASET = [
 async def test_run_pilot_3_cases_live():
     load_dotenv(Path(__file__).parent.parent / ".env")
     api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
-        pytest.skip("GEMINI_API_KEY không được đặt trong môi trường.")
+    if os.getenv("ALLOW_LIVE_AI") != "1" or not api_key:
+        pytest.skip("ALLOW_LIVE_AI!=1 hoặc GEMINI_API_KEY không được đặt trong môi trường.")
 
     logger = ProvenanceLogger(run_id="pilot_verification_run")
     task_results = []

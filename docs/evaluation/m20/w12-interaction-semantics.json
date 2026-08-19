@@ -1,13 +1,20 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "5de367821e0e02eb",
+  "sourceFingerprint": "50bd1b06910e9dc3",
   "dirtyRelevantSources": [
-    "backend/app/simulation/dsl/validator.py",
+    "backend/tests/test_compaction.py",
+    "backend/tests/test_m16_record.py",
+    "backend/tests/test_manifest.py",
+    "backend/tests/test_pilot_runner.py",
+    "backend/tests/test_pipeline.py",
+    "backend/tests/test_program_routing.py",
+    "backend/tests/test_table_query_pipeline.py",
+    "frontend/src/simulations/domains/generic/model.ts",
     "frontend/src/simulations/domains/generic/ui.tsx"
   ],
-  "head": "bf76ac3cbe497478e4cdc6f30b28bbd7aa779c6a",
+  "head": "950801d1ed845f649b96c19cc84ab1cd64d518a4",
   "dirty": true,
-  "generatedAt": "2026-08-19T10:11:01.629Z",
+  "generatedAt": "2026-08-19T10:57:55.214Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

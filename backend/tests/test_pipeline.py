@@ -173,8 +173,10 @@ def test_simulate_sinh_timeline_bi_chan(monkeypatch):
     )
     monkeypatch.setattr(pipeline, "call_gemini", fake)
 
-    with pytest.raises(RuntimeError, match="3 lần"):
-        asyncio.run(pipeline.run_pipeline("Cho dãy 7, 9, 6. Tìm phần tử lớn nhất.", "khóa-giả"))
+    env = asyncio.run(pipeline.run_pipeline("Cho dãy 7, 9, 6. Tìm phần tử lớn nhất.", "khóa-giả"))
+    assert env.get("status") == "error"
+    assert env.get("failure_category") == "synthesis_exhausted"
+    assert "3 lần" in env.get("reason", "")
     assert len(calls) == 5  # analyze + classify + 3 lần simulate
 
 

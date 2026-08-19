@@ -162,15 +162,17 @@ def test_fx7_join_bi_tu_choi_o_classify(monkeypatch):
 
 # ── 8. sai kiểu/toán tử → validator từ chối (cạn retry) ───────────
 def test_fx8_sai_toan_tu_bi_validator_chan(monkeypatch):
-    """">" trên cột chữ: validator từ chối cả 3 lần → RuntimeError, KHÔNG có
+    """>" trên cột chữ: validator từ chối cả 3 lần → status=error (synthesis_exhausted), KHÔNG có
     envelope ok nào được phát."""
     bad = _table_cfg(_TB_SCHEMA, _TB_ROWS,
                      filter={"op": ">", "column": "ten", "value": "M"})
-    with pytest.raises(RuntimeError):
-        _run(monkeypatch, [
-            _an("Lọc theo tên", ["relational_table_query:filter"]),
-            json.dumps(_classify(TARGET)), bad, bad, bad,
-        ])
+    env = _run(monkeypatch, [
+        _an("Lọc theo tên", ["relational_table_query:filter"]),
+        json.dumps(_classify(TARGET)), bad, bad, bad,
+    ])
+    assert env.get("status") == "error"
+    assert env.get("failure_category") == "synthesis_exhausted"
+    assert "config" not in env
 
 
 # ── 10. HAI truy vấn độc lập → phải từ chối trung thực ────────────

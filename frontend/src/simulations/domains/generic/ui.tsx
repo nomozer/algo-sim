@@ -21,7 +21,6 @@ import {
   positionOf,
   structuralRoots,
   valuesOf,
-  computeRuntimeStateAtCursor,
   visibleContentBounds,
   type GenericState,
   type ObjectRole,
@@ -101,9 +100,13 @@ const LABEL_STAGGER_MIN_LEN = 8;
 const LABEL_STAGGER_DY = 16;
 const LABEL_STAGGER_ROWS = 3;
 
-export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props) {
-  const runtime = computeRuntimeStateAtCursor(spec, state);
-  const values = runtime.values;
+export function GenericWorkspace({
+  config: spec,
+  state,
+  busy,
+  dispatch,
+}: Props) {
+  const values = valuesOf(spec, state.base);
   const frame = currentFrame(state);
   const toggleable = new Set(Object.keys(state.base));
 
@@ -120,7 +123,12 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
   // M7.12: bố cục tài liệu (container/heading/paragraph/text) — layout dọc đệ quy,
   // container vẽ khung TRƯỚC (sau đó tới con) để đúng thứ tự z. Vai trò hiển thị
   // (current/…) do engine quyết định qua objectRole — renderer chỉ ánh xạ style.
-  function laidOutNode(obj: SpecObject, x: number, y: number, width: number): { height: number; els: React.ReactElement[] } {
+  function laidOutNode(
+    obj: SpecObject,
+    x: number,
+    y: number,
+    width: number,
+  ): { height: number; els: React.ReactElement[] } {
     const current = objectRole(state, obj.id) === "current";
     const pop = current ? "gen-pop" : undefined;
 
@@ -128,7 +136,17 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       const fs = 18;
       const lines = wrapText(obj.text ?? "", charsPerLine(width, fs));
       const els = lines.map((ln, i) => (
-        <text key={`${obj.id}-${i}`} className={pop} x={x} y={y + 18 + i * 24} fontSize={fs} fontWeight={700} fill="var(--ink)">{ln}</text>
+        <text
+          key={`${obj.id}-${i}`}
+          className={pop}
+          x={x}
+          y={y + 18 + i * 24}
+          fontSize={fs}
+          fontWeight={700}
+          fill="var(--ink)"
+        >
+          {ln}
+        </text>
       ));
       return { height: lines.length * 24 + 6, els };
     }
@@ -136,19 +154,40 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       const fs = 14;
       const lines = wrapText(obj.text ?? "", charsPerLine(width, fs));
       const els = lines.map((ln, i) => (
-        <text key={`${obj.id}-${i}`} className={pop} x={x} y={y + 13 + i * 19} fontSize={fs} fill="var(--ink-secondary)">{ln}</text>
+        <text
+          key={`${obj.id}-${i}`}
+          className={pop}
+          x={x}
+          y={y + 13 + i * 19}
+          fontSize={fs}
+          fill="var(--ink-secondary)"
+        >
+          {ln}
+        </text>
       ));
       return { height: lines.length * 19 + 6, els };
     }
     // container | group — khung chứa các con (childrenOf theo parent)
     const isContainer = obj.type === "container";
     const PAD = isContainer ? 14 : 8;
-    const kids = childrenOf(spec, obj.id).filter((k) => isObjectRenderable(frame, k));
+    const kids = childrenOf(spec, obj.id).filter((k) =>
+      isObjectRenderable(frame, k),
+    );
     const childEls: React.ReactElement[] = [];
     let cursor = y + PAD;
     if (obj.text) {
       childEls.push(
-        <text key={`${obj.id}-title`} className={pop} x={x + PAD} y={cursor + 15} fontSize={15} fontWeight={700} fill="var(--ink)">{obj.text}</text>,
+        <text
+          key={`${obj.id}-title`}
+          className={pop}
+          x={x + PAD}
+          y={cursor + 15}
+          fontSize={15}
+          fontWeight={700}
+          fill="var(--ink)"
+        >
+          {obj.text}
+        </text>,
       );
       cursor += 24;
     }
@@ -157,22 +196,44 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       childEls.push(...r.els);
       cursor += r.height + FLOW_GAP;
     }
-    const height = Math.max(cursor - (kids.length ? FLOW_GAP : 0) + PAD - y, isContainer ? 34 : 24);
+    const height = Math.max(
+      cursor - (kids.length ? FLOW_GAP : 0) + PAD - y,
+      isContainer ? 34 : 24,
+    );
     const box = isContainer ? (
-      <rect key={`${obj.id}-box`} className={pop} x={x} y={y} width={width} height={height} rx={10} fill="var(--surface)" stroke={current ? "var(--primary)" : "var(--ink-faint)"} strokeWidth={current ? 2.5 : 1.5} />
+      <rect
+        key={`${obj.id}-box`}
+        className={pop}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx={10}
+        fill="var(--surface)"
+        stroke={current ? "var(--primary)" : "var(--ink-faint)"}
+        strokeWidth={current ? 2.5 : 1.5}
+      />
     ) : (
-      <rect key={`${obj.id}-box`} x={x} y={y} width={width} height={height} rx={6} fill="var(--canvas-soft)" stroke="none" />
+      <rect
+        key={`${obj.id}-box`}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx={6}
+        fill="var(--canvas-soft)"
+        stroke="none"
+      />
     );
     return { height, els: [box, ...childEls] };
   }
 
   const hasInteractive = spec.objects.some(
-    (o) => !STRUCTURAL_TYPES.has(o.type) && o.type !== "label"
+    (o) => !STRUCTURAL_TYPES.has(o.type) && o.type !== "label",
   );
-  // Nếu là mô hình thuật toán/tương tác, ẩn các text flow để tránh va chạm vào canvas
-  const structuralRootsVisible = hasInteractive
-    ? []
-    : structuralRoots(spec).filter((o) => isObjectRenderable(frame, o));
+  const structuralRootsVisible = structuralRoots(spec)
+    .filter((o) => isObjectRenderable(frame, o))
+    .filter((o) => !(hasInteractive && o.type === "heading"));
   const structuralEls: React.ReactElement[] = [];
   let flowY = FLOW_MARGIN;
   for (const root of structuralRootsVisible) {
@@ -248,7 +309,9 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
      sinh rơi vào. Xem chú thích tại chỗ dựng dải điều khiển. */
   const editMode = false;
   const [editTool, setEditTool] = useState<EditTool>(null);
-  const [contentType, setContentType] = useState<string>(policy.addableTypes[0] ?? "paragraph");
+  const [contentType, setContentType] = useState<string>(
+    policy.addableTypes[0] ?? "paragraph",
+  );
   const [connectFrom, setConnectFrom] = useState<string | null>(null);
   const [editBusy, setEditBusy] = useState(false);
   const [editMsg, setEditMsg] = useState<string | null>(null);
@@ -292,7 +355,8 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
 
   function nextFreeId(prefix: string): string {
     const taken = new Set(spec.objects.map((o) => o.id));
-    for (let n = 1; ; n += 1) if (!taken.has(`${prefix}${n}`)) return `${prefix}${n}`;
+    for (let n = 1; ; n += 1)
+      if (!taken.has(`${prefix}${n}`)) return `${prefix}${n}`;
   }
 
   function onCanvasClick(e: React.MouseEvent) {
@@ -300,11 +364,19 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     const d = domainPoint(e as unknown as React.PointerEvent);
     if (!d) return;
     const taken = spec.objects
-      .filter((o) => !STRUCTURAL_TYPES.has(o.type) && o.type !== "edge" && state.pos[o.id])
+      .filter(
+        (o) =>
+          !STRUCTURAL_TYPES.has(o.type) && o.type !== "edge" && state.pos[o.id],
+      )
       .map((o) => state.pos[o.id]);
     const p = findFreePosition(taken, d);
     const id = nextFreeId("P");
-    runLocalPatch([{ op: "add_object", object: { id, type: "node", label: id, x: p.x, y: p.y } }]);
+    runLocalPatch([
+      {
+        op: "add_object",
+        object: { id, type: "node", label: id, x: p.x, y: p.y },
+      },
+    ]);
   }
 
   /** Thêm một mục nội dung vào cuối cảnh structural (family structural). */
@@ -313,10 +385,16 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     const id = nextFreeId(contentType.slice(0, 1).toUpperCase());
     const root = structuralRoots(spec).find((o) => CONTAINER_TYPES.has(o.type));
     const obj: Record<string, unknown> = { id, type: contentType };
-    if (TEXT_CONTENT_TYPES.has(contentType)) obj.text = "Nội dung mới — hãy sửa lại cho đúng ý.";
+    if (TEXT_CONTENT_TYPES.has(contentType))
+      obj.text = "Nội dung mới — hãy sửa lại cho đúng ý.";
     if (CONTAINER_TYPES.has(contentType)) obj.text = "Khung mới";
     if (root) obj.parent = root.id;
-    runLocalPatch([{ op: "add_object", object: obj as PatchOp extends { object: infer O } ? O : never }]);
+    runLocalPatch([
+      {
+        op: "add_object",
+        object: obj as PatchOp extends { object: infer O } ? O : never,
+      },
+    ]);
   }
 
   function onObjectEditClick(id: string) {
@@ -330,7 +408,14 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         setConnectFrom(id);
         setEditMsg(null); // hướng dẫn "chọn đối tượng thứ hai" do EditBar hiển thị
       } else if (connectFrom !== id) {
-        runLocalPatch([{ op: "connect", from: connectFrom, to: id, edge_id: nextFreeId(`${connectFrom}_${id}`) }]);
+        runLocalPatch([
+          {
+            op: "connect",
+            from: connectFrom,
+            to: id,
+            edge_id: nextFreeId(`${connectFrom}_${id}`),
+          },
+        ]);
         setConnectFrom(null);
       }
     }
@@ -350,7 +435,11 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
     setEditBusy(true);
     setEditMsg(null);
     try {
-      const res = await editViaServer({ simulationId: "generic.rule_scene", config: spec, instruction });
+      const res = await editViaServer({
+        simulationId: "generic.rule_scene",
+        config: spec,
+        instruction,
+      });
       if (res.status === "ok") {
         // Two-tier như loadEnvelope: client tự validate lại config từ server
         const validated = validateGenericConfig(res.config);
@@ -386,15 +475,52 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         const on = v >= 1;
         const clickable = toggleable.has(o.id);
         return (
-          <g key={o.id} className={popCls} style={{ cursor: clickable ? "pointer" : "default" }} onClick={() => clickable && dispatch({ type: "toggle", target: o.id })}>
+          <g
+            key={o.id}
+            className={popCls}
+            style={{ cursor: clickable ? "pointer" : "default" }}
+            onClick={() =>
+              clickable && dispatch({ type: "toggle", target: o.id })
+            }
+          >
             {o.label && (
-              <text x={p.x} y={p.y - 28} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y - 28}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <rect x={p.x - 30} y={p.y - 17} width={60} height={34} rx={17} fill={on ? "var(--primary)" : "var(--canvas-soft)"} stroke={on ? "var(--primary)" : "var(--ink-faint)"} strokeWidth={2} style={{ transition: "fill 0.15s ease" }} />
-            <circle cx={p.x + (on ? 13 : -13)} cy={p.y} r={13} fill="#fff" style={{ transition: "cx 0.15s ease" }} />
-            <text x={p.x + (on ? -14 : 14)} y={p.y + 5} textAnchor="middle" fontSize={13} fontWeight={700} fill={on ? "#fff" : "var(--ink-muted)"}>
+            <rect
+              x={p.x - 30}
+              y={p.y - 17}
+              width={60}
+              height={34}
+              rx={17}
+              fill={on ? "var(--primary)" : "var(--canvas-soft)"}
+              stroke={on ? "var(--primary)" : "var(--ink-faint)"}
+              strokeWidth={2}
+              style={{ transition: "fill 0.15s ease" }}
+            />
+            <circle
+              cx={p.x + (on ? 13 : -13)}
+              cy={p.y}
+              r={13}
+              fill="#fff"
+              style={{ transition: "cx 0.15s ease" }}
+            />
+            <text
+              x={p.x + (on ? -14 : 14)}
+              y={p.y + 5}
+              textAnchor="middle"
+              fontSize={13}
+              fontWeight={700}
+              fill={on ? "#fff" : "var(--ink-muted)"}
+            >
               {v}
             </text>
           </g>
@@ -405,12 +531,33 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         return (
           <g key={o.id} className={popCls}>
             {o.label && (
-              <text x={p.x} y={p.y + 44} textAnchor="middle" fontSize={12} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y + 44}
+                textAnchor="middle"
+                fontSize={12}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <circle cx={p.x} cy={p.y} r={26} fill={on ? "var(--accent-green)" : "var(--canvas-soft)"} stroke={on ? "var(--accent-green)" : "var(--ink-faint)"} strokeWidth={current ? 3.5 : 2} style={{ transition: "fill 0.2s ease" }} />
-            <text x={p.x} y={p.y + 6} textAnchor="middle" fontSize={18} fontWeight={700} fill={on ? "#fff" : "var(--ink-muted)"}>
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={26}
+              fill={on ? "var(--accent-green)" : "var(--canvas-soft)"}
+              stroke={on ? "var(--accent-green)" : "var(--ink-faint)"}
+              strokeWidth={current ? 3.5 : 2}
+              style={{ transition: "fill 0.2s ease" }}
+            />
+            <text
+              x={p.x}
+              y={p.y + 6}
+              textAnchor="middle"
+              fontSize={18}
+              fontWeight={700}
+              fill={on ? "#fff" : "var(--ink-muted)"}
+            >
               {v}
             </text>
           </g>
@@ -418,16 +565,38 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       }
       case "value_box": {
         const strV = String(v ?? "");
-        const fontSize = strV.length > 8 ? 12 : (strV.length > 4 ? 15 : 20);
+        const fontSize = strV.length > 8 ? 12 : strV.length > 4 ? 15 : 20;
         return (
           <g key={o.id} className={popCls}>
             {o.label && (
-              <text x={p.x} y={p.y - 26} textAnchor="middle" fontSize={12} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y - 26}
+                textAnchor="middle"
+                fontSize={12}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <rect x={p.x - 42} y={p.y - 20} width={84} height={40} rx={8} fill="var(--surface)" stroke="var(--primary)" strokeWidth={current ? 3 : 2} />
-            <text x={p.x} y={p.y + 7} textAnchor="middle" fontSize={fontSize} fontWeight={700} fill="var(--ink)">
+            <rect
+              x={p.x - 42}
+              y={p.y - 20}
+              width={84}
+              height={40}
+              rx={8}
+              fill="var(--surface)"
+              stroke="var(--primary)"
+              strokeWidth={current ? 3 : 2}
+            />
+            <text
+              x={p.x}
+              y={p.y + 7}
+              textAnchor="middle"
+              fontSize={fontSize}
+              fontWeight={700}
+              fill="var(--ink)"
+            >
               {strV}
             </text>
           </g>
@@ -444,14 +613,52 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         return (
           <g key={o.id} className={popCls}>
             {o.label && (
-              <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y - 18}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <rect x={trackX} y={p.y - 4} width={sliderWidth} height={8} rx={4} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} />
-            <rect x={trackX} y={p.y - 4} width={pct * sliderWidth} height={8} rx={4} fill="var(--primary)" />
-            <circle cx={thumbX} cy={p.y} r={10} fill="#fff" stroke="var(--primary)" strokeWidth={3} style={{ cursor: "ew-resize" }} />
-            <text x={p.x} y={p.y + 24} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
+            <rect
+              x={trackX}
+              y={p.y - 4}
+              width={sliderWidth}
+              height={8}
+              rx={4}
+              fill="var(--canvas-soft)"
+              stroke="var(--ink-faint)"
+              strokeWidth={1}
+            />
+            <rect
+              x={trackX}
+              y={p.y - 4}
+              width={pct * sliderWidth}
+              height={8}
+              rx={4}
+              fill="var(--primary)"
+            />
+            <circle
+              cx={thumbX}
+              cy={p.y}
+              r={10}
+              fill="#fff"
+              stroke="var(--primary)"
+              strokeWidth={3}
+              style={{ cursor: "ew-resize" }}
+            />
+            <text
+              x={p.x}
+              y={p.y + 24}
+              textAnchor="middle"
+              fontSize={12}
+              fontWeight={700}
+              fill="var(--ink)"
+            >
               {numV} {o.unit ?? ""}
             </text>
           </g>
@@ -464,7 +671,14 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         return (
           <g key={o.id} className={popCls}>
             {o.label && (
-              <text x={p.x} y={p.y - swatchH / 2 - 10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y - swatchH / 2 - 10}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
@@ -477,7 +691,10 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               fill={colorStr}
               stroke="var(--ink-faint)"
               strokeWidth={2}
-              style={{ transition: "fill 0.15s ease", filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.15))" }}
+              style={{
+                transition: "fill 0.15s ease",
+                filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.15))",
+              }}
             />
             <rect
               x={p.x - swatchW / 2}
@@ -502,22 +719,32 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       }
       case "array_strip": {
-        const items = runtime.objectItems[o.id] && runtime.objectItems[o.id].length > 0
-          ? runtime.objectItems[o.id]
-          : (Array.isArray(o.items) && o.items.length > 0
+        const items = Array.isArray(o.items)
           ? o.items
-          : (typeof o.text === "string" && o.text.length > 0
-          ? Array.from(o.text)
-          : (v !== undefined && v !== 0 ? [v] : [" "])));
+          : typeof o.text === "string"
+            ? Array.from(o.text)
+            : v !== undefined && v !== 0
+              ? [v]
+              : [" "];
         const count = Math.max(1, items.length);
-        const cellW = Math.min(38, Math.max(28, Math.floor((VW * 0.7) / count)));
+        const cellW = Math.min(
+          38,
+          Math.max(28, Math.floor((VW * 0.7) / count)),
+        );
         const cellH = 34;
         const totalW = count * cellW;
         const startX = p.x - totalW / 2;
         return (
           <g key={o.id} className={popCls}>
             {o.label && (
-              <text x={p.x} y={p.y - cellH / 2 - 8} textAnchor="middle" fontSize={12} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y - cellH / 2 - 8}
+                textAnchor="middle"
+                fontSize={12}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
@@ -525,7 +752,10 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               const strVal = String(item ?? "");
               const isChar = strVal.length === 1 && !/\d/.test(strVal);
               return (
-                <g key={i} transform={`translate(${startX + i * cellW}, ${p.y - cellH / 2})`}>
+                <g
+                  key={i}
+                  transform={`translate(${startX + i * cellW}, ${p.y - cellH / 2})`}
+                >
                   <rect
                     width={cellW}
                     height={cellH}
@@ -544,7 +774,13 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                   >
                     {strVal}
                   </text>
-                  <text x={cellW / 2} y={cellH + 12} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
+                  <text
+                    x={cellW / 2}
+                    y={cellH + 12}
+                    textAnchor="middle"
+                    fontSize={9}
+                    fill="var(--ink-muted)"
+                  >
                     [{i}]
                   </text>
                 </g>
@@ -563,46 +799,101 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         return (
           <g key={o.id} className={popCls}>
             {o.label && (
-              <text x={p.x} y={p.y - gaugeH - 4} textAnchor="middle" fontSize={12} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y - gaugeH - 4}
+                textAnchor="middle"
+                fontSize={12}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <rect x={p.x - gaugeW / 2} y={p.y} width={gaugeW} height={gaugeH} rx={gaugeH / 2} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} />
-            <rect x={p.x - gaugeW / 2} y={p.y} width={pct * gaugeW} height={gaugeH} rx={gaugeH / 2} fill="var(--accent-teal)" />
-            <text x={p.x} y={p.y + gaugeH + 16} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
+            <rect
+              x={p.x - gaugeW / 2}
+              y={p.y}
+              width={gaugeW}
+              height={gaugeH}
+              rx={gaugeH / 2}
+              fill="var(--canvas-soft)"
+              stroke="var(--ink-faint)"
+              strokeWidth={1}
+            />
+            <rect
+              x={p.x - gaugeW / 2}
+              y={p.y}
+              width={pct * gaugeW}
+              height={gaugeH}
+              rx={gaugeH / 2}
+              fill="var(--accent-teal)"
+            />
+            <text
+              x={p.x}
+              y={p.y + gaugeH + 16}
+              textAnchor="middle"
+              fontSize={12}
+              fontWeight={700}
+              fill="var(--ink)"
+            >
               {numV} {o.unit ?? ""} ({Math.round(pct * 100)}%)
             </text>
           </g>
         );
       }
       case "bar_chart": {
-        const bars = o.bars && o.bars.length > 0 ? o.bars : [
-          { id: "b0", value: typeof v === "number" ? v : 50, label: dl }
-        ];
-        const maxVal = o.max_val ?? Math.max(10, ...bars.map((b) => Number(b.value) || 0));
+        const bars =
+          o.bars && o.bars.length > 0
+            ? o.bars
+            : [{ id: "b0", value: typeof v === "number" ? v : 50, label: dl }];
+        const maxVal =
+          o.max_val ?? Math.max(10, ...bars.map((b) => Number(b.value) || 0));
         const chartW = Math.min(320, bars.length * 44 + 40);
         const chartH = 120;
         const barW = Math.max(16, Math.floor((chartW - 40) / bars.length) - 8);
         const stepAct = frame.stepAction;
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - chartW / 2}, ${p.y - chartH / 2})`}>
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x - chartW / 2}, ${p.y - chartH / 2})`}
+          >
             {o.label && (
-              <text x={chartW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={chartW / 2}
+                y={-10}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <line x1={10} y1={chartH - 20} x2={chartW - 10} y2={chartH - 20} stroke="var(--ink-faint)" strokeWidth={2} />
+            <line
+              x1={10}
+              y1={chartH - 20}
+              x2={chartW - 10}
+              y2={chartH - 20}
+              stroke="var(--ink-faint)"
+              strokeWidth={2}
+            />
             {bars.map((b, i) => {
               const bVal = Number(b.value) || 0;
               const bH = Math.max(4, (bVal / maxVal) * (chartH - 40));
               const bx = 20 + i * (barW + 8);
               const by = chartH - 20 - bH;
-              const isTargeted = stepAct?.targets?.includes(o.id) && stepAct?.indices?.includes(i);
+              const isTargeted =
+                stepAct?.targets?.includes(o.id) &&
+                stepAct?.indices?.includes(i);
               let barColor = b.color ?? "var(--primary)";
               if (isTargeted) {
-                if (stepAct?.action === "swap") barColor = "var(--accent-purple)";
-                else if (stepAct?.state === "comparing") barColor = "var(--accent-orange)";
-                else if (stepAct?.state === "sorted") barColor = "var(--accent-green)";
+                if (stepAct?.action === "swap")
+                  barColor = "var(--accent-purple)";
+                else if (stepAct?.state === "comparing")
+                  barColor = "var(--accent-orange)";
+                else if (stepAct?.state === "sorted")
+                  barColor = "var(--accent-green)";
               }
               return (
                 <g key={b.id ?? i}>
@@ -617,10 +908,23 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                     strokeWidth={isTargeted ? 2 : 0}
                     style={{ transition: "all 0.25s ease" }}
                   />
-                  <text x={bx + barW / 2} y={by - 5} textAnchor="middle" fontSize={11} fontWeight={700} fill="var(--ink)">
+                  <text
+                    x={bx + barW / 2}
+                    y={by - 5}
+                    textAnchor="middle"
+                    fontSize={11}
+                    fontWeight={700}
+                    fill="var(--ink)"
+                  >
                     {bVal}
                   </text>
-                  <text x={bx + barW / 2} y={chartH - 6} textAnchor="middle" fontSize={10} fill="var(--ink-muted)">
+                  <text
+                    x={bx + barW / 2}
+                    y={chartH - 6}
+                    textAnchor="middle"
+                    fontSize={10}
+                    fill="var(--ink-muted)"
+                  >
                     {b.label ?? `[${i}]`}
                   </text>
                 </g>
@@ -637,26 +941,58 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         const gridW = headers.length * cellW;
         const gridH = (rows.length + 1) * cellH;
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - gridW / 2}, ${p.y - gridH / 2})`}>
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x - gridW / 2}, ${p.y - gridH / 2})`}
+          >
             {o.label && (
-              <text x={gridW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={gridW / 2}
+                y={-10}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
             {headers.map((h, ci) => (
               <g key={`h-${ci}`} transform={`translate(${ci * cellW}, 0)`}>
-                <rect width={cellW} height={cellH} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} />
-                <text x={cellW / 2} y={cellH / 2 + 4} textAnchor="middle" fontSize={11} fontWeight={700} fill="var(--ink)">
+                <rect
+                  width={cellW}
+                  height={cellH}
+                  fill="var(--canvas-soft)"
+                  stroke="var(--ink-faint)"
+                  strokeWidth={1}
+                />
+                <text
+                  x={cellW / 2}
+                  y={cellH / 2 + 4}
+                  textAnchor="middle"
+                  fontSize={11}
+                  fontWeight={700}
+                  fill="var(--ink)"
+                >
                   {h}
                 </text>
               </g>
             ))}
             {rows.map((row, ri) =>
               (Array.isArray(row) ? row : [row]).map((cell, ci) => {
-                const isHighlight = o.highlighted_cells?.some((hc) => hc.row === ri && hc.col === ci);
-                const highlightColor = o.highlighted_cells?.find((hc) => hc.row === ri && hc.col === ci)?.color ?? "var(--accent-teal)";
+                const isHighlight = o.highlighted_cells?.some(
+                  (hc) => hc.row === ri && hc.col === ci,
+                );
+                const highlightColor =
+                  o.highlighted_cells?.find(
+                    (hc) => hc.row === ri && hc.col === ci,
+                  )?.color ?? "var(--accent-teal)";
                 return (
-                  <g key={`r-${ri}-${ci}`} transform={`translate(${ci * cellW}, ${(ri + 1) * cellH})`}>
+                  <g
+                    key={`r-${ri}-${ci}`}
+                    transform={`translate(${ci * cellW}, ${(ri + 1) * cellH})`}
+                  >
                     <rect
                       width={cellW}
                       height={cellH}
@@ -665,27 +1001,48 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                       stroke="var(--ink-faint)"
                       strokeWidth={1}
                     />
-                    <text x={cellW / 2} y={cellH / 2 + 4} textAnchor="middle" fontSize={11} fill="var(--ink)">
+                    <text
+                      x={cellW / 2}
+                      y={cellH / 2 + 4}
+                      textAnchor="middle"
+                      fontSize={11}
+                      fill="var(--ink)"
+                    >
                       {String(cell)}
                     </text>
                   </g>
                 );
-              })
+              }),
             )}
           </g>
         );
       }
       case "stack_view": {
-        const items = runtime.objectItems[o.id] ?? (Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []));
+        const items = Array.isArray(o.items)
+          ? o.items
+          : v !== undefined && v !== 0
+            ? [v]
+            : [];
         const itemH = 22;
         const boxW = 80;
         const capacity = o.capacity ?? Math.max(4, items.length);
         const boxH = Math.max(80, capacity * itemH + 20);
         const safeY = Math.max(boxH / 2 + 28, p.y);
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${safeY - boxH / 2})`}>
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x - boxW / 2}, ${safeY - boxH / 2})`}
+          >
             {o.label && (
-              <text x={boxW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={boxW / 2}
+                y={-10}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
@@ -699,12 +1056,32 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               const iy = boxH - (i + 1) * itemH - 4;
               return (
                 <g key={i} transform={`translate(6, ${iy})`}>
-                  <rect width={boxW - 12} height={itemH - 3} rx={3} fill="var(--surface)" stroke="var(--primary)" strokeWidth={1} />
-                  <text x={(boxW - 12) / 2} y={(itemH - 3) / 2 + 4} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
+                  <rect
+                    width={boxW - 12}
+                    height={itemH - 3}
+                    rx={3}
+                    fill="var(--surface)"
+                    stroke="var(--primary)"
+                    strokeWidth={1}
+                  />
+                  <text
+                    x={(boxW - 12) / 2}
+                    y={(itemH - 3) / 2 + 4}
+                    textAnchor="middle"
+                    fontSize={11}
+                    fontWeight={600}
+                    fill="var(--ink)"
+                  >
                     {String(it)}
                   </text>
                   {i === items.length - 1 && (
-                    <text x={boxW + 6} y={(itemH - 3) / 2 + 4} fontSize={10} fontWeight={700} fill="var(--accent-orange)">
+                    <text
+                      x={boxW + 6}
+                      y={(itemH - 3) / 2 + 4}
+                      fontSize={10}
+                      fontWeight={700}
+                      fill="var(--accent-orange)"
+                    >
                       ← TOP
                     </text>
                   )}
@@ -715,31 +1092,88 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       }
       case "queue_view": {
-        const items = runtime.objectItems[o.id] ?? (Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []));
+        const items = Array.isArray(o.items)
+          ? o.items
+          : v !== undefined && v !== 0
+            ? [v]
+            : [];
         const itemW = 34;
         const boxH = 36;
         const capacity = o.capacity ?? Math.max(4, items.length);
         const boxW = Math.max(120, capacity * itemW + 20);
         const safeY = Math.max(boxH / 2 + 28, p.y);
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - boxW / 2}, ${safeY - boxH / 2})`}>
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x - boxW / 2}, ${safeY - boxH / 2})`}
+          >
             {o.label && (
-              <text x={boxW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={boxW / 2}
+                y={-10}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <line x1={0} y1={0} x2={boxW} y2={0} stroke="var(--primary)" strokeWidth={2} />
-            <line x1={0} y1={boxH} x2={boxW} y2={boxH} stroke="var(--primary)" strokeWidth={2} />
-            <text x={-6} y={boxH / 2 + 4} textAnchor="end" fontSize={9} fontWeight={700} fill="var(--accent-teal)">
+            <line
+              x1={0}
+              y1={0}
+              x2={boxW}
+              y2={0}
+              stroke="var(--primary)"
+              strokeWidth={2}
+            />
+            <line
+              x1={0}
+              y1={boxH}
+              x2={boxW}
+              y2={boxH}
+              stroke="var(--primary)"
+              strokeWidth={2}
+            />
+            <text
+              x={-6}
+              y={boxH / 2 + 4}
+              textAnchor="end"
+              fontSize={9}
+              fontWeight={700}
+              fill="var(--accent-teal)"
+            >
               FRONT
             </text>
-            <text x={boxW + 6} y={boxH / 2 + 4} textAnchor="start" fontSize={9} fontWeight={700} fill="var(--accent-teal)">
+            <text
+              x={boxW + 6}
+              y={boxH / 2 + 4}
+              textAnchor="start"
+              fontSize={9}
+              fontWeight={700}
+              fill="var(--accent-teal)"
+            >
               REAR
             </text>
             {items.map((it, i) => (
               <g key={i} transform={`translate(${10 + i * itemW}, 4)`}>
-                <rect width={itemW - 4} height={boxH - 8} rx={4} fill="var(--surface)" stroke="var(--accent-teal)" strokeWidth={1} />
-                <text x={(itemW - 4) / 2} y={(boxH - 8) / 2 + 4} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
+                <rect
+                  width={itemW - 4}
+                  height={boxH - 8}
+                  rx={4}
+                  fill="var(--surface)"
+                  stroke="var(--accent-teal)"
+                  strokeWidth={1}
+                />
+                <text
+                  x={(itemW - 4) / 2}
+                  y={(boxH - 8) / 2 + 4}
+                  textAnchor="middle"
+                  fontSize={11}
+                  fontWeight={600}
+                  fill="var(--ink)"
+                >
                   {String(it)}
                 </text>
               </g>
@@ -748,23 +1182,57 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       }
       case "tree_element": {
-        const valStr = o.value !== undefined ? String(o.value) : (dl || "Node");
+        const valStr = o.value !== undefined ? String(o.value) : dl || "Node";
         const leftPos = o.left && pos[o.left] ? pos[o.left] : null;
         const rightPos = o.right && pos[o.right] ? pos[o.right] : null;
         return (
           <g key={o.id} className={popCls}>
             {leftPos && (
-              <line x1={p.x} y1={p.y} x2={leftPos.x} y2={leftPos.y} stroke="var(--primary)" strokeWidth={2} />
+              <line
+                x1={p.x}
+                y1={p.y}
+                x2={leftPos.x}
+                y2={leftPos.y}
+                stroke="var(--primary)"
+                strokeWidth={2}
+              />
             )}
             {rightPos && (
-              <line x1={p.x} y1={p.y} x2={rightPos.x} y2={rightPos.y} stroke="var(--primary)" strokeWidth={2} />
+              <line
+                x1={p.x}
+                y1={p.y}
+                x2={rightPos.x}
+                y2={rightPos.y}
+                stroke="var(--primary)"
+                strokeWidth={2}
+              />
             )}
-            <circle cx={p.x} cy={p.y} r={20} fill="var(--surface)" stroke="var(--primary)" strokeWidth={2.5} />
-            <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize={12} fontWeight={700} fill="var(--ink)">
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={20}
+              fill="var(--surface)"
+              stroke="var(--primary)"
+              strokeWidth={2.5}
+            />
+            <text
+              x={p.x}
+              y={p.y + 5}
+              textAnchor="middle"
+              fontSize={12}
+              fontWeight={700}
+              fill="var(--ink)"
+            >
               {valStr}
             </text>
             {o.label && (
-              <text x={p.x} y={p.y - 24} textAnchor="middle" fontSize={11} fill="var(--ink-secondary)">
+              <text
+                x={p.x}
+                y={p.y - 24}
+                textAnchor="middle"
+                fontSize={11}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
@@ -774,16 +1242,31 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       case "bit_register": {
         const numVal = typeof v === "number" ? v : Number(v) || 0;
         const size = o.size === 16 ? 16 : 8;
-        const bits: number[] = Array.isArray(o.bits) && o.bits.length === size
-          ? o.bits
-          : Array.from({ length: size }, (_, i) => (numVal >> (size - 1 - i)) & 1);
+        const bits: number[] =
+          Array.isArray(o.bits) && o.bits.length === size
+            ? o.bits
+            : Array.from(
+                { length: size },
+                (_, i) => (numVal >> (size - 1 - i)) & 1,
+              );
         const cellW = 20;
         const cellH = 26;
         const regW = size * cellW;
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - regW / 2}, ${p.y - cellH / 2})`}>
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x - regW / 2}, ${p.y - cellH / 2})`}
+          >
             {o.label && (
-              <text x={regW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={regW / 2}
+                y={-10}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
@@ -806,15 +1289,30 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                 >
                   {b}
                 </text>
-                <text x={cellW / 2} y={cellH + 12} textAnchor="middle" fontSize={8} fill="var(--ink-muted)">
+                <text
+                  x={cellW / 2}
+                  y={cellH + 12}
+                  textAnchor="middle"
+                  fontSize={8}
+                  fill="var(--ink-muted)"
+                >
                   {size - 1 - i}
                 </text>
               </g>
             ))}
             {(o.show_decimal !== false || o.show_hex) && (
-              <text x={regW / 2} y={cellH + 28} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={regW / 2}
+                y={cellH + 28}
+                textAnchor="middle"
+                fontSize={11}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {o.show_decimal !== false ? `Dec: ${numVal} ` : ""}
-                {o.show_hex ? ` Hex: 0x${numVal.toString(16).toUpperCase()}` : ""}
+                {o.show_hex
+                  ? ` Hex: 0x${numVal.toString(16).toUpperCase()}`
+                  : ""}
               </text>
             )}
           </g>
@@ -825,14 +1323,39 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         const gateW = 60;
         const gateH = 40;
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - gateW / 2}, ${p.y - gateH / 2})`}>
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x - gateW / 2}, ${p.y - gateH / 2})`}
+          >
             {o.label && (
-              <text x={gateW / 2} y={-8} textAnchor="middle" fontSize={12} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={gateW / 2}
+                y={-8}
+                textAnchor="middle"
+                fontSize={12}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <rect width={gateW} height={gateH} rx={8} fill="var(--surface)" stroke="var(--primary)" strokeWidth={2} />
-            <text x={gateW / 2} y={gateH / 2 + 5} textAnchor="middle" fontSize={13} fontWeight={700} fill="var(--primary)">
+            <rect
+              width={gateW}
+              height={gateH}
+              rx={8}
+              fill="var(--surface)"
+              stroke="var(--primary)"
+              strokeWidth={2}
+            />
+            <text
+              x={gateW / 2}
+              y={gateH / 2 + 5}
+              textAnchor="middle"
+              fontSize={13}
+              fontWeight={700}
+              fill="var(--primary)"
+            >
               {gateType.toUpperCase()}
             </text>
           </g>
@@ -840,45 +1363,34 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       }
       case "pointer": {
         const ptrLabel = o.label ?? "ptr";
-        const targetId = o.target ?? o.target_id;
-        const targetObj = targetId ? spec.objects.find((x) => x.id === targetId) : undefined;
-        let finalPos = p;
-        let dir: "down" | "up" | "left" | "right" = "down";
-        if (targetObj) {
-          const tpos = pos[targetObj.id] ?? positionOf(targetObj, 0);
-          const tIdx = runtime.pointerIndices[o.id] ?? (typeof v === "number" ? v : (typeof o.target_index === "number" ? o.target_index : 0));
-          const resolved = resolveSemanticAnchor(targetObj, tpos, tIdx, o.anchor ?? "top-center");
-          finalPos = { x: resolved.x, y: resolved.y };
-          dir = resolved.direction;
-        }
-
         return (
-          <g key={o.id} className={popCls} transform={`translate(${finalPos.x}, ${finalPos.y})`}>
-            {dir === "down" ? (
-              <>
-                <path d="M 0,-2 L -5,-12 L 5,-12 Z" fill={o.color ?? "var(--accent-orange)"} />
-                <rect x={-14} y={-30} width={28} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
-                <text x={0} y={-17} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">
-                  {ptrLabel}
-                </text>
-              </>
-            ) : dir === "left" ? (
-              <>
-                <path d="M -2,0 L -12,-5 L -12,5 Z" fill={o.color ?? "var(--accent-orange)"} />
-                <rect x={-42} y={-9} width={30} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
-                <text x={-27} y={4} textAnchor="middle" fontSize={10} fontWeight={700} fill="#fff">
-                  {ptrLabel}
-                </text>
-              </>
-            ) : (
-              <>
-                <path d="M 0,2 L -5,12 L 5,12 Z" fill={o.color ?? "var(--accent-orange)"} />
-                <rect x={-14} y={12} width={28} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
-                <text x={0} y={25} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">
-                  {ptrLabel}
-                </text>
-              </>
-            )}
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x}, ${p.y})`}
+          >
+            <path
+              d="M 0,-10 L -6,-20 L 6,-20 Z"
+              fill={o.color ?? "var(--accent-orange)"}
+            />
+            <rect
+              x={-14}
+              y={-38}
+              width={28}
+              height={18}
+              rx={4}
+              fill={o.color ?? "var(--accent-orange)"}
+            />
+            <text
+              x={0}
+              y={-25}
+              textAnchor="middle"
+              fontSize={11}
+              fontWeight={700}
+              fill="#fff"
+            >
+              {ptrLabel}
+            </text>
           </g>
         );
       }
@@ -888,18 +1400,68 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         const cx = planeW / 2;
         const cy = planeH / 2;
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x - planeW / 2}, ${p.y - planeH / 2})`}>
+          <g
+            key={o.id}
+            className={popCls}
+            transform={`translate(${p.x - planeW / 2}, ${p.y - planeH / 2})`}
+          >
             {o.label && (
-              <text x={planeW / 2} y={-10} textAnchor="middle" fontSize={13} fontWeight={600} fill="var(--ink-secondary)">
+              <text
+                x={planeW / 2}
+                y={-10}
+                textAnchor="middle"
+                fontSize={13}
+                fontWeight={600}
+                fill="var(--ink-secondary)"
+              >
                 {dl}
               </text>
             )}
-            <rect width={planeW} height={planeH} fill="var(--canvas-soft)" stroke="var(--ink-faint)" strokeWidth={1} rx={6} />
-            <line x1={10} y1={cy} x2={planeW - 10} y2={cy} stroke="var(--ink-secondary)" strokeWidth={1.5} />
-            <line x1={cx} y1={planeH - 10} x2={cx} y2={10} stroke="var(--ink-secondary)" strokeWidth={1.5} />
-            <text x={planeW - 8} y={cy + 4} fontSize={11} fontWeight={700} fill="var(--ink)">x</text>
-            <text x={cx + 5} y={14} fontSize={11} fontWeight={700} fill="var(--ink)">y</text>
-            <text x={cx - 8} y={cy + 12} fontSize={9} fill="var(--ink-muted)">O</text>
+            <rect
+              width={planeW}
+              height={planeH}
+              fill="var(--canvas-soft)"
+              stroke="var(--ink-faint)"
+              strokeWidth={1}
+              rx={6}
+            />
+            <line
+              x1={10}
+              y1={cy}
+              x2={planeW - 10}
+              y2={cy}
+              stroke="var(--ink-secondary)"
+              strokeWidth={1.5}
+            />
+            <line
+              x1={cx}
+              y1={planeH - 10}
+              x2={cx}
+              y2={10}
+              stroke="var(--ink-secondary)"
+              strokeWidth={1.5}
+            />
+            <text
+              x={planeW - 8}
+              y={cy + 4}
+              fontSize={11}
+              fontWeight={700}
+              fill="var(--ink)"
+            >
+              x
+            </text>
+            <text
+              x={cx + 5}
+              y={14}
+              fontSize={11}
+              fontWeight={700}
+              fill="var(--ink)"
+            >
+              y
+            </text>
+            <text x={cx - 8} y={cy + 12} fontSize={9} fill="var(--ink-muted)">
+              O
+            </text>
           </g>
         );
       }
@@ -907,12 +1469,16 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         // M7.13A: node có drag khai trong spec → kéo được (engine đã kiểm quyền)
         const canDrag = draggable.has(o.id) && !busy && !editMode;
         const isDragged = dragging === o.id;
-        const editClickable = editMode && (editTool === "connect" || editTool === "delete");
+        const editClickable =
+          editMode && (editTool === "connect" || editTool === "delete");
         const isConnectFrom = connectFrom === o.id;
         const interactProps = canDrag
           ? {
-              style: { cursor: isDragged ? "grabbing" : "grab" } as React.CSSProperties,
-              onPointerDown: (e: React.PointerEvent<SVGGElement>) => onDragStart(e, o.id),
+              style: {
+                cursor: isDragged ? "grabbing" : "grab",
+              } as React.CSSProperties,
+              onPointerDown: (e: React.PointerEvent<SVGGElement>) =>
+                onDragStart(e, o.id),
               onPointerMove: onDragMove,
               onPointerUp: onDragEnd,
               onPointerCancel: onDragEnd,
@@ -924,9 +1490,10 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                  thẳng vào artifact là `DRAG_IS_PRESENTATION_ONLY` thay vì khai
                  khống một đường bàn phím không tồn tại.) */
               svgAffordance({
-                label: editTool === "connect"
-                  ? `Nối từ ${dl || o.id}`
-                  : `Xoá ${dl || o.id}`,
+                label:
+                  editTool === "connect"
+                    ? `Nối từ ${dl || o.id}`
+                    : `Xoá ${dl || o.id}`,
                 onAct: () => onObjectEditClick(o.id),
                 pressed: isConnectFrom,
               })
@@ -956,14 +1523,47 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           return (
             <g key={o.id} className={popCls} {...interactProps}>
               {isConnectFrom && (
-                <circle cx={p.x} cy={p.y} r={15} fill="transparent" stroke="var(--accent-orange)" strokeWidth={2.5} />
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={15}
+                  fill="transparent"
+                  stroke="var(--accent-orange)"
+                  strokeWidth={2.5}
+                />
               )}
               {canDrag && (
-                <circle cx={p.x} cy={p.y} r={13} fill={isDragged ? "var(--canvas-soft)" : "transparent"} stroke="var(--primary)" strokeWidth={1.5} strokeDasharray="3 3" opacity={0.7} />
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r={13}
+                  fill={isDragged ? "var(--canvas-soft)" : "transparent"}
+                  stroke="var(--primary)"
+                  strokeWidth={1.5}
+                  strokeDasharray="3 3"
+                  opacity={0.7}
+                />
               )}
-              {editClickable && <circle cx={p.x} cy={p.y} r={14} fill="transparent" />}
-              <circle cx={p.x} cy={p.y} r={r} fill={fill} stroke="#fff" strokeWidth={2} className={current ? "gen-glow" : undefined} />
-              <text x={labelX} y={labelY} textAnchor={labelAnchor} fontSize={15} fontWeight={700} fill="var(--ink)">
+              {editClickable && (
+                <circle cx={p.x} cy={p.y} r={14} fill="transparent" />
+              )}
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={r}
+                fill={fill}
+                stroke="#fff"
+                strokeWidth={2}
+                className={current ? "gen-glow" : undefined}
+              />
+              <text
+                x={labelX}
+                y={labelY}
+                textAnchor={labelAnchor}
+                fontSize={15}
+                fontWeight={700}
+                fill="var(--ink)"
+              >
                 {dl}
               </text>
             </g>
@@ -974,21 +1574,58 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         return (
           <g key={o.id} className={popCls} {...interactProps}>
             {isConnectFrom && (
-              <circle cx={p.x} cy={p.y} r={34} fill="transparent" stroke="var(--accent-orange)" strokeWidth={2.5} />
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={34}
+                fill="transparent"
+                stroke="var(--accent-orange)"
+                strokeWidth={2.5}
+              />
             )}
             {canDrag && (
-              <circle cx={p.x} cy={p.y} r={32} fill="transparent" stroke="var(--primary)" strokeWidth={1.5} strokeDasharray="4 4" opacity={0.6} />
+              <circle
+                cx={p.x}
+                cy={p.y}
+                r={32}
+                fill="transparent"
+                stroke="var(--primary)"
+                strokeWidth={1.5}
+                strokeDasharray="4 4"
+                opacity={0.6}
+              />
             )}
-            <circle cx={p.x} cy={p.y} r={26} fill="var(--surface)" stroke={color} strokeWidth={current ? 4 : 2.5} className={current ? "gen-glow" : undefined} />
+            <circle
+              cx={p.x}
+              cy={p.y}
+              r={26}
+              fill="var(--surface)"
+              stroke={color}
+              strokeWidth={current ? 4 : 2.5}
+              className={current ? "gen-glow" : undefined}
+            />
             {/* M8-PRE: hợp đồng bảo node dùng "label"; LLM đôi khi đặt "text" — nút
                 KHÔNG TÊN thì sơ đồ mất nghĩa, nên fallback thay vì bỏ trống.
                 M13 Task 11: label kỹ thuật (thiếu/=id/dạng snake-kebab) đi qua
                 displayLabel để sanitize trước khi rơi ra UI học sinh. */}
-            <text x={p.x} y={p.y - 1} textAnchor="middle" fontSize={11} fontWeight={600} fill="var(--ink)">
+            <text
+              x={p.x}
+              y={p.y - 1}
+              textAnchor="middle"
+              fontSize={11}
+              fontWeight={600}
+              fill="var(--ink)"
+            >
               {o.label ? dl : (o.text ?? dl)}
             </text>
             {o.node_type && (
-              <text x={p.x} y={p.y + 11} textAnchor="middle" fontSize={9} fill="var(--ink-muted)">
+              <text
+                x={p.x}
+                y={p.y + 11}
+                textAnchor="middle"
+                fontSize={9}
+                fill="var(--ink-muted)"
+              >
                 {o.node_type}
               </text>
             )}
@@ -997,7 +1634,16 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       }
       case "label":
         return (
-          <text key={o.id} className={popCls} x={p.x} y={p.y} textAnchor="middle" fontSize={14} fontWeight={current ? 700 : 400} fill="var(--ink-secondary)">
+          <text
+            key={o.id}
+            className={popCls}
+            x={p.x}
+            y={p.y}
+            textAnchor="middle"
+            fontSize={14}
+            fontWeight={current ? 700 : 400}
+            fill="var(--ink-secondary)"
+          >
             {dl}
           </text>
         );
@@ -1016,9 +1662,15 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       !STRUCTURAL_TYPES.has(o.type) &&
       isObjectRenderable(frame, o),
   );
-  const spatialCompleted = spatialVisible.filter((o) => objectRole(state, o.id) !== "current");
-  const spatialCurrent = spatialVisible.filter((o) => objectRole(state, o.id) === "current");
-  const labelsVisible = spec.objects.filter((o) => o.type === "label" && isObjectRenderable(frame, o));
+  const spatialCompleted = spatialVisible.filter(
+    (o) => objectRole(state, o.id) !== "current",
+  );
+  const spatialCurrent = spatialVisible.filter(
+    (o) => objectRole(state, o.id) === "current",
+  );
+  const labelsVisible = spec.objects.filter(
+    (o) => o.type === "label" && isObjectRenderable(frame, o),
+  );
 
   return (
     <div className="stack" style={{ gap: "var(--sp-md)" }}>
@@ -1053,7 +1705,11 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                đứng liền nhóm; muốn tách thì tách bằng NHÓM, không bằng lề. */
             className={`btn-utility${autoFit ? "" : " is-active"}`}
             onClick={() => setAutoFit(!autoFit)}
-            title={autoFit ? "Đang tự thu vừa hình — bấm để về khung mặc định" : "Bấm để tự thu vừa hình"}
+            title={
+              autoFit
+                ? "Đang tự thu vừa hình — bấm để về khung mặc định"
+                : "Bấm để tự thu vừa hình"
+            }
           >
             {autoFit ? "Khung mặc định" : "Thu vừa hình"}
           </button>
@@ -1077,17 +1733,41 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           ref={svgRef}
           viewBox={`${vb.x} ${vb.y} ${vb.w} ${vb.h}`}
           width="100%"
-          style={{ maxWidth: VW, display: "block", margin: "0 auto", cursor: editMode && editTool === "add_node" ? "crosshair" : undefined }}
+          style={{
+            maxWidth: VW,
+            display: "block",
+            margin: "0 auto",
+            cursor:
+              editMode && editTool === "add_node" ? "crosshair" : undefined,
+          }}
           onClick={onCanvasClick}
         >
           {/* M8-PRE (S2): đầu mũi tên cho edge CÓ CHIỀU (luồng dữ liệu). Hai biến thể
               màu vì marker không kế thừa stroke của line. userSpaceOnUse → kích thước
               mũi tên không đổi theo strokeWidth. */}
           <defs>
-            <marker id="gen-arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth={12} markerHeight={12} orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <marker
+              id="gen-arrow"
+              viewBox="0 0 10 10"
+              refX="10"
+              refY="5"
+              markerWidth={12}
+              markerHeight={12}
+              orient="auto-start-reverse"
+              markerUnits="userSpaceOnUse"
+            >
               <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--ink-secondary)" />
             </marker>
-            <marker id="gen-arrow-current" viewBox="0 0 10 10" refX="10" refY="5" markerWidth={12} markerHeight={12} orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <marker
+              id="gen-arrow-current"
+              viewBox="0 0 10 10"
+              refX="10"
+              refY="5"
+              markerWidth={12}
+              markerHeight={12}
+              orient="auto-start-reverse"
+              markerUnits="userSpaceOnUse"
+            >
               <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--primary)" />
             </marker>
           </defs>
@@ -1116,9 +1796,14 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               return (
                 <line
                   key={`rule-${ri}-${inputId}`}
-                  x1={s.x} y1={s.y} x2={t.x} y2={t.y}
-                  stroke="var(--ink-faint)" strokeWidth={1.5}
-                  strokeDasharray="4 5" opacity={0.7}
+                  x1={s.x}
+                  y1={s.y}
+                  x2={t.x}
+                  y2={t.y}
+                  stroke="var(--ink-faint)"
+                  strokeWidth={1.5}
+                  strokeDasharray="4 5"
+                  opacity={0.7}
                 >
                   <title>{`${displayLabel(spec, inputId)} → ${displayLabel(spec, r.target)}`}</title>
                 </line>
@@ -1129,13 +1814,18 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           {spec.rules.map((r, ri) => {
             const t = pos[r.target];
             if (!t || !(r.inputs ?? []).some((i) => pos[i])) return null;
-            const label = r.type === "boolean" ? (r.op ?? "").toUpperCase() : "Σ";
+            const label =
+              r.type === "boolean" ? (r.op ?? "").toUpperCase() : "Σ";
             if (!label) return null;
             return (
               <text
                 key={`op-${ri}`}
-                x={t.x} y={t.y - 34} textAnchor="middle"
-                fontSize={11} fontWeight={600} fill="var(--ink-muted)"
+                x={t.x}
+                y={t.y - 34}
+                textAnchor="middle"
+                fontSize={11}
+                fontWeight={600}
+                fill="var(--ink-muted)"
               >
                 {label}
               </text>
@@ -1153,7 +1843,11 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
               // M8-PRE (S2): edge có chiều → lùi điểm cuối ra khỏi hình đích để
               // mũi tên không bị nút (r=26) che; điểm hình học nhỏ hơn nên lùi ít.
               const target = spec.objects.find((t) => t.id === o.to);
-              const pad = o.directed ? (target?.type === "node" && target.node_type ? 28 : 16) : 0;
+              const pad = o.directed
+                ? target?.type === "node" && target.node_type
+                  ? 28
+                  : 16
+                : 0;
               const ex = b.x - ((b.x - a.x) / len) * pad;
               const ey = b.y - ((b.y - a.y) / len) * pad;
               const drawLen = Math.hypot(ex - a.x, ey - a.y) || 1;
@@ -1175,9 +1869,22 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
                     stroke={current ? "var(--primary)" : "var(--ink-secondary)"}
                     strokeWidth={current ? 4 : 2.5}
                     strokeLinecap={o.directed ? "butt" : "round"}
-                    markerEnd={o.directed ? (current ? "url(#gen-arrow-current)" : "url(#gen-arrow)") : undefined}
+                    markerEnd={
+                      o.directed
+                        ? current
+                          ? "url(#gen-arrow-current)"
+                          : "url(#gen-arrow)"
+                        : undefined
+                    }
                     className={current ? "gen-edge-draw" : undefined}
-                    style={current ? ({ ["--len" as string]: drawLen, strokeDasharray: drawLen } as React.CSSProperties) : undefined}
+                    style={
+                      current
+                        ? ({
+                            ["--len" as string]: drawLen,
+                            strokeDasharray: drawLen,
+                          } as React.CSSProperties)
+                        : undefined
+                    }
                   />
                   {deletable && (
                     <line
@@ -1212,20 +1919,33 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
           {/* 2. Họ cấu trúc/nội dung (M7.12): luồng tài liệu */}
           {structuralEls}
           {/* 3. Object spatial ĐÃ HIỆN (completed) */}
-          {spatialCompleted.map((o) => renderObject(o, objectRole(state, o.id)))}
+          {spatialCompleted.map((o) =>
+            renderObject(o, objectRole(state, o.id)),
+          )}
           {/* 4. Object spatial VỪA TẠO (current) — nổi trên completed */}
           {spatialCurrent.map((o) => renderObject(o, objectRole(state, o.id)))}
           {/* 5. Nhãn chữ đứng riêng — trên node/edge, không bị che */}
           {labelsVisible.map((o) => renderObject(o, objectRole(state, o.id)))}
           {/* 6. Thực thể di chuyển (packet) trên cùng */}
           {spec.objects
-            .filter((o) => o.type === "moving_entity" && isObjectRenderable(frame, o))
+            .filter(
+              (o) => o.type === "moving_entity" && isObjectRenderable(frame, o),
+            )
             .map((o) => {
               const nodeId = frame.entityPos[o.id];
               const np = nodeId ? pos[nodeId] : undefined;
               if (!np) return null;
               return (
-                <circle key={o.id} cx={np.x} cy={np.y - 38} r={9} fill="var(--accent-pink)" stroke="#fff" strokeWidth={2} style={{ transition: "cx 0.4s ease, cy 0.4s ease" }} />
+                <circle
+                  key={o.id}
+                  cx={np.x}
+                  cy={np.y - 38}
+                  r={9}
+                  fill="var(--accent-pink)"
+                  stroke="#fff"
+                  strokeWidth={2}
+                  style={{ transition: "cx 0.4s ease, cy 0.4s ease" }}
+                />
               );
             })}
         </svg>
@@ -1233,7 +1953,9 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       {/* M7.14: InteractionFeedback — dẫn xuất của RULE engine, không phải chat.
           (SHELL-N) KHÔNG phải thuyết minh bước: đây là phản hồi cho THAO TÁC vừa
           rồi, một vai trò khác, nên nó giữ lớp riêng thay vì mượn `.narration-bar`. */}
-      {state.feedback && <div className="feedback-bar">{state.feedback.message}</div>}
+      {state.feedback && (
+        <div className="feedback-bar">{state.feedback.message}</div>
+      )}
       {/* (SHELL-N) THUYẾT MINH BƯỚC đã về khe của shell (`narrate` ở `index.ts`).
           Còn lại ở đây là HƯỚNG DẪN THAO TÁC cho cảnh KHÔNG có timeline — vai trò
           khác (affordance, không phải tường thuật) và chỉ đúng khi KHÔNG ở chế độ
@@ -1293,7 +2015,13 @@ function chipName(spec: SimulationSpec, o: SpecObject): string {
   return displayLabel(spec, o.id);
 }
 
-function ObjChips({ spec, objs }: { spec: SimulationSpec; objs: SpecObject[] }) {
+function ObjChips({
+  spec,
+  objs,
+}: {
+  spec: SimulationSpec;
+  objs: SpecObject[];
+}) {
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginTop: 4 }}>
       {objs.map((o) => (
@@ -1313,7 +2041,14 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
   const sliders = spec.objects.filter((o) => o.type === "slider");
   const buttons = spec.interactions.filter((it) => it.type === "button_action");
   const withValue = spec.objects.filter(
-    (o) => o.type !== "slider" && (o.value !== undefined || o.type === "lamp" || o.type === "value_box" || o.type === "color_swatch" || o.type === "metric_gauge" || o.type === "bit_register")
+    (o) =>
+      o.type !== "slider" &&
+      (o.value !== undefined ||
+        o.type === "lamp" ||
+        o.type === "value_box" ||
+        o.type === "color_swatch" ||
+        o.type === "metric_gauge" ||
+        o.type === "bit_register"),
   );
 
   return (
@@ -1321,7 +2056,14 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
       {buttons.length > 0 && (
         <section className="card" style={{ padding: "var(--sp-md)" }}>
           <span className="eyebrow">THAO TÁC / HÀNH ĐỘNG</span>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: "var(--sp-sm)" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 8,
+              marginTop: "var(--sp-sm)",
+            }}
+          >
             {buttons.map((it, i) => (
               <button
                 key={i}
@@ -1338,14 +2080,29 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
       {sliders.length > 0 && (
         <section className="card" style={{ padding: "var(--sp-md)" }}>
           <span className="eyebrow">ĐIỀU KHIỂN THAM SỐ</span>
-          <div className="stack" style={{ gap: "var(--sp-sm)", marginTop: "var(--sp-sm)" }}>
+          <div
+            className="stack"
+            style={{ gap: "var(--sp-sm)", marginTop: "var(--sp-sm)" }}
+          >
             {sliders.map((s) => {
               const curVal = Number(values[s.id] ?? s.min ?? 0);
               return (
-                <div key={s.id} style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, fontWeight: 600 }}>
+                <div
+                  key={s.id}
+                  style={{ display: "flex", flexDirection: "column", gap: 4 }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      fontSize: 13,
+                      fontWeight: 600,
+                    }}
+                  >
                     <span>{displayLabel(spec, s.id)}</span>
-                    <span style={{ color: "var(--primary)" }}>{curVal} {s.unit ?? ""}</span>
+                    <span style={{ color: "var(--primary)" }}>
+                      {curVal} {s.unit ?? ""}
+                    </span>
                   </div>
                   <input
                     type="range"
@@ -1353,7 +2110,13 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
                     max={s.max ?? 100}
                     step={s.step ?? 1}
                     value={curVal}
-                    onChange={(e) => dispatch({ type: "set_param", name: s.id, value: Number(e.target.value) })}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "set_param",
+                        name: s.id,
+                        value: Number(e.target.value),
+                      })
+                    }
                     style={{ width: "100%", cursor: "pointer" }}
                   />
                 </div>
@@ -1366,10 +2129,18 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
       <section className="card" style={{ padding: "var(--sp-md)" }}>
         <span className="eyebrow">ĐỐI TƯỢNG</span>
         {progressive ? (
-          <div className="stack" style={{ gap: "var(--sp-sm)", marginTop: "var(--sp-sm)" }}>
+          <div
+            className="stack"
+            style={{ gap: "var(--sp-sm)", marginTop: "var(--sp-sm)" }}
+          >
             {groups.current.length > 0 && (
               <div>
-                <span className="obj-group-label" style={{ color: "var(--primary)" }}>Vừa tạo</span>
+                <span
+                  className="obj-group-label"
+                  style={{ color: "var(--primary)" }}
+                >
+                  Vừa tạo
+                </span>
                 <ObjChips spec={spec} objs={groups.current} />
               </div>
             )}
@@ -1381,7 +2152,12 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
             )}
             {groups.hidden.length > 0 && (
               <div>
-                <span className="obj-group-label" style={{ color: "var(--ink-faint)" }}>Chưa xuất hiện</span>
+                <span
+                  className="obj-group-label"
+                  style={{ color: "var(--ink-faint)" }}
+                >
+                  Chưa xuất hiện
+                </span>
                 <ObjChips spec={spec} objs={groups.hidden} />
               </div>
             )}
@@ -1389,7 +2165,11 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
         ) : withValue.length > 0 ? (
           <div className="analysis-grid" style={{ marginTop: "var(--sp-sm)" }}>
             {withValue.map((o) => (
-              <FragmentRow key={o.id} label={displayLabel(spec, o.id)} value={values[o.id] ?? 0} />
+              <FragmentRow
+                key={o.id}
+                label={displayLabel(spec, o.id)}
+                value={values[o.id] ?? 0}
+              />
             ))}
           </div>
         ) : (
@@ -1402,19 +2182,26 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
       {spec.rules.length > 0 && (
         <section className="card" style={{ padding: "var(--sp-md)" }}>
           <span className="eyebrow">QUY TẮC</span>
-          <ul style={{ margin: "var(--sp-xs) 0 0 var(--sp-md)", fontSize: 14, color: "var(--ink-secondary)" }}>
+          <ul
+            style={{
+              margin: "var(--sp-xs) 0 0 var(--sp-md)",
+              fontSize: 14,
+              color: "var(--ink-secondary)",
+            }}
+          >
             {spec.rules.map((r, i) => {
               const targetLabel = displayLabel(spec, r.target);
-              const inputLabels = (r.inputs ?? []).map((id) => displayLabel(spec, id));
+              const inputLabels = (r.inputs ?? []).map((id) =>
+                displayLabel(spec, id),
+              );
               return (
                 <li key={i}>
-                  {targetLabel} = {
-                    r.type === "boolean"
-                      ? `${r.op?.toUpperCase()}(${inputLabels.join(", ")})`
-                      : r.type === "formula"
-                        ? `${r.expression}`
-                        : `Σ(${inputLabels.join(", ")} × trọng số)`
-                  }
+                  {targetLabel} ={" "}
+                  {r.type === "boolean"
+                    ? `${r.op?.toUpperCase()}(${inputLabels.join(", ")})`
+                    : r.type === "formula"
+                      ? `${r.expression}`
+                      : `Σ(${inputLabels.join(", ")} × trọng số)`}
                 </li>
               );
             })}
@@ -1435,7 +2222,13 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
   );
 }
 
-function FragmentRow({ label, value }: { label: string; value: number | string }) {
+function FragmentRow({
+  label,
+  value,
+}: {
+  label: string;
+  value: number | string;
+}) {
   const isColor = typeof value === "string" && value.startsWith("#");
   return (
     <>

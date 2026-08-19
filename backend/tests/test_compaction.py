@@ -92,11 +92,14 @@ def test_label_trung_nhung_DANG_BI_THAM_CHIEU_thi_khong_go():
 
 
 def test_canh_TRONG_han_muc_khong_bi_dung_toi():
-    """0 bề mặt regression: label trùng nhưng cảnh chưa vượt hạn mức → giữ nguyên."""
-    raw = _spec([*NODES[:2], {"id": "lb_gv", "type": "label", "label": "Giáo viên", "x": 5, "y": 5}])
+    """0 bề mặt regression: label CÓ NGHĨA RIÊNG nhưng cảnh chưa vượt hạn mức → giữ nguyên.
+
+    Lưu ý: G4 Content Hygiene bắt label trùng với label inline của component,
+    nên test phải dùng label KHÔNG TRÙNG (có nội dung riêng)."""
+    raw = _spec([*NODES[:2], {"id": "lb_note", "type": "label", "label": "Ghi chú hệ thống", "x": 5, "y": 5}])
     cfg, err = validate_generic_config(raw)
     assert err is None
-    assert [o["id"] for o in cfg["objects"]] == ["gv", "nhap", "lb_gv"]
+    assert [o["id"] for o in cfg["objects"]] == ["gv", "nhap", "lb_note"]
 
 
 def test_nen_rut_id_khoi_reveal_step_va_bo_step_rong():

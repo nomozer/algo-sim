@@ -41,7 +41,11 @@ export type ObjectType = (typeof OBJECT_TYPES)[number];
 /** Type có thể CHỨA object con (qua parent). */
 export const CONTAINER_TYPES = new Set<string>(["container", "group"]);
 /** Type mang nội dung chữ dài trong "text". */
-export const TEXT_CONTENT_TYPES = new Set<string>(["heading", "paragraph", "text"]);
+export const TEXT_CONTENT_TYPES = new Set<string>([
+  "heading",
+  "paragraph",
+  "text",
+]);
 /** Type thuộc họ cấu trúc/nội dung (M7.12) — render theo luồng tài liệu. */
 export const STRUCTURAL_TYPES = new Set<string>([
   "container",
@@ -57,17 +61,30 @@ export type RuleType = (typeof RULE_TYPES)[number];
 export const BOOL_OPS = ["and", "or", "not", "xor"] as const;
 export type BoolOp = (typeof BOOL_OPS)[number];
 
-export const INTERACTION_TYPES = ["toggle", "drag", "set_param", "button_action"] as const;
+export const INTERACTION_TYPES = [
+  "toggle",
+  "drag",
+  "set_param",
+  "button_action",
+] as const;
 export type InteractionType = (typeof INTERACTION_TYPES)[number];
 
 /** Type được phép làm target của drag (M7.13A) — v1 chỉ node; song song manifest. */
 export const DRAG_TARGET_TYPES = new Set<string>(["node"]);
 
-export const PROCESS_TYPES = ["move_along_path", "reveal_sequence", "step_sequence"] as const;
+export const PROCESS_TYPES = [
+  "move_along_path",
+  "reveal_sequence",
+  "step_sequence",
+] as const;
 export type ProcessType = (typeof PROCESS_TYPES)[number];
 
 /** Họ process DIỄN BIẾN theo thời gian — song song manifest.temporal_process_types(). */
-export const TEMPORAL_PROCESS_TYPES = new Set<string>(["move_along_path", "reveal_sequence", "step_sequence"]);
+export const TEMPORAL_PROCESS_TYPES = new Set<string>([
+  "move_along_path",
+  "reveal_sequence",
+  "step_sequence",
+]);
 
 export interface BarItem {
   id?: string;
@@ -251,10 +268,7 @@ export class GenericExecutionError extends Error {
     | "unresolved_dependency_after_bound"
     | "non_finite_numeric_value";
 
-  constructor(
-    code: GenericExecutionError["code"],
-    detail: string,
-  ) {
+  constructor(code: GenericExecutionError["code"], detail: string) {
     super(`${code}: ${detail}`);
     this.name = "GenericExecutionError";
     this.code = code;
@@ -277,7 +291,10 @@ export function initialBase(spec: SimulationSpec): Record<string, any> {
       base[o.id] = o.min ?? 0;
     } else if (o.type === "bit_register" && Array.isArray(o.bits)) {
       const bits = o.bits;
-      base[o.id] = bits.reduce((acc, b, idx) => acc + Number(b) * Math.pow(2, bits.length - 1 - idx), 0);
+      base[o.id] = bits.reduce(
+        (acc, b, idx) => acc + Number(b) * Math.pow(2, bits.length - 1 - idx),
+        0,
+      );
     }
   }
   return base;
@@ -304,7 +321,10 @@ export function evaluateSafeExpression(
   function consume(char?: string): string {
     peek();
     if (char && str[pos] !== char) {
-      throw new GenericExecutionError("invalid_numeric_source", `Cần ký tự '${char}', nhưng gặp '${str[pos]}'`);
+      throw new GenericExecutionError(
+        "invalid_numeric_source",
+        `Cần ký tự '${char}', nhưng gặp '${str[pos]}'`,
+      );
     }
     return str[pos++];
   }
@@ -452,9 +472,18 @@ export function evaluateSafeExpression(
         consume(")");
         switch (ident) {
           case "rgb_to_hex": {
-            const r = Math.max(0, Math.min(255, Math.round(Number(args[0] ?? 0))));
-            const g = Math.max(0, Math.min(255, Math.round(Number(args[1] ?? 0))));
-            const b = Math.max(0, Math.min(255, Math.round(Number(args[2] ?? 0))));
+            const r = Math.max(
+              0,
+              Math.min(255, Math.round(Number(args[0] ?? 0))),
+            );
+            const g = Math.max(
+              0,
+              Math.min(255, Math.round(Number(args[1] ?? 0))),
+            );
+            const b = Math.max(
+              0,
+              Math.min(255, Math.round(Number(args[2] ?? 0))),
+            );
             return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
           }
           case "clamp": {
@@ -480,42 +509,69 @@ export function evaluateSafeExpression(
           case "bit_and":
             return (Number(args[0] ?? 0) | 0) & (Number(args[1] ?? 0) | 0);
           case "bit_or":
-            return (Number(args[0] ?? 0) | 0) | (Number(args[1] ?? 0) | 0);
+            return Number(args[0] ?? 0) | 0 | (Number(args[1] ?? 0) | 0);
           case "bit_xor":
             return (Number(args[0] ?? 0) | 0) ^ (Number(args[1] ?? 0) | 0);
           case "bit_not":
-            return (~(Number(args[0] ?? 0) | 0)) & ((1 << (Number(args[1] ?? 8) | 0)) - 1);
+            return (
+              ~(Number(args[0] ?? 0) | 0) &
+              ((1 << (Number(args[1] ?? 8) | 0)) - 1)
+            );
           case "shift_left":
             return (Number(args[0] ?? 0) | 0) << (Number(args[1] ?? 0) | 0);
           case "shift_right":
             return (Number(args[0] ?? 0) | 0) >> (Number(args[1] ?? 0) | 0);
           case "bin":
-            return ((Number(args[0] ?? 0) | 0) & ((1 << (Number(args[1] ?? 8) | 0)) - 1)).toString(2).padStart(Number(args[1] ?? 8), "0");
+            return (
+              (Number(args[0] ?? 0) | 0) &
+              ((1 << (Number(args[1] ?? 8) | 0)) - 1)
+            )
+              .toString(2)
+              .padStart(Number(args[1] ?? 8), "0");
           case "hex":
             return "0x" + Number(args[0] ?? 0).toString(16);
           case "dec":
             return parseInt(String(args[0] ?? "0"), 2);
           case "sum":
-            return Array.isArray(args[0]) ? args[0].reduce((s, x) => s + Number(x), 0) : Number(args[0] ?? 0);
+            return Array.isArray(args[0])
+              ? args[0].reduce((s, x) => s + Number(x), 0)
+              : Number(args[0] ?? 0);
           case "len":
-            return Array.isArray(args[0]) || typeof args[0] === "string" ? args[0].length : 0;
+            return Array.isArray(args[0]) || typeof args[0] === "string"
+              ? args[0].length
+              : 0;
           case "get":
-            return Array.isArray(args[0]) && args[0][Number(args[1] ?? 0)] !== undefined ? args[0][Number(args[1] ?? 0)] : 0;
+            return Array.isArray(args[0]) &&
+              args[0][Number(args[1] ?? 0)] !== undefined
+              ? args[0][Number(args[1] ?? 0)]
+              : 0;
           default:
-            throw new GenericExecutionError("invalid_numeric_source", `Hàm không hỗ trợ: "${ident}"`);
+            throw new GenericExecutionError(
+              "invalid_numeric_source",
+              `Hàm không hỗ trợ: "${ident}"`,
+            );
         }
       }
       if (ident in env) {
         return env[ident];
       }
-      throw new GenericExecutionError("invalid_numeric_source", `Biến chưa có giá trị hoặc không xác định: "${ident}"`);
+      throw new GenericExecutionError(
+        "invalid_numeric_source",
+        `Biến chưa có giá trị hoặc không xác định: "${ident}"`,
+      );
     }
-    throw new GenericExecutionError("invalid_numeric_source", `Ký tự không hợp lệ tại vị trí ${pos}: "${str[pos]}"`);
+    throw new GenericExecutionError(
+      "invalid_numeric_source",
+      `Ký tự không hợp lệ tại vị trí ${pos}: "${str[pos]}"`,
+    );
   }
 
   const res = parseExpression();
   if (pos < str.length) {
-    throw new GenericExecutionError("invalid_numeric_source", `Ký tự thừa sau biểu thức: "${str.slice(pos)}"`);
+    throw new GenericExecutionError(
+      "invalid_numeric_source",
+      `Ký tự thừa sau biểu thức: "${str.slice(pos)}"`,
+    );
   }
   return res;
 }
@@ -528,7 +584,10 @@ function evalRule(rule: SpecRule, values: Record<string, any>): any {
   const inputs: any[] = [];
   for (const id of rule.inputs ?? []) {
     if (!(id in values)) {
-      throw new GenericExecutionError("invalid_numeric_source", `input "${id}" chưa có giá trị`);
+      throw new GenericExecutionError(
+        "invalid_numeric_source",
+        `input "${id}" chưa có giá trị`,
+      );
     }
     inputs.push(values[id]);
   }
@@ -557,11 +616,17 @@ function evalRule(rule: SpecRule, values: Record<string, any>): any {
   // weighted_sum
   const weights = rule.weights ?? [];
   if (weights.length !== inputs.length) {
-    throw new GenericExecutionError("missing_weight", `rule "${rule.target}" thiếu weight`);
+    throw new GenericExecutionError(
+      "missing_weight",
+      `rule "${rule.target}" thiếu weight`,
+    );
   }
   const result = inputs.reduce((sum, v, i) => sum + Number(v) * weights[i], 0);
   if (!Number.isFinite(result)) {
-    throw new GenericExecutionError("non_finite_numeric_value", `rule "${rule.target}" ra ${result}`);
+    throw new GenericExecutionError(
+      "non_finite_numeric_value",
+      `rule "${rule.target}" ra ${result}`,
+    );
   }
   return result;
 }
@@ -569,7 +634,10 @@ function evalRule(rule: SpecRule, values: Record<string, any>): any {
 /**
  * Giá trị đầy đủ = base + giá trị dẫn xuất, áp rule đến khi ổn định.
  */
-export function valuesOf(spec: SimulationSpec, base: Record<string, any>): Record<string, any> {
+export function valuesOf(
+  spec: SimulationSpec,
+  base: Record<string, any>,
+): Record<string, any> {
   const values: Record<string, any> = { ...base };
   const rules = spec.rules;
   let pending: SpecRule[] = [...rules];
@@ -598,128 +666,41 @@ export function valuesOf(spec: SimulationSpec, base: Record<string, any>): Recor
     }
   }
   if (pending.length > 0) {
-    throw new GenericExecutionError("unresolved_dependency_after_bound", "vượt bound evaluation");
+    throw new GenericExecutionError(
+      "unresolved_dependency_after_bound",
+      "vượt bound evaluation",
+    );
   }
   return values;
 }
 
-export interface RuntimeAccumulatedState {
-  values: Record<string, any>;
-  objectItems: Record<string, any[]>;
-  pointerIndices: Record<string, number>;
-  activeTargets: Set<string>;
-}
-
-/**
- * Tích lũy trạng thái động từ đầu timeline đến vị trí cursor hiện hành (G3, G7 Reactive Engine).
- * Cập nhật tức thời: giá trị biến (value_box), phần tử ngăn xếp/hàng đợi (stack/queue), vị trí con trỏ (pointer).
- */
-export function computeRuntimeStateAtCursor(spec: SimulationSpec, state: GenericState): RuntimeAccumulatedState {
-  const baseValues = valuesOf(spec, state.base);
-  const values: Record<string, any> = { ...baseValues };
-  const objectItems: Record<string, any[]> = {};
-  const pointerIndices: Record<string, number> = {};
-  const activeTargets = new Set<string>();
-
-  // 1. Khởi tạo items cho array_strip, stack_view, queue_view
-  for (const o of spec.objects) {
-    if (Array.isArray(o.items)) {
-      objectItems[o.id] = [...o.items];
-    } else if (typeof o.text === "string" && o.type === "array_strip") {
-      objectItems[o.id] = Array.from(o.text);
-    } else if (o.type === "array_strip" && o.value !== undefined && o.value !== 0) {
-      objectItems[o.id] = [o.value];
-    } else {
-      objectItems[o.id] = [];
-    }
-
-    if (o.type === "pointer") {
-      pointerIndices[o.id] = typeof o.target_index === "number" ? o.target_index : (typeof o.index === "number" ? o.index : 0);
-    }
-  }
-
-  const cursor = Math.max(0, Math.min(state.cursor, state.timeline.length - 1));
-  for (let stepIdx = 0; stepIdx <= cursor; stepIdx++) {
-    const frame = state.timeline[stepIdx];
-    if (!frame || !frame.stepAction) continue;
-    const act = frame.stepAction;
-
-    // Active targets
-    if (stepIdx === cursor && act.targets) {
-      act.targets.forEach((t) => activeTargets.add(t));
-    }
-
-    // move_pointer
-    if (act.action === "move_pointer" || act.pointer_id) {
-      const ptrId = act.pointer_id ?? act.targets?.[0];
-      const targetIdx = typeof act.to_index === "number" ? act.to_index : (typeof act.index === "number" ? act.index : 0);
-      if (ptrId) {
-        pointerIndices[ptrId] = targetIdx;
-        values[ptrId] = targetIdx;
-      }
-      if (act.value !== undefined) {
-        for (const o of spec.objects) {
-          if (o.type === "value_box" && (o.label?.toLowerCase().includes("ký tự") || o.id.toLowerCase().includes("char"))) {
-            values[o.id] = act.value;
-          }
-        }
-      }
-    }
-
-    // push
-    if (act.action === "push") {
-      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "stack_view")?.id;
-      if (targetId && objectItems[targetId]) {
-        objectItems[targetId].push(act.value);
-      }
-    }
-
-    // pop
-    if (act.action === "pop") {
-      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "stack_view")?.id;
-      if (targetId && objectItems[targetId] && objectItems[targetId].length > 0) {
-        objectItems[targetId].pop();
-      }
-    }
-
-    // enqueue
-    if (act.action === "enqueue") {
-      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "queue_view")?.id;
-      if (targetId && objectItems[targetId]) {
-        objectItems[targetId].push(act.value);
-      }
-    }
-
-    // dequeue
-    if (act.action === "dequeue") {
-      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "queue_view")?.id;
-      if (targetId && objectItems[targetId] && objectItems[targetId].length > 0) {
-        objectItems[targetId].shift();
-      }
-    }
-
-    // value / highlight / assign direct state updates
-    if (act.action === "value" || act.action === "highlight" || act.action === "assign") {
-      if (act.targets && act.value !== undefined) {
-        act.targets.forEach((t) => {
-          values[t] = act.value;
-        });
-      }
-    }
-  }
-
-  return { values, objectItems, pointerIndices, activeTargets };
-}
-
 /** M13 workstream C: tên hiển thị learner-facing — id nội bộ KHÔNG BAO GIỜ là nhãn chính. */
 const TYPE_DISPLAY_VI: Record<string, string> = {
-  switch: "Công tắc", lamp: "Đèn", value_box: "Ô giá trị", slider: "Thanh trượt",
-  color_swatch: "Mẫu màu", array_strip: "Dải mảng", metric_gauge: "Đồng hồ đo",
-  bar_chart: "Biểu đồ cột", table_grid: "Bảng dữ liệu", stack_view: "Ngăn xếp",
-  queue_view: "Hàng đợi", tree_element: "Nút cây", bit_register: "Thanh ghi bit",
-  logic_gate: "Cổng logic", pointer: "Con trỏ", coordinate_plane: "Hệ tọa độ",
-  node: "Điểm", edge: "Đoạn nối", moving_entity: "Vật di chuyển", label: "Nhãn", container: "Khung",
-  group: "Nhóm", heading: "Tiêu đề", paragraph: "Đoạn văn", text: "Chữ",
+  switch: "Công tắc",
+  lamp: "Đèn",
+  value_box: "Ô giá trị",
+  slider: "Thanh trượt",
+  color_swatch: "Mẫu màu",
+  array_strip: "Dải mảng",
+  metric_gauge: "Đồng hồ đo",
+  bar_chart: "Biểu đồ cột",
+  table_grid: "Bảng dữ liệu",
+  stack_view: "Ngăn xếp",
+  queue_view: "Hàng đợi",
+  tree_element: "Nút cây",
+  bit_register: "Thanh ghi bit",
+  logic_gate: "Cổng logic",
+  pointer: "Con trỏ",
+  coordinate_plane: "Hệ tọa độ",
+  node: "Điểm",
+  edge: "Đoạn nối",
+  moving_entity: "Vật di chuyển",
+  label: "Nhãn",
+  container: "Khung",
+  group: "Nhóm",
+  heading: "Tiêu đề",
+  paragraph: "Đoạn văn",
+  text: "Chữ",
 };
 
 /** Dạng định danh kỹ thuật theo HÌNH THỨC (không keyword): snake/kebab-case
@@ -740,7 +721,9 @@ export function displayLabel(spec: SimulationSpec, id: string): string {
   if (!isTechnicalLabel(authored, id)) return authored!;
   const sameType = spec.objects.filter((x) => x.type === o.type);
   const base = TYPE_DISPLAY_VI[o.type] ?? o.type;
-  return sameType.length > 1 ? `${base} ${sameType.findIndex((x) => x.id === id) + 1}` : base;
+  return sameType.length > 1
+    ? `${base} ${sameType.findIndex((x) => x.id === id) + 1}`
+    : base;
 }
 
 function objLabel(spec: SimulationSpec, id: string): string {
@@ -752,7 +735,8 @@ function managedByReveal(spec: SimulationSpec): Set<string> {
   const managed = new Set<string>();
   for (const proc of spec.processes) {
     if (proc.type === "reveal_sequence") {
-      for (const step of proc.steps) for (const id of step.objects) managed.add(id);
+      for (const step of proc.steps)
+        for (const id of step.objects) managed.add(id);
     }
   }
   return managed;
@@ -767,7 +751,8 @@ function managedByReveal(spec: SimulationSpec): Set<string> {
  */
 export function buildTimeline(spec: SimulationSpec): Frame[] {
   const allIds = spec.objects.map((o) => o.id);
-  const orderVisible = (set: Set<string>): string[] => allIds.filter((id) => set.has(id));
+  const orderVisible = (set: Set<string>): string[] =>
+    allIds.filter((id) => set.has(id));
 
   if (spec.processes.length === 0) {
     return [{ visibleIds: [...allIds], entityPos: {}, narration: spec.title }];
@@ -776,7 +761,9 @@ export function buildTimeline(spec: SimulationSpec): Frame[] {
   const managed = managedByReveal(spec);
   const hasReveal = managed.size > 0;
   // Nền: nếu không có reveal → tất cả; nếu có → object không bị reveal quản lý
-  const visible = new Set(hasReveal ? allIds.filter((id) => !managed.has(id)) : allIds);
+  const visible = new Set(
+    hasReveal ? allIds.filter((id) => !managed.has(id)) : allIds,
+  );
   const entityPos: Record<string, string> = {};
   const frames: Frame[] = [];
 
@@ -787,7 +774,9 @@ export function buildTimeline(spec: SimulationSpec): Frame[] {
         frames.push({
           visibleIds: orderVisible(visible),
           entityPos: { ...entityPos },
-          narration: step.narration ?? `Hé lộ: ${step.objects.map((id) => objLabel(spec, id)).join(", ")}.`,
+          narration:
+            step.narration ??
+            `Hé lộ: ${step.objects.map((id) => objLabel(spec, id)).join(", ")}.`,
         });
       }
     } else if (proc.type === "step_sequence") {
@@ -826,7 +815,9 @@ export function buildTimeline(spec: SimulationSpec): Frame[] {
 }
 
 export function currentFrame(state: GenericState): Frame {
-  return state.timeline[Math.max(0, Math.min(state.cursor, state.timeline.length - 1))];
+  return state.timeline[
+    Math.max(0, Math.min(state.cursor, state.timeline.length - 1))
+  ];
 }
 
 /** Object có được render ở khung này không (gating hiển thị — M7.7). */
@@ -842,14 +833,22 @@ export function isVisible(frame: Frame, id: string): boolean {
 export function isObjectRenderable(frame: Frame, obj: SpecObject): boolean {
   if (!isVisible(frame, obj.id)) return false;
   if (obj.type === "edge") {
-    return !!obj.from && !!obj.to && isVisible(frame, obj.from) && isVisible(frame, obj.to);
+    return (
+      !!obj.from &&
+      !!obj.to &&
+      isVisible(frame, obj.from) &&
+      isVisible(frame, obj.to)
+    );
   }
   if (obj.parent) return isVisible(frame, obj.parent);
   return true;
 }
 
 /** Object con trực tiếp của một container/group, theo thứ tự khai báo (M7.12). */
-export function childrenOf(spec: SimulationSpec, parentId: string): SpecObject[] {
+export function childrenOf(
+  spec: SimulationSpec,
+  parentId: string,
+): SpecObject[] {
   return spec.objects.filter((o) => o.parent === parentId);
 }
 
@@ -859,10 +858,17 @@ export function structuralRoots(spec: SimulationSpec): SpecObject[] {
 }
 
 /** Vị trí object để vẽ: dùng x,y nếu có; nếu thiếu, auto-grid theo index. */
-export function positionOf(obj: SpecObject, index: number): { x: number; y: number } {
-  if (typeof obj.x === "number" && typeof obj.y === "number") return { x: obj.x, y: obj.y };
+export function positionOf(
+  obj: SpecObject,
+  index: number,
+): { x: number; y: number } {
+  if (typeof obj.x === "number" && typeof obj.y === "number")
+    return { x: obj.x, y: obj.y };
   const perRow = 4;
-  return { x: 12 + (index % perRow) * 26, y: 20 + Math.floor(index / perRow) * 30 };
+  return {
+    x: 12 + (index % perRow) * 26,
+    y: 20 + Math.floor(index / perRow) * 30,
+  };
 }
 
 /* ── Vị trí state-owned + drag (M7.13A) ───────────────────────── */
@@ -874,13 +880,17 @@ import { computeSemanticLayout } from "./layout-compiler";
  * structural (họ đó layout theo luồng tài liệu, không có tọa độ tự do).
  * Áp dụng Semantic Layout Compiler để tự động phân vùng không gian không chồng chéo.
  */
-export function layoutPositions(spec: SimulationSpec): Record<string, { x: number; y: number }> {
+export function layoutPositions(
+  spec: SimulationSpec,
+): Record<string, { x: number; y: number }> {
   return computeSemanticLayout(spec);
 }
 
 /** Các object có interaction drag khai trong spec. */
 export function dragTargets(spec: SimulationSpec): Set<string> {
-  return new Set(spec.interactions.filter((it) => it.type === "drag").map((it) => it.target));
+  return new Set(
+    spec.interactions.filter((it) => it.type === "drag").map((it) => it.target),
+  );
 }
 
 function clamp(v: number, lo: number, hi: number): number {
@@ -893,10 +903,17 @@ function clamp(v: number, lo: number, hi: number): number {
  * thuộc allowlist + đang visible ở frame hiện tại; rồi snap/axis/clamp theo
  * constraints. Không hợp lệ → trả state cũ (no-op), không ném lỗi.
  */
-export function applyMove(state: GenericState, target: string, x: number, y: number): GenericState {
+export function applyMove(
+  state: GenericState,
+  target: string,
+  x: number,
+  y: number,
+): GenericState {
   const obj = state.spec.objects.find((o) => o.id === target);
   if (!obj || !DRAG_TARGET_TYPES.has(obj.type)) return state;
-  const interaction = state.spec.interactions.find((it) => it.type === "drag" && it.target === target);
+  const interaction = state.spec.interactions.find(
+    (it) => it.type === "drag" && it.target === target,
+  );
   if (!interaction) return state;
   if (!isVisible(currentFrame(state), target)) return state;
   const prev = state.pos[target];
@@ -915,10 +932,17 @@ export function applyMove(state: GenericState, target: string, x: number, y: num
   // Message chỉ nói điều engine đo được — không suy diễn ngữ nghĩa hình học.
   const hitBounds = c.bounds !== undefined && (cx !== nx || cy !== ny);
   const feedback: InteractionFeedback | null = hitBounds
-    ? { rule: "drag_bounds", message: "Đối tượng này chỉ di chuyển được trong vùng tương tác cho phép." }
+    ? {
+        rule: "drag_bounds",
+        message:
+          "Đối tượng này chỉ di chuyển được trong vùng tương tác cho phép.",
+      }
     : null;
   const samePos = cx === prev.x && cy === prev.y;
-  const sameFeedback = (state.feedback ?? null) === null ? feedback === null : state.feedback?.rule === feedback?.rule;
+  const sameFeedback =
+    (state.feedback ?? null) === null
+      ? feedback === null
+      : state.feedback?.rule === feedback?.rule;
   if (samePos && sameFeedback) return state;
   return {
     ...state,
@@ -939,7 +963,8 @@ export function findFreePosition(
   hint?: { x: number; y: number },
 ): { x: number; y: number } {
   const MIN_DIST = 12;
-  const free = (x: number, y: number) => taken.every((p) => Math.hypot(p.x - x, p.y - y) >= MIN_DIST);
+  const free = (x: number, y: number) =>
+    taken.every((p) => Math.hypot(p.x - x, p.y - y) >= MIN_DIST);
   if (hint) {
     const hx = clamp(hint.x, 5, 95);
     const hy = clamp(hint.y, 5, 95);
@@ -952,7 +977,8 @@ export function findFreePosition(
       }
     : { x: 50, y: 50 };
   const candidates: { x: number; y: number }[] = [];
-  for (let y = 10; y <= 90; y += 10) for (let x = 10; x <= 90; x += 10) candidates.push({ x, y });
+  for (let y = 10; y <= 90; y += 10)
+    for (let x = 10; x <= 90; x += 10) candidates.push({ x, y });
   candidates.sort((a, b) => {
     const da = Math.hypot(a.x - center.x, a.y - center.y);
     const db = Math.hypot(b.x - center.x, b.y - center.y);
@@ -971,7 +997,10 @@ export function findFreePosition(
  * Object mới: dùng x/y trong spec nếu có (LLM/click đã chọn), không thì
  * findFreePosition — không đè lên object cũ.
  */
-export function applyEditedSpec(state: GenericState, newSpec: SimulationSpec): GenericState {
+export function applyEditedSpec(
+  state: GenericState,
+  newSpec: SimulationSpec,
+): GenericState {
   const base = initialBase(newSpec);
   for (const id of Object.keys(base)) {
     if (id in state.base) base[id] = state.base[id];
@@ -981,7 +1010,8 @@ export function applyEditedSpec(state: GenericState, newSpec: SimulationSpec): G
   newSpec.objects.forEach((o, i) => {
     if (STRUCTURAL_TYPES.has(o.type)) return;
     let p = state.pos[o.id];
-    if (!p && typeof o.x === "number" && typeof o.y === "number") p = { x: o.x, y: o.y };
+    if (!p && typeof o.x === "number" && typeof o.y === "number")
+      p = { x: o.x, y: o.y };
     if (!p && o.type !== "edge") p = findFreePosition(taken);
     if (!p) p = positionOf(o, i); // edge: vị trí không dùng để vẽ (derive từ hai đầu)
     pos[o.id] = p;
@@ -1037,7 +1067,8 @@ export type ObjectRole = "current" | "completed" | "hidden";
 export function currentStepObjectIds(state: GenericState): string[] {
   if (state.timeline.length <= 1) return [];
   const cur = currentFrame(state).visibleIds;
-  const prev = state.cursor > 0 ? state.timeline[state.cursor - 1].visibleIds : [];
+  const prev =
+    state.cursor > 0 ? state.timeline[state.cursor - 1].visibleIds : [];
   const prevSet = new Set(prev);
   return cur.filter((id) => !prevSet.has(id));
 }
@@ -1057,7 +1088,11 @@ export function inspectorGroups(state: GenericState): {
 } {
   const visible = new Set(currentFrame(state).visibleIds);
   const cur = new Set(currentStepObjectIds(state));
-  const groups = { current: [] as SpecObject[], completed: [] as SpecObject[], hidden: [] as SpecObject[] };
+  const groups = {
+    current: [] as SpecObject[],
+    completed: [] as SpecObject[],
+    hidden: [] as SpecObject[],
+  };
   for (const o of state.spec.objects) {
     if (!visible.has(o.id)) groups.hidden.push(o);
     else if (cur.has(o.id)) groups.current.push(o);

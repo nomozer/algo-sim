@@ -128,9 +128,10 @@ def test_ham_va_de_quy_bi_tu_choi_khong_ro_ri_sang_generic(monkeypatch):
     bad = _program_cfg_assign().replace('"kind": "assign"', '"kind": "call"')
     script = CaseScript(_program_analysis(goal="Mô phỏng hàm đệ quy tính giai thừa"),
                         [_classify(TARGET)], [bad, bad, bad])
-    with pytest.raises(RuntimeError) as exc:
-        _run(script, monkeypatch, "Mô phỏng hàm đệ quy tính giai thừa n!")
-    assert "không hỗ trợ" in str(exc.value)
+    env = _run(script, monkeypatch, "Mô phỏng hàm đệ quy tính giai thừa n!")
+    assert env.get("status") == "error"
+    assert env.get("failure_category") == "synthesis_exhausted"
+    assert "config" not in env
 
 
 # ── đủ ngữ nghĩa: không được bỏ sót cấu trúc đề hỏi ─────────────

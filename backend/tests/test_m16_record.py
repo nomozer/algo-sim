@@ -422,7 +422,7 @@ def test_build_m16_record_map_du_truong_transcript_day_du(monkeypatch):
 
 
 def test_build_m16_record_pipeline_runtimeerror_khong_phai_infra_error(monkeypatch):
-    """RuntimeError từ run_pipeline (simulate cạn retry) LÀ outcome sản phẩm,
+    """Lỗi synthesis_exhausted (simulate cạn retry) trả envelope status error,
     KHÔNG phải infra error — infra_error PHẢI None trừ khi CALLER tự đặt qua
     tham số riêng."""
     mock, counts = _mock(
@@ -431,21 +431,17 @@ def test_build_m16_record_pipeline_runtimeerror_khong_phai_infra_error(monkeypat
         simulate_seq=["không phải json hợp lệ"] * 3,
     )
     obs = AttemptObserver()
-    pipeline_error = None
-    try:
-        _run(monkeypatch, mock, obs)
-        assert False, "phải raise RuntimeError"
-    except RuntimeError as err:
-        pipeline_error = str(err)
+    env = _run(monkeypatch, mock, obs)
+    assert env.get("status") == "error"
+    assert env.get("failure_category") == "synthesis_exhausted"
 
     item = EvalItem("t-exhausted", "Tìm max.", "specialized", "algorithm.find_max")
-    rec = build_m16_record(item, obs, None, pipeline_error, _zero_budget_delta())
+    rec = build_m16_record(item, obs, env, None, _zero_budget_delta())
 
-    assert rec.envelope_status is None
+    assert rec.envelope_status == "error"
     assert rec.infra_error is None  # KHÔNG tự gán từ pipeline_error
-    assert rec.detail == pipeline_error  # tham khảo, không phân loại
     assert len(rec.simulate_attempts) == 3  # có sẵn — không mất dữ liệu
-    assert rec.via_production_pipeline is True  # pipeline_error not None
+    assert rec.via_production_pipeline is True
 
 
 def test_build_m16_record_infra_error_dat_boi_caller():

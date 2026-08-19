@@ -67,7 +67,7 @@ def test_reject_dsl_version_khong_ho_tro():
 
 
 def test_dsl_version_hop_le_van_chay():
-    spec = {"dsl_version": "1.0", "title": "x", "objects": [{"id": "a", "type": "label"}]}
+    spec = {"dsl_version": "1.0", "title": "x", "objects": [{"id": "a", "type": "label", "label": "Nhãn A"}]}
     assert validate_generic_config(spec)[1] is None
 
 
