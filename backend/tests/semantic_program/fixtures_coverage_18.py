@@ -851,7 +851,19 @@ P16_DFA_LEXER = SemanticProgramSpec(
             body=[
                 AssignStmt(
                     target_var="state",
-                    expr=MapGetExpr(container="trans", key=VarRefExpr(name="ch"), default=LiteralExpr(value="ERROR")),
+                    expr=MapGetExpr(
+                        container="trans",
+                        key=BinaryArithExpr(
+                            op="+",
+                            left=BinaryArithExpr(
+                                op="+",
+                                left=VarRefExpr(name="state"),
+                                right=LiteralExpr(value=":"),
+                            ),
+                            right=VarRefExpr(name="ch"),
+                        ),
+                        default=LiteralExpr(value="ERROR"),
+                    ),
                 ),
                 IfStmt(
                     condition=CompareCond(op="==", left=VarRefExpr(name="state"), right=LiteralExpr(value="ERROR")),

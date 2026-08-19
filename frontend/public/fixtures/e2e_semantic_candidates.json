@@ -1,0 +1,940 @@
+{
+  "stack_bracket": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Kiểm tra chuỗi ngoặc hợp lệ bằng Ngăn xếp",
+    "description": "Duyệt từng ký tự, gặp mở thì push, gặp đóng thì kiểm tra đỉnh stack và pop.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Kiểm tra chuỗi ngoặc hợp lệ bằng Ngăn xếp",
+      "objects": [
+        {
+          "id": "bracket_strip",
+          "type": "array_strip",
+          "label": "Chuỗi ngoặc đầu vào",
+          "items": [
+            "{",
+            "[",
+            "(",
+            ")",
+            "]",
+            "}"
+          ]
+        },
+        {
+          "id": "stack",
+          "type": "stack_view",
+          "label": "Ngăn xếp",
+          "items": [],
+          "capacity": 8
+        },
+        {
+          "id": "result_box",
+          "type": "value_box",
+          "label": "Kết quả",
+          "value": "HỢP LỆ"
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Học sinh quan sát cách Ngăn xếp lưu trữ các dấu mở ngoặc và khử cặp khi gặp dấu đóng tương ứng. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: c = '{'.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '{' vào stack.",
+              "targets": [
+                "stack"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: c = '['.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '[' vào stack.",
+              "targets": [
+                "stack"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: c = '('.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '(' vào stack.",
+              "targets": [
+                "stack"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: c = ')'.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '(' ra khỏi stack.",
+              "targets": [
+                "stack"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: c = ']'.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '[' ra khỏi stack.",
+              "targets": [
+                "stack"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: c = '}'.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '{' ra khỏi stack.",
+              "targets": [
+                "stack"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "bracket_strip"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  },
+  "binary_search": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Tìm kiếm nhị phân trên dãy đã sắp thứ tự",
+    "description": "Tìm kiếm nhị phân trên dãy đã sắp thứ tự",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Tìm kiếm nhị phân trên dãy đã sắp thứ tự",
+      "objects": [
+        {
+          "id": "arr",
+          "type": "array_strip",
+          "label": "Dãy số đã sắp thứ tự",
+          "items": [
+            2,
+            5,
+            8,
+            12,
+            16,
+            23,
+            38,
+            56,
+            72,
+            91
+          ]
+        },
+        {
+          "id": "ptr_l",
+          "type": "pointer",
+          "label": "left",
+          "target": "arr",
+          "target_index": 0
+        },
+        {
+          "id": "ptr_r",
+          "type": "pointer",
+          "label": "right",
+          "target": "arr",
+          "target_index": 9
+        },
+        {
+          "id": "ptr_m",
+          "type": "pointer",
+          "label": "mid",
+          "target": "arr",
+          "target_index": 0
+        },
+        {
+          "id": "target_box",
+          "type": "value_box",
+          "label": "Khóa cần tìm",
+          "value": 23
+        },
+        {
+          "id": "found_box",
+          "type": "value_box",
+          "label": "Vị trí tìm thấy",
+          "value": -1
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán right = 9.",
+              "targets": [
+                "ptr_r"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán mid = 4.",
+              "targets": [
+                "ptr_m"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán left = 5.",
+              "targets": [
+                "ptr_l"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán mid = 7.",
+              "targets": [
+                "ptr_m"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán right = 6.",
+              "targets": [
+                "ptr_r"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán mid = 5.",
+              "targets": [
+                "ptr_m"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán found_idx = 5.",
+              "targets": [
+                "found_box"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thực hiện lệnh break: ngắt vòng lặp hiện thời.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  },
+  "bubble_sort": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Sắp xếp nổi bọt (Bubble Sort)",
+    "description": "Sắp xếp nổi bọt (Bubble Sort)",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Sắp xếp nổi bọt (Bubble Sort)",
+      "objects": [
+        {
+          "id": "arr",
+          "type": "array_strip",
+          "label": "Dãy số",
+          "items": [
+            5,
+            1,
+            4,
+            2,
+            8
+          ]
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán n = 5.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: i = 0.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán swapped = False.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 0.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Hoán đổi arr[0] (5) và arr[1] (1).",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán swapped = True.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 1.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Hoán đổi arr[1] (5) và arr[2] (4).",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán swapped = True.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 2.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Hoán đổi arr[2] (5) và arr[3] (2).",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán swapped = True.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 3.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: i = 1.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán swapped = False.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 0.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 1.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Hoán đổi arr[1] (4) và arr[2] (2).",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán swapped = True.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 2.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: i = 2.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán swapped = False.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 0.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: j = 1.",
+              "targets": [
+                "ptr_j"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thực hiện lệnh break: ngắt vòng lặp hiện thời.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  },
+  "graph_bfs": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+    "description": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+      "objects": [
+        {
+          "id": "q",
+          "type": "queue_view",
+          "label": "Hàng đợi BFS",
+          "items": []
+        },
+        {
+          "id": "order",
+          "type": "array_strip",
+          "label": "Thứ tự duyệt",
+          "items": []
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '1' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '1' vào tập hợp visited.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '1' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '1' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: v = '2'.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '2' vào tập hợp visited.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '2' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: v = '3'.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '3' vào tập hợp visited.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '3' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '2' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '2' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: v = '4'.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '4' vào tập hợp visited.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '4' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '3' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '3' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: v = '4'.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: v = '5'.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '5' vào tập hợp visited.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '5' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '4' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '4' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '5' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '5' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  }
+}

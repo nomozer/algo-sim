@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Package semantic_program: Hợp đồng, kiểm định, interpreter và visual trace adapter (Batch 2)."""
+"""Package semantic_program: Hợp đồng, kiểm định, interpreter, visual trace adapter và pipeline adapter."""
 from .contract import (
     SemanticProgramSpec,
     MemoryDeclaration,
@@ -12,6 +12,7 @@ from .contract import (
 from .validator import validate_semantic_program, ValidationResult
 from .interpreter import SemanticProgramInterpreter, SemanticExecutionResult, SemanticTraceStep
 from .visual_adapter import VisualTraceAdapter, VisualFrame
+from .pipeline_adapter import compile_semantic_program_to_envelope
 
 __all__ = [
     "SemanticProgramSpec",
@@ -28,4 +29,5 @@ __all__ = [
     "SemanticTraceStep",
     "VisualTraceAdapter",
     "VisualFrame",
+    "compile_semantic_program_to_envelope",
 ]
