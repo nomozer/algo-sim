@@ -1,0 +1,3066 @@
+{
+  "$defs": {
+    "AssignStmt": {
+      "properties": {
+        "kind": {
+          "const": "assign",
+          "default": "assign",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "Tên biến nhận kết quả",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "expr": {
+          "description": "Biểu thức giá trị gán vào",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Expr"
+        }
+      },
+      "required": [
+        "target_var",
+        "expr"
+      ],
+      "title": "AssignStmt",
+      "type": "object"
+    },
+    "BinaryArithExpr": {
+      "properties": {
+        "kind": {
+          "const": "arith",
+          "default": "arith",
+          "title": "Kind",
+          "type": "string"
+        },
+        "op": {
+          "description": "Toán tử số học",
+          "enum": [
+            "+",
+            "-",
+            "*",
+            "//",
+            "%"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "left": {
+          "description": "Vế trái",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Left"
+        },
+        "right": {
+          "description": "Vế phải",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Right"
+        }
+      },
+      "required": [
+        "op",
+        "left",
+        "right"
+      ],
+      "title": "BinaryArithExpr",
+      "type": "object"
+    },
+    "BreakStmt": {
+      "properties": {
+        "kind": {
+          "const": "break",
+          "default": "break",
+          "title": "Kind",
+          "type": "string"
+        }
+      },
+      "title": "BreakStmt",
+      "type": "object"
+    },
+    "CompareCond": {
+      "properties": {
+        "kind": {
+          "const": "compare",
+          "default": "compare",
+          "title": "Kind",
+          "type": "string"
+        },
+        "op": {
+          "description": "Toán tử so sánh",
+          "enum": [
+            "==",
+            "!=",
+            "<",
+            "<=",
+            ">",
+            ">="
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "left": {
+          "description": "Vế trái",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Left"
+        },
+        "right": {
+          "description": "Vế phải",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Right"
+        }
+      },
+      "required": [
+        "op",
+        "left",
+        "right"
+      ],
+      "title": "CompareCond",
+      "type": "object"
+    },
+    "ContainsCond": {
+      "properties": {
+        "kind": {
+          "const": "contains",
+          "default": "contains",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên container/set/map",
+          "title": "Container",
+          "type": "string"
+        },
+        "item": {
+          "description": "Phần tử hoặc khóa cần kiểm tra tồn tại",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Item"
+        }
+      },
+      "required": [
+        "container",
+        "item"
+      ],
+      "title": "ContainsCond",
+      "type": "object"
+    },
+    "DequeueStmt": {
+      "properties": {
+        "kind": {
+          "const": "dequeue",
+          "default": "dequeue",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên queue",
+          "title": "Container",
+          "type": "string"
+        },
+        "dest_var": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Biến nhận phần tử lấy ra",
+          "title": "Dest Var"
+        }
+      },
+      "required": [
+        "container"
+      ],
+      "title": "DequeueStmt",
+      "type": "object"
+    },
+    "EnqueueStmt": {
+      "properties": {
+        "kind": {
+          "const": "enqueue",
+          "default": "enqueue",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên queue",
+          "title": "Container",
+          "type": "string"
+        },
+        "val": {
+          "description": "Phần tử thêm vào hàng đợi",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Val"
+        }
+      },
+      "required": [
+        "container",
+        "val"
+      ],
+      "title": "EnqueueStmt",
+      "type": "object"
+    },
+    "FieldRefExpr": {
+      "properties": {
+        "kind": {
+          "const": "field",
+          "default": "field",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target": {
+          "description": "Biểu thức trả về node_ref hoặc record",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Target"
+        },
+        "field": {
+          "description": "Tên trường truy xuất",
+          "enum": [
+            "left",
+            "right",
+            "val",
+            "data"
+          ],
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target",
+        "field"
+      ],
+      "title": "FieldRefExpr",
+      "type": "object"
+    },
+    "ForEachStmt": {
+      "properties": {
+        "kind": {
+          "const": "for_each",
+          "default": "for_each",
+          "title": "Kind",
+          "type": "string"
+        },
+        "item_var": {
+          "description": "Biến nhận từng phần tử",
+          "title": "Item Var",
+          "type": "string"
+        },
+        "container_or_expr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "discriminator": {
+                "mapping": {
+                  "arith": "#/$defs/BinaryArithExpr",
+                  "field": "#/$defs/FieldRefExpr",
+                  "index": "#/$defs/IndexRefExpr",
+                  "length": "#/$defs/LengthExpr",
+                  "literal": "#/$defs/LiteralExpr",
+                  "map_get": "#/$defs/MapGetExpr",
+                  "neighbors": "#/$defs/NeighborsExpr",
+                  "peek": "#/$defs/PeekExpr",
+                  "unary": "#/$defs/UnaryArithExpr",
+                  "var": "#/$defs/VarRefExpr"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/VarRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/IndexRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/FieldRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/BinaryArithExpr"
+                },
+                {
+                  "$ref": "#/$defs/UnaryArithExpr"
+                },
+                {
+                  "$ref": "#/$defs/LengthExpr"
+                },
+                {
+                  "$ref": "#/$defs/PeekExpr"
+                },
+                {
+                  "$ref": "#/$defs/MapGetExpr"
+                },
+                {
+                  "$ref": "#/$defs/NeighborsExpr"
+                }
+              ]
+            }
+          ],
+          "description": "Tên container hoặc biểu thức danh sách",
+          "title": "Container Or Expr"
+        },
+        "body": {
+          "description": "Thân vòng lặp",
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "assign": "#/$defs/AssignStmt",
+                "break": "#/$defs/BreakStmt",
+                "dequeue": "#/$defs/DequeueStmt",
+                "enqueue": "#/$defs/EnqueueStmt",
+                "for_each": "#/$defs/ForEachStmt",
+                "for_range": "#/$defs/ForRangeStmt",
+                "if": "#/$defs/IfStmt",
+                "map_set": "#/$defs/MapSetStmt",
+                "pop": "#/$defs/PopStmt",
+                "push": "#/$defs/PushStmt",
+                "return": "#/$defs/ReturnStmt",
+                "set_insert": "#/$defs/SetInsertStmt",
+                "set_remove": "#/$defs/SetRemoveStmt",
+                "swap": "#/$defs/SwapStmt",
+                "while": "#/$defs/WhileStmt",
+                "write_index": "#/$defs/WriteIndexStmt"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/WriteIndexStmt"
+              },
+              {
+                "$ref": "#/$defs/MapSetStmt"
+              },
+              {
+                "$ref": "#/$defs/SwapStmt"
+              },
+              {
+                "$ref": "#/$defs/PushStmt"
+              },
+              {
+                "$ref": "#/$defs/PopStmt"
+              },
+              {
+                "$ref": "#/$defs/EnqueueStmt"
+              },
+              {
+                "$ref": "#/$defs/DequeueStmt"
+              },
+              {
+                "$ref": "#/$defs/SetInsertStmt"
+              },
+              {
+                "$ref": "#/$defs/SetRemoveStmt"
+              },
+              {
+                "$ref": "#/$defs/IfStmt"
+              },
+              {
+                "$ref": "#/$defs/WhileStmt"
+              },
+              {
+                "$ref": "#/$defs/ForRangeStmt"
+              },
+              {
+                "$ref": "#/$defs/ForEachStmt"
+              },
+              {
+                "$ref": "#/$defs/BreakStmt"
+              },
+              {
+                "$ref": "#/$defs/ReturnStmt"
+              }
+            ]
+          },
+          "title": "Body",
+          "type": "array"
+        }
+      },
+      "required": [
+        "item_var",
+        "container_or_expr",
+        "body"
+      ],
+      "title": "ForEachStmt",
+      "type": "object"
+    },
+    "ForRangeStmt": {
+      "properties": {
+        "kind": {
+          "const": "for_range",
+          "default": "for_range",
+          "title": "Kind",
+          "type": "string"
+        },
+        "loop_var": {
+          "description": "Biến chạy vòng lặp",
+          "title": "Loop Var",
+          "type": "string"
+        },
+        "start": {
+          "description": "Giá trị bắt đầu",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Start"
+        },
+        "end": {
+          "description": "Giá trị kết thúc (exclusive)",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "End"
+        },
+        "step": {
+          "default": 1,
+          "description": "Bước nhảy (mặc định 1)",
+          "title": "Step",
+          "type": "integer"
+        },
+        "body": {
+          "description": "Thân vòng lặp",
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "assign": "#/$defs/AssignStmt",
+                "break": "#/$defs/BreakStmt",
+                "dequeue": "#/$defs/DequeueStmt",
+                "enqueue": "#/$defs/EnqueueStmt",
+                "for_each": "#/$defs/ForEachStmt",
+                "for_range": "#/$defs/ForRangeStmt",
+                "if": "#/$defs/IfStmt",
+                "map_set": "#/$defs/MapSetStmt",
+                "pop": "#/$defs/PopStmt",
+                "push": "#/$defs/PushStmt",
+                "return": "#/$defs/ReturnStmt",
+                "set_insert": "#/$defs/SetInsertStmt",
+                "set_remove": "#/$defs/SetRemoveStmt",
+                "swap": "#/$defs/SwapStmt",
+                "while": "#/$defs/WhileStmt",
+                "write_index": "#/$defs/WriteIndexStmt"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/WriteIndexStmt"
+              },
+              {
+                "$ref": "#/$defs/MapSetStmt"
+              },
+              {
+                "$ref": "#/$defs/SwapStmt"
+              },
+              {
+                "$ref": "#/$defs/PushStmt"
+              },
+              {
+                "$ref": "#/$defs/PopStmt"
+              },
+              {
+                "$ref": "#/$defs/EnqueueStmt"
+              },
+              {
+                "$ref": "#/$defs/DequeueStmt"
+              },
+              {
+                "$ref": "#/$defs/SetInsertStmt"
+              },
+              {
+                "$ref": "#/$defs/SetRemoveStmt"
+              },
+              {
+                "$ref": "#/$defs/IfStmt"
+              },
+              {
+                "$ref": "#/$defs/WhileStmt"
+              },
+              {
+                "$ref": "#/$defs/ForRangeStmt"
+              },
+              {
+                "$ref": "#/$defs/ForEachStmt"
+              },
+              {
+                "$ref": "#/$defs/BreakStmt"
+              },
+              {
+                "$ref": "#/$defs/ReturnStmt"
+              }
+            ]
+          },
+          "title": "Body",
+          "type": "array"
+        }
+      },
+      "required": [
+        "loop_var",
+        "start",
+        "end",
+        "body"
+      ],
+      "title": "ForRangeStmt",
+      "type": "object"
+    },
+    "IfStmt": {
+      "properties": {
+        "kind": {
+          "const": "if",
+          "default": "if",
+          "title": "Kind",
+          "type": "string"
+        },
+        "condition": {
+          "description": "Điều kiện rẽ nhánh",
+          "discriminator": {
+            "mapping": {
+              "compare": "#/$defs/CompareCond",
+              "contains": "#/$defs/ContainsCond",
+              "is_empty": "#/$defs/IsEmptyCond",
+              "is_null": "#/$defs/IsNullCond",
+              "logic": "#/$defs/LogicCond",
+              "not": "#/$defs/NotCond"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CompareCond"
+            },
+            {
+              "$ref": "#/$defs/LogicCond"
+            },
+            {
+              "$ref": "#/$defs/NotCond"
+            },
+            {
+              "$ref": "#/$defs/IsEmptyCond"
+            },
+            {
+              "$ref": "#/$defs/ContainsCond"
+            },
+            {
+              "$ref": "#/$defs/IsNullCond"
+            }
+          ],
+          "title": "Condition"
+        },
+        "then_body": {
+          "description": "Khối lệnh khi điều kiện đúng",
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "assign": "#/$defs/AssignStmt",
+                "break": "#/$defs/BreakStmt",
+                "dequeue": "#/$defs/DequeueStmt",
+                "enqueue": "#/$defs/EnqueueStmt",
+                "for_each": "#/$defs/ForEachStmt",
+                "for_range": "#/$defs/ForRangeStmt",
+                "if": "#/$defs/IfStmt",
+                "map_set": "#/$defs/MapSetStmt",
+                "pop": "#/$defs/PopStmt",
+                "push": "#/$defs/PushStmt",
+                "return": "#/$defs/ReturnStmt",
+                "set_insert": "#/$defs/SetInsertStmt",
+                "set_remove": "#/$defs/SetRemoveStmt",
+                "swap": "#/$defs/SwapStmt",
+                "while": "#/$defs/WhileStmt",
+                "write_index": "#/$defs/WriteIndexStmt"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/WriteIndexStmt"
+              },
+              {
+                "$ref": "#/$defs/MapSetStmt"
+              },
+              {
+                "$ref": "#/$defs/SwapStmt"
+              },
+              {
+                "$ref": "#/$defs/PushStmt"
+              },
+              {
+                "$ref": "#/$defs/PopStmt"
+              },
+              {
+                "$ref": "#/$defs/EnqueueStmt"
+              },
+              {
+                "$ref": "#/$defs/DequeueStmt"
+              },
+              {
+                "$ref": "#/$defs/SetInsertStmt"
+              },
+              {
+                "$ref": "#/$defs/SetRemoveStmt"
+              },
+              {
+                "$ref": "#/$defs/IfStmt"
+              },
+              {
+                "$ref": "#/$defs/WhileStmt"
+              },
+              {
+                "$ref": "#/$defs/ForRangeStmt"
+              },
+              {
+                "$ref": "#/$defs/ForEachStmt"
+              },
+              {
+                "$ref": "#/$defs/BreakStmt"
+              },
+              {
+                "$ref": "#/$defs/ReturnStmt"
+              }
+            ]
+          },
+          "title": "Then Body",
+          "type": "array"
+        },
+        "else_body": {
+          "description": "Khối lệnh khi điều kiện sai",
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "assign": "#/$defs/AssignStmt",
+                "break": "#/$defs/BreakStmt",
+                "dequeue": "#/$defs/DequeueStmt",
+                "enqueue": "#/$defs/EnqueueStmt",
+                "for_each": "#/$defs/ForEachStmt",
+                "for_range": "#/$defs/ForRangeStmt",
+                "if": "#/$defs/IfStmt",
+                "map_set": "#/$defs/MapSetStmt",
+                "pop": "#/$defs/PopStmt",
+                "push": "#/$defs/PushStmt",
+                "return": "#/$defs/ReturnStmt",
+                "set_insert": "#/$defs/SetInsertStmt",
+                "set_remove": "#/$defs/SetRemoveStmt",
+                "swap": "#/$defs/SwapStmt",
+                "while": "#/$defs/WhileStmt",
+                "write_index": "#/$defs/WriteIndexStmt"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/WriteIndexStmt"
+              },
+              {
+                "$ref": "#/$defs/MapSetStmt"
+              },
+              {
+                "$ref": "#/$defs/SwapStmt"
+              },
+              {
+                "$ref": "#/$defs/PushStmt"
+              },
+              {
+                "$ref": "#/$defs/PopStmt"
+              },
+              {
+                "$ref": "#/$defs/EnqueueStmt"
+              },
+              {
+                "$ref": "#/$defs/DequeueStmt"
+              },
+              {
+                "$ref": "#/$defs/SetInsertStmt"
+              },
+              {
+                "$ref": "#/$defs/SetRemoveStmt"
+              },
+              {
+                "$ref": "#/$defs/IfStmt"
+              },
+              {
+                "$ref": "#/$defs/WhileStmt"
+              },
+              {
+                "$ref": "#/$defs/ForRangeStmt"
+              },
+              {
+                "$ref": "#/$defs/ForEachStmt"
+              },
+              {
+                "$ref": "#/$defs/BreakStmt"
+              },
+              {
+                "$ref": "#/$defs/ReturnStmt"
+              }
+            ]
+          },
+          "title": "Else Body",
+          "type": "array"
+        }
+      },
+      "required": [
+        "condition",
+        "then_body"
+      ],
+      "title": "IfStmt",
+      "type": "object"
+    },
+    "IndexRefExpr": {
+      "properties": {
+        "kind": {
+          "const": "index",
+          "default": "index",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên container (array/matrix)",
+          "title": "Container",
+          "type": "string"
+        },
+        "index": {
+          "description": "Chỉ số hoặc biểu thức chỉ số",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Index"
+        }
+      },
+      "required": [
+        "container",
+        "index"
+      ],
+      "title": "IndexRefExpr",
+      "type": "object"
+    },
+    "IsEmptyCond": {
+      "properties": {
+        "kind": {
+          "const": "is_empty",
+          "default": "is_empty",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên container kiểm tra rỗng",
+          "title": "Container",
+          "type": "string"
+        }
+      },
+      "required": [
+        "container"
+      ],
+      "title": "IsEmptyCond",
+      "type": "object"
+    },
+    "IsNullCond": {
+      "properties": {
+        "kind": {
+          "const": "is_null",
+          "default": "is_null",
+          "title": "Kind",
+          "type": "string"
+        },
+        "expr": {
+          "description": "Biểu thức kiểm tra null",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Expr"
+        }
+      },
+      "required": [
+        "expr"
+      ],
+      "title": "IsNullCond",
+      "type": "object"
+    },
+    "LengthExpr": {
+      "properties": {
+        "kind": {
+          "const": "length",
+          "default": "length",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên container cần lấy kích thước",
+          "title": "Container",
+          "type": "string"
+        }
+      },
+      "required": [
+        "container"
+      ],
+      "title": "LengthExpr",
+      "type": "object"
+    },
+    "LiteralExpr": {
+      "properties": {
+        "kind": {
+          "const": "literal",
+          "default": "literal",
+          "title": "Kind",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Giá trị nguyên thủy",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "LiteralExpr",
+      "type": "object"
+    },
+    "LogicCond": {
+      "properties": {
+        "kind": {
+          "const": "logic",
+          "default": "logic",
+          "title": "Kind",
+          "type": "string"
+        },
+        "op": {
+          "description": "Toán tử logic",
+          "enum": [
+            "and",
+            "or"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "left": {
+          "description": "Điều kiện trái",
+          "discriminator": {
+            "mapping": {
+              "compare": "#/$defs/CompareCond",
+              "contains": "#/$defs/ContainsCond",
+              "is_empty": "#/$defs/IsEmptyCond",
+              "is_null": "#/$defs/IsNullCond",
+              "logic": "#/$defs/LogicCond",
+              "not": "#/$defs/NotCond"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CompareCond"
+            },
+            {
+              "$ref": "#/$defs/LogicCond"
+            },
+            {
+              "$ref": "#/$defs/NotCond"
+            },
+            {
+              "$ref": "#/$defs/IsEmptyCond"
+            },
+            {
+              "$ref": "#/$defs/ContainsCond"
+            },
+            {
+              "$ref": "#/$defs/IsNullCond"
+            }
+          ],
+          "title": "Left"
+        },
+        "right": {
+          "description": "Điều kiện phải",
+          "discriminator": {
+            "mapping": {
+              "compare": "#/$defs/CompareCond",
+              "contains": "#/$defs/ContainsCond",
+              "is_empty": "#/$defs/IsEmptyCond",
+              "is_null": "#/$defs/IsNullCond",
+              "logic": "#/$defs/LogicCond",
+              "not": "#/$defs/NotCond"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CompareCond"
+            },
+            {
+              "$ref": "#/$defs/LogicCond"
+            },
+            {
+              "$ref": "#/$defs/NotCond"
+            },
+            {
+              "$ref": "#/$defs/IsEmptyCond"
+            },
+            {
+              "$ref": "#/$defs/ContainsCond"
+            },
+            {
+              "$ref": "#/$defs/IsNullCond"
+            }
+          ],
+          "title": "Right"
+        }
+      },
+      "required": [
+        "op",
+        "left",
+        "right"
+      ],
+      "title": "LogicCond",
+      "type": "object"
+    },
+    "MapGetExpr": {
+      "properties": {
+        "kind": {
+          "const": "map_get",
+          "default": "map_get",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên map",
+          "title": "Container",
+          "type": "string"
+        },
+        "key": {
+          "description": "Khóa cần tra cứu",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Key"
+        },
+        "default": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "arith": "#/$defs/BinaryArithExpr",
+                  "field": "#/$defs/FieldRefExpr",
+                  "index": "#/$defs/IndexRefExpr",
+                  "length": "#/$defs/LengthExpr",
+                  "literal": "#/$defs/LiteralExpr",
+                  "map_get": "#/$defs/MapGetExpr",
+                  "neighbors": "#/$defs/NeighborsExpr",
+                  "peek": "#/$defs/PeekExpr",
+                  "unary": "#/$defs/UnaryArithExpr",
+                  "var": "#/$defs/VarRefExpr"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/VarRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/IndexRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/FieldRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/BinaryArithExpr"
+                },
+                {
+                  "$ref": "#/$defs/UnaryArithExpr"
+                },
+                {
+                  "$ref": "#/$defs/LengthExpr"
+                },
+                {
+                  "$ref": "#/$defs/PeekExpr"
+                },
+                {
+                  "$ref": "#/$defs/MapGetExpr"
+                },
+                {
+                  "$ref": "#/$defs/NeighborsExpr"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Giá trị mặc định nếu không tìm thấy khóa",
+          "title": "Default"
+        }
+      },
+      "required": [
+        "container",
+        "key"
+      ],
+      "title": "MapGetExpr",
+      "type": "object"
+    },
+    "MapSetStmt": {
+      "properties": {
+        "kind": {
+          "const": "map_set",
+          "default": "map_set",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên map",
+          "title": "Container",
+          "type": "string"
+        },
+        "key": {
+          "description": "Khóa cần gán",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Key"
+        },
+        "val": {
+          "description": "Giá trị gán",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Val"
+        }
+      },
+      "required": [
+        "container",
+        "key",
+        "val"
+      ],
+      "title": "MapSetStmt",
+      "type": "object"
+    },
+    "MemoryDeclaration": {
+      "properties": {
+        "name": {
+          "description": "Tên định danh biến/container trong bộ nhớ",
+          "title": "Name",
+          "type": "string"
+        },
+        "type": {
+          "description": "Kiểu dữ liệu ngữ nghĩa",
+          "enum": [
+            "int",
+            "str",
+            "bool",
+            "float",
+            "array",
+            "stack",
+            "queue",
+            "matrix",
+            "map",
+            "set",
+            "tree_node",
+            "graph",
+            "node_ref",
+            "null"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "initial_value": {
+          "default": null,
+          "description": "Giá trị khởi tạo ban đầu",
+          "title": "Initial Value"
+        },
+        "element_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "int",
+                "str",
+                "bool",
+                "float",
+                "array",
+                "stack",
+                "queue",
+                "matrix",
+                "map",
+                "set",
+                "tree_node",
+                "graph",
+                "node_ref",
+                "null"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Kiểu phần tử nếu là array/stack/queue/set",
+          "title": "Element Type"
+        },
+        "key_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "int",
+                "str",
+                "bool",
+                "float"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Kiểu khóa nếu là map",
+          "title": "Key Type"
+        },
+        "val_type": {
+          "anyOf": [
+            {
+              "enum": [
+                "int",
+                "str",
+                "bool",
+                "float",
+                "array",
+                "stack",
+                "queue",
+                "matrix",
+                "map",
+                "set",
+                "tree_node",
+                "graph",
+                "node_ref",
+                "null"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Kiểu giá trị nếu là map",
+          "title": "Val Type"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "title": "MemoryDeclaration",
+      "type": "object"
+    },
+    "NeighborsExpr": {
+      "properties": {
+        "kind": {
+          "const": "neighbors",
+          "default": "neighbors",
+          "title": "Kind",
+          "type": "string"
+        },
+        "graph": {
+          "description": "Tên graph",
+          "title": "Graph",
+          "type": "string"
+        },
+        "node": {
+          "description": "Đỉnh cần lấy danh sách kề",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Node"
+        }
+      },
+      "required": [
+        "graph",
+        "node"
+      ],
+      "title": "NeighborsExpr",
+      "type": "object"
+    },
+    "NotCond": {
+      "properties": {
+        "kind": {
+          "const": "not",
+          "default": "not",
+          "title": "Kind",
+          "type": "string"
+        },
+        "expr": {
+          "description": "Điều kiện phủ định",
+          "discriminator": {
+            "mapping": {
+              "compare": "#/$defs/CompareCond",
+              "contains": "#/$defs/ContainsCond",
+              "is_empty": "#/$defs/IsEmptyCond",
+              "is_null": "#/$defs/IsNullCond",
+              "logic": "#/$defs/LogicCond",
+              "not": "#/$defs/NotCond"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CompareCond"
+            },
+            {
+              "$ref": "#/$defs/LogicCond"
+            },
+            {
+              "$ref": "#/$defs/NotCond"
+            },
+            {
+              "$ref": "#/$defs/IsEmptyCond"
+            },
+            {
+              "$ref": "#/$defs/ContainsCond"
+            },
+            {
+              "$ref": "#/$defs/IsNullCond"
+            }
+          ],
+          "title": "Expr"
+        }
+      },
+      "required": [
+        "expr"
+      ],
+      "title": "NotCond",
+      "type": "object"
+    },
+    "PeekExpr": {
+      "properties": {
+        "kind": {
+          "const": "peek",
+          "default": "peek",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên stack hoặc queue cần nhìn phần tử đầu",
+          "title": "Container",
+          "type": "string"
+        }
+      },
+      "required": [
+        "container"
+      ],
+      "title": "PeekExpr",
+      "type": "object"
+    },
+    "PopStmt": {
+      "properties": {
+        "kind": {
+          "const": "pop",
+          "default": "pop",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên stack",
+          "title": "Container",
+          "type": "string"
+        },
+        "dest_var": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Biến nhận phần tử lấy ra (nếu có)",
+          "title": "Dest Var"
+        }
+      },
+      "required": [
+        "container"
+      ],
+      "title": "PopStmt",
+      "type": "object"
+    },
+    "PushStmt": {
+      "properties": {
+        "kind": {
+          "const": "push",
+          "default": "push",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên stack hoặc array",
+          "title": "Container",
+          "type": "string"
+        },
+        "val": {
+          "description": "Phần tử đẩy vào",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Val"
+        }
+      },
+      "required": [
+        "container",
+        "val"
+      ],
+      "title": "PushStmt",
+      "type": "object"
+    },
+    "ReturnStmt": {
+      "properties": {
+        "kind": {
+          "const": "return",
+          "default": "return",
+          "title": "Kind",
+          "type": "string"
+        },
+        "val": {
+          "anyOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "arith": "#/$defs/BinaryArithExpr",
+                  "field": "#/$defs/FieldRefExpr",
+                  "index": "#/$defs/IndexRefExpr",
+                  "length": "#/$defs/LengthExpr",
+                  "literal": "#/$defs/LiteralExpr",
+                  "map_get": "#/$defs/MapGetExpr",
+                  "neighbors": "#/$defs/NeighborsExpr",
+                  "peek": "#/$defs/PeekExpr",
+                  "unary": "#/$defs/UnaryArithExpr",
+                  "var": "#/$defs/VarRefExpr"
+                },
+                "propertyName": "kind"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/VarRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/IndexRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/FieldRefExpr"
+                },
+                {
+                  "$ref": "#/$defs/BinaryArithExpr"
+                },
+                {
+                  "$ref": "#/$defs/UnaryArithExpr"
+                },
+                {
+                  "$ref": "#/$defs/LengthExpr"
+                },
+                {
+                  "$ref": "#/$defs/PeekExpr"
+                },
+                {
+                  "$ref": "#/$defs/MapGetExpr"
+                },
+                {
+                  "$ref": "#/$defs/NeighborsExpr"
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Giá trị trả về (nếu có)",
+          "title": "Val"
+        }
+      },
+      "title": "ReturnStmt",
+      "type": "object"
+    },
+    "SetInsertStmt": {
+      "properties": {
+        "kind": {
+          "const": "set_insert",
+          "default": "set_insert",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên set",
+          "title": "Container",
+          "type": "string"
+        },
+        "val": {
+          "description": "Phần tử thêm vào tập hợp",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Val"
+        }
+      },
+      "required": [
+        "container",
+        "val"
+      ],
+      "title": "SetInsertStmt",
+      "type": "object"
+    },
+    "SetRemoveStmt": {
+      "properties": {
+        "kind": {
+          "const": "set_remove",
+          "default": "set_remove",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên set",
+          "title": "Container",
+          "type": "string"
+        },
+        "val": {
+          "description": "Phần tử xóa khỏi tập hợp",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Val"
+        }
+      },
+      "required": [
+        "container",
+        "val"
+      ],
+      "title": "SetRemoveStmt",
+      "type": "object"
+    },
+    "SwapStmt": {
+      "properties": {
+        "kind": {
+          "const": "swap",
+          "default": "swap",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên container hoán đổi (array)",
+          "title": "Container",
+          "type": "string"
+        },
+        "idx_a": {
+          "description": "Chỉ số A",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Idx A"
+        },
+        "idx_b": {
+          "description": "Chỉ số B",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Idx B"
+        }
+      },
+      "required": [
+        "container",
+        "idx_a",
+        "idx_b"
+      ],
+      "title": "SwapStmt",
+      "type": "object"
+    },
+    "UnaryArithExpr": {
+      "properties": {
+        "kind": {
+          "const": "unary",
+          "default": "unary",
+          "title": "Kind",
+          "type": "string"
+        },
+        "op": {
+          "const": "-",
+          "description": "Toán tử đảo dấu",
+          "title": "Op",
+          "type": "string"
+        },
+        "expr": {
+          "description": "Biểu thức con",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Expr"
+        }
+      },
+      "required": [
+        "op",
+        "expr"
+      ],
+      "title": "UnaryArithExpr",
+      "type": "object"
+    },
+    "VarRefExpr": {
+      "properties": {
+        "kind": {
+          "const": "var",
+          "default": "var",
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "description": "Tên biến tham chiếu",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "VarRefExpr",
+      "type": "object"
+    },
+    "VisualBindings": {
+      "properties": {
+        "containers": {
+          "description": "Danh sách binding container",
+          "items": {
+            "$ref": "#/$defs/VisualContainerBinding"
+          },
+          "title": "Containers",
+          "type": "array"
+        },
+        "pointers": {
+          "description": "Danh sách binding con trỏ",
+          "items": {
+            "$ref": "#/$defs/VisualPointerBinding"
+          },
+          "title": "Pointers",
+          "type": "array"
+        },
+        "value_boxes": {
+          "description": "Danh sách binding hộp giá trị",
+          "items": {
+            "$ref": "#/$defs/VisualValueBoxBinding"
+          },
+          "title": "Value Boxes",
+          "type": "array"
+        }
+      },
+      "title": "VisualBindings",
+      "type": "object"
+    },
+    "VisualContainerBinding": {
+      "properties": {
+        "semantic_id": {
+          "description": "Tên container trong Semantic Memory",
+          "title": "Semantic Id",
+          "type": "string"
+        },
+        "primitive": {
+          "description": "Visual primitive tương ứng trong DSL",
+          "enum": [
+            "array_strip",
+            "stack_view",
+            "queue_view",
+            "table_grid",
+            "tree_element",
+            "bit_register",
+            "bar_chart"
+          ],
+          "title": "Primitive",
+          "type": "string"
+        },
+        "label": {
+          "description": "Nhãn hiển thị trên canvas",
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "semantic_id",
+        "primitive",
+        "label"
+      ],
+      "title": "VisualContainerBinding",
+      "type": "object"
+    },
+    "VisualPointerBinding": {
+      "properties": {
+        "pointer_id": {
+          "description": "ID của con trỏ hiển thị",
+          "title": "Pointer Id",
+          "type": "string"
+        },
+        "var_ref": {
+          "description": "Tên biến trong Semantic Memory cần theo dõi",
+          "title": "Var Ref",
+          "type": "string"
+        },
+        "target_container": {
+          "description": "Container mà con trỏ neo vào",
+          "title": "Target Container",
+          "type": "string"
+        },
+        "label": {
+          "description": "Ký tự nhãn con trỏ (vd: 'i', 'left')",
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "pointer_id",
+        "var_ref",
+        "target_container",
+        "label"
+      ],
+      "title": "VisualPointerBinding",
+      "type": "object"
+    },
+    "VisualValueBoxBinding": {
+      "properties": {
+        "box_id": {
+          "description": "ID của hộp giá trị",
+          "title": "Box Id",
+          "type": "string"
+        },
+        "var_ref": {
+          "description": "Tên biến cần hiển thị",
+          "title": "Var Ref",
+          "type": "string"
+        },
+        "label": {
+          "description": "Nhãn của hộp giá trị (vd: 'Ký tự hiện tại', 'Kết quả')",
+          "title": "Label",
+          "type": "string"
+        }
+      },
+      "required": [
+        "box_id",
+        "var_ref",
+        "label"
+      ],
+      "title": "VisualValueBoxBinding",
+      "type": "object"
+    },
+    "WhileStmt": {
+      "properties": {
+        "kind": {
+          "const": "while",
+          "default": "while",
+          "title": "Kind",
+          "type": "string"
+        },
+        "condition": {
+          "description": "Điều kiện lặp",
+          "discriminator": {
+            "mapping": {
+              "compare": "#/$defs/CompareCond",
+              "contains": "#/$defs/ContainsCond",
+              "is_empty": "#/$defs/IsEmptyCond",
+              "is_null": "#/$defs/IsNullCond",
+              "logic": "#/$defs/LogicCond",
+              "not": "#/$defs/NotCond"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/CompareCond"
+            },
+            {
+              "$ref": "#/$defs/LogicCond"
+            },
+            {
+              "$ref": "#/$defs/NotCond"
+            },
+            {
+              "$ref": "#/$defs/IsEmptyCond"
+            },
+            {
+              "$ref": "#/$defs/ContainsCond"
+            },
+            {
+              "$ref": "#/$defs/IsNullCond"
+            }
+          ],
+          "title": "Condition"
+        },
+        "max_iterations": {
+          "default": 100,
+          "description": "Giới hạn số vòng lặp tối đa chống lặp vô hạn",
+          "maximum": 200,
+          "minimum": 1,
+          "title": "Max Iterations",
+          "type": "integer"
+        },
+        "body": {
+          "description": "Thân vòng lặp",
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "assign": "#/$defs/AssignStmt",
+                "break": "#/$defs/BreakStmt",
+                "dequeue": "#/$defs/DequeueStmt",
+                "enqueue": "#/$defs/EnqueueStmt",
+                "for_each": "#/$defs/ForEachStmt",
+                "for_range": "#/$defs/ForRangeStmt",
+                "if": "#/$defs/IfStmt",
+                "map_set": "#/$defs/MapSetStmt",
+                "pop": "#/$defs/PopStmt",
+                "push": "#/$defs/PushStmt",
+                "return": "#/$defs/ReturnStmt",
+                "set_insert": "#/$defs/SetInsertStmt",
+                "set_remove": "#/$defs/SetRemoveStmt",
+                "swap": "#/$defs/SwapStmt",
+                "while": "#/$defs/WhileStmt",
+                "write_index": "#/$defs/WriteIndexStmt"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/WriteIndexStmt"
+              },
+              {
+                "$ref": "#/$defs/MapSetStmt"
+              },
+              {
+                "$ref": "#/$defs/SwapStmt"
+              },
+              {
+                "$ref": "#/$defs/PushStmt"
+              },
+              {
+                "$ref": "#/$defs/PopStmt"
+              },
+              {
+                "$ref": "#/$defs/EnqueueStmt"
+              },
+              {
+                "$ref": "#/$defs/DequeueStmt"
+              },
+              {
+                "$ref": "#/$defs/SetInsertStmt"
+              },
+              {
+                "$ref": "#/$defs/SetRemoveStmt"
+              },
+              {
+                "$ref": "#/$defs/IfStmt"
+              },
+              {
+                "$ref": "#/$defs/WhileStmt"
+              },
+              {
+                "$ref": "#/$defs/ForRangeStmt"
+              },
+              {
+                "$ref": "#/$defs/ForEachStmt"
+              },
+              {
+                "$ref": "#/$defs/BreakStmt"
+              },
+              {
+                "$ref": "#/$defs/ReturnStmt"
+              }
+            ]
+          },
+          "title": "Body",
+          "type": "array"
+        }
+      },
+      "required": [
+        "condition",
+        "body"
+      ],
+      "title": "WhileStmt",
+      "type": "object"
+    },
+    "WriteIndexStmt": {
+      "properties": {
+        "kind": {
+          "const": "write_index",
+          "default": "write_index",
+          "title": "Kind",
+          "type": "string"
+        },
+        "container": {
+          "description": "Tên container (array/matrix)",
+          "title": "Container",
+          "type": "string"
+        },
+        "index": {
+          "description": "Chỉ số ghi",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Index"
+        },
+        "val": {
+          "description": "Giá trị ghi vào",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Val"
+        }
+      },
+      "required": [
+        "container",
+        "index",
+        "val"
+      ],
+      "title": "WriteIndexStmt",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "spec_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Spec Version",
+      "type": "string"
+    },
+    "title": {
+      "description": "Tiêu đề mô phỏng thuật toán",
+      "maxLength": 150,
+      "minLength": 3,
+      "title": "Title",
+      "type": "string"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "maxLength": 300,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Mô tả ngắn gọn",
+      "title": "Description"
+    },
+    "memory_declarations": {
+      "description": "Khai báo các vùng nhớ và biến",
+      "items": {
+        "$ref": "#/$defs/MemoryDeclaration"
+      },
+      "title": "Memory Declarations",
+      "type": "array"
+    },
+    "statements": {
+      "description": "Tập các câu lệnh thuật toán",
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "assign": "#/$defs/AssignStmt",
+            "break": "#/$defs/BreakStmt",
+            "dequeue": "#/$defs/DequeueStmt",
+            "enqueue": "#/$defs/EnqueueStmt",
+            "for_each": "#/$defs/ForEachStmt",
+            "for_range": "#/$defs/ForRangeStmt",
+            "if": "#/$defs/IfStmt",
+            "map_set": "#/$defs/MapSetStmt",
+            "pop": "#/$defs/PopStmt",
+            "push": "#/$defs/PushStmt",
+            "return": "#/$defs/ReturnStmt",
+            "set_insert": "#/$defs/SetInsertStmt",
+            "set_remove": "#/$defs/SetRemoveStmt",
+            "swap": "#/$defs/SwapStmt",
+            "while": "#/$defs/WhileStmt",
+            "write_index": "#/$defs/WriteIndexStmt"
+          },
+          "propertyName": "kind"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/AssignStmt"
+          },
+          {
+            "$ref": "#/$defs/WriteIndexStmt"
+          },
+          {
+            "$ref": "#/$defs/MapSetStmt"
+          },
+          {
+            "$ref": "#/$defs/SwapStmt"
+          },
+          {
+            "$ref": "#/$defs/PushStmt"
+          },
+          {
+            "$ref": "#/$defs/PopStmt"
+          },
+          {
+            "$ref": "#/$defs/EnqueueStmt"
+          },
+          {
+            "$ref": "#/$defs/DequeueStmt"
+          },
+          {
+            "$ref": "#/$defs/SetInsertStmt"
+          },
+          {
+            "$ref": "#/$defs/SetRemoveStmt"
+          },
+          {
+            "$ref": "#/$defs/IfStmt"
+          },
+          {
+            "$ref": "#/$defs/WhileStmt"
+          },
+          {
+            "$ref": "#/$defs/ForRangeStmt"
+          },
+          {
+            "$ref": "#/$defs/ForEachStmt"
+          },
+          {
+            "$ref": "#/$defs/BreakStmt"
+          },
+          {
+            "$ref": "#/$defs/ReturnStmt"
+          }
+        ]
+      },
+      "title": "Statements",
+      "type": "array"
+    },
+    "visual_bindings": {
+      "$ref": "#/$defs/VisualBindings",
+      "description": "Khai báo liên kết hiển thị trực quan"
+    },
+    "pedagogical_intent": {
+      "anyOf": [
+        {
+          "maxLength": 500,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Ý đồ sư phạm / tóm tắt cấp cao (Tier 2 narration)",
+      "title": "Pedagogical Intent"
+    }
+  },
+  "required": [
+    "title",
+    "memory_declarations",
+    "statements"
+  ],
+  "title": "SemanticProgramSpec",
+  "type": "object"
+}
