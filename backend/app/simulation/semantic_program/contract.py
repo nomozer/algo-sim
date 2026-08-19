@@ -300,7 +300,7 @@ class VisualBindings(BaseModel):
 class SemanticProgramSpec(BaseModel):
     spec_version: Literal["1.0"] = SPEC_VERSION
     title: str = Field(..., min_length=3, max_length=150, description="Tiêu đề mô phỏng thuật toán")
-    description: Optional[str] = Field(None, max_length=300, description="Mô tả ngắn gọn")
+    description: Optional[str] = Field(None, max_length=1000, description="Mô tả ngắn gọn")
     memory_declarations: list[MemoryDeclaration] = Field(..., description="Khai báo các vùng nhớ và biến")
     statements: list[SemanticStatement] = Field(..., description="Tập các câu lệnh thuật toán")
     visual_bindings: VisualBindings = Field(default_factory=VisualBindings, description="Khai báo liên kết hiển thị trực quan")
