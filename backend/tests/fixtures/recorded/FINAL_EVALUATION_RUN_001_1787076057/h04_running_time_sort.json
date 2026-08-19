@@ -1,0 +1,200 @@
+{
+  "task_id": "h04_running_time_sort",
+  "problem_text": "Cho thời gian chạy (giây) của 5 vận động viên gồm: 12.5, 11.2, 14.1, 10.8, 13.0. Hãy mô phỏng thuật toán sắp xếp các thành tích này theo thứ tự tăng dần.",
+  "prompt_hash": "963aaf88029ee6ab07cd7be8060bbbe0e30c8952b39701b9378717ec21fbb7b4",
+  "git_commit": "d2e5b9f1aa2807124ab7c1c2894914b131a34e93",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T18:02:54.926030+00:00",
+  "duration_sec": 13.477931499481201,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "unsupported",
+      "duration": 13.477931499481201
+    }
+  ],
+  "final_envelope": {
+    "status": "unsupported",
+    "reason": "Đề đang yêu cầu 3 việc cùng lúc (sắp xếp nổi bọt; sắp xếp chèn; sắp xếp chọn), nhưng mỗi lần mô phỏng chỉ trình bày được MỘT. Một lần mô phỏng chạy một thuật toán sắp xếp. Em hãy tách thành từng lần hỏi — giữ nguyên dữ liệu, mỗi lần chọn một yêu cầu — để xem đầy đủ từng bước.",
+    "failure_category": "semantic_incomplete",
+    "error_code": "multiple_operations_not_supported",
+    "completeness": {
+      "family_id": "comparison_sort",
+      "operation_cardinality": "single",
+      "max_operations": 1,
+      "requested_operations": [
+        "comparison_sort:bubble",
+        "comparison_sort:insertion",
+        "comparison_sort:selection"
+      ],
+      "requested_semantic_requirements": [
+        {
+          "semantic_operation_id": "sequence.sort",
+          "semantic_variant_id": "bubble",
+          "semantic_goal_id": null
+        },
+        {
+          "semantic_operation_id": "sequence.sort",
+          "semantic_variant_id": "insertion",
+          "semantic_goal_id": null
+        },
+        {
+          "semantic_operation_id": "sequence.sort",
+          "semantic_variant_id": "selection",
+          "semantic_goal_id": null
+        }
+      ],
+      "requested_operation_labels": [
+        "sắp xếp nổi bọt",
+        "sắp xếp chèn",
+        "sắp xếp chọn"
+      ],
+      "supported_operations": [
+        "comparison_sort:bubble",
+        "comparison_sort:insertion",
+        "comparison_sort:selection"
+      ],
+      "requested_in_family": [
+        "comparison_sort.adjacent_compare_swap",
+        "comparison_sort.select_extreme_repeated",
+        "comparison_sort.shift_into_sorted_prefix"
+      ],
+      "unsupported_combinations": [
+        [
+          "sequence.sort/bubble",
+          "sequence.sort/insertion",
+          "sequence.sort/selection"
+        ]
+      ],
+      "detected_by": "semantic_operation",
+      "policy_note": "Một lần mô phỏng chạy một thuật toán sắp xếp."
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "progressive",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "thời gian chạy của vận động viên",
+        "dãy thành tích"
+      ],
+      "data": [
+        {
+          "description": "thời gian chạy của 5 vận động viên",
+          "labels": null,
+          "values": [
+            12.5,
+            11.2,
+            14.1,
+            10.8,
+            13.0
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "sắp xếp các thành tích"
+      ],
+      "constraints": [
+        "thứ tự tăng dần"
+      ],
+      "goal": "Mô phỏng thuật toán sắp xếp các thành tích này theo thứ tự tăng dần.",
+      "input_description": "Dãy số thực biểu thị thời gian chạy của các vận động viên.",
+      "output_description": "Dãy số đã được sắp xếp theo thứ tự tăng dần.",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": "Đề bài không chỉ định cụ thể thuật toán sắp xếp nào cần mô phỏng.",
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [
+        "adjacent_compare_swap",
+        "shift_into_sorted_prefix",
+        "select_extreme_repeated"
+      ],
+      "requested_operations": [
+        "comparison_sort:bubble",
+        "comparison_sort:insertion",
+        "comparison_sort:selection"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "step_by_step_construction",
+        "movement",
+        "numeric"
+      ],
+      "scene_construction": "step_by_step",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    }
+  }
+}

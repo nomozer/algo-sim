@@ -1,0 +1,151 @@
+{
+  "task_id": "h05_search_last_occurrence",
+  "problem_text": "Cho dãy số nguyên gồm: 2, 5, 8, 5, 3, 5, 1. Hãy mô phỏng thuật toán tìm vị trí (chỉ số index) xuất hiện cuối cùng của số 5 trong dãy.",
+  "prompt_hash": "874f4c1d9097508642e37da3d4411b41382c0919105b43d849614a13e8eedc34",
+  "git_commit": "d2e5b9f1aa2807124ab7c1c2894914b131a34e93",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T18:03:26.261620+00:00",
+  "duration_sec": 31.334596872329712,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "unsupported",
+      "duration": 31.334596872329712
+    }
+  ],
+  "final_envelope": {
+    "status": "unsupported",
+    "reason": "Cơ chế đề yêu cầu thuộc một họ năng lực khác với mô phỏng đã chọn — cần chọn lại mô phỏng đúng họ hoặc từ chối trung thực.",
+    "failure_category": "capability_gap",
+    "error_code": "route_mechanism_family_mismatch",
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "dãy số nguyên",
+        "số 5"
+      ],
+      "data": [
+        {
+          "description": "dãy số nguyên",
+          "values": [
+            2,
+            5,
+            8,
+            5,
+            3,
+            5,
+            1
+          ]
+        },
+        {
+          "description": "số cần tìm",
+          "values": [
+            5
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "tìm vị trí xuất hiện cuối cùng của một số trong dãy"
+      ],
+      "constraints": [
+        "dãy gồm các số nguyên"
+      ],
+      "goal": "Mô phỏng thuật toán tìm vị trí (chỉ số index) xuất hiện cuối cùng của số 5 trong dãy.",
+      "input_description": "Một dãy số nguyên và một số nguyên cần tìm.",
+      "output_description": "Vị trí (chỉ số index) xuất hiện cuối cùng của số cần tìm trong dãy.",
+      "result_ownership": "provided",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": "bounded_control_flow.bounded_loop",
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [
+        "bounded_control_flow.bounded_loop"
+      ],
+      "requested_operations": [
+        "single_pass_scan:linear_search"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "single_pass_scan",
+        "numeric"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    }
+  }
+}

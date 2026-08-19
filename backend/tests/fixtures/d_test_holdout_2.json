@@ -1,0 +1,84 @@
+[
+  {
+    "id": "t01_min_power_scan",
+    "problem_text": "Cho mảng tiêu thụ điện (kWh) của 6 hộ gia đình gồm: 45, 12, 89, 32, 67, 23. Hãy mô phỏng thuật toán quét tuần tự để tìm lượng điện tiêu thụ nhỏ nhất.",
+    "oracle_func": "oracle_find_min",
+    "oracle_inputs": [[45, 12, 89, 32, 67, 23]],
+    "is_supported": true,
+    "archetype": "single_pass_scan_min"
+  },
+  {
+    "id": "t02_mixed_bracket_stack",
+    "problem_text": "Mô phỏng thuật toán kiểm tra chuỗi dấu ngoặc '[()]{}' có hợp lệ hay không sử dụng cấu trúc dữ liệu Ngăn xếp (Stack).",
+    "oracle_func": "oracle_bracket_validator",
+    "oracle_inputs": ["[()]{}"],
+    "is_supported": true,
+    "archetype": "stack_lilo"
+  },
+  {
+    "id": "t03_print_queue_fifo",
+    "problem_text": "Cho hàng đợi in ấn ban đầu gồm 3 tài liệu: DocA, DocB, DocC. Hãy mô phỏng thuật toán thêm tài liệu DocD vào hàng đợi và lần lượt in 2 tài liệu đầu tiên theo nguyên tắc FIFO (vào trước ra trước).",
+    "oracle_func": "oracle_queue_fifo",
+    "oracle_inputs": [["DocA", "DocB", "DocC"], ["DocD"], 2],
+    "is_supported": true,
+    "archetype": "queue_fifo"
+  },
+  {
+    "id": "t04_height_selection_sort",
+    "problem_text": "Cho danh sách chiều cao (cm) của 5 học sinh gồm: 158, 172, 165, 160, 170. Hãy mô phỏng thuật toán sắp xếp chọn (Selection Sort) để sắp danh sách theo thứ tự tăng dần.",
+    "oracle_func": "oracle_sort_athletes",
+    "oracle_inputs": [[158, 172, 165, 160, 170]],
+    "is_supported": true,
+    "archetype": "selection_sort"
+  },
+  {
+    "id": "t05_frequency_counter",
+    "problem_text": "Cho dãy số nguyên gồm: 7, 3, 7, 8, 7, 2, 9. Hãy mô phỏng thuật toán quét tuần tự để đếm số lần xuất hiện của số 7 trong dãy.",
+    "oracle_func": "oracle_frequency_count",
+    "oracle_inputs": [[7, 3, 7, 8, 7, 2, 9], 7],
+    "is_supported": true,
+    "archetype": "frequency_counter"
+  },
+  {
+    "id": "t06_excellent_student_filter",
+    "problem_text": "Cho bảng điểm gồm 4 học sinh: An (8.0), Bình (9.5), Chi (9.2), Dũng (7.5). Hãy mô phỏng thuật toán lọc và làm nổi bật các học sinh có điểm từ 9.0 trở lên.",
+    "oracle_func": "oracle_table_filter",
+    "oracle_inputs": [["Học sinh", "Điểm"], [["An", 8.0], ["Bình", 9.5], ["Chi", 9.2], ["Dũng", 7.5]], "Điểm", 9.0],
+    "is_supported": true,
+    "archetype": "table_grid_filter"
+  },
+  {
+    "id": "t07_exam_score_avg_scan",
+    "problem_text": "Cho điểm kiểm tra 5 bài của một học sinh: 6, 8, 7, 9, 10. Hãy tính điểm trung bình và mô phỏng quét tìm bài kiểm tra đầu tiên có điểm cao hơn mức trung bình đó.",
+    "oracle_func": "oracle_temperature_scan",
+    "oracle_inputs": [[6, 8, 7, 9, 10]],
+    "is_supported": true,
+    "archetype": "average_and_threshold"
+  },
+  {
+    "id": "t08_odd_numbers_counter",
+    "problem_text": "Cho danh sách số nguyên gồm: 14, 27, 35, 42, 59, 68, 71. Hãy mô phỏng thuật toán đếm số lượng số lẻ trong danh sách.",
+    "oracle_func": "oracle_odd_count",
+    "oracle_inputs": [[14, 27, 35, 42, 59, 68, 71]],
+    "is_supported": true,
+    "archetype": "filter_and_count"
+  },
+  {
+    "id": "t09_refusal_missing_preorder_tree",
+    "problem_text": "Hãy mô phỏng thuật toán duyệt cây nhị phân theo thứ tự trước (Pre-order Traversal) và in danh sách các nút được thăm.",
+    "oracle_func": "oracle_find_max",
+    "oracle_inputs": [[]],
+    "is_supported": false,
+    "expected_refusal_category": "insufficient_specification",
+    "archetype": "honest_refusal_missing_data"
+  },
+  {
+    "id": "t10_refusal_3d_cube_rotation",
+    "problem_text": "Hãy mô phỏng việc quay một khối lập phương 3 chiều quanh trục tọa độ Z với góc quay thay đổi liên tục theo thời gian thực.",
+    "oracle_func": "oracle_find_max",
+    "oracle_inputs": [[]],
+    "is_supported": false,
+    "expected_refusal_category": "capability_gap",
+    "archetype": "honest_refusal_capability_gap"
+  }
+]

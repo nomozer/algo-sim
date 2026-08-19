@@ -1,0 +1,287 @@
+{
+  "task_id": "h07_temperature_scan_avg",
+  "problem_text": "Cho nhiệt độ 7 ngày trong tuần: 24, 26, 25, 29, 28, 31, 27 độ C. Hãy tính nhiệt độ trung bình tuần và mô phỏng quét tìm ngày đầu tiên có nhiệt độ cao hơn mức trung bình.",
+  "prompt_hash": "27431f1a433ad58925b2e4feadafe1e60b73ffae53951eed7e12c1ca20529558",
+  "git_commit": "d2e5b9f1aa2807124ab7c1c2894914b131a34e93",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T18:05:54.406692+00:00",
+  "duration_sec": 126.80209231376648,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 126.80209231376648
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Tính nhiệt độ trung bình và tìm ngày đầu tiên cao hơn trung bình",
+    "description": "Dãy nhiệt độ 7 ngày trong tuần. → Nhiệt độ trung bình tuần và ngày đầu tiên có nhiệt độ cao hơn mức trung bình.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Tính nhiệt độ trung bình và tìm ngày đầu tiên cao hơn trung bình",
+      "objects": [
+        {
+          "id": "heading_title",
+          "type": "heading",
+          "text": "Tính nhiệt độ trung bình và tìm ngày đầu tiên cao hơn trung bình"
+        },
+        {
+          "id": "temperatures_array",
+          "type": "array_strip",
+          "label": "Nhiệt độ 7 ngày (°C)"
+        },
+        {
+          "id": "sum_label",
+          "type": "label",
+          "text": "Tổng nhiệt độ:"
+        },
+        {
+          "id": "sum_box",
+          "type": "value_box",
+          "value": 0
+        },
+        {
+          "id": "count_label",
+          "type": "label",
+          "text": "Số ngày:"
+        },
+        {
+          "id": "count_box",
+          "type": "value_box",
+          "value": 7
+        },
+        {
+          "id": "avg_temp_label",
+          "type": "label",
+          "text": "Nhiệt độ trung bình:"
+        },
+        {
+          "id": "avg_temp_box",
+          "type": "value_box"
+        },
+        {
+          "id": "result_label",
+          "type": "label",
+          "text": "Ngày đầu tiên > trung bình:"
+        },
+        {
+          "id": "result_box",
+          "type": "value_box"
+        },
+        {
+          "id": "pointer_i",
+          "type": "pointer",
+          "label": "i"
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "action": "highlight",
+              "narration": "Chúng ta có dữ liệu nhiệt độ 7 ngày trong tuần: 24, 26, 25, 29, 28, 31, 27 độ C."
+            },
+            {
+              "action": "highlight",
+              "narration": "Để tính nhiệt độ trung bình, chúng ta cần tính tổng nhiệt độ của tất cả các ngày và biết số lượng ngày. Khởi tạo tổng là 0 và số ngày là 7."
+            },
+            {
+              "action": "highlight",
+              "narration": "Bắt đầu tính tổng nhiệt độ. Con trỏ 'i' sẽ duyệt qua từng ngày để cộng dồn."
+            },
+            {
+              "action": "highlight",
+              "narration": "Hệ thống cộng dồn nhiệt độ của tất cả 7 ngày: 24 + 26 + 25 + 29 + 28 + 31 + 27 = 190. Giá trị tổng được cập nhật vào ô 'Tổng nhiệt độ'. (Lưu ý: Con trỏ 'i' không di chuyển trong bước này để minh họa tổng thể phép cộng dồn)."
+            },
+            {
+              "action": "highlight",
+              "narration": "Sau khi tính tổng, con trỏ 'i' di chuyển ra khỏi mảng để chuẩn bị cho bước tiếp theo."
+            },
+            {
+              "action": "highlight",
+              "narration": "Tổng nhiệt độ là 190°C. Số ngày là 7. Nhiệt độ trung bình được tính bằng 190 / 7 ≈ 27.14°C. Giá trị này được hiển thị trong ô 'Nhiệt độ trung bình'."
+            },
+            {
+              "action": "highlight",
+              "narration": "Bây giờ, chúng ta sẽ quét lại từ đầu để tìm ngày đầu tiên có nhiệt độ cao hơn mức trung bình (27.14°C). Con trỏ 'i' được đặt lại về vị trí đầu tiên."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' đang ở ngày thứ 1 (24°C). Kiểm tra: 24°C không lớn hơn 27.14°C. Ngày này không thỏa mãn điều kiện."
+            },
+            {
+              "action": "highlight",
+              "narration": "Di chuyển con trỏ 'i' sang ngày tiếp theo, ngày thứ 2."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' đang ở ngày thứ 2 (26°C). Kiểm tra: 26°C không lớn hơn 27.14°C. Ngày này không thỏa mãn điều kiện."
+            },
+            {
+              "action": "highlight",
+              "narration": "Di chuyển con trỏ 'i' sang ngày tiếp theo, ngày thứ 3."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' đang ở ngày thứ 3 (25°C). Kiểm tra: 25°C không lớn hơn 27.14°C. Ngày này không thỏa mãn điều kiện."
+            },
+            {
+              "action": "highlight",
+              "narration": "Di chuyển con trỏ 'i' sang ngày tiếp theo, ngày thứ 4."
+            },
+            {
+              "action": "highlight",
+              "narration": "Con trỏ 'i' đang ở ngày thứ 4 (29°C). Kiểm tra: 29°C LỚN HƠN 27.14°C! Đây là ngày đầu tiên có nhiệt độ cao hơn mức trung bình. Ngày này được đánh dấu màu xanh lá cây."
+            },
+            {
+              "action": "highlight",
+              "narration": "Ghi nhận kết quả: Ngày 4 là ngày đầu tiên có nhiệt độ cao hơn mức trung bình. Quá trình tìm kiếm kết thúc."
+            },
+            {
+              "action": "highlight",
+              "narration": "Quá trình tìm kiếm hoàn tất. Ngày đầu tiên có nhiệt độ cao hơn mức trung bình là Ngày 4."
+            }
+          ]
+        }
+      ],
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "nhiệt độ",
+        "ngày trong tuần",
+        "nhiệt độ trung bình tuần"
+      ],
+      "data": [
+        {
+          "description": "Nhiệt độ 7 ngày trong tuần",
+          "labels": null,
+          "values": [
+            24,
+            26,
+            25,
+            29,
+            28,
+            31,
+            27
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "tính nhiệt độ trung bình tuần",
+        "quét tìm ngày đầu tiên có nhiệt độ cao hơn mức trung bình"
+      ],
+      "constraints": [
+        "7 ngày trong tuần",
+        "nhiệt độ tính bằng độ C"
+      ],
+      "goal": "Mô phỏng quét tìm ngày đầu tiên có nhiệt độ cao hơn mức trung bình.",
+      "input_description": "Dãy nhiệt độ 7 ngày trong tuần.",
+      "output_description": "Nhiệt độ trung bình tuần và ngày đầu tiên có nhiệt độ cao hơn mức trung bình.",
+      "result_ownership": "rule_derivable",
+      "domain_scope": "ADJACENT_CONTEXT",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "single_pass_scan:scan",
+        "single_pass_scan:linear_search"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "single_pass_scan",
+        "numeric"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}

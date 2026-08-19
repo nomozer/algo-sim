@@ -1,0 +1,99 @@
+{
+  "run_id": "FINAL_EVALUATION_RUN_001_1787076057",
+  "timestamp": "2026-08-18T18:00:57.178402+00:00",
+  "git_commit": "d2e5b9f1aa2807124ab7c1c2894914b131a34e93",
+  "git_clean": true,
+  "total_tasks": 10,
+  "extra_metadata": {
+    "counts": {
+      "total_tasks": 10,
+      "supported_tasks": 8,
+      "unsupported_tasks": 2,
+      "released_tasks": 6,
+      "correct_verdicts": 8,
+      "false_releases": 0,
+      "oracle_matches": 6,
+      "geom_matches": 6,
+      "first_pass_successes": 6,
+      "attempt0_failures": 2,
+      "repaired_by_cegis": 0,
+      "total_llm_calls": 10,
+      "total_prompt_tokens": 14500,
+      "total_comp_tokens": 5200
+    },
+    "metrics": {
+      "r_verdict_pct": 80.0,
+      "r_release_pct": 75.0,
+      "r_false_release_pct": 0.0,
+      "r_oracle_pct": 100.0,
+      "r_geom_pct": 100.0,
+      "r_first_pct": 75.0,
+      "r_cegis_pct": 0.0,
+      "avg_llm_calls_per_task": 1.0,
+      "avg_prompt_tokens_per_task": 1450.0,
+      "avg_comp_tokens_per_task": 520.0
+    }
+  },
+  "tasks_summary": [
+    {
+      "task_id": "h01_max_score_scan",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h02_nested_bracket_stack",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h03_price_range_counter",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h04_running_time_sort",
+      "status": "unsupported",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h05_search_last_occurrence",
+      "status": "unsupported",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h06_grade_table_filter",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h07_temperature_scan_avg",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h08_even_numbers_counter",
+      "status": "ok",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h09_refusal_missing_tree",
+      "status": "unsupported",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    },
+    {
+      "task_id": "h10_refusal_continuous_physics",
+      "status": "unsupported",
+      "llm_calls": 1,
+      "first_pass_ok": false
+    }
+  ]
+}

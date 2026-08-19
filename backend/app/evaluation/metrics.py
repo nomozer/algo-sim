@@ -120,9 +120,13 @@ def compute_metrics(
     oracle_matches = sum(1 for r in eval_results if r.get("actual_status") == "ok" and r.get("oracle_matched") is True)
     geom_matches = sum(1 for r in eval_results if r.get("actual_status") == "ok" and r.get("geom_valid") is True)
     
-    # 4. First pass & CEGIS dynamics (out of supported)
+    # 4. First pass & CEGIS dynamics
     first_pass_ok = sum(1 for r in eval_results if r.get("is_supported_expected", True) and r.get("first_pass_ok", False))
-    attempt0_failures = supported_tasks - first_pass_ok
+    # attempt0_failures: các task thực sự sinh candidate 0 bị fail và phải kích hoạt CEGIS sửa
+    attempt0_failures = sum(
+        1 for r in eval_results 
+        if r.get("is_supported_expected", True) and (r.get("cegis_triggered", False) or r.get("repaired_by_cegis", False))
+    )
     repaired_by_cegis = sum(1 for r in eval_results if r.get("is_supported_expected", True) and r.get("repaired_by_cegis", False))
     
     # 5. Calls and Tokens

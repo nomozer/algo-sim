@@ -394,6 +394,47 @@ def execute_simulation(spec: dict, oracle_result: dict[str, Any] | None = None) 
                 )
                 return ExecutionReport(ok=False, error=ce.message, error_code=ce.violation_code, counterexample=ce)
 
+        # 7. Min / Max scan
+        if "min_val" in oracle_result:
+            expected_min = oracle_result["min_val"]
+            found = False
+            for vid, val in current_values.items():
+                if val == expected_min:
+                    found = True
+                    break
+            if not found and (str(expected_min) in all_narrations or f"nhỏ nhất: {expected_min}" in all_narrations.lower() or f"min: {expected_min}" in all_narrations.lower()):
+                found = True
+            if not found:
+                ce = Counterexample(
+                    gate="oracle",
+                    violation_code="ORACLE_RESULT_MISMATCH",
+                    step_index=len(snapshots) - 1,
+                    message=f'Giá trị nhỏ nhất không khớp với Oracle: mong đợi min = {expected_min}.',
+                    details={"expected": expected_min, "actual_values": current_values},
+                )
+                return ExecutionReport(ok=False, error=ce.message, error_code=ce.violation_code, counterexample=ce)
+
+        # 8. Queue FIFO final length
+        if "final_length" in oracle_result:
+            expected_len = oracle_result["final_length"]
+            found = False
+            if current_queues:
+                for q in current_queues.values():
+                    if len(q) == expected_len or len(q) == expected_len + 1:
+                        found = True
+                        break
+            if not found and ("hàng đợi" in all_narrations.lower() or str(expected_len) in all_narrations):
+                found = True
+            if not found:
+                ce = Counterexample(
+                    gate="oracle",
+                    violation_code="ORACLE_RESULT_MISMATCH",
+                    step_index=len(snapshots) - 1,
+                    message=f'Số phần tử hàng đợi cuối cùng không khớp với Oracle: mong đợi {expected_len}.',
+                    details={"expected": expected_len, "actual_values": current_values},
+                )
+                return ExecutionReport(ok=False, error=ce.message, error_code=ce.violation_code, counterexample=ce)
+
     return ExecutionReport(
         ok=True,
         snapshots=snapshots,

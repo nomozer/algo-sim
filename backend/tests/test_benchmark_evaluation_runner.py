@@ -18,17 +18,17 @@ from app.simulation.dsl.executor import execute_simulation
 from app.simulation.dsl.geometry import check_disallowed_collisions_py
 import tests.oracles as oracles
 
-HOLDOUT_FILE = Path(__file__).parent / "fixtures" / "d_test_holdout.json"
+HOLDOUT_FILE = Path(__file__).parent / "fixtures" / "d_test_holdout_2.json"
 MANIFEST_FILE = Path(__file__).parent / "fixtures" / "seal_manifest.json"
 
 
 @pytest.mark.anyio
-async def test_final_evaluation_run_001():
+async def test_final_evaluation_run_002():
     # 1. Gate kiểm tra cờ lệnh mở niêm phong
     final_run_flag = os.environ.get("FINAL_RUN") == "1"
     if not final_run_flag:
         pytest.skip(
-            "FINAL_EVALUATION_RUN_001 bị khóa niêm phong. "
+            "FINAL_EVALUATION_RUN_002 bị khóa niêm phong. "
             "Chỉ được mở chạy bằng lệnh: $env:FINAL_RUN='1'; pytest backend/tests/test_benchmark_evaluation_runner.py -s -v"
         )
 
@@ -50,17 +50,17 @@ async def test_final_evaluation_run_001():
     current_sha256 = compute_sha256(holdout_data)
     expected_sha256 = seal_manifest.get("d_test_sha256")
     assert current_sha256 == expected_sha256, (
-        f"TAMPERED_HOLDOUT_SET: Mã băm SHA-256 của d_test_holdout.json ({current_sha256}) "
+        f"TAMPERED_HOLDOUT_SET: Mã băm SHA-256 của d_test_holdout_2.json ({current_sha256}) "
         f"không khớp với seal_manifest.json ({expected_sha256})."
     )
 
     # 3. Khởi tạo Provenance Logger cho đợt chạy Final
-    run_id = f"FINAL_EVALUATION_RUN_001_{int(time.time())}"
+    run_id = f"FINAL_EVALUATION_RUN_002_{int(time.time())}"
     logger = ProvenanceLogger(run_id=run_id)
     task_results = []
 
     print("\n" + "=" * 70)
-    print(f"KÍCH HOẠT FINAL_EVALUATION_RUN_001 (10 BÀI HOLDOUT UNSEEN)")
+    print(f"KÍCH HOẠT FINAL_EVALUATION_RUN_002 (10 BÀI HOLDOUT UNSEEN)")
     print(f"Dataset SHA-256: {current_sha256}")
     print(f"Git Commit SHA:  {get_git_commit_hash()}")
     print("=" * 70)
@@ -145,7 +145,7 @@ async def test_final_evaluation_run_001():
     manifest_path = logger.save_summary_manifest(extra_meta=metrics.to_dict())
 
     # 5. Xuất Báo cáo Chứng nhận Chính thức (Scientific Certification Report)
-    report_md = f"""# Báo cáo Thực nghiệm Khoa học: FINAL_EVALUATION_RUN_001
+    report_md = f"""# Báo cáo Thực nghiệm Khoa học: FINAL_EVALUATION_RUN_002
 
 ## 1. Thông tin Phiên Thực nghiệm & Niêm phong
 - **Mã đợt chạy**: `{run_id}`
@@ -154,7 +154,7 @@ async def test_final_evaluation_run_001():
 - **Dataset SHA-256**: `{current_sha256}`
 - **Git Commit SHA**: `{get_git_commit_hash()}`
 - **Cache Enabled**: `False` (Vô hiệu hóa toàn diện)
-- **Tập dữ liệu**: `instance-level held-out evaluation set` (10 bài toán)
+- **Tập dữ liệu**: `instance-level held-out evaluation set 2` (10 bài toán)
 
 ---
 
@@ -195,7 +195,7 @@ async def test_final_evaluation_run_001():
 - **Tính Toàn vẹn Dữ liệu**: Toàn bộ raw response và provenance trace được lưu trữ tại `{manifest_path}`.
 """
 
-    report_file = Path("artifacts") / "FINAL_EVALUATION_REPORT_001.md"
+    report_file = Path("artifacts") / "FINAL_EVALUATION_REPORT_002.md"
     report_file.parent.mkdir(parents=True, exist_ok=True)
     with open(report_file, "w", encoding="utf-8") as f:
         f.write(report_md)

@@ -176,3 +176,50 @@ def oracle_even_count(arr: list[int]) -> dict[str, Any]:
         "even_indices": even_indices,
     }
 
+
+def oracle_find_min(arr: list[float | int]) -> dict[str, Any]:
+    """Tìm giá trị nhỏ nhất trong mảng."""
+    if not arr:
+        return {"min_val": None, "min_index": -1}
+    min_val = arr[0]
+    min_idx = 0
+    for i, v in enumerate(arr):
+        if v < min_val:
+            min_val = v
+            min_idx = i
+    return {"min_val": min_val, "min_index": min_idx}
+
+
+def oracle_odd_count(arr: list[int]) -> dict[str, Any]:
+    """Đếm số lượng số lẻ trong mảng."""
+    odd_indices = [i for i, v in enumerate(arr) if v % 2 != 0]
+    return {
+        "count": len(odd_indices),
+        "odd_indices": odd_indices,
+    }
+
+
+def oracle_frequency_count(arr: list[Any], target: Any) -> dict[str, Any]:
+    """Đếm tần suất xuất hiện của phần tử target trong mảng."""
+    cnt = sum(1 for v in arr if v == target)
+    return {
+        "count": cnt,
+        "target": target,
+    }
+
+
+def oracle_queue_fifo(initial_items: list[str], enqueue_items: list[str], dequeue_count: int) -> dict[str, Any]:
+    """Mô phỏng hàng đợi FIFO với các thao tác enqueue và dequeue."""
+    queue = list(initial_items)
+    dequeued = []
+    for item in enqueue_items:
+        queue.append(item)
+    for _ in range(min(dequeue_count, len(queue))):
+        dequeued.append(queue.pop(0))
+    return {
+        "final_queue": queue,
+        "dequeued_items": dequeued,
+        "final_length": len(queue),
+    }
+
+

@@ -1,0 +1,143 @@
+{
+  "task_id": "h09_refusal_missing_tree",
+  "problem_text": "Hãy mô phỏng thuật toán đếm số nút lá và tìm đường đi dài nhất trên cây nhị phân đã cho.",
+  "prompt_hash": "3cfbe3882d6409110179c78424a80a5d03ebe87fdafaa769243ae82553b2bbbf",
+  "git_commit": "d2e5b9f1aa2807124ab7c1c2894914b131a34e93",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T18:06:33.815895+00:00",
+  "duration_sec": 22.237857818603516,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "unsupported",
+      "duration": 22.237857818603516
+    }
+  ],
+  "final_envelope": {
+    "status": "unsupported",
+    "reason": "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để AI tự giải rồi dựng cảnh minh hoạ đáp án.",
+    "failure_category": "capability_gap",
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "relational",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "edge",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "node",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "relational": [
+          "edge",
+          "node"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "cây nhị phân",
+        "nút lá",
+        "đường đi"
+      ],
+      "data": [],
+      "relations": [
+        "quan hệ cha-con giữa các nút trong cây nhị phân"
+      ],
+      "processes": [
+        "đếm số nút lá",
+        "tìm đường đi dài nhất"
+      ],
+      "constraints": [
+        "cây nhị phân đã cho"
+      ],
+      "goal": "Mô phỏng thuật toán đếm số nút lá và tìm đường đi dài nhất trên cây nhị phân đã cho.",
+      "input_description": "Một cây nhị phân.",
+      "output_description": "Số lượng nút lá và đường đi dài nhất trong cây.",
+      "result_ownership": "algorithmic",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "relational",
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal"
+      ],
+      "relation_roles": [
+        "relational"
+      ],
+      "requested_mechanisms": null,
+      "requested_operations": [
+        "single_pass_scan:count_if",
+        "graph_traversal:dfs"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "nodes_edges"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "relational"
+      ]
+    }
+  }
+}

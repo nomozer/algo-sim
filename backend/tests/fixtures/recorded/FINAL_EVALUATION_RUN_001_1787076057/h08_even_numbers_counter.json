@@ -1,0 +1,181 @@
+{
+  "task_id": "h08_even_numbers_counter",
+  "problem_text": "Cho danh sách số nguyên gồm: 15, 22, 34, 19, 48, 51, 60. Hãy mô phỏng thuật toán đếm số lượng số chẵn trong danh sách.",
+  "prompt_hash": "69e1cede121b945cc91c9a3d376cb9f2a92513b53dab1c29129879b13241d746",
+  "git_commit": "d2e5b9f1aa2807124ab7c1c2894914b131a34e93",
+  "model_id": "gemini-2.5-flash",
+  "temperature": 0.1,
+  "timestamp": "2026-08-18T18:06:11.577508+00:00",
+  "duration_sec": 17.16963815689087,
+  "tokens_prompt": 0,
+  "tokens_completion": 0,
+  "llm_calls": 1,
+  "first_pass_ok": false,
+  "repaired_by_cegis": false,
+  "classification": null,
+  "attempts": [
+    {
+      "status": "ok",
+      "duration": 17.16963815689087
+    }
+  ],
+  "final_envelope": {
+    "status": "ok",
+    "simulation_id": "algorithm.count_if",
+    "domain": "algorithm",
+    "visual_mode": "2d",
+    "title": "Mô phỏng thuật toán đếm số lượng số chẵn trong danh sách.",
+    "description": "Một danh sách các số nguyên. → Số lượng các số chẵn có trong danh sách.",
+    "config": {
+      "problem": {
+        "summary": "Mô phỏng thuật toán đếm số lượng số chẵn trong danh sách.",
+        "input": "Một danh sách các số nguyên.",
+        "output": "Số lượng các số chẵn có trong danh sách."
+      },
+      "algorithm_id": "count_if",
+      "data": {
+        "array": [
+          15,
+          22,
+          34,
+          19,
+          48,
+          51,
+          60
+        ],
+        "labels": null,
+        "target": null,
+        "condition": {
+          "op": "==",
+          "value": 0
+        },
+        "order": null
+      },
+      "data_generated": false,
+      "notes": null
+    },
+    "notes": null,
+    "analysis": {
+      "objects": [
+        "danh sách số nguyên",
+        "số chẵn"
+      ],
+      "data": [
+        {
+          "description": "danh sách số nguyên",
+          "values": [
+            15,
+            22,
+            34,
+            19,
+            48,
+            51,
+            60
+          ]
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "đếm số lượng số chẵn trong danh sách"
+      ],
+      "constraints": [],
+      "goal": "Mô phỏng thuật toán đếm số lượng số chẵn trong danh sách.",
+      "input_description": "Một danh sách các số nguyên.",
+      "output_description": "Số lượng các số chẵn có trong danh sách.",
+      "result_ownership": "rule_derivable",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "numeric"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "temporal",
+        "numeric_threshold"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [
+        "bounded_control_flow.bounded_loop",
+        "bounded_control_flow.conditional_branch"
+      ],
+      "requested_operations": [
+        "single_pass_scan:count_if"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "step_by_step_construction"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "numeric"
+      ]
+    },
+    "representation_plan": {
+      "semantic_roles": [
+        "numeric",
+        "numeric_threshold",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "array_strip",
+        "bar_chart",
+        "bit_register",
+        "color_swatch",
+        "coordinate_plane",
+        "formula",
+        "lamp",
+        "metric_gauge",
+        "move_along_path",
+        "pointer",
+        "queue_view",
+        "reveal_sequence",
+        "slider",
+        "stack_view",
+        "step_sequence",
+        "switch",
+        "table_grid",
+        "tree_element",
+        "value_box",
+        "weighted_sum"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "numeric": [
+          "array_strip",
+          "bar_chart",
+          "bit_register",
+          "color_swatch",
+          "coordinate_plane",
+          "formula",
+          "lamp",
+          "metric_gauge",
+          "pointer",
+          "queue_view",
+          "slider",
+          "stack_view",
+          "switch",
+          "table_grid",
+          "tree_element",
+          "value_box",
+          "weighted_sum"
+        ],
+        "numeric_threshold": [],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": [
+        "numeric_threshold"
+      ]
+    },
+    "source": "composed",
+    "reuse_fallback": false
+  }
+}
