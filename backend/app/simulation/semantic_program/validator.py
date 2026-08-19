@@ -146,6 +146,10 @@ class SemanticTypeChecker:
             err = self._check_value_expr(stmt.index)
             if err:
                 return err
+            if stmt.second_index:
+                err = self._check_value_expr(stmt.second_index)
+                if err:
+                    return err
             return self._check_value_expr(stmt.val)
 
         elif isinstance(stmt, MapSetStmt):
@@ -287,7 +291,12 @@ class SemanticTypeChecker:
             c_type = self.symbols[expr.container].type
             if c_type not in ("array", "matrix", "str"):
                 return f"index_ref chỉ hợp lệ trên array/matrix/str, không hợp lệ trên '{c_type}'."
-            return self._check_value_expr(expr.index)
+            err = self._check_value_expr(expr.index)
+            if err:
+                return err
+            if expr.second_index:
+                return self._check_value_expr(expr.second_index)
+            return None
         elif isinstance(expr, FieldRefExpr):
             return self._check_value_expr(expr.target)
         elif isinstance(expr, BinaryArithExpr):

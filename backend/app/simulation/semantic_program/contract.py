@@ -45,7 +45,8 @@ class VarRefExpr(BaseModel):
 class IndexRefExpr(BaseModel):
     kind: Literal["index"] = "index"
     container: str = Field(..., description="Tên container (array/matrix)")
-    index: ValueExpr = Field(..., description="Chỉ số hoặc biểu thức chỉ số")
+    index: ValueExpr = Field(..., description="Chỉ số hoặc chỉ số dòng")
+    second_index: Optional[ValueExpr] = Field(None, description="Chỉ số cột nếu là ma trận 2D")
 
 class FieldRefExpr(BaseModel):
     kind: Literal["field"] = "field"
@@ -162,7 +163,8 @@ class AssignStmt(BaseModel):
 class WriteIndexStmt(BaseModel):
     kind: Literal["write_index"] = "write_index"
     container: str = Field(..., description="Tên container (array/matrix)")
-    index: ValueExpr = Field(..., description="Chỉ số ghi")
+    index: ValueExpr = Field(..., description="Chỉ số hoặc chỉ số dòng")
+    second_index: Optional[ValueExpr] = Field(None, description="Chỉ số cột nếu là ma trận 2D")
     val: ValueExpr = Field(..., description="Giá trị ghi vào")
 
 class MapSetStmt(BaseModel):

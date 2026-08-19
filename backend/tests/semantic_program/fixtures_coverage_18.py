@@ -807,7 +807,11 @@ P15_MATRIX_TRAVERSAL = SemanticProgramSpec(
                             expr=BinaryArithExpr(
                                 op="+",
                                 left=VarRefExpr(name="total_sum"),
-                                right=IndexRefExpr(container="grid", index=VarRefExpr(name="r")),
+                                right=IndexRefExpr(
+                                    container="grid",
+                                    index=VarRefExpr(name="r"),
+                                    second_index=VarRefExpr(name="c"),
+                                ),
                             ),
                         ),
                     ],
