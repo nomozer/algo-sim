@@ -603,6 +603,114 @@ export function valuesOf(spec: SimulationSpec, base: Record<string, any>): Recor
   return values;
 }
 
+export interface RuntimeAccumulatedState {
+  values: Record<string, any>;
+  objectItems: Record<string, any[]>;
+  pointerIndices: Record<string, number>;
+  activeTargets: Set<string>;
+}
+
+/**
+ * Tích lũy trạng thái động từ đầu timeline đến vị trí cursor hiện hành (G3, G7 Reactive Engine).
+ * Cập nhật tức thời: giá trị biến (value_box), phần tử ngăn xếp/hàng đợi (stack/queue), vị trí con trỏ (pointer).
+ */
+export function computeRuntimeStateAtCursor(spec: SimulationSpec, state: GenericState): RuntimeAccumulatedState {
+  const baseValues = valuesOf(spec, state.base);
+  const values: Record<string, any> = { ...baseValues };
+  const objectItems: Record<string, any[]> = {};
+  const pointerIndices: Record<string, number> = {};
+  const activeTargets = new Set<string>();
+
+  // 1. Khởi tạo items cho array_strip, stack_view, queue_view
+  for (const o of spec.objects) {
+    if (Array.isArray(o.items)) {
+      objectItems[o.id] = [...o.items];
+    } else if (typeof o.text === "string" && o.type === "array_strip") {
+      objectItems[o.id] = Array.from(o.text);
+    } else if (o.type === "array_strip" && o.value !== undefined && o.value !== 0) {
+      objectItems[o.id] = [o.value];
+    } else {
+      objectItems[o.id] = [];
+    }
+
+    if (o.type === "pointer") {
+      pointerIndices[o.id] = typeof o.target_index === "number" ? o.target_index : (typeof o.index === "number" ? o.index : 0);
+    }
+  }
+
+  const cursor = Math.max(0, Math.min(state.cursor, state.timeline.length - 1));
+  for (let stepIdx = 0; stepIdx <= cursor; stepIdx++) {
+    const frame = state.timeline[stepIdx];
+    if (!frame || !frame.stepAction) continue;
+    const act = frame.stepAction;
+
+    // Active targets
+    if (stepIdx === cursor && act.targets) {
+      act.targets.forEach((t) => activeTargets.add(t));
+    }
+
+    // move_pointer
+    if (act.action === "move_pointer" || act.pointer_id) {
+      const ptrId = act.pointer_id ?? act.targets?.[0];
+      const targetIdx = typeof act.to_index === "number" ? act.to_index : (typeof act.index === "number" ? act.index : 0);
+      if (ptrId) {
+        pointerIndices[ptrId] = targetIdx;
+        values[ptrId] = targetIdx;
+      }
+      if (act.value !== undefined) {
+        for (const o of spec.objects) {
+          if (o.type === "value_box" && (o.label?.toLowerCase().includes("ký tự") || o.id.toLowerCase().includes("char"))) {
+            values[o.id] = act.value;
+          }
+        }
+      }
+    }
+
+    // push
+    if (act.action === "push") {
+      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "stack_view")?.id;
+      if (targetId && objectItems[targetId]) {
+        objectItems[targetId].push(act.value);
+      }
+    }
+
+    // pop
+    if (act.action === "pop") {
+      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "stack_view")?.id;
+      if (targetId && objectItems[targetId] && objectItems[targetId].length > 0) {
+        objectItems[targetId].pop();
+      }
+    }
+
+    // enqueue
+    if (act.action === "enqueue") {
+      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "queue_view")?.id;
+      if (targetId && objectItems[targetId]) {
+        objectItems[targetId].push(act.value);
+      }
+    }
+
+    // dequeue
+    if (act.action === "dequeue") {
+      const targetId = act.targets?.[0] ?? spec.objects.find((o) => o.type === "queue_view")?.id;
+      if (targetId && objectItems[targetId] && objectItems[targetId].length > 0) {
+        objectItems[targetId].shift();
+      }
+    }
+
+    // value / highlight / assign direct state updates
+    if (act.action === "value" || act.action === "highlight" || act.action === "assign") {
+      if (act.targets && act.value !== undefined) {
+        act.targets.forEach((t) => {
+          values[t] = act.value;
+        });
+      }
+    }
+  }
+
+  return { values, objectItems, pointerIndices, activeTargets };
+}
+
 /** M13 workstream C: tên hiển thị learner-facing — id nội bộ KHÔNG BAO GIỜ là nhãn chính. */
 const TYPE_DISPLAY_VI: Record<string, string> = {
   switch: "Công tắc", lamp: "Đèn", value_box: "Ô giá trị", slider: "Thanh trượt",

@@ -21,6 +21,7 @@ import {
   positionOf,
   structuralRoots,
   valuesOf,
+  computeRuntimeStateAtCursor,
   visibleContentBounds,
   type GenericState,
   type ObjectRole,
@@ -101,7 +102,8 @@ const LABEL_STAGGER_DY = 16;
 const LABEL_STAGGER_ROWS = 3;
 
 export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props) {
-  const values = valuesOf(spec, state.base);
+  const runtime = computeRuntimeStateAtCursor(spec, state);
+  const values = runtime.values;
   const frame = currentFrame(state);
   const toggleable = new Set(Object.keys(state.base));
 
@@ -167,9 +169,10 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
   const hasInteractive = spec.objects.some(
     (o) => !STRUCTURAL_TYPES.has(o.type) && o.type !== "label"
   );
-  const structuralRootsVisible = structuralRoots(spec)
-    .filter((o) => isObjectRenderable(frame, o))
-    .filter((o) => !(hasInteractive && o.type === "heading"));
+  // Nếu là mô hình thuật toán/tương tác, ẩn các text flow để tránh va chạm vào canvas
+  const structuralRootsVisible = hasInteractive
+    ? []
+    : structuralRoots(spec).filter((o) => isObjectRenderable(frame, o));
   const structuralEls: React.ReactElement[] = [];
   let flowY = FLOW_MARGIN;
   for (const root of structuralRootsVisible) {
@@ -499,11 +502,13 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       }
       case "array_strip": {
-        const items = Array.isArray(o.items)
+        const items = runtime.objectItems[o.id] && runtime.objectItems[o.id].length > 0
+          ? runtime.objectItems[o.id]
+          : (Array.isArray(o.items) && o.items.length > 0
           ? o.items
-          : typeof o.text === "string"
+          : (typeof o.text === "string" && o.text.length > 0
           ? Array.from(o.text)
-          : (v !== undefined && v !== 0 ? [v] : [" "]);
+          : (v !== undefined && v !== 0 ? [v] : [" "])));
         const count = Math.max(1, items.length);
         const cellW = Math.min(38, Math.max(28, Math.floor((VW * 0.7) / count)));
         const cellH = 34;
@@ -671,7 +676,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       }
       case "stack_view": {
-        const items = Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []);
+        const items = runtime.objectItems[o.id] ?? (Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []));
         const itemH = 22;
         const boxW = 80;
         const capacity = o.capacity ?? Math.max(4, items.length);
@@ -710,7 +715,7 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
         );
       }
       case "queue_view": {
-        const items = Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []);
+        const items = runtime.objectItems[o.id] ?? (Array.isArray(o.items) ? o.items : (v !== undefined && v !== 0 ? [v] : []));
         const itemW = 34;
         const boxH = 36;
         const capacity = o.capacity ?? Math.max(4, items.length);
@@ -835,13 +840,45 @@ export function GenericWorkspace({ config: spec, state, busy, dispatch }: Props)
       }
       case "pointer": {
         const ptrLabel = o.label ?? "ptr";
+        const targetId = o.target ?? o.target_id;
+        const targetObj = targetId ? spec.objects.find((x) => x.id === targetId) : undefined;
+        let finalPos = p;
+        let dir: "down" | "up" | "left" | "right" = "down";
+        if (targetObj) {
+          const tpos = pos[targetObj.id] ?? positionOf(targetObj, 0);
+          const tIdx = runtime.pointerIndices[o.id] ?? (typeof v === "number" ? v : (typeof o.target_index === "number" ? o.target_index : 0));
+          const resolved = resolveSemanticAnchor(targetObj, tpos, tIdx, o.anchor ?? "top-center");
+          finalPos = { x: resolved.x, y: resolved.y };
+          dir = resolved.direction;
+        }
+
         return (
-          <g key={o.id} className={popCls} transform={`translate(${p.x}, ${p.y})`}>
-            <path d="M 0,-10 L -6,-20 L 6,-20 Z" fill={o.color ?? "var(--accent-orange)"} />
-            <rect x={-14} y={-38} width={28} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
-            <text x={0} y={-25} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">
-              {ptrLabel}
-            </text>
+          <g key={o.id} className={popCls} transform={`translate(${finalPos.x}, ${finalPos.y})`}>
+            {dir === "down" ? (
+              <>
+                <path d="M 0,-2 L -5,-12 L 5,-12 Z" fill={o.color ?? "var(--accent-orange)"} />
+                <rect x={-14} y={-30} width={28} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
+                <text x={0} y={-17} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">
+                  {ptrLabel}
+                </text>
+              </>
+            ) : dir === "left" ? (
+              <>
+                <path d="M -2,0 L -12,-5 L -12,5 Z" fill={o.color ?? "var(--accent-orange)"} />
+                <rect x={-42} y={-9} width={30} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
+                <text x={-27} y={4} textAnchor="middle" fontSize={10} fontWeight={700} fill="#fff">
+                  {ptrLabel}
+                </text>
+              </>
+            ) : (
+              <>
+                <path d="M 0,2 L -5,12 L 5,12 Z" fill={o.color ?? "var(--accent-orange)"} />
+                <rect x={-14} y={12} width={28} height={18} rx={4} fill={o.color ?? "var(--accent-orange)"} />
+                <text x={0} y={25} textAnchor="middle" fontSize={11} fontWeight={700} fill="#fff">
+                  {ptrLabel}
+                </text>
+              </>
+            )}
           </g>
         );
       }
