@@ -31,6 +31,14 @@ class MemoryDeclaration(BaseModel):
     element_type: Optional[MemoryType] = Field(None, description="Kiểu phần tử nếu là array/stack/queue/set")
     key_type: Optional[ScalarType] = Field(None, description="Kiểu khóa nếu là map")
     val_type: Optional[MemoryType] = Field(None, description="Kiểu giá trị nếu là map")
+    source_fact_id: Optional[str] = Field(
+        None,
+        description=(
+            "ID mục dữ liệu trong RequestContract mà initial_value lấy từ đó. "
+            "BẮT BUỘC khi initial_value mang nghĩa dữ liệu ĐỀ CHO. Ghim ĐÚNG MỤC "
+            "NÀO — khớp theo giá trị đơn thuần dễ trùng ngẫu nhiên."
+        ),
+    )
 
 
 # ── 2. Biểu thức giá trị đóng (Closed Value Expressions) ────────────────────

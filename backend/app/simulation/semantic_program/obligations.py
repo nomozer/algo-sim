@@ -56,6 +56,28 @@ AGGREGATE_OPS = frozenset({"count", "sum", "product", "max", "min"})
 #: không cài lại thuật toán sinh ra nó.
 SEQUENCE_TRANSFORMS = frozenset({"reverse", "distinct", "filter", "map", "identity"})
 
+#: Thủ tục mà đề có thể ÉP BUỘC, dùng cho route semantic.
+#:
+#: Tập ĐÓNG RIÊNG, cố ý KHÔNG dẫn xuất từ catalog: khoá phạm vi cũ nằm ngay
+#: trong `enum: list(analyze_exposed_values())` của `ANALYZE_SCHEMA`, nên tái
+#: dùng nó là kéo lại đúng cái vừa gỡ (spec E5). Catalog vocabulary vẫn sống
+#: cho đường module; nó chỉ không được quyết định admissibility ở đây.
+#:
+#: `None` = đề KHÔNG ép thủ tục ⇒ oracle so tương đương ngữ nghĩa, chứ không so
+#: canonical mechanism events (spec §5.5).
+SEMANTIC_PRESCRIBED_PROCEDURES = frozenset({
+    "adjacent_compare_swap",
+    "select_extreme_repeated",
+    "shift_into_sorted_prefix",
+    "partition_recursive",
+    "tree_traversal.preorder",
+    "tree_traversal.inorder",
+    "tree_traversal.postorder",
+    "tree_traversal.level_order",
+    "breadth_first",
+    "depth_first",
+})
+
 
 class Obligation(BaseModel):
     """Một nghĩa vụ ngữ nghĩa do `analyze` khai, server đóng băng."""
