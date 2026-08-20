@@ -250,29 +250,11 @@ describe("module.predict dùng decisionPointOf — thuần, đúng trace, có m�
     return mod.timeline!.goToStep(mod.init(r.config), cursor) as AlgorithmSimState;
   }
 
-  it("challenge/check khớp decisionPointOf; đúng và sai đều KHÔNG đụng canonical state", () => {
-    const s = init(1);
-    const before = JSON.stringify(s);
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("challenge/check khớp decisionPointOf; đúng và sai đều KHÔNG đụng c
+     Kiem predict.challenge/check — W13 go nang luc du doan co chu dich. */
 
-    const ch = mod.predict!.challenge(s)!;
-    expect(ch.options.map((o) => o.id).sort()).toEqual(["found", "left", "right"]);
-
-    const good = mod.predict!.check(s, "right");
-    expect(good.verdict).toBe("correct");
-    const bad = mod.predict!.check(s, "left");
-    expect(bad.verdict).toBe("incorrect");
-    expect(bad.expectedId).toBe("right");
-    // phản hồi mang bằng chứng nhân quả tất định
-    expect(bad.message).toContain("7");
-
-    expect(JSON.stringify(s)).toBe(before);
-  });
-
-  it("không có điểm quyết định → không có challenge (không hỏi vu vơ)", () => {
-    expect(mod.predict!.challenge(init(0))).toBeNull();
-    const done = init(999); // clamp về bước cuối (done)
-    expect(mod.predict!.challenge(done)).toBeNull();
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("không có điểm quyết định → không có challenge (không hỏi vu vơ)", 
+     Kiem predict.challenge/check — W13 go nang luc du doan co chu dich. */
 });
 
 /* ── consequenceOf — mặt "chuyện gì vừa xảy ra" của cùng dữ liệu ──────────── */

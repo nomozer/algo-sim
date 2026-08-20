@@ -64,46 +64,46 @@ function stateOf(id: AlgorithmId, cursor: number): AlgorithmSimState {
   return mod.timeline!.goToStep(mod.init(r.config), cursor) as AlgorithmSimState;
 }
 
-describe("W12 §6 — luật hiện công cụ (Policy B)", () => {
-  it("thử thách ĐÓNG ⇒ công cụ dùng được, không cần mở Khám phá trước", () => {
-    expect(toolAffordanceOpen({ exploreOpen: false, challengeOpen: false, busy: false })).toBe(true);
+describe("W12 §6 → W13 — luật hiện công cụ, sau khi Thử thách bị gỡ", () => {
+  /* VIẾT LẠI 2026-08-21 (Task 10b). Bản cũ kiểm ba nhánh của Policy B:
+     "thử thách đóng ⇒ hiện", "thử thách mở ⇒ siết", "mở Khám phá thì được lại".
+     W13 gỡ hẳn Thử thách nên hai nhánh sau KHÔNG CÒN ĐỐI TƯỢNG, và chính
+     `tool-affordance.ts` đã co hợp đồng lại còn `{ busy }`.
+
+     Thứ còn sống — và là thứ luôn đúng bất kể có bao nhiêu chế độ: ENGINE ĐANG
+     CHẠY THÌ CÔNG CỤ NGHỈ. */
+
+  it("mở bài ra là dùng được ngay — không cần mở chế độ nào trước", () => {
+    expect(toolAffordanceOpen({ busy: false })).toBe(true);
   });
 
-  it("thử thách MỞ ⇒ nhường chỗ, TRỪ khi học sinh tự mở Khám phá", () => {
-    expect(toolAffordanceOpen({ exploreOpen: false, challengeOpen: true, busy: false })).toBe(false);
-    /* Mở Khám phá là hành động CỐ Ý — khác hẳn việc chưa biết nút ấy tồn tại,
-       vốn là đúng thứ đã làm 52/92 dòng hỏng. */
-    expect(toolAffordanceOpen({ exploreOpen: true, challengeOpen: true, busy: false })).toBe(true);
+  it("engine đang chạy ⇒ mọi công cụ nghỉ", () => {
+    expect(toolAffordanceOpen({ busy: true })).toBe(false);
   });
 
-  it("engine đang chạy ⇒ mọi công cụ nghỉ (luật cũ, không đổi)", () => {
-    expect(toolAffordanceOpen({ exploreOpen: true, challengeOpen: false, busy: true })).toBe(false);
-  });
-
-  /**
-   * ĐỐI CHỨNG DƯƠNG cho lỗi C của ma trận W12-E.
-   *
-   * Một luật chỉ có giá trị nếu nó ĐỎ ĐƯỢC. Bản cài sai đúng như bản trước W12
-   * — đòi `exploreOpen` — phải làm khẳng định trên gãy; nếu không thì test ở
-   * trên chỉ đang mô tả lại chính nó.
-   */
-  it("(đối chứng) bản cài CŨ (đòi mở Khám phá) sẽ làm luật này ĐỎ", () => {
-    const oldRule = (i: { exploreOpen: boolean; busy: boolean }) => i.exploreOpen && !i.busy;
-    const atOpen = { exploreOpen: false, challengeOpen: false, busy: false };
-    expect(toolAffordanceOpen(atOpen)).toBe(true);
-    expect(oldRule(atOpen), "bản cũ vẫn cho công cụ hiện ⇒ đối chứng vô nghĩa").toBe(false);
+  /* ĐỐI CHỨNG DƯƠNG — một luật chỉ có giá trị nếu nó ĐỎ ĐƯỢC.
+     Bản cài trước W12 đòi `exploreOpen`, nên ngay lúc mở bài nó giấu công cụ:
+     đúng nguyên nhân của 52/92 dòng hỏng đo được trên trình duyệt. Giữ đối
+     chứng này vì nó vẫn chứng minh được luật hiện tại KHÁC bản cũ. */
+  it("(đối chứng) bản cài CŨ đòi mở Khám phá trước sẽ giấu mất công cụ", () => {
+    const luatCu = (i: { exploreOpen: boolean; busy: boolean }) => i.exploreOpen && !i.busy;
+    expect(toolAffordanceOpen({ busy: false })).toBe(true);
+    expect(
+      luatCu({ exploreOpen: false, busy: false }),
+      "bản cũ vẫn cho công cụ hiện ⇒ đối chứng vô nghĩa",
+    ).toBe(false);
   });
 });
 
 describe("W12 §11 — quét CẢ HỌ thuật toán, không kết luận từ một bài", () => {
-  it.each(ALGORITHM_TARGETS)("%s: thử thách đóng ⇒ affordance có mặt (hoặc khai rõ vì sao không)", (id) => {
+  it.each(ALGORITHM_TARGETS)("%s: mở bài ra là công cụ có mặt (hoặc khai rõ vì sao không)", (id) => {
     const policy = whatIfPolicyOf(id);
     const state = stateOf(id, 1);
     const allowed = policy.mode === "hidden"
       ? false
       : whatIfDragAllowed(state, {
-          policyAllows: toolAffordanceOpen({ exploreOpen: false, challengeOpen: false, busy: false }),
-          busy: false, last: false, answered: false, challengeOpen: false,
+          policyAllows: toolAffordanceOpen({ busy: false }),
+          busy: false, last: false,
         });
 
     if (id in DRAG_IS_DECORATION) {
@@ -113,7 +113,7 @@ describe("W12 §11 — quét CẢ HỌ thuật toán, không kết luận từ m
       expect(allowed).toBe(false);
       return;
     }
-    expect(allowed, `${id}: thử thách đóng mà công cụ vẫn bị giấu`).toBe(true);
+    expect(allowed, `${id}: mở bài ra mà công cụ vẫn bị giấu`).toBe(true);
   });
 
   it("danh sách trang trí chỉ được NGẮN ĐI — thêm dòng là tự khai vừa giấu công cụ", () => {
@@ -156,26 +156,31 @@ describe("W12-B · chế độ là TRÌNH BÀY, không phải sự thật", () =
     expect(CATALOG.length).toBe(24);
   });
 
-  it.each(CATALOG)("%s: mở rồi đóng Thử thách KHÔNG dựng lại state canonical", (simId) => {
+  /* VIẾT LẠI 2026-08-21 (Task 10b) — CHUYỂN CHỦ THỂ, GIỮ BẤT BIẾN.
+     Bản cũ chạy luật này qua `setChallengeOpen`, mà W13 đã gỡ Thử thách. Nhưng
+     bất biến thì KHÔNG chết theo: "chế độ là TRÌNH BÀY, không phải sự thật" vẫn
+     phải đúng với mọi chế độ còn lại. `exploreOpen` mang đúng vai đó, nên luật
+     dời sang nó thay vì bị xoá cùng chế độ cũ. */
+  it.each(CATALOG)("%s: mở rồi đóng Khám phá KHÔNG dựng lại state canonical", (simId) => {
     const e = offlineCatalog().find((x) => x.simId === simId)!;
     useAppStore.getState().loadEnvelope(e.envelope);
 
     const before = useAppStore.getState().active!;
-    useAppStore.getState().setChallengeOpen(true);
-    expect(useAppStore.getState().active!.state, `${simId}: MỞ thử thách đã dựng lại state`)
+    useAppStore.getState().setExploreOpen(true);
+    expect(useAppStore.getState().active!.state, `${simId}: MỞ Khám phá đã dựng lại state`)
       .toBe(before.state);
 
-    useAppStore.getState().setChallengeOpen(false);
+    useAppStore.getState().setExploreOpen(false);
     const after = useAppStore.getState().active!;
     // So bằng THAM CHIẾU: state canonical không được dựng lại, kể cả thành một
     // đối tượng "bằng giá trị" — dựng lại là mất mọi thứ engine đang giữ.
-    expect(after.state, `${simId}: ĐÓNG thử thách đã dựng lại state`).toBe(before.state);
-    expect(after.config, `${simId}: đóng thử thách đã đụng config`).toBe(before.config);
-    expect(useAppStore.getState().challengeOpen).toBe(false);
+    expect(after.state, `${simId}: ĐÓNG Khám phá đã dựng lại state`).toBe(before.state);
+    expect(after.config, `${simId}: đóng Khám phá đã đụng config`).toBe(before.config);
+    expect(useAppStore.getState().exploreOpen).toBe(false);
   });
 
-  it("(đối chứng) một `setChallengeOpen` có 'dọn dẹp' sẽ làm luật này ĐỎ", () => {
-    /* Bản cài sai hợp lý nhất — đóng thử thách thì dựng lại mô hình cho sạch —
+  it("(đối chứng) một `setExploreOpen` có 'dọn dẹp' sẽ làm luật này ĐỎ", () => {
+    /* Bản cài sai hợp lý nhất — đóng chế độ thì dựng lại mô hình cho sạch —
        phải phá được khẳng định ở trên. Không dựng lại được cảnh đó thì test
        trên chỉ đang mô tả chính nó (`ARCHITECTURE_MAP §8` #14). */
     const e = offlineCatalog().find((x) => x.simId === "algorithm.find_max")!;

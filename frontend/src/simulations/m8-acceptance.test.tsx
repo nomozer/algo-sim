@@ -51,7 +51,6 @@ describe("M8 acceptance — luồng 2D → dự đoán → 3D → 2D", () => {
 
   it("chạy trọn kịch bản nghiệm thu, không rebuild, không AI call", () => {
     const store = () => useAppStore.getState();
-    const mod = getSimulation(witnessId!)!;
 
     // (1) Nạp bài từ fixture offline (bài mẫu — không cần backend)
     store().loadEnvelope(sample!.envelope, sample!.id);
@@ -67,12 +66,10 @@ describe("M8 acceptance — luồng 2D → dự đoán → 3D → 2D", () => {
     expect(s3.cursor).toBe(1);
     expect(s3.cursor).toBeLessThan(s3.steps.length - 1);
 
-    // (4)(5) Nộp dự đoán — engine chấm, kết quả là DỮ LIỆU (không phải hội thoại)
-    const challenge = mod.predict!.challenge(store().active!.state);
-    expect(challenge, "bài làm chứng phải có nhịp dự đoán ở bước này").toBeTruthy();
-    store().submitPrediction(challenge!.options[0].id);
-    expect(store().prediction).not.toBeNull();
-    const verdictBefore3d = store().prediction!.verdict;
+    /* (4)(5) "nộp dự đoán rồi engine chấm" ĐÃ XOÁ 2026-08-21 (Task 10b): W13 gỡ
+       năng lực dự đoán. Phần còn lại của kịch bản — đổi 2D⇄3D không reset,
+       không rebuild, timeline thuộc MODULE chứ không thuộc renderer — mới là
+       thứ M8 dựng ra để nghiệm thu, và nó không phụ thuộc dự đoán. */
 
     // (6) Chuyển sang 3D
     const stateBefore3d = store().active!.state;
@@ -87,13 +84,10 @@ describe("M8 acceptance — luồng 2D → dự đoán → 3D → 2D", () => {
     const s7 = store().active!.state as EncapState;
     expect(s7.cursor).toBe(1);
     expect(s7.layers).toBe(s3.layers);
-    expect(store().prediction!.verdict).toBe(verdictBefore3d);
 
     // (8) Tiến MỘT bước ngay trong chế độ 3D — timeline là của MODULE, không của renderer
     store().nextStep();
     expect((store().active!.state as EncapState).cursor).toBe(2);
-    // đổi bước → dự đoán cũ hết hiệu lực (ngữ nghĩa M8-PRE-LIP, không phải do 3D)
-    expect(store().prediction).toBeNull();
 
     // (9)(10) Quay về 2D — state/timeline nhất quán, không reset, không rebuild
     const stateBefore2d = store().active!.state;
