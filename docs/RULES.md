@@ -147,7 +147,9 @@ patch wave**, và báo đúng bốn mục:
 ## 4. Các luật cứng bền vững (tóm tắt — nơi thực thi ở ARCHITECTURE_MAP §5)
 
 1. **LLM không bao giờ sở hữu runtime**: không sinh timeline / bước / kết quả.
-   LLM chỉ trích xuất ngữ nghĩa, phân loại, điền config được validate.
+   LLM chỉ trích xuất ngữ nghĩa, phân loại, điền config được validate, **và
+   (từ 2026-08-20) tổng hợp bounded Semantic IR** — IR là *chương trình*, còn
+   chạy nó ra timeline vẫn là việc của engine tất định.
 2. **Engine tất định sở hữu sự thật** — mọi diễn biến từ `init`/`apply`/`timeline`.
 3. **Canonical simulation: đúng hoặc `capability_gap`** — không render xấp xỉ
    gây hiểu lầm.
@@ -163,3 +165,15 @@ patch wave**, và báo đúng bốn mục:
 9. **Không mở rộng kiểu một-module-một-bài-học** — ưu tiên specialized có sẵn →
    generic DSL → năng lực tái sử dụng → từ chối trung thực.
 10. **Test mặc định = 0 API call thật** — live AI là opt-in có ngân sách.
+11. **Kết quả phải có AUTHORITY TẤT ĐỊNH sở hữu** (làm sắc luật 1, không nới).
+    `provided` → OK · `rule_derivable` → cần rule authority · `algorithmic` →
+    cần program/interpreter authority · không có authority → `capability_gap`.
+    `SemanticProgramInterpreter` là **một** authority; LLM thì **không bao giờ**.
+    Chi tiết: spec `2026-08-20-semantic-program-generative-route-design.md` §3.3.
+12. **Cấm cắt câm** — chạm trần ngân sách phải **BÁO**, không được lặng lẽ giao
+    một phần. Sinh ra từ sự cố `MAX_REVEAL_STEPS` cắt `steps[:20]` không báo lỗi.
+    Ngân sách **thực thi** và ngân sách **trình bày** là hai thứ khác nhau (§4.3).
+13. **Nghĩa vụ đóng băng trước khi sinh chương trình** — `analyze` khai, server
+    đóng băng thành `RequestContract`; stage sinh **không** được khai lại hay
+    sửa. Đây là separation of responsibility, **không phải** independent oracle
+    (§5.2).

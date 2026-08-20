@@ -116,10 +116,10 @@ Hướng phụ thuộc: `contract ← validator ← interpreter ← adapter ← 
 Bất biến đánh số mới (mỗi cái kèm nơi thực thi + test khoá):
 
 ```markdown
-| #26 | Khung ⇔ trạng thái: frame k suy hoàn toàn từ trace[k].memory_snapshot | `visual_adapter.py` | `test_frame_state_invariant.py` |
-| #27 | Pacer phân hoạch đầy đủ, không chồng lấn, không sinh khung mới | `pacer.py` | `test_pacer_partition.py` |
-| #28 | Mọi primitive trong enum có nhánh adapter | `visual_adapter.py` | `test_primitive_coverage.py` |
-| #29 | Binding bắt buộc phải phân giải được — fail-closed | `pipeline_adapter.py` | `test_binding_fail_closed.py` |
+| #31 | Khung ⇔ trạng thái: frame k suy hoàn toàn từ trace[k].memory_snapshot | `visual_adapter.py` | `test_frame_state_invariant.py` |
+| #32 | Pacer phân hoạch đầy đủ, không chồng lấn, không sinh khung mới | `pacer.py` | `test_pacer_partition.py` |
+| #33 | Mọi primitive trong enum có nhánh adapter | `visual_adapter.py` | `test_primitive_coverage.py` |
+| #34 | Binding bắt buộc phải phân giải được — fail-closed | `pipeline_adapter.py` | `test_binding_fail_closed.py` |
 ```
 
 Anti-pattern — thêm mục: *"Cầu nối giữ khung đầu rồi phát narration chạy"* — đã ship bug thật, spec §0(b).
@@ -311,14 +311,14 @@ git commit -m "test(semantic-program): dung DEV/SEALED benchmark va khoa fingerp
 
 **Interfaces:**
 - Consumes: `compile_semantic_program_to_envelope(spec)` · `SemanticProgramInterpreter` · `VisualTraceAdapter` · fixture `P01_STACK_BRACKET` từ `fixtures_coverage_18.py`
-- Produces: bất biến #26 — hợp đồng mà Task 3 phải làm thoả
+- Produces: bất biến #31 — hợp đồng mà Task 3 phải làm thoả
 
 - [ ] **Step 1: Viết test**
 
 ```python
 # backend/tests/semantic_program/test_frame_state_invariant.py
 # -*- coding: utf-8 -*-
-"""Bất biến #26 — khung hình k suy hoàn toàn từ trạng thái bước k.
+"""Bất biến #31 — khung hình k suy hoàn toàn từ trạng thái bước k.
 
 Test này ĐỎ trước khi Task 3 sửa: `pipeline_adapter` hiện chỉ giữ
 `frames[0].objects` rồi vứt mọi khung sau (spec E1).
@@ -407,7 +407,7 @@ git commit -m "test(semantic-program): khoa bat bien khung-trang thai (RED)"
 ```python
 # backend/tests/semantic_program/test_pacer_partition.py
 # -*- coding: utf-8 -*-
-"""Bất biến #27 — pacer gộp, KHÔNG bỏ."""
+"""Bất biến #32 — pacer gộp, KHÔNG bỏ."""
 import pytest
 from app.simulation.semantic_program.pacer import pace
 from app.simulation.semantic_program.visual_adapter import VisualFrame
@@ -467,7 +467,7 @@ Expected: FAIL — `ModuleNotFoundError: app.simulation.semantic_program.pacer`
 """PresentationPacer — gộp khung máy thành bước xem.
 
 Gộp nằm NGOÀI VisualTraceAdapter: adapter phải giữ song ánh
-frame k ⇔ trace[k] thì bất biến #26 mới là định lý (spec §4.4).
+frame k ⇔ trace[k] thì bất biến #31 mới là định lý (spec §4.4).
 
 Presentation budget TÁCH HẲN execution budget: chạm trần trình bày KHÔNG
 phải lỗi — hạ mức chi tiết, không bao giờ cắt khung (spec §4.3).
@@ -545,7 +545,7 @@ Expected: PASS (5 test)
 ```python
 # backend/tests/semantic_program/test_primitive_coverage.py
 # -*- coding: utf-8 -*-
-"""Bất biến #28 — mọi primitive trong enum phải có nhánh adapter.
+"""Bất biến #33 — mọi primitive trong enum phải có nhánh adapter.
 
 Vá riêng `bar_chart` thì primitive kế tiếp lại rơi y hệt (spec §4.6).
 """
@@ -607,7 +607,7 @@ Expected: PASS
 ```python
 # backend/tests/semantic_program/test_binding_fail_closed.py
 # -*- coding: utf-8 -*-
-"""Bất biến #29 — binding bắt buộc không phân giải được thì KHÔNG phát envelope.
+"""Bất biến #34 — binding bắt buộc không phân giải được thì KHÔNG phát envelope.
 
 Luật KHÔNG phải "bỏ con trỏ rồi vẫn render phần còn lại" — đó là hạ cấp âm
 thầm, đúng loại lỗi ở spec §0(b).

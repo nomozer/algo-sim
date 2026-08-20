@@ -59,6 +59,10 @@ spec hiện tại + yêu cầu → (LLM đề xuất patch) → SimulationPatch
 | Từ vựng capability (types/limits/roles) | `simulation/dsl/manifest.py` | mọi allowlist/enum/prompt **dẫn xuất** từ đây |
 | Luật hợp lệ của spec | `dsl/validator.py` (+ mirror TS `generic/validate.ts`) | hai tầng, cùng luật |
 | Timeline / state / kết quả | **engine tất định** (`core/algorithms.ts`, `generic/model.ts`, `generic_engine.py`) | LLM **không bao giờ** |
+| **Chương trình ngữ nghĩa (IR)** | LLM tổng hợp, **server đóng băng nghĩa vụ trước** (`RequestContract`) | IR là *chương trình ứng viên*; chạy nó KHÔNG phải việc của LLM |
+| **Trace thực thi** | `semantic_program/interpreter.py` — **authority tất định** | ngân sách **thực thi**; chạm trần phải BÁO |
+| **Khung hình (frame)** | `semantic_program/visual_adapter.py` | song ánh `frame k ⇔ trace[k]` — điều kiện để bất biến #31 là định lý |
+| **Bước xem (view step)** | `semantic_program/pacer.py` | ngân sách **trình bày**, tách hẳn ngân sách thực thi; gộp KHÔNG bỏ |
 | Vị trí object lúc chạy | `GenericState.pos` (engine-owned, **toạ độ miền 0–100**) | spec bất biến; drag chỉ đổi state |
 | **Bố cục/kích thước canvas** | **RENDERER** — không bao giờ là engine state | xem quy tắc renderer-neutral bên dưới |
 | Định tuyến bài → mô phỏng | `catalog.py` + classify (LLM) + capability gate (tất định) | gate có quyền phủ quyết |
@@ -105,6 +109,9 @@ manifest ← validator ← catalog ← pipeline ← main
 manifest ← representation / semantic / patterns / patch
 types ← registry ← store ← components
 module (domain) → types/registry;  renderer → state (chỉ ĐỌC)
+
+# Route sinh ngữ nghĩa (2026-08-20) — KHÔNG được đảo:
+contract ← validator ← interpreter ← visual_adapter ← pacer ← envelope
 ```
 
 Renderer **không bao giờ** nắm state quyền uy; nó phát `SimAction` và đọc lại.
@@ -151,6 +158,14 @@ Store **không** biết domain (không import Trace/SimulationSpec/mảng).
 | 29 | **Vai trò do MÁY CHỦ sở hữu; thanh điều hướng ứng dụng nằm NGOÀI lưới workspace** (M18). Client gửi `role` gì cũng không đổi được quyền — server tra `users.role` theo phiên, và đăng ký thường luôn ra học sinh (vai trò giáo viên cần mã mời; không cấu hình ⇒ ĐÓNG). Vai trò ở frontend là bản chiếu để VẼ: sửa nó trong devtools thì thấy được thanh điều hướng giáo viên và không gọi nổi endpoint nào. Về bố cục: thanh điều hướng mới KHÔNG được lặp lại cột 208px đã gỡ ở W4B-3B — cột đó nằm TRONG lưới workspace nên nó trải qua cả hàng sân khấu lẫn hàng điều khiển và bóp cả hai. Thanh mới nằm ngoài lưới, thu gọn thành dải biểu tượng trong mô phỏng, và thành ngăn kéo tạm dưới 900px | `accounts/policy.py::resolve_signup_role` + `accounts/router.py::Caller.require_role` + `components/AppSidebar.tsx` + `.app-root/.app-nav` (global.css) | `test_auth_api.py` (tự khai giáo viên bị chặn; thiếu cấu hình vẫn đóng) · `test_classroom_api.py` (6 ca từ chối của `§36`) · `ux-shell.test.tsx` (hai vai không dùng chung thanh điều hướng) · `accept-classroom-m18.mjs` (403 ở cả 4 bề rộng) |
 
 | 30 | **Khung mô phỏng lấy bề rộng từ CƠ CHẾ, và mọi thứ của cùng một cơ chế đứng trên MỘT rail** (M19). Trước wave này thẻ luôn 1624px @1920 trong khi mực dao động 276–1597px, và từng renderer tự căn giữa hình bên trong lớp giãn ấy — đo được 23/23 target hỏng, rail lệch tới 722px. Nguyên nhân là một: thẻ là flex column STRETCH nên con nào cũng giãn hết cửa sổ rồi phải tự căn giữa lại. Luật nay: cột nội dung + thẻ đều `fit-content`, có SÀN SƯ PHẠM `min-width` (không bóp sát từng pixel SVG — phải còn chỗ cho nhãn/chú giải/một câu thuyết minh), và MỌI con lấp trọn thẻ nên mép trái của hình CHÍNH LÀ rail của chữ. Khay điều khiển nằm cùng cột nên tự bằng bề rộng thẻ (giữ W4B-3H). SVG sân khấu phải khai bề rộng THẬT qua `stageSvgSize` — `width="100%"` không sizing được cha `fit-content` (Chrome rơi về 300px mặc định) và buộc phải `margin: 0 auto`, chính là rail thứ hai. Ngoại lệ phải KHAI kèm lý do cơ chế: `web.style_model` được bám cửa sổ (trang web lấp bề rộng khả dụng LÀ hành vi đang dạy), `logic.boolean_dag` được đặt chú giải cạnh sơ đồ | `styles/global.css` (`.app-layout` cột `auto` + `.workspace-card` `fit-content` + `.workspace-card > * { width: 100% }`) + `simulations/stage-size.ts` | `frontend/scripts/audit-composition.mjs` — 23 target × 4 bề rộng, hai lỗi tách bạch. **Lỗi A đo bằng câu FALSIFIABLE "khung có bám cửa sổ không"** (so 1920 vs 1366): so mực/khung là không thể sai vì chữ luôn giãn đầy khung. Tiêm lỗi: cột `1fr` + thẻ `100%` ⇒ ĐỎ · căn giữa hình ⇒ ĐỎ rail · nới khoảng cách cột sơ đồ ⇒ ĐỎ ở `dag.test` |
+
+| 31 | **Khung hình thứ `k` suy được HOÀN TOÀN từ `trace[k].memory_snapshot` qua `visual_bindings`, không phụ thuộc gì khác** (2026-08-20). Đây là bất biến khoá trục hiển thị, và nó sinh ra từ một bug đã ship: cầu nối giữ `frames[0].objects` rồi vứt mọi khung sau, nên lời thuyết minh chạy tới bước 15 trong khi ngăn xếp trên hình vẫn RỖNG và các ô giá trị vẫn `0`. Chương trình do AI sinh **đúng**, interpreter chạy **đúng**, trace **đúng** — chỉ khúc nối vứt trạng thái; chẩn đoán nhầm thành "lỗi của AI" sẽ dẫn tới quyết định kiến trúc sai. Hệ quả bắt buộc: envelope mang **toàn bộ** chuỗi khung với snapshot đầy đủ mỗi khung (không delta — logic replay chính là chỗ trục hiển thị lệch khỏi trục ngữ nghĩa); renderer chỉ ĐỌC, được nội suy **pixel** giữa hai khung nhưng **cấm** bịa trạng thái ngữ nghĩa trung gian | `semantic_program/pipeline_adapter.py::compile_semantic_program_to_envelope` + `visual_adapter.py` | `test_frame_state_invariant.py` (envelope giữ đủ mọi khung của adapter; và hồi quy trực tiếp: không được mọi khung đều có ngăn xếp rỗng) |
+
+| 32 | **Gộp bước nằm NGOÀI adapter, và pacer PHÂN HOẠCH chứ không CẮT** (2026-08-20). Gộp đặt trong `VisualTraceAdapter` là phá song ánh `frame k ⇔ trace[k]`, tức phá luôn tư cách định lý của bất biến #31 — nên nó thuộc `PresentationPacer`, chạy sau. Bất biến của pacer yếu hơn nhưng vẫn kiểm được: mỗi bước xem là một đoạn **liên tiếp** các khung máy; các đoạn phân hoạch **đầy đủ**, **không chồng lấn**, **không sinh khung mới**. Ngân sách trình bày tách hẳn ngân sách thực thi: chạm trần trình bày KHÔNG phải lỗi (hạ mức chi tiết cho tới khi vừa, và khai đang xem ở mức gộp nào), còn chạm trần thực thi thì phải BÁO. Gộp hai con số này làm một chính là nguyên nhân gốc của `MAX_REVEAL_STEPS` cắt `steps[:20]` không báo lỗi | `semantic_program/pacer.py::pace` | `test_pacer_partition.py` (phân hoạch đầy đủ · không chồng lấn · tổng khung bảo toàn ở 5000 khung — cắt là ĐỎ) |
+
+| 33 | **Mọi primitive khai trong enum của contract BẮT BUỘC có nhánh xử lý trong adapter** (2026-08-20). Sinh ra từ `bar_chart`: contract liệt kê nó trong `VisualContainerBinding.primitive` nhưng `_adapt_single_step` không có nhánh nào, nên LLM khai `bar_chart` là ra object rỗng — lỗi CÂM, không đỏ ở đâu. Vá riêng một nhánh thì primitive kế tiếp lại rơi y hệt; nên luật là **đối sánh hai chiều** giữa enum và `HANDLED_PRIMITIVES`, thiếu hoặc thừa đều ĐỎ | `semantic_program/visual_adapter.py::VisualTraceAdapter.HANDLED_PRIMITIVES` | `test_primitive_coverage.py` (enum ⊆ handled **và** handled ⊆ enum) |
+
+| 34 | **Binding bắt buộc không phân giải được → FAIL-CLOSED, không render một phần** (2026-08-20). Luật **không phải** "bỏ con trỏ rồi vẫn vẽ phần còn lại" — đó là hạ cấp âm thầm, đúng loại lỗi đã sinh ra bất biến #31 (con trỏ `i` neo vào container rỗng nên đè lên dòng chữ thuyết minh). Một `visual_binding` bắt buộc mà không phân giải được ở **bất kỳ** khung nào là hỏng hợp đồng: adapter/validation thất bại và **không phát canonical envelope**. Học sinh thà không thấy gì còn hơn thấy một cảnh thiếu thành phần mà không ai nói cho biết là đang thiếu. Lưu ý phạm vi: đòi phân giải **ít nhất một lần trong trace**, không đòi ở mọi khung — một con trỏ chưa được gán ở bước 0 là bình thường | `semantic_program/pipeline_adapter.py::_assert_bindings_resolvable` | `test_binding_fail_closed.py` (`VisualBindingUnresolved` khi binding không bao giờ phân giải) |
 
 ## 6. Bốn trục khái niệm
 
@@ -261,6 +276,18 @@ Live eval opt-in, có suite (smoke/full/boundary) và ngân sách API.
    thật**, không phải bằng đọc code. Cùng lúc lộ thêm `--border`/`--radius-sm`/
    `--radius-md` (M8-PRE-LIP): `PredictionBar` suốt nay **không có viền, không bo
    góc**. Nay khoá bằng `styles/tokens.test.ts` (mọi `var()` phải có định nghĩa).
+
+15. **Cầu nối giữ khung ĐẦU rồi phát narration chạy** (2026-08-20) — đã ship bug
+    thật. `compile_semantic_program_to_envelope` lấy `frames[0].objects` rồi vứt
+    toàn bộ khung còn lại, nên trên màn hình: thuyết minh đọc *"lấy `[` ra khỏi
+    ngăn xếp, so với `]`, khớp nhau"* — **chính xác từng chi tiết** — trong khi
+    ngăn xếp RỖNG, "Ký tự hiện tại" = `0`, "Kết quả" = `0`, con trỏ đè lên chữ.
+    Hai bài học tách bạch: (a) **hình đóng băng mà lời vẫn chạy là lỗi CẦU NỐI,
+    không phải lỗi của LLM** — chương trình sinh ra đúng, interpreter chạy đúng,
+    trace đúng; đổ cho AI ở đây là chẩn đoán nhầm rồi sửa nhầm chỗ. (b) lỗi này
+    **không có test nào bắt được** vì hợp đồng envelope không hề đòi khung thứ
+    `k` phải khớp trạng thái bước `k` — cho tới khi bất biến #31 được viết ra.
+    Cùng họ với #13: chỗ nào không có bất biến thì chỗ đó trôi im lặng.
 
 ## 9. Vị trí cache & pattern reuse
 

@@ -50,7 +50,8 @@ const KNOWN_GAPS = [
   "components/AIHelpPanel.tsx",
   "components/AnalysisCard.tsx",
   "components/ArrayView.tsx",
-  "components/PredictionBar.tsx",
+  // PredictionBar.tsx — xoá 2026-08-20: file đã biến mất khỏi kho mã cùng lượt
+  // W13 gỡ quiz. Nợ chỉ đi xuống, và mục ma cũng làm guard ĐỎ.
   "components/PseudocodeView.tsx",
   "components/SimulationInspector.tsx",
   "components/StageLegend.tsx",

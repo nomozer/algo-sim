@@ -142,11 +142,18 @@ không phải một lượt dọn tài liệu — đừng "khôi phục" bản c
 
 **Hai điểm trong tên là ràng buộc, không phải văn phong.**
 
-- *"LLM phân tích"* — **KHÔNG được đổi thành "sinh"/"tự sinh"**. Hệ không sinh
-  mô phỏng mới: LLM đọc đề rồi điền đặc tả đã kiểm định, miền mô phỏng dựng tay,
-  đề lệch danh mục bị từ chối bằng `capability_gap`. README §6 đã cấm sẵn tuyên
-  bố *"sinh mô phỏng phổ quát"*; tên mà nói "sinh" thì tự phản chứng ranh giới
-  R0. "Phân tích" an toàn vì nó là tên bước thật trong pipeline (`analyze`).
+- *"LLM phân tích"* — **TÊN ĐỀ TÀI vẫn KHÔNG đổi thành "sinh"/"tự sinh"**
+  (chốt lại 2026-08-20, xem §0-2026-08-20 bên dưới). Nhưng **lý do phải sửa**:
+  lập luận cũ dựa vào tiền đề *"miền mô phỏng dựng tay"*, và tiền đề đó nay chỉ
+  còn đúng **một phần** — route `generic.semantic_program` sinh chương trình
+  ngữ nghĩa từ đề. Lý do còn hiệu lực, hẹp hơn: README §6 cấm tuyên bố *"sinh
+  mô phỏng phổ quát"*, mà phạm vi mới **cố ý không phổ quát** (bounded IR, 2D,
+  miền thuật toán rời rạc — spec 2026-08-20 §1.1). "Phân tích" giữ trong tên vì
+  nó là tên bước thật trong pipeline (`analyze`) và không hứa quá.
+  ⚠️ **"Sinh" KHÔNG tự phản chứng R0** dưới kiến trúc mới: LLM tổng hợp IR,
+  còn thực thi · kiểm chứng · dẫn xuất trực quan thuộc thành phần tất định —
+  LLM vẫn **không bao giờ** là authority của kết quả. Dùng chữ "sinh" trong
+  **tên module/tài liệu kỹ thuật** là hợp lệ; chỉ **tên đề tài** giữ nguyên.
 - *bỏ "2D/3D"* — có chủ đích, vì số thật là **23 target chỉ 2D · 1 có 2D+3D**
   (`network.protocol_encapsulation`) và W4B-2R đã phán 3D thua 10/10 tiêu chí ở
   hầu hết cơ chế. 3D vẫn là năng lực có thật và vẫn được kể trong thân luận văn;
@@ -323,6 +330,31 @@ quả học tập khi chưa có nghiên cứu trên người học.
 
 **Tầng lớp học ĐÓNG BĂNG ở mức**: đăng nhập · lớp · giao mô phỏng đã hỗ trợ ·
 học sinh luyện tập · giáo viên quan sát trạng thái có cấu trúc.
+
+### §0-2026-08-20 — MỞ LẠI phạm vi "sinh mô phỏng" (nguồn: giáo viên hướng dẫn)
+
+Khoá phạm vi 2026-08 (24 target, không sinh tự động) **được thay thế ở ĐÚNG
+phần sinh mô phỏng** bởi
+`docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`
+(APPROVED DESIGN, `0c53882`). Kế hoạch thực thi: `docs/superpowers/plans/2026-08-20-semantic-program-generative-route.md`.
+
+**Lõi đề tài được bổ sung một nhánh**, không thay nhánh cũ: yêu cầu học bằng
+ngôn ngữ tự nhiên → **LLM tổng hợp bounded Semantic IR** → validate tất định →
+**interpreter tất định thực thi** → kiểm chứng nghĩa vụ → dẫn xuất trực quan 2D.
+
+**Phạm vi mới HẸP và có hàng rào** (spec §1.1 — đọc trước khi mở bất kỳ wave nào):
+2D only · bounded IR · miền thuật toán rời rạc/hữu hạn/có biên · 6 ranh giới ·
+hard scope lock sau khi SEALED niêm phong.
+
+**VẪN ngoài mục tiêu** (danh sách trên còn nguyên hiệu lực, không nhân lượt mở
+này mà nới): HTML/CSS · CSDL · đóng gói giao thức theo hướng generative · 3D cho
+route mới · tắt 24 module cũ · pattern reuse cho route mới · explicit context
+caching · mức yếu phục vụ học sinh. Ý tưởng rơi vào đây → `POST_THESIS_BACKLOG.md`.
+
+**Kỷ luật tuyên bố không đổi**: mở phạm vi **không** sinh thêm bằng chứng. Hai
+chỉ số phải báo **riêng, đồng-primary** — `Generative executability rate` (kiến
+trúc có thoát module-per-problem không) và `Safe serve rate` (bao nhiêu đủ bằng
+chứng để thật sự phục vụ). Không được gộp làm một để số đẹp hơn.
 
 **Kỷ luật tuyên bố**: chỉ nói điều có bằng chứng. Giữ
 `CURRICULUM_SUPPORT_PARTIAL` khi phủ chương trình còn dở, và

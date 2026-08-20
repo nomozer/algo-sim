@@ -2363,3 +2363,44 @@ chính (`m19/after.json`, `m18/classroom-acceptance.json`,
 
 Đã gắn vào: `audit-composition.mjs` · `accept-classroom-m18.mjs` ·
 `accept-experience-w4b4c.mjs`.
+
+---
+
+## Trả nợ sync-lock 2026-08-20 (rơi lại từ `d4c1ef6`, `b06c0e9`, `09c0f49`)
+
+Năm file dưới đây đã landed mà không có entry — `code-index-sync.test.ts` ĐỎ ở
+HEAD trước khi wave sinh-ngữ-nghĩa bắt đầu. Ghi **cái chúng sở hữu**, không chỉ tên.
+
+### `frontend/src/simulations/domains/generic/layout-compiler.ts` (G1–G7) · offline
+
+Sở hữu **phân vùng không gian theo VAI TRÒ NGỮ NGHĨA** trong hệ toạ độ miền 0–100:
+Input Zone (`array_strip`, `bar_chart`, `table_grid`) · State Zone (`value_box`,
+`pointer`, `switch`, `slider`) · Structure Zone (`stack_view`, `queue_view`,
+`tree_element`) · Output Zone. Đây là **nguồn duy nhất** quyết định object nằm đâu
+trên sân khấu generic — renderer **không** được tự đặt toạ độ cho từng bài.
+
+### `frontend/src/simulations/domains/generic/anchor-resolver.ts` (Semantic Anchor System, G5) · offline
+
+Sở hữu việc **phân giải vị trí (X, Y) của pointer/annotation neo vào một thành phần
+ngữ nghĩa** theo *kiểu đối tượng + `target_index`*. Tồn tại để xoá hardcode toạ độ
+theo từng bài. ⚠️ Liên quan trực tiếp **bất biến #34**: neo không phân giải được thì
+đường sinh ngữ nghĩa phải fail-closed, **không** vẽ một phần.
+
+### `frontend/src/simulations/domains/generic/disallowed-collision.ts` · offline
+
+Sở hữu **định nghĩa va chạm bị CẤM** giữa các đối tượng đã bố cục: `TEXT_ON_TEXT`
+(nhãn đè nhãn) · `BOX_ON_BOX` · `CANVAS_OVERFLOW` (tràn ngoài 0–100). Đọc kết quả
+của `layout-compiler.ts`. Đây là bản kiểm **tất định** cho đúng lớp lỗi mà L5a
+(visual regression) bắt trên trình duyệt — hai tầng khác nhau, đừng bỏ tầng này vì
+đã có tầng kia.
+
+### `frontend/scripts/verify-semantic-e2e-render.mjs` · `verify-live-gemini-render.mjs` · `verify-real-browser-render.mjs` · cần Chrome + `npm run dev`
+
+Ba runner Playwright chụp mô phỏng do đường `semantic_program` sinh, ở 4 viewport
+(1920 · 1536 · 1366 · 768), phục vụ các lượt chứng nhận `b06c0e9`/`09c0f49`.
+
+> ⚠️ **Cả ba đều hardcode `ARTIFACT_DIR` trỏ RA NGOÀI REPO**
+> (`C:/Users/Bunny/.gemini/antigravity-ide/brain/…`). Bằng chứng ghi ra đó
+> **không tái lập được** và theo luật dự án thì không được ghi DONE. Spec
+> 2026-08-20 (E13) mới chỉ bắt được **một** trong ba file — Task 13 của plan phải
+> sửa **cả ba**.
