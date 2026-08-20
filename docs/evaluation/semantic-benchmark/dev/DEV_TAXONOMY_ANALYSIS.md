@@ -31,7 +31,7 @@ Phân bố nghĩa vụ: `count_matching` 3 · `membership` 3 · `ordering` 3 ·
 | `aggregate_matching` | 1 | **THÊM** | Tổng/tích/trung bình có điều kiện là dạng phổ biến bậc nhất trong chương trình. Nó **bao trùm** `count_matching` (đếm = gộp với phép `count`), nên thêm nó làm taxonomy **gọn đi**, không phình ra |
 | `first_match_index` | 1 | **THÊM** | Khác `membership` ở chỗ đòi **vị trí đầu tiên** — thứ tự duyệt là một phần của câu trả lời. Đây đúng điểm nghẽn nhận thức #3 của đề tài, và mẫu *"tìm X đầu tiên thoả…"* lặp lại khắp chương trình |
 | `distinct_preserving_order` | 1 | **GỘP**, không thêm | Là một phép biến đổi của `derived_sequence`. Thêm nguyên thuỷ thứ ba cho nó là đẻ checker theo ca |
-| `connected_components` | 1 | **TỔ HỢP**, không thêm | Dựng được từ `reachability` lặp trên các đỉnh chưa thăm. Xét TỔ HỢP trước khi xét MỞ RỘNG |
+| `connected_components` | 1 | **TỔ HỢP** — nhưng GIỮ WEAK | Dựng được từ `reachability` lặp, và xét tổ hợp trước khi xét mở rộng là đúng. NHƯNG tổ hợp chỉ đáng gọi STRONG khi C₂ kiểm được **phân hoạch đầy đủ**: các thành phần rời nhau · phủ hết miền đỉnh · mỗi thành phần đúng bằng tập reachability của nó. Chưa có semantics đó ⇒ **giữ WEAK**, không gọi STRONG sớm cho bảng đẹp. Không thêm obligation mới chỉ vì điểm này |
 | `predicate_verdict` | 1 | **KHÔNG thêm** → `verification_gap` | Kiểm nó đòi **cài lại chính thuật toán đang kiểm** — mất tính độc lập, và oracle mất nghĩa. Đây là ranh giới khoa học ở §5.4, khai tường minh chứ không vá |
 
 Một mở rộng **phạm vi** (không phải checker mới): `count_matching` hiện khai cho
@@ -58,13 +58,17 @@ structural_traversal(tree, order)         — tree_node
 
 ## Hiệu ứng dự kiến trên DEV
 
-7/8 ca WEAK được nâng; còn **dev_05 (`predicate_verdict`)** ở `verification_gap`.
+6/8 ca WEAK được nâng. Còn hai ca ở `verification_gap`:
 
-> **19/20 STRONG, 1/20 verification_gap — TRÊN DEV.**
+- **dev_05** (`predicate_verdict`) — kiểm đòi cài lại chính thuật toán.
+- **dev_20** (`connected_components`) — tổ hợp được, nhưng chưa có kiểm phân hoạch
+  đầy đủ nên **chưa đủ tư cách STRONG**.
+
+> **18/20 STRONG, 2/20 verification_gap — TRÊN DEV.**
 
 ## Cảnh báo phải đọc kèm con số trên
 
-Con số 19/20 **KHÔNG dự đoán được SEALED**, vì ba lý do:
+Con số 18/20 **KHÔNG dự đoán được SEALED**, vì ba lý do:
 
 1. **DEV do chính agent viết hệ soạn ra.** Dù nghĩa vụ được suy từ đề chứ không
    từ chương trình, việc chọn *đề nào* vẫn nằm trong tay người biết IR.
@@ -73,7 +77,7 @@ Con số 19/20 **KHÔNG dự đoán được SEALED**, vì ba lý do:
 3. Đây là lý do SEALED tồn tại. Con số dùng cho luận văn là con số của **SEALED**,
    mở đúng một lần ở Task 12.
 
-Ghi 19/20 vào báo cáo như tỉ lệ năng lực của hệ là **overclaim**. Nó chỉ nói:
+Ghi 18/20 vào báo cáo như tỉ lệ năng lực của hệ là **overclaim**. Nó chỉ nói:
 *với 9 checker này, phần lớn dạng bài trong chương trình mà chúng tôi liệt kê
 được đều có đường kiểm chứng độc lập.*
 
