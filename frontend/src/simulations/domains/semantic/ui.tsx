@@ -143,7 +143,6 @@ function VeMot({ o, sang }: { o: SemanticObject; sang: boolean }) {
 }
 
 export function SemanticWorkspace({
-  config,
   state,
 }: WorkspaceProps<SemanticConfig, SemanticState>) {
   const buoc = state.timeline[state.cursor];

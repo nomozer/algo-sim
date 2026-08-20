@@ -46,6 +46,22 @@ const semanticProgramModule: SimulationModule<SemanticConfig, SemanticState> = {
     return buoc ? { text: buoc.narration } : null;
   },
 
+  /**
+   * Ngữ cảnh cho panel Giải thích. Chỉ chở SỰ KIỆN của bước hiện tại — không
+   * chở `simulation_id`, tên kiểu primitive hay bất kỳ định danh kĩ thuật nào
+   * (bất biến ui-hygiene: chuỗi kĩ thuật không được lọt lên bề mặt học sinh).
+   */
+  getExplainContext: (state, config) => {
+    const buoc = state.timeline[state.cursor];
+    return {
+      tieuDe: config.title,
+      buocHienTai: state.cursor + 1,
+      tongSoBuoc: state.timeline.length,
+      thuyetMinh: buoc?.narration ?? "",
+      mucGop: state.groupingLevel === "iteration" ? "theo vòng lặp" : "từng bước",
+    };
+  },
+
   Workspace: SemanticWorkspace,
 };
 
