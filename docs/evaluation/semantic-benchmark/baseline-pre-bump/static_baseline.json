@@ -1,0 +1,25 @@
+{
+  "ghi_luc": "2026-08-20, TRUOC khi bump cho Task 4",
+  "cache_version": "32",
+  "ghi_chu": "Baseline TINH (offline). Chua co so live vi live can duyet budget rieng.",
+  "prompt_bytes": {
+    "adapt.md": 1387,
+    "analyze.md": 6594,
+    "classify.md": 4311,
+    "edit.md": 3356,
+    "explain.md": 1464,
+    "semantic_program.md": 1998,
+    "simulate.md": 1370,
+    "transcribe.md": 983
+  },
+  "prompt_sha256": {
+    "adapt.md": "7d3519e28cf3874b",
+    "analyze.md": "d7bd6053c65aee11",
+    "classify.md": "0d8430b5e5c6699a",
+    "edit.md": "8ad40d485f8dc1f1",
+    "explain.md": "bdaccf66bdc700bd",
+    "semantic_program.md": "b68fb1127e586645",
+    "simulate.md": "d3baf6ec56d1bc94",
+    "transcribe.md": "b54fbc097ad66295"
+  }
+}

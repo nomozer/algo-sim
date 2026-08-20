@@ -26,7 +26,11 @@ BUDGET_BYTES: dict[str, int] = {
     "classify.md": 4550,
     "edit.md": 3550,
     "explain.md": 1550,
-    "semantic_program.md": 2100,
+    # HẠ 2100 → 1800 (2026-08-20). Bản viết lại bỏ phần schema đã cưỡng chế
+    # (danh sách statement/expression/primitive) và còn 1.675B, nhỏ hơn bản gốc
+    # 1.998B. Ghi lại vì bản nháp đầu của chính lượt này lại PHÌNH lên 2.131B —
+    # gỡ enum xong rồi nhồi thêm văn xuôi. Cổng này bắt được, nên nó có ích.
+    "semantic_program.md": 1800,
     "simulate.md": 1450,
     "transcribe.md": 1050,
 }

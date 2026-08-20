@@ -125,7 +125,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       TIÊU có cấu trúc). Cache cũ giữ analysis KHÔNG có trường này → cổng
 #       không phân biệt được "đếm tổ A" với "đếm tổ B", gộp thành một và trả ok
 #       cho một nửa. History KHÔNG bump: hợp đồng envelope đã lưu không đổi.
-CACHE_VERSION = "32"
+# "33": 2026-08-20 — Task 4 đường sinh ngữ nghĩa. `semantic_program.md` viết lại
+#       (bỏ phần schema đã cưỡng chế, giữ phần không mã hoá được) + thêm
+#       `stage_semantic_program`. Bề mặt LLM và policy định tuyến đổi ⇒ analysis
+#       cache cũ không còn đáng tin dưới luật mới. Bump CÓ CHỦ ĐÍCH, không phải
+#       "bump cho chắc".
+CACHE_VERSION = "33"
 
 
 class InputPayload(BaseModel):

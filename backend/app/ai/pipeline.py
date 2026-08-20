@@ -34,7 +34,12 @@ from app.simulation.mechanism_gate import (
     check_variant_consistency,
 )
 from app.simulation.mechanisms import analyze_exposed_values, canonical_mechanism, mechanism_family
+from typing import TYPE_CHECKING
+
 from app.ai.telemetry import stage_scope
+
+if TYPE_CHECKING:  # tránh import vòng lúc chạy: contract kéo theo cả cây pydantic
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
 from app.simulation.operations import analyze_exposed_operations
 from app.simulation.error_codes import ErrorCode
 
@@ -287,6 +292,55 @@ async def stage_analyze(text: str, api_key: str) -> dict:
         api_key, "analyze", user, ANALYZE_SCHEMA, 0.1, 1,
         "Lần trước không phải JSON hợp lệ. Trả về đúng một đối tượng JSON theo schema.",
     )
+
+
+async def stage_semantic_program(
+    text: str, analysis: dict, api_key: str
+) -> tuple["SemanticProgramSpec | None", str | None]:
+    """LLM tổng hợp `SemanticProgramSpec` — ĐÚNG MỘT LƯỢT.
+
+    Trả `(spec, None)` khi hợp lệ, `(None, lý_do)` khi hỏng.
+
+    R0 nguyên vẹn: LLM viết CHƯƠNG TRÌNH, không quyết kết quả — interpreter tất
+    định mới là authority (luật cứng #11).
+
+    Vì sao một lượt chứ không ≤3 như `stage_simulate`: chương trình đúng thì
+    interpreter tự sinh ra toàn bộ bước, nên độ dài mô phỏng KHÔNG tiêu thêm
+    token. Retry ở đây chỉ để cứu lỗi parse, không phải để dò dần cho đúng.
+
+    Cấu trúc và enum do `responseSchema` cưỡng chế (constrained decoding). Nhưng
+    đó KHÔNG phải đảm bảo tuyệt đối — Flash có ghi nhận rơi vào vòng lặp lặp
+    token trong literal số cho tới `MAX_TOKENS` rồi trả JSON cụt; nên nhánh lỗi
+    parse dưới đây là đường sống, không phải phòng thủ thừa.
+    """
+    from app.simulation.semantic_program.contract import generate_json_schema
+    from app.simulation.semantic_program.validator import validate_semantic_program
+
+    user = f'Đề bài:\n"""\n{text}\n"""'
+    with stage_scope("semantic_program"):
+        raw = await call_gemini(
+            api_key,
+            load_skill("semantic_program"),
+            user,
+            generate_json_schema(),
+            0.1,
+        )
+
+    try:
+        payload = json.loads(raw)
+    except (json.JSONDecodeError, TypeError) as e:
+        return None, f"SEMANTIC_PROGRAM_INVALID: JSON không parse được ({e})"
+
+    if not isinstance(payload, dict):
+        return None, (
+            "SEMANTIC_PROGRAM_INVALID: đầu ra không phải một đối tượng JSON "
+            f"(nhận {type(payload).__name__})"
+        )
+
+    val = validate_semantic_program(payload)
+    if not val.ok:
+        return None, f"SEMANTIC_PROGRAM_INVALID: {val.error}"
+    return val.spec, None
 
 
 async def stage_classify(

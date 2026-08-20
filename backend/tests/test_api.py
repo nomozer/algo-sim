@@ -281,7 +281,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `generic.rule_scene` nuốt (dựng thành các bước hé lộ thay vì ba kênh trộn
     # được) — trả lại mù thì bản sửa định tuyến này vô hiệu với chính các đề nó
     # nhắm tới.
-    assert main_module.CACHE_VERSION == "32"
+    # 33 (2026-08-20): `semantic_program.md` viết lại + `stage_semantic_program`
+    # — bề mặt LLM đổi nên analysis cache cũ không còn đáng tin dưới luật mới.
+    assert main_module.CACHE_VERSION == "33"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
