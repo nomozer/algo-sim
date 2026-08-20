@@ -60,3 +60,40 @@ class ErrorCode(str, Enum):
     GATE_OUT_OF_SCOPE = "gate_out_of_scope"
     GATE_NOT_SIMULATION_SUITABLE = "gate_not_simulation_suitable"
     GATE_SCOPE_UNDECLARED = "gate_scope_undeclared"
+
+    # 2026-08-20 — route sinh ngữ nghĩa `generic.semantic_program`.
+    SEMANTIC_PROGRAM_INVALID = "semantic_program_invalid"
+    INTERPRETER_BUDGET_EXHAUSTED = "interpreter_budget_exhausted"
+    INPUT_NOT_GROUNDED = "input_not_grounded"
+    REQUESTED_OPERATION_UNCOVERED = "requested_operation_uncovered"
+    OBLIGATION_WITNESS_UNREALIZED = "obligation_witness_unrealized"
+    #: Mức yếu — hệ CHẠY ĐƯỢC nhưng chưa có checker độc lập. KHÔNG phải
+    #: `capability_gap`: nói "không làm được" khi thật ra "chưa chứng minh
+    #: được" là báo cáo sai năng lực của chính mình.
+    SEMANTIC_VERIFICATION_UNAVAILABLE = "semantic_verification_unavailable"
+    #: Hậu điều kiện SERVER-OWNED/executable bị vi phạm. KHÔNG diễn giải là
+    #: "chứng minh AI hiểu sai đề" — hậu điều kiện do LLM đề xuất mà vi phạm
+    #: thì chỉ chứng minh chương trình TỰ MÂU THUẪN.
+    POSTCONDITION_VIOLATED = "postcondition_violated"
+    #: Telemetry-only, KHÔNG BAO GIỜ lên UI. Exact-trace mismatch là subtype.
+    ORACLE_SEMANTIC_MISMATCH = "oracle_semantic_mismatch"
+
+
+#: `failure_category` của từng mã lỗi route semantic.
+#:
+#: `verification_gap` tách hẳn `capability_gap` vì chúng trả lời HAI câu hỏi
+#: khác nhau (spec §3.6):
+#:   capability_gap    — "Máy có thực thi được không?"            → KHÔNG
+#:   verification_gap  — "Máy chạy được, nhưng có đủ bằng chứng   → CHƯA
+#:                        để phát canonical cho học sinh không?"
+#: Gộp hai cái làm một là lẫn "hệ không làm được" với "hệ làm được nhưng chưa
+#: chứng minh được" — và chính sự phân biệt đó là đóng góp của đề tài.
+SEMANTIC_FAILURE_CATEGORY: dict[str, str] = {
+    ErrorCode.SEMANTIC_PROGRAM_INVALID.value: "capability_gap",
+    ErrorCode.INTERPRETER_BUDGET_EXHAUSTED.value: "capability_gap",
+    ErrorCode.INPUT_NOT_GROUNDED.value: "insufficient_specification",
+    ErrorCode.REQUESTED_OPERATION_UNCOVERED.value: "semantic_incomplete",
+    ErrorCode.OBLIGATION_WITNESS_UNREALIZED.value: "semantic_incomplete",
+    ErrorCode.SEMANTIC_VERIFICATION_UNAVAILABLE.value: "verification_gap",
+    ErrorCode.POSTCONDITION_VIOLATED.value: "verification_gap",
+}

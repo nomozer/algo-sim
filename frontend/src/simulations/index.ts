@@ -6,6 +6,7 @@ import { registerGenericDomain } from "./domains/generic";
 import { registerWebDomain } from "./domains/web";
 import { registerLogicDomain } from "./domains/logic";
 import { registerNetworkDomain } from "./domains/network";
+import { registerSemanticDomain } from "./domains/semantic";
 import { registerTreeDomain } from "./domains/tree/tree-module";
 
 export * from "./types";
@@ -30,4 +31,5 @@ export function registerAllSimulations(): void {
   registerColorDomain(); // W5A — mô hình màu RGB
   registerGenericDomain();
   registerWebDomain();
+  registerSemanticDomain(); // 2026-08-20 — đường sinh ngữ nghĩa (2D, shadow-only)
 }

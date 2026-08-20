@@ -50,6 +50,11 @@ export const TRANSPORT_POLICY: Record<string, readonly [TransportMode, string]> 
     "nút CHÍNH LÀ định nghĩa của từng kiểu."],
   "algorithm.bubble_sort": ["FULL_TRACE",
     "Bài học là TRÌNH TỰ đổi chỗ do thuật toán quyết định, không phải dãy đã sắp."],
+  "generic.semantic_program": ["FULL_TRACE",
+    "Chương trình ngữ nghĩa được diễn hoạt TỪNG BƯỚC: mỗi khung là một trạng " +
+    "thái bộ nhớ có thật do interpreter tất định sinh ra. Xem trạng thái cuối " +
+    "chỉ cho biết KẾT QUẢ, trong khi thứ đáng học là CƠ CHẾ đi tới kết quả đó — " +
+    "và chính việc bỏ mất các khung giữa là lỗi đã ship (bất biến #31)."],
   "algorithm.insertion_sort": ["FULL_TRACE",
     "Phần đã sắp LỚN DẦN sang phải và mỗi phần tử mới được chèn vào đúng chỗ " +
     "của nó; nhìn dãy đã sắp không cho biết nó được chèn vào đâu và đẩy ai đi."],

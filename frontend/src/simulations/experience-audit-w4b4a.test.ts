@@ -223,7 +223,20 @@ describe("W4B-4A · câu hỏi nghiệm thu chạy trên toàn danh mục", () =
        thư viện (học sinh không còn đường mở nó không cần backend) đi qua im
        lặng, và mọi phép đo phía dưới cũng lặng lẽ thu hẹp phạm vi theo.
        Registry là nguồn sự thật về "sản phẩm có những bài nào" ⇒ so với nó. */
-    const registered = listSimulations().map((m) => m.id).sort();
+    /* 2026-08-20 — SHADOW-ONLY: route được ĐĂNG KÝ nhưng CHƯA PHỤC VỤ học sinh.
+       Serving gate (spec §10.2) chỉ mở learner-facing sau khi đủ chuỗi
+       `RequestContract → P2 → C₁a → validator → interpreter → C₁b → C₂ → STRONG`.
+       Chưa phục vụ thì chưa có mẫu offline trong thư viện công khai — và đó là
+       ĐÚNG, không phải mẫu bị mất.
+
+       Khai TƯỜNG MINH ở đây thay vì nới sàn: nới sàn thì lần sau một target thật
+       biến mất khỏi thư viện cũng đi qua im lặng, đúng lỗ hổng F10 đã bịt. */
+    const SHADOW_ONLY = ["generic.semantic_program"];
+
+    const registered = listSimulations()
+      .map((m) => m.id)
+      .filter((id) => !SHADOW_ONLY.includes(id))
+      .sort();
     const measured = rows.map((r) => r.target).sort();
     expect(measured, "target đăng ký mà không có mẫu offline dựng được").toEqual(registered);
   });
