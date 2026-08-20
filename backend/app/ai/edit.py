@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 
+from app.ai.telemetry import stage_scope
 from app.ai.gemini import call_gemini, load_skill
 from app.simulation.dsl.manifest import (
     SEMANTIC_ROLES,
@@ -187,7 +188,8 @@ async def edit_simulation(config: dict, instruction: str, api_key: str) -> dict:
     last_code = STRUCTURE_INVALID
 
     for _attempt in range(2):  # 1 lần + 1 retry kèm lỗi
-        raw = await call_gemini(api_key, load_skill("edit"), prompt, EDIT_SCHEMA, 0.1)
+        with stage_scope("edit"):
+            raw = await call_gemini(api_key, load_skill("edit"), prompt, EDIT_SCHEMA, 0.1)
         try:
             parsed = json.loads(raw)
         except json.JSONDecodeError:

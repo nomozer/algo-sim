@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 
+from app.ai.telemetry import stage_scope
 from app.ai.gemini import call_gemini, load_skill
 
 EXPLAIN_SCHEMA = {
@@ -38,7 +39,8 @@ async def explain_state(
         f"HỘI THOẠI GẦN NHẤT:\n{history_text or '(chưa có)'}\n\n"
         f"NGƯỜI HỌC HỎI: {question}"
     )
-    raw = await call_gemini(api_key, load_skill("explain"), user, EXPLAIN_SCHEMA, 0.4)
+    with stage_scope("explain"):
+        raw = await call_gemini(api_key, load_skill("explain"), user, EXPLAIN_SCHEMA, 0.4)
     try:
         parsed = json.loads(raw)
         reply = parsed.get("reply") if isinstance(parsed, dict) else None

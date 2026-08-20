@@ -34,6 +34,7 @@ from app.simulation.mechanism_gate import (
     check_variant_consistency,
 )
 from app.simulation.mechanisms import analyze_exposed_values, canonical_mechanism, mechanism_family
+from app.ai.telemetry import stage_scope
 from app.simulation.operations import analyze_exposed_operations
 from app.simulation.error_codes import ErrorCode
 
@@ -262,7 +263,11 @@ async def _call_json(
     """Gọi Gemini + parse JSON, retry khi trả về không phải JSON hợp lệ."""
     prompt = user_text
     for attempt in range(retries + 1):
-        raw = await call_gemini(api_key, load_skill(skill), prompt, schema, temperature)
+        # Nhãn stage cho telemetry token (spec §6.1). Dùng ContextVar thay vì
+        # tham số của call_gemini: hàm đó có 13 test double, thêm tham số quan
+        # trắc vào chữ ký làm gãy hết.
+        with stage_scope(skill):
+            raw = await call_gemini(api_key, load_skill(skill), prompt, schema, temperature)
         try:
             parsed = json.loads(raw)
             if isinstance(parsed, dict):
@@ -343,7 +348,8 @@ async def stage_simulate(
     stage_incomplete: dict | None = None
 
     for _attempt in range(3):
-        raw = await call_gemini(api_key, load_skill("simulate"), prompt, spec.config_schema, 0.1)
+        with stage_scope("simulate"):
+            raw = await call_gemini(api_key, load_skill("simulate"), prompt, spec.config_schema, 0.1)
         try:
             candidate = json.loads(raw)
         except json.JSONDecodeError:
@@ -442,7 +448,8 @@ async def stage_simulate_family(
     prompt = base
     last_error = "không rõ"
     for _attempt in range(3):
-        raw = await call_gemini(api_key, load_skill("simulate"), prompt, selector.config_schema, 0.1)
+        with stage_scope("simulate_family"):
+            raw = await call_gemini(api_key, load_skill("simulate"), prompt, selector.config_schema, 0.1)
         try:
             candidate = json.loads(raw)
         except json.JSONDecodeError:

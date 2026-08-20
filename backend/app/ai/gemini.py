@@ -13,6 +13,8 @@ from pathlib import Path
 
 import httpx
 
+from app.ai.telemetry import current_stage, record_usage
+
 MODEL = "gemini-2.5-flash"
 SKILLS_DIR = Path(__file__).resolve().parent / "skills"
 
@@ -157,6 +159,13 @@ async def call_gemini(
             raise RuntimeError(f"Gemini API lỗi HTTP {res.status_code}: {res.text[:300]}")
 
     body = res.json()
+
+    # Ghi token TRƯỚC khi parse nội dung: lượt trả về rỗng vẫn đã tiêu token, và
+    # bỏ sót đúng những lượt hỏng sẽ làm baseline đẹp hơn sự thật.
+    record_usage(
+        current_stage(), body.get("usageMetadata") if isinstance(body, dict) else None
+    )
+
     try:
         text = body["candidates"][0]["content"]["parts"][0]["text"]
     except (KeyError, IndexError, TypeError):

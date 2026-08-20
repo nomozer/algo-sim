@@ -14,6 +14,7 @@ import io
 import zipfile
 
 from app.ai.gemini import call_gemini, load_skill
+from app.ai.telemetry import stage_scope
 
 # ── Giới hạn ──────────────────────────────────────────────────
 MAX_TEXT_CHARS = 8000
@@ -154,13 +155,14 @@ async def ingest_to_text(
         valid_mime = _check_image(raw, mime_type)
         if not api_key:
             raise IngestError("__NEED_KEY__")  # main.py chuyển thành 503
-        transcribed = await call_gemini(
-            api_key,
-            load_skill("transcribe"),
-            "Chép lại nội dung đề bài trong ảnh này.",
-            temperature=0.0,
-            image={"mime_type": valid_mime, "data": content},
-        )
+        with stage_scope("transcribe"):
+            transcribed = await call_gemini(
+                api_key,
+                load_skill("transcribe"),
+                "Chép lại nội dung đề bài trong ảnh này.",
+                temperature=0.0,
+                image={"mime_type": valid_mime, "data": content},
+            )
         text = transcribed.strip()
         if len(text) < 10:
             raise IngestError("Không đọc được đề bài trong ảnh. Hãy chụp rõ hơn hoặc gõ tay đề.")

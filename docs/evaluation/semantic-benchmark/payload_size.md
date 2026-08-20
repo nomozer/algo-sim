@@ -28,8 +28,12 @@ Sinh lại: chạy `compile_semantic_program_to_envelope` trên
 | P17_PREFIX_SUM | 10 | 10 | step | 5.188 |
 | P18_FREQUENCY_COUNT | 19 | 19 | step | 8.217 |
 
-**Tổng hợp:** lớn nhất **23.317 B** · trung bình **10.910 B** · nhiều khung nhất
-**42** · ít nhất **4** · `grouping_level = "step"` ở **18/18**.
+**Payload:** lớn nhất **23.317 B** · trung bình **10.910 B**.
+
+**Số khung:** min **4** · trung vị **18,0** · trung bình **20,1** · max **42** ·
+`grouping_level = "step"` ở **18/18**.
+
+Phân bố: `4, 8, 10, 14, 14, 15, 16, 17, 17, 19, 19, 21, 22, 23, 31, 32, 38, 42`
 
 ## Ba kết luận
 
@@ -43,5 +47,8 @@ Sinh lại: chạy `compile_semantic_program_to_envelope` trên
    cần thiết (đề học sinh tự gõ có thể lớn hơn), nhưng **đừng tối ưu mức gộp
    khi chưa có bài nào chạm trần**.
 
-3. **Ngân sách thực thi 300 còn rất rộng** so với 42 khung thực tế. Trần cũ của
-   DSL là 20 — tức nó đã cắt câm ngay cả ở bài trung bình.
+3. **Trần 20 của DSL cắt câm 7/18 bài trong tập này (39%)** — các bài 21, 22,
+   23, 31, 32, 38, 42 khung. Nói cho chính xác: bài **trung vị (18 khung) KHÔNG
+   bị cắt**; nên phát biểu đúng là *"trần 20 cắt gần bốn phần mười bài đã quan
+   sát"*, **không phải** *"cắt cả bài trung bình"*. Ngân sách thực thi 300 thì
+   còn rất rộng so với max 42.
