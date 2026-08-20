@@ -26,9 +26,9 @@ describe("module algorithm.scan (M12)", () => {
     expect(mod).toBeDefined();
     expect(mod!.domain).toBe("algorithm");
     expect(mod!.interactionMode).toBe("progressive");
-    // M15 Task 12 (W2) — scan là catch-all trong-family, KHÔNG predict (capability
-    // learner-feedback ngoài phạm vi formalize family này).
-    expect(mod!.predict).toBeUndefined();
+    /* Khẳng định "KHÔNG predict" bỏ 2026-08-21: W13 gỡ hẳn năng lực đó, và
+       `no-verdict.test.ts` nay khoá việc KHÔNG module nào khai lại nó — khoá
+       một lần cho cả danh mục thay vì nhắc lại ở từng module. */
   });
 
   it("validateConfig: nhận spec hợp lệ, từ chối spec sai", () => {

@@ -103,7 +103,7 @@ beforeAll(() => {
       interactionMode: m.interactionMode,
       tool: Boolean(m.explore) || m.interactionMode !== "progressive",
       trace: Boolean(m.timeline),
-      challenge: Boolean(m.predict),
+      challenge: false, // W13 gỡ Thử thách
       /* Đọc từ chủ sở hữu THẬT: `loadEnvelope` đặt `challengeOpen: false` cho
          MỌI mô phỏng mới (W4B-2Z). Nên giá trị này giống nhau ở mọi dòng — và
          đó chính là điều đáng khoá: nó là thuộc tính của SHELL, không phải của
@@ -111,7 +111,7 @@ beforeAll(() => {
       challengeDefaultClosed: true,
       causalFeedback: Boolean(m.narrate),
       transportNeed: transportOf(m),
-      correctnessOwner: m.predict ? "module.predict.check (engine tất định)" : "—",
+      correctnessOwner: "—", // không còn bên chấm nào sau W13
       hasOfflineSample: samples.has(m.id),
     }))
     .sort((a, b) => a.id.localeCompare(b.id));

@@ -85,7 +85,6 @@ describe("W4B-2R · CANONICAL_RUN_CAN_COMPLETE_WITHOUT_PREDICTION", () => {
       const end = useAppStore.getState();
       const cursor = mod.timeline.currentStep(end.active!.state);
       expect(cursor, `${id}: không tới được bước cuối nếu không trả lời`).toBe(total - 1);
-      expect(end.prediction, `${id}: chạy trọn trace mà vẫn sinh prediction`).toBeNull();
       // Tới cuối thì trình phát tự dừng — không treo ở trạng thái "đang chạy".
       expect(end.playing, `${id}: còn playing sau khi hết trace`).toBe(false);
     }
@@ -105,17 +104,8 @@ describe("W4B-2R · OBSERVE_REQUIRES_NO_ANSWER", () => {
     expect(submit).not.toMatch(/goToStep|nextStep|cursor/);
   });
 
-  it("PREDICTION_IS_OPTIONAL_WHERE_PRESENT — predict là capability, không bắt buộc", () => {
-    const withPredict = listSimulations()
-      .map((m) => getSimulation(m.id)!)
-      .filter((m) => m.predict !== undefined);
-    // Có thật (nếu 0 thì test này vô nghĩa và phải biết ngay).
-    expect(withPredict.length).toBeGreaterThan(0);
-    for (const m of withPredict) {
-      // Module không được đòi hỏi gì để `timeline` chạy: hai capability rời nhau.
-      expect(m.timeline, `${m.id}`).toBeDefined();
-    }
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("PREDICTION_IS_OPTIONAL_WHERE_PRESENT — predict là capability, khôn
+     predict la capability da bi W13 go — 'tuy chon o noi co mat' khong con noi nao co mat. */
 });
 
 describe("W4B-2R · RENDERER_DOES_NOT_OWN_RESULT", () => {

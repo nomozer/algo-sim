@@ -9,7 +9,7 @@ import { BoolDagWorkspace, makeBoolDagModule } from "./domains/logic/dag-module"
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
 import type { AlgorithmSimState } from "./domains/algorithm";
-import type { SimulationEnvelope } from "./types";
+
 
 registerAllSimulations();
 
@@ -284,25 +284,8 @@ describe("W1 · Space trên nút đáp án phải trả lời, không bật Tự
 describe("W1 · reset trả PredictionBar về thu gọn & chưa trả lời", () => {
   beforeEach(() => useAppStore.getState().reset());
 
-  it("runtime reset xoá prediction", () => {
-    const env: SimulationEnvelope = {
-      status: "ok", simulation_id: "algorithm.find_max", domain: "algorithm",
-      visual_mode: "2d", title: "t", description: null, notes: null,
-      config: {
-        problem: { summary: "s", input: "i", output: "o" },
-        algorithm_id: "find_max", data: { array: ARR }, data_generated: false, notes: null,
-      },
-    };
-    useAppStore.getState().loadEnvelope(env);
-    useAppStore.getState().goToStep(1);
-    useAppStore.getState().submitPrediction("yes");
-    expect(useAppStore.getState().prediction).not.toBeNull();
-
-    useAppStore.getState().resetSim();
-    expect(useAppStore.getState().prediction).toBeNull();
-    // và cursor về đầu ⇒ câu hỏi đổi ⇒ bar tự thu gọn (khoá mở theo câu hỏi)
-    expect((useAppStore.getState().active!.state as AlgorithmSimState).cursor).toBe(0);
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("runtime reset xoá prediction", () => {
+     Kiem 'reset xoa prediction' — W13 go prediction. */
 });
 
 /* ── 5. W4B-2B §9 — PANEL GIẢI THÍCH KHÔNG CHÉP LẠI HEADER WORKSPACE ─────────

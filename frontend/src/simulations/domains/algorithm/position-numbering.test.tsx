@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./index";
 import { AlgorithmInspector, AlgorithmWorkspace } from "./ui";
-import { SearchStateView } from "../../../components/SearchActionZone";
+import { SearchStateView } from "../../../components/SearchStateView";
 import { searchInteractionOf } from "./decision";
 import { activeTrace, type AlgorithmSimState } from "./model";
 import { ALGORITHM_IDS, type AlgorithmId } from "../../../core/types";
@@ -199,7 +199,7 @@ describe("W4B-2D §4 · cùng màn hình ⇒ cùng một con số", () => {
   /**
    * W4B-2D §17/§26 — vùng hành động của họ tìm kiếm NAY nằm sau cổng Thí nghiệm,
    * mà `labOpen` là `useState` cục bộ nên SSR luôn thấy `false`
-   * (`ARCHITECTURE_MAP §8` #13). Dựng thẳng `SearchActionZone` với CHÍNH model
+   * (`ARCHITECTURE_MAP §8` #13). Dựng thẳng `SearchStateView` với CHÍNH model
    * mà production cấp cho nó: đó đúng là thứ học sinh đọc khi đã mở Thí nghiệm,
    * và không phải giả lập `labOpen` bằng `renderToString`.
    */

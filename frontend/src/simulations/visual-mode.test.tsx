@@ -86,18 +86,8 @@ describe("visualMode — trạng thái TRÌNH BÀY trong store", () => {
     expect((useAppStore.getState().active!.state as { cursor: number }).cursor).toBe(cursorBefore);
   });
 
-  it("(7) prediction KHÔNG bị renderer mode đụng tới (nó gắn với BƯỚC, không gắn renderer)", () => {
-    useAppStore.getState().loadEnvelope(envelopeFor("network.packet_routing", NET_CONFIG));
-    const canonical = (useAppStore.getState().active!.state as { route: string[] }).route[1];
-    useAppStore.getState().submitPrediction(canonical);
-    expect(useAppStore.getState().prediction!.verdict).toBe("correct");
-
-    useAppStore.getState().setVisualMode("3d");
-    expect(useAppStore.getState().prediction!.verdict).toBe("correct");
-
-    useAppStore.getState().setVisualMode("2d");
-    expect(useAppStore.getState().prediction!.verdict).toBe("correct");
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("(7) prediction KHÔNG bị renderer mode đụng tới (nó gắn với BƯỚC, k
+     Kiem prediction khong bi renderer mode dung — W13 go prediction. */
 });
 
 describe("renderer selection — DẪN XUẤT TỪ HỢP ĐỒNG MODULE (không theo id)", () => {

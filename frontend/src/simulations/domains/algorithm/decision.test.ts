@@ -244,11 +244,7 @@ describe("module.predict dùng decisionPointOf — thuần, đúng trace, có m�
   const mod = makeAlgorithmModule("binary_search");
   const DATA = { array: [1, 3, 5, 7, 9, 11, 13], target: 3 };
 
-  function init(cursor: number): AlgorithmSimState {
-    const r = mod.validateConfig({ problem: {}, algorithm_id: "binary_search", data: DATA, data_generated: false, notes: null });
-    if (!r.ok) throw new Error(r.error);
-    return mod.timeline!.goToStep(mod.init(r.config), cursor) as AlgorithmSimState;
-  }
+  /* `init` GỠ 2026-08-21 (Task 10b): chỉ dùng bởi các test predict đã xoá. */
 
   /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("challenge/check khớp decisionPointOf; đúng và sai đều KHÔNG đụng c
      Kiem predict.challenge/check — W13 go nang luc du doan co chu dich. */

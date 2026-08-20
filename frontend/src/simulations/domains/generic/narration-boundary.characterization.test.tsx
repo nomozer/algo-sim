@@ -193,11 +193,8 @@ describe("đặc tả · narration KHÔNG sở hữu state/kết quả/phán quy
     // ⇒ PHÁT HIỆN: engine giữ đúng sự thật; mâu thuẫn nằm giữa HAI BỀ MẶT,
     // và không tầng nào đối chiếu chúng.
   });
-
-  it("generic.rule_scene KHÔNG khai `predict` ⇒ không có phán quyết để bẻ", () => {
-    const mod = makeGenericModule();
-    expect(mod.predict, "nếu có predict thì phải đo lại rủi ro").toBeUndefined();
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — 
+     Kiem 'khong khai predict' — no-verdict.test.ts nay khoa viec do cho CA danh muc, khoa mot lan thay vi nhac lai o tung module. */
 
   it("narration là trường TRÌNH BÀY: không logic nào đọc nó để quyết định", () => {
     /* Khoá bằng mã nguồn: `model.ts` chỉ GÁN narration vào frame, không bao giờ

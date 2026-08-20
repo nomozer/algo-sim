@@ -10,7 +10,6 @@ import {
   stageInteractionsOf,
 } from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
-import { challengeEntry } from "../components/SimulationWorkspace";
 import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
 import type { AlgorithmSimState } from "./domains/algorithm";
@@ -213,21 +212,8 @@ describe("W4B-2B §7/§18 · Quan sát ẩn CAM KẾT, giữ QUAN HỆ", () => {
    *   2. lối vào là `<button>` THẬT có `aria-expanded` (bàn phím tới được);
    *   3. sân khấu KHÔNG được dựng lại nút ấy (chống tái phát dải).
    */
-  it("cổng nhìn thấy được và là NÚT thật (bàn phím tới được, có aria-expanded)", () => {
-    for (const id of GATED) {
-      const { config, state } = build(id);
-      const entry = challengeEntry(makeAlgorithmModule(id), state, config);
-      expect(entry, `${id}: không có lối vào`).not.toBeNull();
-      expect(entry!.label.length, `${id}: nhãn cụt`).toBeGreaterThan(14);
-      expect(observeHtml(id), `${id}: sân khấu dựng lại nút cổng`)
-        .not.toContain("sim-secondary-action");
-    }
-    const controls = readFileSync(
-      new URL("../components/SimulationControls.tsx", import.meta.url), "utf-8",
-    );
-    expect(controls, "lối vào không phải <button>").toMatch(/<button[\s\S]{0,400}sim-secondary-action/);
-    expect(controls, "lối vào không khai trạng thái mở/đóng").toContain("aria-expanded={open}");
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("cổng nhìn thấy được và là NÚT thật (bàn phím tới được, có aria-exp
+     Cong Thu thach da bi W13 go — khong con nut nao de kiem. */
 });
 
 /* ══ 3. KHÔNG RÒ ĐÁP ÁN (§10) ═════════════════════════════════════════════ */
@@ -295,7 +281,6 @@ describe("W4B-2B §13 · mở/đóng Thí nghiệm KHÔNG chạm engine state", 
       simulation_id: "algorithm.find_max", title: "t", config,
     } as unknown as SimulationEnvelope);
     const before = useAppStore.getState().active!.state;
-    useAppStore.getState().setChallengeOpen(true);
     useAppStore.getState().setExploreOpen(true);
     expect(useAppStore.getState().active!.state, "đổi chế độ đã dựng lại state").toBe(before);
     expect(mod.timeline!.currentStep(useAppStore.getState().active!.state as AlgorithmSimState))
@@ -328,33 +313,18 @@ describe("W4B-2B §13 · mở/đóng Thí nghiệm KHÔNG chạm engine state", 
       expect(JSON.stringify(useAppStore.getState().active!.state), `${id}`).toBe(before);
       expect((useAppStore.getState().active!.state as AlgorithmSimState).cursor, `${id}`)
         .toBe(cursorBefore);
-      expect(useAppStore.getState().prediction, `${id}: cổng trình bày làm bẩn prediction`)
-        .toBeNull();
     }
   });
 });
 
 /* ══ 5. KHÔNG CÓ BÊN CHẤM THỨ HAI (§4, §24) ═══════════════════════════════ */
 
-describe("W4B-2B §4 · `predict.check` vẫn là bên chấm DUY NHẤT", () => {
-  it("cam kết đi qua submitPrediction → predict.check, phản hồi sống ở store", () => {
-    for (const id of GATED) {
-      const { mod, state } = build(id);
-      const cur = at(state, firstActionable(state));
-      const model = stageModel(cur);
-      const ids = model.actions.map((a) => a.id);
-
-      // đúng một đáp án được engine chấm là đúng — engine, không phải renderer
-      const verdicts = ids.map((a) => mod.predict!.check(cur, a).verdict);
-      /* W4B-2D: `binary_search` bày tới BA hành động (trái / giữa / phải), nên
-         "đúng 1 sai 1" là con số của hai họ cũ, không phải bất biến. Bất biến
-         thật: engine chấm ĐÚNG MỘT lựa chọn là đúng, mọi lựa chọn còn lại sai —
-         và không lựa chọn nào rơi ra ngoài hai phán quyết đó. */
-      expect(verdicts.filter((v) => v === "correct").length, `${id}: ${verdicts}`).toBe(1);
-      expect(verdicts.filter((v) => v === "incorrect").length, `${id}: ${verdicts}`)
-        .toBe(ids.length - 1);
-    }
-  });
+describe("W4B-2B §4 → W13 · KHÔNG renderer nào tự chấm", () => {
+  /* Test "cam kết đi qua submitPrediction → predict.check" ĐÃ XOÁ 2026-08-21
+     (Task 10b): không còn bên chấm nào sau W13, nên không còn gì để khoá là
+     "duy nhất". Nhưng vế NGƯỢC LẠI vẫn sống và vẫn đáng khoá: renderer KHÔNG
+     được tự dựng một đường chấm cho riêng mình. Bỏ luôn cả hai là mất lớp bảo
+     vệ đó. */
 
   it("renderer/ActionZone không tự chấm: không có bên chấm nào ngoài predict.check", () => {
     for (const file of ["../components/ScanActionZone.tsx", "../components/SortActionZone.tsx",

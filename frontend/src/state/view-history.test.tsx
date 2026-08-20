@@ -129,21 +129,8 @@ describe("(9) MỞ LẠI TỪ LỊCH SỬ — zero-AI, khôi phục tiến độ
 });
 
 describe("(23)(24) state tạm KHÔNG rơi vào lịch sử", () => {
-  it("submitPrediction + what-if không đổi dữ liệu lịch sử đã lưu", () => {
-    const store = () => useAppStore.getState();
-    store().loadEnvelope(envelope());
-    const before = JSON.stringify(store().history[0]);
-
-    const canonical = (store().active!.state as NetworkState).route[1];
-    store().submitPrediction(canonical);
-    expect(store().prediction).not.toBeNull();
-
-    expect(JSON.stringify(store().history[0])).toBe(before);
-    // reopen sau đó cũng không mang theo prediction cũ
-    store().goHome();
-    store().reopenFromHistory(store().history[0].id);
-    expect(store().prediction).toBeNull();
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("submitPrediction + what-if không đổi dữ liệu lịch sử đã lưu", () =
+     submitPrediction/prediction da bi W13 go. */
 });
 
 describe("App SSR — Home sạch (không giả inspector/timeline rỗng)", () => {

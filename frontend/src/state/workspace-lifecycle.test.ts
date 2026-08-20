@@ -70,19 +70,15 @@ describe("M18-UI · một mô phỏng tại một thời điểm", () => {
 
   it("bài MỚI luôn mở ở Quan sát — chế độ không rò từ bài trước", () => {
     s().loadEnvelope(ENV_A);
-    s().setChallengeOpen(true);
     s().setExploreOpen(true);
     s().loadEnvelope(ENV_B);
-    expect(s().challengeOpen).toBe(false);
     expect(s().exploreOpen).toBe(false);
   });
 
-  it("Đặt lại đóng cả hai chế độ — dựng lại mô hình là về Quan sát", () => {
+  it("Đặt lại đóng chế độ — dựng lại mô hình là về Quan sát", () => {
     s().loadEnvelope(ENV_A);
-    s().setChallengeOpen(true);
     s().setExploreOpen(true);
     s().resetSim();
-    expect(s().challengeOpen).toBe(false);
     expect(s().exploreOpen).toBe(false);
   });
 

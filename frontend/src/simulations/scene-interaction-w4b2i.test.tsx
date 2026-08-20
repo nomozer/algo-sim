@@ -11,7 +11,7 @@ import {
   stageInteractionsOf,
 } from "./domains/algorithm/decision";
 import { ArrayView } from "../components/ArrayView";
-import { SearchActionZone } from "../components/SearchActionZone";
+import { SearchStateView } from "../components/SearchStateView";
 import { commitmentSurfaceKind } from "./domains/algorithm/interaction-policy";
 
 /**
@@ -206,8 +206,8 @@ describe("W4B-2I · NO_DUPLICATE_DETACHED_QUIZ_SURFACE", () => {
     const { state } = build("binary_search");
     const model = searchInteractionOf(at(state, firstActionable(state)))!;
     const hidden = renderToString(
-      <SearchActionZone model={model} answered={false} busy={false} onAct={() => {}}
-        chrome="tool" actionsHidden />,
+      <SearchStateView model={model}
+        />,
     );
     expect(hidden).not.toContain("search-actions");
     expect(hidden).not.toContain("btn-choice");
@@ -215,8 +215,8 @@ describe("W4B-2I · NO_DUPLICATE_DETACHED_QUIZ_SURFACE", () => {
 
     // …và ở hình thức `buttons` thì nút vẫn còn nguyên (không vô tình giết cả hai).
     const shown = renderToString(
-      <SearchActionZone model={model} answered={false} busy={false} onAct={() => {}}
-        chrome="tool" />,
+      <SearchStateView model={model}
+        />,
     );
     expect(shown).toContain("search-actions");
   });
@@ -251,29 +251,11 @@ describe("W4B-2I · NO_DUPLICATE_DETACHED_QUIZ_SURFACE", () => {
 /* ══ 4. ENGINE VẪN LÀ BÊN CHẤM DUY NHẤT ═══════════════════════════════════ */
 
 describe("W4B-2I · ENGINE_OWNS_ACTION_VERDICT trên đường sân khấu", () => {
-  it("id vùng bấm LÀ option id của engine ⇒ nộp thẳng qua predict.check", () => {
-    for (const id of SEARCH_IDS) {
-      const { mod, state } = build(id);
-      const cur = at(state, firstActionable(state));
-      const model = searchInteractionOf(cur)!;
-      const regions = searchSceneRegions(model, (DATA[id]!.array as number[]).length) ?? [];
-      const verdicts = regions.map((r) => mod.predict!.check(cur, r.id).verdict);
-      expect(verdicts.filter((v) => v === "correct").length, `${id}: ${verdicts}`).toBe(1);
-      expect(verdicts.some((v) => v === "unsupported_to_verify"), `${id}: id lạ`).toBe(false);
-    }
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("id vùng bấm LÀ option id của engine ⇒ nộp thẳng qua predict.check"
+     Kiem duong predict.check — W13 go co chu dich. */
 
-  it("WRONG_DIRECT_ACTION_PRESERVES_CANONICAL_STATE — sai không đụng canonical", () => {
-    for (const id of SEARCH_IDS) {
-      const { mod, state } = build(id);
-      const cur = at(state, firstActionable(state));
-      const model = searchInteractionOf(cur)!;
-      const regions = searchSceneRegions(model, (DATA[id]!.array as number[]).length) ?? [];
-      const before = JSON.stringify(cur);
-      for (const r of regions) mod.predict!.check(cur, r.id);
-      expect(JSON.stringify(cur), `${id}: chấm làm mutate state`).toBe(before);
-    }
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("WRONG_DIRECT_ACTION_PRESERVES_CANONICAL_STATE — sai không đụng can
+     Kiem duong predict.check — W13 go co chu dich. */
 
   it("ArrayView KHÔNG tự chấm và KHÔNG tự suy ra vùng nào ứng hành động nào", () => {
     const src = code(readFileSync(new URL("../components/ArrayView.tsx", import.meta.url), "utf-8"));

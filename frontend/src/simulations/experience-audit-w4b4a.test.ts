@@ -184,12 +184,10 @@ beforeAll(() => {
     }
 
     const steps = mod.timeline ? mod.timeline.stepCount(state) : 1;
-    let commitment = 0;
-    if (mod.timeline && mod.predict?.presentedInStage) {
-      for (let i = 0; i < steps; i += 1) {
-        if (mod.predict.presentedInStage(mod.timeline.goToStep(state, i))) commitment += 1;
-      }
-    }
+    /* `presentedInStage` thuộc `predict`, W13 đã gỡ. Không còn bề mặt cam kết
+       nào để đếm — giữ cột trong bảng probe nhưng luôn bằng 0, thay vì bỏ cột
+       và làm gãy so sánh với các artifact cũ. */
+    const commitment = 0;
 
     rows.push({
       target: entry.simId,
@@ -201,7 +199,7 @@ beforeAll(() => {
       actionsThatChanged: changed,
       declaresExplore: !!mod.explore,
       hasExploreEntry: exploreEntry(mod, state, r.config) !== null,
-      declaresPredict: !!mod.predict,
+      declaresPredict: false,
       presentsCommitment: commitment > 0,
     });
   }

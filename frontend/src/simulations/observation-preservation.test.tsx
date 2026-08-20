@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
-import { SearchActionZone } from "../components/SearchActionZone";
+import { SearchStateView } from "../components/SearchStateView";
 import { searchInteractionOf, decisionPointOf } from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import type { AlgorithmSimState } from "./domains/algorithm";
@@ -12,7 +12,7 @@ import type { AlgorithmId } from "../core/types";
  * CORE_OBSERVATION_STATE_PRESERVED_UNDER_GATING (W4B-2V, root cause #1).
  *
  * SỰ CỐ ĐƯỢC KHOÁ Ở ĐÂY. W4B-2D thêm `&& commitmentVisible` để gác **nút cam
- * kết**, nhưng đặt điều kiện đó TRÊN cả `SearchActionZone` — component vốn sở
+ * kết**, nhưng đặt điều kiện đó TRÊN cả `SearchStateView` — component vốn sở
  * hữu cả trạng thái quan sát lẫn điều khiển. Hệ quả: gác quyền hành động thì
  * mất luôn chip vị trí/đích/vùng xét và khối chi phí. Với tìm tuần tự thì chi
  * phí CHÍNH LÀ cơ chế đáng học — và `interaction-policy.ts` đã viện dẫn đúng
@@ -152,7 +152,7 @@ describe("W4B-2V · CORE_OBSERVATION_STATE_PRESERVED_UNDER_GATING", () => {
       const cur = at(state, firstActionable(state));
       const model = searchInteractionOf(cur)!;
       const zone = seen(renderToString(
-        <SearchActionZone model={model} answered={false} busy={false} onAct={() => {}} />,
+        <SearchStateView model={model} />,
       ));
       const probes = coreProbes(id, cur);
       /* Nhãn hành động CÓ QUYỀN nhắc tên vị trí ("Tìm tiếp ở nửa TRÁI") — đó là
@@ -176,7 +176,7 @@ describe("W4B-2V · CORE_OBSERVATION_STATE_PRESERVED_UNDER_GATING", () => {
       const cur = at(state, firstActionable(state));
       const model = searchInteractionOf(cur)!;
       const zone = renderToString(
-        <SearchActionZone model={model} answered={false} busy={false} onAct={() => {}} />,
+        <SearchStateView model={model} />,
       );
       expect(surfaceCount(zone), `${id}`).toBe(1);
       for (const a of model.actions) expect(zone, `${id}: thiếu ${a.id}`).toContain(a.label);

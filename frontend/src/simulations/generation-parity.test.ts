@@ -99,7 +99,6 @@ interface Row {
   visualModes: string;
   interactionMode: string;
   hasTimeline: boolean;
-  hasPredict: boolean;
   hasExplore: boolean;
   actionVocabulary: string[];
   aiSourcesChecked: number;
@@ -177,7 +176,6 @@ describe("WAVE 1 · bài mẫu và bài AI giải ra CÙNG một module/renderer
         visualModes: availableVisualModes(mod).join("/"),
         interactionMode: mod.interactionMode,
         hasTimeline: !!mod.timeline,
-        hasPredict: !!mod.predict,
         hasExplore: !!mod.explore,
         actionVocabulary: sampleVocab,
         aiSourcesChecked: PIPELINE_SOURCES.length,

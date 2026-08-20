@@ -91,7 +91,6 @@ describe("W5A · công cụ có ràng buộc: đổi đầu vào là tính lại
   it("KHÔNG timeline, KHÔNG predict — trộn màu không có 'bước tiếp theo' để cam kết", () => {
     const { mod } = build();
     expect(mod.timeline, "mọc timeline cho một quan hệ tức thì").toBeUndefined();
-    expect(mod.predict, "gắn quiz vào một công cụ — đúng thứ Phase B vừa gỡ").toBeUndefined();
     expect(mod.explore, "công cụ không có lời mời nào").toBeTruthy();
   });
 

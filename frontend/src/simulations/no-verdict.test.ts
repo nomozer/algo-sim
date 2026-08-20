@@ -37,7 +37,7 @@ const CAPABILITY_DA_GO = ["predict", "prediction", "submitPrediction"] as const;
 describe("W13 §1 — không module nào khai lại năng lực chấm điểm", () => {
   it("không module nào còn khai `predict`", () => {
     const pham = listSimulations()
-      .filter((m) => (m as Record<string, unknown>).predict !== undefined)
+      .filter((m) => (m as unknown as Record<string, unknown>).predict !== undefined)
       .map((m) => m.id);
     expect(pham, `module khai lại năng lực đã gỡ:\n${pham.join("\n")}`).toEqual([]);
   });

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
-import { SearchActionZone } from "../components/SearchActionZone";
+import { SearchStateView } from "../components/SearchStateView";
 import { searchInteractionOf, stageInteractionsOf } from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { ALGORITHM_IDS, type AlgorithmId } from "../core/types";
@@ -104,10 +104,8 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     expect(UI).toMatch(/chrome:\s*\(gated \? "tool" : "panel"\)/);
     expect(UI, "shell quyết định theo định danh bài").not.toMatch(/algorithm_id\s*===\s*["']/);
     const z = renderToString(
-      <SearchActionZone
-        model={searchInteractionOf(at(build("binary_search").state, actionableStep(build("binary_search").state)))!}
-        answered={false} busy={false} onAct={() => {}} chrome="tool"
-      />,
+      <SearchStateView
+        model={searchInteractionOf(at(build("binary_search").state, actionableStep(build("binary_search").state)))!} />,
     );
     expect(z).toContain("is-tool");
   });
@@ -175,10 +173,8 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
       const { state } = build(id);
       const k = actionableStep(state);
       const zone = renderToString(
-        <SearchActionZone
-          model={searchInteractionOf(at(state, k))!}
-          answered={false} busy={false} onAct={() => {}} chrome="tool"
-        />,
+        <SearchStateView
+          model={searchInteractionOf(at(state, k))!} />,
       );
       for (const dup of ["search-state", "search-cost", "search-precondition", "scan-chip"]) {
         expect(zone, `${id}: công cụ chép lại "${dup}" của Quan sát`).not.toContain(dup);
@@ -190,11 +186,8 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     const { state } = build("binary_search");
     const k = actionableStep(state);
     const zone = renderToString(
-      <SearchActionZone
-        model={searchInteractionOf(at(state, k))!}
-        answered busy={false} onAct={() => {}} chrome="tool"
-        feedback={{ verdict: "incorrect", message: "Chưa đúng." }}
-      />,
+      <SearchStateView
+        model={searchInteractionOf(at(state, k))!} />,
     );
     expect(zone).toContain("predict-result");
     expect(zone.indexOf("predict-result"), "phản hồi rơi ra ngoài zone")

@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { registerAllSimulations } from "./index";
 import { getSimulation, listSimulations } from "./registry";
 import { offlineCatalog } from "../data/offline-catalog";
-import { challengeEntry, exploreEntry } from "../components/SimulationWorkspace";
+import { exploreEntry } from "../components/SimulationWorkspace";
 import { thresholdRange } from "./domains/algorithm/condition-param";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { activeTrace, type AlgorithmConfig, type AlgorithmSimState } from "./domains/algorithm/model";
@@ -86,15 +86,8 @@ describe("W4B-3A §1 · cờ chế độ sống ở store mà store KHÔNG biế
 /* ══ 2. HAI CHẾ ĐỘ KHÔNG ĐƯỢC GỘP ════════════════════════════════════════ */
 
 describe("W4B-3A §2 · Khám phá ≠ Thử thách", () => {
-  it("hai cờ độc lập — mở cái này không kéo theo cái kia", () => {
-    const e = offlineCatalog().find((x) => x.simId === "algorithm.find_max")!;
-    useAppStore.getState().loadEnvelope(e.envelope);
-    useAppStore.getState().setExploreOpen(true);
-    expect(useAppStore.getState().challengeOpen, "Khám phá kéo theo Thử thách").toBe(false);
-    useAppStore.getState().setExploreOpen(false);
-    useAppStore.getState().setChallengeOpen(true);
-    expect(useAppStore.getState().exploreOpen, "Thử thách kéo theo Khám phá").toBe(false);
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("hai cờ độc lập — mở cái này không kéo theo cái kia", () => {
+     Chi con MOT co che do sau W13 — 'hai co doc lap' khong con doi tuong. */
 
   it("`explore` KHÔNG được đi qua bên chấm — không module nào nối nó vào predict", () => {
     /* Đây là ranh giới trung tâm: Khám phá không có đúng/sai. Nếu một ngày
@@ -195,7 +188,8 @@ describe("W4B-3A §3 · lối vào suy từ capability", () => {
       if (!r.ok) continue;
       let st: unknown;
       try { st = mod.init(r.config); } catch { continue; }
-      for (const entry of [challengeEntry(mod, st, r.config), exploreEntry(mod, st, r.config)]) {
+      /* Chỉ còn MỘT lối vào sau W13 — `challengeEntry` đã bị gỡ cùng chế độ. */
+      for (const entry of [exploreEntry(mod, st, r.config)]) {
         if (!entry) continue;
         expect(entry.label.length, `${e.simId}: nhãn cụt "${entry.label}"`).toBeGreaterThan(14);
         expect(entry.label, `${e.simId}: nhãn lộ định danh kỹ thuật`).not.toMatch(/[a-z]+_[a-z]+|\./);

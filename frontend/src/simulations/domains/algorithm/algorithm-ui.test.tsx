@@ -6,7 +6,7 @@ import type { AlgorithmSimState } from "./model";
 import { activeTrace } from "./model";
 import type { AlgorithmId } from "../../../core/types";
 import { whatIfPolicyOf } from "./interaction-policy";
-import { challengeEntry, exploreEntry } from "../../../components/SimulationWorkspace";
+
 
 /**
  * M9-S1 — UI theo chính sách tương tác + dải nhân quả dùng chung.
@@ -40,20 +40,8 @@ function html(algorithmId: AlgorithmId, data: Record<string, unknown>, cursor: n
  * `challengeEntry`/`exploreEntry` — CÙNG hàm `SimulationControls` gọi, không
  * phải bản sao dành riêng cho test.
  */
-function entries(algorithmId: AlgorithmId, data: Record<string, unknown>, cursor: number) {
-  const mod = makeAlgorithmModule(algorithmId);
-  const r = mod.validateConfig({ problem: {}, algorithm_id: algorithmId, data, data_generated: false, notes: null });
-  if (!r.ok) throw new Error(r.error);
-  const s = stateAt(algorithmId, data, cursor);
-  return {
-    challenge: challengeEntry(mod, s, r.config),
-    explore: exploreEntry(mod, s, r.config),
-  };
-}
-
-/** Toàn bộ chữ một lối vào mang ra màn hình (nhãn + câu mời). */
-const textOf = (e: { label: string; hint?: string } | null) =>
-  e ? `${e.label} ${e.hint ?? ""}` : "";
+/* Hai helper `entries`/`textOf` GỠ 2026-08-21 (Task 10b): chúng chỉ phục vụ
+   các khẳng định về cổng Thử thách, mà W13 đã gỡ cổng đó. */
 
 describe("gating swap trong AlgorithmWorkspace", () => {
   /* W4B-2I — HAI TEST NÀY ĐỔI TIỀN ĐỀ, có chủ đích.
@@ -81,16 +69,12 @@ describe("gating swap trong AlgorithmWorkspace", () => {
        Thử thách đóng ⇒ kéo dùng được ngay, nên `cursor:grab` PHẢI có mặt. */
     expect(h, "thử thách đóng mà không có con trỏ kéo").toContain("cursor:grab");
     expect(h, "câu mời quay lại thành dải dưới mô hình").not.toContain("tự đổi chỗ từng cặp");
-    expect(textOf(entries("bubble_sort", { array: [1, 3, 2], order: "asc" }, 1).challenge))
-      .toContain("tự đổi chỗ từng cặp");
   });
 
   it("selection_sort: cùng một luật — không còn bài sắp xếp nào hở vùng cam kết", () => {
     const h = html("selection_sort", { array: [3, 1, 2], order: "asc" }, 1);
     expect(h).not.toContain("Thao tác sắp xếp");
     expect(h, "thử thách đóng mà không có con trỏ kéo").toContain("cursor:grab");
-    expect(textOf(entries("selection_sort", { array: [3, 1, 2], order: "asc" }, 1).challenge))
-      .toContain("tự chọn phần tử mỗi lượt");
   });
 
   it("(17) sum_if (hidden): KHÔNG gợi ý kéo-thả — kể cả sau khi có cổng Thí nghiệm", () => {
@@ -113,7 +97,6 @@ describe("gating swap trong AlgorithmWorkspace", () => {
     /* W4B-2D: nhãn nút hứa THỨ NẰM SAU CỔNG — cổng gác cả vùng cam kết, nên
        nhãn cũ (chỉ nói về kéo) sẽ khiến học sinh không biết các nút chọn nửa đi
        đâu. W4B-3A: nhãn đó nay sống ở lối vào, không ở sân khấu. */
-    expect(textOf(entries("binary_search", BIN, 1).challenge)).toContain("tự chọn nửa để tìm tiếp");
     // Tiền đề là dữ kiện QUAN SÁT — nó ở lại kể cả khi cổng đã ẩn vùng cam kết.
     expect(h).toContain("sắp xếp tăng dần");
   });
@@ -123,18 +106,12 @@ describe("gating swap trong AlgorithmWorkspace", () => {
     /* W12 §10 — hồi quy đúng target khởi nguồn quan sát của người dùng. */
     expect(h, "find_max mặc định không có affordance nào ngoài ô dự đoán")
       .toContain("cursor:grab");
-    expect(entries("find_max", { array: [7.5, 9, 6] }, 1).challenge).not.toBeNull();
   });
 
-  it("(PhET/CLT) challenge: teaser tự-giải-thích đi KÈM lối vào — nút không còn bí ẩn", () => {
-    /* Bất biến giữ nguyên qua W4B-3A: cổng phải TỰ MÔ TẢ. Đổi là chỗ đọc nó —
-       teaser nay là `hint` của câu mời (vào `title`/`aria-label` của nút), chứ
-       không phải một dòng chữ dựng dưới sân khấu. */
-    expect(textOf(entries("find_max", { array: [7.5, 9, 6] }, 1).challenge))
-      .toContain("vùng đã duyệt");
-    expect(textOf(entries("binary_search", { array: [1, 3, 5, 7, 9, 11, 13], target: 3 }, 1).challenge))
-      .toContain("loại đi một nửa");
-  });
+  /* it("(PhET/CLT) challenge: teaser tự-giải-thích…") ĐÃ XOÁ 2026-08-21
+     (Task 10b): nó kiểm nhãn của cổng Thử thách, mà W13 gỡ cả cổng. Bất biến
+     "lối vào phải TỰ MÔ TẢ" không mất — `explore-ownership-w4b3a.test.ts` khoá
+     nó cho lối vào Khám phá, tức lối vào duy nhất còn lại. */
 
   it("linear_search: kéo WHAT-IF nay nằm sau cổng — Quan sát không mời kéo", () => {
     /* W4B-2D §3. `mode` vẫn `framed` (khung câu hỏi là CHI PHÍ), nhưng chỗ ĐẶT
@@ -144,8 +121,6 @@ describe("gating swap trong AlgorithmWorkspace", () => {
        phủ (labOpen là useState cục bộ). */
     const h = html("linear_search", { array: [4, 9, 7], target: 9 }, 1);
     expect(h, "thử thách đóng mà không có con trỏ kéo").toContain("cursor:grab");
-    expect(textOf(entries("linear_search", { array: [4, 9, 7], target: 9 }, 1).challenge))
-      .toContain("tự đi từng bước tìm");
     /* W4B-2V/C: khung CHI PHÍ chuyển từ `framing` (đoạn 310 ký tự) sang `hint`
        — chuỗi đứng ngay cạnh công cụ kéo. Ý không mất, chỗ đặt đổi. */
     expect(whatIfPolicyOf("linear_search").hint).toContain("chi phí");
@@ -173,16 +148,24 @@ describe("(19) dải nhân quả — khớp sự kiện trace hiện tại", () 
        một lúc", chỉ là bề mặt đổi theo chế độ. Quan hệ KHÔNG được biến mất khỏi
        Quan sát chỉ vì nút cam kết đã đi chỗ khác.
 
+       2026-08-21 (Task 10b): cổng Thí nghiệm đã bị W13 gỡ, nên `find_max` KHÔNG
+       còn gác vùng cam kết nữa — `ScanActionZone` quay lại là bề mặt hợp lệ và
+       `decision-strip` không dựng (ui.tsx: `decision && !scan && …`). Đảo lại
+       hai khẳng định cho khớp kiến trúc hiện tại.
+
        Điều test này thật sự khoá KHÔNG ĐỔI: biểu thức phải dùng ĐÚNG hai giá trị
        mà event `compare` nêu, không phải renderer tự tính lại. */
-    expect(h).toContain("decision-strip");
-    expect(h).not.toContain("scan-action");
+    expect(h).toContain("scan-action");
+    expect(h).not.toContain("decision-strip");
     // SSR escape ">"
     expect(h).toMatch(new RegExp(`${vi}\\s*&gt;\\s*${String(vj).replace(".", ",")}`));
   });
 
-  it("bước hệ quả find_max (cập nhật max): dải nói rõ nhân quả trước → sau", () => {
+  it("bước hệ quả find_max (cập nhật max): quan hệ trước → sau vẫn nói được", () => {
     const h = html("find_max", { array: [7.5, 9, 6] }, 2);
+    /* KHÁC bước quyết định ở trên: dải HỆ QUẢ (`decision-strip is-consequence`)
+       render độc lập với `scan`, nên ở đây nó vẫn có mặt. Hai dải khác nhau,
+       đừng gộp — `ui.tsx` dựng chúng bằng hai điều kiện tách biệt. */
     expect(h).toContain("decision-strip");
     expect(h).toContain("→");
     expect(h).toContain("max");

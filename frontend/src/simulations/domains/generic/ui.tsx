@@ -29,7 +29,7 @@ import {
 } from "./model";
 import { validateAndApplyPatch, type PatchOp } from "./patch";
 import { validateGenericConfig } from "./validate";
-import { resolveSemanticAnchor } from "./anchor-resolver";
+
 
 /**
  * Renderer 2D tổng quát — vẽ theo primitive của SimulationSpec đã validate.

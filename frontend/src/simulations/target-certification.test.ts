@@ -72,7 +72,6 @@ beforeAll(() => {
     .map((m) => {
       const entries: string[] = [];
       if (m.timeline) entries.push("timeline");
-      if (m.predict) entries.push("predict");
       if (m.explore) entries.push("explore");
       if (m.edit) entries.push("edit");
       if (m.narrate) entries.push("narrate");

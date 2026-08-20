@@ -255,7 +255,7 @@ function classify(m: SimulationModule<unknown, unknown>, stage: string[]): Row {
   const identityApply = /^\s*\(state[^)]*\)\s*=>\s*state\s*$/.test(
     m.apply.toString().replace(/\/\*[\s\S]*?\*\//g, "").trim());
   const branchOnly = accepted.filter((a) => BRANCH_ACTIONS.has(a));
-  const hasChallenge = Boolean(m.predict);
+  const hasChallenge = false; // W13 gỡ Thử thách — không module nào còn khai
   const hasTimeline = Boolean(m.timeline);
 
   let primaryType: string;
