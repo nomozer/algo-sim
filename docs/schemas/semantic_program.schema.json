@@ -1436,10 +1436,18 @@
               "type": "number"
             },
             {
+              "items": {},
+              "type": "array"
+            },
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
               "type": "null"
             }
           ],
-          "description": "Giá trị nguyên thủy",
+          "description": "Giá trị nguyên thủy hoặc cấu trúc literal",
           "title": "Value"
         }
       },

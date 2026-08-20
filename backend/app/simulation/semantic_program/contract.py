@@ -36,7 +36,7 @@ class MemoryDeclaration(BaseModel):
 # ── 2. Biểu thức giá trị đóng (Closed Value Expressions) ────────────────────
 class LiteralExpr(BaseModel):
     kind: Literal["literal"] = "literal"
-    value: Union[int, str, bool, float, None] = Field(..., description="Giá trị nguyên thủy")
+    value: Union[int, str, bool, float, list, dict, None] = Field(..., description="Giá trị nguyên thủy hoặc cấu trúc literal")
 
 class VarRefExpr(BaseModel):
     kind: Literal["var"] = "var"

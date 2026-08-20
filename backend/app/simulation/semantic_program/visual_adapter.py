@@ -69,9 +69,9 @@ class VisualTraceAdapter:
             }
 
             if cb.primitive in ("array_strip", "queue_view"):
-                obj_dict["items"] = list(val) if isinstance(val, (list, tuple)) else []
+                obj_dict["items"] = list(val) if isinstance(val, (list, tuple, set)) else []
             elif cb.primitive == "stack_view":
-                obj_dict["items"] = list(val) if isinstance(val, (list, tuple)) else []
+                obj_dict["items"] = list(val) if isinstance(val, (list, tuple, set)) else []
                 obj_dict["capacity"] = max(8, len(obj_dict["items"]) + 2)
             elif cb.primitive == "table_grid":
                 obj_dict["items"] = val if isinstance(val, list) else []

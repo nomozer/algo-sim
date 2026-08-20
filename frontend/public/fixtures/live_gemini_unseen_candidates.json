@@ -1,1 +1,1130 @@
-{}
+{
+  "live_p01_vowel_count": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Đếm số nguyên âm trong xâu",
+    "description": "Thuật toán này đếm số lượng ký tự nguyên âm (a, e, i, o, u) trong một xâu ký tự cho trước. Nó duyệt qua từng ký tự của xâu, kiểm tra xem ký tự đó có phải là nguyên âm hay không bằng cách tra cứu trong một bảng băm (map) chứa các nguyên âm, và tăng biến đếm nếu tìm thấy.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Đếm số nguyên âm trong xâu",
+      "objects": [
+        {
+          "id": "text",
+          "type": "array_strip",
+          "label": "Xâu ký tự",
+          "items": [
+            "a",
+            "l",
+            "g",
+            "o",
+            "r",
+            "i",
+            "t",
+            "h",
+            "m"
+          ]
+        },
+        {
+          "id": "vowel_count_box",
+          "type": "value_box",
+          "label": "Số nguyên âm",
+          "value": 0
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Minh họa cách sử dụng vòng lặp `for_each` để duyệt qua các phần tử của một mảng/xâu, cách sử dụng cấu trúc dữ liệu `map` để tra cứu hiệu quả, và logic điều kiện `if` để thực hiện các hành động dựa trên kết quả tra cứu. Trực quan hóa quá trình đếm và cập nhật biến trạng thái. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'a'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán vowel_count = 1.",
+              "targets": [
+                "vowel_count_box"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'l'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'g'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'o'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán vowel_count = 2.",
+              "targets": [
+                "vowel_count_box"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'r'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'i'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán vowel_count = 3.",
+              "targets": [
+                "vowel_count_box"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 't'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'h'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: char = 'm'.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "text"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  },
+  "live_p02_second_largest": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Tìm phần tử lớn nhất thứ nhất và thứ hai trong mảng",
+    "description": "Thuật toán này quét qua một mảng số nguyên để tìm ra hai phần tử lớn nhất: 'first_max' (lớn nhất) và 'second_max' (lớn thứ hai). Nó khởi tạo 'first_max' và 'second_max' bằng hai phần tử đầu tiên của mảng (và đảm bảo 'first_max' >= 'second_max'). Sau đó, nó lặp qua các phần tử còn lại, cập nhật 'first_max' và 'second_max' dựa trên các so sánh.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Tìm phần tử lớn nhất thứ nhất và thứ hai trong mảng",
+      "objects": [
+        {
+          "id": "arr",
+          "type": "array_strip",
+          "label": "Mảng",
+          "items": [
+            15,
+            42,
+            8,
+            99,
+            63
+          ]
+        },
+        {
+          "id": "box_first_max",
+          "type": "value_box",
+          "label": "Max 1",
+          "value": 0
+        },
+        {
+          "id": "box_second_max",
+          "type": "value_box",
+          "label": "Max 2",
+          "value": 0
+        },
+        {
+          "id": "box_current_val",
+          "type": "value_box",
+          "label": "Giá trị hiện tại",
+          "value": 0
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Trực quan hóa quá trình duyệt mảng bằng vòng lặp `for_range`, cách so sánh và cập nhật các biến trạng thái ('first_max', 'second_max') để duy trì hai giá trị lớn nhất đã thấy cho đến thời điểm hiện tại. Đặc biệt chú ý đến logic cập nhật khi một giá trị mới lớn hơn 'first_max' hoặc lớn hơn 'second_max' nhưng không bằng 'first_max'. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán first_max = 15.",
+              "targets": [
+                "box_first_max"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán second_max = 42.",
+              "targets": [
+                "box_second_max"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán temp = 15.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán first_max = 42.",
+              "targets": [
+                "box_first_max"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán second_max = 15.",
+              "targets": [
+                "box_second_max"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: i = 2.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_val = 8.",
+              "targets": [
+                "box_current_val"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: i = 3.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_val = 99.",
+              "targets": [
+                "box_current_val"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán second_max = 42.",
+              "targets": [
+                "box_second_max"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán first_max = 99.",
+              "targets": [
+                "box_first_max"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Vòng lặp: i = 4.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_val = 63.",
+              "targets": [
+                "box_current_val"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "arr"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán second_max = 63.",
+              "targets": [
+                "box_second_max"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  },
+  "live_p03_decimal_to_binary_stack": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Chuyển đổi số nguyên sang hệ nhị phân",
+    "description": "Thuật toán chuyển đổi một số nguyên dương (n=29) sang hệ nhị phân. Quá trình này được thực hiện bằng cách liên tục chia số cho 2 và lưu phần dư vào một stack. Sau đó, các phần dư được lấy ra từ stack theo thứ tự LIFO và ghi vào một mảng để tạo thành chuỗi nhị phân đúng thứ tự.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Chuyển đổi số nguyên sang hệ nhị phân",
+      "objects": [
+        {
+          "id": "s",
+          "type": "stack_view",
+          "label": "Stack (s)",
+          "items": [],
+          "capacity": 8
+        },
+        {
+          "id": "binary_digits",
+          "type": "array_strip",
+          "label": "Binary Digits",
+          "items": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "ptr_i",
+          "type": "pointer",
+          "label": "i",
+          "target": "binary_digits",
+          "target_index": 0
+        },
+        {
+          "id": "box_n",
+          "type": "value_box",
+          "label": "Input N",
+          "value": 29
+        },
+        {
+          "id": "box_current_n",
+          "type": "value_box",
+          "label": "Current N",
+          "value": 0
+        },
+        {
+          "id": "box_remainder",
+          "type": "value_box",
+          "label": "Remainder",
+          "value": 0
+        },
+        {
+          "id": "box_digit",
+          "type": "value_box",
+          "label": "Popped Digit",
+          "value": 0
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Minh họa cách sử dụng cấu trúc dữ liệu stack để đảo ngược thứ tự các chữ số nhị phân được tạo ra từ phép chia lấy dư. Điều này cho thấy ứng dụng của stack trong việc xử lý dữ liệu cần được truy cập theo thứ tự LIFO (Last-In, First-Out) để đạt được kết quả mong muốn. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_n = 29.",
+              "targets": [
+                "box_current_n"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán remainder = 1.",
+              "targets": [
+                "box_remainder"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '1' vào s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_n = 14.",
+              "targets": [
+                "box_current_n"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán remainder = 0.",
+              "targets": [
+                "box_remainder"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '0' vào s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_n = 7.",
+              "targets": [
+                "box_current_n"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán remainder = 1.",
+              "targets": [
+                "box_remainder"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '1' vào s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_n = 3.",
+              "targets": [
+                "box_current_n"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán remainder = 1.",
+              "targets": [
+                "box_remainder"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '1' vào s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_n = 1.",
+              "targets": [
+                "box_current_n"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán remainder = 1.",
+              "targets": [
+                "box_remainder"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '1' vào s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán current_n = 0.",
+              "targets": [
+                "box_current_n"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán i = 0.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '1' ra khỏi s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Ghi giá trị 1 vào binary_digits[0].",
+              "targets": [
+                "binary_digits"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán i = 1.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '1' ra khỏi s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Ghi giá trị 1 vào binary_digits[1].",
+              "targets": [
+                "binary_digits"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán i = 2.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '1' ra khỏi s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Ghi giá trị 1 vào binary_digits[2].",
+              "targets": [
+                "binary_digits"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán i = 3.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '0' ra khỏi s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Ghi giá trị 0 vào binary_digits[3].",
+              "targets": [
+                "binary_digits"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán i = 4.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đỉnh '1' ra khỏi s.",
+              "targets": [
+                "s"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Ghi giá trị 1 vào binary_digits[4].",
+              "targets": [
+                "binary_digits"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán i = 5.",
+              "targets": [
+                "ptr_i"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  },
+  "live_p04_palindrome_two_pointers": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Kiểm tra Palindrome bằng Hai Con Trỏ",
+    "description": "Thuật toán kiểm tra xem một mảng ký tự có phải là chuỗi palindrome hay không. Sử dụng hai con trỏ, một từ đầu (left) và một từ cuối (right), di chuyển vào giữa. Nếu bất kỳ cặp ký tự nào không khớp, chuỗi không phải là palindrome. Nếu tất cả các cặp khớp, chuỗi là palindrome.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Kiểm tra Palindrome bằng Hai Con Trỏ",
+      "objects": [
+        {
+          "id": "chars",
+          "type": "array_strip",
+          "label": "Mảng ký tự",
+          "items": [
+            "r",
+            "a",
+            "c",
+            "e",
+            "c",
+            "a",
+            "r"
+          ]
+        },
+        {
+          "id": "ptr_left",
+          "type": "pointer",
+          "label": "left",
+          "target": "chars",
+          "target_index": 0
+        },
+        {
+          "id": "box_is_pal",
+          "type": "value_box",
+          "label": "is_pal",
+          "value": true
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Minh họa cách sử dụng hiệu quả hai con trỏ để duyệt và so sánh các phần tử từ hai phía đối diện của một cấu trúc dữ liệu (mảng), đặc biệt hữu ích cho các bài toán đối xứng như kiểm tra palindrome. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "chars"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán left = 0.",
+              "targets": [
+                "ptr_left"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán right = 6.",
+              "targets": [
+                "ptr_right"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán is_pal = True.",
+              "targets": [
+                "box_is_pal"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "chars"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán left = 1.",
+              "targets": [
+                "ptr_left"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán right = 5.",
+              "targets": [
+                "ptr_right"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "chars"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán left = 2.",
+              "targets": [
+                "ptr_left"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán right = 4.",
+              "targets": [
+                "ptr_right"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "chars"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán left = 3.",
+              "targets": [
+                "ptr_left"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Gán right = 3.",
+              "targets": [
+                "ptr_right"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  },
+  "live_p05_graph_bfs_queue": {
+    "status": "ok",
+    "simulation_id": "generic.rule_scene",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Duyệt đồ thị theo chiều rộng (BFS)",
+    "description": "Thuật toán duyệt đồ thị theo chiều rộng (BFS) bắt đầu từ một đỉnh cho trước. Thuật toán sử dụng một hàng đợi (queue) để quản lý các đỉnh cần thăm và một tập hợp (set) để theo dõi các đỉnh đã được thăm, đảm bảo mỗi đỉnh chỉ được xử lý một lần. Các đỉnh được thăm theo từng 'lớp' hoặc 'mức' từ đỉnh bắt đầu.",
+    "config": {
+      "dsl_version": "1.0",
+      "title": "Duyệt đồ thị theo chiều rộng (BFS)",
+      "objects": [
+        {
+          "id": "q",
+          "type": "queue_view",
+          "label": "Hàng đợi (Queue)",
+          "items": []
+        },
+        {
+          "id": "visited",
+          "type": "array_strip",
+          "label": "Đã thăm (Visited)",
+          "items": []
+        },
+        {
+          "id": "order",
+          "type": "array_strip",
+          "label": "Thứ tự duyệt (Order)",
+          "items": []
+        },
+        {
+          "id": "box_start_node",
+          "type": "value_box",
+          "label": "Đỉnh bắt đầu",
+          "value": "1"
+        },
+        {
+          "id": "box_current_node",
+          "type": "value_box",
+          "label": "Đỉnh hiện tại",
+          "value": ""
+        },
+        {
+          "id": "box_neighbor",
+          "type": "value_box",
+          "label": "Đỉnh kề",
+          "value": ""
+        }
+      ],
+      "rules": [],
+      "interactions": [],
+      "processes": [
+        {
+          "type": "step_sequence",
+          "steps": [
+            {
+              "narration": "Mô phỏng cách BFS khám phá đồ thị từng lớp một, sử dụng hàng đợi để duy trì thứ tự thăm, và tập hợp 'visited' để tránh lặp lại và chu trình. Trực quan hóa sự phát triển của hàng đợi, tập hợp các đỉnh đã thăm, và thứ tự duyệt cuối cùng. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '1' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '1' vào tập hợp visited.",
+              "targets": [
+                "visited"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '1' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '1' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: neighbor = '2'.",
+              "targets": [
+                "box_neighbor"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '2' vào tập hợp visited.",
+              "targets": [
+                "visited"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '2' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '2' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: neighbor = '3'.",
+              "targets": [
+                "box_neighbor"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '3' vào tập hợp visited.",
+              "targets": [
+                "visited"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '3' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '3' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '2' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: neighbor = '4'.",
+              "targets": [
+                "box_neighbor"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '4' vào tập hợp visited.",
+              "targets": [
+                "visited"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '4' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '4' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '3' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: neighbor = '4'.",
+              "targets": [
+                "box_neighbor"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: SAI.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Xét phần tử: neighbor = '5'.",
+              "targets": [
+                "box_neighbor"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Kiểm tra điều kiện: ĐÚNG.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm phần tử '5' vào tập hợp visited.",
+              "targets": [
+                "visited"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Thêm '5' vào cuối hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Đẩy giá trị '5' vào order.",
+              "targets": [
+                "order"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '4' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            },
+            {
+              "narration": "Lấy phần tử đầu '5' ra khỏi hàng đợi q.",
+              "targets": [
+                "q"
+              ],
+              "action": "step"
+            }
+          ]
+        }
+      ]
+    },
+    "notes": null
+  }
+}

@@ -88,7 +88,7 @@ class SemanticTypeChecker:
             if cb.semantic_id not in self.symbols:
                 return ValidationResult(False, f"Visual binding container '{cb.semantic_id}' không tồn tại trong memory_declarations.")
             decl = self.symbols[cb.semantic_id]
-            if decl.type not in ("array", "stack", "queue", "matrix", "tree_node", "graph", "bit_register"):
+            if decl.type not in ("array", "stack", "queue", "matrix", "tree_node", "graph", "bit_register", "set", "map"):
                 return ValidationResult(False, f"Visual binding container '{cb.semantic_id}' có kiểu '{decl.type}' không phải kiểu container hợp lệ.")
 
         for pb in self.spec.visual_bindings.pointers:
