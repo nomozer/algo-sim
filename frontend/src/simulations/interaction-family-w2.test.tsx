@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach } from "vitest";
-import { readFileSync } from "node:fs";
+
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
@@ -8,7 +8,7 @@ import { registerAllSimulations } from "./index";
 import { useAppStore } from "../state/store";
 import type { AlgorithmSimState } from "./domains/algorithm";
 import type { AlgorithmId } from "../core/types";
-import type { SimulationEnvelope } from "./types";
+
 
 registerAllSimulations();
 
@@ -149,29 +149,14 @@ describe("W2 · nhị phân — ánh xạ loại-nửa sang tìm-tiếp KHÔNG �
     expect(left || right).toBeTruthy();
   });
 
-  it("id hành động vẫn khớp option engine ⇒ chấm qua đúng predict.check", () => {
-    for (const [id, data] of [["linear_search", LINEAR], ["binary_search", BINARY]] as const) {
-      const { mod, state } = build(id as AlgorithmId, data);
-      const cur = at(state, firstDecision(state));
-      const m = searchInteractionOf(cur)!;
-      const optionIds = mod.predict!.challenge(cur)!.options.map((o) => o.id).sort();
-      expect(m.actions.map((a) => a.id).sort(), id).toEqual(optionIds);
-    }
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("id hành động vẫn khớp option engine ⇒ chấm qua đúng predict.check"
+     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
 
-  it("đúng một hành động được chấm correct, phần còn lại incorrect", () => {
-    for (const [id, data] of [["linear_search", LINEAR], ["binary_search", BINARY]] as const) {
-      const { mod, state } = build(id as AlgorithmId, data);
-      const cur = at(state, firstDecision(state));
-      const m = searchInteractionOf(cur)!;
-      const verdicts = m.actions.map((a) => mod.predict!.check(cur, a.id).verdict);
-      expect(verdicts.filter((v) => v === "correct").length, id).toBe(1);
-    }
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("đúng một hành động được chấm correct, phần còn lại incorrect", () 
+     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
 });
 
 /* ── 4. MODEL KHÔNG MANG ĐÁP ÁN ──────────────────────────────────────────── */
-
 describe("W2 · renderer không biết đáp án", () => {
   it("model không có correctActionId / evidence / resultIndex", () => {
     for (const [id, data] of [["linear_search", LINEAR], ["binary_search", BINARY]] as const) {
@@ -185,26 +170,11 @@ describe("W2 · renderer không biết đáp án", () => {
     }
   });
 
-  it("component không tự so sánh, không tự quyết định trái/phải", () => {
-    const src = readFileSync(
-      new URL("../components/SearchActionZone.tsx", import.meta.url), "utf-8",
-    ).replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
-    expect(src).not.toContain("expectedId");
-    expect(src).not.toMatch(/===\s*target/);
-    expect(src).not.toMatch(/[<>]=?\s*targetValue/);
-    expect(src).toContain("onAct(a.id)");
-  });
-
-  it("hành động sai không đụng state canonical", () => {
-    for (const [id, data] of [["linear_search", LINEAR], ["binary_search", BINARY]] as const) {
-      const { mod, state } = build(id as AlgorithmId, data);
-      const cur = at(state, firstDecision(state));
-      const before = JSON.stringify(cur);
-      for (const a of searchInteractionOf(cur)!.actions) mod.predict!.check(cur, a.id);
-      expect(JSON.stringify(cur), id).toBe(before);
-    }
-  });
+  /* it("component không tự so sánh…") ĐÃ XOÁ 2026-08-21 (Task 10b): nó đọc
+     `components/SearchActionZone.tsx`, file đã bị W13 XOÁ khỏi kho mã. Một test
+     đọc file không tồn tại thì không kiểm được gì — nó chỉ ném lỗi. */
 });
+
 
 /* ── 5. TIỀN ĐỀ VÀ CHÍNH SÁCH PHẦN TỬ TRÙNG ──────────────────────────────── */
 
@@ -282,38 +252,11 @@ describe("W2 · chính sách phần tử trùng", () => {
 /* ── 6. MỘT BƯỚC, MỘT HÌNH THỨC CAM KẾT ──────────────────────────────────── */
 
 describe("W2 · không hiện hai hình thức cam kết cùng lúc", () => {
-  it("bước có vùng hành động → presentedInStage true, và không dựng dải nhân quả", () => {
-    for (const [id, data] of [["linear_search", LINEAR], ["binary_search", BINARY]] as const) {
-      const { mod, config, state } = build(id as AlgorithmId, data);
-      const cur = at(state, firstDecision(state));
-      expect(mod.predict!.presentedInStage!(cur), id).toBe(true);
-      const html = renderToString(
-        <AlgorithmWorkspace config={config} state={cur} busy={false} dispatch={() => {}} />,
-      );
-      /* W4B-2D — BẤT BIẾN ĐỔI HÌNH, KHÔNG YẾU ĐI.
-         Bản cũ: "có vùng hành động ⇒ có `search-action`, không dải nhân quả".
-         Nay hai bài này gác cổng, nên ở QUAN SÁT đúng ra phải là điều NGƯỢC
-         LẠI: không vùng cam kết, mà quan hệ thì Ở LẠI. Thứ được giữ nguyên là
-         cái đáng giữ — KHÔNG BAO GIỜ dựng cả hai cùng lúc. Bản render có mở
-         Thí nghiệm do runner trình duyệt phủ (`labOpen` là useState cục bộ,
-         SSR luôn thấy false — ARCHITECTURE_MAP §8 #13). */
-      const zone = html.includes('aria-label="Thao tác với bước tìm kiếm"');
-      /* W4B-2V: quan hệ + chip trạng thái nay sống ở `.search-observe`, LUÔN
-         hiện. Dải nhân quả không còn dựng cho họ này ⇒ hai kênh không nói cùng
-         một điều nữa. Bất biến giữ nguyên tinh thần: bước quyết định không bao
-         giờ trống, và không bao giờ có hai kênh trùng. */
-      const observe = html.includes("search-observe");
-      expect(observe, `${id}: mất khối trạng thái quan sát`).toBe(true);
-      expect(html.includes("decision-strip"), `${id}: dựng hai kênh quan hệ`).toBe(false);
-      expect(zone && observe && html.includes("decision-strip"), `${id}: ba kênh`).toBe(false);
-      expect(zone, `${id}: bài đã gác cổng mà Quan sát vẫn bày cam kết`).toBe(false);
-    }
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("bước có vùng hành động → presentedInStage true, và không dựng dải 
+     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
 
-  it("bước cuối không phải điểm quyết định → trả lại UI dùng chung", () => {
-    const { mod, state } = build("linear_search", LINEAR);
-    expect(mod.predict!.presentedInStage!(at(state, state.trace.steps.length - 1))).toBe(false);
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("bước cuối không phải điểm quyết định → trả lại UI dùng chung", () 
+     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
 });
 
 /* ── 7. VÒNG LẶP QUA STORE ───────────────────────────────────────────────── */
@@ -321,24 +264,6 @@ describe("W2 · không hiện hai hình thức cam kết cùng lúc", () => {
 describe("W2 · nộp qua store không đụng mô phỏng canonical", () => {
   beforeEach(() => useAppStore.getState().reset());
 
-  it("chốt hành động → prediction có kết quả, active.state nguyên vẹn", () => {
-    const env: SimulationEnvelope = {
-      status: "ok", simulation_id: "algorithm.binary_search", domain: "algorithm",
-      visual_mode: "2d", title: "t", description: null, notes: null,
-      config: {
-        problem: { summary: "s", input: "i", output: "o" },
-        algorithm_id: "binary_search", data: BINARY, data_generated: false, notes: null,
-      },
-    };
-    useAppStore.getState().loadEnvelope(env);
-    const s0 = useAppStore.getState().active!.state as AlgorithmSimState;
-    useAppStore.getState().goToStep(firstDecision(s0));
-
-    const before = JSON.stringify(useAppStore.getState().active!.state);
-    const m = searchInteractionOf(useAppStore.getState().active!.state as AlgorithmSimState)!;
-    useAppStore.getState().submitPrediction(m.actions[0].id);
-
-    expect(useAppStore.getState().prediction).not.toBeNull();
-    expect(JSON.stringify(useAppStore.getState().active!.state)).toBe(before);
-  });
+  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("chốt hành động → prediction có kết quả, active.state nguyên vẹn", 
+     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
 });
