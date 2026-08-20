@@ -1,19 +1,15 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
-import {
-  challengeEntry,
-  challengeSurfaceVisible,
-} from "../components/SimulationWorkspace";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
 import { isScanFamily, scanInteractionOf, stageInteractionsOf } from "./domains/algorithm/decision";
 import { commitmentSurfaceVisible, whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { registerAllSimulations } from "./index";
-import { useAppStore } from "../state/store";
+
 import type { AlgorithmSimState } from "./domains/algorithm";
 import { ALGORITHM_IDS, type AlgorithmId } from "../core/types";
-import type { SimulationEnvelope } from "./types";
+
 
 registerAllSimulations();
 
@@ -111,18 +107,6 @@ describe("W1-IF · dữ liệu renderer không mang đáp án", () => {
     }
   });
 
-  it("HTML của bước chưa trả lời không chứa bằng chứng nhân quả", () => {
-    const { mod, config, state } = build("find_max", {});
-    const cur = at(state, firstDecision(state));
-    const html = renderToString(
-      <AlgorithmWorkspace config={config} state={cur} busy={false} dispatch={() => {}} />,
-    );
-    // `evidence` chỉ được sinh ra khi CHẤM, và chỉ hiện sau khi học sinh chốt
-    const evidence = mod.predict!.check(cur, "yes").message;
-    expect(evidence.length).toBeGreaterThan(10);
-    expect(html).not.toContain("nên max được cập nhật");
-    expect(html).not.toContain("Chính xác");
-  });
 
   it("component không tự phán xử — nó chỉ phát hành động và hiển thị phản hồi", () => {
     const src = readFileSync(
@@ -130,64 +114,19 @@ describe("W1-IF · dữ liệu renderer không mang đáp án", () => {
     ).replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
     expect(src).not.toContain("expectedId");
     expect(src).not.toMatch(/===\s*['"]yes['"]/);
-    expect(src).toContain("onAct(a.id)");
+    /* `onAct(a.id)` BỎ 2026-08-21: W13 gỡ hàng nút hành động, component nay chỉ
+       trình bày. Assertion "không đọc đáp án" ở trên mới là phần còn giá trị. */
   });
 });
 
 /* ── 3. ENGINE VẪN LÀ BÊN DUY NHẤT PHÁN ĐÚNG/SAI ─────────────────────────── */
 
-describe("W1-IF · chấm bằng engine tất định, qua đúng một đường", () => {
-  it("hành động đúng → correct; hành động sai → incorrect; cả hai đều từ predict.check", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      const cur = at(state, firstDecision(state));
-      const m = scanInteractionOf(cur)!;
-
-      const update = mod.predict!.check(cur, m.actions[0].id);
-      const keep = mod.predict!.check(cur, m.actions[1].id);
-      // đúng một trong hai là correct — engine quyết, test không giả định cái nào
-      expect([update.verdict, keep.verdict].sort(), id).toEqual(["correct", "incorrect"]);
-      expect(update.message.length, id).toBeGreaterThan(10);
-    }
-  });
-
-  it("hành động SAI không đụng state canonical", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      const cur = at(state, firstDecision(state));
-      const m = scanInteractionOf(cur)!;
-      const before = JSON.stringify(cur);
-
-      mod.predict!.check(cur, m.actions[0].id);
-      mod.predict!.check(cur, m.actions[1].id);
-
-      expect(JSON.stringify(cur), id).toBe(before);
-    }
-  });
-
-  it("id hành động khớp option của DecisionPoint — không có đường chấm thứ hai", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      const cur = at(state, firstDecision(state));
-      const m = scanInteractionOf(cur)!;
-      const optionIds = mod.predict!.challenge(cur)!.options.map((o) => o.id);
-      expect(m.actions.map((a) => a.id), id).toEqual(optionIds);
-    }
-  });
-});
+/* describe "chấm bằng engine tất định" ĐÃ XOÁ 2026-08-21: không còn bên
+   chấm nào sau W13, nên không còn đường nào để khoá là "duy nhất". */
 
 /* ── 4. MỘT BƯỚC, MỘT HÌNH THỨC CAM KẾT ──────────────────────────────────── */
 
 describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
-  it("bước có vùng hành động thì module khai presentedInStage = true", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      const d = firstDecision(state);
-      expect(mod.predict!.presentedInStage!(at(state, d)), id).toBe(true);
-      // bước cuối không phải điểm quyết định → trả về UI dùng chung như cũ
-      expect(mod.predict!.presentedInStage!(at(state, state.trace.steps.length - 1)), id).toBe(false);
-    }
-  });
 
   /* ── W3B §14 — LOCK CŨ ĐÃ ĐƯỢC THAY, CÓ CHỦ ĐÍCH ────────────────────────
    *
@@ -218,51 +157,7 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
     }
   });
 
-  it("presentedInStage khớp ĐÚNG việc có mô hình hay không", () => {
-    for (const id of ALGORITHM_IDS) {
-      const extra =
-        id === "binary_search" || id === "linear_search"
-          ? { array: [...ARR].sort((a, b) => a - b), target: 8 }
-          : id === "count_if" || id === "sum_if"
-            ? { condition: { op: ">=", value: 7 } }
-            : id === "bubble_sort" || id === "insertion_sort" || id === "selection_sort"
-              ? { order: "asc" }
-              : {};
-      const { mod, state } = build(id, extra);
-      for (let i = 0; i < state.trace.steps.length; i += 1) {
-        const cur = at(state, i);
-        expect(mod.predict!.presentedInStage!(cur), `${id} bước ${i}`)
-          .toBe(stageInteractionsOf(cur).length === 1);
-      }
-    }
-  });
 
-  it("shell tôn trọng presentedInStage trước khi dựng PredictionBar", () => {
-    /* W4B-2U2: luật giữ nguyên, chỗ ở đổi. Bản cũ khớp REGEX trên mã nguồn của
-       một biểu thức inline trong JSX — nên nó đỏ ngay khi biểu thức được tách
-       thành hàm thuần, dù hành vi không đổi một chút nào. Test khoá HÌNH DẠNG MÃ
-       chặn đúng loại refactor nó lẽ ra phải bảo vệ.
-       Nay khẳng định vào HÀNH VI qua chủ sở hữu `challengeSurfaceVisible`.
-
-       W4B-3A — TÁCH CỬA KHỎI PHÒNG. `presentedInStage` chỉ được phép tắt BỀ MẶT
-       thứ hai (`PredictionBar`); nó KHÔNG được tắt LỐI VÀO. Bản trước áp nó cho
-       cả hai, nên ở đúng những bước có vùng cam kết thì shell không dựng lối
-       vào nào — và họ thuật toán phải tự dựng lấy một nút, chính là dải
-       `experimentTrigger` nằm dưới mô hình. */
-    const cap = { challenge: () => null, check: () => ({ verdict: "unsupported_to_verify" as const, answerId: "x", message: "" }) };
-    const presented = { predict: { ...cap, presentedInStage: () => true } };
-    const notPresented = { predict: { ...cap, presentedInStage: () => false } };
-
-    // Module tự bày cam kết trên sân khấu ⇒ shell KHÔNG dựng bề mặt thứ hai,
-    // kể cả khi Thử thách đang mở.
-    expect(challengeSurfaceVisible(presented, {}, true)).toBe(false);
-    // …nhưng LỐI VÀO vẫn còn: đó là cửa, không phải bề mặt.
-    expect(challengeEntry(presented, {}, {})).not.toBeNull();
-
-    // Không tự bày ⇒ bề mặt dùng chung thuộc về Thử thách, không thuộc Quan sát.
-    expect(challengeSurfaceVisible(notPresented, {}, false)).toBe(false);
-    expect(challengeSurfaceVisible(notPresented, {}, true)).toBe(true);
-  });
 
   /* ── BẤT BIẾN BỀ MẶT CAM KẾT (W4B-2D §2) ────────────────────────────────
    *
@@ -355,18 +250,23 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
         <AlgorithmWorkspace config={config} state={at(state, d)} busy={false} dispatch={() => {}} />,
       );
       expect(surfaceCount(html), `${id}: Quan sát vẫn còn bề mặt cam kết`).toBe(0);
-      // W4B-2V: họ tìm kiếm dời quan hệ sang `.search-observe` (ngoài cổng).
+      /* Quan hệ đang xét phải Ở LẠI dù bề mặt cam kết đi vắng — nhưng nó ở
+         nhà nào thì tuỳ HỌ cơ chế, và `ui.tsx` chỉ dựng `decision-strip` khi
+         target KHÔNG thuộc scan/search/sort (ba dải họ đó tự chở phép so sánh,
+         "không bao giờ hai kênh nói một điều").
+         W4B-2V: họ tìm kiếm dùng `.search-observe`.
+         2026-08-21 (Task 10b): bổ sung `.scan-action` — thiếu nó thì mọi bài
+         quét dãy đều đỏ oan, vì chúng chưa từng có `decision-strip`. */
       expect(
-        html.includes("decision-strip") || html.includes("search-observe"),
+        html.includes("decision-strip")
+          || html.includes("search-observe")
+          || html.includes("scan-action")
+          || html.includes("sort-action"),
         `${id}: cổng đã lấy mất quan hệ`,
       ).toBe(true);
-      /* W4B-3A — đường vào KHÔNG còn nằm trong HTML của sân khấu; đó chính là
-         dải đã gỡ. Hỏi chủ sở hữu mới, và hỏi cả tính KHẢ DỤNG: ở đúng bước có
-         vùng cam kết thì lối vào phải mời được (không mờ), nếu không thì bề mặt
-         đã bị gác sau một cửa khoá. */
-      const entry = challengeEntry(makeAlgorithmModule(id), at(state, d), config);
-      expect(entry, `${id}: mất đường vào Thử thách`).not.toBeNull();
-      expect(entry!.available, `${id}: cửa khoá ngay tại bước có cam kết`).not.toBe(false);
+      /* Đoạn hỏi `challengeEntry` ĐÃ BỎ 2026-08-21 (Task 10b): W13 gỡ luôn chế
+         độ Thử thách, nên không còn lối vào nào để đòi. Hai assertion trên vẫn
+         giữ nguyên giá trị — cổng KHÔNG được lấy mất quan hệ đang xét. */
     }
   });
 
@@ -391,30 +291,4 @@ describe("W1-IF · không bao giờ hiện hai hình thức cùng lúc", () => {
 
 /* ── 5. VÒNG LẶP QUA STORE: PHẢN HỒI LÀ DỮ LIỆU, MÔ PHỎNG KHÔNG ĐỔI ─────── */
 
-describe("W1-IF · nộp qua store không đụng mô phỏng canonical", () => {
-  beforeEach(() => useAppStore.getState().reset());
-
-  it("chốt hành động → prediction có kết quả, active.state nguyên vẹn", () => {
-    const env: SimulationEnvelope = {
-      status: "ok", simulation_id: "algorithm.count_if", domain: "algorithm",
-      visual_mode: "2d", title: "t", description: null, notes: null,
-      config: {
-        problem: { summary: "s", input: "i", output: "o" },
-        algorithm_id: "count_if",
-        data: { array: ARR, condition: { op: ">=", value: 7 } },
-        data_generated: false, notes: null,
-      },
-    };
-    useAppStore.getState().loadEnvelope(env);
-    const s0 = useAppStore.getState().active!.state as AlgorithmSimState;
-    const d = firstDecision(s0);
-    useAppStore.getState().goToStep(d);
-
-    const engineBefore = JSON.stringify(useAppStore.getState().active!.state);
-    const m = scanInteractionOf(useAppStore.getState().active!.state as AlgorithmSimState)!;
-    useAppStore.getState().submitPrediction(m.actions[0].id);
-
-    expect(useAppStore.getState().prediction).not.toBeNull();
-    expect(JSON.stringify(useAppStore.getState().active!.state)).toBe(engineBefore);
-  });
-});
+/* describe "nộp qua store" ĐÃ XOÁ 2026-08-21: `submitPrediction` không còn. */

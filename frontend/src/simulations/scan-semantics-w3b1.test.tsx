@@ -1,18 +1,18 @@
-import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
-import { describe, expect, it, beforeEach } from "vitest";
-import { readFileSync } from "node:fs";
-import { challengeSurfaceVisible } from "../components/SimulationWorkspace";
+
+import { describe, expect, it } from "vitest";
+
+
 import { renderToString } from "react-dom/server";
 import { arrayLegendItems } from "../components/ArrayView";
-import { ScanActionZone } from "../components/ScanActionZone";
+
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
 import { isScanFamily, scanInteractionOf } from "./domains/algorithm/decision";
 import { registerAllSimulations } from "./index";
-import { useAppStore } from "../state/store";
+
 import type { AlgorithmSimState } from "./domains/algorithm";
 import { ALGORITHM_IDS, type AlgorithmId } from "../core/types";
-import type { SimulationEnvelope } from "./types";
+
 
 registerAllSimulations();
 
@@ -199,244 +199,34 @@ describe("W3B-1 · vùng hành động giữ đúng ranh giới cam kết", () =
          đòi phải luôn có một. Nên đọc kỳ vọng từ CHÍNH bản khai policy: thêm
          target vào pilot thì test đi theo, không đỏ vì một lý do chẳng liên
          quan; mà lỡ có hai bề mặt thì vẫn đỏ như cũ. */
-      const gated = whatIfPolicyOf(id as never).experimentGated === true;
-      expect(zones.reduce((a, b) => a + b, 0), `${id}: ${zones}`).toBe(gated ? 0 : 1);
+      /* Bất biến thật là "KHÔNG BAO GIỜ HAI", không phải "luôn có một". */
+      expect(zones.reduce((a, b) => a + b, 0), `${id}: ${zones}`).toBeLessThanOrEqual(1);
       expect(html, id).not.toContain('class="predict-bar"');
-      /* Vùng cam kết đi vắng thì QUAN HỆ phải ở lại — dải nhân quả nhận việc đó.
-         Không có nó, cổng Thí nghiệm vô tình lấy mất một dữ kiện thuần quan sát. */
-      if (gated) expect(html, id).toContain("decision-strip");
-      else expect(html, id).not.toContain("decision-strip");
+
+      /* 2026-08-21 (Task 10b) — VIẾT LẠI. Bản cũ đòi `decision-strip` phải có
+         mặt khi vùng cam kết bị gác. Hai tiền đề của nó đã mất: W13 gỡ hẳn vùng
+         cam kết, và `ui.tsx` chỉ dựng `decision-strip` khi target KHÔNG thuộc
+         họ scan/search/sort — vì ba dải họ đó tự chở phép so sánh
+         ("không bao giờ hai kênh nói một điều").
+
+         Thứ còn sống, và là thứ đáng khoá: QUAN HỆ ĐANG XÉT phải hiện ở ĐÚNG
+         MỘT nơi. Với họ scan thì nơi đó là `scan-action`; đòi thêm
+         `decision-strip` chính là đòi kênh thứ hai. */
+      const coDaiHo = html.includes("scan-action");
+      const coDaiQuyetDinh = html.includes("decision-strip");
+      expect(
+        Number(coDaiHo) + Number(coDaiQuyetDinh),
+        `${id}: quan hệ đang xét phải hiện ở ĐÚNG MỘT dải`,
+      ).toBe(1);
     }
   });
+  /* (10)–(23) ĐÃ XOÁ 2026-08-21 (Task 10b).
 
-  it("(10) shell KHÔNG dựng PredictionBar khi vùng hành động đã hiện", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      expect(mod.predict!.presentedInStage!(at(state, firstDecision(state))), id).toBe(true);
-    }
-    /* W4B-2U2: luật này KHÔNG đổi, chỉ ĐỔI CHỖ Ở. Trước đây nó là một biểu
-       thức inline trong JSX nên chỉ kiểm được bằng regex trên mã nguồn — brittle,
-       và đã đỏ khi biểu thức được tách ra. Nay chủ sở hữu là hàm THUẦN
-       `challengeSurfaceVisible`, nên khẳng định thẳng vào HÀNH VI: bước đã có
-       vùng hành động thì shell KHÔNG dựng bề mặt thứ hai, kể cả khi học sinh mở
-       Thử thách. */
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      const s = at(state, firstDecision(state));
-      expect(challengeSurfaceVisible(mod, s, true), `${id}: dựng hai bề mặt cam kết`)
-        .toBe(false);
-    }
-  });
+     Toàn bộ khối đó kiểm VÒNG CAM KẾT có chấm điểm: `predict.check`,
+     `submitPrediction`, `PredictionBar`, và việc phản hồi bị xoá khi tua/đặt
+     lại. W13 gỡ năng lực đó có chủ đích, nên không còn hành vi nào để khoá.
 
-  it("(11) hành động SAI không đổi bất kỳ sự thật nào của engine", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      const cur = at(state, firstDecision(state));
-      const m = scanInteractionOf(cur)!;
-      const wrong = m.actions.find(
-        (a) => mod.predict!.check(cur, a.id).verdict === "incorrect",
-      )!;
-      const before = JSON.stringify(cur);
-
-      const r = mod.predict!.check(cur, wrong.id);
-
-      expect(r.verdict, id).toBe("incorrect");
-      expect(JSON.stringify(cur), id).toBe(before);
-    }
-  });
-
-  it("(12) hành động ĐÚNG cũng không tự tiến cursor", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, state } = build(id, data);
-      const d = firstDecision(state);
-      const cur = at(state, d);
-      const m = scanInteractionOf(cur)!;
-      const right = m.actions.find(
-        (a) => mod.predict!.check(cur, a.id).verdict === "correct",
-      )!;
-
-      mod.predict!.check(cur, right.id);
-
-      expect(cur.cursor, id).toBe(d);
-      expect(JSON.stringify(cur.trace), id).toBe(JSON.stringify(state.trace));
-    }
-  });
-
-  it("(13) bằng chứng KHÔNG có trong DOM trước khi học sinh hành động", () => {
-    for (const [id, data] of SCAN) {
-      const { mod, config, state } = build(id, data);
-      const cur = at(state, firstDecision(state));
-      const m = scanInteractionOf(cur)!;
-      const html = renderToString(
-        <AlgorithmWorkspace config={config} state={cur} busy={false} dispatch={() => {}} />,
-      );
-      for (const a of m.actions) {
-        const evidence = mod.predict!.check(cur, a.id).message;
-        // câu bằng chứng bỏ tiền tố phán quyết ("Chính xác. " / "Chưa đúng. ")
-        const core = evidence.replace(/^(Chính xác|Chưa đúng)\.\s*/, "");
-        expect(core.length, id).toBeGreaterThan(10);
-        expect(html, `${id}: ${core}`).not.toContain(core);
-      }
-      expect(html, id).not.toContain("Chính xác");
-      expect(html, id).not.toContain("Chưa đúng");
-    }
-  });
-
-  it("(14) sau khi chốt, nút đã chọn phân biệt được — và KHÔNG chỉ bằng màu", () => {
-    for (const [id, data] of SCAN) {
-      const { state } = build(id, data);
-      const m = scanInteractionOf(at(state, firstDecision(state)))!;
-      const picked = m.actions[1].id;
-      const html = renderToString(
-        <ScanActionZone
-          model={m} answered busy={false} onAct={() => {}}
-          feedback={{ verdict: "correct", message: "…", answerId: picked }}
-        />,
-      );
-
-      // đúng MỘT nút mang dấu đã chọn
-      expect(html.split('data-chosen="true"').length - 1, id).toBe(1);
-      expect(html.split('data-chosen="false"').length - 1, id).toBe(1);
-      expect(html, id).toContain('aria-pressed="true"');
-      expect(html, id).toContain('aria-pressed="false"');
-      // dấu hiệu CHỮ, không phụ thuộc vào việc phân biệt được màu
-      expect(html, id).toContain("em đã chọn");
-      // nút còn lại vẫn đọc được (có mặt, có nhãn) chứ không bị ẩn đi
-      expect(html, id).toContain(m.actions[0].label);
-    }
-  });
-
-  it("(14b) chưa chốt thì KHÔNG nút nào mang trạng thái đã chọn", () => {
-    const { state } = build("find_max", {});
-    const m = scanInteractionOf(at(state, firstDecision(state)))!;
-    const html = renderToString(
-      <ScanActionZone model={m} answered={false} busy={false} onAct={() => {}} feedback={null} />,
-    );
-    expect(html).not.toContain("data-chosen");
-    expect(html).not.toContain("aria-pressed");
-    expect(html).not.toContain("em đã chọn");
-  });
-
-  it("(14c) vùng hành động không bao giờ đọc `expectedId`", () => {
-    const src = readFileSync(
-      new URL("../components/ScanActionZone.tsx", import.meta.url), "utf-8",
-    ).replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
-    expect(src).not.toContain("expectedId");
-    expect(src).toContain("feedback?.answerId");
-  });
-});
-
-/* ══ 15–20. VÒNG ĐỜI PHẢN HỒI + AUTOPLAY (qua store thật) ═════════════════ */
-
-const envOf = (id: AlgorithmId, data: Record<string, unknown>): SimulationEnvelope => ({
-  status: "ok", simulation_id: `algorithm.${id}`, domain: "algorithm",
-  visual_mode: "2d", title: "t", description: null, notes: null,
-  config: {
-    problem: { summary: "s", input: "i", output: "o" },
-    algorithm_id: id,
-    data: { array: ARR, ...data },
-    data_generated: false, notes: null,
-  },
-});
-
-/** Nạp một target, đứng ở điểm quyết định và CHỐT một hành động. */
-function answerAtDecision(id: AlgorithmId, data: Record<string, unknown>): number {
-  const store = useAppStore.getState();
-  store.loadEnvelope(envOf(id, data));
-  const s0 = useAppStore.getState().active!.state as AlgorithmSimState;
-  const d = firstDecision(s0);
-  useAppStore.getState().goToStep(d);
-  const m = scanInteractionOf(useAppStore.getState().active!.state as AlgorithmSimState)!;
-  useAppStore.getState().submitPrediction(m.actions[0].id);
-  expect(useAppStore.getState().prediction).not.toBeNull();
-  return d;
-}
-
-describe("W3B-1 · phản hồi sống đúng một bước, không đeo bám timeline", () => {
-  beforeEach(() => useAppStore.getState().reset());
-
-  it("(15) Next xoá phản hồi", () => {
-    answerAtDecision("count_if", { condition: { op: ">=", value: 7 } });
-    useAppStore.getState().nextStep();
-    expect(useAppStore.getState().prediction).toBeNull();
-  });
-
-  it("(16) Back xoá phản hồi", () => {
-    answerAtDecision("count_if", { condition: { op: ">=", value: 7 } });
-    useAppStore.getState().prevStep();
-    expect(useAppStore.getState().prediction).toBeNull();
-  });
-
-  it("(17) tua timeline (scrub) xoá phản hồi", () => {
-    const d = answerAtDecision("sum_if", { condition: { op: ">=", value: 7 } });
-    useAppStore.getState().goToStep(d + 2);
-    expect(useAppStore.getState().prediction).toBeNull();
-  });
-
-  it("(18) Đặt lại xoá phản hồi và đưa mô phỏng về bước đầu", () => {
-    answerAtDecision("find_max", {});
-    useAppStore.getState().resetSim();
-    expect(useAppStore.getState().prediction).toBeNull();
-    expect((useAppStore.getState().active!.state as AlgorithmSimState).cursor).toBe(0);
-  });
-
-  it("(19) đổi config (nạp envelope khác) xoá phản hồi", () => {
-    answerAtDecision("find_max", {});
-    useAppStore.getState().loadEnvelope(envOf("find_min", {}));
-    expect(useAppStore.getState().prediction).toBeNull();
-  });
-
-  it("(20) tự chạy KHÔNG bị vùng hành động chặn", () => {
-    const d = answerAtDecision("find_min", {});
-    useAppStore.getState().setPlaying(true);
-    expect(useAppStore.getState().playing).toBe(true);
-
-    // vòng tự chạy gọi nextStep() — bước vẫn tiến dù vừa chốt một hành động
-    useAppStore.getState().nextStep();
-    expect((useAppStore.getState().active!.state as AlgorithmSimState).cursor).toBe(d + 1);
-    expect(useAppStore.getState().prediction).toBeNull();
-    expect(useAppStore.getState().playing).toBe(true);
-  });
-});
-
-/* ══ 21–23. BÀN PHÍM ══════════════════════════════════════════════════════
- *
- * Suite này chạy trên môi trường `node` (không jsdom — và wave này KHÔNG thêm
- * dependency), nên ở đây khoá ĐIỀU KIỆN sinh ra hành vi phím, còn hành vi thật
- * (Tab · Shift+Tab · Enter · Space) đo bằng bàn phím thật trong Chrome ở §12.
- */
-
-describe("W3B-1 · bàn phím", () => {
-  it("(21) phím tắt toàn cục nhường phím cho control đang focus (Space ≠ tự chạy)", () => {
-    const src = readFileSync(
-      new URL("../components/SimulationControls.tsx", import.meta.url), "utf-8",
-    );
-    // guard theo NĂNG LỰC tự xử lý Enter/Space — `button` phải nằm trong đó,
-    // nếu không Space trên nút hành động sẽ bật Tự chạy và mất câu trả lời.
-    expect(src).toMatch(/closest\?\.\(\s*['"`][^'"`]*button/);
-  });
-
-  it("(22) hành động là <button type=\"button\"> THẬT — Enter/Space là hành vi gốc", () => {
-    const { state } = build("sum_if", { condition: { op: ">=", value: 7 } });
-    const m = scanInteractionOf(at(state, firstDecision(state)))!;
-    const html = renderToString(
-      <ScanActionZone model={m} answered={false} busy={false} onAct={() => {}} feedback={null} />,
-    );
-    expect(html.split('type="button"').length - 1).toBe(m.actions.length);
-    // không có div/span giả làm nút — control giả phải tự cài phím, control
-    // gốc thì không cần, và đây là control gốc.
-    expect(html).not.toContain('role="button"');
-  });
-
-  it("(23) thứ tự Tab = thứ tự đọc, không có tabindex nào bẻ lại", () => {
-    const { state } = build("find_max", {});
-    const m = scanInteractionOf(at(state, firstDecision(state)))!;
-    const html = renderToString(
-      <ScanActionZone model={m} answered={false} busy={false} onAct={() => {}} feedback={null} />,
-    );
-    expect(html).not.toContain("tabindex");
-    const order = m.actions.map((a) => html.indexOf(a.label));
-    expect(order.every((p) => p >= 0)).toBe(true);
-    expect([...order].sort((x, y) => x - y)).toEqual(order);
-  });
+     Thứ SỐNG SÓT của wave W3B-1 — ngôn ngữ thuyết minh phải nói theo cơ chế
+     của từng target ("đã được đếm" chứ không phải "đã tìm thấy") — nằm ở các
+     test (1)–(9) phía trên và giữ nguyên. */
 });
