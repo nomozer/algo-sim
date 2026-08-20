@@ -111,3 +111,39 @@ def check_structural_coverage(
             weak_kinds=sorted(set(weak)),
         )
     return CoverageResult(ok=True)
+
+
+def check_realized_coverage(
+    contract: RequestContract, spec: SemanticProgramSpec, exec_result
+) -> CoverageResult:
+    """C₁b — chạy SAU execution.
+
+    Trả lời câu mà C₁a không trả lời được: witness có THẬT SỰ được tạo ra trong
+    lượt chạy này không, hay chỉ tồn tại trên giấy?
+
+    Ví dụ tách được hai tầng: `assign min_value = 1` nằm trong `if 1 == 2`.
+    C₁a thấy biến khai đúng kiểu và có producer ⇒ PASS. Nhưng nhánh ấy không bao
+    giờ đạt tới, nên mô phỏng sẽ phát ra một "nghĩa vụ" chưa từng xảy ra.
+
+    Nghĩa vụ MỨC YẾU bị bỏ qua ở đây: C₁a đã xử chúng bằng
+    `SEMANTIC_VERIFICATION_UNAVAILABLE`, và kết tội chúng lần nữa dưới nhãn
+    "witness chưa hiện thực hoá" là nói sai bản chất.
+    """
+    realized: set[str] = set()
+    for step in getattr(exec_result, "trace", ()) or ():
+        for name, value in (step.memory_snapshot or {}).items():
+            if value is not None:
+                realized.add(name)
+
+    missing = [
+        f"{ob.describe()}: witness '{ob.witness}' không được hiện thực hoá trong "
+        "lượt chạy (nhánh chết, hoặc không đạt tới)"
+        for ob in contract.obligations
+        if is_supported(ob.kind) and ob.witness and ob.witness not in realized
+    ]
+
+    if missing:
+        return CoverageResult(
+            ok=False, error_code="OBLIGATION_WITNESS_UNREALIZED", missing=missing
+        )
+    return CoverageResult(ok=True)

@@ -1922,6 +1922,49 @@ git commit -m "feat(semantic-program): C2 hau dieu kien server-owned + bat servi
 
 ---
 
+## Task 10b: ⛔ CỔNG CHẶN — trả DỨT ĐIỂM nợ W13 (chốt 2026-08-21)
+
+**Task 11 KHÔNG được bắt đầu trước khi cổng này xanh. Không vá lẻ.**
+
+### Hiện trạng đo được (2026-08-21, trên `main` sạch)
+
+| | |
+|---|---|
+| `npx vitest run` | **111 test ĐỎ** (đo sau khi stash toàn bộ việc của wave này) |
+| `npx tsc -b` | **ĐỎ** |
+| Số file test dính | **26** |
+
+**Không phải do wave sinh ngữ nghĩa.** Kiểm bằng cách stash rồi chạy lại; và
+`grep semantic_program` trên đầu ra vitest = **0**.
+
+Nguyên nhân: W13 gỡ quiz khỏi production nhưng **không dọn test**. `types.ts` có
+nguyên đoạn ghi *"W13 — KHÔNG CÒN `PredictionCapability`"*, trong khi 26 file
+test vẫn gọi những thứ đã bị gỡ:
+
+```
+mod.predict            AppState.challengeOpen      AppState.setChallengeOpen
+AppState.prediction    challengeEntry              challengeSurfaceVisible
+components/SearchActionZone   (module không còn tồn tại)
+```
+
+### Vì sao là CỔNG chặn, không phải việc dọn dẹp
+
+- **T2/T3 không dùng được.** `npm run test:wave` = `vitest run && tsc -b &&
+  vite build` — cả ba đỏ, nên không có cách nào đóng wave đúng luật dự án.
+- **L5a cần nền xanh.** Visual regression trên một suite đã đỏ thì không phân
+  biệt được lỗi mới với lỗi cũ.
+
+### Luật xử lý
+
+- **Dứt điểm, không vá lẻ** (quyết định của chủ đề tài, 2026-08-21). Vá từng
+  file theo nhu cầu của Task 11 sẽ để lại phần còn lại đỏ mãi, và cổng T2/T3
+  vẫn không dùng được.
+- Với mỗi file: hoặc **viết lại theo kiến trúc sau W13** (nếu điều nó kiểm vẫn
+  còn ý nghĩa), hoặc **xoá kèm lý do trong commit** (nếu nó kiểm một năng lực
+  đã bị gỡ có chủ đích). **Không** khôi phục `predict`/`challengeOpen` cho test
+  chạy được — `types.ts` đã cấm: *"ĐỪNG khôi phục cho gọn"*.
+- Cổng xanh = `npx vitest run` **0 fail** và `npx tsc -b` **0 lỗi**.
+
 ## Task 11: L5a — visual regression nhỏ, đại diện
 
 **Files:**
