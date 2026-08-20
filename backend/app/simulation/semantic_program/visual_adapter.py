@@ -41,6 +41,21 @@ class VisualFrame(BaseModel):
 
 
 class VisualTraceAdapter:
+    #: Đối sánh HAI CHIỀU với enum `VisualContainerBinding.primitive` — bất biến
+    #: #33. Thêm primitive vào contract mà quên nhánh ở `_adapt_single_step` thì
+    #: LLM khai nó sẽ ra object rỗng, lỗi CÂM (đã xảy ra với `bar_chart`).
+    HANDLED_PRIMITIVES: frozenset[str] = frozenset(
+        {
+            "array_strip",
+            "queue_view",
+            "stack_view",
+            "table_grid",
+            "tree_element",
+            "bit_register",
+            "bar_chart",
+        }
+    )
+
     def __init__(self, spec: SemanticProgramSpec):
         self.spec = spec
         self.bindings: VisualBindings = spec.visual_bindings
@@ -75,6 +90,10 @@ class VisualTraceAdapter:
                 obj_dict["capacity"] = max(8, len(obj_dict["items"]) + 2)
             elif cb.primitive == "table_grid":
                 obj_dict["items"] = val if isinstance(val, list) else []
+            elif cb.primitive == "bar_chart":
+                # Cột = phần tử của container. Renderer chỉ ĐỌC chiều cao từ đây,
+                # KHÔNG tự tính lại từ biểu thức nào khác (bất biến #31).
+                obj_dict["items"] = list(val) if isinstance(val, (list, tuple)) else []
             elif cb.primitive == "tree_element":
                 obj_dict["value"] = val
             elif cb.primitive == "bit_register":

@@ -104,7 +104,9 @@ P01_STACK_BRACKET = SemanticProgramSpec(
             VisualContainerBinding(semantic_id="stack", primitive="stack_view", label="Ngăn xếp"),
         ],
         pointers=[
-            VisualPointerBinding(pointer_id="ptr_i", var_ref="c", target_container="bracket_strip", label="i"),
+            # BỎ 2026-08-20 (bất biến #34): con trỏ buộc vào BIẾN KÝ TỰ của
+            # `for_each` — không có chỉ số nên không bao giờ neo được vào ô nào,
+            # và nó chính là con trỏ trôi đè lên chữ ở spec §0(b).
         ],
         value_boxes=[
             VisualValueBoxBinding(box_id="result_box", var_ref="result", label="Kết quả"),
@@ -883,7 +885,9 @@ P16_DFA_LEXER = SemanticProgramSpec(
             VisualContainerBinding(semantic_id="chars", primitive="array_strip", label="Chuỗi đầu vào"),
         ],
         pointers=[
-            VisualPointerBinding(pointer_id="ptr_c", var_ref="ch", target_container="chars", label="ký tự"),
+            # BỎ 2026-08-20 (bất biến #34): con trỏ buộc vào BIẾN KÝ TỰ của
+            # `for_each` — không có chỉ số nên không bao giờ neo được vào ô nào,
+            # và nó chính là con trỏ trôi đè lên chữ ở spec §0(b).
         ],
         value_boxes=[
             VisualValueBoxBinding(box_id="state_box", var_ref="state", label="Trạng thái DFA"),
@@ -971,7 +975,9 @@ P18_FREQUENCY_COUNT = SemanticProgramSpec(
             VisualContainerBinding(semantic_id="text", primitive="array_strip", label="Dãy ký tự đầu vào"),
         ],
         pointers=[
-            VisualPointerBinding(pointer_id="ptr_c", var_ref="ch", target_container="text", label="c"),
+            # BỎ 2026-08-20 (bất biến #34): con trỏ buộc vào BIẾN KÝ TỰ của
+            # `for_each` — không có chỉ số nên không bao giờ neo được vào ô nào,
+            # và nó chính là con trỏ trôi đè lên chữ ở spec §0(b).
         ],
         value_boxes=[
             VisualValueBoxBinding(box_id="cnt_box", var_ref="count", label="Tần suất hiện thời"),

@@ -3,7 +3,10 @@
 import pytest
 from app.simulation.semantic_program.validator import validate_semantic_program
 from app.simulation.semantic_program.interpreter import SemanticProgramInterpreter
-from app.simulation.semantic_program.pipeline_adapter import compile_semantic_program_to_envelope
+from app.simulation.semantic_program.pipeline_adapter import (
+    VisualBindingUnresolved,
+    compile_semantic_program_to_envelope,
+)
 from .unseen_smoke_fixtures import (
     ALL_5_UNSEEN_FIXTURES,
     UNSEEN_01_VOWEL_COUNT,
@@ -66,11 +69,33 @@ def test_unseen_05_hot_potato_queue_execution():
     assert len(res.final_memory["q"]) == 0
 
 
-def test_all_5_unseen_compile_to_production_envelopes():
-    """Tất cả 5 bài toán mới biên dịch thành SimulationEnvelope chuẩn hợp lệ."""
+def test_unseen_compile_va_ghi_nhan_binding_hong_cua_luot_live():
+    """4/5 bài live biên dịch sạch; 1 bài bị bất biến #34 từ chối.
+
+    GHI NHẬN, KHÔNG PHẢI HỒI QUY (2026-08-20). Fixture ở đây là **bản ghi thật**
+    của lượt live Gemini — theo luật dự án, artifact lượt cũ không được sửa lại.
+    Bài đếm nguyên âm do LLM sinh có `VisualPointerBinding(var_ref="ch")`, tức
+    con trỏ buộc vào BIẾN KÝ TỰ của `for_each`: không có chỉ số nên không bao
+    giờ neo được vào ô nào.
+
+    Ý nghĩa cho luận văn: lỗi này **do chính LLM sinh ra**, và lượt cert cũ báo
+    PASS vì test chỉ kiểm `len(objects) > 0` — không kiểm binding có neo được
+    không. Bất biến #34 nay bắt được. Đây là bằng chứng cho claim B (chạy được
+    ≠ đủ bằng chứng để phục vụ), không phải một fixture cần "sửa cho xanh".
+    """
+    ok, rejected = [], []
     for spec in ALL_5_UNSEEN_FIXTURES:
-        envelope = compile_semantic_program_to_envelope(spec)
+        try:
+            envelope = compile_semantic_program_to_envelope(spec)
+        except VisualBindingUnresolved as e:
+            rejected.append((spec.title, str(e)))
+            continue
         assert envelope["status"] == "ok"
         assert envelope["domain"] == "generic"
-        assert len(envelope["config"]["objects"]) > 0
-        assert len(envelope["config"]["processes"][0]["steps"]) > 0
+        assert len(envelope["config"]["frames"]) > 0
+        assert len(envelope["config"]["view_steps"]) > 0
+        ok.append(spec.title)
+
+    assert len(ok) == 4, f"Mong 4 bài sạch, thực tế {len(ok)}: {ok}"
+    assert len(rejected) == 1, f"Mong đúng 1 bài bị từ chối, thực tế: {rejected}"
+    assert "không bao giờ mang giá trị nguyên" in rejected[0][1]
