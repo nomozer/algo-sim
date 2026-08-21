@@ -60,8 +60,21 @@ SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
                 "type": "OBJECT",
                 "properties": {
                     "kind": {"type": "STRING", "enum": sorted(OBLIGATION_KINDS)},
-                    "container": {"type": "STRING"},
-                    "witness": {"type": "STRING"},
+                    # ĐỊNH DANH, không phải câu chữ. Lượt pilot 3 thu được
+                    # `container` = "các năm từ nam_bat_dau đến nam_ket_thuc" —
+                    # một cụm từ tiếng Việt, không thể là tên biến, nên chương
+                    # trình không có cách nào khai báo trùng và C₁a luôn trượt.
+                    "container": {
+                        "type": "STRING",
+                        "description": "Tên biến kiểu snake_case, chỉ chữ "
+                                       "thường không dấu, số và gạch dưới. "
+                                       "KHÔNG viết cụm từ hay câu.",
+                    },
+                    "witness": {
+                        "type": "STRING",
+                        "description": "Tên biến kiểu snake_case sẽ chứa câu "
+                                       "trả lời. KHÔNG viết cụm từ hay câu.",
+                    },
                     "cmp": {"type": "STRING", "nullable": True},
                     "op": {"type": "STRING", "nullable": True},
                     "transform": {"type": "STRING", "nullable": True},

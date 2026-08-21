@@ -298,6 +298,41 @@ def test_shadow_VAN_chay_khi_classify_tra_mismatch_va_return_som(monkeypatch):
     assert ghi["servable"] is True, ghi
 
 
+def test_hai_luot_LLM_dung_CHUNG_danh_xung():
+    """Khe hở đo được ở pilot 3: hai lượt tách rời nên không chung không gian
+    tên. `semantic_analyze` khai witness `so_lon_nhat`, `semantic_program` đặt
+    tên khác, C₁a báo đúng "container chưa khai báo" — 12/40 case trượt.
+
+    Sửa: lượt viết chương trình được cho biết ĐÚNG các tên đó. Điều này KHÔNG
+    làm C₁a rỗng nghĩa — C₁a hỏi chương trình có SINH RA witness không, không
+    hỏi nó đặt tên thế nào; và nghĩa vụ vẫn được đóng băng TRƯỚC khi chương
+    trình được viết.
+    """
+    khoi = pipeline._obligations_for_prompt(_contract())
+    assert "arr" in khoi and "max_val" in khoi, khoi
+    assert "PHẢI dùng ĐÚNG" in khoi
+
+    from app.simulation.semantic_program.request_contract import RequestContract
+
+    trong = pipeline._obligations_for_prompt(RequestContract())
+    assert "không đòi kết quả" in trong
+
+
+def test_schema_analyze_doi_dinh_danh_chu_khong_phai_cum_tu():
+    """Pilot 3 thu được `container` = "các năm từ nam_bat_dau đến nam_ket_thuc"
+    — một cụm từ tiếng Việt, không thể là tên biến, nên chương trình không có
+    cách nào khai báo trùng và C₁a luôn trượt."""
+    from app.simulation.semantic_program.analyze_contract import (
+        SEMANTIC_ANALYZE_SCHEMA,
+    )
+
+    props = SEMANTIC_ANALYZE_SCHEMA["properties"]["obligations"]["items"]["properties"]
+    for truong in ("container", "witness"):
+        mo_ta = props[truong].get("description", "")
+        assert "snake_case" in mo_ta, f"{truong}: không đòi định danh"
+        assert "KHÔNG viết cụm từ" in mo_ta, truong
+
+
 def test_shadow_chay_TRUOC_classify(monkeypatch):
     """Khoá THỨ TỰ, không chỉ kết quả: độc lập phải là cấu trúc."""
     thu_tu: list[str] = []

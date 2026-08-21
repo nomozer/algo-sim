@@ -356,6 +356,40 @@ def _facts_for_prompt(contract: "RequestContract") -> str:
     return "Dữ liệu đề cho (ghim `source_fact_id` về đúng id dưới đây):\n" + "\n".join(dong)
 
 
+def _obligations_for_prompt(contract: "RequestContract") -> str:
+    """Danh xưng CHUNG cho hai lượt LLM — container và witness của từng nghĩa vụ.
+
+    VÌ SAO CẦN (đo được ở lượt pilot 3): hai lượt được tách rời có chủ đích, nên
+    chúng không dùng chung không gian tên. `semantic_analyze` khai
+    `extremum(container='day_so_hoc', witness='so_lon_nhat_nho_hon_100')`, còn
+    `semantic_program` đặt tên biến hoàn toàn khác, và C₁a báo đúng là "container
+    chưa khai báo". 12/40 case trượt vì đúng khe hở này.
+
+    Việc này KHÔNG làm C₁a rỗng nghĩa. C₁a hỏi *chương trình có SINH RA witness
+    không*, không hỏi *nó đặt tên thế nào*. Tính độc lập cần giữ là "hợp đồng
+    nêu yêu cầu TRƯỚC khi chương trình được viết", và điều đó vẫn nguyên vẹn:
+    nghĩa vụ đã đóng băng xong mới tới lượt viết chương trình.
+    """
+    if not contract.obligations:
+        return "Đề không đòi kết quả cụ thể nào."
+    dong = [
+        f"- {ob.kind}: dữ liệu bị hỏi nằm trong biến `{ob.container}`, "
+        f"kết quả nằm trong biến `{ob.witness}`"
+        for ob in contract.obligations
+        if ob.witness
+    ]
+    if not dong:
+        return "Đề không đòi kết quả cụ thể nào."
+    return (
+        "Nghĩa vụ của đề. CẢ HAI tên dưới đây đều phải có mặt trong "
+        "`memory_declarations`, đúng từng chữ:\n"
+        + "\n".join(dong)
+        + "\n(Dãy do đề mô tả mà không liệt kê sẵn thì vẫn phải dựng thành một "
+        "biến chứa dữ liệu — mô phỏng cần hiện dãy đó lên, không chỉ tính ra "
+        "đáp số.)"
+    )
+
+
 async def stage_semantic_program(
     text: str, analysis: dict, api_key: str, contract: "RequestContract | None" = None
 ) -> tuple["SemanticProgramSpec | None", str | None]:
@@ -383,6 +417,7 @@ async def stage_semantic_program(
     user = f'Đề bài:\n"""\n{text}\n"""'
     if contract is not None:
         user = f"{user}\n\n{_facts_for_prompt(contract)}"
+        user = f"{user}\n\n{_obligations_for_prompt(contract)}"
     # Hợp đồng IR phải đi kèm, vì Gemini KHÔNG nhận được schema của nó (xem
     # `grammar_card.py`). Thiếu nó, mô hình tự đặt tên trường và 38/40 case
     # trượt thẩm định — đo được ở lượt pilot thứ hai.

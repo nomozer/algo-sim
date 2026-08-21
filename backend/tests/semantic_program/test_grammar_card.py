@@ -77,7 +77,10 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     """Nó là hợp đồng giao diện, không phải chỗ chép luật. Phình lên nghĩa là ai
     đó đang nhồi văn xuôi vào — thứ đề tài này cố ý tránh."""
     n = len(grammar_card().encode("utf-8"))
-    assert n <= 2600, (
+    # 2600 → 3400 (2026-08-22): thêm nhãn KIỂU cho từng trường (`:tên`,
+    # `:biểu thức`, `:khối lệnh`). Không phải văn xuôi — đó là thứ đã sửa 11+
+    # case trượt vì mô hình điền biểu thức vào chỗ đòi tên biến.
+    assert n <= 3400, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
@@ -103,6 +106,25 @@ def test_the_liet_ke_GIA_TRI_cua_truong_enum():
     the = grammar_card()
     for gt in ("+", "//", "==", "<=", "and", "or"):
         assert gt in the, f"thẻ thiếu giá trị toán tử `{gt}`"
+
+
+def test_the_neu_KIEU_cua_tung_truong():
+    """Tên trường nói *chỗ nào điền*; kiểu nói *điền cái gì vào đó*.
+
+    Lượt pilot 3: mô hình nhét cả object biểu thức vào `index.container` —
+    trong khi nó là `str`, tức TÊN BIẾN. 11+ case trượt vì đúng nhầm lẫn này.
+    """
+    the = grammar_card()
+    assert "index: container:tên" in the, "thiếu nhãn kiểu cho `container`"
+    assert "expr:biểu thức" in the
+    assert "body:khối lệnh" in the
+
+
+def test_the_khong_gan_nhan_kieu_cho_truong_enum():
+    """Trường enum đã liệt kê giá trị rồi — gắn thêm nhãn kiểu là thừa."""
+    the = grammar_card()
+    assert "op(+|-|*|//|%)" in the
+    assert "op(+|-|*|//|%):" not in the
 
 
 def test_khong_in_duong_dan_module_vao_the():

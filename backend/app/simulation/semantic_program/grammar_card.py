@@ -58,6 +58,35 @@ def _gia_tri_dong(annotation) -> tuple[str, ...]:
     return ()
 
 
+def _kieu(annotation) -> str:
+    """Nhãn KIỂU gọn cho một trường — thứ tên trường không nói được.
+
+    Đo được ở lượt pilot 3: mô hình điền cả một object biểu thức vào
+    `index.container`, `map_get.container`, `write_index.container` — trong khi
+    chúng là `str`, tức TÊN BIẾN. 11+ case trượt vì đúng nhầm lẫn này. Thẻ liệt
+    kê tên trường mà không nói kiểu thì mô hình phải tự đoán.
+    """
+    if annotation is str or annotation == typing.Optional[str]:
+        return "tên"
+    txt = repr(annotation)
+    if txt.startswith("list["):
+        return "khối lệnh"
+    if "Cond" in txt:
+        return "điều kiện"
+    if "Expr" in txt or "Stmt" in txt:
+        return "biểu thức"
+    # Trường nhận JSON THÔ (`Any`, hoặc union của các kiểu nền). Phải nói rõ,
+    # nếu không mô hình cho rằng chỗ nào cũng điền được biểu thức: lượt kiểm
+    # sau bản sửa danh xưng cho thấy nó viết
+    # `initial_value: {"kind": "literal", "value": 1}` thay vì `1`, và P2 báo
+    # "giá trị ['literal'] không có trong mục đề cho".
+    args = typing.get_args(annotation)
+    nen = (int, str, bool, float, list, dict, type(None))
+    if annotation is typing.Any or (args and all(a in nen for a in args)):
+        return "giá trị thô, KHÔNG phải biểu thức"
+    return ""
+
+
 def _truong(model: type[BaseModel]) -> str:
     """Tên trường, `?` = tuỳ chọn, và LIỆT KÊ GIÁ TRỊ cho trường enum.
 
@@ -74,6 +103,10 @@ def _truong(model: type[BaseModel]) -> str:
         # Bỏ qua enum quá dài (vd MemoryType) — chúng đã có mục riêng.
         if gt and len(gt) <= 8:
             nhan += "(" + "|".join(gt) + ")"
+        else:
+            k = _kieu(f.annotation)
+            if k:
+                nhan += ":" + k
         ra.append(nhan)
     return " ".join(ra)
 
