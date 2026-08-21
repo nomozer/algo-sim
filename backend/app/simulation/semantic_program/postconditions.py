@@ -29,6 +29,9 @@ class PostconditionResult(BaseModel):
     ok: bool
     error_code: str | None = None
     violations: list[str] = Field(default_factory=list)
+    #: Nghĩa vụ mà checker KHÔNG biểu diễn được ⇒ mức yếu (`verification_gap`).
+    #: Tách hẳn khỏi `violations`: "tôi không biết" ≠ "chương trình sai".
+    weak_kinds: list[str] = Field(default_factory=list)
 
 
 def _final(exec_result) -> dict[str, Any]:
@@ -57,10 +60,65 @@ _PREDS: dict[str, Callable[[Any, Any], bool]] = {
 }
 
 
+class KhongKiemChungDuoc(Exception):
+    """Checker KHÔNG biểu diễn được thứ nghĩa vụ đòi ⇒ mức yếu, không phải vi phạm.
+
+    Tách hẳn khỏi "vi phạm" vì hai câu trả lời khác nhau về bản chất: một cái
+    nói *chương trình sai*, cái kia nói *tôi không biết*. Trộn chúng là kết tội
+    một chương trình đúng.
+    """
+
+
 def _pred_of(ob: Obligation) -> Callable[[Any], bool]:
-    fn = _PREDS.get(str(ob.params.get("pred") or "any"), _PREDS["any"])
+    """Vị từ lọc của nghĩa vụ. Không biểu diễn được ⇒ NÉM, không đoán.
+
+    TỪNG SAI VÀ SAI ĐẮT (đo được ở lượt pilot 4): bản cũ mặc định về `any` khi
+    `pred` lạ. Với `aggregate_matching(count)` thì "đếm mọi phần tử" chính là
+    `len(container)`, nên checker bịa ra một kỳ vọng bằng đúng số phần tử rồi
+    kết tội chương trình:
+
+        đếm cặp nghịch đảo [3,2,1,5,4]  → hệ 4 (ĐÚNG), checker đòi 5
+        đếm bạn cao hơn TB (8 số đo)     → hệ 4 (ĐÚNG), checker đòi 8
+
+    Hai case đúng bị từ chối. Đây là cùng một lớp lỗi đã lặp nhiều lần trong dự
+    án: **giá trị mặc định thầm lặng ở chỗ đáng lẽ fail-closed.**
+
+    Vắng `pred` KHÁC với `pred` lạ: đề chỉ nói "đếm số phần tử" thì không có vị
+    từ nào, và đếm tất cả là ĐÚNG. Chỉ khi đề khai một vị từ mà bảng không có
+    mới là không kiểm chứng được.
+    """
+    raw = ob.params.get("pred")
+    if raw is None:
+        fn = _PREDS["any"]
+    else:
+        fn = _PREDS.get(str(raw))
+        if fn is None:
+            raise KhongKiemChungDuoc(
+                f"vị từ '{raw}' không nằm trong tập kiểm được "
+                f"({', '.join(sorted(_PREDS))})"
+            )
     nguong = ob.params.get("threshold", ob.params.get("value"))
     return lambda x: bool(fn(x, nguong))
+
+
+def _co_ast_chua_tinh(value: Any) -> bool:
+    """Trạng thái có chứa NODE BIỂU THỨC chưa được tính không?
+
+    `sealed_038` của lượt pilot 4: chương trình đẩy nguyên object biểu thức vào
+    mảng thay vì giá trị của nó —
+
+        [{"kind": "index", "container": "day_so_a",
+          "index": {"kind": "var", "name": "i"}}, … lặp 6 lần]
+
+    Validator, P2, C₁a, C₁b và C₂ đều cho qua, nên hệ TỰ CHO LÀ PHÁT ĐƯỢC một
+    kết quả là rác. Kiểm hình thức của container mà không nhìn vào PHẦN TỬ thì
+    không bắt được điều đó.
+    """
+    if isinstance(value, dict):
+        return "kind" in value or any(_co_ast_chua_tinh(v) for v in value.values())
+    if isinstance(value, (list, tuple)):
+        return any(_co_ast_chua_tinh(v) for v in value)
+    return False
 
 
 def _extremum(snap: dict, ob: Obligation) -> str | None:
@@ -238,12 +296,27 @@ def check_postconditions(
     """
     snap = _final(exec_result)
     violations: list[str] = []
+    weak: list[str] = []
     for ob in contract.obligations:
+        # Kiểm TRƯỚC mọi checker, cho MỌI nghĩa vụ: trạng thái chứa node biểu
+        # thức chưa được tính là rác, bất kể kind là gì. Để từng checker tự lo
+        # thì mỗi checker mới lại là một lỗ (xem `_co_ast_chua_tinh`).
+        for ten in (ob.container, ob.witness):
+            if ten and _co_ast_chua_tinh(snap.get(ten)):
+                violations.append(
+                    f"{ob.describe()}: biến '{ten}' chứa node biểu thức CHƯA "
+                    "ĐƯỢC TÍNH, không phải giá trị"
+                )
+
         fn = CHECKERS.get(ob.kind)
         if fn is None:
             continue
         try:
             msg = fn(snap, ob)
+        except KhongKiemChungDuoc as e:
+            # KHÔNG phải vi phạm: checker tự nhận là không biểu diễn được.
+            weak.append(ob.kind)
+            continue
         except (TypeError, ValueError, KeyError) as e:
             msg = f"{ob.describe()}: không kiểm được hậu điều kiện ({e})"
         if msg:
@@ -251,6 +324,12 @@ def check_postconditions(
 
     if violations:
         return PostconditionResult(
-            ok=False, error_code="POSTCONDITION_VIOLATED", violations=violations
+            ok=False, error_code="POSTCONDITION_VIOLATED",
+            violations=violations, weak_kinds=sorted(set(weak)),
+        )
+    if weak:
+        return PostconditionResult(
+            ok=False, error_code="SEMANTIC_VERIFICATION_UNAVAILABLE",
+            weak_kinds=sorted(set(weak)),
         )
     return PostconditionResult(ok=True)

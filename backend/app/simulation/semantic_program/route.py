@@ -185,7 +185,12 @@ def verify_and_compile(
         )
 
     post = check_postconditions(contract, spec, exec_res)
-    if not post.ok:
+    # C₂ nay có HAI kết cục âm, và chúng khác hẳn nhau:
+    #   POSTCONDITION_VIOLATED            — chương trình tự mâu thuẫn
+    #   SEMANTIC_VERIFICATION_UNAVAILABLE — checker không biểu diễn được vị từ
+    # Gộp chúng là kết tội một chương trình có thể hoàn toàn đúng — lượt pilot 4
+    # đo được đúng chuyện đó xảy ra hai lần.
+    if post.violations:
         return _hong(
             "postconditions",
             ErrorCode.POSTCONDITION_VIOLATED,
@@ -193,6 +198,8 @@ def verify_and_compile(
             details=list(post.violations),
             **da_chay,
         )
+    if post.weak_kinds:
+        da_chay["weak"] = sorted(set(da_chay["weak"]) | set(post.weak_kinds))
 
     try:
         # Interpreter chạy lại bên trong `compile`. Tất định nên kết quả trùng
@@ -221,7 +228,8 @@ def verify_and_compile(
     # Mức YẾU: chạy được, biên dịch được, nhưng chưa có checker độc lập cho
     # nghĩa vụ đề đòi ⇒ KHÔNG phát canonical. Đây là `verification_gap`, và nó
     # là chỗ hai tỉ lệ của luận văn tách nhau ra.
-    if c1a.weak_kinds:
+    weak_tong = sorted(set(da_chay["weak"]))
+    if weak_tong:
         code = ErrorCode.SEMANTIC_VERIFICATION_UNAVAILABLE
         return SemanticRouteOutcome(
             stage_reached="verification",
@@ -231,9 +239,9 @@ def verify_and_compile(
             failure_category=SEMANTIC_FAILURE_CATEGORY[code.value],
             reason=(
                 "Mô phỏng chạy được nhưng hệ chưa có cách kiểm chứng độc lập "
-                f"nghĩa vụ: {', '.join(sorted(set(c1a.weak_kinds)))}."
+                f"nghĩa vụ: {', '.join(weak_tong)}."
             ),
-            weak_kinds=list(c1a.weak_kinds),
+            weak_kinds=weak_tong,
             exec_status=exec_res.status,
             total_steps=exec_res.total_steps,
             frame_count=len(envelope["config"]["frames"]),
