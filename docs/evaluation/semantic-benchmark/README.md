@@ -12,7 +12,7 @@ commit kế tiếp. Một hash trả lời *"đo bản nào"*, hash kia trả l�
 | 2026-08-21, sau khi nối route | `c6c5c28` | `901182c` |
 | 2026-08-21, sau sáu điểm sửa phương pháp đo | `89fee9b` | `b141788` |
 | 2026-08-22, ngân sách cuối | `36bae92` | `2fa3e88` |
-| **2026-08-22, sau pilot — BẢN ĐEM ĐO** | **`4e13e2b`** | (commit kế tiếp) |
+| **2026-08-22, sau pilot — BẢN ĐEM ĐO** | **`4e13e2b`** | `4945be6` |
 
 > **`36bae92` nay là SUPERSEDED.** Nó được đóng băng trước khi route từng chạy
 > với API thật; bốn lượt pilot cho thấy nó **chưa gọi nổi API một lần nào** (schema
