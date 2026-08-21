@@ -1,0 +1,75 @@
+{
+  "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
+  "dong_bang_luc": "2026-08-21T12:34:54+00:00",
+  "commit": "4013b6b71b57a1620b4678a6b5db59628b9cbb79",
+  "commit_ngan": "4013b6b",
+  "cay_lam_viec_sach": false,
+  "cache_version": "33",
+  "spec_version_ir": "1.0",
+  "taxonomy": {
+    "so_nghia_vu": 9,
+    "kinds": [
+      "aggregate_matching",
+      "derived_sequence",
+      "extremum",
+      "first_match_index",
+      "membership",
+      "ordering",
+      "reachability",
+      "structural_traversal",
+      "total_mapping"
+    ],
+    "aggregate_ops": [
+      "count",
+      "max",
+      "min",
+      "product",
+      "sum"
+    ],
+    "sequence_transforms": [
+      "distinct",
+      "filter",
+      "identity",
+      "map",
+      "reverse"
+    ],
+    "co_checker_server_owned": [
+      "aggregate_matching",
+      "derived_sequence",
+      "extremum",
+      "first_match_index",
+      "membership",
+      "ordering",
+      "reachability",
+      "total_mapping"
+    ],
+    "hash": "4dd712a376aea4bbf5d3d5fa16101b247518ef2b1b8ba5beca7670f910612d67"
+  },
+  "visual_primitive_set": {
+    "so_primitive": 8,
+    "primitives": [
+      "array_strip",
+      "bar_chart",
+      "bit_register",
+      "graph_view",
+      "queue_view",
+      "stack_view",
+      "table_grid",
+      "tree_element"
+    ],
+    "hash": "1a127502ac1d931a57814b826bc8aee02b75268bba1265416e1546cd77009ff8"
+  },
+  "schema_semantic_program": {
+    "duong_dan": "docs/schemas/semantic_program.schema.json",
+    "hash": "b87aeb188ebc5739531848613dc881e774e2371d4c1e6a77e701cd50a166b687"
+  },
+  "dev": {
+    "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
+    "so_case": 20,
+    "fingerprint": "8a3de7a3f95309429ebc35cfbcdf3cd03237502efa4ef8b255864f069d48e885"
+  },
+  "sealed": {
+    "trang_thai": "CHUA_NIEM_PHONG",
+    "ghi_chu": "SEALED do nguồn ngoài cung cấp; agent viết hệ KHÔNG soạn nó. Niêm phong bằng scripts/seal_benchmark.py."
+  }
+}

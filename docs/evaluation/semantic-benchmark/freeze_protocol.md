@@ -37,3 +37,55 @@ phân tích, không phải chỗ để giấu.
 Thống kê các **lớp nghĩa vụ thực tế** xuất hiện trong bài thuật toán THPT, chọn
 một tập checker **nhỏ, đại diện**, rồi **đóng băng taxonomy trước SEALED**.
 **Không** thêm checker để cứu từng held-out case.
+
+---
+
+# Bổ sung 2026-08-21 — KHOÁ TRƯỚC KHI MỞ SEALED
+
+Ba luật dưới đây chốt **trước khi nhìn thấy bất kỳ kết quả nào**. Đó là toàn bộ
+giá trị của chúng: một ngưỡng đặt sau khi biết số thì không còn là ngưỡng.
+
+## 1. Evaluation candidate — danh tính bản được đo
+
+`EVALUATION_CANDIDATE.json`, sinh bằng `backend/scripts/freeze_evaluation_candidate.py`.
+Ghi: commit · `CACHE_VERSION` · hash taxonomy (9 nghĩa vụ) · hash tập primitive
+(8, có `graph_view`) · hash schema IR · fingerprint DEV · thời điểm đóng băng.
+
+Mọi giá trị **dẫn xuất từ nguồn**, không chép tay — chép tay thì manifest trôi
+khỏi mã đúng như bảng danh tính từng trôi ở `CURRENT_STATE.md`.
+
+> **KHÔNG sửa candidate vì kết quả SEALED.** Kiểm bằng
+> `freeze_evaluation_candidate.py --verify`; lệch ⇒ thoát != 0.
+
+## 2. Ngân sách Task 12 — chốt cứng, không nâng sau khi thấy số
+
+```
+N (SEALED)                    = 40
+Lượt LLM logic / case         ≤ 3      (analyze + classify + semantic_program)
+Trần lượt logic               = 120
+Trần lần thử HTTP             = 160    (chừa cho retry/transient)
+```
+
+Trần HTTP rộng hơn trần logic **chỉ để chịu lỗi tạm thời**, KHÔNG phải để dò
+tìm kết quả tốt hơn.
+
+> Vượt trần ⇒ **dừng evaluation** và ghi `BUDGET_EXHAUSTED`. **Không nâng trần
+> sau khi đã thấy kết quả** — làm thế là mua thêm lượt cho tới khi số đẹp.
+
+## 3. D2 — matched subset chọn TẤT ĐỊNH, không chọn theo kết quả
+
+D2 (claim token thực nghiệm) chỉ đo trên các case **cả hai route đều phục vụ
+thành công**. Quy tắc chọn, chốt tại đây:
+
+1. Lấy tập giao (cả hai route đều `ok`).
+2. Sắp theo `case_id` (thứ tự từ điển) — tất định, không phụ thuộc kết quả.
+3. Nếu tập giao > 12: lấy **phân tầng đều** — chỉ số
+   `round(i * (n - 1) / 11)` với `i = 0..11`, khử trùng.
+4. Báo **RIÊNG** ba con số: semantic cost · legacy cost · shadow cost.
+
+> Không có chuyện thấy case nào đẹp rồi mới chọn để so token. Ai đọc quy tắc này
+> cũng dựng lại được đúng tập ấy mà không cần chạy hệ.
+
+Nhắc lại từ §D1: claim **cấu trúc** (sau khi IR đã sinh, số bước runtime không
+tiêu thêm token LLM) đúng theo cấu tạo và **không cần** matched subset. Chỉ D2
+mới cần.
