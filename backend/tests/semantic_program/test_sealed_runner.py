@@ -361,6 +361,175 @@ def test_chay_mot_case_thu_duoc_ca_ba_thu(rn, monkeypatch):
                                "semantic_program"}, r["token"]
 
 
+def test_main_chay_TRON_duong_dieu_phoi_offline(rn, tmp_path, monkeypatch):
+    """`main()` chưa từng được chạy — chỉ từng hàm con.
+
+    Đây là chỗ hỏng thì hỏng SAU KHI đã tiêu hết quota: `json.dumps` gặp một
+    kiểu không serialize được ở dòng ghi file cuối, một `KeyError` trong khối
+    in báo cáo, hay `out_dir` không tạo được. Mọi thứ ấy chỉ lộ khi chạy trọn.
+
+    Chạy hoàn toàn offline: `call_gemini` bị thay, guard mạng của conftest vẫn
+    đứng nguyên, và SEALED trỏ vào thư mục tạm.
+    """
+    import hashlib
+    import json as _json
+    import sys
+
+    from app.ai import pipeline
+
+    from .test_route_wiring import _kich_ban
+
+    # SEALED giả, niêm phong đúng cách.
+    cases = tmp_path / "cases.json"
+    cases.write_text(_json.dumps({"cases": [
+        {"case_id": f"gia_{i}",
+         "source": {"book": "x", "location": "y"},
+         "problem_text": "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34",
+         "ground_truth": {"kind": "human",
+                          "expected": [{"obligation_kind": "extremum",
+                                        "value": 89}]}}
+        for i in range(2)
+    ]}, ensure_ascii=False), encoding="utf-8")
+    fp = tmp_path / "FINGERPRINT.txt"
+    fp.write_text(hashlib.sha256(cases.read_bytes()).hexdigest() + "\n",
+                  encoding="utf-8")
+    monkeypatch.setattr(rn, "SEALED", cases)
+    monkeypatch.setattr(rn, "FINGERPRINT", fp)
+
+    # `_kiem_candidate` chạy subprocess trên kho mã thật; ở đây thay bằng stub
+    # để test không phụ thuộc trạng thái cây làm việc. Bản thân nó đã được kiểm
+    # riêng bằng `freeze_evaluation_candidate.py --verify`.
+    monkeypatch.setattr(rn, "_kiem_candidate",
+                        lambda: {"commit_ngan": "gia1234", "cache_version": "34"})
+
+    kich_ban: list[str] = []
+
+    async def f(api_key, system_prompt, user_text, response_schema=None,
+                temperature=0.2, image=None):
+        from app.ai.telemetry import current_stage, record_usage
+
+        if not kich_ban:
+            kich_ban.extend(_kich_ban())
+        record_usage(current_stage(), {"totalTokenCount": 100})
+        return kich_ban.pop(0)
+
+    monkeypatch.setattr(pipeline, "call_gemini", f)
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+
+    out = tmp_path / "results"
+    monkeypatch.setattr(sys, "argv",
+                        ["run_sealed_evaluation.py", "--out-dir", str(out)])
+
+    assert rn.main() == 0
+
+    # Hai artifact phải TỒN TẠI và PARSE ĐƯỢC — đây là điều test này sinh ra để
+    # chứng minh.
+    tom_tat = _json.loads((out / "sealed_summary.json").read_text(encoding="utf-8"))
+    chi_tiet = _json.loads((out / "sealed_cases.json").read_text(encoding="utf-8"))
+
+    assert tom_tat["N_planned"] == 2 and tom_tat["N_processed"] == 2
+    assert tom_tat["evaluation_complete"] is True
+    assert tom_tat["A_generative_executability"]["so"] == 2
+    assert tom_tat["B_internal_servable"]["so"] == 2
+    assert tom_tat["dung_theo_oracle_doc_lap"]["pass"] == 2
+    assert tom_tat["dung_theo_oracle_doc_lap"]["tong_kiem"] == 2
+    assert tom_tat["sealed_fingerprint"] == fp.read_text(encoding="utf-8").strip()
+    assert len(chi_tiet) == 2
+
+
+def test_main_het_ngan_sach_thi_bao_cao_KHONG_noi_doi_ve_N(rn, tmp_path, monkeypatch):
+    """`BUDGET_EXHAUSTED` là một kết cục ĐƯỢC GHI TRONG PROTOCOL, không phải lỗi.
+
+    Nhưng nếu báo cáo không nói rõ, mẫu số tự co lại và A/B đọc như thể benchmark
+    chỉ có ngần ấy bài. Ở đây trần bị hạ để nó chắc chắn cạn giữa chừng.
+    """
+    import hashlib
+    import json as _json
+    import sys
+
+    from app.ai import pipeline
+
+    from .test_route_wiring import _kich_ban
+
+    cases = tmp_path / "cases.json"
+    cases.write_text(_json.dumps({"cases": [
+        {"case_id": f"gia_{i}",
+         "problem_text": "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34",
+         "ground_truth": {"kind": "human",
+                          "expected": [{"obligation_kind": "extremum",
+                                        "value": 89}]}}
+        for i in range(4)
+    ]}, ensure_ascii=False), encoding="utf-8")
+    fp = tmp_path / "FINGERPRINT.txt"
+    fp.write_text(hashlib.sha256(cases.read_bytes()).hexdigest() + "\n",
+                  encoding="utf-8")
+    monkeypatch.setattr(rn, "SEALED", cases)
+    monkeypatch.setattr(rn, "FINGERPRINT", fp)
+    monkeypatch.setattr(rn, "_kiem_candidate",
+                        lambda: {"commit_ngan": "gia1234", "cache_version": "34"})
+    # Đủ cho ĐÚNG hai case (4 lượt/case), rồi cạn.
+    monkeypatch.setattr(rn, "TRAN_LOGIC", 8)
+
+    kich_ban: list[str] = []
+
+    async def f(api_key, system_prompt, user_text, response_schema=None,
+                temperature=0.2, image=None):
+        from app.ai import gemini
+        from app.ai.telemetry import current_stage, record_usage
+
+        # `note_call()` thật nằm TRONG `gemini.call_gemini`, mà ở đây ta thay
+        # `pipeline.call_gemini` — nên phải tự báo, nếu không ngân sách đếm
+        # bằng 0 và test này không kiểm được gì. Bản thân dây thật
+        # ("call_gemini phải báo cho ApiBudget") được khoá ở
+        # `tests/test_gemini.py::test_moi_luot_goi_deu_bao_cho_ngan_sach`.
+        if gemini.BUDGET is not None:
+            gemini.BUDGET.note_call()
+        if not kich_ban:
+            kich_ban.extend(_kich_ban())
+        record_usage(current_stage(), {"totalTokenCount": 100})
+        return kich_ban.pop(0)
+
+    monkeypatch.setattr(pipeline, "call_gemini", f)
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+    out = tmp_path / "results"
+    monkeypatch.setattr(sys, "argv",
+                        ["run_sealed_evaluation.py", "--out-dir", str(out)])
+
+    assert rn.main() == 0, "hết ngân sách là kết cục hợp lệ, không phải crash"
+
+    bc = _json.loads((out / "sealed_summary.json").read_text(encoding="utf-8"))
+    assert bc["N_planned"] == 4
+    assert bc["N_processed"] < 4, "trần bị hạ mà vẫn chạy hết ⇒ trần không có tác dụng"
+    assert bc["evaluation_complete"] is False
+    assert bc["dung_som"] and "BUDGET_EXHAUSTED" in bc["dung_som"]
+    assert "KHÔNG được công bố" in bc["canh_bao"]
+
+
+def test_main_tu_choi_khi_SEALED_bi_sua(rn, tmp_path, monkeypatch):
+    """Tiêm lỗi ở tầng `main()`: phải thoát != 0 TRƯỚC khi tiêu một lượt nào."""
+    import sys
+
+    cases = tmp_path / "cases.json"
+    cases.write_text('{"cases": []}', encoding="utf-8")
+    fp = tmp_path / "FINGERPRINT.txt"
+    fp.write_text("0" * 64 + "\n", encoding="utf-8")
+    monkeypatch.setattr(rn, "SEALED", cases)
+    monkeypatch.setattr(rn, "FINGERPRINT", fp)
+    monkeypatch.setattr(rn, "_kiem_candidate",
+                        lambda: {"commit_ngan": "gia1234", "cache_version": "34"})
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+    monkeypatch.setattr(sys, "argv",
+                        ["run_sealed_evaluation.py", "--out-dir", str(tmp_path)])
+
+    assert rn.main() == 2
+    assert not (tmp_path / "sealed_summary.json").exists(), (
+        "đã ghi báo cáo cho một tập không hợp lệ"
+    )
+
+
 def _fake_llm(responses):
     async def f(api_key, system_prompt, user_text, response_schema=None,
                 temperature=0.2, image=None):
