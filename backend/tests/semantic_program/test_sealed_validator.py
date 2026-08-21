@@ -189,6 +189,18 @@ def test_du_40_case_thi_khong_canh_bao_so_luong(vd):
     assert not any("N_planned" in x for x in cb)
 
 
+def test_thong_bao_kem_VI_TRI_de_dinh_vi_duoc(vd):
+    """Phát hiện khi chạy thử chính CLI: với file 40 case mà `case_id` trùng
+    hoặc bỏ trống, chỉ in id thì người sửa không biết dòng nào."""
+    loi, _ = vd.kiem(_bo(_case(), _case()))
+    assert any(x.startswith("[#1 ") for x in loi), loi
+
+    c = _case()
+    del c["case_id"]
+    loi2, _ = vd.kiem(_bo(c))
+    assert any("#0" in x and "thiếu case_id" in x for x in loi2), loi2
+
+
 def test_validator_KHONG_tu_nhan_la_bo_cham(vd):
     """Nó chỉ trả lời 'runner đọc được không'. Tự nhận nhiều hơn là nguy hiểm:
     ground truth mà máy kiểm được thì không còn độc lập."""

@@ -89,7 +89,10 @@ def kiem(payload: dict) -> tuple[list[str], list[str]]:
     so_cham_duoc = 0
 
     for i, c in enumerate(cases):
-        cid = (c or {}).get("case_id", f"#{i}")
+        # Nhãn KÈM VỊ TRÍ, không chỉ `case_id`. Với file 40 case mà id bị trùng
+        # hoặc bỏ trống, chỉ in id thì người sửa không định vị được dòng nào —
+        # phát hiện khi chạy thử chính CLI này trên một file hỏng.
+        cid = f"#{i} {(c or {}).get('case_id') or '(thiếu case_id)'}"
         if not isinstance(c, dict):
             _loi(loi, cid, "case không phải object")
             continue
