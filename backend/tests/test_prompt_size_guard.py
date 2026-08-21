@@ -26,6 +26,10 @@ BUDGET_BYTES: dict[str, int] = {
     "classify.md": 4550,
     "edit.md": 3550,
     "explain.md": 1550,
+    # Bề mặt `analyze` RIÊNG của route ngữ nghĩa (2026-08-21). Tách khỏi
+    # `analyze.md` có chủ đích — trộn vào đó thì mọi đề đi đường module cũng
+    # phải trả tiền cho từ vựng nghĩa vụ mà chúng không dùng.
+    "semantic_analyze.md": 1950,
     # HẠ 2100 → 1800 (2026-08-20). Bản viết lại bỏ phần schema đã cưỡng chế
     # (danh sách statement/expression/primitive) và còn 1.675B, nhỏ hơn bản gốc
     # 1.998B. Ghi lại vì bản nháp đầu của chính lượt này lại PHÌNH lên 2.131B —

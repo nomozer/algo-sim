@@ -26,7 +26,7 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from .contract import SemanticProgramSpec
-from .request_contract import RequestContract
+from .request_contract import RequestContract, norm_value
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
 #:
@@ -60,10 +60,38 @@ class GroundingResult(BaseModel):
 
 
 def _canon(value: Any) -> tuple[Any, ...]:
-    """Chuẩn hoá về tuple để so khớp không phụ thuộc list/tuple/vô hướng."""
-    if isinstance(value, (list, tuple)):
-        return tuple(value)
-    return (value,)
+    """Rút mọi NGUYÊN TỬ vô hướng của một giá trị, đã chuẩn hoá kiểu.
+
+    Hai bậc, mỗi bậc vá một chỗ P2 từ chối oan chương trình đúng:
+
+    1. `norm_value` — `analyze` trả chuỗi, IR khai số. So thẳng thì `"12"` khác
+       `12` và không đề nào truy được về chính nó.
+    2. **Phẳng hoá sâu** — cây khai `{"val": "A", "left": {...}}`, còn đề chỉ
+       liệt kê được các nhãn A, B, C. So nguyên khối thì mọi đề cây trượt P2,
+       và trượt vì hình dạng chứ không vì dữ liệu.
+
+    Ranh giới mà bậc 2 giữ đúng: P2 hỏi **dữ liệu** có từ đề không. HÌNH DẠNG
+    thì không — chọn cây hay mảng, lồng ra sao, là việc của chương trình. Khoá
+    của dict là tên trường do IR đặt nên không tính là dữ liệu; chỉ giá trị mới
+    tính. `None` bỏ qua: nó là chỗ trống của cấu trúc, không phải một giá trị đề
+    cho.
+    """
+    ra: list[Any] = []
+
+    def di(v: Any) -> None:
+        if v is None:
+            return
+        if isinstance(v, dict):
+            for x in v.values():
+                di(x)
+        elif isinstance(v, (list, tuple, set)):
+            for x in v:
+                di(x)
+        else:
+            ra.append(norm_value(v))
+
+    di(value)
+    return tuple(ra)
 
 
 def check_grounding(

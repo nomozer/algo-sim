@@ -2457,6 +2457,22 @@ có checker (lý do ghi trong file).
 Sở hữu **bề mặt `analyze` của route semantic**, tách hẳn enum dẫn xuất catalog
 (spec E5). `build_request_contract` LỌC nghĩa vụ ngoài taxonomy ngay tại đây.
 
+### `backend/app/simulation/semantic_program/route.py` · offline
+
+Sở hữu **thứ tự các cổng tất định** của route và **phán quyết cuối**:
+P2 → C₁a → thực thi → C₁b → C₂ → biên dịch. Trả `SemanticRouteOutcome` mang HAI
+cờ tách hẳn nhau — `executable` (máy chạy được không) và `servable` (đủ bằng
+chứng phát canonical chưa); gộp chúng là bóp hai tỉ lệ của luận văn thành một.
+Không có lượt LLM nào ở đây. Điểm dễ sai đã ghi trong file: C₁a trả `ok=False`
+cho **cả** mức yếu, nên chỉ `REQUESTED_OPERATION_UNCOVERED` mới được chặn.
+
+### `backend/app/ai/skills/semantic_analyze.md` · **live**
+
+Prompt của `stage_semantic_analyze` — đề bài → dữ liệu đề cho + nghĩa vụ. **Tách
+hẳn `analyze.md`** để đề đi đường module không phải trả tiền cho từ vựng nghĩa
+vụ. Không được gộp vào lượt viết IR: một lượt sinh cả nghĩa vụ lẫn chương trình
+thì C₁a tự đối chiếu một nguồn với chính nó.
+
 ### `backend/app/simulation/execution_authority_gate.py` · offline
 
 Thay khái niệm của `computation_gate.py` (file cũ GIỮ NGUYÊN cho đường module).

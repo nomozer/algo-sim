@@ -240,15 +240,45 @@ def test_operation_anh_em_cung_family_khong_duoc_lam_tu_choi_oan(monkeypatch):
 
 # ── MỌI đường trả envelope ok phải qua PHA 2 ─────────────────────
 def test_moi_duong_tra_ok_deu_qua_phase2():
-    """Khoá cấu trúc: đếm call site `_completeness_phase2` phải BẰNG số đường
-    phát envelope ok trong run_pipeline. Thêm một đường trả ok mới mà quên gate
-    ⇒ test đỏ (đúng cách lỗ selector đã lọt ở RC1-D)."""
+    """Khoá cấu trúc: mọi đường phát envelope ok phải qua MỘT cổng completeness.
+    Thêm một đường trả ok mới mà quên gate ⇒ test đỏ (đúng cách lỗ selector đã
+    lọt ở RC1-D).
+
+    HAI cơ chế, không phải một — và đây không phải nới luật:
+
+    - Đường CATALOG dùng `_completeness_phase2`: đối chiếu yêu cầu của đề với
+      cái một target CỤ THỂ biểu diễn được. Nó cần một `simulation_id`.
+    - Đường SINH NGỮ NGHĨA không có target catalog nào để đối chiếu, nên dùng
+      cổng phủ C₁a/C₁b trong `verify_and_compile`: nghĩa vụ đề đòi phải có
+      đường tạo witness (trước khi chạy) VÀ witness phải hiện thực hoá thật
+      trong lượt chạy (sau khi chạy). Chặt hơn PHA 2 chứ không lỏng hơn.
+
+    Ép đường thứ hai gọi PHA 2 thì phải bịa ra một `simulation_id` catalog cho
+    nó — tức làm hỏng đúng thứ mà route này sinh ra để tránh.
+    """
     src = Path(pipeline.__file__).read_text(encoding="utf-8")
     ok_emits = len(re.findall(r'_emit\(observer,\s*"envelope",\s*status="ok"', src))
-    phase2_calls = len(re.findall(r"_completeness_phase2\(", src))
     # -1 vì có một lần là ĐỊNH NGHĨA hàm, không phải call site
-    assert phase2_calls - 1 == ok_emits, (
-        f"{ok_emits} đường trả ok nhưng chỉ {phase2_calls - 1} chỗ gọi PHA 2")
+    phase2_calls = len(re.findall(r"_completeness_phase2\(", src)) - 1
+    semantic_ok = len(re.findall(r'source="semantic_program"\)', src))
+    assert phase2_calls + semantic_ok == ok_emits, (
+        f"{ok_emits} đường trả ok nhưng chỉ {phase2_calls} chỗ gọi PHA 2 "
+        f"và {semantic_ok} đường qua cổng phủ ngữ nghĩa")
+
+
+def test_duong_ngu_nghia_that_su_qua_cong_phu():
+    """Đếm ở test trên chỉ khoá SỐ LƯỢNG. Cái này khoá NỘI DUNG: đường ngữ nghĩa
+    phải thật sự chạy C₁a và C₁b, không phải chỉ mang cái nhãn `semantic_program`.
+
+    Không có nó thì lần sau ai đó gắn `source="semantic_program"` vào một đường
+    trả ok bất kỳ là qua được cả hai test.
+    """
+    from app.simulation.semantic_program import route
+
+    src = Path(route.__file__).read_text(encoding="utf-8")
+    for ten in ("check_grounding", "check_structural_coverage",
+                "check_realized_coverage", "check_postconditions"):
+        assert f"{ten}(" in src, f"route ngữ nghĩa không gọi {ten}"
 
 
 def test_moi_family_co_it_nhat_mot_operation():

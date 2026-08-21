@@ -57,6 +57,48 @@ def test_oracle_mismatch_KHONG_co_failure_category():
     assert ErrorCode.ORACLE_SEMANTIC_MISMATCH.value not in SEMANTIC_FAILURE_CATEGORY
 
 
+# ── Mức yếu phải ĐẾN ĐƯỢC, không chỉ có tên trong bảng ───────────
+# Mọi test ở trên kiểm BẢNG ÁNH XẠ, và bảng ánh xạ vẫn xanh kể cả khi đường sinh
+# ra nó đã chết. Đó đúng là chuyện đã xảy ra: `is_supported()` mang docstring
+# "có checker server-owned không?" nhưng thân hàm trả `kind in OBLIGATION_KINDS`,
+# nên mức yếu KHÔNG BAO GIỜ kích hoạt — `verification_gap` thành mã chết, còn tỉ
+# lệ "phát canonical an toàn" thì bị thổi lên vì hệ phát kết quả duyệt cây mà
+# không có một cách kiểm độc lập nào.
+
+
+def test_ham_kiem_checker_dung_bang_CHECKERS_lam_nguon():
+    from app.simulation.semantic_program.obligations import (
+        OBLIGATION_KINDS,
+        has_server_owned_checker,
+    )
+    from app.simulation.semantic_program.postconditions import CHECKERS
+
+    for kind in OBLIGATION_KINDS:
+        assert has_server_owned_checker(kind) == (kind in CHECKERS), (
+            f"{kind}: hỏi 'có checker không' mà trả lời theo 'có trong taxonomy "
+            "không' — hai tập KHÁC NHAU"
+        )
+
+
+def test_co_that_it_nhat_mot_nghia_vu_muc_yeu():
+    """Không còn kind nào thiếu checker ⇒ `verification_gap` thành rỗng nghĩa.
+
+    Không phải lỗi — nhưng phải BIẾT, vì lúc ấy mọi con số "safe serve rate"
+    trong luận văn bằng đúng "executability rate", và câu chuyện hai tỉ lệ tách
+    nhau không còn gì để kể.
+    """
+    from app.simulation.semantic_program.obligations import (
+        OBLIGATION_KINDS,
+        has_server_owned_checker,
+    )
+
+    yeu = [k for k in OBLIGATION_KINDS if not has_server_owned_checker(k)]
+    assert yeu == ["structural_traversal"], (
+        f"tập nghĩa vụ mức yếu đã đổi: {yeu}. Thêm checker là tiến bộ THẬT — "
+        "nhưng phải cập nhật luận văn, đừng để số cũ đứng nguyên."
+    )
+
+
 @pytest.mark.parametrize("cat", sorted(set(SEMANTIC_FAILURE_CATEGORY.values())))
 def test_chi_dung_cac_category_da_khai(cat):
     assert cat in {

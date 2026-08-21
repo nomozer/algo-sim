@@ -24,6 +24,33 @@ from pydantic import BaseModel, ConfigDict
 from .obligations import Obligation
 
 
+def norm_value(v: Any) -> Any:
+    """Chuẩn hoá một giá trị để so khớp được giữa HAI NGUỒN KHÁC KIỂU.
+
+    `analyze` trả dữ liệu đề cho dưới dạng chuỗi (schema JSON của Gemini không
+    có kiểu "số hoặc chuỗi"), còn IR khai `initial_value` đúng kiểu — `12` chứ
+    không phải `"12"`. So thẳng thì P2 trượt sạch dù chương trình hoàn toàn
+    đúng, và trượt CÂM: mã lỗi sẽ nói "đề không cho những giá trị này".
+
+    Chỉ nới đúng một bậc: chuỗi trông như số thì thành số. Không đoán gì thêm —
+    `"true"` vẫn là chuỗi, vì `bool` trong `int` là cái bẫy sẵn có của Python.
+    """
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, str):
+        s = v.strip()
+        try:
+            return int(s)
+        except ValueError:
+            pass
+        try:
+            return float(s)
+        except ValueError:
+            pass
+        return s
+    return v
+
+
 class InputFact(BaseModel):
     """Một mục dữ liệu đề cho, đã được `analyze` trích và server đóng băng.
 

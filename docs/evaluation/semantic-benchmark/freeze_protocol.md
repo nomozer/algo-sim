@@ -61,10 +61,20 @@ khỏi mã đúng như bảng danh tính từng trôi ở `CURRENT_STATE.md`.
 
 ```
 N (SEALED)                    = 40
-Lượt LLM logic / case         ≤ 3      (analyze + classify + semantic_program)
-Trần lượt logic               = 120
-Trần lần thử HTTP             = 160    (chừa cho retry/transient)
+Lượt LLM logic / case         ≤ 4      (analyze + classify + semantic_analyze
+                                        + semantic_program)
+Trần lượt logic               = 160
+Trần lần thử HTTP             = 200    (chừa cho retry/transient)
 ```
+
+> **Vì sao 3 → 4 (sửa 2026-08-21, TRƯỚC khi thấy bất kỳ kết quả nào).** Bản đầu
+> đếm thiếu một lượt: route cần `semantic_analyze` dựng `RequestContract` **và**
+> `semantic_program` viết IR. Gộp hai lượt ấy làm một thì cùng một lượt sinh ra
+> cả nghĩa vụ lẫn chương trình, nên mô hình chỉ việc khai nghĩa vụ nào mà chương
+> trình nó vừa viết đã thoả — C₁a còn đúng hình thức nhưng không kiểm được gì.
+> Đây là sửa **số học của thiết kế**, không phải nới trần vì số xấu: lúc sửa
+> chưa có một case SEALED nào được chạy. Luật "không nâng sau khi thấy số" vẫn
+> nguyên vẹn và từ đây trở đi là tuyệt đối.
 
 Trần HTTP rộng hơn trần logic **chỉ để chịu lỗi tạm thời**, KHÔNG phải để dò
 tìm kết quả tốt hơn.

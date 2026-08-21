@@ -31,8 +31,10 @@ from pydantic import BaseModel, ConfigDict
 #: Cấu trúc duyệt được — miền của các nghĩa vụ đếm/gộp.
 TRAVERSABLE = frozenset({"array", "matrix", "set", "map", "tree_node"})
 
-#: kind → miền kiểu container hợp lệ. Nghĩa vụ nào không có mặt ở đây là
-#: KHÔNG có checker server-owned ⇒ mức yếu (spec §5.4).
+#: kind → miền kiểu container hợp lệ. Bảng này nói nghĩa vụ nào ĐƯỢC KHAI và
+#: hợp với kiểu container nào — nó KHÔNG nói cái nào kiểm chứng được. Câu hỏi
+#: sau do `CHECKERS` (postconditions.py) trả lời; xem `has_server_owned_checker`
+#: để biết vì sao trộn hai câu đó lại từng làm mức yếu chết câm.
 OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     "extremum": frozenset({"array", "matrix"}),
     # Bao trùm `count_matching` cũ: đếm = gộp với phép `count`. Thêm nó làm
@@ -98,9 +100,23 @@ class Obligation(BaseModel):
         return f"{self.kind}({self.container})"
 
 
-def is_supported(kind: str) -> bool:
-    """Nghĩa vụ có checker server-owned không? Không → mức yếu (§5.4)."""
-    return kind in OBLIGATION_KINDS
+def has_server_owned_checker(kind: str) -> bool:
+    """Nghĩa vụ này có checker server-owned không? Không → mức yếu (§5.4).
+
+    TỪNG SAI, và sai câm: bản đầu tên là `is_supported` và thân hàm trả
+    `kind in OBLIGATION_KINDS` — tức hỏi "có trong taxonomy không". Hai tập ấy
+    KHÁC NHAU: `structural_traversal` có trong taxonomy nhưng không có checker.
+    Hệ quả là mức yếu chưa từng kích hoạt lần nào, nên `verification_gap` — thứ
+    mà luận văn nêu như đóng góp — là mã chết trên đường C₁a, và tỉ lệ "phát
+    canonical an toàn" bị thổi lên vì hệ phát kết quả duyệt cây mà không hề có
+    cách kiểm độc lập.
+
+    Bảng `CHECKERS` là nguồn sự thật duy nhất. Import trễ vì `postconditions`
+    import ngược lại `Obligation` ở file này.
+    """
+    from .postconditions import CHECKERS
+
+    return kind in CHECKERS
 
 
 def accepts_container_type(kind: str, container_type: str | None) -> bool:

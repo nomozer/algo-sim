@@ -16,6 +16,7 @@ from app.simulation.completeness_gate import (
     check_requested_combination,
 )
 from app.simulation.computation_gate import check_computation_ownership
+from app.simulation.execution_authority_gate import check_execution_authority
 from app.simulation.scope import DomainScope, Simulatability
 from app.simulation.scope_gate import (
     SCOPE_FAILURE_CATEGORY,
@@ -40,6 +41,8 @@ from app.ai.telemetry import stage_scope
 
 if TYPE_CHECKING:  # tránh import vòng lúc chạy: contract kéo theo cả cây pydantic
     from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.request_contract import RequestContract
+    from app.simulation.semantic_program.route import SemanticRouteOutcome
 from app.simulation.operations import analyze_exposed_operations
 from app.simulation.error_codes import ErrorCode
 
@@ -294,8 +297,67 @@ async def stage_analyze(text: str, api_key: str) -> dict:
     )
 
 
+async def stage_semantic_analyze(
+    text: str, api_key: str
+) -> tuple["RequestContract | None", str | None]:
+    """Đề bài → `RequestContract` ĐÃ ĐÓNG BĂNG (dữ liệu đề cho + nghĩa vụ).
+
+    VÌ SAO TÁCH HẲN LƯỢT NÀY, không gộp vào lượt viết chương trình: gộp thì cùng
+    một lượt sinh ra cả *nghĩa vụ* lẫn *chương trình*, nên mô hình chỉ việc khai
+    nghĩa vụ nào mà chương trình nó vừa viết đã thoả. C₁a khi ấy còn đúng về mặt
+    hình thức nhưng không còn kiểm được gì — nó tự đối chiếu một nguồn với chính
+    nguồn ấy. Hai lượt tách rời tốn thêm một call và đổi lại giữ cho cổng phủ có
+    thật sự là một cổng.
+
+    Server ĐÓNG BĂNG, không chép nguyên lời LLM: `build_request_contract` loại
+    nghĩa vụ ngoài taxonomy và mục dữ liệu thiếu `id` ngay tại biên.
+    """
+    from app.simulation.semantic_program.analyze_contract import (
+        SEMANTIC_ANALYZE_SCHEMA,
+        build_request_contract,
+    )
+
+    user = f'Đề bài:\n"""\n{text}\n"""'
+    with stage_scope("semantic_analyze"):
+        raw = await call_gemini(
+            api_key,
+            load_skill("semantic_analyze"),
+            user,
+            SEMANTIC_ANALYZE_SCHEMA,
+            0.1,
+        )
+
+    try:
+        payload = json.loads(raw)
+    except (json.JSONDecodeError, TypeError) as e:
+        return None, f"SEMANTIC_ANALYZE_INVALID: JSON không parse được ({e})"
+    if not isinstance(payload, dict):
+        return None, (
+            "SEMANTIC_ANALYZE_INVALID: đầu ra không phải một đối tượng JSON "
+            f"(nhận {type(payload).__name__})"
+        )
+    return build_request_contract(payload), None
+
+
+def _facts_for_prompt(contract: "RequestContract") -> str:
+    """Danh mục dữ liệu đề cho, kèm ĐÚNG `id` mà IR phải ghim vào.
+
+    Không có khối này thì `source_fact_id` là bất khả thi chứ không phải khó:
+    lượt viết chương trình chưa từng nhìn thấy hợp đồng, nên không có id nào để
+    trích dẫn, và P2 sẽ từ chối 100% chương trình — kể cả chương trình đúng.
+    """
+    if not contract.input_facts:
+        return "Đề không cho dữ liệu cụ thể nào."
+    dong = [
+        f"- id `{f.fact_id}` — {f.label}"
+        + (f": {', '.join(str(v) for v in f.values)}" if f.values else " (đề chưa cho giá trị)")
+        for f in contract.input_facts
+    ]
+    return "Dữ liệu đề cho (ghim `source_fact_id` về đúng id dưới đây):\n" + "\n".join(dong)
+
+
 async def stage_semantic_program(
-    text: str, analysis: dict, api_key: str
+    text: str, analysis: dict, api_key: str, contract: "RequestContract | None" = None
 ) -> tuple["SemanticProgramSpec | None", str | None]:
     """LLM tổng hợp `SemanticProgramSpec` — ĐÚNG MỘT LƯỢT.
 
@@ -317,6 +379,8 @@ async def stage_semantic_program(
     from app.simulation.semantic_program.validator import validate_semantic_program
 
     user = f'Đề bài:\n"""\n{text}\n"""'
+    if contract is not None:
+        user = f"{user}\n\n{_facts_for_prompt(contract)}"
     with stage_scope("semantic_program"):
         raw = await call_gemini(
             api_key,
@@ -688,7 +752,57 @@ async def classify_with_one_route_recovery(
 
 # ── Orchestrator ──────────────────────────────────────────────
 
-async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=None) -> dict:
+async def _semantic_route_attempt(
+    text: str, analysis: dict, api_key: str, observer
+) -> "SemanticRouteOutcome | None":
+    """Hai lượt LLM + toàn bộ cổng tất định. Trả `None` khi chưa dựng nổi IR.
+
+    Mọi thất bại đều được EMIT chứ không nuốt: benchmark cần biết bài hỏng ở
+    khâu nào, và "hỏng ở khâu nào" mới là dữ liệu, còn "hỏng" thì không.
+    """
+    from app.simulation.semantic_program.route import verify_and_compile
+
+    contract, cerr = await stage_semantic_analyze(text, api_key)
+    if contract is None:
+        _emit(observer, "semantic_route", stage_reached="semantic_analyze",
+              executable=False, servable=False,
+              error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value, reason=cerr)
+        return None
+
+    _emit(observer, "semantic_contract",
+          so_fact=len(contract.input_facts),
+          so_nghia_vu=len(contract.obligations),
+          kinds=sorted({ob.kind for ob in contract.obligations}))
+
+    spec, serr = await stage_semantic_program(text, analysis, api_key, contract)
+    if spec is None:
+        _emit(observer, "semantic_route", stage_reached="semantic_program",
+              executable=False, servable=False,
+              error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value, reason=serr)
+        return None
+
+    outcome = verify_and_compile(contract, spec)
+    _emit(observer, "semantic_route",
+          stage_reached=outcome.stage_reached,
+          executable=outcome.executable,
+          servable=outcome.servable,
+          error_code=outcome.error_code,
+          failure_category=outcome.failure_category,
+          reason=outcome.reason,
+          weak_kinds=outcome.weak_kinds,
+          details=outcome.details,
+          total_steps=outcome.total_steps,
+          frame_count=outcome.frame_count)
+    return outcome
+
+
+async def run_pipeline(
+    text: str,
+    api_key: str,
+    pattern_store=None,
+    observer=None,
+    semantic_route: str = "off",
+) -> dict:
     """Chạy trọn pipeline; trả ValidatedSimulationEnvelope hoặc unsupported.
 
     Ném RuntimeError khi stage simulate thất bại sau retry (API trả 422).
@@ -778,6 +892,34 @@ async def run_pipeline(text: str, api_key: str, pattern_store=None, observer=Non
                 deferred_scope = scope_gate
             else:
                 return _scope_refusal(scope_gate)
+
+        # ─── ROUTE SINH NGỮ NGHĨA ───
+        # Đặt TRƯỚC `check_computation_ownership` là có chủ đích: cổng ấy từ
+        # chối đúng lớp bài `algorithmic` — tức đúng lớp bài route này sinh
+        # được. Chạy sau nó thì route không bao giờ tới lượt.
+        #
+        # R0 không bị nới: `check_execution_authority` vẫn đòi một AUTHORITY
+        # TẤT ĐỊNH sở hữu kết quả; khác biệt duy nhất là hệ nay CÓ một cái
+        # (interpreter), nên câu "algorithmic ⇒ từ chối" không còn đồng nghĩa
+        # với "không ai sở hữu kết quả".
+        if semantic_route != "off":
+            auth = check_execution_authority(analysis, plan, has_interpreter=True)
+            _emit(observer, "gate_checked", gate="execution_authority",
+                  fired=bool(auth),
+                  reason_code=ErrorCode.GATE_RESULT_OWNERSHIP.value if auth else None)
+            if auth is None:
+                outcome = await _semantic_route_attempt(text, analysis, api_key, observer)
+                if outcome is not None and semantic_route == "serve" and outcome.servable:
+                    env = dict(outcome.envelope or {})
+                    env["analysis"] = analysis
+                    env["representation_plan"] = plan
+                    env["source"] = "semantic_program"
+                    _emit(observer, "envelope", status="ok",
+                          simulation_id=env.get("simulation_id"), source="semantic_program")
+                    return env
+                # SHADOW: đã thu đủ bằng chứng qua observer, KHÔNG đổi thứ trả
+                # về. Người học vẫn nhận đúng hành vi cũ cho tới khi cổng phát
+                # được mở (spec §10.2).
 
         gate_reason = check_computation_ownership(analysis, plan)
         _emit(observer, "gate_checked", gate="computation", fired=bool(gate_reason),

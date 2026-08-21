@@ -18,7 +18,11 @@ from typing import Iterable
 from pydantic import BaseModel, Field
 
 from .contract import SemanticProgramSpec
-from .obligations import accepts_container_type, is_supported
+from .obligations import (
+    OBLIGATION_KINDS,
+    accepts_container_type,
+    has_server_owned_checker,
+)
 from .request_contract import RequestContract
 
 
@@ -72,13 +76,19 @@ def check_structural_coverage(
     weak: list[str] = []
 
     for ob in contract.obligations:
-        if not is_supported(ob.kind):
-            # Mức YẾU: hệ chạy được nhưng chưa có cách kiểm chứng độc lập.
-            # KHÔNG phải `capability_gap` — nói nhầm là báo cáo sai năng lực
-            # của chính mình (§5.4).
+        # Kind NGOÀI taxonomy: không có miền kiểu nào để đối chiếu, nên kiểm
+        # cấu trúc là BẤT KHẢ THI chứ không phải đã qua ⇒ mức yếu ngay.
+        # (Đường production không tới đây được — `build_request_contract` lọc
+        # tại biên — nhưng C₁a không được phép dựa vào lời hứa của khâu khác.)
+        if ob.kind not in OBLIGATION_KINDS:
             weak.append(ob.kind)
             continue
 
+        # Kind TRONG taxonomy: THỨ TỰ CÓ Ý NGHĨA — kiểm CẤU TRÚC trước,
+        # kiểm-chứng-được sau. Hỏi ngược lại thì một nghĩa vụ mức yếu gắn nhầm
+        # container (vd `structural_traversal` gắn lên mảng) thoát khỏi mọi
+        # kiểm tra cấu trúc, và một lỗi thật lọt qua dưới danh nghĩa "chưa kiểm
+        # chứng được".
         ctype = declared.get(ob.container)
         if ctype is None:
             missing.append(f"{ob.describe()}: container '{ob.container}' chưa khai báo")
@@ -92,10 +102,20 @@ def check_structural_coverage(
         w = ob.witness
         if not w:
             missing.append(f"{ob.describe()}: thiếu witness")
-        elif w not in declared:
+            continue
+        if w not in declared:
             missing.append(f"{ob.describe()}: witness '{w}' chưa khai báo")
-        elif w not in producers:
+            continue
+        if w not in producers:
             missing.append(f"{ob.describe()}: witness '{w}' không có producer hợp lệ")
+            continue
+
+        # Cấu trúc sạch. Còn lại là một câu hỏi KHÁC HẲN: chạy xong rồi thì có
+        # cách nào kiểm chứng độc lập không? Không → mức YẾU, và mức yếu KHÔNG
+        # phải `capability_gap`: nói "không làm được" về một bài máy làm được là
+        # báo cáo sai năng lực của chính mình (§5.4).
+        if not has_server_owned_checker(ob.kind):
+            weak.append(ob.kind)
 
     if missing:
         return CoverageResult(
@@ -139,7 +159,7 @@ def check_realized_coverage(
         f"{ob.describe()}: witness '{ob.witness}' không được hiện thực hoá trong "
         "lượt chạy (nhánh chết, hoặc không đạt tới)"
         for ob in contract.obligations
-        if is_supported(ob.kind) and ob.witness and ob.witness not in realized
+        if has_server_owned_checker(ob.kind) and ob.witness and ob.witness not in realized
     ]
 
     if missing:

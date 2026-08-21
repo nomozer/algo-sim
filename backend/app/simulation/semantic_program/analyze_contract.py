@@ -23,7 +23,7 @@ from .obligations import (
     SEMANTIC_PRESCRIBED_PROCEDURES,
     Obligation,
 )
-from .request_contract import InputFact, RequestContract
+from .request_contract import InputFact, RequestContract, norm_value
 
 #: Kiểu của một mục dữ liệu đề cho — đóng, và bám hệ kiểu của IR.
 INPUT_FACT_KINDS = ("array", "matrix", "map", "set", "graph", "tree_node",
@@ -43,7 +43,11 @@ SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
                     "id": {"type": "STRING"},
                     "kind": {"type": "STRING", "enum": list(INPUT_FACT_KINDS)},
                     "label": {"type": "STRING"},
-                    "value": {"type": "STRING"},
+                    # MẢNG, không phải một chuỗi. Bản đầu khai STRING đơn và nó
+                    # làm P2 trượt sạch một cách câm: dãy "12, 45, 67" về dưới
+                    # dạng MỘT giá trị, còn `initial_value` trong IR là ba số
+                    # nguyên, nên không giá trị nào "có trong mục dữ liệu" cả.
+                    "value": {"type": "ARRAY", "items": {"type": "STRING"}},
                 },
                 "required": ["id", "kind", "label"],
             },
@@ -80,11 +84,12 @@ _PARAM_KEYS = ("witness", "cmp", "op", "transform", "pred", "item", "order",
 
 
 def _as_values(raw: Any) -> tuple[Any, ...]:
+    """Phẳng hoá + chuẩn hoá kiểu. Xem `norm_value` để biết vì sao cần bậc này."""
     if raw is None:
         return ()
     if isinstance(raw, (list, tuple)):
-        return tuple(raw)
-    return (raw,)
+        return tuple(norm_value(v) for v in raw)
+    return (norm_value(raw),)
 
 
 def build_request_contract(payload: dict[str, Any]) -> RequestContract:

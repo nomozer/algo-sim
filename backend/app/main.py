@@ -130,7 +130,14 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       `stage_semantic_program`. Bề mặt LLM và policy định tuyến đổi ⇒ analysis
 #       cache cũ không còn đáng tin dưới luật mới. Bump CÓ CHỦ ĐÍCH, không phải
 #       "bump cho chắc".
-CACHE_VERSION = "33"
+# "34": 2026-08-21 — route sinh ngữ nghĩa được NỐI vào `run_pipeline` (trước đó
+#       `stage_semantic_program` không có một ai gọi). Thêm `stage_semantic_analyze`
+#       + skill `semantic_analyze.md`, và `semantic_program.md` nay dạy ghim
+#       `source_fact_id`. Bề mặt LLM đổi VÀ chính sách định tuyến đổi — đề
+#       `algorithmic` từng bị `computation_gate` từ chối nay có thể đi tiếp qua
+#       `execution_authority_gate`. Analysis cache cũ sinh dưới luật đó không còn
+#       đáng tin.
+CACHE_VERSION = "34"
 
 
 class InputPayload(BaseModel):

@@ -23,8 +23,8 @@ con trỏ không có ô nào để bám. Cần con trỏ chạy dọc dãy thì 
 
 ## Dữ liệu chỉ đến từ đề bài
 
-`initial_value` chỉ chứa giá trị đề cho. Đề thiếu thì cứ để thiếu — không bịa
-thêm phần tử cho "đủ đẹp".
+`initial_value` chỉ chứa giá trị đề cho, và phải ghim `source_fact_id` về đúng
+mục dữ liệu được liệt kê kèm đề. Đề thiếu thì để thiếu — không bịa cho "đủ đẹp".
 
 ## Thuyết minh
 

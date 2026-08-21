@@ -283,7 +283,11 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # nhắm tới.
     # 33 (2026-08-20): `semantic_program.md` viết lại + `stage_semantic_program`
     # — bề mặt LLM đổi nên analysis cache cũ không còn đáng tin dưới luật mới.
-    assert main_module.CACHE_VERSION == "33"
+    # 34 (2026-08-21): route ngữ nghĩa NỐI vào `run_pipeline` + thêm
+    # `stage_semantic_analyze`. Chính sách định tuyến đổi thật: đề `algorithmic`
+    # trước bị `computation_gate` từ chối, nay qua được `execution_authority_gate`
+    # — envelope/analysis cache dưới luật cũ mang đúng lớp bài bị từ chối oan.
+    assert main_module.CACHE_VERSION == "34"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
