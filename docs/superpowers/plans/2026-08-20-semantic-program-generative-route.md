@@ -228,6 +228,17 @@ Hỏi user: nguồn đề cho SEALED (SGK lớp mấy / đề thi / bài tập),
 }
 ```
 
+> ⚠️ **Khối trên là bản NHÁP của kế hoạch, đã LỖI THỜI ở hai chỗ.** Hợp đồng có
+> thẩm quyền: `docs/evaluation/semantic-benchmark/README.md` +
+> `CUSTODIAN_HANDOFF.md`.
+>
+> 1. `ground_truth.final_state` khoá vào **tên biến** (`max_val`) — bỏ, vì tên
+>    biến do LLM đặt và custodian không được phép đoán. Dạng đúng:
+>    `expected: [{obligation_kind, value[, index]}]`.
+> 2. `expressible_in_ir` **không còn là guard**. Dùng năng lực IR làm điều kiện
+>    loại case là tự chọn population có lợi cho mình; bài thoả rubric mà IR chịu
+>    thua thì **ở lại** và thành `capability_gap`.
+
 - [ ] **Step 5: Viết `seal_benchmark.py`**
 
 ```python

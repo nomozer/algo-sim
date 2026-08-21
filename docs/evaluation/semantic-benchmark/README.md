@@ -109,6 +109,9 @@ là mảng:
     "not_prompt_example": true,
     "expressible_in_ir": true
   },
+  // ↑ BA guard đầu là CỨNG (đều nói về nhiễm dữ liệu).
+  //   `expressible_in_ir` chỉ là GHI CHÚ MÔ TẢ — `false` hợp lệ, và KHÔNG BAO
+  //   GIỜ là lý do loại case. Xem "Năng lực của hệ không phải bộ lọc" bên dưới.
   "prescribed_procedure": null,
   "ground_truth": {
     "kind": "human | independent_solver | property_oracle",
@@ -120,6 +123,24 @@ là mảng:
   "expected_obligations": []
 }
 ```
+
+### Năng lực của hệ KHÔNG phải bộ lọc population
+
+Sửa 2026-08-22, trước khi giao custodian. `expressible_in_ir` từng nằm trong
+nhóm guard cứng và bị bắt phải `true`. Đó là dùng **năng lực hiện tại của IR**
+làm điều kiện loại case — tức lọc bỏ trước đúng những bài đáng lẽ phải ở lại để
+thành `capability_gap` trung thực. Hệ quả: tỉ lệ **A** cao lên một cách giả tạo,
+và cao đúng ở chỗ không ai kiểm được.
+
+Luật đúng, vốn đã có sẵn trong `eligibility_rubric.md`:
+
+| tình huống | xử lý |
+|---|---|
+| Không thoả rubric §7.2 | **ngoài population** — không đưa vào |
+| Thoả rubric, **IR hiện tại chịu thua** | **VẪN Ở TRONG** — kết quả `capability_gap` |
+
+`capability_gap` là **kết quả có giá trị**, không phải sự cố. Sửa IR để cứu một
+case như thế sau khi mở SEALED là **phá con dấu**.
 
 ### `expected` KHÔNG được nhắc tên biến
 

@@ -78,6 +78,40 @@ def test_metadata_guard_false_la_loi(vd):
     assert any("held-out" in x for x in loi)
 
 
+# ── `expressible_in_ir` KHÔNG được là điều kiện loại case ────────
+def test_expressible_in_ir_FALSE_khong_phai_loi(vd):
+    """Sửa 2026-08-22, TRƯỚC khi giao custodian.
+
+    Bắt `expressible_in_ir=true` là dùng NĂNG LỰC HIỆN TẠI CỦA IR làm bộ lọc
+    population — tức loại trước đúng những bài đáng lẽ phải ở lại để thành
+    `capability_gap` trung thực, và làm tỉ lệ A cao lên một cách giả tạo.
+    Rubric §7.2 vốn đã nói ngược lại.
+    """
+    md = {"no_specialized_module": True, "no_target_template": True,
+          "not_prompt_example": True, "expressible_in_ir": False}
+    loi, cb = vd.kiem(_bo(_case(metadata=md)))
+    assert loi == [], f"case dự kiến capability_gap bị loại khỏi tập: {loi}"
+    assert any("VẪN Ở LẠI" in x for x in cb), cb
+
+
+def test_thieu_han_expressible_in_ir_cung_khong_phai_loi(vd):
+    """Nó là MÔ TẢ, không phải guard — vắng mặt không chặn được gì."""
+    md = {"no_specialized_module": True, "no_target_template": True,
+          "not_prompt_example": True}
+    loi, _ = vd.kiem(_bo(_case(metadata=md)))
+    assert loi == [], loi
+
+
+def test_guard_cung_dung_BA_cai_va_khong_cai_nao_ve_nang_luc_IR(vd):
+    assert vd.METADATA_GUARDS == (
+        "no_specialized_module", "no_target_template", "not_prompt_example",
+    ), (
+        "Guard cứng chỉ được nói về NHIỄM DỮ LIỆU. Thêm điều kiện về năng lực "
+        "hệ vào đây là tự chọn population có lợi cho mình."
+    )
+    assert "expressible_in_ir" in vd.METADATA_MO_TA
+
+
 def test_in_scope_false_khong_duoc_nam_trong_tap(vd):
     el = {"discrete": True, "finite_input": True,
           "deterministic_bounded_procedure": True, "in_scope": False}

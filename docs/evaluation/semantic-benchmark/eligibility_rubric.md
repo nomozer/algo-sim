@@ -26,5 +26,17 @@ không cần chạy hệ**.
   benchmark**, kết quả `capability_gap`. Đó là **phát hiện phải báo cáo**, không
   phải sự cố cần vá. Sửa IR để cứu nó là phá con dấu (§7.4 của spec).
 
-`expressible_in_ir` trong metadata của mỗi case là **kết quả AUDIT trước khi
-seal** theo rubric này — **không** phải bộ lọc áp sau khi thấy hệ chạy hỏng.
+`expressible_in_ir` trong metadata của mỗi case là **ghi chú MÔ TẢ**, không phải
+guard. Nó **không bao giờ** được dùng làm điều kiện loại case, dù trước hay sau
+khi thấy hệ chạy.
+
+> **Sửa 2026-08-22.** Trước đó nó bị xếp chung với ba guard held-out và bị bắt
+> phải `true`. Làm thế là dùng năng lực hiện tại của IR để chọn population —
+> lọc bỏ trước đúng những bài đáng lẽ thành `capability_gap`, khiến tỉ lệ
+> executability cao lên một cách giả tạo. Ba guard cứng còn lại
+> (`no_specialized_module`, `no_target_template`, `not_prompt_example`) đều nói
+> về **nhiễm dữ liệu**, và chỉ loại case vì lý do đó mới hợp lệ.
+>
+> Khoá bởi `tests/semantic_program/test_sealed_validator.py`:
+> `test_expressible_in_ir_FALSE_khong_phai_loi` và
+> `test_guard_cung_dung_BA_cai_va_khong_cai_nao_ve_nang_luc_IR`.

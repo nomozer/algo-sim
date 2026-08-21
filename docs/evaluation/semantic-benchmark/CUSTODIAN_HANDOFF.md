@@ -34,17 +34,27 @@ hệ làm được không".
 Từ nguồn thật (sách giáo khoa, đề kiểm tra, tài liệu ôn tập). Ghi lại `source`
 đủ để người khác tra lại được: tên sách + vị trí.
 
-Bốn điều kiện **held-out**, mỗi đề phải thoả cả bốn:
+Ba điều kiện **held-out**, mỗi đề phải thoả cả ba. Cả ba đều nói về **nhiễm dữ
+liệu** — bài đã được hệ phục vụ sẵn, hoặc đã lọt vào prompt:
 
 | guard | nghĩa |
 |---|---|
 | `no_specialized_module` | hệ **chưa có** module chuyên biệt cho dạng bài này |
 | `no_target_template` | không có template/target catalog nào khớp sẵn |
 | `not_prompt_example` | đề **không** xuất hiện trong bất kỳ prompt nào của hệ |
-| `expressible_in_ir` | về nguyên tắc diễn đạt được bằng IR (rời rạc, hữu hạn, có biên) |
 
 Thiếu **một** guard là đề ấy làm hỏng tính held-out của **cả tập**, không chỉ
 của chính nó.
+
+> **KHÔNG có guard nào về năng lực của hệ, và đó là cố ý.** Đừng loại một đề vì
+> nghĩ "cái này chắc hệ chưa làm được". Bài **thoả rubric mà IR hiện tại không
+> diễn đạt được** phải **ở lại trong tập** và trở thành `capability_gap` — đó là
+> một **phát hiện phải báo cáo**, không phải sự cố cần tránh.
+>
+> Lọc những bài ấy ra chính là tự chọn một population có lợi cho hệ, và con số
+> "tỉ lệ sinh được" thu về sẽ cao lên một cách giả tạo. Trường
+> `expressible_in_ir` nếu bạn muốn ghi thì chỉ là **ghi chú mô tả**: `false`
+> hoàn toàn hợp lệ, và bộ kiểm hình dạng sẽ chỉ nhắc lại rằng case đó ở lại.
 
 ### 2. Audit phạm vi
 
@@ -58,6 +68,17 @@ ghi vào `eligibility_audit`:
 
 `in_scope: false` thì **bỏ đề đó ra**, đừng để trong tập rồi trông chờ hệ từ
 chối — như thế là đo lời từ chối chứ không đo năng lực sinh.
+
+**Ranh giới phải phân biệt cho đúng**, vì hai thứ này dễ lẫn:
+
+| tình huống | làm gì |
+|---|---|
+| Không thoả rubric (liên tục, vô hạn, không có thủ tục tất định…) | **ngoài population** — bỏ ra |
+| Thoả rubric **nhưng IR hiện tại chịu thua** | **giữ lại** — kết quả `capability_gap`, và đó là số liệu thật |
+
+Câu hỏi ở bước này là *"đề này có thuộc lớp bài mà luận văn nhận đo không"*,
+**không** phải *"hệ có làm được không"*. Câu thứ hai là thứ benchmark sinh ra để
+trả lời — hỏi trước nó là tự trả lời hộ.
 
 ### 3. Dựng ground truth ĐỘC LẬP
 
@@ -121,9 +142,9 @@ Nó bắt các lỗi khiến lượt chạy live duy nhất bị mất: thiếu 
 trùng, `obligation_kind` sai chính tả, guard bị bỏ quên, dùng nhầm dạng
 `{tên_biến: giá_trị}` cũ.
 
-Nó **không** kiểm đề có đúng phạm vi không, và **không** kiểm đáp án có đúng
-không. Hai việc đó là của bạn — nếu máy kiểm được đáp án thì đáp án đã không còn
-độc lập.
+Nó **không** kiểm đề có đúng phạm vi không, **không** kiểm đáp án có đúng không,
+và **không** loại case vì IR chịu thua. Ba việc đó lần lượt là: của bạn · của
+bạn · và của chính benchmark.
 
 Sửa hết lỗi rồi mới sang bước 5.
 

@@ -616,9 +616,19 @@ kiểm làm thước đo chính nó thì mọi con số thu được đều rỗ
 no_specialized_module = true     (không có module chuyên biệt phục vụ bài này)
 no_target_template   = true      (không có template dựng sẵn theo bài)
 not_prompt_example   = true      (không xuất hiện trong prompt/skill nào)
-expressible_in_ir    = true      (kết quả AUDIT TRƯỚC KHI SEAL theo rubric §7.2 —
-                                  KHÔNG phải bộ lọc áp sau khi thấy hệ chạy hỏng)
 ```
+
+Cả ba đều nói về **nhiễm dữ liệu**, và chỉ nhiễm dữ liệu mới là lý do hợp lệ để
+loại một case.
+
+> **SỬA 2026-08-22 (trước khi seal).** Bản đầu có guard thứ tư
+> `expressible_in_ir = true`. Nó bị **gỡ khỏi nhóm guard** và hạ xuống thành ghi
+> chú mô tả: bắt nó phải `true` là dùng **năng lực hiện tại của IR** làm bộ lọc
+> population, tức loại trước đúng những bài đáng lẽ ở lại để thành
+> `capability_gap` trung thực — và làm tỉ lệ executability cao lên một cách giả
+> tạo. Rubric §7.2 vốn đã nói ngược lại: *thoả rubric nhưng IR không diễn đạt
+> được ⇒ **VẪN Ở TRONG** benchmark*. Đây là sửa **phương pháp benchmark**, không
+> đụng hệ sinh mô phỏng.
 
 ### 7.2 Eligibility rubric — định nghĩa population TRƯỚC, độc lập với cài đặt
 

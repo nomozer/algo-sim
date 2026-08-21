@@ -12,6 +12,9 @@ NÓ KHÔNG PHẢI, và không được dùng như, một bộ chấm:
   người, và người phải chịu trách nhiệm bằng chữ ký của mình.
 - Không kiểm ground truth có ĐÚNG không — nếu máy kiểm được thì nó đã không còn
   là ground truth độc lập nữa.
+- **Không** dùng năng lực hiện tại của IR để loại case. Bài thoả rubric mà IR
+  không diễn đạt được thì **ở lại** và thành `capability_gap` — đó là phát hiện
+  phải báo cáo. Lọc nó ra là tự nâng tỉ lệ A của mình.
 
 Nó chỉ trả lời một câu: **runner có đọc được tập này không.**
 
@@ -27,13 +30,25 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "backend"))
 
-#: Guard mà `EVALUATION_CANDIDATE` đòi custodian tự xác nhận (spec §7.2).
+#: Guard CỨNG — cả ba đều nói về NHIỄM DỮ LIỆU: bài đã được hệ phục vụ sẵn,
+#: hoặc đã lọt vào prompt. Thiếu một cái là tập mất tính held-out.
 METADATA_GUARDS = (
     "no_specialized_module",
     "no_target_template",
     "not_prompt_example",
-    "expressible_in_ir",
 )
+
+#: MÔ TẢ, không phải guard — và đây là một sửa có chủ đích (2026-08-22).
+#:
+#: `expressible_in_ir` từng nằm trong nhóm trên và bị bắt phải `true`. Làm thế là
+#: dùng NĂNG LỰC HIỆN TẠI CỦA IR làm điều kiện loại case — tức lọc bỏ trước đúng
+#: những bài đáng lẽ phải ở lại để thành `capability_gap` trung thực, và làm tỉ
+#: lệ A cao lên một cách giả tạo. Rubric §7.2 vốn đã nói ngược lại: *thoả rubric
+#: nhưng IR không diễn đạt được ⇒ VẪN Ở TRONG benchmark*.
+#:
+#: Nay nó chỉ là ghi chú của custodian. `false` KHÔNG phải lỗi, và KHÔNG BAO GIỜ
+#: là lý do bỏ một case ra khỏi tập.
+METADATA_MO_TA = ("expressible_in_ir",)
 
 ELIGIBILITY_CO = (
     "discrete",
@@ -108,7 +123,7 @@ def kiem(payload: dict) -> tuple[list[str], list[str]]:
         # ── metadata guard: thiếu MỘT cái là benchmark mất tính held-out ──
         md = c.get("metadata")
         if not isinstance(md, dict):
-            _loi(loi, cid, "thiếu `metadata` (4 guard held-out)")
+            _loi(loi, cid, "thiếu `metadata` (3 guard held-out)")
         else:
             for g in METADATA_GUARDS:
                 if g not in md:
@@ -116,6 +131,14 @@ def kiem(payload: dict) -> tuple[list[str], list[str]]:
                 elif md[g] is not True:
                     _loi(loi, cid, f"metadata `{g}` = {md[g]!r}, phải là true — "
                                    "case này làm hỏng tính held-out")
+            # MÔ TẢ, không phải guard. `false` là hợp lệ và ĐÁNG GIÁ: nó báo
+            # trước một `capability_gap` mà benchmark sẽ đo được thật.
+            if md.get("expressible_in_ir") is False:
+                canh_bao.append(
+                    f"[{cid}] `expressible_in_ir: false` — case này VẪN Ở LẠI "
+                    "trong tập và dự kiến cho `capability_gap`. Đó là phát hiện "
+                    "phải báo cáo, không phải lý do loại case (rubric §7.2)."
+                )
 
         pp = c.get("prescribed_procedure")
         if pp is not None and pp not in SEMANTIC_PRESCRIBED_PROCEDURES:
