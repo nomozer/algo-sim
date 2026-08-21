@@ -176,16 +176,25 @@ hiện nó SKIP vì `sealed/cases.json` chưa tồn tại, và sẽ tự bật k
 ## Ngân sách Task 12 — đã duyệt, không nâng sau khi thấy số
 
 ```
-N = 40  ·  trần logic 160  ·  trần HTTP 200
+N = 40  ·  trần logic 440  ·  trần HTTP 520
 ```
 
 Đường **hạnh phúc** là 4 lượt/case: `analyze` · `classify` · `semantic_analyze` ·
 `semantic_program`. Nhưng 4 **không phải upper bound** — bound thật dẫn từ call
-graph là **11** (`freeze_protocol.md §2`). Hệ quả phải biết trước khi chạy: 4×40
-= 160 đúng bằng trần, nên **retry ở bất kỳ đâu cũng làm lượt chạy dừng trước case
-thứ 40**, và báo cáo sẽ ghi `evaluation_complete: false`.
+graph là **11** (`freeze_protocol.md §2`), và `440 = 11 × 40`.
 
-Cả hai trục nay được **cưỡng chế** trong `ApiBudget`, không chỉ đếm.
+`440` không cho phép hệ "thử 11 lần cho đẹp": mỗi stage vẫn giữ retry bound
+riêng đã có sẵn trong production code. Nó chỉ là tổng trần của những đường
+retry/reclassify **đã tồn tại từ trước evaluation**.
+
+Trần cũ `160` bị bỏ vì nó **xung đột với protocol**: 4×40 = 160 đúng bằng trần,
+nên một lần retry duy nhất cũng đủ làm evaluation không đạt `N=40` — trong khi
+`N=40` là mục tiêu nghiên cứu đã khoá. Ngân sách phải phủ worst case.
+
+Cả hai trục được **cưỡng chế** trong `ApiBudget`, không chỉ đếm. Vượt ⇒
+`BUDGET_EXHAUSTED`, `evaluation_complete: false`, **không chạy bù**.
+
+> Chốt 2026-08-22, trước khi niêm phong. **Không nâng sau khi SEALED được mở.**
 
 ## Các con số phải báo — và đừng gộp chúng
 

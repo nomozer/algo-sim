@@ -55,10 +55,24 @@ FINGERPRINT = BENCH / "sealed" / "FINGERPRINT.txt"
 
 sys.path.insert(0, str(BACKEND))
 
-#: Ngân sách đã duyệt 2026-08-21. Sửa hai số này SAU khi thấy kết quả là mua
-#: thêm lượt cho tới khi số đẹp — xem `freeze_protocol.md §2`.
-TRAN_LOGIC = 160
-TRAN_HTTP = 200
+#: NGÂN SÁCH CUỐI CÙNG, chốt 2026-08-22 TRƯỚC khi custodian niêm phong và
+#: TRƯỚC khi nhìn một case SEALED nào. Sửa hai số này SAU khi thấy kết quả là
+#: mua thêm lượt cho tới khi số đẹp — xem `freeze_protocol.md §2`.
+#:
+#: 440 = 11 × 40, tức ĐÚNG upper bound của call graph nhân N_planned. Nó KHÔNG
+#: có nghĩa hệ được phép "thử 11 lần cho đẹp": mỗi stage vẫn giữ nguyên retry
+#: bound riêng đã định nghĩa trong production code từ trước evaluation. Đây chỉ
+#: là tổng trần của những đường retry/reclassify ĐÃ TỒN TẠI.
+#:
+#: Trần cũ 160 bị bỏ vì nó XUNG ĐỘT với protocol chứ không chỉ tiết kiệm quota:
+#: 4 × 40 = 160 đúng bằng trần, nên một lần retry duy nhất ở bất kỳ đâu cũng đủ
+#: làm evaluation không hoàn tất — trong khi N=40 đã là mục tiêu nghiên cứu khoá.
+TRAN_LOGIC = 440
+
+#: ~18% headroom trên logical worst-case, để chịu transient HTTP (429/5xx).
+#: KHÔNG phải chỗ để dò tìm kết quả tốt hơn. Vượt ⇒ `BUDGET_EXHAUSTED`,
+#: `evaluation_complete=false`, và KHÔNG chạy bù.
+TRAN_HTTP = 520
 
 #: Đường HẠNH PHÚC: analyze + classify + semantic_analyze + semantic_program.
 #: Dưới ngần này thì một case chắc chắn không chạy trọn.
@@ -75,10 +89,8 @@ LUOT_TOI_THIEU_MOI_CASE = 4
 #:                                                              ─────────
 #:                                                              tối đa 11
 #:
-#: Hệ quả phải nói thẳng: trần 160 chỉ đủ cho 40 case Ở ĐÚNG ĐƯỜNG HẠNH PHÚC
-#: (4 × 40 = 160), không còn một slot dự phòng. Retry ở bất kỳ đâu ⇒ lượt chạy
-#: dừng trước case thứ 40 và `evaluation_complete` = false. Đó là hành vi ĐÚNG
-#: theo ngân sách đã duyệt, không phải lỗi — nhưng phải biết trước khi chạy.
+#: Con số này là CƠ SỞ của `TRAN_LOGIC`: 11 × 40 = 440. Ngân sách được dẫn xuất
+#: từ call graph, không chọn bằng cảm tính.
 LUOT_TOI_DA_MOI_CASE = 11
 
 

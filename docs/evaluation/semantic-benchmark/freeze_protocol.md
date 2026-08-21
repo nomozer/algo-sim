@@ -61,9 +61,21 @@ khỏi mã đúng như bảng danh tính từng trôi ở `CURRENT_STATE.md`.
 
 ```
 N (SEALED)                    = 40
-Trần lượt logic               = 160    (CƯỠNG CHẾ, không chỉ đếm)
-Trần lần thử HTTP             = 200    (chừa cho retry/transient)
+Trần lượt logic               = 440    (= 11 × 40, CƯỠNG CHẾ không chỉ đếm)
+Trần lần thử HTTP             = 520    (~18% headroom cho transient)
 ```
+
+> **Chốt 2026-08-22, TRƯỚC khi custodian niêm phong và trước khi nhìn một case
+> SEALED nào.** Hai trần này **không được nâng sau khi SEALED được mở**.
+
+`440` **không** có nghĩa hệ được phép "thử 11 lần cho đẹp". Mỗi stage vẫn giữ
+nguyên retry bound riêng đã định nghĩa trong production code từ trước
+evaluation; 440 chỉ là **tổng trần** của những đường retry/reclassify đã tồn
+tại, nhân với `N_planned`.
+
+`520` cho ~18% headroom trên logical worst-case, **chỉ để chịu transient
+HTTP** (429/5xx). Vượt vẫn là `BUDGET_EXHAUSTED`, `evaluation_complete=false`,
+và **không chạy bù**.
 
 ### Upper bound thật — dẫn từ call graph, không ước lượng
 
@@ -79,12 +91,14 @@ stage_simulate*          for _attempt in range(3)       → tối đa 3
 ```
 
 Đường **hạnh phúc** là 4 (`analyze` + `classify` + `semantic_analyze` +
-`semantic_program`). Bốn **không phải bound**.
+`semantic_program`). Bốn **không phải bound** — 11 mới là.
 
-> **Hệ quả phải biết trước khi chạy.** 4 × 40 = 160 = đúng trần, không còn một
-> slot dự phòng. Retry ở bất kỳ đâu ⇒ lượt chạy dừng trước case thứ 40, báo cáo
-> ghi `evaluation_complete: false` kèm cảnh báo, và A/B **không được công bố như
-> kết quả chính**. Đó là hành vi ĐÚNG theo ngân sách đã duyệt — không phải lỗi.
+> **Vì sao trần cũ 160 bị bỏ.** 4 × 40 = 160 đúng bằng trần, nên **một lần retry
+> duy nhất ở bất kỳ đâu** cũng đủ làm lượt chạy dừng trước case thứ 40. Khi
+> `N=40` đã là mục tiêu nghiên cứu khoá thì một ngân sách như thế **xung đột với
+> protocol**, chứ không còn đơn thuần là tiết kiệm quota. Trần phải phủ **worst
+> case**, không phải best case. Sửa ngày 2026-08-22, trước khi thấy bất kỳ kết
+> quả SEALED nào — hợp lệ về phương pháp, và là lần cuối.
 
 Cưỡng chế nằm ở `ApiBudget(max_api_calls=…, max_logical_calls=…)`. Trước
 2026-08-21 chỉ có trần HTTP, nên số lượt logic có thể vượt xa ngân sách mà không

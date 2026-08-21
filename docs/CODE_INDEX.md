@@ -2487,7 +2487,7 @@ thì C₁a tự đối chiếu một nguồn với chính nó.
 
 Runner Task 12. Kiểm candidate + vân tay con dấu **trước** khi mở SEALED, chạy
 `run_pipeline(semantic_route="shadow")` nên MỘT lượt đo được cả hai route. Ngân
-sách 160 logic / 200 HTTP cưỡng chế qua `gemini.ApiBudget` (dùng lại, không viết
+sách 440 logic / 520 HTTP cưỡng chế qua `gemini.ApiBudget` (dùng lại, không viết
 bộ đếm mới). Viết **trước** khi thấy SEALED có chủ đích; phần chấm/tổng kết được
 khoá offline bởi `tests/semantic_program/test_sealed_runner.py` vì chạy lại là
 mất tính held-out.

@@ -324,7 +324,8 @@ def test_phan_bo_that_bai_gom_theo_ma_loi(rn):
 def test_bao_cao_ghi_lai_ngan_sach_da_dung(rn):
     bc = rn._tong_ket([_r("c1", executable=True, servable=True)], 1, {}, "v",
                       _NganSach(), None)
-    assert bc["ngan_sach"]["tran_logic"] == 160
+    assert bc["ngan_sach"]["tran_logic"] == 440
+    assert bc["ngan_sach"]["tran_http"] == 520
     assert bc["ngan_sach"]["logic_da_dung"] == 40
 
 
@@ -405,15 +406,35 @@ def test_thieu_ALLOW_LIVE_AI_thi_khong_tieu_quota(rn, monkeypatch):
 
 
 def test_ngan_sach_khop_ban_da_duyet(rn):
-    assert (rn.TRAN_LOGIC, rn.TRAN_HTTP) == (160, 200)
+    """Ngân sách CUỐI, chốt 2026-08-22 trước khi niêm phong SEALED."""
+    assert (rn.TRAN_LOGIC, rn.TRAN_HTTP) == (440, 520)
     assert rn.LUOT_TOI_THIEU_MOI_CASE == 4
 
 
 def test_upper_bound_duoc_dan_xuat_khong_phai_uoc_luong(rn):
     """Điểm 2. Upper bound thật đọc từ call graph là 11, KHÔNG phải 4.
 
-    Trần 160 chỉ đủ cho 40 case ở đúng đường hạnh phúc (4 × 40). Con số 11 phải
-    có mặt trong mã để lần sau không ai lại tưởng 4 là bound.
+    Con số 11 phải có mặt trong mã để lần sau không ai lại tưởng 4 là bound.
     """
     assert rn.LUOT_TOI_DA_MOI_CASE == 11
     assert rn.LUOT_TOI_DA_MOI_CASE > rn.LUOT_TOI_THIEU_MOI_CASE
+
+
+def test_tran_logic_du_cho_N40_o_worst_case(rn):
+    """Ngân sách KHÔNG được xung đột với mục tiêu nghiên cứu đã khoá.
+
+    Trần cũ 160 = 4 × 40 đúng bằng đường hạnh phúc, nên một lần retry duy nhất
+    ở bất kỳ đâu cũng đủ làm `evaluation_complete=false` — tức ngân sách tự nó
+    ngăn benchmark đạt N=40. Trần phải phủ được WORST case, không phải best.
+    """
+    assert rn.TRAN_LOGIC >= rn.LUOT_TOI_DA_MOI_CASE * 40, (
+        f"{rn.TRAN_LOGIC} < {rn.LUOT_TOI_DA_MOI_CASE} × 40 — ngân sách có thể "
+        "chặn evaluation trước khi đủ 40 case"
+    )
+
+
+def test_tran_HTTP_rong_hon_tran_logic_de_chiu_transient(rn):
+    """Rộng hơn CHỈ để chịu 429/5xx, không phải để dò tìm kết quả tốt hơn."""
+    assert rn.TRAN_HTTP > rn.TRAN_LOGIC
+    headroom = (rn.TRAN_HTTP - rn.TRAN_LOGIC) / rn.TRAN_LOGIC
+    assert 0.10 <= headroom <= 0.30, f"headroom {headroom:.0%} ngoài khoảng đã chốt"
