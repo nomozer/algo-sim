@@ -11,10 +11,19 @@ commit kế tiếp. Một hash trả lời *"đo bản nào"*, hash kia trả l�
 | 2026-08-21, bản đầu | `9898d13` | `5506027` |
 | 2026-08-21, sau khi nối route | `c6c5c28` | `901182c` |
 | 2026-08-21, sau sáu điểm sửa phương pháp đo | `89fee9b` | `b141788` |
-| **2026-08-22, ngân sách cuối — BẢN ĐEM ĐO** | **`36bae92`** | `2fa3e88` |
+| 2026-08-22, ngân sách cuối | `36bae92` | `2fa3e88` |
+| **2026-08-22, sau pilot — BẢN ĐEM ĐO** | **`4e13e2b`** | (commit kế tiếp) |
 
-> Dòng cuối là **bản được đem đánh giá**. Từ đây **không sửa hệ nữa** — pha
-> pre-SEALED correction đã đóng.
+> **`36bae92` nay là SUPERSEDED.** Nó được đóng băng trước khi route từng chạy
+> với API thật; bốn lượt pilot cho thấy nó **chưa gọi nổi API một lần nào** (schema
+> có `$ref` treo ⇒ HTTP 400 toàn bộ). Đo trên nó là đo một hệ không chạy.
+>
+> Bản đem đo nay là dòng cuối, sau khi sửa: schema/thẻ văn phạm, thứ tự shadow,
+> danh xưng chung giữa hai lượt LLM, và **hai lỗi fail-closed của C₂**. Chi tiết
+> ở `pilot-results-4/PHAT_HIEN.md`.
+>
+> Từ đây **không sửa hệ nữa**, và **không chạy lại 40 case pilot** — tập đó đã bị
+> đốt qua bốn lượt và chỉ còn giá trị như nhật ký kỹ thuật.
 
 Mỗi lần, hash bên trái là **cha trực tiếp** của hash bên phải
 (`git rev-parse <phải>^` → `<trái>`), và manifest được sinh **trên cây sạch**
