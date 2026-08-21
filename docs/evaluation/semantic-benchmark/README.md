@@ -11,6 +11,10 @@ commit kế tiếp. Một hash trả lời *"đo bản nào"*, hash kia trả l�
 | 2026-08-21, bản đầu | `9898d13` | `5506027` |
 | 2026-08-21, sau khi nối route | `c6c5c28` | `901182c` |
 | 2026-08-21, sau sáu điểm sửa phương pháp đo | `89fee9b` | `b141788` |
+| **2026-08-22, ngân sách cuối — BẢN ĐEM ĐO** | **`36bae92`** | (commit kế tiếp) |
+
+> Dòng cuối là **bản được đem đánh giá**. Từ đây **không sửa hệ nữa** — pha
+> pre-SEALED correction đã đóng.
 
 Mỗi lần, hash bên trái là **cha trực tiếp** của hash bên phải
 (`git rev-parse <phải>^` → `<trái>`), và manifest được sinh **trên cây sạch**
