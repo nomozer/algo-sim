@@ -2473,6 +2473,15 @@ hẳn `analyze.md`** để đề đi đường module không phải trả tiền
 vụ. Không được gộp vào lượt viết IR: một lượt sinh cả nghĩa vụ lẫn chương trình
 thì C₁a tự đối chiếu một nguồn với chính nó.
 
+### `backend/scripts/run_sealed_evaluation.py` · **live**, chạy ĐÚNG MỘT LẦN
+
+Runner Task 12. Kiểm candidate + vân tay con dấu **trước** khi mở SEALED, chạy
+`run_pipeline(semantic_route="shadow")` nên MỘT lượt đo được cả hai route, và
+báo A · B · D1 · D2 riêng rẽ. Ngân sách 160 logic / 200 HTTP cưỡng chế qua
+`gemini.ApiBudget` (dùng lại, không viết bộ đếm mới). Viết **trước** khi thấy
+SEALED có chủ đích; phần chấm/tổng kết được khoá offline bởi
+`tests/semantic_program/test_sealed_runner.py` vì chạy lại là mất tính held-out.
+
 ### `backend/app/simulation/execution_authority_gate.py` · offline
 
 Thay khái niệm của `computation_gate.py` (file cũ GIỮ NGUYÊN cho đường module).

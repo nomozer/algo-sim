@@ -64,6 +64,10 @@ class SemanticRouteOutcome(BaseModel):
     exec_status: str | None = None
     total_steps: int | None = None
     frame_count: int | None = None
+    #: Trạng thái bộ nhớ CUỐI do interpreter sinh. Đây là thứ duy nhất được đem
+    #: so với ground truth độc lập — so với `envelope` là so với thứ đã qua tay
+    #: adapter thị giác.
+    final_memory: dict[str, Any] | None = None
     envelope: dict[str, Any] | None = None
 
 
@@ -166,6 +170,7 @@ def verify_and_compile(
         "executable": True,
         "exec_status": exec_res.status,
         "total_steps": exec_res.total_steps,
+        "final_memory": dict(exec_res.final_memory),
         "weak": list(c1a.weak_kinds),
     }
 
@@ -232,6 +237,7 @@ def verify_and_compile(
             exec_status=exec_res.status,
             total_steps=exec_res.total_steps,
             frame_count=len(envelope["config"]["frames"]),
+            final_memory=dict(exec_res.final_memory),
             envelope=envelope,
         )
 
@@ -242,5 +248,6 @@ def verify_and_compile(
         exec_status=exec_res.status,
         total_steps=exec_res.total_steps,
         frame_count=len(envelope["config"]["frames"]),
+        final_memory=dict(exec_res.final_memory),
         envelope=envelope,
     )

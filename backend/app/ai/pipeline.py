@@ -792,7 +792,11 @@ async def _semantic_route_attempt(
           weak_kinds=outcome.weak_kinds,
           details=outcome.details,
           total_steps=outcome.total_steps,
-          frame_count=outcome.frame_count)
+          frame_count=outcome.frame_count,
+          # Trạng thái cuối là thứ DUY NHẤT đem so được với ground truth độc
+          # lập. Thiếu nó ở đây thì benchmark chấm được đúng 0 case — và chấm
+          # sai theo hướng im lặng, sau khi đã tiêu hết quota.
+          final_memory=outcome.final_memory)
     return outcome
 
 

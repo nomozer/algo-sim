@@ -108,6 +108,10 @@ def test_contract_hop_le_va_chuong_trinh_dung_thi_phat_duoc():
     )
     assert kq.stage_reached == "served"
     assert kq.frame_count and kq.frame_count > 1
+    # Trạng thái cuối phải đi kèm MỌI phán quyết đã chạy được — nó là thứ duy
+    # nhất đem so được với ground truth. Rơi mất nó thì benchmark chấm 0/40 mà
+    # vẫn xanh lè, sau khi đã tiêu hết quota.
+    assert kq.final_memory and kq.final_memory.get("max_val") == 89
 
 
 def test_thieu_provenance_thi_P2_chan_truoc_khi_chay():
@@ -165,6 +169,7 @@ def test_nghia_vu_khong_co_checker_la_verification_gap_chu_khong_phai_capability
     assert kq.error_code == "semantic_verification_unavailable"
     assert kq.failure_category == "verification_gap"
     assert kq.envelope is not None, "mức yếu vẫn dựng được mô phỏng, chỉ không phát"
+    assert kq.final_memory is not None, "đã chạy xong thì phải có trạng thái cuối"
 
 
 # ── 2. Qua production orchestration ──────────────────────────────
