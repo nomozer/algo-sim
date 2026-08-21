@@ -2,23 +2,29 @@
 
 ## Hai hash, đọc kỹ kẻo hiểu nhầm
 
-```
-evaluation candidate source commit  = 9898d13
-freeze / manifest commit            = 5506027
-```
+Manifest luôn ghi **commit của bản được đo**; commit *chứa* manifest thì là
+commit kế tiếp. Một hash trả lời *"đo bản nào"*, hash kia trả lời *"bản ghi nằm
+ở đâu"* — đọc lẫn là tưởng manifest trỏ nhầm.
 
-`EVALUATION_CANDIDATE.json` ghi `commit = 9898d13`, **không phải** `5506027`.
-Đó là **đúng**, không phải trỏ nhầm:
+| lần đóng băng | candidate source commit (ghi trong manifest) | freeze/manifest commit |
+|---|---|---|
+| 2026-08-21, bản đầu | `9898d13` | `5506027` |
+| 2026-08-21, sau khi nối route | `c6c5c28` | `901182c` |
 
-- `9898d13` là trạng thái mã **được đem đo** — taxonomy, tập primitive, schema,
-  prompt đều ở đúng bản này. Manifest được sinh **trên cây sạch** tại đó
-  (`cay_lam_viec_sach: true`).
-- `5506027` chỉ **chứa** manifest ấy cộng test khoá nó. Nó là cha–con trực tiếp
-  của `9898d13` (`git rev-parse 5506027^` → `9898d13`), và **không đụng** một
-  dòng nào của hệ được đo.
+Cả hai lần, hash bên trái là **cha trực tiếp** của hash bên phải
+(`git rev-parse <phải>^` → `<trái>`), và manifest được sinh **trên cây sạch**
+(`cay_lam_viec_sach: true`). Commit bên phải chỉ thêm manifest cùng test khoá
+nó — **không đụng** một dòng nào của hệ được đo.
 
-Nói cách khác: một hash trả lời *"đo bản nào"*, hash kia trả lời *"bản ghi nằm ở
-đâu"*. Kiểm bất cứ lúc nào bằng:
+**Vì sao có lần thứ hai.** Ngày 2026-08-21 phát hiện `stage_semantic_program`
+**không có một ai gọi**: route ngữ nghĩa chưa bao giờ đi qua `run_pipeline`, nên
+bản `9898d13` đo được các *mảnh* chứ không đo được *đường đi*. Nối xong,
+`CACHE_VERSION` 33 → 34. Taxonomy, tập primitive, schema và DEV giữ **nguyên
+hash** qua cả hai lần — thay đổi nằm ở chỗ nối dây, không ở hợp đồng. Đây là
+thay đổi pha DEV và xảy ra **trước khi SEALED được niêm phong**, nên luật con
+dấu không bị đụng tới.
+
+Kiểm bất cứ lúc nào bằng:
 
 ```bash
 cd backend && .venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify
@@ -114,6 +120,24 @@ Hai điều bắt buộc:
 `prescribed_procedure`: `null` khi đề **không ép** thủ tục. Có ép thì dùng giá
 trị trong `SEMANTIC_PRESCRIBED_PROCEDURES`, và oracle sẽ so **canonical
 mechanism events** chứ không so raw trace 1:1 (spec §5.5).
+
+## Chạy Task 12
+
+Sau khi custodian giao đường dẫn + fingerprint, **một lệnh, một lần**:
+
+```bash
+cd backend && ALLOW_LIVE_AI=1 PYTHONIOENCODING=utf-8 \
+  .venv/Scripts/python.exe scripts/run_sealed_evaluation.py \
+  --out-dir ../docs/evaluation/semantic-benchmark/results
+```
+
+Runner tự từ chối chạy nếu candidate đã lệch, nếu chưa có vân tay, hoặc nếu
+`cases.json` bị sửa sau khi niêm phong. Nó chạy ở chế độ **shadow** nên một lượt
+đo được cả hai route và người học không nhận đầu ra khác đi.
+
+Runner được viết **trước khi thấy SEALED**, và phần chấm/tổng kết của nó bị khoá
+offline bởi `tests/semantic_program/test_sealed_runner.py` — vì nó chỉ được chạy
+một lần, sai từ lượt đầu là không cứu được.
 
 ## Niêm phong
 
