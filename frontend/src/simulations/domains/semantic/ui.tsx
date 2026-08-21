@@ -107,6 +107,75 @@ function Bang({ o, sang }: { o: SemanticObject; sang: boolean }) {
   );
 }
 
+/**
+ * Đồ thị — LAYOUT TẤT ĐỊNH, không physics, không camera, không editor.
+ *
+ * Đỉnh xếp đều trên một đường tròn theo THỨ TỰ ĐÃ SẮP của id. Chọn vòng tròn vì
+ * nó tất định tuyệt đối: cùng một đồ thị luôn cho cùng một hình, nên ảnh chụp so
+ * được giữa các lượt và test hình học không đỏ ngẫu nhiên. Force-directed đẹp
+ * hơn nhưng phụ thuộc trạng thái khởi tạo — mỗi lần chạy một khác.
+ *
+ * `visited`/`current` đến TỪ BACKEND (đọc `memory_snapshot`). Component này
+ * không biết BFS là gì và không được biết.
+ */
+function DoThi({ o, sang }: { o: SemanticObject; sang: boolean }) {
+  const nodes = o.nodes ?? [];
+  if (nodes.length === 0) return null;
+
+  const R = 58;
+  const PAD = 22;
+  const size = (R + PAD) * 2;
+  const tam = size / 2;
+  const viTri = new Map<string, { x: number; y: number }>();
+  nodes.forEach((n, i) => {
+    // Bắt đầu từ 12 giờ (−π/2) để đồ thị nhỏ trông cân, và để thứ tự đọc khớp
+    // thứ tự id — học sinh dò được đỉnh nào là đỉnh nào.
+    const goc = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
+    viTri.set(n, { x: tam + R * Math.cos(goc), y: tam + R * Math.sin(goc) });
+  });
+
+  const daTham = new Set(o.visited ?? []);
+  const dangXet = o.current ?? null;
+
+  return (
+    <div className="sem-block">
+      <div className="sem-label">{nhan(o)}</div>
+      <svg
+        className="sem-graph"
+        data-hot={sang || undefined}
+        viewBox={`0 0 ${size} ${size}`}
+        width={size}
+        height={size}
+        role="img"
+        aria-label={`Đồ thị ${nodes.length} đỉnh`}
+      >
+        {(o.edges ?? []).map(([u, v]) => {
+          const a = viTri.get(u);
+          const b = viTri.get(v);
+          if (!a || !b) return null;
+          return (
+            <line
+              key={`${u}-${v}`}
+              className="sem-graph-edge"
+              x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+            />
+          );
+        })}
+        {nodes.map((n) => {
+          const p = viTri.get(n)!;
+          const trangThai = n === dangXet ? "current" : daTham.has(n) ? "visited" : "idle";
+          return (
+            <g key={n} className="sem-graph-node" data-state={trangThai}>
+              <circle cx={p.x} cy={p.y} r={13} />
+              <text x={p.x} y={p.y + 4} textAnchor="middle">{n}</text>
+            </g>
+          );
+        })}
+      </svg>
+    </div>
+  );
+}
+
 /** Con trỏ CHỈ vẽ khi neo phân giải được — không có ô thì không vẽ (#34). */
 function ConTro({ o }: { o: SemanticObject }) {
   if (typeof o.target_index !== "number") return null;
@@ -127,6 +196,8 @@ function VeMot({ o, sang }: { o: SemanticObject; sang: boolean }) {
       return <NganXep o={o} sang={sang} />;
     case "bar_chart":
       return <CotBieuDo o={o} sang={sang} />;
+    case "graph_view":
+      return <DoThi o={o} sang={sang} />;
     case "table_grid":
       return <Bang o={o} sang={sang} />;
     case "value_box":

@@ -53,6 +53,7 @@ class VisualTraceAdapter:
             "tree_element",
             "bit_register",
             "bar_chart",
+            "graph_view",
         }
     )
 
@@ -90,6 +91,28 @@ class VisualTraceAdapter:
                 obj_dict["capacity"] = max(8, len(obj_dict["items"]) + 2)
             elif cb.primitive == "table_grid":
                 obj_dict["items"] = val if isinstance(val, list) else []
+            elif cb.primitive == "graph_view":
+                # Topology đọc THẲNG từ bộ nhớ: {đỉnh: [đỉnh kề, …]}.
+                adj = val if isinstance(val, dict) else {}
+                obj_dict["nodes"] = sorted(str(k) for k in adj)
+                obj_dict["edges"] = sorted(
+                    {
+                        tuple(sorted((str(u), str(v))))
+                        for u, ke in adj.items()
+                        for v in (ke or [])
+                    }
+                )
+                obj_dict["edges"] = [list(e) for e in obj_dict["edges"]]
+                # Trạng thái đỉnh do CHƯƠNG TRÌNH khai biến nào mang nó; adapter
+                # chỉ đọc. Không có khai báo ⇒ không tô, KHÔNG tự chạy lại BFS.
+                if cb.visited_ref:
+                    v = snap.get(cb.visited_ref)
+                    obj_dict["visited"] = sorted(
+                        str(x) for x in v
+                    ) if isinstance(v, (list, tuple, set)) else []
+                if cb.current_ref:
+                    cur = snap.get(cb.current_ref)
+                    obj_dict["current"] = None if cur is None else str(cur)
             elif cb.primitive == "bar_chart":
                 # Cột = phần tử của container. Renderer chỉ ĐỌC chiều cao từ đây,
                 # KHÔNG tự tính lại từ biểu thức nào khác (bất biến #31).

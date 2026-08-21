@@ -93,6 +93,59 @@ describe("semantic route — model", () => {
   });
 });
 
+describe("semantic route — graph_view", () => {
+  const withGraph = {
+    ...CONFIG,
+    frames: [
+      {
+        step_index: 0,
+        narration: "Bắt đầu từ đỉnh 1.",
+        objects: [{
+          id: "g", type: "graph_view", label: "Đồ thị",
+          nodes: ["1", "2", "3"],
+          edges: [["1", "2"], ["2", "3"]],
+          visited: [], current: "1",
+        }],
+        highlighted_object_ids: [],
+      },
+      {
+        step_index: 1,
+        narration: "Thăm đỉnh 2.",
+        objects: [{
+          id: "g", type: "graph_view", label: "Đồ thị",
+          nodes: ["1", "2", "3"],
+          edges: [["1", "2"], ["2", "3"]],
+          visited: ["1"], current: "2",
+        }],
+        highlighted_object_ids: ["g"],
+      },
+    ],
+    view_steps: [
+      { view_index: 0, frame_lo: 0, frame_hi: 0, narration: "Bắt đầu từ đỉnh 1." },
+      { view_index: 1, frame_lo: 1, frame_hi: 1, narration: "Thăm đỉnh 2." },
+    ],
+  };
+
+  it("giữ nguyên topology và trạng thái đỉnh do backend gửi", () => {
+    const s = buildSemanticState(withGraph);
+    const g0 = s.timeline[0].objects[0];
+    expect(g0.nodes).toEqual(["1", "2", "3"]);
+    expect(g0.edges).toEqual([["1", "2"], ["2", "3"]]);
+    expect(g0.current).toBe("1");
+    expect(g0.visited).toEqual([]);
+  });
+
+  it("trạng thái đỉnh ĐỔI theo bước — không đóng băng ở khung đầu", () => {
+    const s = buildSemanticState(withGraph);
+    expect(s.timeline[1].objects[0].visited).toEqual(["1"]);
+    expect(s.timeline[1].objects[0].current).toBe("2");
+  });
+
+  it("config có graph_view vẫn qua validateConfig", () => {
+    expect(validateSemanticConfig(withGraph).ok).toBe(true);
+  });
+});
+
 describe("semantic route — validateConfig", () => {
   it("nhận config hợp lệ", () => {
     const r = validateSemanticConfig(CONFIG);

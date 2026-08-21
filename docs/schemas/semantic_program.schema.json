@@ -2664,7 +2664,8 @@
             "table_grid",
             "tree_element",
             "bit_register",
-            "bar_chart"
+            "bar_chart",
+            "graph_view"
           ],
           "title": "Primitive",
           "type": "string"
@@ -2673,6 +2674,32 @@
           "description": "Nhãn hiển thị trên canvas",
           "title": "Label",
           "type": "string"
+        },
+        "visited_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Tên biến (set/array) chứa các đỉnh ĐÃ THĂM. Chỉ có nghĩa với `graph_view`. Không khai thì đồ thị vẽ không tô trạng thái.",
+          "title": "Visited Ref"
+        },
+        "current_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Tên biến chứa đỉnh ĐANG XÉT. Chỉ có nghĩa với `graph_view`.",
+          "title": "Current Ref"
         }
       },
       "required": [

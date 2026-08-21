@@ -283,9 +283,34 @@ class VisualContainerBinding(BaseModel):
     semantic_id: str = Field(..., description="Tên container trong Semantic Memory")
     primitive: Literal[
         "array_strip", "stack_view", "queue_view", "table_grid",
-        "tree_element", "bit_register", "bar_chart"
+        "tree_element", "bit_register", "bar_chart", "graph_view"
     ] = Field(..., description="Visual primitive tương ứng trong DSL")
     label: str = Field(..., description="Nhãn hiển thị trên canvas")
+
+    # ── Tham chiếu TRẠNG THÁI cho `graph_view` (2026-08-21) ──────────────────
+    #
+    # VÌ SAO CÓ HAI TRƯỜNG NÀY: `graph_view` phải tô được đỉnh nào đã thăm và
+    # đỉnh nào đang xét, nếu không mô phỏng BFS chỉ còn là một hàng đợi đổi số.
+    # Nhưng renderer TUYỆT ĐỐI không được tự suy ra điều đó bằng cách chạy lại
+    # BFS/DFS — làm thế là dựng một engine thứ hai trong tầng trình bày, đúng
+    # thứ R0 cấm.
+    #
+    # Cách giữ cả hai: chương trình KHAI BÁO biến nào mang trạng thái ấy, và
+    # adapter đọc thẳng từ `memory_snapshot`. Cùng khuôn với
+    # `VisualPointerBinding.var_ref` — một liên kết khai báo, không phải suy diễn.
+    visited_ref: Optional[str] = Field(
+        None,
+        description=(
+            "Tên biến (set/array) chứa các đỉnh ĐÃ THĂM. Chỉ có nghĩa với "
+            "`graph_view`. Không khai thì đồ thị vẽ không tô trạng thái."
+        ),
+    )
+    current_ref: Optional[str] = Field(
+        None,
+        description=(
+            "Tên biến chứa đỉnh ĐANG XÉT. Chỉ có nghĩa với `graph_view`."
+        ),
+    )
 
 class VisualPointerBinding(BaseModel):
     pointer_id: str = Field(..., description="ID của con trỏ hiển thị")

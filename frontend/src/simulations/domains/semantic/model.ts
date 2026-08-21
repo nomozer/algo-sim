@@ -23,6 +23,16 @@ export interface SemanticObject {
   target?: string;
   target_index?: number;
   capacity?: number;
+  /* ── `graph_view` (2026-08-21) ──────────────────────────────────────────
+     Cả bốn trường đều do BACKEND đọc từ `memory_snapshot` rồi gửi xuống.
+     Renderer KHÔNG được suy ra `visited` bằng cách tự chạy lại BFS/DFS —
+     làm thế là dựng engine thứ hai ở tầng trình bày (R0 cấm). Không khai
+     `visited_ref`/`current_ref` thì hai trường dưới vắng mặt, và đồ thị vẽ
+     không tô trạng thái. */
+  nodes?: string[];
+  edges?: string[][];
+  visited?: string[];
+  current?: string | null;
 }
 
 export interface SemanticFrame {

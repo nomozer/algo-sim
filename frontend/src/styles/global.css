@@ -4510,3 +4510,49 @@ html {
   border-radius: var(--rounded-md);
   background: var(--canvas-soft);
 }
+
+/* ── `graph_view` (2026-08-21) — layout tất định, không physics ─────────────
+ *
+ * Ba trạng thái đỉnh (`idle` / `visited` / `current`) đến TỪ DỮ LIỆU trong
+ * khung, không do CSS hay renderer suy ra. Chúng phân biệt được bằng CẢ màu lẫn
+ * độ đậm nét viền — không bao giờ chỉ bằng màu.
+ */
+.sem-graph {
+  display: block;
+  overflow: visible;
+}
+
+.sem-graph-edge {
+  stroke: var(--hairline);
+  stroke-width: 1.5;
+}
+
+.sem-graph-node circle {
+  fill: var(--canvas);
+  stroke: var(--ink-faint);
+  stroke-width: 1.5;
+  transition: fill 0.25s ease, stroke 0.25s ease;
+}
+
+.sem-graph-node text {
+  font-size: 12px;
+  fill: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.sem-graph-node[data-state="visited"] circle {
+  fill: var(--accent-sky-tint);
+  stroke: var(--accent-sky);
+}
+
+/* Đỉnh ĐANG XÉT: đổi cả màu VÀ độ dày viền — phân biệt không chỉ dựa vào màu. */
+.sem-graph-node[data-state="current"] circle {
+  fill: var(--accent-orange);
+  stroke: var(--accent-orange-deep);
+  stroke-width: 3;
+}
+
+.sem-graph-node[data-state="current"] text {
+  fill: var(--on-primary);
+  font-weight: 600;
+}

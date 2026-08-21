@@ -2404,3 +2404,90 @@ Ba runner Playwright chụp mô phỏng do đường `semantic_program` sinh, �
 > **không tái lập được** và theo luật dự án thì không được ghi DONE. Spec
 > 2026-08-20 (E13) mới chỉ bắt được **một** trong ba file — Task 13 của plan phải
 > sửa **cả ba**.
+
+---
+
+## Đường sinh ngữ nghĩa `generic.semantic_program` (2026-08-20 → 21)
+
+Spec: `docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`.
+Bất biến #31–#34 ở `ARCHITECTURE_MAP §5`.
+
+### `backend/app/simulation/semantic_program/pacer.py` · Change impact: offline
+
+Sở hữu **NGÂN SÁCH TRÌNH BÀY** và phép gộp khung máy → bước xem. Cố ý nằm NGOÀI
+`visual_adapter` để adapter giữ song ánh `frame k ⇔ trace[k]` — có song ánh đó
+thì bất biến #31 mới là định lý. Bất biến riêng của nó (#32): các đoạn phân hoạch
+đầy đủ, không chồng lấn, **không sinh khung mới**. Chạm trần ⇒ hạ mức chi tiết,
+KHÔNG cắt.
+
+### `backend/app/simulation/semantic_program/obligations.py` · offline
+
+Sở hữu **taxonomy nghĩa vụ ngữ nghĩa** (9 kind) + `SEMANTIC_PRESCRIBED_PROCEDURES`.
+Khoá vào HỆ KIỂU của IR, **không** vào catalog — số target là mở, số kiểu dữ liệu
+thì đóng. Đóng băng trước SEALED; khoá bởi `test_taxonomy_frozen.py`, trong đó có
+danh sách bốn nghĩa vụ **cố ý loại** kèm lý do.
+
+### `backend/app/simulation/semantic_program/request_contract.py` · offline
+
+Sở hữu **hợp đồng yêu cầu đã đóng băng** (`frozen=True`). Đây là chỗ luật "stage
+sinh không được khai lại nghĩa vụ" trở thành bất khả thay vì lời dặn. Ghi rõ giới
+hạn: separation of responsibility, **không phải** independent oracle.
+
+### `backend/app/simulation/semantic_program/coverage_gate.py` · offline
+
+Sở hữu **C₁a** (structural, trước execution) và **C₁b** (realized, sau execution).
+C₁a hỏi "có witness hợp lệ không", C₁b hỏi "witness có THẬT SỰ được tạo ra không"
+— hai câu khác nhau, và ví dụ tách chúng là `assign` nằm trong nhánh chết.
+
+### `backend/app/simulation/semantic_program/grounding_gate.py` · offline
+
+Sở hữu **P2** của chuỗi provenance: mọi `initial_value` không phải HẠT KHỞI TẠO
+phải tham chiếu **đúng mục** trong `RequestContract`. Kiểm THAM CHIẾU, không
+tìm-theo-giá-trị. Giới hạn P1 khai ở `docs/evaluation/semantic-benchmark/P1_LIMITATION.md`.
+
+### `backend/app/simulation/semantic_program/postconditions.py` · offline
+
+Sở hữu **C₂** — 8 checker server-owned. Mỗi checker tính lại tính chất TỪ TRẠNG
+THÁI CUỐI bằng phép toán sơ cấp, **không cài lại thuật toán của chương trình**;
+đó là điều kiện để oracle giữ được tính độc lập. `structural_traversal` cố ý chưa
+có checker (lý do ghi trong file).
+
+### `backend/app/simulation/semantic_program/analyze_contract.py` · offline
+
+Sở hữu **bề mặt `analyze` của route semantic**, tách hẳn enum dẫn xuất catalog
+(spec E5). `build_request_contract` LỌC nghĩa vụ ngoài taxonomy ngay tại đây.
+
+### `backend/app/simulation/execution_authority_gate.py` · offline
+
+Thay khái niệm của `computation_gate.py` (file cũ GIỮ NGUYÊN cho đường module).
+Luật: kết quả phải có **authority tất định** sở hữu. `SemanticProgramInterpreter`
+là một authority; LLM thì **không bao giờ**.
+
+### `backend/app/ai/telemetry.py` · offline
+
+Sở hữu **bộ đếm token theo stage**. Dùng `ContextVar` (`stage_scope`) chứ không
+thêm tham số vào `call_gemini`: hàm đó có 13 test double, và một double gãy vì
+production thêm tham số QUAN TRẮC là mùi thiết kế.
+
+### `backend/scripts/seal_benchmark.py` · offline
+
+Khoá/kiểm fingerprint của SEALED benchmark. Thoát != 0 khi seal vỡ.
+
+### `frontend/src/simulations/domains/semantic/` · offline
+
+`model.ts` — đọc frame timeline, **không** tính lại bước; `validateSemanticConfig`
+kiểm lại bất biến #32 ở phía nhận (envelope có thể đến từ lịch sử đã lưu).
+`ui.tsx` — renderer 2D chỉ ĐỌC khung; `DoThi` vẽ `graph_view` bằng layout vòng
+tròn TẤT ĐỊNH (không physics/camera/editor), và `visited`/`current` đến TỪ
+BACKEND — renderer không được tự chạy lại BFS. `index.ts` — đăng ký module,
+**shadow-only** cho tới hết Task 12.
+
+### `frontend/scripts/l5a-semantic-visual.mjs` (L5a) · cần Chrome + `npm run dev`
+
+Sở hữu **soát thị giác đại diện** của route semantic: 4 ca × 2 bề rộng, đo
+`getBoundingClientRect()` thay vì so ảnh pixel (repo không có `@playwright/test`).
+Năm phép đo: chữ đè chữ · tràn/clipping · con trỏ chui vào nhãn · **chữ lặp** ·
+khung ĐỔI sau 6 bước. Có `--faultcheck` để chứng minh guard đỏ được — bắt buộc
+chạy trước khi tin một bản soát "SẠCH" (`ARCHITECTURE_MAP §8` #14). Fixture
+`public/fixtures/semantic_l5a.json` **sinh từ backend thật**, không viết tay.
+Kết quả: `docs/evaluation/semantic-l5a/`.

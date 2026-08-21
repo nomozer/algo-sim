@@ -578,6 +578,14 @@ P09_GRAPH_BFS = SemanticProgramSpec(
     ],
     visual_bindings=VisualBindings(
         containers=[
+            # 2026-08-21 — ĐỒ THỊ nay vẽ được. Trước đó bài BFS chỉ thấy hàng
+            # đợi và thứ tự duyệt: cơ chế trung tâm (đi qua đỉnh nào, theo thứ
+            # tự nào) không xuất hiện trên màn hình. Trạng thái đỉnh KHAI BÁO
+            # bằng tên biến — renderer đọc, không tự chạy lại BFS.
+            VisualContainerBinding(
+                semantic_id="g", primitive="graph_view", label="Đồ thị",
+                visited_ref="visited", current_ref="u",
+            ),
             VisualContainerBinding(semantic_id="q", primitive="queue_view", label="Hàng đợi BFS"),
             VisualContainerBinding(semantic_id="order", primitive="array_strip", label="Thứ tự duyệt"),
         ],

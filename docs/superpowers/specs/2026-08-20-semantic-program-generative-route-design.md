@@ -71,7 +71,19 @@ eligibility rubric ở §7.2.
 ### MVP của route
 
 > `generic.semantic_program` v1 = **algorithmic bounded IR + 2D only + không mở
-> primitive/type mới.**
+> primitive/type THEO TỪNG BÀI.**
+>
+> **Sửa cách diễn đạt 2026-08-21.** Bản đầu viết "không mở primitive/type mới",
+> và câu đó tự mâu thuẫn với chính quy trình: tập primitive phải hoàn thiện được
+> từ DEV *trước* khi niêm phong. Phát biểu đúng:
+>
+> > Tập primitive/type được phép **hoàn thiện từ DEV** cho tới khi SEALED được
+> > niêm phong; **sau thời điểm đó thì ĐÓNG BĂNG**, và không bao giờ mở thêm vì
+> > một kết quả SEALED (hard scope lock dưới đây).
+>
+> Ranh giới vẫn nguyên: mở vì **một lớp trạng thái đã được admit mà hợp đồng thị
+> giác không biểu diễn được** thì hợp lệ; mở vì **một ca cụ thể chạy chưa đẹp**
+> thì không.
 
 ### Sáu ranh giới implementation
 
