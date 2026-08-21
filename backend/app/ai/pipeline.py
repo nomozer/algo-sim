@@ -874,6 +874,25 @@ async def run_pipeline(
     plan = build_representation_plan(analysis)
     _emit(observer, "plan_built", unsupported_capabilities=list(plan.get("unsupported_capabilities", [])))
 
+    # ─── ROUTE SINH NGỮ NGHĨA — chạy TRƯỚC classify, có chủ đích ───
+    # Đặt ở đây thì tính độc lập với classifier là CẤU TRÚC, không phải vị trí:
+    # không có nhánh nào của classify — kể cả `mismatch_gap` return sớm — chen
+    # được vào trước nó.
+    #
+    # Bản trước đặt khối này SAU `chosen = …`, tưởng là đủ. Lượt chạy pilot đầu
+    # tiên cho thấy không: 3/40 case bị `classify_with_one_route_recovery` trả
+    # `mismatch_gap` và `run_pipeline` return ngay tại đó, nên route sinh không
+    # bao giờ được thử. Claim A khi ấy vẫn phụ thuộc một phần vào classifier
+    # legacy — đúng khiếm khuyết đã sửa một lần, sống sót ở nhánh khác.
+    #
+    # Điều kiện để THỬ là scope + execution authority. Điều kiện để PHÁT thì
+    # khác và chặt hơn — nó cần `chosen`, nên nằm ở dưới.
+    semantic_outcome = None
+    if semantic_route != "off":
+        semantic_outcome = await _semantic_shadow(
+            text, analysis, plan, api_key, observer
+        )
+
     classification = await stage_classify(text, analysis, api_key)  # lần 1
     _emit(observer, "classify_done",
           status=classification.get("status"), simulation_id=classification.get("simulation_id"))
@@ -916,12 +935,6 @@ async def run_pipeline(
     #
     # Điều kiện để THỬ là scope + execution authority, không phải target nào
     # được chọn. Điều kiện để PHÁT thì khác và chặt hơn (xem dưới).
-    semantic_outcome = None
-    if semantic_route != "off":
-        semantic_outcome = await _semantic_shadow(
-            text, analysis, plan, api_key, observer
-        )
-
     # PHÁT thì vẫn nhường module chuyên biệt: ranh giới phạm vi của đề tài là
     # KHÔNG thay thế 24 module đang có. Route sinh chỉ phục vụ chỗ trống.
     if (

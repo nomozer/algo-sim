@@ -101,16 +101,53 @@ def load_skill(name: str) -> str:
     return _skill_cache[name]
 
 
-def _sanitize_gemini_schema(obj: Any) -> Any:
-    """Loại bỏ các trường JSON Schema không được Gemini API chấp nhận (như additionalProperties, $schema)."""
+def _co_tham_chieu(obj: Any) -> bool:
+    """Schema có `$ref` không? Có ⇒ Gemini KHÔNG diễn đạt được."""
     if isinstance(obj, dict):
-        cleaned = {}
+        return "$ref" in obj or any(_co_tham_chieu(v) for v in obj.values())
+    if isinstance(obj, list):
+        return any(_co_tham_chieu(x) for x in obj)
+    return False
+
+
+def _sanitize_gemini_schema(obj: Any) -> Any | None:
+    """Dọn schema cho Gemini, hoặc trả `None` khi Gemini không diễn đạt được nó.
+
+    TỪNG HỎNG CÂM VÀ HỎNG TOÀN BỘ (phát hiện 2026-08-22, lượt chạy pilot đầu
+    tiên với API thật): bản cũ xoá `$defs` nhưng GIỮ NGUYÊN các `$ref` trỏ vào
+    đó, để lại tham chiếu treo, nên payload bị API trả HTTP 400 —
+
+        Unknown name "$ref" ... Unknown name "const" ...
+
+    Hệ quả: `stage_semantic_program` gửi schema sinh từ Pydantic và **chưa từng
+    gọi thành công một lần nào**. 1725 test offline vẫn xanh vì tất cả đều mock
+    `call_gemini`; chỉ một lượt chạy thật mới lộ ra.
+
+    VÌ SAO KHÔNG NỘI SUY `$ref` THAY VÌ BỎ SCHEMA: schema IR có 37 `$defs`, 421
+    `$ref`, 40 `oneOf` kèm `discriminator`, và **đệ quy** (câu lệnh chứa câu
+    lệnh). Nội suy một schema đệ quy thì không dừng. Đây là giới hạn của dialect
+    schema Gemini, không phải một trường viết sai.
+
+    RÀNG BUỘC CẤU TRÚC KHÔNG MẤT ĐI: nó vốn không nằm ở Gemini. `responseSchema`
+    chỉ làm tăng tỉ lệ trúng; thứ BẢO ĐẢM là `validate_semantic_program` chạy
+    phía server, và nó vẫn từ chối y như trước. Bỏ schema làm đầu ra kém đều
+    hơn, KHÔNG làm hợp đồng lỏng hơn.
+    """
+    if _co_tham_chieu(obj):
+        return None
+
+    if isinstance(obj, dict):
+        cleaned: dict = {}
         for k, v in obj.items():
             if k in ("additionalProperties", "$schema", "$defs", "definitions", "default"):
                 continue
+            # Pydantic phát `const` cho `Literal`; Gemini chỉ biết `enum`.
+            if k == "const":
+                cleaned["enum"] = [v]
+                continue
             cleaned[k] = _sanitize_gemini_schema(v)
         return cleaned
-    elif isinstance(obj, list):
+    if isinstance(obj, list):
         return [_sanitize_gemini_schema(item) for item in obj]
     return obj
 
@@ -134,8 +171,14 @@ async def call_gemini(
     )
     generation_config: dict = {"temperature": temperature}
     if response_schema is not None:
+        # JSON mode giữ nguyên trong MỌI trường hợp — đầu ra vẫn phải là JSON.
         generation_config["responseMimeType"] = "application/json"
-        generation_config["responseSchema"] = _sanitize_gemini_schema(response_schema)
+        an_toan = _sanitize_gemini_schema(response_schema)
+        if an_toan is not None:
+            generation_config["responseSchema"] = an_toan
+        # `None` ⇒ schema có `$ref`, Gemini không diễn đạt được (xem
+        # `_sanitize_gemini_schema`). Gửi kèm là HTTP 400 cho MỌI lượt gọi. Bỏ
+        # schema, giữ JSON mode; ràng buộc thật vẫn do validator phía server áp.
 
     parts: list[dict] = []
     if image is not None:

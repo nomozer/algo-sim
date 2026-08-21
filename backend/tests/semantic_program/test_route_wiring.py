@@ -66,13 +66,28 @@ def _fake(responses):
 
 
 def _kich_ban():
-    """4 lượt: analyze · classify · semantic_analyze · semantic_program."""
+    """4 lượt, ĐÚNG THỨ TỰ THẬT: analyze · semantic_analyze · semantic_program
+    · classify.
+
+    Route sinh chạy TRƯỚC classify để độc lập với mọi nhánh của nó (kể cả
+    `mismatch_gap` return sớm) — xem `test_shadow_chay_TRUOC_classify`.
+    """
+    return [
+        json.dumps(_analysis(goal="Tìm số lớn nhất của dãy", ownership="algorithmic")),
+        json.dumps(ANALYZE_PAYLOAD),
+        _spec_co_provenance().model_dump_json(),
+        json.dumps({"status": "ok", "simulation_id": "generic.rule_scene",
+                    "reason": None}),
+    ]
+
+
+def _kich_ban_off():
+    """Chế độ `off` chỉ gọi analyze + classify — KHÔNG dùng `_kich_ban()[:2]`,
+    vì hai phần tử đầu của kịch bản đầy đủ nay là analyze + semantic_analyze."""
     return [
         json.dumps(_analysis(goal="Tìm số lớn nhất của dãy", ownership="algorithmic")),
         json.dumps({"status": "ok", "simulation_id": "generic.rule_scene",
                     "reason": None}),
-        json.dumps(ANALYZE_PAYLOAD),
-        _spec_co_provenance().model_dump_json(),
     ]
 
 
@@ -175,7 +190,7 @@ def test_nghia_vu_khong_co_checker_la_verification_gap_chu_khong_phai_capability
 # ── 2. Qua production orchestration ──────────────────────────────
 def test_off_giu_nguyen_hanh_vi_cu(monkeypatch):
     """Mặc định phải y hệt trước khi có route — không tốn lượt LLM nào thêm."""
-    monkeypatch.setattr(pipeline, "call_gemini", _fake(_kich_ban()[:2]))
+    monkeypatch.setattr(pipeline, "call_gemini", _fake(_kich_ban_off()))
     env = asyncio.run(pipeline.run_pipeline(
         "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34", "khoa-gia",
     ))
@@ -185,7 +200,7 @@ def test_off_giu_nguyen_hanh_vi_cu(monkeypatch):
 def test_shadow_khong_doi_dau_ra_mot_bit(monkeypatch):
     thu = _Thu()
     shadow = _chay(monkeypatch, semantic_route="shadow", observer=thu)
-    monkeypatch.setattr(pipeline, "call_gemini", _fake(_kich_ban()[:2]))
+    monkeypatch.setattr(pipeline, "call_gemini", _fake(_kich_ban_off()))
     off = asyncio.run(pipeline.run_pipeline(
         "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34", "khoa-gia",
     ))
@@ -212,10 +227,10 @@ def test_shadow_VAN_chay_khi_classifier_chon_module_chuyen_biet(monkeypatch):
 
     kich_ban = [
         json.dumps(_analysis(goal="Tìm số lớn nhất của dãy", ownership="algorithmic")),
-        json.dumps({"status": "ok", "simulation_id": "algorithm.find_max",
-                    "reason": None}),
         json.dumps(ANALYZE_PAYLOAD),
         _spec_co_provenance().model_dump_json(),
+        json.dumps({"status": "ok", "simulation_id": "algorithm.find_max",
+                    "reason": None}),
     ]
     du_phong = _algo_cfg(DAY_SO)
 
@@ -241,16 +256,85 @@ def test_shadow_VAN_chay_khi_classifier_chon_module_chuyen_biet(monkeypatch):
     assert env["simulation_id"] == "algorithm.find_max"
 
 
+def test_shadow_VAN_chay_khi_classify_tra_mismatch_va_return_som(monkeypatch):
+    """Lỗi thật, tìm ra ở lượt chạy pilot đầu tiên (2026-08-22).
+
+    `classify_with_one_route_recovery` trả `mismatch_gap` thì `run_pipeline`
+    return NGAY, trước cả `chosen = …`. Bản sửa trước đặt khối shadow sau dòng
+    đó nên 3/40 case của pilot không bao giờ được thử route sinh — claim A vẫn
+    phụ thuộc một phần vào classifier legacy, đúng khiếm khuyết đã sửa một lần
+    mà sống sót ở nhánh khác.
+
+    Nay shadow chạy TRƯỚC `stage_classify`, nên không nhánh nào của classify
+    chen vào trước nó được.
+    """
+    # analyze khai một cơ chế, classify chọn target thuộc family KHÁC ⇒ lệch
+    # tuyến; recovery gọi classify lần hai, vẫn lệch ⇒ capability_gap sớm.
+    kich_ban = [
+        json.dumps(_analysis(goal="Tìm số lớn nhất của dãy", ownership="algorithmic")),
+        json.dumps(ANALYZE_PAYLOAD),
+        _spec_co_provenance().model_dump_json(),
+        json.dumps({"status": "ok", "simulation_id": "tree.traversal", "reason": None}),
+        json.dumps({"status": "ok", "simulation_id": "tree.traversal", "reason": None}),
+    ]
+
+    async def f(api_key, system_prompt, user_text, response_schema=None,
+                temperature=0.2, image=None):
+        return kich_ban.pop(0) if kich_ban else json.dumps(
+            {"status": "unsupported", "simulation_id": None, "reason": "x"})
+
+    monkeypatch.setattr(pipeline, "call_gemini", f)
+    thu = _Thu()
+    asyncio.run(pipeline.run_pipeline(
+        "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34", "khoa-gia",
+        observer=thu, semantic_route="shadow",
+    ))
+
+    ghi = thu.dau_tien("semantic_route")
+    assert ghi is not None, (
+        "classify trả mismatch và return sớm ⇒ route sinh không được thử. "
+        "Claim A khi ấy đo classifier, không đo route sinh."
+    )
+    assert ghi["servable"] is True, ghi
+
+
+def test_shadow_chay_TRUOC_classify(monkeypatch):
+    """Khoá THỨ TỰ, không chỉ kết quả: độc lập phải là cấu trúc."""
+    thu_tu: list[str] = []
+
+    async def f(api_key, system_prompt, user_text, response_schema=None,
+                temperature=0.2, image=None):
+        from app.ai.telemetry import current_stage
+
+        thu_tu.append(current_stage())
+        return {
+            "analyze": lambda: json.dumps(
+                _analysis(goal="x", ownership="algorithmic")),
+            "semantic_analyze": lambda: json.dumps(ANALYZE_PAYLOAD),
+            "semantic_program": lambda: _spec_co_provenance().model_dump_json(),
+        }.get(current_stage(), lambda: json.dumps(
+            {"status": "ok", "simulation_id": "generic.rule_scene",
+             "reason": None}))()
+
+    monkeypatch.setattr(pipeline, "call_gemini", f)
+    asyncio.run(pipeline.run_pipeline(
+        "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34", "khoa-gia",
+        semantic_route="shadow",
+    ))
+    assert thu_tu[:3] == ["analyze", "semantic_analyze", "semantic_program"], thu_tu
+    assert "classify" in thu_tu and thu_tu.index("classify") > 2, thu_tu
+
+
 def test_serve_KHONG_gianh_cho_cua_module_chuyen_biet(monkeypatch):
     """Ranh giới phạm vi: route sinh phục vụ CHỖ TRỐNG, không thay 24 module."""
     from app.evaluation.m16_offline_scripts import _algo_cfg
 
     kich_ban = [
         json.dumps(_analysis(goal="Tìm số lớn nhất của dãy", ownership="algorithmic")),
-        json.dumps({"status": "ok", "simulation_id": "algorithm.find_max",
-                    "reason": None}),
         json.dumps(ANALYZE_PAYLOAD),
         _spec_co_provenance().model_dump_json(),
+        json.dumps({"status": "ok", "simulation_id": "algorithm.find_max",
+                    "reason": None}),
     ]
     du_phong = _algo_cfg(DAY_SO)
 

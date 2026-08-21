@@ -168,3 +168,96 @@ def test_khong_co_budget_thi_khong_dem_khong_chan(monkeypatch):
     client = _install(monkeypatch, [_FakeResp(200, OK_BODY)])
     out = asyncio.run(gemini.call_gemini("k", "sys", "user"))
     assert out == "kết quả" and client.calls == 1
+
+
+# ── SCHEMA: cái gì gửi được cho Gemini, cái gì không ─────────────
+# Lỗi thật, tìm ra ở lượt chạy pilot đầu tiên với API thật (2026-08-22): bản cũ
+# xoá `$defs` nhưng giữ `$ref` trỏ vào đó, nên MỌI lượt gọi `semantic_program`
+# bị HTTP 400. Route sinh ngữ nghĩa chưa từng chạy được một lần nào, trong khi
+# 1725 test offline vẫn xanh vì tất cả đều mock `call_gemini`.
+
+
+class _BatPayload:
+    """Bắt payload thật sự được gửi đi."""
+
+    def __init__(self, resp):
+        self.resp = resp
+        self.payload = None
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *a):
+        return False
+
+    async def post(self, url, json=None):
+        self.payload = json
+        return self.resp
+
+
+def _bat(monkeypatch):
+    c = _BatPayload(_FakeResp(200, OK_BODY))
+    monkeypatch.setattr(gemini.httpx, "AsyncClient", lambda **kw: c)
+    return c
+
+
+def test_schema_don_gian_van_duoc_gui_nhu_cu(monkeypatch):
+    """Không được đổi hành vi của analyze/classify/simulate — chúng đang chạy."""
+    c = _bat(monkeypatch)
+    schema = {"type": "OBJECT", "properties": {"a": {"type": "STRING"}},
+              "required": ["a"]}
+    asyncio.run(gemini.call_gemini("k", "sys", "user", response_schema=schema))
+    gc = c.payload["generationConfig"]
+    assert gc["responseMimeType"] == "application/json"
+    assert gc["responseSchema"]["properties"]["a"]["type"] == "STRING"
+
+
+def test_schema_co_ref_thi_KHONG_gui_nhung_VAN_giu_json_mode(monkeypatch):
+    c = _bat(monkeypatch)
+    schema = {"type": "OBJECT", "$defs": {"X": {"type": "STRING"}},
+              "properties": {"a": {"$ref": "#/$defs/X"}}}
+    asyncio.run(gemini.call_gemini("k", "sys", "user", response_schema=schema))
+    gc = c.payload["generationConfig"]
+    assert "responseSchema" not in gc, (
+        "gửi schema có $ref là HTTP 400 cho MỌI lượt gọi"
+    )
+    assert gc["responseMimeType"] == "application/json", (
+        "bỏ schema thì vẫn phải ép JSON, nếu không đầu ra thành văn xuôi"
+    )
+
+
+def test_const_duoc_doi_thanh_enum(monkeypatch):
+    """Pydantic phát `const` cho `Literal`; Gemini chỉ biết `enum`."""
+    c = _bat(monkeypatch)
+    schema = {"type": "OBJECT", "properties": {"kind": {"const": "assign"}}}
+    asyncio.run(gemini.call_gemini("k", "sys", "user", response_schema=schema))
+    p = c.payload["generationConfig"]["responseSchema"]["properties"]["kind"]
+    assert p == {"enum": ["assign"]}, p
+
+
+def test_schema_IR_THAT_khong_lam_vo_payload(monkeypatch):
+    """Tiêm CHÍNH schema đã làm hỏng 35/40 case của lượt pilot."""
+    from app.simulation.semantic_program.contract import generate_json_schema
+
+    c = _bat(monkeypatch)
+    asyncio.run(gemini.call_gemini("k", "sys", "user",
+                                   response_schema=generate_json_schema()))
+    gc = c.payload["generationConfig"]
+    assert "responseSchema" not in gc
+    assert gc["responseMimeType"] == "application/json"
+    import json as _j
+    assert "$ref" not in _j.dumps(c.payload), "payload còn tham chiếu treo"
+
+
+def test_moi_schema_PRODUCTION_khac_van_gui_duoc_nhu_cu():
+    """Bản sửa chỉ được chạm đúng schema IR. Nếu nó vô tình làm analyze hay
+    classify mất `responseSchema` thì constrained decoding của ĐƯỜNG MODULE —
+    thứ đang chạy tốt — hỏng theo, và hỏng câm."""
+    from app.ai.pipeline import ANALYZE_SCHEMA, _adapt_schema, _classify_schema
+
+    for ten, s in (("analyze", ANALYZE_SCHEMA),
+                   ("classify", _classify_schema()),
+                   ("adapt", _adapt_schema({"x": {"kind": "number_array"}}))):
+        ra = gemini._sanitize_gemini_schema(s)
+        assert ra is not None, f"{ten}: schema production bị bỏ, không được"
+        assert "properties" in ra, f"{ten}: mất nội dung sau khi dọn"
