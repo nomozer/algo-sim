@@ -1,8 +1,8 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-08-21T18:21:54+00:00",
-  "commit": "cdada5347cf3a5e3a3846cc373eae997c20a4595",
-  "commit_ngan": "cdada53",
+  "dong_bang_luc": "2026-08-21T19:35:39+00:00",
+  "commit": "7ecc992f7af2a1183d84144a8707c9061973a684",
+  "commit_ngan": "7ecc992",
   "cay_lam_viec_sach": true,
   "cache_version": "34",
   "spec_version_ir": "1.0",
@@ -13,7 +13,7 @@
       "frontend/src/simulations/domains/generic/semantic_program.schema.json"
     ],
     "so_file": 125,
-    "tree_hash": "5608fbfefc831da373bc59e404c42e5b89fcc35822e5ad4acdf948c86270029b",
+    "tree_hash": "8ff04a7694b20c5570e49284928f731befda9907a48071bbe8fdf2b50b7681b3",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
@@ -79,7 +79,7 @@
     "fingerprint": "8a3de7a3f95309429ebc35cfbcdf3cd03237502efa4ef8b255864f069d48e885"
   },
   "sealed": {
-    "trang_thai": "CHUA_NIEM_PHONG",
+    "trang_thai": "DA_NIEM_PHONG",
     "ghi_chu": "SEALED do nguồn ngoài cung cấp; agent viết hệ KHÔNG soạn nó. Niêm phong bằng scripts/seal_benchmark.py."
   }
 }
