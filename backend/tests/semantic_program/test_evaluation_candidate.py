@@ -84,6 +84,80 @@ def test_dev_fingerprint_khong_troi(manifest):
     assert manifest["dev"]["so_case"] == 20
 
 
+# ── MÃ SẢN PHẨM, không chỉ hợp đồng ──────────────────────────────
+# Năm fingerprint ở trên khoá HỢP ĐỒNG (taxonomy · primitive · schema · DEV ·
+# CACHE_VERSION). Chúng hoàn toàn MÙ trước việc sửa `pipeline.py`, `route.py`,
+# interpreter, validator, hay bất kỳ checker nào — tức mù trước đúng loại thay
+# đổi mà sự cố "route chưa từng được nối" đã cho thấy là có thật.
+#
+# Không có test này thì câu "hệ được đo = <commit>" chỉ là một nhãn trong báo
+# cáo, không phải mệnh đề máy kiểm được.
+
+
+def _freeze_module():
+    import importlib.util
+
+    p = ROOT / "backend" / "scripts" / "freeze_evaluation_candidate.py"
+    spec = importlib.util.spec_from_file_location("freeze_evaluation_candidate", p)
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+def test_ma_san_pham_khong_troi_khoi_ban_da_dong_bang(manifest):
+    fz = _freeze_module()
+    hien_tai, so_file = fz.measured_system_hash()
+    assert manifest["measured_system"]["tree_hash"] == hien_tai, (
+        "MÃ SẢN PHẨM của hệ được đo đã đổi sau khi đóng băng candidate. Xem "
+        f"`git diff {manifest.get('commit_ngan')} HEAD -- "
+        + " ".join(fz.MEASURED_SYSTEM_PATHS) + "`. Đổi vì một case SEALED ⇒ VI "
+        "PHẠM luật con dấu (§7.4)."
+    )
+    assert manifest["measured_system"]["so_file"] == so_file
+
+
+def test_tap_duong_dan_do_KHONG_lan_bo_do_vao(manifest):
+    """Harness phải nằm NGOÀI, nếu không thì thêm một test là candidate đỏ và
+    người ta sẽ đóng băng lại candidate cho xong — làm hỏng chính con dấu."""
+    fz = _freeze_module()
+    for p in fz.MEASURED_SYSTEM_PATHS:
+        assert not p.startswith("backend/tests"), p
+        assert not p.startswith("backend/scripts"), p
+        assert not p.startswith("docs"), p
+    assert "backend/app" in fz.MEASURED_SYSTEM_PATHS, (
+        "thiếu mã production backend thì cổng này không khoá được gì"
+    )
+
+
+def test_ma_san_pham_bao_trum_dung_cac_module_cua_route():
+    """Đường dẫn khai theo NGUYÊN TẮC ('backend/app' là sản phẩm), nhưng vẫn
+    phải khẳng định nó thật sự phủ các module lõi — khai đúng mà quét sót thì
+    cổng xanh giả."""
+    fz = _freeze_module()
+    phu = {f.relative_to(ROOT).as_posix() for f in fz._measured_system_files()}
+    for bat_buoc in (
+        "backend/app/ai/pipeline.py",
+        "backend/app/ai/gemini.py",
+        "backend/app/ai/skills/semantic_program.md",
+        "backend/app/ai/skills/semantic_analyze.md",
+        "backend/app/simulation/semantic_program/route.py",
+        "backend/app/simulation/semantic_program/interpreter.py",
+        "backend/app/simulation/semantic_program/validator.py",
+        "backend/app/simulation/semantic_program/grounding_gate.py",
+        "backend/app/simulation/semantic_program/coverage_gate.py",
+        "backend/app/simulation/semantic_program/postconditions.py",
+        "backend/app/simulation/execution_authority_gate.py",
+    ):
+        assert bat_buoc in phu, f"cổng mã sản phẩm KHÔNG phủ {bat_buoc}"
+
+
+def test_khong_quet_pycache():
+    fz = _freeze_module()
+    assert not any("__pycache__" in str(f) for f in fz._measured_system_files()), (
+        "quét bytecode ⇒ hash đổi theo lần chạy, cổng thành nhiễu rồi bị tắt"
+    )
+
+
 def test_candidate_ghi_dung_commit_va_cay_sach(manifest):
     """Cây bẩn ⇒ trường `commit` không định danh được bản đang đo."""
     assert manifest["cay_lam_viec_sach"] is True, (

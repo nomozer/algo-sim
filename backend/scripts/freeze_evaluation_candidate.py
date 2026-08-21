@@ -31,9 +31,60 @@ OUT = BENCH / "EVALUATION_CANDIDATE.json"
 
 sys.path.insert(0, str(ROOT / "backend"))
 
+#: HỆ ĐƯỢC ĐO — tập đường dẫn mã SẢN PHẨM cấu thành nó.
+#:
+#: VÌ SAO CẦN (thêm 2026-08-22): năm fingerprint cũ (taxonomy · primitive ·
+#: schema · DEV · CACHE_VERSION) **không đủ** để chứng minh "hệ được đo vẫn là
+#: bản đã đóng băng". Sửa `pipeline.py`, `route.py`, interpreter, validator,
+#: grounding/C₁a/C₁b/C₂ hay bất kỳ checker nào mà không đụng năm thứ kia thì
+#: `--verify` vẫn XANH trong khi ngữ nghĩa hệ đã đổi — đúng loại lỗ mà sự cố
+#: "route chưa từng được nối" đã cho thấy là có thật.
+#:
+#: Ranh giới chọn theo NGUYÊN TẮC, không theo phán đoán từng file: mọi thứ
+#: trong `backend/app` là mã sản phẩm; `scripts/`, `tests/`, `docs/` là bộ đo.
+#: Nhờ vậy harness được phép cứng cáp thêm mà candidate không phải đóng băng
+#: lại, còn một dòng mã sản phẩm đổi là ĐỎ ngay.
+MEASURED_SYSTEM_PATHS = (
+    "backend/app",
+    # Module 2D của route — thuộc bề mặt hợp đồng, không phải bộ đo.
+    "frontend/src/simulations/domains/semantic",
+    "frontend/src/simulations/domains/generic/semantic_program.schema.json",
+)
+
+_BO_QUA = ("__pycache__", ".pyc", ".pyo")
+
 
 def _sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _measured_system_files() -> list[Path]:
+    ra: list[Path] = []
+    for muc in MEASURED_SYSTEM_PATHS:
+        p = ROOT / muc
+        if p.is_file():
+            ra.append(p)
+        elif p.is_dir():
+            ra.extend(
+                f for f in p.rglob("*")
+                if f.is_file() and not any(b in str(f) for b in _BO_QUA)
+            )
+    return sorted(ra)
+
+
+def measured_system_hash() -> tuple[str, int]:
+    """Băm NỘI DUNG mã sản phẩm — không dựa vào git, để chạy được cả trên cây bẩn.
+
+    Trả `(hash, số file)`. Số file khai riêng vì thêm/xoá file là kiểu trôi mà
+    người đọc nhận ra ngay, còn hash thì không nói được gì ngoài "khác".
+    """
+    h = hashlib.sha256()
+    files = _measured_system_files()
+    for f in files:
+        h.update(f.relative_to(ROOT).as_posix().encode("utf-8"))
+        h.update(b"\0")
+        h.update(hashlib.sha256(f.read_bytes()).digest())
+    return h.hexdigest(), len(files)
 
 
 def _git(*args: str) -> str:
@@ -81,6 +132,18 @@ def build() -> dict:
         ),
         "cache_version": CACHE_VERSION,
         "spec_version_ir": SPEC_VERSION,
+        # Cái này mới làm câu "hệ được đo = <commit>" thành mệnh đề MÁY KIỂM
+        # ĐƯỢC. Năm fingerprint dưới đây chỉ khoá HỢP ĐỒNG; cái này khoá MÃ.
+        "measured_system": {
+            "paths": list(MEASURED_SYSTEM_PATHS),
+            "so_file": measured_system_hash()[1],
+            "tree_hash": measured_system_hash()[0],
+            "khai": (
+                "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness "
+                "(scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép "
+                "cứng cáp thêm mà không phải đóng băng lại candidate."
+            ),
+        },
         "taxonomy": {
             "so_nghia_vu": len(taxonomy),
             "kinds": sorted(taxonomy),
@@ -131,11 +194,36 @@ def main() -> int:
             khoa = "hash" if nhom != "dev" else "fingerprint"
             if cu.get(nhom, {}).get(khoa) != moi.get(nhom, {}).get(khoa):
                 lech.append(f"{nhom}.{khoa}")
+
+        # MÃ SẢN PHẨM — kiểm riêng vì lời chẩn đoán của nó khác hẳn: bốn nhóm
+        # trên nói "hợp đồng đổi", cái này nói "cài đặt đổi", và cái sau là thứ
+        # `--verify` cũ hoàn toàn mù.
+        ms_cu = (cu.get("measured_system") or {}).get("tree_hash")
+        ms_moi = moi["measured_system"]["tree_hash"]
+        if ms_cu is None:
+            print(
+                "Candidate được đóng băng TRƯỚC khi có `measured_system` — nó "
+                "không chứng minh được mã sản phẩm còn nguyên. Đóng băng lại."
+            )
+            return 1
+        if ms_cu != ms_moi:
+            print("MÃ SẢN PHẨM ĐÃ ĐỔI so với bản đã đóng băng.")
+            print(f"  đã đóng băng : {ms_cu[:16]}…  ({cu['measured_system'].get('so_file')} file)")
+            print(f"  hiện tại     : {ms_moi[:16]}…  ({moi['measured_system']['so_file']} file)")
+            commit = cu.get("commit_ngan") or cu.get("commit", "")[:7]
+            if commit:
+                print("\nXem đúng cái gì đổi:")
+                print(f"  git diff --stat {commit} HEAD -- "
+                      + " ".join(MEASURED_SYSTEM_PATHS))
+            lech.append("measured_system.tree_hash")
+
         if lech:
-            print("CANDIDATE LỆCH so với bản đã đóng băng:", ", ".join(lech))
+            print("\nCANDIDATE LỆCH so với bản đã đóng băng:", ", ".join(lech))
             print("Nếu lệch vì một kết quả SEALED thì đây là VI PHẠM luật con dấu (§7.4).")
             return 1
-        print("Candidate khớp bản đã đóng băng.")
+        print(f"Candidate khớp bản đã đóng băng "
+              f"(mã sản phẩm: {moi['measured_system']['so_file']} file, "
+              f"{ms_moi[:16]}…).")
         return 0
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
@@ -147,6 +235,8 @@ def main() -> int:
     print(f"  primitive set     {moi['visual_primitive_set']['so_primitive']} · {moi['visual_primitive_set']['hash'][:16]}")
     print(f"  schema            {moi['schema_semantic_program']['hash'][:16]}")
     print(f"  DEV               {moi['dev']['so_case']} case · {moi['dev']['fingerprint'][:16]}")
+    print(f"  MÃ SẢN PHẨM       {moi['measured_system']['so_file']} file · "
+          f"{moi['measured_system']['tree_hash'][:16]}")
     print(f"  SEALED            {moi['sealed']['trang_thai']}")
     return 0
 
