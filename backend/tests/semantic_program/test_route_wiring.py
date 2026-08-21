@@ -310,7 +310,10 @@ def test_hai_luot_LLM_dung_CHUNG_danh_xung():
     """
     khoi = pipeline._obligations_for_prompt(_contract())
     assert "arr" in khoi and "max_val" in khoi, khoi
-    assert "PHẢI dùng ĐÚNG" in khoi
+    assert "memory_declarations" in khoi, "không nói rõ hai tên phải được khai báo"
+    # Dãy chỉ được MÔ TẢ (1, 4, 7, …) vẫn phải dựng thành biến chứa dữ liệu —
+    # mô phỏng cần hiện dãy lên, không chỉ tính ra đáp số.
+    assert "hiện dãy đó lên" in khoi, khoi
 
     from app.simulation.semantic_program.request_contract import RequestContract
 
