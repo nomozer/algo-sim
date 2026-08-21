@@ -168,7 +168,10 @@ export function SemanticWorkspace({
         ))}
       </div>
 
-      <p className="sem-narration">{buoc.narration}</p>
+      {/* (SHELL-N) THUYẾT MINH KHÔNG dựng ở đây — module cấp chữ qua `narrate()`
+          ở `index.ts`, shell dựng bằng `NarrationSlot`. Bản đầu dựng cả hai nơi
+          và L5a chụp được hậu quả: cùng một câu hiện HAI LẦN dưới sân khấu.
+          Cùng quy ước với `generic/ui.tsx` và `algorithm/ui.tsx`. */}
     </div>
   );
 }

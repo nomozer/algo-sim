@@ -1,0 +1,3740 @@
+{
+  "stack_bracket": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Kiểm tra chuỗi ngoặc hợp lệ bằng Ngăn xếp",
+    "description": "Duyệt từng ký tự, gặp mở thì push, gặp đóng thì kiểm tra đỉnh stack và pop.",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Kiểm tra chuỗi ngoặc hợp lệ bằng Ngăn xếp",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Học sinh quan sát cách Ngăn xếp lưu trữ các dấu mở ngoặc và khử cặp khi gặp dấu đóng tương ứng. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Xét phần tử: c = '{'.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 2,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 3,
+          "narration": "Đẩy giá trị '{' vào stack.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{"
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": [
+            "stack"
+          ]
+        },
+        {
+          "step_index": 4,
+          "narration": "Xét phần tử: c = '['.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{"
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 5,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{"
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 6,
+          "narration": "Đẩy giá trị '[' vào stack.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "["
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": [
+            "stack"
+          ]
+        },
+        {
+          "step_index": 7,
+          "narration": "Xét phần tử: c = '('.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "["
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 8,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "["
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 9,
+          "narration": "Đẩy giá trị '(' vào stack.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "[",
+                "("
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": [
+            "stack"
+          ]
+        },
+        {
+          "step_index": 10,
+          "narration": "Xét phần tử: c = ')'.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "[",
+                "("
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 11,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "[",
+                "("
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 12,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "[",
+                "("
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 13,
+          "narration": "Lấy phần tử đỉnh '(' ra khỏi stack.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "["
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": [
+            "stack"
+          ]
+        },
+        {
+          "step_index": 14,
+          "narration": "Xét phần tử: c = ']'.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "["
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 15,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "["
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 16,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{",
+                "["
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 17,
+          "narration": "Lấy phần tử đỉnh '[' ra khỏi stack.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{"
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": [
+            "stack"
+          ]
+        },
+        {
+          "step_index": 18,
+          "narration": "Xét phần tử: c = '}'.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{"
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 19,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{"
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 20,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [
+                "{"
+              ],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 21,
+          "narration": "Lấy phần tử đỉnh '{' ra khỏi stack.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": [
+            "stack"
+          ]
+        },
+        {
+          "step_index": 22,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "bracket_strip",
+              "type": "array_strip",
+              "label": "Chuỗi ngoặc đầu vào",
+              "items": [
+                "{",
+                "[",
+                "(",
+                ")",
+                "]",
+                "}"
+              ]
+            },
+            {
+              "id": "stack",
+              "type": "stack_view",
+              "label": "Ngăn xếp",
+              "items": [],
+              "capacity": 8
+            },
+            {
+              "id": "result_box",
+              "type": "value_box",
+              "label": "Kết quả",
+              "value": "HỢP LỆ"
+            }
+          ],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Học sinh quan sát cách Ngăn xếp lưu trữ các dấu mở ngoặc và khử cặp khi gặp dấu đóng tương ứng. | Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Xét phần tử: c = '{'."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Đẩy giá trị '{' vào stack."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Xét phần tử: c = '['."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 6,
+          "frame_lo": 6,
+          "frame_hi": 6,
+          "narration": "Đẩy giá trị '[' vào stack."
+        },
+        {
+          "view_index": 7,
+          "frame_lo": 7,
+          "frame_hi": 7,
+          "narration": "Xét phần tử: c = '('."
+        },
+        {
+          "view_index": 8,
+          "frame_lo": 8,
+          "frame_hi": 8,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 9,
+          "frame_lo": 9,
+          "frame_hi": 9,
+          "narration": "Đẩy giá trị '(' vào stack."
+        },
+        {
+          "view_index": 10,
+          "frame_lo": 10,
+          "frame_hi": 10,
+          "narration": "Xét phần tử: c = ')'."
+        },
+        {
+          "view_index": 11,
+          "frame_lo": 11,
+          "frame_hi": 11,
+          "narration": "Kiểm tra điều kiện: SAI."
+        },
+        {
+          "view_index": 12,
+          "frame_lo": 12,
+          "frame_hi": 12,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 13,
+          "frame_lo": 13,
+          "frame_hi": 13,
+          "narration": "Lấy phần tử đỉnh '(' ra khỏi stack."
+        },
+        {
+          "view_index": 14,
+          "frame_lo": 14,
+          "frame_hi": 14,
+          "narration": "Xét phần tử: c = ']'."
+        },
+        {
+          "view_index": 15,
+          "frame_lo": 15,
+          "frame_hi": 15,
+          "narration": "Kiểm tra điều kiện: SAI."
+        },
+        {
+          "view_index": 16,
+          "frame_lo": 16,
+          "frame_hi": 16,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 17,
+          "frame_lo": 17,
+          "frame_hi": 17,
+          "narration": "Lấy phần tử đỉnh '[' ra khỏi stack."
+        },
+        {
+          "view_index": 18,
+          "frame_lo": 18,
+          "frame_hi": 18,
+          "narration": "Xét phần tử: c = '}'."
+        },
+        {
+          "view_index": 19,
+          "frame_lo": 19,
+          "frame_hi": 19,
+          "narration": "Kiểm tra điều kiện: SAI."
+        },
+        {
+          "view_index": 20,
+          "frame_lo": 20,
+          "frame_hi": 20,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 21,
+          "frame_lo": 21,
+          "frame_hi": 21,
+          "narration": "Lấy phần tử đỉnh '{' ra khỏi stack."
+        },
+        {
+          "view_index": 22,
+          "frame_lo": 22,
+          "frame_hi": 22,
+          "narration": "Kiểm tra điều kiện: SAI."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null
+  },
+  "find_max": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Tìm phần tử lớn nhất trong dãy số",
+    "description": "Tìm phần tử lớn nhất trong dãy số",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Tìm phần tử lớn nhất trong dãy số",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 0
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Gán max_val = 12.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 2,
+          "narration": "Gán max_idx = 0.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 3,
+          "narration": "Vòng lặp: i = 1.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 4,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 5,
+          "narration": "Gán max_val = 45.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 6,
+          "narration": "Gán max_idx = 1.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 7,
+          "narration": "Vòng lặp: i = 2.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 8,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 9,
+          "narration": "Gán max_val = 67.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 10,
+          "narration": "Gán max_idx = 2.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 11,
+          "narration": "Vòng lặp: i = 3.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 3
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 12,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 3
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 13,
+          "narration": "Vòng lặp: i = 4.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 14,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 15,
+          "narration": "Gán max_val = 89.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 16,
+          "narration": "Gán max_idx = 4.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 17,
+          "narration": "Vòng lặp: i = 5.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 5
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 18,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "array_strip",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 5
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Gán max_val = 12."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Gán max_idx = 0."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Vòng lặp: i = 1."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Gán max_val = 45."
+        },
+        {
+          "view_index": 6,
+          "frame_lo": 6,
+          "frame_hi": 6,
+          "narration": "Gán max_idx = 1."
+        },
+        {
+          "view_index": 7,
+          "frame_lo": 7,
+          "frame_hi": 7,
+          "narration": "Vòng lặp: i = 2."
+        },
+        {
+          "view_index": 8,
+          "frame_lo": 8,
+          "frame_hi": 8,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 9,
+          "frame_lo": 9,
+          "frame_hi": 9,
+          "narration": "Gán max_val = 67."
+        },
+        {
+          "view_index": 10,
+          "frame_lo": 10,
+          "frame_hi": 10,
+          "narration": "Gán max_idx = 2."
+        },
+        {
+          "view_index": 11,
+          "frame_lo": 11,
+          "frame_hi": 11,
+          "narration": "Vòng lặp: i = 3."
+        },
+        {
+          "view_index": 12,
+          "frame_lo": 12,
+          "frame_hi": 12,
+          "narration": "Kiểm tra điều kiện: SAI."
+        },
+        {
+          "view_index": 13,
+          "frame_lo": 13,
+          "frame_hi": 13,
+          "narration": "Vòng lặp: i = 4."
+        },
+        {
+          "view_index": 14,
+          "frame_lo": 14,
+          "frame_hi": 14,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 15,
+          "frame_lo": 15,
+          "frame_hi": 15,
+          "narration": "Gán max_val = 89."
+        },
+        {
+          "view_index": 16,
+          "frame_lo": 16,
+          "frame_hi": 16,
+          "narration": "Gán max_idx = 4."
+        },
+        {
+          "view_index": 17,
+          "frame_lo": 17,
+          "frame_hi": 17,
+          "narration": "Vòng lặp: i = 5."
+        },
+        {
+          "view_index": 18,
+          "frame_lo": 18,
+          "frame_hi": 18,
+          "narration": "Kiểm tra điều kiện: SAI."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null
+  },
+  "graph_bfs": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+    "description": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": []
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Thêm '1' vào cuối hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "1"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": []
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 2,
+          "narration": "Thêm phần tử '1' vào tập hợp visited.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "1"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": []
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 3,
+          "narration": "Lấy phần tử đầu '1' ra khỏi hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": []
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 4,
+          "narration": "Đẩy giá trị '1' vào order.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "order"
+          ]
+        },
+        {
+          "step_index": 5,
+          "narration": "Xét phần tử: v = '2'.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 6,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 7,
+          "narration": "Thêm phần tử '2' vào tập hợp visited.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 8,
+          "narration": "Thêm '2' vào cuối hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "2"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 9,
+          "narration": "Xét phần tử: v = '3'.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "2"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 10,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "2"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 11,
+          "narration": "Thêm phần tử '3' vào tập hợp visited.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "2"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 12,
+          "narration": "Thêm '3' vào cuối hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "2",
+                "3"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 13,
+          "narration": "Lấy phần tử đầu '2' ra khỏi hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "3"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 14,
+          "narration": "Đẩy giá trị '2' vào order.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "3"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "order"
+          ]
+        },
+        {
+          "step_index": 15,
+          "narration": "Xét phần tử: v = '4'.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "3"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 16,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "3"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 17,
+          "narration": "Thêm phần tử '4' vào tập hợp visited.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "3"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 18,
+          "narration": "Thêm '4' vào cuối hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "3",
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 19,
+          "narration": "Lấy phần tử đầu '3' ra khỏi hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 20,
+          "narration": "Đẩy giá trị '3' vào order.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "order"
+          ]
+        },
+        {
+          "step_index": 21,
+          "narration": "Xét phần tử: v = '4'.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 22,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 23,
+          "narration": "Xét phần tử: v = '5'.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 24,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 25,
+          "narration": "Thêm phần tử '5' vào tập hợp visited.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 26,
+          "narration": "Thêm '5' vào cuối hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "4",
+                "5"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 27,
+          "narration": "Lấy phần tử đầu '4' ra khỏi hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "5"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 28,
+          "narration": "Đẩy giá trị '4' vào order.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": [
+                "5"
+              ]
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3",
+                "4"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "order"
+          ]
+        },
+        {
+          "step_index": 29,
+          "narration": "Lấy phần tử đầu '5' ra khỏi hàng đợi q.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3",
+                "4"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "q"
+          ]
+        },
+        {
+          "step_index": 30,
+          "narration": "Đẩy giá trị '5' vào order.",
+          "objects": [
+            {
+              "id": "q",
+              "type": "queue_view",
+              "label": "Hàng đợi BFS",
+              "items": []
+            },
+            {
+              "id": "order",
+              "type": "array_strip",
+              "label": "Thứ tự duyệt",
+              "items": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+              ]
+            }
+          ],
+          "highlighted_object_ids": [
+            "order"
+          ]
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Thêm '1' vào cuối hàng đợi q."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Thêm phần tử '1' vào tập hợp visited."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Lấy phần tử đầu '1' ra khỏi hàng đợi q."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Đẩy giá trị '1' vào order."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Xét phần tử: v = '2'."
+        },
+        {
+          "view_index": 6,
+          "frame_lo": 6,
+          "frame_hi": 6,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 7,
+          "frame_lo": 7,
+          "frame_hi": 7,
+          "narration": "Thêm phần tử '2' vào tập hợp visited."
+        },
+        {
+          "view_index": 8,
+          "frame_lo": 8,
+          "frame_hi": 8,
+          "narration": "Thêm '2' vào cuối hàng đợi q."
+        },
+        {
+          "view_index": 9,
+          "frame_lo": 9,
+          "frame_hi": 9,
+          "narration": "Xét phần tử: v = '3'."
+        },
+        {
+          "view_index": 10,
+          "frame_lo": 10,
+          "frame_hi": 10,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 11,
+          "frame_lo": 11,
+          "frame_hi": 11,
+          "narration": "Thêm phần tử '3' vào tập hợp visited."
+        },
+        {
+          "view_index": 12,
+          "frame_lo": 12,
+          "frame_hi": 12,
+          "narration": "Thêm '3' vào cuối hàng đợi q."
+        },
+        {
+          "view_index": 13,
+          "frame_lo": 13,
+          "frame_hi": 13,
+          "narration": "Lấy phần tử đầu '2' ra khỏi hàng đợi q."
+        },
+        {
+          "view_index": 14,
+          "frame_lo": 14,
+          "frame_hi": 14,
+          "narration": "Đẩy giá trị '2' vào order."
+        },
+        {
+          "view_index": 15,
+          "frame_lo": 15,
+          "frame_hi": 15,
+          "narration": "Xét phần tử: v = '4'."
+        },
+        {
+          "view_index": 16,
+          "frame_lo": 16,
+          "frame_hi": 16,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 17,
+          "frame_lo": 17,
+          "frame_hi": 17,
+          "narration": "Thêm phần tử '4' vào tập hợp visited."
+        },
+        {
+          "view_index": 18,
+          "frame_lo": 18,
+          "frame_hi": 18,
+          "narration": "Thêm '4' vào cuối hàng đợi q."
+        },
+        {
+          "view_index": 19,
+          "frame_lo": 19,
+          "frame_hi": 19,
+          "narration": "Lấy phần tử đầu '3' ra khỏi hàng đợi q."
+        },
+        {
+          "view_index": 20,
+          "frame_lo": 20,
+          "frame_hi": 20,
+          "narration": "Đẩy giá trị '3' vào order."
+        },
+        {
+          "view_index": 21,
+          "frame_lo": 21,
+          "frame_hi": 21,
+          "narration": "Xét phần tử: v = '4'."
+        },
+        {
+          "view_index": 22,
+          "frame_lo": 22,
+          "frame_hi": 22,
+          "narration": "Kiểm tra điều kiện: SAI."
+        },
+        {
+          "view_index": 23,
+          "frame_lo": 23,
+          "frame_hi": 23,
+          "narration": "Xét phần tử: v = '5'."
+        },
+        {
+          "view_index": 24,
+          "frame_lo": 24,
+          "frame_hi": 24,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 25,
+          "frame_lo": 25,
+          "frame_hi": 25,
+          "narration": "Thêm phần tử '5' vào tập hợp visited."
+        },
+        {
+          "view_index": 26,
+          "frame_lo": 26,
+          "frame_hi": 26,
+          "narration": "Thêm '5' vào cuối hàng đợi q."
+        },
+        {
+          "view_index": 27,
+          "frame_lo": 27,
+          "frame_hi": 27,
+          "narration": "Lấy phần tử đầu '4' ra khỏi hàng đợi q."
+        },
+        {
+          "view_index": 28,
+          "frame_lo": 28,
+          "frame_hi": 28,
+          "narration": "Đẩy giá trị '4' vào order."
+        },
+        {
+          "view_index": 29,
+          "frame_lo": 29,
+          "frame_hi": 29,
+          "narration": "Lấy phần tử đầu '5' ra khỏi hàng đợi q."
+        },
+        {
+          "view_index": 30,
+          "frame_lo": 30,
+          "frame_hi": 30,
+          "narration": "Đẩy giá trị '5' vào order."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null
+  },
+  "bar_chart": {
+    "status": "ok",
+    "simulation_id": "generic.semantic_program",
+    "domain": "generic",
+    "visual_mode": "2d",
+    "title": "Tìm phần tử lớn nhất trong dãy số",
+    "description": "Tìm phần tử lớn nhất trong dãy số",
+    "config": {
+      "spec_version": "1.0",
+      "title": "Tìm phần tử lớn nhất trong dãy số",
+      "frames": [
+        {
+          "step_index": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 0
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 1,
+          "narration": "Gán max_val = 12.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 2,
+          "narration": "Gán max_idx = 0.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 3,
+          "narration": "Vòng lặp: i = 1.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 4,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 12
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 5,
+          "narration": "Gán max_val = 45.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 0
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 6,
+          "narration": "Gán max_idx = 1.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 7,
+          "narration": "Vòng lặp: i = 2.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 8,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 45
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 9,
+          "narration": "Gán max_val = 67.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 1
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 10,
+          "narration": "Gán max_idx = 2.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 11,
+          "narration": "Vòng lặp: i = 3.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 3
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 12,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 3
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 13,
+          "narration": "Vòng lặp: i = 4.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 14,
+          "narration": "Kiểm tra điều kiện: ĐÚNG.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 67
+            }
+          ],
+          "highlighted_object_ids": []
+        },
+        {
+          "step_index": 15,
+          "narration": "Gán max_val = 89.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 2
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": [
+            "max_box"
+          ]
+        },
+        {
+          "step_index": 16,
+          "narration": "Gán max_idx = 4.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_max"
+          ]
+        },
+        {
+          "step_index": 17,
+          "narration": "Vòng lặp: i = 5.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 5
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": [
+            "ptr_i"
+          ]
+        },
+        {
+          "step_index": 18,
+          "narration": "Kiểm tra điều kiện: SAI.",
+          "objects": [
+            {
+              "id": "arr",
+              "type": "bar_chart",
+              "label": "Dãy số",
+              "items": [
+                12,
+                45,
+                67,
+                23,
+                89,
+                34
+              ]
+            },
+            {
+              "id": "ptr_i",
+              "type": "pointer",
+              "label": "i",
+              "target": "arr",
+              "target_index": 5
+            },
+            {
+              "id": "ptr_max",
+              "type": "pointer",
+              "label": "max",
+              "target": "arr",
+              "target_index": 4
+            },
+            {
+              "id": "max_box",
+              "type": "value_box",
+              "label": "Giá trị lớn nhất",
+              "value": 89
+            }
+          ],
+          "highlighted_object_ids": []
+        }
+      ],
+      "view_steps": [
+        {
+          "view_index": 0,
+          "frame_lo": 0,
+          "frame_hi": 0,
+          "narration": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ."
+        },
+        {
+          "view_index": 1,
+          "frame_lo": 1,
+          "frame_hi": 1,
+          "narration": "Gán max_val = 12."
+        },
+        {
+          "view_index": 2,
+          "frame_lo": 2,
+          "frame_hi": 2,
+          "narration": "Gán max_idx = 0."
+        },
+        {
+          "view_index": 3,
+          "frame_lo": 3,
+          "frame_hi": 3,
+          "narration": "Vòng lặp: i = 1."
+        },
+        {
+          "view_index": 4,
+          "frame_lo": 4,
+          "frame_hi": 4,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 5,
+          "frame_lo": 5,
+          "frame_hi": 5,
+          "narration": "Gán max_val = 45."
+        },
+        {
+          "view_index": 6,
+          "frame_lo": 6,
+          "frame_hi": 6,
+          "narration": "Gán max_idx = 1."
+        },
+        {
+          "view_index": 7,
+          "frame_lo": 7,
+          "frame_hi": 7,
+          "narration": "Vòng lặp: i = 2."
+        },
+        {
+          "view_index": 8,
+          "frame_lo": 8,
+          "frame_hi": 8,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 9,
+          "frame_lo": 9,
+          "frame_hi": 9,
+          "narration": "Gán max_val = 67."
+        },
+        {
+          "view_index": 10,
+          "frame_lo": 10,
+          "frame_hi": 10,
+          "narration": "Gán max_idx = 2."
+        },
+        {
+          "view_index": 11,
+          "frame_lo": 11,
+          "frame_hi": 11,
+          "narration": "Vòng lặp: i = 3."
+        },
+        {
+          "view_index": 12,
+          "frame_lo": 12,
+          "frame_hi": 12,
+          "narration": "Kiểm tra điều kiện: SAI."
+        },
+        {
+          "view_index": 13,
+          "frame_lo": 13,
+          "frame_hi": 13,
+          "narration": "Vòng lặp: i = 4."
+        },
+        {
+          "view_index": 14,
+          "frame_lo": 14,
+          "frame_hi": 14,
+          "narration": "Kiểm tra điều kiện: ĐÚNG."
+        },
+        {
+          "view_index": 15,
+          "frame_lo": 15,
+          "frame_hi": 15,
+          "narration": "Gán max_val = 89."
+        },
+        {
+          "view_index": 16,
+          "frame_lo": 16,
+          "frame_hi": 16,
+          "narration": "Gán max_idx = 4."
+        },
+        {
+          "view_index": 17,
+          "frame_lo": 17,
+          "frame_hi": 17,
+          "narration": "Vòng lặp: i = 5."
+        },
+        {
+          "view_index": 18,
+          "frame_lo": 18,
+          "frame_hi": 18,
+          "narration": "Kiểm tra điều kiện: SAI."
+        }
+      ],
+      "grouping_level": "step",
+      "presentation_overflow": false,
+      "execution_truncated": false
+    },
+    "notes": null
+  }
+}

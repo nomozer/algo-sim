@@ -1,0 +1,170 @@
+{
+  "when": "2026-08-21T00:51:41.851Z",
+  "port": "3100",
+  "mode": "soát",
+  "viewports": [
+    "school_1366x768",
+    "desktop_1920x1080"
+  ],
+  "cases": [
+    "stack_bracket",
+    "find_max",
+    "graph_bfs",
+    "bar_chart"
+  ],
+  "failures": 0,
+  "rows": [
+    {
+      "case": "stack_bracket",
+      "viewport": "school_1366x768",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 6,
+        "bars": 0,
+        "boxes": 1,
+        "pointers": 0
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    },
+    {
+      "case": "stack_bracket",
+      "viewport": "desktop_1920x1080",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 6,
+        "bars": 0,
+        "boxes": 1,
+        "pointers": 0
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    },
+    {
+      "case": "find_max",
+      "viewport": "school_1366x768",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 6,
+        "bars": 0,
+        "boxes": 1,
+        "pointers": 1
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    },
+    {
+      "case": "find_max",
+      "viewport": "desktop_1920x1080",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 6,
+        "bars": 0,
+        "boxes": 1,
+        "pointers": 1
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    },
+    {
+      "case": "graph_bfs",
+      "viewport": "school_1366x768",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 2,
+        "bars": 0,
+        "boxes": 0,
+        "pointers": 0
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    },
+    {
+      "case": "graph_bfs",
+      "viewport": "desktop_1920x1080",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 2,
+        "bars": 0,
+        "boxes": 0,
+        "pointers": 0
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    },
+    {
+      "case": "bar_chart",
+      "viewport": "school_1366x768",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 0,
+        "bars": 6,
+        "boxes": 1,
+        "pointers": 1
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    },
+    {
+      "case": "bar_chart",
+      "viewport": "desktop_1920x1080",
+      "ok": true,
+      "loi": [],
+      "counts": {
+        "cells": 0,
+        "bars": 6,
+        "boxes": 1,
+        "pointers": 1
+      },
+      "doiKhungSau6Buoc": true,
+      "chiTiet": {
+        "collisions": [],
+        "clipped": [],
+        "pointerHits": [],
+        "duplicates": []
+      }
+    }
+  ]
+}
