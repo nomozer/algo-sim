@@ -1,0 +1,85 @@
+{
+  "chay_luc": "2026-08-21T20:23:14+00:00",
+  "measured_system_candidate": "7ecc992",
+  "evaluation_harness_commit": {
+    "commit": "20ebbb8",
+    "cay_sach": true
+  },
+  "cache_version": "34",
+  "sealed_fingerprint": "34a10a9c47c63cf97ae2f378fb1fb67f4319d77b47902d9446082d03ff701342",
+  "dung_som": null,
+  "ngan_sach": {
+    "tran_logic": 440,
+    "tran_http": 520,
+    "logic_da_dung": 204,
+    "http_da_dung": 207,
+    "retry": 3
+  },
+  "N_planned": 40,
+  "N_processed": 40,
+  "evaluation_complete": true,
+  "canh_bao": null,
+  "A_generative_executability": {
+    "so": 0,
+    "tren": 40,
+    "ti_le": 0.0
+  },
+  "B_internal_servable": {
+    "so": 0,
+    "tren": 40,
+    "ti_le": 0.0,
+    "khai": "STRONG-assurance rate — tỉ lệ case QUA HẾT cổng nội bộ. ĐÂY KHÔNG PHẢI 'đúng': cổng nội bộ không phải oracle độc lập. Xem `dung_theo_oracle_doc_lap`."
+  },
+  "A_tru_B_phan_ra": {
+    "tong": 0,
+    "theo_nguyen_nhan": {},
+    "khai": "Chạy được nhưng không phát được. CHỈ nhánh `verification_gap` mới là 'thiếu cách kiểm chứng'; các nhánh còn lại là chương trình tự mâu thuẫn (C₁b/C₂) hoặc không dựng nổi bề mặt thị giác. Gọi cả khối là verification_gap là báo cáo sai."
+  },
+  "dung_theo_oracle_doc_lap": {
+    "pass": 0,
+    "fail": 0,
+    "ungraded": 0,
+    "no_result": 40,
+    "tong_kiem": 40,
+    "ti_le_tren_so_cham_duoc": null,
+    "phat_nhung_oracle_noi_SAI": {
+      "so": 0,
+      "case_id": [],
+      "khai": "Case hệ tự cho là phát được nhưng ground truth độc lập nói sai. Khác 0 ⇒ cổng nội bộ CHƯA ĐỦ, và không được viết trong luận văn rằng những case ấy 'an toàn'."
+    },
+    "ghi_chu": "UNGRADED/NO_RESULT đếm RIÊNG, không vào tử số lẫn mẫu số. `tong_kiem` phải bằng N_processed."
+  },
+  "D1_structural_interpreter_khong_ton_token": {
+    "khai": "Sau khi IR được sinh, interpreter chạy bao nhiêu bước cũng KHÔNG tốn thêm một lượt LLM nào. Đây là claim CẤU TRÚC, kiểm bằng call graph, không phải claim thực nghiệm về giá.",
+    "so_luot_llm_phan_bo": [
+      2,
+      4,
+      5,
+      6,
+      7
+    ],
+    "so_buoc_min_max": {
+      "min": null,
+      "max": null
+    },
+    "bang_chung": []
+  },
+  "semantic_token_per_case": {
+    "khai": "Telemetry hỗ trợ, KHÔNG phải D1. Claim thực nghiệm về token là D2.",
+    "tat_ca_stage": 23747.0,
+    "chi_stage_ngu_nghia": 4227.8
+  },
+  "D2_matched_subset": {
+    "so_case": 0,
+    "case_id": [],
+    "ngu_nghia": 0,
+    "module": 0,
+    "chung": 0,
+    "ghi_chu": "Ba con số báo RIÊNG. Tập giao rỗng là một KẾT QUẢ hợp lệ và phải được ghi đúng như thế, không phải lỗi runner."
+  },
+  "phan_bo_that_bai": {
+    "semantic_program_invalid": 38,
+    "gate_not_simulation_suitable": 1,
+    "gate_out_of_scope": 1
+  }
+}
