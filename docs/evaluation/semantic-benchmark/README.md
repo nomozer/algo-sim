@@ -221,6 +221,29 @@ Cả hai trục được **cưỡng chế** trong `ApiBudget`, không chỉ đ�
 
 > Chốt 2026-08-22, trước khi niêm phong. **Không nâng sau khi SEALED được mở.**
 
+## Hai danh tính trong artifact Task 12
+
+Báo cáo ghi **riêng** hai hash, và chúng trả lời hai câu khác nhau:
+
+```json
+"measured_system_candidate": "36bae92",
+"evaluation_harness_commit": { "commit": "…", "cay_sach": true }
+```
+
+| trường | câu hỏi |
+|---|---|
+| `measured_system_candidate` | **đo bản nào** của hệ sinh mô phỏng |
+| `evaluation_harness_commit` | **bộ đo phiên bản nào** đã đo nó (HEAD lúc chạy) |
+
+Tách ra vì harness — runner, validator, test instrumentation — vẫn còn có thể
+được siết chặt trước SEALED, và **không có lý do gì đóng băng lại candidate chỉ
+vì bộ đo cứng cáp hơn**, miễn thay đổi ấy không đụng vào **ngữ nghĩa** của hệ
+được đo. Gộp hai hash làm một thì hoặc phải refreeze mỗi lần thêm một test,
+hoặc phải im lặng để candidate trôi khỏi HEAD — cả hai đều tệ.
+
+`cay_sach: false` **không chặn** lượt chạy: harness bẩn không làm sai kết quả
+đo. Nhưng nó được ghi lại, vì người đọc có quyền biết bộ đo lúc ấy chưa commit.
+
 ## Các con số phải báo — và đừng gộp chúng
 
 | | nghĩa |

@@ -57,6 +57,19 @@ khỏi mã đúng như bảng danh tính từng trôi ở `CURRENT_STATE.md`.
 > **KHÔNG sửa candidate vì kết quả SEALED.** Kiểm bằng
 > `freeze_evaluation_candidate.py --verify`; lệch ⇒ thoát != 0.
 
+### Hệ ĐƯỢC ĐO ≠ BỘ ĐO
+
+Artifact Task 12 ghi riêng `measured_system_candidate` và
+`evaluation_harness_commit`. Harness (runner · validator · test instrumentation)
+được phép cứng cáp thêm **trước** SEALED mà **không** phải đóng băng lại
+candidate, miễn thay đổi ấy không đụng vào **ngữ nghĩa** của hệ được đo — tức
+không chạm prompt · schema · taxonomy · primitive · route · checker.
+
+Ranh giới kiểm được: `--verify` chỉ so taxonomy · tập primitive · schema · DEV ·
+`CACHE_VERSION`. Thêm một test hay siết một thông báo lỗi thì `--verify` vẫn
+khớp; đổi một trong năm thứ trên thì nó đỏ. Đó chính là định nghĩa vận hành của
+"không đụng ngữ nghĩa".
+
 ## 2. Ngân sách Task 12 — chốt cứng, không nâng sau khi thấy số
 
 ```

@@ -376,7 +376,9 @@ def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str
 
     return {
         "chay_luc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "candidate_commit": candidate.get("commit_ngan"),
+        # HAI DANH TÍNH, đừng gộp — xem `_danh_tinh_harness`.
+        "measured_system_candidate": candidate.get("commit_ngan"),
+        "evaluation_harness_commit": _danh_tinh_harness(),
         "cache_version": candidate.get("cache_version"),
         "sealed_fingerprint": van_tay,
         "dung_som": dung_som,
@@ -469,6 +471,40 @@ def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str
     }
 
 
+def _danh_tinh_harness() -> dict:
+    """HEAD của BỘ ĐO tại thời điểm chạy — tách hẳn khỏi hệ ĐƯỢC ĐO.
+
+    Hai danh tính, hai câu hỏi khác nhau:
+
+        measured_system_candidate  — ĐO BẢN NÀO của hệ sinh mô phỏng
+        evaluation_harness_commit  — BỘ ĐO phiên bản nào đã đo nó
+
+    Cần tách vì harness (runner, validator, test instrumentation) còn có thể
+    được siết chặt trước SEALED, và **không có lý do gì đóng băng lại candidate
+    chỉ vì bộ đo cứng cáp hơn** — miễn thay đổi ấy không đụng vào NGỮ NGHĨA của
+    hệ được đo. Gộp hai hash làm một thì hoặc phải refreeze mỗi lần thêm một
+    test, hoặc phải im lặng để candidate trôi khỏi HEAD; cả hai đều tệ.
+
+    Cây bẩn được ghi lại chứ không chặn: harness bẩn không làm sai kết quả đo,
+    nhưng người đọc có quyền biết bộ đo lúc ấy chưa được commit.
+    """
+    def _git(*a: str):
+        """Trả `(ok, stdout đã strip)`. Tách `ok` khỏi nội dung vì chuỗi RỖNG là
+        một câu trả lời có nghĩa ("cây sạch"), không phải thất bại."""
+        try:
+            r = subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True)
+            return r.returncode == 0, r.stdout.strip()
+        except OSError:
+            return False, ""
+
+    ok_head, head = _git("rev-parse", "--short", "HEAD")
+    ok_status, ban = _git("status", "--porcelain")
+    return {
+        "commit": head if ok_head else None,
+        "cay_sach": (ban == "") if ok_status else None,
+    }
+
+
 def _min_max_buoc(ket_qua: list[dict]) -> dict:
     """Khoảng số bước đã chạy. Rộng mà số lượt LLM không nhúc nhích chính là
     bằng chứng của D1 cấu trúc."""
@@ -556,7 +592,10 @@ async def _main_async(args) -> int:
         json.dumps(ket_qua, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     oracle = bao_cao["dung_theo_oracle_doc_lap"]
+    hn = bao_cao["evaluation_harness_commit"]
     print("\n── KẾT QUẢ ──")
+    print(f"  hệ được đo            {bao_cao['measured_system_candidate']}"
+          f"  ·  bộ đo {hn['commit']} (cây sạch: {hn['cay_sach']})")
     print(f"  N                     {bao_cao['N_processed']}/{bao_cao['N_planned']}"
           f"  (đầy đủ: {bao_cao['evaluation_complete']})")
     if bao_cao["canh_bao"]:

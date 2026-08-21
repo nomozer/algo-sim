@@ -321,6 +321,50 @@ def test_phan_bo_that_bai_gom_theo_ma_loi(rn):
     assert "c4" not in bo
 
 
+# ── Hai danh tính: hệ ĐƯỢC ĐO vs BỘ ĐO ───────────────────────────
+def test_bao_cao_tach_he_duoc_do_khoi_bo_do(rn):
+    """Gộp hai hash làm một thì hoặc phải refreeze candidate mỗi lần thêm một
+    test, hoặc phải im lặng để candidate trôi khỏi HEAD. Cả hai đều tệ."""
+    bc = rn._tong_ket([_r("c1", executable=True, servable=True)], 1,
+                      {"commit_ngan": "36bae92", "cache_version": "34"}, "v",
+                      _NganSach(), None)
+
+    assert bc["measured_system_candidate"] == "36bae92"
+    assert "candidate_commit" not in bc, "nhãn cũ không nói rõ đó là hash NÀO"
+
+    hn = bc["evaluation_harness_commit"]
+    assert isinstance(hn, dict) and set(hn) == {"commit", "cay_sach"}
+    assert hn["commit"] and len(hn["commit"]) >= 7, hn
+    assert hn["commit"] != bc["measured_system_candidate"] or True  # có thể trùng
+
+
+def test_danh_tinh_harness_khong_lan_CAY_SACH_voi_GIT_LOI(rn, monkeypatch):
+    """Chuỗi rỗng từ `git status` nghĩa là CÂY SẠCH, không phải thất bại.
+
+    Lẫn hai thứ đó là ghi `cay_sach: null` cho một lượt chạy hoàn toàn sạch, và
+    người đọc artifact sẽ tưởng bộ đo không kiểm được gì.
+    """
+    import subprocess
+
+    class _Kq:
+        def __init__(self, code, out):
+            self.returncode, self.stdout = code, out
+
+    def gia(cmd, **kw):
+        if "status" in cmd:
+            return _Kq(0, "")          # cây SẠCH
+        return _Kq(0, "abc1234\n")
+
+    monkeypatch.setattr(subprocess, "run", gia)
+    assert rn._danh_tinh_harness() == {"commit": "abc1234", "cay_sach": True}
+
+    def hong(cmd, **kw):
+        raise OSError("khong co git")
+
+    monkeypatch.setattr(subprocess, "run", hong)
+    assert rn._danh_tinh_harness() == {"commit": None, "cay_sach": None}
+
+
 def test_bao_cao_ghi_lai_ngan_sach_da_dung(rn):
     bc = rn._tong_ket([_r("c1", executable=True, servable=True)], 1, {}, "v",
                       _NganSach(), None)

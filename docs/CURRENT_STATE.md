@@ -52,7 +52,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   call graph**.
 > - `CACHE_VERSION` **33 → 34**. Taxonomy `4dd712a3` · primitive `1a127502` ·
 >   schema `b87aeb18` · DEV `8a3de7a3` — **không đổi** qua cả bốn lần đóng băng.
-> - Offline: pytest **1723** (18 skip, 1 deselect) · vitest **1473 / 123 file** ·
+> - Offline: pytest **1725** (18 skip, 1 deselect) · vitest **1473 / 123 file** ·
 >   tsc 0 lỗi · vite build sạch.
 > - **CHƯA làm — chặn ở ngoài phía phát triển:** SEALED 40 do custodian độc lập
 >   chuẩn bị và niêm phong. Task 12 chạy sau đó, **một lần**; Task 13 closeout
