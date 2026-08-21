@@ -1,19 +1,14 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "36a1870e92655560",
+  "sourceFingerprint": "ff81d295f6467bee",
   "dirtyRelevantSources": [
-    "backend/app/simulation/semantic_program/contract.py",
-    "backend/app/simulation/semantic_program/visual_adapter.py",
-    "backend/tests/semantic_program/fixtures_coverage_18.py",
-    "frontend/src/simulations/domains/generic/semantic_program.schema.json",
-    "frontend/src/simulations/domains/semantic/model.ts",
-    "frontend/src/simulations/domains/semantic/semantic.test.ts",
-    "frontend/src/simulations/domains/semantic/ui.tsx",
-    "frontend/src/styles/global.css"
+    "frontend/scripts/verify-live-gemini-render.mjs",
+    "frontend/scripts/verify-real-browser-render.mjs",
+    "frontend/scripts/verify-semantic-e2e-render.mjs"
   ],
-  "head": "d81b6062e1892dce694c839d2d93d39eb6f48953",
+  "head": "e1bc11ccaa12215bd0fcda2ff6ae0617af3b6a83",
   "dirty": true,
-  "generatedAt": "2026-08-21T12:28:02.183Z",
+  "generatedAt": "2026-08-21T13:25:15.746Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

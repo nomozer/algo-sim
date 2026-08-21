@@ -1,8 +1,16 @@
 import { chromium } from "playwright";
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
 
-const ARTIFACT_DIR = "C:/Users/Bunny/.gemini/antigravity-ide/brain/1b410171-c038-4e7f-ae93-ef8434b82ce0";
+// Bằng chứng phải rơi vào KHO MÃ. Bản trước ghi ra một scratch dir tuyệt đối
+// của máy một người, nên ảnh chụp và báo cáo không bao giờ commit được — tức
+// script chạy xanh mà luận văn vẫn không có gì để dẫn.
+const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const ARTIFACT_DIR = process.env.ARTIFACT_DIR
+  ? path.resolve(process.env.ARTIFACT_DIR)
+  : path.join(REPO, "docs/evaluation/semantic-program/render");
+fs.mkdirSync(ARTIFACT_DIR, { recursive: true });
 
 const VIEWPORTS = [
   { name: "desktop_1920x1080", width: 1920, height: 1080 },
