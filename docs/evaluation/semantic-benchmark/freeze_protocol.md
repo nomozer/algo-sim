@@ -65,10 +65,22 @@ Artifact Task 12 ghi riêng `measured_system_candidate` và
 candidate, miễn thay đổi ấy không đụng vào **ngữ nghĩa** của hệ được đo — tức
 không chạm prompt · schema · taxonomy · primitive · route · checker.
 
-Ranh giới kiểm được: `--verify` chỉ so taxonomy · tập primitive · schema · DEV ·
-`CACHE_VERSION`. Thêm một test hay siết một thông báo lỗi thì `--verify` vẫn
-khớp; đổi một trong năm thứ trên thì nó đỏ. Đó chính là định nghĩa vận hành của
-"không đụng ngữ nghĩa".
+Ranh giới **kiểm được**, và từ 2026-08-22 nó khoá **cả mã** chứ không chỉ hợp
+đồng. `--verify` so sáu thứ:
+
+```
+taxonomy · tập primitive · schema · DEV · CACHE_VERSION   ← HỢP ĐỒNG
+measured_system.tree_hash                                  ← MÃ SẢN PHẨM
+```
+
+Thứ sáu là thứ làm câu *"hệ được đo = `<commit>`"* thành mệnh đề máy kiểm được.
+Không có nó, sửa `pipeline.py` / `route.py` / interpreter / validator / checker
+mà không đụng năm thứ đầu thì `--verify` **vẫn xanh** trong khi ngữ nghĩa hệ đã
+đổi — đúng loại lỗ mà sự cố "route chưa từng được nối" đã phơi ra.
+
+Định nghĩa vận hành của "không đụng ngữ nghĩa": thêm một test, siết một thông
+báo lỗi, viết thêm tài liệu ⇒ `--verify` vẫn khớp. Đổi một dòng trong
+`backend/app` ⇒ ĐỎ.
 
 ## 2. Ngân sách Task 12 — chốt cứng, không nâng sau khi thấy số
 

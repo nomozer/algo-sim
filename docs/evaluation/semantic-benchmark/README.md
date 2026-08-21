@@ -221,6 +221,44 @@ Cả hai trục được **cưỡng chế** trong `ApiBudget`, không chỉ đ�
 
 > Chốt 2026-08-22, trước khi niêm phong. **Không nâng sau khi SEALED được mở.**
 
+## "Hệ được đo = `36bae92`" nay là mệnh đề MÁY KIỂM ĐƯỢC
+
+Trước 2026-08-22, `--verify` chỉ so **taxonomy · primitive · schema · DEV ·
+`CACHE_VERSION`** — tức chỉ khoá **hợp đồng**. Nó hoàn toàn **mù** trước việc
+sửa `pipeline.py`, `route.py`, interpreter, validator hay bất kỳ checker nào:
+`--verify` vẫn xanh trong khi ngữ nghĩa hệ đã đổi. Đúng loại lỗ mà sự cố *"route
+chưa từng được nối"* đã cho thấy là có thật.
+
+Manifest nay có thêm:
+
+```json
+"measured_system": {
+  "paths": ["backend/app", "frontend/src/simulations/domains/semantic", …],
+  "so_file": 125,
+  "tree_hash": "5608fbfe…"
+}
+```
+
+Ranh giới chọn theo **nguyên tắc**, không theo phán đoán từng file:
+
+| | thuộc về |
+|---|---|
+| `backend/app/**` + module 2D + schema mirror | **hệ được đo** — đổi một dòng là `--verify` ĐỎ |
+| `backend/scripts/**`, `backend/tests/**`, `docs/**` | **bộ đo** — được siết chặt tự do |
+
+Nhờ vậy harness cứng cáp thêm mà **không** phải đóng băng lại candidate, còn một
+dòng mã sản phẩm đổi thì không lọt được.
+
+**Đã chứng minh bằng tiêm lỗi**: thêm một dòng *comment* vào `route.py` ⇒
+`--verify` đỏ, exit 1, kèm sẵn lệnh `git diff --stat` để tra. Khôi phục ⇒ hash
+trùng khít trở lại.
+
+> **Đọc `commit` trong manifest cho đúng.** Trường `commit` ghi thời điểm
+> manifest được **sinh ra**; danh tính của **hệ được đo** nằm ở `tree_hash`.
+> Hai thứ tách nhau từ khi harness được phép đổi độc lập. Kiểm được:
+> `git diff 36bae92 HEAD -- backend/app` **rỗng**, và `tree_hash` giữ nguyên
+> `5608fbfe…` qua mọi lần đóng băng kể từ `36bae92`.
+
 ## Hai danh tính trong artifact Task 12
 
 Báo cáo ghi **riêng** hai hash, và chúng trả lời hai câu khác nhau:

@@ -34,7 +34,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > Bằng chứng: `docs/evaluation/semantic-benchmark/` (`README.md` ·
 > `freeze_protocol.md` · `CUSTODIAN_HANDOFF.md` · `EVALUATION_CANDIDATE.json`).
 >
-> - **Bản đem đo: `36bae92`** (manifest ở `2fa3e88`). Từ mốc này **không sửa**
+> - **Bản đem đo: `36bae92`** — danh tính máy kiểm được là `measured_system.tree_hash` = `5608fbfe…` (125 file), giữ NGUYÊN qua mọi lần đóng băng sau đó. Từ mốc này **không sửa**
 >   prompt · schema · taxonomy · primitive · route · checker · runner · ngân
 >   sách vì kết quả SEALED. `--verify` là cổng kiểm.
 > - **Route nay ĐI QUA `run_pipeline` thật** (bất biến #22). Trước 2026-08-21
@@ -52,7 +52,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   call graph**.
 > - `CACHE_VERSION` **33 → 34**. Taxonomy `4dd712a3` · primitive `1a127502` ·
 >   schema `b87aeb18` · DEV `8a3de7a3` — **không đổi** qua cả bốn lần đóng băng.
-> - Offline: pytest **1725** (18 skip, 1 deselect) · vitest **1473 / 123 file** ·
+> - Offline: pytest **1729** (18 skip, 1 deselect) · vitest **1473 / 123 file** ·
 >   tsc 0 lỗi · vite build sạch.
 > - **CHƯA làm — chặn ở ngoài phía phát triển:** SEALED 40 do custodian độc lập
 >   chuẩn bị và niêm phong. Task 12 chạy sau đó, **một lần**; Task 13 closeout

@@ -1,13 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "b37f1cee981175f5",
-  "dirtyRelevantSources": [
-    "backend/tests/semantic_program/test_sealed_runner.py",
-    "backend/tests/test_gemini.py"
-  ],
-  "head": "413b81ce8da0e38c679434e00ecba35684d5ceee",
-  "dirty": true,
-  "generatedAt": "2026-08-21T18:11:50.736Z",
+  "sourceFingerprint": "416b733f1c08a158",
+  "dirtyRelevantSources": [],
+  "head": "cdada5347cf3a5e3a3846cc373eae997c20a4595",
+  "dirty": false,
+  "generatedAt": "2026-08-21T18:23:34.797Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
