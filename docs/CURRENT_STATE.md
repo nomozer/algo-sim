@@ -29,6 +29,35 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### M21 — ROUTE SINH NGỮ NGHĨA: đóng phía phát triển, chờ SEALED (2026-08-22)
+>
+> Bằng chứng: `docs/evaluation/semantic-benchmark/` (`README.md` ·
+> `freeze_protocol.md` · `CUSTODIAN_HANDOFF.md` · `EVALUATION_CANDIDATE.json`).
+>
+> - **Bản đem đo: `36bae92`** (manifest ở `2fa3e88`). Từ mốc này **không sửa**
+>   prompt · schema · taxonomy · primitive · route · checker · runner · ngân
+>   sách vì kết quả SEALED. `--verify` là cổng kiểm.
+> - **Route nay ĐI QUA `run_pipeline` thật** (bất biến #22). Trước 2026-08-21
+>   `stage_semantic_program` **không có một ai gọi**: mọi mảnh đều xanh nhưng
+>   chưa mảnh nào được ghép — unit test xanh **không** chứng minh đường
+>   orchestration tồn tại.
+> - **Cờ `semantic_route`**: `off` (mặc định, production không đổi một bit) ·
+>   `shadow` · `serve`. Shadow chạy **độc lập với classifier legacy** — đặt
+>   trong nhánh generic thì claim A hoá ra là claim về *classifier*.
+> - **Hai tỉ lệ tách hẳn**: `A` executability · `B_internal_servable`
+>   (STRONG-assurance nội bộ, **không phải "đúng"**). `A − B` phải **phân rã**:
+>   chỉ một nhánh là `verification_gap`, còn lại là C₁b/C₂/binding.
+> - **Ngân sách chốt cuối**: N=40 · 440 lượt logic · 520 HTTP, cưỡng chế ở cả
+>   hai trục trong `ApiBudget`. 440 = 11 × 40 với 11 là upper bound **dẫn từ
+>   call graph**.
+> - `CACHE_VERSION` **33 → 34**. Taxonomy `4dd712a3` · primitive `1a127502` ·
+>   schema `b87aeb18` · DEV `8a3de7a3` — **không đổi** qua cả bốn lần đóng băng.
+> - Offline: pytest **1708** (18 skip, 1 deselect) · vitest **1473 / 123 file** ·
+>   tsc 0 lỗi · vite build sạch.
+> - **CHƯA làm — chặn ở ngoài phía phát triển:** SEALED 40 do custodian độc lập
+>   chuẩn bị và niêm phong. Task 12 chạy sau đó, **một lần**; Task 13 closeout
+>   sau cùng.
+>
 > ### M19 — BỐ CỤC DÙNG CHUNG: khung theo cơ chế, một rail (2026-08-13)
 >
 > Bằng chứng: `docs/evaluation/m19/` (`before-1920.json` · `after.json`).

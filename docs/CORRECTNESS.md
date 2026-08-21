@@ -44,6 +44,51 @@ canonical) bất khả xâm phạm, `exit_branch` quay về. Generic experimenta
 tương lai theo đúng khuôn này: **branch chỉ có giá trị khi engine tính được hậu
 quả** — chưa có rule thì chưa có branch, không "giả vờ biết".
 
+## 2b. Trục thứ ba: CHẠY ĐƯỢC ≠ CHỨNG MINH ĐƯỢC (route sinh ngữ nghĩa)
+
+Hai trục ở §2 đủ cho đường module: ở đó, config qua được validator là đủ để
+phát, vì bản thân module đã mã hoá sẵn cơ chế đúng. Route sinh ngữ nghĩa
+(`generic.semantic_program`) không có chỗ dựa ấy — chương trình do LLM viết ra
+lần đầu tiên nhìn thấy — nên phải tách thêm một trục:
+
+| | Câu hỏi | Trả lời KHÔNG thì gọi là |
+|---|---|---|
+| **executable** | Máy có **thực thi** được bài này thành mô phỏng? | `capability_gap` |
+| **servable** | Đã đủ **bằng chứng** để phát như canonical? | `verification_gap` |
+
+Gộp hai cái làm một là báo cáo sai năng lực của chính hệ theo hướng **bi quan**:
+nói "không làm được" về một bài vừa chạy xong. Đó cũng là chỗ hai chỉ số
+đồng-primary của đề tài tách nhau (`STATUS_LEDGER §0-2026-08-20`).
+
+**`servable=false` KHÔNG phải một nhóm đồng nhất.** Bốn nguyên nhân, khác hẳn
+nhau về bản chất, và chỉ nguyên nhân đầu mới là "thiếu cách kiểm chứng":
+
+| cổng | ý nghĩa khi trượt |
+|---|---|
+| C₁a mức yếu | nghĩa vụ **không có checker server-owned** → `verification_gap` |
+| C₁b | có đường tạo witness nhưng **lượt chạy không đi qua** (nhánh chết) |
+| C₂ | chương trình **tự mâu thuẫn** với nghĩa vụ nó tự khai |
+| binding/compile | không dựng nổi bề mặt thị giác từ trace |
+
+C₁b và C₂ chứng minh chương trình **hỏng**, không phải hệ thiếu công cụ. Gọi cả
+bốn là `verification_gap` là báo cáo sai.
+
+**Ba điều KHÔNG bị nới ở route này:**
+
+1. **R0 nguyên vẹn.** LLM viết *chương trình*; `SemanticProgramInterpreter` mới
+   là authority tính ra kết quả. `execution_authority_gate` thay khái niệm của
+   `computation_gate` chứ không nới nó — luật cũ viết "algorithmic ⇒ từ chối",
+   luật đúng luôn là "kết quả phải có **authority tất định** sở hữu". Khi hệ
+   chưa có interpreter thì hai câu trùng nhau; nay đã có thì phải tách, nếu
+   không hệ từ chối đúng lớp bài nó vừa làm được.
+2. **Dữ liệu phải truy được về đề** (P2, `grounding_gate`). Ghim **đúng mục
+   nào**, không phải "trông giống dữ liệu đề". Giới hạn P1 (Contract → đề gốc)
+   còn mở và đã khai ở `semantic-benchmark/P1_LIMITATION.md`.
+3. **Cổng nội bộ KHÔNG phải oracle.** `servable=true` nghĩa là *qua hết cổng nội
+   bộ* (STRONG-assurance), **không** nghĩa là *đúng*. Correctness theo oracle
+   độc lập phải báo riêng, và case `servable` mà oracle nói sai phải được nêu
+   đích danh — che nó bằng một cái nhãn đẹp là tự bịt mắt mình.
+
 ## 3. Taxonomy kết quả patch/edit (PatchResult) — TÁCH với interaction feedback
 
 Cho **patch/edit** (đổi cấu trúc spec):

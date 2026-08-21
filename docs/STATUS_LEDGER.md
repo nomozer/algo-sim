@@ -352,9 +352,22 @@ route mới · tắt 24 module cũ · pattern reuse cho route mới · explicit 
 caching · mức yếu phục vụ học sinh. Ý tưởng rơi vào đây → `POST_THESIS_BACKLOG.md`.
 
 **Kỷ luật tuyên bố không đổi**: mở phạm vi **không** sinh thêm bằng chứng. Hai
-chỉ số phải báo **riêng, đồng-primary** — `Generative executability rate` (kiến
-trúc có thoát module-per-problem không) và `Safe serve rate` (bao nhiêu đủ bằng
-chứng để thật sự phục vụ). Không được gộp làm một để số đẹp hơn.
+chỉ số phải báo **riêng, đồng-primary** — `A: Generative executability rate`
+(kiến trúc có thoát module-per-problem không) và `B: internal servable rate`
+(bao nhiêu qua hết cổng nội bộ). Không được gộp làm một để số đẹp hơn.
+
+**Ba chỗ dễ viết sai, chốt 2026-08-22** (chi tiết: `semantic-benchmark/README.md`):
+
+- **B không phải "đúng".** Tên cũ `Safe serve rate` hứa nhiều hơn thứ đo được —
+  cổng nội bộ không phải oracle độc lập. Đúng tên là **STRONG-assurance nội
+  bộ**; correctness theo oracle độc lập báo **riêng**, và case `servable=true`
+  mà oracle nói sai phải được **nêu đích danh**.
+- **A − B phải phân rã.** Chỉ một nhánh trong đó là `verification_gap`; các
+  nhánh còn lại là chương trình tự mâu thuẫn (C₁b/C₂) hoặc không dựng nổi bề
+  mặt thị giác. Gọi cả khối bằng một tên là báo cáo sai.
+- **D1 là claim CẤU TRÚC**, không phải giá đo được: sau khi IR sinh xong,
+  interpreter chạy bao nhiêu bước cũng không tốn thêm lượt LLM nào. Token/case
+  là telemetry hỗ trợ; claim thực nghiệm về token là **D2**.
 
 **Kỷ luật tuyên bố**: chỉ nói điều có bằng chứng. Giữ
 `CURRICULUM_SUPPORT_PARTIAL` khi phủ chương trình còn dở, và

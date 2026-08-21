@@ -2483,6 +2483,18 @@ hẳn `analyze.md`** để đề đi đường module không phải trả tiền
 vụ. Không được gộp vào lượt viết IR: một lượt sinh cả nghĩa vụ lẫn chương trình
 thì C₁a tự đối chiếu một nguồn với chính nó.
 
+### `backend/scripts/validate_sealed_submission.py` · offline, CUSTODIAN chạy
+
+Kiểm **hình dạng** tập SEALED trước khi niêm phong: trường thiếu, `case_id`
+trùng, `obligation_kind` sai chính tả, 4 metadata guard, và dạng `expected` cũ
+`{tên_biến: giá_trị}` (bị bỏ vì tên biến do LLM đặt). Tách khỏi runner có chủ
+đích — runner chạy một lần, còn cái này chạy bao nhiêu lần cũng được vì không
+gọi API.
+
+**Cố ý KHÔNG kiểm** phạm vi đề và tính đúng của ground truth: ground truth mà
+máy kiểm được thì không còn độc lập. Khoá bởi `test_sealed_validator.py`, gồm cả
+một test chống chính nó tự nhận là bộ chấm.
+
 ### `backend/scripts/run_sealed_evaluation.py` · **live**, chạy ĐÚNG MỘT LẦN
 
 Runner Task 12. Kiểm candidate + vân tay con dấu **trước** khi mở SEALED, chạy

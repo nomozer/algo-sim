@@ -1,12 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "31b7ec54a827a735",
-  "dirtyRelevantSources": [
-    "backend/tests/semantic_program/test_sealed_runner.py"
-  ],
-  "head": "3bfae69fca4e5ad9b049c43dfd5d2460fc7574ee",
-  "dirty": true,
-  "generatedAt": "2026-08-21T17:40:39.507Z",
+  "sourceFingerprint": "2f7b64c11d8a47e8",
+  "dirtyRelevantSources": [],
+  "head": "b381c1cc0099e61b11200eb1560b2f48a663954b",
+  "dirty": false,
+  "generatedAt": "2026-08-21T17:50:06.033Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
