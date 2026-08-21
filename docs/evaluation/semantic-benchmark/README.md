@@ -10,19 +10,26 @@ commit kế tiếp. Một hash trả lời *"đo bản nào"*, hash kia trả l�
 |---|---|---|
 | 2026-08-21, bản đầu | `9898d13` | `5506027` |
 | 2026-08-21, sau khi nối route | `c6c5c28` | `901182c` |
+| 2026-08-21, sau sáu điểm sửa phương pháp đo | `89fee9b` | (commit kế tiếp) |
 
-Cả hai lần, hash bên trái là **cha trực tiếp** của hash bên phải
+Mỗi lần, hash bên trái là **cha trực tiếp** của hash bên phải
 (`git rev-parse <phải>^` → `<trái>`), và manifest được sinh **trên cây sạch**
 (`cay_lam_viec_sach: true`). Commit bên phải chỉ thêm manifest cùng test khoá
 nó — **không đụng** một dòng nào của hệ được đo.
 
-**Vì sao có lần thứ hai.** Ngày 2026-08-21 phát hiện `stage_semantic_program`
-**không có một ai gọi**: route ngữ nghĩa chưa bao giờ đi qua `run_pipeline`, nên
-bản `9898d13` đo được các *mảnh* chứ không đo được *đường đi*. Nối xong,
-`CACHE_VERSION` 33 → 34. Taxonomy, tập primitive, schema và DEV giữ **nguyên
-hash** qua cả hai lần — thay đổi nằm ở chỗ nối dây, không ở hợp đồng. Đây là
-thay đổi pha DEV và xảy ra **trước khi SEALED được niêm phong**, nên luật con
-dấu không bị đụng tới.
+**Vì sao có lần thứ hai.** Phát hiện `stage_semantic_program` **không có một ai
+gọi**: route ngữ nghĩa chưa bao giờ đi qua `run_pipeline`, nên bản `9898d13` đo
+được các *mảnh* chứ không đo được *đường đi*. Nối xong, `CACHE_VERSION` 33 → 34.
+
+**Vì sao có lần thứ ba.** Soát lại toàn bộ đường đo và sửa **sáu lỗi phương
+pháp** — lớn nhất là semantic shadow bị classifier legacy quyết định có được
+chạy hay không, khiến claim A hoá ra là một claim về *classifier*. Chi tiết
+từng điểm nằm trong commit `89fee9b`.
+
+Taxonomy, tập primitive, schema và DEV giữ **nguyên hash** qua cả ba lần — thay
+đổi nằm ở chỗ nối dây và ở cách đo, không ở hợp đồng. Cả ba đều là thay đổi pha
+DEV và đều xảy ra **trước khi SEALED được niêm phong**, nên luật con dấu không
+bị đụng tới lần nào.
 
 Kiểm bất cứ lúc nào bằng:
 
@@ -67,7 +74,7 @@ PHÍA PHÁT TRIỂN
   → mở SEALED ĐÚNG MỘT LẦN
   → chạy evaluation
   → TUYỆT ĐỐI không sửa hệ
-  → báo A · B · D1 · D2
+  → báo A · B · A−B (đã phân rã) · oracle độc lập · D1 · D2
 ```
 
 > Sau khi mở SEALED, case nào hỏng vì thiếu checker / thiếu primitive / IR không
