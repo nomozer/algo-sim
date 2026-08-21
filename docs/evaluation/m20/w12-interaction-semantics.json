@@ -1,13 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "8d3deaa9efb92d37",
-  "dirtyRelevantSources": [
-    "backend/app/simulation/semantic_program/postconditions.py",
-    "backend/app/simulation/semantic_program/route.py"
-  ],
-  "head": "a124b78c291c86404eaa683cfeb52531efbec9d2",
-  "dirty": true,
-  "generatedAt": "2026-08-21T22:44:43.071Z",
+  "sourceFingerprint": "f06970e656cdf802",
+  "dirtyRelevantSources": [],
+  "head": "3e3b48002a9b0e5481c3c8270cbae0c27012ff75",
+  "dirty": false,
+  "generatedAt": "2026-08-21T22:49:55.501Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

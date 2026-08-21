@@ -50,6 +50,28 @@ Kiểm bất cứ lúc nào bằng:
 cd backend && .venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify
 ```
 
+## `34a10a9c…` là INTERNAL LIVE PILOT — đã lưu trữ, KHÔNG tái sử dụng
+
+Tập fingerprint **`34a10a9c…`** nằm ở `pilot/sealed-pilot-34a10a9c/` là **pilot
+nội bộ**, không phải SEALED. Nó **không được** dùng lại làm SEALED hay làm số
+liệu Task 12.
+
+Lý do nó bị loại tư cách đã ghi ngay trong dữ liệu (`cases.json`, khối
+`custodian_declaration`): custodian không độc lập với tác giả hệ thống. Ngoài
+ra nó đã bị chạy **bốn lượt** và hệ được sửa dựa trên chính nó, nên tính
+held-out bằng không.
+
+Việc dời chỗ **không phá con dấu pilot**: nội dung không đổi một byte,
+`cases.json` và `FINGERPRINT.txt` đi cùng nhau, hash vẫn đúng `34a10a9c…`.
+Giữ lại làm bằng chứng lịch sử — bốn lượt chạy tương ứng ở `pilot-results/`
+→ `pilot-results-4/`, và các phát hiện ở
+`pilot-results-4/PHAT_HIEN.md`.
+
+`ground_truth_solver.py` đi cùng tập vì nó sinh ra **đúng 40 case ấy** — nó là
+một phần của dataset, không phải công cụ chung của benchmark.
+
+`sealed/` nay **trống**, dành riêng cho custodian thứ ba.
+
 ## Ba tập dữ liệu, ba vai trò khác hẳn nhau
 
 | | Ai soạn | Được nhìn? | Đổi được cái gì |
