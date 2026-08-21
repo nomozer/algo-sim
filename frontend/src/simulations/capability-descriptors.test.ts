@@ -54,8 +54,15 @@ describe("M14 §C4 — descriptor ↔ registry cross-lock", () => {
      THẬT là PHỦ ĐỦ/song ánh, và nó mạnh hơn khi suy từ chủ sở hữu. */
     expect(ids.length).toBeGreaterThan(0);
     for (const id of ids) expect(getSimulation(id), `thiếu module ${id}`).toBeDefined();
-    // song ánh: số module đăng ký == số runtime target
-    expect(listSimulations().length).toBe(ids.length);
+    /* Song ánh: số module đăng ký == số runtime target.
+       2026-08-21 — `generic.semantic_program` được đăng ký ở FE nhưng CHƯA có
+       descriptor backend: nó là route SHADOW-ONLY, chưa phục vụ học sinh
+       (serving gate, spec §10.2). Loại tường minh thay vì nới `toBeGreaterThan`
+       — nới sàn thì lần sau một target THẬT vắng descriptor cũng đi qua im
+       lặng, đúng thứ song ánh này sinh ra để bắt. */
+    const SHADOW_ONLY = ["generic.semantic_program"];
+    const dangKy = listSimulations().filter((m) => !SHADOW_ONLY.includes(m.id));
+    expect(dangKy.length).toBe(ids.length);
   });
 
   it("executor_id trỏ đúng module thật", () => {

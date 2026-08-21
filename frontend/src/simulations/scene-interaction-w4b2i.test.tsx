@@ -11,7 +11,7 @@ import {
   stageInteractionsOf,
 } from "./domains/algorithm/decision";
 import { ArrayView } from "../components/ArrayView";
-import { SearchStateView } from "../components/SearchStateView";
+
 import { commitmentSurfaceKind } from "./domains/algorithm/interaction-policy";
 
 /**
@@ -195,31 +195,11 @@ describe("W4B-2I · NO_DUPLICATE_DETACHED_QUIZ_SURFACE", () => {
     expect(commitmentSurfaceKind(true, true)).toBe("scene");
   });
 
-  it("`actionsHidden` PHẢI nối vào hình thức đó — không được đóng cứng", () => {
-    const src = code(readFileSync(new URL("./domains/algorithm/ui.tsx", import.meta.url), "utf-8"));
-    expect(src, "hàng nút quay lại đứng song song với vùng bấm")
-      .toMatch(/actionsHidden=\{surface === "scene"\}/);
-    expect(src).not.toMatch(/actionsHidden=\{(true|false)\}/);
-  });
+  /* it("`actionsHidden…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Kiem hang nut hanh dong cua vung cam ket — W13 go ca hang nut lan vung cam ket. */
 
-  it("zone ở hình thức `scene`: KHÔNG dựng nút hành động nào", () => {
-    const { state } = build("binary_search");
-    const model = searchInteractionOf(at(state, firstActionable(state)))!;
-    const hidden = renderToString(
-      <SearchStateView model={model}
-        />,
-    );
-    expect(hidden).not.toContain("search-actions");
-    expect(hidden).not.toContain("btn-choice");
-    for (const a of model.actions) expect(hidden).not.toContain(a.label);
-
-    // …và ở hình thức `buttons` thì nút vẫn còn nguyên (không vô tình giết cả hai).
-    const shown = renderToString(
-      <SearchStateView model={model}
-        />,
-    );
-    expect(shown).toContain("search-actions");
-  });
+  /* it("zone ở hình thức …") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Kiem hang nut hanh dong cua vung cam ket — W13 go ca hang nut lan vung cam ket. */
 
   it("sân khấu sở hữu hành động ⇒ hàng nút rời BIẾN MẤT", () => {
     const { config, state } = build("binary_search");

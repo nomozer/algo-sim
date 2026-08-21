@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-19T10:58:03.287Z",
+  "generatedAt": "2026-08-21T00:10:49.804Z",
   "note": "sinh từ registry qua vitest (KHÔNG cần trình duyệt); dùng kèm commit chứa nó.",
   "gateOwners": {
     "semantic": "backend/app/evaluation/authenticity_audit.py",
@@ -252,6 +252,20 @@
       "declaredEntryPoints": [
         "timeline",
         "edit",
+        "narrate"
+      ],
+      "visualModes": [
+        "2d"
+      ],
+      "hasOfflineSample": false,
+      "representationVerdict": "CERTIFIED"
+    },
+    {
+      "id": "generic.semantic_program",
+      "domain": "generic",
+      "interactionMode": "progressive",
+      "declaredEntryPoints": [
+        "timeline",
         "narrate"
       ],
       "visualModes": [

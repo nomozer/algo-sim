@@ -128,10 +128,11 @@ describe("(9) MỞ LẠI TỪ LỊCH SỬ — zero-AI, khôi phục tiến độ
   });
 });
 
-describe("(23)(24) state tạm KHÔNG rơi vào lịch sử", () => {
-  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("submitPrediction + what-if không đổi dữ liệu lịch sử đã lưu", () =
-     submitPrediction/prediction da bi W13 go. */
-});
+/* describe "(23)(24) state tạm KHÔNG rơi vào lịch sử" GỠ 2026-08-21 (Task 10b):
+   test duy nhất bên trong đi qua `submitPrediction`, thứ W13 đã gỡ. Vế "what-if
+   không đổi lịch sử đã lưu" KHÔNG mất — `workspace-lifecycle.test.ts` khoá việc
+   đổi chế độ/dựng lại không đụng bản ghi, và `apply` của từng miền là chủ sở
+   hữu duy nhất của thao tác học sinh. */
 
 describe("App SSR — Home sạch (không giả inspector/timeline rỗng)", () => {
   it("(1)-(5) trạng thái đầu: hero + composer là hành động chính; không player-controls, không panel Quan sát", () => {

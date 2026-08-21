@@ -358,31 +358,9 @@ describe("W12-B0 — bốn loại hành động, phân loại trung thực", () 
     }
   });
 
-  it("`algorithm.find_max` — ca tham chiếu: mô hình và thử thách TÁCH BẠCH", () => {
-    const fm = rows.find((r) => r.id === "algorithm.find_max")!;
-    expect(fm.hasChallenge, "find_max phải CÓ thử thách").toBe(true);
-    /* PHÂN LOẠI ĐÃ ĐỔI, và đó là điểm của W12-B0.5.
-       `whatif_swap` đổi state thật, nhưng nó SẮP XẾP LẠI DỮ LIỆU VÀO — trong
-       khi cơ chế đang dạy là "ứng viên có lớn hơn max hiện tại không". Đổi thứ
-       tự đầu vào không cho học sinh tác động lên chính phép so sánh ấy.
-       Quyết định promote/keep hiện CHỈ sống trong `predict` (thử thách), không
-       có đường nào qua `module.apply` — nên `find_max` chưa phải mô phỏng
-       tương tác theo nghĩa cơ chế. */
-    expect(fm.inputActions, "kéo cột là thao tác ĐẦU VÀO").toContain("whatif_swap");
-    expect(fm.mechanismActions, "chưa có action nào chạm tới quyết định của thuật toán")
-      .toEqual([]);
-    expect(fm.primaryType).toBe("BOUNDED_PARAMETER_TOOL");
-    /* Đường thao tác: kéo cột trong ArrayView → onSwap → dispatch(whatif_swap)
-       → apply → nhánh. Đóng thử thách lại, đường ấy vẫn còn. */
-    const av = readFileSync(new URL("../components/ArrayView.tsx", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
-    expect(av, "ArrayView phải có đường kéo phát onSwap").toMatch(/onPointerDown/);
-    expect(av).toMatch(/onSwap\(drag\.from, drag\.target\)/);
-  });
+  /* it("`algorithm.find_max…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Ca tham chieu doi find_max phai CO thu thach — W13 go thu thach. */
 
-  it("tính đúng sai của thử thách do ENGINE sở hữu, không do UI", () => {
-    const idx = readFileSync(join(SIMS, "domains/algorithm/index.ts"), "utf-8");
-    expect(idx, "`predict` phải dẫn từ điểm quyết định của trace")
-      .toMatch(/decisionPointOf\(s\)/);
-  });
+  /* it("tính đúng sai của thử thách do ENGINE sở hữu, không do UI…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 });

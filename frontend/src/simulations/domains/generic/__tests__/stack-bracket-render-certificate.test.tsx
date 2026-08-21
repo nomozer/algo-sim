@@ -45,7 +45,9 @@ describe("Stack Bracket Simulation — Production Render Certificate (Phase 6b)"
         type: "pointer",
         label: "i",
         target: "bracket_strip",
-        target_index: 2,
+        /* Chỉ số ô KHÔNG nằm trên object: `resolveSemanticAnchor` nhận nó
+           qua THAM SỐ thứ ba (xem test 3). Khai ở đây là một trường mà
+           không ai đọc. */
       },
     ],
     rules: [],
@@ -55,43 +57,29 @@ describe("Stack Bracket Simulation — Production Render Certificate (Phase 6b)"
         type: "step_sequence",
         steps: [
           {
-            highlight: ["bracket_strip"],
+            action: "highlight",
+            targets: ["bracket_strip"],
             narration: "Xét ký tự đầu tiên '{': Là dấu mở ngoặc, đẩy vào Ngăn xếp.",
-            state: {
-              curr_char: "{",
-              stack_view: { op: "push", value: "{" },
-            },
           },
           {
-            highlight: ["bracket_strip"],
+            action: "highlight",
+            targets: ["bracket_strip"],
             narration: "Xét ký tự tiếp theo '[': Là dấu mở ngoặc, tiếp tục đẩy vào Ngăn xếp.",
-            state: {
-              curr_char: "[",
-              stack_view: { op: "push", value: "[" },
-            },
           },
           {
-            highlight: ["bracket_strip"],
+            action: "highlight",
+            targets: ["bracket_strip"],
             narration: "Xét ký tự '(': Là dấu mở ngoặc, đẩy vào Ngăn xếp.",
-            state: {
-              curr_char: "(",
-              stack_view: { op: "push", value: "(" },
-            },
           },
           {
-            highlight: ["bracket_strip", "stack_view"],
+            action: "highlight",
+            targets: ["bracket_strip", "stack_view"],
             narration: "Xét ký tự ')': Là dấu đóng ngoặc, kiểm tra đỉnh stack thấy '(' khớp cặp! Pop '(' ra khỏi stack.",
-            state: {
-              curr_char: ")",
-              stack_view: { op: "pop" },
-            },
           },
           {
-            highlight: ["result_box"],
+            action: "highlight",
+            targets: ["result_box"],
             narration: "Duyệt hết chuỗi và Stack rỗng: Chuỗi ngoặc hoàn toàn HỢP LỆ!",
-            state: {
-              result_box: "HỢP LỆ",
-            },
           },
         ],
       },
@@ -138,7 +126,6 @@ describe("Stack Bracket Simulation — Production Render Certificate (Phase 6b)"
   });
 
   it("3. Semantic Anchor: Pointer neo đúng vị trí target cell", () => {
-    const s0 = mod.init(STACK_BRACKET_SPEC);
     const pos = computeSemanticLayout(STACK_BRACKET_SPEC);
     const stripPos = pos["bracket_strip"];
     expect(stripPos).toBeDefined();

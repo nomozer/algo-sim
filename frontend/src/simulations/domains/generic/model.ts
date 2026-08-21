@@ -105,7 +105,9 @@ export interface SpecObject {
   x?: number;
   y?: number;
   label?: string;
-  value?: number;
+  /* Chuoi hop le tu 2026-08 (render-quality): o gia tri hien "hop le"/"["/ky tu.
+     `validate.ts` da nhan ca hai kieu tu luc do; kieu nay bi bo lai phia sau. */
+  value?: number | string;
   min?: number;
   max?: number;
   step?: number;
@@ -123,6 +125,8 @@ export interface SpecObject {
   show_decimal?: boolean;
   show_hex?: boolean;
   gate_type?: "and" | "or" | "not" | "xor" | "nand" | "nor";
+  /** Doi tuong ma con tro/chu thich NEO vao (anchor-resolver doc truong nay). */
+  target?: string;
   target_id?: string;
   index?: number;
   min_x?: number;
@@ -268,10 +272,14 @@ export class GenericExecutionError extends Error {
     | "unresolved_dependency_after_bound"
     | "non_finite_numeric_value";
 
+  /** Phan MO TA cua loi, tach khoi `message` da ghep san ma code. */
+  readonly detail: string;
+
   constructor(code: GenericExecutionError["code"], detail: string) {
     super(`${code}: ${detail}`);
     this.name = "GenericExecutionError";
     this.code = code;
+    this.detail = detail;
   }
 }
 

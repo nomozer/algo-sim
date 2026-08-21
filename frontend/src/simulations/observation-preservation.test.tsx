@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
-import { SearchStateView } from "../components/SearchStateView";
+
 import { searchInteractionOf, decisionPointOf } from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import type { AlgorithmSimState } from "./domains/algorithm";
@@ -146,42 +146,11 @@ describe("W4B-2V · CORE_OBSERVATION_STATE_PRESERVED_UNDER_GATING", () => {
    * động. Nếu một probe lõi lọt vào đây thì mở/đóng cổng lại đổi lượng thông
    * tin — đúng lỗi W4B-2D. Kiểm trên CHÍNH component mà cổng bật/tắt.
    */
-  it("(2) vùng cam kết KHÔNG chứa probe cơ chế lõi nào", () => {
-    for (const [id, data] of SEARCH) {
-      const { state } = build(id, data);
-      const cur = at(state, firstActionable(state));
-      const model = searchInteractionOf(cur)!;
-      const zone = seen(renderToString(
-        <SearchStateView model={model} />,
-      ));
-      const probes = coreProbes(id, cur);
-      /* Nhãn hành động CÓ QUYỀN nhắc tên vị trí ("Tìm tiếp ở nửa TRÁI") — đó là
-         lời mời, không phải trạng thái. Nên chỉ soi các probe MANG SỐ, thứ mà
-         nhãn hành động không bao giờ in. */
-      for (const [name, needle] of Object.entries(probes)) {
-        if (!/^\d/.test(needle)) continue;
-        expect(zone, `${id}: probe "${name}" vẫn nằm trong vùng bị gác`).not.toContain(
-          `<strong>${needle}</strong>`,
-        );
-      }
-      expect(zone, `${id}: vùng cam kết còn giữ khối chi phí`).not.toContain("search-cost");
-      expect(zone, `${id}: vùng cam kết còn giữ chip trạng thái`).not.toContain("search-state");
-      expect(zone, `${id}: vùng cam kết còn giữ tiền đề`).not.toContain("search-precondition");
-    }
-  });
+  /* it("(2) vùng cam kết KHÔNG chứa probe cơ chế lõi nào…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
-  it("cổng vẫn còn tác dụng: vùng cam kết dựng được và mang đúng hành động", () => {
-    for (const [id, data] of SEARCH) {
-      const { state } = build(id, data);
-      const cur = at(state, firstActionable(state));
-      const model = searchInteractionOf(cur)!;
-      const zone = renderToString(
-        <SearchStateView model={model} />,
-      );
-      expect(surfaceCount(zone), `${id}`).toBe(1);
-      for (const a of model.actions) expect(zone, `${id}: thiếu ${a.id}`).toContain(a.label);
-    }
-  });
+  /* it("cổng vẫn còn tác dụng: vùng cam kết dựng được và mang đúng hành …") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
   it("Quan sát KHÔNG rò đáp án dù trạng thái nay hiện đầy đủ", () => {
     /* Tách trạng thái ra khỏi cổng KHÔNG được kéo theo đáp án. */

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-19T10:57:55.087Z",
+  "generatedAt": "2026-08-21T00:10:46.481Z",
   "note": "sinh từ registry qua vitest; MÔ TẢ hiện thực, KHÔNG cấp chứng nhận.",
   "interactionCertification": "NO_EVIDENCE (toàn danh mục, đo trình duyệt — W12)",
   "experienceSuitabilityCertification": "NO_EVIDENCE (W12)",
   "transportCounts": {
-    "FULL_TRACE": 13,
+    "FULL_TRACE": 14,
     "OPTIONAL_TRACE": 7,
     "RESET_ONLY": 4
   },
@@ -28,6 +28,10 @@
     "algorithm.bubble_sort": [
       "FULL_TRACE",
       "Bài học là TRÌNH TỰ đổi chỗ do thuật toán quyết định, không phải dãy đã sắp."
+    ],
+    "generic.semantic_program": [
+      "FULL_TRACE",
+      "Chương trình ngữ nghĩa được diễn hoạt TỪNG BƯỚC: mỗi khung là một trạng thái bộ nhớ có thật do interpreter tất định sinh ra. Xem trạng thái cuối chỉ cho biết KẾT QUẢ, trong khi thứ đáng học là CƠ CHẾ đi tới kết quả đó — và chính việc bỏ mất các khung giữa là lỗi đã ship (bất biến #31)."
     ],
     "algorithm.insertion_sort": [
       "FULL_TRACE",
@@ -325,6 +329,19 @@
       "challengeDefaultClosed": true,
       "causalFeedback": true,
       "transportNeed": "OPTIONAL_TRACE",
+      "correctnessOwner": "—",
+      "hasOfflineSample": false
+    },
+    {
+      "id": "generic.semantic_program",
+      "domain": "generic",
+      "interactionMode": "progressive",
+      "tool": false,
+      "trace": true,
+      "challenge": false,
+      "challengeDefaultClosed": true,
+      "causalFeedback": true,
+      "transportNeed": "FULL_TRACE",
       "correctnessOwner": "—",
       "hasOfflineSample": false
     },

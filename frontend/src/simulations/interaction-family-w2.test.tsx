@@ -1,11 +1,11 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
 import { isSearchFamily, searchInteractionOf } from "./domains/algorithm/decision";
 import { registerAllSimulations } from "./index";
-import { useAppStore } from "../state/store";
+
 import type { AlgorithmSimState } from "./domains/algorithm";
 import type { AlgorithmId } from "../core/types";
 
@@ -251,19 +251,10 @@ describe("W2 · chính sách phần tử trùng", () => {
 
 /* ── 6. MỘT BƯỚC, MỘT HÌNH THỨC CAM KẾT ──────────────────────────────────── */
 
-describe("W2 · không hiện hai hình thức cam kết cùng lúc", () => {
-  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("bước có vùng hành động → presentedInStage true, và không dựng dải 
-     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
-
-  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("bước cuối không phải điểm quyết định → trả lại UI dùng chung", () 
-     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
-});
-
-/* ── 7. VÒNG LẶP QUA STORE ───────────────────────────────────────────────── */
-
-describe("W2 · nộp qua store không đụng mô phỏng canonical", () => {
-  beforeEach(() => useAppStore.getState().reset());
-
-  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("chốt hành động → prediction có kết quả, active.state nguyên vẹn", 
-     Kiem duong CHAM DIEM (predict.check / submitPrediction / presentedInStage) — W13 go co chu dich. */
-});
+/* Hai describe cuối ĐÃ GỠ 2026-08-21 (Task 10b):
+   · "không hiện hai hình thức cam kết cùng lúc" — chỉ còn MỘT hình thức sau
+     W13, nên "không hiện hai" không còn đối tượng. Bất biến tổng quát vẫn được
+     `interaction-family-w1.test.tsx` khoá cho toàn bộ danh mục.
+   · "nộp qua store không đụng mô phỏng canonical" — `submitPrediction` không
+     còn. Vế "thao tác không đụng state canonical" nay thuộc `explore` → `apply`
+     của từng miền. */

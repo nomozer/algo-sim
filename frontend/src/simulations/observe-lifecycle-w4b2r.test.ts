@@ -110,9 +110,13 @@ describe("W4B-2R · OBSERVE_REQUIRES_NO_ANSWER", () => {
 
 describe("W4B-2R · RENDERER_DOES_NOT_OWN_RESULT", () => {
   it("không renderer nào tự chấm hay tự dựng kết quả", () => {
+    /* KHÔI PHỤC 2026-08-21 (Task 10b). Test này từng bị xoá nhầm trong đợt trả
+       nợ W13: nó ĐỎ chỉ vì đọc `components/SearchActionZone.tsx`, file W13 đã
+       xoá — chứ bất biến thì còn nguyên giá trị và không dính gì tới `predict`.
+       Bỏ đúng một dòng đường dẫn, giữ cả phép kiểm. */
     const files = [
       "../components/ArrayView.tsx",
-      "../components/SearchActionZone.tsx",
+      "../components/SearchStateView.tsx",
       "../components/ScanActionZone.tsx",
       "../components/SortActionZone.tsx",
       "./domains/network/ui.tsx",

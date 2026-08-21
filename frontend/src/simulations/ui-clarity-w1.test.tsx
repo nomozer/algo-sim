@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
@@ -7,7 +7,7 @@ import { decisionPointOf, narrationWithoutPrompt } from "./domains/algorithm/dec
 import { ArrayView, arrayLegendItems } from "../components/ArrayView";
 import { BoolDagWorkspace, makeBoolDagModule } from "./domains/logic/dag-module";
 import { registerAllSimulations } from "./index";
-import { useAppStore } from "../state/store";
+
 import type { AlgorithmSimState } from "./domains/algorithm";
 
 
@@ -240,26 +240,9 @@ describe("W1 · boolean_dag — bảng chi tiết là tra cứu phụ", () => {
 
 /* ── 3b. THU GỌN LÀ BẢO ĐẢM CẤU TRÚC, KHÔNG PHẢI SO CHUỖI ────────────────── */
 
-describe("W1 · checkpoint luôn bắt đầu ở trạng thái thu gọn", () => {
-  it("shell gắn key theo BƯỚC nên rời bước rồi quay lại vẫn thu gọn", () => {
-    /* Bản đầu của W1 khoá trạng thái mở theo NỘI DUNG câu hỏi. Đo trong Chrome
-       bắt được lỗi: rời bước 1 rồi quay lại bước 1 thì câu hỏi y hệt ⇒ bar vẫn
-       mở. Nay `SimulationWorkspace` gắn `key={timeline.currentStep(state)}`, tức
-       mỗi lần vào một bước là một mount mới. Khoá bằng chính mã nguồn shell —
-       component không tự chứng minh được điều này qua SSR. */
-    const src = readFileSync(
-      new URL("../components/SimulationWorkspace.tsx", import.meta.url), "utf-8",
-    );
-    expect(src).toMatch(/key=\{mod\.timeline \? mod\.timeline\.currentStep\(active\.state\)/);
-
-    // và PredictionBar dựa vào mount đó: cờ nội bộ, KHÔNG so chuỗi câu hỏi
-    const bar = readFileSync(
-      new URL("../components/PredictionBar.tsx", import.meta.url), "utf-8",
-    ).replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
-    expect(bar).toContain("useState(false)");
-    expect(bar).not.toContain("challenge.question)");
-  });
-});
+/* describe "W1 · checkpoint luôn bắt đầu ở trạng thái thu gọn" ĐÃ GỠ 2026-08-21
+   (Task 10b): "checkpoint" ở đây là ô dự đoán, mà W13 gỡ hẳn. Không còn thứ gì
+   để bắt đầu ở trạng thái thu gọn. */
 
 /* ── 3c. PHÍM TẮT TOÀN CỤC KHÔNG CƯỚP PHÍM CỦA CONTROL ĐANG FOCUS ────────── */
 
@@ -281,12 +264,10 @@ describe("W1 · Space trên nút đáp án phải trả lời, không bật Tự
 
 /* ── 4. RESET XOÁ TRẠNG THÁI TRẢ LỜI ─────────────────────────────────────── */
 
-describe("W1 · reset trả PredictionBar về thu gọn & chưa trả lời", () => {
-  beforeEach(() => useAppStore.getState().reset());
-
-  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("runtime reset xoá prediction", () => {
-     Kiem 'reset xoa prediction' — W13 go prediction. */
-});
+/* describe "W1 · reset trả PredictionBar về thu gọn & chưa trả lời" GỠ 2026-08-21
+   (Task 10b): `PredictionBar` và `prediction` đều đã bị W13 xoá, nên không còn
+   trạng thái trả lời nào để reset. Vế "reset đưa mô phỏng về bước đầu" KHÔNG
+   mất — `workspace-lifecycle.test.ts` khoá nó. */
 
 /* ── 5. W4B-2B §9 — PANEL GIẢI THÍCH KHÔNG CHÉP LẠI HEADER WORKSPACE ─────────
  *

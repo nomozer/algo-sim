@@ -1,26 +1,35 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "50bd1b06910e9dc3",
+  "sourceFingerprint": "47b4a98d65a5fd52",
   "dirtyRelevantSources": [
-    "backend/tests/test_compaction.py",
-    "backend/tests/test_m16_record.py",
-    "backend/tests/test_manifest.py",
-    "backend/tests/test_pilot_runner.py",
-    "backend/tests/test_pipeline.py",
-    "backend/tests/test_program_routing.py",
-    "backend/tests/test_table_query_pipeline.py",
+    "frontend/src/simulations/capability-descriptors.test.ts",
+    "frontend/src/simulations/domains/algorithm/decision.test.ts",
+    "frontend/src/simulations/domains/generic/__tests__/stack-bracket-render-certificate.test.tsx",
+    "frontend/src/simulations/domains/generic/index.ts",
+    "frontend/src/simulations/domains/generic/layout-compiler.ts",
     "frontend/src/simulations/domains/generic/model.ts",
-    "frontend/src/simulations/domains/generic/ui.tsx"
+    "frontend/src/simulations/domains/generic/ui.tsx",
+    "frontend/src/simulations/experience-manifest.test.ts",
+    "frontend/src/simulations/experiment-gate-w4b2b.test.tsx",
+    "frontend/src/simulations/experiment-tool-mode.test.tsx",
+    "frontend/src/simulations/interaction-family-w2.test.tsx",
+    "frontend/src/simulations/interaction-semantics.test.ts",
+    "frontend/src/simulations/observation-preservation.test.tsx",
+    "frontend/src/simulations/observe-lifecycle-w4b2r.test.ts",
+    "frontend/src/simulations/scene-interaction-w4b2i.test.tsx",
+    "frontend/src/simulations/ui-clarity-w1.test.tsx",
+    "frontend/src/state/view-history.test.tsx",
+    "frontend/src/styles/global.css"
   ],
-  "head": "950801d1ed845f649b96c19cc84ab1cd64d518a4",
+  "head": "a81dca14c05a7335fe2f1c06ae1c2286ab959a9a",
   "dirty": true,
-  "generatedAt": "2026-08-19T10:57:55.214Z",
+  "generatedAt": "2026-08-21T00:10:45.548Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
     "node": "v24.13.0",
     "platform": "win32",
-    "targets": 24
+    "targets": 25
   },
   "kind": "DESCRIPTIVE_MANIFEST",
   "note": "Dẫn từ hợp đồng module + affordance trong renderer miền. KHÔNG phải chứng nhận trình duyệt — đó là việc của certify-w12.mjs.",
@@ -351,6 +360,23 @@
       "hasChallenge": false,
       "hasTimeline": true,
       "primaryType": "INTERACTIVE_MODEL"
+    },
+    {
+      "id": "generic.semantic_program",
+      "domain": "generic",
+      "manipulatesWhenChallengeClosed": "chỉ dòng thời gian (đã xác nhận: `apply` là hàm đồng nhất)",
+      "stageActions": [
+        "move",
+        "set_param",
+        "step",
+        "toggle"
+      ],
+      "mechanismActions": [],
+      "inputActions": [],
+      "acceptedByModule": [],
+      "hasChallenge": false,
+      "hasTimeline": true,
+      "primaryType": "TRACE_MODEL"
     },
     {
       "id": "logic.and_gate",

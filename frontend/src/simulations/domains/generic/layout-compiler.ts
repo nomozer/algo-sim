@@ -20,36 +20,10 @@ export interface BoundingBox {
   h: number; // height in domain units (0-100)
 }
 
-function estimateObjectSize(o: SpecObject): { w: number; h: number } {
-  switch (o.type) {
-    case "array_strip": {
-      const count = Array.isArray(o.items) ? o.items.length : 1;
-      return { w: Math.min(80, Math.max(25, count * 7)), h: 18 };
-    }
-    case "bar_chart": {
-      const count = Array.isArray(o.bars) ? o.bars.length : 1;
-      return { w: Math.min(80, Math.max(30, count * 8)), h: 32 };
-    }
-    case "table_grid": {
-      const cols = Array.isArray(o.headers) ? o.headers.length : 2;
-      return { w: Math.min(85, Math.max(35, cols * 14)), h: 35 };
-    }
-    case "stack_view":
-      return { w: 22, h: 36 };
-    case "queue_view":
-      return { w: 35, h: 20 };
-    case "value_box":
-      return { w: 18, h: 16 };
-    case "switch":
-      return { w: 16, h: 14 };
-    case "slider":
-      return { w: 28, h: 16 };
-    case "lamp":
-      return { w: 14, h: 14 };
-    default:
-      return { w: 20, h: 16 };
-  }
-}
+/* `estimateObjectSize` XOÁ 2026-08-21 (Task 10b): mã chết từ lúc viết — không
+   nơi nào gọi, kể cả trong chính file này. Một hàm ước lượng kích thước không
+   chạy không phải lưới an toàn; nó chỉ làm người đọc sau tưởng việc đo kích
+   thước đã có chủ. Cần lại thì lấy từ git history. */
 
 function isResultBox(o: SpecObject): boolean {
   if (o.type !== "value_box") return false;

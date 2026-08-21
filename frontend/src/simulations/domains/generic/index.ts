@@ -57,7 +57,13 @@ export function makeGenericModule(): SimulationModule<SimulationSpec, GenericSta
       if (action.type === "set_param") {
         if (action.name in state.base) {
           const val = typeof action.value === "number" ? action.value : Number(action.value);
-          return { ...state, base: { ...state.base, [action.name]: Number.isFinite(val) ? val : action.value } };
+          /* `base` là Record<string, number> và rule evaluation đọc nó như SỐ.
+             Bản trước lưu thẳng `action.value` khi ép kiểu thất bại, tức nhét
+             chuỗi/bool vào một bảng số — đúng loại coercion im lặng mà M13 cấm
+             (bất biến "không có seed/fallback"). Không ép được thì KHÔNG đổi gì:
+             thao tác ngoài miền hợp lệ là no-op, không phải là dữ liệu mới. */
+          if (!Number.isFinite(val)) return state;
+          return { ...state, base: { ...state.base, [action.name]: val } };
         }
       }
       if (action.type === "move") {

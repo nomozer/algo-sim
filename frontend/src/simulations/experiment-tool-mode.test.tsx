@@ -3,8 +3,8 @@ import { readFileSync } from "node:fs";
 import { renderToString } from "react-dom/server";
 import { makeAlgorithmModule } from "./domains/algorithm";
 import { AlgorithmWorkspace } from "./domains/algorithm/ui";
-import { SearchStateView } from "../components/SearchStateView";
-import { searchInteractionOf, stageInteractionsOf } from "./domains/algorithm/decision";
+
+import { stageInteractionsOf } from "./domains/algorithm/decision";
 import { whatIfPolicyOf } from "./domains/algorithm/interaction-policy";
 import { ALGORITHM_IDS, type AlgorithmId } from "../core/types";
 import type { AlgorithmSimState } from "./domains/algorithm";
@@ -33,11 +33,8 @@ import type { AlgorithmSimState } from "./domains/algorithm";
  * do runner trình duyệt đo — `docs/evaluation/m17/w4b2vc2-tool-mode/`.
  */
 
-const UI_SRC = readFileSync(
-  new URL("./domains/algorithm/ui.tsx", import.meta.url), "utf-8",
-);
-/** Bóc chú thích: repo CỐ Ý nhắc tên thứ đã bỏ để ghi lại vì sao bỏ. */
-const UI = UI_SRC.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+/* `UI_SRC`/`UI` (đọc `ui.tsx` để soi chuỗi) GỠ 2026-08-21 (Task 10b): chỉ các
+   test về panel Thí nghiệm dùng chúng, và W13 đã gỡ panel đó. */
 const CSS = readFileSync(new URL("../styles/global.css", import.meta.url), "utf-8");
 
 const GATED = ALGORITHM_IDS.filter((id) => whatIfPolicyOf(id).experimentGated === true);
@@ -79,12 +76,8 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     expect(GATED.length).toBeGreaterThan(0);
   });
 
-  it("công cụ KHÔNG dựng bằng chrome thẻ (`.notes` / `.experiment-tray` / `.card`)", () => {
-    for (const dead of ['className="notes"', 'className="experiment-tray"', 'experiment-tray-close']) {
-      expect(UI, `chrome thẻ quay lại: ${dead}`).not.toContain(dead);
-    }
-    expect(UI, "mất chủ sở hữu công cụ").toContain('className="experiment-tool"');
-  });
+  /* it("công cụ KHÔNG dựng bằng chrome thẻ (…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
   it("chrome CÔNG CỤ gỡ nền/viền/padding và xếp NGANG — khác hẳn chrome thẻ", () => {
     /* Đây là khác biệt panel ↔ tool, và nó sống ở CSS chứ không ở JSX. Kiểm
@@ -100,34 +93,14 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     expect(wrapRule, "công cụ không xếp inline").toContain("inline-flex");
   });
 
-  it("zone nhận chrome DẪN XUẤT từ capability, không từ tên bài", () => {
-    expect(UI).toMatch(/chrome:\s*\(gated \? "tool" : "panel"\)/);
-    expect(UI, "shell quyết định theo định danh bài").not.toMatch(/algorithm_id\s*===\s*["']/);
-    const z = renderToString(
-      <SearchStateView
-        model={searchInteractionOf(at(build("binary_search").state, actionableStep(build("binary_search").state)))!} />,
-    );
-    expect(z).toContain("is-tool");
-  });
+  /* it("zone nhận chrome DẪN XUẤT từ capability, không từ tên bài…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
-  it("EXPERIMENT_CLOSE_CONTROL_LIVES_INSIDE_TOOL — không có hàng đóng riêng", () => {
-    const tool = UI.slice(UI.indexOf('className="experiment-tool"'));
-    const block = tool.slice(0, tool.indexOf("</div>"));
-    expect(block, "lối đóng nằm ngoài công cụ").toContain("experiment-tool-close");
-    /* W4B-3A: công cụ này bọc vùng CAM KẾT, nên nó thuộc chế độ Thử thách —
-       nhãn đóng nói đúng chế độ mình đóng. */
-    expect(block).toContain('aria-label="Đóng thử thách"');
-  });
+  /* it("EXPERIMENT_CLOSE_CONTROL_LIVES_INSIDE_TOOL — không có hàng đóng …") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
-  it("NO_SEPARATE_EXPERIMENT_FRAMING_ROW — framing là TÊN KHẢ TRUY CẬP", () => {
-    /* `framing` được phép tồn tại, nhưng không được là một hàng chữ. Cách duy
-       nhất nó xuất hiện trong JSX phải là `aria-label`. */
-    const uses = [...UI.matchAll(/policy\.framing/g)].length;
-    expect(uses, "framing xuất hiện nhiều hơn một chỗ").toBe(1);
-    expect(UI).toContain("aria-label={policy.framing}");
-    expect(UI, "framing bị in thành nội dung").not.toContain("{policy.framing}<");
-    expect(UI).not.toContain("<strong>{policy.framing}</strong>");
-  });
+  /* it("NO_SEPARATE_EXPERIMENT_FRAMING_ROW — framing là TÊN KHẢ TRUY CẬP…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
   it("DESCRIPTIVE_EXPERIMENT_AFFORDANCE_EXISTS — cổng tự mô tả, không bí ẩn", () => {
     /* Đối trọng bắt buộc của việc bỏ hàng teaser: nếu chỉ tối ưu cho gọn thì
@@ -166,33 +139,11 @@ describe("W4B-2V/C2 · EXPERIMENT_IS_A_TOOL_NOT_A_CONTENT_PANEL", () => {
     }
   });
 
-  it("EXPERIMENT_DOES_NOT_DUPLICATE_CORE_OBSERVATION_STATE", () => {
-    /* Công cụ sở hữu HÀNH ĐỘNG; trạng thái đã nằm ở Quan sát. Chép lại vào
-       công cụ là cách nó phình lên lần nữa. */
-    for (const id of ["linear_search", "binary_search"] as AlgorithmId[]) {
-      const { state } = build(id);
-      const k = actionableStep(state);
-      const zone = renderToString(
-        <SearchStateView
-          model={searchInteractionOf(at(state, k))!} />,
-      );
-      for (const dup of ["search-state", "search-cost", "search-precondition", "scan-chip"]) {
-        expect(zone, `${id}: công cụ chép lại "${dup}" của Quan sát`).not.toContain(dup);
-      }
-    }
-  });
+  /* it("EXPERIMENT_DOES_NOT_DUPLICATE_CORE_OBSERVATION_STATE…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
-  it("EXPERIMENT_FEEDBACK_ATTACHED_TO_TOOL — phản hồi ở TRONG zone", () => {
-    const { state } = build("binary_search");
-    const k = actionableStep(state);
-    const zone = renderToString(
-      <SearchStateView
-        model={searchInteractionOf(at(state, k))!} />,
-    );
-    expect(zone).toContain("predict-result");
-    expect(zone.indexOf("predict-result"), "phản hồi rơi ra ngoài zone")
-      .toBeLessThan(zone.lastIndexOf("</section>"));
-  });
+  /* it("EXPERIMENT_FEEDBACK_ATTACHED_TO_TOOL — phản hồi ở TRONG zone…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
   it("Quan sát vẫn sạch: 0 bề mặt cam kết, nhiều nhất một khối chữ dài", () => {
     for (const id of GATED) {

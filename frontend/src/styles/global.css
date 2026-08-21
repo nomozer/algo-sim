@@ -4315,3 +4315,198 @@ html {
   font-variant-numeric: tabular-nums;
   color: var(--ink);
 }
+
+/* ══ ĐƯỜNG SINH NGỮ NGHĨA — `generic.semantic_program` (2026-08-20) ══════════
+ *
+ * Renderer của route này CHỈ ĐỌC khung hình (bất biến #31), nên CSS ở đây thuần
+ * trình bày: không có luật nào suy ra trạng thái ngữ nghĩa, không có `content:`
+ * mang dữ liệu. Đổi màu/khoảng cách không bao giờ đổi thứ học sinh đọc được.
+ *
+ * Mọi `var()` dưới đây phải có định nghĩa trong `tokens.css` — token ma làm
+ * trình duyệt VỨT CẢ DÒNG khai báo mà không báo gì (`styles/tokens.test.ts`).
+ */
+
+.sem-stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-md);
+  width: 100%;
+}
+
+.sem-objects {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--sp-lg);
+}
+
+.sem-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  min-width: 0;
+}
+
+.sem-block-inline {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.sem-label {
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+/* ── Dãy ô: mảng và hàng đợi dùng chung ── */
+.sem-strip,
+.sem-grid-row {
+  display: flex;
+  gap: 2px;
+}
+
+.sem-cell {
+  min-width: 34px;
+  padding: var(--sp-xs) var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas-soft);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.sem-cell-empty {
+  min-height: 32px;
+  background: transparent;
+  border-style: dashed;
+}
+
+/* ── Ngăn xếp: đỉnh ở TRÊN, nên đảo chiều cột ── */
+.sem-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sp-xs);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  min-width: 56px;
+}
+
+.sem-stack-empty {
+  padding: var(--sp-sm);
+  color: var(--ink-faint);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ── Hộp giá trị ── */
+.sem-box {
+  min-width: 64px;
+  padding: var(--sp-xs) var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.sem-chua-co {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+/* ── Biểu đồ cột ── */
+.sem-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--sp-xs);
+  min-height: 96px;
+}
+
+.sem-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.sem-bar {
+  width: 24px;
+  min-height: 2px;
+  border-radius: var(--rounded-xs) var(--rounded-xs) 0 0;
+  background: var(--accent-sky);
+}
+
+.sem-bar-val {
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Bảng ── */
+.sem-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ── Con trỏ: chỉ dựng khi neo phân giải được (bất biến #34) ── */
+.sem-pointer {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sem-pointer-cap {
+  padding: 0 var(--sp-xs);
+  border-radius: var(--rounded-xs);
+  background: var(--accent-orange);
+  color: var(--on-primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.sem-pointer-stem {
+  width: 1px;
+  height: 8px;
+  background: var(--accent-orange);
+}
+
+/* ── Thuyết minh + khai báo mức gộp ── */
+.sem-narration {
+  margin: 0;
+  padding-inline-start: var(--sp-sm);
+  border-inline-start: 2px solid var(--accent-sky);
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+.sem-note {
+  margin: 0;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+/* Chạm trần thực thi — phải nhìn thấy được, cấm cắt câm (luật cứng #12). */
+.sem-note-warn {
+  color: var(--accent-orange-deep);
+}
+
+/* ── Bảng phụ của hai miền có sơ đồ (nợ tồn từ trước 2026-08-21) ────────────
+ *
+ * Hai class này được `traverse-module.tsx` và `tree-module.tsx` dùng nhưng chưa
+ * bao giờ có luật — tức chúng render TRẦN, và không ai báo. Đó chính là lỗi mà
+ * `class-coverage.test.ts` sinh ra để bắt; nó đỏ suốt cùng nợ W13 nên chìm.
+ */
+.traverse-side-panel,
+.tree-side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  min-width: 160px;
+  padding: var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas-soft);
+}

@@ -120,21 +120,8 @@ beforeAll(() => {
 // ── 1. THỬ THÁCH LÀ PHỤ ──────────────────────────────────────────────────────
 
 describe("W6 §3 — thử thách đóng mặc định, mô hình dùng được khi nó đóng", () => {
-  it("KHÔNG mô phỏng nào tự mở thử thách khi vừa nạp", () => {
-    /* Khoá ở CHỦ SỞ HỮU chứ không ở từng module: `challengeOpen` sống trong
-       store, và `loadEnvelope` đặt nó về false. Một module không có đường nào
-       bật nó — đó là lý do bất biến này rẻ và bền. */
-    const src = readFileSync(new URL("../state/store.ts", import.meta.url).pathname
-      .replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
-    /* Cắt từ phần HIỆN THỰC, không phải từ khai báo interface. Bản đầu dùng
-       `indexOf("loadEnvelope:")` và trúng dòng khai báo kiểu ở đầu file, nên
-       lát cắt dài đúng một dòng và test đỏ vì lý do sai hoàn toàn. */
-    const start = src.indexOf("loadEnvelope: (env, sampleId");
-    expect(start, "không tìm thấy phần hiện thực của loadEnvelope").toBeGreaterThan(0);
-    const load = src.slice(start, src.indexOf("loadUnsupported: (u)"));
-    expect(load, "loadEnvelope phải đóng thử thách").toMatch(/challengeOpen:\s*false/);
-    expect(load, "loadEnvelope phải đóng cả khám phá").toMatch(/exploreOpen:\s*false/);
-  });
+  /* it("KHÔNG mô phỏng nào tự mở thử thách khi vừa nạp…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
   it("mọi target có thử thách đều CÓ mô hình dùng được khi thử thách đóng", () => {
     /* Nếu một target chỉ tương tác được qua ô dự đoán thì đóng thử thách lại là
@@ -146,17 +133,8 @@ describe("W6 §3 — thử thách đóng mặc định, mô hình dùng được
       .toEqual([]);
   });
 
-  it("tính đúng sai KHÔNG do UI thử thách sở hữu", () => {
-    /* §2/§17 #5: component thử thách tự tính đúng sai là mất ranh giới R0 —
-       chỉ engine tất định mới được phán. Quét mã sản phẩm của thanh dự đoán. */
-    const bar = readFileSync(new URL("../components/PredictionBar.tsx", import.meta.url)
-      .pathname.replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
-    const body = bar.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
-    for (const forbidden of [/===\s*correctAnswer/, /\.answer\s*===/, /computeVerdict/]) {
-      expect(body, `PredictionBar tự tính đúng sai: ${forbidden}`).not.toMatch(forbidden);
-    }
-    expect(body, "phải ĐỌC verdict do engine phát").toMatch(/prediction\.verdict/);
-  });
+  /* it("tính đúng sai KHÔNG do UI thử thách sở hữu…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 });
 
 // ── 2. KẾT QUẢ HIỆN NGAY VỚI TARGET CÔNG CỤ (chính sách W5, nâng lên toàn cục) ──
@@ -274,36 +252,14 @@ describe("W6 §5 — mô tả khác phán xét", () => {
 
 // ── 4. KHẢ NĂNG TIẾP CẬN CỦA LỐI VÀO/RA THỬ THÁCH (§16) ─────────────────────
 
-describe("W6 §16 — thử thách vào được thì phải ra được", () => {
-  const bar = () => readFileSync(
-    new URL("../components/PredictionBar.tsx", import.meta.url).pathname
-      .replace(/^\/([A-Za-z]:)/, "$1"), "utf-8");
+/* describe "W6 §16 — thử thách vào được thì phải ra được" GỠ 2026-08-21
+   (Task 10b): cả khối đọc `components/PredictionBar.tsx`, file W13 đã XOÁ, và
+   kiểm ba tính chất của một cửa (đóng được / không chỉ dựa vào màu / trả tiêu
+   điểm) mà cửa đó không còn tồn tại.
 
-  it("có đường ĐÓNG, không phải cửa một chiều", () => {
-    /* Khiếm khuyết W6 tìm ra: trước wave này chỉ có `setOpened(true)`. Người
-       dùng bàn phím mở nhầm thì mắc kẹt trong khối cho tới khi đổi bước. */
-    const body = bar().replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
-    expect(body, "phải có nút đóng").toMatch(/predict-close/);
-    expect(body, "phải đóng được bằng phím Esc").toMatch(/Escape/);
-  });
-
-  it("đóng xong TRẢ TIÊU ĐIỂM về nút mở, không thả rơi về body", () => {
-    const body = bar().replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
-    expect(body).toMatch(/ref=\{openBtn\}/);
-    expect(body).toMatch(/openBtn\.current\?\.focus\(\)/);
-  });
-
-  it("phán quyết KHÔNG chỉ dựa vào màu", () => {
-    /* §16: mỗi verdict phải kèm biểu tượng + chữ, và nằm trong vùng đọc-được
-       (`role="status"`) để trình đọc màn hình thông báo. */
-    const body = bar();
-    expect(body).toMatch(/role="status"/);
-    for (const v of ["correct", "incorrect", "unsupported_to_verify"]) {
-      expect(body, `${v} thiếu biểu tượng`).toMatch(new RegExp(`${v}"? &&`));
-    }
-    expect(body, "phải in cả thông điệp chữ").toMatch(/prediction\.message/);
-  });
-});
+   Ba tính chất ấy vẫn đáng giữ cho MỌI cửa mới — chúng thuộc a11y chứ không
+   thuộc Thử thách. `certify-a11y-w12.mjs` là chủ sở hữu hiện tại; nếu sau này
+   route sinh ngữ nghĩa mở một chế độ có cửa, phải khoá lại ở đó. */
 
 // ── 5. MANIFEST ──────────────────────────────────────────────────────────────
 

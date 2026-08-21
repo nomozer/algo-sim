@@ -240,18 +240,8 @@ describe("insertion_sort — quyết định dời phần tử", () => {
 
 /* ── (9)(10)(13)(18) qua module.predict — hợp đồng và độ thuần ───────────── */
 
-describe("module.predict dùng decisionPointOf — thuần, đúng trace, có mặc định an toàn", () => {
-  const mod = makeAlgorithmModule("binary_search");
-  const DATA = { array: [1, 3, 5, 7, 9, 11, 13], target: 3 };
-
-  /* `init` GỠ 2026-08-21 (Task 10b): chỉ dùng bởi các test predict đã xoá. */
-
-  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("challenge/check khớp decisionPointOf; đúng và sai đều KHÔNG đụng c
-     Kiem predict.challenge/check — W13 go nang luc du doan co chu dich. */
-
-  /* ĐÃ XOÁ 2026-08-21 (Task 10b) — it("không có điểm quyết định → không có challenge (không hỏi vu vơ)", 
-     Kiem predict.challenge/check — W13 go nang luc du doan co chu dich. */
-});
+/* describe "module.predict dùng decisionPointOf" ĐÃ GỠ 2026-08-21 (Task 10b):
+   mọi test bên trong kiểm `predict.challenge/check`, năng lực W13 đã bỏ. */
 
 /* ── consequenceOf — mặt "chuyện gì vừa xảy ra" của cùng dữ liệu ──────────── */
 

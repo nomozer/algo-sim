@@ -155,13 +155,8 @@ describe("W4B-2B · cổng là PILOT, không phải rollout cả họ", () => {
     }
   });
 
-  it("shell KHÔNG quyết định bằng tên bài — cổng dẫn xuất từ policy", () => {
-    const src = code(readFileSync(new URL("./domains/algorithm/ui.tsx", import.meta.url), "utf-8"));
-    // anti-pattern #2: mọi quyết định suy từ capability, không từ định danh bài
-    expect(src).not.toMatch(/algorithm_id\s*===\s*["']/);
-    expect(src).not.toMatch(/moduleId\s*===\s*["']/);
-    expect(src).toMatch(/policy\.experimentGated/);
-  });
+  /* it("shell KHÔNG quyết định bằng tên bài — cổng dẫn xuất từ policy…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 });
 
 /* ══ 2. QUAN SÁT SẠCH, NHƯNG KHÔNG NGHÈO ĐI ═══════════════════════════════ */
@@ -188,19 +183,8 @@ describe("W4B-2B §7/§18 · Quan sát ẩn CAM KẾT, giữ QUAN HỆ", () => {
     }
   });
 
-  it("QUAN HỆ đang xét vẫn ở lại — cổng không được lấy mất dữ kiện quan sát", () => {
-    /* W4B-2V: quan hệ có HAI chủ sở hữu hợp lệ tuỳ họ — dải nhân quả
-       (`.decision-strip`) cho quét dãy/sắp xếp, và khối quan sát
-       (`.search-observe`) cho tìm kiếm, nơi quan hệ dọn về ở cùng chip trạng
-       thái. Test khẳng định NGỮ NGHĨA còn sống, không khẳng định tên class —
-       bản cũ chỉ biết một chủ sở hữu nên nó đỏ ngay khi quyền sở hữu dời đi,
-       dù học sinh vẫn nhìn thấy đủ. */
-    for (const id of GATED) {
-      const html = observeHtml(id);
-      const hasRelation = html.includes("decision-strip") || html.includes("search-observe");
-      expect(hasRelation, `${id}: mất quan hệ ở Quan sát`).toBe(true);
-    }
-  });
+  /* it("QUAN HỆ đang xét vẫn ở lại — cổng không được lấy mất dữ kiện qua…") ĐÃ XOÁ 2026-08-21 (Task 10b).
+     Khai niem W13 da go: cong Thi nghiem dang PANEL / che do Thu thach / vung cam ket. */
 
   /* W4B-3A — CỔNG ĐỔI CHỦ, BẤT BIẾN GIỮ NGUYÊN.
    *

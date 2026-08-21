@@ -906,7 +906,11 @@ export function GenericWorkspace({
                     fill={barColor}
                     stroke={isTargeted ? "#fff" : "transparent"}
                     strokeWidth={isTargeted ? 2 : 0}
-                    style={{ transition: "all 0.25s ease" }}
+                    /* Liệt kê ĐÚNG thuộc tính đang đổi thay vì `all`: trên SVG,
+                       `all` kéo theo cả thuộc tính hình học mà trình duyệt nội
+                       suy khác nhau, và guard `transition-semantics` chặn đúng
+                       vì lý do đó. Ở đây chỉ có màu nền/viền đổi. */
+                    style={{ transition: "fill 0.25s ease, stroke 0.25s ease" }}
                   />
                   <text
                     x={bx + barW / 2}
