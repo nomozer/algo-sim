@@ -1,10 +1,15 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "4c6b7e151a149316",
-  "dirtyRelevantSources": [],
-  "head": "1644b7f51476bcd2a38e931debb98851e477a665",
-  "dirty": false,
-  "generatedAt": "2026-08-21T13:25:58.951Z",
+  "dirtyRelevantSources": [
+    "backend/app/ai/gemini.py",
+    "backend/app/ai/pipeline.py",
+    "backend/tests/semantic_program/test_route_wiring.py",
+    "backend/tests/semantic_program/test_sealed_runner.py"
+  ],
+  "head": "031bb618e8dc9c2e2025251ad8aae71ae139b4d4",
+  "dirty": true,
+  "generatedAt": "2026-08-21T17:30:45.550Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

@@ -752,6 +752,44 @@ async def classify_with_one_route_recovery(
 
 # ── Orchestrator ──────────────────────────────────────────────
 
+async def _semantic_shadow(
+    text: str, analysis: dict, plan: dict, api_key: str, observer
+) -> "SemanticRouteOutcome | None":
+    """Quyết định route sinh CÓ ĐƯỢC THỬ hay không — độc lập với classifier.
+
+    Hai cổng, và chỉ hai:
+
+    - **Phạm vi** — đề ngoài môn Tin học thì dù máy dựng được cảnh cũng không
+      dựng. `GATE_SCOPE_UNDECLARED` KHÔNG chặn ở đây: nó là lỗi hợp đồng prompt
+      chứ không phải phán quyết về đề, và để nó chặn thì route mất lượt vì một
+      trường bị thiếu.
+    - **Execution authority** — kết quả phải có một authority TẤT ĐỊNH sở hữu.
+      R0 không bị nới một milimet; khác biệt duy nhất là hệ nay có interpreter.
+
+    Cố ý KHÔNG hỏi classifier chọn target nào. Hỏi thì claim A tụt xuống thành
+    "hệ sinh được mô phỏng cho những bài mà classifier không nhận", tức một
+    claim về classifier chứ không phải về route sinh.
+    """
+    scope = check_scope_and_simulatability(analysis)
+    if scope is not None and scope[0] is not ErrorCode.GATE_SCOPE_UNDECLARED:
+        _emit(observer, "semantic_route", stage_reached="scope",
+              executable=False, servable=False,
+              error_code=scope[0].value, reason=scope[1])
+        return None
+
+    auth = check_execution_authority(analysis, plan, has_interpreter=True)
+    _emit(observer, "gate_checked", gate="execution_authority",
+          fired=bool(auth),
+          reason_code=ErrorCode.GATE_RESULT_OWNERSHIP.value if auth else None)
+    if auth is not None:
+        _emit(observer, "semantic_route", stage_reached="execution_authority",
+              executable=False, servable=False,
+              error_code=ErrorCode.GATE_RESULT_OWNERSHIP.value, reason=auth)
+        return None
+
+    return await _semantic_route_attempt(text, analysis, api_key, observer)
+
+
 async def _semantic_route_attempt(
     text: str, analysis: dict, api_key: str, observer
 ) -> "SemanticRouteOutcome | None":
@@ -769,10 +807,17 @@ async def _semantic_route_attempt(
               error_code=ErrorCode.SEMANTIC_PROGRAM_INVALID.value, reason=cerr)
         return None
 
+    # Phát KÈM witness của từng nghĩa vụ. Ground truth độc lập không được phép
+    # đoán tên biến mà LLM tự đặt — custodian chỉ khai nghĩa vụ và giá trị
+    # đúng, còn ánh xạ nghĩa-vụ → tên-biến thì đọc từ contract này.
     _emit(observer, "semantic_contract",
           so_fact=len(contract.input_facts),
           so_nghia_vu=len(contract.obligations),
-          kinds=sorted({ob.kind for ob in contract.obligations}))
+          kinds=sorted({ob.kind for ob in contract.obligations}),
+          obligations=[
+              {"kind": ob.kind, "container": ob.container, "witness": ob.witness}
+              for ob in contract.obligations
+          ])
 
     spec, serr = await stage_semantic_program(text, analysis, api_key, contract)
     if spec is None:
@@ -861,6 +906,40 @@ async def run_pipeline(
     # kiện lọc "lớn hơn 4"). SERVER ra phán quyết cuối, tất định — không đọc
     # text đề (không keyword-patch).
     chosen = classification.get("simulation_id") if classification.get("status") == "ok" else None
+
+    # ─── ROUTE SINH NGỮ NGHĨA — ĐỘC LẬP với phán quyết của classifier ───
+    # Đặt NGOÀI nhánh generic có chủ đích. Nếu chỉ chạy khi classifier legacy
+    # trả `None`/`generic.rule_scene` thì một held-out case bị classifier chọn
+    # nhầm một specialized target sẽ khiến route sinh KHÔNG BAO GIỜ được thử —
+    # và claim A ("hệ sinh được mô phỏng cho lớp bài này") hoá ra vẫn phụ thuộc
+    # vào catalog classifier, tức đo nhầm thứ.
+    #
+    # Điều kiện để THỬ là scope + execution authority, không phải target nào
+    # được chọn. Điều kiện để PHÁT thì khác và chặt hơn (xem dưới).
+    semantic_outcome = None
+    if semantic_route != "off":
+        semantic_outcome = await _semantic_shadow(
+            text, analysis, plan, api_key, observer
+        )
+
+    # PHÁT thì vẫn nhường module chuyên biệt: ranh giới phạm vi của đề tài là
+    # KHÔNG thay thế 24 module đang có. Route sinh chỉ phục vụ chỗ trống.
+    if (
+        semantic_route == "serve"
+        and semantic_outcome is not None
+        and semantic_outcome.servable
+        and (chosen is None or chosen == "generic.rule_scene")
+    ):
+        env = dict(semantic_outcome.envelope or {})
+        env["analysis"] = analysis
+        env["representation_plan"] = plan
+        env["source"] = "semantic_program"
+        _emit(observer, "envelope", status="ok",
+              simulation_id=env.get("simulation_id"), source="semantic_program")
+        return env
+    # SHADOW: bằng chứng đã thu qua observer, KHÔNG đổi thứ trả về. Người học
+    # vẫn nhận đúng hành vi cũ cho tới khi cổng phát được mở (spec §10.2).
+
     if chosen is None or chosen == "generic.rule_scene":
         # M20 W3 — PHẠM VI phán TRƯỚC năng lực. Đề ngoài môn Tin học thì dù engine
         # dựng được cảnh cũng không dựng; đề thuộc môn nhưng không có cơ chế để mô
@@ -896,34 +975,6 @@ async def run_pipeline(
                 deferred_scope = scope_gate
             else:
                 return _scope_refusal(scope_gate)
-
-        # ─── ROUTE SINH NGỮ NGHĨA ───
-        # Đặt TRƯỚC `check_computation_ownership` là có chủ đích: cổng ấy từ
-        # chối đúng lớp bài `algorithmic` — tức đúng lớp bài route này sinh
-        # được. Chạy sau nó thì route không bao giờ tới lượt.
-        #
-        # R0 không bị nới: `check_execution_authority` vẫn đòi một AUTHORITY
-        # TẤT ĐỊNH sở hữu kết quả; khác biệt duy nhất là hệ nay CÓ một cái
-        # (interpreter), nên câu "algorithmic ⇒ từ chối" không còn đồng nghĩa
-        # với "không ai sở hữu kết quả".
-        if semantic_route != "off":
-            auth = check_execution_authority(analysis, plan, has_interpreter=True)
-            _emit(observer, "gate_checked", gate="execution_authority",
-                  fired=bool(auth),
-                  reason_code=ErrorCode.GATE_RESULT_OWNERSHIP.value if auth else None)
-            if auth is None:
-                outcome = await _semantic_route_attempt(text, analysis, api_key, observer)
-                if outcome is not None and semantic_route == "serve" and outcome.servable:
-                    env = dict(outcome.envelope or {})
-                    env["analysis"] = analysis
-                    env["representation_plan"] = plan
-                    env["source"] = "semantic_program"
-                    _emit(observer, "envelope", status="ok",
-                          simulation_id=env.get("simulation_id"), source="semantic_program")
-                    return env
-                # SHADOW: đã thu đủ bằng chứng qua observer, KHÔNG đổi thứ trả
-                # về. Người học vẫn nhận đúng hành vi cũ cho tới khi cổng phát
-                # được mở (spec §10.2).
 
         gate_reason = check_computation_ownership(analysis, plan)
         _emit(observer, "gate_checked", gate="computation", fired=bool(gate_reason),

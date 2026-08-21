@@ -195,6 +195,79 @@ def test_shadow_khong_doi_dau_ra_mot_bit(monkeypatch):
     assert ghi is not None and ghi["servable"] is True, ghi
 
 
+def test_shadow_VAN_chay_khi_classifier_chon_module_chuyen_biet(monkeypatch):
+    """ĐIỂM QUAN TRỌNG NHẤT: route sinh KHÔNG được phụ thuộc classifier legacy.
+
+    Nếu semantic attempt chỉ chạy trong nhánh `generic.rule_scene` thì một
+    held-out case bị classifier chọn nhầm một specialized target sẽ khiến route
+    sinh không bao giờ được thử. Claim A khi ấy tụt xuống thành "hệ sinh được
+    mô phỏng cho những bài mà classifier không nhận" — một claim về CLASSIFIER,
+    không phải về route sinh.
+
+    Ở đây classifier chọn `algorithm.find_max` (module chuyên biệt có thật).
+    Hai điều phải cùng đúng: semantic vẫn chạy trọn, VÀ người học vẫn nhận
+    envelope của module chuyên biệt.
+    """
+    from app.evaluation.m16_offline_scripts import _algo_cfg
+
+    kich_ban = [
+        json.dumps(_analysis(goal="Tìm số lớn nhất của dãy", ownership="algorithmic")),
+        json.dumps({"status": "ok", "simulation_id": "algorithm.find_max",
+                    "reason": None}),
+        json.dumps(ANALYZE_PAYLOAD),
+        _spec_co_provenance().model_dump_json(),
+    ]
+    du_phong = _algo_cfg(DAY_SO)
+
+    async def f(api_key, system_prompt, user_text, response_schema=None,
+                temperature=0.2, image=None):
+        return kich_ban.pop(0) if kich_ban else du_phong
+
+    monkeypatch.setattr(pipeline, "call_gemini", f)
+    thu = _Thu()
+    env = asyncio.run(pipeline.run_pipeline(
+        "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34", "khoa-gia",
+        observer=thu, semantic_route="shadow",
+    ))
+
+    ghi = thu.dau_tien("semantic_route")
+    assert ghi is not None, (
+        "route sinh KHÔNG được thử vì classifier chọn module chuyên biệt — "
+        "claim A khi ấy đo classifier chứ không đo route sinh"
+    )
+    assert ghi["servable"] is True, ghi
+    # …và module chuyên biệt vẫn là thứ được trả cho người học.
+    assert env["status"] == "ok"
+    assert env["simulation_id"] == "algorithm.find_max"
+
+
+def test_serve_KHONG_gianh_cho_cua_module_chuyen_biet(monkeypatch):
+    """Ranh giới phạm vi: route sinh phục vụ CHỖ TRỐNG, không thay 24 module."""
+    from app.evaluation.m16_offline_scripts import _algo_cfg
+
+    kich_ban = [
+        json.dumps(_analysis(goal="Tìm số lớn nhất của dãy", ownership="algorithmic")),
+        json.dumps({"status": "ok", "simulation_id": "algorithm.find_max",
+                    "reason": None}),
+        json.dumps(ANALYZE_PAYLOAD),
+        _spec_co_provenance().model_dump_json(),
+    ]
+    du_phong = _algo_cfg(DAY_SO)
+
+    async def f(api_key, system_prompt, user_text, response_schema=None,
+                temperature=0.2, image=None):
+        return kich_ban.pop(0) if kich_ban else du_phong
+
+    monkeypatch.setattr(pipeline, "call_gemini", f)
+    env = asyncio.run(pipeline.run_pipeline(
+        "Tìm giá trị lớn nhất trong dãy 12 45 67 23 89 34", "khoa-gia",
+        semantic_route="serve",
+    ))
+    assert env["simulation_id"] == "algorithm.find_max", (
+        "route sinh đã giành chỗ của một module chuyên biệt"
+    )
+
+
 def test_serve_tra_envelope_ngu_nghia(monkeypatch):
     env = _chay(monkeypatch, semantic_route="serve")
     assert env["status"] == "ok"

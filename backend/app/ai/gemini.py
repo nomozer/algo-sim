@@ -38,8 +38,16 @@ class BudgetExceeded(RuntimeError):
 class ApiBudget:
     """Đếm request HTTP THẬT + chặn khi vượt trần (M7.14T §7)."""
 
-    def __init__(self, max_api_calls: int | None = None, max_attempts: int | None = None):
+    def __init__(self, max_api_calls: int | None = None, max_attempts: int | None = None,
+                 max_logical_calls: int | None = None):
         self.max_api_calls = max_api_calls
+        # Trần LƯỢT LOGIC (số lần `call_gemini` được gọi). Trước 2026-08-21 chỉ
+        # có trần HTTP, nên một lượt đánh giá có thể vượt xa ngân sách lượt logic
+        # mà không gì chặn: pipeline có nhiều tầng retry TỰ NÓ — `_call_json`
+        # retry 1 lần cho analyze/classify, one-route recovery gọi classify
+        # thêm lượt nữa, `stage_simulate*` lặp tới 3. Đếm mà không chặn thì con
+        # số ngân sách chỉ là lời chúc.
+        self.max_logical_calls = max_logical_calls
         # Trần retry TRANSIENT (HTTP) — KHÔNG đụng retry validation của pipeline
         # (3 lần simulate là ngữ nghĩa sản phẩm, đổi là hỏng benchmark).
         self.max_attempts = max_attempts or MAX_ATTEMPTS
@@ -50,6 +58,16 @@ class ApiBudget:
         self.aborted = False
 
     def note_call(self) -> None:
+        """Gọi TRƯỚC mỗi lượt logic; vượt trần → BudgetExceeded."""
+        if (
+            self.max_logical_calls is not None
+            and self.logical_calls >= self.max_logical_calls
+        ):
+            self.aborted = True
+            raise BudgetExceeded(
+                f"Đã chạm trần {self.max_logical_calls} lượt LLM logic — dừng "
+                "để không đốt thêm quota."
+            )
         self.logical_calls += 1
 
     def note_request(self, is_retry: bool) -> None:

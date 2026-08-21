@@ -61,18 +61,41 @@ khỏi mã đúng như bảng danh tính từng trôi ở `CURRENT_STATE.md`.
 
 ```
 N (SEALED)                    = 40
-Lượt LLM logic / case         ≤ 4      (analyze + classify + semantic_analyze
-                                        + semantic_program)
-Trần lượt logic               = 160
+Trần lượt logic               = 160    (CƯỠNG CHẾ, không chỉ đếm)
 Trần lần thử HTTP             = 200    (chừa cho retry/transient)
 ```
 
-> **Vì sao 3 → 4 (sửa 2026-08-21, TRƯỚC khi thấy bất kỳ kết quả nào).** Bản đầu
-> đếm thiếu một lượt: route cần `semantic_analyze` dựng `RequestContract` **và**
-> `semantic_program` viết IR. Gộp hai lượt ấy làm một thì cùng một lượt sinh ra
-> cả nghĩa vụ lẫn chương trình, nên mô hình chỉ việc khai nghĩa vụ nào mà chương
-> trình nó vừa viết đã thoả — C₁a còn đúng hình thức nhưng không kiểm được gì.
-> Đây là sửa **số học của thiết kế**, không phải nới trần vì số xấu: lúc sửa
+### Upper bound thật — dẫn từ call graph, không ước lượng
+
+```
+stage_analyze            _call_json(retries=1)          → tối đa 2
+stage_classify lần 1     _call_json(retries=1)          → tối đa 2
+one-route recovery       thêm một stage_classify        → tối đa 2
+stage_semantic_analyze   không retry                    → 1
+stage_semantic_program   không retry                    → 1
+stage_simulate*          for _attempt in range(3)       → tối đa 3
+                                                          ─────────
+                                                          tối đa 11
+```
+
+Đường **hạnh phúc** là 4 (`analyze` + `classify` + `semantic_analyze` +
+`semantic_program`). Bốn **không phải bound**.
+
+> **Hệ quả phải biết trước khi chạy.** 4 × 40 = 160 = đúng trần, không còn một
+> slot dự phòng. Retry ở bất kỳ đâu ⇒ lượt chạy dừng trước case thứ 40, báo cáo
+> ghi `evaluation_complete: false` kèm cảnh báo, và A/B **không được công bố như
+> kết quả chính**. Đó là hành vi ĐÚNG theo ngân sách đã duyệt — không phải lỗi.
+
+Cưỡng chế nằm ở `ApiBudget(max_api_calls=…, max_logical_calls=…)`. Trước
+2026-08-21 chỉ có trần HTTP, nên số lượt logic có thể vượt xa ngân sách mà không
+gì chặn: đếm mà không chặn thì con số ngân sách chỉ là lời chúc.
+
+> **Vì sao đường hạnh phúc là 4 chứ không phải 3 (sửa 2026-08-21, TRƯỚC khi thấy
+> bất kỳ kết quả nào).** Route cần `semantic_analyze` dựng `RequestContract`
+> **và** `semantic_program` viết IR. Gộp hai lượt ấy làm một thì cùng một lượt
+> sinh ra cả nghĩa vụ lẫn chương trình, nên mô hình chỉ việc khai nghĩa vụ nào mà
+> chương trình nó vừa viết đã thoả — C₁a còn đúng hình thức nhưng không kiểm được
+> gì. Đây là sửa **số học của thiết kế**, không phải nới trần vì số xấu: lúc sửa
 > chưa có một case SEALED nào được chạy. Luật "không nâng sau khi thấy số" vẫn
 > nguyên vẹn và từ đây trở đi là tuyệt đối.
 

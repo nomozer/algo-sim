@@ -2457,6 +2457,16 @@ có checker (lý do ghi trong file).
 Sở hữu **bề mặt `analyze` của route semantic**, tách hẳn enum dẫn xuất catalog
 (spec E5). `build_request_contract` LỌC nghĩa vụ ngoài taxonomy ngay tại đây.
 
+### `backend/app/ai/pipeline.py` → `_semantic_shadow` · **live**
+
+Quyết định route sinh **có được thử hay không** — và cố ý KHÔNG hỏi classifier
+chọn target nào. Chỉ hai cổng: phạm vi (bỏ qua `GATE_SCOPE_UNDECLARED` vì đó là
+lỗi hợp đồng prompt, không phải phán quyết về đề) và `execution_authority`.
+Đặt nó trong nhánh generic là làm claim A phụ thuộc classifier legacy — tức đo
+classifier chứ không đo route sinh. Việc **PHÁT** thì vẫn nhường module chuyên
+biệt (ranh giới: không thay 24 module). Khoá bởi
+`test_route_wiring.py::test_shadow_VAN_chay_khi_classifier_chon_module_chuyen_biet`.
+
 ### `backend/app/simulation/semantic_program/route.py` · offline
 
 Sở hữu **thứ tự các cổng tất định** của route và **phán quyết cuối**:
@@ -2476,11 +2486,19 @@ thì C₁a tự đối chiếu một nguồn với chính nó.
 ### `backend/scripts/run_sealed_evaluation.py` · **live**, chạy ĐÚNG MỘT LẦN
 
 Runner Task 12. Kiểm candidate + vân tay con dấu **trước** khi mở SEALED, chạy
-`run_pipeline(semantic_route="shadow")` nên MỘT lượt đo được cả hai route, và
-báo A · B · D1 · D2 riêng rẽ. Ngân sách 160 logic / 200 HTTP cưỡng chế qua
-`gemini.ApiBudget` (dùng lại, không viết bộ đếm mới). Viết **trước** khi thấy
-SEALED có chủ đích; phần chấm/tổng kết được khoá offline bởi
-`tests/semantic_program/test_sealed_runner.py` vì chạy lại là mất tính held-out.
+`run_pipeline(semantic_route="shadow")` nên MỘT lượt đo được cả hai route. Ngân
+sách 160 logic / 200 HTTP cưỡng chế qua `gemini.ApiBudget` (dùng lại, không viết
+bộ đếm mới). Viết **trước** khi thấy SEALED có chủ đích; phần chấm/tổng kết được
+khoá offline bởi `tests/semantic_program/test_sealed_runner.py` vì chạy lại là
+mất tính held-out.
+
+Bốn thứ trong đây dễ bị viết sai vào luận văn, nên mỗi thứ có một test khoá:
+**A−B phải phân rã** (chỉ một nhánh là `verification_gap`) · **B là
+STRONG-assurance nội bộ, không phải "đúng"** (oracle độc lập báo riêng, và case
+`servable` mà oracle nói sai được nêu đích danh) · **D1 là claim CẤU TRÚC**
+(số lượt LLM đứng yên khi số bước trải rộng; token/case chỉ là telemetry hỗ trợ)
+· **N=40 khoá**, chạy thiếu thì `evaluation_complete: false` và A/B không được
+công bố như kết quả chính.
 
 ### `backend/app/simulation/execution_authority_gate.py` · offline
 

@@ -12,14 +12,24 @@ LUẬT KHI CHẠY (spec §7.4, `freeze_protocol.md`):
     GHI ĐÚNG cái hỏng đó. KHÔNG vá rồi chạy lại — một lần vá là con dấu mất
     hiệu lực và phải niêm phong tập mới.
 
-Bốn con số phải báo, và chúng KHÁC NHAU:
+Các con số phải báo, và chúng KHÁC NHAU:
 
-    A  — generative executability rate: máy dựng được mô phỏng chạy được
-    B  — safe serve rate: đủ bằng chứng để phát canonical
-    D1 — token/case của route ngữ nghĩa
-    D2 — so token với đường module, CHỈ trên matched subset
+    A   — generative executability rate: máy dựng được mô phỏng CHẠY ĐƯỢC
+    B   — internal servable rate (STRONG-assurance): qua HẾT cổng nội bộ.
+          KHÔNG phải "đúng" — cổng nội bộ không phải oracle độc lập.
+    A−B — chạy được nhưng không phát được, PHẢI PHÂN RÃ theo nguyên nhân:
+          `verification_gap` (thiếu checker) · C₁b · C₂ · binding/compile.
+          Gọi cả khối là `verification_gap` là báo cáo sai — chỉ một nhánh
+          trong đó mới là "thiếu cách kiểm chứng".
+    oracle độc lập — pass/fail/ungraded/no_result, tách hẳn khỏi B. Case
+          `servable=True` mà ground truth nói SAI là con số đáng sợ nhất trong
+          báo cáo: nó nói cổng nội bộ chưa đủ.
+    D1  — claim CẤU TRÚC: sau khi IR được sinh, interpreter chạy bao nhiêu bước
+          cũng không tốn thêm một lượt LLM nào. Kiểm bằng call graph, không
+          phải bằng giá đo được. Token/case là telemetry HỖ TRỢ, không phải D1.
+    D2  — claim thực nghiệm về token, CHỈ trên matched subset.
 
-A ≥ B luôn đúng, và khoảng cách giữa chúng chính là `verification_gap`.
+A ≥ B luôn đúng. Khoảng cách giữa chúng KHÔNG được gọi bằng một cái tên duy nhất.
 
     cd backend && ALLOW_LIVE_AI=1 PYTHONIOENCODING=utf-8 \\
       .venv/Scripts/python.exe scripts/run_sealed_evaluation.py \\
@@ -49,7 +59,27 @@ sys.path.insert(0, str(BACKEND))
 #: thêm lượt cho tới khi số đẹp — xem `freeze_protocol.md §2`.
 TRAN_LOGIC = 160
 TRAN_HTTP = 200
-LUOT_MOI_CASE = 4
+
+#: Đường HẠNH PHÚC: analyze + classify + semantic_analyze + semantic_program.
+#: Dưới ngần này thì một case chắc chắn không chạy trọn.
+LUOT_TOI_THIEU_MOI_CASE = 4
+
+#: UPPER BOUND THẬT, dẫn xuất từ call graph — KHÔNG phải ước lượng:
+#:
+#:     stage_analyze          `_call_json(retries=1)`         → tối đa 2
+#:     stage_classify lần 1   `_call_json(retries=1)`         → tối đa 2
+#:     one-route recovery     thêm một stage_classify         → tối đa 2
+#:     stage_semantic_analyze không retry                     → 1
+#:     stage_semantic_program không retry                     → 1
+#:     stage_simulate*        `for _attempt in range(3)`      → tối đa 3
+#:                                                              ─────────
+#:                                                              tối đa 11
+#:
+#: Hệ quả phải nói thẳng: trần 160 chỉ đủ cho 40 case Ở ĐÚNG ĐƯỜNG HẠNH PHÚC
+#: (4 × 40 = 160), không còn một slot dự phòng. Retry ở bất kỳ đâu ⇒ lượt chạy
+#: dừng trước case thứ 40 và `evaluation_complete` = false. Đó là hành vi ĐÚNG
+#: theo ngân sách đã duyệt, không phải lỗi — nhưng phải biết trước khi chạy.
+LUOT_TOI_DA_MOI_CASE = 11
 
 
 class DungSach(RuntimeError):
@@ -125,28 +155,81 @@ def _chuan(v):
     return norm_value(v)
 
 
-def _cham(case: dict, outcome) -> dict:
-    """So kết quả máy với ground truth ĐỘC LẬP.
+def _cham(case: dict, contract_event: dict | None, outcome) -> dict:
+    """So kết quả máy với ground truth ĐỘC LẬP — KHÔNG phụ thuộc tên biến.
 
-    Chỉ hỗ trợ dạng `expected` = ánh xạ biến-bộ-nhớ → giá trị. Dạng khác trả
-    `UNGRADED` và được đếm RIÊNG — đoán bừa rồi tính là đạt thì con số B mất
-    nghĩa, mà tính là trượt thì vu oan cho hệ.
+    VÌ SAO KHÔNG NHẬN `{tên_biến: giá_trị}`: tên biến trong bộ nhớ do LLM tự
+    đặt. Một chương trình hoàn toàn đúng gọi biến là `ket_qua` trong khi custodian
+    ghi `max_value` sẽ FAIL oan — và cái FAIL oan ấy đi thẳng vào con số chính
+    của luận văn. Custodian không được phép phải đoán tên biến của LLM.
+
+    Hợp đồng đúng: custodian khai **nghĩa vụ + giá trị đúng**, còn ánh xạ
+    nghĩa-vụ → tên-biến thì đọc từ `RequestContract` mà server đã đóng băng::
+
+        "expected": [
+          {"obligation_kind": "extremum", "value": 89},
+          {"obligation_kind": "aggregate_matching", "value": 3, "index": 0}
+        ]
+
+    `index` chỉ cần khi đề có NHIỀU nghĩa vụ cùng loại. Không có index mà nhập
+    nhằng ⇒ `UNGRADED`, không đoán.
     """
     gt = case.get("ground_truth") or {}
     expected = gt.get("expected")
-    if not isinstance(expected, dict) or not expected:
-        return {"verdict": "UNGRADED", "ly_do": "ground_truth.expected không phải "
-                "ánh xạ biến → giá trị"}
+    if not isinstance(expected, list) or not expected:
+        return {"verdict": "UNGRADED",
+                "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"}
 
     if outcome is None or outcome.final_memory is None:
         return {"verdict": "NO_RESULT", "ly_do": "route không sinh được kết quả"}
 
-    lech = []
-    for ten, mong in expected.items():
-        thuc = outcome.final_memory.get(ten, "<KHÔNG CÓ BIẾN NÀY>")
-        if _chuan(thuc) != _chuan(mong):
-            lech.append(f"{ten}: máy={thuc!r} · đúng={mong!r}")
-    return {"verdict": "PASS" if not lech else "FAIL", "lech": lech}
+    obligations = (contract_event or {}).get("obligations") or []
+    lech: list[str] = []
+    khong_cham: list[str] = []
+
+    for muc in expected:
+        if not isinstance(muc, dict) or "obligation_kind" not in muc:
+            khong_cham.append(f"mục kỳ vọng sai dạng: {muc!r}")
+            continue
+        kind = muc["obligation_kind"]
+        ung_vien = [o for o in obligations if o.get("kind") == kind]
+        if not ung_vien:
+            khong_cham.append(
+                f"{kind}: hệ KHÔNG khai nghĩa vụ này nên không có witness để tra"
+            )
+            continue
+        if len(ung_vien) > 1:
+            idx = muc.get("index")
+            if not isinstance(idx, int) or not (0 <= idx < len(ung_vien)):
+                khong_cham.append(
+                    f"{kind}: có {len(ung_vien)} nghĩa vụ cùng loại, thiếu `index` "
+                    "hợp lệ để chỉ đúng cái nào"
+                )
+                continue
+            ob = ung_vien[idx]
+        else:
+            ob = ung_vien[0]
+
+        witness = ob.get("witness")
+        if not witness:
+            khong_cham.append(f"{kind}: nghĩa vụ không có witness")
+            continue
+        if witness not in outcome.final_memory:
+            lech.append(f"{kind} (witness '{witness}'): biến không có trong bộ nhớ cuối")
+            continue
+        thuc = outcome.final_memory[witness]
+        if _chuan(thuc) != _chuan(muc.get("value")):
+            lech.append(
+                f"{kind} (witness '{witness}'): máy={thuc!r} · đúng={muc.get('value')!r}"
+            )
+
+    if lech:
+        # Sai CHỨNG MINH ĐƯỢC thắng mọi thứ chưa chấm được: một câu trả lời đã
+        # biết là sai thì không còn là "chưa kết luận".
+        return {"verdict": "FAIL", "lech": lech, "khong_cham": khong_cham}
+    if khong_cham:
+        return {"verdict": "UNGRADED", "ly_do": "; ".join(khong_cham)}
+    return {"verdict": "PASS", "lech": []}
 
 
 class _Thu:
@@ -184,20 +267,27 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
         loi = f"{type(e).__name__}: {e}"
 
     ghi = thu.dau_tien("semantic_route")
+    hop_dong = thu.dau_tien("semantic_contract")
     outcome = _outcome_tu_event(ghi)
+    token = usage_report()
 
     return {
         "case_id": case.get("case_id"),
         "source": case.get("source"),
         "loi_runner": loi,
+        "ngat_vi_ngan_sach": bool(loi and "BudgetExceeded" in loi),
         "legacy": {
             "status": (env or {}).get("status"),
             "simulation_id": (env or {}).get("simulation_id"),
             "failure_category": (env or {}).get("failure_category"),
         },
         "semantic": ghi,
-        "cham": _cham(case, outcome),
-        "token": usage_report(),
+        "contract": hop_dong,
+        "cham": _cham(case, hop_dong, outcome),
+        "token": token,
+        # Số LƯỢT LLM của case này — bằng chứng cho claim D1 cấu trúc: nó KHÔNG
+        # thay đổi theo số bước mô phỏng.
+        "so_luot_llm": sum(v.get("calls", 0) for v in token.values()),
     }
 
 
@@ -214,7 +304,20 @@ def _outcome_tu_event(ghi: dict | None):
     return _OutcomeNhe(ghi) if ghi else None
 
 
-def _tong_ket(ket_qua: list[dict], candidate: dict, van_tay: str,
+#: `stage_reached` → nhóm giải thích "chạy được nhưng KHÔNG phát được".
+#: Đây là phân rã của A − B. Gọi cả khối đó là `verification_gap` là SAI: chỉ
+#: một nhánh trong đó mới là "thiếu cách kiểm chứng", ba nhánh còn lại là
+#: chương trình tự mâu thuẫn hoặc không dựng nổi bề mặt thị giác.
+_NHOM_KHONG_PHAT = {
+    "verification": "verification_gap",       # thiếu checker độc lập (§5.4)
+    "realized_coverage": "C1b_witness_unrealized",
+    "postconditions": "C2_postcondition_violated",
+    "binding": "binding_unresolved",
+    "compile": "compile_failed",
+}
+
+
+def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str,
               budget, dung_som: str | None) -> dict:
     n = len(ket_qua)
     thuc_thi = [r for r in ket_qua if (r["semantic"] or {}).get("executable")]
@@ -222,6 +325,23 @@ def _tong_ket(ket_qua: list[dict], candidate: dict, van_tay: str,
     dung = [r for r in ket_qua if r["cham"]["verdict"] == "PASS"]
     sai = [r for r in ket_qua if r["cham"]["verdict"] == "FAIL"]
     chua_cham = [r for r in ket_qua if r["cham"]["verdict"] == "UNGRADED"]
+    khong_kq = [r for r in ket_qua if r["cham"]["verdict"] == "NO_RESULT"]
+
+    # A − B: phân rã theo NGUYÊN NHÂN, không gộp thành một nhãn.
+    chay_khong_phat = [r for r in thuc_thi if not (r["semantic"] or {}).get("servable")]
+    phan_ra: dict[str, int] = {}
+    for r in chay_khong_phat:
+        stage = (r["semantic"] or {}).get("stage_reached") or "?"
+        khoa = _NHOM_KHONG_PHAT.get(stage, f"khac:{stage}")
+        phan_ra[khoa] = phan_ra.get(khoa, 0) + 1
+
+    # Đúng/sai theo ORACLE ĐỘC LẬP, tách hẳn khỏi phán quyết nội bộ. Case mà hệ
+    # tự cho là phát được NHƯNG ground truth nói sai là con số đáng sợ nhất
+    # trong cả báo cáo — nó nói checker nội bộ chưa đủ.
+    phat_nhung_sai = [
+        r for r in ket_qua
+        if (r["semantic"] or {}).get("servable") and r["cham"]["verdict"] == "FAIL"
+    ]
 
     def _tok(r) -> int:
         return sum(v.get("total_tokens", 0) for v in (r["token"] or {}).values())
@@ -255,23 +375,70 @@ def _tong_ket(ket_qua: list[dict], candidate: dict, van_tay: str,
             "http_da_dung": getattr(budget, "http_requests", None),
             "retry": getattr(budget, "retry_requests", None),
         },
-        "N": n,
+        "N_planned": n_planned,
+        "N_processed": n,
+        # Chạy thiếu case mà báo A/B trên mẫu số đã co lại thì con số đọc như
+        # thể benchmark chỉ có ngần ấy bài. Protocol đã khoá N=40.
+        "evaluation_complete": n == n_planned and dung_som is None,
+        "canh_bao": None if (n == n_planned and dung_som is None) else (
+            f"LƯỢT CHẠY KHÔNG ĐẦY ĐỦ ({n}/{n_planned}). KHÔNG được công bố A/B "
+            "dưới đây như kết quả chính; chúng chỉ mô tả tập con đã chạy."
+        ),
         "A_generative_executability": {
             "so": len(thuc_thi), "tren": n,
             "ti_le": round(len(thuc_thi) / n, 4) if n else None,
         },
-        "B_safe_serve": {
+        "B_internal_servable": {
             "so": len(phat), "tren": n,
             "ti_le": round(len(phat) / n, 4) if n else None,
-            "ghi_chu": "A - B = verification_gap. Hai con số này KHÔNG được gộp.",
+            "khai": "STRONG-assurance rate — tỉ lệ case QUA HẾT cổng nội bộ. "
+                    "ĐÂY KHÔNG PHẢI 'đúng': cổng nội bộ không phải oracle độc "
+                    "lập. Xem `dung_theo_oracle_doc_lap`.",
         },
-        "dung_so_voi_ground_truth": {
+        "A_tru_B_phan_ra": {
+            "tong": len(chay_khong_phat),
+            "theo_nguyen_nhan": dict(sorted(phan_ra.items(), key=lambda kv: -kv[1])),
+            "khai": "Chạy được nhưng không phát được. CHỈ nhánh "
+                    "`verification_gap` mới là 'thiếu cách kiểm chứng'; các "
+                    "nhánh còn lại là chương trình tự mâu thuẫn (C₁b/C₂) hoặc "
+                    "không dựng nổi bề mặt thị giác. Gọi cả khối là "
+                    "verification_gap là báo cáo sai.",
+        },
+        "dung_theo_oracle_doc_lap": {
             "pass": len(dung), "fail": len(sai), "ungraded": len(chua_cham),
-            "ghi_chu": "UNGRADED đếm RIÊNG — không tính vào tử số lẫn mẫu số của "
-                       "bất kỳ tỉ lệ nào.",
+            "no_result": len(khong_kq),
+            "tong_kiem": len(dung) + len(sai) + len(chua_cham) + len(khong_kq),
+            "ti_le_tren_so_cham_duoc": (
+                round(len(dung) / (len(dung) + len(sai)), 4)
+                if (len(dung) + len(sai)) else None
+            ),
+            "phat_nhung_oracle_noi_SAI": {
+                "so": len(phat_nhung_sai),
+                "case_id": [r["case_id"] for r in phat_nhung_sai],
+                "khai": "Case hệ tự cho là phát được nhưng ground truth độc lập "
+                        "nói sai. Khác 0 ⇒ cổng nội bộ CHƯA ĐỦ, và không được "
+                        "viết trong luận văn rằng những case ấy 'an toàn'.",
+            },
+            "ghi_chu": "UNGRADED/NO_RESULT đếm RIÊNG, không vào tử số lẫn mẫu số. "
+                       "`tong_kiem` phải bằng N_processed.",
         },
-        "D1_token_case_ngu_nghia": {
-            "trung_binh": round(sum(_tok(r) for r in ket_qua) / n, 1) if n else None,
+        "D1_structural_interpreter_khong_ton_token": {
+            "khai": "Sau khi IR được sinh, interpreter chạy bao nhiêu bước cũng "
+                    "KHÔNG tốn thêm một lượt LLM nào. Đây là claim CẤU TRÚC, "
+                    "kiểm bằng call graph, không phải claim thực nghiệm về giá.",
+            "so_luot_llm_phan_bo": sorted({r["so_luot_llm"] for r in ket_qua}),
+            "so_buoc_min_max": _min_max_buoc(ket_qua),
+            "bang_chung": [
+                {"case_id": r["case_id"],
+                 "so_buoc": (r["semantic"] or {}).get("total_steps"),
+                 "so_luot_llm": r["so_luot_llm"]}
+                for r in ket_qua if (r["semantic"] or {}).get("total_steps")
+            ],
+        },
+        "semantic_token_per_case": {
+            "khai": "Telemetry hỗ trợ, KHÔNG phải D1. Claim thực nghiệm về "
+                    "token là D2.",
+            "tat_ca_stage": round(sum(_tok(r) for r in ket_qua) / n, 1) if n else None,
             "chi_stage_ngu_nghia": round(
                 sum(_tok_stage(r, {"semantic_analyze", "semantic_program"})
                     for r in ket_qua) / n, 1) if n else None,
@@ -288,6 +455,14 @@ def _tong_ket(ket_qua: list[dict], candidate: dict, van_tay: str,
         },
         "phan_bo_that_bai": _phan_bo(ket_qua),
     }
+
+
+def _min_max_buoc(ket_qua: list[dict]) -> dict:
+    """Khoảng số bước đã chạy. Rộng mà số lượt LLM không nhúc nhích chính là
+    bằng chứng của D1 cấu trúc."""
+    buoc = [(r["semantic"] or {}).get("total_steps") for r in ket_qua]
+    buoc = [b for b in buoc if isinstance(b, int)]
+    return {"min": min(buoc), "max": max(buoc)} if buoc else {"min": None, "max": None}
 
 
 def _phan_bo(ket_qua: list[dict]) -> dict:
@@ -316,31 +491,50 @@ async def _main_async(args) -> int:
     if not api_key:
         raise DungSach("Thiếu GEMINI_API_KEY (đặt trong backend/.env).")
 
-    budget = gemini.ApiBudget(max_api_calls=TRAN_HTTP)
+    # Trần cưỡng chế ở CẢ HAI trục. Chỉ chặn HTTP là không đủ: pipeline có
+    # nhiều tầng retry tự nó (xem LUOT_TOI_DA_MOI_CASE), nên số lượt logic có
+    # thể vượt xa ngân sách mà không gì chặn.
+    budget = gemini.ApiBudget(
+        max_api_calls=TRAN_HTTP, max_logical_calls=TRAN_LOGIC
+    )
     gemini.set_budget(budget)
 
     ket_qua: list[dict] = []
     dung_som = None
     try:
         for i, case in enumerate(cases, 1):
-            # Trần LOGIC kiểm trước mỗi case: chặn giữa chừng một case thì lượt
-            # ấy vừa tốn quota vừa không dùng được.
-            if budget.logical_calls + LUOT_MOI_CASE > TRAN_LOGIC:
+            # Không KHỞI ĐỘNG một case khi chắc chắn không đủ chỗ cho đường
+            # hạnh phúc của nó — case dở dang vừa tốn quota vừa không dùng được.
+            # Đây là ngưỡng TỐI THIỂU, không phải upper bound: trần cứng trong
+            # `ApiBudget` mới là thứ chặn khi retry làm case vượt dự kiến.
+            con_lai = TRAN_LOGIC - budget.logical_calls
+            if con_lai < LUOT_TOI_THIEU_MOI_CASE:
                 dung_som = (
-                    f"BUDGET_EXHAUSTED: đã dùng {budget.logical_calls} lượt logic, "
-                    f"case tiếp theo cần {LUOT_MOI_CASE} nữa, trần {TRAN_LOGIC}."
+                    f"BUDGET_EXHAUSTED: đã dùng {budget.logical_calls}/{TRAN_LOGIC} "
+                    f"lượt logic, còn {con_lai} — không đủ cho một case "
+                    f"({LUOT_TOI_THIEU_MOI_CASE} lượt ở đường hạnh phúc)."
                 )
                 print(f"\n{dung_som}")
                 break
             print(f"[{i}/{len(cases)}] {case.get('case_id')}", flush=True)
-            ket_qua.append(await _chay_mot_case(case, api_key))
+            r = await _chay_mot_case(case, api_key)
+            if r["ngat_vi_ngan_sach"]:
+                # Case bị cắt GIỮA CHỪNG: không phải hệ thất bại, nên không được
+                # tính vào mẫu số. Ghi lại rồi dừng.
+                dung_som = (
+                    f"BUDGET_EXHAUSTED giữa case {case.get('case_id')}: "
+                    f"{r['loi_runner']}"
+                )
+                print(f"\n{dung_som}")
+                break
+            ket_qua.append(r)
     except gemini.BudgetExceeded as e:
-        dung_som = f"BUDGET_EXHAUSTED (HTTP): {e}"
+        dung_som = f"BUDGET_EXHAUSTED: {e}"
         print(f"\n{dung_som}")
     finally:
         gemini.set_budget(None)
 
-    bao_cao = _tong_ket(ket_qua, candidate, van_tay, budget, dung_som)
+    bao_cao = _tong_ket(ket_qua, len(cases), candidate, van_tay, budget, dung_som)
 
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -349,12 +543,26 @@ async def _main_async(args) -> int:
     (out / "sealed_cases.json").write_text(
         json.dumps(ket_qua, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    oracle = bao_cao["dung_theo_oracle_doc_lap"]
     print("\n── KẾT QUẢ ──")
-    print(f"  N                     {bao_cao['N']}")
-    print(f"  A executability       {bao_cao['A_generative_executability']}")
-    print(f"  B safe serve          {bao_cao['B_safe_serve']['so']}/{bao_cao['N']}")
-    print(f"  đúng/sai/chưa chấm    {bao_cao['dung_so_voi_ground_truth']}")
-    print(f"  D1 token/case         {bao_cao['D1_token_case_ngu_nghia']}")
+    print(f"  N                     {bao_cao['N_processed']}/{bao_cao['N_planned']}"
+          f"  (đầy đủ: {bao_cao['evaluation_complete']})")
+    if bao_cao["canh_bao"]:
+        print(f"  ⚠ {bao_cao['canh_bao']}")
+    print(f"  A executability       {bao_cao['A_generative_executability']['so']}"
+          f"/{bao_cao['N_processed']}")
+    print(f"  B internal servable   {bao_cao['B_internal_servable']['so']}"
+          f"/{bao_cao['N_processed']}  (STRONG-assurance, KHÔNG phải 'đúng')")
+    print(f"  A−B phân rã           {bao_cao['A_tru_B_phan_ra']['theo_nguyen_nhan']}")
+    print(f"  oracle độc lập        pass={oracle['pass']} fail={oracle['fail']} "
+          f"ungraded={oracle['ungraded']} no_result={oracle['no_result']}")
+    print(f"  phát nhưng oracle SAI {oracle['phat_nhung_oracle_noi_SAI']['so']}"
+          f"  {oracle['phat_nhung_oracle_noi_SAI']['case_id']}")
+    print(f"  D1 cấu trúc           lượt LLM/case "
+          f"{bao_cao['D1_structural_interpreter_khong_ton_token']['so_luot_llm_phan_bo']}"
+          f" · số bước "
+          f"{bao_cao['D1_structural_interpreter_khong_ton_token']['so_buoc_min_max']}")
+    print(f"  token/case (hỗ trợ)   {bao_cao['semantic_token_per_case']['chi_stage_ngu_nghia']}")
     print(f"  D2 matched subset     {bao_cao['D2_matched_subset']['so_case']} case")
     print(f"  phân bố thất bại      {bao_cao['phan_bo_that_bai']}")
     print(f"  ngân sách             {bao_cao['ngan_sach']}")

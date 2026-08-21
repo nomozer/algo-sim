@@ -102,13 +102,27 @@ là mảng:
   "ground_truth": {
     "kind": "human | independent_solver | property_oracle",
     "provenance": "…dựng bằng gì, ai dựng…",
-    "expected": {}
+    "expected": [
+      { "obligation_kind": "extremum", "value": 89 }
+    ]
   },
   "expected_obligations": []
 }
 ```
 
-Hai điều bắt buộc:
+### `expected` KHÔNG được nhắc tên biến
+
+Custodian khai **nghĩa vụ + giá trị đúng**. Tên biến trong bộ nhớ là do LLM tự
+đặt, nên bắt custodian đoán nó là bắt đoán sai: một chương trình hoàn toàn đúng
+gọi biến `ket_qua` trong khi custodian ghi `max_value` sẽ **FAIL oan**, và cái
+FAIL oan ấy đi thẳng vào con số chính của luận văn. Runner đọc ánh xạ
+nghĩa-vụ → tên-biến từ `RequestContract` mà server đã đóng băng.
+
+`obligation_kind` lấy từ taxonomy (`OBLIGATION_KINDS`, 9 giá trị). Đề có **nhiều
+nghĩa vụ cùng loại** thì thêm `"index": 0|1|…`; thiếu index mà nhập nhằng thì
+runner trả `UNGRADED` chứ không đoán.
+
+Ba điều bắt buộc:
 
 - `ground_truth.kind` **không bao giờ** được là hệ đang bị kiểm. Lấy
   `SemanticProgramInterpreter` làm thước đo chính nó thì mọi con số thu được đều
@@ -116,6 +130,9 @@ Hai điều bắt buộc:
 - `expected_obligations` **chỉ điền nếu custodian tự xác lập trước khi seal**.
   Để hệ hiện tại sinh trường đó rồi dùng lại làm ground truth là tự chấm bằng
   chính đầu ra của mình — bỏ trống còn hơn.
+- Đề **không đòi kết quả cụ thể** (chỉ yêu cầu quan sát diễn biến) thì để
+  `expected` rỗng. Case ấy được đếm `UNGRADED` và **không** vào tử số lẫn mẫu số
+  của bất kỳ tỉ lệ nào.
 
 `prescribed_procedure`: `null` khi đề **không ép** thủ tục. Có ép thì dùng giá
 trị trong `SEMANTIC_PRESCRIBED_PROCEDURES`, và oracle sẽ so **canonical
@@ -152,12 +169,39 @@ hiện nó SKIP vì `sealed/cases.json` chưa tồn tại, và sẽ tự bật k
 ## Ngân sách Task 12 — đã duyệt, không nâng sau khi thấy số
 
 ```
-N = 40  ·  ≤ 4 lượt LLM logic/case  ·  trần logic 160  ·  trần HTTP 200
+N = 40  ·  trần logic 160  ·  trần HTTP 200
 ```
 
-Bốn lượt là: `analyze` · `classify` · `semantic_analyze` · `semantic_program`.
-Con số này sửa từ 3 lên 4 ngày 2026-08-21, **trước khi chạy case SEALED nào** —
-lý do đầy đủ ở `freeze_protocol.md §2`.
+Đường **hạnh phúc** là 4 lượt/case: `analyze` · `classify` · `semantic_analyze` ·
+`semantic_program`. Nhưng 4 **không phải upper bound** — bound thật dẫn từ call
+graph là **11** (`freeze_protocol.md §2`). Hệ quả phải biết trước khi chạy: 4×40
+= 160 đúng bằng trần, nên **retry ở bất kỳ đâu cũng làm lượt chạy dừng trước case
+thứ 40**, và báo cáo sẽ ghi `evaluation_complete: false`.
+
+Cả hai trục nay được **cưỡng chế** trong `ApiBudget`, không chỉ đếm.
+
+## Các con số phải báo — và đừng gộp chúng
+
+| | nghĩa |
+|---|---|
+| **A** | dựng được mô phỏng **chạy được** |
+| **B** `B_internal_servable` | qua **hết cổng nội bộ** (STRONG-assurance). **Không phải "đúng"** — cổng nội bộ không phải oracle độc lập |
+| **A − B** | chạy được nhưng không phát được. **Phải phân rã**: `verification_gap` · C₁b · C₂ · binding/compile |
+| oracle độc lập | pass / fail / **ungraded** / **no_result**, tách hẳn khỏi B |
+| **D1** | claim **cấu trúc**: sau khi IR sinh xong, interpreter chạy bao nhiêu bước cũng không tốn thêm lượt LLM nào. Kiểm bằng call graph |
+| **D2** | claim **thực nghiệm** về token, chỉ trên matched subset |
+
+Hai chỗ dễ viết sai vào luận văn:
+
+- Gọi cả khối **A − B** là `verification_gap`. Chỉ một nhánh trong đó là "thiếu
+  cách kiểm chứng"; ba nhánh còn lại là chương trình **tự mâu thuẫn** (C₁b/C₂)
+  hoặc không dựng nổi bề mặt thị giác.
+- Gọi token/case là **D1**. Đó là telemetry hỗ trợ. D1 là claim cấu trúc, và
+  bằng chứng của nó là *số lượt LLM đứng yên trong khi số bước trải rộng*.
+
+Case `servable=true` mà oracle độc lập nói **sai** được nêu đích danh trong báo
+cáo (`phat_nhung_oracle_noi_SAI`). Khác 0 ⇒ cổng nội bộ chưa đủ, và **không được
+viết rằng những case ấy "an toàn"**.
 
 Vượt trần ⇒ dừng và ghi `BUDGET_EXHAUSTED`. Trần HTTP rộng hơn trần logic **chỉ
 để chịu lỗi tạm thời**, không phải để dò tìm kết quả tốt hơn.
