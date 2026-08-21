@@ -1,14 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "ff81d295f6467bee",
-  "dirtyRelevantSources": [
-    "frontend/scripts/verify-live-gemini-render.mjs",
-    "frontend/scripts/verify-real-browser-render.mjs",
-    "frontend/scripts/verify-semantic-e2e-render.mjs"
-  ],
-  "head": "e1bc11ccaa12215bd0fcda2ff6ae0617af3b6a83",
-  "dirty": true,
-  "generatedAt": "2026-08-21T13:25:15.746Z",
+  "sourceFingerprint": "4c6b7e151a149316",
+  "dirtyRelevantSources": [],
+  "head": "1644b7f51476bcd2a38e931debb98851e477a665",
+  "dirty": false,
+  "generatedAt": "2026-08-21T13:25:59.032Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
