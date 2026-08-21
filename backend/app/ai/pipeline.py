@@ -378,9 +378,15 @@ async def stage_semantic_program(
     from app.simulation.semantic_program.contract import generate_json_schema
     from app.simulation.semantic_program.validator import validate_semantic_program
 
+    from app.simulation.semantic_program.grammar_card import grammar_card
+
     user = f'Đề bài:\n"""\n{text}\n"""'
     if contract is not None:
         user = f"{user}\n\n{_facts_for_prompt(contract)}"
+    # Hợp đồng IR phải đi kèm, vì Gemini KHÔNG nhận được schema của nó (xem
+    # `grammar_card.py`). Thiếu nó, mô hình tự đặt tên trường và 38/40 case
+    # trượt thẩm định — đo được ở lượt pilot thứ hai.
+    user = f"{user}\n\n{grammar_card()}"
     with stage_scope("semantic_program"):
         raw = await call_gemini(
             api_key,

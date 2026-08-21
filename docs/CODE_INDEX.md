@@ -2467,6 +2467,21 @@ classifier chứ không đo route sinh. Việc **PHÁT** thì vẫn nhường mo
 biệt (ranh giới: không thay 24 module). Khoá bởi
 `test_route_wiring.py::test_shadow_VAN_chay_khi_classifier_chon_module_chuyen_biet`.
 
+### `backend/app/simulation/semantic_program/grammar_card.py` · **live**
+
+Hợp đồng IR ở dạng gọn (~2,3 KB), **sinh 100% từ `contract.py`**, ghép vào
+*user message* của `stage_semantic_program`. Nó thay `responseSchema` — thứ
+Gemini KHÔNG nhận được vì schema IR đệ quy và nội suy `$ref` nổ ~10× mỗi bậc
+(296 KB ở độ sâu 2, 3 MB ở độ sâu 3). Không có nó, mô hình bọc đầu ra trong
+khoá `semantic_program`, gọi `variables` thay `memory_declarations`, và
+38/40 case trượt thẩm định.
+
+Phải liệt kê **cả giá trị enum** chứ không chỉ tên trường: tên trường nói được
+*chỗ nào điền*, không nói được *điền gì* (mô hình từng viết `op: "add"` thay
+`"+"`). Đặt ở user message chứ không ở `skills/*.md` để ngân sách prompt tĩnh
+vẫn đo đúng thứ nó sinh ra để đo. Khoá bởi `test_grammar_card.py` (9 test, gồm
+sync-lock từng `kind` và chặn rác kiểu `typing.Annotated` lọt vào).
+
 ### `backend/app/simulation/semantic_program/route.py` · offline
 
 Sở hữu **thứ tự các cổng tất định** của route và **phán quyết cuối**:
