@@ -1,0 +1,813 @@
+{
+  "khai": "Pool để GVHD/custodian độc lập chọn 40 ID. Lọc CHỈ bằng các contamination guard đã đóng băng; không dùng kết quả pilot, checker support, khả năng IR hay dự đoán thành công.",
+  "source_universe_fingerprint": "4a9c356495ebc0148642601f0e560cd1edc5999d01c153d5fe640c9b4b813df5",
+  "guards_applied": [
+    "pilot_provenance_overlap",
+    "no_specialized_module"
+  ],
+  "eligible_count": 89,
+  "excluded_count": 100,
+  "records": [
+    {
+      "source_id": "T10-C5-001",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 89,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Kết quả của mỗi lệnh sau là gì? Kết quả đó có kiểu dữ liệu nào? >>> 5/2 ; >>> 12 + 1.5 ; >>> \"Bạn là học sinh lớp 10\" ; >>> 10 + 7/2",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-002",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 89,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Lệnh sau sẽ in ra kết quả gì? >>> print(\"13 + 10*3/2 - 3*2 = \", 13 + 10*3/2 - 3*2)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-003",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 90,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Hãy viết lệnh để tính giá trị các biểu thức sau trong chế độ gõ lệnh trực tiếp của Python: a) 10 + 13; b) 20 - 7; c) 3 × 10 - 16; d) 12/5 + 13/6.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-004",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 90,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Viết chương trình Python in ra màn hình bảng nhân trong phạm vi 10.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-005",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 93,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Sau các lệnh dưới đây, các biến x, y nhận giá trị bao nhiêu? >>> x = 10 ; >>> y = x**2 - 1 ; >>> x = x/2 + y",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-006",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 93,
+      "exercise_number_or_position": "Câu hỏi 3",
+      "problem_text": "a, b nhận giá trị gì sau các lệnh sau? >>> a,b = 2,3 ; >>> a,b = a+b, a-b",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-007",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 94,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Mỗi lệnh sau là đúng hay sai? Nếu đúng thì cho kết quả là bao nhiêu? >>> (12 - 10//2)**2 - 1 ; >>> (13 + 45**2)(30//12 - 5/2)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-008",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 94,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Mỗi lệnh sau cho kết quả là xâu kí tự như thế nào? >>> \"\"*20 + \"010\" ; >>> \"10\"+\"0\"*5",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-009",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 95,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "problem_text": "Thực hiện các phép tính sau trong môi trường lập trình Python, so sánh kết quả với việc tính biểu thức toán học. a) (1 + 2 + 3 + ... + 10)³. b) 1/2 + 1/3 + 1/4 + 1/5. c) Thực hiện lệnh gán x = 2, y = 5 rồi tính giá trị biểu thức (x + y)(x² + y² - 1). d) Thực hiện lệnh gán a = 2, b = 3, c = 4 rồi tính giá trị biểu thức (a + b + c)(a + b - c).",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-010",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 96,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "problem_text": "Gán giá trị cho biến R là bán kính hình tròn rồi viết chương trình tính và in kết quả theo mẫu: Chu vi hình tròn là: ..... ; Diện tích hình tròn là: ..... (chương trình mẫu trong sách dùng R = 4.5 và pi = 3.14).",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-011",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 96,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Lệnh sau sẽ in ra kết quả gì? >>> print(\"đồ rê mi \"*3 + \"pha son la si đô \"*2)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-012",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 96,
+      "exercise_number_or_position": "Vận dụng 1",
+      "problem_text": "Viết các lệnh để thực hiện việc đổi số giây ss cho trước sang số ngày, giờ, phút, giây, in kết quả ra màn hình. Ví dụ, nếu ss = 684 500 thì kết quả in ra như sau: 684 500 giây = 7 ngày 22 giờ 8 phút 20 giây.",
+      "context_text": "Gợi ý: Sử dụng các phép toán lấy thương nguyên, lấy số dư và các cách đổi sau: 1 ngày = 86 400 giây; 1 giờ = 3 600 giây; 1 phút = 60 giây."
+    },
+    {
+      "source_id": "T10-C5-013",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 96,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Hãy cho biết trước và sau khi thực hiện các lệnh sau, giá trị các biến x, y là bao nhiêu. Em có nhận xét gì về kết quả nhận được? >>> x, y = 10, 7 ; >>> x, y = y, x",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-014",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 98,
+      "exercise_number_or_position": "Câu hỏi",
+      "problem_text": "Xác định kiểu và giá trị của các biểu thức sau: a) \"15 + 20 - 7\"; b) 32 > 45; c) 13 != 8 + 5; d) 1 == 2.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-015",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 99,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Mỗi lệnh sau sẽ trả lại các giá trị nào? a) str(150); b) int(\"1110\"); c) float(\"15.0\").",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-017",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 100,
+      "exercise_number_or_position": "Vận dụng 1",
+      "problem_text": "Viết chương trình nhập giá trị ss là số giây từ bàn phím. Thông báo ra màn hình thời gian ss giây này sau khi đổi thành thời gian tính bằng ngày, giờ, phút, giây.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-018",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 100,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Viết chương trình nhập ba số thực dương a, b, c và tính chu vi, diện tích của tam giác có độ dài các cạnh là a, b, c (a, b, c > 0 và thoả mãn bất đẳng thức tam giác).",
+      "context_text": "Gợi ý: Công thức Heron tính diện tích tam giác S = căn bậc hai của p(p-a)(p-b)(p-c) với p là nửa chu vi tam giác."
+    },
+    {
+      "source_id": "T10-C5-019",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 102,
+      "exercise_number_or_position": "Câu hỏi",
+      "problem_text": "Mỗi biểu thức sau có giá trị True hay False? a) 100%4 == 0; b) 111//5 != 20 or 20%3 != 0.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-020",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 103,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "problem_text": "Viết chương trình nhập số tự nhiên n từ bàn phím. Sau đó thông báo số em đã nhập là số chẵn hay số lẻ phụ thuộc vào n là chẵn hay lẻ.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-022",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 104,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Tìm một vài giá trị m, n thoả mãn các biểu thức sau: a) 100%m == 0 and n%5 != 0; b) m%100 == 0 and m%400 != 0; c) n%3 == 0 or (n%3 != 0 and n%4 == 0).",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-024",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 104,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Năm n là năm nhuận nếu giá trị n thoả mãn điều kiện: n chia hết cho 400 hoặc n chia hết cho 4 đồng thời không chia hết cho 100. Viết chương trình nhập số năm n và cho biết năm n có phải là nhuận hay không.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-025",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 105,
+      "exercise_number_or_position": "Hoạt động 1",
+      "problem_text": "Thực hiện đoạn chương trình sau trong chế độ gõ lệnh trực tiếp của Python để tính tổng 0 + 1 + ... + 9. Tổng này có giá trị bao nhiêu? Giải thích kết quả. >>> S = 0 ; >>> for k in range(10): S = S + k ; >>> print(S)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-026",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 106,
+      "exercise_number_or_position": "Câu hỏi",
+      "problem_text": "Với giá trị n cho trước, so sánh giá trị S trong đoạn chương trình sau với tổng 1 + 2 + ... + n. S = 0 ; for k in range(1,n+1): S = S + k",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-027",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 107,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "problem_text": "Nhập số tự nhiên n từ bàn phím và in ra màn hình dãy các ước số của n theo chiều ngang màn hình. Ví dụ nếu n = 10 thì chương trình sẽ in ra dãy số 1, 2, 5, 10.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-029",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 107,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Đoạn chương trình sau in ra kết quả gì? n = int(input(\"Nhập số tự nhiên n:\")) ; S = 0 ; for k in range(n+1): S = S + k ; print(S*S)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-030",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 107,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Viết đoạn chương trình tính tích 1 × 2 × 3 × ... × n với n được nhập vào từ bàn phím.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-031",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 107,
+      "exercise_number_or_position": "Vận dụng 1",
+      "problem_text": "Viết chương trình nhập từ bàn phím số tự nhiên n và in ra kết quả S = 1 + 1/2 + ... + 1/n.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-032",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 107,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Viết chương trình nhập từ bàn phím số tự nhiên n và in ra kết quả là tổng sau: S = 1³ + 2³ + ... + n³.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-033",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 109,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Viết đoạn chương trình tính tổng 2 + 4 + ... + 100 sử dụng lệnh while.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-037",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 110,
+      "exercise_number_or_position": "Vận dụng",
+      "problem_text": "Viết chương trình in các số tự nhiên từ 1 đến 100 ra màn hình thành 10 hàng, mỗi hàng 10 số, có dạng: 1 2 3 ... 10 / 11 12 .... 20 / ... / 91 92 ..... 100.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-038",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 112,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Cho danh sách A = [1, 0, \"One\", 9, 15, \"Two\", True, False]. Hãy cho biết giá trị các phần tử: a) A[0]; b) A[2]; c) A[7]; d) A[len(A)].",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-039",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 113,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Cho dãy các số nguyên A, viết chương trình in ra các số chẵn của A.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-040",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 113,
+      "exercise_number_or_position": "Câu hỏi 2 (mục 3)",
+      "problem_text": "Danh sách A sẽ như thế nào sau các lệnh sau? >>> A = [2,4,10,1,0] ; >>> A.append(100) ; >>> del A[1]",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-043",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 116,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Giả sử A = [\"0\",\"1\",\"01\",\"10\"]. Các biểu thức sau trả về giá trị đúng hay sai? a) 1 in A; b) \"01\" in A.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-044",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 117,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Danh sách A trước và sau lệnh insert() là [1,4,10,0] và [1,4,10,5,0]. Lệnh đã dùng là gì?",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-045",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 117,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "problem_text": "Nhập số n từ bàn phím, sau đó nhập danh sách n tên học sinh trong lớp và in ra danh sách các tên học sinh này, mỗi tên học sinh trên một dòng. Yêu cầu danh sách được in ra theo thứ tự ngược lại với thứ tự đã nhập.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-046",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 117,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "problem_text": "Cho trước dãy số A. Viết chương trình xoá đi các phần tử có giá trị nhỏ hơn 0 từ A. (Chương trình mẫu trong sách dùng A = [0,1,-3,-10,5,9,-20,55].)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-047",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 118,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+      "problem_text": "Cho trước dãy số A. Viết chương trình tìm và chỉ ra vị trí đầu tiên của dãy số A mà ba số hạng liên tiếp có giá trị là 1, 2, 3. Nếu tìm thấy thì thông báo vị trí tìm thấy, nếu không thì thông báo \"Không tìm thấy mẫu\". (Chương trình mẫu trong sách dùng A = [0,4,0,1,2,3,8,9,0,1,2,3,17,-16,0,1,2] và p = [1,2,3].)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-052",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 120,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Mỗi xâu hợp lệ ở Câu 1 có độ dài bằng bao nhiêu? (Câu 1: a) \"123&*()+-ABC\"; b) \"1010110&0101001\"; c) \"Tây Nguyên\".)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-053",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 121,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Sau khi thực hiện các lệnh sau, biến skq sẽ có giá trị bao nhiêu? >>> s = \"81723\" ; >>> skq = \"\" ; >>> for ch in s: if int(ch) % 2 != 0: skq = skq + ch",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-055",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 121,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "problem_text": "Nhập một xâu kí tự S từ bàn phím rồi kiểm tra xem xâu S có chứa xâu con \"10\" không.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-060",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 123,
+      "exercise_number_or_position": "Khởi động",
+      "problem_text": "Cho xâu c = \"Trường Sơn\" và xâu m = \"Bước chân trên dải Trường Sơn\". Em hãy cho biết xâu c có là xâu con của xâu m không. Nếu có thì tìm vị trí của xâu c trong xâu m.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-062",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 124,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Lệnh sau trả lại giá trị gì? >>> \"abababab\".find(\"ab\",4)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-063",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 125,
+      "exercise_number_or_position": "Câu hỏi",
+      "problem_text": "Cho xâu kí tự: \"gà,vịt,chó,lợn,ngựa,cá\". Em hãy trình bày cách làm để xoá các dấu \",\" và thay thế bằng dấu \" \" trong xâu này.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-064",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 125,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "problem_text": "Viết chương trình nhập nhiều số nguyên từ bàn phím, các số cách nhau bởi dấu cách. Khi nhập xong thông báo số lượng các số đã nhập và in các số này thành hàng ngang.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-065",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 126,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "problem_text": "Viết chương trình nhập một xâu kí tự có thể có nhiều dấu cách giữa các từ. Sau đó chỉnh sửa xâu kí tự đó sao cho giữa các từ chỉ có một dấu cách. In xâu kết quả ra màn hình.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-066",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 126,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+      "problem_text": "Viết chương trình nhập số tự nhiên n, rồi nhập họ tên của n học sinh. Sau đó in ra danh sách tên học sinh theo hai cột, cột 1 là tên, cột 2 là họ đệm.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-071",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 129,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "problem_text": "Viết hàm prime(n) với tham số là số tự nhiên n và trả lại True nếu n là số nguyên tố, trả lại False nếu n không phải là số nguyên tố.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-072",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 130,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Viết hàm với tham số là số tự nhiên n in ra các số là ước nguyên tố của n.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-074",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 130,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Viết chương trình yêu cầu nhập từ bàn phím một xâu kí tự, sau đó thông báo: tổng số các kí tự là chữ số của xâu; tổng số các kí tự là chữ cái tiếng Anh trong xâu. Viết hàm cho mỗi yêu cầu trên.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-076",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 133,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Sử dụng hàm prime, em hãy viết chương trình in ra các số nguyên tố trong khoảng từ m đến n, với m, n là hai số tự nhiên và 1 < m < n.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-079",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 134,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+      "problem_text": "Thiết lập hàm merge_str(s1,s2) với s1, s2 là hai xâu cần gộp. Hàm này sẽ gộp hai xâu s1, s2 theo cách, lấy lần lượt từng kí tự của s1, s2 đưa vào xâu kết quả. Nếu có một xâu hết kí tự thì đưa phần còn lại của xâu dài hơn vào xâu kết quả. Ví dụ nếu s1 = \"1111\", s2 = \"0000\" thì xâu kết quả là \"10101010\".",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-080",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 135,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Thiết lập hàm power(a,b,c) với a, b, c là số nguyên. Hàm trả lại giá trị (a+b) mũ c.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-084",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 137,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Giả sử có các lệnh sau: >>> a,b = 1,2 ; >>> def f(a,b): a = a + b ; b = b*a ; return a + b. Giá trị của a, b bằng bao nhiêu sau khi thực hiện lệnh sau? a) f(1, 2); b) f(10, 20).",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-085",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 138,
+      "exercise_number_or_position": "Câu hỏi",
+      "problem_text": "Giả sử hàm f(x,y) được định nghĩa như sau: >>> def f(x,y): a = 2*(x + y) ; print(a + n). Kết quả nào được in ra khi thực hiện các lệnh sau? n = 10 ; f(1,2)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-086",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 138,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "problem_text": "Viết hàm với đầu vào là danh sách A chứa các số và số thực x. Hàm trả lại một danh sách kết quả B từ danh sách A bằng cách chỉ giữ lại các phần tử lớn hơn hoặc bằng x.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-087",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 138,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "problem_text": "Viết hàm với đầu vào là xâu kí tự Str và số c, đầu ra là danh sách các từ được tách ra từ xâu Str nhưng đã được chuyển thành chữ in hoa hoặc chữ in thường, hoặc chỉ chuyển kí tự đầu các từ thành chữ in hoa tuỳ thuộc vào tham số đầu vào c: nếu c = 0 chuyển thành chữ in hoa; nếu c = 1 chuyển thành chữ in thường; nếu c = 2 chuyển viết chữ hoa kí tự đầu của mỗi từ.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-088",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 139,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+      "problem_text": "Viết chương trình yêu cầu thực hiện lần lượt các việc sau, mỗi việc cần được thực hiện bởi một hàm: 1. Nhập từ bàn phím một dãy các số nguyên, mỗi số cách nhau bởi dấu cách. Chuyển các số này vào danh sách A và in danh sách A ra màn hình. 2. Trích từ danh sách A ra một danh sách B gồm các phần tử lớn hơn 0. In danh sách B ra màn hình. 3. Trích từ danh sách A ra một danh sách C gồm các phần tử nhỏ hơn 0. In danh sách C ra màn hình.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-089",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 140,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Viết hàm với đầu vào, đầu ra như sau: đầu vào là danh sách sList, các phần tử là xâu kí tự; đầu ra là danh sách cList, các phần tử là kí tự đầu tiên của các xâu kí tự tương ứng trong danh sách sList.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-090",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 140,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Viết hàm Tach_day() với đầu vào là danh sách A, đầu ra là hai danh sách B, C được mô tả như sau: danh sách B thu được từ A bằng cách lấy ra các phần tử có chỉ số chẵn; danh sách C thu được từ A bằng cách lấy ra các phần tử có chỉ số lẻ.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-092",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 140,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Viết chương trình nhập ba số tự nhiên từ bàn phím day, month, year, các số cách nhau bởi dấu cách. Các số này biểu diễn giá trị của ngày, tháng, năm nào đó. Chương trình cần kiểm tra và in ra thông báo số liệu đã nhập vào đó có hợp lệ hay không.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-094",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 143,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "problem_text": "Viết chương trình nhập các số nguyên m, n từ bàn phím, cách nhau bởi dấu cách. Chương trình đưa ra tổng, hiệu, thương của hai số đã nhập.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-099",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 150,
+      "exercise_number_or_position": "Nhiệm vụ 2",
+      "problem_text": "Viết chương trình nhập từ bàn phím ba số thực a, b, c và tìm nghiệm của phương trình bậc hai ax² + bx + c = 0. Chương trình cần xét đầy đủ các trường hợp xảy ra.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-100",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 152,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Viết chương trình in bảng cửu chương ra màn hình như sau: hàng thứ nhất in ra bảng nhân 1, 2, 3, 4, 5; hàng thứ hai in ra bảng nhân 6, 7, 8, 9, 10.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-103",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 153,
+      "exercise_number_or_position": "Nhiệm vụ 1",
+      "problem_text": "Viết chương trình nhập họ tên đầy đủ từ bàn phím, ví dụ \"Nguyễn Thị Mai Hương\", sau đó tách riêng phần tên, họ, đệm và in ra màn hình.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T10-C5-104",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 153,
+      "exercise_number_or_position": "Nhiệm vụ 2",
+      "problem_text": "Trọng lượng của em trên các hành tinh khác. Chương trình yêu cầu nhập trọng lượng của em (tính theo đơn vị N - Newton) trên Trái Đất và tính trọng lượng của em trên một hành tinh khác (ví dụ Mặt Trăng, Hoả tinh, Kim tinh, Thổ tinh, Mộc tinh, Mặt Trời).",
+      "context_text": "P = m × g. Danh sách hành tinh: [\"Mặt Trăng\",\"Hoả tinh\",\"Kim tinh\",\"Mộc tinh\",\"Thổ tinh\",\"Mặt Trời\"] với gravities = [1.62, 3.711, 8.83, 24.79, 10.44, 274.0]; trên Trái Đất g = 9.8 m/s²."
+    },
+    {
+      "source_id": "T10-C5-105",
+      "book": "tin-hoc-10.pdf",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 154,
+      "exercise_number_or_position": "Nhiệm vụ 3",
+      "problem_text": "Kiểm tra tính hợp lệ của ba tham số ngày, tháng, năm. Chương trình sẽ yêu cầu nhập ba số tự nhiên: ngày, tháng, năm từ bàn phím theo khuôn dạng, ví dụ nhập 08-02-2021. Chương trình sẽ thông báo bộ dữ liệu đã nhập là hợp lệ hay không hợp lệ.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-010",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 88,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Chỉnh sửa lại chương trình của Nhiệm vụ 1 để bổ sung chức năng: a) Thông báo điểm đầu tiên và điểm cuối cùng trong danh sách. b) Cho phép người dùng tra cứu đầu điểm thứ n với quy ước n bắt đầu từ 1 ứng với điểm đầu tiên. Nếu n lớn hơn tổng số đầu điểm hoặc nhỏ hơn 1, cần thông báo không hợp lệ và yêu cầu người dùng nhập lại.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-011",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 88,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Chỉnh sửa lại chương trình để người dùng có thể: a) Tra cứu các đầu điểm kiểm tra theo STT (số thứ tự) của học sinh. Quy ước số thứ tự bắt đầu từ 1. Nếu người dùng nhập STT lớn hơn số lượng học sinh thì chương trình thông báo STT không hợp lệ và yêu cầu nhập lại. b) Tra cứu điểm kiểm tra cụ thể lần thứ n của một học sinh theo STT.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-024",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 96,
+      "exercise_number_or_position": "Nhiệm vụ 2",
+      "problem_text": "Viết chương trình tra cứu điểm thi theo tên các học sinh trong lớp. Chương trình cho phép người dùng nhập tên của học sinh cần tra cứu, sau đó kiểm tra và thông báo điểm số của học sinh cần tìm. Nếu không tìm thấy tên học sinh trong danh sách đã nhập, thông báo \"không tìm thấy dữ liệu của học sinh\".",
+      "context_text": "Tệp diem.inp gồm nhiều hàng, mỗi hàng gồm tên học sinh và điểm cách nhau bởi dấu cách: Nam 7.8; Sơn 5.6; Hương 8.9; Huyền 7.4; Hà 9.5; Hùng 8.4."
+    },
+    {
+      "source_id": "T11CS-C6-027",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 98,
+      "exercise_number_or_position": "Vận dụng",
+      "problem_text": "Viết chương trình tra cứu tên theo điểm thi của học sinh trong lớp. Chương trình cho phép người dùng nhập vào khoảng điểm số cần tìm kiếm (ví dụ từ 6 đến 8). Chương trình kiểm tra và thông báo tên của học sinh có điểm số nằm trong khoảng tương ứng.",
+      "context_text": "Dữ liệu: Sơn 5.6; Huyền 7.4; Nam 7.8; Hùng 8.4; Hương 8.9; Hà 9.5."
+    },
+    {
+      "source_id": "T11CS-C6-041",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 108,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Chương trình sau giải bài toán: yêu cầu nhập số tự nhiên n và tính tổng 1 + 2 + ... + n. Chương trình trên có đúng không? n = int(input(\"Nhập số tự nhiên n: \")) ; S = 0 ; for i in range(n+1): S = S + i ; print(S)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-046",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 111,
+      "exercise_number_or_position": "Khởi động",
+      "problem_text": "Quan sát và ước lượng thời gian thực hiện các đoạn chương trình 1 và 2 trong Hình 24.2. Chương trình nào chạy nhanh hơn? Vì sao? Chương trình 1: n = 100 ; C = 0 ; for k in range(n): C = C + 1 ; print(C). Chương trình 2: n = 100 ; C = 0 ; for i in range(n): for j in range(n): C = C + 1 ; print(C)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-047",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 113,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Các lệnh và đoạn chương trình sau cần chạy trong bao nhiêu đơn vị thời gian? (a) n = 1000000 ; for k in range(n): if k%3 == 0: print(k). (b) n = 1000000 ; b = 3 ; for k in range(0,n,b): print(k)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-053",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 122,
+      "exercise_number_or_position": "Vận dụng 1",
+      "problem_text": "Sử dụng phương pháp làm mịn dần để giải bài toán sau: cho trước số tự nhiên không âm n, viết chương trình kiểm tra xem số n có phải là số nguyên tố hay không? Chương trình cần thông báo \"CÓ\" nếu n là số nguyên tố, ngược lại thông báo \"KHÔNG\".",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-054",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 123,
+      "exercise_number_or_position": "Nhiệm vụ 1",
+      "problem_text": "Cho trước một dãy n số, các số được kí hiệu A[0], A[1], ..., A[n-1]. Cần thiết kế chương trình kiểm tra xem dãy trên có phải là một hoán vị của dãy số 1, 2, ..., n hay không. Chương trình cần thông báo kết quả là CÓ hoặc KHÔNG.",
+      "context_text": "Chương trình chính trong sách chạy với A = [2, 1, 9, 10, 8, 6, 5, 2, 3, 1]."
+    },
+    {
+      "source_id": "T11CS-C6-055",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 125,
+      "exercise_number_or_position": "Nhiệm vụ 2",
+      "problem_text": "Cho trước dãy số A[0], A[1], ..., A[n-1]. Cần tính được mỗi giá trị của các phần tử của dãy trên được lặp lại bao nhiêu lần trong dãy đó. Kết quả cần được đưa ra dãy B. Như vậy dãy B sẽ có ý nghĩa như sau: B[k] = số lần lặp của phần tử A[k] trong dãy A. Ví dụ nếu A = [2, 1, 1, 3, 5, 10, 2, 5, 2] thì B = [3, 2, 2, 1, 2, 1, 3, 2, 3].",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-056",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 126,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Thiết kế thuật toán cho nhiệm vụ 1 với ý tưởng khác như sau: dãy A là một hoán vị của dãy các số từ 1 đến n khi và chỉ khi dãy A có độ dài n và mọi số i từ 1 đến n đều nằm trong A.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-057",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 126,
+      "exercise_number_or_position": "Vận dụng 1",
+      "problem_text": "Cho dãy số A = A[0], A[1], ..., A[n-1]. Thiết kế và viết chương trình kiểm tra trong dãy A có hai phần tử nào trùng nhau hay không. Cần đưa ra câu trả lời là \"có\" hay \"không\".",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-058",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 126,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Xâu kí tự được gọi là đối xứng nếu thay đổi thứ tự ngược lại các kí tự của xâu thì vẫn nhận được dãy ban đầu. Ví dụ xâu \"abcdcba\" là đối xứng, còn xâu \"1011\" không là đối xứng. Thiết kế và viết chương trình kiểm tra một xâu kí tự cho trước có là đối xứng hay không.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-067",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 142,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "problem_text": "Đoạn chương trình sau thực hiện công việc gì? from LinkedList import * ; L = LL() ; insert(L,10) ; insert(L,20) ; show(L)",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-068",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 142,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "problem_text": "Viết đoạn chương trình ngắn sử dụng thư viện LinkedList để thiết lập một danh sách liên kết L và bổ sung các tên \"Bình\", \"Hoa\", \"Hà\" vào danh sách này.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-070",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 142,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Viết hàm delete_last(L) có chức năng xoá phần tử cuối cùng của danh sách liên kết L.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-071",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 143,
+      "exercise_number_or_position": "Nhiệm vụ 1",
+      "problem_text": "Viết thư viện hinh_tron gồm hai hàm để tính chu vi và diện tích của hình tròn với tham số của hàm số là bán kính. Sau đó, viết một tệp mã nguồn main.py để yêu cầu người dùng nhập bán kính đường tròn là một số dương rồi sử dụng thư viện trên để tính diện tích và chu vi hình tròn.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-074",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 145,
+      "exercise_number_or_position": "Vận dụng 1",
+      "problem_text": "Tạo thư viện phuong_trinh gồm hàm phuongTrinhBac2(a, b, c) với a, b, c là các hệ số của phương trình ax² + bx + c = 0. Tuỳ vào các giá trị của các tham số, hàm sẽ in ra thông báo nghiệm của phương trình.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11CS-C6-075",
+      "book": "tin-hoc-11-cs.pdf",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 145,
+      "exercise_number_or_position": "Vận dụng 2",
+      "problem_text": "Viết chương trình quản lí các bài hát trong một đĩa CD hay một play list, sử dụng cấu trúc LinkedList. Chương trình gồm hàm nhapDL() yêu cầu người dùng nhập số lượng bài hát rồi nhập lần lượt tên các bài hát và bổ sung vào đĩa CD; hàm timBai() nhận đối tượng LinkedList và tên bài hát, nếu có bài hát cần tìm thì in ra vị trí đầu tiên xuất hiện bài hát, nếu không in ra thông báo \"Không tìm thấy bài hát\"; hàm inTT() in mỗi bài hát trên một dòng theo định dạng <Số thứ tự>. <Tên bài hát>.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11ICT-001",
+      "book": "tin-hoc-11-ict.pdf",
+      "section_or_chapter": "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video",
+      "page": 121,
+      "exercise_number_or_position": "Luyện tập 1",
+      "problem_text": "Cho ảnh số có số điểm ảnh là 3000 × 2000 điểm ảnh. Tính kích thước ảnh với mỗi độ phân giải: a) 72 dpi. b) 150 dpi. c) 300 dpi. d) 600 dpi.",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11ICT-002",
+      "book": "tin-hoc-11-ict.pdf",
+      "section_or_chapter": "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video",
+      "page": 121,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Nếu in một ảnh ở độ phân giải 300 dpi thì thu được ảnh in có kích thước 10 × 10 inch. Để ảnh in có kích thước 5 × 5 inch thì cần in ảnh ở độ phân giải cao hơn hay thấp hơn 300 dpi?",
+      "context_text": ""
+    },
+    {
+      "source_id": "T11ICT-003",
+      "book": "tin-hoc-11-ict.pdf",
+      "section_or_chapter": "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video",
+      "page": 136,
+      "exercise_number_or_position": "Luyện tập 2",
+      "problem_text": "Một tệp ảnh mở trong GIMP có 5 lớp ảnh. Nếu dùng hiệu ứng Blend với số khung hình trung gian là 5 thì số lượng khung hình do GIMP tạo ra để làm trung gian là bao nhiêu?",
+      "context_text": ""
+    }
+  ]
+}

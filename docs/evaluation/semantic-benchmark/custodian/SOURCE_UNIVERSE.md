@@ -1,4 +1,4 @@
-# SOURCE UNIVERSE — bài tập SGK để custodian độc lập CHỌN
+# SOURCE UNIVERSE V2 — bài tập SGK để custodian độc lập CHỌN
 
 > **Vai trò của phase này:** development agent thực hiện trích xuất cơ học từ
 > nguồn SGK. **Quyền lựa chọn 40 case SEALED thuộc về GVHD/custodian độc lập.**
@@ -6,27 +6,36 @@
 Danh sách này **không** phản ánh năng lực của hệ đang được đánh giá. Nó phản
 ánh nội dung SGK.
 
+**V2 = V1 (184 record, fingerprint `971981da…`) + 5 record mới từ ba SGK còn
+lại.** Toàn bộ 184 record V1 được bảo toàn nguyên vẹn, chỉ đổi tiền tố ID cho
+nhất quán giữa năm cuốn.
+
 ## Phạm vi đã duyệt
 
-| SGK | Chủ đề | Trang sách | Số record |
+| SGK | Chủ đề | Phạm vi | Số record |
 |---|---|---|---|
 | `tin-hoc-10.pdf` | Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính | 86 – 155 (70 trang) | **109** |
 | `tin-hoc-11-cs.pdf` | Chủ đề 6 — Kĩ thuật lập trình | 81 – 145 (65 trang) | **75** |
-| | | **135 trang** | **184** |
+| `tin-hoc-11-ict.pdf` | Toàn bộ 7 chủ đề | toàn bộ 155 trang | **3** |
+| `tin-hoc-12-cs.pdf` | Toàn bộ 7 chủ đề | toàn bộ 168 trang | **1** |
+| `tin-hoc-12-ict.pdf` | Toàn bộ 7 chủ đề | toàn bộ 160 trang | **1** |
+| | | **tổng 708 trang** | **189** |
 
-Duyệt **tuần tự toàn bộ** hai chương, không bỏ trang nào.
+Chi tiết vì sao ba cuốn sau cho rất ít: `SOURCE_COVERAGE_AUDIT.md`.
 
 ## Cách đọc nguồn
 
-Năm cuốn SGK là **bản quét, không có lớp chữ** — `pdftotext` trả về 60 ký tự
-cho 60 trang, đúng bằng số dấu ngắt trang. Máy cũng không có OCR nào
-(`pytesseract`, `PIL`, `pdf2image`, `tesseract` CLI đều vắng).
+Cả năm cuốn là **bản quét, không có lớp chữ** — `pdftotext` trả 60 ký tự cho 60
+trang, đúng bằng số dấu ngắt trang.
 
-Cách đọc: cài `pymupdf`, dựng ảnh từng trang ở 95 DPI, ghép 4 trang một ảnh rồi
-đọc trực tiếp bằng thị giác. **Mọi số trang trong bảng là số trang IN TRÊN
-SÁCH**, tra ngược được.
+- **V1** (TH10 CĐ5, TH11-KHMT CĐ6, 135 trang): PyMuPDF dựng ảnh trang, đọc trực
+  tiếp bằng thị giác.
+- **V2** (ba cuốn còn lại, 483 trang): `backend/scripts/ocr_sgk_ingest.py` —
+  PyMuPDF → Google Cloud Vision `document_text_detection`, **cache trên đĩa** ở
+  `data/knowledge/ocr-cache/` (thư mục `data/` bị gitignore). Credential nạp từ
+  `.secrets/` qua biến môi trường; **không** in và **không** ghi vào artifact.
 
-Không có trang nào khó đọc hoặc không xác định được nội dung.
+Mọi số trang là **số trang IN TRÊN SÁCH**. Không có trang nào đọc không được.
 
 ## Quy tắc trích — khai trước để kiểm toán được
 
@@ -34,47 +43,35 @@ Không có trang nào khó đọc hoặc không xác định được nội dung
 dữ liệu hoặc thủ tục đã cho: một giá trị, một dãy, một đếm, một vị trí, một ánh
 xạ, hay một trạng thái cuối.
 
-**LOẠI** câu hỏi thuần định nghĩa · nêu ý kiến · kể tên · thao tác giao diện ·
-"lệnh này có lỗi không / thuộc loại lỗi gì" · in ra một chuỗi cho sẵn.
+**LOẠI** câu thuần định nghĩa · nêu ý kiến · kể tên · thao tác giao diện ·
+"lệnh này có lỗi không / thuộc loại lỗi gì" · in ra một chuỗi cho sẵn · yêu cầu
+*viết ra một câu lệnh/truy vấn* mà không có dữ liệu cụ thể và đáp án là mã chứ
+không phải một giá trị.
 
-Quy tắc này nói về **bản chất bài toán**. Nó không hỏi hệ có làm được hay
-không: bài thoả rubric mà IR hiện tại có thể không biểu diễn được thì **vẫn
-được giữ** — đó có thể trở thành `capability_gap`, một kết quả nghiên cứu hợp
-lệ.
+Quy tắc nói về **bản chất bài toán**. Nó không hỏi hệ có làm được không: bài
+thoả rubric mà IR hiện tại có thể chịu thua thì **vẫn được giữ** — đó có thể
+thành `capability_gap`, một kết quả nghiên cứu hợp lệ.
 
-Một record = một mục được đánh số trong sách. Mục có nhiều ý a/b/c/d giữ nguyên
-trong cùng một record, đúng như sách đánh số.
+Một record = một mục được đánh số trong sách.
 
 ## Chưa làm ở phase này
 
 Chưa giải bài · chưa tạo ground truth · chưa phân loại theo khả năng hệ thống ·
 **chưa chọn 40 case SEALED**.
 
-## Lưu ý khi chọn
-
-Tập **INTERNAL LIVE PILOT** (`../pilot/sealed-pilot-34a10a9c/`) đã lấy một số
-bài từ chính hai chương này. Bộ 40 case SEALED phải **khác** tập đó. Nếu cần
-danh sách đối chiếu, mở `cases.json` của pilot — mỗi case ở đó ghi rõ
-`source.location` là trang và số bài.
-
 ## Fingerprint
 
 ```
-971981da321a918a61c15357bfe1edb756a369115c9410b0b80cf219c41818a1
+4a9c356495ebc0148642601f0e560cd1edc5999d01c153d5fe640c9b4b813df5
 ```
 
-SHA-256 của `source_universe.json`.
+SHA-256 của `source_universe.json` (V2).
 
 ## Kiểm chất lượng
 
 ```
 PASS — mọi kiểm tra đều đạt
 ```
-
-Đã kiểm: `source_id` duy nhất · mọi record có `book` · có `page` · có
-`problem_text` không rỗng · không có record trùng hoàn toàn · sắp theo sách →
-trang → vị trí · số record trong JSON khớp bảng trên · fingerprint tính trên
-đúng file JSON cuối cùng.
 
 ## Bảng chọn
 
@@ -264,3 +261,8 @@ trang → vị trí · số record trong JSON khớp bảng trên · fingerprint
 | `T11CS-C6-073` | TH11-KHMT | CĐ6 | 144 | Nhiệm vụ 3 | Em hãy định nghĩa hàm tinhNtkTB(dsNtk, dstyLe) trong file cong_thuc_hoa.py để tính nguyên tử… |
 | `T11CS-C6-074` | TH11-KHMT | CĐ6 | 145 | Vận dụng 1 | Tạo thư viện phuong_trinh gồm hàm phuongTrinhBac2(a, b, c) với a, b, c là các hệ số của… |
 | `T11CS-C6-075` | TH11-KHMT | CĐ6 | 145 | Vận dụng 2 | Viết chương trình quản lí các bài hát trong một đĩa CD hay một play list, sử dụng cấu trúc… |
+| `T11ICT-001` | TH11-KHMT | CĐ6 | 121 | Luyện tập 1 | Cho ảnh số có số điểm ảnh là 3000 × 2000 điểm ảnh. Tính kích thước ảnh với mỗi độ phân giải:… |
+| `T11ICT-002` | TH11-KHMT | CĐ6 | 121 | Luyện tập 2 | Nếu in một ảnh ở độ phân giải 300 dpi thì thu được ảnh in có kích thước 10 × 10 inch. Để ảnh… |
+| `T11ICT-003` | TH11-KHMT | CĐ6 | 136 | Luyện tập 2 | Một tệp ảnh mở trong GIMP có 5 lớp ảnh. Nếu dùng hiệu ứng Blend với số khung hình trung gian… |
+| `T12CS-001` | TH11-KHMT | CĐ6 | 66 | Luyện tập 1 | Cho ảnh có kích thước gốc là 720 × 450 pixel. Chèn ảnh vào trang web bằng câu lệnh: <img… |
+| `T12ICT-001` | TH11-KHMT | CĐ6 | 66 | Luyện tập 1 | Cho ảnh có kích thước gốc là 720 × 450 pixel. Chèn ảnh vào trang web bằng câu lệnh: <img… |

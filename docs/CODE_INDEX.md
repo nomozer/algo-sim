@@ -2498,6 +2498,21 @@ hẳn `analyze.md`** để đề đi đường module không phải trả tiền
 vụ. Không được gộp vào lượt viết IR: một lượt sinh cả nghĩa vụ lẫn chương trình
 thì C₁a tự đối chiếu một nguồn với chính nó.
 
+### `backend/scripts/ocr_sgk_ingest.py` · **live** (Cloud Vision), có CACHE
+
+Đọc SGK bản QUÉT thành text. Năm cuốn trong `data/knowledge/sources/` không có
+lớp chữ — `pdftotext` trả 60 ký tự cho 60 trang, đúng bằng số dấu ngắt trang.
+Repo **không có** RAG/index/cache nào để tái dùng, và `app/ingestion/input.py`
+là lớp chuẩn hoá input của **sản phẩm** (text/docx/ảnh), không đọc PDF.
+
+Đường đọc: PyMuPDF dựng ảnh trang → Cloud Vision `document_text_detection`.
+Credential lấy từ `.secrets/` qua `GOOGLE_APPLICATION_CREDENTIALS`; **không in
+và không ghi** giá trị secret vào artifact.
+
+**Cache là điểm chính**: mỗi trang OCR đúng một lần rồi ghi vào
+`data/knowledge/ocr-cache/<sách>.json`. `data/` bị gitignore nên text SGK không
+vào kho mã. `--stats` báo trạng thái cache mà **không tốn call nào**.
+
 ### `backend/scripts/validate_sealed_submission.py` · offline, CUSTODIAN chạy
 
 Kiểm **hình dạng** tập SEALED trước khi niêm phong: trường thiếu, `case_id`

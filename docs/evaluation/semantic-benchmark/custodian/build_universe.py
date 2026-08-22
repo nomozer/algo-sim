@@ -28,6 +28,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -922,6 +923,36 @@ r(T11, C6, 145, "Vận dụng 2",
   "dòng theo định dạng <Số thứ tự>. <Tên bài hát>.")
 
 
+# ═══════════════ V2 — ba SGK còn lại ═══════════════
+# Đọc qua Cloud Vision OCR (scripts/ocr_sgk_ingest.py), 483 trang vào cache.
+# Duyệt TOÀN BỘ khối bài tập của cả ba cuốn; chi tiết ở SOURCE_COVERAGE_AUDIT.md.
+T11I = "tin-hoc-11-ict.pdf"
+T12C = "tin-hoc-12-cs.pdf"
+T12I = "tin-hoc-12-ict.pdf"
+
+r(T11I, "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video", 121, "Luyện tập 1",
+  "Cho ảnh số có số điểm ảnh là 3000 × 2000 điểm ảnh. Tính kích thước ảnh với "
+  "mỗi độ phân giải: a) 72 dpi. b) 150 dpi. c) 300 dpi. d) 600 dpi.")
+r(T11I, "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video", 121, "Luyện tập 2",
+  "Nếu in một ảnh ở độ phân giải 300 dpi thì thu được ảnh in có kích thước "
+  "10 × 10 inch. Để ảnh in có kích thước 5 × 5 inch thì cần in ảnh ở độ phân "
+  "giải cao hơn hay thấp hơn 300 dpi?")
+r(T11I, "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video", 136, "Luyện tập 2",
+  "Một tệp ảnh mở trong GIMP có 5 lớp ảnh. Nếu dùng hiệu ứng Blend với số "
+  "khung hình trung gian là 5 thì số lượng khung hình do GIMP tạo ra để làm "
+  "trung gian là bao nhiêu?")
+r(T12C, "Chủ đề 4 — Giải quyết vấn đề với sự trợ giúp của máy tính", 66,
+  "Luyện tập 1",
+  "Cho ảnh có kích thước gốc là 720 × 450 pixel. Chèn ảnh vào trang web bằng "
+  "câu lệnh: <img src=\"images/1.png\" alt=\"chiếc lá\" width=\"600\"> Hỏi ảnh "
+  "trong trang web có kích thước bao nhiêu?")
+r(T12I, "Chủ đề 4 — Giải quyết vấn đề với sự trợ giúp của máy tính", 66,
+  "Luyện tập 1",
+  "Cho ảnh có kích thước gốc là 720 × 450 pixel. Chèn ảnh vào trang web bằng "
+  "câu lệnh: <img src=\"images/1.png\" alt=\"chiếc lá\" width=\"690\"> Hỏi ảnh "
+  "trong trang web có kích thước bao nhiêu?")
+
+
 def _nhan_dien(text: str, n: int = 95) -> str:
     """Câu mô tả ngắn để người chọn NHẬN RA bài, không thay nội dung đầy đủ."""
     t = text.replace("|", "/")
@@ -953,11 +984,12 @@ def kiem_chat_luong(recs: list[dict]) -> list[str]:
 
 def main() -> int:
     RECORDS.sort(key=lambda r: (r["book"], r["page"]))
-    dem = {T10: 0, T11: 0}
+    TAG = {T10: "T10-C5", T11: "T11CS-C6", T11I: "T11ICT",
+           T12C: "T12CS", T12I: "T12ICT"}
+    dem = {k: 0 for k in TAG}
     for rec in RECORDS:
         dem[rec["book"]] += 1
-        tag = "T10-C5" if rec["book"] == T10 else "T11CS-C6"
-        rec["source_id"] = f"{tag}-{dem[rec['book']]:03d}"
+        rec["source_id"] = f"{TAG[rec['book']]}-{dem[rec['book']]:03d}"
 
     thu_tu = ["source_id", "book", "section_or_chapter", "page",
               "exercise_number_or_position", "problem_text", "context_text"]
@@ -985,16 +1017,24 @@ def main() -> int:
     md = HERE / "SOURCE_UNIVERSE.md"
     md.write_text(_md(dem, van_tay, loi, "\n".join(dong)), encoding="utf-8")
 
-    print(f"tin-hoc-10   : {dem[T10]}")
-    print(f"tin-hoc-11-cs: {dem[T11]}")
-    print(f"tong         : {len(goi)}")
+    for b in (T10, T11, T11I, T12C, T12I):
+        print(f"{b[:-4]:16}: {dem[b]}")
+    print(f"{'tong':16}: {len(goi)}")
     print(f"fingerprint  : {van_tay}")
     print(f"quality      : {'PASS' if not loi else 'FAIL — ' + '; '.join(loi)}")
     return 0 if not loi else 1
 
 
 def _md(dem, van_tay, loi, bang) -> str:
-    return f"""# SOURCE UNIVERSE — bài tập SGK để custodian độc lập CHỌN
+    hang = "\n".join(
+        f"| `{b}` | {sec} | {tr} | **{dem[b]}** |" for b, sec, tr in (
+            (T10, C5, "86 – 155 (70 trang)"),
+            (T11, C6, "81 – 145 (65 trang)"),
+            (T11I, "Toàn bộ 7 chủ đề", "toàn bộ 155 trang"),
+            (T12C, "Toàn bộ 7 chủ đề", "toàn bộ 168 trang"),
+            (T12I, "Toàn bộ 7 chủ đề", "toàn bộ 160 trang"),
+        ))
+    return f"""# SOURCE UNIVERSE V2 — bài tập SGK để custodian độc lập CHỌN
 
 > **Vai trò của phase này:** development agent thực hiện trích xuất cơ học từ
 > nguồn SGK. **Quyền lựa chọn 40 case SEALED thuộc về GVHD/custodian độc lập.**
@@ -1002,27 +1042,32 @@ def _md(dem, van_tay, loi, bang) -> str:
 Danh sách này **không** phản ánh năng lực của hệ đang được đánh giá. Nó phản
 ánh nội dung SGK.
 
+**V2 = V1 (184 record, fingerprint `971981da…`) + 5 record mới từ ba SGK còn
+lại.** Toàn bộ 184 record V1 được bảo toàn nguyên vẹn, chỉ đổi tiền tố ID cho
+nhất quán giữa năm cuốn.
+
 ## Phạm vi đã duyệt
 
-| SGK | Chủ đề | Trang sách | Số record |
+| SGK | Chủ đề | Phạm vi | Số record |
 |---|---|---|---|
-| `tin-hoc-10.pdf` | {C5} | 86 – 155 (70 trang) | **{dem[T10]}** |
-| `tin-hoc-11-cs.pdf` | {C6} | 81 – 145 (65 trang) | **{dem[T11]}** |
-| | | **135 trang** | **{dem[T10] + dem[T11]}** |
+{hang}
+| | | **tổng 708 trang** | **{sum(dem.values())}** |
 
-Duyệt **tuần tự toàn bộ** hai chương, không bỏ trang nào.
+Chi tiết vì sao ba cuốn sau cho rất ít: `SOURCE_COVERAGE_AUDIT.md`.
 
 ## Cách đọc nguồn
 
-Năm cuốn SGK là **bản quét, không có lớp chữ** — `pdftotext` trả về 60 ký tự
-cho 60 trang, đúng bằng số dấu ngắt trang. Máy cũng không có OCR nào
-(`pytesseract`, `PIL`, `pdf2image`, `tesseract` CLI đều vắng).
+Cả năm cuốn là **bản quét, không có lớp chữ** — `pdftotext` trả 60 ký tự cho 60
+trang, đúng bằng số dấu ngắt trang.
 
-Cách đọc: cài `pymupdf`, dựng ảnh từng trang ở 95 DPI, ghép 4 trang một ảnh rồi
-đọc trực tiếp bằng thị giác. **Mọi số trang trong bảng là số trang IN TRÊN
-SÁCH**, tra ngược được.
+- **V1** (TH10 CĐ5, TH11-KHMT CĐ6, 135 trang): PyMuPDF dựng ảnh trang, đọc trực
+  tiếp bằng thị giác.
+- **V2** (ba cuốn còn lại, 483 trang): `backend/scripts/ocr_sgk_ingest.py` —
+  PyMuPDF → Google Cloud Vision `document_text_detection`, **cache trên đĩa** ở
+  `data/knowledge/ocr-cache/` (thư mục `data/` bị gitignore). Credential nạp từ
+  `.secrets/` qua biến môi trường; **không** in và **không** ghi vào artifact.
 
-Không có trang nào khó đọc hoặc không xác định được nội dung.
+Mọi số trang là **số trang IN TRÊN SÁCH**. Không có trang nào đọc không được.
 
 ## Quy tắc trích — khai trước để kiểm toán được
 
@@ -1030,28 +1075,21 @@ Không có trang nào khó đọc hoặc không xác định được nội dung
 dữ liệu hoặc thủ tục đã cho: một giá trị, một dãy, một đếm, một vị trí, một ánh
 xạ, hay một trạng thái cuối.
 
-**LOẠI** câu hỏi thuần định nghĩa · nêu ý kiến · kể tên · thao tác giao diện ·
-"lệnh này có lỗi không / thuộc loại lỗi gì" · in ra một chuỗi cho sẵn.
+**LOẠI** câu thuần định nghĩa · nêu ý kiến · kể tên · thao tác giao diện ·
+"lệnh này có lỗi không / thuộc loại lỗi gì" · in ra một chuỗi cho sẵn · yêu cầu
+*viết ra một câu lệnh/truy vấn* mà không có dữ liệu cụ thể và đáp án là mã chứ
+không phải một giá trị.
 
-Quy tắc này nói về **bản chất bài toán**. Nó không hỏi hệ có làm được hay
-không: bài thoả rubric mà IR hiện tại có thể không biểu diễn được thì **vẫn
-được giữ** — đó có thể trở thành `capability_gap`, một kết quả nghiên cứu hợp
-lệ.
+Quy tắc nói về **bản chất bài toán**. Nó không hỏi hệ có làm được không: bài
+thoả rubric mà IR hiện tại có thể chịu thua thì **vẫn được giữ** — đó có thể
+thành `capability_gap`, một kết quả nghiên cứu hợp lệ.
 
-Một record = một mục được đánh số trong sách. Mục có nhiều ý a/b/c/d giữ nguyên
-trong cùng một record, đúng như sách đánh số.
+Một record = một mục được đánh số trong sách.
 
 ## Chưa làm ở phase này
 
 Chưa giải bài · chưa tạo ground truth · chưa phân loại theo khả năng hệ thống ·
 **chưa chọn 40 case SEALED**.
-
-## Lưu ý khi chọn
-
-Tập **INTERNAL LIVE PILOT** (`../pilot/sealed-pilot-34a10a9c/`) đã lấy một số
-bài từ chính hai chương này. Bộ 40 case SEALED phải **khác** tập đó. Nếu cần
-danh sách đối chiếu, mở `cases.json` của pilot — mỗi case ở đó ghi rõ
-`source.location` là trang và số bài.
 
 ## Fingerprint
 
@@ -1059,18 +1097,13 @@ danh sách đối chiếu, mở `cases.json` của pilot — mỗi case ở đó
 {van_tay}
 ```
 
-SHA-256 của `source_universe.json`.
+SHA-256 của `source_universe.json` (V2).
 
 ## Kiểm chất lượng
 
 ```
 {"PASS — mọi kiểm tra đều đạt" if not loi else chr(10).join(loi)}
 ```
-
-Đã kiểm: `source_id` duy nhất · mọi record có `book` · có `page` · có
-`problem_text` không rỗng · không có record trùng hoàn toàn · sắp theo sách →
-trang → vị trí · số record trong JSON khớp bảng trên · fingerprint tính trên
-đúng file JSON cuối cùng.
 
 ## Bảng chọn
 
@@ -1079,4 +1112,4 @@ trang → vị trí · số record trong JSON khớp bảng trên · fingerprint
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
