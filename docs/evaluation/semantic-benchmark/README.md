@@ -72,6 +72,37 @@ một phần của dataset, không phải công cụ chung của benchmark.
 
 `sealed/` nay **trống**, dành riêng cho custodian thứ ba.
 
+## SEALED chính thức — chuỗi provenance bốn tầng
+
+```
+SOURCE UNIVERSE V2        4a9c3564…   189 bài, 5 SGK, 708 trang
+→ EXTERNAL SELECTION POOL 34d11adc…    89 bài (sau 2 contamination guard)
+→ EXTERNAL SELECTION      6efe2450…    40 ID · seed 23082026 do GVHD cấp
+→ SEALED                  7e5df014…    40 case + ground truth độc lập
+```
+
+**Corpus đã audit cả năm SGK.** Ba cuốn bổ sung (`tin-hoc-11-ict`,
+`tin-hoc-12-cs`, `tin-hoc-12-ict`) chỉ đóng góp **5/189** bài eligible — không
+phải thiếu sót của việc trích mà là hình dạng thật của chương trình. Chi tiết
+từng chủ đề, kể cả chủ đề cho 0 bài: `custodian/SOURCE_COVERAGE_AUDIT.md`.
+
+**Selection do bên ngoài quyết.** GVHD cấp seed `23082026`; `select_by_seed.py`
+lấy 40 ID tất định từ pool đã đóng băng và từ chối chạy nếu pool đổi. Cùng seed
++ cùng pool ⇒ cùng 40 ID, ai cũng kiểm lại được.
+
+**Ground truth độc lập.** `custodian/sealed_ground_truth.py` — Python thuần,
+`import` chỉ có `hashlib`, `json`, `sys`, `pathlib`. Không đụng một dòng nào của
+production. 31/40 case chấm được; 9 case `expected` rỗng vì taxonomy cố ý không
+có `predicate_verdict` — chúng vẫn đóng góp vào A và B, chỉ trục oracle là
+UNGRADED. Đầy đủ: `custodian/GROUND_TRUTH_AUDIT.md`.
+
+> Tập fingerprint `34a10a9c…` ở `pilot/` là **INTERNAL LIVE PILOT**, đã archive
+> và **không** liên quan tới SEALED này. Số của nó không bao giờ là A/B/D.
+
+**Phạm vi phủ chương trình** phải ghi theo source universe thực tế:
+`CURRICULUM_SUPPORT_PARTIAL`. **Không** diễn giải thành "toàn bộ chương trình
+Tin học THPT". Tác động lên người học: `LEARNER_IMPACT_NOT_EVALUATED`.
+
 ## Ba tập dữ liệu, ba vai trò khác hẳn nhau
 
 | | Ai soạn | Được nhìn? | Đổi được cái gì |

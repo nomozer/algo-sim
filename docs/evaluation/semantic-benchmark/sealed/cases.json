@@ -1,0 +1,1591 @@
+{
+  "provenance_chain": {
+    "source_universe_fingerprint": "4a9c356495ebc0148642601f0e560cd1edc5999d01c153d5fe640c9b4b813df5",
+    "selection_pool_fingerprint": "34d11adc5084047f92b290ac906fc6177c8aa3d23b9b0323dd8b325d48d50808",
+    "external_selection_fingerprint": "6efe2450a9dc3d051d364e8878120a30b961df6a7a5fe91b8401d1ab8cec2770",
+    "external_seed": "23082026",
+    "selector_role": "external_GVHD_or_custodian",
+    "selection_method": "deterministic_seed"
+  },
+  "ground_truth": {
+    "solver": "docs/evaluation/semantic-benchmark/custodian/sealed_ground_truth.py",
+    "khai": "Python thuần, không import mã sản phẩm nào. Case không có nghĩa vụ nào trong taxonomy diễn đạt được thì `expected` RỖNG và runner đếm là UNGRADED."
+  },
+  "cases": [
+    {
+      "case_id": "T10-C5-006",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 93, Câu hỏi 3",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 93,
+        "exercise_number_or_position": "Câu hỏi 3",
+        "source_id": "T10-C5-006"
+      },
+      "problem_text": "a, b nhận giá trị gì sau các lệnh sau? >>> a,b = 2,3 ; >>> a,b = a+b, a-b",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "total_mapping",
+            "value": {
+              "a": 5,
+              "b": -1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-008",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 94, Câu hỏi 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 94,
+        "exercise_number_or_position": "Câu hỏi 2",
+        "source_id": "T10-C5-008"
+      },
+      "problem_text": "Mỗi lệnh sau cho kết quả là xâu kí tự như thế nào? >>> \"\"*20 + \"010\" ; >>> \"10\"+\"0\"*5",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              "010",
+              "1000000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-010",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 96, Thực hành, Nhiệm vụ 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 96,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+        "source_id": "T10-C5-010"
+      },
+      "problem_text": "Gán giá trị cho biến R là bán kính hình tròn rồi viết chương trình tính và in kết quả theo mẫu: Chu vi hình tròn là: ..... ; Diện tích hình tròn là: ..... (chương trình mẫu trong sách dùng R = 4.5 và pi = 3.14).",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "bán kính R = 4.5 và pi = 3.14 lấy từ chương trình mẫu trang 96 của SGK; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "total_mapping",
+            "value": {
+              "chu_vi": 28.26,
+              "dien_tich": 63.585
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-013",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 96, Vận dụng 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 96,
+        "exercise_number_or_position": "Vận dụng 2",
+        "source_id": "T10-C5-013"
+      },
+      "problem_text": "Hãy cho biết trước và sau khi thực hiện các lệnh sau, giá trị các biến x, y là bao nhiêu. Em có nhận xét gì về kết quả nhận được? >>> x, y = 10, 7 ; >>> x, y = y, x",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "total_mapping",
+            "value": {
+              "x": 7,
+              "y": 10
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-020",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 103, Thực hành, Nhiệm vụ 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 103,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+        "source_id": "T10-C5-020"
+      },
+      "problem_text": "Viết chương trình nhập số tự nhiên n từ bàn phím. Sau đó thông báo số em đã nhập là số chẵn hay số lẻ phụ thuộc vào n là chẵn hay lẻ.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề yêu cầu một PHÁN QUYẾT (chẵn/lẻ). Taxonomy 9 nghĩa vụ cố ý không có `predicate_verdict`, nên không nghĩa vụ nào diễn đạt được kết quả này.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — phán quyết nhị phân"
+    },
+    {
+      "case_id": "T10-C5-024",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 104, Vận dụng 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 104,
+        "exercise_number_or_position": "Vận dụng 2",
+        "source_id": "T10-C5-024"
+      },
+      "problem_text": "Năm n là năm nhuận nếu giá trị n thoả mãn điều kiện: n chia hết cho 400 hoặc n chia hết cho 4 đồng thời không chia hết cho 100. Viết chương trình nhập số năm n và cho biết năm n có phải là nhuận hay không.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề yêu cầu một PHÁN QUYẾT (có phải năm nhuận không). Xem T10-C5-020.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — phán quyết nhị phân"
+    },
+    {
+      "case_id": "T10-C5-025",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 105, Hoạt động 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 105,
+        "exercise_number_or_position": "Hoạt động 1",
+        "source_id": "T10-C5-025"
+      },
+      "problem_text": "Thực hiện đoạn chương trình sau trong chế độ gõ lệnh trực tiếp của Python để tính tổng 0 + 1 + ... + 9. Tổng này có giá trị bao nhiêu? Giải thích kết quả. >>> S = 0 ; >>> for k in range(10): S = S + k ; >>> print(S)",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "dữ liệu và/hoặc đáp án in sẵn trong SGK; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 45
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-026",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 106, Câu hỏi",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 106,
+        "exercise_number_or_position": "Câu hỏi",
+        "source_id": "T10-C5-026",
+        "problem_text_goc": "Với giá trị n cho trước, so sánh giá trị S trong đoạn chương trình sau với tổng 1 + 2 + ... + n. S = 0 ; for k in range(1,n+1): S = S + k"
+      },
+      "problem_text": "Cho n = 10. Thực hiện đoạn chương trình sau rồi cho biết giá trị của S: S = 0 ; for k in range(1, n+1): S = S + k",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề để n tự do; custodian chọn n = 10; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 55
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-027",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 107, Thực hành, Nhiệm vụ 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 107,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+        "source_id": "T10-C5-027",
+        "problem_text_goc": "Nhập số tự nhiên n từ bàn phím và in ra màn hình dãy các ước số của n theo chiều ngang màn hình. Ví dụ nếu n = 10 thì chương trình sẽ in ra dãy số 1, 2, 5, 10."
+      },
+      "problem_text": "Cho số tự nhiên n = 10. Hãy liệt kê các ước số của n theo thứ tự tăng dần.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề nêu sẵn ví dụ n = 10 với kết quả 1, 2, 5, 10; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              1,
+              2,
+              5,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-033",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 109, Câu hỏi 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 109,
+        "exercise_number_or_position": "Câu hỏi 2",
+        "source_id": "T10-C5-033"
+      },
+      "problem_text": "Viết đoạn chương trình tính tổng 2 + 4 + ... + 100 sử dụng lệnh while.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 2550
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-037",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 110, Vận dụng",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 110,
+        "exercise_number_or_position": "Vận dụng",
+        "source_id": "T10-C5-037"
+      },
+      "problem_text": "Viết chương trình in các số tự nhiên từ 1 đến 100 ra màn hình thành 10 hàng, mỗi hàng 10 số, có dạng: 1 2 3 ... 10 / 11 12 .... 20 / ... / 91 92 ..... 100.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề in 1..100 thành 10 hàng mỗi hàng 10 số; ground truth là dãy giá trị, không phải cách trình bày; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40,
+              41,
+              42,
+              43,
+              44,
+              45,
+              46,
+              47,
+              48,
+              49,
+              50,
+              51,
+              52,
+              53,
+              54,
+              55,
+              56,
+              57,
+              58,
+              59,
+              60,
+              61,
+              62,
+              63,
+              64,
+              65,
+              66,
+              67,
+              68,
+              69,
+              70,
+              71,
+              72,
+              73,
+              74,
+              75,
+              76,
+              77,
+              78,
+              79,
+              80,
+              81,
+              82,
+              83,
+              84,
+              85,
+              86,
+              87,
+              88,
+              89,
+              90,
+              91,
+              92,
+              93,
+              94,
+              95,
+              96,
+              97,
+              98,
+              99,
+              100
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-038",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 112, Câu hỏi 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 112,
+        "exercise_number_or_position": "Câu hỏi 1",
+        "source_id": "T10-C5-038"
+      },
+      "problem_text": "Cho danh sách A = [1, 0, \"One\", 9, 15, \"Two\", True, False]. Hãy cho biết giá trị các phần tử: a) A[0]; b) A[2]; c) A[7]; d) A[len(A)].",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "ba ý a, b, c của đề. Ý d) A[len(A)] cố ý vượt chỉ số và sinh lỗi, không phải một giá trị nên không đưa vào ground truth; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              1,
+              "One",
+              false
+            ]
+          }
+        ]
+      },
+      "custodian_note": "ý d) là trường hợp lỗi, đã loại khỏi expected"
+    },
+    {
+      "case_id": "T10-C5-039",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 113, Câu hỏi 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 113,
+        "exercise_number_or_position": "Câu hỏi 2",
+        "source_id": "T10-C5-039",
+        "problem_text_goc": "Cho dãy các số nguyên A, viết chương trình in ra các số chẵn của A."
+      },
+      "problem_text": "Cho dãy các số nguyên A: 3 8 1 10 7 4. Hãy liệt kê các số chẵn của A theo thứ tự xuất hiện.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              8,
+              10,
+              4
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-045",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 117, Thực hành, Nhiệm vụ 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 117,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+        "source_id": "T10-C5-045",
+        "problem_text_goc": "Nhập số n từ bàn phím, sau đó nhập danh sách n tên học sinh trong lớp và in ra danh sách các tên học sinh này, mỗi tên học sinh trên một dòng. Yêu cầu danh sách được in ra theo thứ tự ngược lại với thứ tự đã nhập."
+      },
+      "problem_text": "Cho danh sách tên học sinh theo thứ tự đã nhập: An, Binh, Cuong, Dung. Hãy in danh sách các tên này theo thứ tự ngược lại với thứ tự đã nhập.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              "Dung",
+              "Cuong",
+              "Binh",
+              "An"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-052",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 120, Câu hỏi 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 120,
+        "exercise_number_or_position": "Câu hỏi 2",
+        "source_id": "T10-C5-052"
+      },
+      "problem_text": "Mỗi xâu hợp lệ ở Câu 1 có độ dài bằng bao nhiêu? (Câu 1: a) \"123&*()+-ABC\"; b) \"1010110&0101001\"; c) \"Tây Nguyên\".)",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "dữ liệu và/hoặc đáp án in sẵn trong SGK; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              12,
+              15,
+              10
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-062",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 124, Câu hỏi 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 124,
+        "exercise_number_or_position": "Câu hỏi 2",
+        "source_id": "T10-C5-062"
+      },
+      "problem_text": "Lệnh sau trả lại giá trị gì? >>> \"abababab\".find(\"ab\",4)",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "dữ liệu và/hoặc đáp án in sẵn trong SGK; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "first_match_index",
+            "value": 4
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-064",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 125, Thực hành, Nhiệm vụ 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 125,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+        "source_id": "T10-C5-064",
+        "problem_text_goc": "Viết chương trình nhập nhiều số nguyên từ bàn phím, các số cách nhau bởi dấu cách. Khi nhập xong thông báo số lượng các số đã nhập và in các số này thành hàng ngang."
+      },
+      "problem_text": "Nhập vào dãy số nguyên: 12 7 25 9 18. Hãy cho biết đã nhập bao nhiêu số.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 5
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-065",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 126, Thực hành, Nhiệm vụ 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 126,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+        "source_id": "T10-C5-065",
+        "problem_text_goc": "Viết chương trình nhập một xâu kí tự có thể có nhiều dấu cách giữa các từ. Sau đó chỉnh sửa xâu kí tự đó sao cho giữa các từ chỉ có một dấu cách. In xâu kết quả ra màn hình."
+      },
+      "problem_text": "Cho xâu kí tự S = \"Hoc   sinh  lop   10\", giữa các từ có thể có nhiều dấu cách. Hãy tách S thành danh sách các từ, bỏ hết dấu cách thừa.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              "Hoc",
+              "sinh",
+              "lop",
+              "10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-071",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 129, Thực hành, Nhiệm vụ 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 129,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+        "source_id": "T10-C5-071"
+      },
+      "problem_text": "Viết hàm prime(n) với tham số là số tự nhiên n và trả lại True nếu n là số nguyên tố, trả lại False nếu n không phải là số nguyên tố.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề yêu cầu một PHÁN QUYẾT (n có là số nguyên tố không). Xem T10-C5-020.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — phán quyết nhị phân"
+    },
+    {
+      "case_id": "T10-C5-076",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 133, Câu hỏi 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 133,
+        "exercise_number_or_position": "Câu hỏi 1",
+        "source_id": "T10-C5-076",
+        "problem_text_goc": "Sử dụng hàm prime, em hãy viết chương trình in ra các số nguyên tố trong khoảng từ m đến n, với m, n là hai số tự nhiên và 1 < m < n."
+      },
+      "problem_text": "Cho hai số tự nhiên m = 10 và n = 30. Hãy liệt kê các số nguyên tố nằm trong khoảng từ m đến n theo thứ tự tăng dần.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề để m, n tự do; custodian chọn m = 10, n = 30; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              11,
+              13,
+              17,
+              19,
+              23,
+              29
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-079",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 134, Thực hành, Nhiệm vụ 3",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 134,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+        "source_id": "T10-C5-079"
+      },
+      "problem_text": "Thiết lập hàm merge_str(s1,s2) với s1, s2 là hai xâu cần gộp. Hàm này sẽ gộp hai xâu s1, s2 theo cách, lấy lần lượt từng kí tự của s1, s2 đưa vào xâu kết quả. Nếu có một xâu hết kí tự thì đưa phần còn lại của xâu dài hơn vào xâu kết quả. Ví dụ nếu s1 = \"1111\", s2 = \"0000\" thì xâu kết quả là \"10101010\".",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "dữ liệu và/hoặc đáp án in sẵn trong SGK (ví dụ s1 = \"1111\", s2 = \"0000\" cho kết quả \"10101010\"); tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              "1",
+              "0",
+              "1",
+              "0",
+              "1",
+              "0",
+              "1",
+              "0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-080",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 135, Luyện tập 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 135,
+        "exercise_number_or_position": "Luyện tập 1",
+        "source_id": "T10-C5-080"
+      },
+      "problem_text": "Thiết lập hàm power(a,b,c) với a, b, c là số nguyên. Hàm trả lại giá trị (a+b) mũ c.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề định nghĩa một HÀM số học (a+b) mũ c. Không nghĩa vụ nào trong taxonomy 9 loại diễn đạt được một phép tính vô hướng thuần tuý như vậy.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — số học vô hướng, ngoài taxonomy"
+    },
+    {
+      "case_id": "T10-C5-084",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 137, Câu hỏi 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 137,
+        "exercise_number_or_position": "Câu hỏi 1",
+        "source_id": "T10-C5-084"
+      },
+      "problem_text": "Giả sử có các lệnh sau: >>> a,b = 1,2 ; >>> def f(a,b): a = a + b ; b = b*a ; return a + b. Giá trị của a, b bằng bao nhiêu sau khi thực hiện lệnh sau? a) f(1, 2); b) f(10, 20).",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "hàm f gán lại a, b ở PHẠM VI CỤC BỘ nên a, b ở chương trình chính không đổi — đó chính là điểm bài học của Bài 28; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "total_mapping",
+            "value": {
+              "a": 1,
+              "b": 2
+            }
+          }
+        ]
+      },
+      "custodian_note": "đáp án phụ thuộc quy tắc phạm vi biến, đã ghi rõ"
+    },
+    {
+      "case_id": "T10-C5-085",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 138, Câu hỏi",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 138,
+        "exercise_number_or_position": "Câu hỏi",
+        "source_id": "T10-C5-085"
+      },
+      "problem_text": "Giả sử hàm f(x,y) được định nghĩa như sau: >>> def f(x,y): a = 2*(x + y) ; print(a + n). Kết quả nào được in ra khi thực hiện các lệnh sau? n = 10 ; f(1,2)",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "dữ liệu và/hoặc đáp án in sẵn trong SGK; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 16
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-086",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 138, Thực hành, Nhiệm vụ 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 138,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+        "source_id": "T10-C5-086",
+        "problem_text_goc": "Viết hàm với đầu vào là danh sách A chứa các số và số thực x. Hàm trả lại một danh sách kết quả B từ danh sách A bằng cách chỉ giữ lại các phần tử lớn hơn hoặc bằng x."
+      },
+      "problem_text": "Cho danh sách A: 1 7 3 10 5 và số x = 5. Hãy lập danh sách B gồm các phần tử của A lớn hơn hoặc bằng x, giữ nguyên thứ tự.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              7,
+              10,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-088",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 139, Thực hành, Nhiệm vụ 3",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 139,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+        "source_id": "T10-C5-088",
+        "problem_text_goc": "Viết chương trình yêu cầu thực hiện lần lượt các việc sau, mỗi việc cần được thực hiện bởi một hàm: 1. Nhập từ bàn phím một dãy các số nguyên, mỗi số cách nhau bởi dấu cách. Chuyển các số này vào danh sách A và in danh sách A ra màn hình. 2. Trích từ danh sách A ra một danh sách B gồm các phần tử lớn hơn 0. In danh sách B ra màn hình. 3. Trích từ danh sách A ra một danh sách C gồm các phần tử nhỏ hơn 0. In danh sách C ra màn hình."
+      },
+      "problem_text": "Cho dãy số nguyên A: 3 -5 8 0 -2 7. Hãy lập danh sách B gồm các phần tử lớn hơn 0 của A, giữ nguyên thứ tự.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              3,
+              8,
+              7
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-089",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 140, Luyện tập 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 140,
+        "exercise_number_or_position": "Luyện tập 1",
+        "source_id": "T10-C5-089",
+        "problem_text_goc": "Viết hàm với đầu vào, đầu ra như sau: đầu vào là danh sách sList, các phần tử là xâu kí tự; đầu ra là danh sách cList, các phần tử là kí tự đầu tiên của các xâu kí tự tương ứng trong danh sách sList."
+      },
+      "problem_text": "Cho danh sách sList gồm các xâu kí tự: Hoa, Lan, Cuc, Mai. Hãy lập danh sách cList gồm kí tự đầu tiên của mỗi xâu tương ứng trong sList.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              "H",
+              "L",
+              "C",
+              "M"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-094",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 143, Thực hành, Nhiệm vụ 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 143,
+        "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+        "source_id": "T10-C5-094",
+        "problem_text_goc": "Viết chương trình nhập các số nguyên m, n từ bàn phím, cách nhau bởi dấu cách. Chương trình đưa ra tổng, hiệu, thương của hai số đã nhập."
+      },
+      "problem_text": "Cho hai số nguyên m = 17 và n = 5. Hãy tính tổng, hiệu và thương của hai số này.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề gốc nhận dữ liệu từ bàn phím; custodian cụ thể hoá dữ liệu; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "total_mapping",
+            "value": {
+              "tong": 22,
+              "hieu": 12,
+              "thuong": 3.4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-099",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 150, Nhiệm vụ 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 150,
+        "exercise_number_or_position": "Nhiệm vụ 2",
+        "source_id": "T10-C5-099"
+      },
+      "problem_text": "Viết chương trình nhập từ bàn phím ba số thực a, b, c và tìm nghiệm của phương trình bậc hai ax² + bx + c = 0. Chương trình cần xét đầy đủ các trường hợp xảy ra.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề tìm NGHIỆM của phương trình bậc hai và phải xét đủ các trường hợp (vô nghiệm / nghiệm kép / hai nghiệm). Không nghĩa vụ nào trong taxonomy diễn đạt được một tập nghiệm phân nhánh như vậy.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — tập nghiệm phân nhánh, ngoài taxonomy"
+    },
+    {
+      "case_id": "T10-C5-103",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 153, Nhiệm vụ 1",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 153,
+        "exercise_number_or_position": "Nhiệm vụ 1",
+        "source_id": "T10-C5-103"
+      },
+      "problem_text": "Viết chương trình nhập họ tên đầy đủ từ bàn phím, ví dụ \"Nguyễn Thị Mai Hương\", sau đó tách riêng phần tên, họ, đệm và in ra màn hình.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "dữ liệu và/hoặc đáp án in sẵn trong SGK (ví dụ \"Nguyễn Thị Mai Hương\"); tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "total_mapping",
+            "value": {
+              "ho": "Nguyễn",
+              "dem": "Thị Mai",
+              "ten": "Hương"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T10-C5-104",
+      "source": {
+        "book": "tin-hoc-10.pdf",
+        "location": "trang 153, Nhiệm vụ 2",
+        "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+        "page": 153,
+        "exercise_number_or_position": "Nhiệm vụ 2",
+        "source_id": "T10-C5-104",
+        "problem_text_goc": "Trọng lượng của em trên các hành tinh khác. Chương trình yêu cầu nhập trọng lượng của em (tính theo đơn vị N - Newton) trên Trái Đất và tính trọng lượng của em trên một hành tinh khác (ví dụ Mặt Trăng, Hoả tinh, Kim tinh, Thổ tinh, Mộc tinh, Mặt Trời)."
+      },
+      "problem_text": "Trọng lượng của một người trên Trái Đất là 600 N. Biết gia tốc trọng trường trên Trái Đất là 9,8 m/s² và trên Mặt Trăng là 1,62 m/s². Hãy tính trọng lượng của người đó trên Mặt Trăng.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "công thức P = P0 × g / 9.8 và bảng gravities in ở trang 154; custodian chọn P0 = 600 N và hành tinh Mặt Trăng (g = 1.62); tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 99.184
+          }
+        ]
+      },
+      "context_text": "P = m × g. Danh sách hành tinh: [\"Mặt Trăng\",\"Hoả tinh\",\"Kim tinh\",\"Mộc tinh\",\"Thổ tinh\",\"Mặt Trời\"] với gravities = [1.62, 3.711, 8.83, 24.79, 10.44, 274.0]; trên Trái Đất g = 9.8 m/s²."
+    },
+    {
+      "case_id": "T11CS-C6-027",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 98, Vận dụng",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 98,
+        "exercise_number_or_position": "Vận dụng",
+        "source_id": "T11CS-C6-027",
+        "problem_text_goc": "Viết chương trình tra cứu tên theo điểm thi của học sinh trong lớp. Chương trình cho phép người dùng nhập vào khoảng điểm số cần tìm kiếm (ví dụ từ 6 đến 8). Chương trình kiểm tra và thông báo tên của học sinh có điểm số nằm trong khoảng tương ứng."
+      },
+      "problem_text": "Cho danh sách điểm thi: Sơn 5.6, Huyền 7.4, Nam 7.8, Hùng 8.4, Hương 8.9, Hà 9.5. Hãy liệt kê tên các học sinh có điểm nằm trong khoảng từ 6 đến 8, theo thứ tự điểm tăng dần.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "dữ liệu điểm thi in ở trang 98 của SGK (Sơn 5.6, Huyền 7.4, Nam 7.8, Hùng 8.4, Hương 8.9, Hà 9.5); custodian chọn khoảng điểm 6–8 đúng như ví dụ trong đề; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              "Huyền",
+              "Nam"
+            ]
+          }
+        ]
+      },
+      "context_text": "Dữ liệu: Sơn 5.6; Huyền 7.4; Nam 7.8; Hùng 8.4; Hương 8.9; Hà 9.5."
+    },
+    {
+      "case_id": "T11CS-C6-041",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 108, Câu hỏi 1",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 108,
+        "exercise_number_or_position": "Câu hỏi 1",
+        "source_id": "T11CS-C6-041",
+        "problem_text_goc": "Chương trình sau giải bài toán: yêu cầu nhập số tự nhiên n và tính tổng 1 + 2 + ... + n. Chương trình trên có đúng không? n = int(input(\"Nhập số tự nhiên n: \")) ; S = 0 ; for i in range(n+1): S = S + i ; print(S)"
+      },
+      "problem_text": "Cho n = 5. Chương trình sau tính tổng: S = 0 ; for i in range(n+1): S = S + i. Hãy cho biết giá trị của S sau khi chương trình chạy xong.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "chương trình trong đề dùng range(n+1) nên tổng đúng bằng 1+2+...+n; custodian chọn n = 5; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 15
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T11CS-C6-053",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 122, Vận dụng 1",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 122,
+        "exercise_number_or_position": "Vận dụng 1",
+        "source_id": "T11CS-C6-053"
+      },
+      "problem_text": "Sử dụng phương pháp làm mịn dần để giải bài toán sau: cho trước số tự nhiên không âm n, viết chương trình kiểm tra xem số n có phải là số nguyên tố hay không? Chương trình cần thông báo \"CÓ\" nếu n là số nguyên tố, ngược lại thông báo \"KHÔNG\".",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề yêu cầu một PHÁN QUYẾT (CÓ/KHÔNG là số nguyên tố). Xem T10-C5-020.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — phán quyết nhị phân"
+    },
+    {
+      "case_id": "T11CS-C6-056",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 126, Luyện tập 1",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 126,
+        "exercise_number_or_position": "Luyện tập 1",
+        "source_id": "T11CS-C6-056"
+      },
+      "problem_text": "Thiết kế thuật toán cho nhiệm vụ 1 với ý tưởng khác như sau: dãy A là một hoán vị của dãy các số từ 1 đến n khi và chỉ khi dãy A có độ dài n và mọi số i từ 1 đến n đều nằm trong A.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề yêu cầu một PHÁN QUYẾT (dãy có là hoán vị của 1..n không). Xem T10-C5-020.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — phán quyết nhị phân"
+    },
+    {
+      "case_id": "T11CS-C6-057",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 126, Vận dụng 1",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 126,
+        "exercise_number_or_position": "Vận dụng 1",
+        "source_id": "T11CS-C6-057"
+      },
+      "problem_text": "Cho dãy số A = A[0], A[1], ..., A[n-1]. Thiết kế và viết chương trình kiểm tra trong dãy A có hai phần tử nào trùng nhau hay không. Cần đưa ra câu trả lời là \"có\" hay \"không\".",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề yêu cầu một PHÁN QUYẾT (có hai phần tử trùng nhau không). Xem T10-C5-020.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — phán quyết nhị phân"
+    },
+    {
+      "case_id": "T11CS-C6-058",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 126, Vận dụng 2",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 126,
+        "exercise_number_or_position": "Vận dụng 2",
+        "source_id": "T11CS-C6-058"
+      },
+      "problem_text": "Xâu kí tự được gọi là đối xứng nếu thay đổi thứ tự ngược lại các kí tự của xâu thì vẫn nhận được dãy ban đầu. Ví dụ xâu \"abcdcba\" là đối xứng, còn xâu \"1011\" không là đối xứng. Thiết kế và viết chương trình kiểm tra một xâu kí tự cho trước có là đối xứng hay không.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "đề yêu cầu một PHÁN QUYẾT (xâu có đối xứng không). Xem T10-C5-020.",
+        "expected": []
+      },
+      "custodian_note": "UNGRADED — phán quyết nhị phân"
+    },
+    {
+      "case_id": "T11CS-C6-068",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 142, Câu hỏi 2",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 142,
+        "exercise_number_or_position": "Câu hỏi 2",
+        "source_id": "T11CS-C6-068"
+      },
+      "problem_text": "Viết đoạn chương trình ngắn sử dụng thư viện LinkedList để thiết lập một danh sách liên kết L và bổ sung các tên \"Bình\", \"Hoa\", \"Hà\" vào danh sách này.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "hàm insert() của thư viện LinkedList trong SGK chèn vào ĐẦU danh sách, nên duyệt từ head ra thứ tự ngược với thứ tự chèn; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              "Hà",
+              "Hoa",
+              "Bình"
+            ]
+          }
+        ]
+      },
+      "custodian_note": "đáp án phụ thuộc ngữ nghĩa insert-at-head của thư viện LinkedList định nghĩa ở Bài 30, đã ghi rõ"
+    },
+    {
+      "case_id": "T11CS-C6-070",
+      "source": {
+        "book": "tin-hoc-11-cs.pdf",
+        "location": "trang 142, Vận dụng 2",
+        "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+        "page": 142,
+        "exercise_number_or_position": "Vận dụng 2",
+        "source_id": "T11CS-C6-070",
+        "problem_text_goc": "Viết hàm delete_last(L) có chức năng xoá phần tử cuối cùng của danh sách liên kết L."
+      },
+      "problem_text": "Cho danh sách liên kết L gồm các phần tử theo thứ tự từ đầu danh sách: 5, 2, 8. Hãy xoá phần tử cuối cùng của L và cho biết danh sách thu được.",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "danh sách liên kết minh hoạ trong Bài 30 là 5 → 2 → 8; xoá phần tử cuối còn 5 → 2; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "derived_sequence",
+            "value": [
+              5,
+              2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "T11ICT-003",
+      "source": {
+        "book": "tin-hoc-11-ict.pdf",
+        "location": "trang 136, Luyện tập 2",
+        "section_or_chapter": "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video",
+        "page": 136,
+        "exercise_number_or_position": "Luyện tập 2",
+        "source_id": "T11ICT-003"
+      },
+      "problem_text": "Một tệp ảnh mở trong GIMP có 5 lớp ảnh. Nếu dùng hiệu ứng Blend với số khung hình trung gian là 5 thì số lượng khung hình do GIMP tạo ra để làm trung gian là bao nhiêu?",
+      "eligibility_audit": {
+        "discrete": true,
+        "finite_input": true,
+        "deterministic_bounded_procedure": true,
+        "in_scope": true
+      },
+      "metadata": {
+        "no_specialized_module": true,
+        "no_target_template": true,
+        "not_prompt_example": true,
+        "expressible_in_ir": true
+      },
+      "prescribed_procedure": null,
+      "ground_truth": {
+        "kind": "independent_solver",
+        "provenance": "GIMP chèn số khung hình trung gian vào GIỮA mỗi cặp lớp liền kề: 5 lớp có 4 khoảng, mỗi khoảng 5 khung ⇒ 20; tính bằng Python thuần trong sealed_ground_truth.py; không dùng hệ đang được đánh giá",
+        "expected": [
+          {
+            "obligation_kind": "aggregate_matching",
+            "value": 20
+          }
+        ]
+      },
+      "custodian_note": "đáp án phụ thuộc ngữ nghĩa hiệu ứng Blend của GIMP, đã ghi rõ"
+    }
+  ]
+}

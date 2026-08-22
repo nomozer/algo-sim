@@ -54,9 +54,20 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   schema `b87aeb18` · DEV `8a3de7a3` — **không đổi** qua cả bốn lần đóng băng.
 > - Offline: pytest **1729** (18 skip, 1 deselect) · vitest **1473 / 123 file** ·
 >   tsc 0 lỗi · vite build sạch.
-> - **CHƯA làm — chặn ở ngoài phía phát triển:** SEALED 40 do custodian độc lập
->   chuẩn bị và niêm phong. Task 12 chạy sau đó, **một lần**; Task 13 closeout
->   sau cùng.
+> - **SEALED chính thức ĐÃ SẴN SÀNG** (2026-08-23), fingerprint `7e5df014…`,
+>   N=40. Chuỗi provenance bốn tầng: SOURCE UNIVERSE V2 `4a9c3564…` (189 bài,
+>   **audit cả 5 SGK**, 708 trang) → POOL `34d11adc…` (89 bài) → EXTERNAL
+>   SELECTION `6efe2450…` (**seed `23082026` do GVHD cấp**) → SEALED. Ground
+>   truth do `custodian/sealed_ground_truth.py` tính bằng Python thuần, không
+>   import mã sản phẩm; 31/40 chấm được, 9 UNGRADED vì taxonomy cố ý không có
+>   `predicate_verdict`.
+> - **Ba SGK bổ sung chỉ cho 5/189 bài eligible.** Corpus bài toán thuật toán
+>   của chương trình tập trung ở TH10 CĐ5 và TH11-KHMT CĐ6. Phủ chương trình
+>   ghi đúng theo đó: `CURRICULUM_SUPPORT_PARTIAL`; tác động người học:
+>   `LEARNER_IMPACT_NOT_EVALUATED`.
+> - **CHƯA làm:** Task 12 chạy **một lần** trên `7e5df014…`; Task 13 closeout
+>   sau cùng. Tập `34a10a9c…` ở `pilot/` là INTERNAL LIVE PILOT, không liên
+>   quan.
 >
 > ### M19 — BỐ CỤC DÙNG CHUNG: khung theo cơ chế, một rail (2026-08-13)
 >
