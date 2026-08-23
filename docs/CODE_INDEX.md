@@ -2542,6 +2542,20 @@ STRONG-assurance nội bộ, không phải "đúng"** (oracle độc lập báo 
 · **N=40 khoá**, chạy thiếu thì `evaluation_complete: false` và A/B không được
 công bố như kết quả chính.
 
+**ĐÃ CHẠY 2026-08-23 — lượt duy nhất, không được gọi lại.** Artifact ở
+`docs/evaluation/semantic-benchmark/results/`:
+
+- `sealed_summary.json` — số tổng hợp (A/B/A−B/oracle/D1/D2/ngân sách).
+- `sealed_cases.json` — 40 bản ghi case-level: `semantic` (stage_reached,
+  executable, servable, error_code, reason), `legacy` (route module để so),
+  `contract` (nghĩa vụ khai), `cham` (verdict oracle), `token` theo stage.
+- `OFFICIAL_RESULT.md` — **bản diễn giải chính thức, nguồn trích cho luận văn**.
+  Chứa cảnh báo bắt buộc: 17/40 case chết ở `spec_version` float vs
+  `Literal["1.0"]`, nên A = 3/40 là cận dưới của cận dưới.
+
+Gọi lại runner sẽ ghi đè artifact và **phá tính held-out** — muốn đo lại phải
+niêm phong SEALED MỚI, không phải chạy lại tập cũ.
+
 ### `backend/app/simulation/execution_authority_gate.py` · offline
 
 Thay khái niệm của `computation_gate.py` (file cũ GIỮ NGUYÊN cho đường module).

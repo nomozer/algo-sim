@@ -62,3 +62,17 @@ cấu trúc · bằng chứng từ extractor tất định.
 
 **Không làm ở Task 7** vì nó là một dự án provenance riêng, và ranh giới 5 của
 §1.1 cấm mở tối ưu phụ. Ghi vào `POST_THESIS_BACKLOG.md` nếu muốn theo tiếp.
+
+## Cập nhật sau Task 12 (2026-08-23) — P1 vẫn CHƯA bị lượt đo chạm tới
+
+Lượt SEALED chính thức (`results/OFFICIAL_RESULT.md`) **không** cung cấp thêm
+bằng chứng nào về P1, và cũng không được dùng để nói P1 đã hẹp lại:
+
+- `input_not_grounded` chỉ nổ **1/40 case** — tức cổng P2 gần như không có dịp
+  phát biểu trên tập này.
+- 27/40 case dừng ở `semantic_program_invalid`, **trước** khi tới tầng grounding.
+  Riêng 17 case trong đó chết vì `spec_version` là số JSON thay vì chuỗi.
+
+Nói cách khác: tập SEALED này đo được **cổng ngoài cùng**, chưa đo tới chỗ P1
+sống. Giữ nguyên trạng thái **CÒN HỞ CÓ CHỦ ĐÍCH**; muốn có số về P1/P2 phải
+niêm phong SEALED mới sau khi cổng cú pháp thôi chặn.

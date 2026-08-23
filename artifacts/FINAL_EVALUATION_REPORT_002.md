@@ -1,3 +1,17 @@
+> ## ⚠️ TẦNG 2 — INTERNAL LIVE PILOT. KHÔNG phải số chính thức của luận văn.
+>
+> Cập nhật 2026-08-23 (Task 13 closeout). Báo cáo này chạy **trước** khi SEALED
+> được niêm phong, trên một tập **10 bài** khác hẳn, ở commit `bf76ac3`.
+>
+> **Held-out metrics chính thức nằm ở**
+> `docs/evaluation/semantic-benchmark/results/OFFICIAL_RESULT.md` — SEALED
+> `7e5df014…`, N=40, candidate `4e13e2b`, custodian độc lập, seed ngoài
+> `23082026`. Số ở đó: **A 3/40 · B 1/40 · oracle PASS 2 / FAIL 0**.
+>
+> Các tỉ lệ trong file này (90 % · 87,5 % · 100 %) là **engineering evidence**
+> trên n=10 không held-out theo custodian độc lập. **Không trích chúng như kết
+> quả đánh giá của đề tài**, và không đặt cạnh số SEALED như thể cùng một trục.
+
 # Báo cáo Thực nghiệm Khoa học: FINAL_EVALUATION_RUN_002
 
 ## 1. Thông tin Phiên Thực nghiệm & Niêm phong

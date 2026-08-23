@@ -374,6 +374,39 @@ chỉ số phải báo **riêng, đồng-primary** — `A: Generative executabil
 `LEARNER_IMPACT_NOT_EVALUATED` vì kho này không chứa nghiên cứu đối chứng trên
 người học.
 
+### §0-2026-08-23 — TASK 12 ĐÃ CHẠY. Ba tầng bằng chứng, chỉ tầng 3 được trích
+
+Bằng chứng: **`docs/evaluation/semantic-benchmark/results/OFFICIAL_RESULT.md`**
+(+ `sealed_summary.json`, `sealed_cases.json`). Candidate `4e13e2b`, harness
+`9d8e1a1`, SEALED `7e5df014…`, N=40, `evaluation_complete = true`, chạy **một
+lần** `2026-08-23T05:10:39Z`.
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| Route sinh ngữ nghĩa — đo held-out chính thức | **DONE (Task 12)** | `results/OFFICIAL_RESULT.md`; A 3/40 · B 1/40 · oracle PASS 2/FAIL 0 | — (cần SEALED mới để đo lại) |
+| Biên assurance nội bộ | **DONE — bảo thủ, không lỏng** | 0 sai-chấp-nhận · 1 false rejection (`T11CS-C6-041`) | phân tích C₂ |
+| D1 claim cấu trúc | **DONE** | bước 2→22 (×11) vs lượt LLM `[2,4,5,6,7,8]` | — |
+| D2 claim thực nghiệm token | **NOT_ESTIMABLE** | `matched_N = 0`; giao ngữ nghĩa×legacy rỗng | SEALED mới |
+| Năng lực ngữ nghĩa thật của `4e13e2b` | **CHƯA ĐO TỚI** | 17/40 chết ở `spec_version` float vs `Literal["1.0"]` | **SEALED mới bắt buộc** |
+
+**Ba tầng bằng chứng — không được trộn:**
+
+| tầng | là gì | dùng được cho |
+|---|---|---|
+| 1. OFFLINE / UNIT / INVARIANT | pytest · vitest · tsc · build · guard | kỹ thuật; **không** là số năng lực |
+| 2. INTERNAL LIVE PILOT | `pilot/sealed-pilot-34a10a9c/` + `pilot-results/`→`pilot-results-4/` | **engineering evidence** — dò lỗi, chỉnh hệ trước khi niêm phong |
+| 3. **OFFICIAL INDEPENDENT SEALED** | **`results/`** trên `7e5df014…` | **held-out metrics chính thức của luận văn** |
+
+Chỉ **tầng 3** được viết vào kết luận. Số của pilot (tầng 2) **không bao giờ** là
+A/B/D — nó chỉ chứng minh quá trình kỹ thuật, và bốn lượt pilot đều xảy ra
+**trước** khi SEALED được niêm phong nên luật con dấu không bị đụng.
+
+**Hard scope lock nay có hiệu lực.** SEALED đã mở. Mọi sửa vào prompt · schema ·
+taxonomy · primitive · route · checker · interpreter · renderer · ngưỡng
+assurance · ngân sách kể từ đây **làm mất hiệu lực con dấu** và bắt buộc niêm
+phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều này áp cả cho lỗi
+`spec_version` đã biết — biết chỗ hỏng **không** cấp quyền vá rồi chạy lại.
+
 ## 4f. Wave 10 — guard ngữ nghĩa chuyển động
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |

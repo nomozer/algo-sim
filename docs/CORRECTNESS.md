@@ -89,6 +89,33 @@ bốn là `verification_gap` là báo cáo sai.
    độc lập phải báo riêng, và case `servable` mà oracle nói sai phải được nêu
    đích danh — che nó bằng một cái nhãn đẹp là tự bịt mắt mình.
 
+### 2b-bis. Trục này ĐÃ ĐƯỢC ĐO — SEALED `7e5df014…` (2026-08-23)
+
+Nguồn: `docs/evaluation/semantic-benchmark/results/OFFICIAL_RESULT.md`. Candidate
+`4e13e2b`, N=40, `evaluation_complete = true`, lượt **duy nhất**.
+
+| trục | đo được |
+|---|---|
+| **executable** (A) | 3/40 |
+| **servable** (B) | 1/40 |
+| **oracle độc lập** | PASS 2 · FAIL 0 · UNGRADED 9 · NO_RESULT 29 |
+
+Ba điều lượt đo này xác nhận, và một điều nó **không** xác nhận:
+
+- **Tách A/B là đúng và cần thiết.** A ≠ B trên dữ liệu thật (3 vs 1). Gộp lại
+  là mất thông tin.
+- **`servable=false` thật sự không đồng nhất.** `A − B = 2` và **cả hai là C₂**
+  (chương trình tự mâu thuẫn), `verification_gap` = **0**. Nếu đã gọi cả khối là
+  `verification_gap` thì báo cáo đã sai 2/2.
+- **Cổng nội bộ bảo thủ, không lỏng.** `phát nhưng oracle nói SAI` = **0**;
+  ngược lại có **1 false rejection** (`T11CS-C6-041`: oracle ĐÚNG mà C₂ chặn).
+  Hướng lệch của biên assurance là **an toàn**.
+- **Lượt này KHÔNG đo được năng lực ngữ nghĩa.** 17/40 case chết trước mọi tầng
+  ngữ nghĩa vì `spec_version` phát ra là số JSON `1.0` trong khi schema đòi chuỗi
+  `"1.0"`. A = 3/40 vì thế là **cận dưới của cận dưới**, không phải ước lượng
+  năng lực. Theo luật con dấu, sửa rồi chạy lại là **cấm** — phải niêm phong
+  SEALED mới.
+
 ## 3. Taxonomy kết quả patch/edit (PatchResult) — TÁCH với interaction feedback
 
 Cho **patch/edit** (đổi cấu trúc spec):

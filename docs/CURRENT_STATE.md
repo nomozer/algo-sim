@@ -29,14 +29,17 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
-> ### M21 — ROUTE SINH NGỮ NGHĨA: đóng phía phát triển, chờ SEALED (2026-08-22)
+> ### M21 — ROUTE SINH NGỮ NGHĨA: ĐÃ ĐO CHÍNH THỨC trên SEALED (2026-08-23)
 >
 > Bằng chứng: `docs/evaluation/semantic-benchmark/` (`README.md` ·
-> `freeze_protocol.md` · `CUSTODIAN_HANDOFF.md` · `EVALUATION_CANDIDATE.json`).
+> `freeze_protocol.md` · `CUSTODIAN_HANDOFF.md` · `EVALUATION_CANDIDATE.json` ·
+> **`results/OFFICIAL_RESULT.md`** ← số chính thức của luận văn).
 >
-> - **Bản đem đo: `36bae92`** — danh tính máy kiểm được là `measured_system.tree_hash` = `5608fbfe…` (125 file), giữ NGUYÊN qua mọi lần đóng băng sau đó. Từ mốc này **không sửa**
+> - **Bản đem đo: `4e13e2b`** — danh tính máy kiểm được là
+>   `measured_system.tree_hash` = `024f627b…` (126 file). Từ mốc này **không sửa**
 >   prompt · schema · taxonomy · primitive · route · checker · runner · ngân
->   sách vì kết quả SEALED. `--verify` là cổng kiểm.
+>   sách vì kết quả SEALED. `--verify` là cổng kiểm. (Bản `36bae92`/`5608fbfe…`
+>   là lần đóng băng TRƯỚC pilot 4; candidate cuối cùng đem đo là `4e13e2b`.)
 > - **Route nay ĐI QUA `run_pipeline` thật** (bất biến #22). Trước 2026-08-21
 >   `stage_semantic_program` **không có một ai gọi**: mọi mảnh đều xanh nhưng
 >   chưa mảnh nào được ghép — unit test xanh **không** chứng minh đường
@@ -52,8 +55,8 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   call graph**.
 > - `CACHE_VERSION` **33 → 34**. Taxonomy `4dd712a3` · primitive `1a127502` ·
 >   schema `b87aeb18` · DEV `8a3de7a3` — **không đổi** qua cả bốn lần đóng băng.
-> - Offline: pytest **1729** (18 skip, 1 deselect) · vitest **1473 / 123 file** ·
->   tsc 0 lỗi · vite build sạch.
+> - Offline (đo lại lúc Task 13 closeout, 2026-08-23): pytest **1758** (17 skip,
+>   1 deselect) · vitest **1473 / 123 file** · tsc 0 lỗi · vite build sạch.
 > - **SEALED chính thức ĐÃ SẴN SÀNG** (2026-08-23), fingerprint `7e5df014…`,
 >   N=40. Chuỗi provenance bốn tầng: SOURCE UNIVERSE V2 `4a9c3564…` (189 bài,
 >   **audit cả 5 SGK**, 708 trang) → POOL `34d11adc…` (89 bài) → EXTERNAL
@@ -65,9 +68,31 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   của chương trình tập trung ở TH10 CĐ5 và TH11-KHMT CĐ6. Phủ chương trình
 >   ghi đúng theo đó: `CURRICULUM_SUPPORT_PARTIAL`; tác động người học:
 >   `LEARNER_IMPACT_NOT_EVALUATED`.
-> - **CHƯA làm:** Task 12 chạy **một lần** trên `7e5df014…`; Task 13 closeout
->   sau cùng. Tập `34a10a9c…` ở `pilot/` là INTERNAL LIVE PILOT, không liên
->   quan.
+> - **TASK 12 ĐÃ CHẠY — MỘT LẦN, `2026-08-23T05:10:39Z`.** `evaluation_complete
+>   = true`, 40/40 case, ngân sách dùng **205/440** logic · **207/520** HTTP ·
+>   2 retry. Ba con số **tách hẳn nhau**:
+>   **A** executability **3/40 (7,5 %)** · **B** internal servable **1/40
+>   (2,5 %)** · oracle độc lập **PASS 2 · FAIL 0 · UNGRADED 9 · NO_RESULT 29**.
+>   `A − B = 2`, **cả hai là `C2_postcondition_violated`**, `verification_gap`
+>   = **0**.
+> - **0 case "phát nhưng oracle nói SAI"** — biên assurance không sai-chấp-nhận.
+>   **1 false rejection** (`T11CS-C6-041`: oracle ĐÚNG, C₂ vẫn chặn) ⇒ cổng nội
+>   bộ **bảo thủ**, không phải lỏng.
+> - **A = 3/40 KHÔNG đo được năng lực ngữ nghĩa.** 27 case chết ở
+>   `semantic_program_invalid`, trong đó **17 case hỏng vì ĐÚNG MỘT lỗi kiểu**:
+>   LLM phát `spec_version: 1.0` (số JSON) còn schema đòi `Literal["1.0"]`
+>   (chuỗi) ⇒ Pydantic fail-closed trước mọi tầng ngữ nghĩa. Con số đứng nguyên
+>   theo luật con dấu; muốn đo lại **phải niêm phong SEALED MỚI**, cấm vá rồi
+>   chạy lại.
+> - **D1 giữ được** (claim CẤU TRÚC): số bước interpreter 2 → 22 (biến thiên 11
+>   lần) trong khi lượt LLM/case chỉ nằm trong `[2,4,5,6,7,8]`, chặn trên bởi
+>   call graph. Telemetry hỗ trợ: 23 733,7 token/case toàn stage · 6 066,6
+>   token/case chỉ stage ngữ nghĩa; tổng 949 347 token / 205 lượt.
+> - **D2 = `D2_NOT_ESTIMABLE_ON_THIS_SEALED`** — `matched_N = 0`. Case ngữ nghĩa
+>   phục vụ được duy nhất (`T10-C5-025`) thì route legacy `error`; giao rỗng.
+>   **Không** suy D2 từ case không khớp.
+> - Tập `34a10a9c…` ở `pilot/` là INTERNAL LIVE PILOT (tầng 2), **không** phải
+>   số của luận văn. Chỉ `results/` (tầng 3) được trích dẫn.
 >
 > ### M19 — BỐ CỤC DÙNG CHUNG: khung theo cơ chế, một rail (2026-08-13)
 >

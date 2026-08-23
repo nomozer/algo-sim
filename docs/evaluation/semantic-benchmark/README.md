@@ -103,13 +103,51 @@ UNGRADED. Đầy đủ: `custodian/GROUND_TRUTH_AUDIT.md`.
 `CURRICULUM_SUPPORT_PARTIAL`. **Không** diễn giải thành "toàn bộ chương trình
 Tin học THPT". Tác động lên người học: `LEARNER_IMPACT_NOT_EVALUATED`.
 
+## ⛳ TASK 12 ĐÃ CHẠY — 2026-08-23, MỘT LẦN, con dấu ĐÃ MỞ
+
+**Số chính thức: [`results/OFFICIAL_RESULT.md`](results/OFFICIAL_RESULT.md).**
+
+| | |
+|---|---|
+| candidate / harness | `4e13e2b` · `9d8e1a1` (cây sạch) |
+| N | 40/40 · `evaluation_complete = true` |
+| **A** generative executability | **3/40 (7,5 %)** |
+| **B** internal servable | **1/40 (2,5 %)** |
+| oracle độc lập | PASS 2 · FAIL 0 · UNGRADED 9 · NO_RESULT 29 |
+| phát nhưng oracle nói SAI | **0** |
+| false rejection | **1** — `T11CS-C6-041` |
+| A−B | 2, **cả hai C₂**; `verification_gap` = 0 |
+| D1 | **giữ được** (bước 2→22 vs lượt LLM `[2,4,5,6,7,8]`) |
+| D2 | **`D2_NOT_ESTIMABLE_ON_THIS_SEALED`** (`matched_N = 0`) |
+| ngân sách | logic 205/440 · HTTP 207/520 · retry 2 |
+
+**Cảnh báo diễn giải bắt buộc đi kèm mọi lần trích A:** 17/40 case chết vì LLM
+phát `spec_version: 1.0` (số JSON) trong khi schema đòi `Literal["1.0"]` (chuỗi).
+Chúng bị Pydantic vứt **trước** mọi tầng ngữ nghĩa. A = 3/40 vì thế là **cận
+dưới của cận dưới**, không phải ước lượng năng lực ngữ nghĩa của `4e13e2b`.
+
+**Con dấu đã mở ⇒ hard scope lock có hiệu lực.** Biết chỗ hỏng **không** cấp
+quyền vá rồi chạy lại. Sửa `spec_version` (hay bất cứ phần nào của hệ được đo)
+bắt buộc **niêm phong tập SEALED MỚI** trước khi công bố số mới.
+
 ## Ba tập dữ liệu, ba vai trò khác hẳn nhau
 
 | | Ai soạn | Được nhìn? | Đổi được cái gì |
 |---|---|---|---|
 | **DEV** (20 case) | agent phát triển | có | **hệ** — IR, schema, prompt, taxonomy |
-| **SEALED** (40 case) | **custodian độc lập** | **không**, tới Task 12 | **kết luận của luận văn** |
+| **SEALED** (40 case) | **custodian độc lập** | **đã mở 2026-08-23** (Task 12) | **kết luận của luận văn** |
 | **EVALUATION_CANDIDATE** | sinh từ nguồn | có | không đổi gì — nó là ảnh chụp danh tính |
+
+## Ba TẦNG BẰNG CHỨNG — chỉ tầng 3 được trích vào luận văn
+
+| tầng | là gì | vị trí | dùng được cho |
+|---|---|---|---|
+| 1 | OFFLINE / UNIT / INVARIANT | pytest · vitest · tsc · build | kỹ thuật; **không** là số năng lực |
+| 2 | INTERNAL LIVE PILOT | `pilot/` + `pilot-results/`→`pilot-results-4/` | **engineering evidence** |
+| 3 | **OFFICIAL INDEPENDENT SEALED** | **`results/`** | **held-out metrics chính thức** |
+
+Bốn lượt pilot đều xảy ra **trước** khi SEALED được niêm phong, nên chúng không
+đụng luật con dấu — nhưng số của chúng **không bao giờ** là A/B/D của luận văn.
 
 Luật con dấu (spec §7.4), viết gọn:
 
