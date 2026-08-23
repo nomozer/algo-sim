@@ -31,8 +31,14 @@ const OUT = argOf("--out-dir", "../docs/evaluation/semantic-vnext/e2e");
 const PORT = argOf("--port", "3100");
 const FAULT = argOf("--fault", "");
 
-const DE_BAI =
-  "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng ngăn xếp Stack với chuỗi {[()]}.";
+// `--de` để soát được đề KHÁC mà không phải sửa mã: đề ghép ngoặc dừng ở
+// `predicate_verdict` (taxonomy cố ý không có), nên nó KHÔNG bao giờ chứng minh
+// được đường phát. Muốn bằng chứng trình duyệt cho một envelope do route SINH
+// phát ra thì phải chạy một đề nằm trong taxonomy — vd `derived_sequence`.
+const DE_BAI = argOf(
+  "--de",
+  "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng ngăn xếp Stack với chuỗi {[()]}.",
+);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 mkdirSync(OUT, { recursive: true });
@@ -43,6 +49,15 @@ const page = await b.newPage({ viewport: { width: 1440, height: 900 } });
 /* Chộp ĐÚNG response sản phẩm — nguồn sự thật cho "route nào đã phục vụ". */
 let apiRes = null;
 let soRequest = 0;
+/* Chộp cả REQUEST, không chỉ response: một lượt soát từng kết luận "server sai"
+   trong khi thứ UI gửi đi mới là cái khác — không nhìn được body thì không phân
+   biệt nổi hai khả năng ấy. */
+let apiReq = null;
+page.on("request", (r) => {
+  if (r.url().includes("/api/analyze")) {
+    try { apiReq = JSON.parse(r.postData() || "null"); } catch { apiReq = r.postData(); }
+  }
+});
 page.on("response", async (r) => {
   if (!r.url().includes("/api/analyze")) return;
   soRequest += 1;
@@ -70,6 +85,7 @@ if (apiRes === null) {
 writeFileSync(join(OUT, "api-response.json"), JSON.stringify(apiRes, null, 2) + "\n", "utf-8");
 const env = apiRes.body ?? {};
 console.log(`HTTP ${apiRes.status} · status=${env.status} · simulation_id=${env.simulation_id} · source=${env.source}`);
+console.log("  UI gui di:", JSON.stringify(apiReq?.input?.content ?? apiReq).slice(0, 160));
 
 /* ── VÂN TAY ROUTE: phải là route sinh ngữ nghĩa, không phải rule_scene ── */
 const routeOk = env.simulation_id === "generic.semantic_program" || env.source === "semantic_program";

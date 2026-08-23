@@ -249,8 +249,27 @@ def _total_mapping(snap: dict, ob: Obligation) -> str | None:
 
 
 def _derived_sequence(snap: dict, ob: Obligation) -> str | None:
-    src = _phang(snap.get(str(ob.params.get("src") or "")))
+    # NGUỒN: `params.src` nếu có, NGƯỢC LẠI là `ob.container`.
+    #
+    # Trước 2026-08-23 chỉ đọc `params.src`. Nghĩa vụ nào khai container mà không
+    # khai `src` (LLM khai `derived_sequence(container='day_so',
+    # witness='day_so_dao_nguoc')` — đúng hình dạng taxonomy) thì `snap.get("")`
+    # ra None, `_phang` ra `[]`, `transform` mặc định `identity` cho `want = []`,
+    # rồi so với một witness cũng `[]` và **CHO QUA**.
+    #
+    # Đo được trên đường sản phẩm (probe E2E `serve`, đề "đảo dãy bằng ngăn
+    # xếp"): envelope PHÁT ĐI có khung cuối `ngan_xep.items = []`,
+    # `day_so_dao_nguoc.items = []` — mô phỏng chạy 5 bước, không gì đổi, đáp án
+    # không bao giờ hiện, mà `servable = True`. Đây là chiều IM LẶNG CHẤP NHẬN
+    # của cùng lớp "nghĩa vụ vô hiệu" mà `T11CS-C6-041` phơi ra ở chiều tố cáo
+    # sai — và chiều này nguy hiểm hơn, vì nó không kêu lên.
+    ten_src = str(ob.params.get("src") or ob.container or "")
+    src = _phang(snap.get(ten_src))
     dest = _phang(snap.get(ob.witness))
+    # Chặn TRƯỚC khi biến đổi: mọi phép trên tập rỗng đều ra tập rỗng, nên witness
+    # rỗng khớp một cách vô nghĩa. Cùng chốt mà `_aggregate_matching` đã có.
+    if not src:
+        return _nghia_vu_vo_hieu(ob)
     phep = str(ob.params.get("transform") or "identity")
     if phep == "reverse":
         want = list(reversed(src))

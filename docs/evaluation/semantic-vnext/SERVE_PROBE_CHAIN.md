@@ -75,6 +75,52 @@ nhánh generic có chủ đích) nhưng sống sót ở lượt **PHÁT**.
 đầu). Một lượt trượt — route **chưa ổn định 100%**, và con số 3/4 không đủ mẫu
 để gọi là tỉ lệ.
 
+## 4b. ⚠️ ĐÍNH CHÍNH — lượt "phát được" ở §4 là DƯƠNG TÍNH GIẢ
+
+Chạy runner trình duyệt trên chính envelope đã phát (`e2e-serve-daoday/`) rồi
+**mở ảnh ra xem**, thay vì đọc mỗi `status=ok`:
+
+| khung | ngăn xếp | dãy đảo ngược | lời kể |
+|---|---|---|---|
+| 3/5 | `trống` | rỗng | *"Xét phần tử: p = '2'"* |
+| **5/5** | `trống` | **rỗng** | *"Xét phần tử: p = '1'"* |
+
+Khung CUỐI của envelope phát đi: `ngan_xep.items = []`,
+`day_so_dao_nguoc.items = []`, `phan_tu_box.value = ""`. Học sinh bấm hết 5
+bước, lời kể chạy, **hình không đổi và đáp án không bao giờ hiện** — đúng
+triệu chứng vNext từng chụp cho `generic.rule_scene`, nay tái diễn ở route sinh.
+
+**Nguyên nhân — lỗ trong chính C₂.** `_derived_sequence` đọc nguồn từ
+`ob.params["src"]`. Nghĩa vụ khai `derived_sequence(container='day_so',
+witness='day_so_dao_nguoc')` — đúng hình dạng taxonomy — nhưng không có `src`,
+nên `snap.get("")` ra None, `_phang` ra `[]`, `transform` mặc định `identity`
+cho `want = []`, và `[] == []` **cho qua**.
+
+Đây là chiều **IM LẶNG CHẤP NHẬN** của cùng lớp *"nghĩa vụ vô hiệu"* mà
+`T11CS-C6-041` phơi ra ở chiều tố cáo sai. Chiều này nguy hiểm hơn: nó không
+kêu lên, và thứ đi ra là một mô phỏng **dạy sai**.
+
+**Đã bịt** (`postconditions.py::_derived_sequence`): nguồn lấy `params.src` nếu
+có, ngược lại lấy `ob.container`; nguồn rỗng ⇒ `_nghia_vu_vo_hieu`, fail-closed.
+Khoá hai chiều bởi `test_derived_sequence_vacuous.py` (7 test): vô hiệu không
+được pass, **và** nguồn có dữ liệu thì vẫn phải bắt đúng/bỏ qua đúng.
+
+Sau bản vá, đo lại 2/2 lượt:
+
+```
+executable: true · servable: FALSE
+derived_sequence(day_so_dao_nguoc, reverse): = [], đúng phải là [1, 8, 2, 5]
+```
+
+**Kết luận đúng của §4, sau đính chính:** route sinh **đã đi được hết đường ống**
+(đường phát thông, cổng chạy, transport hiện, học sinh bấm được từng bước) —
+nhưng **chưa có lượt nào tạo ra chương trình LÀM ĐÚNG việc**. Con số "3/4 phục
+vụ được" ở §4 đo *đường ống*, không đo *tính đúng*, và không được trích như tỉ
+lệ thành công.
+
+Bài học lặp lại lần thứ hai trong cùng wave: **`status=ok` không phải bằng
+chứng**; phải mở ảnh ra xem.
+
 ## 5. Ranh giới KHÔNG đụng tới — và vì sao
 
 Đề ghép ngoặc dừng ở `postconditions` vì nghĩa vụ đúng của nó là

@@ -1,0 +1,41 @@
+{
+  "chay_luc": "2026-08-23T11:50:39.706Z",
+  "de_bai": "Cho dãy số 5, 2, 8, 1. Hãy dùng ngăn xếp để đảo ngược thứ tự của dãy này.",
+  "fault": null,
+  "so_request_analyze": 1,
+  "http_status": 200,
+  "envelope_status": "ok",
+  "simulation_id": "generic.semantic_program",
+  "source": "exact_cache",
+  "route_la_semantic": true,
+  "chuoi_dau_vao_hien": false,
+  "stack_doi_giua_cac_khung": false,
+  "co_ket_luan_cuoi": false,
+  "khung": [
+    {
+      "khung": "A_init",
+      "co_svg": false,
+      "narration": null
+    },
+    {
+      "khung": "B_buoc2",
+      "co_svg": false,
+      "narration": null
+    },
+    {
+      "khung": "C_buoc3",
+      "co_svg": false,
+      "narration": null
+    },
+    {
+      "khung": "D_buoc4",
+      "co_svg": false,
+      "narration": null
+    },
+    {
+      "khung": "E_buoc5",
+      "co_svg": false,
+      "narration": null
+    }
+  ]
+}
