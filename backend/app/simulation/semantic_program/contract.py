@@ -9,9 +9,61 @@ Mục tiêu:
 from __future__ import annotations
 import json
 from typing import Annotated, Any, Literal, Optional, Union
-from pydantic import BaseModel, Field, Discriminator, Tag
+from pydantic import BaseModel, BeforeValidator, Field, Discriminator, Tag, field_validator
 
 SPEC_VERSION: Literal["1.0"] = "1.0"
+
+
+def canonical_spec_version(v: Any) -> Any:
+    """BIÊN CHUẨN HOÁ `spec_version` — JSON number `1.0` và chuỗi `"1.0"` là hai
+    cách viết CÙNG MỘT phiên bản.
+
+    Vì sao tồn tại: trên SEALED `7e5df014…` (OFFICIAL Task 12), **17/40 case**
+    chết với đúng một lỗi — LLM phát `"spec_version": 1.0` (float), contract đòi
+    `Literal["1.0"]` (str), Pydantic vứt CẢ chương trình trước khi xét bất kỳ
+    tầng ngữ nghĩa nào. Đó là fail-closed nhầm tầng: một khác biệt serialization
+    che mất năng lực ngữ nghĩa của chương trình.
+
+    Hàm này KHÔNG nới phiên bản. Nó chỉ gộp các cách viết của **1.0**; mọi số
+    khác được trả về dạng chuỗi để `Literal` từ chối, và để thông báo lỗi vẫn
+    nêu đúng giá trị LLM đã phát (người sửa prompt cần thấy con số đó).
+
+    `bool` phải chặn tường minh: trong Python `True` là subclass của `int`, nên
+    không có nhánh này thì `float(True) == 1.0` sẽ biến `true` thành phiên bản
+    hợp lệ.
+    """
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, (int, float)):
+        return SPEC_VERSION if float(v) == 1.0 else str(v)
+    return v
+
+def canonical_container_name(v: Any) -> Any:
+    """BIÊN CHUẨN HOÁ THAM CHIẾU CONTAINER — `{"kind":"var","name":X}` ⇒ `X`.
+
+    Vì sao tồn tại: probe E2E sản phẩm (2026-08-23) cho thấy đề "kiểm tra chuỗi
+    ngoặc bằng ngăn xếp" đi hết tới `stage_semantic_program`, dựng đúng nghĩa vụ
+    `membership(chuoi_ngoac, witness=is_valid)`, rồi chết với **4 lỗi cùng một
+    lớp**: LLM viết `container: {"kind":"var","name":"stack"}` còn schema đòi
+    `container: "stack"`. Hai cách viết CÙNG MỘT tham chiếu. Lớp lỗi này cũng có
+    trong SEALED `7e5df014…`, đứng ngay sau `spec_version` về số case bị giết.
+
+    RANH GIỚI — chỉ nhận `var`. Mọi biểu thức khác (`index`, `arith`, `length`,
+    `map_get`…) vẫn bị từ chối: container là một TÊN, không phải biểu thức cần
+    tính. Nới tới mức nhận biểu thức thì interpreter phải đánh giá nó để biết
+    đang thao tác trên vùng nhớ nào — một ngữ nghĩa khác hẳn, không thuộc phạm vi
+    bản vá này.
+    """
+    if isinstance(v, dict) and v.get("kind") == "var":
+        ten = v.get("name")
+        if isinstance(ten, str) and ten:
+            return ten
+    return v
+
+
+#: Tên container. Nhận cả tên trần lẫn tham chiếu biến, nội bộ luôn là chuỗi.
+ContainerName = Annotated[str, BeforeValidator(canonical_container_name)]
+
 
 # ── 1. Kiểu dữ liệu bộ nhớ (Memory Types) ──────────────────────────────────
 ScalarType = Literal["int", "str", "bool", "float"]
@@ -52,7 +104,7 @@ class VarRefExpr(BaseModel):
 
 class IndexRefExpr(BaseModel):
     kind: Literal["index"] = "index"
-    container: str = Field(..., description="Tên container (array/matrix)")
+    container: ContainerName = Field(..., description="Tên container (array/matrix)")
     index: ValueExpr = Field(..., description="Chỉ số hoặc chỉ số dòng")
     second_index: Optional[ValueExpr] = Field(None, description="Chỉ số cột nếu là ma trận 2D")
 
@@ -74,15 +126,15 @@ class UnaryArithExpr(BaseModel):
 
 class LengthExpr(BaseModel):
     kind: Literal["length"] = "length"
-    container: str = Field(..., description="Tên container cần lấy kích thước")
+    container: ContainerName = Field(..., description="Tên container cần lấy kích thước")
 
 class PeekExpr(BaseModel):
     kind: Literal["peek"] = "peek"
-    container: str = Field(..., description="Tên stack hoặc queue cần nhìn phần tử đầu")
+    container: ContainerName = Field(..., description="Tên stack hoặc queue cần nhìn phần tử đầu")
 
 class MapGetExpr(BaseModel):
     kind: Literal["map_get"] = "map_get"
-    container: str = Field(..., description="Tên map")
+    container: ContainerName = Field(..., description="Tên map")
     key: ValueExpr = Field(..., description="Khóa cần tra cứu")
     default: Optional[ValueExpr] = Field(None, description="Giá trị mặc định nếu không tìm thấy khóa")
 
@@ -135,11 +187,11 @@ class NotCond(BaseModel):
 
 class IsEmptyCond(BaseModel):
     kind: Literal["is_empty"] = "is_empty"
-    container: str = Field(..., description="Tên container kiểm tra rỗng")
+    container: ContainerName = Field(..., description="Tên container kiểm tra rỗng")
 
 class ContainsCond(BaseModel):
     kind: Literal["contains"] = "contains"
-    container: str = Field(..., description="Tên container/set/map")
+    container: ContainerName = Field(..., description="Tên container/set/map")
     item: ValueExpr = Field(..., description="Phần tử hoặc khóa cần kiểm tra tồn tại")
 
 class IsNullCond(BaseModel):
@@ -170,51 +222,51 @@ class AssignStmt(BaseModel):
 
 class WriteIndexStmt(BaseModel):
     kind: Literal["write_index"] = "write_index"
-    container: str = Field(..., description="Tên container (array/matrix)")
+    container: ContainerName = Field(..., description="Tên container (array/matrix)")
     index: ValueExpr = Field(..., description="Chỉ số hoặc chỉ số dòng")
     second_index: Optional[ValueExpr] = Field(None, description="Chỉ số cột nếu là ma trận 2D")
     val: ValueExpr = Field(..., description="Giá trị ghi vào")
 
 class MapSetStmt(BaseModel):
     kind: Literal["map_set"] = "map_set"
-    container: str = Field(..., description="Tên map")
+    container: ContainerName = Field(..., description="Tên map")
     key: ValueExpr = Field(..., description="Khóa cần gán")
     val: ValueExpr = Field(..., description="Giá trị gán")
 
 class SwapStmt(BaseModel):
     kind: Literal["swap"] = "swap"
-    container: str = Field(..., description="Tên container hoán đổi (array)")
+    container: ContainerName = Field(..., description="Tên container hoán đổi (array)")
     idx_a: ValueExpr = Field(..., description="Chỉ số A")
     idx_b: ValueExpr = Field(..., description="Chỉ số B")
 
 class PushStmt(BaseModel):
     kind: Literal["push"] = "push"
-    container: str = Field(..., description="Tên stack hoặc array")
+    container: ContainerName = Field(..., description="Tên stack hoặc array")
     val: ValueExpr = Field(..., description="Phần tử đẩy vào")
 
 class PopStmt(BaseModel):
     kind: Literal["pop"] = "pop"
-    container: str = Field(..., description="Tên stack")
+    container: ContainerName = Field(..., description="Tên stack")
     dest_var: Optional[str] = Field(None, description="Biến nhận phần tử lấy ra (nếu có)")
 
 class EnqueueStmt(BaseModel):
     kind: Literal["enqueue"] = "enqueue"
-    container: str = Field(..., description="Tên queue")
+    container: ContainerName = Field(..., description="Tên queue")
     val: ValueExpr = Field(..., description="Phần tử thêm vào hàng đợi")
 
 class DequeueStmt(BaseModel):
     kind: Literal["dequeue"] = "dequeue"
-    container: str = Field(..., description="Tên queue")
+    container: ContainerName = Field(..., description="Tên queue")
     dest_var: Optional[str] = Field(None, description="Biến nhận phần tử lấy ra")
 
 class SetInsertStmt(BaseModel):
     kind: Literal["set_insert"] = "set_insert"
-    container: str = Field(..., description="Tên set")
+    container: ContainerName = Field(..., description="Tên set")
     val: ValueExpr = Field(..., description="Phần tử thêm vào tập hợp")
 
 class SetRemoveStmt(BaseModel):
     kind: Literal["set_remove"] = "set_remove"
-    container: str = Field(..., description="Tên set")
+    container: ContainerName = Field(..., description="Tên set")
     val: ValueExpr = Field(..., description="Phần tử xóa khỏi tập hợp")
 
 class IfStmt(BaseModel):
@@ -315,7 +367,7 @@ class VisualContainerBinding(BaseModel):
 class VisualPointerBinding(BaseModel):
     pointer_id: str = Field(..., description="ID của con trỏ hiển thị")
     var_ref: str = Field(..., description="Tên biến trong Semantic Memory cần theo dõi")
-    target_container: str = Field(..., description="Container mà con trỏ neo vào")
+    target_container: ContainerName = Field(..., description="Container mà con trỏ neo vào")
     label: str = Field(..., description="Ký tự nhãn con trỏ (vd: 'i', 'left')")
 
 class VisualValueBoxBinding(BaseModel):
@@ -332,6 +384,13 @@ class VisualBindings(BaseModel):
 # ── 6. Toàn bộ đặc tả SemanticProgramSpec ──────────────────────────────────
 class SemanticProgramSpec(BaseModel):
     spec_version: Literal["1.0"] = SPEC_VERSION
+
+    # `mode="before"` = chạy TRƯỚC khi `Literal` kiểm. Nhờ vậy mọi tầng phía dưới
+    # (schema, interpreter, checker) chỉ nhìn thấy biểu diễn canonical dạng chuỗi
+    # — biên nằm đúng một chỗ, không rải `isinstance` khắp pipeline.
+    _canonical_spec_version = field_validator("spec_version", mode="before")(
+        canonical_spec_version
+    )
     title: str = Field(..., min_length=3, max_length=150, description="Tiêu đề mô phỏng thuật toán")
     description: Optional[str] = Field(None, max_length=1000, description="Mô tả ngắn gọn")
     memory_declarations: list[MemoryDeclaration] = Field(..., description="Khai báo các vùng nhớ và biến")

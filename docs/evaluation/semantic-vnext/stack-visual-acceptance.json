@@ -1,0 +1,257 @@
+{
+  "chay_luc": "2026-08-23T06:16:22.948Z",
+  "faultcheck": false,
+  "so_pass": 6,
+  "tong": 6,
+  "khung": [
+    {
+      "cursor": 0,
+      "ten": "A_init",
+      "stack": [],
+      "curr": "—",
+      "ket_qua": "—",
+      "quan_sat": {
+        "allText": [
+          "Chuỗi đầu vào",
+          "{",
+          "[0]",
+          "[",
+          "[1]",
+          "(",
+          "[2]",
+          ")",
+          "[3]",
+          "]",
+          "[4]",
+          "}",
+          "[5]",
+          "Ngăn xếp",
+          "Ký tự hiện tại",
+          "—",
+          "Kết quả",
+          "—"
+        ],
+        "stack": [],
+        "curr": "—",
+        "ket_qua": "—"
+      },
+      "chuoi_du": true,
+      "ok_stack": true,
+      "ok_curr": true,
+      "ok_ket_qua": true,
+      "pass": true
+    },
+    {
+      "cursor": 1,
+      "ten": "B_doc_ngoac_nhon",
+      "stack": [],
+      "curr": "{",
+      "ket_qua": "—",
+      "quan_sat": {
+        "allText": [
+          "Chuỗi đầu vào",
+          "{",
+          "[0]",
+          "[",
+          "[1]",
+          "(",
+          "[2]",
+          ")",
+          "[3]",
+          "]",
+          "[4]",
+          "}",
+          "[5]",
+          "Ngăn xếp",
+          "Ký tự hiện tại",
+          "{",
+          "Kết quả",
+          "—"
+        ],
+        "stack": [],
+        "curr": "{",
+        "ket_qua": "—"
+      },
+      "chuoi_du": true,
+      "ok_stack": true,
+      "ok_curr": true,
+      "ok_ket_qua": true,
+      "pass": true
+    },
+    {
+      "cursor": 2,
+      "ten": "C_sau_push_nhon",
+      "stack": [
+        "{"
+      ],
+      "curr": "{",
+      "ket_qua": "—",
+      "quan_sat": {
+        "allText": [
+          "Chuỗi đầu vào",
+          "{",
+          "[0]",
+          "[",
+          "[1]",
+          "(",
+          "[2]",
+          ")",
+          "[3]",
+          "]",
+          "[4]",
+          "}",
+          "[5]",
+          "Ngăn xếp",
+          "{",
+          "← TOP",
+          "Ký tự hiện tại",
+          "{",
+          "Kết quả",
+          "—"
+        ],
+        "stack": [
+          "{"
+        ],
+        "curr": "{",
+        "ket_qua": "—"
+      },
+      "chuoi_du": true,
+      "ok_stack": true,
+      "ok_curr": true,
+      "ok_ket_qua": true,
+      "pass": true
+    },
+    {
+      "cursor": 4,
+      "ten": "D_sau_push_vuong",
+      "stack": [
+        "{",
+        "["
+      ],
+      "curr": "[",
+      "ket_qua": "—",
+      "quan_sat": {
+        "allText": [
+          "Chuỗi đầu vào",
+          "{",
+          "[0]",
+          "[",
+          "[1]",
+          "(",
+          "[2]",
+          ")",
+          "[3]",
+          "]",
+          "[4]",
+          "}",
+          "[5]",
+          "Ngăn xếp",
+          "{",
+          "[",
+          "← TOP",
+          "Ký tự hiện tại",
+          "[",
+          "Kết quả",
+          "—"
+        ],
+        "stack": [
+          "{",
+          "["
+        ],
+        "curr": "[",
+        "ket_qua": "—"
+      },
+      "chuoi_du": true,
+      "ok_stack": true,
+      "ok_curr": true,
+      "ok_ket_qua": true,
+      "pass": true
+    },
+    {
+      "cursor": 5,
+      "ten": "E_sau_pop",
+      "stack": [
+        "{"
+      ],
+      "curr": "[",
+      "ket_qua": "—",
+      "quan_sat": {
+        "allText": [
+          "Chuỗi đầu vào",
+          "{",
+          "[0]",
+          "[",
+          "[1]",
+          "(",
+          "[2]",
+          ")",
+          "[3]",
+          "]",
+          "[4]",
+          "}",
+          "[5]",
+          "Ngăn xếp",
+          "{",
+          "← TOP",
+          "Ký tự hiện tại",
+          "[",
+          "Kết quả",
+          "—"
+        ],
+        "stack": [
+          "{"
+        ],
+        "curr": "[",
+        "ket_qua": "—"
+      },
+      "chuoi_du": true,
+      "ok_stack": true,
+      "ok_curr": true,
+      "ok_ket_qua": true,
+      "pass": true
+    },
+    {
+      "cursor": 6,
+      "ten": "F_ket_qua",
+      "stack": [
+        "{"
+      ],
+      "curr": "[",
+      "ket_qua": "Hợp lệ",
+      "quan_sat": {
+        "allText": [
+          "Chuỗi đầu vào",
+          "{",
+          "[0]",
+          "[",
+          "[1]",
+          "(",
+          "[2]",
+          ")",
+          "[3]",
+          "]",
+          "[4]",
+          "}",
+          "[5]",
+          "Ngăn xếp",
+          "{",
+          "← TOP",
+          "Ký tự hiện tại",
+          "[",
+          "Kết quả",
+          "Hợp lệ"
+        ],
+        "stack": [
+          "{"
+        ],
+        "curr": "[",
+        "ket_qua": "Hợp lệ"
+      },
+      "chuoi_du": true,
+      "ok_stack": true,
+      "ok_curr": true,
+      "ok_ket_qua": true,
+      "pass": true
+    }
+  ]
+}

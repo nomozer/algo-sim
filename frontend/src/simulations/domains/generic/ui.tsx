@@ -18,6 +18,7 @@ import {
   inspectorGroups,
   isObjectRenderable,
   objectRole,
+  PENDING_DISPLAY,
   positionOf,
   structuralRoots,
   valuesOf,
@@ -106,8 +107,13 @@ export function GenericWorkspace({
   busy,
   dispatch,
 }: Props) {
-  const values = valuesOf(spec, state.base);
   const frame = currentFrame(state);
+  /* Nền lấy từ KHUNG ĐANG XEM, không phải từ spec tĩnh — nếu không thì mọi
+     khung hiện cùng một giá trị và lời kể chạy trong khi hình đứng yên (sự cố
+     đã chụp màn hình). Khung không mang giá trị (cảnh tĩnh, reveal_sequence)
+     thì lùi về `state.base` đúng như cũ. Rules vẫn chạy CHỒNG lên trên, nên
+     giá trị dẫn xuất theo kịp từng bước. */
+  const values = valuesOf(spec, frame.values ?? state.base);
   const toggleable = new Set(Object.keys(state.base));
 
   // M7.13A: vị trí ĐỌC TỪ STATE (engine sở hữu) — edge/moving_entity tra cùng
@@ -462,7 +468,17 @@ export function GenericWorkspace({
 
   function renderObject(o: SpecObject, role: ObjectRole) {
     const p = pos[o.id] ?? { x: 50, y: 50 };
-    const v = values[o.id] !== undefined ? values[o.id] : (o.value ?? 0);
+    /* HAI BIẾN, CỐ Ý KHÔNG GỘP.
+     *
+     * `vRaw` giữ được sự khác nhau giữa "chưa có binding" (`undefined`) và "giá
+     * trị bằng 0". `v` là bản đã ép số cho các nhánh TÍNH TOÁN (gauge, bar,
+     * slider) — chúng cần một số để vẽ hình học, `undefined` vào đó là NaN.
+     *
+     * Gộp hai cái làm một chính là lỗi cũ (`o.value ?? 0`): nhánh hiển thị nhận
+     * luôn số 0 do nhánh tính toán cần, rồi in nó ra như dữ liệu thật. Xem
+     * `model.ts::PENDING_DISPLAY`. */
+    const vRaw = values[o.id] !== undefined ? values[o.id] : o.value;
+    const v = vRaw ?? 0;
     const current = role === "current";
     const popCls = current ? "gen-pop" : undefined;
     // M13 Task 11: nhãn CHÍNH không bao giờ là id kỹ thuật thô (xem displayLabel).
@@ -564,7 +580,10 @@ export function GenericWorkspace({
         );
       }
       case "value_box": {
-        const strV = String(v ?? "");
+        /* `vRaw`, KHÔNG phải `v`: ô giá trị là bề mặt HIỂN THỊ, nên nó phải phân
+           biệt "chưa có binding" với "bằng 0". `""` vẫn là dữ liệu (thuật toán
+           đã kết luận rỗng), chỉ `undefined` mới là chưa có. */
+        const strV = vRaw === undefined ? PENDING_DISPLAY : String(vRaw);
         const fontSize = strV.length > 8 ? 12 : strV.length > 4 ? 15 : 20;
         return (
           <g key={o.id} className={popCls}>
@@ -719,13 +738,17 @@ export function GenericWorkspace({
         );
       }
       case "array_strip": {
-        const items = Array.isArray(o.items)
-          ? o.items
-          : typeof o.text === "string"
-            ? Array.from(o.text)
-            : v !== undefined && v !== 0
-              ? [v]
-              : [" "];
+        /* Cùng luật với `stack_view`: giá trị của KHUNG thắng nội dung khởi tạo
+           trong spec, để dãy đổi được theo bước (ghi ô, hoán vị). */
+        const items = Array.isArray(vRaw)
+          ? vRaw
+          : Array.isArray(o.items)
+            ? o.items
+            : typeof o.text === "string"
+              ? Array.from(o.text)
+              : v !== undefined && v !== 0
+                ? [v]
+                : [" "];
         const count = Math.max(1, items.length);
         const cellW = Math.min(
           38,
@@ -1022,11 +1045,16 @@ export function GenericWorkspace({
         );
       }
       case "stack_view": {
-        const items = Array.isArray(o.items)
-          ? o.items
-          : v !== undefined && v !== 0
-            ? [v]
-            : [];
+        /* `vRaw` TRƯỚC `o.items`: engine đã gấp push/pop vào giá trị của khung,
+           còn `o.items` chỉ là nội dung KHỞI TẠO trong spec. Đọc spec trước là
+           lý do ngăn xếp đứng yên suốt timeline. */
+        const items = Array.isArray(vRaw)
+          ? vRaw
+          : Array.isArray(o.items)
+            ? o.items
+            : v !== undefined && v !== 0
+              ? [v]
+              : [];
         const itemH = 22;
         const boxW = 80;
         const capacity = o.capacity ?? Math.max(4, items.length);
@@ -2172,7 +2200,9 @@ export function GenericInspector({ config: spec, state, dispatch }: Props) {
               <FragmentRow
                 key={o.id}
                 label={displayLabel(spec, o.id)}
-                value={values[o.id] ?? 0}
+                /* Cùng luật với ô giá trị trên sân khấu: chưa có binding thì
+                   nói "chưa có", đừng bịa số 0. */
+                value={values[o.id] ?? o.value ?? PENDING_DISPLAY}
               />
             ))}
           </div>

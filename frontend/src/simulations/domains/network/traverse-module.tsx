@@ -435,7 +435,7 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
   const edgeStatuses = usedStatuses(edgeViews).filter((s) => s !== "idle");
 
   return (
-    <div className="traverse-layout-split" style={{ display: "grid", gridTemplateColumns: "minmax(380px, 1.4fr) minmax(280px, 1fr)", gap: "var(--sp-xl)", alignItems: "start" }}>
+    <div className="traverse-layout-split">
       {/* CỘT TRÁI: ĐỒ THỊ VÀ CHÚ GIẢI */}
       <div className="sim-stage" ref={boxRef} style={{ display: "flex", flexDirection: "column", gap: "var(--sp-sm)", minWidth: 0 }}>
         <svg viewBox={`0 0 ${gl.width} ${gl.height}`}

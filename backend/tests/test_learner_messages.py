@@ -103,7 +103,7 @@ def _analyze(text: str):
 
 
 def test_api_unsupported_mang_learner_reason(monkeypatch, co_key):
-    async def fake_pipeline(text, api_key, pattern_store=None, observer=None):
+    async def fake_pipeline(text, api_key, pattern_store=None, observer=None, **kw):
         return {
             "status": "unsupported",
             "reason": "Bài cần cơ chế chưa có engine tất định sở hữu (arbitrary_algorithm).",
@@ -121,7 +121,7 @@ def test_api_unsupported_mang_learner_reason(monkeypatch, co_key):
 
 
 def test_api_422_than_thien_va_chi_tiet_tach_rieng(monkeypatch, co_key):
-    async def fail_pipeline(text, api_key, pattern_store=None, observer=None):
+    async def fail_pipeline(text, api_key, pattern_store=None, observer=None, **kw):
         raise RuntimeError(
             'Không sinh được cấu hình hợp lệ sau 3 lần thử (lỗi cuối: objects[2].value '
             'thiếu trường "type" theo schema dsl_v1).'

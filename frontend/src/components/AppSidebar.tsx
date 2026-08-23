@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useAppStore, type AppView } from "../state/store";
 import { useAuthStore } from "../state/auth";
 import {
@@ -65,6 +66,15 @@ export function AppSidebar() {
   const drawerOpen = useAppStore((s) => s.sidebarDrawerOpen);
   const closeDrawer = useAppStore((s) => s.closeSidebarDrawer);
 
+  useEffect(() => {
+    if (!drawerOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeDrawer();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [drawerOpen, closeDrawer]);
+
   if (!user) return null;
   const items = itemsForRole(user.role);
 
@@ -86,14 +96,20 @@ export function AppSidebar() {
             quen thuộc của các ứng dụng có cột điều hướng).
             Thu gọn thì chỉ còn nút: tên không đủ chỗ, và giữ nó lại sẽ bị cắt. */}
         <div className="app-nav-head">
-          {!collapsed && (
+          {(!collapsed || drawerOpen) && (
             <button type="button" className="app-nav-brand"
               onClick={() => { setView("home"); closeDrawer(); }}
               title="Về trang chủ">
               AlgoSim
             </button>
           )}
-          <button type="button" className="app-nav-toggle" onClick={toggle}
+          <button type="button" className="app-nav-toggle" onClick={() => {
+            if (drawerOpen) {
+              closeDrawer();
+            } else {
+              toggle();
+            }
+          }}
             aria-expanded={!collapsed}
             aria-label={collapsed ? "Mở rộng thanh điều hướng" : "Thu gọn thanh điều hướng"}
             title={collapsed ? "Mở rộng" : "Thu gọn"}>

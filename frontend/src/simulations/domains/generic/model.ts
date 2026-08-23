@@ -8,6 +8,19 @@
 export const DSL_VERSION = "1.0";
 export const SUPPORTED_DSL_VERSIONS = new Set(["1.0"]);
 
+/**
+ * Dấu hiển thị cho RÀNG BUỘC CHƯA GIẢI ĐƯỢC — khác hẳn một giá trị bằng 0.
+ *
+ * Trước 2026-08-23 `ui.tsx::renderObject` viết `o.value ?? 0`, nên một ô giá trị
+ * chưa có binding hiện ra số `0` y như dữ liệu thật. Màn hình bài "Kiểm tra đóng
+ * mở ngoặc" vì thế báo `Ký tự hiện tại: 0` và `Kết quả: 0` — hai con số renderer
+ * TỰ BỊA, thủng ranh giới R0 (engine sở hữu state, renderer chỉ ĐỌC).
+ *
+ * Luật thay thế, hai vế không tách rời: thiếu binding ⇒ dấu này; giá trị THẬT
+ * bằng 0 ⇒ vẫn in `0`. Khoá bởi `__tests__/pending-binding-fidelity.test.tsx`.
+ */
+export const PENDING_DISPLAY = "—";
+
 export const OBJECT_TYPES = [
   "switch",
   "lamp",
@@ -225,6 +238,19 @@ export interface Frame {
   entityPos: Record<string, string>; // entityId → nodeId
   narration: string;
   stepAction?: StepAction;
+  /**
+   * TRẠNG THÁI NGỮ NGHĨA TẠI KHUNG NÀY — engine sở hữu, renderer chỉ ĐỌC.
+   *
+   * Trước 2026-08-23 Frame không có kênh này: `step_sequence` chỉ đẩy ra lời kể
+   * + highlight, còn `valuesOf(spec, state.base)` là hằng số suốt timeline. Hệ
+   * quả đã chụp được màn hình: narration nói "đẩy '[' vào ngăn xếp" trong khi
+   * hình ngăn xếp vẫn rỗng ở mọi bước. Validator thì LẠI nhận và giữ
+   * `value`/`to_index`/`indices` của từng bước — hợp đồng hứa, engine vứt.
+   *
+   * `undefined` ⇒ khung không đổi giá trị (cảnh tĩnh, `reveal_sequence`,
+   * `move_along_path`); chỗ đọc lùi về `state.base` như cũ.
+   */
+  values?: Record<string, any>;
 }
 
 /**
@@ -757,6 +783,54 @@ function managedByReveal(spec: SimulationSpec): Set<string> {
  * - Có step_sequence → các bước diễn tiến thuật toán (highlight, swap, move_pointer).
  * visibleIds luôn sắp theo thứ tự khai báo object → serializable, tất định.
  */
+/**
+ * Gấp MỘT step action lên bản đồ giá trị đang chạy — TẠI CHỖ, tất định.
+ *
+ * Allowlist đóng, KHÔNG `eval`, KHÔNG suy diễn từ tên thuật toán. Hành động lạ
+ * ⇒ không đổi gì (tương thích ngược: `highlight`, `swap`, và mọi chuỗi tuỳ ý mà
+ * validator vốn cho qua đều rơi vào đây).
+ *
+ * Vì sao ở ĐÂY chứ không ở renderer: renderer tự thực thi push/pop là dựng
+ * engine thứ hai ở tầng trình bày — đúng thứ ranh giới R0 cấm. Engine sở hữu
+ * diễn tiến; renderer chỉ đọc `frame.values`.
+ */
+export function applyStepAction(
+  values: Record<string, any>,
+  step: StepAction,
+): void {
+  const targets = Array.isArray(step.targets) ? step.targets : [];
+  const asList = (id: string): any[] =>
+    Array.isArray(values[id]) ? [...values[id]] : [];
+
+  switch (step.action) {
+    case "set_value":
+      if (step.value === undefined) return;
+      for (const id of targets) values[id] = step.value;
+      return;
+
+    case "push":
+      if (step.value === undefined) return;
+      for (const id of targets) values[id] = [...asList(id), step.value];
+      return;
+
+    case "pop":
+      for (const id of targets) values[id] = asList(id).slice(0, -1);
+      return;
+
+    case "move_pointer": {
+      /* Con trỏ mang CHỈ SỐ. Không có `to_index` thì không đoán — đứng yên còn
+         hơn trỏ nhầm ô. */
+      if (typeof step.to_index !== "number") return;
+      const id = step.pointer_id ?? targets[0];
+      if (id) values[id] = step.to_index;
+      return;
+    }
+
+    default:
+      return;
+  }
+}
+
 export function buildTimeline(spec: SimulationSpec): Frame[] {
   const allIds = spec.objects.map((o) => o.id);
   const orderVisible = (set: Set<string>): string[] =>
@@ -774,6 +848,15 @@ export function buildTimeline(spec: SimulationSpec): Frame[] {
   );
   const entityPos: Record<string, string> = {};
   const frames: Frame[] = [];
+  /* Trạng thái chạy dần cho `step_sequence`. Nền là giá trị gốc CỘNG nội dung
+     collection khai trong spec (`items`) — nếu không, push đầu tiên sẽ ghi đè
+     một ngăn xếp đã có sẵn phần tử thành mảng một phần tử. */
+  const stepValues: Record<string, any> = initialBase(spec);
+  for (const o of spec.objects) {
+    if (Array.isArray(o.items) && stepValues[o.id] === undefined) {
+      stepValues[o.id] = [...o.items];
+    }
+  }
 
   for (const proc of spec.processes) {
     if (proc.type === "reveal_sequence") {
@@ -789,11 +872,13 @@ export function buildTimeline(spec: SimulationSpec): Frame[] {
       }
     } else if (proc.type === "step_sequence") {
       for (const step of proc.steps) {
+        applyStepAction(stepValues, step);
         frames.push({
           visibleIds: [...allIds],
           entityPos: { ...entityPos },
           narration: step.narration ?? spec.title,
           stepAction: { ...step },
+          values: { ...stepValues },
         });
       }
     } else {

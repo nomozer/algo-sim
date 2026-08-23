@@ -32,6 +32,12 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql+psycopg2://algosim:algosim@db:5432/algosim
+      # Route sinh ngữ nghĩa: off (mặc định) | shadow | serve.
+      # `off` giữ production đúng hành vi cũ; bật là quyết định vận hành TƯỜNG
+      # MINH, không phải tác dụng phụ của việc nâng cấp. Xem
+      # `app/main.py::semantic_route_mode`.
+      #   SEMANTIC_ROUTE_MODE=serve docker compose up -d backend
+      SEMANTIC_ROUTE_MODE: ${SEMANTIC_ROUTE_MODE:-off}
     volumes:
       - ./backend/app:/app/app
     env_file:

@@ -77,31 +77,43 @@ export function computeSemanticLayout(spec: SimulationSpec): Record<string, { x:
     }
   }
 
+  // 1b. Phát hiện nội dung văn bản cấu trúc (paragraph, text, label) ở đầu cảnh
+  const hasStructuralText = spec.objects.some(
+    (o) =>
+      (o.type === "paragraph" || o.type === "text" || o.type === "label") &&
+      typeof (o as any).text === "string" &&
+      (o as any).text.trim().length > 0,
+  );
+
   // 2. Tính tọa độ cho Input Zone (Top / Center)
   if (inputObjs.length > 0) {
     const hasStructures = structObjs.length > 0;
+    const baseInputY = hasStructuralText ? (hasStructures ? 26 : 28) : (hasStructures ? 20 : 22);
     inputObjs.forEach((o, idx) => {
       if (pos[o.id]) return;
       if (hasStructures) {
         // Đẩy sang trái một chút để nhường không gian bên phải cho stack/queue
-        pos[o.id] = { x: 34, y: 18 + idx * 28 };
+        pos[o.id] = { x: 34, y: baseInputY + idx * 26 };
       } else {
         // Căn giữa toàn cảnh
-        pos[o.id] = { x: 50, y: 22 + idx * 30 };
+        pos[o.id] = { x: 50, y: baseInputY + idx * 28 };
       }
     });
   }
 
   // 3. Tính tọa độ cho Structure Zone (Right Side)
   if (structObjs.length > 0) {
+    const baseStructY = hasStructuralText ? 38 : 35;
     structObjs.forEach((o, idx) => {
       if (pos[o.id]) return;
-      pos[o.id] = { x: 78 + idx * 22, y: 35 };
+      pos[o.id] = { x: 78 + idx * 22, y: baseStructY };
     });
   }
 
   // 4. Tính tọa độ cho State Zone (Middle-Left)
-  const stateStartY = inputObjs.length > 0 ? (structObjs.length > 0 ? 50 : 60) : 25;
+  const stateStartY = inputObjs.length > 0
+    ? (structObjs.length > 0 ? (hasStructuralText ? 54 : 50) : (hasStructuralText ? 62 : 60))
+    : (hasStructuralText ? 36 : 25);
   if (stateObjs.length > 0) {
     stateObjs.forEach((o, idx) => {
       if (pos[o.id]) return;

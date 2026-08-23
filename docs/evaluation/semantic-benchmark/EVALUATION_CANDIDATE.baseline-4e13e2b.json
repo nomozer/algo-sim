@@ -1,0 +1,85 @@
+{
+  "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
+  "dong_bang_luc": "2026-08-21T22:45:27+00:00",
+  "commit": "4e13e2b9b86859dcc84cf145896643f4d034a83c",
+  "commit_ngan": "4e13e2b",
+  "cay_lam_viec_sach": true,
+  "cache_version": "34",
+  "spec_version_ir": "1.0",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/generic/semantic_program.schema.json"
+    ],
+    "so_file": 126,
+    "tree_hash": "024f627bc8cc6af21aedd623dca94cccb7608c9c600447ceda64ee25dee12aa9",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "taxonomy": {
+    "so_nghia_vu": 9,
+    "kinds": [
+      "aggregate_matching",
+      "derived_sequence",
+      "extremum",
+      "first_match_index",
+      "membership",
+      "ordering",
+      "reachability",
+      "structural_traversal",
+      "total_mapping"
+    ],
+    "aggregate_ops": [
+      "count",
+      "max",
+      "min",
+      "product",
+      "sum"
+    ],
+    "sequence_transforms": [
+      "distinct",
+      "filter",
+      "identity",
+      "map",
+      "reverse"
+    ],
+    "co_checker_server_owned": [
+      "aggregate_matching",
+      "derived_sequence",
+      "extremum",
+      "first_match_index",
+      "membership",
+      "ordering",
+      "reachability",
+      "total_mapping"
+    ],
+    "hash": "4dd712a376aea4bbf5d3d5fa16101b247518ef2b1b8ba5beca7670f910612d67"
+  },
+  "visual_primitive_set": {
+    "so_primitive": 8,
+    "primitives": [
+      "array_strip",
+      "bar_chart",
+      "bit_register",
+      "graph_view",
+      "queue_view",
+      "stack_view",
+      "table_grid",
+      "tree_element"
+    ],
+    "hash": "1a127502ac1d931a57814b826bc8aee02b75268bba1265416e1546cd77009ff8"
+  },
+  "schema_semantic_program": {
+    "duong_dan": "docs/schemas/semantic_program.schema.json",
+    "hash": "b87aeb188ebc5739531848613dc881e774e2371d4c1e6a77e701cd50a166b687"
+  },
+  "dev": {
+    "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
+    "so_case": 20,
+    "fingerprint": "8a3de7a3f95309429ebc35cfbcdf3cd03237502efa4ef8b255864f069d48e885"
+  },
+  "sealed": {
+    "trang_thai": "DA_NIEM_PHONG",
+    "ghi_chu": "SEALED do nguồn ngoài cung cấp; agent viết hệ KHÔNG soạn nó. Niêm phong bằng scripts/seal_benchmark.py."
+  }
+}

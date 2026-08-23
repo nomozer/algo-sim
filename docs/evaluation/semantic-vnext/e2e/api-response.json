@@ -1,0 +1,100 @@
+{
+  "status": 200,
+  "body": {
+    "status": "unsupported",
+    "reason": "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để AI tự giải rồi dựng cảnh minh hoạ đáp án.",
+    "failure_category": "capability_gap",
+    "representation_plan": {
+      "semantic_roles": [
+        "structural",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "container",
+        "group",
+        "move_along_path",
+        "reveal_sequence",
+        "step_sequence"
+      ],
+      "scene_mode": "hybrid",
+      "mapping_intent": {
+        "structural": [
+          "container",
+          "group"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "chuỗi đóng mở ngoặc",
+        "ngăn xếp Stack"
+      ],
+      "data": [
+        {
+          "description": "chuỗi đóng mở ngoặc",
+          "labels": null,
+          "values": null
+        }
+      ],
+      "relations": [
+        "quan hệ đóng mở tương ứng giữa các loại ngoặc"
+      ],
+      "processes": [
+        "duyệt qua từng ký tự của chuỗi",
+        "đẩy ký tự ngoặc mở vào ngăn xếp",
+        "khi gặp ngoặc đóng, lấy phần tử trên cùng của ngăn xếp ra",
+        "so sánh ngoặc đóng với ngoặc mở vừa lấy ra"
+      ],
+      "constraints": [
+        "ngoặc đóng phải khớp với ngoặc mở tương ứng trên đỉnh ngăn xếp",
+        "ngăn xếp phải rỗng sau khi duyệt hết chuỗi nếu chuỗi hợp lệ"
+      ],
+      "goal": "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc.",
+      "input_description": "Một chuỗi các ký tự đóng mở ngoặc.",
+      "output_description": "Kết quả là chuỗi hợp lệ hay không hợp lệ (True/False).",
+      "result_ownership": "algorithmic",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "chuỗi đóng mở ngoặc là đầu vào",
+        "ngăn xếp Stack là cấu trúc dữ liệu phụ trợ"
+      ],
+      "interaction_needs": [],
+      "notes": "Đề bài cung cấp ví dụ cụ thể là chuỗi '{[()]}'.",
+      "prescribed_procedure": null,
+      "process_roles": [
+        "duyệt là quá trình chính",
+        "đẩy/lấy/so sánh là các thao tác trên ngăn xếp"
+      ],
+      "relation_roles": [
+        "quan hệ khớp là ràng buộc logic"
+      ],
+      "requested_mechanisms": [
+        "bounded_control_flow.conditional_branch"
+      ],
+      "requested_operations": [
+        "single_pass_scan:scan",
+        "bounded_control_flow:conditional"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "structural",
+        "temporal"
+      ],
+      "scene_construction": "prebuilt",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "structural"
+      ]
+    },
+    "learner_reason": "Bài này cần một cơ chế mà AlgoSim chưa mô phỏng chính xác được, nên hệ thống từ chối trung thực thay vì dựng một mô phỏng gần đúng. Bạn có thể thử một bài thuộc các chủ đề đang hỗ trợ: tìm kiếm, sắp xếp, quét dãy, số nhị phân, cổng logic, định tuyến gói tin, đóng gói dữ liệu qua các tầng mạng."
+  }
+}

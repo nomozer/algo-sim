@@ -411,7 +411,7 @@ export function TreeWorkspace({ state, config, busy, dispatch }: Props) {
   }
 
   return (
-    <div className="tree-layout-split" style={{ display: "grid", gridTemplateColumns: "minmax(380px, 1.4fr) minmax(280px, 1fr)", gap: "var(--sp-xl)", alignItems: "start" }}>
+    <div className="tree-layout-split">
       {/* CỘT TRÁI: CÂY NHỊ PHÂN VÀ CHÚ GIẢI */}
       <div className="sim-stage" style={{ display: "flex", flexDirection: "column", gap: "var(--sp-sm)", minWidth: 0 }}>
         <svg viewBox={`0 0 ${RW} ${RH}`} style={{ width: "100%", maxWidth: RW, minHeight: 220, margin: "0 auto" }} role="img"

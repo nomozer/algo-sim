@@ -1,10 +1,23 @@
 {
   "provenanceVersion": 2,
   "sourceFingerprint": "f06970e656cdf802",
-  "dirtyRelevantSources": [],
-  "head": "9d8e1a12af4f7c6bd328865831a2c822d41ebfc7",
-  "dirty": false,
-  "generatedAt": "2026-08-23T05:17:14.713Z",
+  "dirtyRelevantSources": [
+    "backend/app/main.py",
+    "backend/app/simulation/semantic_program/contract.py",
+    "backend/app/simulation/semantic_program/postconditions.py",
+    "backend/tests/test_api.py",
+    "backend/tests/test_learner_messages.py",
+    "frontend/src/components/AppSidebar.tsx",
+    "frontend/src/simulations/domains/generic/layout-compiler.ts",
+    "frontend/src/simulations/domains/generic/model.ts",
+    "frontend/src/simulations/domains/generic/ui.tsx",
+    "frontend/src/simulations/domains/network/traverse-module.tsx",
+    "frontend/src/simulations/domains/tree/tree-module.tsx",
+    "frontend/src/styles/global.css"
+  ],
+  "head": "22bd4e450e6504fc4e63eb8927d71837e8ff8009",
+  "dirty": true,
+  "generatedAt": "2026-08-23T10:20:26.652Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

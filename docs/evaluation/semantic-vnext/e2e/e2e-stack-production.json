@@ -1,0 +1,21 @@
+{
+  "chay_luc": "2026-08-23T07:43:31.356Z",
+  "de_bai": "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng ngăn xếp Stack với chuỗi {[()]}.",
+  "fault": null,
+  "so_request_analyze": 1,
+  "http_status": 200,
+  "envelope_status": "unsupported",
+  "simulation_id": null,
+  "source": null,
+  "route_la_semantic": false,
+  "chuoi_dau_vao_hien": false,
+  "stack_doi_giua_cac_khung": false,
+  "co_ket_luan_cuoi": false,
+  "khung": [
+    {
+      "khung": "A_init",
+      "co_svg": false,
+      "narration": null
+    }
+  ]
+}

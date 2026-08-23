@@ -121,6 +121,26 @@ def _co_ast_chua_tinh(value: Any) -> bool:
     return False
 
 
+def _nghia_vu_vo_hieu(ob: Obligation) -> str:
+    """Container của nghĩa vụ RỖNG ⇒ nghĩa vụ không nói được gì về lượt chạy.
+
+    Vì sao phải có thông điệp riêng: với `sum`/`count`/`product`, tập rỗng vẫn
+    cho ra một giá trị "đúng" (0, 0, 1). Checker khi ấy so witness với con số
+    ấy và báo *"witness 's' = 15, đúng phải là 0"* — đọc y như "đáp án của bạn
+    sai". Trên SEALED `7e5df014…` case `T11CS-C6-041` bị đúng câu đó trong khi
+    oracle độc lập xác nhận 15 ĐÚNG.
+
+    Đây KHÔNG phải lối thoát cho C₂: hàm chỉ đổi CÁCH NÓI, vi phạm vẫn là vi
+    phạm và `servable` vẫn False. Container có dữ liệu thì không đi qua đây.
+    """
+    return (
+        f"{ob.describe()}: nghĩa vụ VÔ HIỆU — container '{ob.container}' rỗng, "
+        f"chương trình chưa từng ghi dữ liệu vào nó. Không kết luận được gì về "
+        f"witness '{ob.witness}'; nghĩa vụ này khai sai chỗ chứ không phải kết "
+        f"quả sai."
+    )
+
+
 def _extremum(snap: dict, ob: Obligation) -> str | None:
     seq = _phang(snap.get(ob.container))
     if not seq:
@@ -135,6 +155,10 @@ def _extremum(snap: dict, ob: Obligation) -> str | None:
 
 def _aggregate_matching(snap: dict, ob: Obligation) -> str | None:
     seq = _phang(snap.get(ob.container))
+    # Chặn TRƯỚC khi gộp: `sum([])`/`len([])`/tích rỗng đều ra một con số trông
+    # như đáp án đúng, và đó là nguồn của thông điệp gây hiểu nhầm.
+    if not seq:
+        return _nghia_vu_vo_hieu(ob)
     khop = [x for x in seq if _pred_of(ob)(x)]
     op = str(ob.params.get("op") or "count")
     if op == "count":
@@ -178,6 +202,10 @@ def _membership(snap: dict, ob: Obligation) -> str | None:
     box = snap.get(ob.container)
     if box is None:
         return f"membership({ob.container}): container không tồn tại"
+    # Cùng lý do với `_aggregate_matching`: "x phải có mặt" trong một container
+    # RỖNG không phải phát hiện về thuật toán, nó là nghĩa vụ chưa có dữ liệu.
+    if isinstance(box, (list, tuple, set, dict, str)) and len(box) == 0:
+        return _nghia_vu_vo_hieu(ob)
     item = ob.params.get("item")
     mong = bool(ob.params.get("expected", True))
     try:

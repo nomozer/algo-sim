@@ -137,7 +137,34 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       `algorithmic` từng bị `computation_gate` từ chối nay có thể đi tiếp qua
 #       `execution_authority_gate`. Analysis cache cũ sinh dưới luật đó không còn
 #       đáng tin.
-CACHE_VERSION = "34"
+#   35 (2026-08-23, vNext): route ngữ nghĩa NỐI THẬT vào đường sản phẩm. Trước
+#       đó `main.py` gọi `run_pipeline` mà quên `semantic_route`, nên nó rơi về
+#       `"off"` và `stage_semantic_program` chưa từng chạy cho người dùng thật.
+#       Envelope cache cũ là kết quả của đường KHÔNG có route sinh.
+CACHE_VERSION = "35"
+
+#: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
+#: không suy từ nội dung đề, không hard-code riêng bài nào.
+SEMANTIC_ROUTE_MODES = ("off", "shadow", "serve")
+
+
+def semantic_route_mode() -> str:
+    """Chế độ route sinh ngữ nghĩa cho lượt phân tích này.
+
+    VÌ SAO HÀM NÀY TỒN TẠI: trước vNext, `main.py` gọi `run_pipeline(text,
+    api_key, pattern_store=...)` mà KHÔNG truyền `semantic_route`. Tham số ấy
+    mặc định `"off"` ở `ai/pipeline.py`, nên `stage_semantic_program` **chưa bao
+    giờ chạy trong sản phẩm** — mọi bài đều rơi về classifier legacy. Bài thuật
+    toán không khớp module nào thì xuống `generic.rule_scene`, miền khai báo
+    tĩnh: narration kể "đẩy '(' vào ngăn xếp" trong khi hình ngăn xếp rỗng.
+    Cùng họ với bất biến #22 (mảnh nào cũng xanh mà chưa mảnh nào được ghép).
+
+    Mặc định giữ `"off"`: bật là một quyết định vận hành tường minh, không phải
+    tác dụng phụ của việc nâng cấp. Giá trị lạ ⇒ ép về `"off"` chứ không tạo ra
+    một chế độ thứ tư im lặng.
+    """
+    v = os.getenv("SEMANTIC_ROUTE_MODE", "off")
+    return v if v in SEMANTIC_ROUTE_MODES else "off"
 
 
 class InputPayload(BaseModel):
@@ -300,7 +327,15 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
     # TẦNG 2 (pattern reuse) bật qua store inject — pipeline tự giới hạn nó
     # sau classify và chỉ cho generic.rule_scene.
     try:
-        envelope = await run_pipeline(text, api_key, pattern_store=DbPatternStore(CACHE_VERSION))
+        envelope = await run_pipeline(
+            text,
+            api_key,
+            pattern_store=DbPatternStore(CACHE_VERSION),
+            # Thiếu đúng tham số này là lý do route sinh ngữ nghĩa chưa bao giờ
+            # chạy trong sản phẩm — xem `semantic_route_mode()`. Khoá bởi
+            # `tests/test_semantic_route_wired_to_production.py`.
+            semantic_route=semantic_route_mode(),
+        )
     except Exception as err:  # pipeline thất bại sau retry → báo người dùng
         # M17 W0 — học sinh thấy thông điệp thân thiện; chi tiết kỹ thuật đi
         # field riêng (FE không render, dev đọc qua devtools/log).

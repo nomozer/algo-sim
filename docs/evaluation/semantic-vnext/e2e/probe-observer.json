@@ -1,0 +1,90 @@
+{
+  "de": "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng ngăn xếp Stack với chuỗi {[()]}.",
+  "su_kien": [
+    {
+      "event": "analyze_done",
+      "data": {
+        "result_ownership": "algorithmic",
+        "prescribed_procedure": null,
+        "canonical_prescribed": null
+      }
+    },
+    {
+      "event": "plan_built",
+      "data": {
+        "unsupported_capabilities": []
+      }
+    },
+    {
+      "event": "gate_checked",
+      "data": {
+        "gate": "execution_authority",
+        "fired": false,
+        "reason_code": null
+      }
+    },
+    {
+      "event": "semantic_contract",
+      "data": {
+        "so_fact": 1,
+        "so_nghia_vu": 1,
+        "kinds": [
+          "membership"
+        ],
+        "obligations": [
+          {
+            "kind": "membership",
+            "container": "chuoi_ngoac",
+            "witness": "is_valid"
+          }
+        ]
+      }
+    },
+    {
+      "event": "semantic_route",
+      "data": {
+        "stage_reached": "semantic_program",
+        "executable": false,
+        "servable": false,
+        "error_code": "semantic_program_invalid",
+        "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 4 validation errors for SemanticProgramSpec\nstatements.1.for_each.body.0.if.condition.contains.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 'opening_brackets'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.1.for_each.body.0.if.else_body.0.if.condition.is_empty.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 'stack'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.1.for_each.body.0.if.else_body.0.if.else_body.1.if.condition.compare.right.map_get.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 'matching_brackets'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.2.if.condition.not.expr.is_empty.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 'stack'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type"
+      }
+    },
+    {
+      "event": "classify_done",
+      "data": {
+        "status": "ok",
+        "simulation_id": "generic.rule_scene"
+      }
+    },
+    {
+      "event": "gate_checked",
+      "data": {
+        "gate": "scope",
+        "fired": false,
+        "reason_code": null
+      }
+    },
+    {
+      "event": "gate_checked",
+      "data": {
+        "gate": "computation",
+        "fired": true,
+        "reason_code": "gate_result_ownership"
+      }
+    },
+    {
+      "event": "envelope",
+      "data": {
+        "status": "unsupported",
+        "simulation_id": null,
+        "failure_category": "capability_gap"
+      }
+    }
+  ],
+  "envelope_status": "unsupported",
+  "simulation_id": null,
+  "source": null,
+  "reason": "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để AI tự giải rồi dựng cảnh minh hoạ đáp án.",
+  "error_code": null
+}

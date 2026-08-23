@@ -95,7 +95,7 @@ def test_moi_loai_input_di_qua_cung_pipeline(monkeypatch):
     monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
     seen: list[str] = []
 
-    async def fake_pipeline(text, api_key, pattern_store=None):
+    async def fake_pipeline(text, api_key, pattern_store=None, **kw):
         seen.append(text)
         return {
             "status": "ok",
@@ -287,7 +287,15 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `stage_semantic_analyze`. Chính sách định tuyến đổi thật: đề `algorithmic`
     # trước bị `computation_gate` từ chối, nay qua được `execution_authority_gate`
     # — envelope/analysis cache dưới luật cũ mang đúng lớp bài bị từ chối oan.
-    assert main_module.CACHE_VERSION == "34"
+    # 35 (2026-08-23, vNext): route ngữ nghĩa nay THỰC SỰ được nối vào đường sản
+    # phẩm — `main.py` trước đó gọi `run_pipeline` mà KHÔNG truyền
+    # `semantic_route`, nên tham số rơi về mặc định `"off"` và
+    # `stage_semantic_program` chưa từng chạy cho một người dùng thật. Chính sách
+    # định tuyến đổi ở đúng nghĩa đen của nó. Envelope cache sinh dưới luật cũ là
+    # kết quả của đường KHÔNG có route sinh — trả lại mù thì bản sửa này vô hiệu
+    # với chính những đề nó nhắm tới (bài thuật toán rơi xuống
+    # `generic.rule_scene` rồi hiện narration chạy trên hình đứng yên).
+    assert main_module.CACHE_VERSION == "35"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
@@ -311,7 +319,7 @@ def test_khong_cache_ket_qua_unsupported(monkeypatch):
     init_db()
     text = "Đề test không cache unsupported: một bài vượt năng lực hiện tại nhé"
 
-    async def fake_unsupported(t, api_key, pattern_store=None):
+    async def fake_unsupported(t, api_key, pattern_store=None, **kw):
         return {"status": "unsupported", "reason": "vượt năng lực"}
 
     monkeypatch.setattr(main_module, "run_pipeline", fake_unsupported)
@@ -339,7 +347,7 @@ def test_exact_cache_lan_hai_khong_goi_pipeline(monkeypatch):
     monkeypatch.setattr(main_module, "CACHE_VERSION", f"test-{uuid.uuid4()}")
     calls: list[str] = []
 
-    async def fake_pipeline(text, api_key, pattern_store=None):
+    async def fake_pipeline(text, api_key, pattern_store=None, **kw):
         calls.append(text)
         return {
             "status": "ok",

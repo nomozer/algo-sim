@@ -672,6 +672,42 @@ lần kéo thử. Quan hệ thao-tác ↔ config khác nhau theo miền một c�
 Chrome. Đừng dựng phép quét rộng rồi cấy ngoại lệ cho tới lúc nó hết nghĩa.
 Tiêm lỗi đã chạy: cho `set_param` giữ ngưỡng cũ ⇒ ĐỎ 2/4.
 
+### `frontend/scripts/e2e-stack-production.mjs` (vNext) · **TIÊU QUOTA THẬT**
+
+E2E đường NGƯỜI DÙNG: gõ đề vào `.composer-text`, bấm `.composer-send`, chờ HTTP
+`/api/analyze` thật, rồi bấm `button[title="Tiến một bước"]`. **Không**
+`loadEnvelope`, không fixture, không sample offline — đó là ranh giới với
+`capture-stack-vnext.mjs` bên dưới, thứ chỉ là bằng chứng COMPONENT.
+
+Chộp response `/api/analyze` qua `page.on("response")` làm nguồn sự thật cho
+"route nào đã phục vụ" (`simulation_id` / `source`), vì UI không hiển thị điều
+đó. Kết quả: `docs/evaluation/semantic-vnext/e2e/`.
+
+⚠️ Mỗi lượt là một request phân tích thật (nhiều lượt LLM phía backend) và tiêu
+một lượt dùng thử của khách. Cần `SEMANTIC_ROUTE_MODE=serve` ở container thì
+route sinh mới chạy. Backend chạy uvicorn KHÔNG reload dù `app/` được bind-mount
+⇒ sửa mã Python xong phải `docker compose restart backend`, nếu không đo phải
+bản cũ trong bộ nhớ.
+
+### `frontend/scripts/capture-stack-vnext.mjs` (vNext) · cần dev server + Playwright
+
+Bằng chứng trình duyệt cho case Stack `{[()]}`: tiêm envelope thẳng qua
+`useAppStore.loadEnvelope`, đặt cursor tới 6 khung mốc, chụp ảnh và trích **phép
+chiếu ngữ nghĩa từ DOM** (nội dung `<text>` trong SVG) — không so pixel. Kết quả:
+`docs/evaluation/semantic-vnext/` (`STACK_VISUAL_ACCEPTANCE.md` ·
+`stack-visual-acceptance.json` · 6 ảnh).
+
+Hai điều kiện của anti-pattern #14 đều CÓ THẬT trong script: **dấu vân tay trang**
+(khẳng định đúng tiêu đề + 7 bước, sai thì thoát `3`) và **`--faultcheck`** (thay
+`push`/`pop` bằng `highlight` ⇒ bản soát phải tụt khỏi 6/6, không tụt thì thoát
+`4`). Chế độ tiêm lỗi tái hiện đúng triệu chứng gốc — ngăn xếp rỗng ở mọi khung
+trong khi narration vẫn kể push/pop.
+
+⚠️ Bộ trích phải LOẠI chú giải trình bày khỏi danh sách phần tử: lượt chạy đầu
+nuốt nhãn `← TOP` vào `stack` và báo FAIL nhầm 4 khung. Chú giải không phải dữ
+liệu. ⚠️ Cổng 3000 hay bị chiếm bởi dev server khác đang chạy mã CŨ; dùng
+`--port` để dựng server riêng, đừng chụp vào cổng lạ (tiền lệ `0a71268`).
+
 ### `frontend/scripts/capture-phase-evidence.mjs` (W6) · cần `npm run dev` + Chrome
 Chụp CLIP theo `.workspace-card` ở MỘT trạng thái xác định (`--target`,
 `--viewport`, `--act`). Ghép với `git checkout <ref> -- <file>` (Vite HMR nạp lại
@@ -1520,8 +1556,22 @@ Engine + kiểu DSL v1 (mirror manifest). Exports (chính): `SimulationSpec`,
 `initialBase`, `applyMove`, `layoutPositions`, `dragTargets`, `findFreePosition`,
 `applyEditedSpec`, `visibleContentBounds`, `objectRole`, `inspectorGroups`,
 `STRUCTURAL_TYPES`, `TEMPORAL_PROCESS_TYPES`, `DRAG_TARGET_TYPES`, (M13)
-`GenericExecutionError`, `displayLabel`.
-Tests: `generic.test.ts`, `patch.test.ts`.
+`GenericExecutionError`, `displayLabel`, (vNext) `PENDING_DISPLAY`,
+`applyStepAction`.
+Tests: `generic.test.ts`, `patch.test.ts`,
+`__tests__/pending-binding-fidelity.test.tsx`,
+`__tests__/stack-semantic-frame-acceptance.test.tsx`.
+
+**vNext 2026-08-23 — `Frame.values`, kênh TRẠNG THÁI THEO BƯỚC.** Trước đó
+nhánh `step_sequence` của `buildTimeline` chỉ đẩy ra lời kể + highlight, còn
+`valuesOf(spec, state.base)` hằng số suốt timeline ⇒ narration kể "đẩy '[' vào
+ngăn xếp" trong khi hình ngăn xếp rỗng ở MỌI khung (đã chụp màn hình). Validator
+thì vẫn nhận và giữ `value`/`to_index`/`indices` từng bước — hợp đồng hứa, engine
+vứt. `applyStepAction` gấp `set_value`/`push`/`pop`/`move_pointer` lên một bản đồ
+chạy dần (**allowlist đóng, không `eval`**; hành động lạ ⇒ không đổi gì), chụp
+vào `Frame.values`. `undefined` ⇒ lùi về `state.base` như cũ.
+`PENDING_DISPLAY` (`—`) là dấu CHƯA CÓ BINDING, tách hẳn giá trị 0 thật —
+`ui.tsx` từng viết `o.value ?? 0` nên ô chưa có dữ liệu hiện số `0` như thật.
 Notes (M13 §3.4): `valuesOf` port ĐÚNG bản forward-resolve ba trạng thái của
 `generic_engine.py::values_of` (đối chiếu 1:1 — port bản ĐÃ SỬA lỗi control-flow
 `pending`, xem note ở entry backend) — KHÔNG còn seed 0. `GenericExecutionError`
@@ -2590,3 +2640,10 @@ khung ĐỔI sau 6 bước. Có `--faultcheck` để chứng minh guard đỏ đ
 chạy trước khi tin một bản soát "SẠCH" (`ARCHITECTURE_MAP §8` #14). Fixture
 `public/fixtures/semantic_l5a.json` **sinh từ backend thật**, không viết tay.
 Kết quả: `docs/evaluation/semantic-l5a/`.
+
+### `frontend/scripts/capture-stack-vnext.mjs` · cần Chrome + `npm run dev`
+
+Bằng chứng trình duyệt thật cho kịch bản Stack vNext: kiểm tra trạng thái tương tác
+thay đổi thật sự khi bấm chuyển bước (khắc phục điểm mù của SSR renderToString).
+Đo đạc dấu vân tay trang, kiểm tra render ngăn xếp qua Playwright và hỗ trợ `--faultcheck`.
+
