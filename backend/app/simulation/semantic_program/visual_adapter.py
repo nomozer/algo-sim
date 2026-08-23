@@ -19,6 +19,22 @@ from .contract import SemanticProgramSpec, VisualBindings
 from .interpreter import SemanticExecutionResult, SemanticTraceStep
 
 
+def _day_phan_tu(val: Any) -> list[Any]:
+    """Trạng thái bộ nhớ → DÃY PHẦN TỬ vẽ được.
+
+    `str` được tách thành từng ký tự, và đó là điểm của hàm này: một chuỗi LÀ
+    dãy ký tự, nên bài quét chuỗi (đối xứng, đếm nguyên âm, kiểm ngoặc) phải
+    thấy được từng ô như thấy một mảng. Bản trước dùng
+    `isinstance(val, (list, tuple, set))` nên chuỗi rơi về `[]` — hình rỗng
+    trong khi chương trình đang duyệt nó.
+    """
+    if isinstance(val, str):
+        return list(val)
+    if isinstance(val, (list, tuple, set)):
+        return list(val)
+    return []
+
+
 class VisualObject(BaseModel):
     id: str
     type: str
@@ -86,9 +102,9 @@ class VisualTraceAdapter:
             }
 
             if cb.primitive in ("array_strip", "queue_view"):
-                obj_dict["items"] = list(val) if isinstance(val, (list, tuple, set)) else []
+                obj_dict["items"] = _day_phan_tu(val)
             elif cb.primitive == "stack_view":
-                obj_dict["items"] = list(val) if isinstance(val, (list, tuple, set)) else []
+                obj_dict["items"] = _day_phan_tu(val)
                 obj_dict["capacity"] = max(8, len(obj_dict["items"]) + 2)
             elif cb.primitive == "table_grid":
                 obj_dict["items"] = val if isinstance(val, list) else []

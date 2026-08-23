@@ -29,7 +29,12 @@ BUDGET_BYTES: dict[str, int] = {
     # Bề mặt `analyze` RIÊNG của route ngữ nghĩa (2026-08-21). Tách khỏi
     # `analyze.md` có chủ đích — trộn vào đó thì mọi đề đi đường module cũng
     # phải trả tiền cho từ vựng nghĩa vụ mà chúng không dùng.
-    "semantic_analyze.md": 1950,
+    # 1950 → 2200 (2026-08-23): luật "tham số phân biệt BẮT BUỘC". Đo được trên
+    # DEV `dev_01` (tìm max): nghĩa vụ `extremum` phát ra KHÔNG có `cmp`, checker
+    # âm thầm hiểu thành `min` rồi báo *"witness = 35, đúng phải là 27"* — kết
+    # tội một chương trình ĐÚNG. `cmp` vốn đã có trong schema (nullable) nhưng
+    # prompt chưa bao giờ nhắc, nên model không có lý do gì để điền.
+    "semantic_analyze.md": 2200,
     # HẠ 2100 → 1800 (2026-08-20). Bản viết lại bỏ phần schema đã cưỡng chế
     # (danh sách statement/expression/primitive) và còn 1.675B, nhỏ hơn bản gốc
     # 1.998B. Ghi lại vì bản nháp đầu của chính lượt này lại PHÌNH lên 2.131B —

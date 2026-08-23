@@ -92,17 +92,48 @@ def test_chuong_trinh_dung_thi_di_qua():
 
 
 def test_bang_tra_HANG_khong_bi_doi_phai_co_hinh():
-    """`pairs` là bảng ghép ngoặc — hằng, không đổi suốt lượt chạy.
+    """Container HẰNG, không ghim dữ liệu đề ⇒ KHÔNG bị đòi hiện.
 
-    Đòi nó phải hiện là đòi vẽ mọi thứ, và đó là cách một cổng trở nên vô dụng.
-    Luật chỉ chạm container BIẾN ĐỘNG.
+    Đòi vẽ mọi thứ là cách một cổng trở nên vô dụng: luật (1) chỉ chạm container
+    BIẾN ĐỘNG, luật (2) chỉ chạm thứ có `source_fact_id`.
+
+    Trước 2026-08-23 test này lấy `pairs` của P01 làm ví dụ. Ví dụ ấy hết dùng
+    được vì `pairs` nay ĐÃ có binding (`map_view`) — nó buộc phải có, bởi
+    `grounding_gate` đòi mọi `initial_value` không rỗng phải ghim
+    `source_fact_id`, và cái gì đã khai là dữ liệu đề thì luật (2) đòi phải
+    thấy. Nên dựng ví dụ TỐI GIẢN ở đây, kiểm thẳng ý định thay vì mượn hình
+    dạng của một fixture có thể đổi.
     """
-    spec = P01_STACK_BRACKET
-    assert "pairs" in {d.name for d in spec.memory_declarations}
-    assert not any(
-        c.semantic_id == "pairs" for c in (spec.visual_bindings.containers or [])
+    from app.simulation.semantic_program.contract import (
+        AssignStmt,
+        LiteralExpr,
+        MemoryDeclaration,
+        SemanticProgramSpec,
+        VisualBindings,
+        VisualValueBoxBinding,
     )
-    assert check_learner_surface(_contract(), spec, _chay(spec), _envelope(spec)).ok
+
+    spec = SemanticProgramSpec(
+        title="Có một bảng hằng không ai nhìn",
+        memory_declarations=[
+            # HẰNG: không đổi, không ghim đề ⇒ không bị đòi hiện.
+            MemoryDeclaration(name="bang_hang", type="map", key_type="str",
+                              val_type="str", initial_value={"a": "b"}),
+            MemoryDeclaration(name="r", type="int", initial_value=0),
+        ],
+        statements=[AssignStmt(target_var="r", expr=LiteralExpr(value=1))],
+        visual_bindings=VisualBindings(
+            containers=[], pointers=[],
+            value_boxes=[VisualValueBoxBinding(box_id="rb", var_ref="r", label="Kết quả")],
+        ),
+    )
+    assert not any(
+        c.semantic_id == "bang_hang" for c in (spec.visual_bindings.containers or [])
+    )
+    kq = check_learner_surface(
+        _contract(witness="r"), spec, _chay(spec), _envelope(spec)
+    )
+    assert kq.ok, kq.invisible
 
 
 # ── Nửa 2: TIÊM LỖI — cổng phải ĐỎ ─────────────────────────────────────────

@@ -80,6 +80,36 @@ def canonical_container_name(v: Any) -> Any:
 ContainerName = Annotated[str, BeforeValidator(canonical_container_name)]
 
 
+def canonical_const_int(v: Any) -> Any:
+    """BIÊN CHUẨN HOÁ HẰNG NGUYÊN — `{"kind":"literal","value":1}` ⇒ `1`.
+
+    Vì sao tồn tại: trên SEALED `7e5df014…`, hai case (`T10-C5-062`,
+    `T10-C5-071`) chết với đúng một lỗi — LLM viết
+    `for_range.step: {"kind":"literal","value":1}` còn schema đòi `int` trần.
+    `start`/`end` là `ValueExpr` nên NHẬN dạng bọc, riêng `step` thì không: mô
+    hình viết cả ba cùng một kiểu là hành vi nhất quán, chỉ hợp đồng là không
+    nhất quán. Cùng lớp lỗi với `spec_version` và `container` — sai CÁCH VIẾT,
+    không sai thuật toán.
+
+    RANH GIỚI: chỉ gỡ `literal` mang số nguyên. `var`/`arith` vẫn bị từ chối —
+    bước nhảy phải là HẰNG thì vòng lặp mới có biên tất định; nhận biểu thức là
+    đổi ngữ nghĩa của `for_range`, không thuộc phạm vi một phép chuẩn hoá.
+    """
+    if isinstance(v, dict):
+        if v.get("kind") == "literal" and isinstance(v.get("value"), int) and not isinstance(v.get("value"), bool):
+            return v["value"]
+        raise ValueError(
+            f"`step` phải là HẰNG nguyên, không phải biểu thức (nhận "
+            f"kind={v.get('kind')!r}). Bước nhảy không hằng thì vòng lặp không "
+            f"còn biên tất định."
+        )
+    return v
+
+
+#: Bước nhảy vòng lặp. Nhận cả số trần lẫn hằng đã bọc, nội bộ luôn là `int`.
+ConstInt = Annotated[int, BeforeValidator(canonical_const_int)]
+
+
 # ── 1. Kiểu dữ liệu bộ nhớ (Memory Types) ──────────────────────────────────
 ScalarType = Literal["int", "str", "bool", "float"]
 ContainerType = Literal[
@@ -334,7 +364,7 @@ class ForRangeStmt(BaseModel):
     loop_var: str = Field(..., description="Biến chạy vòng lặp")
     start: ValueExpr = Field(..., description="Giá trị bắt đầu")
     end: ValueExpr = Field(..., description="Giá trị kết thúc (exclusive)")
-    step: int = Field(1, description="Bước nhảy (mặc định 1)")
+    step: ConstInt = Field(1, description="Bước nhảy (mặc định 1)")
     body: list[SemanticStatement] = Field(..., description="Thân vòng lặp")
 
 class ForEachStmt(BaseModel):

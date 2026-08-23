@@ -105,7 +105,14 @@ class SemanticTypeChecker:
             if cb.semantic_id not in self.symbols:
                 return ValidationResult(False, f"Visual binding container '{cb.semantic_id}' không tồn tại trong memory_declarations.")
             decl = self.symbols[cb.semantic_id]
-            if decl.type not in ("array", "stack", "queue", "matrix", "tree_node", "graph", "bit_register", "set", "map"):
+            # `str` ĐƯỢC bind từ 2026-08-23: một chuỗi LÀ dãy ký tự, và
+            # `array_strip` vẫn vẽ nó như vẽ một mảng. Trên SEALED `7e5df014…`
+            # hai case (`T10-C5-079`, `T11CS-C6-058`) chết chỉ vì luật này —
+            # chương trình quét chuỗi hoàn toàn đúng, nhưng khai chuỗi làm
+            # container thì bị từ chối, mà không khai thì học sinh không thấy
+            # dữ liệu mình đang duyệt. Cùng lớp với `set` (cũng không phải dãy
+            # theo nghĩa hẹp) vốn đã được nhận từ trước.
+            if decl.type not in ("array", "stack", "queue", "matrix", "tree_node", "graph", "bit_register", "set", "map", "str"):
                 return ValidationResult(False, f"Visual binding container '{cb.semantic_id}' có kiểu '{decl.type}' không phải kiểu container hợp lệ.")
 
         for pb in self.spec.visual_bindings.pointers:

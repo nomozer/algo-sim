@@ -50,6 +50,54 @@ from semantic_program.fixtures_coverage_18 import (  # noqa: E402
     ALL_18_COVERAGE_FIXTURES as F,
 )
 
+def _ghim(spec, m: dict[str, str]):
+    d = list(spec.memory_declarations)
+    for i, x in enumerate(d):
+        if x.name in m:
+            d[i] = x.model_copy(update={"source_fact_id": m[x.name]})
+    return spec.model_copy(update={"memory_declarations": d})
+
+
+#: Hợp đồng ĐẦY ĐỦ cho những lớp đã có nghĩa vụ kiểm chứng được — dùng để chạy
+#: `verify_and_compile` thật và chấm cổng `SERVABLE`.
+#:
+#: Lớp không có mặt ở đây KHÔNG phải lỗi: nó nghĩa là taxonomy hiện chưa có
+#: nghĩa vụ diễn đạt được bài đó, và cổng `SERVABLE` báo `N/A` chứ không báo
+#: FAIL. Ép cho đủ bằng một nghĩa vụ gượng ép là tự làm hỏng dữ liệu của §16.
+HOP_DONG: dict[str, tuple[dict, dict]] = {
+    "stack": (
+        {"bracket_strip": "I1", "pairs": "I2"},
+        {
+            "input_facts": [
+                {"id": "I1", "kind": "array", "label": "chuỗi ngoặc",
+                 "value": ["{", "[", "(", ")", "]", "}"]},
+                {"id": "I2", "kind": "map", "label": "cặp ngoặc",
+                 "value": ["(", ")", "[", "]", "{", "}"]},
+            ],
+            "obligations": [{"kind": "predicate_verdict", "container": "bracket_strip",
+                             "witness": "result", "pred": "balanced_delimiters"}],
+        },
+    ),
+    "array": (
+        {"arr": "I1"},
+        {
+            "input_facts": [{"id": "I1", "kind": "array", "label": "dãy số",
+                             "value": ["12", "45", "67", "23", "89", "34"]}],
+            "obligations": [{"kind": "extremum", "container": "arr",
+                             "witness": "max_val", "cmp": "max"}],
+        },
+    ),
+    "graph": (
+        {"g": "I1"},
+        {
+            "input_facts": [{"id": "I1", "kind": "graph", "label": "đồ thị",
+                             "value": ["1", "2", "3", "4", "5"]}],
+            "obligations": [{"kind": "reachability", "container": "g",
+                             "witness": "order"}],
+        },
+    ),
+}
+
 #: (lớp, fixture, witness, đáp án kiểm tay)
 CASES: list[tuple[str, Any, str, dict[str, Any]]] = [
     ("scalar", F[13], "bit_is_set", {"bit_is_set": True}),
@@ -164,9 +212,26 @@ def _chay_mot_case(lop: str, spec, witness: str, mong_doi: dict) -> dict:
     idx = [fr["step_index"] for fr in frames]
     g["TRANSPORT_CONTROLS_VALID"] = len(frames) > 1 and idx == sorted(idx)
 
+    # SERVABLE — chạy ĐƯỜNG PHÁN QUYẾT THẬT (`verify_and_compile`), không suy từ
+    # các cổng trên. Lớp chưa có nghĩa vụ diễn đạt được ⇒ `None` (N/A), không
+    # phải FAIL: đó là dữ liệu về TAXONOMY, không phải lỗi của lớp.
+    servable = None
+    if lop in HOP_DONG:
+        from app.simulation.semantic_program.analyze_contract import (
+            build_request_contract,
+        )
+        from app.simulation.semantic_program.route import verify_and_compile
+
+        ghim, payload = HOP_DONG[lop]
+        out = verify_and_compile(build_request_contract(payload), _ghim(spec, ghim))
+        servable = bool(out.servable)
+        if not servable:
+            ghi_chu.append(f"servable=False: {out.error_code} · {out.reason}")
+
     return {
         "lop": lop,
         "title": spec.title,
+        "servable": servable,
         "steps": res.total_steps,
         "frames": len(frames),
         "gates": g,
@@ -217,10 +282,17 @@ def main() -> int:
         Path(a.md).write_text(_md(kq), encoding="utf-8")
     for r in kq["cases"]:
         xau = [g for g, v in r["gates"].items() if not v]
-        print(f"{'PASS' if r['pass'] else 'FAIL'}  {r['lop']:18} {r['title'][:34]:36}"
-              + ("" if r["pass"] else "  ← " + ", ".join(xau)))
-    print(f"\nCROSS_DOMAIN_OFFLINE = {kq['pass_count']}/{kq['total']}")
-    return 0 if kq["pass_count"] == kq["total"] else 1
+        sv = {True: "servable", False: "NOT-servable", None: "n/a"}[r["servable"]]
+        print(f"{'PASS' if r['pass'] else 'FAIL'}  {r['lop']:18} {r['title'][:32]:34}"
+              f"{sv:14}" + ("" if r["pass"] else "  ← " + ", ".join(xau)))
+    n_sv = sum(1 for r in kq["cases"] if r["servable"] is True)
+    n_co = sum(1 for r in kq["cases"] if r["servable"] is not None)
+    print(f"\nCROSS_DOMAIN_OFFLINE = {kq['pass_count']}/{kq['total']}"
+          f"   ·   SERVABLE = {n_sv}/{n_co} lớp có nghĩa vụ diễn đạt được")
+    xau_sv = [r["lop"] for r in kq["cases"] if r["servable"] is False]
+    if xau_sv:
+        print(f"KHÔNG phát được: {', '.join(xau_sv)}")
+    return 0 if kq["pass_count"] == kq["total"] and not xau_sv else 1
 
 
 if __name__ == "__main__":

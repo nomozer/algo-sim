@@ -102,6 +102,14 @@ P01_STACK_BRACKET = SemanticProgramSpec(
         containers=[
             VisualContainerBinding(semantic_id="bracket_strip", primitive="array_strip", label="Chuỗi ngoặc đầu vào"),
             VisualContainerBinding(semantic_id="stack", primitive="stack_view", label="Ngăn xếp"),
+            # THÊM 2026-08-23. `pairs` là bảng ghép ngoặc: nó KHÔNG biến động
+            # nên luật (1) của `learner_surface` không đòi, nhưng nó có
+            # `initial_value` không rỗng nên `grounding_gate` buộc phải ghim
+            # `source_fact_id` — và cái gì đã khai là dữ liệu đề thì luật (2)
+            # đòi phải thấy được. Hai luật ấy khớp nhau, chỉ thiếu ĐƯỜNG: `map`
+            # không có primitive nào cho tới khi `map_view` ra đời cùng ngày.
+            # Hiện nó ra cũng đúng sư phạm hơn: học sinh thấy bảng đang được tra.
+            VisualContainerBinding(semantic_id="pairs", primitive="map_view", label="Bảng ghép ngoặc"),
         ],
         pointers=[
             # BỎ 2026-08-20 (bất biến #34): con trỏ buộc vào BIẾN KÝ TỰ của

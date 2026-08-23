@@ -1,5 +1,5 @@
 {
-  "chay_luc": "2026-08-23T12:33:52.172Z",
+  "chay_luc": "2026-08-23T16:34:43.910Z",
   "fault": false,
   "ket": [
     {
@@ -101,6 +101,42 @@
       "pass": true
     },
     {
+      "bai": "điểm kiểm tra cao nhất",
+      "viewport": "min-344",
+      "do": {
+        "so_chu": 24,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "điểm kiểm tra cao nhất",
+      "viewport": "min-320",
+      "do": {
+        "so_chu": 24,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
       "bai": "Duyệt cây thư mục",
       "viewport": "desktop",
       "do": {
@@ -155,6 +191,42 @@
       "pass": true
     },
     {
+      "bai": "Duyệt cây thư mục",
+      "viewport": "min-344",
+      "do": {
+        "so_chu": 20,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "Duyệt cây thư mục",
+      "viewport": "min-320",
+      "do": {
+        "so_chu": 20,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
       "bai": "đường ít chặng nhất",
       "viewport": "desktop",
       "do": {
@@ -193,6 +265,42 @@
     {
       "bai": "đường ít chặng nhất",
       "viewport": "mobile",
+      "do": {
+        "so_chu": 5,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "đường ít chặng nhất",
+      "viewport": "min-344",
+      "do": {
+        "so_chu": 5,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "đường ít chặng nhất",
+      "viewport": "min-320",
       "do": {
         "so_chu": 5,
         "ngoai_khung": 0,

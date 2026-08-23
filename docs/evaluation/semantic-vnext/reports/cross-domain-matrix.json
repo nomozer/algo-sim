@@ -3,6 +3,7 @@
     {
       "lop": "scalar",
       "title": "Kiểm tra bit thứ K của một số nguyên",
+      "servable": null,
       "steps": 4,
       "frames": 4,
       "gates": {
@@ -24,6 +25,7 @@
     {
       "lop": "array",
       "title": "Tìm phần tử lớn nhất trong dãy số",
+      "servable": true,
       "steps": 19,
       "frames": 19,
       "gates": {
@@ -45,6 +47,7 @@
     {
       "lop": "string",
       "title": "Hai con trỏ: Kiểm tra chuỗi đối xứng (Palindrome)",
+      "servable": null,
       "steps": 8,
       "frames": 8,
       "gates": {
@@ -66,6 +69,7 @@
     {
       "lop": "stack",
       "title": "Kiểm tra chuỗi ngoặc hợp lệ bằng Ngăn xếp",
+      "servable": true,
       "steps": 23,
       "frames": 23,
       "gates": {
@@ -87,6 +91,7 @@
     {
       "lop": "derived_sequence",
       "title": "Mảng cộng dồn (Prefix Sum Array)",
+      "servable": null,
       "steps": 10,
       "frames": 10,
       "gates": {
@@ -108,6 +113,7 @@
     {
       "lop": "tree",
       "title": "Duyệt cây nhị phân theo thứ tự trước (Preorder NLR)",
+      "servable": null,
       "steps": 16,
       "frames": 16,
       "gates": {
@@ -129,6 +135,7 @@
     {
       "lop": "graph",
       "title": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+      "servable": true,
       "steps": 31,
       "frames": 31,
       "gates": {

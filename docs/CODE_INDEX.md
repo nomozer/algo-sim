@@ -735,7 +735,13 @@ soát vu oan cho sản phẩm.
 trong khung vẽ · không tràn ngang · không chữ kích thước 0 · nút bước còn bấm
 được. `--faultcheck` chặn nút Tiến ở tầng capture để chứng minh guard đỏ được.
 
-Ngưỡng đo được: bố cục **tràn ngang dưới ~354px** (344 tràn · 360 không).
+**`SUPPORTED_MIN_WIDTH = 320px`**, khoá bằng hai viewport `min-320`/`min-344`
+trong chính runner. Trước vNext bố cục tràn ngang dưới ~354px và trang mất dữ
+liệu ở mép phải; truy được chuỗi `.control-zone` (nowrap, 252/304px) →
+`.player` (229px) → `.panel-controls` → `.app-layout` → `html`. Sửa bằng
+`flex-wrap` trên `.control-zone` ở `global.css` — một luật ở tầng dùng chung,
+không vá theo ảnh chụp, và không breakpoint nào phải nhớ vì wrap chỉ kích hoạt
+khi hết chỗ (màn rộng không đổi một pixel).
 
 ### `frontend/scripts/capture-stack-vnext.mjs` (vNext) · cần dev server + Playwright
 

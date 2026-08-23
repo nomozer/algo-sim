@@ -931,10 +931,28 @@ html {
   gap: var(--sp-md);
 }
 
+/* ── vNext — CỤM ĐIỀU KHIỂN PHẢI XUỐNG DÒNG ĐƯỢC Ở MÀN RẤT HẸP ───────────
+ *
+ * ĐO ĐƯỢC: dưới ~354px, `.player` tràn ngang và trang mất dữ liệu ở mép phải.
+ * Truy chuỗi: `.control-zone` mặc định `nowrap`, nên hai cụm rộng 252px và
+ * 304px không co được trong khung 229px → đẩy `.panel-controls` → `.app-layout`
+ * → `html`. `flex-wrap` của hàng CHA không cứu được, vì nó chỉ xuống dòng GIỮA
+ * các cụm chứ không xuống dòng TRONG một cụm.
+ *
+ * VÌ SAO KHÔNG MÂU THUẪN VỚI W12/W4B-3G: hai ghi chú ấy nói về NHỊP và NHÓM —
+ * gap 2px trong cụm, 16px giữa các cụm, tỉ lệ 8:1 để mắt đọc ra nhóm mà không
+ * cần đường kẻ. Nhịp đó do `gap` giữ, và nó sống sót qua việc xuống dòng. Cái
+ * bị đổi chỉ là số hàng khi HẾT CHỖ — đúng lúc lựa chọn thật sự là "xuống dòng"
+ * hay "mất dữ liệu".
+ *
+ * Không breakpoint nào phải nhớ: wrap chỉ kích hoạt khi thiếu chỗ, nên màn rộng
+ * không đổi một pixel. */
 .control-zone {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--sp-xs);
+  row-gap: var(--sp-xs);
 }
 
 /* ── W4B-3G — MỘT SẮC XANH, CHROME YÊN LẶNG ───────────────────────────────

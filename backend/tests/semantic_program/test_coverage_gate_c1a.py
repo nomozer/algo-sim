@@ -103,15 +103,38 @@ def test_kieu_container_khong_hop_voi_nghia_vu_thi_tu_choi():
     assert any("không hợp" in m for m in res.missing)
 
 
-def test_nghia_vu_khong_co_checker_thi_bao_muc_yeu_khong_phai_thieu():
-    """Mức YẾU ≠ thiếu nghĩa vụ. Phải phân biệt để §5.4 xử đúng."""
-    contract = RequestContract(
-        obligations=(_ob(kind="predicate_verdict", container="a", witness="max_val"),)
+def _spec_co_cay() -> SemanticProgramSpec:
+    """Spec mang một `tree_node` — cần cho nghĩa vụ mức yếu duy nhất còn lại.
+
+    `structural_traversal` chỉ nhận `tree_node`; gắn nó lên mảng thì C₁a rơi vào
+    nhánh "kiểu không hợp" và test không còn kiểm được điều nó định kiểm.
+    """
+    return SemanticProgramSpec(
+        title="Duyệt cây",
+        memory_declarations=[
+            MemoryDeclaration(name="a", type="tree_node",
+                              initial_value={"val": "A", "left": None, "right": None}),
+            MemoryDeclaration(name="max_val", type="int", initial_value=0),
+        ],
+        statements=[AssignStmt(target_var="max_val", expr=LiteralExpr(value=1))],
     )
-    res = check_structural_coverage(contract, _spec_tim_max())
+
+
+def test_nghia_vu_khong_co_checker_thi_bao_muc_yeu_khong_phai_thieu():
+    """Mức YẾU ≠ thiếu nghĩa vụ. Phải phân biệt để §5.4 xử đúng.
+
+    Dùng `structural_traversal` — nghĩa vụ mức yếu DUY NHẤT còn lại sau khi
+    `predicate_verdict` có checker (2026-08-23). Lưu ý mức yếu của
+    `predicate_verdict` nằm ở tầng khác: C₁a chỉ hỏi *kind có checker không*,
+    còn *vị từ cụ thể có kiểm được không* thì C₂ mới trả lời.
+    """
+    contract = RequestContract(
+        obligations=(_ob(kind="structural_traversal", container="a", witness="max_val"),)
+    )
+    res = check_structural_coverage(contract, _spec_co_cay())
     assert not res.ok
     assert res.error_code == "SEMANTIC_VERIFICATION_UNAVAILABLE"
-    assert res.weak_kinds == ["predicate_verdict"]
+    assert res.weak_kinds == ["structural_traversal"]
 
 
 def test_producer_nam_trong_nhanh_long_van_tinh_la_co():

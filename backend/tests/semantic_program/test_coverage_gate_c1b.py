@@ -135,7 +135,7 @@ def test_nghia_vu_muc_yeu_khong_bi_C1b_ket_toi_thieu():
     """Mức yếu là chuyện của §5.4, không phải 'witness chưa hiện thực hoá'."""
     hop_dong = RequestContract(
         obligations=(
-            Obligation(kind="predicate_verdict", container="a",
+            Obligation(kind="structural_traversal", container="a",
                        params={"witness": "khong_ton_tai"}),
         )
     )

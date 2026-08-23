@@ -51,6 +51,28 @@ def _ghim(spec, m: dict[str, str]):
 #:  id đối tượng phải ĐỔI trên hình, đáp án kiểm tay)
 CASES = [
     (
+        # Ca BẮT BUỘC của §9 — và là bài đã dựng nên toàn bộ wave này. Trước khi
+        # `predicate_verdict` được mở, nó `executable=True` mà không bao giờ
+        # `servable`: taxonomy không có kind nào diễn đạt được "chuỗi này có hợp
+        # lệ không". Không có gì hard-code riêng cho nó — chỉ một nghĩa vụ tổng
+        # quát cộng một vị từ trong `PREDICATE_CHECKERS`.
+        "stack",
+        "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng Stack với chuỗi {[()]}.",
+        _ghim(F[0], {"bracket_strip": "I1", "pairs": "I2"}),
+        {
+            "input_facts": [
+                {"id": "I1", "kind": "array", "label": "chuỗi ngoặc",
+                 "value": ["{", "[", "(", ")", "]", "}"]},
+                {"id": "I2", "kind": "map", "label": "cặp ngoặc tương ứng",
+                 "value": ["(", ")", "[", "]", "{", "}"]},
+            ],
+            "obligations": [{"kind": "predicate_verdict", "container": "bracket_strip",
+                             "witness": "result", "pred": "balanced_delimiters"}],
+        },
+        "stack",
+        {"result": "HỢP LỆ"},
+    ),
+    (
         "array",
         "Cho dãy 12, 45, 67, 23, 89, 34. Tìm phần tử lớn nhất.",
         _ghim(F[1], {"arr": "I1"}),

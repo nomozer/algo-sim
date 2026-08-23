@@ -28,6 +28,10 @@ không phải nghĩa vụ.
 Đề hỏi nhiều thứ thì khai nhiều nghĩa vụ. Đề chỉ yêu cầu quan sát diễn biến,
 không đòi kết quả cụ thể nào, thì để danh sách rỗng.
 
+**Tham số phân biệt BẮT BUỘC** — thiếu là nghĩa vụ mất đường xác minh, vì máy
+KHÔNG đoán: `extremum` và `ordering` cần `cmp` (`max`/`min`, `asc`/`desc`),
+`derived_sequence` cần `transform`, `aggregate_matching` cần `op`.
+
 ## prescribed_procedure
 
 Chỉ điền khi đề GỌI TÊN một thủ tục cụ thể ("bằng thuật toán sắp xếp nổi bọt").

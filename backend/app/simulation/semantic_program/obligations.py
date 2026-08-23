@@ -16,11 +16,40 @@ sở hữu thì KHÔNG được vào bảng, dù tên nghe hợp lý tới đâu
 từ nhu cầu của từng ca. Sau khi SEALED niêm phong: KHÔNG thêm checker để cứu
 held-out case — hard scope lock §1.1.
 
-Ba thứ CỐ Ý không có mặt, ghi lại để lần sau khỏi "bổ sung cho đủ":
-- `predicate_verdict` (kiểu "dấu ngoặc có hợp lệ không") — kiểm nó đòi cài lại
-  chính thuật toán đang kiểm, nên oracle mất tính độc lập. `verification_gap`.
+Hai thứ CỐ Ý không có mặt, ghi lại để lần sau khỏi "bổ sung cho đủ":
 - `distinct_preserving_order` — là một phép của `derived_sequence`.
 - `connected_components` — tổ hợp được từ `reachability` lặp.
+
+─── `predicate_verdict`: MỞ 2026-08-23, và vì sao phản đối cũ không đứng ────
+
+Bản đầu loại nó với lý do: *"kiểm nó đòi cài lại chính thuật toán đang kiểm, nên
+oracle mất tính độc lập"*. Lý do ấy nghe đúng nhưng **áp quá rộng** — theo đúng
+tiêu chuẩn đó thì không checker nào trong bảng sống sót:
+
+    `_extremum`        tính lại `max(seq)` từ container trong snapshot
+    `_membership`      tính lại `item in box`
+    `_total_mapping`   tính lại phép đếm
+
+Cả ba đều "cài lại" phép toán mà chương trình vừa làm. Điều khiến chúng vẫn là
+oracle là chỗ khác: chúng tính lại **TỪ DỮ LIỆU ĐỀ**, bằng phép sơ cấp, và
+KHÔNG bao giờ đọc witness để suy ra đáp án — witness chỉ được đem SO. Vị từ cân
+bằng ngoặc thoả đúng ba điều kiện ấy: một lượt quét đếm là phép sơ cấp, chạy
+trên chuỗi đã grounded, độc lập hoàn toàn với chương trình.
+
+Khác biệt THẬT mà phản đối cũ chạm tới: `predicate_verdict` không kiểm được từ
+TRẠNG THÁI CUỐI (ngăn xếp rỗng ở cuối không chứng minh gì — một chương trình
+không bao giờ push cũng kết thúc rỗng). Nó buộc phải tính lại từ đầu vào. Đó là
+ràng buộc về *nguồn dữ liệu của checker*, không phải về tính độc lập.
+
+Nguồn phát hiện: DEV (ma trận xuyên miền cho thấy bài ngoặc không có kind nào
+diễn đạt được, nên `executable=True` mà không bao giờ `servable`). KHÔNG phải từ
+một ca SEALED.
+
+ADMISSIBILITY ≠ VERIFIABILITY, và ở đây hai thứ đó tách nhau rõ nhất: kind này
+được KHAI cho mọi vị từ, nhưng chỉ vị từ nào có mặt trong `PREDICATE_CHECKERS`
+(`postconditions.py`) mới được KIỂM. Vị từ lạ ⇒ mức yếu ⇒ `verification_gap`,
+`executable=True` mà `servable=False`. Đó là chỗ luật "LLM nói gì checker tin
+nấy" bị chặn.
 """
 from __future__ import annotations
 
@@ -49,7 +78,40 @@ OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     "derived_sequence": frozenset({"array", "stack", "queue"}),
     "reachability": frozenset({"graph"}),
     "structural_traversal": frozenset({"tree_node"}),
+    # Phán quyết đúng/sai trên TOÀN BỘ dữ liệu vào. Miền rộng vì một vị từ có
+    # thể hỏi về bất kỳ cấu trúc nào; cái hẹp là tập vị từ KIỂM ĐƯỢC, và nó do
+    # `PREDICATE_CHECKERS` giữ chứ không phải bảng này (xem docstring module).
+    "predicate_verdict": (
+        TRAVERSABLE
+        | frozenset({"stack", "queue", "graph"})
+        # VÔ HƯỚNG, mở 2026-08-24. "n chẵn hay lẻ", "biểu thức này True hay
+        # False" — chủ thể là MỘT SỐ, không phải một tập. Vị từ vô hướng đi qua
+        # `_PREDS` (`postconditions.py`): tập ĐÓNG và sơ cấp (even/odd/gt/ge/
+        # lt/le/eq) đã có sẵn từ trước, nên mở chiều này KHÔNG đẻ thêm checker
+        # nào. Vị từ ngoài tập ấy — "năm nhuận" chẳng hạn — vẫn là
+        # `verification_gap`, và đó là câu trả lời trung thực.
+        | frozenset({"int", "float", "bool", "str"})
+    ),
+    # ── `scalar_accumulation`, mở 2026-08-24 ────────────────────────────────
+    #
+    # VÌ SAO: đo cơ học trên chính bảng này cho thấy **0/10 nghĩa vụ nhận được
+    # một chủ thể vô hướng**. Toàn bộ taxonomy hình dạng *container*. Nhưng vòng
+    # lặp tích luỹ trên một BIÊN SỐ — `S = 1 + 2 + … + n`, `1 × 2 × … × n`,
+    # `S = 1³ + 2³ + … + n³` — là kiến trúc cơ bản nhất của chương trình Tin học
+    # 10, và không kind nào diễn đạt được nó. Đây là khoảng trống của HỢP ĐỒNG,
+    # đo được mà không cần nhìn bài nào.
+    #
+    # KHÁC `aggregate_matching` ở NGUỒN: kia gộp trên một container đã có, đây
+    # gộp trên một DÃY SINH RA TỪ BIÊN. Chủ thể là biên `n`, nên miền là vô
+    # hướng — không chồng lấn.
+    "scalar_accumulation": frozenset({"int", "float"}),
 }
+
+#: Số hạng của phép tích luỹ — tập ĐÓNG, mỗi phép tính lại được bằng biểu thức
+#: sơ cấp trên `k`. Đóng là điều kiện để checker giữ tính độc lập: mở cho một
+#: biểu thức bất kỳ thì checker phải ĐÁNH GIÁ biểu thức của chương trình, tức
+#: chạy lại chính chương trình.
+TERM_TRANSFORMS = frozenset({"identity", "square", "cube", "reciprocal"})
 
 #: Phép gộp đóng của `aggregate_matching`.
 AGGREGATE_OPS = frozenset({"count", "sum", "product", "max", "min"})

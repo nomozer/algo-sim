@@ -25,11 +25,37 @@ TAXONOMY_DA_DONG_BANG = {
     "derived_sequence",
     "reachability",
     "structural_traversal",
+    # MỞ 2026-08-23. Câu hỏi bắt buộc của test này — *thay đổi đến từ DEV hay
+    # từ một case SEALED?* — trả lời: **DEV**. Ma trận xuyên miền
+    # (`cross_domain_matrix.py`) cho thấy bài "chuỗi ngoặc hợp lệ" không có kind
+    # nào diễn đạt được: `membership` kiểm `item in container`, còn bài này hỏi
+    # một VỊ TỪ trên toàn bộ đầu vào. Hệ quả đo được: `executable=True` mà không
+    # bao giờ `servable`, cho cả một lớp bài chứ không riêng bài nào.
+    #
+    # Phản đối cũ ("kiểm nó đòi cài lại thuật toán đang kiểm") được trả lời đầy
+    # đủ trong docstring của `obligations.py` — tóm tắt: `_extremum` cũng tính
+    # lại `max`, và điều giữ tính oracle là *tính lại TỪ DỮ LIỆU ĐỀ, không đọc
+    # witness để suy đáp án*, chứ không phải *không được cài lại*.
+    "predicate_verdict",
+    # MỞ 2026-08-24, nguồn DEV và đo được TỪ CHÍNH BẢNG NÀY: trước khi thêm,
+    # **0/10 nghĩa vụ nhận được một chủ thể vô hướng** — toàn bộ taxonomy hình
+    # dạng *container*. Trong khi vòng lặp tích luỹ trên một biên số
+    # (`S = 1+2+…+n`, `1×2×…×n`, `S = 1³+…+n³`) là kiến trúc cơ bản nhất của
+    # chương trình Tin học 10. Đó là khoảng trống của HỢP ĐỒNG, chứng minh được
+    # mà không cần nhìn bài nào — không phải nhu cầu của một ca.
+    #
+    # Tính độc lập của oracle giữ được nhờ HAI tập ĐÓNG: `op` ∈ {sum, product}
+    # và `term` ∈ `TERM_TRANSFORMS`. Số hạng ngoài tập ⇒ mức yếu, vì kiểm nó
+    # đòi đánh giá biểu thức của chương trình — tức chạy lại chính nó.
+    "scalar_accumulation",
 }
 
 #: Cố ý KHÔNG có mặt — ghi lại kèm lý do để lần sau khỏi "bổ sung cho đủ".
 CO_Y_KHONG_CO = {
-    "predicate_verdict": "kiểm nó đòi cài lại chính thuật toán đang kiểm → oracle mất tính độc lập; đây là verification_gap thật",
+    # `predicate_verdict` ĐÃ RỜI danh sách này 2026-08-23 — xem
+    # `TAXONOMY_DA_DONG_BANG` và docstring `obligations.py`. Giữ lại một dòng
+    # lịch sử thay vì xoá sạch: lý do loại nó năm xưa vẫn đúng về một nửa (không
+    # kiểm được từ trạng thái cuối), chỉ sai ở vế "mất tính độc lập".
     "count_matching": "đã bị bao trùm bởi aggregate_matching (đếm = gộp với phép count)",
     "distinct_preserving_order": "là một phép của derived_sequence, không phải nguyên thuỷ riêng",
     "connected_components": "tổ hợp được từ reachability lặp — xét TỔ HỢP trước khi xét MỞ RỘNG",

@@ -195,10 +195,21 @@ async function soatMotBai(page, bai) {
  *   CONTROL_DUNG  — nút bước còn bấm được; điều khiển bị đẩy khỏi màn hình thì
  *                   mô phỏng thành một bức tranh tĩnh
  */
+/**
+ * `min-320` là BỀ RỘNG NHỎ NHẤT ĐƯỢC HỖ TRỢ, và nó nằm ở đây chứ không nằm
+ * trong một tài liệu: trước vNext, bố cục tràn ngang dưới ~354px và trang mất
+ * dữ liệu ở mép phải. Nguyên nhân là `.control-zone` không xuống dòng được
+ * (`global.css`), đã sửa ở tầng dùng chung chứ không vá theo ảnh chụp.
+ *
+ * Giữ 344 trong danh sách dù nó nằm giữa hai mốc: đó là con số ĐÃ ĐO ĐƯỢC lúc
+ * hỏng, nên nó là hồi quy cụ thể nhất.
+ */
 const VIEWPORTS = [
   { ten: "desktop", width: 1440, height: 900 },
   { ten: "tablet", width: 834, height: 1112 },
   { ten: "mobile", width: 390, height: 844 },
+  { ten: "min-344", width: 344, height: 800 },
+  { ten: "min-320", width: 320, height: 800 },
 ];
 
 async function soatThiGiac(page, bai, vp) {

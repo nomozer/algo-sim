@@ -137,9 +137,34 @@ def test_first_match_index_dung_vi_tri_dau_tien():
 
 
 def test_nghia_vu_khong_co_checker_thi_bo_qua_khong_ket_toi():
-    """Mức yếu ≠ vi phạm. Nó là verification_gap ở §5.4, xử ở C₁a."""
+    """Mức yếu ≠ vi phạm. Nó là verification_gap ở §5.4, xử ở C₁a.
+
+    Dùng `structural_traversal` — nghĩa vụ thật sự KHÔNG có checker (lý do ghi
+    trong `CHECKERS`). Trước 2026-08-23 test này dùng `predicate_verdict`; nay
+    kind ấy đã có checker nên nó không còn minh hoạ được điều đang kiểm.
+    """
     spec = _spec_gan_phan_tu_dau()
-    assert check_postconditions(_hd("predicate_verdict", witness="m"), spec, _chay(spec)).ok
+    assert check_postconditions(
+        _hd("structural_traversal", witness="m"), spec, _chay(spec)
+    ).ok
+
+
+def test_vi_tu_LA_thi_yeu_chu_khong_ket_toi():
+    """`predicate_verdict` với vị từ chưa có bộ kiểm ⇒ mức yếu, KHÔNG phải sai.
+
+    Đây là chỗ chặn "LLM nói đáp án gì thì checker tin đáp án đó": kind được
+    KHAI cho mọi vị từ, nhưng chỉ vị từ trong `PREDICATE_CHECKERS` mới được
+    KIỂM. Còn lại ⇒ `verification_gap`, `servable=False`.
+    """
+    spec = _spec_gan_phan_tu_dau()
+    kq = check_postconditions(
+        _hd("predicate_verdict", pred="mot_vi_tu_chua_ai_kiem", witness="m"),
+        spec,
+        _chay(spec),
+    )
+    assert not kq.ok
+    assert kq.violations == [], "không được KẾT TỘI khi chỉ là chưa kiểm được"
+    assert kq.weak_kinds == ["predicate_verdict"]
 
 
 def test_moi_checker_deu_ung_voi_mot_nghia_vu_co_that():

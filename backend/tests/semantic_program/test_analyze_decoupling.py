@@ -74,11 +74,11 @@ def test_nghia_vu_ngoai_taxonomy_bi_loai_o_khau_dong_bang():
     """Server ĐÓNG BĂNG nghĩa là server lọc, không phải chép nguyên lời LLM."""
     xau = json.loads(json.dumps(_PAYLOAD))
     xau["obligations"].append(
-        {"kind": "predicate_verdict", "container": "t", "witness": "ok"}
+        {"kind": "mot_kind_khong_ton_tai", "container": "t", "witness": "ok"}
     )
     contract = build_request_contract(xau)
     kinds = [o.kind for o in contract.obligations]
-    assert "predicate_verdict" not in kinds, (
+    assert "mot_kind_khong_ton_tai" not in kinds, (
         "Nghĩa vụ ngoài taxonomy phải bị loại ở khâu đóng băng — giữ lại thì "
         "C₁a sau đó mới phát hiện, muộn hơn một tầng"
     )
