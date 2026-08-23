@@ -29,6 +29,33 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### vNext — ROUTE SINH ĐÃ PHỤC VỤ ĐƯỢC MỘT ĐỀ THẬT (2026-08-23, sau SEALED)
+>
+> Bằng chứng: `docs/evaluation/semantic-vnext/SERVE_PROBE_CHAIN.md` (tầng 2 —
+> engineering evidence, **không phải** số luận văn).
+>
+> - Đề *"đảo dãy 5,2,8,1 bằng ngăn xếp"* → `status=ok` ·
+>   `simulation_id=generic.semantic_program` · `source=semantic_program` · **5
+>   khung**, qua `run_pipeline` sản phẩm với `SEMANTIC_ROUTE_MODE=serve`. Đo lặp
+>   **3/4 lượt**, `retry=0`. Trước lượt này route **chưa từng phục vụ** một đề
+>   nào cho người dùng thật.
+> - Tám lượt probe trên đề ghép ngoặc chết ở **tám lớp lỗi HÌNH DẠNG khác nhau**,
+>   không lượt nào là hiểu sai đề. Sửa theo hai nguyên tắc thay cho chín bản vá:
+>   mã hoá được ⇒ validator giữ (`canonical_condition`); không mã hoá được ⇒
+>   **đưa lỗi ngược cho LLM sửa** (`stage_semantic_program` ≤3 lượt, khuôn
+>   `stage_simulate`). Trần là hằng số ⇒ **claim D1 nguyên vẹn**.
+> - Sửa một lỗi ĐỊNH TUYẾN: `mismatch_gap` return trước nhánh phát, nên phán
+>   quyết lệch của classifier legacy giết một outcome `servable=true`.
+> - **Đề ghép ngoặc vẫn `capability_gap` — ĐÚNG THIẾT KẾ.** Nghĩa vụ của nó là
+>   `predicate_verdict`, thứ `obligations.py` cố ý không có vì kiểm nó đòi cài
+>   lại chính thuật toán đang kiểm. Taxonomy giữ **9 nghĩa vụ, `4dd712a3…` qua
+>   cả năm lần đóng băng** — không thêm nghĩa vụ nào để cứu case.
+> - `CACHE_VERSION` **35 → 36**. Candidate đóng băng lại ở `d6b7b30`
+>   (`464887dd…`, 128 file). Offline: pytest **1845** · vitest **1530 / 127
+>   file** · tsc 0 lỗi · build sạch.
+> - **CHƯA làm:** đo lại `A` (phải niêm phong SEALED MỚI) · bằng chứng thị giác
+>   cho envelope do route PHÁT ra (bản đang có chụp envelope tiêm thẳng).
+>
 > ### M21 — ROUTE SINH NGỮ NGHĨA: ĐÃ ĐO CHÍNH THỨC trên SEALED (2026-08-23)
 >
 > Bằng chứng: `docs/evaluation/semantic-benchmark/` (`README.md` ·

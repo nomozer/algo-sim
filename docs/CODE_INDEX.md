@@ -164,7 +164,10 @@ Notes: **biên mạng duy nhất** của hệ. Guard offline nằm ở `conftest
 Orchestrator: analyze → plan/gate → classify → (pattern reuse | simulate) → envelope.
 Exports: `ANALYZE_SCHEMA`, `stage_analyze`, `stage_classify`, `stage_simulate`,
 `stage_adapt`, `try_pattern_reuse`, `run_pipeline(text, api_key, pattern_store=None,
-observer=None)`, (M15) `classify_with_one_route_recovery`.
+observer=None)`, (M15) `classify_with_one_route_recovery`, (vNext)
+`stage_semantic_analyze`, `stage_semantic_program(text, analysis, api_key,
+contract=None, observer=None)`, `MAX_SEMANTIC_PROGRAM_ATTEMPTS`,
+`_envelope_tu_route_sinh`.
 Deps: catalog, manifest, representation, semantic, patterns, gemini, (M15)
 `mechanism_gate.check_mechanism_consistency_for_target`, `mechanisms.canonical_mechanism`.
 Tests: `test_pipeline.py`, `test_reuse.py`, `test_capability_boundary.py`,
@@ -180,6 +183,17 @@ hiện `ROUTE_MECHANISM_FAMILY_MISMATCH` trên route đầu; reclassify ra
 nữa); mismatch vẫn còn sau 1 lượt → `capability_gap`. Ngân sách cố định: analyze
 tối đa 1 call, classify tối đa 2 (gốc + đúng 1 reclassify), simulate tối đa 1 —
 không có đường quay lại vô hạn.
+**(vNext 2026-08-23) `stage_semantic_program` nay ≤3 lượt**, gửi lỗi validator
+ngược cho LLM sửa — khuôn `stage_simulate`. Lý do đo được: tám lượt probe E2E
+trên một đề chết ở TÁM lỗi HÌNH DẠNG khác nhau (`container` nhận biểu thức rồi
+nhận literal, `pop` viết như biểu thức rồi `peek` viết như câu lệnh…), không lỗi
+nào là hiểu sai đề. Trần là HẰNG SỐ ⇒ claim D1 nguyên vẹn (lượt LLM chặn bởi
+call graph, không theo độ dài trace). **Và nhánh PHÁT của route sinh nay chạy cả
+khi `mismatch_gap` bắn**: trước đó một phán quyết lệch của classifier legacy
+return TRƯỚC nhánh phát, giết một outcome `servable=true` (đo được: đề "đảo dãy
+bằng ngăn xếp" đạt `stage_reached=served` rồi envelope trả `unsupported`). Cổng
+mismatch bảo vệ đường module — chương trình ngữ nghĩa không đi qua target nào.
+Envelope dựng ở MỘT chỗ: `_envelope_tu_route_sinh`.
 
 ### `ai/edit.py` · Change impact: targeted live
 NL edit nhẹ (M7.14A): 1 call LLM sinh `{required_roles, operations}`; server đối
@@ -2540,6 +2554,29 @@ tiền lệ `graph_view`: mở vì một **lớp trạng thái đã admit**, ngu
 không phải một ca SEALED. Thêm primitive ⇒ đồng bộ BỐN nơi: `contract.py` Literal ·
 `visual_adapter.HANDLED_PRIMITIVES` + nhánh adapt · `test_primitive_set_frozen.py` ·
 renderer `domains/semantic/ui.tsx`, rồi chạy `export_semantic_program_schema.py`.
+
+### `backend/app/simulation/semantic_program/contract.py` — BIÊN CHUẨN HOÁ · offline
+
+Ngoài các model IR, file này giữ **ba biên gộp cách viết**, tất cả cùng một luật:
+*gộp hai cách viết của MỘT thứ, KHÔNG nới ngữ nghĩa*. Chúng tồn tại vì fail-closed
+ở tầng cú pháp che mất năng lực ngữ nghĩa thật của chương trình.
+
+- `canonical_spec_version` — `1.0` (số) ⇒ `"1.0"`. Nguồn: SEALED `7e5df014…`,
+  **17/40 case** chết vì đúng lỗi này. Chặn `bool` tường minh (`True` là subclass
+  của `int`). Phiên bản khác 1.0 vẫn bị từ chối.
+- `canonical_container_name` — `{"kind":"var","name":X}` ⇒ `X`; mọi kind khác
+  **raise có DẠY** thay vì để Pydantic nói "Input should be a valid string".
+- `canonical_condition` (2026-08-23) — `hop_le` ⇒ `hop_le == true`. Nguồn: probe
+  E2E, LLM viết `if hop_le and …` mà union điều kiện chỉ nhận sáu dạng mệnh đề.
+  RANH GIỚI: chỉ gấp dạng mang được bool (`var/field/index/map_get/literal`);
+  `arith`/`length`/`neighbors` vẫn bị từ chối vì `2+3` làm điều kiện là lỗi KIỂU
+  thật — nới KÝ PHÁP không được thành nới KIỂU.
+
+Tests: `test_spec_version_canonicalization.py`, `test_container_ref_canonicalization.py`,
+`test_condition_canonicalization.py`. Sửa model ⇒ chạy
+`scripts/export_semantic_program_schema.py` (ghi HAI bản, khoá bởi
+`test_schema_sync.py`). BeforeValidator KHÔNG vào JSON schema nên hash schema chỉ
+đổi khi model đổi.
 
 ### `backend/app/simulation/semantic_program/analyze_contract.py` · offline
 
