@@ -61,11 +61,62 @@ from .request_contract import RequestContract
 #: `frontend/src/simulations/learner-gate.ts` — hai đầu của cùng một luật.
 PLACEHOLDER_LEAKS = ("undefined", "null", "[object Object]", "NaN", "Infinity")
 
-#: Kiểu bộ nhớ mà "đổi giá trị" nghĩa là DIỄN TIẾN chứ không phải một phép gán
-#: nội bộ. Vô hướng cố ý nằm ngoài — xem docstring module.
+#: CHÍNH SÁCH HIỂN THỊ cho MỌI `MemoryType` đã admit — mỗi kiểu một quyết định
+#: TƯỜNG MINH, kèm lý do khi quyết định là "không đòi".
+#:
+#: VÌ SAO LÀ BẢNG CHỨ KHÔNG PHẢI MỘT `frozenset`: bản đầu viết thẳng bảy tên vào
+#: một hằng số, và nó bỏ sót `tree_node` — một `ContainerType` đầy đủ tư cách.
+#: Bỏ sót đó KHÔNG ồn ào: cây dựng dần qua các bước mà không có hình thì gate vẫn
+#: nói `servable=True`. Đúng lớp lỗi mà chính gate này sinh ra để chặn, lọt ngay
+#: trong gate.
+#:
+#: `test_learner_surface_type_coverage` duyệt `typing.get_args(MemoryType)` và
+#: đòi mọi kiểu có mặt ở đây. Thêm một `MemoryType` mà quên bảng này là ĐỎ — nên
+#: lần sau câu hỏi "kiểu này có cần hiện không" bị bắt buộc phải trả lời.
+SURFACE_POLICY: dict[str, str] = {
+    # ── PHẢI HIỆN khi biến động: tập hợp thay đổi CHÍNH LÀ cơ chế bài đang dạy.
+    "array": "container",
+    "stack": "container",
+    "queue": "container",
+    "matrix": "container",
+    "map": "container",
+    "set": "container",
+    "graph": "container",
+    "tree_node": "container",
+    # ── KHÔNG đòi, và mỗi dòng phải nói VÌ SAO ────────────────────────────────
+    "int": "vô hướng — biến đếm/chỉ số/tạm. Đòi vẽ hết thì màn hình đầy thứ "
+           "không phải nội dung bài, và cổng sẽ bị tắt vì kêu oan.",
+    "float": "vô hướng — như `int`.",
+    "bool": "vô hướng — cờ nội bộ. Nếu nó mang CÂU TRẢ LỜI thì đã bị luật "
+            "witness bắt phải hiện, không cần luật thứ hai.",
+    "str": "vô hướng — nhãn/kết quả dạng chữ. Cùng lý do với `bool`.",
+    "node_ref": "con trỏ tới một đỉnh, không phải dữ liệu. Đường lên màn hình "
+                "của nó là `pointers` binding, không phải một container.",
+    "null": "vắng mặt của giá trị — không có gì để hiện.",
+}
+
+#: Kiểu mà "đổi giá trị" nghĩa là DIỄN TIẾN. DẪN XUẤT từ bảng trên, không viết
+#: tay lần thứ hai — hai danh sách rời nhau chắc chắn sẽ lệch.
 CONTAINER_TYPES = frozenset(
-    {"array", "stack", "queue", "matrix", "map", "set", "graph"}
+    t for t, v in SURFACE_POLICY.items() if v == "container"
 )
+
+#: Mỗi kiểu phải-hiện đi được ra ÍT NHẤT MỘT visual primitive. Đây là vế thứ hai
+#: của bất biến §1: *đã admit và biến động* ⇒ *biểu diễn được*. `map` từng vi
+#: phạm đúng vế này suốt nhiều milestone — admit từ lâu, không primitive nào vẽ
+#: được, nên mọi bài có đáp án là bảng đều chạy được mà không xem được.
+TYPE_TO_PRIMITIVES: dict[str, tuple[str, ...]] = {
+    "array": ("array_strip", "bar_chart", "table_grid"),
+    "stack": ("stack_view",),
+    "queue": ("queue_view",),
+    "matrix": ("table_grid",),
+    "map": ("map_view",),
+    # `set` đi qua `array_strip`: adapter đã phẳng hoá `set` thành list. Thứ tự
+    # do adapter sắp, không phải thứ tự chèn.
+    "set": ("array_strip",),
+    "graph": ("graph_view",),
+    "tree_node": ("tree_element",),
+}
 
 
 class LearnerSurfaceResult(BaseModel):

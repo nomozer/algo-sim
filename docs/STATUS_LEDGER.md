@@ -710,6 +710,29 @@ Bảng ngữ nghĩa giữ nguyên **11 INTERACTIVE_MODEL · 9 BOUNDED_PARAMETER_
 | `WAVE4_INTERACTION_CERTIFICATION` | **NO_EVIDENCE — không đổi** | chỉ nâng khi đủ 23/23 có bằng chứng tươi | **W12** |
 | `WAVE6_BROWSER_EXPERIENCE` | **PARTIAL — không đổi** | chín màn trải nghiệm chưa chạy | **W12** |
 
+## 4h. vNext — route sinh ngữ nghĩa NỐI VÀO SẢN PHẨM (2026-08-23)
+
+Bằng chứng: `docs/evaluation/semantic-vnext/` (`SERVE_PROBE_CHAIN.md` ·
+`STACK_VISUAL_ACCEPTANCE.md` · `e2e-serve-daoday/`).
+
+| Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
+|---|---|---|---|
+| Route sinh được NỐI vào `run_pipeline` sản phẩm | **DONE** | `test_semantic_route_wired_to_production.py`; `main.py::semantic_route_mode` | — |
+| `generic` diễn hoạt trạng thái theo bước (`Frame.values`) | **DONE** | `STACK_VISUAL_ACCEPTANCE.md` 6/6 khung, `--faultcheck` tụt 2/6 | — |
+| Nhánh PHÁT không bị classifier legacy phủ quyết | **DONE** | `_envelope_tu_route_sinh`; đo: `served` → envelope `ok` | — |
+| Vòng sửa có trần cho `stage_semantic_program` | **DONE** | `MAX_SEMANTIC_PROGRAM_ATTEMPTS=3`; lỗi cú pháp 4→2→1→0 | — |
+| Bốn biên ký pháp (`spec_version`·`container`·`condition`·nesting) | **DONE** | `test_*_canonicalization.py`, `MAX_NESTING_DEPTH` 4→6 | — |
+| **C₂ không cho nghĩa vụ VÔ HIỆU phát đi** | **DONE** | `test_derived_sequence_vacuous.py` 7 test, hai chiều | — |
+| **Route sinh ra mô phỏng ĐÚNG** | **OPEN — chưa có lượt nào** | `SERVE_PROBE_CHAIN §4b`: lượt "phát được" là DƯƠNG TÍNH GIẢ | **cần wave riêng** |
+| `SEMANTIC_ROUTE_MODE` trong sản phẩm | **`off` có chủ đích** | chưa có bằng chứng route sinh mô phỏng đúng ⇒ bật là sớm | — |
+| Đo lại `A` sau bốn biên ký pháp | **OPEN** | phải niêm phong **SEALED MỚI**; cấm chạy lại trên tập cũ | — |
+| Bằng chứng thị giác cho envelope do route PHÁT | **PARTIAL** | ảnh có, nhưng chụp đúng lượt dương tính giả | wave sau |
+
+⚠️ **Bài học lặp lại HAI lần trong cùng wave: `status=ok` không phải bằng
+chứng.** Lần một: `capture-stack-vnext.mjs` tiêm envelope thẳng vào store nên
+chứng minh renderer chứ không chứng minh đường sinh. Lần hai: envelope `ok` với
+5 khung mà mọi khung đều rỗng. Cả hai lần chỉ lộ ra khi **mở ảnh ra xem**.
+
 ## 5. Phủ chương trình
 
 | Owner / Feature | Trạng thái | Bằng chứng | Wave kế |
