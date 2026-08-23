@@ -13,7 +13,7 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > |---|---|
 > | Active development branch | **`main`** — hệ thống được phát triển tiếp TRỰC TIẾP ở đây |
 > | Main baseline | **`f2b28e2`** = PATCH1 implementation `8bd2324` + PATCH1 live evidence `f2b28e2` |
-> | `CACHE_VERSION` | **36** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
+> | `CACHE_VERSION` | **37** — kiểm: `grep -n 'CACHE_VERSION = ' backend/app/main.py` |
 > | `HISTORY_SCHEMA_VERSION` | **2** — kiểm: `grep -n 'HISTORY_SCHEMA_VERSION' frontend/src/state/history.ts` |
 > | Family / Target | **12 / 24** — kiểm: `backend/.venv/Scripts/python.exe backend/scripts/catalog_runtime_matrix.py` |
 > | ↳ phân rã family | **10 mô phỏng cơ chế tính toán** (`result_authority = computation`) + **2 biểu diễn** (`representation` — `structural_progressive_representation`, `web_presentation`). **Không** đếm phẳng cả 12 là "mô phỏng thuật toán" |
@@ -61,10 +61,14 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   `stage_simulate`). Trần là hằng số ⇒ **claim D1 nguyên vẹn**.
 > - Sửa một lỗi ĐỊNH TUYẾN: `mismatch_gap` return trước nhánh phát, nên phán
 >   quyết lệch của classifier legacy giết một outcome `servable=true`.
-> - **Đề ghép ngoặc vẫn `capability_gap` — ĐÚNG THIẾT KẾ.** Nghĩa vụ của nó là
->   `predicate_verdict`, thứ `obligations.py` cố ý không có vì kiểm nó đòi cài
->   lại chính thuật toán đang kiểm. Taxonomy giữ **9 nghĩa vụ, `4dd712a3…` qua
->   cả năm lần đóng băng** — không thêm nghĩa vụ nào để cứu case.
+> - **`predicate_verdict` ĐÃ MỞ (2026-08-24), và đề ghép ngoặc nay chạy được.**
+>   Phản đối cũ ("kiểm nó đòi cài lại chính thuật toán đang kiểm") áp quá rộng:
+>   `_extremum` cũng tính lại `max`, `_membership` cũng tính lại `in`. Thứ giữ
+>   tính oracle là *tính lại TỪ DỮ LIỆU ĐỀ, không đọc witness để suy đáp án* —
+>   và `balanced_delimiters` thoả. Mở thêm `scalar_accumulation` vì đo cơ học
+>   cho thấy **0/10 nghĩa vụ nhận được chủ thể vô hướng**, trong khi vòng lặp
+>   tích luỹ trên một biên số là kiến trúc cơ bản nhất của Tin học 10. Taxonomy:
+>   **11 nghĩa vụ**. Nguồn cả hai: DEV.
 > - `CACHE_VERSION` **35 → 36**. Candidate đóng băng lại ở `d6b7b30`
 >   (`464887dd…`, 128 file). Offline: pytest **1845** · vitest **1530 / 127
 >   file** · tsc 0 lỗi · build sạch.

@@ -1,8 +1,8 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-08-23T12:20:15+00:00",
-  "commit": "1963ca0a9058707e79ddcf8a6775c08187f96829",
-  "commit_ngan": "1963ca0",
+  "dong_bang_luc": "2026-08-23T17:07:55+00:00",
+  "commit": "12085d5103165b7fdeefb2d2d5b0d2071dc8a84a",
+  "commit_ngan": "12085d5",
   "cay_lam_viec_sach": true,
   "cache_version": "36",
   "spec_version_ir": "1.0",
@@ -13,11 +13,11 @@
       "frontend/src/simulations/domains/generic/semantic_program.schema.json"
     ],
     "so_file": 128,
-    "tree_hash": "1b7bfc853beac1bf9437b901918bad543d60abc44b54406aa47dae200c62e6d2",
+    "tree_hash": "7dda2a31857bff340c904a9783b68ad80b2a400faef351aa3887891f9c9335c7",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
-    "so_nghia_vu": 9,
+    "so_nghia_vu": 11,
     "kinds": [
       "aggregate_matching",
       "derived_sequence",
@@ -25,7 +25,9 @@
       "first_match_index",
       "membership",
       "ordering",
+      "predicate_verdict",
       "reachability",
+      "scalar_accumulation",
       "structural_traversal",
       "total_mapping"
     ],
@@ -50,10 +52,12 @@
       "first_match_index",
       "membership",
       "ordering",
+      "predicate_verdict",
       "reachability",
+      "scalar_accumulation",
       "total_mapping"
     ],
-    "hash": "4dd712a376aea4bbf5d3d5fa16101b247518ef2b1b8ba5beca7670f910612d67"
+    "hash": "b30e45dace0efd5813e5e1bc7dd631ec1796258bddc9613a9ed6de1d0e67d7b4"
   },
   "visual_primitive_set": {
     "so_primitive": 9,

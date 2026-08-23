@@ -301,7 +301,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # nhớ chưa khai, nên chương trình bị Pydantic vứt trước mọi tầng ngữ nghĩa.
     # Đổi prompt mà không bump thì đề cũ vẫn trả chương trình sinh dưới prompt
     # cũ, và bản sửa đọc như không ăn thua.
-    assert main_module.CACHE_VERSION == "36"
+    # 37: schema `analyze` ngữ nghĩa đổi hai chỗ — taxonomy thêm
+    # `predicate_verdict`/`scalar_accumulation`, và `pred` thành ENUM vị từ kiểm
+    # được. Live 24/08 cho thấy đề chuỗi ngoặc `executable=True` rồi rơi mức yếu
+    # chỉ vì thiếu `pred`: trường ấy là chuỗi tự do nên mô hình chưa từng biết có
+    # vị từ nào để gọi. Không bump thì phân tích cache theo schema cũ vẫn về
+    # không kèm `pred`, và bản sửa đọc như không ăn thua.
+    assert main_module.CACHE_VERSION == "37"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
@@ -314,6 +320,49 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
         s.commit()
         assert _cache_lookup(s, key) is None  # policy_version="9" (luật cũ) → miss
 
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.commit()
+
+
+def test_ghi_de_cache_cu_sau_bump_KHONG_vo_khoa(monkeypatch):
+    """Đề ĐÃ TỪNG phân tích, gặp `CACHE_VERSION` mới ⇒ phải ghi đè, không 500.
+
+    LỖI THẬT, CÂM SUỐT NHIỀU LẦN BUMP: tra cứu trượt vì `policy_version` khác,
+    nhánh ghi lại tìm thấy hàng cũ theo `key` và `session.delete(...)` rồi
+    `session.add(...)` trong CÙNG một flush — SQLAlchemy phát INSERT **trước**
+    DELETE, nên đụng `UNIQUE(key)`. Người dùng nhận 500 cho đúng những đề họ đã
+    xem trước đó.
+
+    Không lộ ra suốt thời gian dài vì test luôn chạy trên DB sạch; nó chỉ hiện
+    khi DB còn hàng của lần bump trước. Test này DỰNG LẠI đúng tình huống ấy.
+    """
+    monkeypatch.setenv("GEMINI_API_KEY", "khoa-gia")
+    init_db()
+    text = "Đề đã từng phân tích ở phiên bản cache cũ, nay gặp bump mới"
+    key = _cache_key(text)
+
+    with SessionLocal() as s:
+        s.query(SimulationCache).filter_by(key=key).delete()
+        s.add(SimulationCache(
+            key=key, problem_text=text, simulation_id="generic.rule_scene",
+            envelope_json='{"status":"ok"}', dsl_version=DSL_VERSION,
+            policy_version="1",  # phiên bản CŨ ⇒ tra cứu sẽ trượt
+        ))
+        s.commit()
+
+    async def fake_ok(t, api_key, pattern_store=None, **kw):
+        return {"status": "ok", "simulation_id": "generic.rule_scene",
+                "config": {"objects": [], "frames": []}, "source": "composed"}
+
+    monkeypatch.setattr(main_module, "run_pipeline", fake_ok)
+    res = client.post("/api/analyze",
+                      json={"input": {"type": "text", "content": text}})
+    assert res.status_code == 200, res.text
+
+    with SessionLocal() as s:
+        rows = s.query(SimulationCache).filter_by(key=key).all()
+        assert len(rows) == 1, "phải còn ĐÚNG một hàng — ghi đè, không nhân bản"
+        assert rows[0].policy_version == main_module.CACHE_VERSION
         s.query(SimulationCache).filter_by(key=key).delete()
         s.commit()
 

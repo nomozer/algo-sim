@@ -356,11 +356,34 @@ def _facts_for_prompt(contract: "RequestContract") -> str:
     """
     if not contract.input_facts:
         return "Đề không cho dữ liệu cụ thể nào."
-    dong = [
-        f"- id `{f.fact_id}` — {f.label}"
-        + (f": {', '.join(str(v) for v in f.values)}" if f.values else " (đề chưa cho giá trị)")
-        for f in contract.input_facts
-    ]
+
+    def _hien(f) -> str:
+        """Cách VIẾT của một mục dữ liệu, cho MẮT ĐỌC.
+
+        ─── BẪY ĐÃ CẮN, ĐO ĐƯỢC TRÊN LƯỢT LIVE 2026-08-24 ──────────────────
+        `f.values` là biểu diễn dành cho GROUNDING: một chuỗi được mở thành
+        *toàn bộ + từng ký tự* (`gia_tri_kem_ky_tu`) để chương trình khai đầu
+        vào dạng mảng ký tự vẫn qua được P2. Đem nguyên biểu diễn ấy nối bằng
+        dấu phẩy thì mục `{[()]}` hiện ra thành:
+
+            Chuỗi đóng mở ngoặc: {[()]}, {, [, (, ), ], }
+
+        — dấu phẩy vừa là ký tự phân cách vừa nằm cạnh toàn dấu ngoặc. Mô hình
+        đọc mớ đó rồi khai `['{', '<', '(', ')', '>']`: **bịa ra dấu ngoặc
+        nhọn**. Cổng grounding bắt đúng và từ chối, nhưng thứ bị hỏng là CÁCH
+        HỎI, không phải mô hình.
+
+        `source_text` là literal ĐÚNG NHƯ NÓ NẰM TRONG ĐỀ, do extractor tất
+        định cắt ra kèm span. Có nó thì hiển thị nó — không có cách viết nào
+        trung thực hơn thế.
+        """
+        if f.source_text:
+            return f': "{f.source_text}"'
+        if f.values:
+            return f": {', '.join(str(v) for v in f.values)}"
+        return " (đề chưa cho giá trị)"
+
+    dong = [f"- id `{f.fact_id}` — {f.label}{_hien(f)}" for f in contract.input_facts]
     return "Dữ liệu đề cho (ghim `source_fact_id` về đúng id dưới đây):\n" + "\n".join(dong)
 
 

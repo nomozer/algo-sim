@@ -34,6 +34,12 @@ from app.simulation.dsl.manifest import DSL_VERSION, MANIFEST, SUPPORTED_VERSION
 from app.simulation.patterns import DbPatternStore
 from app.ai.edit import edit_simulation
 from app.ai.explain import explain_state
+from app.ai.route_trace import (
+    DiagnosticObserver,
+    bat_telemetry,
+    lan_gan_nhat,
+    theo_id,
+)
 from app.ingestion.input import IngestError, ingest_to_text
 from app.ai.pipeline import run_pipeline
 from app.learner_messages import attach_learner_reason, learner_error_message
@@ -147,7 +153,14 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       chết vì LLM viết `container: {"kind":"literal","value":"([{"}` — trỏ tới
 #       một vùng nhớ chưa bao giờ được khai. Bề mặt LLM đổi ⇒ chương trình ngữ
 #       nghĩa cache theo prompt cũ không còn đại diện cho prompt hiện hành.
-CACHE_VERSION = "36"
+#   37 (2026-08-24, vNext): schema `analyze` ngữ nghĩa đổi HAI chỗ — taxonomy
+#       thêm `predicate_verdict`/`scalar_accumulation`, và `pred` từ chuỗi tự do
+#       thành ENUM các vị từ kiểm được. Đo được ở lượt live 24/08: đề chuỗi ngoặc
+#       đi trọn tới C₂ với `executable=True` rồi rơi mức yếu chỉ vì nghĩa vụ
+#       không kèm `pred` — trường ấy chưa bao giờ cho mô hình biết có những vị từ
+#       nào. Bề mặt khai nghĩa vụ đổi ⇒ mọi phân tích cache theo schema cũ không
+#       còn đại diện cho schema hiện hành.
+CACHE_VERSION = "37"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
@@ -261,6 +274,24 @@ def diagnostics_runtime():
     return runtime_identity()
 
 
+@app.get("/api/diagnostics/semantic")
+def diagnostics_semantic(request_id: str | None = None, n: int = 5):
+    """Chuỗi sự kiện của các lượt phân tích gần nhất — CÔNG CỤ CHẨN ĐOÁN.
+
+    Trả `{"bat": false}` khi telemetry tắt, thay vì mảng rỗng: "tắt" và "chạy
+    rồi mà không có gì" là hai câu trả lời khác hẳn nhau, và lẫn chúng đúng là
+    kiểu nhầm đã khiến lượt live 2026-08-24 mất một buổi.
+
+    Không có bí mật nào đi qua đây — chỉ các trường `ai/pipeline.py` đã chọn để
+    phát, và chúng không mang credential.
+    """
+    if not bat_telemetry():
+        return {"bat": False, "cach_bat": "SEMANTIC_TELEMETRY=1 ở container backend"}
+    if request_id:
+        return {"bat": True, "ban_ghi": theo_id(request_id)}
+    return {"bat": True, "ban_ghi": lan_gan_nhat(n)}
+
+
 @app.post("/api/analyze")
 async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(default=None)):
     """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
@@ -333,9 +364,18 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
     # TẦNG 2 (pattern reuse) bật qua store inject — pipeline tự giới hạn nó
     # sau classify và chỉ cho generic.rule_scene.
     try:
+        # TELEMETRY CHẨN ĐOÁN — thụ động, mặc định TẮT (`SEMANTIC_TELEMETRY`).
+        #
+        # `run_pipeline` phát sự kiện cho observer từ M14, nhưng đường sản phẩm
+        # luôn truyền `None` nên mọi sự kiện rơi vào hư không. Lượt live
+        # 2026-08-24 trả `unsupported` cho cả ba đề mà log chỉ có `POST 200 OK`:
+        # tiêu quota thật để mua lại đúng câu hỏi cũ. Cùng lớp lỗi với chính
+        # `semantic_route` từng bị bỏ quên ở đây.
+        obs = DiagnosticObserver(text) if bat_telemetry() else None
         envelope = await run_pipeline(
             text,
             api_key,
+            observer=obs,
             pattern_store=DbPatternStore(CACHE_VERSION),
             # Thiếu đúng tham số này là lý do route sinh ngữ nghĩa chưa bao giờ
             # chạy trong sản phẩm — xem `semantic_route_mode()`. Khoá bởi
@@ -343,12 +383,19 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
             semantic_route=semantic_route_mode(),
         )
     except Exception as err:  # pipeline thất bại sau retry → báo người dùng
+        # Chốt bản ghi TRƯỚC khi trả lỗi: lượt hỏng mới là lượt cần chẩn đoán,
+        # bỏ nó đi là bỏ đúng dữ liệu đáng giá nhất.
+        if obs is not None:
+            obs.ket_thuc(None)
         # M17 W0 — học sinh thấy thông điệp thân thiện; chi tiết kỹ thuật đi
         # field riêng (FE không render, dev đọc qua devtools/log).
         return JSONResponse(
             status_code=422,
             content={"error": learner_error_message(), "error_detail": str(err)},
         )
+
+    if obs is not None:
+        obs.ket_thuc(envelope)
 
     # M7.8: CHỈ cache kết quả THÀNH CÔNG. Không cache unsupported để tránh kẹt
     # kết quả cũ khi năng lực classify/DSL được cải thiện (chống stale).
@@ -364,6 +411,14 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
             stale = session.query(SimulationCache).filter_by(key=key).first()
             if stale is not None:
                 session.delete(stale)  # row version cũ → thay bằng kết quả mới
+                # FLUSH NGAY, và đây không phải thừa: trong MỘT flush,
+                # SQLAlchemy phát INSERT **trước** DELETE, nên hàng mới đụng
+                # `UNIQUE(key)` của hàng cũ chưa kịp xoá. Hệ quả là mỗi lần bump
+                # `CACHE_VERSION` thì đề ĐÃ TỪNG phân tích trả 500 — tra cứu
+                # trượt vì `policy_version` khác, rồi ghi lại thì vỡ khoá.
+                # Lỗi câm suốt nhiều lần bump vì test luôn chạy trên DB sạch;
+                # nó lộ ra ở bump 36→37 khi DB test còn hàng của lượt trước.
+                session.flush()
             session.add(
                 SimulationCache(
                     key=key,

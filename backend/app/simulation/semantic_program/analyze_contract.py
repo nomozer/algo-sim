@@ -34,6 +34,25 @@ from .request_contract import InputFact, RequestContract, norm_value
 INPUT_FACT_KINDS = ("array", "matrix", "map", "set", "graph", "tree_node",
                     "int", "str", "bool", "float")
 
+
+def _vi_tu_kiem_duoc() -> list[str]:
+    """Tập vị từ mà server CÓ bộ kiểm độc lập — dẫn xuất, không chép tay.
+
+    Nhập trễ (trong hàm) để tránh vòng phụ thuộc: `postconditions` đọc
+    `obligations`, còn module này đọc cả hai.
+
+    Hai nguồn, hai loại chủ thể: `PREDICATE_CHECKERS` cho chủ thể TẬP HỢP
+    (`balanced_delimiters`), `_PREDS` cho chủ thể VÔ HƯỚNG (even/odd/gt/…).
+    Gộp lại vì với người khai nghĩa vụ thì đó chỉ là một câu hỏi: *tôi được
+    phép gọi tên vị từ nào?*
+    """
+    from .postconditions import _PREDS, PREDICATE_CHECKERS
+
+    return sorted(set(PREDICATE_CHECKERS) | set(_PREDS))
+
+
+_VI_TU_KIEM_DUOC = _vi_tu_kiem_duoc()
+
 SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
     "type": "OBJECT",
     "properties": {
@@ -83,7 +102,26 @@ SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
                     "cmp": {"type": "STRING", "nullable": True},
                     "op": {"type": "STRING", "nullable": True},
                     "transform": {"type": "STRING", "nullable": True},
-                    "pred": {"type": "STRING", "nullable": True},
+                    # VỊ TỪ — enum, không phải chuỗi tự do.
+                    #
+                    # ĐO ĐƯỢC (live 2026-08-24): đề chuỗi ngoặc đi trọn tới C₂,
+                    # `executable=True`, rồi rơi mức yếu chỉ vì nghĩa vụ không
+                    # kèm `pred`. Không phải mô hình lười — trường này là STRING
+                    # tự do, nên **nó chưa bao giờ được cho biết có những vị từ
+                    # nào**. Bắt ai đó gọi đúng tên một thứ chưa từng được giới
+                    # thiệu thì im lặng là kết cục đương nhiên.
+                    #
+                    # Liệt kê ở đây = liệt kê ĐÚNG tập KIỂM ĐƯỢC, dẫn xuất từ
+                    # chính hai registry chứ không chép tay: thêm một checker là
+                    # từ vựng analyze tự rộng ra, không có chỗ nào lệch.
+                    "pred": {
+                        "type": "STRING",
+                        "nullable": True,
+                        "enum": _VI_TU_KIEM_DUOC,
+                        "description": "Tên vị từ cho `predicate_verdict`. Chỉ "
+                                       "dùng tên trong danh sách; vị từ ngoài "
+                                       "danh sách sẽ không kiểm chứng được.",
+                    },
                 },
                 "required": ["kind", "container", "witness"],
             },

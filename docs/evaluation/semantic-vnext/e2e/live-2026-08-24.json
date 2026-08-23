@@ -1,0 +1,48 @@
+{
+  "chay_luc": "2026-08-24T00:11:31",
+  "so_request": 3,
+  "ket": [
+    {
+      "ten": "stack/predicate",
+      "de": "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng Stack với chuỗi {[()]}.",
+      "http": 200,
+      "giay": 34.9,
+      "status": "unsupported",
+      "simulation_id": null,
+      "source": null,
+      "failure_category": "capability_gap",
+      "error_code": null,
+      "reason": "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để AI tự giải rồi dựng cảnh minh hoạ đáp án.",
+      "so_khung": 0,
+      "final_memory": null
+    },
+    {
+      "ten": "scalar/tich luy",
+      "de": "Viết chương trình tính tổng các số nguyên từ 1 đến 10 và in kết quả.",
+      "http": 200,
+      "giay": 26.0,
+      "status": "unsupported",
+      "simulation_id": null,
+      "source": null,
+      "failure_category": "capability_gap",
+      "error_code": "route_mechanism_family_mismatch",
+      "reason": "Cơ chế đề yêu cầu thuộc một họ năng lực khác với mô phỏng đã chọn — cần chọn lại mô phỏng đúng họ hoặc từ chối trung thực.",
+      "so_khung": 0,
+      "final_memory": null
+    },
+    {
+      "ten": "array/quet",
+      "de": "Cho dãy 12, 45, 67, 23, 89, 34. Hãy tìm phần tử lớn nhất của dãy.",
+      "http": 200,
+      "giay": 29.5,
+      "status": "ok",
+      "simulation_id": "algorithm.find_max",
+      "source": "composed",
+      "failure_category": null,
+      "error_code": null,
+      "reason": "",
+      "so_khung": 0,
+      "final_memory": null
+    }
+  ]
+}

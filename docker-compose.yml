@@ -38,6 +38,11 @@ services:
       # `app/main.py::semantic_route_mode`.
       #   SEMANTIC_ROUTE_MODE=serve docker compose up -d backend
       SEMANTIC_ROUTE_MODE: ${SEMANTIC_ROUTE_MODE:-off}
+      # Telemetry chẩn đoán route ngữ nghĩa — THỤ ĐỘNG, mặc định tắt.
+      # Đọc ở `GET /api/diagnostics/semantic`. Bật khi cần biết một lượt chết ở
+      # tầng nào; không bật thì mỗi lượt live chỉ trả về "unsupported" trống.
+      #   SEMANTIC_TELEMETRY=1 docker compose up -d backend
+      SEMANTIC_TELEMETRY: ${SEMANTIC_TELEMETRY:-0}
     volumes:
       - ./backend/app:/app/app
     env_file:
