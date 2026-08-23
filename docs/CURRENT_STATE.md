@@ -40,6 +40,17 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 >   prompt · schema · taxonomy · primitive · route · checker · runner · ngân
 >   sách vì kết quả SEALED. `--verify` là cổng kiểm. (Bản `36bae92`/`5608fbfe…`
 >   là lần đóng băng TRƯỚC pilot 4; candidate cuối cùng đem đo là `4e13e2b`.)
+> - **⚠️ `EVALUATION_CANDIDATE.json` nay trỏ `dacd240`, KHÔNG phải bản đã đo.**
+>   Sau Task 12, vNext sửa mã sản phẩm (routing · frame · renderer · biên
+>   `spec_version`) nên tree hash trôi khỏi `024f627b…` và hai cổng con dấu ĐỎ
+>   đúng như thiết kế. Xử lý theo luật *"DEV được phép làm thay đổi HỆ, SEALED
+>   chỉ được phép làm thay đổi KẾT LUẬN"*: đóng băng lại candidate ở `dacd240`
+>   (`706be2ad…`, vẫn 126 file) và lưu danh tính bản đã đo ở
+>   `EVALUATION_CANDIDATE.baseline-4e13e2b.json`. **Số chính thức ở
+>   `results/OFFICIAL_RESULT.md` vẫn là số của `4e13e2b` và KHÔNG được đọc như
+>   số của `dacd240`** — muốn đo lại phải niêm phong SEALED MỚI. Hợp đồng
+>   (taxonomy `4dd712a3` · primitive `1a127502` · schema `b87aeb18` · DEV
+>   `8a3de7a3`) **không đổi** qua lượt này: chỉ cài đặt đổi.
 > - **Route nay ĐI QUA `run_pipeline` thật** (bất biến #22). Trước 2026-08-21
 >   `stage_semantic_program` **không có một ai gọi**: mọi mảnh đều xanh nhưng
 >   chưa mảnh nào được ghép — unit test xanh **không** chứng minh đường
