@@ -719,6 +719,24 @@ bước, sai thì thoát != 0) và **`--faultcheck`** (chặn sự kiện nút "
 soát phải TỤT ĐIỂM). Chạy: `node scripts/certify-transport-vnext.mjs --port 3177
 [--faultcheck]`.
 
+### `frontend/scripts/certify-transport-vnext.mjs` (vNext) · cần dev server + Playwright
+
+Sở hữu HAI bản soát trên UI THẬT, **không inject store**: §6 transport (Tiến ·
+Lùi · Về đầu · Dựng lại · Tự chạy/Dừng) và §5 rõ ràng thị giác ở ba bề rộng.
+Dùng **bài mẫu offline** (`data/samples.ts`) nên 0 API call — người dùng chọn
+bài, bấm nút, trạng thái đổi thật. Ba miền: array/quét · tree/duyệt · graph/BFS.
+
+Hai cái bẫy đã cắn và nay ghi lại trong code: nút bước là nút ICON chỉ có
+`title` (tìm theo chữ trượt IM LẶNG), và `Tự chạy` **đổi nhãn thành `Dừng`** sau
+khi bấm. Nhịp tự chạy đo được ~1 bước/giây, tick đầu ~1,2s — chờ 900ms thì bản
+soát vu oan cho sản phẩm.
+
+Đo HÌNH HỌC chứ không so pixel (repo không có `@playwright/test`): chữ SVG nằm
+trong khung vẽ · không tràn ngang · không chữ kích thước 0 · nút bước còn bấm
+được. `--faultcheck` chặn nút Tiến ở tầng capture để chứng minh guard đỏ được.
+
+Ngưỡng đo được: bố cục **tràn ngang dưới ~354px** (344 tràn · 360 không).
+
 ### `frontend/scripts/capture-stack-vnext.mjs` (vNext) · cần dev server + Playwright
 
 Bằng chứng trình duyệt cho case Stack `{[()]}`: tiêm envelope thẳng qua

@@ -1,5 +1,36 @@
 # Chọn 40 case SEALED — hướng dẫn cho GVHD / người thứ ba
 
+> ## ⚠️ ĐỌC MỤC NÀY TRƯỚC — LƯỢT #2 (2026-08-23)
+>
+> Lượt #1 đã chạy xong và **số của nó đã đóng** (A 3/40 · B 1/40 trên bản
+> `4e13e2b`). Sau đó hệ được sửa ở đúng những chỗ mà lượt #1 chỉ ra, nên cần đo
+> lại trên bài **chưa từng thấy**.
+>
+> **Khác biệt duy nhất so với hướng dẫn bên dưới:**
+>
+> | | Lượt #1 | **Lượt #2** |
+> |---|---|---|
+> | Không gian chọn | 89 bài | **49 bài** (đã loại 40 bài lượt #1) |
+> | Lệnh | `--seed <số>` | `--seed <số>` **`--exclude-measured`** |
+>
+> 40 bài của lượt #1 phải bị loại vì chúng **đã lộ ra cho người sửa mã** — chính
+> chúng dẫn dắt các bản vá. Đo lại trên chúng thì con số chỉ nói *"hệ đã được vá
+> theo đúng những bài này"*, không nói về năng lực.
+>
+> ```bash
+> cd docs/evaluation/semantic-benchmark/custodian
+> python select_by_seed.py --seed <số của thầy> --exclude-measured           # xem trước
+> python select_by_seed.py --seed <số của thầy> --exclude-measured --write   # chốt
+> ```
+>
+> Script tự in ra *"Loại 40 bài đã đo ở lượt #1 · còn 49 bài chưa từng đo"* và từ
+> chối chạy nếu pool hoặc tập loại trừ bị đổi.
+>
+> ⚠️ **49 cho 40 là rất sát.** Nếu thầy chọn tay (phương án A), xin lấy đúng 40
+> ID **trong danh sách 49 bài còn lại**, không lấy ngoài.
+>
+> Giao thức đầy đủ của lượt #2: `../RUN2_PROTOCOL.md`.
+
 Bạn đang giữ mắt xích quyết định của cả phần đánh giá. Việc cần làm nhỏ: **chọn
 đúng 40 ID** từ pool. Nhưng nó phải do **bạn** làm, không phải agent viết hệ —
 đó là toàn bộ lý do phần này tồn tại.
