@@ -221,3 +221,67 @@ def test_route_ha_servable_va_giu_executable():
 @pytest.mark.parametrize("code", [ErrorCode.LEARNER_SURFACE_INCOMPLETE])
 def test_ma_loi_moi_co_category_hop_le(code):
     assert SEMANTIC_FAILURE_CATEGORY[code.value] == "verification_gap"
+
+
+# ── §1 — PHỦ KIỂU: không kiểu nào lọt qua mà không có quyết định ───────────
+#
+# Lỗ hổng nhóm test này đóng: bản đầu của gate viết bảy tên container thẳng vào
+# một hằng số và bỏ sót `tree_node`. Bỏ sót đó IM LẶNG — cây dựng dần qua các
+# bước mà không có hình thì gate vẫn nói `servable=True`. Tức đúng lớp lỗi mà
+# gate sinh ra để chặn, lọt ngay bên trong gate.
+
+import typing  # noqa: E402
+
+from app.simulation.semantic_program.contract import (  # noqa: E402
+    ContainerType,
+    MemoryType,
+    VisualContainerBinding,
+)
+from app.simulation.semantic_program.learner_surface import (  # noqa: E402
+    CONTAINER_TYPES as GATE_TYPES,
+)
+from app.simulation.semantic_program.learner_surface import (  # noqa: E402
+    SURFACE_POLICY,
+    TYPE_TO_PRIMITIVES,
+)
+
+
+@pytest.mark.parametrize("mt", sorted(typing.get_args(MemoryType)))
+def test_moi_memory_type_co_quyet_dinh_tuong_minh(mt):
+    """Thêm `MemoryType` mà quên chính sách hiển thị ⇒ ĐỎ ngay tại đây."""
+    assert mt in SURFACE_POLICY, (
+        f"`{mt}` là MemoryType đã admit nhưng chưa có quyết định hiển thị. "
+        "Thêm vào SURFACE_POLICY: 'container' nếu phải hiện, hoặc một câu nói "
+        "VÌ SAO không đòi."
+    )
+
+
+def test_moi_container_type_deu_phai_hien():
+    """`ContainerType` = lớp trạng thái mang dữ liệu ⇒ biến động thì phải thấy.
+
+    Đây là bất biến bắt được `tree_node`: nó nằm trong `ContainerType` từ đầu mà
+    gate không phủ.
+    """
+    thieu = sorted(set(typing.get_args(ContainerType)) - GATE_TYPES)
+    assert thieu == [], (
+        f"ContainerType không được learner-surface phủ: {thieu}. Một container "
+        "biến động mà không ai đòi hiện là một mô phỏng kể chuyện về thứ không "
+        "có trên màn hình."
+    )
+
+
+@pytest.mark.parametrize("ct", sorted(typing.get_args(ContainerType)))
+def test_da_admit_va_bien_dong_thi_bieu_dien_duoc(ct):
+    """ADMITTED_DYNAMIC_STATE_TYPE ⇒ HAS_VISUAL_REPRESENTATION.
+
+    Vế này từng bị vi phạm suốt nhiều milestone: `map` admit từ lâu mà không
+    primitive nào vẽ được, nên mọi bài có đáp án là bảng chạy được mà không xem
+    được. Đòi nó thành ĐỎ là cách duy nhất để lần sau không lặp lại.
+    """
+    prims = TYPE_TO_PRIMITIVES.get(ct, ())
+    assert prims, f"`{ct}` đã admit nhưng không primitive nào biểu diễn được"
+    hop_le = set(
+        typing.get_args(VisualContainerBinding.model_fields["primitive"].annotation)
+    )
+    la = sorted(set(prims) - hop_le)
+    assert la == [], f"`{ct}` trỏ tới primitive không tồn tại: {la}"

@@ -49,6 +49,7 @@ Ngoài hai lớp đó, cổng im lặng. Một cổng kêu oan là một cổng 
 """
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -162,17 +163,74 @@ def _bien_dong(exec_res: SemanticExecutionResult, ten: str) -> bool:
     return False
 
 
+#: Khoá KHÔNG đi ra màn hình — định danh, kiểu, tham số hình học. Quét chúng chỉ
+#: tạo dương tính giả.
+#:
+#: VÌ SAO LÀ DANH SÁCH LOẠI TRỪ, KHÔNG PHẢI DANH SÁCH CHO PHÉP: bản đầu chỉ soi
+#: `items` và `value`, nên `entries` (map), `nodes`/`edges` (graph), ô của
+#: `table_grid` — tất cả đều KHÔNG được quét. Với danh sách cho phép, mỗi
+#: primitive mới lại lặng lẽ mở một lỗ; với danh sách loại trừ, primitive mới
+#: được quét MẶC ĐỊNH và chỉ được miễn khi ai đó nói rõ nó là kỹ thuật. Sai lầm
+#: an toàn phải nghiêng về phía bắt nhầm, không phải bỏ sót.
+NON_LEARNER_KEYS = frozenset(
+    {
+        "id",
+        "type",
+        "primitive",
+        "capacity",
+        "target",
+        "target_index",
+        "highlight_indices",
+        "highlighted_object_ids",
+        "step_index",
+        "semantic_id",
+    }
+)
+
+#: Trong CÂU KỂ thì giá trị rò ra nằm giữa câu, nên phải khớp theo biên từ chứ
+#: không so bằng nhau.
+_RX_TRONG_CAU = re.compile(
+    r"(?<![\w.\[])(?:" + "|".join(re.escape(x) for x in PLACEHOLDER_LEAKS) + r")(?![\w.])"
+    r"|\[object Object\]"
+)
+
+
+def _quet_sau(node: Any, duong: str, ra: list[str]) -> None:
+    """Đi hết cây payload hiển thị, bắt chuỗi kỹ thuật ở MỌI độ sâu.
+
+    Bắt lồng nhau là bắt buộc chứ không phải cho đẹp: một `entries` của map là
+    `[[khoá, giá_trị], …]`, một `edges` của graph là `[[u, v], …]`. Chỉ nhìn
+    tầng một thì giá trị hỏng nằm ở tầng hai đi qua tự do.
+    """
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if k in NON_LEARNER_KEYS:
+                continue
+            _quet_sau(v, f"{duong}.{k}", ra)
+    elif isinstance(node, (list, tuple)):
+        for i, v in enumerate(node):
+            _quet_sau(v, f"{duong}[{i}]", ra)
+    elif isinstance(node, str):
+        # So BẰNG NHAU cho một giá trị dữ liệu: chuỗi dữ liệu thật có thể chứa
+        # chữ "null" như nội dung, và bắt nó là kêu oan.
+        if node.strip() in PLACEHOLDER_LEAKS:
+            ra.append(f'{duong}: "{node}"')
+    # Số (kể cả 0) và bool đi qua: `0` THẬT là dữ liệu hợp lệ, và nuốt nó chính
+    # là bẫy ngược chiều của `?? 0` mà kho này đã dính một lần.
+
+
 def _ro_ri(envelope: dict[str, Any]) -> list[str]:
-    """Chuỗi kỹ thuật lọt vào giá trị hiển thị của bất kỳ khung nào."""
+    """Chuỗi kỹ thuật lọt lên bề mặt học sinh, ở bất kỳ khung và độ sâu nào."""
     ra: list[str] = []
-    for frame in envelope.get("config", {}).get("frames", ()) or ():
+    for i, frame in enumerate(envelope.get("config", {}).get("frames", ()) or ()):
         for obj in frame.get("objects", ()) or ():
-            ung = list(obj.get("items") or ())
-            if "value" in obj:
-                ung.append(obj["value"])
-            for v in ung:
-                if isinstance(v, str) and v.strip() in PLACEHOLDER_LEAKS:
-                    ra.append(f"{obj.get('id')}: \"{v}\"")
+            _quet_sau(obj, f"khung{i}.{obj.get('id')}", ra)
+        # Lời kể cũng là bề mặt học sinh, và là chỗ dễ rò nhất: một giá trị hỏng
+        # được nội suy vào câu thì nằm GIỮA câu, không đứng một mình.
+        for k in ("narration", "tier1_fact", "tier2_intent"):
+            v = frame.get(k)
+            if isinstance(v, str) and _RX_TRONG_CAU.search(v):
+                ra.append(f"khung{i}.{k}: \"{v[:60]}\"")
     return sorted(set(ra))
 
 
