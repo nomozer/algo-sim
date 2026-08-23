@@ -1,10 +1,10 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-08-23T10:22:16+00:00",
-  "commit": "dacd2404a89895faf9263dd0e38566044fafaaaf",
-  "commit_ngan": "dacd240",
+  "dong_bang_luc": "2026-08-23T11:38:07+00:00",
+  "commit": "d6b7b30414b7efd700f4815889f4a20f8a41fe07",
+  "commit_ngan": "d6b7b30",
   "cay_lam_viec_sach": true,
-  "cache_version": "35",
+  "cache_version": "36",
   "spec_version_ir": "1.0",
   "measured_system": {
     "paths": [
@@ -12,8 +12,8 @@
       "frontend/src/simulations/domains/semantic",
       "frontend/src/simulations/domains/generic/semantic_program.schema.json"
     ],
-    "so_file": 126,
-    "tree_hash": "706be2ad845d41d0c7d4f93c17d2730dfea7a63096793d2f9cd8f27ee621c322",
+    "so_file": 128,
+    "tree_hash": "464887dd26596632fffc65d965513ad0c52cbd5ee4c508ca15a83e19717aa997",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
@@ -56,22 +56,23 @@
     "hash": "4dd712a376aea4bbf5d3d5fa16101b247518ef2b1b8ba5beca7670f910612d67"
   },
   "visual_primitive_set": {
-    "so_primitive": 8,
+    "so_primitive": 9,
     "primitives": [
       "array_strip",
       "bar_chart",
       "bit_register",
       "graph_view",
+      "map_view",
       "queue_view",
       "stack_view",
       "table_grid",
       "tree_element"
     ],
-    "hash": "1a127502ac1d931a57814b826bc8aee02b75268bba1265416e1546cd77009ff8"
+    "hash": "9357dab18fe3bce13eec0dfb5e09febf1f102a32e6338322ecb243bc234d77ef"
   },
   "schema_semantic_program": {
     "duong_dan": "docs/schemas/semantic_program.schema.json",
-    "hash": "b87aeb188ebc5739531848613dc881e774e2371d4c1e6a77e701cd50a166b687"
+    "hash": "0b9c364c9c09238c50cbba893abc86276c6ece204e72a63109be65b3dff6b53a"
   },
   "dev": {
     "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
