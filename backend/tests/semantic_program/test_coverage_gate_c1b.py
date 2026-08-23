@@ -56,8 +56,14 @@ def _spec_nhanh_chet() -> SemanticProgramSpec:
             IfStmt(
                 condition=CompareCond(op="==", left=LiteralExpr(value=1),
                                       right=LiteralExpr(value=2)),
-                then_body=[AssignStmt(target_var="min_value",
-                                      expr=LiteralExpr(value=1))],
+                # Đọc `a` ngay trong nhánh chết: witness DẪN XUẤT từ container
+                # nên C₁a qua, và test chạm được tới điều nó định kiểm — C₁b bắt
+                # nhánh không bao giờ chạy. Bản trước gán hằng `1`, nên từ
+                # 2026-08-24 nó bị cổng "witness không dẫn xuất" chặn TRƯỚC, và
+                # test đỏ vì một lý do khác hẳn.
+                then_body=[AssignStmt(
+                    target_var="min_value",
+                    expr=IndexRefExpr(container="a", index=LiteralExpr(value=0)))],
                 else_body=[],
             )
         ],

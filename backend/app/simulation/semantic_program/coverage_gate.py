@@ -13,7 +13,7 @@ BA CÂU HỎI KHÁC NHAU, đừng gộp (spec §5.3):
 """
 from __future__ import annotations
 
-from typing import Iterable
+from typing import Any, Iterable
 
 from pydantic import BaseModel, Field
 
@@ -65,12 +65,109 @@ def _producers(statements: Iterable) -> set[str]:
     return found
 
 
+def _doc(node: Any) -> set[str]:
+    """Tên bộ nhớ mà một biểu thức/điều kiện ĐỌC.
+
+    Duyệt tổng quát trên cây Pydantic thay vì liệt kê từng lớp: ngữ pháp IR còn
+    mở rộng, và một bảng liệt kê tay sẽ lặng lẽ bỏ sót lớp mới — đúng kiểu lỗi
+    câm mà bất biến #33 sinh ra để chặn.
+    """
+    ra: set[str] = set()
+
+    def di(x: Any) -> None:
+        if isinstance(x, BaseModel):
+            if getattr(x, "kind", None) == "var" and isinstance(getattr(x, "name", None), str):
+                ra.add(x.name)
+            for ten, gt in x:
+                # Ba trường này mang TÊN vùng nhớ, không phải dữ liệu — và tên
+                # là một chuỗi trần nên nhánh đệ quy bên dưới sẽ bỏ qua nó.
+                # `container_or_expr` (của `for_each`) từng bị bỏ sót đúng vì
+                # thế: hai fixture dùng vòng lặp trên chuỗi bị chấm là "không
+                # dẫn xuất từ đầu vào" trong khi chúng dẫn xuất rõ ràng.
+                if ten in ("container", "graph", "container_or_expr") and isinstance(gt, str):
+                    ra.add(gt)
+                else:
+                    di(gt)
+        elif isinstance(x, (list, tuple)):
+            for y in x:
+                di(y)
+        elif isinstance(x, dict):
+            for y in x.values():
+                di(y)
+
+    di(node)
+    return ra
+
+
+def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
+               ra: dict[str, set[str]] | None = None) -> dict[str, set[str]]:
+    """Mỗi biến PHỤ THUỘC vào những biến nào — kể cả qua NHÁNH.
+
+    `ngoai` là phụ thuộc ĐIỀU KHIỂN đang có hiệu lực: điều kiện của `if`/`while`
+    và nguồn duyệt của vòng lặp bao quanh. Thiếu vế này thì
+    `result = "KHÔNG HỢP LỆ"` nằm trong nhánh so sánh đỉnh ngăn xếp bị coi là
+    hằng không phụ thuộc gì — và một chương trình ĐÚNG bị kết tội.
+    """
+    if ra is None:
+        ra = {}
+
+    def them(ten: str | None, nguon: set[str]) -> None:
+        if ten:
+            ra.setdefault(ten, set()).update(nguon | ngoai)
+
+    for st in statements or ():
+        kind = getattr(st, "kind", None)
+        if kind == "assign":
+            them(st.target_var, _doc(st.expr))
+        elif kind in ("pop", "dequeue"):
+            them(getattr(st, "dest_var", None), {st.container})
+            them(st.container, set())
+        elif kind in ("write_index", "map_set", "swap", "push", "enqueue",
+                      "set_insert", "set_remove"):
+            them(st.container, _doc(st))
+        elif kind == "for_range":
+            nguon = _doc(getattr(st, "start", None)) | _doc(getattr(st, "end", None))
+            them(getattr(st, "loop_var", None), nguon)
+            _phu_thuoc(st.body, ngoai | nguon, ra)
+            continue
+        elif kind == "for_each":
+            # `for_each` duyệt `container_or_expr`: hoặc TÊN một container,
+            # hoặc một biểu thức danh sách. Hai dạng, hai cách đọc.
+            src = getattr(st, "container_or_expr", None)
+            nguon = {src} if isinstance(src, str) else _doc(src)
+            them(getattr(st, "item_var", None), nguon)
+            _phu_thuoc(st.body, ngoai | frozenset(nguon), ra)
+            continue
+
+        # Nhánh/thân vòng lặp: điều kiện bao quanh trở thành phụ thuộc ĐIỀU KHIỂN.
+        dk = _doc(getattr(st, "condition", None)) if hasattr(st, "condition") else set()
+        for attr in ("body", "then_body", "else_body"):
+            sub = getattr(st, attr, None)
+            if sub:
+                _phu_thuoc(sub, ngoai | frozenset(dk), ra)
+    return ra
+
+
+def _bao_dong(dep: dict[str, set[str]], ten: str) -> set[str]:
+    """Bao đóng bắc cầu — `S` phụ thuộc `arr` qua bao nhiêu bước cũng tính."""
+    thay: set[str] = set()
+    hang = [ten]
+    while hang:
+        x = hang.pop()
+        for y in dep.get(x, ()):
+            if y not in thay:
+                thay.add(y)
+                hang.append(y)
+    return thay
+
+
 def check_structural_coverage(
     contract: RequestContract, spec: SemanticProgramSpec
 ) -> CoverageResult:
     """C₁a — chạy TRƯỚC execution."""
     declared = {d.name: d.type for d in spec.memory_declarations}
     producers = _producers(spec.statements)
+    phu_thuoc = _phu_thuoc(spec.statements, frozenset())
 
     missing: list[str] = []
     weak: list[str] = []
@@ -108,6 +205,31 @@ def check_structural_coverage(
             continue
         if w not in producers:
             missing.append(f"{ob.describe()}: witness '{w}' không có producer hợp lệ")
+            continue
+
+        # WITNESS PHẢI DẪN XUẤT TỪ DỮ LIỆU, không được là hằng gán thẳng.
+        #
+        # ─── LỖ HỔNG ĐÃ ĐO ĐƯỢC (live 2026-08-24) ────────────────────────────
+        # Đề chuỗi ngoặc: LLM chép đúng `{[()]}`, khai đủ `stack`/`char`/
+        # `top_char`, rồi gán thẳng `hop_le = true`. Vòng lặp KHÔNG chạy —
+        # `total_steps=2`, `stack=null`. Mọi cổng phía trước đều xanh: có
+        # producer, kiểu hợp, và C₂ tính lại độc lập cũng ra `True` nên KHỚP.
+        #
+        # Với phán quyết nhị phân, đoán bừa đúng 50%. Oracle kiểm ĐÁP ÁN không
+        # phân biệt được "tính đúng" với "đoán trúng" — và đó là giới hạn cấu
+        # trúc, không phải lỗi cài đặt. Phép kiểm này bổ khuyết đúng chỗ ấy: nó
+        # hỏi về CÔNG VIỆC chứ không về đáp án.
+        #
+        # Tổng quát cho MỌI nghĩa vụ, không riêng `predicate_verdict`:
+        # `extremum(arr, max_val)` gán thẳng `max_val = 89` cũng qua C₂ y hệt.
+        #
+        # Phụ thuộc tính cả qua NHÁNH (`_phu_thuoc`): `result = "KHÔNG HỢP LỆ"`
+        # trong nhánh so sánh đỉnh ngăn xếp vẫn là dẫn xuất thật.
+        if ob.container not in _bao_dong(phu_thuoc, w):
+            missing.append(
+                f"{ob.describe()}: witness '{w}' không dẫn xuất từ "
+                f"'{ob.container}' — chương trình khai đáp án chứ không tính nó"
+            )
             continue
 
         # Cấu trúc sạch. Còn lại là một câu hỏi KHÁC HẲN: chạy xong rồi thì có

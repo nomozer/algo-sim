@@ -10,6 +10,7 @@ import pytest
 from app.simulation.semantic_program.contract import (
     AssignStmt,
     CompareCond,
+    FieldRefExpr,
     IfStmt,
     IndexRefExpr,
     LiteralExpr,
@@ -116,7 +117,13 @@ def _spec_co_cay() -> SemanticProgramSpec:
                               initial_value={"val": "A", "left": None, "right": None}),
             MemoryDeclaration(name="max_val", type="int", initial_value=0),
         ],
-        statements=[AssignStmt(target_var="max_val", expr=LiteralExpr(value=1))],
+        # Witness phải DẪN XUẤT từ container: cổng "witness không dẫn xuất"
+        # (2026-08-24) chặn hằng gán thẳng, và spec minh hoạ cũng phải tuân
+        # luật ấy — nếu không test đỏ vì lý do khác hẳn điều nó định kiểm.
+        statements=[
+            AssignStmt(target_var="max_val",
+                       expr=FieldRefExpr(target=VarRefExpr(name="a"), field="val")),
+        ],
     )
 
 
@@ -144,7 +151,12 @@ def test_producer_nam_trong_nhanh_long_van_tinh_la_co():
         IfStmt(
             condition=CompareCond(op="<", left=VarRefExpr(name="max_val"),
                                   right=LiteralExpr(value=100)),
-            then_body=[AssignStmt(target_var="max_val", expr=LiteralExpr(value=9))],
+            # Đọc `a` trong nhánh: witness vẫn dẫn xuất từ container, nên test
+            # kiểm đúng điều nó định kiểm (producer trong nhánh lồng) chứ không
+            # vướng cổng "witness không dẫn xuất".
+            then_body=[AssignStmt(
+                target_var="max_val",
+                expr=IndexRefExpr(container="a", index=LiteralExpr(value=0)))],
             else_body=[],
         )
     ]
