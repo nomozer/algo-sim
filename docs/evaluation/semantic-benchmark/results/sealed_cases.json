@@ -1,0 +1,3438 @@
+[
+  {
+    "case_id": "T10-C5-006",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 93, Câu hỏi 3",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 93,
+      "exercise_number_or_position": "Câu hỏi 3",
+      "source_id": "T10-C5-006"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.bounded_control_flow",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "weak_kinds": [],
+      "details": [
+        "total_mapping(a): kiểu 'int' không hợp với nghĩa vụ này",
+        "total_mapping(b): kiểu 'int' không hợp với nghĩa vụ này"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 2,
+      "kinds": [
+        "total_mapping"
+      ],
+      "obligations": [
+        {
+          "kind": "total_mapping",
+          "container": "a",
+          "witness": "gia_tri_a_cuoi_cung"
+        },
+        {
+          "kind": "total_mapping",
+          "container": "b",
+          "witness": "gia_tri_b_cuoi_cung"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1726,
+        "candidates_tokens": 420,
+        "cached_content_tokens": 0,
+        "total_tokens": 2682,
+        "thoughts_tokens": 536,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 511,
+        "candidates_tokens": 209,
+        "cached_content_tokens": 0,
+        "total_tokens": 1480,
+        "thoughts_tokens": 760,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1622,
+        "candidates_tokens": 725,
+        "cached_content_tokens": 0,
+        "total_tokens": 4985,
+        "thoughts_tokens": 2638,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4942,
+        "candidates_tokens": 76,
+        "cached_content_tokens": 0,
+        "total_tokens": 5230,
+        "thoughts_tokens": 212,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 1566,
+        "candidates_tokens": 737,
+        "cached_content_tokens": 0,
+        "total_tokens": 3449,
+        "thoughts_tokens": 1146,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-008",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 94, Câu hỏi 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 94,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "source_id": "T10-C5-008"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 2,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "bieu_thuc_1",
+          "witness": "ket_qua_1"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "bieu_thuc_2",
+          "witness": "ket_qua_2"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1728,
+        "candidates_tokens": 492,
+        "cached_content_tokens": 0,
+        "total_tokens": 2730,
+        "thoughts_tokens": 510,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 513,
+        "candidates_tokens": 256,
+        "cached_content_tokens": 0,
+        "total_tokens": 1893,
+        "thoughts_tokens": 1124,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1641,
+        "candidates_tokens": 590,
+        "cached_content_tokens": 0,
+        "total_tokens": 4856,
+        "thoughts_tokens": 2625,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4946,
+        "candidates_tokens": 99,
+        "cached_content_tokens": 0,
+        "total_tokens": 6686,
+        "thoughts_tokens": 1641,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 3245,
+        "candidates_tokens": 1585,
+        "cached_content_tokens": 0,
+        "total_tokens": 10563,
+        "thoughts_tokens": 5733,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-010",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 96, Thực hành, Nhiệm vụ 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 96,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "source_id": "T10-C5-010"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.bounded_control_flow",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 2,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "hinh_tron",
+          "witness": "chu_vi"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "hinh_tron",
+          "witness": "dien_tich"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1754,
+        "candidates_tokens": 656,
+        "cached_content_tokens": 0,
+        "total_tokens": 3003,
+        "thoughts_tokens": 593,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 539,
+        "candidates_tokens": 206,
+        "cached_content_tokens": 0,
+        "total_tokens": 1145,
+        "thoughts_tokens": 400,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1647,
+        "candidates_tokens": 1022,
+        "cached_content_tokens": 0,
+        "total_tokens": 4645,
+        "thoughts_tokens": 1976,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5188,
+        "candidates_tokens": 93,
+        "cached_content_tokens": 0,
+        "total_tokens": 6141,
+        "thoughts_tokens": 860,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 1812,
+        "candidates_tokens": 1117,
+        "cached_content_tokens": 0,
+        "total_tokens": 4826,
+        "thoughts_tokens": 1897,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-013",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 96, Vận dụng 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 96,
+      "exercise_number_or_position": "Vận dụng 2",
+      "source_id": "T10-C5-013"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.bounded_control_flow",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 4,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "x_initial_value",
+          "witness": "x_before_swap"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "y_initial_value",
+          "witness": "y_before_swap"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "x_after_swap",
+          "witness": "x_after_swap_value"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "y_after_swap",
+          "witness": "y_after_swap_value"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1747,
+        "candidates_tokens": 455,
+        "cached_content_tokens": 0,
+        "total_tokens": 2691,
+        "thoughts_tokens": 489,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 532,
+        "candidates_tokens": 294,
+        "cached_content_tokens": 0,
+        "total_tokens": 2967,
+        "thoughts_tokens": 2141,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1712,
+        "candidates_tokens": 1594,
+        "cached_content_tokens": 0,
+        "total_tokens": 8038,
+        "thoughts_tokens": 4732,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4997,
+        "candidates_tokens": 69,
+        "cached_content_tokens": 0,
+        "total_tokens": 5600,
+        "thoughts_tokens": 534,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 1621,
+        "candidates_tokens": 537,
+        "cached_content_tokens": 0,
+        "total_tokens": 3125,
+        "thoughts_tokens": 967,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-020",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 103, Thực hành, Nhiệm vụ 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 103,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "source_id": "T10-C5-020"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "insufficient_specification"
+    },
+    "semantic": {
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "weak_kinds": [],
+      "details": [
+        "membership(so_n): kiểu 'int' không hợp với nghĩa vụ này"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "membership"
+      ],
+      "obligations": [
+        {
+          "kind": "membership",
+          "container": "so_n",
+          "witness": "ket_qua_chan_le"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1731,
+        "candidates_tokens": 414,
+        "cached_content_tokens": 0,
+        "total_tokens": 2714,
+        "thoughts_tokens": 569,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 516,
+        "candidates_tokens": 122,
+        "cached_content_tokens": 0,
+        "total_tokens": 1423,
+        "thoughts_tokens": 785,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1572,
+        "candidates_tokens": 435,
+        "cached_content_tokens": 0,
+        "total_tokens": 2433,
+        "thoughts_tokens": 426,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4915,
+        "candidates_tokens": 79,
+        "cached_content_tokens": 0,
+        "total_tokens": 5486,
+        "thoughts_tokens": 492,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 4
+  },
+  {
+    "case_id": "T10-C5-024",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 104, Vận dụng 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 104,
+      "exercise_number_or_position": "Vận dụng 2",
+      "source_id": "T10-C5-024"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.bounded_control_flow",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "weak_kinds": [],
+      "details": [
+        "membership(nam_n): kiểu 'int' không hợp với nghĩa vụ này"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "membership"
+      ],
+      "obligations": [
+        {
+          "kind": "membership",
+          "container": "nam_n",
+          "witness": "la_nam_nhuan"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1756,
+        "candidates_tokens": 494,
+        "cached_content_tokens": 0,
+        "total_tokens": 2832,
+        "thoughts_tokens": 582,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 541,
+        "candidates_tokens": 157,
+        "cached_content_tokens": 0,
+        "total_tokens": 1153,
+        "thoughts_tokens": 455,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1595,
+        "candidates_tokens": 753,
+        "cached_content_tokens": 0,
+        "total_tokens": 2969,
+        "thoughts_tokens": 621,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4995,
+        "candidates_tokens": 102,
+        "cached_content_tokens": 0,
+        "total_tokens": 6005,
+        "thoughts_tokens": 908,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 4927,
+        "candidates_tokens": 3289,
+        "cached_content_tokens": 971,
+        "total_tokens": 33039,
+        "thoughts_tokens": 24823,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T10-C5-025",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 105, Hoạt động 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 105,
+      "exercise_number_or_position": "Hoạt động 1",
+      "source_id": "T10-C5-025"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "weak_kinds": [],
+      "details": [],
+      "total_steps": 22,
+      "frame_count": 22,
+      "final_memory": {
+        "total_sum": 45,
+        "k": 9,
+        "numbers_to_sum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "aggregate_matching"
+      ],
+      "obligations": [
+        {
+          "kind": "aggregate_matching",
+          "container": "numbers_to_sum",
+          "witness": "total_sum"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "PASS",
+      "lech": []
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1762,
+        "candidates_tokens": 612,
+        "cached_content_tokens": 0,
+        "total_tokens": 2939,
+        "thoughts_tokens": 565,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 547,
+        "candidates_tokens": 166,
+        "cached_content_tokens": 0,
+        "total_tokens": 2016,
+        "thoughts_tokens": 1303,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1629,
+        "candidates_tokens": 626,
+        "cached_content_tokens": 0,
+        "total_tokens": 4020,
+        "thoughts_tokens": 1765,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5168,
+        "candidates_tokens": 63,
+        "cached_content_tokens": 0,
+        "total_tokens": 5998,
+        "thoughts_tokens": 767,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 5444,
+        "candidates_tokens": 2086,
+        "cached_content_tokens": 0,
+        "total_tokens": 12339,
+        "thoughts_tokens": 4809,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T10-C5-026",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 106, Câu hỏi",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 106,
+      "exercise_number_or_position": "Câu hỏi",
+      "source_id": "T10-C5-026",
+      "problem_text_goc": "Với giá trị n cho trước, so sánh giá trị S trong đoạn chương trình sau với tổng 1 + 2 + ... + n. S = 0 ; for k in range(1,n+1): S = S + k"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "aggregate_matching"
+      ],
+      "obligations": [
+        {
+          "kind": "aggregate_matching",
+          "container": "n",
+          "witness": "s"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1734,
+        "candidates_tokens": 425,
+        "cached_content_tokens": 0,
+        "total_tokens": 2492,
+        "thoughts_tokens": 333,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 519,
+        "candidates_tokens": 123,
+        "cached_content_tokens": 0,
+        "total_tokens": 2109,
+        "thoughts_tokens": 1467,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1563,
+        "candidates_tokens": 526,
+        "cached_content_tokens": 0,
+        "total_tokens": 2525,
+        "thoughts_tokens": 436,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4959,
+        "candidates_tokens": 67,
+        "cached_content_tokens": 0,
+        "total_tokens": 5767,
+        "thoughts_tokens": 741,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 4817,
+        "candidates_tokens": 1940,
+        "cached_content_tokens": 0,
+        "total_tokens": 12016,
+        "thoughts_tokens": 5259,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T10-C5-027",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 107, Thực hành, Nhiệm vụ 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 107,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "source_id": "T10-C5-027",
+      "problem_text_goc": "Nhập số tự nhiên n từ bàn phím và in ra màn hình dãy các ước số của n theo chiều ngang màn hình. Ví dụ nếu n = 10 thì chương trình sẽ in ra dãy số 1, 2, 5, 10."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "weak_kinds": [],
+      "details": [
+        "derived_sequence(n): kiểu 'int' không hợp với nghĩa vụ này"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "n",
+          "witness": "uoc_so"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1716,
+        "candidates_tokens": 354,
+        "cached_content_tokens": 0,
+        "total_tokens": 2516,
+        "thoughts_tokens": 446,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 501,
+        "candidates_tokens": 141,
+        "cached_content_tokens": 0,
+        "total_tokens": 964,
+        "thoughts_tokens": 322,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1548,
+        "candidates_tokens": 682,
+        "cached_content_tokens": 0,
+        "total_tokens": 2666,
+        "thoughts_tokens": 436,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4885,
+        "candidates_tokens": 140,
+        "cached_content_tokens": 0,
+        "total_tokens": 6299,
+        "thoughts_tokens": 1274,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 9651,
+        "candidates_tokens": 2039,
+        "cached_content_tokens": 0,
+        "total_tokens": 30917,
+        "thoughts_tokens": 19227,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T10-C5-033",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 109, Câu hỏi 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 109,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "source_id": "T10-C5-033"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "grounding",
+      "executable": false,
+      "servable": false,
+      "error_code": "input_not_grounded",
+      "failure_category": "insufficient_specification",
+      "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "weak_kinds": [],
+      "details": [
+        "start_value: giá trị [2] không có trong mục 'start_value' (Giá trị bắt đầu của dãy số) — đề không cho những giá trị này",
+        "end_value: giá trị [100] không có trong mục 'end_value' (Giá trị kết thúc của dãy số) — đề không cho những giá trị này",
+        "step_value: giá trị [2] không có trong mục 'step_value' (Bước nhảy của dãy số) — đề không cho những giá trị này"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null
+    },
+    "contract": {
+      "so_fact": 3,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "aggregate_matching"
+      ],
+      "obligations": [
+        {
+          "kind": "aggregate_matching",
+          "container": "day_so_chan",
+          "witness": "tong_chan"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1716,
+        "candidates_tokens": 565,
+        "cached_content_tokens": 0,
+        "total_tokens": 2948,
+        "thoughts_tokens": 667,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 501,
+        "candidates_tokens": 222,
+        "cached_content_tokens": 274,
+        "total_tokens": 1820,
+        "thoughts_tokens": 1097,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1606,
+        "candidates_tokens": 807,
+        "cached_content_tokens": 0,
+        "total_tokens": 3217,
+        "thoughts_tokens": 804,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5072,
+        "candidates_tokens": 82,
+        "cached_content_tokens": 0,
+        "total_tokens": 5794,
+        "thoughts_tokens": 640,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 5153,
+        "candidates_tokens": 2011,
+        "cached_content_tokens": 1690,
+        "total_tokens": 10039,
+        "thoughts_tokens": 2875,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T10-C5-037",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 110, Vận dụng",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 110,
+      "exercise_number_or_position": "Vận dụng",
+      "source_id": "T10-C5-037"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 0,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "natural_numbers_1_to_100",
+          "witness": "printed_output"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1764,
+        "candidates_tokens": 527,
+        "cached_content_tokens": 0,
+        "total_tokens": 2843,
+        "thoughts_tokens": 552,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 549,
+        "candidates_tokens": 104,
+        "cached_content_tokens": 0,
+        "total_tokens": 2538,
+        "thoughts_tokens": 1885,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1579,
+        "candidates_tokens": 1163,
+        "cached_content_tokens": 0,
+        "total_tokens": 3734,
+        "thoughts_tokens": 992,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 10249,
+        "candidates_tokens": 268,
+        "cached_content_tokens": 0,
+        "total_tokens": 12409,
+        "thoughts_tokens": 1892,
+        "calls": 2
+      },
+      "simulate": {
+        "prompt_tokens": 5261,
+        "candidates_tokens": 2894,
+        "cached_content_tokens": 0,
+        "total_tokens": 23167,
+        "thoughts_tokens": 15012,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 8
+  },
+  {
+    "case_id": "T10-C5-038",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 112, Câu hỏi 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 112,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "source_id": "T10-C5-038"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 4,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "danh_sach_a",
+          "witness": "gia_tri_a0"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "danh_sach_a",
+          "witness": "gia_tri_a2"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "danh_sach_a",
+          "witness": "gia_tri_a7"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "danh_sach_a",
+          "witness": "gia_tri_alen"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1755,
+        "candidates_tokens": 597,
+        "cached_content_tokens": 0,
+        "total_tokens": 2774,
+        "thoughts_tokens": 422,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 540,
+        "candidates_tokens": 314,
+        "cached_content_tokens": 0,
+        "total_tokens": 3164,
+        "thoughts_tokens": 2310,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1721,
+        "candidates_tokens": 952,
+        "cached_content_tokens": 0,
+        "total_tokens": 3320,
+        "thoughts_tokens": 647,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 10187,
+        "candidates_tokens": 343,
+        "cached_content_tokens": 0,
+        "total_tokens": 14670,
+        "thoughts_tokens": 4140,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-039",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 113, Câu hỏi 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 113,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "source_id": "T10-C5-039",
+      "problem_text_goc": "Cho dãy các số nguyên A, viết chương trình in ra các số chẵn của A."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.0.for_each.body.0.if.then_body.0.assign.expr.arith.right\n  Input tag 'array' found using 'kind' does not match any of the expected tags: 'literal', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get', 'neighbors' [type=union_tag_invalid, input_value={'kind': 'array', 'elemen...: 'var', 'name': 'so'}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "day_so_a",
+          "witness": "so_chan_a"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1728,
+        "candidates_tokens": 489,
+        "cached_content_tokens": 0,
+        "total_tokens": 2866,
+        "thoughts_tokens": 649,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 513,
+        "candidates_tokens": 151,
+        "cached_content_tokens": 0,
+        "total_tokens": 1015,
+        "thoughts_tokens": 351,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1585,
+        "candidates_tokens": 700,
+        "cached_content_tokens": 0,
+        "total_tokens": 3496,
+        "thoughts_tokens": 1211,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4957,
+        "candidates_tokens": 127,
+        "cached_content_tokens": 903,
+        "total_tokens": 6198,
+        "thoughts_tokens": 1114,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 3256,
+        "candidates_tokens": 1535,
+        "cached_content_tokens": 2802,
+        "total_tokens": 6104,
+        "thoughts_tokens": 1313,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-045",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 117, Thực hành, Nhiệm vụ 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 117,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "source_id": "T10-C5-045",
+      "problem_text_goc": "Nhập số n từ bàn phím, sau đó nhập danh sách n tên học sinh trong lớp và in ra danh sách các tên học sinh này, mỗi tên học sinh trên một dòng. Yêu cầu danh sách được in ra theo thứ tự ngược lại với thứ tự đã nhập."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "ten_hoc_sinh",
+          "witness": "ten_dao_nguoc"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1732,
+        "candidates_tokens": 399,
+        "cached_content_tokens": 0,
+        "total_tokens": 3859,
+        "thoughts_tokens": 1728,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 517,
+        "candidates_tokens": 141,
+        "cached_content_tokens": 0,
+        "total_tokens": 949,
+        "thoughts_tokens": 291,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1582,
+        "candidates_tokens": 908,
+        "cached_content_tokens": 0,
+        "total_tokens": 3951,
+        "thoughts_tokens": 1461,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4945,
+        "candidates_tokens": 101,
+        "cached_content_tokens": 0,
+        "total_tokens": 5900,
+        "thoughts_tokens": 854,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 6526,
+        "candidates_tokens": 2652,
+        "cached_content_tokens": 0,
+        "total_tokens": 19160,
+        "thoughts_tokens": 9982,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 6
+  },
+  {
+    "case_id": "T10-C5-052",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 120, Câu hỏi 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 120,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "source_id": "T10-C5-052"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.0.for_each.body.0.assign.expr.length.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 'xau_hien_tai'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.0.for_each.body.1.write_index.index.length.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 'do_dai_moi_xau'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "cac_xau",
+          "witness": "do_dai_moi_xau"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1752,
+        "candidates_tokens": 438,
+        "cached_content_tokens": 0,
+        "total_tokens": 2703,
+        "thoughts_tokens": 513,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 537,
+        "candidates_tokens": 156,
+        "cached_content_tokens": 0,
+        "total_tokens": 1634,
+        "thoughts_tokens": 941,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1620,
+        "candidates_tokens": 508,
+        "cached_content_tokens": 0,
+        "total_tokens": 3781,
+        "thoughts_tokens": 1653,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4985,
+        "candidates_tokens": 108,
+        "cached_content_tokens": 0,
+        "total_tokens": 7221,
+        "thoughts_tokens": 2128,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 9941,
+        "candidates_tokens": 1709,
+        "cached_content_tokens": 2827,
+        "total_tokens": 15039,
+        "thoughts_tokens": 3389,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T10-C5-062",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 124, Câu hỏi 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 124,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "source_id": "T10-C5-062"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.1.for_range.step\n  Input should be a valid integer [type=int_type, input_value={'kind': 'literal', 'value': 1}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/int_type"
+    },
+    "contract": {
+      "so_fact": 3,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "first_match_index"
+      ],
+      "obligations": [
+        {
+          "kind": "first_match_index",
+          "container": "chuoi_goc",
+          "witness": "ket_qua"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1712,
+        "candidates_tokens": 545,
+        "cached_content_tokens": 0,
+        "total_tokens": 2674,
+        "thoughts_tokens": 417,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 497,
+        "candidates_tokens": 230,
+        "cached_content_tokens": 0,
+        "total_tokens": 3208,
+        "thoughts_tokens": 2481,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1592,
+        "candidates_tokens": 1229,
+        "cached_content_tokens": 0,
+        "total_tokens": 9199,
+        "thoughts_tokens": 6378,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4996,
+        "candidates_tokens": 137,
+        "cached_content_tokens": 0,
+        "total_tokens": 6257,
+        "thoughts_tokens": 1124,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 10016,
+        "candidates_tokens": 2107,
+        "cached_content_tokens": 2831,
+        "total_tokens": 20196,
+        "thoughts_tokens": 8073,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T10-C5-064",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 125, Thực hành, Nhiệm vụ 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 125,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "source_id": "T10-C5-064",
+      "problem_text_goc": "Viết chương trình nhập nhiều số nguyên từ bàn phím, các số cách nhau bởi dấu cách. Khi nhập xong thông báo số lượng các số đã nhập và in các số này thành hàng ngang."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.count_if",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "aggregate_matching"
+      ],
+      "obligations": [
+        {
+          "kind": "aggregate_matching",
+          "container": "day_so",
+          "witness": "so_luong_so"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1722,
+        "candidates_tokens": 363,
+        "cached_content_tokens": 0,
+        "total_tokens": 2583,
+        "thoughts_tokens": 498,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 507,
+        "candidates_tokens": 138,
+        "cached_content_tokens": 0,
+        "total_tokens": 837,
+        "thoughts_tokens": 192,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1574,
+        "candidates_tokens": 372,
+        "cached_content_tokens": 0,
+        "total_tokens": 2578,
+        "thoughts_tokens": 632,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4899,
+        "candidates_tokens": 53,
+        "cached_content_tokens": 0,
+        "total_tokens": 5983,
+        "thoughts_tokens": 1031,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 962,
+        "candidates_tokens": 126,
+        "cached_content_tokens": 0,
+        "total_tokens": 1970,
+        "thoughts_tokens": 882,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-065",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 126, Thực hành, Nhiệm vụ 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 126,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "source_id": "T10-C5-065",
+      "problem_text_goc": "Viết chương trình nhập một xâu kí tự có thể có nhiều dấu cách giữa các từ. Sau đó chỉnh sửa xâu kí tự đó sao cho giữa các từ chỉ có một dấu cách. In xâu kết quả ra màn hình."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "chuoi_s",
+          "witness": "danh_sach_tu"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1735,
+        "candidates_tokens": 355,
+        "cached_content_tokens": 0,
+        "total_tokens": 2689,
+        "thoughts_tokens": 599,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 520,
+        "candidates_tokens": 146,
+        "cached_content_tokens": 0,
+        "total_tokens": 1150,
+        "thoughts_tokens": 484,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1582,
+        "candidates_tokens": 1175,
+        "cached_content_tokens": 0,
+        "total_tokens": 3563,
+        "thoughts_tokens": 806,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4904,
+        "candidates_tokens": 139,
+        "cached_content_tokens": 0,
+        "total_tokens": 5748,
+        "thoughts_tokens": 705,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 4
+  },
+  {
+    "case_id": "T10-C5-071",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 129, Thực hành, Nhiệm vụ 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 129,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 2",
+      "source_id": "T10-C5-071"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.4.for_range.step\n  Input should be a valid integer [type=int_type, input_value={'kind': 'literal', 'value': 2}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/int_type"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "membership"
+      ],
+      "obligations": [
+        {
+          "kind": "membership",
+          "container": "n",
+          "witness": "is_prime"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1730,
+        "candidates_tokens": 496,
+        "cached_content_tokens": 0,
+        "total_tokens": 3014,
+        "thoughts_tokens": 788,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 515,
+        "candidates_tokens": 116,
+        "cached_content_tokens": 0,
+        "total_tokens": 1110,
+        "thoughts_tokens": 479,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1565,
+        "candidates_tokens": 1605,
+        "cached_content_tokens": 0,
+        "total_tokens": 5129,
+        "thoughts_tokens": 1959,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4976,
+        "candidates_tokens": 118,
+        "cached_content_tokens": 0,
+        "total_tokens": 7365,
+        "thoughts_tokens": 2271,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 3275,
+        "candidates_tokens": 1478,
+        "cached_content_tokens": 0,
+        "total_tokens": 11756,
+        "thoughts_tokens": 7003,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-076",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 133, Câu hỏi 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 133,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "source_id": "T10-C5-076",
+      "problem_text_goc": "Sử dụng hàm prime, em hãy viết chương trình in ra các số nguyên tố trong khoảng từ m đến n, với m, n là hai số tự nhiên và 1 < m < n."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 2,
+      "kinds": [
+        "derived_sequence",
+        "ordering"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "so_trong_khoang_mn",
+          "witness": "so_nguyen_to"
+        },
+        {
+          "kind": "ordering",
+          "container": "so_nguyen_to",
+          "witness": "so_nguyen_to"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1729,
+        "candidates_tokens": 448,
+        "cached_content_tokens": 0,
+        "total_tokens": 2797,
+        "thoughts_tokens": 620,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 514,
+        "candidates_tokens": 225,
+        "cached_content_tokens": 0,
+        "total_tokens": 2152,
+        "thoughts_tokens": 1413,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1617,
+        "candidates_tokens": 1466,
+        "cached_content_tokens": 0,
+        "total_tokens": 10093,
+        "thoughts_tokens": 7010,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4979,
+        "candidates_tokens": 112,
+        "cached_content_tokens": 0,
+        "total_tokens": 6052,
+        "thoughts_tokens": 961,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 4
+  },
+  {
+    "case_id": "T10-C5-079",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 134, Thực hành, Nhiệm vụ 3",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 134,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+      "source_id": "T10-C5-079"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Visual binding container 's1' có kiểu 'str' không phải kiểu container hợp lệ."
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "s1_s2",
+          "witness": "merged_string"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1816,
+        "candidates_tokens": 546,
+        "cached_content_tokens": 0,
+        "total_tokens": 3127,
+        "thoughts_tokens": 765,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 601,
+        "candidates_tokens": 184,
+        "cached_content_tokens": 0,
+        "total_tokens": 1486,
+        "thoughts_tokens": 701,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1676,
+        "candidates_tokens": 2263,
+        "cached_content_tokens": 0,
+        "total_tokens": 4823,
+        "thoughts_tokens": 884,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5157,
+        "candidates_tokens": 80,
+        "cached_content_tokens": 0,
+        "total_tokens": 6667,
+        "thoughts_tokens": 1430,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 3447,
+        "candidates_tokens": 2030,
+        "cached_content_tokens": 0,
+        "total_tokens": 23777,
+        "thoughts_tokens": 18300,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-080",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 135, Luyện tập 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 135,
+      "exercise_number_or_position": "Luyện tập 1",
+      "source_id": "T10-C5-080"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "not_simulation_suitable"
+    },
+    "semantic": {
+      "stage_reached": "scope",
+      "executable": false,
+      "servable": false,
+      "error_code": "gate_not_simulation_suitable",
+      "reason": "Bài này thuộc chương trình nhưng không có cơ chế nào để mô phỏng — dựng cảnh cho nó chỉ là trang trí, không giúp hiểu thêm."
+    },
+    "contract": null,
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1727,
+        "candidates_tokens": 482,
+        "cached_content_tokens": 0,
+        "total_tokens": 2872,
+        "thoughts_tokens": 663,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4973,
+        "candidates_tokens": 91,
+        "cached_content_tokens": 0,
+        "total_tokens": 6479,
+        "thoughts_tokens": 1415,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 2
+  },
+  {
+    "case_id": "T10-C5-084",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 137, Câu hỏi 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 137,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "source_id": "T10-C5-084"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.bounded_control_flow",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "weak_kinds": [],
+      "details": [
+        "total_mapping(global_a): kiểu 'int' không hợp với nghĩa vụ này",
+        "total_mapping(global_b): kiểu 'int' không hợp với nghĩa vụ này",
+        "total_mapping(global_a): kiểu 'int' không hợp với nghĩa vụ này",
+        "total_mapping(global_b): kiểu 'int' không hợp với nghĩa vụ này"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null
+    },
+    "contract": {
+      "so_fact": 5,
+      "so_nghia_vu": 4,
+      "kinds": [
+        "total_mapping"
+      ],
+      "obligations": [
+        {
+          "kind": "total_mapping",
+          "container": "global_a",
+          "witness": "final_a_after_call_1"
+        },
+        {
+          "kind": "total_mapping",
+          "container": "global_b",
+          "witness": "final_b_after_call_1"
+        },
+        {
+          "kind": "total_mapping",
+          "container": "global_a",
+          "witness": "final_a_after_call_2"
+        },
+        {
+          "kind": "total_mapping",
+          "container": "global_b",
+          "witness": "final_b_after_call_2"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1771,
+        "candidates_tokens": 843,
+        "cached_content_tokens": 0,
+        "total_tokens": 4029,
+        "thoughts_tokens": 1415,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 556,
+        "candidates_tokens": 481,
+        "cached_content_tokens": 0,
+        "total_tokens": 3469,
+        "thoughts_tokens": 2432,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1840,
+        "candidates_tokens": 2072,
+        "cached_content_tokens": 0,
+        "total_tokens": 6355,
+        "thoughts_tokens": 2443,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5272,
+        "candidates_tokens": 99,
+        "cached_content_tokens": 909,
+        "total_tokens": 6309,
+        "thoughts_tokens": 938,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 1896,
+        "candidates_tokens": 468,
+        "cached_content_tokens": 0,
+        "total_tokens": 4840,
+        "thoughts_tokens": 2476,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-085",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 138, Câu hỏi",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 138,
+      "exercise_number_or_position": "Câu hỏi",
+      "source_id": "T10-C5-085"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.bounded_control_flow",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 3,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "f_execution",
+          "witness": "printed_value"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1757,
+        "candidates_tokens": 672,
+        "cached_content_tokens": 0,
+        "total_tokens": 2946,
+        "thoughts_tokens": 517,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 542,
+        "candidates_tokens": 221,
+        "cached_content_tokens": 0,
+        "total_tokens": 2459,
+        "thoughts_tokens": 1696,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1624,
+        "candidates_tokens": 1085,
+        "cached_content_tokens": 0,
+        "total_tokens": 6368,
+        "thoughts_tokens": 3659,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5118,
+        "candidates_tokens": 106,
+        "cached_content_tokens": 0,
+        "total_tokens": 6284,
+        "thoughts_tokens": 1060,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 3519,
+        "candidates_tokens": 1581,
+        "cached_content_tokens": 1723,
+        "total_tokens": 7821,
+        "thoughts_tokens": 2721,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 6
+  },
+  {
+    "case_id": "T10-C5-086",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 138, Thực hành, Nhiệm vụ 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 138,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "source_id": "T10-C5-086",
+      "problem_text_goc": "Viết hàm với đầu vào là danh sách A chứa các số và số thực x. Hàm trả lại một danh sách kết quả B từ danh sách A bằng cách chỉ giữ lại các phần tử lớn hơn hoặc bằng x."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "danh_sach_a",
+          "witness": "danh_sach_b"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1737,
+        "candidates_tokens": 771,
+        "cached_content_tokens": 0,
+        "total_tokens": 4364,
+        "thoughts_tokens": 1856,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 522,
+        "candidates_tokens": 200,
+        "cached_content_tokens": 0,
+        "total_tokens": 1340,
+        "thoughts_tokens": 618,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1609,
+        "candidates_tokens": 561,
+        "cached_content_tokens": 0,
+        "total_tokens": 2968,
+        "thoughts_tokens": 798,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 10401,
+        "candidates_tokens": 248,
+        "cached_content_tokens": 0,
+        "total_tokens": 13400,
+        "thoughts_tokens": 2751,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-088",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 139, Thực hành, Nhiệm vụ 3",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 139,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 3",
+      "source_id": "T10-C5-088",
+      "problem_text_goc": "Viết chương trình yêu cầu thực hiện lần lượt các việc sau, mỗi việc cần được thực hiện bởi một hàm: 1. Nhập từ bàn phím một dãy các số nguyên, mỗi số cách nhau bởi dấu cách. Chuyển các số này vào danh sách A và in danh sách A ra màn hình. 2. Trích từ danh sách A ra một danh sách B gồm các phần tử lớn hơn 0. In danh sách B ra màn hình. 3. Trích từ danh sách A ra một danh sách C gồm các phần tử nhỏ hơn 0. In danh sách C ra màn hình."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "day_so_a",
+          "witness": "danh_sach_b"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1732,
+        "candidates_tokens": 435,
+        "cached_content_tokens": 0,
+        "total_tokens": 3597,
+        "thoughts_tokens": 1430,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 517,
+        "candidates_tokens": 154,
+        "cached_content_tokens": 0,
+        "total_tokens": 1021,
+        "thoughts_tokens": 350,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1589,
+        "candidates_tokens": 719,
+        "cached_content_tokens": 0,
+        "total_tokens": 3224,
+        "thoughts_tokens": 916,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4981,
+        "candidates_tokens": 108,
+        "cached_content_tokens": 0,
+        "total_tokens": 6323,
+        "thoughts_tokens": 1234,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 3280,
+        "candidates_tokens": 1672,
+        "cached_content_tokens": 0,
+        "total_tokens": 10925,
+        "thoughts_tokens": 5973,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-089",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 140, Luyện tập 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 140,
+      "exercise_number_or_position": "Luyện tập 1",
+      "source_id": "T10-C5-089",
+      "problem_text_goc": "Viết hàm với đầu vào, đầu ra như sau: đầu vào là danh sách sList, các phần tử là xâu kí tự; đầu ra là danh sách cList, các phần tử là kí tự đầu tiên của các xâu kí tự tương ứng trong danh sách sList."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.0.for_each.body.0.assign.expr.index.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 's'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type\nstatements.0.for_each.body.1.write_index.index.length.container\n  Input should be a valid string [type=string_type, input_value={'kind': 'var', 'name': 'c_list'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "s_list",
+          "witness": "c_list"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1733,
+        "candidates_tokens": 510,
+        "cached_content_tokens": 0,
+        "total_tokens": 2917,
+        "thoughts_tokens": 674,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 518,
+        "candidates_tokens": 133,
+        "cached_content_tokens": 0,
+        "total_tokens": 1061,
+        "thoughts_tokens": 410,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1572,
+        "candidates_tokens": 554,
+        "cached_content_tokens": 0,
+        "total_tokens": 3131,
+        "thoughts_tokens": 1005,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 10153,
+        "candidates_tokens": 273,
+        "cached_content_tokens": 0,
+        "total_tokens": 13168,
+        "thoughts_tokens": 2742,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-094",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 143, Thực hành, Nhiệm vụ 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 143,
+      "exercise_number_or_position": "Thực hành, Nhiệm vụ 1",
+      "source_id": "T10-C5-094",
+      "problem_text_goc": "Viết chương trình nhập các số nguyên m, n từ bàn phím, cách nhau bởi dấu cách. Chương trình đưa ra tổng, hiệu, thương của hai số đã nhập."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "algorithm.bounded_control_flow",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 3,
+      "kinds": [
+        "aggregate_matching"
+      ],
+      "obligations": [
+        {
+          "kind": "aggregate_matching",
+          "container": "m_n",
+          "witness": "tong"
+        },
+        {
+          "kind": "aggregate_matching",
+          "container": "m_n",
+          "witness": "hieu"
+        },
+        {
+          "kind": "aggregate_matching",
+          "container": "m_n",
+          "witness": "thuong"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1719,
+        "candidates_tokens": 375,
+        "cached_content_tokens": 0,
+        "total_tokens": 3154,
+        "thoughts_tokens": 1060,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 504,
+        "candidates_tokens": 243,
+        "cached_content_tokens": 0,
+        "total_tokens": 1050,
+        "thoughts_tokens": 303,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1616,
+        "candidates_tokens": 882,
+        "cached_content_tokens": 0,
+        "total_tokens": 3167,
+        "thoughts_tokens": 669,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4897,
+        "candidates_tokens": 107,
+        "cached_content_tokens": 0,
+        "total_tokens": 6217,
+        "thoughts_tokens": 1213,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 1521,
+        "candidates_tokens": 689,
+        "cached_content_tokens": 0,
+        "total_tokens": 3027,
+        "thoughts_tokens": 817,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-099",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 150, Nhiệm vụ 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 150,
+      "exercise_number_or_position": "Nhiệm vụ 2",
+      "source_id": "T10-C5-099"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.5.if.else_body.1.if.then_body.0.assign.expr.arith.left.arith.right\n  Input tag 'function_call' found using 'kind' does not match any of the expected tags: 'literal', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get', 'neighbors' [type=union_tag_invalid, input_value={'kind': 'function_call',...var', 'name': 'delta'}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid\nstatements.5.if.else_body.1.if.then_body.1.assign.expr.arith.left.arith.right\n  Input tag 'function_call' found using 'kind' does not match any of the expected tags: 'literal', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get', 'neighbors' [type=union_tag_invalid, input_value={'kind': 'function_call',...var', 'name': 'delta'}]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid"
+    },
+    "contract": {
+      "so_fact": 3,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "phuong_trinh",
+          "witness": "nghiem"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1739,
+        "candidates_tokens": 445,
+        "cached_content_tokens": 0,
+        "total_tokens": 2933,
+        "thoughts_tokens": 749,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 524,
+        "candidates_tokens": 201,
+        "cached_content_tokens": 0,
+        "total_tokens": 1319,
+        "thoughts_tokens": 594,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1626,
+        "candidates_tokens": 2809,
+        "cached_content_tokens": 0,
+        "total_tokens": 12797,
+        "thoughts_tokens": 8362,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 10067,
+        "candidates_tokens": 265,
+        "cached_content_tokens": 4527,
+        "total_tokens": 12416,
+        "thoughts_tokens": 2084,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T10-C5-103",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 153, Nhiệm vụ 1",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 153,
+      "exercise_number_or_position": "Nhiệm vụ 1",
+      "source_id": "T10-C5-103"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 3,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "ho_ten_day_du",
+          "witness": "ho"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "ho_ten_day_du",
+          "witness": "dem"
+        },
+        {
+          "kind": "derived_sequence",
+          "container": "ho_ten_day_du",
+          "witness": "ten"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1732,
+        "candidates_tokens": 607,
+        "cached_content_tokens": 0,
+        "total_tokens": 2978,
+        "thoughts_tokens": 639,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 517,
+        "candidates_tokens": 237,
+        "cached_content_tokens": 0,
+        "total_tokens": 1734,
+        "thoughts_tokens": 980,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1637,
+        "candidates_tokens": 2018,
+        "cached_content_tokens": 0,
+        "total_tokens": 5219,
+        "thoughts_tokens": 1564,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5059,
+        "candidates_tokens": 129,
+        "cached_content_tokens": 0,
+        "total_tokens": 6517,
+        "thoughts_tokens": 1329,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 4
+  },
+  {
+    "case_id": "T10-C5-104",
+    "source": {
+      "book": "tin-hoc-10.pdf",
+      "location": "trang 153, Nhiệm vụ 2",
+      "section_or_chapter": "Chủ đề 5 — Giải quyết vấn đề với sự trợ giúp của máy tính",
+      "page": 153,
+      "exercise_number_or_position": "Nhiệm vụ 2",
+      "source_id": "T10-C5-104",
+      "problem_text_goc": "Trọng lượng của em trên các hành tinh khác. Chương trình yêu cầu nhập trọng lượng của em (tính theo đơn vị N - Newton) trên Trái Đất và tính trọng lượng của em trên một hành tinh khác (ví dụ Mặt Trăng, Hoả tinh, Kim tinh, Thổ tinh, Mộc tinh, Mặt Trời)."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "out_of_scope"
+    },
+    "semantic": {
+      "stage_reached": "scope",
+      "executable": false,
+      "servable": false,
+      "error_code": "gate_out_of_scope",
+      "reason": "Bài này thuộc môn khác, không nằm trong chương trình Tin học THPT mà hệ mô phỏng — hệ từ chối trung thực thay vì dựng một cảnh trông giống mô phỏng."
+    },
+    "contract": null,
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1756,
+        "candidates_tokens": 496,
+        "cached_content_tokens": 0,
+        "total_tokens": 3146,
+        "thoughts_tokens": 894,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5043,
+        "candidates_tokens": 106,
+        "cached_content_tokens": 0,
+        "total_tokens": 6307,
+        "thoughts_tokens": 1158,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 2
+  },
+  {
+    "case_id": "T11CS-C6-027",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 98, Vận dụng",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 98,
+      "exercise_number_or_position": "Vận dụng",
+      "source_id": "T11CS-C6-027",
+      "problem_text_goc": "Viết chương trình tra cứu tên theo điểm thi của học sinh trong lớp. Chương trình cho phép người dùng nhập vào khoảng điểm số cần tìm kiếm (ví dụ từ 6 đến 8). Chương trình kiểm tra và thông báo tên của học sinh có điểm số nằm trong khoảng tương ứng."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "database.relational_table_query",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 5 validation errors for SemanticProgramSpec\nstatements.0.for_each.body.0.if.condition.logic.left.compare.left.field.field\n  Input should be 'left', 'right', 'val' or 'data' [type=literal_error, input_value='diem', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.0.for_each.body.0.if.condition.logic.right.compare.left.field.field\n  Input should be 'left', 'right', 'val' or 'data' [type=literal_error, input_value='diem', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.2.for_range.body.0.for_range.body.0.if.condition.compare.left.field.field\n  Input should be 'left', 'right', 'val' or 'data' [type=literal_error, input_value='diem', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.2.for_range.body.0.for_range.body.0.if.condition.compare.right.field.field\n  Input should be 'left', 'right', 'val' or 'data' [type=literal_error, input_value='diem', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nstatements.3.for_each.body.1.write_index.val.field.field\n  Input should be 'left', 'right', 'val' or 'data' [type=literal_error, input_value='ten', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "diem_thi",
+          "witness": "ten_hoc_sinh_chon_loc"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1761,
+        "candidates_tokens": 786,
+        "cached_content_tokens": 0,
+        "total_tokens": 3979,
+        "thoughts_tokens": 1432,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 546,
+        "candidates_tokens": 244,
+        "cached_content_tokens": 0,
+        "total_tokens": 2134,
+        "thoughts_tokens": 1344,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1643,
+        "candidates_tokens": 1796,
+        "cached_content_tokens": 0,
+        "total_tokens": 7773,
+        "thoughts_tokens": 4334,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5228,
+        "candidates_tokens": 105,
+        "cached_content_tokens": 0,
+        "total_tokens": 6314,
+        "thoughts_tokens": 981,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 1724,
+        "candidates_tokens": 180,
+        "cached_content_tokens": 0,
+        "total_tokens": 2718,
+        "thoughts_tokens": 814,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T11CS-C6-041",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 108, Câu hỏi 1",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 108,
+      "exercise_number_or_position": "Câu hỏi 1",
+      "source_id": "T11CS-C6-041",
+      "problem_text_goc": "Chương trình sau giải bài toán: yêu cầu nhập số tự nhiên n và tính tổng 1 + 2 + ... + n. Chương trình trên có đúng không? n = int(input(\"Nhập số tự nhiên n: \")) ; S = 0 ; for i in range(n+1): S = S + i ; print(S)"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "error",
+      "simulation_id": null,
+      "failure_category": "synthesis_exhausted"
+    },
+    "semantic": {
+      "stage_reached": "postconditions",
+      "executable": true,
+      "servable": false,
+      "error_code": "postcondition_violated",
+      "failure_category": "verification_gap",
+      "reason": "Chương trình tự mâu thuẫn với nghĩa vụ nó tự khai.",
+      "weak_kinds": [],
+      "details": [
+        "aggregate_matching(day_so_cong, sum): witness 's' = 15, đúng phải là 0"
+      ],
+      "total_steps": 14,
+      "frame_count": null,
+      "final_memory": {
+        "n": 5,
+        "s": 15,
+        "i": 5,
+        "day_so_cong": []
+      }
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "aggregate_matching"
+      ],
+      "obligations": [
+        {
+          "kind": "aggregate_matching",
+          "container": "day_so_cong",
+          "witness": "s"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "PASS",
+      "lech": []
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1738,
+        "candidates_tokens": 457,
+        "cached_content_tokens": 0,
+        "total_tokens": 2672,
+        "thoughts_tokens": 477,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 523,
+        "candidates_tokens": 131,
+        "cached_content_tokens": 0,
+        "total_tokens": 1227,
+        "thoughts_tokens": 573,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1570,
+        "candidates_tokens": 790,
+        "cached_content_tokens": 0,
+        "total_tokens": 3852,
+        "thoughts_tokens": 1492,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4999,
+        "candidates_tokens": 68,
+        "cached_content_tokens": 0,
+        "total_tokens": 5904,
+        "thoughts_tokens": 837,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 4935,
+        "candidates_tokens": 1875,
+        "cached_content_tokens": 3286,
+        "total_tokens": 10520,
+        "thoughts_tokens": 3710,
+        "calls": 3
+      }
+    },
+    "so_luot_llm": 7
+  },
+  {
+    "case_id": "T11CS-C6-053",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 122, Vận dụng 1",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 122,
+      "exercise_number_or_position": "Vận dụng 1",
+      "source_id": "T11CS-C6-053"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "membership"
+      ],
+      "obligations": [
+        {
+          "kind": "membership",
+          "container": "so_n",
+          "witness": "la_so_nguyen_to"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1756,
+        "candidates_tokens": 517,
+        "cached_content_tokens": 0,
+        "total_tokens": 2971,
+        "thoughts_tokens": 698,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 541,
+        "candidates_tokens": 131,
+        "cached_content_tokens": 0,
+        "total_tokens": 1008,
+        "thoughts_tokens": 336,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1600,
+        "candidates_tokens": 1331,
+        "cached_content_tokens": 0,
+        "total_tokens": 4905,
+        "thoughts_tokens": 1974,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 10139,
+        "candidates_tokens": 290,
+        "cached_content_tokens": 0,
+        "total_tokens": 12973,
+        "thoughts_tokens": 2544,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T11CS-C6-056",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 126, Luyện tập 1",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 126,
+      "exercise_number_or_position": "Luyện tập 1",
+      "source_id": "T11CS-C6-056"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.if.condition\n  Input tag 'var' found using 'kind' does not match any of the expected tags: 'compare', 'logic', 'not', 'is_empty', 'contains', 'is_null' [type=union_tag_invalid, input_value={'kind': 'var', 'name': 'is_permutation'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid"
+    },
+    "contract": {
+      "so_fact": 2,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "aggregate_matching"
+      ],
+      "obligations": [
+        {
+          "kind": "aggregate_matching",
+          "container": "day_a",
+          "witness": "is_permutation"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1749,
+        "candidates_tokens": 489,
+        "cached_content_tokens": 0,
+        "total_tokens": 4058,
+        "thoughts_tokens": 1820,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 534,
+        "candidates_tokens": 169,
+        "cached_content_tokens": 0,
+        "total_tokens": 3550,
+        "thoughts_tokens": 2847,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1607,
+        "candidates_tokens": 982,
+        "cached_content_tokens": 0,
+        "total_tokens": 6631,
+        "thoughts_tokens": 4042,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5067,
+        "candidates_tokens": 181,
+        "cached_content_tokens": 0,
+        "total_tokens": 6764,
+        "thoughts_tokens": 1516,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 4
+  },
+  {
+    "case_id": "T11CS-C6-057",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 126, Vận dụng 1",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 126,
+      "exercise_number_or_position": "Vận dụng 1",
+      "source_id": "T11CS-C6-057"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "postconditions",
+      "executable": true,
+      "servable": false,
+      "error_code": "postcondition_violated",
+      "failure_category": "verification_gap",
+      "reason": "Chương trình tự mâu thuẫn với nghĩa vụ nó tự khai.",
+      "weak_kinds": [],
+      "details": [
+        "membership(day_so_a): None phải có mặt"
+      ],
+      "total_steps": 2,
+      "frame_count": null,
+      "final_memory": {
+        "day_so_a": [],
+        "has_duplicates": false,
+        "seen_elements": [],
+        "i": null,
+        "current_val": null
+      }
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "membership"
+      ],
+      "obligations": [
+        {
+          "kind": "membership",
+          "container": "day_so_a",
+          "witness": "has_duplicates"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1748,
+        "candidates_tokens": 380,
+        "cached_content_tokens": 0,
+        "total_tokens": 2930,
+        "thoughts_tokens": 802,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 533,
+        "candidates_tokens": 125,
+        "cached_content_tokens": 0,
+        "total_tokens": 940,
+        "thoughts_tokens": 282,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1589,
+        "candidates_tokens": 1013,
+        "cached_content_tokens": 0,
+        "total_tokens": 4335,
+        "thoughts_tokens": 1733,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4957,
+        "candidates_tokens": 142,
+        "cached_content_tokens": 0,
+        "total_tokens": 6108,
+        "thoughts_tokens": 1009,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 4
+  },
+  {
+    "case_id": "T11CS-C6-058",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 126, Vận dụng 2",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 126,
+      "exercise_number_or_position": "Vận dụng 2",
+      "source_id": "T11CS-C6-058"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Visual binding container 'xau_ky_tu' có kiểu 'str' không phải kiểu container hợp lệ."
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "membership"
+      ],
+      "obligations": [
+        {
+          "kind": "membership",
+          "container": "xau_ky_tu",
+          "witness": "la_doi_xung"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "UNGRADED",
+      "ly_do": "ground_truth.expected không phải danh sách nghĩa vụ + giá trị"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1771,
+        "candidates_tokens": 429,
+        "cached_content_tokens": 0,
+        "total_tokens": 3526,
+        "thoughts_tokens": 1326,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 556,
+        "candidates_tokens": 136,
+        "cached_content_tokens": 0,
+        "total_tokens": 1017,
+        "thoughts_tokens": 325,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1620,
+        "candidates_tokens": 1250,
+        "cached_content_tokens": 0,
+        "total_tokens": 4876,
+        "thoughts_tokens": 2006,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4963,
+        "candidates_tokens": 129,
+        "cached_content_tokens": 0,
+        "total_tokens": 6181,
+        "thoughts_tokens": 1089,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 4
+  },
+  {
+    "case_id": "T11CS-C6-068",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 142, Câu hỏi 2",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 142,
+      "exercise_number_or_position": "Câu hỏi 2",
+      "source_id": "T11CS-C6-068"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "capability_gap"
+    },
+    "semantic": {
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "weak_kinds": [],
+      "details": [
+        "derived_sequence(danh_sach_l): witness 'ten_hoc_sinh' không có producer hợp lệ"
+      ],
+      "total_steps": null,
+      "frame_count": null,
+      "final_memory": null
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "danh_sach_l",
+          "witness": "ten_hoc_sinh"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1733,
+        "candidates_tokens": 582,
+        "cached_content_tokens": 0,
+        "total_tokens": 3043,
+        "thoughts_tokens": 728,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 518,
+        "candidates_tokens": 154,
+        "cached_content_tokens": 0,
+        "total_tokens": 1092,
+        "thoughts_tokens": 420,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1581,
+        "candidates_tokens": 311,
+        "cached_content_tokens": 0,
+        "total_tokens": 3648,
+        "thoughts_tokens": 1756,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 10105,
+        "candidates_tokens": 216,
+        "cached_content_tokens": 0,
+        "total_tokens": 11831,
+        "thoughts_tokens": 1510,
+        "calls": 2
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T11CS-C6-070",
+    "source": {
+      "book": "tin-hoc-11-cs.pdf",
+      "location": "trang 142, Vận dụng 2",
+      "section_or_chapter": "Chủ đề 6 — Kĩ thuật lập trình",
+      "page": 142,
+      "exercise_number_or_position": "Vận dụng 2",
+      "source_id": "T11CS-C6-070",
+      "problem_text_goc": "Viết hàm delete_last(L) có chức năng xoá phần tử cuối cùng của danh sách liên kết L."
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "ok",
+      "simulation_id": "generic.rule_scene",
+      "failure_category": null
+    },
+    "semantic": {
+      "stage_reached": "semantic_program",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nspec_version\n  Input should be '1.0' [type=literal_error, input_value=1.0, input_type=float]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    },
+    "contract": {
+      "so_fact": 1,
+      "so_nghia_vu": 1,
+      "kinds": [
+        "derived_sequence"
+      ],
+      "obligations": [
+        {
+          "kind": "derived_sequence",
+          "container": "danh_sach_l",
+          "witness": "danh_sach_l_sau_xoa"
+        }
+      ]
+    },
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1736,
+        "candidates_tokens": 456,
+        "cached_content_tokens": 0,
+        "total_tokens": 3809,
+        "thoughts_tokens": 1617,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 521,
+        "candidates_tokens": 146,
+        "cached_content_tokens": 0,
+        "total_tokens": 896,
+        "thoughts_tokens": 229,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 1594,
+        "candidates_tokens": 624,
+        "cached_content_tokens": 0,
+        "total_tokens": 7864,
+        "thoughts_tokens": 5646,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4932,
+        "candidates_tokens": 70,
+        "cached_content_tokens": 902,
+        "total_tokens": 5728,
+        "thoughts_tokens": 726,
+        "calls": 1
+      },
+      "simulate": {
+        "prompt_tokens": 3231,
+        "candidates_tokens": 728,
+        "cached_content_tokens": 0,
+        "total_tokens": 8086,
+        "thoughts_tokens": 4127,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 5
+  },
+  {
+    "case_id": "T11ICT-003",
+    "source": {
+      "book": "tin-hoc-11-ict.pdf",
+      "location": "trang 136, Luyện tập 2",
+      "section_or_chapter": "Chủ đề 7 — Phần mềm chỉnh sửa ảnh và làm video",
+      "page": 136,
+      "exercise_number_or_position": "Luyện tập 2",
+      "source_id": "T11ICT-003"
+    },
+    "loi_runner": null,
+    "ngat_vi_ngan_sach": false,
+    "legacy": {
+      "status": "unsupported",
+      "simulation_id": null,
+      "failure_category": "not_simulation_suitable"
+    },
+    "semantic": {
+      "stage_reached": "scope",
+      "executable": false,
+      "servable": false,
+      "error_code": "gate_not_simulation_suitable",
+      "reason": "Bài này thuộc chương trình nhưng không có cơ chế nào để mô phỏng — dựng cảnh cho nó chỉ là trang trí, không giúp hiểu thêm."
+    },
+    "contract": null,
+    "cham": {
+      "verdict": "NO_RESULT",
+      "ly_do": "route không sinh được kết quả"
+    },
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1738,
+        "candidates_tokens": 553,
+        "cached_content_tokens": 0,
+        "total_tokens": 3169,
+        "thoughts_tokens": 878,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5094,
+        "candidates_tokens": 93,
+        "cached_content_tokens": 0,
+        "total_tokens": 5996,
+        "thoughts_tokens": 809,
+        "calls": 1
+      }
+    },
+    "so_luot_llm": 2
+  }
+]
