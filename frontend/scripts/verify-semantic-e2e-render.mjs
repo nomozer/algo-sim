@@ -21,7 +21,9 @@ const VIEWPORTS = [
 
 async function run() {
   console.log("Starting Semantic E2E Playwright Browser Verification on port 3000...");
-  const fixturesPath = path.resolve("public/fixtures/e2e_semantic_candidates.json");
+  // Fixture nằm ở `frontend/tests/`, KHÔNG ở `public/` — xem chú thích cùng
+  // loại ở `verify-live-gemini-render.mjs`. Neo theo REPO thay vì cwd.
+  const fixturesPath = path.join(REPO, "frontend/tests/fixtures/semantic/e2e_semantic_candidates.json");
   if (!fs.existsSync(fixturesPath)) {
     throw new Error(`Candidate fixtures not found at ${fixturesPath}`);
   }

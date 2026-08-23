@@ -75,6 +75,10 @@ class ErrorCode(str, Enum):
     #: "chứng minh AI hiểu sai đề" — hậu điều kiện do LLM đề xuất mà vi phạm
     #: thì chỉ chứng minh chương trình TỰ MÂU THUẪN.
     POSTCONDITION_VIOLATED = "postcondition_violated"
+    #: Chạy được, biên dịch được, nhưng MÀN HÌNH không mang đủ thứ để hiểu bài:
+    #: một container biến động không có binding, hoặc chỗ chứa đáp án không hiện
+    #: ra. Xem `semantic_program/learner_surface.py`.
+    LEARNER_SURFACE_INCOMPLETE = "learner_surface_incomplete"
     #: Telemetry-only, KHÔNG BAO GIỜ lên UI. Exact-trace mismatch là subtype.
     ORACLE_SEMANTIC_MISMATCH = "oracle_semantic_mismatch"
 
@@ -96,4 +100,9 @@ SEMANTIC_FAILURE_CATEGORY: dict[str, str] = {
     ErrorCode.OBLIGATION_WITNESS_UNREALIZED.value: "semantic_incomplete",
     ErrorCode.SEMANTIC_VERIFICATION_UNAVAILABLE.value: "verification_gap",
     ErrorCode.POSTCONDITION_VIOLATED.value: "verification_gap",
+    #: `verification_gap`, KHÔNG phải `capability_gap`: hệ thực thi được bài này,
+    #: nó chỉ chưa đủ điều kiện để PHÁT cho học sinh. Đúng ranh giới mà hai tỉ lệ
+    #: của luận văn tách nhau — xếp nhầm sang `capability_gap` là tự khai năng
+    #: lực thấp hơn thực tế.
+    ErrorCode.LEARNER_SURFACE_INCOMPLETE.value: "verification_gap",
 }

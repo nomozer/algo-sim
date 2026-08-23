@@ -981,6 +981,12 @@ P18_FREQUENCY_COUNT = SemanticProgramSpec(
     visual_bindings=VisualBindings(
         containers=[
             VisualContainerBinding(semantic_id="text", primitive="array_strip", label="Dãy ký tự đầu vào"),
+            # THÊM 2026-08-23. Trước đó `freq` — chính BẢNG TẦN SUẤT mà bài mang
+            # tên — không có binding nào: mô phỏng hiện chuỗi vào và một số đếm,
+            # còn bảng thì không bao giờ xuất hiện. Bỏ trống không phải do quên
+            # mà vì `map` chưa có primitive nào biểu diễn được; `learner_surface`
+            # phơi ra cả hai điều đó cùng lúc.
+            VisualContainerBinding(semantic_id="freq", primitive="map_view", label="Bảng tần suất"),
         ],
         pointers=[
             # BỎ 2026-08-20 (bất biến #34): con trỏ buộc vào BIẾN KÝ TỰ của

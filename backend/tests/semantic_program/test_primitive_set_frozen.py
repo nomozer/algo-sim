@@ -30,6 +30,12 @@ PRIMITIVE_DA_DONG_BANG = {
     "bit_register",
     "bar_chart",
     "graph_view",  # thêm 2026-08-21 — xem docstring
+    # thêm 2026-08-23, CÙNG KHUÔN với `graph_view` và cùng lý do: `map` là một
+    # `MemoryType` đã admit mà hợp đồng thị giác không biểu diễn được. Cổng bề
+    # mặt học sinh (`learner_surface.py`) phơi ra trên fixture #18 — chương trình
+    # dựng bảng tần suất suốt lượt chạy, màn hình không bao giờ có bảng.
+    # Nguồn: DEV. KHÔNG phải từ một ca SEALED.
+    "map_view",
 }
 
 #: Cố ý KHÔNG có mặt, ghi kèm lý do để lần sau khỏi "bổ sung cho đủ".

@@ -10,7 +10,7 @@ cd frontend && node scripts/l5a-semantic-visual.mjs --port 3100
 cd frontend && node scripts/l5a-semantic-visual.mjs --port 3100 --faultcheck
 ```
 
-Fixture (`public/fixtures/semantic_l5a.json`) **sinh từ backend thật** bằng
+Fixture (`frontend/tests/fixtures/semantic/semantic_l5a.json`) **sinh từ backend thật** bằng
 `compile_semantic_program_to_envelope` trên `fixtures_coverage_18.py` — không
 phải JSON viết tay, nên nó luôn phản ánh hợp đồng envelope hiện hành.
 

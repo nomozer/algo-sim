@@ -797,6 +797,7 @@ function managedByReveal(spec: SimulationSpec): Set<string> {
 export function applyStepAction(
   values: Record<string, any>,
   step: StepAction,
+  kieuCua?: (id: string) => string | undefined,
 ): void {
   const targets = Array.isArray(step.targets) ? step.targets : [];
   const asList = (id: string): any[] =>
@@ -814,7 +815,20 @@ export function applyStepAction(
       return;
 
     case "pop":
-      for (const id of targets) values[id] = asList(id).slice(0, -1);
+      /* LẤY RA Ở ĐẦU NÀO là do CẤU TRÚC quyết, không do tên hành động.
+       *
+       * Bản trước luôn `slice(0, -1)` — đúng cho ngăn xếp (LIFO), SAI cho hàng
+       * đợi (FIFO), và sai một cách im lặng: hình vẫn đổi mỗi bước nên trông như
+       * đang chạy, chỉ là lấy nhầm đầu. Mọi bài BFS/xếp hàng đều dính, và không
+       * cổng nào cũ bắt được vì cả hai đều "có đổi".
+       *
+       * Không đẻ thêm `dequeue`: đề sinh ra từ LLM sẽ tiếp tục viết `pop`, nên
+       * một hành động thứ hai chỉ dời lỗi chứ không đóng nó. Cho ngữ nghĩa bám
+       * kiểu đã khai thì mọi chương trình CŨ tự đúng lên. */
+      for (const id of targets) {
+        const l = asList(id);
+        values[id] = kieuCua?.(id) === "queue_view" ? l.slice(1) : l.slice(0, -1);
+      }
       return;
 
     case "move_pointer": {
@@ -872,7 +886,11 @@ export function buildTimeline(spec: SimulationSpec): Frame[] {
       }
     } else if (proc.type === "step_sequence") {
       for (const step of proc.steps) {
-        applyStepAction(stepValues, step);
+        // Kiểu đã khai đi kèm: `pop` trên hàng đợi lấy ở ĐẦU, trên ngăn xếp lấy
+        // ở ĐỈNH. Xem `applyStepAction`.
+        applyStepAction(stepValues, step, (id) =>
+          spec.objects.find((o) => o.id === id)?.type,
+        );
         frames.push({
           visibleIds: [...allIds],
           entityPos: { ...entityPos },

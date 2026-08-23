@@ -51,7 +51,24 @@ from .contract import (
 )
 
 MAX_STATEMENTS = 50
-MAX_NESTING_DEPTH = 4
+
+#: NÂNG 4 → 6 (2026-08-23), có lý do đo được — không phải nới cho dễ thở.
+#:
+#: IR **không có `elif`**: mỗi nhánh "ngược lại, nếu…" phải viết thành
+#: `else_body: [if …]`, tức mỗi bậc của một dây else-if ĂN MỘT TẦNG lồng. Với
+#: trần 4, một dây ba bậc là hết chỗ trước khi thân vòng lặp kịp làm gì.
+#:
+#: Probe E2E (route `serve`, API thật) trên đề ghép ngoặc bằng ngăn xếp — bài
+#: ngăn xếp kinh điển của TH11-KHMT — dừng ở `Độ sâu lồng lệnh (5) vượt quá
+#: giới hạn tối đa (4)` sau khi MỌI lỗi ký pháp đã hết. Cấu trúc tối thiểu của
+#: nó là: duyệt ký tự → nếu ngoặc mở → ngược lại → nếu ngăn xếp rỗng → ngược
+#: lại → so khớp đỉnh. Năm tầng là mức SÀN của bài, không phải chương trình
+#: viết luộm thuộm.
+#:
+#: 6 chứ không phải 5: chừa đúng một tầng cho `while`/`for` bọc ngoài, thứ mà
+#: bài sắp xếp lồng hai vòng cần tới. Trần vẫn tồn tại — nó chặn chương trình
+#: bệnh lý, và `MAX_STATEMENTS` mới là thứ chặn kích thước.
+MAX_NESTING_DEPTH = 6
 MAX_MEMORY_DECLARATIONS = 20
 
 class ValidationResult:

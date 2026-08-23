@@ -1,0 +1,92 @@
+{
+  "status": 200,
+  "body": {
+    "status": "unsupported",
+    "reason": "Kết quả của bài phải được TÍNH qua cơ chế thuật toán riêng mà không engine tất định nào của hệ sở hữu — hệ từ chối trung thực thay vì để AI tự giải rồi dựng cảnh minh hoạ đáp án.",
+    "failure_category": "capability_gap",
+    "representation_plan": {
+      "semantic_roles": [
+        "structural",
+        "temporal"
+      ],
+      "required_dsl_capabilities": [
+        "container",
+        "group",
+        "move_along_path",
+        "reveal_sequence",
+        "step_sequence"
+      ],
+      "scene_mode": "progressive",
+      "mapping_intent": {
+        "structural": [
+          "container",
+          "group"
+        ],
+        "temporal": [
+          "move_along_path",
+          "reveal_sequence",
+          "step_sequence"
+        ]
+      },
+      "unsupported_capabilities": []
+    },
+    "analysis": {
+      "objects": [
+        "chuỗi đóng mở ngoặc",
+        "ngăn xếp Stack"
+      ],
+      "data": [
+        {
+          "description": "Chuỗi đóng mở ngoặc",
+          "labels": null,
+          "values": null
+        }
+      ],
+      "relations": [],
+      "processes": [
+        "kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc"
+      ],
+      "constraints": [
+        "chuỗi đóng mở ngoặc"
+      ],
+      "goal": "Kiểm tra tính hợp lệ của chuỗi đóng mở ngoặc bằng ngăn xếp Stack với chuỗi {[()]}",
+      "input_description": "Chuỗi đóng mở ngoặc",
+      "output_description": "Kết quả kiểm tra tính hợp lệ (hợp lệ/không hợp lệ)",
+      "result_ownership": "algorithmic",
+      "domain_scope": "THPT_INFORMATICS",
+      "simulatability": "MEANINGFUL_TRACE",
+      "entity_roles": [
+        "chuỗi đóng mở ngoặc: dữ liệu đầu vào",
+        "ngăn xếp Stack: cấu trúc dữ liệu"
+      ],
+      "interaction_needs": [],
+      "notes": null,
+      "prescribed_procedure": null,
+      "process_roles": [
+        "kiểm tra tính hợp lệ: quá trình chính"
+      ],
+      "relation_roles": [],
+      "requested_mechanisms": [
+        "bounded_control_flow.conditional_branch",
+        "bounded_control_flow.bounded_loop"
+      ],
+      "requested_operations": [
+        "single_pass_scan:scan",
+        "structural_progressive_representation:rule_scene"
+      ],
+      "requested_requirements": null,
+      "required_capabilities": [
+        "structural",
+        "temporal"
+      ],
+      "scene_construction": "step_by_step",
+      "temporal_needs": [
+        "temporal"
+      ],
+      "visual_needs": [
+        "structural"
+      ]
+    },
+    "learner_reason": "Bài này cần một cơ chế mà AlgoSim chưa mô phỏng chính xác được, nên hệ thống từ chối trung thực thay vì dựng một mô phỏng gần đúng. Bạn có thể thử một bài thuộc các chủ đề đang hỗ trợ: tìm kiếm, sắp xếp, quét dãy, số nhị phân, cổng logic, định tuyến gói tin, đóng gói dữ liệu qua các tầng mạng."
+  }
+}

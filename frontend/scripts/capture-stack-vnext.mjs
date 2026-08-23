@@ -12,7 +12,7 @@
  *      Guard chưa từng đỏ là guard chưa được chứng minh.
  *
  * Chạy: `npm run dev` ở cửa sổ khác, rồi
- *   node scripts/capture-stack-vnext.mjs --out-dir ../docs/evaluation/semantic-vnext
+ *   node scripts/capture-stack-vnext.mjs --out-dir ../docs/evaluation/semantic-vnext/browser-evidence
  */
 import { chromium } from "playwright";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -23,7 +23,10 @@ const argOf = (k, d) => {
   const i = args.indexOf(k);
   return i >= 0 && args[i + 1] ? args[i + 1] : d;
 };
-const OUT = argOf("--out-dir", "../docs/evaluation/semantic-vnext");
+// Ảnh chụp đi vào `browser-evidence/`, không vào gốc `semantic-vnext/`: gốc là
+// chỗ của các thư mục theo VAI TRÒ (reports · browser-evidence · e2e), và bản
+// trước đổ thẳng 7 file ra đó rồi nằm lẫn với báo cáo.
+const OUT = argOf("--out-dir", "../docs/evaluation/semantic-vnext/browser-evidence");
 const PORT = argOf("--port", "3000");
 const FAULT = args.includes("--faultcheck");
 

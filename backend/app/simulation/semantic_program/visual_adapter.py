@@ -54,6 +54,7 @@ class VisualTraceAdapter:
             "bit_register",
             "bar_chart",
             "graph_view",
+            "map_view",
         }
     )
 
@@ -117,6 +118,13 @@ class VisualTraceAdapter:
                 # Cột = phần tử của container. Renderer chỉ ĐỌC chiều cao từ đây,
                 # KHÔNG tự tính lại từ biểu thức nào khác (bất biến #31).
                 obj_dict["items"] = list(val) if isinstance(val, (list, tuple)) else []
+            elif cb.primitive == "map_view":
+                # Cặp khoá→giá trị theo THỨ TỰ KHOÁ ĐÃ SẮP, không theo thứ tự
+                # chèn: thứ tự chèn phụ thuộc lượt chạy nên hai lần chụp cùng
+                # một bài cho hình khác nhau, và ảnh chụp hết so được với nhau.
+                # Cùng lý do `graph_view` sắp `nodes`/`edges`.
+                d = val if isinstance(val, dict) else {}
+                obj_dict["entries"] = [[str(k), d[k]] for k in sorted(d, key=str)]
             elif cb.primitive == "tree_element":
                 obj_dict["value"] = val
             elif cb.primitive == "bit_register":

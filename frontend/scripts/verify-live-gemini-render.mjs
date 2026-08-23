@@ -20,7 +20,11 @@ const VIEWPORTS = [
 
 async function run() {
   console.log("Starting Live Gemini Unseen Playwright Browser Render on port 3000...");
-  const fixturesPath = path.resolve("public/fixtures/live_gemini_unseen_candidates.json");
+  // Fixture nằm ở `frontend/tests/`, KHÔNG ở `public/`: script đọc nó bằng
+  // `fs`, chưa bao giờ qua HTTP, nên để trong `public/` chỉ khiến Vite chép
+  // envelope thu từ Gemini vào `dist/` và phát cho mọi người dùng thật.
+  // Neo theo REPO thay vì cwd — bản cũ chỉ chạy đúng khi đứng ở `frontend/`.
+  const fixturesPath = path.join(REPO, "frontend/tests/fixtures/live-ai/live_gemini_unseen_candidates.json");
   if (!fs.existsSync(fixturesPath)) {
     throw new Error(`Live candidate fixtures not found at ${fixturesPath}`);
   }

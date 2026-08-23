@@ -141,7 +141,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       đó `main.py` gọi `run_pipeline` mà quên `semantic_route`, nên nó rơi về
 #       `"off"` và `stage_semantic_program` chưa từng chạy cho người dùng thật.
 #       Envelope cache cũ là kết quả của đường KHÔNG có route sinh.
-CACHE_VERSION = "35"
+#   36 (2026-08-23, vNext): `semantic_program.md` nay dạy `container` phải là TÊN
+#       vùng nhớ đã khai. Probe E2E sản phẩm sau khi bật `serve` cho thấy đề
+#       "kiểm tra chuỗi ngoặc bằng ngăn xếp" đi tới `stage_semantic_program` rồi
+#       chết vì LLM viết `container: {"kind":"literal","value":"([{"}` — trỏ tới
+#       một vùng nhớ chưa bao giờ được khai. Bề mặt LLM đổi ⇒ chương trình ngữ
+#       nghĩa cache theo prompt cũ không còn đại diện cho prompt hiện hành.
+CACHE_VERSION = "36"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

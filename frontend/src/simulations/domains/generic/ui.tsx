@@ -466,7 +466,28 @@ export function GenericWorkspace({
     }
   }
 
+  /**
+   * MÓC NGỮ NGHĨA cho phép chiếu DOM → trạng thái.
+   *
+   * Vì sao cần: `<g key={o.id}>` KHÔNG đi ra DOM (React nuốt `key`), nên nhìn từ
+   * ngoài không có cách nào biết chữ nào thuộc đối tượng nào. Guard buộc phải
+   * đoán theo vị trí nhãn — mà một guard đoán là guard sẽ kêu oan rồi bị tắt.
+   *
+   * `<g>` rỗng không transform, không style: hình vẽ ra y hệt. Đây là móc ĐỌC,
+   * không phải kênh dữ liệu — giá trị mà guard chấm vẫn là chữ người học NHÌN
+   * THẤY trong `<text>`, không phải một thuộc tính renderer tự khai.
+   */
   function renderObject(o: SpecObject, role: ObjectRole) {
+    const el = renderObjectBody(o, role);
+    if (el == null) return el;
+    return (
+      <g key={o.id} data-obj={o.id} data-role={role}>
+        {el}
+      </g>
+    );
+  }
+
+  function renderObjectBody(o: SpecObject, role: ObjectRole) {
     const p = pos[o.id] ?? { x: 50, y: 50 };
     /* HAI BIẾN, CỐ Ý KHÔNG GỘP.
      *
@@ -787,7 +808,11 @@ export function GenericWorkspace({
                     stroke="var(--primary)"
                     strokeWidth={1.5}
                   />
+                  {/* `data-item`: đây là DỮ LIỆU, khác chú giải `[i]` ngay dưới.
+                      Phép chiếu ngữ nghĩa cần phân biệt hai loại chữ — không thì
+                      nhãn chỉ số bị chấm như phần tử của dãy. */}
                   <text
+                    data-item={i}
                     x={cellW / 2}
                     y={cellH / 2 + 5}
                     textAnchor="middle"
@@ -1096,7 +1121,9 @@ export function GenericWorkspace({
                     stroke="var(--primary)"
                     strokeWidth={1}
                   />
+                  {/* DỮ LIỆU, khác chú giải `← TOP` ngay bên cạnh. */}
                   <text
+                    data-item={i}
                     x={(boxW - 12) / 2}
                     y={(itemH - 3) / 2 + 4}
                     textAnchor="middle"
@@ -1124,11 +1151,18 @@ export function GenericWorkspace({
         );
       }
       case "queue_view": {
-        const items = Array.isArray(o.items)
-          ? o.items
-          : v !== undefined && v !== 0
-            ? [v]
-            : [];
+        /* `vRaw` TRƯỚC `o.items` — CÙNG LUẬT với `stack_view`/`array_strip`.
+           Thiếu vế đầu là lỗi đã ship: bản vá vNext sửa ngăn xếp và dải mảng
+           nhưng bỏ sót hàng đợi, nên mọi bài BFS/xếp hàng vẫn vẽ hàng đợi đứng
+           yên trong khi lời kể nói "đưa B vào". Vá theo từng primitive là cách
+           lỗi này sống sót; `learner-gate` bắt được vì nó soi mọi miền. */
+        const items = Array.isArray(vRaw)
+          ? vRaw
+          : Array.isArray(o.items)
+            ? o.items
+            : v !== undefined && v !== 0
+              ? [v]
+              : [];
         const itemW = 34;
         const boxH = 36;
         const capacity = o.capacity ?? Math.max(4, items.length);
@@ -1198,7 +1232,9 @@ export function GenericWorkspace({
                   stroke="var(--accent-teal)"
                   strokeWidth={1}
                 />
+                {/* DỮ LIỆU, khác chú giải `FRONT`/`REAR` ở hai đầu hàng đợi. */}
                 <text
+                  data-item={i}
                   x={(itemW - 4) / 2}
                   y={(boxH - 8) / 2 + 4}
                   textAnchor="middle"

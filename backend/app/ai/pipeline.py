@@ -46,6 +46,11 @@ if TYPE_CHECKING:  # tránh import vòng lúc chạy: contract kéo theo cả c�
 from app.simulation.operations import analyze_exposed_operations
 from app.simulation.error_codes import ErrorCode
 
+#: Trần lượt sửa của `stage_semantic_program`. HẰNG SỐ, không theo độ dài trace —
+#: đó là điều giữ cho claim D1 (số lượt LLM chặn bởi call graph) còn đúng. Bằng
+#: `stage_simulate` để hai đường không lệch nhau vô cớ.
+MAX_SEMANTIC_PROGRAM_ATTEMPTS = 3
+
 
 def _emit(observer, event_type: str, **data) -> None:
     """M14 §F2 — phát event cho observer THỤ ĐỘNG (None → no-op, hành vi
@@ -336,7 +341,10 @@ async def stage_semantic_analyze(
             "SEMANTIC_ANALYZE_INVALID: đầu ra không phải một đối tượng JSON "
             f"(nhận {type(payload).__name__})"
         )
-    return build_request_contract(payload), None
+    # `text` đi kèm là bậc P1: `analyze` có thể bỏ trống ô giá trị dù đề ghi rõ
+    # literal (đã quan sát: `values=null` cho đề chứa `{[()]}`). Có đề gốc thì
+    # server tự neo được literal về span thay vì phụ thuộc model nhớ chép.
+    return build_request_contract(payload, problem_text=text), None
 
 
 def _facts_for_prompt(contract: "RequestContract") -> str:
@@ -391,18 +399,37 @@ def _obligations_for_prompt(contract: "RequestContract") -> str:
 
 
 async def stage_semantic_program(
-    text: str, analysis: dict, api_key: str, contract: "RequestContract | None" = None
+    text: str,
+    analysis: dict,
+    api_key: str,
+    contract: "RequestContract | None" = None,
+    observer=None,
 ) -> tuple["SemanticProgramSpec | None", str | None]:
-    """LLM tổng hợp `SemanticProgramSpec` — ĐÚNG MỘT LƯỢT.
+    """LLM tổng hợp `SemanticProgramSpec` — ≤3 lượt, lỗi validator gửi ngược.
 
     Trả `(spec, None)` khi hợp lệ, `(None, lý_do)` khi hỏng.
 
     R0 nguyên vẹn: LLM viết CHƯƠNG TRÌNH, không quyết kết quả — interpreter tất
     định mới là authority (luật cứng #11).
 
-    Vì sao một lượt chứ không ≤3 như `stage_simulate`: chương trình đúng thì
-    interpreter tự sinh ra toàn bộ bước, nên độ dài mô phỏng KHÔNG tiêu thêm
-    token. Retry ở đây chỉ để cứu lỗi parse, không phải để dò dần cho đúng.
+    ĐỔI TỪ MỘT LƯỢT → ≤3 (2026-08-23). Bản cũ ghi *"retry ở đây chỉ để cứu lỗi
+    parse, không phải để dò dần cho đúng"* — vế sau vẫn đúng và vẫn được giữ,
+    nhưng vế đầu hoá ra bao trùm hơn ta tưởng. Tám lượt probe E2E liên tiếp trên
+    một đề (ghép ngoặc bằng ngăn xếp, route `serve`, API thật) chết ở TÁM lỗi
+    hình dạng KHÁC NHAU, mỗi lần một chỗ: `container` nhận biểu thức, rồi nhận
+    literal, `pop` viết như biểu thức, rồi `peek` viết như câu lệnh, biến bool
+    dùng thẳng làm điều kiện… Không lỗi nào là hiểu sai đề — chương trình dựng
+    đúng nghĩa vụ, đúng cấu trúc dữ liệu, chỉ sai CÁCH VIẾT. Và mỗi lỗi ấy đều
+    đã có sẵn một thông báo Pydantic nói đúng chỗ sai.
+
+    Vá từng lớp bằng luật prompt là đuổi theo một biến ngẫu nhiên: sửa xong lớp
+    này thì lượt sau model rơi vào lớp khác (`RULES §3c` gọi đây là
+    DEEP_HARDENING). Đưa lỗi ngược cho chính nó sửa thì cả LỚP biến mất một lần
+    — đúng khuôn `stage_simulate` đã dùng từ M3.
+
+    Trần là HẰNG SỐ, nên claim D1 không suy suyển: số lượt LLM vẫn bị chặn bởi
+    call graph chứ không đi theo độ dài trace. Chương trình đúng thì interpreter
+    vẫn tự sinh toàn bộ bước mà không tiêu thêm một token nào.
 
     Cấu trúc và enum do `responseSchema` cưỡng chế (constrained decoding). Nhưng
     đó KHÔNG phải đảm bảo tuyệt đối — Flash có ghi nhận rơi vào vòng lặp lặp
@@ -414,38 +441,55 @@ async def stage_semantic_program(
 
     from app.simulation.semantic_program.grammar_card import grammar_card
 
-    user = f'Đề bài:\n"""\n{text}\n"""'
+    base = f'Đề bài:\n"""\n{text}\n"""'
     if contract is not None:
-        user = f"{user}\n\n{_facts_for_prompt(contract)}"
-        user = f"{user}\n\n{_obligations_for_prompt(contract)}"
+        base = f"{base}\n\n{_facts_for_prompt(contract)}"
+        base = f"{base}\n\n{_obligations_for_prompt(contract)}"
     # Hợp đồng IR phải đi kèm, vì Gemini KHÔNG nhận được schema của nó (xem
     # `grammar_card.py`). Thiếu nó, mô hình tự đặt tên trường và 38/40 case
     # trượt thẩm định — đo được ở lượt pilot thứ hai.
-    user = f"{user}\n\n{grammar_card()}"
-    with stage_scope("semantic_program"):
-        raw = await call_gemini(
-            api_key,
-            load_skill("semantic_program"),
-            user,
-            generate_json_schema(),
-            0.1,
+    base = f"{base}\n\n{grammar_card()}"
+
+    prompt = base
+    loi_cuoi = "không rõ"
+
+    for lan in range(MAX_SEMANTIC_PROGRAM_ATTEMPTS):
+        with stage_scope("semantic_program"):
+            raw = await call_gemini(
+                api_key,
+                load_skill("semantic_program"),
+                prompt,
+                generate_json_schema(),
+                0.1,
+            )
+
+        loi: str | None = None
+        try:
+            payload = json.loads(raw)
+        except (json.JSONDecodeError, TypeError) as e:
+            loi = f"JSON không parse được ({e})"
+        else:
+            if not isinstance(payload, dict):
+                loi = (
+                    "đầu ra không phải một đối tượng JSON "
+                    f"(nhận {type(payload).__name__})"
+                )
+            else:
+                val = validate_semantic_program(payload)
+                if val.ok:
+                    return val.spec, None
+                loi = val.error
+
+        loi_cuoi = loi
+        _emit(observer, "semantic_program_attempt", n=lan, ok=False, message=loi)
+        # Cùng khuôn với `stage_simulate` — lỗi validator là thứ DUY NHẤT gửi
+        # ngược. Không gợi ý cách sửa: gợi ý là ta đang viết chương trình hộ.
+        prompt = (
+            f"{base}\n\nLần trước bị từ chối vì: {loi}\n"
+            "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại."
         )
 
-    try:
-        payload = json.loads(raw)
-    except (json.JSONDecodeError, TypeError) as e:
-        return None, f"SEMANTIC_PROGRAM_INVALID: JSON không parse được ({e})"
-
-    if not isinstance(payload, dict):
-        return None, (
-            "SEMANTIC_PROGRAM_INVALID: đầu ra không phải một đối tượng JSON "
-            f"(nhận {type(payload).__name__})"
-        )
-
-    val = validate_semantic_program(payload)
-    if not val.ok:
-        return None, f"SEMANTIC_PROGRAM_INVALID: {val.error}"
-    return val.spec, None
+    return None, f"SEMANTIC_PROGRAM_INVALID: {loi_cuoi}"
 
 
 async def stage_classify(
@@ -831,6 +875,23 @@ async def _semantic_shadow(
     return await _semantic_route_attempt(text, analysis, api_key, observer)
 
 
+def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> dict:
+    """Envelope phát từ route sinh — MỘT chỗ dựng, hai chỗ gọi.
+
+    Hai lối vào (nhánh phát bình thường, và nhánh classifier lệch) phải dựng ra
+    envelope GIỐNG HỆT nhau. Chép thành hai bản là cách chắc chắn để `source`
+    hoặc `representation_plan` thiếu ở đúng một lối vào — thứ chỉ lộ ra khi đọc
+    artifact nhiều tuần sau.
+    """
+    env = dict(outcome.envelope or {})
+    env["analysis"] = analysis
+    env["representation_plan"] = plan
+    env["source"] = "semantic_program"
+    _emit(observer, "envelope", status="ok",
+          simulation_id=env.get("simulation_id"), source="semantic_program")
+    return env
+
+
 async def _semantic_route_attempt(
     text: str, analysis: dict, api_key: str, observer
 ) -> "SemanticRouteOutcome | None":
@@ -860,7 +921,9 @@ async def _semantic_route_attempt(
               for ob in contract.obligations
           ])
 
-    spec, serr = await stage_semantic_program(text, analysis, api_key, contract)
+    spec, serr = await stage_semantic_program(
+        text, analysis, api_key, contract, observer=observer
+    )
     if spec is None:
         _emit(observer, "semantic_route", stage_reached="semantic_program",
               executable=False, servable=False,
@@ -945,6 +1008,24 @@ async def run_pipeline(
         text, analysis, classification, api_key, observer
     )
     if mismatch_gap is not None:
+        # Route sinh ĐÃ phục vụ được thì phán quyết lệch của classifier legacy
+        # KHÔNG được phủ quyết nó. Cổng mismatch bảo vệ đường module: nó chặn
+        # việc simulate một target chuyên biệt mâu thuẫn với cơ chế. Chương
+        # trình ngữ nghĩa không đi qua target nào, nên nó không nằm trong tầm
+        # bảo vệ ấy — để nguyên `return` ở đây là bắt route sinh chịu hậu quả
+        # của một cuộc bầu chọn nó không tham gia.
+        #
+        # Cùng khiếm khuyết đã sửa cho lượt THỬ (xem chú thích ở nhánh phát bên
+        # dưới): lượt thử đã được đưa ra ngoài phán quyết classifier, còn lượt
+        # PHÁT thì vẫn nằm sau một `return` của classifier. Đo được trên đề
+        # "đảo dãy bằng ngăn xếp": `stage_reached=served, servable=true`, 5
+        # khung — rồi envelope trả `unsupported`.
+        if (
+            semantic_route == "serve"
+            and semantic_outcome is not None
+            and semantic_outcome.servable
+        ):
+            return _envelope_tu_route_sinh(semantic_outcome, analysis, plan, observer)
         _emit(observer, "envelope", status="unsupported", simulation_id=None,
               failure_category="capability_gap")
         return {
@@ -984,13 +1065,7 @@ async def run_pipeline(
         and semantic_outcome.servable
         and (chosen is None or chosen == "generic.rule_scene")
     ):
-        env = dict(semantic_outcome.envelope or {})
-        env["analysis"] = analysis
-        env["representation_plan"] = plan
-        env["source"] = "semantic_program"
-        _emit(observer, "envelope", status="ok",
-              simulation_id=env.get("simulation_id"), source="semantic_program")
-        return env
+        return _envelope_tu_route_sinh(semantic_outcome, analysis, plan, observer)
     # SHADOW: bằng chứng đã thu qua observer, KHÔNG đổi thứ trả về. Người học
     # vẫn nhận đúng hành vi cũ cho tới khi cổng phát được mở (spec §10.2).
 

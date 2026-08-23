@@ -49,7 +49,9 @@ const VIEWPORTS = [
 ];
 
 const FIXTURES = JSON.parse(
-  fs.readFileSync(path.resolve(HERE, "../public/fixtures/semantic_l5a.json"), "utf-8"),
+  // `frontend/tests/`, không `public/`: fixture đọc bằng `fs` chứ không qua
+  // HTTP, để trong `public/` chỉ khiến nó bị bundle vào `dist/` sản phẩm.
+  fs.readFileSync(path.resolve(HERE, "../tests/fixtures/semantic/semantic_l5a.json"), "utf-8"),
 );
 
 /* ── Phép đo chạy TRONG trang ─────────────────────────────────────────────── */

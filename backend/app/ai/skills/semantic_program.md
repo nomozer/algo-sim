@@ -21,6 +21,20 @@ Chỉ khai con trỏ khi có biến mang giá trị **số nguyên** làm chỉ 
 `for_each` thì biến chạy là PHẦN TỬ, không phải chỉ số — gắn con trỏ vào nó thì
 con trỏ không có ô nào để bám. Cần con trỏ chạy dọc dãy thì dùng `for_range`.
 
+## Bốn chỗ dễ viết sai
+
+- `container` là **tên** vùng nhớ đã khai, không nhận literal. Và **đừng khai
+  bảng hằng của thuật toán** (`([{`, bảng ghép ngoặc): `initial_value` chỉ dành
+  cho dữ liệu ĐỀ CHO. Hằng của thuật toán viết thẳng thành so sánh
+  (`c == "(" or c == "["`).
+- Lấy phần tử ra là **câu lệnh**: `pop`/`dequeue` có `dest_var` để nhận giá trị.
+  `x = pop(s)` không viết bằng phép gán được. Chỉ nhìn mà không lấy là `peek`.
+- Chuỗi **được duyệt** thì khai `array` ký tự, không khai `str`: `str` là scalar,
+  không có ô để tô cũng không có chỉ số cho con trỏ bám.
+- `visual_bindings` phải phủ **mọi container biến động** (ngăn xếp, hàng đợi,
+  mảng đang đổi) **và witness của mỗi nghĩa vụ**. Chạy đúng mà học sinh không
+  thấy đáp án trên hình thì mô phỏng vẫn hỏng.
+
 ## Dữ liệu chỉ đến từ đề bài
 
 `initial_value` chỉ chứa giá trị đề cho, và phải ghim `source_fact_id` về đúng

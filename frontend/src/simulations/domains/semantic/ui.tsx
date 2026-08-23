@@ -108,6 +108,42 @@ function Bang({ o, sang }: { o: SemanticObject; sang: boolean }) {
 }
 
 /**
+ * Bảng ánh xạ khoá → giá trị.
+ *
+ * VÌ SAO CÓ: `map` là `MemoryType` đã được admit từ lâu, nhưng cho tới
+ * 2026-08-23 không primitive nào biểu diễn được nó — nên mọi bài mà ĐÁP ÁN là
+ * một bảng (đếm tần suất, gom nhóm, dựng bảng tra) chạy được mà không xem được.
+ * Cổng `learner_surface.py` phơi ra điều đó trên fixture #18.
+ *
+ * Hai cột, một hàng một cặp: đọc được ở bề ngang hẹp mà không phải cuộn, và
+ * không cần biết trước bảng có bao nhiêu khoá. Thứ tự do BACKEND sắp theo khoá —
+ * renderer không sắp lại (thứ tự chèn phụ thuộc lượt chạy thì ảnh chụp hết so
+ * được với nhau).
+ */
+function BangAnhXa({ o, sang }: { o: SemanticObject; sang: boolean }) {
+  const cap = o.entries ?? [];
+  return (
+    <div className="sem-block">
+      <div className="sem-label">{nhan(o)}</div>
+      <div className="sem-map" data-hot={sang || undefined}>
+        {cap.length === 0 ? (
+          /* Bảng rỗng THẬT là một trạng thái có nghĩa (chưa đếm được gì), khác
+             hẳn "không có bảng". Nói ra bằng chữ, đừng để một khung trống. */
+          <div className="sem-map-empty">(chưa có mục nào)</div>
+        ) : (
+          cap.map(([k, v]) => (
+            <div className="sem-map-row" key={k}>
+              <div className="sem-map-key">{k}</div>
+              <div className="sem-map-val">{String(v)}</div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
  * Đồ thị — LAYOUT TẤT ĐỊNH, không physics, không camera, không editor.
  *
  * Đỉnh xếp đều trên một đường tròn theo THỨ TỰ ĐÃ SẮP của id. Chọn vòng tròn vì
@@ -200,6 +236,8 @@ function VeMot({ o, sang }: { o: SemanticObject; sang: boolean }) {
       return <DoThi o={o} sang={sang} />;
     case "table_grid":
       return <Bang o={o} sang={sang} />;
+    case "map_view":
+      return <BangAnhXa o={o} sang={sang} />;
     case "value_box":
     case "bit_register":
     case "tree_element":

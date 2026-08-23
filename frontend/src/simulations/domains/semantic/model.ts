@@ -33,6 +33,11 @@ export interface SemanticObject {
   edges?: string[][];
   visited?: string[];
   current?: string | null;
+  /* ── `map_view` (2026-08-23) ────────────────────────────────────────────
+     Cặp khoá→giá trị, ĐÃ SẮP THEO KHOÁ ở backend. Renderer không sắp lại và
+     không tự suy: thứ tự chèn phụ thuộc lượt chạy nên hai lần chụp cùng một
+     bài sẽ cho hình khác nhau. Cùng luật với `nodes`/`edges`. */
+  entries?: [string, unknown][];
 }
 
 export interface SemanticFrame {

@@ -2665,7 +2665,8 @@
             "tree_element",
             "bit_register",
             "bar_chart",
-            "graph_view"
+            "graph_view",
+            "map_view"
           ],
           "title": "Primitive",
           "type": "string"

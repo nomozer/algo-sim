@@ -54,10 +54,25 @@ def canonical_container_name(v: Any) -> Any:
     đang thao tác trên vùng nhớ nào — một ngữ nghĩa khác hẳn, không thuộc phạm vi
     bản vá này.
     """
-    if isinstance(v, dict) and v.get("kind") == "var":
-        ten = v.get("name")
-        if isinstance(ten, str) and ten:
-            return ten
+    if isinstance(v, dict):
+        if v.get("kind") == "var":
+            ten = v.get("name")
+            if isinstance(ten, str) and ten:
+                return ten
+        # TỪ CHỐI CÓ DẠY, không để Pydantic nói "Input should be a valid string".
+        #
+        # Vì sao thông báo phải nằm ở ĐÂY chứ không ở prompt hay thẻ văn phạm:
+        # cả hai bề mặt ấy đều có ngân sách byte (`test_prompt_size_guard`,
+        # `test_grammar_card`) và cả hai guard nói cùng một câu — luật nào mã
+        # hoá được thì để validator giữ. Luật này mã hoá được trọn vẹn, nên viết
+        # nó thành văn xuôi ở nơi khác là trả giá hai lần: tốn ngân sách, mà vẫn
+        # chỉ là GỢI Ý. Ở đây nó là RÀNG BUỘC, và câu chữ đi thẳng vào telemetry
+        # (§5) nơi người sửa thật sự đọc nó.
+        raise ValueError(
+            f"`container` nhận TÊN một mục trong memory_declarations, không "
+            f"nhận biểu thức (nhận kind={v.get('kind')!r}). Cần một tập/bảng "
+            f"hằng thì khai nó thành một mục có initial_value rồi gọi bằng tên."
+        )
     return v
 
 
@@ -198,6 +213,38 @@ class IsNullCond(BaseModel):
     kind: Literal["is_null"] = "is_null"
     expr: ValueExpr = Field(..., description="Biểu thức kiểm tra null")
 
+#: Biểu thức GIÁ TRỊ có thể mang sẵn một giá trị đúng/sai. Chỉ những dạng này
+#: mới được gấp thành điều kiện — `arith`/`length`/`neighbors` thì không, vì
+#: `2+3` dùng làm điều kiện là lỗi kiểu thật, và im lặng bọc nó thành
+#: `2+3 == true` sẽ đẩy lỗi xuống sâu hơn với thông báo khó hiểu hơn.
+_DANG_MANG_BOOL = ("var", "field", "index", "map_get", "literal")
+
+
+def canonical_condition(v: Any) -> Any:
+    """BIÊN CHUẨN HOÁ ĐIỀU KIỆN — `hop_le` ⇒ `hop_le == true`.
+
+    Vì sao tồn tại: probe E2E sản phẩm (2026-08-23) trên đề *"kiểm tra chuỗi
+    ngoặc bằng ngăn xếp"* cho thấy LLM viết `if hop_le and ...` bằng cách đặt
+    thẳng `{"kind":"var","name":"hop_le"}` vào vế của `logic`, trong khi union
+    điều kiện chỉ nhận `compare/logic/not/is_empty/contains/is_null`. Cả chương
+    trình bị vứt vì một khác biệt KÝ PHÁP: `x` và `x == true` là cùng một mệnh
+    đề, và mọi ngôn ngữ lập trình mà học sinh từng thấy đều cho viết cách đầu.
+
+    Cùng họ với `canonical_container_name`: gộp hai cách viết của MỘT tham
+    chiếu, KHÔNG nới ngữ nghĩa. Điều kiện sau khi gấp vẫn phải qua kiểm kiểu —
+    biến không mang kiểu bool thì vẫn bị từ chối, chỉ khác là bị từ chối ở tầng
+    NGỮ NGHĨA với thông báo nói đúng bệnh, thay vì chết ở tầng cú pháp.
+    """
+    if isinstance(v, dict) and v.get("kind") in _DANG_MANG_BOOL:
+        return {
+            "kind": "compare",
+            "op": "==",
+            "left": v,
+            "right": {"kind": "literal", "value": True},
+        }
+    return v
+
+
 ConditionExpr = Annotated[
     Union[
         Annotated[CompareCond, Tag("compare")],
@@ -208,6 +255,7 @@ ConditionExpr = Annotated[
         Annotated[IsNullCond, Tag("is_null")],
     ],
     Discriminator("kind"),
+    BeforeValidator(canonical_condition),
 ]
 
 LogicCond.model_rebuild()
@@ -335,7 +383,15 @@ class VisualContainerBinding(BaseModel):
     semantic_id: str = Field(..., description="Tên container trong Semantic Memory")
     primitive: Literal[
         "array_strip", "stack_view", "queue_view", "table_grid",
-        "tree_element", "bit_register", "bar_chart", "graph_view"
+        "tree_element", "bit_register", "bar_chart", "graph_view",
+        # `map_view` thêm 2026-08-23 — CÙNG LÝ DO với `graph_view`: `map` là một
+        # `MemoryType` đã được admit mà hợp đồng thị giác không có cách nào biểu
+        # diễn. Cổng bề mặt học sinh phơi ra điều đó trên fixture #18 ("Bảng đếm
+        # tần suất ký tự"): chương trình dựng `freq` suốt lượt chạy, còn màn hình
+        # không bao giờ có bảng nào — bài mang tên "bảng tần suất" mà không hiện
+        # bảng. Mở vì một LỚP TRẠNG THÁI đã admit là hợp lệ; nguồn phát hiện là
+        # DEV, không phải một ca SEALED (`test_primitive_set_frozen.py`).
+        "map_view",
     ] = Field(..., description="Visual primitive tương ứng trong DSL")
     label: str = Field(..., description="Nhãn hiển thị trên canvas")
 

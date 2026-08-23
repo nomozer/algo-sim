@@ -295,7 +295,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # kết quả của đường KHÔNG có route sinh — trả lại mù thì bản sửa này vô hiệu
     # với chính những đề nó nhắm tới (bài thuật toán rơi xuống
     # `generic.rule_scene` rồi hiện narration chạy trên hình đứng yên).
-    assert main_module.CACHE_VERSION == "35"
+    # 36 (2026-08-23, vNext): prompt `semantic_program.md` thêm luật `container`
+    # phải là TÊN vùng nhớ đã khai. Probe E2E sau khi bật `serve` bắt được LLM
+    # viết `container: {"kind":"literal","value":"([{"}` — tham chiếu một vùng
+    # nhớ chưa khai, nên chương trình bị Pydantic vứt trước mọi tầng ngữ nghĩa.
+    # Đổi prompt mà không bump thì đề cũ vẫn trả chương trình sinh dưới prompt
+    # cũ, và bản sửa đọc như không ăn thua.
+    assert main_module.CACHE_VERSION == "36"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

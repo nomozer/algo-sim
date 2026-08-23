@@ -26,6 +26,10 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 from .contract import SemanticProgramSpec
+# Tái dùng write-set của C₁a thay vì viết bản thứ hai: nó đã biết mọi dạng câu
+# lệnh tạo ra một biến (`assign`, `pop`, `push`, `map_set`, biến chạy vòng lặp…)
+# và hai bản rời nhau chắc chắn sẽ lệch khi thêm primitive.
+from .coverage_gate import _producers
 from .request_contract import RequestContract, norm_value
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
@@ -100,9 +104,33 @@ def check_grounding(
     """P2 — mọi giá trị khởi tạo phải truy được về ĐÚNG mục dữ liệu đã chỉ."""
     unresolved: list[str] = []
 
+    # MỘT lớp được miễn `source_fact_id`, và nó kiểm được ở phía server chứ
+    # không do chương trình tự khai.
+    #
+    # VÌ SAO CẦN. P2 hỏi "dữ liệu này ở đâu ra". Bản đầu trả lời câu đó bằng đúng
+    # một cách — phải ghim về một mục của đề — nên nó chặn luôn cả thứ KHÔNG
+    # phải dữ liệu đề: `result = "HỢP LỆ"` là nhãn đầu ra khởi tạo lạc quan, sẽ
+    # bị chính chương trình ghi đè.
+    #
+    # RANH GIỚI ĐÃ CÂN NHẮC VÀ KHÔNG VƯỢT: không miễn theo kiểu "mọi nguyên tử
+    # của giá trị đều đã có trong hợp đồng". Nghe hợp lý nhưng đó chính là
+    # tìm-theo-giá-trị mà docstring của `test_grounding_gate.py` bác bỏ tường
+    # minh — nó biến P2 từ kiểm THAM CHIẾU thành trùng khớp ngẫu nhiên, và làm
+    # hỏng ba test âm cùng lúc (ghim nhầm mục vẫn qua). Hệ quả còn lại: bảng tra
+    # HẰNG của thuật toán (`pairs`, tập nguyên âm, chữ số La Mã, vector hướng
+    # BFS) vẫn cần một mục dữ liệu để ghim. Đó là câu hỏi năng lực ngữ nghĩa,
+    # thuộc §12, KHÔNG phải chỗ để nới một cổng đã được thiết kế có chủ đích.
+    computed = _producers(spec.statements)
+
     for decl in spec.memory_declarations:
         if _is_seed(decl.initial_value):
             continue  # hạt khởi tạo, không mang thông tin của đề
+
+        # CHƯƠNG TRÌNH TỰ TÍNH RA. Có câu lệnh ghi vào biến này ⇒ giá trị khởi
+        # tạo không gánh thông tin, nó chỉ là điểm xuất phát. Câu hỏi "phép tính
+        # ấy có thoả nghĩa vụ không" là của C₁/C₂, không phải của P2.
+        if decl.name in computed:
+            continue
 
         fid = decl.source_fact_id
         if not fid:

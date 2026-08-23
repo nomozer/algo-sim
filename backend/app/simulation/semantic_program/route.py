@@ -35,6 +35,7 @@ from .contract import SemanticProgramSpec
 from .coverage_gate import check_realized_coverage, check_structural_coverage
 from .grounding_gate import check_grounding
 from .interpreter import SemanticProgramInterpreter
+from .learner_surface import check_learner_surface
 from .pacer import DEFAULT_PRESENTATION_BUDGET
 from .pipeline_adapter import (
     DEFAULT_EXECUTION_BUDGET,
@@ -223,6 +224,37 @@ def verify_and_compile(
             ErrorCode.SEMANTIC_PROGRAM_INVALID,
             f"Không biên dịch được envelope: {e}",
             **da_chay,
+        )
+
+    # BỀ MẶT HỌC SINH — cổng cuối, và là cổng DUY NHẤT quay về phía màn hình.
+    #
+    # Mọi cổng phía trên nhìn về phía CHƯƠNG TRÌNH: cú pháp, dữ liệu, phủ nghĩa
+    # vụ, hậu điều kiện, binding có phân giải được. Qua hết chúng vẫn còn lọt
+    # được đúng thứ đã ship: chương trình chạy đúng, lời kể đúng, envelope sạch —
+    # mà ngăn xếp trên hình rỗng suốt bảy bước. Chạy SAU `compile` vì câu hỏi là
+    # về những khung SẼ ĐƯỢC PHÁT, không phải về ý định của chương trình.
+    surface = check_learner_surface(contract, spec, exec_res, envelope)
+    if not surface.ok:
+        code = ErrorCode.LEARNER_SURFACE_INCOMPLETE
+        return SemanticRouteOutcome(
+            stage_reached="learner_surface",
+            # `executable=True` là CÓ CHỦ ĐÍCH: hệ chạy được bài này. Cái thiếu
+            # là đường lên màn hình, không phải năng lực.
+            executable=True,
+            servable=False,
+            error_code=code.value,
+            failure_category=SEMANTIC_FAILURE_CATEGORY[code.value],
+            reason=(
+                "Mô phỏng chạy được nhưng màn hình chưa mang đủ thông tin để "
+                "hiểu bài: " + "; ".join(surface.invisible)
+            ),
+            details=list(surface.invisible),
+            weak_kinds=sorted(set(da_chay["weak"])),
+            exec_status=exec_res.status,
+            total_steps=exec_res.total_steps,
+            frame_count=len(envelope["config"]["frames"]),
+            final_memory=dict(exec_res.final_memory),
+            envelope=envelope,
         )
 
     # Mức YẾU: chạy được, biên dịch được, nhưng chưa có checker độc lập cho

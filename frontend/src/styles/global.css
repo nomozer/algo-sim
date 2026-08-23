@@ -4463,6 +4463,50 @@ html {
   gap: 2px;
 }
 
+/* ── Bảng ánh xạ khoá → giá trị (`map_view`, 2026-08-23) ──
+   Hai cột chứ không phải lưới: số khoá không biết trước, và một cột khoá thẳng
+   hàng đọc nhanh hơn hẳn khi bảng dài ra. Khoá canh trái để mắt dò theo mép,
+   giá trị canh phải + `tabular-nums` để so độ lớn theo cột. */
+.sem-map {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 14rem;
+  overflow-y: auto;
+}
+
+.sem-map-row {
+  display: grid;
+  grid-template-columns: minmax(2.5rem, auto) 1fr;
+  gap: 2px;
+}
+
+.sem-map-key,
+.sem-map-val {
+  padding: var(--sp-xs) var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-sm);
+  background: var(--canvas-soft);
+  color: var(--ink);
+}
+
+.sem-map-key {
+  color: var(--ink-muted);
+  text-align: start;
+}
+
+.sem-map-val {
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+/* Bảng rỗng THẬT khác "không có bảng" — nói ra, đừng để khung trống. */
+.sem-map-empty {
+  padding: var(--sp-xs) var(--sp-sm);
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
 /* ── Con trỏ: chỉ dựng khi neo phân giải được (bất biến #34) ── */
 .sem-pointer {
   display: inline-flex;

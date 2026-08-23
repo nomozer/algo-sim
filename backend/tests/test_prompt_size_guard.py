@@ -34,7 +34,24 @@ BUDGET_BYTES: dict[str, int] = {
     # (danh sách statement/expression/primitive) và còn 1.675B, nhỏ hơn bản gốc
     # 1.998B. Ghi lại vì bản nháp đầu của chính lượt này lại PHÌNH lên 2.131B —
     # gỡ enum xong rồi nhồi thêm văn xuôi. Cổng này bắt được, nên nó có ích.
-    "semantic_program.md": 1800,
+    # NÂNG 1800 → 2500 (2026-08-23). KHÔNG phải nới để nhồi văn xuôi — đúng thứ
+    # comment trên cảnh báo. Bốn lượt probe E2E trên đề "kiểm tra chuỗi ngoặc
+    # bằng ngăn xếp" (route `serve`, API thật) đo được mỗi luật gỡ đúng một lớp
+    # lỗi, số lỗi cú pháp đi 4 → 2 → 1 → 0:
+    #   · `container` là TÊN đã khai (literal đặt thẳng ⇒ trỏ vùng nhớ không có)
+    #   · `pop`/`dequeue` là CÂU LỆNH có `dest_var`; chỉ `peek` là biểu thức
+    #   · chuỗi ĐƯỢC DUYỆT khai `array` ký tự, không khai `str`
+    # Đã thử chỗ rẻ hơn trước: thẻ văn phạm (`grammar_card`) VỐN ĐÃ in
+    # `pop: container:tên dest_var?:tên` và `container:tên` — tức dữ kiện dẫn
+    # xuất có sẵn mà model vẫn viết sai. Thiếu là GỢI Ý CÁCH DÙNG, thứ docstring
+    # của chính thẻ xếp về `skills/*.md`. Nên trần đổi, không phải chỗ đặt đổi.
+    # 2500 → 2850 (cùng lượt): luật thứ tư — `visual_bindings` phải phủ container
+    # BIẾN ĐỘNG và witness của mỗi nghĩa vụ. Đề "đảo dãy bằng ngăn xếp" chạy
+    # được (executable, 8 bước) rồi bị `learner_surface` chặn với đúng câu
+    # "mô phỏng chạy xong mà học sinh không thấy đáp án". Đây là luật SƯ PHẠM,
+    # không mã hoá thành canonicalization được: cổng biết đòi gì, nhưng model
+    # chỉ biết sau khi đã trượt.
+    "semantic_program.md": 2850,
     "simulate.md": 1450,
     "transcribe.md": 1050,
 }

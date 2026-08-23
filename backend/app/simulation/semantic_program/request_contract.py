@@ -64,6 +64,29 @@ class InputFact(BaseModel):
     label: str
     values: tuple[Any, ...] = ()
 
+    # ── P1 — BẰNG CHỨNG NGUỒN ────────────────────────────────────────────────
+    #
+    # Bốn trạng thái, và sự khác nhau giữa chúng là toàn bộ giá trị của P1:
+    #
+    #   "unchecked" — không có `problem_text` để đối chiếu (đường gọi cũ, test
+    #                 dựng contract bằng tay). KHÔNG kết luận gì; giữ nguyên
+    #                 hành vi trước vNext.
+    #   "extracted" — `analyze` bỏ trống ô giá trị, extractor tất định tìm thấy
+    #                 literal trong đề và server lấy nó. Đây là ca đã quan sát
+    #                 được: `values=null` trong khi đề ghi rõ `{[()]}`.
+    #   "confirmed" — `analyze` có khai, và MỌI giá trị khai đều truy được về
+    #                 một span trong đề.
+    #   "claimed"   — `analyze` khai giá trị mà đề không có bằng chứng. Đây là
+    #                 thứ P1 sinh ra để bắt: model tự thêm dữ liệu rồi chương
+    #                 trình khớp với dữ liệu tự thêm đó, và mọi cổng phía sau
+    #                 đều xanh vì chúng chỉ so chương trình với hợp đồng.
+    provenance: str = "unchecked"
+    source_start: int | None = None
+    source_end: int | None = None
+    source_text: str | None = None
+    #: Đúng những giá trị KHÔNG chứng minh được. Rỗng ⇔ không có gì để trách.
+    unproven_values: tuple[Any, ...] = ()
+
 
 class RequestContract(BaseModel):
     """Hợp đồng yêu cầu — bất biến sau khi server đóng băng."""

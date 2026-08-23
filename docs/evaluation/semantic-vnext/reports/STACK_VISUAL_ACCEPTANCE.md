@@ -2,7 +2,8 @@
 
 > Bằng chứng trình duyệt THẬT (Chromium qua Playwright), không phải `renderToString`.
 > Runner: `frontend/scripts/capture-stack-vnext.mjs` · dữ liệu máy:
-> `stack-visual-acceptance.json` · ảnh: `stack-{A..F}_*.png`.
+> `../browser-evidence/stack-visual-acceptance.json` · ảnh:
+> `../browser-evidence/stack-{A..F}_*.png`.
 
 ## 0. Vì sao cần bản soát này
 

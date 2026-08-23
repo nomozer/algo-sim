@@ -146,6 +146,53 @@ describe("semantic route — graph_view", () => {
   });
 });
 
+describe("semantic route — map_view", () => {
+  /* `map` là `MemoryType` đã admit từ lâu mà tới 2026-08-23 mới có primitive.
+     Hệ quả cũ: mọi bài mà ĐÁP ÁN là một bảng (đếm tần suất, gom nhóm, dựng bảng
+     tra) chạy được nhưng không xem được — `learner_surface.py` phơi ra trên
+     fixture #18. Ba test dưới khoá đúng ba điều bảng phải làm được. */
+  const withMap = {
+    ...CONFIG,
+    frames: [
+      {
+        step_index: 0,
+        narration: "Bảng còn rỗng.",
+        objects: [{ id: "freq", type: "map_view", label: "Bảng tần suất", entries: [] }],
+        highlighted_object_ids: [],
+      },
+      {
+        step_index: 1,
+        narration: "Đếm được a:2, b:1.",
+        objects: [{
+          id: "freq", type: "map_view", label: "Bảng tần suất",
+          entries: [["a", 2], ["b", 1]],
+        }],
+        highlighted_object_ids: ["freq"],
+      },
+    ],
+    view_steps: [
+      { view_index: 0, frame_lo: 0, frame_hi: 0, narration: "Bảng còn rỗng." },
+      { view_index: 1, frame_lo: 1, frame_hi: 1, narration: "Đếm được a:2, b:1." },
+    ],
+  };
+
+  it("bảng RỖNG THẬT giữ nguyên là rỗng, không bị dựng mục giả", () => {
+    expect(buildSemanticState(withMap).timeline[0].objects[0].entries).toEqual([]);
+  });
+
+  it("bảng ĐỔI theo bước — đây là thứ bài học đang dạy", () => {
+    const s = buildSemanticState(withMap);
+    expect(s.timeline[1].objects[0].entries).toEqual([["a", 2], ["b", 1]]);
+    expect(s.timeline[0].objects[0].entries).not.toEqual(
+      s.timeline[1].objects[0].entries,
+    );
+  });
+
+  it("config có map_view qua validateConfig", () => {
+    expect(validateSemanticConfig(withMap).ok).toBe(true);
+  });
+});
+
 describe("semantic route — validateConfig", () => {
   it("nhận config hợp lệ", () => {
     const r = validateSemanticConfig(CONFIG);

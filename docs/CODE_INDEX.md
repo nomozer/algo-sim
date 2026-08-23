@@ -694,8 +694,8 @@ bản cũ trong bộ nhớ.
 Bằng chứng trình duyệt cho case Stack `{[()]}`: tiêm envelope thẳng qua
 `useAppStore.loadEnvelope`, đặt cursor tới 6 khung mốc, chụp ảnh và trích **phép
 chiếu ngữ nghĩa từ DOM** (nội dung `<text>` trong SVG) — không so pixel. Kết quả:
-`docs/evaluation/semantic-vnext/` (`STACK_VISUAL_ACCEPTANCE.md` ·
-`stack-visual-acceptance.json` · 6 ảnh).
+`docs/evaluation/semantic-vnext/browser-evidence/` (`stack-visual-acceptance.json`
+· 6 ảnh); báo cáo đi kèm ở `semantic-vnext/reports/STACK_VISUAL_ACCEPTANCE.md`.
 
 Hai điều kiện của anti-pattern #14 đều CÓ THẬT trong script: **dấu vân tay trang**
 (khẳng định đúng tiêu đề + 7 bước, sai thì thoát `3`) và **`--faultcheck`** (thay
@@ -1392,6 +1392,21 @@ WITHOUT_PREDICTION` (chạy trọn timeline MỌI envelope offline bằng `nextS
 `prediction` vẫn `null`), `OBSERVE_REQUIRES_NO_ANSWER` (`nextStep` không đọc
 `prediction`; `submitPrediction` không đụng cursor). Mở file này trước khi định
 thêm bất kỳ cổng nào chặn Play.
+
+### `simulations/learner-gate.ts` · `learner-gate.test.ts` · Change impact: offline
+Sở hữu **phép chiếu ngữ nghĩa DOM → trạng thái** và cổng tương tác dùng chung cho
+MỌI mô phỏng sinh ra — không nhánh riêng cho miền nào.
+`projectSemanticDom(html, spec)` đọc **chữ người học nhìn thấy** trong `<text>`,
+khoá theo `data-obj` mà `ui.tsx::renderObject` gắn; `data-item` phân biệt *dữ liệu*
+với *chú giải* (`← TOP`, `FRONT`/`REAR`, `[0] [1]`) — thiếu vế này guard chấm
+`["{","← TOP"]` là nội dung ngăn xếp. Collection RỖNG đọc theo `LA_COLLECTION`:
+vắng `data-item` = rỗng thật, không phải "đọc chú giải".
+`kiemTransport` chụp bảng trạng thái khi đi xuôi rồi **lùi từng bước so lại**, nên
+engine nào tính lùi bằng hoàn tác gần đúng sẽ trượt; kèm SCRUB nhảy cóc và kẹp
+biên (`kiemBienTimeline`). `findPlaceholderLeaks` + `zeroKhongBiNuot` giữ cả hai
+chiều của bẫy `?? 0` (chưa-có không được thành `0`; `0` thật không được thành `—`).
+Gate này đã bắt được HAI lỗi sản phẩm mà mọi cổng cũ bỏ lọt (xem `ui.tsx`,
+`model.ts::applyStepAction`). Thêm primitive mới ⇒ thêm nó vào `MIEN` của test.
 
 ### `simulations/registry.ts` · `legacy.ts` · Change impact: offline
 Đăng ký/tra module theo id; `legacy.ts` nâng `algorithm_id` cũ thành envelope.
@@ -2502,6 +2517,30 @@ THÁI CUỐI bằng phép toán sơ cấp, **không cài lại thuật toán c�
 đó là điều kiện để oracle giữ được tính độc lập. `structural_traversal` cố ý chưa
 có checker (lý do ghi trong file).
 
+### `backend/app/simulation/semantic_program/learner_surface.py` · offline
+
+Cổng CUỐI và là cổng **duy nhất quay về phía màn hình** — mọi cổng khác nhìn về
+phía chương trình. Chạy SAU `compile` vì câu hỏi là về những khung **sẽ được
+phát**, không phải về ý định của chương trình. Hạ `servable=False` nhưng **giữ
+`executable=True`** (`LEARNER_SURFACE_INCOMPLETE` → `verification_gap`): hệ chạy
+được bài, cái thiếu là đường lên màn hình.
+
+Bổ khuyết đúng chiều còn trống của bất biến #34: `_assert_bindings_resolvable`
+hỏi *mỗi binding có biến không*; cổng này hỏi *mỗi biến đáng thấy có binding
+không*. Chỉ đòi HAI lớp — container **biến động** và **witness** của nghĩa vụ —
+vì đòi mọi biến là từ chối oan hàng loạt mô phỏng đúng (biến đếm, biến tạm), mà
+một cổng kêu oan là một cổng sẽ bị tắt. Bảng tra HẰNG (`pairs`) không đổi giá trị
+nên không bị đòi. Cùng danh sách `PLACEHOLDER_LEAKS` với
+`frontend/src/simulations/learner-gate.ts` — hai đầu của một luật.
+
+Phát hiện đầu tiên của nó: fixture #18 dựng bảng tần suất suốt lượt chạy mà màn
+hình không bao giờ có bảng — vì `map` là `MemoryType` đã admit mà không primitive
+nào biểu diễn được. Đó là nguồn gốc của `map_view` (2026-08-23), thêm theo đúng
+tiền lệ `graph_view`: mở vì một **lớp trạng thái đã admit**, nguồn phát hiện DEV,
+không phải một ca SEALED. Thêm primitive ⇒ đồng bộ BỐN nơi: `contract.py` Literal ·
+`visual_adapter.HANDLED_PRIMITIVES` + nhánh adapt · `test_primitive_set_frozen.py` ·
+renderer `domains/semantic/ui.tsx`, rồi chạy `export_semantic_program_schema.py`.
+
 ### `backend/app/simulation/semantic_program/analyze_contract.py` · offline
 
 Sở hữu **bề mặt `analyze` của route semantic**, tách hẳn enum dẫn xuất catalog
@@ -2638,7 +2677,10 @@ Sở hữu **soát thị giác đại diện** của route semantic: 4 ca × 2 b
 Năm phép đo: chữ đè chữ · tràn/clipping · con trỏ chui vào nhãn · **chữ lặp** ·
 khung ĐỔI sau 6 bước. Có `--faultcheck` để chứng minh guard đỏ được — bắt buộc
 chạy trước khi tin một bản soát "SẠCH" (`ARCHITECTURE_MAP §8` #14). Fixture
-`public/fixtures/semantic_l5a.json` **sinh từ backend thật**, không viết tay.
+`frontend/tests/fixtures/semantic/semantic_l5a.json` **sinh từ backend thật**,
+không viết tay. (Trước vNext nó nằm ở `public/` nên bị Vite chép thẳng vào
+`dist/` — script đọc nó bằng `fs`, chưa bao giờ qua HTTP. Khoá bởi
+`src/public-assets-hygiene.test.ts`.)
 Kết quả: `docs/evaluation/semantic-l5a/`.
 
 ### `frontend/scripts/capture-stack-vnext.mjs` · cần Chrome + `npm run dev`
