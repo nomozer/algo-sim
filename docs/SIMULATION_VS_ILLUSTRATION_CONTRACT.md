@@ -128,9 +128,27 @@ Suy từ **ai có bên chấm tất định**, không phải từ cảm nhận t
 
 ## 7. Tuyên bố ĐƯỢC PHÉP và BỊ CẤM
 
-Được nói: trạng thái mô phỏng là tất định; biểu diễn dẫn xuất từ state; ngữ
+Được nói: trạng thái mô phỏng là tất định; **hình vẽ** dẫn xuất từ state; ngữ
 cảnh NL ánh xạ vào target tái dụng đã validate; thao tác học sinh được engine
 chấm ở nơi có hợp đồng; 2D/3D chia sẻ cùng sự thật.
+
+⚠️ **NGOẠI LỆ ĐÃ ĐO, phải nêu kèm mỗi khi dùng câu "dẫn xuất từ state"** — chữ
+*"biểu diễn"* bị thu hẹp thành *"hình vẽ"* ở đây có chủ đích. `generic.rule_scene`
+có đúng **một** trường văn bản do LLM soạn (`RevealStep.narration` và narration
+của `step_sequence`): nó **không** dẫn xuất từ state, mà dẫn xuất từ LLM. Đo được
+ở `GENERIC_RULE_SCENE_LLM_BOUNDARY_AUDIT §5`: narration **không** đổi được state,
+kết quả hay phán quyết (T2 nguyên vẹn), nhưng **nói được** một kết quả mâu thuẫn
+với con số engine đang vẽ trên cùng màn hình, và không tầng nào đối chiếu.
+
+Từ 2026-08-23 trường ấy có **trần độ dài** (`MAX_TEXT_LEN`, hai tầng, khoá bởi
+`test_dsl.py` + `narration-boundary.characterization.test.tsx`). Trần chặn được
+**khối lượng**, không chặn được **nội dung** — nên tuyên bố vẫn phải thu hẹp,
+đúng như audit §7 đòi: *hoặc siết trường, hoặc thu hẹp tuyên bố* — ở đây làm cả
+hai, vì siết một nửa thì tuyên bố cũ vẫn sai một nửa.
+
+Phát biểu đúng: **hình vẽ** dẫn xuất tất định từ state ở mọi target; **lời
+thuyết minh** cũng vậy, TRỪ `generic.rule_scene`, nơi nó do LLM soạn trong một
+miền có trần độ dài nhưng không có kiểm nội dung.
 
 **Không** được nói: học sinh học tốt hơn · có cải thiện kết quả học tập · 3D
 dạy tốt hơn 2D. Giữ nguyên `LEARNER_IMPACT_NOT_EVALUATED` và

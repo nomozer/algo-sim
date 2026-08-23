@@ -189,9 +189,11 @@ NON_LEARNER_KEYS = frozenset(
 
 #: Trong CÂU KỂ thì giá trị rò ra nằm giữa câu, nên phải khớp theo biên từ chứ
 #: không so bằng nhau.
+#: Biên TỪ, không phải biên "không-phải-dấu-chấm": bản đầu viết `(?![\w.])` nên
+#: `"… là undefined."` — đúng dạng hay gặp nhất — trượt vì dấu chấm cuối câu.
 _RX_TRONG_CAU = re.compile(
-    r"(?<![\w.\[])(?:" + "|".join(re.escape(x) for x in PLACEHOLDER_LEAKS) + r")(?![\w.])"
-    r"|\[object Object\]"
+    r"\b(?:" + "|".join(re.escape(x) for x in PLACEHOLDER_LEAKS if x.isalnum()) + r")\b"
+    r"|" + re.escape("[object Object]")
 )
 
 
@@ -260,7 +262,36 @@ def check_learner_surface(
                 "không có binding nào — học sinh nghe kể về nó mà không thấy nó"
             )
 
-    # (2) Chỗ chứa CÂU TRẢ LỜI phải nhìn thấy được.
+    # (2) DỮ LIỆU ĐỀ CHO phải nhìn thấy được, dù nó có biến động hay không.
+    #
+    # VÌ SAO CẦN LUẬT RIÊNG: luật (1) chỉ chạm container BIẾN ĐỘNG, nên một dãy
+    # chỉ-đọc — `arr` của bài tìm max, `chars` của bài đối xứng, `g` của bài BFS
+    # — biến mất khỏi màn hình mà không ai kêu. Mà mất đầu vào thì học sinh
+    # không còn gì để bám: con trỏ chạy trên một dãy vô hình, lời kể nói "so 45
+    # với 89" trong khi trên hình không có số nào.
+    #
+    # Ma trận xuyên miền phơi ra chỗ này: gỡ binding của container đầu tiên mà
+    # 6/7 lớp VẪN XANH. Một cổng để lọt sáu trên bảy ca là một cổng chưa chặn gì.
+    #
+    # Neo vào `source_fact_id` chứ không vào "có initial_value": bảng tra HẰNG
+    # (`pairs`) cũng có giá trị khởi tạo mà không phải dữ liệu đề, và đòi nó
+    # phải hiện là quay lại kêu oan. `source_fact_id` là chỗ chương trình TỰ KHAI
+    # "cái này lấy từ đề", và đường sản phẩm bắt buộc phải khai (P2).
+    # KHÔNG lọc theo `CONTAINER_TYPES` ở luật này — cố ý. Miễn trừ vô hướng ở
+    # luật (1) là để tha biến ĐẾM/TẠM, không phải để tha dữ liệu đề. Bài "kiểm
+    # tra bit thứ k của số n" có đầu vào là hai số; giấu chúng đi thì học sinh
+    # xem một mô phỏng không biết đang xét số nào. `source_fact_id` phân biệt
+    # được đúng hai loại đó, nên luật này neo vào nó chứ không neo vào kiểu.
+    for decl in spec.memory_declarations:
+        if not decl.source_fact_id:
+            continue
+        if decl.name not in da_bind:
+            thieu.append(
+                f"'{decl.name}' mang dữ liệu đề (mục '{decl.source_fact_id}') "
+                "nhưng không có binding — học sinh không thấy đầu vào để theo dõi"
+            )
+
+    # (3) Chỗ chứa CÂU TRẢ LỜI phải nhìn thấy được.
     for ob in contract.obligations:
         witness = (ob.params or {}).get("witness")
         if witness and witness not in da_bind:

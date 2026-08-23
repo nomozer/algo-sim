@@ -1,0 +1,48 @@
+{
+  "chay_luc": "2026-08-23T12:18:13.479Z",
+  "fault": false,
+  "ket": [
+    {
+      "bai": "diem-cao-nhat",
+      "ten": "array/quét",
+      "kiem": {
+        "NEXT": false,
+        "PREVIOUS": false,
+        "RESET": false,
+        "PLAY": false,
+        "PAUSE": false,
+        "KHONG_RO_RI": true
+      },
+      "ghi_chu": [],
+      "pass": false
+    },
+    {
+      "bai": "xep-hang-chieu-cao",
+      "ten": "array/hoán vị",
+      "kiem": {
+        "NEXT": false,
+        "PREVIOUS": false,
+        "RESET": false,
+        "PLAY": false,
+        "PAUSE": false,
+        "KHONG_RO_RI": true
+      },
+      "ghi_chu": [],
+      "pass": false
+    },
+    {
+      "bai": "tra-tu-dien",
+      "ten": "array/chia đôi",
+      "kiem": {
+        "NEXT": false,
+        "PREVIOUS": false,
+        "RESET": false,
+        "PLAY": false,
+        "PAUSE": false,
+        "KHONG_RO_RI": true
+      },
+      "ghi_chu": [],
+      "pass": false
+    }
+  ]
+}

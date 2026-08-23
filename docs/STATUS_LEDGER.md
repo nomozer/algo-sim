@@ -724,6 +724,8 @@ Bằng chứng: `docs/evaluation/semantic-vnext/` (`SERVE_PROBE_CHAIN.md` ·
 | Bốn biên ký pháp (`spec_version`·`container`·`condition`·nesting) | **DONE** | `test_*_canonicalization.py`, `MAX_NESTING_DEPTH` 4→6 | — |
 | **C₂ không cho nghĩa vụ VÔ HIỆU phát đi** | **DONE** | `test_derived_sequence_vacuous.py` 7 test, hai chiều | — |
 | **Route sinh ra mô phỏng ĐÚNG** | **OPEN — chưa có lượt nào** | `SERVE_PROBE_CHAIN §4b`: lượt "phát được" là DƯƠNG TÍNH GIẢ | **cần wave riêng** |
+| Trần độ dài `narration` của `generic.rule_scene` | **DONE** | `test_dsl.py` 5 test + `narration-boundary.characterization.test.tsx` 18 test, hai tầng | — |
+| Kiểm **nội dung** narration (mâu thuẫn với state) | **OPEN — có chủ đích** | audit §9 cấm dựng hệ kiểm duyệt / LLM judge; tuyên bố đã thu hẹp thay vì hứa suông | — |
 | `SEMANTIC_ROUTE_MODE` trong sản phẩm | **`off` có chủ đích** | chưa có bằng chứng route sinh mô phỏng đúng ⇒ bật là sớm | — |
 | Đo lại `A` sau bốn biên ký pháp | **OPEN** | phải niêm phong **SEALED MỚI**; cấm chạy lại trên tập cũ | — |
 | Bằng chứng thị giác cho envelope do route PHÁT | **PARTIAL** | ảnh có, nhưng chụp đúng lượt dương tính giả | wave sau |

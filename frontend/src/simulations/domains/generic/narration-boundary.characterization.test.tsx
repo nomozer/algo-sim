@@ -70,7 +70,6 @@ describe("đặc tả · validator hai tầng chỉ kiểm KIỂU của narratio
     ["lộ trước bước sau", "Bước sau sẽ hiện B, và đáp án là B."],
     ["tự xưng là hệ thống chấm điểm", "Hệ thống xác nhận: lời giải này chính xác."],
     ["chèn thẻ HTML", "<script>alert(1)</script><b>đậm</b>"],
-    ["chuỗi rất dài", "x".repeat(20000)],
   ];
 
   for (const [name, text] of CASES) {
@@ -80,12 +79,25 @@ describe("đặc tả · validator hai tầng chỉ kiểm KIỂU của narratio
     });
   }
 
-  it("không có TRẦN ĐỘ DÀI nào — chuỗi 20k ký tự đi thẳng vào spec", () => {
-    const long = "x".repeat(20000);
-    const r = accept(long);
+  /* ĐÃ ĐỔI 2026-08-23 — giảm nhẹ được uỷ quyền ở AUDIT §8.
+     Trước đây khối này khẳng định "không có TRẦN ĐỘ DÀI nào" và chuỗi 20k ký tự
+     đi thẳng vào spec. Nay có trần, tái dùng `MAX_TEXT_LEN` (500) của chữ object
+     thay vì đẻ hằng số thứ hai cho cùng một thứ. */
+  it("TỪ CHỐI: chuỗi 20k ký tự vượt trần độ dài", () => {
+    const r = accept("x".repeat(20000));
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error).toMatch(/quá dài/);
+  });
+
+  it("trần là 500: đúng 500 ký tự vẫn QUA, 501 thì TỪ CHỐI", () => {
+    expect(accept("x".repeat(500)).ok).toBe(true);
+    expect(accept("x".repeat(501)).ok).toBe(false);
+  });
+
+  it("một câu thuyết minh bình thường KHÔNG bị vạ lây", () => {
+    const r = accept("Đẩy phần tử 5 vào ngăn xếp; đỉnh ngăn xếp nay là 5.");
     if (!r.ok) throw new Error(r.error);
-    const frames = buildTimeline(r.config);
-    expect(frames[0].narration).toHaveLength(20000);
+    expect(buildTimeline(r.config)[0].narration).toContain("ngăn xếp");
   });
 
   it("narration KHÔNG phải chuỗi thì bị bỏ qua, KHÔNG làm hỏng spec", () => {

@@ -6,11 +6,12 @@ arbitrary code. §4: LLM không sinh state/frames/timeline.
 """
 
 import asyncio
+import copy
 import json
 
 from app.ai import pipeline
 from app.simulation.catalog import CATALOG
-from app.simulation.dsl.validator import validate_generic_config
+from app.simulation.dsl.validator import MAX_TEXT_LEN, validate_generic_config
 
 AND_SPEC = {
     "dsl_version": "1.0",
@@ -1069,4 +1070,66 @@ def test_pedagogical_quality_dry_run_catches_eval_error():
     cfg, err = validate_generic_config(bad_formula_spec)
     assert cfg is None
     assert "Lỗi" in err
+
+
+# ── TRẦN ĐỘ DÀI narration (2026-08-23) ────────────────────────
+#
+# Giảm nhẹ được uỷ quyền ở `GENERIC_RULE_SCENE_LLM_BOUNDARY_AUDIT §8`. Ma trận
+# đối kháng §4 của audit đó đo được: chuỗi 20 000 ký tự **ACCEPTED** vì "không
+# có trần độ dài ở bất kỳ tầng nào". Narration là bề mặt TỰ DO duy nhất của
+# `generic.rule_scene`, và học sinh đọc thẳng nó ở khe thuyết minh.
+#
+# Trần tái dùng `MAX_TEXT_LEN` của chữ object thay vì đẻ hằng số thứ hai: hai
+# con số cho cùng một thứ ("chữ hiện lên màn hình") chắc chắn sẽ lệch nhau.
+#
+# Luật phải đúng ở CẢ HAI tầng — mirror TS ở `generic/validate.ts`, khoá bởi
+# `narration-boundary.characterization.test.tsx`. Vá một tầng là để hở đường kia.
+
+
+def _reveal_voi_narration(narr):
+    spec = copy.deepcopy(REVEAL_SPEC)
+    spec["processes"][0]["steps"][0]["narration"] = narr
+    return validate_generic_config(spec)
+
+
+def test_narration_reveal_dai_qua_tran_bi_tu_choi():
+    cfg, err = _reveal_voi_narration("x" * 20000)
+    assert cfg is None
+    assert "quá dài" in err
+
+
+def test_narration_reveal_dung_tran_van_qua():
+    cfg, err = _reveal_voi_narration("x" * MAX_TEXT_LEN)
+    assert err is None, err
+    assert cfg["processes"][0]["steps"][0]["narration"]
+
+
+def test_narration_reveal_vuot_mot_ky_tu_bi_tu_choi():
+    cfg, err = _reveal_voi_narration("x" * (MAX_TEXT_LEN + 1))
+    assert cfg is None and "quá dài" in err
+
+
+def test_cau_thuyet_minh_binh_thuong_khong_bi_va_lay():
+    cfg, err = _reveal_voi_narration("Hé lộ hai đỉnh A và B của tam giác.")
+    assert err is None, err
+    assert "tam giác" in cfg["processes"][0]["steps"][0]["narration"]
+
+
+def test_narration_step_sequence_cung_co_tran():
+    """`explanation`/`description`/`note` đều đổ về cùng một trường — chốt phải
+    đặt SAU chỗ gộp, nếu không một tên khác vẫn tuồn được 20k ký tự vào."""
+    for ten in ("narration", "explanation", "description", "note"):
+        spec = {
+            "dsl_version": "1.0",
+            "title": "Dãy số",
+            "objects": [{"id": "day", "type": "array_strip", "items": [1, 2]}],
+            "rules": [],
+            "interactions": [],
+            "processes": [{"type": "step_sequence", "steps": [
+                {"action": "highlight", "targets": ["day"], ten: "y" * 20000},
+            ]}],
+        }
+        cfg, err = validate_generic_config(spec)
+        assert cfg is None, f"trường {ten!r} lọt qua trần độ dài"
+        assert "quá dài" in err
 

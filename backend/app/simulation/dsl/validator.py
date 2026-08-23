@@ -504,6 +504,20 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
                         return None, f'Trường lạ trong reveal step: "{k}".'
                 step = {"objects": list(objs)}
                 if isinstance(st.get("narration"), str):
+                    # TRẦN ĐỘ DÀI — giảm nhẹ được uỷ quyền ở
+                    # `GENERIC_RULE_SCENE_LLM_BOUNDARY_AUDIT §8`. Ma trận đối
+                    # kháng §4 đo được: chuỗi 20 000 ký tự ACCEPTED vì "không có
+                    # trần độ dài ở bất kỳ tầng nào". Đây là trần đó.
+                    #
+                    # Tái dùng `MAX_TEXT_LEN` chứ không đẻ hằng số thứ hai:
+                    # narration LÀ chữ hiện lên màn hình, cùng loại với `text`
+                    # của object, và hai con số cho cùng một thứ chắc chắn sẽ
+                    # lệch nhau.
+                    if len(st["narration"]) > MAX_TEXT_LEN:
+                        return None, (
+                            f"Thuyết minh của reveal step quá dài "
+                            f"(tối đa {MAX_TEXT_LEN} ký tự)."
+                        )
                     step["narration"] = st["narration"]
                 norm_steps.append(step)
             processes.append({"type": "reveal_sequence", "steps": norm_steps})
@@ -541,6 +555,15 @@ def validate_generic_config(raw) -> tuple[dict | None, str | None]:
                     step["value"] = st["value"]
                 narr = st.get("narration") or st.get("explanation") or st.get("description") or st.get("note")
                 if isinstance(narr, str) and narr.strip():
+                    # Cùng trần với reveal step — xem chú thích ở nhánh trên.
+                    # Bốn tên trường đều đổ về đây, nên chốt phải đặt SAU chỗ gộp
+                    # chứ không phải trên từng tên, nếu không `explanation` dài
+                    # 20 000 ký tự vẫn lọt.
+                    if len(narr) > MAX_TEXT_LEN:
+                        return None, (
+                            f"Thuyết minh của step_sequence quá dài "
+                            f"(tối đa {MAX_TEXT_LEN} ký tự)."
+                        )
                     step["narration"] = narr.strip()
                 norm_steps.append(step)
             if not norm_steps:

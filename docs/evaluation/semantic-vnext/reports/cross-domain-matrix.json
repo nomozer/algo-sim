@@ -1,0 +1,166 @@
+{
+  "cases": [
+    {
+      "lop": "scalar",
+      "title": "Kiểm tra bit thứ K của một số nguyên",
+      "steps": 4,
+      "frames": 4,
+      "gates": {
+        "PROGRAM_VALID": true,
+        "INTERPRETER_COMPLETE": true,
+        "EXPECTED_RESULT": true,
+        "INPUT_PRESERVED": true,
+        "TRACE_FRAME_CONSISTENT": true,
+        "DYNAMIC_STATE_VISIBLE": true,
+        "WITNESS_VISIBLE": true,
+        "PLACEHOLDER_LEAK_FREE": true,
+        "NARRATION_CONSISTENT": true,
+        "PRESENTATION_INDEPENDENT": true,
+        "TRANSPORT_CONTROLS_VALID": true
+      },
+      "pass": true,
+      "ghi_chu": []
+    },
+    {
+      "lop": "array",
+      "title": "Tìm phần tử lớn nhất trong dãy số",
+      "steps": 19,
+      "frames": 19,
+      "gates": {
+        "PROGRAM_VALID": true,
+        "INTERPRETER_COMPLETE": true,
+        "EXPECTED_RESULT": true,
+        "INPUT_PRESERVED": true,
+        "TRACE_FRAME_CONSISTENT": true,
+        "DYNAMIC_STATE_VISIBLE": true,
+        "WITNESS_VISIBLE": true,
+        "PLACEHOLDER_LEAK_FREE": true,
+        "NARRATION_CONSISTENT": true,
+        "PRESENTATION_INDEPENDENT": true,
+        "TRANSPORT_CONTROLS_VALID": true
+      },
+      "pass": true,
+      "ghi_chu": []
+    },
+    {
+      "lop": "string",
+      "title": "Hai con trỏ: Kiểm tra chuỗi đối xứng (Palindrome)",
+      "steps": 8,
+      "frames": 8,
+      "gates": {
+        "PROGRAM_VALID": true,
+        "INTERPRETER_COMPLETE": true,
+        "EXPECTED_RESULT": true,
+        "INPUT_PRESERVED": true,
+        "TRACE_FRAME_CONSISTENT": true,
+        "DYNAMIC_STATE_VISIBLE": true,
+        "WITNESS_VISIBLE": true,
+        "PLACEHOLDER_LEAK_FREE": true,
+        "NARRATION_CONSISTENT": true,
+        "PRESENTATION_INDEPENDENT": true,
+        "TRANSPORT_CONTROLS_VALID": true
+      },
+      "pass": true,
+      "ghi_chu": []
+    },
+    {
+      "lop": "stack",
+      "title": "Kiểm tra chuỗi ngoặc hợp lệ bằng Ngăn xếp",
+      "steps": 23,
+      "frames": 23,
+      "gates": {
+        "PROGRAM_VALID": true,
+        "INTERPRETER_COMPLETE": true,
+        "EXPECTED_RESULT": true,
+        "INPUT_PRESERVED": true,
+        "TRACE_FRAME_CONSISTENT": true,
+        "DYNAMIC_STATE_VISIBLE": true,
+        "WITNESS_VISIBLE": true,
+        "PLACEHOLDER_LEAK_FREE": true,
+        "NARRATION_CONSISTENT": true,
+        "PRESENTATION_INDEPENDENT": true,
+        "TRANSPORT_CONTROLS_VALID": true
+      },
+      "pass": true,
+      "ghi_chu": []
+    },
+    {
+      "lop": "derived_sequence",
+      "title": "Mảng cộng dồn (Prefix Sum Array)",
+      "steps": 10,
+      "frames": 10,
+      "gates": {
+        "PROGRAM_VALID": true,
+        "INTERPRETER_COMPLETE": true,
+        "EXPECTED_RESULT": true,
+        "INPUT_PRESERVED": true,
+        "TRACE_FRAME_CONSISTENT": true,
+        "DYNAMIC_STATE_VISIBLE": true,
+        "WITNESS_VISIBLE": true,
+        "PLACEHOLDER_LEAK_FREE": true,
+        "NARRATION_CONSISTENT": true,
+        "PRESENTATION_INDEPENDENT": true,
+        "TRANSPORT_CONTROLS_VALID": true
+      },
+      "pass": true,
+      "ghi_chu": []
+    },
+    {
+      "lop": "tree",
+      "title": "Duyệt cây nhị phân theo thứ tự trước (Preorder NLR)",
+      "steps": 16,
+      "frames": 16,
+      "gates": {
+        "PROGRAM_VALID": true,
+        "INTERPRETER_COMPLETE": true,
+        "EXPECTED_RESULT": true,
+        "INPUT_PRESERVED": true,
+        "TRACE_FRAME_CONSISTENT": true,
+        "DYNAMIC_STATE_VISIBLE": true,
+        "WITNESS_VISIBLE": true,
+        "PLACEHOLDER_LEAK_FREE": true,
+        "NARRATION_CONSISTENT": true,
+        "PRESENTATION_INDEPENDENT": true,
+        "TRANSPORT_CONTROLS_VALID": true
+      },
+      "pass": true,
+      "ghi_chu": []
+    },
+    {
+      "lop": "graph",
+      "title": "Duyệt đồ thị theo chiều rộng (BFS) bằng Hàng đợi",
+      "steps": 31,
+      "frames": 31,
+      "gates": {
+        "PROGRAM_VALID": true,
+        "INTERPRETER_COMPLETE": true,
+        "EXPECTED_RESULT": true,
+        "INPUT_PRESERVED": true,
+        "TRACE_FRAME_CONSISTENT": true,
+        "DYNAMIC_STATE_VISIBLE": true,
+        "WITNESS_VISIBLE": true,
+        "PLACEHOLDER_LEAK_FREE": true,
+        "NARRATION_CONSISTENT": true,
+        "PRESENTATION_INDEPENDENT": true,
+        "TRANSPORT_CONTROLS_VALID": true
+      },
+      "pass": true,
+      "ghi_chu": []
+    }
+  ],
+  "pass_count": 7,
+  "total": 7,
+  "gates": [
+    "PROGRAM_VALID",
+    "INTERPRETER_COMPLETE",
+    "EXPECTED_RESULT",
+    "INPUT_PRESERVED",
+    "TRACE_FRAME_CONSISTENT",
+    "DYNAMIC_STATE_VISIBLE",
+    "WITNESS_VISIBLE",
+    "PLACEHOLDER_LEAK_FREE",
+    "NARRATION_CONSISTENT",
+    "PRESENTATION_INDEPENDENT",
+    "TRANSPORT_CONTROLS_VALID"
+  ]
+}

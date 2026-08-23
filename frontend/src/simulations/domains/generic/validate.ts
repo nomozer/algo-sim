@@ -512,6 +512,12 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
             return { ok: false, error: `Trường lạ trong reveal step: "${k}".` };
           }
         }
+        // TRẦN ĐỘ DÀI narration — gương của `dsl/validator.py`. Ma trận đối kháng
+        // của `GENERIC_RULE_SCENE_LLM_BOUNDARY_AUDIT §4` đo được chuỗi 20 000 ký
+        // tự ACCEPTED ở CẢ HAI tầng; vá một tầng thì đường còn lại vẫn hở.
+        if (typeof st.narration === "string" && st.narration.length > MAX_TEXT_LEN) {
+          return { ok: false, error: `Thuyết minh của reveal step quá dài (tối đa ${MAX_TEXT_LEN} ký tự).` };
+        }
         revealSteps.push({
           objects: st.objects as string[],
           ...(typeof st.narration === "string" ? { narration: st.narration } : {}),
@@ -544,7 +550,13 @@ export function validateGenericConfig(raw: unknown): ConfigResult<SimulationSpec
         if (typeof st.pointer_id === "string") step.pointer_id = st.pointer_id;
         if (typeof st.to_index === "number") step.to_index = st.to_index;
         if (st.value !== undefined) step.value = st.value;
-        if (typeof st.narration === "string") step.narration = st.narration;
+        // Cùng trần với reveal step — xem chú thích ở nhánh trên.
+        if (typeof st.narration === "string") {
+          if (st.narration.length > MAX_TEXT_LEN) {
+            return { ok: false, error: `Thuyết minh của step_sequence quá dài (tối đa ${MAX_TEXT_LEN} ký tự).` };
+          }
+          step.narration = st.narration;
+        }
         stepActions.push(step);
       }
       processes.push({ type: "step_sequence", steps: stepActions });

@@ -703,6 +703,22 @@ route sinh mới chạy. Backend chạy uvicorn KHÔNG reload dù `app/` đượ
 ⇒ sửa mã Python xong phải `docker compose restart backend`, nếu không đo phải
 bản cũ trong bộ nhớ.
 
+### `frontend/scripts/certify-transport-vnext.mjs` (vNext) · cần dev server + Playwright
+
+Sở hữu tầng bằng chứng **transport qua CONTROL THẬT**: bấm đúng nút "Sau"/"Trước"
+trên trang rồi hỏi *màn hình có đổi không*. Ranh giới với `learner-gate.test.ts`:
+test đó gọi `mod.timeline` TRỰC TIẾP nên chứng minh hợp đồng ở tầng engine, không
+chứng minh nút bấm nối được vào engine — đúng khoảng trống mà sự cố `main.py`
+quên `semantic_route` đã phơi ra (mảnh nào cũng xanh mà chưa mảnh nào được ghép).
+
+Dùng **bài mẫu offline** (`data/samples.ts`) nên **0 gọi `/api`, 0 quota, không
+inject store** — người dùng chọn bài, bấm nút, trạng thái đổi thật.
+
+Hai điều kiện của anti-pattern #14 đều có: **dấu vân tay trang** (đúng bài + >1
+bước, sai thì thoát != 0) và **`--faultcheck`** (chặn sự kiện nút "Sau" ⇒ bản
+soát phải TỤT ĐIỂM). Chạy: `node scripts/certify-transport-vnext.mjs --port 3177
+[--faultcheck]`.
+
 ### `frontend/scripts/capture-stack-vnext.mjs` (vNext) · cần dev server + Playwright
 
 Bằng chứng trình duyệt cho case Stack `{[()]}`: tiêm envelope thẳng qua
@@ -2577,6 +2593,28 @@ Tests: `test_spec_version_canonicalization.py`, `test_container_ref_canonicaliza
 `scripts/export_semantic_program_schema.py` (ghi HAI bản, khoá bởi
 `test_schema_sync.py`). BeforeValidator KHÔNG vào JSON schema nên hash schema chỉ
 đổi khi model đổi.
+
+### `backend/scripts/cross_domain_matrix.py` · offline · 0 API call
+
+Bảy lớp trạng thái (scalar · array · string · stack · derived_sequence · tree ·
+graph) đi qua **một** bộ 11 cổng, không nhánh riêng miền nào. Đáp án mong đợi
+**kiểm tay** (21=10101₂ · max=89 · "radar" · `{[()]}` · prefix [2,6,7,14,17] ·
+preorder A,B,C · BFS 1→5), không chép từ đầu ra của hệ — nếu không
+`EXPECTED_RESULT` là tautology. `--json/--md` ghi artifact vào
+`docs/evaluation/semantic-vnext/reports/`.
+
+Khoá bởi `tests/semantic_program/test_cross_domain_matrix.py`, và nửa quan trọng
+hơn của bộ test ấy là phần TIÊM LỖI: bản đầu của ma trận **rỗng** — gỡ binding
+mà 6/7 lớp vẫn xanh, vì cổng chỉ chạm container biến động còn dãy đầu vào
+chỉ-đọc thì không ai đòi. Đó là nguồn gốc luật (2) của `learner_surface`.
+
+### `backend/tests/test_mocked_production_e2e.py` · offline · 0 API call
+
+E2E qua ĐƯỜNG HTTP THẬT (`POST /api/analyze` → `main.py` → `run_pipeline` → …
+→ `learner_surface` → envelope), chỉ thay `call_gemini`. Không inject envelope,
+không inject store. Ba miền: array · graph · map. Chạy TRƯỚC mọi lượt live —
+mọi tầng sau LLM là tất định nên tiêu quota để phát hiện lại lỗi tất định là
+lãng phí (đã xảy ra ba lượt liên tiếp trong wave này).
 
 ### `backend/app/simulation/semantic_program/analyze_contract.py` · offline
 
