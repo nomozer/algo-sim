@@ -223,6 +223,69 @@ def test_ma_loi_moi_co_category_hop_le(code):
     assert SEMANTIC_FAILURE_CATEGORY[code.value] == "verification_gap"
 
 
+# ── §2 — RÒ PLACEHOLDER Ở MỌI ĐỘ SÂU, MỌI PAYLOAD ─────────────────────────
+#
+# Bản đầu chỉ soi `items` và `value`, nên `entries` (map), `nodes`/`edges`
+# (graph), ô của `table_grid` — không cái nào được quét. Nhóm test này khoá
+# chiều đúng: payload mới bị quét MẶC ĐỊNH, chỉ được miễn khi khai là kỹ thuật.
+
+
+def _env_mot_khung(obj: dict) -> dict:
+    return {"config": {"frames": [{"step_index": 0, "narration": "x", "objects": [obj]}]}}
+
+
+@pytest.mark.parametrize(
+    "ten,obj",
+    [
+        ("scalar", {"id": "o", "type": "value_box", "value": "undefined"}),
+        ("array item", {"id": "o", "type": "array_strip", "items": [1, "null", 3]}),
+        ("map entry (lồng 2 tầng)",
+         {"id": "o", "type": "map_view", "entries": [["a", 1], ["b", "NaN"]]}),
+        ("tree node", {"id": "o", "type": "tree_element", "value": "[object Object]"}),
+        ("graph — nhãn đỉnh", {"id": "o", "type": "graph_view", "nodes": ["A", "Infinity"]}),
+        ("graph — trạng thái hiện tại",
+         {"id": "o", "type": "graph_view", "nodes": ["A"], "current": "undefined"}),
+        ("table_grid — ô lồng 2 tầng",
+         {"id": "o", "type": "table_grid", "items": [[1, 2], [3, "null"]]}),
+    ],
+)
+def test_ro_ri_bi_bat_o_moi_payload(ten, obj):
+    from app.simulation.semantic_program.learner_surface import _ro_ri
+
+    assert _ro_ri(_env_mot_khung(obj)), f"{ten}: rò mà không bắt được"
+
+
+def test_ro_ri_trong_LOI_KE_cung_bi_bat():
+    """Giá trị hỏng nội suy vào câu thì nằm GIỮA câu, không đứng một mình."""
+    from app.simulation.semantic_program.learner_surface import _ro_ri
+
+    env = _env_mot_khung({"id": "o", "type": "value_box", "value": 5})
+    env["config"]["frames"][0]["narration"] = "Kết quả cuối cùng là undefined."
+    assert _ro_ri(env)
+
+
+def test_khoa_ky_thuat_KHONG_bi_quet():
+    """`id`/`type`/`capacity` không đi ra màn hình — quét chúng là kêu oan."""
+    from app.simulation.semantic_program.learner_surface import _ro_ri
+
+    assert _ro_ri(_env_mot_khung(
+        {"id": "null", "type": "value_box", "capacity": 3, "value": 7}
+    )) == []
+
+
+@pytest.mark.parametrize(
+    "gt", [0, 0.0, False, "0", "", "Hà Nội", "giá trị null của bảng"]
+)
+def test_du_lieu_that_KHONG_bi_bat_oan(gt):
+    """Số 0 thật, chuỗi rỗng, và chữ chứa 'null' như NỘI DUNG đều hợp lệ.
+
+    Bẫy ngược chiều của `?? 0` — nuốt `0` hợp lệ — đã cắn kho này một lần rồi.
+    """
+    from app.simulation.semantic_program.learner_surface import _ro_ri
+
+    assert _ro_ri(_env_mot_khung({"id": "o", "type": "value_box", "value": gt})) == []
+
+
 # ── §1 — PHỦ KIỂU: không kiểu nào lọt qua mà không có quyết định ───────────
 #
 # Lỗ hổng nhóm test này đóng: bản đầu của gate viết bảy tên container thẳng vào
