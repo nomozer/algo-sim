@@ -368,8 +368,8 @@ def test_danh_tinh_harness_khong_lan_CAY_SACH_voi_GIT_LOI(rn, monkeypatch):
 def test_bao_cao_ghi_lai_ngan_sach_da_dung(rn):
     bc = rn._tong_ket([_r("c1", executable=True, servable=True)], 1, {}, "v",
                       _NganSach(), None)
-    assert bc["ngan_sach"]["tran_logic"] == 440
-    assert bc["ngan_sach"]["tran_http"] == 520
+    assert bc["ngan_sach"]["tran_logic"] == 520
+    assert bc["ngan_sach"]["tran_http"] == 620
     assert bc["ngan_sach"]["logic_da_dung"] == 40
 
 
@@ -619,18 +619,39 @@ def test_thieu_ALLOW_LIVE_AI_thi_khong_tieu_quota(rn, monkeypatch):
 
 
 def test_ngan_sach_khop_ban_da_duyet(rn):
-    """Ngân sách CUỐI, chốt 2026-08-22 trước khi niêm phong SEALED."""
-    assert (rn.TRAN_LOGIC, rn.TRAN_HTTP) == (440, 520)
+    """Ngân sách của LƯỢT #2, chốt 2026-08-23 trước khi niêm phong SEALED #2.
+
+    Lượt #1 chạy dưới trần của chính nó (440/520, dùng 205/207) và số của nó ĐÃ
+    ĐÓNG. Trần đổi vì call graph đổi — `stage_semantic_program` từ 1 lượt thành
+    ≤3 — chứ không phải vì kết quả xấu. Chốt này có TRƯỚC khi tập SEALED #2 tồn
+    tại và trước khi biết seed #2, nên luật "không nâng sau khi thấy số" nguyên
+    vẹn.
+    """
+    assert (rn.TRAN_LOGIC, rn.TRAN_HTTP) == (520, 620)
     assert rn.LUOT_TOI_THIEU_MOI_CASE == 4
 
 
 def test_upper_bound_duoc_dan_xuat_khong_phai_uoc_luong(rn):
-    """Điểm 2. Upper bound thật đọc từ call graph là 11, KHÔNG phải 4.
+    """Điểm 2. Upper bound thật đọc từ call graph là 13, KHÔNG phải 4.
 
-    Con số 11 phải có mặt trong mã để lần sau không ai lại tưởng 4 là bound.
+    Con số này phải có mặt trong mã để lần sau không ai lại tưởng 4 là bound.
+    11 → 13 vì `stage_semantic_program` nay `range(MAX_SEMANTIC_PROGRAM_ATTEMPTS)`.
     """
-    assert rn.LUOT_TOI_DA_MOI_CASE == 11
+    assert rn.LUOT_TOI_DA_MOI_CASE == 13
     assert rn.LUOT_TOI_DA_MOI_CASE > rn.LUOT_TOI_THIEU_MOI_CASE
+
+
+def test_upper_bound_khop_hang_so_that_trong_pipeline(rn):
+    """Bound phải DẪN từ mã, không phải một con số chép tay.
+
+    Nếu ai đó đổi `MAX_SEMANTIC_PROGRAM_ATTEMPTS` mà quên ngân sách, test này đỏ
+    trước khi một lượt đo thật bị đứt giữa chừng vì `BUDGET_EXHAUSTED`.
+    """
+    from app.ai.pipeline import MAX_SEMANTIC_PROGRAM_ATTEMPTS
+
+    # 2 analyze + 2 classify + 2 reclassify + 1 semantic_analyze + 3 simulate = 10
+    CO_DINH = 10
+    assert rn.LUOT_TOI_DA_MOI_CASE == CO_DINH + MAX_SEMANTIC_PROGRAM_ATTEMPTS
 
 
 def test_tran_logic_du_cho_N40_o_worst_case(rn):

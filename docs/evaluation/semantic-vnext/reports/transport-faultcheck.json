@@ -1,0 +1,48 @@
+{
+  "chay_luc": "2026-08-23T12:31:49.965Z",
+  "fault": true,
+  "ket": [
+    {
+      "bai": "điểm kiểm tra cao nhất",
+      "ten": "array/quét",
+      "kiem": {
+        "NEXT": false,
+        "PREVIOUS": true,
+        "RESET": true,
+        "PLAY": true,
+        "PAUSE": true,
+        "KHONG_RO_RI": true
+      },
+      "ghi_chu": [],
+      "pass": false
+    },
+    {
+      "bai": "Duyệt cây thư mục",
+      "ten": "tree/duyệt",
+      "kiem": {
+        "NEXT": false,
+        "PREVIOUS": true,
+        "RESET": true,
+        "PLAY": true,
+        "PAUSE": true,
+        "KHONG_RO_RI": true
+      },
+      "ghi_chu": [],
+      "pass": false
+    },
+    {
+      "bai": "đường ít chặng nhất",
+      "ten": "graph/BFS",
+      "kiem": {
+        "NEXT": false,
+        "PREVIOUS": true,
+        "RESET": true,
+        "PLAY": true,
+        "PAUSE": true,
+        "KHONG_RO_RI": true
+      },
+      "ghi_chu": [],
+      "pass": false
+    }
+  ]
+}

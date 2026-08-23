@@ -67,12 +67,17 @@ sys.path.insert(0, str(BACKEND))
 #: Trần cũ 160 bị bỏ vì nó XUNG ĐỘT với protocol chứ không chỉ tiết kiệm quota:
 #: 4 × 40 = 160 đúng bằng trần, nên một lần retry duy nhất ở bất kỳ đâu cũng đủ
 #: làm evaluation không hoàn tất — trong khi N=40 đã là mục tiêu nghiên cứu khoá.
-TRAN_LOGIC = 440
+#:
+#: LƯỢT #2 (2026-08-23): 440 → 520 vì upper bound đi 11 → 13, xem
+#: `LUOT_TOI_DA_MOI_CASE`. Chốt TRƯỚC khi SEALED #2 tồn tại.
+TRAN_LOGIC = 520
 
 #: ~18% headroom trên logical worst-case, để chịu transient HTTP (429/5xx).
 #: KHÔNG phải chỗ để dò tìm kết quả tốt hơn. Vượt ⇒ `BUDGET_EXHAUSTED`,
 #: `evaluation_complete=false`, và KHÔNG chạy bù.
-TRAN_HTTP = 520
+#:
+#: LƯỢT #2: 520 → 620 (= 520 × 1,19, giữ nguyên tỉ lệ headroom cũ).
+TRAN_HTTP = 620
 
 #: Đường HẠNH PHÚC: analyze + classify + semantic_analyze + semantic_program.
 #: Dưới ngần này thì một case chắc chắn không chạy trọn.
@@ -84,14 +89,21 @@ LUOT_TOI_THIEU_MOI_CASE = 4
 #:     stage_classify lần 1   `_call_json(retries=1)`         → tối đa 2
 #:     one-route recovery     thêm một stage_classify         → tối đa 2
 #:     stage_semantic_analyze không retry                     → 1
-#:     stage_semantic_program không retry                     → 1
+#:     stage_semantic_program `range(MAX_SEMANTIC_PROGRAM_ATTEMPTS)` → tối đa 3
 #:     stage_simulate*        `for _attempt in range(3)`      → tối đa 3
 #:                                                              ─────────
-#:                                                              tối đa 11
+#:                                                              tối đa 13
 #:
-#: Con số này là CƠ SỞ của `TRAN_LOGIC`: 11 × 40 = 440. Ngân sách được dẫn xuất
+#: Con số này là CƠ SỞ của `TRAN_LOGIC`: 13 × 40 = 520. Ngân sách được dẫn xuất
 #: từ call graph, không chọn bằng cảm tính.
-LUOT_TOI_DA_MOI_CASE = 11
+#:
+#: 11 → 13 (2026-08-23, LƯỢT #2): `stage_semantic_program` trước đây một lượt,
+#: nay ≤3 và gửi lỗi validator ngược cho LLM sửa. Đổi này là HỆ QUẢ SỐ HỌC của
+#: một thay đổi call graph, **không** phải nới trần vì số xấu — nó được chốt
+#: TRƯỚC khi tập SEALED #2 tồn tại và trước khi biết seed #2. Luật "không nâng
+#: sau khi thấy số" nguyên vẹn: số của lượt #1 đã đóng, và lượt #1 chạy dưới
+#: trần 440 của chính nó (dùng 205/440).
+LUOT_TOI_DA_MOI_CASE = 13
 
 
 class DungSach(RuntimeError):

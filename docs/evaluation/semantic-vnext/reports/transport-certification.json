@@ -1,48 +1,212 @@
 {
-  "chay_luc": "2026-08-23T12:18:13.479Z",
+  "chay_luc": "2026-08-23T12:33:52.172Z",
   "fault": false,
   "ket": [
     {
-      "bai": "diem-cao-nhat",
+      "bai": "điểm kiểm tra cao nhất",
       "ten": "array/quét",
       "kiem": {
-        "NEXT": false,
-        "PREVIOUS": false,
-        "RESET": false,
-        "PLAY": false,
-        "PAUSE": false,
+        "NEXT": true,
+        "PREVIOUS": true,
+        "RESET": true,
+        "PLAY": true,
+        "PAUSE": true,
         "KHONG_RO_RI": true
       },
       "ghi_chu": [],
-      "pass": false
+      "pass": true
     },
     {
-      "bai": "xep-hang-chieu-cao",
-      "ten": "array/hoán vị",
+      "bai": "Duyệt cây thư mục",
+      "ten": "tree/duyệt",
       "kiem": {
-        "NEXT": false,
-        "PREVIOUS": false,
-        "RESET": false,
-        "PLAY": false,
-        "PAUSE": false,
+        "NEXT": true,
+        "PREVIOUS": true,
+        "RESET": true,
+        "PLAY": true,
+        "PAUSE": true,
         "KHONG_RO_RI": true
       },
       "ghi_chu": [],
-      "pass": false
+      "pass": true
     },
     {
-      "bai": "tra-tu-dien",
-      "ten": "array/chia đôi",
+      "bai": "đường ít chặng nhất",
+      "ten": "graph/BFS",
       "kiem": {
-        "NEXT": false,
-        "PREVIOUS": false,
-        "RESET": false,
-        "PLAY": false,
-        "PAUSE": false,
+        "NEXT": true,
+        "PREVIOUS": true,
+        "RESET": true,
+        "PLAY": true,
+        "PAUSE": true,
         "KHONG_RO_RI": true
       },
       "ghi_chu": [],
-      "pass": false
+      "pass": true
+    }
+  ],
+  "thi_giac": [
+    {
+      "bai": "điểm kiểm tra cao nhất",
+      "viewport": "desktop",
+      "do": {
+        "so_chu": 24,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "điểm kiểm tra cao nhất",
+      "viewport": "tablet",
+      "do": {
+        "so_chu": 24,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "điểm kiểm tra cao nhất",
+      "viewport": "mobile",
+      "do": {
+        "so_chu": 24,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "Duyệt cây thư mục",
+      "viewport": "desktop",
+      "do": {
+        "so_chu": 20,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "Duyệt cây thư mục",
+      "viewport": "tablet",
+      "do": {
+        "so_chu": 20,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "Duyệt cây thư mục",
+      "viewport": "mobile",
+      "do": {
+        "so_chu": 20,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "đường ít chặng nhất",
+      "viewport": "desktop",
+      "do": {
+        "so_chu": 5,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "đường ít chặng nhất",
+      "viewport": "tablet",
+      "do": {
+        "so_chu": 5,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
+    },
+    {
+      "bai": "đường ít chặng nhất",
+      "viewport": "mobile",
+      "do": {
+        "so_chu": 5,
+        "ngoai_khung": 0,
+        "chu_te": 0,
+        "tran_ngang": false
+      },
+      "kiem": {
+        "CO_NOI_DUNG": true,
+        "TRONG_KHUNG": true,
+        "CHU_DOC_DUOC": true,
+        "KHONG_TRAN": true,
+        "CONTROL_DUNG": true
+      },
+      "pass": true
     }
   ]
 }

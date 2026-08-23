@@ -29,6 +29,21 @@ test). Không ghi việc đang định làm vào mục "đã xong".
 > | Current state (file này) | **`docs/CURRENT_STATE.md`** |
 > | Project index / architecture memory | **`docs/CODE_INDEX.md`** (module/symbol) + **`docs/ARCHITECTURE_MAP.md`** (kiến trúc, sở hữu, hướng phụ thuộc, bất biến) |
 >
+> ### 🔒 ĐÓNG BĂNG MÃ — chờ lượt đo chính thức #2 (từ 2026-08-23)
+>
+> **KHÔNG sửa** `backend/app`, `app/ai/skills/*.md`, schema, taxonomy, primitive,
+> route, checker cho tới khi SEALED #2 chạy xong. Áp cho **mọi phiên**, không
+> riêng phiên nào — ngày 2026-08-23 có hai phiên cùng sửa `semantic_program/` và
+> candidate phải đóng băng lại **6 lần trong một ngày**; còn trôi thì con số đo
+> được không gắn với bản nào cả.
+>
+> Được phép: `backend/scripts/`, `backend/tests/`, `docs/` (harness, không thuộc
+> `MEASURED_SYSTEM_PATHS`). Cổng kiểm: `freeze_evaluation_candidate.py --verify`.
+>
+> Giao thức đầy đủ: **`docs/evaluation/semantic-benchmark/RUN2_PROTOCOL.md`** —
+> ngân sách 520/620 (bound 11 → 13) và cơ chế loại 40 bài đã đo đều đã chốt
+> TRƯỚC khi có seed. Mắt xích còn thiếu: **seed #2 do GVHD cấp**.
+>
 > ### vNext — ROUTE SINH ĐÃ PHỤC VỤ ĐƯỢC MỘT ĐỀ THẬT (2026-08-23, sau SEALED)
 >
 > Bằng chứng: `docs/evaluation/semantic-vnext/SERVE_PROBE_CHAIN.md` (tầng 2 —
