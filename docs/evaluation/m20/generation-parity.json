@@ -1,10 +1,12 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "313af2d33a452bb8",
-  "dirtyRelevantSources": [],
-  "head": "3e0d67ce1222285762fa6dbfea8ecb73e9414fe0",
-  "dirty": false,
-  "generatedAt": "2026-08-23T17:51:34.773Z",
+  "sourceFingerprint": "ab05ae61384efc15",
+  "dirtyRelevantSources": [
+    "frontend/scripts/verify-semantic-e2e-render.mjs"
+  ],
+  "head": "3b414902bd83bbd1ea5b4cd33c905c2023614b70",
+  "dirty": true,
+  "generatedAt": "2026-08-24T09:09:26.602Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
