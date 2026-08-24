@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="AlgoSim">
+  <!-- Nền đặc: ở 16px một nét mảnh trên nền trong suốt biến mất, còn ô đặc thì
+       vẫn nhận ra được trên mọi màu thanh tab (sáng lẫn tối) mà không cần
+       prefers-color-scheme. Màu là --primary #0075de, sắc nhấn DUY NHẤT của
+       DESIGN.md — favicon không được đẻ accent thứ hai. -->
+  <rect width="32" height="32" rx="7" fill="#0075de" />
+  <!-- Ba đỉnh nối nhau: đọc được vừa là đồ thị/cây (miền đang có) vừa là hình
+       phẳng có đỉnh (đề hình học không gian). Nét 2.6 + đầu bo tròn giữ đúng
+       khuôn của components/icons.tsx, chỉ dày hơn chút cho cỡ 16px. -->
+  <path d="M16 10 L10 22 L22 22 Z" fill="none" stroke="#ffffff" stroke-width="2.6"
+        stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="16" cy="10" r="3.1" fill="#ffffff" />
+  <circle cx="10" cy="22" r="3.1" fill="#ffffff" />
+  <circle cx="22" cy="22" r="3.1" fill="#ffffff" />
+</svg>
