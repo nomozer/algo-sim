@@ -2526,6 +2526,70 @@ Ba runner Playwright chụp mô phỏng do đường `semantic_program` sinh, �
 
 ---
 
+## Miền HÌNH HỌC KHÔNG GIAN (2026-08-24 → nay)
+
+> Đổi đề tài: `STATUS_LEDGER §0-2026-08-24`. Kế hoạch: `docs/geometry/`
+> (`GEOMETRY_ROADMAP` · `MIGRATION_PLAN` · `CURRENT_SYSTEM_MAPPING` ·
+> `GEOMETRY_ARCHITECTURE_GAP_REPORT`).
+
+### `backend/app/simulation/geometry/` — nhân hình học · offline · **0 API call**
+
+Bốn tầng, phụ thuộc MỘT CHIỀU: `exact` → `predicates` → `kernel` → `measure`,
+cộng `section` ở trên cùng.
+
+**QUYẾT ĐỊNH NỀN: số học `Fraction` CHÍNH XÁC, KHÔNG epsilon.** Đề hình học THPT
+cho toạ độ hữu tỉ, và đại số tuyến tính trên ℚ ở lại trong ℚ — giao tuyến, hình
+chiếu, thiết diện, thể tích đều hữu tỉ. Vô tỉ chỉ ở độ dài/góc, nhốt trong
+`measure` bằng cách giữ **bình phương** (`d²`, `cos²θ` đều hữu tỉ). Hệ quả: tầng
+vị từ **không có một epsilon nào** — vuông góc ⇔ `u·v == 0`, song song ⇔
+`u×v == 0`, đồng phẳng ⇔ `det == 0`. Claim nâng từ *"tất định"* lên **"chính
+xác"**: tất định là chạy lại ra cùng kết quả, **kể cả cùng một kết quả sai**.
+
+`predicates` **cố ý KHÔNG phụ thuộc `kernel`**: `postconditions` gọi vị từ để
+kiểm chứng, và nếu vị từ dựa vào chỗ dựng thì oracle đang kiểm chính cái nó vừa
+dựng ra.
+
+`section.cross_section` đi theo **MẶT, không theo ĐIỂM**. Gom giao điểm rồi sắp
+quanh trọng tâm cần `atan2` — kéo vô tỉ vào đúng chỗ đang giữ chính xác — **và**
+vứt mất thứ tự dựng. Đi theo mặt thì mỗi mặt cho một cạnh, và dãy cạnh ấy chính
+là dãy bước học sinh làm trên giấy: timeline có sẵn, không phải bịa sau.
+
+FAIL-CLOSED với mã **phân biệt hai tình huống dạy hai điều khác nhau**:
+`PARALLEL_NO_INTERSECTION` (giao rỗng) ≠ `CONTAINED_INFINITE_INTERSECTION` (giao
+vô số điểm). Hai đường **chéo nhau** cũng ném — trên hình phẳng chúng trông như
+cắt nhau, trả một điểm "gần đúng" ở đó là **dạy sai**.
+
+Khoá bởi `tests/geometry/test_geometry_kernel.py` (40) + `test_section.py` (15),
+đáp án **kiểm tay**, không chép từ đầu ra kernel. ⚠️ Tiêm lỗi lượt đầu chỉ làm
+2/37 đỏ vì toạ độ `(0,1,2,½)` float biểu diễn đúng hết — đã thêm ca dùng bộ mẫu
+`(3,7,11,13)` tìm bằng **dò số** (`det` float = `1.084e−19` thay vì `0`).
+
+### `backend/app/simulation/semantic_program/geometry_exec.py` · offline
+
+Cầu nối IR ↔ kernel. Export: `build_initial` · `eval_geometry_expr` ·
+`exec_construct_point/line/section` · `GEOMETRY_TYPES`.
+
+**LUẬT CỐT LÕI**: hàm ở đây nhận **TÊN** đối tượng, đọc từ bộ nhớ, gọi kernel.
+Không hàm nào nhận **toạ độ kết quả** từ IR. Thêm một trường `result` vào
+`ConstructPointStmt` "cho nhanh" là trao quyền quyết kết quả cho LLM —
+`test_R0_*` trong `tests/geometry/test_geometry_ir.py` khoá lại.
+
+### `docs/evaluation/geometry/custodian/geometry_oracle.py` · **0 API call**
+
+Oracle độc lập, chỉ `import fractions`. Đầu vào là **tuple số thuần** (dạng dây)
+— không có đường nào cho hai bên vô tình dùng chung kiểu rồi dùng chung một lỗi.
+
+**Hai chiến lược theo bản chất câu hỏi**: thiết diện kiểm **6 BẤT BIẾN, không
+dựng lại** (kiểm bằng tính chất độc lập hơn kiểm bằng dựng lại — hai bản cài
+cùng thuật toán dễ mang cùng lỗi và triệt tiêu nhau); thể tích dùng **phân rã
+KHÁC** (kernel chia quạt từ đỉnh chóp, oracle chia tứ diện từ một điểm trong).
+
+Khoá bởi `test_oracle_independence.py` — ba mức, **chỉ mức 3 là bằng chứng**:
+không import mã sản phẩm (soi bằng `ast`, không quét chuỗi — bản đầu quét chuỗi
+và đỏ oan vì chính docstring nhắc tên module bị cấm) · khớp trên bài kiểm tay
+(CẦN, chưa ĐỦ) · **tiêm lỗi vào kernel thì oracle BẮT ĐƯỢC** (4 phép tiêm) ·
+cộng hai ca ranh giới chống **bắt oan**.
+
 ## Đường sinh ngữ nghĩa `generic.semantic_program` (2026-08-20 → 21)
 
 Spec: `docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`.
