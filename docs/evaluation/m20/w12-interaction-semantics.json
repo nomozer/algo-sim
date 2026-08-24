@@ -1,15 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "ab2913ebee200719",
-  "dirtyRelevantSources": [
-    "backend/app/ai/pipeline.py",
-    "backend/app/main.py",
-    "backend/app/simulation/semantic_program/analyze_contract.py",
-    "backend/tests/test_api.py"
-  ],
-  "head": "12085d5103165b7fdeefb2d2d5b0d2071dc8a84a",
-  "dirty": true,
-  "generatedAt": "2026-08-23T17:39:46.498Z",
+  "sourceFingerprint": "313af2d33a452bb8",
+  "dirtyRelevantSources": [],
+  "head": "3e0d67ce1222285762fa6dbfea8ecb73e9414fe0",
+  "dirty": false,
+  "generatedAt": "2026-08-23T17:51:34.756Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
