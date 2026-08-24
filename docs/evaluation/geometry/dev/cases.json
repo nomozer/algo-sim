@@ -7,7 +7,9 @@
     "Đề viết như SGK Toán 11–12: văn xuôi tiếng Việt, KHÔNG cho toạ độ. Mô hình phải tự đặt hệ toạ độ — đó là một phần của bài toán sinh.",
     "`oracle_result` tính TAY, không chạy hệ. Chạy hệ rồi chép kết quả làm đáp án thì test thành tautology.",
     "Khoảng cách và thể tích khai dưới dạng phân số; góc khai bằng cos² vì góc vô tỉ còn cos² hữu tỉ.",
-    "Mười bài phủ ĐỦ TÁM nghĩa vụ, mỗi nghĩa vụ ít nhất một lần."
+    "Mười bài phủ ĐỦ TÁM nghĩa vụ, mỗi nghĩa vụ ít nhất một lần.",
+    "`oracle_result` phải có ÍT NHẤT MỘT khoá trùng tên một NGHĨA VỤ — đó là chỗ bộ đo bám vào để tìm đối tượng cần chấm, vì tên biến do LLM tự đặt và custodian không được phép đoán. Khoá văn xuôi (`hinh_chieu_la`, `so_canh_thiet_dien`) là ghi chú cho người đọc, KHÔNG dùng để chấm.",
+    "Giá trị của khoá nghĩa vụ dùng ĐÚNG đơn vị mà checker so: `distance`/`volume` là phân số; `angle` là cos²; quan hệ là true/false."
   ],
   "hinh_quy_uoc": "Trừ khi đề nói khác, hệ toạ độ mong đợi: đáy trong z=0, cạnh bên vuông góc đáy chạy dọc trục z, hình vuông cạnh 1 là (0,0,0)(1,0,0)(1,1,0)(0,1,0). Mô hình được chọn hệ khác — oracle so QUAN HỆ và ĐẠI LƯỢNG, không so toạ độ.",
   "cases": [
@@ -72,7 +74,7 @@
       "chu_de": "Góc giữa hai đường thẳng",
       "problem_text": "Cho hình vuông ABCD cạnh 1 nằm trong mặt phẳng. Tính góc giữa đường thẳng AB và đường chéo AC.",
       "expected_obligations": ["angle"],
-      "oracle_result": {"angle_do": 45, "cos_sq": "1/2"},
+      "oracle_result": {"angle": "1/2", "angle_do": 45},
       "ghi_chu_kiem_tay": "Đường chéo hình vuông tạo với cạnh góc 45°. cos45° = √2/2 ⇒ cos² = 1/2. Khai bằng cos² vì góc vô tỉ."
     },
     {
