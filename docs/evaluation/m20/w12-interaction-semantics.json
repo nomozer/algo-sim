@@ -1,12 +1,19 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "ab05ae61384efc15",
+  "sourceFingerprint": "4d40dcef8930f81d",
   "dirtyRelevantSources": [
-    "frontend/scripts/verify-semantic-e2e-render.mjs"
+    "backend/app/main.py",
+    "backend/app/simulation/semantic_program/contract.py",
+    "backend/app/simulation/semantic_program/interpreter.py",
+    "backend/app/simulation/semantic_program/learner_surface.py",
+    "backend/app/simulation/semantic_program/validator.py",
+    "backend/tests/semantic_program/test_grammar_card.py",
+    "backend/tests/test_api.py",
+    "frontend/src/simulations/domains/generic/semantic_program.schema.json"
   ],
-  "head": "3b414902bd83bbd1ea5b4cd33c905c2023614b70",
+  "head": "cba53fc2c1f75ebb61afeeda83289c5abd2360a3",
   "dirty": true,
-  "generatedAt": "2026-08-24T09:09:26.567Z",
+  "generatedAt": "2026-08-24T10:24:59.891Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
