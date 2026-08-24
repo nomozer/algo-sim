@@ -307,7 +307,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # chỉ vì thiếu `pred`: trường ấy là chuỗi tự do nên mô hình chưa từng biết có
     # vị từ nào để gọi. Không bump thì phân tích cache theo schema cũ vẫn về
     # không kèm `pred`, và bản sửa đọc như không ăn thua.
-    assert main_module.CACHE_VERSION == "37"
+    # 38: MIỀN HÌNH HỌC KHÔNG GIAN (đổi đề tài, `STATUS_LEDGER §0-2026-08-24`).
+    # IR mở 6 `MemoryType` + 5 biểu thức + 3 câu lệnh dựng, và **thẻ văn phạm
+    # dẫn xuất từ contract nên nó đi thẳng vào user message** — tức bề mặt prompt
+    # đã đổi. Không bump thì mọi đề đã phân tích trả về envelope sinh dưới từ
+    # vựng CŨ, nơi `point3`/`plane3` chưa tồn tại, và bản mở IR đọc như không ăn
+    # thua.
+    assert main_module.CACHE_VERSION == "38"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

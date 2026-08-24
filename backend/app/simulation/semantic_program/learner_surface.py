@@ -94,6 +94,21 @@ SURFACE_POLICY: dict[str, str] = {
     "node_ref": "con trỏ tới một đỉnh, không phải dữ liệu. Đường lên màn hình "
                 "của nó là `pointers` binding, không phải một container.",
     "null": "vắng mặt của giá trị — không có gì để hiện.",
+    # ── MIỀN HÌNH HỌC (2026-08-24) ───────────────────────────────────────────
+    # Quyết định ở đây KHÔNG suy được từ miền cũ: một `array` biến động là cơ
+    # chế bài đang dạy, còn một `point3` đứng yên vẫn là thứ học sinh phải nhìn
+    # thấy suốt bài. Nên trục phân loại đổi từ "có biến động không" sang "có
+    # phải đối tượng hình học đề cho / dựng ra không".
+    "solid": "container",
+    "polygon3": "container",
+    "point3": "container",
+    "line3": "container",
+    "plane3": "container",
+    "vector3": "vô hướng có hướng — phương/pháp tuyến là ĐẠI LƯỢNG TRUNG GIAN "
+               "của phép dựng, không phải đối tượng học sinh cần thấy. Vẽ mọi "
+               "pháp tuyến ra màn hình là lấp kín hình bằng mũi tên không ai "
+               "đọc. Khi nó thật sự mang nghĩa (vector chỉ phương của một "
+               "đường cần nêu) thì đường ấy đã là `line3` và đã phải hiện.",
 }
 
 #: Kiểu mà "đổi giá trị" nghĩa là DIỄN TIẾN. DẪN XUẤT từ bảng trên, không viết

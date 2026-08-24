@@ -55,6 +55,15 @@ from .validator import validate_semantic_program
 
 DEFAULT_MAX_STEPS = 300
 
+from .geometry_exec import (  # noqa: E402
+    GEOMETRY_TYPES,
+    build_initial,
+    exec_construct_line,
+    exec_construct_point,
+    exec_construct_section,
+)
+
+
 class SemanticExecutionError(Exception):
     """Vi phạm biên lúc thực thi — KHÔNG bao giờ thành no-op hay `None`.
 
@@ -125,7 +134,15 @@ class SemanticProgramInterpreter:
         self.status = "completed"
 
         for decl in spec.memory_declarations:
-            self.memory[decl.name] = copy.deepcopy(decl.initial_value)
+            # Kiểu HÌNH HỌC dựng thành đối tượng của kernel ngay từ đây, thay
+            # vì để nguyên JSON. Để nguyên thì mỗi phép dựng lại phải tự đoán
+            # hình dạng, và chỗ đoán ấy là nơi lỗi kiểu lọt qua im lặng.
+            if decl.type in GEOMETRY_TYPES:
+                self.memory[decl.name] = build_initial(
+                    decl.type, copy.deepcopy(decl.initial_value), decl.name
+                )
+            else:
+                self.memory[decl.name] = copy.deepcopy(decl.initial_value)
 
         # Lưu snapshot ban đầu bước 0
         self._record_step(
@@ -242,6 +259,44 @@ class SemanticProgramInterpreter:
                     target=stmt.container,
                     details={"value": val},
                     narration=f"Đẩy giá trị '{val}' vào {stmt.container}.",
+                )
+
+        # ── DỰNG HÌNH ────────────────────────────────────────────────────
+        # Ba nhánh này KHÔNG tự tính toạ độ. Chúng đọc tên, gọi `geometry_exec`,
+        # và `geometry_exec` gọi kernel. Mọi `GeometryError` để nguyên cho nó
+        # bay lên — kernel đã phân biệt "song song nên không giao" với "nằm
+        # trong nên giao vô số điểm", nuốt ở đây là xoá mất phân biệt ấy.
+        elif stmt.kind == "construct_point":
+            p, ke = exec_construct_point(stmt, self.memory)
+            self.memory[stmt.target_var] = p
+            self._record_step(
+                action="construct_point", target=stmt.target_var,
+                details={"label": stmt.label, "toa_do": [str(p.x), str(p.y), str(p.z)]},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_line":
+            ln, ke = exec_construct_line(stmt, self.memory)
+            self.memory[stmt.target_var] = ln
+            self._record_step(
+                action="construct_line", target=stmt.target_var,
+                details={"label": stmt.label,
+                         "qua": [stmt.through_a, stmt.through_b]},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_section":
+            sec, ke_list = exec_construct_section(stmt, self.memory)
+            self.memory[stmt.target_var] = sec
+            # MỘT câu lệnh IR → NHIỀU bước timeline. Thứ tự cạnh do kernel
+            # quyết, và chính nó là dãy thao tác học sinh làm trên giấy.
+            for i, (st, ke) in enumerate(zip(sec.steps, ke_list)):
+                self._record_step(
+                    action="section_edge", target=stmt.target_var,
+                    details={"canh": i, "mat": st.face_index,
+                             "a": [str(st.a.x), str(st.a.y), str(st.a.z)],
+                             "b": [str(st.b.x), str(st.b.y), str(st.b.z)]},
+                    narration=ke,
                 )
 
         elif isinstance(stmt, PopStmt):

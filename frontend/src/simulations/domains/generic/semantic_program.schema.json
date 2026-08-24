@@ -18,13 +18,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -33,6 +38,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -97,13 +117,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -112,6 +137,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -148,13 +188,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -163,6 +208,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -241,13 +301,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -256,6 +321,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -292,13 +372,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -307,6 +392,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -347,6 +447,200 @@
       "title": "CompareCond",
       "type": "object"
     },
+    "ConstructLineStmt": {
+      "properties": {
+        "kind": {
+          "const": "construct_line",
+          "default": "construct_line",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên đường dựng ra",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "through_a": {
+          "description": "tên điểm 1",
+          "title": "Through A",
+          "type": "string"
+        },
+        "through_b": {
+          "description": "tên điểm 2",
+          "title": "Through B",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "through_a",
+        "through_b"
+      ],
+      "title": "ConstructLineStmt",
+      "type": "object"
+    },
+    "ConstructPointStmt": {
+      "properties": {
+        "kind": {
+          "const": "construct_point",
+          "default": "construct_point",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên điểm dựng ra",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "expr": {
+          "description": "biểu thức hình học",
+          "discriminator": {
+            "mapping": {
+              "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
+              "field": "#/$defs/FieldRefExpr",
+              "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
+              "length": "#/$defs/LengthExpr",
+              "literal": "#/$defs/LiteralExpr",
+              "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
+              "neighbors": "#/$defs/NeighborsExpr",
+              "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
+              "unary": "#/$defs/UnaryArithExpr",
+              "var": "#/$defs/VarRefExpr"
+            },
+            "propertyName": "kind"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/VarRefExpr"
+            },
+            {
+              "$ref": "#/$defs/IndexRefExpr"
+            },
+            {
+              "$ref": "#/$defs/FieldRefExpr"
+            },
+            {
+              "$ref": "#/$defs/BinaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/UnaryArithExpr"
+            },
+            {
+              "$ref": "#/$defs/LengthExpr"
+            },
+            {
+              "$ref": "#/$defs/PeekExpr"
+            },
+            {
+              "$ref": "#/$defs/MapGetExpr"
+            },
+            {
+              "$ref": "#/$defs/NeighborsExpr"
+            }
+          ],
+          "title": "Expr"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "nhãn, vd M",
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "expr"
+      ],
+      "title": "ConstructPointStmt",
+      "type": "object"
+    },
+    "ConstructSectionStmt": {
+      "description": "Dựng thiết diện — engine đi theo MẶT và sinh ra NHIỀU bước con.\n\nMột câu lệnh cho ra cả dãy cạnh, vì thứ tự cạnh do kernel quyết chứ không do\nLLM quyết. LLM chỉ nói *\"cắt khối này bằng mặt phẳng kia\"*.",
+      "properties": {
+        "kind": {
+          "const": "construct_section",
+          "default": "construct_section",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên thiết diện",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "solid": {
+          "description": "tên khối",
+          "title": "Solid",
+          "type": "string"
+        },
+        "plane": {
+          "description": "tên mp cắt",
+          "title": "Plane",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "solid",
+        "plane"
+      ],
+      "title": "ConstructSectionStmt",
+      "type": "object"
+    },
     "ContainsCond": {
       "properties": {
         "kind": {
@@ -365,13 +659,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -380,6 +679,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -452,6 +766,39 @@
       "title": "DequeueStmt",
       "type": "object"
     },
+    "DivideSegmentExpr": {
+      "description": "Điểm chia đoạn theo tỉ lệ — `t=0` là `a`, `t=1` là `b`.\n\nCó mặt vì dạng đề *\"M thuộc AB sao cho AM = 2MB\"* rất phổ biến, và vì nó là\n**miền hợp lệ của thao tác kéo** ở Bước 6: kéo M nghĩa là đổi `t`, không\nphải đổi toạ độ tự do.",
+      "properties": {
+        "kind": {
+          "const": "divide_segment",
+          "default": "divide_segment",
+          "title": "Kind",
+          "type": "string"
+        },
+        "a": {
+          "description": "tên điểm đầu",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "description": "tên điểm cuối",
+          "title": "B",
+          "type": "string"
+        },
+        "ratio": {
+          "description": "phân số, vd 2/3",
+          "title": "Ratio",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b",
+        "ratio"
+      ],
+      "title": "DivideSegmentExpr",
+      "type": "object"
+    },
     "EnqueueStmt": {
       "properties": {
         "kind": {
@@ -470,13 +817,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -485,6 +837,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -537,13 +904,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -552,6 +924,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -624,13 +1011,18 @@
               "discriminator": {
                 "mapping": {
                   "arith": "#/$defs/BinaryArithExpr",
+                  "divide_segment": "#/$defs/DivideSegmentExpr",
                   "field": "#/$defs/FieldRefExpr",
                   "index": "#/$defs/IndexRefExpr",
+                  "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr"
                 },
@@ -639,6 +1031,21 @@
               "oneOf": [
                 {
                   "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectLinePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlanePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/MidpointExpr"
+                },
+                {
+                  "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/DivideSegmentExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -680,6 +1087,9 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_section": "#/$defs/ConstructSectionStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -700,6 +1110,15 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPointStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSectionStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -778,13 +1197,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -793,6 +1217,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -829,13 +1268,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -844,6 +1288,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -888,6 +1347,9 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_section": "#/$defs/ConstructSectionStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -908,6 +1370,15 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPointStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSectionStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -1019,6 +1490,9 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_section": "#/$defs/ConstructSectionStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1039,6 +1513,15 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPointStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSectionStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -1097,6 +1580,9 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_section": "#/$defs/ConstructSectionStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1117,6 +1603,15 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPointStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSectionStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -1194,13 +1689,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -1209,6 +1709,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1246,13 +1761,18 @@
               "discriminator": {
                 "mapping": {
                   "arith": "#/$defs/BinaryArithExpr",
+                  "divide_segment": "#/$defs/DivideSegmentExpr",
                   "field": "#/$defs/FieldRefExpr",
                   "index": "#/$defs/IndexRefExpr",
+                  "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr"
                 },
@@ -1261,6 +1781,21 @@
               "oneOf": [
                 {
                   "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectLinePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlanePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/MidpointExpr"
+                },
+                {
+                  "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/DivideSegmentExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -1307,6 +1842,58 @@
       "title": "IndexRefExpr",
       "type": "object"
     },
+    "IntersectLinePlaneExpr": {
+      "properties": {
+        "kind": {
+          "const": "intersect_line_plane",
+          "default": "intersect_line_plane",
+          "title": "Kind",
+          "type": "string"
+        },
+        "line": {
+          "description": "tên đường thẳng",
+          "title": "Line",
+          "type": "string"
+        },
+        "plane": {
+          "description": "tên mặt phẳng",
+          "title": "Plane",
+          "type": "string"
+        }
+      },
+      "required": [
+        "line",
+        "plane"
+      ],
+      "title": "IntersectLinePlaneExpr",
+      "type": "object"
+    },
+    "IntersectPlanePlaneExpr": {
+      "properties": {
+        "kind": {
+          "const": "intersect_plane_plane",
+          "default": "intersect_plane_plane",
+          "title": "Kind",
+          "type": "string"
+        },
+        "plane_a": {
+          "description": "tên mặt phẳng 1",
+          "title": "Plane A",
+          "type": "string"
+        },
+        "plane_b": {
+          "description": "tên mặt phẳng 2",
+          "title": "Plane B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "plane_a",
+        "plane_b"
+      ],
+      "title": "IntersectPlanePlaneExpr",
+      "type": "object"
+    },
     "IsEmptyCond": {
       "properties": {
         "kind": {
@@ -1340,13 +1927,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -1355,6 +1947,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1571,13 +2178,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -1586,6 +2198,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1623,13 +2250,18 @@
               "discriminator": {
                 "mapping": {
                   "arith": "#/$defs/BinaryArithExpr",
+                  "divide_segment": "#/$defs/DivideSegmentExpr",
                   "field": "#/$defs/FieldRefExpr",
                   "index": "#/$defs/IndexRefExpr",
+                  "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr"
                 },
@@ -1638,6 +2270,21 @@
               "oneOf": [
                 {
                   "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectLinePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlanePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/MidpointExpr"
+                },
+                {
+                  "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/DivideSegmentExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -1702,13 +2349,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -1717,6 +2369,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1753,13 +2420,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -1768,6 +2440,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1831,7 +2518,13 @@
             "tree_node",
             "graph",
             "node_ref",
-            "null"
+            "null",
+            "point3",
+            "vector3",
+            "line3",
+            "plane3",
+            "polygon3",
+            "solid"
           ],
           "title": "Type",
           "type": "string"
@@ -1858,7 +2551,13 @@
                 "tree_node",
                 "graph",
                 "node_ref",
-                "null"
+                "null",
+                "point3",
+                "vector3",
+                "line3",
+                "plane3",
+                "polygon3",
+                "solid"
               ],
               "type": "string"
             },
@@ -1906,7 +2605,13 @@
                 "tree_node",
                 "graph",
                 "node_ref",
-                "null"
+                "null",
+                "point3",
+                "vector3",
+                "line3",
+                "plane3",
+                "polygon3",
+                "solid"
               ],
               "type": "string"
             },
@@ -1939,6 +2644,32 @@
       "title": "MemoryDeclaration",
       "type": "object"
     },
+    "MidpointExpr": {
+      "properties": {
+        "kind": {
+          "const": "midpoint",
+          "default": "midpoint",
+          "title": "Kind",
+          "type": "string"
+        },
+        "a": {
+          "description": "tên điểm đầu",
+          "title": "A",
+          "type": "string"
+        },
+        "b": {
+          "description": "tên điểm cuối",
+          "title": "B",
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "MidpointExpr",
+      "type": "object"
+    },
     "NeighborsExpr": {
       "properties": {
         "kind": {
@@ -1957,13 +2688,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -1972,6 +2708,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2114,6 +2865,32 @@
       "title": "PopStmt",
       "type": "object"
     },
+    "ProjectOntoExpr": {
+      "properties": {
+        "kind": {
+          "const": "project_onto",
+          "default": "project_onto",
+          "title": "Kind",
+          "type": "string"
+        },
+        "point": {
+          "description": "tên điểm",
+          "title": "Point",
+          "type": "string"
+        },
+        "target": {
+          "description": "tên mặt phẳng/đường chiếu lên",
+          "title": "Target",
+          "type": "string"
+        }
+      },
+      "required": [
+        "point",
+        "target"
+      ],
+      "title": "ProjectOntoExpr",
+      "type": "object"
+    },
     "PushStmt": {
       "properties": {
         "kind": {
@@ -2132,13 +2909,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -2147,6 +2929,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2200,13 +2997,18 @@
               "discriminator": {
                 "mapping": {
                   "arith": "#/$defs/BinaryArithExpr",
+                  "divide_segment": "#/$defs/DivideSegmentExpr",
                   "field": "#/$defs/FieldRefExpr",
                   "index": "#/$defs/IndexRefExpr",
+                  "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr"
                 },
@@ -2215,6 +3017,21 @@
               "oneOf": [
                 {
                   "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectLinePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlanePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/MidpointExpr"
+                },
+                {
+                  "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/DivideSegmentExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -2275,13 +3092,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -2290,6 +3112,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2347,13 +3184,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -2362,6 +3204,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2419,13 +3276,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -2434,6 +3296,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2470,13 +3347,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -2485,6 +3367,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2544,13 +3441,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -2559,6 +3461,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2827,6 +3744,9 @@
               "mapping": {
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
+                "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_section": "#/$defs/ConstructSectionStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -2847,6 +3767,15 @@
             "oneOf": [
               {
                 "$ref": "#/$defs/AssignStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPointStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSectionStmt"
               },
               {
                 "$ref": "#/$defs/WriteIndexStmt"
@@ -2924,13 +3853,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -2939,6 +3873,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2976,13 +3925,18 @@
               "discriminator": {
                 "mapping": {
                   "arith": "#/$defs/BinaryArithExpr",
+                  "divide_segment": "#/$defs/DivideSegmentExpr",
                   "field": "#/$defs/FieldRefExpr",
                   "index": "#/$defs/IndexRefExpr",
+                  "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+                  "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
+                  "project_onto": "#/$defs/ProjectOntoExpr",
                   "unary": "#/$defs/UnaryArithExpr",
                   "var": "#/$defs/VarRefExpr"
                 },
@@ -2991,6 +3945,21 @@
               "oneOf": [
                 {
                   "$ref": "#/$defs/LiteralExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectLinePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/IntersectPlanePlaneExpr"
+                },
+                {
+                  "$ref": "#/$defs/MidpointExpr"
+                },
+                {
+                  "$ref": "#/$defs/ProjectOntoExpr"
+                },
+                {
+                  "$ref": "#/$defs/DivideSegmentExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -3034,13 +4003,18 @@
           "discriminator": {
             "mapping": {
               "arith": "#/$defs/BinaryArithExpr",
+              "divide_segment": "#/$defs/DivideSegmentExpr",
               "field": "#/$defs/FieldRefExpr",
               "index": "#/$defs/IndexRefExpr",
+              "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
+              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
+              "project_onto": "#/$defs/ProjectOntoExpr",
               "unary": "#/$defs/UnaryArithExpr",
               "var": "#/$defs/VarRefExpr"
             },
@@ -3049,6 +4023,21 @@
           "oneOf": [
             {
               "$ref": "#/$defs/LiteralExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectLinePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/IntersectPlanePlaneExpr"
+            },
+            {
+              "$ref": "#/$defs/MidpointExpr"
+            },
+            {
+              "$ref": "#/$defs/ProjectOntoExpr"
+            },
+            {
+              "$ref": "#/$defs/DivideSegmentExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3133,6 +4122,9 @@
           "mapping": {
             "assign": "#/$defs/AssignStmt",
             "break": "#/$defs/BreakStmt",
+            "construct_line": "#/$defs/ConstructLineStmt",
+            "construct_point": "#/$defs/ConstructPointStmt",
+            "construct_section": "#/$defs/ConstructSectionStmt",
             "dequeue": "#/$defs/DequeueStmt",
             "enqueue": "#/$defs/EnqueueStmt",
             "for_each": "#/$defs/ForEachStmt",
@@ -3153,6 +4145,15 @@
         "oneOf": [
           {
             "$ref": "#/$defs/AssignStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructPointStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructLineStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructSectionStmt"
           },
           {
             "$ref": "#/$defs/WriteIndexStmt"

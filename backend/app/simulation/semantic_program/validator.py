@@ -90,6 +90,19 @@ MAX_STATEMENTS = 50
 #: IR một `elif` để dây else-if không còn ăn tầng — việc đó đổi schema nên phải
 #: chờ sau lượt đo #2. Ghi ở `RUN2_PROTOCOL §7b`.
 MAX_NESTING_DEPTH = 8
+
+#: Biểu thức hình học → tên các trường mang TÊN ĐỐI TƯỢNG. Bảng này DẪN XUẤT
+#: được từ contract, nhưng viết tay ở đây có chủ đích: nó là chỗ duy nhất nói
+#: "trường nào là tham chiếu", và dẫn xuất tự động sẽ nuốt luôn `ratio` — một
+#: chuỗi phân số, KHÔNG phải tên đối tượng. Thêm biểu thức hình học mà quên
+#: dòng ở đây thì validator trả "không được hỗ trợ" và ĐỎ ngay, không im lặng.
+_BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
+    "intersect_line_plane": ("line", "plane"),
+    "intersect_plane_plane": ("plane_a", "plane_b"),
+    "midpoint": ("a", "b"),
+    "divide_segment": ("a", "b"),
+    "project_onto": ("point", "target"),
+}
 MAX_MEMORY_DECLARATIONS = 20
 
 class ValidationResult:
@@ -321,7 +334,37 @@ class SemanticTypeChecker:
                 return self._check_value_expr(stmt.val)
             return None
 
+        # ── DỰNG HÌNH (2026-08-24) ───────────────────────────────────────
+        # Thẩm định TĨNH ở đây chỉ hỏi: mọi tên có được khai chưa. Câu hỏi
+        # "hai mặt phẳng này có song song không" là câu hỏi ĐỘNG — chỉ trả lời
+        # được khi biết toạ độ, và kernel đã fail-closed đúng chỗ ấy. Cố đoán
+        # trước ở đây là dựng một tầng hình học thứ hai, và hai tầng thì sẽ
+        # lệch nhau.
+        elif stmt.kind in ("construct_point", "construct_line", "construct_section"):
+            for ten in self._ten_tham_chieu(stmt):
+                if ten not in self.symbols and ten not in self.scoped_vars:
+                    return (f"Câu lệnh dựng tham chiếu '{ten}' chưa khai trong "
+                            f"memory_declarations và cũng chưa được dựng trước đó.")
+            loi = (self._check_value_expr(stmt.expr)
+                   if stmt.kind == "construct_point" else None)
+            if loi:
+                return loi
+            # ĐĂNG KÝ đối tượng vừa dựng — cùng luật `assign`. Không đăng ký thì
+            # một dây dựng hai bước (`M = trung điểm AB` rồi `d = MS`) bị từ
+            # chối oan, mà dây hai bước chính là hình dạng của MỌI bài dựng hình.
+            self.scoped_vars.add(stmt.target_var)
+            return None
+
         return f"Toán tử câu lệnh không được hỗ trợ hoặc không hợp lệ: {type(stmt)}"
+
+    @staticmethod
+    def _ten_tham_chieu(stmt) -> list[str]:
+        """Tên đối tượng mà một câu lệnh dựng ĐỌC (không tính tên nó GHI RA)."""
+        if stmt.kind == "construct_line":
+            return [stmt.through_a, stmt.through_b]
+        if stmt.kind == "construct_section":
+            return [stmt.solid, stmt.plane]
+        return []
 
     def _check_value_expr(self, expr: ValueExpr) -> Optional[str]:
         if isinstance(expr, LiteralExpr):
@@ -379,6 +422,19 @@ class SemanticTypeChecker:
             if self.symbols[expr.graph].type != "graph":
                 return f"neighbors chỉ hợp lệ trên graph."
             return self._check_value_expr(expr.node)
+        # ── BIỂU THỨC HÌNH HỌC (2026-08-24) ──────────────────────────────
+        # Mọi trường của năm biểu thức này là TÊN (khoá bởi
+        # `test_R0_bieu_thuc_hinh_hoc_chi_nhan_TEN`), nên thẩm định tĩnh gom
+        # được về một luật duy nhất: tên phải đã khai. Kiểu và tính khả thi
+        # hình học là việc của kernel — nó có toạ độ, còn ở đây thì không.
+        elif expr.kind in _BIEU_THUC_HINH_HOC:
+            for ten_truong in _BIEU_THUC_HINH_HOC[expr.kind]:
+                ten = getattr(expr, ten_truong)
+                if ten not in self.symbols and ten not in self.scoped_vars:
+                    return (f"Biểu thức '{expr.kind}' tham chiếu '{ten}' chưa "
+                            f"khai trong memory_declarations.")
+            return None
+
         return f"Biểu thức giá trị không được hỗ trợ: {type(expr)}"
 
     def _check_condition_expr(self, cond: ConditionExpr) -> Optional[str]:

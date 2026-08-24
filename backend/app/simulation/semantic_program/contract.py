@@ -131,7 +131,13 @@ ContainerType = Literal[
 MemoryType = Literal[
     "int", "str", "bool", "float",
     "array", "stack", "queue", "matrix", "map", "set", "tree_node", "graph",
-    "node_ref", "null"
+    "node_ref", "null",
+    # ── MIỀN HÌNH HỌC KHÔNG GIAN (2026-08-24, Bước 3 của MIGRATION_PLAN) ────
+    # Sáu kiểu, đóng như phần trên. Chúng chở ĐỐI TƯỢNG, không chở TOẠ ĐỘ KẾT
+    # QUẢ: `point3` khai được `A(0,0,0)` mà đề cho, nhưng giao điểm của hai
+    # đường thì phải do `construct_point` gọi kernel tính ra. Đó là ranh giới
+    # R0 ở miền này — LLM khai dữ kiện, engine tính hệ quả.
+    "point3", "vector3", "line3", "plane3", "polygon3", "solid",
 ]
 
 class MemoryDeclaration(BaseModel):
@@ -201,9 +207,53 @@ class NeighborsExpr(BaseModel):
     graph: str = Field(..., description="Tên graph")
     node: ValueExpr = Field(..., description="Đỉnh cần lấy danh sách kề")
 
+# ── Biểu thức HÌNH HỌC (Bước 3) ────────────────────────────────────────────
+#
+# LUẬT CHUNG CỦA CẢ NHÓM, và là chỗ ranh giới R0 dễ vỡ nhất ở miền này:
+# mỗi biểu thức chỉ nhận **TÊN đối tượng**, không nhận toạ độ kết quả. LLM được
+# nói *"giao tuyến của (SAB) và (SCD)"*; nó KHÔNG được nói *"giao tuyến là MN"*.
+# Toạ độ do `geometry/kernel.py` tính, và `geometry/` không import `app.ai`.
+class IntersectLinePlaneExpr(BaseModel):
+    kind: Literal["intersect_line_plane"] = "intersect_line_plane"
+    line: str = Field(..., description="tên đường thẳng")
+    plane: str = Field(..., description="tên mặt phẳng")
+
+class IntersectPlanePlaneExpr(BaseModel):
+    kind: Literal["intersect_plane_plane"] = "intersect_plane_plane"
+    plane_a: str = Field(..., description="tên mặt phẳng 1")
+    plane_b: str = Field(..., description="tên mặt phẳng 2")
+
+class MidpointExpr(BaseModel):
+    kind: Literal["midpoint"] = "midpoint"
+    a: str = Field(..., description="tên điểm đầu")
+    b: str = Field(..., description="tên điểm cuối")
+
+class ProjectOntoExpr(BaseModel):
+    kind: Literal["project_onto"] = "project_onto"
+    point: str = Field(..., description="tên điểm")
+    target: str = Field(..., description="tên mặt phẳng/đường chiếu lên")
+
+class DivideSegmentExpr(BaseModel):
+    """Điểm chia đoạn theo tỉ lệ — `t=0` là `a`, `t=1` là `b`.
+
+    Có mặt vì dạng đề *"M thuộc AB sao cho AM = 2MB"* rất phổ biến, và vì nó là
+    **miền hợp lệ của thao tác kéo** ở Bước 6: kéo M nghĩa là đổi `t`, không
+    phải đổi toạ độ tự do.
+    """
+    kind: Literal["divide_segment"] = "divide_segment"
+    a: str = Field(..., description="tên điểm đầu")
+    b: str = Field(..., description="tên điểm cuối")
+    ratio: str = Field(..., description="phân số, vd 2/3")
+
+
 ValueExpr = Annotated[
     Union[
         Annotated[LiteralExpr, Tag("literal")],
+        Annotated[IntersectLinePlaneExpr, Tag("intersect_line_plane")],
+        Annotated[IntersectPlanePlaneExpr, Tag("intersect_plane_plane")],
+        Annotated[MidpointExpr, Tag("midpoint")],
+        Annotated[ProjectOntoExpr, Tag("project_onto")],
+        Annotated[DivideSegmentExpr, Tag("divide_segment")],
         Annotated[VarRefExpr, Tag("var")],
         Annotated[IndexRefExpr, Tag("index")],
         Annotated[FieldRefExpr, Tag("field")],
@@ -394,9 +444,43 @@ class ReturnStmt(BaseModel):
     kind: Literal["return"] = "return"
     val: Optional[ValueExpr] = Field(None, description="Giá trị trả về (nếu có)")
 
+# ── Câu lệnh DỰNG HÌNH (Bước 3) ────────────────────────────────────────────
+#
+# Mỗi câu lệnh ở đây = **một bước trong timeline** = một khung hình. Đó là lý do
+# chúng là *statement* chứ không phải *expression*: biểu thức tính ra giá trị
+# nhưng không để lại dấu vết, còn học sinh cần thấy **thứ tự dựng**.
+class ConstructPointStmt(BaseModel):
+    kind: Literal["construct_point"] = "construct_point"
+    target_var: str = Field(..., description="tên điểm dựng ra")
+    expr: ValueExpr = Field(..., description="biểu thức hình học")
+    label: Optional[str] = Field(None, description="nhãn, vd M")
+
+class ConstructLineStmt(BaseModel):
+    kind: Literal["construct_line"] = "construct_line"
+    target_var: str = Field(..., description="tên đường dựng ra")
+    through_a: str = Field(..., description="tên điểm 1")
+    through_b: str = Field(..., description="tên điểm 2")
+    label: Optional[str] = None
+
+class ConstructSectionStmt(BaseModel):
+    """Dựng thiết diện — engine đi theo MẶT và sinh ra NHIỀU bước con.
+
+    Một câu lệnh cho ra cả dãy cạnh, vì thứ tự cạnh do kernel quyết chứ không do
+    LLM quyết. LLM chỉ nói *"cắt khối này bằng mặt phẳng kia"*.
+    """
+    kind: Literal["construct_section"] = "construct_section"
+    target_var: str = Field(..., description="tên thiết diện")
+    solid: str = Field(..., description="tên khối")
+    plane: str = Field(..., description="tên mp cắt")
+    label: Optional[str] = None
+
+
 SemanticStatement = Annotated[
     Union[
         Annotated[AssignStmt, Tag("assign")],
+        Annotated[ConstructPointStmt, Tag("construct_point")],
+        Annotated[ConstructLineStmt, Tag("construct_line")],
+        Annotated[ConstructSectionStmt, Tag("construct_section")],
         Annotated[WriteIndexStmt, Tag("write_index")],
         Annotated[MapSetStmt, Tag("map_set")],
         Annotated[SwapStmt, Tag("swap")],

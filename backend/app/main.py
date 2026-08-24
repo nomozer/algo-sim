@@ -160,7 +160,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       không kèm `pred` — trường ấy chưa bao giờ cho mô hình biết có những vị từ
 #       nào. Bề mặt khai nghĩa vụ đổi ⇒ mọi phân tích cache theo schema cũ không
 #       còn đại diện cho schema hiện hành.
-CACHE_VERSION = "37"
+CACHE_VERSION = "38"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

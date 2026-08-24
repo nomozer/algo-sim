@@ -80,7 +80,17 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # 2600 → 3400 (2026-08-22): thêm nhãn KIỂU cho từng trường (`:tên`,
     # `:biểu thức`, `:khối lệnh`). Không phải văn xuôi — đó là thứ đã sửa 11+
     # case trượt vì mô hình điền biểu thức vào chỗ đòi tên biến.
-    assert n <= 3400, (
+    #
+    # 3400 → 3800 (2026-08-24): miền HÌNH HỌC KHÔNG GIAN thêm 8 kind — 5 biểu
+    # thức + 3 câu lệnh dựng — và 6 `MemoryType`. Thẻ phình vì **từ vựng**, không
+    # vì văn xuôi: nó in `intersect_line_plane: line:tên plane:tên`, không in
+    # một câu giải thích nào. Đã thử rút gọn `description` của tám model mới
+    # trước khi nâng trần — vô ích, vì thẻ KHÔNG đọc `description`, nó dẫn xuất
+    # từ tên trường và KIỂU.
+    #
+    # Guard chống nhồi văn xuôi THẬT SỰ là `test_the_khong_phai_van_ban_viet_tay`
+    # ngay dưới đây; trần byte chỉ là lưới thứ hai, chặn ca ai đó thêm 50 kind.
+    assert n <= 3800, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )
