@@ -442,13 +442,21 @@ export function TreeWorkspace({ state, config, busy, dispatch }: Props) {
                         strokeWidth={n.id === state.config.rootId && !isCur && !isVisited ? 2 : 1.5} />
                 {/* Nhãn NGẮN nằm trong nút; nhãn DÀI (tên tiếng Việt) đặt DƯỚI
                     nút để không tràn ra ngoài vòng tròn và đè nút bên cạnh. */}
+                {/* W13-A11Y — nhãn LUÔN là mực đậm, kể cả trên nút đã tô.
+                    Trước đây nút hiện tại/đã thăm dùng chữ TRẮNG: trên cam
+                    (#dd5b00) chỉ được 3.77:1 và trên xanh lá (#1aae39) chỉ
+                    2.94:1, đều dưới ngưỡng AA cho chữ 13px. Đổi MÀU NÚT thì
+                    phá hợp đồng chú giải (cam = đang xét, xanh = đã thăm phải
+                    khớp đúng sắc trên sân khấu), nên đổi CHỮ: mực trên cam
+                    5.57:1, trên xanh lá 7.15:1. Trạng thái vẫn đọc được bằng
+                    hai kênh (màu nút + vị trí trên đường active). */}
                 {n.label.length <= INLINE_LABEL_MAX ? (
                   <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize={13} fontWeight="600"
-                        fill={isCur || isVisited ? "var(--on-primary)" : "var(--ink)"}>{n.label}</text>
+                        fill="var(--ink)">{n.label}</text>
                 ) : (
                   <>
                     <text x={p.x} y={p.y + 5} textAnchor="middle" fontSize={13} fontWeight="600"
-                          fill={isCur || isVisited ? "var(--on-primary)" : "var(--ink)"}>{n.id}</text>
+                          fill="var(--ink)">{n.id}</text>
                     <text x={p.x} y={p.y + 34} textAnchor="middle" fontSize={12} fontWeight="600"
                           fill="var(--ink)">{n.label}</text>
                   </>

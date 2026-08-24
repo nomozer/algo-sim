@@ -206,11 +206,16 @@ html {
   margin: 0;
 }
 
+/* W13-A11Y: `--primary` (#0075de) đạt 4.57:1 trên nền trắng nhưng chỉ 4.19:1
+   trên `--canvas-soft` — và nút này sống chủ yếu TRONG thẻ nền xám ấm ("Xem
+   thư viện"), tức nó luôn ở đúng phía trượt. `--primary-active` là bậc đậm
+   CÙNG sắc đã có sẵn (6.25:1 trên soft, 6.81:1 trên trắng), nên không phải
+   thêm màu mới — DESIGN.md §Don't cấm dựng accent cấu trúc thứ hai. */
 .link-btn {
   background: none;
   border: none;
   padding: 0;
-  color: var(--primary);
+  color: var(--primary-active);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -341,7 +346,7 @@ html {
 }
 
 .composer-text::placeholder {
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .composer-foot {
@@ -381,7 +386,7 @@ html {
 
 .composer-send:disabled {
   background: rgba(0, 0, 0, 0.05);
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   cursor: default;
   opacity: 1;
 }
@@ -502,7 +507,7 @@ html {
   align-items: center;
   gap: 5px;
   font-size: 12px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .starter-dot {
@@ -574,7 +579,7 @@ html {
   align-items: center;
   gap: 5px;
   font-size: 12px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 /* Bó lại: thẻ rộng 900px mà thanh kéo hết chiều ngang thì thành sợi chỉ,
@@ -610,7 +615,7 @@ html {
   background: none;
   border: none;
   border-left: 1px solid var(--hairline);
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   font-size: 14px;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
@@ -723,7 +728,7 @@ html {
    trạng thái nghỉ trong DESIGN.md; primary chỉ nói "đây là hành động". */
 .btn-primary:disabled {
   background: var(--canvas-soft);
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   border: 1px solid var(--hairline);
   opacity: 1;
 }
@@ -834,7 +839,7 @@ html {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.125px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   text-transform: uppercase;
   padding-top: 2px;
 }
@@ -990,7 +995,7 @@ html {
 /* Hết đường đi ở đầu/cuối là trạng thái BÌNH THƯỜNG, gặp liên tục — làm mờ
    quá tay thì trông như hỏng. Nhạt đi một bậc, không phải nửa độ đục. */
 .player-controls .btn-icon:disabled {
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   background: none;
 }
 
@@ -1150,7 +1155,7 @@ html {
    `.btn-primary:disabled` (khoá bởi ui-hygiene.test.ts). */
 .btn-icon:disabled {
   background: var(--canvas-soft);
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   opacity: 1;
   cursor: not-allowed;
 }
@@ -1323,7 +1328,7 @@ html {
 
 .hint {
   font-size: 13px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .empty-state {
@@ -1556,7 +1561,7 @@ html {
   font-size: 11px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .stage-legend .dot {
@@ -1620,7 +1625,7 @@ html {
 .frontier-count,
 .frontier-rule {
   font-size: 11px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .frontier-rule { margin: 6px 0 0; }
@@ -1698,9 +1703,13 @@ html {
   padding: 2px 6px;
 }
 
-.frontier-tag.is-in { color: var(--accent-orange); border: 1px solid var(--accent-orange); }
-.frontier-tag.is-out { color: var(--accent-orange); border: 1px solid var(--accent-orange); }
-.frontier-tag.is-done { color: var(--accent-green); border: 1px solid var(--accent-green); }
+/* W13-A11Y: CHỮ dùng bậc `-deep`, VIỀN giữ sắc gốc. Tách như vậy vì hai thứ
+   chịu hai ngưỡng khác nhau — chữ 10px đậm cần 4.5:1 (xanh gốc chỉ được 2.69),
+   còn viền là đồ hoạ, ngưỡng 3:1. Giữ viền sắc gốc để thẻ vẫn nhận ra cùng họ
+   màu với chấm chú giải trên sân khấu (`ARCHITECTURE_MAP` bất biến chú-giải). */
+.frontier-tag.is-in { color: var(--accent-orange-deep); border: 1px solid var(--accent-orange); }
+.frontier-tag.is-out { color: var(--accent-orange-deep); border: 1px solid var(--accent-orange); }
+.frontier-tag.is-done { color: var(--accent-green-deep); border: 1px solid var(--accent-green); }
 
 .frontier-left-out,
 .frontier-visited {
@@ -1794,9 +1803,9 @@ html {
 
 .loop-cond-then { color: var(--ink-muted); }
 .loop-cond.is-true { border-left-color: var(--accent-green); }
-.loop-cond.is-true .loop-cond-verdict { color: var(--accent-green); }
+.loop-cond.is-true .loop-cond-verdict { color: var(--accent-green-deep); }
 .loop-cond.is-false { border-left-color: var(--accent-orange); }
-.loop-cond.is-false .loop-cond-verdict { color: var(--accent-orange); }
+.loop-cond.is-false .loop-cond-verdict { color: var(--accent-orange-deep); }
 
 /* Bốn pha + cạnh quay lại. */
 .loop-cycle {
@@ -1827,7 +1836,7 @@ html {
 
 .loop-arrow {
   margin-left: var(--sp-xs);
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .loop-back,
@@ -1837,7 +1846,7 @@ html {
   border-radius: var(--rounded-md);
   border: 1px dashed var(--hairline);
   padding: 4px 10px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .loop-back.is-active {
@@ -1933,7 +1942,7 @@ html {
   font-weight: 600;
   letter-spacing: 0.3px;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   margin: 0 0 var(--sp-xs);
 }
 
@@ -1954,7 +1963,7 @@ html {
   font-weight: 600;
   letter-spacing: 0.2px;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .gate-detail .data-table th,
@@ -2047,7 +2056,7 @@ html {
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.125px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   margin-bottom: var(--sp-xs);
 }
 
@@ -2072,7 +2081,7 @@ html {
 }
 
 .pseudo-no {
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   min-width: 14px;
   text-align: right;
   flex-shrink: 0;
@@ -2676,7 +2685,7 @@ html {
 .ai-toggle-caret {
   margin-left: auto;
   display: inline-flex;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 /* ── M9-UX5: trang Thư viện — nhà riêng của danh mục đầy đủ ──────────────── */
@@ -2711,7 +2720,7 @@ html {
   border: 1px solid #dddddd;
   border-radius: var(--rounded-xs);
   padding: 6px 10px;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 .library-search:focus-within {
@@ -2838,7 +2847,7 @@ html {
 .obj-chip-type {
   font-size: 10px;
   font-weight: 400;
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 
 /* ── PredictionBar — TRÌNH BÀY THEO DESIGN.md (sửa ở M9-UX6) ─────────────────
@@ -3316,7 +3325,7 @@ html {
 }
 
 .predict-result.is-unsupported_to_verify .icon {
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
 }
 .predict-result.is-unsupported_to_verify { background: var(--canvas-soft); color: var(--ink-secondary); }
 
@@ -3502,7 +3511,7 @@ html {
 }
 
 .acc-badge .acc-prev {
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   text-decoration: line-through;
 }
 
@@ -3620,7 +3629,7 @@ html {
   width: 32px; height: 32px;
   display: flex; align-items: center; justify-content: center;
   border: 0; background: none; border-radius: var(--rounded-sm);
-  color: var(--ink-faint); cursor: pointer;
+  color: var(--ink-quiet); cursor: pointer;
 }
 .app-nav-toggle:hover { background: var(--canvas-soft); color: var(--ink-secondary); }
 .app-nav-shell.is-collapsed .app-nav-toggle { align-self: center; }
@@ -3641,10 +3650,10 @@ html {
 .app-nav-item:hover { background: var(--canvas-soft); color: var(--ink); }
 .app-nav-item.is-active { background: var(--canvas-soft); color: var(--ink); font-weight: 600; }
 .app-nav-item:focus-visible { outline: 2px solid var(--primary); outline-offset: -2px; }
-.app-nav-icon { display: flex; flex: 0 0 auto; color: var(--ink-faint); }
+.app-nav-icon { display: flex; flex: 0 0 auto; color: var(--ink-quiet); }
 .app-nav-item.is-active .app-nav-icon { color: var(--primary); }
 .app-nav-label { min-width: 0; display: flex; flex-direction: column; }
-.app-nav-label small { font-size: 11px; color: var(--ink-faint); }
+.app-nav-label small { font-size: 11px; color: var(--ink-quiet); }
 .app-nav-avatar {
   flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -3715,7 +3724,7 @@ html {
 .auth-title { font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -0.3px; }
 .auth-close {
   width: 30px; height: 30px; border: 0; background: none; cursor: pointer;
-  font-size: 20px; line-height: 1; color: var(--ink-faint); border-radius: var(--rounded-sm);
+  font-size: 20px; line-height: 1; color: var(--ink-quiet); border-radius: var(--rounded-sm);
 }
 .auth-close:hover { background: var(--canvas-soft); color: var(--ink); }
 .auth-form { display: grid; gap: var(--sp-sm); margin-top: var(--sp-md); }
@@ -3726,7 +3735,7 @@ html {
   background: var(--surface); color: var(--ink);
 }
 .auth-field input:focus-visible { outline: 2px solid var(--primary); outline-offset: -1px; }
-.auth-hint { color: var(--ink-faint); font-size: 12px; }
+.auth-hint { color: var(--ink-quiet); font-size: 12px; }
 .auth-roles {
   border: 0; margin: 0; padding: 0; display: flex; gap: var(--sp-md);
   align-items: center; flex-wrap: wrap;
@@ -3762,7 +3771,7 @@ html {
 }
 .form-error { margin: 0; color: var(--accent-orange); font-size: 13px; }
 .form-notice { margin: 0; color: var(--accent-green); font-size: 13px; }
-.empty-note { color: var(--ink-faint); font-size: 14px; margin: 0; }
+.empty-note { color: var(--ink-quiet); font-size: 14px; margin: 0; }
 
 .class-list, .assignment-list {
   list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-sm);
@@ -3784,18 +3793,18 @@ html {
 }
 .class-code-off { font-size: 12px; color: var(--accent-orange); }
 .assignment-instruction { margin: 0; font-size: 13px; color: var(--ink-muted); }
-.assignment-progress { font-size: 12px; color: var(--ink-faint); }
+.assignment-progress { font-size: 12px; color: var(--ink-quiet); }
 
 /* ── Bảng quan sát ───────────────────────────────────────────────────────── */
 .observe-bar { display: flex; gap: var(--sp-md); align-items: flex-end; flex-wrap: wrap; }
-.observe-stamp { font-size: 12px; color: var(--ink-faint); }
+.observe-stamp { font-size: 12px; color: var(--ink-quiet); }
 .table-scroll { overflow-x: auto; }
 .observe-table { width: 100%; }
-.observe-table .is-idle-row { color: var(--ink-faint); }
+.observe-table .is-idle-row { color: var(--ink-quiet); }
 .observe-status { font-size: 12px; font-weight: 600; }
 .observe-status.is-practicing { color: var(--primary); }
 .observe-status.is-completed { color: var(--accent-green); }
-.observe-status.is-not_started { color: var(--ink-faint); }
+.observe-status.is-not_started { color: var(--ink-quiet); }
 
 /* ── MÔ HÌNH CSS CÓ RÀNG BUỘC (W4B-2Z) ─────────────────────────────────────
    Bố cục CHIA ĐÔI: điều khiển trái, XEM TRƯỚC phải chiếm phần lớn bề ngang.
@@ -3826,7 +3835,7 @@ html {
 }
 .web-group-head {
   display: flex; align-items: baseline; gap: var(--sp-xs);
-  font-size: 12px; color: var(--ink-faint);
+  font-size: 12px; color: var(--ink-quiet);
   text-transform: uppercase; letter-spacing: 0.04em;
   /* Là NÚT thật (đường bàn phím của phép chọn) nhưng đọc như tiêu đề nhóm. */
   padding: 0; border: 0; background: none; cursor: pointer;
@@ -3836,7 +3845,10 @@ html {
 .web-group-head:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
 .web-group.is-selected .web-group-head { color: var(--ink-secondary); }
 .web-group-head code {
-  font-size: 12px; color: var(--primary);
+  /* W13-A11Y: `--primary` chỉ được 4.19:1 trên thẻ `--canvas-soft`. Trạng thái
+     hover ở trên đã dùng `--primary-active` rồi, nên lúc NGHỈ sáng hơn lúc hover
+     vừa trượt AA vừa ngược chiều nhấn mạnh. */
+  font-size: 12px; color: var(--primary-active);
   text-transform: none; letter-spacing: 0;
 }
 .web-control { display: flex; flex-direction: column; gap: var(--sp-xs); }
@@ -4051,7 +4063,7 @@ html {
 }
 .web-url {
   margin-left: var(--sp-xs);
-  font-size: 12px; color: var(--ink-faint);
+  font-size: 12px; color: var(--ink-quiet);
 }
 
 /* Khung trang: chính là `.trang` trong bảng CSS bên dưới — cùng một thứ, một
@@ -4425,7 +4437,7 @@ html {
 
 .sem-stack-empty {
   padding: var(--sp-sm);
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   font-size: 12px;
   text-align: center;
 }
@@ -4442,7 +4454,7 @@ html {
 }
 
 .sem-chua-co {
-  color: var(--ink-faint);
+  color: var(--ink-quiet);
   font-style: italic;
 }
 
@@ -4629,4 +4641,56 @@ html {
 .sem-graph-node[data-state="current"] text {
   fill: var(--on-primary);
   font-weight: 600;
+}
+
+/* ── W13-A11Y — TÔN TRỌNG "GIẢM CHUYỂN ĐỘNG" CỦA HỆ ĐIỀU HÀNH ──────────────
+ *
+ * ─── VÌ SAO CẦN, ĐO ĐƯỢC Ở HEAD d7102e1 ──────────────────────────────────
+ *
+ * Toàn bộ `frontend/src` KHÔNG có một lần nào nhắc `prefers-reduced-motion`
+ * (`grep -c` = 0), trong khi có 3 `@keyframes` · 3 `animation:` · 25
+ * `transition:`. Nghĩa là học sinh đã bật "Giảm chuyển động" ở Windows/macOS
+ * vẫn nhận đủ mọi hoạt cảnh — hệ điều hành có nói, sản phẩm không nghe.
+ *
+ * Đây KHÔNG phải mục làm đẹp. Người học nhạy tiền đình (rối loạn tiền đình,
+ * migraine tiền triệu, say chuyển động) gặp buồn nôn/chóng mặt thật khi bị
+ * hoạt cảnh không xin phép — và bề mặt của đề tài đang đi về phía hình học
+ * không gian, tức chuyển động sẽ NHIỀU hơn chứ không ít đi.
+ *
+ * ─── VÌ SAO ĐẶT Ở TẦNG `*`, KHÔNG LIỆT KÊ TỪNG LỚP ───────────────────────
+ *
+ * Liệt kê từng lớp là chặn *lần đã xảy ra*, không chặn *lớp lỗi*: mỗi
+ * `transition` viết thêm sau này lại lọt ra ngoài trong im lặng. Bộ chọn phổ
+ * quát bắt cả thứ chưa được viết. `0.01ms` chứ không phải `0` là có chủ đích —
+ * sự kiện `transitionend`/`animationend` vẫn phát, nên mã nào chờ nó không bị
+ * treo.
+ *
+ * ─── MỘT NGOẠI LỆ, CÓ LÝ DO ──────────────────────────────────────────────
+ *
+ * `.composer-spin` là chỉ báo DUY NHẤT cho biết AI đang phân tích: nó nằm
+ * trong nút gửi (`ProblemInput.tsx:220`), không kèm chữ nào, và `aria-label`
+ * của nút giữ nguyên "Phân tích đề bằng AI" cả khi đang chạy. Dừng hẳn nó thì
+ * người bật giảm-chuyển-động mất luôn THÔNG TIN, không chỉ mất hoạt cảnh —
+ * đó là hạ cấp khả năng tiếp cận nhân danh khả năng tiếp cận. Nên nó được
+ * quay CHẬM lại (0.7s → 2.4s), không bị tắt: đủ để biết hệ đang làm việc, đủ
+ * chậm để không phải là kích thích tiền đình.
+ *
+ * Guard khoá cả khối này LẪN ngoại lệ ở `styles/tokens.test.ts` — ngoại lệ mà
+ * bị ai đó "dọn cho gọn" thì chỉ báo tiến trình biến mất không tiếng động.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Ngoại lệ có chủ đích — xem lý do ở khối chú thích trên. */
+  .composer-spin {
+    animation-duration: 2.4s !important;
+    animation-iteration-count: infinite !important;
+  }
 }

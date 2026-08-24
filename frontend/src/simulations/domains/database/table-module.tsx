@@ -572,8 +572,10 @@ function narrateStep(step: TableStep, schema: TableColumn[],
 // Trạng thái hàng — icon là component SVG (guard ui-hygiene cấm ký tự Unicode
 // làm icon); phân biệt KHÔNG chỉ bằng màu (§7): có nhãn chữ + hình + viền.
 const STATUS = {
-  current: { label: "Đang xét", Icon: IconPlay, bg: "var(--accent-orange)", fg: "#fff" },
-  keep: { label: "Giữ", Icon: IconCheck, bg: "var(--accent-green)", fg: "#fff" },
+  // W13-A11Y: chữ TRẮNG trên sắc gốc trượt AA (trên cam 3.77:1, trên xanh lá
+  // 2.94:1). Bậc `-deep` đưa cả hai lên 9.11 / 7.13 mà vẫn cùng họ màu.
+  current: { label: "Đang xét", Icon: IconPlay, bg: "var(--accent-orange-deep)", fg: "#fff" },
+  keep: { label: "Giữ", Icon: IconCheck, bg: "var(--accent-green-deep)", fg: "#fff" },
   drop: { label: "Loại", Icon: IconCross, bg: "var(--surface)", fg: "var(--ink-muted)" },
   cutoff: { label: "Không lấy", Icon: null, bg: "var(--surface)", fg: "var(--ink-muted)" },
 } as const;

@@ -207,3 +207,259 @@ describe("M18-UI — nền thanh bên thuộc về VỎ, không thuộc phần t
     expect(nav!, "phần dính lại mang viền phải").not.toContain("border-right:");
   });
 });
+
+/** Cắt một khối `{...}` cân bằng ngoặc, tính từ vị trí `from`. `indexOf("}")`
+ *  không dùng được cho `@media` vì bên trong còn khối con. */
+function balancedBlock(css: string, from: number): string | null {
+  const open = css.indexOf("{", from);
+  if (open < 0) return null;
+  let depth = 0;
+  for (let i = open; i < css.length; i++) {
+    if (css[i] === "{") depth++;
+    else if (css[i] === "}" && --depth === 0) return css.slice(open, i + 1);
+  }
+  return null;
+}
+
+/**
+ * W13-A11Y — HỆ ĐIỀU HÀNH ĐÃ NÓI "GIẢM CHUYỂN ĐỘNG" THÌ SẢN PHẨM PHẢI NGHE.
+ *
+ * ─── LỖ HỔNG ĐO ĐƯỢC Ở HEAD d7102e1 ──────────────────────────────────────
+ *
+ * `grep -rc "prefers-reduced-motion" frontend/src` = **0**, trong khi kho có 3
+ * `@keyframes`, 3 `animation:`, 25 `transition:`. Không test nào bắt được vì
+ * vitest không chạy CSS, và mắt người thì không nhìn ra thứ VẮNG MẶT.
+ *
+ * ─── VÌ SAO GUARD KHOÁ "BỘ CHỌN PHỔ QUÁT", KHÔNG KHOÁ TỪNG LỚP ───────────
+ *
+ * Khoá từng lớp là khoá lần đã xảy ra. Bắt buộc khối reduce phải phủ qua `*`
+ * thì mọi `transition` viết THÊM sau này tự động nằm trong tầm — kể cả của
+ * miền hình học không gian chưa viết. Cùng tinh thần với anti-pattern #13:
+ * đặt guard ở chỗ không phụ thuộc thứ đã tồn tại.
+ *
+ * Đường thoát duy nhất còn lại là một khai báo `animation`/`transition` mang
+ * `!important` đặt NGOÀI khối reduce — nó sẽ thắng cả bộ chọn phổ quát. Nên
+ * guard cấm đúng đường đó.
+ */
+describe("(W13-A11Y) prefers-reduced-motion — hoạt cảnh phải xin phép", () => {
+  const at = globalCss.indexOf("@media (prefers-reduced-motion: reduce)");
+  const block = at < 0 ? null : balancedBlock(globalCss, at);
+
+  it("có khối @media (prefers-reduced-motion: reduce)", () => {
+    expect(
+      at,
+      "không có khối nào — học sinh bật 'Giảm chuyển động' vẫn nhận đủ hoạt cảnh",
+    ).toBeGreaterThan(-1);
+    expect(block, "khối @media không đóng ngoặc cân bằng").not.toBeNull();
+  });
+
+  it("vô hiệu hoá ở tầng PHỔ QUÁT — hoạt cảnh viết sau này cũng bị phủ", () => {
+    expect(block, "chưa có khối reduce").not.toBeNull();
+    expect(block!, "thiếu bộ chọn `*` ⇒ chỉ phủ được thứ đã liệt kê").toMatch(/(^|[\s,{])\*/);
+    for (const prop of ["animation-duration", "transition-duration"]) {
+      expect(block!, `khối reduce không đặt ${prop}`).toContain(prop);
+    }
+    // Không `!important` thì bộ chọn `*` (độ đặc hiệu 0) thua mọi lớp thật.
+    expect(
+      (block!.match(/!important/g) ?? []).length,
+      "thiếu !important ⇒ bộ chọn `*` độ đặc hiệu 0, thua mọi khai báo có lớp",
+    ).toBeGreaterThanOrEqual(3);
+  });
+
+  /**
+   * `.composer-spin` là chỉ báo DUY NHẤT cho "AI đang phân tích" — nằm trong
+   * nút gửi, không kèm chữ, `aria-label` không đổi khi chạy. Dừng hẳn nó là
+   * lấy mất THÔNG TIN chứ không chỉ lấy mất hoạt cảnh. Nó được quay chậm lại,
+   * và dòng này giữ cho ngoại lệ đó không bị ai "dọn cho gọn".
+   */
+  it("giữ ngoại lệ .composer-spin — quay CHẬM, không TẮT", () => {
+    expect(block, "chưa có khối reduce").not.toBeNull();
+    const at2 = block!.indexOf(".composer-spin");
+    expect(at2, "ngoại lệ biến mất ⇒ chỉ báo tiến trình tắt câm").toBeGreaterThan(-1);
+    const spin = balancedBlock(block!, at2);
+    expect(spin, "khối .composer-spin hỏng").not.toBeNull();
+    expect(spin!, "ngoại lệ mà không lặp ⇒ chỉ báo đứng im").toContain("infinite");
+    const dur = /animation-duration:\s*([\d.]+)s/.exec(spin!);
+    expect(dur, "ngoại lệ không đặt lại thời lượng").not.toBeNull();
+    expect(
+      Number(dur![1]),
+      "quay nhanh hơn 1.5s thì vẫn là kích thích tiền đình",
+    ).toBeGreaterThanOrEqual(1.5);
+  });
+
+  it("KHÔNG có animation/transition !important nào NGOÀI khối reduce", () => {
+    const ngoai = block ? globalCss.replace(block, "") : globalCss;
+    const offenders = [...ngoai.matchAll(/(?:^|[;{}\s])(animation|transition)[a-z-]*:[^;}]*!important/gi)]
+      .map((m) => m[0].trim());
+    expect(
+      offenders,
+      "khai báo này thắng cả bộ chọn `*` ⇒ giảm-chuyển-động bị vô hiệu trong im lặng:\n" +
+        offenders.join("\n"),
+    ).toEqual([]);
+  });
+});
+
+/**
+ * W13-A11Y — TƯƠNG PHẢN CHỮ (WCAG 2.1 AA, 4.5:1).
+ *
+ * ─── VÌ SAO KHÔNG CHẤM MỌI TOKEN ─────────────────────────────────────────
+ *
+ * `--hairline` 1.25:1 và `--accent-sky` 2.38:1 "trượt" nếu chấm phẳng cả bảng
+ * màu — nhưng chúng là VIỀN và NỀN, ngưỡng của chúng không phải 4.5. Chấm
+ * phẳng sinh ra 10 phát hiện giả rồi chôn 4 phát hiện thật. Nên guard chỉ xét
+ * token THẬT SỰ đứng sau `color:`.
+ *
+ * ⚠️ Và `color:` phải khớp ở BIÊN KHAI BÁO. Bản nháp đầu của guard này dùng
+ * `/color:\s*var\(/` nên khớp luôn `border-color:` / `outline-color:` —
+ * `--hairline` hiện ra như "màu chữ 2 chỗ" trong khi nó chưa bao giờ là chữ.
+ * Đó là phát hiện giả sinh ra từ chính công cụ đo.
+ *
+ * ─── VÌ SAO CÓ DANH SÁCH NỢ, KHÔNG ĐỎ NGAY ───────────────────────────────
+ *
+ * Bốn token dưới đây đang trượt ở 55 chỗ dùng. Sửa chúng KHÔNG phải việc của
+ * một guard: `--ink-faint` (#a39e98) muốn đạt 4.5:1 phải tối tới quãng
+ * `#6f6a63`, tức gần trùng `--ink-muted` (#615d59) — thang mực BA BẬC của
+ * `DESIGN.md` sập còn hai. Đó là quyết định ngôn ngữ thị giác, thuộc về người
+ * làm thiết kế, và anti-pattern #12 cấm agent tự chế.
+ *
+ * Nên guard làm đúng việc của guard: **ghim con số đo được** và bắt danh sách
+ * này chỉ được NGẮN ĐI. Thêm token trượt mới ⇒ ĐỎ. Sửa xong mà quên xoá dòng
+ * ⇒ cũng ĐỎ. Cùng khuôn với `KNOWN_GAPS` của code-index-guard.
+ */
+describe("(W13-A11Y) tương phản chữ — WCAG AA 4.5:1", () => {
+  const AA_TEXT = 4.5;
+
+  /** Giá trị hex của một token, đọc từ tokens.css (không hard-code màu). */
+  function hexOf(token: string): string | null {
+    const m = new RegExp(`${token}\\s*:\\s*(#[0-9a-f]{3,8})`, "i").exec(tokensCss);
+    return m ? m[1] : null;
+  }
+
+  /** Độ chói tương đối theo WCAG 2.1 §relative luminance. */
+  function luminance(hex: string): number {
+    const h = hex.replace("#", "");
+    const full = h.length === 3 ? [...h].map((c) => c + c).join("") : h;
+    const [r, g, b] = [0, 2, 4].map((i) => {
+      const c = parseInt(full.slice(i, i + 2), 16) / 255;
+      return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  }
+
+  function contrast(a: string, b: string): number {
+    const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+    return (hi + 0.05) / (lo + 0.05);
+  }
+
+  /** Hai nền mà chữ thân bài thực sự nằm lên. */
+  const BACKGROUNDS = ["--canvas", "--canvas-soft"];
+
+  /**
+   * `--on-primary` (#ffffff) là chữ trên NỀN `--primary`, không phải trên
+   * canvas — đo nó với nền trang sẽ ra 1:1 và là phát hiện giả.
+   */
+  const KHONG_NAM_TREN_CANVAS = new Set(["--on-primary"]);
+
+  /**
+   * NỢ ĐÃ ĐO — `token@nền` → tỉ lệ tại thời điểm ghi (HEAD d7102e1).
+   * DANH SÁCH NÀY CHỈ ĐƯỢC NGẮN ĐI. Thêm dòng = tự khai vừa tạo nợ mới.
+   */
+  const NO_TUONG_PHAN: Record<string, number> = {
+    /* PHÂN CÔNG GIỮA HAI PHÉP ĐO — đây là lý do cả hai cùng tồn tại.
+       Lượt Chrome W13 quét **26 bề mặt / 884 phần tử có chữ** và thấy 0 cặp
+       trượt: mọi chỗ accent tô chữ mà THỰC SỰ hiện ra đã chuyển sang bậc
+       `-deep` (`.frontier-tag`, `.loop-cond-verdict`, nhãn SVG program-module,
+       huy hiệu bảng). Nhưng còn **7 chỗ `--accent-orange` và 4 chỗ
+       `--accent-green`** vẫn đứng sau `color:` mà lượt quét không render tới
+       (trạng thái bước cụ thể chưa chạm). Trình duyệt nói được cái ĐÃ CHỨNG
+       MINH; dòng nợ này giữ cái CÒN CÓ THỂ XẢY RA — một đoạn chữ accent mới
+       đặt lên nền sáng sẽ trượt lại. Xoá chúng chỉ khi số dùng về 0. */
+    "--accent-orange@--canvas": 3.77,
+    "--accent-orange@--canvas-soft": 3.46,
+    "--accent-green@--canvas": 2.93,
+    "--accent-green@--canvas-soft": 2.69,
+    /* `--primary` ĐẠT trên nền trắng (4.57), chỉ trượt trên thẻ nền xám ấm.
+       Chỗ THẬT SỰ trượt mà Chrome bắt được — `.link-btn` "Xem thư viện" — đã
+       chuyển sang `--primary-active`. Dòng này ở lại vì luật vẫn đúng: một
+       đoạn chữ `--primary` đặt MỚI lên thẻ `--canvas-soft` sẽ lại trượt. */
+    "--primary@--canvas-soft": 4.19,
+  };
+
+  /** Token đứng sau `color:` — khớp ở BIÊN khai báo, xem cảnh báo phía trên. */
+  const textTokens = [
+    ...new Set(
+      [...globalCss.matchAll(/(?:^|[;{}\s])color:\s*var\(\s*(--[a-z0-9-]+)/gi)].map((m) => m[1]),
+    ),
+  ].filter((t) => !KHONG_NAM_TREN_CANVAS.has(t));
+
+  it("có tìm ra token màu chữ (guard không rỗng vô nghĩa)", () => {
+    expect(textTokens.length, "không khớp token nào ⇒ regex hỏng, guard luôn xanh")
+      .toBeGreaterThan(5);
+  });
+
+  it("mọi token màu chữ đều là hex đọc được", () => {
+    const la = textTokens.filter((t) => hexOf(t) === null);
+    expect(la, `guard chỉ hiểu hex — token này không đo được: ${la.join(", ")}`).toEqual([]);
+  });
+
+  it("không có token màu chữ TRƯỢT AA nào nằm ngoài danh sách nợ", () => {
+    const moi: string[] = [];
+    for (const t of textTokens) {
+      const fg = hexOf(t);
+      if (!fg) continue;
+      for (const bgToken of BACKGROUNDS) {
+        const bg = hexOf(bgToken);
+        if (!bg) continue;
+        const r = contrast(fg, bg);
+        const key = `${t}@${bgToken}`;
+        if (r < AA_TEXT && !(key in NO_TUONG_PHAN)) {
+          moi.push(`${key} = ${r.toFixed(2)}:1 (cần ${AA_TEXT})`);
+        }
+      }
+    }
+    expect(moi, `nợ tương phản MỚI — chỉ được ngắn đi, không được dài ra:\n${moi.join("\n")}`)
+      .toEqual([]);
+  });
+
+  /**
+   * W13-A11Y — TOKEN ĐƯỜNG KẺ KHÔNG ĐƯỢC QUAY LẠI LÀM CHỮ.
+   *
+   * `--ink-faint` (2.66:1) từng gánh HAI vai: chữ phụ ở 37 chỗ VÀ đường
+   * kẻ/cạnh đồ thị/viền chấm "chưa xét" ở 5 chỗ. Không sửa được giá trị vì mỗi
+   * vai đòi một hướng ngược nhau — chữ cần tối đi, còn tối đi thì chấm "nhàn
+   * rỗi" trông như đang hoạt động. Đã tách: chữ sang `--ink-quiet` (#74706c),
+   * `--ink-faint` giữ nguyên cho nét vẽ.
+   *
+   * Sự tách vai đó vô hình trong mã — không có gì ngăn bản vá sau viết lại
+   * `color: var(--ink-faint)` và mọi test vẫn xanh, vì token ấy CÓ tồn tại và
+   * danh sách nợ không còn nhắc tới nó. Dòng này là thứ duy nhất giữ nó.
+   */
+  it("token dành cho ĐƯỜNG KẺ không được dùng làm màu chữ", () => {
+    const CHI_DUONG_KE = ["--ink-faint", "--hairline"];
+    const pham = CHI_DUONG_KE.filter((t) => textTokens.includes(t));
+    expect(
+      pham,
+      "token này chỉ dành cho nét vẽ/viền (tương phản dưới 3:1) — chữ phụ dùng " +
+        `\`--ink-quiet\`: ${pham.join(", ")}`,
+    ).toEqual([]);
+  });
+
+  it("mọi dòng nợ vẫn còn trượt thật — sửa xong phải xoá dòng", () => {
+    const da_het: string[] = [];
+    const lech: string[] = [];
+    for (const [key, ghi] of Object.entries(NO_TUONG_PHAN)) {
+      const [t, bgToken] = key.split("@");
+      const fg = hexOf(t);
+      const bg = hexOf(bgToken);
+      if (!fg || !bg) {
+        da_het.push(`${key} (token không còn tồn tại)`);
+        continue;
+      }
+      const r = contrast(fg, bg);
+      if (r >= AA_TEXT) da_het.push(`${key} nay ĐẠT ${r.toFixed(2)}:1`);
+      else if (Math.abs(r - ghi) > 0.05) lech.push(`${key}: ghi ${ghi} nhưng đo ${r.toFixed(2)}`);
+    }
+    expect(da_het, `đã trả nợ mà quên xoá dòng:\n${da_het.join("\n")}`).toEqual([]);
+    expect(lech, `màu đã đổi, số ghi trong nợ không còn đúng:\n${lech.join("\n")}`).toEqual([]);
+  });
+});

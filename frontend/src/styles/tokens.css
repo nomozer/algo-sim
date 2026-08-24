@@ -13,6 +13,36 @@
   --ink: #000000;
   --ink-secondary: #31302e;
   --ink-muted: #615d59;
+  /* ── W13-A11Y — TÁCH VAI: `--ink-faint` TỪNG LÀM HAI VIỆC KHÁC NHAU ───────
+     Đo trên Chrome thật (`certify-a11y-w13.mjs`, 1440px): `--ink-faint` trên
+     nền trắng cho **2.66:1**, dưới xa ngưỡng WCAG AA 4.5:1 cho chữ thường —
+     và nó đang tô chữ ở 37 chỗ trong `global.css`. Hai chỗ bắt được tận mắt:
+     nhãn miền trên thẻ bài mẫu ("Thuật toán", 12px) và dòng gợi ý ở workspace
+     ("Sắp xếp nổi bọt", 13px). Học sinh đọc trên máy chiếu lớp học hoặc laptop
+     rẻ là đúng nhóm chịu thiệt nhất.
+
+     Nhưng KHÔNG được sửa thẳng giá trị `--ink-faint`: nó còn tô **đường kẻ,
+     cạnh đồ thị, viền chấm "chưa xét"** (5 chỗ trong `global.css` + ~40 chỗ
+     `fill`/`stroke` SVG trong các module). Tối nó đi thì cạnh đồ thị đậm lên
+     và chấm "nhàn rỗi" trông như đang hoạt động — đổi NGHĨA của sân khấu để
+     chữa một lỗi của CHỮ. Đó là một token gánh hai vai, và cách chữa là tách
+     vai chứ không phải chọn một bên.
+
+     `#716d69` không chọn theo mắt: nó là màu **SÁNG NHẤT** còn đạt AA trên MỌI
+     nền ĐO ĐƯỢC — 5.10:1 trên `--canvas`, 4.69:1 trên `--canvas-soft`, 4.51:1
+     trên `#e8f2fd` (dải dòng mã giả). Sáng nhất là có chủ đích: "giấy trắng
+     yên tĩnh" của DESIGN.md bị xáo trộn ít nhất có thể. Vẫn cách bậc trên
+     (`--ink-muted`, 6.53:1) đủ xa nên thang mực KHÔNG sập còn ba bậc.
+
+     ⚠️ Bản đầu đặt `#74706c` vì chỉ tính với HAI nền tôi GIẢ ĐỊNH (`--canvas`,
+     `--canvas-soft`). Lượt quét 26 bề mặt tìm ra nền thứ ba có thật —
+     `.pseudo-no` nằm trên dải xanh nhạt `#e8f2fd` — và ở đó `#74706c` chỉ được
+     4.34:1. Bài học không phải "chọn nhầm màu" mà là **tập nền phải đến từ
+     phép đo, không từ trí nhớ về bảng token**.
+
+     ⚠️ `--ink-faint` nay CHỈ dành cho đường kẻ/viền/nét vẽ. Dùng nó làm
+     `color:` là quay lại đúng lỗi vừa chữa — `styles/tokens.test.ts` chặn. */
+  --ink-quiet: #716d69;
   --ink-faint: #a39e98;
   --hairline: #e6e6e6;
 
@@ -37,6 +67,12 @@
   --accent-orange-deep: #793400;
   --accent-teal: #2a9d99;
   --accent-green: #1aae39;
+  /* W13-A11Y — bậc ĐẬM của xanh lá, để tô CHỮ. `--accent-green` (2.93:1) là màu
+     TÔ NỀN/HÌNH, dùng làm chữ thì trượt AA ở mọi nền đo được. Khuôn này đã có
+     sẵn trong bảng (`--accent-orange-deep`, `--accent-purple-deep`) — đây chỉ là
+     mắt xích còn thiếu, không phải màu mới của ngôn ngữ thị giác. 7.13/6.55/6.30
+     trên ba nền đo được, ngang bậc `--accent-orange-deep` (9.11/8.37). */
+  --accent-green-deep: #0f6622;
   --accent-brown: #523410;
 
   /* Typography */

@@ -1,0 +1,180 @@
+{
+  "motion": {
+    "probe": {
+      "gen-pop": {
+        "truoc": 0.35,
+        "sau": 0.00001,
+        "dat": true
+      },
+      "gen-edge-draw": {
+        "truoc": 0.5,
+        "sau": 0.00001,
+        "dat": true
+      },
+      "composer-spin": {
+        "truoc": 0.7,
+        "sau": 2.4,
+        "lap": "infinite",
+        "dat": true
+      }
+    },
+    "transitionThat": {
+      "doDuoc": 12,
+      "conChay": []
+    },
+    "TRANSITION_BI_TRIET_TIEU": true,
+    "verdict": "CERTIFIED"
+  },
+  "contrast": {
+    "beMat": {
+      "home": {
+        "doDuoc": 21,
+        "truot": 0
+      },
+      "library": {
+        "doDuoc": 21,
+        "truot": 0
+      },
+      "algorithm.find_max": {
+        "doDuoc": 49,
+        "truot": 0
+      },
+      "algorithm.find_min": {
+        "doDuoc": 46,
+        "truot": 0
+      },
+      "algorithm.sum_if": {
+        "doDuoc": 37,
+        "truot": 0
+      },
+      "algorithm.count_if": {
+        "doDuoc": 39,
+        "truot": 0
+      },
+      "algorithm.linear_search": {
+        "doDuoc": 38,
+        "truot": 0
+      },
+      "algorithm.binary_search": {
+        "doDuoc": 42,
+        "truot": 0
+      },
+      "algorithm.bubble_sort": {
+        "doDuoc": 36,
+        "truot": 0
+      },
+      "algorithm.insertion_sort": {
+        "doDuoc": 33,
+        "truot": 0
+      },
+      "logic.and_gate": {
+        "doDuoc": 13,
+        "truot": 0
+      },
+      "color.rgb_model": {
+        "doDuoc": 14,
+        "truot": 0
+      },
+      "binary.decimal_to_binary": {
+        "doDuoc": 21,
+        "truot": 0
+      },
+      "network.packet_routing": {
+        "doDuoc": 26,
+        "truot": 0
+      },
+      "network.protocol_encapsulation": {
+        "doDuoc": 28,
+        "truot": 0
+      },
+      "web.style_model": {
+        "doDuoc": 40,
+        "truot": 0
+      },
+      "generic.rule_scene": {
+        "doDuoc": 17,
+        "truot": 0
+      },
+      "algorithm.selection_sort": {
+        "doDuoc": 32,
+        "truot": 0
+      },
+      "algorithm.scan": {
+        "doDuoc": 27,
+        "truot": 0
+      },
+      "algorithm.bounded_control_flow": {
+        "doDuoc": 43,
+        "truot": 0
+      },
+      "binary.base_conversion": {
+        "doDuoc": 53,
+        "truot": 0
+      },
+      "binary.character_encoding": {
+        "doDuoc": 33,
+        "truot": 0
+      },
+      "logic.boolean_dag": {
+        "doDuoc": 48,
+        "truot": 0
+      },
+      "network.graph_traversal": {
+        "doDuoc": 36,
+        "truot": 0
+      },
+      "database.relational_table_query": {
+        "doDuoc": 42,
+        "truot": 0
+      },
+      "tree.traversal": {
+        "doDuoc": 49,
+        "truot": 0
+      }
+    },
+    "boQua": [],
+    "truot": [],
+    "soBeMat": 26,
+    "tongPhanTu": 884,
+    "verdict": "CERTIFIED"
+  },
+  "fault": {
+    "motion": {
+      "genPopSau": 5,
+      "batDuoc": true
+    },
+    "contrast": {
+      "truot": 3,
+      "nen": 0,
+      "batDuoc": true
+    },
+    "verdict": "GUARD_CHUNG_MINH_DUOC"
+  },
+  "provenance": {
+    "provenanceVersion": 2,
+    "sourceFingerprint": "b34054e2931f83a7",
+    "dirtyRelevantSources": [
+      "frontend/src/components/ArrayView.tsx",
+      "frontend/src/components/SamplePreview.tsx",
+      "frontend/src/simulations/domains/algorithm/program-module.tsx",
+      "frontend/src/simulations/domains/binary/ui.tsx",
+      "frontend/src/simulations/domains/database/table-module.tsx",
+      "frontend/src/simulations/domains/logic/dag-module.tsx",
+      "frontend/src/simulations/domains/tree/tree-module.tsx",
+      "frontend/src/styles/global.css",
+      "frontend/src/styles/tokens.css",
+      "frontend/src/styles/tokens.test.ts"
+    ],
+    "head": "3364aa2d8d514e5433d487d213395b081126d73e",
+    "dirty": true,
+    "generatedAt": "2026-08-24T18:47:26.384Z",
+    "tool": "certify-a11y-w13",
+    "toolVersion": "1",
+    "environment": {
+      "node": "v24.13.0",
+      "platform": "win32",
+      "viewport": 1440
+    }
+  },
+  "verdict": "CERTIFIED"
+}

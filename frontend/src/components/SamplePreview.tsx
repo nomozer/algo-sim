@@ -202,13 +202,13 @@ function SearchRange() {
         />
       ))}
       <path d="M 62 14 l -5 5 h 10 z" fill="var(--primary)" />
-      <text x={9} y={48} fontSize={8} fill="var(--ink-faint)">
+      <text x={9} y={48} fontSize={8} fill="var(--ink-quiet)">
         trái
       </text>
-      <text x={57} y={48} fontSize={8} fill="var(--primary)">
+      <text x={57} y={48} fontSize={8} fill="var(--primary-active)">
         giữa
       </text>
-      <text x={80} y={48} fontSize={8} fill="var(--ink-faint)">
+      <text x={80} y={48} fontSize={8} fill="var(--ink-quiet)">
         phải
       </text>
     </svg>
@@ -326,11 +326,11 @@ function BinaryBits() {
             textAnchor="middle"
             fontSize={11}
             fontWeight={700}
-            fill={b === "1" ? "#fff" : "var(--ink-faint)"}
+            fill={b === "1" ? "#fff" : "var(--ink-quiet)"}
           >
             {b}
           </text>
-          <text x={18 + i * 20} y={44} textAnchor="middle" fontSize={8} fill="var(--ink-faint)">
+          <text x={18 + i * 20} y={44} textAnchor="middle" fontSize={8} fill="var(--ink-quiet)">
             {weights[i]}
           </text>
         </g>

@@ -551,7 +551,7 @@ export function DagDiagram({
               textAnchor="middle"
               fontSize={LABEL_FONT}
               fontWeight={700}
-              fill={v === null ? "var(--ink-faint)" : v === 1 ? "var(--accent-green)" : "var(--ink-muted)"}
+              fill={v === null ? "var(--ink-quiet)" : v === 1 ? "var(--accent-green-deep)" : "var(--ink-muted)"}
               pointerEvents="none"
             >
               {v === null ? "?" : v}

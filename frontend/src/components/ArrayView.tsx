@@ -435,7 +435,7 @@ export function ArrayView({
               <text x={colW / 2} y={TOP_PAD + CHART_H / 2} textAnchor="middle"
                     fontSize={12} fill="var(--ink-muted)">trống</text>
               <text x={colW / 2} y={TOP_PAD + CHART_H + (labels ? 42 : 26)} textAnchor="middle"
-                    fontSize={11} fill="var(--ink-faint)">{i + 1}</text>
+                    fontSize={11} fill="var(--ink-quiet)">{i + 1}</text>
             </g>
           );
         }
@@ -487,7 +487,7 @@ export function ArrayView({
               textAnchor="middle"
               fontSize={14}
               fontWeight={600}
-              fill={dimmed ? "var(--ink-faint)" : "var(--ink)"}
+              fill={dimmed ? "var(--ink-quiet)" : "var(--ink)"}
               pointerEvents="none"
             >
               {fmt(v)}
@@ -505,7 +505,7 @@ export function ArrayView({
                 y={TOP_PAD + CHART_H + 26}
                 textAnchor="middle"
                 fontSize={12}
-                fill={dimmed ? "var(--ink-faint)" : "var(--ink-secondary)"}
+                fill={dimmed ? "var(--ink-quiet)" : "var(--ink-secondary)"}
               >
                 {labels[i]}
               </text>
@@ -522,7 +522,7 @@ export function ArrayView({
               y={TOP_PAD + CHART_H + (labels ? 42 : 26)}
               textAnchor="middle"
               fontSize={11}
-              fill="var(--ink-faint)"
+              fill="var(--ink-quiet)"
             >
               {i + 1}
             </text>

@@ -59,11 +59,11 @@ export function BinaryWorkspace({ state, dispatch }: Props) {
                   textAnchor="middle"
                   fontSize={24}
                   fontWeight={700}
-                  fill={bit === 1 ? "#fff" : "var(--ink-faint)"}
+                  fill={bit === 1 ? "#fff" : "var(--ink-quiet)"}
                 >
                   {bit}
                 </text>
-                <text x={x + CELL / 2} y={110} textAnchor="middle" fontSize={11} fill="var(--ink-faint)">
+                <text x={x + CELL / 2} y={110} textAnchor="middle" fontSize={11} fill="var(--ink-quiet)">
                   {bit === 1 ? `+${pv[i]}` : "0"}
                 </text>
               </g>

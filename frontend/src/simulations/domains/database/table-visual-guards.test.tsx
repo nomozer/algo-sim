@@ -182,6 +182,9 @@ describe("guard 10 — không dùng var() token không tồn tại", () => {
     const KNOWN = new Set([
       "--accent-orange", "--accent-green", "--surface", "--ink-muted",
       "--hairline", "--sp-md", "--sp-sm",
+      // W13-A11Y: chữ TRẮNG trên sắc gốc trượt AA (cam 3.77:1, xanh lá 2.94:1),
+      // nên huy hiệu trạng thái đổi sang bậc `-deep` (9.11 / 7.13).
+      "--accent-orange-deep", "--accent-green-deep",
     ]);
     const tokens = [...h.matchAll(/var\((--[a-z0-9-]+)/gi)].map((m) => m[1]);
     for (const t of tokens) expect(KNOWN.has(t), `token lạ: ${t}`).toBe(true);

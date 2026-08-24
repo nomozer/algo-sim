@@ -179,7 +179,7 @@ function LoopAxis({
       {/* BIÊN DỪNG — vạch + nhãn chữ, không chỉ bằng màu */}
       <line x1={boundX} y1={20} x2={boundX} y2={56} stroke="var(--accent-orange)" strokeWidth={2.5} />
       <text x={boundX} y={16} textAnchor="middle" fontSize={11} fontWeight={700}
-            fill="var(--accent-orange)">biên {shape.bound}</text>
+            fill="var(--accent-orange-deep)">biên {shape.bound}</text>
 
       {marks.map((v) => {
         const isCurrent = current === v;
@@ -214,7 +214,7 @@ function LoopAxis({
       </defs>
       {exited && (
         <text x={W - PAD} y={88} textAnchor="end" fontSize={12} fontWeight={600}
-              fill="var(--accent-green)">đã thoát vòng lặp</text>
+              fill="var(--accent-green-deep)">đã thoát vòng lặp</text>
       )}
     </svg>
   );

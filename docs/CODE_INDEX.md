@@ -918,6 +918,46 @@ tên file (miễn theo file thì bản vá HTML sau đó cũng lọt).
 — thuộc tính bố cục HTML nhưng chính nó LÀ state mô phỏng đang dạy. Ngoại lệ khai
 theo BỘ CHỌN kèm lý do ≥80 ký tự nói vì sao không đẩy chỗ nhìn.
 
+### `frontend/src/styles/tokens.test.ts` (M9-UX5 → W13-A11Y) · offline
+Sở hữu NGỮ NGHĨA TOKEN CSS, không chỉ sự tồn tại của tên. Bốn nhóm: `var()` phải
+trỏ token có thật (quét cả `.css` LẪN `.tsx` — token ma trong SVG làm stroke
+thành `none`) · bóng đổ phải đến từ token (`DESIGN.md §Elevation`) · nền thanh
+bên thuộc VỎ không thuộc phần tử dính · và từ W13-A11Y thêm hai trục:
+**giảm chuyển động** + **tương phản chữ**.
+⚠️ Giảm chuyển động khoá **bộ chọn phổ quát**, không khoá từng lớp: khoá từng
+lớp là khoá lần đã xảy ra, còn `transition` viết thêm sau này (kể cả của miền
+hình học không gian chưa viết) tự động nằm ngoài tầm. Đường thoát duy nhất còn
+lại — `animation`/`transition` mang `!important` đặt NGOÀI khối reduce — bị cấm
+riêng. `.composer-spin` là NGOẠI LỆ CÓ CHỦ ĐÍCH (quay chậm 2.4s, không tắt): nó
+là chỉ báo duy nhất cho "AI đang phân tích", không kèm chữ, `aria-label` không
+đổi khi chạy — tắt nó là lấy mất THÔNG TIN nhân danh khả năng tiếp cận. Guard
+khoá cả ngoại lệ để không ai "dọn cho gọn".
+⚠️ Tương phản chỉ chấm token THẬT SỰ đứng sau `color:`, và `color:` phải khớp ở
+BIÊN KHAI BÁO — bản nháp dùng `/color:\s*var\(/` nên khớp luôn `border-color:`,
+làm `--hairline` (1.25:1) hiện ra như "màu chữ" trong khi nó chưa bao giờ là chữ.
+Chấm phẳng cả bảng màu sinh 10 phát hiện giả rồi chôn 4 phát hiện thật.
+`NO_TUONG_PHAN` **chỉ được ngắn đi** — thêm token trượt mới ĐỎ, trả nợ mà quên
+xoá dòng cũng ĐỎ. Còn lại `--accent-orange`/`--accent-green` (bề mặt MODULE,
+lượt đo Chrome W13 chưa chạm tới) và `--primary@--canvas-soft` (luật vẫn đúng
+cho chữ primary đặt MỚI lên thẻ xám).
+⚠️ TÁCH VAI, không phải đổi màu — `--ink-faint` từng gánh HAI vai: chữ phụ 37
+chỗ VÀ đường kẻ/cạnh đồ thị/viền chấm "chưa xét" 5 chỗ. Không sửa được giá trị
+vì hai vai đòi hai hướng ngược nhau: chữ cần tối đi, mà tối đi thì chấm "nhàn
+rỗi" trông như đang hoạt động — đổi NGHĨA sân khấu để chữa lỗi của CHỮ. Đã tách:
+chữ sang `--ink-quiet` (#74706c = màu SÁNG NHẤT còn đạt AA trên CẢ HAI nền,
+4.91/4.51 — sáng nhất là có chủ đích, xáo trộn "giấy trắng yên tĩnh" ít nhất),
+`--ink-faint` giữ nguyên cho nét vẽ. Sự tách vai đó VÔ HÌNH trong mã nên có test
+riêng (`token dành cho ĐƯỜNG KẺ không được dùng làm màu chữ`) — thiếu nó thì bản
+vá sau viết lại `color: var(--ink-faint)` và mọi test vẫn xanh.
+⚠️ `--ink-quiet` là `#716d69`, KHÔNG phải `#74706c` như bản đầu: bản đầu chỉ
+tính với hai nền tôi GIẢ ĐỊNH (`--canvas`, `--canvas-soft`), còn lượt quét 26 bề
+mặt tìm ra nền thứ ba có thật — `.pseudo-no` trên dải `#e8f2fd` — nơi `#74706c`
+chỉ được 4.34:1. Tập nền phải đến từ PHÉP ĐO, không từ trí nhớ về bảng token.
+`--accent-green-deep` (#0f6622) là mắt xích còn thiếu của khuôn `-deep` đã có
+sẵn (`--accent-orange-deep`, `--accent-purple-deep`), không phải màu mới.
+Chứng nhận trình duyệt: `scripts/certify-a11y-w13.mjs` — 26 bề mặt, 884 phần tử
+có chữ, **0 cặp trượt** (lượt đầu: 11).
+
 ### `frontend/src/evidence-provenance.test.ts` (M20 W8 closure) · offline
 Khoá hợp đồng xuất xứ v2 và chứng minh vòng TỰ THAM CHIẾU đã bị phá.
 ⚠️ Có một test tồn tại vì lỗi thật: `sourceFingerprint` bản đầu chạy `git
@@ -995,6 +1035,34 @@ nhận (`audit-composition.mjs`, `certify-visual-weight-w12.mjs`).
 `network/ui.tsx::LinkHandle` và `logic/dag-module.tsx` là nguồn gốc của khuôn và
 KHÔNG bị viết lại (đổi mã đã chứng nhận để cho đối xứng = đánh đổi rủi ro hồi
 quy lấy cái đẹp). Khoá bởi `scripts/certify-a11y-w12.mjs`.
+
+### `frontend/scripts/certify-a11y-w13.mjs` (M20 W13) · cần Chrome
+Giảm chuyển động + tương phản, đo bằng GIÁ TRỊ TÍNH TOÁN sau khi mọi tầng CSS đã
+phân giải. Không lặp phép đo của `styles/tokens.test.ts` — vitest dừng ở "luật CÓ
+được viết ra", script này đo "trình duyệt CÓ làm theo". Bật/tắt giả lập qua CDP
+`Emulation.setEmulatedMedia` (đúng thứ hệ điều hành gửi), đo trước/sau.
+⚠️ Tương phản chấm theo CẶP THẬT, không theo bảng màu: leo cây tổ tiên tìm nền
+ĐỤC đầu tiên, vì nền thật là kết quả của DOM (thẻ lồng thẻ, nền trong suốt xuyên
+xuống) — guard tĩnh chỉ GIẢ ĐỊNH được `--canvas`/`--canvas-soft`. Ngưỡng theo cỡ
+chữ đúng WCAG 1.4.3 (≥24px, hoặc ≥18.66px và đậm → 3:1; còn lại 4.5:1); chấm mọi
+thứ bằng 4.5 là tự sinh phát hiện giả trên tiêu đề.
+⚠️ QUÉT TOÀN DANH MỤC, không chọn tay bề mặt — 26 bề mặt (home · library · mọi
+target `offlineCatalog()`), 884 phần tử có chữ. Bản đầu đo ba bề mặt rồi báo
+CERTIFIED trong khi **8 lỗi nữa đang tồn tại** ở những target nó không đi qua
+(`.frontier-tag`, `.loop-cond-verdict`, nhãn SVG program-module, huy hiệu bảng):
+đúng anti-pattern #13 — guard đặt ở chỗ phụ thuộc route nào tình cờ được ghé.
+Một target không nạp được ⇒ `boQua`, và `boQua` khác rỗng thì verdict là RED,
+KHÔNG phải "sạch".
+⚠️ CHỮ SVG lấy màu từ `fill` chứ không phải `color`, và nền của nó là hình ANH
+EM chứ không phải tổ tiên — nên nền dò bằng `elementsFromPoint` tại tâm chữ.
+Hai bẫy đã cắn trong lúc dựng: (1) leo cây DOM cho chữ SVG đẻ ra "trắng trên
+trắng 1:1"; (2) `elementsFromPoint` trả về CẢ TỔ TIÊN, mà `g`/`svg` có `fill`
+mặc định đen ⇒ 8 "nền đen" giả. Nay bỏ tổ tiên và chỉ nhận
+rect/circle/ellipse/polygon/path. Phát hiện giả sinh từ chính công cụ đo là
+loại nguy hiểm nhất: nó trông y hệt phát hiện thật.
+Mục FAULT tự bơm một khối CSS đặt SAU mọi stylesheet — đúng hình dạng lỗi mà
+guard tĩnh không thấy: `global.css` vẫn đúng nguyên vẹn, chỉ tầng phân giải cuối
+bị luật khác thắng. Artifact: `docs/evaluation/m20/w13-a11y.json`.
 
 ### `frontend/scripts/certify-a11y-w12.mjs` (M20 W12) · cần Chrome
 Khả năng tiếp cận đo bằng PHÍM THẬT qua CDP `Input.dispatchKeyEvent` — sự kiện
