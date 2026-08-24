@@ -1046,9 +1046,17 @@ phân giải. Không lặp phép đo của `styles/tokens.test.ts` — vitest d�
 xuống) — guard tĩnh chỉ GIẢ ĐỊNH được `--canvas`/`--canvas-soft`. Ngưỡng theo cỡ
 chữ đúng WCAG 1.4.3 (≥24px, hoặc ≥18.66px và đậm → 3:1; còn lại 4.5:1); chấm mọi
 thứ bằng 4.5 là tự sinh phát hiện giả trên tiêu đề.
-⚠️ QUÉT TOÀN DANH MỤC, không chọn tay bề mặt — 26 bề mặt (home · library · mọi
-target `offlineCatalog()`), 884 phần tử có chữ. Bản đầu đo ba bề mặt rồi báo
-CERTIFIED trong khi **8 lỗi nữa đang tồn tại** ở những target nó không đi qua
+⚠️ QUÉT TOÀN DANH MỤC **VÀ ĐI QUA CÁC BƯỚC** — 26 bề mặt (home · library · mọi
+target `offlineCatalog()`) × tới 6 bước, 104 bước, 5431 phần tử có chữ. Phạm vi
+này lớn dần theo ba lần bị lừa, mỗi lần đều báo CERTIFIED trước khi bị mở rộng:
+ba bề mặt bỏ sót 8 lỗi · một-khung-mỗi-target bỏ sót 5 lỗi nữa, vì
+`.frontier-tag.is-done`, `.loop-cond-verdict`, `.hold-label`, `.loop-back.is-active`
+và nhãn nút mạng **chỉ tồn tại ở TRẠNG THÁI** chứ không ở khung đầu. Bước tới
+bằng `nextStep()` (đúng hàm học sinh bấm) và nhận biết hết bước bằng cách so
+TRẠNG THÁI ENGINE trước/sau — không đoán tên trường con trỏ, vì con trỏ nằm
+trong state của module chứ không ở store.
+Bản đầu đo ba bề mặt rồi báo CERTIFIED trong khi **8 lỗi nữa đang tồn tại** ở
+những target nó không đi qua
 (`.frontier-tag`, `.loop-cond-verdict`, nhãn SVG program-module, huy hiệu bảng):
 đúng anti-pattern #13 — guard đặt ở chỗ phụ thuộc route nào tình cờ được ghé.
 Một target không nạp được ⇒ `boQua`, và `boQua` khác rỗng thì verdict là RED,

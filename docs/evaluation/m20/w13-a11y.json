@@ -29,113 +29,139 @@
     "beMat": {
       "home": {
         "doDuoc": 21,
-        "truot": 0
+        "truot": 0,
+        "daBuoc": 0
       },
       "library": {
         "doDuoc": 21,
-        "truot": 0
+        "truot": 0,
+        "daBuoc": 0
       },
       "algorithm.find_max": {
-        "doDuoc": 49,
-        "truot": 0
+        "doDuoc": 366,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.find_min": {
-        "doDuoc": 46,
-        "truot": 0
+        "doDuoc": 344,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.sum_if": {
-        "doDuoc": 37,
-        "truot": 0
+        "doDuoc": 281,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.count_if": {
-        "doDuoc": 39,
-        "truot": 0
+        "doDuoc": 295,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.linear_search": {
-        "doDuoc": 38,
-        "truot": 0
+        "doDuoc": 326,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.binary_search": {
-        "doDuoc": 42,
-        "truot": 0
+        "doDuoc": 310,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.bubble_sort": {
-        "doDuoc": 36,
-        "truot": 0
+        "doDuoc": 282,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.insertion_sort": {
-        "doDuoc": 33,
-        "truot": 0
+        "doDuoc": 262,
+        "truot": 0,
+        "daBuoc": 6
       },
       "logic.and_gate": {
         "doDuoc": 13,
-        "truot": 0
+        "truot": 0,
+        "daBuoc": 0
       },
       "color.rgb_model": {
         "doDuoc": 14,
-        "truot": 0
+        "truot": 0,
+        "daBuoc": 0
       },
       "binary.decimal_to_binary": {
         "doDuoc": 21,
-        "truot": 0
+        "truot": 0,
+        "daBuoc": 0
       },
       "network.packet_routing": {
-        "doDuoc": 26,
-        "truot": 0
+        "doDuoc": 104,
+        "truot": 0,
+        "daBuoc": 3
       },
       "network.protocol_encapsulation": {
-        "doDuoc": 28,
-        "truot": 0
+        "doDuoc": 211,
+        "truot": 0,
+        "daBuoc": 6
       },
       "web.style_model": {
         "doDuoc": 40,
-        "truot": 0
+        "truot": 0,
+        "daBuoc": 0
       },
       "generic.rule_scene": {
         "doDuoc": 17,
-        "truot": 0
+        "truot": 0,
+        "daBuoc": 0
       },
       "algorithm.selection_sort": {
-        "doDuoc": 32,
-        "truot": 0
+        "doDuoc": 247,
+        "truot": 0,
+        "daBuoc": 6
       },
       "algorithm.scan": {
-        "doDuoc": 27,
-        "truot": 0
+        "doDuoc": 108,
+        "truot": 0,
+        "daBuoc": 3
       },
       "algorithm.bounded_control_flow": {
-        "doDuoc": 43,
-        "truot": 0
+        "doDuoc": 301,
+        "truot": 0,
+        "daBuoc": 6
       },
       "binary.base_conversion": {
-        "doDuoc": 53,
-        "truot": 0
+        "doDuoc": 265,
+        "truot": 0,
+        "daBuoc": 4
       },
       "binary.character_encoding": {
-        "doDuoc": 33,
-        "truot": 0
+        "doDuoc": 406,
+        "truot": 0,
+        "daBuoc": 6
       },
       "logic.boolean_dag": {
-        "doDuoc": 48,
-        "truot": 0
+        "doDuoc": 240,
+        "truot": 0,
+        "daBuoc": 4
       },
       "network.graph_traversal": {
-        "doDuoc": 36,
-        "truot": 0
+        "doDuoc": 283,
+        "truot": 0,
+        "daBuoc": 6
       },
       "database.relational_table_query": {
-        "doDuoc": 42,
-        "truot": 0
+        "doDuoc": 299,
+        "truot": 0,
+        "daBuoc": 6
       },
       "tree.traversal": {
-        "doDuoc": 49,
-        "truot": 0
+        "doDuoc": 354,
+        "truot": 0,
+        "daBuoc": 6
       }
     },
     "boQua": [],
     "truot": [],
     "soBeMat": 26,
-    "tongPhanTu": 884,
+    "tongPhanTu": 5431,
     "verdict": "CERTIFIED"
   },
   "fault": {
@@ -152,13 +178,13 @@
   },
   "provenance": {
     "provenanceVersion": 2,
-    "sourceFingerprint": "bb4c970aba2e881a",
+    "sourceFingerprint": "b9ac7ae7e3384b32",
     "dirtyRelevantSources": [
       "backend/tests/geometry/test_phase5_harness.py"
     ],
-    "head": "4dff2437d8e969b27965db5e59267d0cbfd5cbe8",
+    "head": "6e8042117e0f35106b73b0138c920f14475670bb",
     "dirty": true,
-    "generatedAt": "2026-08-24T18:55:49.948Z",
+    "generatedAt": "2026-08-24T19:10:40.075Z",
     "tool": "certify-a11y-w13",
     "toolVersion": "1",
     "environment": {

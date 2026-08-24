@@ -484,7 +484,11 @@ export function TraverseWorkspace({ state, config, busy, dispatch }: Props) {
                   textAnchor="middle"
                   fontSize={13}
                   fontWeight="600"
-                  fill={isCur || isVisited || inFrontier ? "var(--on-primary)" : "var(--ink)"}
+                  // W13-A11Y — cùng lý do với tree-module: chữ TRẮNG trên cam
+                  // (3.77:1) và trên xanh lá (2.94:1) đều trượt AA. Đổi màu NÚT
+                  // thì phá hợp đồng chú giải, nên nhãn luôn là mực đậm —
+                  // 5.57:1 trên cam, 7.15:1 trên xanh lá.
+                  fill="var(--ink)"
                 >
                   {long ? n.id : (n.label ?? n.id)}
                 </text>

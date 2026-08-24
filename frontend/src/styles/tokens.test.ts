@@ -366,14 +366,15 @@ describe("(W13-A11Y) tương phản chữ — WCAG AA 4.5:1", () => {
    */
   const NO_TUONG_PHAN: Record<string, number> = {
     /* PHÂN CÔNG GIỮA HAI PHÉP ĐO — đây là lý do cả hai cùng tồn tại.
-       Lượt Chrome W13 quét **26 bề mặt / 884 phần tử có chữ** và thấy 0 cặp
-       trượt: mọi chỗ accent tô chữ mà THỰC SỰ hiện ra đã chuyển sang bậc
-       `-deep` (`.frontier-tag`, `.loop-cond-verdict`, nhãn SVG program-module,
-       huy hiệu bảng). Nhưng còn **7 chỗ `--accent-orange` và 4 chỗ
-       `--accent-green`** vẫn đứng sau `color:` mà lượt quét không render tới
-       (trạng thái bước cụ thể chưa chạm). Trình duyệt nói được cái ĐÃ CHỨNG
-       MINH; dòng nợ này giữ cái CÒN CÓ THỂ XẢY RA — một đoạn chữ accent mới
-       đặt lên nền sáng sẽ trượt lại. Xoá chúng chỉ khi số dùng về 0. */
+       Lượt Chrome W13 quét **26 bề mặt · 104 bước · 5431 phần tử có chữ** và
+       thấy 0 cặp trượt: mọi chỗ accent tô chữ mà THỰC SỰ hiện ra đã chuyển
+       sang bậc `-deep`. Bước qua timeline là thứ tìm ra 5 lỗi cuối
+       (`.hold-label`, `.loop-back.is-active`, `.acc-arrow`, nhãn nút mạng) —
+       chúng chỉ tồn tại ở TRẠNG THÁI, đo mỗi target một khung thì vô hình.
+       Nhưng vẫn còn **5 chỗ `--accent-orange` và 4 chỗ `--accent-green`** đứng
+       sau `color:` mà 104 bước đó chưa render tới. Trình duyệt nói được cái ĐÃ
+       CHỨNG MINH; dòng nợ này giữ cái CÒN CÓ THỂ XẢY RA — một đoạn chữ accent
+       mới đặt lên nền sáng sẽ trượt lại. Xoá chúng chỉ khi số dùng về 0. */
     "--accent-orange@--canvas": 3.77,
     "--accent-orange@--canvas-soft": 3.46,
     "--accent-green@--canvas": 2.93,

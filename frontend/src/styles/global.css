@@ -1852,7 +1852,8 @@ html {
 .loop-back.is-active {
   border-style: solid;
   border-color: var(--accent-orange);
-  color: var(--accent-orange);
+  /* W13-A11Y: viền giữ sắc gốc (đồ hoạ, ngưỡng 3:1), CHỮ dùng bậc đậm. */
+  color: var(--accent-orange-deep);
   font-weight: 600;
 }
 
@@ -1882,7 +1883,8 @@ html {
   font-weight: 700;
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: var(--accent-orange);
+  /* W13-A11Y: 11px đậm cần 4.5:1, sắc cam gốc chỉ được 3.77:1. */
+  color: var(--accent-orange-deep);
 }
 
 .hold-value {
@@ -3516,7 +3518,9 @@ html {
 }
 
 .acc-badge .acc-arrow {
-  color: var(--primary);
+  /* W13-A11Y: huy hiệu nằm trên thẻ `--canvas-soft`, ở đó `--primary` chỉ được
+     4.19:1. `--primary-active` là bậc đậm cùng sắc, 6.25:1. */
+  color: var(--primary-active);
 }
 
 /* W4B-2V — nhãn trách nhiệm của công tắc cách xem. Nó lùi công tắc về vai PHỤ:

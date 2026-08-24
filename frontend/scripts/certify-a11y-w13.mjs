@@ -262,6 +262,7 @@ const BE_MAT = [
   { ten: "library", vao: async () => { await s.clickText("Thư viện"); await sleep(900); } },
   ...simIds.map((id) => ({
     ten: id,
+    coTimeline: true,
     vao: async () => {
       await s.resetBetweenScenarios();
       await sleep(250);
@@ -271,6 +272,26 @@ const BE_MAT = [
     },
   })),
 ];
+
+/**
+ * ĐI QUA CÁC BƯỚC, KHÔNG CHỈ ĐO KHUNG ĐẦU.
+ *
+ * Đo mỗi target đúng một bước vẫn để lọt cả một hạng: màu chỉ xuất hiện ở
+ * TRẠNG THÁI (`.frontier-tag.is-done` chỉ có sau khi thăm xong một đỉnh,
+ * `.loop-cond-verdict` chỉ hiện khi vòng lặp đã phán ĐÚNG/SAI, nhãn "đã thoát
+ * vòng lặp" chỉ hiện ở bước cuối). Bước tới bằng đúng hàm học sinh bấm, và
+ * nhận biết đã hết bằng cách so TRẠNG THÁI ENGINE trước/sau — không đoán tên
+ * trường con trỏ, vì con trỏ nằm trong state của module chứ không ở store.
+ */
+const MAX_BUOC = 6;
+async function buocToi() {
+  return s.eval(`(async()=>{var st=await import(${JSON.stringify(s.mods.store)});
+    var g=st.useAppStore.getState;
+    var truoc=JSON.stringify(g().active && g().active.state);
+    g().nextStep();
+    var sau=JSON.stringify(g().active && g().active.state);
+    return truoc===sau ? 'het' : 'da buoc';})()`);
+}
 
 ket.contrast.beMat = {};
 ket.contrast.boQua = [];
@@ -283,18 +304,29 @@ for (const bm of BE_MAT) {
     ket.contrast.boQua.push({ beMat: bm.ten, vi: String(err).slice(0, 120) });
     continue;
   }
-  const rows = JSON.parse(await s.eval(DO_TUONG_PHAN));
-  const truot = rows.filter((r) => !r.dat);
-  ket.contrast.beMat[bm.ten] = { doDuoc: rows.length, truot: truot.length };
-  for (const r of truot) {
-    const key = r.mau + " trên " + r.nen + " @" + r.sel;
-    if (!truotGop.has(key)) truotGop.set(key, { ...r, beMat: [bm.ten], soLan: 1 });
-    else {
-      const g = truotGop.get(key);
-      g.soLan += 1;
-      if (!g.beMat.includes(bm.ten)) g.beMat.push(bm.ten);
+  let tongDo = 0;
+  let tongTruot = 0;
+  let daBuoc = 0;
+  for (let b = 0; b <= (bm.coTimeline ? MAX_BUOC : 0); b++) {
+    if (b > 0) {
+      if ((await buocToi()) !== "da buoc") break;
+      daBuoc += 1;
+      await sleep(160);
+    }
+    const rows = JSON.parse(await s.eval(DO_TUONG_PHAN));
+    tongDo += rows.length;
+    for (const r of rows.filter((x) => !x.dat)) {
+      tongTruot += 1;
+      const key = r.mau + " trên " + r.nen + " @" + r.sel;
+      if (!truotGop.has(key)) truotGop.set(key, { ...r, beMat: [bm.ten], soLan: 1, buoc: b });
+      else {
+        const g = truotGop.get(key);
+        g.soLan += 1;
+        if (!g.beMat.includes(bm.ten)) g.beMat.push(bm.ten);
+      }
     }
   }
+  ket.contrast.beMat[bm.ten] = { doDuoc: tongDo, truot: tongTruot, daBuoc };
 }
 ket.contrast.truot = [...truotGop.values()].sort((a, b) => a.ti - b.ti);
 ket.contrast.soBeMat = Object.keys(ket.contrast.beMat).length;
@@ -364,8 +396,10 @@ for (const [k, v] of Object.entries(ket.motion.probe)) {
 console.log(`  ${(ket.motion.TRANSITION_BI_TRIET_TIEU ? "✔" : "✘")} transition thật: ` +
   `${ket.motion.transitionThat.doDuoc} phần tử đo được, ${ket.motion.transitionThat.conChay.length} còn chạy`);
 console.log("\n── TƯƠNG PHẢN (cặp chữ/nền THẬT, quét toàn danh mục) ─");
-console.log(`  ${ket.contrast.soBeMat} bề mặt · ${ket.contrast.tongPhanTu} phần tử có chữ ` +
-  `· ${ket.contrast.truot.length} cặp trượt · ${ket.contrast.boQua.length} bề mặt bỏ qua`);
+const tongBuoc = Object.values(ket.contrast.beMat).reduce((a, b) => a + (b.daBuoc ?? 0), 0);
+console.log(`  ${ket.contrast.soBeMat} bề mặt · ${tongBuoc} bước đã đi qua · ` +
+  `${ket.contrast.tongPhanTu} phần tử có chữ · ${ket.contrast.truot.length} cặp trượt · ` +
+  `${ket.contrast.boQua.length} bề mặt bỏ qua`);
 for (const b of ket.contrast.boQua) console.log(`    ⚠ chưa đo được: ${b.beMat} — ${b.vi}`);
 for (const r of ket.contrast.truot.slice(0, 16)) {
   console.log(`    ✘ ${String(r.ti).padStart(5)}:1 (cần ${r.can}) ${r.svg ? "[SVG] " : ""}${r.sel}` +
