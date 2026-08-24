@@ -152,22 +152,13 @@
   },
   "provenance": {
     "provenanceVersion": 2,
-    "sourceFingerprint": "b34054e2931f83a7",
+    "sourceFingerprint": "bb4c970aba2e881a",
     "dirtyRelevantSources": [
-      "frontend/src/components/ArrayView.tsx",
-      "frontend/src/components/SamplePreview.tsx",
-      "frontend/src/simulations/domains/algorithm/program-module.tsx",
-      "frontend/src/simulations/domains/binary/ui.tsx",
-      "frontend/src/simulations/domains/database/table-module.tsx",
-      "frontend/src/simulations/domains/logic/dag-module.tsx",
-      "frontend/src/simulations/domains/tree/tree-module.tsx",
-      "frontend/src/styles/global.css",
-      "frontend/src/styles/tokens.css",
-      "frontend/src/styles/tokens.test.ts"
+      "backend/tests/geometry/test_phase5_harness.py"
     ],
-    "head": "3364aa2d8d514e5433d487d213395b081126d73e",
+    "head": "4dff2437d8e969b27965db5e59267d0cbfd5cbe8",
     "dirty": true,
-    "generatedAt": "2026-08-24T18:47:26.384Z",
+    "generatedAt": "2026-08-24T18:55:49.948Z",
     "tool": "certify-a11y-w13",
     "toolVersion": "1",
     "environment": {
