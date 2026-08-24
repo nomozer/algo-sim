@@ -2816,6 +2816,24 @@ STRONG-assurance nội bộ, không phải "đúng"** (oracle độc lập báo 
 · **N=40 khoá**, chạy thiếu thì `evaluation_complete: false` và A/B không được
 công bố như kết quả chính.
 
+**`--dataset dev` (2026-08-24) — đường đo KHÔNG cần seed của GVHD.** 20 case ở
+`dev/cases.json`, tập tự khai *"DEV **được nhìn**; SEALED thì không"*. Chạy nó
+**không đốt** pool 49 bài held-out và **không cần** seed, nên nó là cách duy
+nhất biết A/B của hệ hiện tại trước lượt #2. Ba khác biệt so với đường sealed,
+đều cố ý: bỏ `_kiem_seal()` (DEV không có con dấu — giả vờ có là nói dối xuất
+xứ) · **vẫn** `_kiem_candidate()` (chạy trên cây đã trôi thì số không gắn với
+bản nào) · trần riêng `TRAN_LOGIC_DEV`/`TRAN_HTTP_DEV` = 260/310, **dẫn từ cùng
+call graph** với N=20 nên đổi một trần không kéo trần kia theo.
+
+⚠️ **Số của DEV không bao giờ là số của luận văn**: hệ đã được chỉnh trên chính
+20 case này. Nó trả lời đúng một câu — *bốn biên chuẩn hoá + vòng sửa có làm
+phễu thông hơn không*. Oracle sẽ **UNGRADED toàn bộ**: ground truth của DEV còn
+ở định dạng cũ (khoá theo TÊN BIẾN), không phải hợp đồng nghĩa-vụ + giá-trị mà
+`_cham` đòi — và **không được tự chuyển đổi**, viết lại ground truth là việc của
+custodian. Báo cáo tự đeo `dataset` + `canh_bao_dataset`; đầu ra mặc định vào
+`dev-results/`, và có **chặn cứng** không cho DEV ghi vào `results/`. Khoá bởi
+ba test mới ở `test_sealed_runner.py` §7.
+
 **ĐÃ CHẠY 2026-08-23 — lượt duy nhất, không được gọi lại.** Artifact ở
 `docs/evaluation/semantic-benchmark/results/`:
 

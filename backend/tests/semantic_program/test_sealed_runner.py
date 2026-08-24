@@ -672,3 +672,44 @@ def test_tran_HTTP_rong_hon_tran_logic_de_chiu_transient(rn):
     assert rn.TRAN_HTTP > rn.TRAN_LOGIC
     headroom = (rn.TRAN_HTTP - rn.TRAN_LOGIC) / rn.TRAN_LOGIC
     assert 0.10 <= headroom <= 0.30, f"headroom {headroom:.0%} ngoài khoảng đã chốt"
+
+
+# ── 7. chế độ DEV (2026-08-24) — tiện lợi KHÔNG được lây sang đường SEALED ──
+class _NganSachGia:
+    logical_calls = 0
+    http_requests = 0
+    retry_requests = 0
+
+
+def test_dev_va_sealed_co_NGAN_SACH_TACH_HAN(rn):
+    """Trần DEV dẫn từ CÙNG call graph với N=20, không phải con số chọn tay.
+
+    Tách hằng số để một lượt DEV **không tiêu được** vào ngân sách đã chốt cho
+    lượt đo chính thức — và để đổi một trần không lặng lẽ kéo trần kia theo.
+    """
+    assert rn.TRAN_LOGIC_DEV == rn.LUOT_TOI_DA_MOI_CASE * 20 == 260
+    assert rn.TRAN_LOGIC == rn.LUOT_TOI_DA_MOI_CASE * 40 == 520
+    assert rn.TRAN_HTTP_DEV < rn.TRAN_HTTP
+
+
+def test_bao_cao_DEV_luon_TU_KHAI_la_dev(rn):
+    """Artifact DEV lọt ra ngoài mà không tự khai thì đọc y hệt một kết quả
+    held-out — và đó là cách một con số đường-hạnh-phúc đi vào luận văn."""
+    bao = rn._tong_ket([], 20, {"commit_ngan": "x", "cache_version": "37"},
+                       "KHONG_CO_CON_DAU__DEV", _NganSachGia(), None,
+                       dataset="dev", tran_logic=rn.TRAN_LOGIC_DEV,
+                       tran_http=rn.TRAN_HTTP_DEV)
+    assert bao["dataset"] == "dev"
+    assert bao["canh_bao_dataset"]
+    assert "KHÔNG được viết vào luận văn" in bao["canh_bao_dataset"]
+    assert bao["ngan_sach"]["tran_logic"] == rn.TRAN_LOGIC_DEV
+
+
+def test_bao_cao_SEALED_khong_deo_canh_bao(rn):
+    """Cảnh báo phải VẮNG ở đường sealed. Cảnh báo dán khắp nơi là cảnh báo
+    không ai đọc."""
+    bao = rn._tong_ket([], 40, {"commit_ngan": "x", "cache_version": "37"},
+                       "van_tay_that", _NganSachGia(), None)
+    assert bao["dataset"] == "sealed"
+    assert bao["canh_bao_dataset"] is None
+    assert bao["ngan_sach"]["tran_logic"] == rn.TRAN_LOGIC

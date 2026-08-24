@@ -53,6 +53,16 @@ BENCH = ROOT / "docs" / "evaluation" / "semantic-benchmark"
 SEALED = BENCH / "sealed" / "cases.json"
 FINGERPRINT = BENCH / "sealed" / "FINGERPRINT.txt"
 
+#: Tập DEV — 20 case, **được nhìn** (`dev/cases.json` tự khai: *"DEV được nhìn;
+#: SEALED thì không"*). Chạy trên nó KHÔNG đốt tập held-out và KHÔNG cần seed
+#: của GVHD, nên nó là cách duy nhất biết A/B của hệ hiện tại trước lượt #2.
+#:
+#: ⚠️ Số của DEV **không bao giờ** là số của luận văn: hệ đã được chỉnh trên
+#: chính 20 case này (`dev/cases.json` → *"dùng để chỉnh IR/schema/prompt"*),
+#: nên nó đo *đường hạnh phúc*, không đo năng lực tổng quát. Nó trả lời đúng
+#: một câu: **bốn biên chuẩn hoá + vòng sửa có làm phễu thông hơn không.**
+DEV = BENCH / "dev" / "cases.json"
+
 sys.path.insert(0, str(BACKEND))
 
 #: NGÂN SÁCH CUỐI CÙNG, chốt 2026-08-22 TRƯỚC khi custodian niêm phong và
@@ -78,6 +88,13 @@ TRAN_LOGIC = 520
 #:
 #: LƯỢT #2: 520 → 620 (= 520 × 1,19, giữ nguyên tỉ lệ headroom cũ).
 TRAN_HTTP = 620
+
+#: Trần của tập DEV — DẪN từ cùng call graph, N=20 thay vì 40, không phải một
+#: con số chọn tay: 13 × 20 = 260, và headroom HTTP giữ đúng tỉ lệ 1,19 của
+#: SEALED. Tách hằng số riêng để một lượt DEV **không bao giờ** tiêu được vào
+#: ngân sách đã chốt cho lượt đo chính thức.
+TRAN_LOGIC_DEV = 260
+TRAN_HTTP_DEV = 310
 
 #: Đường HẠNH PHÚC: analyze + classify + semantic_analyze + semantic_program.
 #: Dưới ngần này thì một case chắc chắn không chạy trọn.
@@ -351,7 +368,8 @@ _NHOM_KHONG_PHAT = {
 
 
 def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str,
-              budget, dung_som: str | None) -> dict:
+              budget, dung_som: str | None, dataset: str = "sealed",
+              tran_logic: int = TRAN_LOGIC, tran_http: int = TRAN_HTTP) -> dict:
     n = len(ket_qua)
     thuc_thi = [r for r in ket_qua if (r["semantic"] or {}).get("executable")]
     phat = [r for r in ket_qua if (r["semantic"] or {}).get("servable")]
@@ -417,9 +435,20 @@ def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str
         "cache_version": candidate.get("cache_version"),
         "sealed_fingerprint": van_tay,
         "dung_som": dung_som,
+        "dataset": dataset,
+        # Cờ này phải ĐI CÙNG mọi con số. Một artifact DEV lọt vào tay người đọc
+        # mà không tự khai là DEV thì nó đọc y hệt một kết quả held-out.
+        "canh_bao_dataset": (
+            None if dataset == "sealed" else
+            "DEV — tập ĐÃ ĐƯỢC NHÌN và hệ đã được chỉnh trên chính nó. "
+            "Số ở đây đo ĐƯỜNG HẠNH PHÚC, KHÔNG phải năng lực tổng quát, và "
+            "KHÔNG được viết vào luận văn như A/B chính thức. Oracle sẽ là "
+            "UNGRADED vì ground truth của DEV còn ở định dạng cũ (khoá theo tên "
+            "biến), không phải hợp đồng nghĩa-vụ + giá-trị mà `_cham` đòi."
+        ),
         "ngan_sach": {
-            "tran_logic": TRAN_LOGIC,
-            "tran_http": TRAN_HTTP,
+            "tran_logic": tran_logic,
+            "tran_http": tran_http,
             "logic_da_dung": getattr(budget, "logical_calls", None),
             "http_da_dung": getattr(budget, "http_requests", None),
             "retry": getattr(budget, "retry_requests", None),
@@ -602,11 +631,24 @@ async def _main_async(args) -> int:
 
     _bat_buoc_live()
     candidate = _kiem_candidate()
-    van_tay = _kiem_seal()
+    la_dev = args.dataset == "dev"
 
-    cases = json.loads(SEALED.read_text(encoding="utf-8"))["cases"]
-    print(f"SEALED: {len(cases)} case · vân tay {van_tay[:16]}")
+    if la_dev:
+        # KHÔNG kiểm vân tay con dấu: DEV không có con dấu, và giả vờ có là nói
+        # dối về xuất xứ. Nhưng candidate VẪN phải khớp — chạy trên một cây mã
+        # đã trôi thì con số không gắn với bản nào cả.
+        van_tay = "KHONG_CO_CON_DAU__DEV"
+        tran_logic, tran_http = TRAN_LOGIC_DEV, TRAN_HTTP_DEV
+        cases = json.loads(DEV.read_text(encoding="utf-8"))["cases"]
+        print(f"DEV: {len(cases)} case — ĐÃ ĐƯỢC NHÌN, không phải held-out")
+        print("     Số của lượt này KHÔNG được viết vào luận văn như A/B chính thức.")
+    else:
+        van_tay = _kiem_seal()
+        tran_logic, tran_http = TRAN_LOGIC, TRAN_HTTP
+        cases = json.loads(SEALED.read_text(encoding="utf-8"))["cases"]
+        print(f"SEALED: {len(cases)} case · vân tay {van_tay[:16]}")
     print(f"Candidate: {candidate['commit_ngan']} · CACHE_VERSION {candidate['cache_version']}")
+    print(f"Ngân sách: {tran_logic} lượt logic · {tran_http} lần thử HTTP")
 
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
@@ -616,7 +658,7 @@ async def _main_async(args) -> int:
     # nhiều tầng retry tự nó (xem LUOT_TOI_DA_MOI_CASE), nên số lượt logic có
     # thể vượt xa ngân sách mà không gì chặn.
     budget = gemini.ApiBudget(
-        max_api_calls=TRAN_HTTP, max_logical_calls=TRAN_LOGIC
+        max_api_calls=tran_http, max_logical_calls=tran_logic
     )
     gemini.set_budget(budget)
 
@@ -628,10 +670,10 @@ async def _main_async(args) -> int:
             # hạnh phúc của nó — case dở dang vừa tốn quota vừa không dùng được.
             # Đây là ngưỡng TỐI THIỂU, không phải upper bound: trần cứng trong
             # `ApiBudget` mới là thứ chặn khi retry làm case vượt dự kiến.
-            con_lai = TRAN_LOGIC - budget.logical_calls
+            con_lai = tran_logic - budget.logical_calls
             if con_lai < LUOT_TOI_THIEU_MOI_CASE:
                 dung_som = (
-                    f"BUDGET_EXHAUSTED: đã dùng {budget.logical_calls}/{TRAN_LOGIC} "
+                    f"BUDGET_EXHAUSTED: đã dùng {budget.logical_calls}/{tran_logic} "
                     f"lượt logic, còn {con_lai} — không đủ cho một case "
                     f"({LUOT_TOI_THIEU_MOI_CASE} lượt ở đường hạnh phúc)."
                 )
@@ -655,7 +697,9 @@ async def _main_async(args) -> int:
     finally:
         gemini.set_budget(None)
 
-    bao_cao = _tong_ket(ket_qua, len(cases), candidate, van_tay, budget, dung_som)
+    bao_cao = _tong_ket(ket_qua, len(cases), candidate, van_tay, budget, dung_som,
+                        dataset=args.dataset, tran_logic=tran_logic,
+                        tran_http=tran_http)
 
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -702,8 +746,23 @@ async def _main_async(args) -> int:
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--out-dir", default=str(BENCH / "results"))
+    p.add_argument("--dataset", choices=("sealed", "dev"), default="sealed",
+                   help="sealed = lượt đo chính thức (MỘT LẦN). "
+                        "dev = 20 case đã được nhìn, không phải held-out.")
+    p.add_argument("--out-dir", default=None)
     args = p.parse_args()
+
+    # Mặc định đầu ra ĐI THEO dataset, không để người chạy phải nhớ.
+    if args.out_dir is None:
+        args.out_dir = str(BENCH / ("results" if args.dataset == "sealed" else "dev-results"))
+
+    # CHẶN CỨNG, không phải lời nhắc: một lượt DEV ghi đè `results/` là xoá mất
+    # artifact held-out DUY NHẤT và thay bằng số của tập đã được nhìn. Không có
+    # cờ nào mở được cửa này — muốn ghi vào `results/` thì phải chạy `sealed`.
+    if args.dataset == "dev" and Path(args.out_dir).resolve() == (BENCH / "results").resolve():
+        print("DỪNG: lượt DEV không được ghi vào `results/` — đó là chỗ của "
+              "artifact held-out lượt #1.", file=sys.stderr)
+        return 2
 
     try:
         from dotenv import load_dotenv
