@@ -79,6 +79,58 @@ lượt đo. Lượt #2 là lần đầu tiên nó được đo.
 **Không đặt pass mark.** `freeze_protocol.md` cấm, và §8 của protocol không hứa
 A sẽ cao hơn.
 
+### 3b. Bốn bản vá đáng giá bao nhiêu — CHẨN ĐOÁN CƠ HỌC, 0 API call
+
+`sealed_cases.json` giữ **nguyên văn** khối lỗi Pydantic của từng ca, và khối ấy
+liệt kê ĐỦ mọi lỗi của chương trình. Nên phân loại từng lỗi là đủ để biết ca nào
+nay qua được tầng cú pháp — không phải tiêu một lượt LLM nào.
+
+Công cụ: `backend/scripts/classify_run1_failures.py` (chạy lại được, `--json`).
+
+```
+27 ca trượt thẩm định ở lượt #1
+├── 22  mọi lỗi đã được gộp  → NAY QUA tầng Pydantic
+├──  3  còn lỗi ngoài bốn biên → vẫn trượt
+└──  2  lỗi parse (JSON cụt)  → không kết luận được
+```
+
+Đếm theo **lỗi** (một ca có thể nhiều lỗi): `spec_version` 21 · `container_var` 4
+· `step_literal` 2 · `condition_bool` 1.
+
+Phễu thẩm định vì thế đổi từ **9/36** lên **31/36** chương trình chạm tới
+interpreter — nhưng đọc cho đúng:
+
+> ⚠️ **Qua Pydantic mới là CHẠM cổng kế, không phải chạy đúng.** Sau đó còn
+> `validate_semantic_program` (tầng ngữ nghĩa) → interpreter → C₁a → C₁b → C₂.
+> Ở lượt #1, 9 chương trình qua được cú pháp rụng còn 3 chạy được, còn 1 phát
+> được. Các cổng sau **chưa bao giờ nhìn thấy quá 9 chương trình**.
+>
+> ⚠️ Con số này chạy trên **40 ca ĐÃ LỘ**, nên nó là **chẩn đoán**, tuyệt đối
+> không được trình bày như kết quả held-out.
+
+### 3c. DỰ ĐOÁN TIỀN ĐĂNG KÝ — chốt trước khi có seed
+
+Ghi ở đây để lượt #2 có thể **bác bỏ** được. Dự đoán viết sau khi thấy số thì
+không phải dự đoán.
+
+Ba lớp lỗi dưới đây **chưa được vá và cố ý không vá** (đóng băng mã §2 đang có
+hiệu lực; vá chúng lúc này là vá theo ca đã lộ). Chúng ta dự đoán chúng **sẽ
+xuất hiện lại ở lượt #2**:
+
+| lớp | lượt #1 | bản chất |
+|---|---:|---|
+| `kind` bịa ra (`function_call`, `array`) | 3 lỗi / 2 ca | LLM tự chế kind biểu thức ngoài union đóng |
+| `field` ngoài `{left,right,val,data}` | 5 lỗi / 1 ca | IR **không có kiểu bản ghi**; LLM cần `.diem` của một học sinh |
+| JSON cụt / parse hỏng | 2 ca | Flash rơi vào lặp token tới `MAX_TOKENS` |
+
+Lớp thứ hai là **giới hạn IR thật**, không phải lỗi ký pháp: gộp nó đòi thêm
+kiểu bản ghi, tức mở ngữ nghĩa chứ không phải gộp cách viết. Nếu lượt #2 cho
+thấy nó phổ biến thì đó là **kết luận có giá trị của luận văn** về ranh giới của
+bounded IR — không phải một bug cần vá gấp.
+
+Nếu ba lớp này **không** xuất hiện ở lượt #2 thì dự đoán sai, và điều đó cũng
+phải được ghi đúng như thế.
+
 ## 4. CHẶN — hai thứ preflight không tự giải được
 
 ### (a) Quyết định về sai lệch taxonomy — GVHD, trước khi cấp seed

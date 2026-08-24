@@ -2657,6 +2657,28 @@ Runner đọc nó ở `run_sealed_evaluation.py`: `reset_coercion()` đầu mỗ
 `coercion_report()` vào `sealed_cases.json`, tổng hợp thành khối `coercion_rate`
 trong `sealed_summary.json`.
 
+### `backend/scripts/classify_run1_failures.py` · offline · **0 API call**
+
+Soi lại các ca trượt thẩm định của SEALED #1 bằng hợp đồng HIỆN TẠI, phân loại
+**từng lỗi Pydantic** thành `GOP:<biên đã gộp>` hoặc `TRUOT:<lý do>`. Export:
+`chay()` · `tach_loi()` · `phan_loai()` · `BOOL_KINDS`.
+
+Nó trả lời *"bốn biên chuẩn hoá đáng giá bao nhiêu"* mà **không tiêu một lượt
+LLM nào** — làm được vì `sealed_cases.json` giữ nguyên văn khối lỗi Pydantic, và
+khối ấy liệt kê ĐỦ mọi lỗi của một chương trình. Kết quả 2026-08-24: **22/27 ca
+nay qua tầng Pydantic**, 3 vẫn trượt (`kind` bịa ra · `field` ngoài
+`{left,right,val,data}`), 2 không kết luận được (JSON cụt).
+
+HAI RANH GIỚI, đừng trích sai: (1) qua Pydantic mới là **chạm cổng kế**, sau đó
+còn `validate_semantic_program` → interpreter → C₁a → C₁b → C₂ — ở lượt #1, 9
+chương trình qua cú pháp rụng còn 3 chạy được và 1 phát được; (2) nó chạy trên
+**40 ca ĐÃ LỘ** nên là **chẩn đoán**, không phải số held-out.
+
+`tach_loi()` phân biệt `None` (không phải lỗi schema — JSON hỏng) với `[]` (có
+khối lỗi nhưng rỗng): hai thứ dẫn tới hai kết luận khác nhau, gộp là mất một
+nhóm ca. Ba lớp `TRUOT` được ghi thành **dự đoán tiền đăng ký** ở
+`RUN2_PREFLIGHT.md §3c` để lượt #2 bác bỏ được.
+
 ### `backend/scripts/cross_domain_matrix.py` · offline · 0 API call
 
 Bảy lớp trạng thái (scalar · array · string · stack · derived_sequence · tree ·
