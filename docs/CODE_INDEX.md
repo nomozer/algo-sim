@@ -2917,6 +2917,22 @@ hẳn `analyze.md`** để đề đi đường module không phải trả tiền
 vụ. Không được gộp vào lượt viết IR: một lượt sinh cả nghĩa vụ lẫn chương trình
 thì C₁a tự đối chiếu một nguồn với chính nó.
 
+### `backend/scripts/api_usage_log.py` · offline (HARNESS)
+
+Sở hữu **chi phí của một lượt đo**: bọc `pipeline.call_gemini` để lấy độ trễ và
+**đầu ra thô**, gộp token từ `telemetry.usage_report()`, quy ra USD. Là harness —
+`GhiNhanApi.boc()` gọi thẳng hàm gốc và trả nguyên giá trị gốc, ngoại lệ bay qua
+nguyên vẹn (và vẫn được tính giờ: lượt 429 là lượt đắt nhất). Ra đời vì PHASE 5
+chạy trọn 10 bài rồi **không ghi được nó tiêu bao nhiêu**, dù `telemetry.py` đã
+đếm sẵn và docstring của nó bảo phải gọi.
+
+Hai luật giữ cho con số không thành hư cấu: bảng giá + **ngày tra + nguồn** đi
+kèm vào artifact (con số USD trong `docs/evaluation/` phải tái lập được sau
+nhiều tháng); và model ngoài bảng ⇒ `uoc_tinh_duoc: false`, **không** phải `0.0`.
+Ước tính là CHẶN TRÊN, khai rõ trong `khai`. Giữ đầu ra thô vì khi IR trượt
+schema, `stage_semantic_program` vứt nó đi và chỉ còn chuỗi lỗi Pydantic — PHASE 5
+phải dựng lại *"mô hình bịa `construct_plane`"* từ dấu vết thay vì từ vật chứng.
+
 ### `backend/app/ai/skills/geometry_analyze.md` · **live**
 
 Bản của `semantic_analyze.md` cho **miền hình học** — chọn bằng

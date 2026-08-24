@@ -320,7 +320,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `point_on_line`, `structural_traversal` cho một bài hỏi `coplanar`. Không
     # bump thì đề hình học đã phân tích vẫn trả hợp đồng khai dưới enum cũ, và
     # bản tách miền đọc như không ăn thua ngay trên chính các đề nó nhắm tới.
-    assert main_module.CACHE_VERSION == "39"
+    # 40: `geometry_analyze.md` đổi nội dung — gỡ một RÒ RỈ ĐÁP ÁN. Ví dụ cho
+    # `params.value` viết "biết rằng thể tích bằng 2/3", mà `2/3` đúng là đáp án
+    # `geo_09`/`geo_10`, và nó đứng ngay cạnh câu dạy mô hình khi nào được điền
+    # đáp số. Bump theo nghĩa đen của luật (đổi `skills/*.md` ⇒ bump), không vì
+    # có cache cần dọn — v39 chưa từng chạy live.
+    assert main_module.CACHE_VERSION == "40"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

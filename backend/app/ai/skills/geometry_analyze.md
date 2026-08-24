@@ -66,5 +66,5 @@ bằng số câu hỏi, không gộp.
 ## Giá trị mong đợi — chỉ khai khi ĐỀ CHO SẴN
 
 `distance` và `volume` nhận `value`, `angle` nhận `cos_sq`. **Chỉ điền khi đề
-tự nói ra đáp số** ("biết rằng thể tích bằng 2/3"). Đề bảo *tính* thì để trống:
+tự nói ra đáp số** ("biết rằng thể tích bằng 7/12"). Đề bảo *tính* thì để trống:
 điền vào là bạn tự cho điểm mình, và hệ sẽ tin con số của bạn thay vì tính lại.

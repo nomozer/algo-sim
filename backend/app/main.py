@@ -169,7 +169,14 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       toạ độ), ba primitive dựng/đo mới, và `value`/`cos_sq`/`wrt` trong
 #       schema nghĩa vụ. Bề mặt khai nghĩa vụ đổi ⇒ mọi phân tích cache theo
 #       schema cũ không còn đại diện cho schema hiện hành.
-CACHE_VERSION = "39"
+#   40 (2026-08-25, pre-Phase5 hardening): `geometry_analyze.md` đổi NỘI DUNG —
+#       ví dụ minh hoạ `params.value` dùng `2/3`, đúng bằng đáp án `geo_09` và
+#       `geo_10` của tập DEV, và nó nằm ngay cạnh câu dạy mô hình khi nào được
+#       điền đáp số. Bump ở đây là theo NGHĨA ĐEN của luật (đổi `skills/*.md` ⇒
+#       bump), không phải vì có cache cần dọn: v39 chưa từng chạy live nên chưa
+#       mục nào tồn tại. Giữ luật đúng cả khi nó rẻ mới là cách nó còn đúng lúc
+#       đắt.
+CACHE_VERSION = "40"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

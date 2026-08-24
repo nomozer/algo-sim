@@ -137,6 +137,7 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
     from app.ai import gemini, pipeline
     from app.simulation.semantic_program.route import verify_and_compile
 
+    import api_usage_log as AU
     import reliability_v2 as RV
 
     de = case["problem_text"]
@@ -146,6 +147,10 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
         "chu_de": case.get("chu_de"),
         "expected_obligations": case.get("expected_obligations", []),
         "generated_program": None,
+        # Đầu ra THÔ khi IR bị từ chối. PHASE 5 có 4 bài trượt G1 và không bài
+        # nào để lại thứ mô hình thật sự viết — phân tích phải dựng lại từ chuỗi
+        # lỗi Pydantic, tức đọc dấu vết thay vì đọc vật chứng.
+        "generated_raw": None,
         "obligations_declared": [],
         "schema_pass": False,
         "semantic_pass": False,
@@ -156,15 +161,27 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
         "failure_reason": None,
     }
 
-    # ÉP SKILL HÌNH HỌC. Khôi phục trong `finally`: bỏ sót thì case sau chạy qua
-    # một `load_skill` đã bọc chồng nhiều lớp.
+    # ÉP SKILL HÌNH HỌC + BỌC BỘ GHI. Cả hai khôi phục trong `finally`: bỏ sót
+    # thì case sau chạy qua một `load_skill`/`call_gemini` bọc chồng nhiều lớp.
     goc_load = pipeline.load_skill
+    goc_call = pipeline.call_gemini
 
     def _load(ten: str) -> str:
         return goc_load(SKILL_HINH_HOC if ten == "semantic_program" else ten)
 
-    pipeline.load_skill = _load
-    try:
+    ghi = AU.GhiNhanApi()
+
+    # ─── VÌ SAO THÂN NẰM TRONG MỘT HÀM CON ───────────────────────────────
+    #
+    # Bản trước có `return ra` NGAY TRONG `try`, và ba dòng hậu xử lý nằm SAU
+    # `finally` — nên mọi bài trượt sớm **không bao giờ** được gán
+    # `obligation_match`. Đo được trên chính artifact PHASE 5: 4 bài trượt G1
+    # thiếu hẳn khoá ấy, và `tong_ket` che mất vì nó dùng `.get()`.
+    #
+    # Hàm con làm cho "thoát sớm" và "hậu xử lý" không còn tranh nhau một lối
+    # ra. Hình dạng artifact vì thế ỔN ĐỊNH trên MỌI đường — điều kiện để một
+    # bộ chấm downstream đọc nó mà không phải phòng thủ từng khoá.
+    async def _than() -> None:
         # ─── WAVE 2: TRUYỀN MIỀN, KHÔNG DÙNG BỘ NHẬN MIỀN ─────────────────
         #
         # Lượt Phase 5 đầu chỉ ép skill ở `semantic_program`; `analyze` vẫn là
@@ -181,8 +198,9 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
         )
         if contract is None:
             ra.update(failure_layer=0, failure_code="contract_failure",
-                      failure_reason=err)
-            return ra
+                      failure_reason=err,
+                      generated_raw=ghi.tho_cuoi("semantic_analyze"))
+            return
         ra["obligations_declared"] = sorted({o.kind for o in contract.obligations})
 
         spec, serr = await pipeline.stage_semantic_program(de, {}, api_key, contract)
@@ -194,8 +212,9 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
                 failure_layer=2 if la_schema else 3,
                 failure_code="semantic_program_invalid",
                 failure_reason=hong,
+                generated_raw=ghi.tho_cuoi("semantic_program"),
             )
-            return ra
+            return
         ra["schema_pass"] = True
         ra["semantic_pass"] = True
         ra["generated_program"] = spec.model_dump(mode="json")
@@ -210,6 +229,11 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
         ra["oracle"] = cham
         ra["oracle_pass"] = (True if cham["verdict"] == "PASS"
                              else False if cham["verdict"] == "FAIL" else None)
+
+    pipeline.load_skill = _load
+    pipeline.call_gemini = ghi.boc(goc_call)
+    try:
+        await _than()
     except gemini.BudgetExceeded:
         raise
     except Exception as e:  # noqa: BLE001 — hỏng một case không được giết cả lượt
@@ -217,15 +241,19 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
                   failure_reason=str(e)[:400])
     finally:
         pipeline.load_skill = goc_load
+        pipeline.call_gemini = goc_call
 
     ra["obligation_match"] = RV.obligation_match(
         ra["expected_obligations"], ra["obligations_declared"]
     )
+    # Độ trễ THEO TỪNG BÀI. Tổng của cả lượt không thay được: một bài chậm gấp
+    # mười vì đi hết ba vòng sửa là thông tin, còn trung bình thì che nó đi.
+    ra["do_tre"] = ghi.do_tre()
     return ra
 
 
 async def _main(args) -> int:
-    from app.ai import gemini
+    from app.ai import gemini, telemetry
 
     _bat_buoc_live()
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -239,6 +267,10 @@ async def _main(args) -> int:
 
     budget = gemini.ApiBudget(max_api_calls=TRAN_HTTP, max_logical_calls=TRAN_LOGIC)
     gemini.set_budget(budget)
+    # Bộ đếm token là TOÀN CỤC trong tiến trình. Không xoá thì con số của lượt
+    # này cộng dồn cả những gì đã chạy trước trong cùng tiến trình — và một con
+    # số chi phí sai theo chiều CAO cũng vô dụng như sai theo chiều thấp.
+    telemetry.reset_usage()
     ket: list[dict] = []
     dung_som = None
     try:
@@ -265,7 +297,14 @@ async def _main(args) -> int:
     cp = bao["chi_phi"]
     if cp["do_duoc"]:
         print(f"  chi phí        {cp['luot_logic']}/{cp['tran_logic']} lượt "
-              f"logic · {cp['request_http']}/{cp['tran_http']} HTTP")
+              f"logic · {cp['request_http']}/{cp['tran_http']} HTTP · "
+              f"{cp['tong_token']} token")
+        ut = cp["uoc_tinh_chi_phi"]
+        print(f"  ước tính       "
+              + (f"~${ut['usd']:.4f} (chặn trên, giá {ut['ngay_tra_gia']})"
+                 if ut["uoc_tinh_duoc"] else ut["ly_do"]))
+        print(f"  độ trễ         {cp['do_tre'].get('tong_giay', 0)}s tổng · "
+              f"chậm nhất {cp['do_tre'].get('cham_nhat_giay', 0)}s")
     return 0
 
 
@@ -280,6 +319,7 @@ def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
     nhận được. Đó là lỗi của runner, và đây là chỗ trả nợ: một lượt đo không
     ghi được nó tiêu bao nhiêu thì không tái lập được chi phí.
     """
+    import api_usage_log as AU
     import reliability_v2 as RV
 
     def dem(k: str) -> dict:
@@ -300,27 +340,7 @@ def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
         "obligation_match": RV._gop_obligation_match(
             [{"obligation_match": m} for m in om]),
         "phan_bo_that_bai": _phan_bo(ket),
-        "chi_phi": _chi_phi(budget),
-    }
-
-
-def _chi_phi(budget) -> dict:
-    """Lượt đo này đã tiêu bao nhiêu. `None` ⇒ nói thẳng là KHÔNG ĐO ĐƯỢC.
-
-    Không bịa số 0: "không đo" và "không tốn gì" là hai điều khác hẳn nhau, và
-    nhầm chúng chính là cách một báo cáo chi phí trở thành hư cấu.
-    """
-    if budget is None:
-        return {"do_duoc": False,
-                "ly_do": "runner chạy không có ApiBudget — không đếm được"}
-    return {
-        "do_duoc": True,
-        "luot_logic": budget.logical_calls,
-        "request_http": budget.http_requests,
-        "request_do_retry": budget.retry_requests,
-        "lan_gap_429_5xx": budget.transient_hits,
-        "tran_logic": budget.max_logical_calls,
-        "tran_http": budget.max_api_calls,
+        "chi_phi": AU.bao_cao(model, budget),
     }
 
 
