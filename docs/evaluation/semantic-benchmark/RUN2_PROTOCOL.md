@@ -118,15 +118,91 @@ cd backend && ALLOW_LIVE_AI=1 PYTHONIOENCODING=utf-8 \
 
 - **Chạy đúng một lần.** Không vá giữa chừng, không chạy lại, không chọn lượt
   đẹp hơn. Case hỏng ghi đúng như nó hỏng.
-- **Không thêm nghĩa vụ / checker để cứu case.** Taxonomy giữ 9 nghĩa vụ,
-  `4dd712a3…`. Đề cần `predicate_verdict` vẫn phải trượt — kiểm nó đòi cài lại
-  chính thuật toán đang kiểm.
+- **Không thêm nghĩa vụ / checker để cứu case.** ⚠️ **Câu này đã BỊ LỆCH — đọc
+  §7b trước khi trích.** Bản gốc chốt *"taxonomy giữ 9 nghĩa vụ `4dd712a3…`; đề
+  cần `predicate_verdict` vẫn phải trượt"*. Hệ sẽ đo ở lượt #2 có **11 nghĩa vụ**
+  (`b30e45da…`), gồm cả `predicate_verdict`. Sai lệch được khai đầy đủ ở §7b,
+  ghi ngày 24/08 trước khi có seed. Luật gốc — *không thêm checker để cứu một
+  case cụ thể* — vẫn còn hiệu lực nguyên vẹn cho lượt chạy.
 - **Ba con số báo riêng**: `A` executability · `B` internal servable · oracle độc
   lập. `A − B` phải phân rã, không gộp thành `verification_gap`.
 - **Kết quả thấp là DỮ LIỆU.** Chuỗi probe cho thấy máy dựng đúng nghĩa vụ và
   đúng cấu trúc nhưng **chưa lượt nào sinh ra chương trình làm đúng việc**. Vào
   lượt đo với kỳ vọng con số phải đẹp là tự đặt mình vào thế phải vá sau khi thấy
   số.
+
+## 7b. SAI LỆCH SO VỚI TIỀN ĐĂNG KÝ — khai báo 2026-08-24, TRƯỚC khi có seed
+
+> Ghi ở đây vì đó là cách duy nhất trung thực để xử lý một tiền đăng ký bị lệch:
+> **khai ra, có ngày tháng, trước khi biết seed và trước khi thấy bất kỳ số nào**.
+> Một sai lệch được khai trước khi đo là dữ liệu; phát hiện sau khi đo là vết
+> bẩn không rửa được.
+
+### Lệch cái gì
+
+§2 tuyên bố đóng băng mã lúc `70867ce` (23/08 19:37). Sau mốc đó, `backend/app`
+đã đổi ở **bốn** commit:
+
+| commit | giờ | đụng gì |
+|---|---|---|
+| `12085d5` | 24/08 00:07 | **taxonomy 9 → 11 nghĩa vụ** + 2 lớp hình dạng wire |
+| `0727275` | 24/08 00:15 | telemetry route ngữ nghĩa |
+| `3e0d67c` | 24/08 00:49 | coverage-gate: witness phải DẪN XUẤT từ dữ liệu |
+| `096270d` | 24/08 | bộ đếm coercion + token đầu ra (**quan trắc thuần**) |
+
+Nghiêm trọng nhất là commit đầu, vì nó chạm đúng một câu đã tiền đăng ký ở §7:
+
+> ~~"Taxonomy giữ **9 nghĩa vụ**, `4dd712a3…`. Đề cần `predicate_verdict` vẫn
+> phải trượt."~~
+
+`predicate_verdict` và `scalar_accumulation` nay **đã có trong taxonomy** (11
+nghĩa vụ, `b30e45da…`). Câu §7 ở trên **không còn mô tả hệ sẽ được đo**.
+
+### Lập luận BÊNH cho thay đổi
+
+`12085d5` không thêm nghĩa vụ để cứu một case cụ thể. Nó xuất phát từ một phép
+đo cơ học trên chính `OBLIGATION_KINDS`: **0/10 nghĩa vụ nhận được chủ thể VÔ
+HƯỚNG** — toàn bộ taxonomy mang hình dạng container, trong khi *vòng lặp tích
+luỹ trên một biến số* và *câu hỏi đúng/sai trên một số* là hai kiến trúc cơ bản
+nhất của Tin học 10. Đó là một lỗ hổng **cấu trúc**, cùng loại với bốn biên
+chuẩn hoá, không phải một lần vá theo ca.
+
+Cả hai lớp mới đi qua **tập ĐÓNG** (`_PREDS` có sẵn · `op ∈ {sum,product}` ×
+`TERM_TRANSFORMS`). Vị từ ngoài tập vẫn là `verification_gap`. Đóng là điều kiện
+của tính độc lập: mở cho biểu thức bất kỳ thì checker phải đánh giá biểu thức
+của chương trình, tức chạy lại chính nó.
+
+### Lập luận CHỐNG — phải đọc kèm, không được bỏ
+
+Dù lập luận trên đúng, **nó được nghĩ ra sau khi đã thấy kết quả lượt #1**. Đúng
+5 case của lượt #1 chết vì thiếu chủ thể vô hướng. Một người ngoài có quyền hỏi:
+*nếu lượt #1 không phơi ra 5 case ấy, phép đo cơ học kia có được chạy không?*
+Không ai trả lời trung thực được câu đó, kể cả người viết mã.
+
+Đó chính là rủi ro mà §7 được viết ra để chặn, và nó đã không chặn được.
+
+### Hệ quả cho việc trình bày
+
+1. §7 câu "giữ 9 nghĩa vụ / `4dd712a3…`" **bị thay** bởi mục này. Hằng số đúng
+   của lượt #2 là **11 nghĩa vụ, `b30e45da…`**, đóng băng ở `EVALUATION_CANDIDATE.json`
+   (`b407af0`, cây sạch).
+2. Luận văn **phải nêu sai lệch này khi báo số lượt #2**, không được trình bày
+   lượt #2 như một phép đo tiền đăng ký sạch. Câu đúng: *"lượt #2 đo trên bài
+   chưa từng thấy, nhưng taxonomy đã mở thêm hai lớp sau khi thấy kết quả lượt
+   #1; mức độ held-out của TẬP ĐỀ là nguyên vẹn, còn mức độ tiền-đăng-ký của
+   TAXONOMY thì không."*
+3. Quyết định nhận hay hoàn taxonomy về 9 thuộc **GVHD**, và phải chốt **trước
+   khi cấp seed**. Hoàn về 9 thì lượt #2 sạch tiền đăng ký nhưng bỏ đi một bản
+   vá cấu trúc có thật; giữ 11 thì phải mang theo lời khai này.
+4. `096270d` là **quan trắc thuần** — không đụng prompt · schema · taxonomy ·
+   primitive · route · checker; bốn hash ngữ nghĩa không đổi. Nó không tạo thêm
+   sai lệch nào, chỉ làm `measured_system.tree_hash` trôi nên phải đóng băng lại.
+
+### Kỷ luật từ đây
+
+Đóng băng mã ở §2 **có hiệu lực trở lại** kể từ `b407af0`. Cổng kiểm:
+`freeze_evaluation_candidate.py --verify`. Lần này nếu còn commit nào chạm
+`backend/app` trước lượt chạy, nó phải được khai vào chính mục này.
 
 ## 8. Điều protocol này KHÔNG hứa
 
