@@ -266,6 +266,44 @@ model chỉ được xuất hiện MỘT lần trong mã · runner phải ghi `m
 > Nói *"tại model cũ"* là báo cáo sai nguyên nhân. Model là đòn bẩy **bổ sung**,
 > đo được bằng A/B trên DEV, không phải lời giải thích cho số cũ.
 
+### Lệch lần thứ tư — interpreter FAIL-CLOSED (2026-08-24)
+
+Khai ngay: seed #2 vẫn chưa tồn tại.
+
+**Audit tìm thấy**: `semantic_program/interpreter.py` im lặng cho qua MỌI vi
+phạm biên — `pop`/`dequeue` trên rỗng là **no-op không ghi bước**, `peek` trên
+rỗng trả `None`, chỉ số ngoài biên trả `None`, `length` trên tên sai trả `0`.
+
+**Vì sao là lỗi SOUNDNESS, không phải thiếu năng lực**: một chương trình sai
+sinh ra trace **trông hợp lý**. Học sinh xem một mô phỏng có bước biến mất mà
+không ai nói cho biết là đang thiếu — cùng họ với lỗi đã sinh ra bất biến #31.
+
+**Có tiền lệ ĐÚNG ngay trong kho**: M13-SOUNDNESS đã sửa chính lớp lỗi này cho
+`generic_engine` (*"numeric silent-zero… KHÔNG còn seed/fallback 0"* →
+`GenericEvaluationError`, 4 mã, fail-closed). `interpreter.py` là **chủ sở hữu
+thứ hai** và đã tái tạo lại nó cho container. Bản vá này đưa nó về cùng khuôn:
+`SemanticExecutionError` + 4 mã (`EMPTY_CONTAINER` · `INDEX_OUT_OF_RANGE` ·
+`UNDECLARED_CONTAINER` · `CONTAINER_TYPE_MISMATCH`).
+
+**KHÔNG mở phạm vi**: không domain mới, không primitive mới, taxonomy KHÔNG đổi.
+Route đã sẵn dịch mọi `Exception` của interpreter thành `servable=False` nên
+không phải sửa. `map_get` có `default` **tường minh** vẫn hợp lệ — chỉ khoá chỗ
+hệ **âm thầm** bịa giá trị.
+
+**Bằng chứng RED→GREEN**: 11 fault test viết TRƯỚC, tất cả ĐỎ (`ImportError`,
+rồi 6 ca không ném lỗi), sau bản vá **11/11 GREEN**. Và **không một test cũ nào
+vỡ** (2071 passed) — các nhánh im lặng ấy chết thật, không đang gánh việc.
+
+**Ảnh hưởng tới lượt #2**: có thể **hạ** `A`. Chương trình từng "chạy xong" nhờ
+nuốt lỗi biên nay sẽ `executable=false`. Đó là **đúng**: `A` cũ đếm cả những lượt
+chạy trên hư không. Phải nêu điều này khi so #1 với #2.
+
+### Kèm theo — `replay_harness.py` (harness, không lệch)
+
+`backend/scripts/` nên không chạm hệ được đo. Chạy một chương trình trên nhiều
+đầu vào, phát hiện `INPUT_IGNORED` · `DEAD_STATE` · `HARD_CODED?` mà **không cần
+oracle**. Phủ đúng chỗ kiểm tĩnh C₁b không với tới.
+
 ### Kỷ luật từ đây
 
 Đóng băng mã ở §2 **có hiệu lực trở lại** kể từ `b407af0`. Cổng kiểm:

@@ -2682,6 +2682,38 @@ vòng sửa; (2) ba thứ tưởng hỏng mà validator vẫn cho qua — `state
 gán vào **biến chưa khai**, `value_box` trỏ **biến lạ**. Payload dùng được là
 `push` vào container chưa khai.
 
+### `backend/scripts/replay_harness.py` · offline · **0 API call**
+
+Chạy MỘT `SemanticProgramSpec` trên **nhiều đầu vào** rồi so chuỗi hành động.
+Export: `replay()` · `KetQuaReplay` · `TIM_MAX` / `GAN_CUNG` (hai chương trình
+đối chứng) · `SO_BIEN_THE`.
+
+VÌ SAO: tới 2026-08-24 một chương trình chỉ chạy đúng **một** lần, trên đúng
+`initial_value` mà LLM viết cùng nó. Với một mẫu, *"tính ra đáp án"* và *"biết
+trước đáp án"* cho cùng kết quả.
+
+**RANH GIỚI VỚI C₁b — đọc trước khi thêm detector.** `coverage_gate` (`3e0d67c`)
+đã bịt "gán thẳng đáp án" bằng kiểm **TĨNH** (witness phải có đường phụ thuộc,
+kể cả qua nhánh, về container đầu vào). File này **không làm lại**. Nó phủ chỗ
+tĩnh không với tới: chương trình *có* đọc container mà vẫn không tính đúng —
+`GAN_CUNG` cố ý đọc `a` qua `length` nên **qua được C₁b**, và chỉ replay mới lộ.
+Cũng khác `evaluation/metamorphic.py` (cái đó biến đổi **văn bản đề** cho
+classifier; đây giữ chương trình, đổi **dữ liệu**).
+
+Ba detector, **không cần oracle** — chạy được trên bất kỳ chương trình sinh nào:
+`INPUT_IGNORED` (mọi đầu vào cho cùng một chuỗi hành động) · `DEAD_STATE`
+(container khai ra mà không lượt nào đụng) · `HARD_CODED?` (witness hằng qua mọi
+biến thể). Truyền `oracle=` thì so thêm.
+
+⚠️ **`HARD_CODED?` là NGHI VẤN, KHÔNG vào `ok`** — một nghĩa vụ có thể hằng
+chính đáng, biến nó thành phán quyết là đẻ false rejection ở chỗ khó cãi nhất.
+Chỉ `INPUT_IGNORED` và `DEAD_STATE` quyết PASS/FAIL.
+
+Chữ ký hành động cố ý **bỏ giá trị**, chỉ giữ `(action, target)`: giữ giá trị
+thì hai lượt luôn khác nhau và `INPUT_IGNORED` xanh vĩnh viễn. Khoá bởi
+`test_replay_harness.py` (9 test, nửa là ca ÂM TÍNH — chương trình thật không
+được gắn cờ).
+
 ### `backend/scripts/classify_run1_failures.py` · offline · **0 API call**
 
 Soi lại các ca trượt thẩm định của SEALED #1 bằng hợp đồng HIỆN TẠI, phân loại
