@@ -1,19 +1,14 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "4d40dcef8930f81d",
+  "sourceFingerprint": "10d72e171bbf107f",
   "dirtyRelevantSources": [
-    "backend/app/main.py",
-    "backend/app/simulation/semantic_program/contract.py",
-    "backend/app/simulation/semantic_program/interpreter.py",
-    "backend/app/simulation/semantic_program/learner_surface.py",
-    "backend/app/simulation/semantic_program/validator.py",
-    "backend/tests/semantic_program/test_grammar_card.py",
-    "backend/tests/test_api.py",
-    "frontend/src/simulations/domains/generic/semantic_program.schema.json"
+    "backend/app/simulation/semantic_program/coverage_gate.py",
+    "backend/app/simulation/semantic_program/geometry_exec.py",
+    "backend/tests/semantic_program/test_evaluation_candidate.py"
   ],
-  "head": "cba53fc2c1f75ebb61afeeda83289c5abd2360a3",
+  "head": "7c7e025c8732883b1813eb0d126b5d97ae98deb9",
   "dirty": true,
-  "generatedAt": "2026-08-24T10:24:59.918Z",
+  "generatedAt": "2026-08-24T13:34:06.115Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
