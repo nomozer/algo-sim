@@ -78,6 +78,29 @@ OBLIGATION_KINDS: dict[str, frozenset[str]] = {
     "derived_sequence": frozenset({"array", "stack", "queue"}),
     "reachability": frozenset({"graph"}),
     "structural_traversal": frozenset({"tree_node"}),
+    # ── MIỀN HÌNH HỌC KHÔNG GIAN (2026-08-24) ────────────────────────────────
+    #
+    # Tám nghĩa vụ, chia hai nhóm theo ĐÚNG câu hỏi bài toán hỏi:
+    #   quan hệ  → trả lời ĐÚNG/SAI  (thuộc · song song · vuông góc · đồng phẳng)
+    #   đại lượng → trả lời MỘT SỐ   (khoảng cách · góc · thể tích)
+    #
+    # VÌ SAO TÁCH `point_on_line` KHỎI `point_on_plane` thay vì gộp thành một
+    # `incidence`: hai cái nhận CHỦ THỂ khác nhau (`line3` ↔ `plane3`), và gộp
+    # thì bảng kiểu bên dưới mất tác dụng — một đề hỏi "M có thuộc (SBC) không"
+    # sẽ lọt qua khi LLM gắn nhầm vào một đường thẳng.
+    #
+    # VÌ SAO CẢ TÁM ĐỀU CÓ CHECKER SERVER-OWNED: ở miền này oracle là **giải
+    # tích**, không phải cài lại thuật toán đang kiểm. Đó chính là cái khó đã
+    # buộc loại `predicate_verdict` khỏi taxonomy hồi tháng 8, và miền hình học
+    # thoát được nó.
+    "point_on_line": frozenset({"line3"}),
+    "point_on_plane": frozenset({"plane3"}),
+    "parallel": frozenset({"line3", "plane3"}),
+    "perpendicular": frozenset({"line3", "plane3"}),
+    "coplanar": frozenset({"polygon3", "solid"}),
+    "distance": frozenset({"point3", "line3", "plane3"}),
+    "angle": frozenset({"line3", "plane3"}),
+    "volume": frozenset({"solid"}),
     # Phán quyết đúng/sai trên TOÀN BỘ dữ liệu vào. Miền rộng vì một vị từ có
     # thể hỏi về bất kỳ cấu trúc nào; cái hẹp là tập vị từ KIỂM ĐƯỢC, và nó do
     # `PREDICATE_CHECKERS` giữ chứ không phải bảng này (xem docstring module).

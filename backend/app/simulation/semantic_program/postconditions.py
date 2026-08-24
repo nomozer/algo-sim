@@ -551,6 +551,8 @@ def _scalar_accumulation(snap: dict, ob: Obligation) -> str | None:
     )
 
 
+from .geometry_obligations import GEOMETRY_CHECKERS  # noqa: E402
+
 CHECKERS: dict[str, Callable[[dict, Obligation], str | None]] = {
     "predicate_verdict": _predicate_verdict,
     "scalar_accumulation": _scalar_accumulation,
@@ -565,6 +567,13 @@ CHECKERS: dict[str, Callable[[dict, Obligation], str | None]] = {
     # `structural_traversal` chưa có checker: kiểm nó cần cấu trúc cây trong
     # snapshot ở dạng duyệt được, mà IR hiện lưu `tree_node` dạng lồng nhau —
     # để đó còn hơn dựng một checker chỉ đúng với một hình dạng cây.
+    #
+    # ── MIỀN HÌNH HỌC: tám checker, KHÔNG cái nào ở mức yếu ─────────────────
+    # Khác hẳn miền Tin học, nơi `predicate_verdict` phải để mức yếu vì kiểm nó
+    # đòi cài lại chính thuật toán đang kiểm. Ở hình học, kiểm là một PHÉP TÍNH
+    # giải tích (`u·v == 0`), không phải một lời giải — nên tính độc lập không
+    # mất. Xem `geometry_obligations.py`.
+    **GEOMETRY_CHECKERS,
 }
 
 

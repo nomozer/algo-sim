@@ -1,0 +1,95 @@
+{
+  "dataset": "geometry_generation_dev_set",
+  "version": 1,
+  "ngay": "2026-08-24",
+  "muc_dich": "Chỉnh IR/prompt hình học và chọn tập checker đại diện. ĐÂY LÀ TẬP PHÁT TRIỂN — được nhìn, được sửa hệ theo nó. Số của nó KHÔNG BAO GIỜ là số held-out của luận văn. Tập held-out phải do custodian chọn bằng seed của GVHD, giống hệt quy trình SEALED của miền Tin học.",
+  "luat_soan": [
+    "Đề viết như SGK Toán 11–12: văn xuôi tiếng Việt, KHÔNG cho toạ độ. Mô hình phải tự đặt hệ toạ độ — đó là một phần của bài toán sinh.",
+    "`oracle_result` tính TAY, không chạy hệ. Chạy hệ rồi chép kết quả làm đáp án thì test thành tautology.",
+    "Khoảng cách và thể tích khai dưới dạng phân số; góc khai bằng cos² vì góc vô tỉ còn cos² hữu tỉ.",
+    "Mười bài phủ ĐỦ TÁM nghĩa vụ, mỗi nghĩa vụ ít nhất một lần."
+  ],
+  "hinh_quy_uoc": "Trừ khi đề nói khác, hệ toạ độ mong đợi: đáy trong z=0, cạnh bên vuông góc đáy chạy dọc trục z, hình vuông cạnh 1 là (0,0,0)(1,0,0)(1,1,0)(0,1,0). Mô hình được chọn hệ khác — oracle so QUAN HỆ và ĐẠI LƯỢNG, không so toạ độ.",
+  "cases": [
+    {
+      "case_id": "geo_01",
+      "chu_de": "Điểm thuộc mặt phẳng",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông. Gọi M là trung điểm của cạnh AB. Hãy chỉ ra rằng M nằm trong mặt phẳng đáy (ABCD).",
+      "expected_obligations": ["point_on_plane"],
+      "oracle_result": {"point_on_plane": true},
+      "ghi_chu_kiem_tay": "M là trung điểm của một cạnh đáy nên hiển nhiên thuộc mặt đáy. Bài dễ nhất — dùng để kiểm mô hình có đặt được hệ toạ độ và khai được nghĩa vụ đơn giản nhất."
+    },
+    {
+      "case_id": "geo_02",
+      "chu_de": "Giao tuyến hai mặt phẳng",
+      "problem_text": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD. Hãy dựng giao tuyến của mặt phẳng (SAB) và mặt phẳng đáy (ABCD).",
+      "expected_obligations": ["point_on_line"],
+      "oracle_result": {"giao_tuyen_la": "đường thẳng AB", "point_on_line": true},
+      "ghi_chu_kiem_tay": "Cả hai mặt phẳng cùng chứa A và B, nên giao tuyến là đường AB. Kiểm bằng cách hỏi A (hoặc B) có thuộc giao tuyến không."
+    },
+    {
+      "case_id": "geo_03",
+      "chu_de": "Thiết diện hình chóp",
+      "problem_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Một mặt phẳng song song với đáy và cắt SA tại trung điểm của SA. Hãy dựng thiết diện của hình chóp tạo bởi mặt phẳng đó.",
+      "expected_obligations": ["coplanar"],
+      "oracle_result": {"so_canh_thiet_dien": 4, "hinh_dang": "hình vuông", "ti_so_dong_dang": "1/2", "coplanar": true},
+      "ghi_chu_kiem_tay": "Mặt phẳng cắt ở nửa chiều cao và song song đáy ⇒ thiết diện đồng dạng đáy với tỉ số 1/2, tức hình vuông cạnh a/2. Bốn cạnh vì chóp có bốn mặt bên."
+    },
+    {
+      "case_id": "geo_04",
+      "chu_de": "Hình chiếu vuông góc",
+      "problem_text": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD, SA vuông góc với mặt phẳng đáy. Hãy xác định hình chiếu vuông góc của điểm S lên mặt phẳng (ABCD).",
+      "expected_obligations": ["point_on_plane"],
+      "oracle_result": {"hinh_chieu_la": "điểm A", "point_on_plane": true},
+      "ghi_chu_kiem_tay": "SA ⊥ đáy nên chân đường vuông góc hạ từ S chính là A. Đây là chỗ hình vẽ tay hay đặt sai nhất."
+    },
+    {
+      "case_id": "geo_05",
+      "chu_de": "Đường thẳng vuông góc mặt phẳng",
+      "problem_text": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD và cạnh bên SA vuông góc với đáy. Chứng minh rằng đường thẳng SA vuông góc với mặt phẳng (ABCD).",
+      "expected_obligations": ["perpendicular"],
+      "oracle_result": {"perpendicular": true},
+      "ghi_chu_kiem_tay": "Đề cho sẵn. Bài này kiểm mô hình có ĐẶT ĐÚNG hệ toạ độ không: nếu nó đặt S lệch khỏi trục z thì nghĩa vụ sẽ FAIL dù đề nói vuông góc."
+    },
+    {
+      "case_id": "geo_06",
+      "chu_de": "Hai đường thẳng song song",
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông. Chứng minh rằng đường thẳng AB song song với đường thẳng DC.",
+      "expected_obligations": ["parallel"],
+      "oracle_result": {"parallel": true},
+      "ghi_chu_kiem_tay": "Hai cạnh đối của hình vuông. Ca đối chứng cho `parallel` ở dạng đường-đường."
+    },
+    {
+      "case_id": "geo_07",
+      "chu_de": "Khoảng cách điểm – mặt phẳng",
+      "problem_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 1, SA vuông góc với đáy và SA = 2. Tính khoảng cách từ điểm S đến mặt phẳng (ABCD).",
+      "expected_obligations": ["distance"],
+      "oracle_result": {"distance": "2"},
+      "ghi_chu_kiem_tay": "SA ⊥ đáy nên khoảng cách chính là độ dài SA = 2. Kiểm tay, không cần công thức."
+    },
+    {
+      "case_id": "geo_08",
+      "chu_de": "Góc giữa hai đường thẳng",
+      "problem_text": "Cho hình vuông ABCD cạnh 1 nằm trong mặt phẳng. Tính góc giữa đường thẳng AB và đường chéo AC.",
+      "expected_obligations": ["angle"],
+      "oracle_result": {"angle_do": 45, "cos_sq": "1/2"},
+      "ghi_chu_kiem_tay": "Đường chéo hình vuông tạo với cạnh góc 45°. cos45° = √2/2 ⇒ cos² = 1/2. Khai bằng cos² vì góc vô tỉ."
+    },
+    {
+      "case_id": "geo_09",
+      "chu_de": "Thể tích hình chóp",
+      "problem_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 1 và chiều cao SA = 2, với SA vuông góc với mặt phẳng đáy. Tính thể tích của khối chóp S.ABCD.",
+      "expected_obligations": ["volume"],
+      "oracle_result": {"volume": "2/3"},
+      "ghi_chu_kiem_tay": "V = (1/3)·S_đáy·h = (1/3)·1·2 = 2/3. Hữu tỉ chính xác."
+    },
+    {
+      "case_id": "geo_10",
+      "chu_de": "Tổng hợp",
+      "problem_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 1, SA vuông góc với đáy và SA = 2. Gọi M là trung điểm của SA. Chứng minh SA vuông góc với đáy, xác định hình chiếu của M lên mặt phẳng (ABCD), và tính thể tích khối chóp.",
+      "expected_obligations": ["perpendicular", "point_on_plane", "volume"],
+      "oracle_result": {"perpendicular": true, "hinh_chieu_M": "điểm A", "point_on_plane": true, "volume": "2/3"},
+      "ghi_chu_kiem_tay": "Ba nghĩa vụ trong một đề — kiểm mô hình có khai được NHIỀU nghĩa vụ không, thay vì chỉ bắt được cái đầu tiên. Hình chiếu của M vẫn là A vì M nằm trên SA."
+    }
+  ]
+}

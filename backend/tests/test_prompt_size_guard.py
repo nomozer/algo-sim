@@ -22,6 +22,22 @@ SKILLS = Path(__file__).resolve().parents[1] / "app" / "ai" / "skills"
 
 BUDGET_BYTES: dict[str, int] = {
     "adapt.md": 1500,
+    # MIỀN HÌNH HỌC KHÔNG GIAN (2026-08-24). Ngân sách LỚN HƠN
+    # `semantic_program.md` (2500) có lý do, không phải vì viết dài tay:
+    #
+    #   1. Đề hình học **không cho toạ độ**. Prompt phải dạy cách ĐẶT HỆ TOẠ ĐỘ
+    #      — thứ không mã hoá được vào schema, và không có nó thì mô hình chọn
+    #      hệ tuỳ tiện rồi ra số vô tỉ mà `Fraction` không nhận.
+    #   2. Ranh giới R0 ở miền này cần VÍ DỤ ĐỐI CHIẾU đúng/sai, vì cám dỗ tự
+    #      điền toạ độ kết quả mạnh hơn hẳn miền thuật toán: model *biết* giao
+    #      tuyến là gì và rất muốn nói ra.
+    #   3. Bảng "đề hỏi gì → nghĩa vụ nào" cho 8 nghĩa vụ.
+    #
+    # ⚠️ Ngân sách này KHÔNG phải chỗ để thêm luật mỗi lần một ca hỏng. Luật nào
+    # mã hoá được thì để validator/kernel giữ — đó là bài học `RULES §3c`
+    # (DEEP_HARDENING) và bằng chứng lượt SEALED #1: 30/40 thất bại là do hợp
+    # đồng cứng nhắc, KHÔNG phải do prompt.
+    "geometry_program_generator.md": 4800,
     "analyze.md": 6900,
     "classify.md": 4550,
     "edit.md": 3550,

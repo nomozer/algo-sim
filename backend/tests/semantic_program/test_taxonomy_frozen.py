@@ -48,6 +48,33 @@ TAXONOMY_DA_DONG_BANG = {
     # và `term` ∈ `TERM_TRANSFORMS`. Số hạng ngoài tập ⇒ mức yếu, vì kiểm nó
     # đòi đánh giá biểu thức của chương trình — tức chạy lại chính nó.
     "scalar_accumulation",
+    # ── MIỀN HÌNH HỌC KHÔNG GIAN — MỞ 2026-08-24 ────────────────────────────
+    #
+    # Câu hỏi bắt buộc của test này là *"thay đổi đến từ DEV hay từ một ca
+    # SEALED?"*. Ở đây câu trả lời là **KHÔNG PHẢI CẢ HAI**: đề tài đã ĐỔI
+    # (`STATUS_LEDGER §0-2026-08-24`, nguồn: GVHD), và tám kind dưới đây là
+    # taxonomy của một MIỀN MỚI, không phải bản nới của miền cũ.
+    #
+    # Chín kind phía trên **giữ nguyên**, không đụng — chúng vẫn là taxonomy
+    # thật của lượt SEALED #1, và số `A 3/40 · B 1/40` vẫn trích được.
+    #
+    # ĐIỂM KHÁC BẢN CHẤT so với miền Tin học: cả tám đều có checker
+    # **server-owned**, không cái nào ở mức yếu. Ở đó, kiểm `predicate_verdict`
+    # đòi cài lại chính thuật toán đang kiểm nên phải cãi nhau nhiều tháng; ở
+    # đây kiểm là một PHÉP TÍNH giải tích (`u·v == 0`), không phải một lời giải.
+    # Tính độc lập không mất, nên không kind nào phải để mức yếu.
+    #
+    # Vì sao tách `point_on_line` khỏi `point_on_plane` thay vì gộp `incidence`:
+    # hai cái nhận CHỦ THỂ khác nhau, gộp thì bảng kiểu mất tác dụng và một đề
+    # hỏi "M có thuộc (SBC)" sẽ lọt khi LLM gắn nhầm vào một đường thẳng.
+    "point_on_line",
+    "point_on_plane",
+    "parallel",
+    "perpendicular",
+    "coplanar",
+    "distance",
+    "angle",
+    "volume",
 }
 
 #: Cố ý KHÔNG có mặt — ghi lại kèm lý do để lần sau khỏi "bổ sung cho đủ".
