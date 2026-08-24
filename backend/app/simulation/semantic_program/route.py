@@ -118,11 +118,19 @@ def verify_and_compile(
     """
     ground = check_grounding(contract, spec)
     if not ground.ok:
+        # `ErrorCode` giữ nguyên — đây vẫn là một thất bại grounding, và mở rộng
+        # enum là đụng vào bề mặt mọi tầng phía sau đọc. Nhưng mã CHI TIẾT phải
+        # lộ ra ở `details`: "khai đáp án làm giả thiết" và "không truy được về
+        # đề bài" là hai bệnh khác hẳn nhau, và gộp chúng thì lượt phân loại
+        # thất bại sau sẽ đếm nhầm — đúng cái Phase 5 vừa phải khai là thiếu sót.
+        chi_tiet = list(ground.unresolved)
+        if ground.error_code and ground.error_code != "INPUT_NOT_GROUNDED":
+            chi_tiet.insert(0, f"[{ground.error_code}]")
         return _hong(
             "grounding",
             ErrorCode.INPUT_NOT_GROUNDED,
             "Chương trình dùng dữ liệu không truy được về đề bài.",
-            details=list(ground.unresolved),
+            details=chi_tiet,
         )
 
     c1a = check_structural_coverage(contract, spec)

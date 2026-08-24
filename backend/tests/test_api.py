@@ -313,7 +313,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # đã đổi. Không bump thì mọi đề đã phân tích trả về envelope sinh dưới từ
     # vựng CŨ, nơi `point3`/`plane3` chưa tồn tại, và bản mở IR đọc như không ăn
     # thua.
-    assert main_module.CACHE_VERSION == "38"
+    # 39: bề mặt `analyze` nay CÓ MIỀN — bài hình học đi qua `geometry_analyze.md`
+    # với enum 8 nghĩa vụ, thay vì `semantic_analyze.md` với enum 19. Phase 5
+    # (2026-08-24) đo được cái giá của việc không tách: 3/6 chương trình hình học
+    # HỢP LỆ khai nghĩa vụ TIN HỌC — `derived_sequence` cho một bài hỏi
+    # `point_on_line`, `structural_traversal` cho một bài hỏi `coplanar`. Không
+    # bump thì đề hình học đã phân tích vẫn trả hợp đồng khai dưới enum cũ, và
+    # bản tách miền đọc như không ăn thua ngay trên chính các đề nó nhắm tới.
+    assert main_module.CACHE_VERSION == "39"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

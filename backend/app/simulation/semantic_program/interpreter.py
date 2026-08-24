@@ -59,8 +59,11 @@ from .geometry_exec import (  # noqa: E402
     GEOMETRY_TYPES,
     build_initial,
     exec_construct_line,
+    exec_construct_plane,
     exec_construct_point,
     exec_construct_section,
+    exec_construct_solid,
+    eval_geometry_expr,
 )
 
 
@@ -282,6 +285,25 @@ class SemanticProgramInterpreter:
                 action="construct_line", target=stmt.target_var,
                 details={"label": stmt.label,
                          "qua": [stmt.through_a, stmt.through_b]},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_plane":
+            pl, ke = exec_construct_plane(stmt, self.memory)
+            self.memory[stmt.target_var] = pl
+            self._record_step(
+                action="construct_plane", target=stmt.target_var,
+                details={"label": stmt.label, "qua": list(stmt.through)},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_solid":
+            kh, ke = exec_construct_solid(stmt, self.memory)
+            self.memory[stmt.target_var] = kh
+            self._record_step(
+                action="construct_solid", target=stmt.target_var,
+                details={"label": stmt.label, "dinh": list(stmt.vertices),
+                         "so_mat": len(stmt.faces)},
                 narration=ke,
             )
 
@@ -542,7 +564,33 @@ class SemanticProgramInterpreter:
             if isinstance(g, dict):
                 return g.get(node, [])
             return []
-        return None
+
+        # ── BIỂU THỨC HÌNH HỌC trong `assign` ────────────────────────────
+        #
+        # Trước Wave 2, nhánh này KHÔNG tồn tại và hàm rơi thẳng xuống
+        # `return None` bên dưới. Biểu thức hình học vì thế chỉ chạy được qua
+        # `construct_point`; đặt cùng biểu thức ấy vào một `assign` thì
+        # `ValueExpr` NHẬN (nó nằm trong union), validator NHẬN, interpreter
+        # trả `None`, và biến mang `None` đi tiếp — không một tầng nào kêu.
+        #
+        # Đo được ngay khi viết `test_geo_09_DI_TRON_DUONG`: `V` ra `None`,
+        # C₁b báo *"witness không được hiện thực hoá"*, và lời chẩn đoán ấy chỉ
+        # đúng một nửa — witness KHÔNG được hiện thực hoá vì phép tính không hề
+        # chạy, chứ không phải vì nhánh chết.
+        from .validator import _BIEU_THUC_HINH_HOC
+
+        if getattr(expr, "kind", None) in _BIEU_THUC_HINH_HOC:
+            return eval_geometry_expr(expr.kind, expr, self.memory)
+
+        # FAIL-CLOSED thay cho `return None`. Một `kind` chưa ai xử lý là LỖI
+        # HỢP ĐỒNG — thêm biểu thức vào union mà quên nhánh ở đây. Trả `None`
+        # biến lỗi ấy thành một giá trị hợp lệ chạy tiếp, và nó chỉ lộ ra ở
+        # cách xa chỗ hỏng.
+        raise SemanticExecutionError(
+            ERR_SAI_KIEU,
+            f"biểu thức '{getattr(expr, 'kind', type(expr).__name__)}' chưa "
+            "có nhánh thực thi",
+        )
 
     def _eval_condition(self, cond: ConditionExpr) -> bool:
         if isinstance(cond, CompareCond):

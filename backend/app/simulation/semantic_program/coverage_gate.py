@@ -52,7 +52,8 @@ def _producers(statements: Iterable) -> set[str]:
         # mọi chương trình hình học, kể cả chương trình dựng đúng. Đây là nửa
         # thứ hai của cùng một lỗ với `_phu_thuoc`: một bên thiếu *ai tạo ra*,
         # một bên thiếu *tạo ra từ cái gì* — và phải vá cả hai mới thông.
-        elif kind in ("construct_point", "construct_line", "construct_section"):
+        elif kind in ("construct_point", "construct_line", "construct_plane",
+                      "construct_solid", "construct_section"):
             found.add(st.target_var)
         elif kind in ("pop", "dequeue"):
             dest = getattr(st, "dest_var", None)
@@ -141,7 +142,13 @@ def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
     for st in statements or ():
         kind = getattr(st, "kind", None)
         if kind == "assign":
-            them(st.target_var, _doc(st.expr))
+            # `_ten_trong_bieu_thuc_hinh_hoc` phải có mặt Ở ĐÂY nữa, không chỉ
+            # ở `construct_point`: `V = measure(volume, of=khoi)` là một
+            # `assign`, và trường `of` là CHUỖI TRẦN nên `_doc` không thấy. Bỏ
+            # sót thì mọi đại lượng đo được đều bị C₁b kết tội "khai đáp án chứ
+            # không tính nó" — đúng thứ nó vừa tính xong.
+            them(st.target_var,
+                 _doc(st.expr) | _ten_trong_bieu_thuc_hinh_hoc(st.expr))
         # ── DỰNG HÌNH (2026-08-24) ───────────────────────────────────────
         #
         # Thiếu ba nhánh này, `_phu_thuoc` trả về `{}` cho MỌI chương trình
@@ -158,6 +165,10 @@ def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
             them(st.target_var, _ten_trong_bieu_thuc_hinh_hoc(st.expr) | _doc(st.expr))
         elif kind == "construct_line":
             them(st.target_var, {st.through_a, st.through_b})
+        elif kind == "construct_plane":
+            them(st.target_var, set(st.through))
+        elif kind == "construct_solid":
+            them(st.target_var, set(st.vertices))
         elif kind == "construct_section":
             them(st.target_var, {st.solid, st.plane})
         elif kind in ("pop", "dequeue"):

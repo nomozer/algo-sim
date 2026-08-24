@@ -160,7 +160,16 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       không kèm `pred` — trường ấy chưa bao giờ cho mô hình biết có những vị từ
 #       nào. Bề mặt khai nghĩa vụ đổi ⇒ mọi phân tích cache theo schema cũ không
 #       còn đại diện cho schema hiện hành.
-CACHE_VERSION = "38"
+#   39 (2026-08-25, geometry Wave 2): bề mặt `analyze` nay CÓ MIỀN. Bài hình học
+#       đi qua `geometry_analyze.md` với enum 8 nghĩa vụ thay vì
+#       `semantic_analyze.md` với enum 19. Phase 5 đo được vì sao: 3/6 chương
+#       trình hợp lệ khai nghĩa vụ TIN HỌC (`derived_sequence`,
+#       `structural_traversal`, `predicate_verdict`) cho bài hình học, vì enum
+#       mời gọi cả chín cái tên ấy. Đổi kèm: `model_assumption` (kênh giả thiết
+#       toạ độ), ba primitive dựng/đo mới, và `value`/`cos_sq`/`wrt` trong
+#       schema nghĩa vụ. Bề mặt khai nghĩa vụ đổi ⇒ mọi phân tích cache theo
+#       schema cũ không còn đại diện cho schema hiện hành.
+CACHE_VERSION = "39"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

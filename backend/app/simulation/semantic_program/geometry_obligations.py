@@ -112,10 +112,34 @@ def check_coplanar(snapshot: dict, ob) -> str | None:
 # So sánh làm trên BÌNH PHƯƠNG với `distance`, và trên `cos²` với `angle` —
 # hai đại lượng ấy vô tỉ, còn bình phương của chúng thì hữu tỉ. Lấy căn rồi so
 # là đưa sai số float quay lại qua cửa sau.
+#
+# ─── HAI HÌNH DẠNG WITNESS, và vì sao phải nhận cả hai (Wave 2) ────────────
+#
+# HÌNH DẠNG CŨ: `witness` là ĐỐI TƯỢNG thứ hai của phép đo, và giá trị mong đợi
+# nằm ở `params["value"]`. Giữ nguyên, không hồi quy.
+#
+# HÌNH DẠNG MỚI: `witness` là CON SỐ mà chương trình đo ra (qua biểu thức
+# `measure`), đối tượng thứ hai nằm ở `params["wrt"]`.
+#
+# Hình dạng mới MẠNH HƠN, và đó là lý do nó có mặt: cổng tính lại đại lượng từ
+# hình rồi so với con số chương trình khai. Hình dạng cũ chỉ so được với con số
+# do `analyze` khai — tức so lời một model với lời chính model ấy. Ngoài ra
+# `cham_oracle` đọc `final_memory[witness]`, nên nếu witness không bao giờ là
+# một con số thì `distance`/`angle`/`volume` **không chấm được bằng oracle** —
+# đúng 4/10 bài của tập DEV.
+def _la_so(v) -> bool:
+    return isinstance(v, (int, Fraction)) and not isinstance(v, bool)
+
+
 def check_distance(snapshot: dict, ob) -> str | None:
-    a, b = _lay(snapshot, ob.container), _lay(snapshot, ob.witness)
+    a = _lay(snapshot, ob.container)
+    b = _lay(snapshot, ob.witness)
+    khai = None
+    if _la_so(b):
+        khai = Fraction(b)
+        b = _lay(snapshot, ob.params.get("wrt"))
     mong = _so(ob.params.get("value"))
-    if mong is None:
+    if mong is None and khai is None:
         return None  # không khai giá trị ⇒ chỉ kiểm được cấu trúc, mức yếu
     try:
         if isinstance(a, Plane3) and isinstance(b, Vec3):
@@ -128,13 +152,22 @@ def check_distance(snapshot: dict, ob) -> str | None:
             return "cặp đối tượng không hợp lệ cho khoảng cách"
     except Exception as e:  # noqa: BLE001 — lỗi hình học là kết luận, không phải sự cố
         return f"không đo được khoảng cách: {e}"
-    return None if d2 == mong * mong else f"{_LECH}: d² = {d2}, đề mong {mong}²"
+    if khai is not None and d2 != khai * khai:
+        return f"{_LECH}: chương trình khai d = {khai}, hình cho d² = {d2}"
+    if mong is not None and d2 != mong * mong:
+        return f"{_LECH}: d² = {d2}, đề mong {mong}²"
+    return None
 
 
 def check_angle(snapshot: dict, ob) -> str | None:
-    a, b = _lay(snapshot, ob.container), _lay(snapshot, ob.witness)
+    a = _lay(snapshot, ob.container)
+    b = _lay(snapshot, ob.witness)
+    khai = None
+    if _la_so(b):
+        khai = Fraction(b)
+        b = _lay(snapshot, ob.params.get("wrt"))
     mong = _so(ob.params.get("cos_sq"))
-    if mong is None:
+    if mong is None and khai is None:
         return None
     try:
         if isinstance(a, Line3) and isinstance(b, Line3):
@@ -147,26 +180,34 @@ def check_angle(snapshot: dict, ob) -> str | None:
             return "cặp đối tượng không hợp lệ cho góc"
     except Exception as e:  # noqa: BLE001
         return f"không đo được góc: {e}"
-    return None if c2 == mong else f"{_LECH}: cos² = {c2}, đề mong {mong}"
+    if khai is not None and c2 != khai:
+        return f"{_LECH}: chương trình khai cos² = {khai}, hình cho {c2}"
+    if mong is not None and c2 != mong:
+        return f"{_LECH}: cos² = {c2}, đề mong {mong}"
+    return None
 
 
 def check_volume(snapshot: dict, ob) -> str | None:
     sol = _lay(snapshot, ob.container)
     if not isinstance(sol, Polyhedron):
         return "cần một `solid`"
+    w = _lay(snapshot, ob.witness)
+    khai = Fraction(w) if _la_so(w) else None
     mong = _so(ob.params.get("value"))
-    if mong is None:
+    if mong is None and khai is None:
         return None
     # Phân rã từ đỉnh đầu tiên qua mọi mặt — tất định, và `abs` nên không phụ
     # thuộc hướng khai mặt.
-    tong = Fraction(0)
-    tam = sol.vertices[0]
-    for f in sol.faces:
-        for i in range(1, len(f) - 1):
-            tong += M.volume_tetrahedron(
-                tam, sol.vertices[f[0]], sol.vertices[f[i]], sol.vertices[f[i + 1]]
-            )
-    return None if tong == mong else f"{_LECH}: V = {tong}, đề mong {mong}"
+    # MỘT nguồn sự thật, dùng chung với phép `measure` của IR: hai bản rời nhau
+    # sẽ lệch, và lệch CÂM vì cả hai đều "chạy ra một con số".
+    from .geometry_exec import volume_polyhedron
+
+    tong = volume_polyhedron(sol)
+    if khai is not None and tong != khai:
+        return f"{_LECH}: chương trình khai V = {khai}, khối cho V = {tong}"
+    if mong is not None and tong != mong:
+        return f"{_LECH}: V = {tong}, đề mong {mong}"
+    return None
 
 
 GEOMETRY_CHECKERS = {

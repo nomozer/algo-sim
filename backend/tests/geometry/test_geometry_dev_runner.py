@@ -89,16 +89,68 @@ def test_runner_KHONG_ghi_vao_thu_muc_cua_lUot_SEALED(rn):
     assert "semantic-benchmark" not in str(rn.GEO)
 
 
-def test_ep_skill_CHI_doi_dung_semantic_program(rn):
-    """Đổi cả `analyze` sang prompt hình học là đo một hệ khác hệ mô tả."""
-    goc = {"semantic_program": "TIN_HOC", "semantic_analyze": "ANALYZE",
-           "geometry_program_generator": "HINH_HOC"}
+def test_analyze_nay_CHAY_MIEN_HINH_HOC(rn):
+    """⚠️ Test này LẬT NGƯỢC bản Wave 1, và lý do phải đọc kèm.
 
-    def _load(t):
-        return goc[rn.SKILL_HINH_HOC if t == "semantic_program" else t]
+    Bản cũ tên là `test_ep_skill_CHI_doi_dung_semantic_program`, và nó khẳng
+    định *"analyze phải giữ nguyên"* với lập luận: đổi cả `analyze` là **đo một
+    hệ khác hệ mô tả**. Lập luận ấy đúng về nguyên tắc và SAI về sự thật — vì
+    hệ được mô tả khi ấy chưa có miền nào cả, nên "giữ nguyên" nghĩa là chạy
+    bài hình học bằng prompt Tin học.
 
-    assert _load("semantic_program") == "HINH_HOC"
-    assert _load("semantic_analyze") == "ANALYZE", "analyze phải giữ nguyên"
+    Phase 5 đo được cái giá: 3/6 chương trình HỢP LỆ khai nghĩa vụ Tin học cho
+    bài hình học (`derived_sequence` cho một bài hỏi `point_on_line`). Không
+    phải mô hình kém — enum của `semantic_analyze` liệt kê cả 19 nghĩa vụ và
+    prompt chưa từng nhắc tới hình học.
+
+    Wave 2 làm cho "miền" thành một thứ có thật trong sản phẩm, nên runner
+    truyền miền chứ không còn *bọc* skill. Đó là lý do test đảo chiều: cái được
+    đo bây giờ ĐÚNG LÀ hệ được mô tả.
+    """
+    import ast
+    import inspect
+
+    from app.simulation.semantic_program.domain_profile import (
+        DOMAIN_HINH_HOC,
+        analyze_skill_for,
+    )
+
+    assert rn.DOMAIN_HINH_HOC == DOMAIN_HINH_HOC
+    assert analyze_skill_for(rn.DOMAIN_HINH_HOC) == "geometry_analyze"
+
+    # Miền phải được TRUYỀN cho `stage_semantic_analyze`, không chỉ import cho
+    # có. Soi `ast` chứ không quét chuỗi — cùng bài học với hai test trên.
+    goi = [
+        n for n in ast.walk(ast.parse(inspect.getsource(rn.chay_mot_case)))
+        if isinstance(n, ast.Call)
+        and isinstance(n.func, ast.Attribute)
+        and n.func.attr == "stage_semantic_analyze"
+    ]
+    assert goi, "runner không còn gọi stage_semantic_analyze?"
+    assert any(kw.arg == "domain" for kw in goi[0].keywords), (
+        "gọi stage_semantic_analyze mà KHÔNG truyền domain — lượt đo sẽ lại "
+        "chạy bằng prompt Tin học, đúng lỗ Phase 5"
+    )
+
+
+def test_runner_KHONG_dung_bo_nhan_mien(rn):
+    """Phép đo không được phụ thuộc vào một SUY ĐOÁN.
+
+    `detect_domain` là heuristic từ khoá. Nếu runner gọi nó và nó đoán sai một
+    bài, số của bài đó nói về bộ nhận miền chứ không nói về hệ sinh — và không
+    ai đọc artifact phân biệt được hai thứ ấy.
+    """
+    import ast
+
+    cay = ast.parse(_R.read_text(encoding="utf-8"))
+    ten_goi = {
+        n.func.id for n in ast.walk(cay)
+        if isinstance(n, ast.Call) and isinstance(n.func, ast.Name)
+    } | {
+        n.func.attr for n in ast.walk(cay)
+        if isinstance(n, ast.Call) and isinstance(n.func, ast.Attribute)
+    }
+    assert "detect_domain" not in ten_goi
 
 
 # ── 3. Chấm oracle — bám NGHĨA VỤ, không bám tên biến ─────────────────────

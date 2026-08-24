@@ -38,6 +38,22 @@ BUDGET_BYTES: dict[str, int] = {
     # (DEEP_HARDENING) và bằng chứng lượt SEALED #1: 30/40 thất bại là do hợp
     # đồng cứng nhắc, KHÔNG phải do prompt.
     "geometry_program_generator.md": 4800,
+    # Bề mặt `analyze` của MIỀN HÌNH HỌC (Wave 2, 2026-08-24). Tách khỏi
+    # `semantic_analyze.md` vì cùng lý do `semantic_analyze.md` tách khỏi
+    # `analyze.md`: trộn vào thì mọi đề Tin học phải trả tiền cho bảng dịch
+    # "câu hỏi hình học → nghĩa vụ nào", và mọi đề hình học phải đọc luật
+    # `cmp`/`transform`/`prescribed_procedure` mà nó không bao giờ dùng.
+    #
+    # LỚN HƠN `semantic_analyze.md` (2200) vì ba thứ không mã hoá được:
+    #   1. Dữ kiện hình học có HAI DẠNG — số đo và quan hệ (`SA ⊥ (ABCD)`).
+    #      Bảng kiểu không diễn đạt được "một mệnh đề quan hệ".
+    #   2. Bảng dịch 8 nghĩa vụ, kèm cột `witness` — vì witness của nhóm quan
+    #      hệ là ĐỐI TƯỢNG còn của nhóm đại lượng là CON SỐ. Đây chính là chỗ
+    #      Phase 5 đo được `obligation_match` 3/6.
+    #   3. Luật "hệ toạ độ KHÔNG phải dữ kiện" — nếu không nói, `analyze` khai
+    #      `A = (0,0,0)` thành một `input_fact`, và cả chuỗi provenance phía
+    #      sau ghim vào một dữ kiện không có trong đề.
+    "geometry_analyze.md": 4200,
     "analyze.md": 6900,
     "classify.md": 4550,
     "edit.md": 3550,

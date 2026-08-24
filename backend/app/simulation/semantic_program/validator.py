@@ -102,6 +102,9 @@ _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
     "midpoint": ("a", "b"),
     "divide_segment": ("a", "b"),
     "project_onto": ("point", "target"),
+    # `quantity` cố ý VẮNG MẶT: nó là một enum đóng, không phải tên vùng nhớ.
+    # Cùng lý do `ratio` vắng mặt ở `divide_segment`.
+    "measure": ("of", "wrt"),
 }
 MAX_MEMORY_DECLARATIONS = 20
 
@@ -340,7 +343,8 @@ class SemanticTypeChecker:
         # được khi biết toạ độ, và kernel đã fail-closed đúng chỗ ấy. Cố đoán
         # trước ở đây là dựng một tầng hình học thứ hai, và hai tầng thì sẽ
         # lệch nhau.
-        elif stmt.kind in ("construct_point", "construct_line", "construct_section"):
+        elif stmt.kind in ("construct_point", "construct_line", "construct_plane",
+                           "construct_solid", "construct_section"):
             for ten in self._ten_tham_chieu(stmt):
                 if ten not in self.symbols and ten not in self.scoped_vars:
                     return (f"Câu lệnh dựng tham chiếu '{ten}' chưa khai trong "
@@ -362,6 +366,10 @@ class SemanticTypeChecker:
         """Tên đối tượng mà một câu lệnh dựng ĐỌC (không tính tên nó GHI RA)."""
         if stmt.kind == "construct_line":
             return [stmt.through_a, stmt.through_b]
+        if stmt.kind == "construct_plane":
+            return list(stmt.through)
+        if stmt.kind == "construct_solid":
+            return list(stmt.vertices)
         if stmt.kind == "construct_section":
             return [stmt.solid, stmt.plane]
         return []
@@ -430,6 +438,10 @@ class SemanticTypeChecker:
         elif expr.kind in _BIEU_THUC_HINH_HOC:
             for ten_truong in _BIEU_THUC_HINH_HOC[expr.kind]:
                 ten = getattr(expr, ten_truong)
+                # `measure.wrt` là `None` với `volume` (một khối không đo "so
+                # với" cái gì cả). Ô trống hợp lệ ≠ tên chưa khai.
+                if ten is None:
+                    continue
                 if ten not in self.symbols and ten not in self.scoped_vars:
                     return (f"Biểu thức '{expr.kind}' tham chiếu '{ten}' chưa "
                             f"khai trong memory_declarations.")

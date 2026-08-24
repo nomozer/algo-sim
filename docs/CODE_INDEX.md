@@ -2628,6 +2628,25 @@ Sở hữu **P2** của chuỗi provenance: mọi `initial_value` không phải 
 phải tham chiếu **đúng mục** trong `RequestContract`. Kiểm THAM CHIẾU, không
 tìm-theo-giá-trị. Giới hạn P1 khai ở `docs/evaluation/semantic-benchmark/P1_LIMITATION.md`.
 
+Từ Wave 2 (2026-08-25) có **kênh thứ hai**: `model_assumption` — giả thiết mô
+hình hoá, cho toạ độ mà chính người giải tự chọn khi đặt hệ trục. Đây KHÔNG phải
+nới cổng: nó opt-in, chỉ nhận `point3`/`vector3`, **không bao giờ** nhận biến là
+witness của một nghĩa vụ (`MODEL_ASSUMPTION_IS_ANSWER`), đòi lý do viết ra, và
+`source_fact_id` vẫn thắng khi khai cả hai. Giả thiết được chấp nhận nằm ở
+`GroundingResult.assumptions` để **đếm được**. Vì sao cần: Phase 5 cho thấy 5/10
+bài hình học chết ở cổng này trong khi prompt *bảo* mô hình tự đặt hệ toạ độ —
+hợp đồng mâu thuẫn với prompt, không phải mô hình sai.
+
+### `backend/app/simulation/semantic_program/domain_profile.py` · offline
+
+Sở hữu **hồ sơ MIỀN** của route ngữ nghĩa: mỗi miền (`tin_hoc` · `hinh_hoc`) có
+tập nghĩa vụ, bảng kiểu dữ kiện và cặp skill riêng. Tập nghĩa vụ **dẫn xuất** từ
+bảng kiểu container của `obligations.OBLIGATION_KINDS` (nghĩa vụ nào nhận toàn
+bộ chủ thể là kiểu hình học thì thuộc miền hình học) — không chép tay thành danh
+sách thứ hai. Giữ luôn `detect_domain`, một heuristic từ khoá **fail-safe về phía
+`tin_hoc`**: cửa duy nhất nó mở là cửa sang hình học, nên 24 target Tin học
+không thể bị nó làm hỏng. Đường ĐO không dùng nó — runner truyền miền thẳng.
+
 ### `backend/app/simulation/semantic_program/postconditions.py` · offline
 
 Sở hữu **C₂** — 8 checker server-owned. Mỗi checker tính lại tính chất TỪ TRẠNG
@@ -2897,6 +2916,17 @@ Prompt của `stage_semantic_analyze` — đề bài → dữ liệu đề cho +
 hẳn `analyze.md`** để đề đi đường module không phải trả tiền cho từ vựng nghĩa
 vụ. Không được gộp vào lượt viết IR: một lượt sinh cả nghĩa vụ lẫn chương trình
 thì C₁a tự đối chiếu một nguồn với chính nó.
+
+### `backend/app/ai/skills/geometry_analyze.md` · **live**
+
+Bản của `semantic_analyze.md` cho **miền hình học** — chọn bằng
+`domain_profile.analyze_skill_for`. Ba thứ nó dạy mà bản Tin học không dạy được:
+dữ kiện hình học có HAI dạng (số đo và **quan hệ** như `SA ⊥ (ABCD)`); bảng dịch
+8 nghĩa vụ kèm cột `witness` (nhóm quan hệ nhận ĐỐI TƯỢNG, nhóm đại lượng nhận
+CON SỐ); và luật **hệ toạ độ KHÔNG phải dữ kiện** — không nói thì `analyze` khai
+`A = (0,0,0)` thành `input_fact` và cả chuỗi provenance ghim vào thứ đề không có.
+Ra đời sau Phase 5, nơi 3/6 chương trình hợp lệ khai nghĩa vụ Tin học cho bài
+hình học vì enum cũ liệt kê cả 19.
 
 ### `backend/scripts/ocr_sgk_ingest.py` · **live** (Cloud Vision), có CACHE
 

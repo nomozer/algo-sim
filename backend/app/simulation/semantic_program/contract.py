@@ -140,9 +140,64 @@ MemoryType = Literal[
     "point3", "vector3", "line3", "plane3", "polygon3", "solid",
 ]
 
+
+def tu_choi_ten_nghia_vu_lam_kieu(v: Any) -> Any:
+    """Chặn NHẦM LẪN HAI TAXONOMY, và chặn bằng một thông điệp DẠY LẠI.
+
+    ⚠️ CỐ Ý KHÔNG mang tiền tố `canonical_`. Bốn hàm `canonical_*` ở file này
+    đều là **biên CHUẨN HOÁ** — chúng nhận một cách viết lệch rồi trả về dạng
+    chuẩn, và mỗi cái có một lớp trong `coercion_stats.LOP_HOP_LE` để đếm xem
+    model lệch bao nhiêu. Hàm này KHÔNG chuẩn hoá gì: nó từ chối. Đặt tên
+    `canonical_memory_type` (bản nháp đầu đã đặt thế) làm `test_coercion_stats`
+    đỏ ngay, và đỏ ĐÚNG — nó buộc phải khai một lớp coercion mà không lượt nào
+    đếm được, vì không có phép ép kiểu nào xảy ra.
+
+    ─── ĐO ĐƯỢC Ở PHASE 5 (2026-08-24), 3/10 bài ───────────────────────────
+
+    Mô hình khai `{"name": "V", "type": "volume"}` — lấy tên một **NGHĨA VỤ**
+    làm **KIỂU BỘ NHỚ**. Cũng thế với `angle`, `perpendicular`, `distance`.
+
+    Nhìn từ phía nó, nhầm lẫn ấy HỢP LÝ: thẻ văn phạm liệt kê các kiểu, prompt
+    liệt kê các nghĩa vụ, và cả hai đều là "danh sách tên hợp lệ". Không chỗ
+    nào nói hai danh sách ấy sống ở hai không gian tên khác nhau.
+
+    ─── VÌ SAO TỪ CHỐI CHỨ KHÔNG ĐỔI TÊN NGHĨA VỤ ──────────────────────────
+
+    Đổi `volume` → `compute_volume` chỉ **dời đích va chạm**: mô hình vẫn có
+    thể viết `type: "compute_volume"`, và ta mất luôn tính tương thích với
+    `oracle_result` của tập DEV vốn khoá theo đúng tên nghĩa vụ. Từ chối tại
+    biên thì đóng hẳn, và không dataset nào phải đổi.
+
+    ─── VÌ SAO KHÔNG ÉP KIỂU (coerce) ──────────────────────────────────────
+
+    `volume` → `float` nghe tiện, nhưng đó là ĐOÁN: `perpendicular` phải thành
+    `bool`, `distance` thành `float`, `angle` thì tuỳ. Mỗi lần đoán đúng là một
+    lần che mất việc mô hình đang hiểu sai cấu trúc. Vòng sửa ≤3 lượt đọc được
+    thông điệp này và tự sửa — đó là đường phục hồi, và nó lộ thiên.
+    """
+    if isinstance(v, str):
+        from .obligations import OBLIGATION_KINDS
+
+        if v in OBLIGATION_KINDS:
+            raise ValueError(
+                f"'{v}' là tên một NGHĨA VỤ, không phải một KIỂU BỘ NHỚ. Hai "
+                f"danh sách này tách biệt. Nghĩa vụ được khai ở lượt đọc đề, "
+                f"không khai trong `memory_declarations`. Ở đây hãy dùng kiểu "
+                f"của ĐỐI TƯỢNG: một số đo là `float`, một quan hệ đúng/sai là "
+                f"`bool`, một điểm là `point3`, một khối là `solid`."
+            )
+    return v
+
+
+#: Kiểu bộ nhớ, kèm bộ chặn nhầm-taxonomy ở ngay biên.
+CheckedMemoryType = Annotated[
+    MemoryType, BeforeValidator(tu_choi_ten_nghia_vu_lam_kieu)
+]
+
+
 class MemoryDeclaration(BaseModel):
     name: str = Field(..., description="Tên định danh biến/container trong bộ nhớ")
-    type: MemoryType = Field(..., description="Kiểu dữ liệu ngữ nghĩa")
+    type: CheckedMemoryType = Field(..., description="Kiểu dữ liệu ngữ nghĩa")
     initial_value: Any = Field(None, description="Giá trị khởi tạo ban đầu")
     element_type: Optional[MemoryType] = Field(None, description="Kiểu phần tử nếu là array/stack/queue/set")
     key_type: Optional[ScalarType] = Field(None, description="Kiểu khóa nếu là map")
@@ -153,6 +208,15 @@ class MemoryDeclaration(BaseModel):
             "ID mục dữ liệu trong RequestContract mà initial_value lấy từ đó. "
             "BẮT BUỘC khi initial_value mang nghĩa dữ liệu ĐỀ CHO. Ghim ĐÚNG MỤC "
             "NÀO — khớp theo giá trị đơn thuần dễ trùng ngẫu nhiên."
+        ),
+    )
+    model_assumption: Optional[str] = Field(
+        None,
+        description=(
+            "LÝ DO chọn giá trị này, khi nó là GIẢ THIẾT MÔ HÌNH HOÁ chứ không "
+            "phải dữ liệu đề cho — điển hình là toạ độ của một đỉnh khi đặt hệ "
+            "trục. Chỉ dùng cho `point3`/`vector3`, và KHÔNG BAO GIỜ cho biến "
+            "mang câu trả lời."
         ),
     )
 
@@ -233,6 +297,41 @@ class ProjectOntoExpr(BaseModel):
     point: str = Field(..., description="tên điểm")
     target: str = Field(..., description="tên mặt phẳng/đường chiếu lên")
 
+class MeasureExpr(BaseModel):
+    """ĐO một đại lượng — kernel tính, IR chỉ nói *đo cái gì*.
+
+    ─── VÌ SAO THÊM: audit Wave 2 lộ ra một lỗ mà Phase 5 chưa kịp nhìn thấy ──
+
+    Ba nghĩa vụ `distance` · `angle` · `volume` đã nằm trong taxonomy đóng băng
+    và có đủ checker. Nhưng IR **không có phép đo nào**, nên chương trình không
+    có cách nào đưa một CON SỐ vào witness — và `cham_oracle` đọc đúng chỗ ấy.
+    Ba nghĩa vụ đó phủ **4/10 bài DEV**. Chúng trượt schema trước nên lỗ này bị
+    che; sửa xong bốn nguyên nhân kia thì chúng vẫn không chấm được.
+
+    Đây KHÔNG phải "thêm primitive vì thiếu": nó là điều kiện để 3/8 nghĩa vụ
+    đã có checker thôi làm mã chết.
+
+    ─── R0 GIỮ NGUYÊN ──────────────────────────────────────────────────────
+
+    Trường của nó toàn là **TÊN**. Không có chỗ nào điền được một con số. LLM
+    nói *"đo khoảng cách từ S tới (ABCD)"*; giá trị do `geometry/measure.py`
+    tính bằng số hữu tỉ chính xác.
+
+    ─── VÌ SAO `angle_cos_sq` CHỨ KHÔNG PHẢI `angle` ───────────────────────
+
+    Góc hình học phần lớn vô tỉ, `cos²` của nó hữu tỉ. Trả về độ là ép một phép
+    làm tròn vào giữa chuỗi tất định, và mọi phép so BẰNG phía sau mất nghĩa.
+    Tên trường nói thẳng đơn vị để không ai đọc nhầm.
+    """
+    kind: Literal["measure"] = "measure"
+    quantity: Literal["distance", "angle_cos_sq", "volume"] = Field(
+        ..., description="đại lượng cần đo"
+    )
+    of: str = Field(..., description="tên đối tượng thứ nhất (hoặc khối)")
+    wrt: Optional[str] = Field(
+        None, description="tên đối tượng thứ hai; `volume` không cần"
+    )
+
 class DivideSegmentExpr(BaseModel):
     """Điểm chia đoạn theo tỉ lệ — `t=0` là `a`, `t=1` là `b`.
 
@@ -254,6 +353,7 @@ ValueExpr = Annotated[
         Annotated[MidpointExpr, Tag("midpoint")],
         Annotated[ProjectOntoExpr, Tag("project_onto")],
         Annotated[DivideSegmentExpr, Tag("divide_segment")],
+        Annotated[MeasureExpr, Tag("measure")],
         Annotated[VarRefExpr, Tag("var")],
         Annotated[IndexRefExpr, Tag("index")],
         Annotated[FieldRefExpr, Tag("field")],
@@ -462,6 +562,51 @@ class ConstructLineStmt(BaseModel):
     through_b: str = Field(..., description="tên điểm 2")
     label: Optional[str] = None
 
+class ConstructPlaneStmt(BaseModel):
+    """Dựng mặt phẳng QUA BA ĐIỂM ĐÃ CÓ — bằng TÊN, không bằng toạ độ.
+
+    ─── VÌ SAO THÊM, ĐO ĐƯỢC Ở PHASE 5 ────────────────────────────────────
+
+    Mô hình bịa `kind: "construct_plane"` ở 2/10 bài. Không phải nó sáng tác:
+    một bài hình học bất kỳ đều cần mặt `(SBC)`, và IR **không có từ nào** để
+    nói câu đó.
+
+    ─── VÀ VÌ SAO ĐÂY LÀ BỊT LỖ R0, KHÔNG PHẢI THÊM TIỆN NGHI ─────────────
+
+    Trước câu lệnh này, cách duy nhất để có `(SBC)` là khai một
+    `memory_declaration` kiểu `plane3` với `initial_value = {"through": [[…],
+    […], […]]}` — tức **chép lại toạ độ của S, B, C lần thứ hai**. Hai bản toạ
+    độ thì sẽ lệch, lệch câm, và bản thứ hai do LLM viết chứ không do kernel
+    tính. Dựng theo tên thì chỉ còn một nguồn.
+    """
+    kind: Literal["construct_plane"] = "construct_plane"
+    target_var: str = Field(..., description="tên mặt phẳng dựng ra")
+    through: list[str] = Field(
+        ..., min_length=3, max_length=3, description="tên ba điểm không thẳng hàng"
+    )
+    label: Optional[str] = Field(None, description="nhãn, vd (SBC)")
+
+class ConstructSolidStmt(BaseModel):
+    """Dựng khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.
+
+    Cùng lý do với `construct_plane`, và thêm một điều: `faces` là **cấu trúc
+    tổ hợp** đọc thẳng từ đề (*"hình chóp S.ABCD"* ⇒ một đáy bốn đỉnh, bốn mặt
+    bên), KHÔNG phải dữ liệu hình học. LLM sở hữu quan hệ kề; kernel sở hữu
+    toạ độ. Ranh giới R0 rơi đúng vào giữa hai thứ đó.
+
+    Chỉ số trong `faces` trỏ vào `vertices` theo VỊ TRÍ, giống hệt cách
+    `Polyhedron` của kernel biểu diễn — không đẻ ra một quy ước thứ hai.
+    """
+    kind: Literal["construct_solid"] = "construct_solid"
+    target_var: str = Field(..., description="tên khối dựng ra")
+    vertices: list[str] = Field(
+        ..., min_length=4, description="tên các đỉnh, theo thứ tự"
+    )
+    faces: list[list[int]] = Field(
+        ..., min_length=4, description="mỗi mặt là danh sách chỉ số đỉnh"
+    )
+    label: Optional[str] = Field(None, description="nhãn, vd S.ABCD")
+
 class ConstructSectionStmt(BaseModel):
     """Dựng thiết diện — engine đi theo MẶT và sinh ra NHIỀU bước con.
 
@@ -480,6 +625,8 @@ SemanticStatement = Annotated[
         Annotated[AssignStmt, Tag("assign")],
         Annotated[ConstructPointStmt, Tag("construct_point")],
         Annotated[ConstructLineStmt, Tag("construct_line")],
+        Annotated[ConstructPlaneStmt, Tag("construct_plane")],
+        Annotated[ConstructSolidStmt, Tag("construct_solid")],
         Annotated[ConstructSectionStmt, Tag("construct_section")],
         Annotated[WriteIndexStmt, Tag("write_index")],
         Annotated[MapSetStmt, Tag("map_set")],

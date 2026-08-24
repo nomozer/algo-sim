@@ -26,12 +26,16 @@ from typing import Any
 
 from ..geometry import GeometryError, Line3, Plane3, Point3, Vec3
 from ..geometry import kernel as K
+from ..geometry import measure as M
 from ..geometry.section import Polyhedron, Section, cross_section
 
 #: Đối tượng lạ trong bộ nhớ khi phép dựng cần một kiểu cụ thể.
 ERR_SAI_LOAI = "GEOMETRY_OPERAND_TYPE"
 #: Tên không có trong bộ nhớ.
 ERR_KHONG_KHAI = "GEOMETRY_UNDECLARED"
+#: Đại lượng đúng nhưng VÔ TỈ — không phải lỗi của chương trình, là giới hạn
+#: biểu diễn. Mã riêng để phân loại thất bại không nhầm nó với "tính sai".
+ERR_VO_TI = "GEOMETRY_IRRATIONAL_RESULT"
 
 
 def _lay(mem: dict[str, Any], ten: str, loai: type, mo_ta: str) -> Any:
@@ -95,6 +99,110 @@ GEOMETRY_TYPES = frozenset(
 )
 
 
+def volume_polyhedron(sol: Polyhedron) -> Fraction:
+    """Thể tích một khối — phân rã quạt từ đỉnh đầu qua MỌI mặt.
+
+    MỘT nguồn sự thật, dùng chung cho `measure` (phép đo của IR) và
+    `check_volume` (cổng C₂). Trước Wave 2, phép này nằm inline trong
+    `geometry_obligations.check_volume`; để nguyên đó rồi viết bản thứ hai ở
+    đây là đúng cái bẫy `ARCHITECTURE_MAP §8` gọi tên — hai bản sẽ lệch, và
+    lệch câm vì cả hai đều "chạy ra một con số".
+
+    `abs` trong `volume_tetrahedron` khiến kết quả không phụ thuộc chiều khai
+    mặt, nên bảng `faces` viết thuận hay nghịch kim đồng hồ đều ra cùng số.
+    """
+    tong = Fraction(0)
+    tam = sol.vertices[0]
+    for f in sol.faces:
+        for i in range(1, len(f) - 1):
+            tong += M.volume_tetrahedron(
+                tam, sol.vertices[f[0]], sol.vertices[f[i]], sol.vertices[f[i + 1]]
+            )
+    return tong
+
+
+# ── phép ĐO: engine trả SỐ HỮU TỈ, IR chỉ nói đo cái gì ───────────────────
+def _do(node: Any, mem: dict[str, Any]) -> Fraction:
+    """`measure` → `Fraction`. Không có float ở đâu trong đường này.
+
+    `distance` trả **bình phương khoảng cách** hay khoảng cách? — Trả KHOẢNG
+    CÁCH khi nó hữu tỉ, và NÉM khi nó vô tỉ. Lý do: `oracle_result` của tập DEV
+    khai `distance: "2"` (một khoảng cách thật), còn `angle` khai `cos²`. Hai
+    đại lượng, hai quy ước, và cả hai đều được nói thẳng ra — cái nguy hiểm là
+    một quy ước ngầm mà hai phía hiểu khác nhau.
+
+    Vô tỉ thì NÉM chứ không làm tròn: một `√2` lặng lẽ thành `1.414…` là đúng
+    cách sai số float quay lại qua cửa sau, sau khi cả kernel đã dựng bằng
+    `Fraction` để tránh nó.
+    """
+    q = node.quantity
+    a = mem.get(node.of)
+    b = mem.get(node.wrt) if node.wrt else None
+
+    if q == "volume":
+        if not isinstance(a, Polyhedron):
+            raise GeometryError(ERR_SAI_LOAI, f"'{node.of}' phải là một khối")
+        return volume_polyhedron(a)
+
+    if b is None:
+        raise GeometryError(
+            ERR_SAI_LOAI, f"đo '{q}' cần hai đối tượng, thiếu `wrt`"
+        )
+
+    if q == "angle_cos_sq":
+        if isinstance(a, Line3) and isinstance(b, Line3):
+            return M.cos_sq_between_lines(a, b)
+        if isinstance(a, Plane3) and isinstance(b, Plane3):
+            return M.cos_sq_between_planes(a, b)
+        if isinstance(a, Line3) and isinstance(b, Plane3):
+            return M.sin_sq_line_plane(a, b)
+        if isinstance(a, Plane3) and isinstance(b, Line3):
+            return M.sin_sq_line_plane(b, a)
+        raise GeometryError(ERR_SAI_LOAI, "cặp đối tượng không hợp lệ cho góc")
+
+    # q == "distance"
+    if isinstance(a, Vec3) and isinstance(b, Plane3):
+        d2 = M.distance_sq_point_plane(a, b)
+    elif isinstance(a, Plane3) and isinstance(b, Vec3):
+        d2 = M.distance_sq_point_plane(b, a)
+    elif isinstance(a, Vec3) and isinstance(b, Line3):
+        d2 = M.distance_sq_point_line(a, b)
+    elif isinstance(a, Line3) and isinstance(b, Vec3):
+        d2 = M.distance_sq_point_line(b, a)
+    elif isinstance(a, Vec3) and isinstance(b, Vec3):
+        d2 = M.distance_sq(a, b)
+    else:
+        raise GeometryError(
+            ERR_SAI_LOAI, "cặp đối tượng không hợp lệ cho khoảng cách"
+        )
+    d = _can_huu_ti(d2)
+    if d is None:
+        raise GeometryError(
+            ERR_VO_TI,
+            f"khoảng cách là căn của {d2}, một số vô tỉ — không biểu diễn "
+            "chính xác được. Hãy hỏi bình phương khoảng cách, hoặc chọn hệ toạ "
+            "độ cho số đo hữu tỉ.",
+        )
+    return d
+
+
+def _can_huu_ti(x: Fraction) -> Fraction | None:
+    """Căn bậc hai CHÍNH XÁC của một phân số, hoặc `None` nếu vô tỉ.
+
+    `math.isqrt` trên tử và mẫu, rồi **kiểm ngược bằng phép nhân**. Không dùng
+    `x ** 0.5`: nó đi qua float, và với mẫu số lớn thì `int(sqrt(n))**2 == n`
+    trở thành một phép so gần đúng đội lốt phép so bằng.
+    """
+    import math
+
+    if x < 0:
+        return None
+    tu, mau = math.isqrt(x.numerator), math.isqrt(x.denominator)
+    if tu * tu != x.numerator or mau * mau != x.denominator:
+        return None
+    return Fraction(tu, mau)
+
+
 # ── biểu thức: engine TỰ TÍNH ─────────────────────────────────────────────
 def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
     """Một biểu thức hình học → giá trị. Toạ độ do KERNEL sinh, không do IR."""
@@ -122,6 +230,8 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
         return K.divide_segment(
             _lay(mem, node.a, Vec3, "điểm"), _lay(mem, node.b, Vec3, "điểm"), t
         )
+    if kind == "measure":
+        return _do(node, mem)
     if kind == "project_onto":
         p = _lay(mem, node.point, Vec3, "điểm")
         muc = mem.get(node.target)
@@ -148,6 +258,41 @@ def exec_construct_line(node: Any, mem: dict[str, Any]) -> tuple[Line3, str]:
     b = _lay(mem, node.through_b, Vec3, "điểm")
     ten = node.label or node.target_var
     return Line3.through(a, b), f"Dựng đường thẳng {ten} qua hai điểm đã có."
+
+
+def exec_construct_plane(node: Any, mem: dict[str, Any]) -> tuple[Plane3, str]:
+    """Mặt phẳng qua BA ĐIỂM ĐÃ CÓ. Ba điểm thẳng hàng ⇒ kernel NÉM, không đoán."""
+    p = [_lay(mem, t, Vec3, "điểm") for t in node.through]
+    ten = node.label or node.target_var
+    return Plane3.through(p[0], p[1], p[2]), (
+        f"Dựng mặt phẳng {ten} qua ba điểm {', '.join(node.through)}."
+    )
+
+
+def exec_construct_solid(node: Any, mem: dict[str, Any]) -> tuple[Polyhedron, str]:
+    """Khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.
+
+    Kiểm chỉ số mặt tại đây chứ không để `Polyhedron` vỡ muộn: `faces` là thứ
+    LLM viết ra, nên chỉ số ngoài biên là ca thường gặp chứ không phải ngoại
+    lệ, và `IndexError` trần thì không nói được đỉnh nào thiếu.
+    """
+    dinh = tuple(_lay(mem, t, Vec3, "đỉnh") for t in node.vertices)
+    n = len(dinh)
+    for i, f in enumerate(node.faces):
+        if len(f) < 3:
+            raise GeometryError(
+                ERR_SAI_LOAI, f"mặt thứ {i + 1} có {len(f)} đỉnh, cần ít nhất 3"
+            )
+        xau = [j for j in f if not 0 <= j < n]
+        if xau:
+            raise GeometryError(
+                ERR_SAI_LOAI,
+                f"mặt thứ {i + 1} trỏ tới chỉ số đỉnh {xau} ngoài khoảng "
+                f"0..{n - 1} — khối chỉ khai {n} đỉnh",
+            )
+    ten = node.label or node.target_var
+    khoi = Polyhedron(vertices=dinh, faces=tuple(tuple(f) for f in node.faces))
+    return khoi, f"Dựng khối {ten} từ {n} đỉnh và {len(node.faces)} mặt."
 
 
 def exec_construct_section(node: Any, mem: dict[str, Any]) -> tuple[Section, list[str]]:

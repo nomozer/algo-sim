@@ -26,6 +26,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -53,6 +54,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -125,6 +129,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -152,6 +157,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -196,6 +204,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -223,6 +232,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -309,6 +321,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -336,6 +349,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -380,6 +396,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -407,6 +424,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -491,6 +511,51 @@
       "title": "ConstructLineStmt",
       "type": "object"
     },
+    "ConstructPlaneStmt": {
+      "description": "Dựng mặt phẳng QUA BA ĐIỂM ĐÃ CÓ — bằng TÊN, không bằng toạ độ.\n\n─── VÌ SAO THÊM, ĐO ĐƯỢC Ở PHASE 5 ────────────────────────────────────\n\nMô hình bịa `kind: \"construct_plane\"` ở 2/10 bài. Không phải nó sáng tác:\nmột bài hình học bất kỳ đều cần mặt `(SBC)`, và IR **không có từ nào** để\nnói câu đó.\n\n─── VÀ VÌ SAO ĐÂY LÀ BỊT LỖ R0, KHÔNG PHẢI THÊM TIỆN NGHI ─────────────\n\nTrước câu lệnh này, cách duy nhất để có `(SBC)` là khai một\n`memory_declaration` kiểu `plane3` với `initial_value = {\"through\": [[…],\n[…], […]]}` — tức **chép lại toạ độ của S, B, C lần thứ hai**. Hai bản toạ\nđộ thì sẽ lệch, lệch câm, và bản thứ hai do LLM viết chứ không do kernel\ntính. Dựng theo tên thì chỉ còn một nguồn.",
+      "properties": {
+        "kind": {
+          "const": "construct_plane",
+          "default": "construct_plane",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên mặt phẳng dựng ra",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "through": {
+          "description": "tên ba điểm không thẳng hàng",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 3,
+          "minItems": 3,
+          "title": "Through",
+          "type": "array"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "nhãn, vd (SBC)",
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "through"
+      ],
+      "title": "ConstructPlaneStmt",
+      "type": "object"
+    },
     "ConstructPointStmt": {
       "properties": {
         "kind": {
@@ -517,6 +582,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -544,6 +610,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -641,6 +710,63 @@
       "title": "ConstructSectionStmt",
       "type": "object"
     },
+    "ConstructSolidStmt": {
+      "description": "Dựng khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.\n\nCùng lý do với `construct_plane`, và thêm một điều: `faces` là **cấu trúc\ntổ hợp** đọc thẳng từ đề (*\"hình chóp S.ABCD\"* ⇒ một đáy bốn đỉnh, bốn mặt\nbên), KHÔNG phải dữ liệu hình học. LLM sở hữu quan hệ kề; kernel sở hữu\ntoạ độ. Ranh giới R0 rơi đúng vào giữa hai thứ đó.\n\nChỉ số trong `faces` trỏ vào `vertices` theo VỊ TRÍ, giống hệt cách\n`Polyhedron` của kernel biểu diễn — không đẻ ra một quy ước thứ hai.",
+      "properties": {
+        "kind": {
+          "const": "construct_solid",
+          "default": "construct_solid",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên khối dựng ra",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "vertices": {
+          "description": "tên các đỉnh, theo thứ tự",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 4,
+          "title": "Vertices",
+          "type": "array"
+        },
+        "faces": {
+          "description": "mỗi mặt là danh sách chỉ số đỉnh",
+          "items": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "minItems": 4,
+          "title": "Faces",
+          "type": "array"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "nhãn, vd S.ABCD",
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "vertices",
+        "faces"
+      ],
+      "title": "ConstructSolidStmt",
+      "type": "object"
+    },
     "ContainsCond": {
       "properties": {
         "kind": {
@@ -667,6 +793,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -694,6 +821,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -825,6 +955,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -852,6 +983,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -912,6 +1046,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -939,6 +1074,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1019,6 +1157,7 @@
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "measure": "#/$defs/MeasureExpr",
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
@@ -1046,6 +1185,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/MeasureExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -1088,8 +1230,10 @@
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1116,6 +1260,12 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSolidStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -1205,6 +1355,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -1232,6 +1383,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1276,6 +1430,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -1303,6 +1458,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1348,8 +1506,10 @@
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1376,6 +1536,12 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSolidStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -1491,8 +1657,10 @@
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1519,6 +1687,12 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSolidStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -1581,8 +1755,10 @@
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -1609,6 +1785,12 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSolidStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -1697,6 +1879,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -1724,6 +1907,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -1769,6 +1955,7 @@
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "measure": "#/$defs/MeasureExpr",
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
@@ -1796,6 +1983,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/MeasureExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -1935,6 +2125,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -1962,6 +2153,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2186,6 +2380,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -2213,6 +2408,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2258,6 +2456,7 @@
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "measure": "#/$defs/MeasureExpr",
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
@@ -2285,6 +2484,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/MeasureExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -2357,6 +2559,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -2384,6 +2587,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2428,6 +2634,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -2455,6 +2662,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2493,6 +2703,51 @@
         "val"
       ],
       "title": "MapSetStmt",
+      "type": "object"
+    },
+    "MeasureExpr": {
+      "description": "ĐO một đại lượng — kernel tính, IR chỉ nói *đo cái gì*.\n\n─── VÌ SAO THÊM: audit Wave 2 lộ ra một lỗ mà Phase 5 chưa kịp nhìn thấy ──\n\nBa nghĩa vụ `distance` · `angle` · `volume` đã nằm trong taxonomy đóng băng\nvà có đủ checker. Nhưng IR **không có phép đo nào**, nên chương trình không\ncó cách nào đưa một CON SỐ vào witness — và `cham_oracle` đọc đúng chỗ ấy.\nBa nghĩa vụ đó phủ **4/10 bài DEV**. Chúng trượt schema trước nên lỗ này bị\nche; sửa xong bốn nguyên nhân kia thì chúng vẫn không chấm được.\n\nĐây KHÔNG phải \"thêm primitive vì thiếu\": nó là điều kiện để 3/8 nghĩa vụ\nđã có checker thôi làm mã chết.\n\n─── R0 GIỮ NGUYÊN ──────────────────────────────────────────────────────\n\nTrường của nó toàn là **TÊN**. Không có chỗ nào điền được một con số. LLM\nnói *\"đo khoảng cách từ S tới (ABCD)\"*; giá trị do `geometry/measure.py`\ntính bằng số hữu tỉ chính xác.\n\n─── VÌ SAO `angle_cos_sq` CHỨ KHÔNG PHẢI `angle` ───────────────────────\n\nGóc hình học phần lớn vô tỉ, `cos²` của nó hữu tỉ. Trả về độ là ép một phép\nlàm tròn vào giữa chuỗi tất định, và mọi phép so BẰNG phía sau mất nghĩa.\nTên trường nói thẳng đơn vị để không ai đọc nhầm.",
+      "properties": {
+        "kind": {
+          "const": "measure",
+          "default": "measure",
+          "title": "Kind",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "đại lượng cần đo",
+          "enum": [
+            "distance",
+            "angle_cos_sq",
+            "volume"
+          ],
+          "title": "Quantity",
+          "type": "string"
+        },
+        "of": {
+          "description": "tên đối tượng thứ nhất (hoặc khối)",
+          "title": "Of",
+          "type": "string"
+        },
+        "wrt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "tên đối tượng thứ hai; `volume` không cần",
+          "title": "Wrt"
+        }
+      },
+      "required": [
+        "quantity",
+        "of"
+      ],
+      "title": "MeasureExpr",
       "type": "object"
     },
     "MemoryDeclaration": {
@@ -2635,6 +2890,19 @@
           "default": null,
           "description": "ID mục dữ liệu trong RequestContract mà initial_value lấy từ đó. BẮT BUỘC khi initial_value mang nghĩa dữ liệu ĐỀ CHO. Ghim ĐÚNG MỤC NÀO — khớp theo giá trị đơn thuần dễ trùng ngẫu nhiên.",
           "title": "Source Fact Id"
+        },
+        "model_assumption": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "LÝ DO chọn giá trị này, khi nó là GIẢ THIẾT MÔ HÌNH HOÁ chứ không phải dữ liệu đề cho — điển hình là toạ độ của một đỉnh khi đặt hệ trục. Chỉ dùng cho `point3`/`vector3`, và KHÔNG BAO GIỜ cho biến mang câu trả lời.",
+          "title": "Model Assumption"
         }
       },
       "required": [
@@ -2696,6 +2964,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -2723,6 +2992,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -2917,6 +3189,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -2944,6 +3217,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3005,6 +3281,7 @@
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "measure": "#/$defs/MeasureExpr",
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
@@ -3032,6 +3309,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/MeasureExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -3100,6 +3380,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -3127,6 +3408,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3192,6 +3476,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -3219,6 +3504,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3284,6 +3572,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -3311,6 +3600,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3355,6 +3647,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -3382,6 +3675,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3449,6 +3745,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -3476,6 +3773,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3745,8 +4045,10 @@
                 "assign": "#/$defs/AssignStmt",
                 "break": "#/$defs/BreakStmt",
                 "construct_line": "#/$defs/ConstructLineStmt",
+                "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
+                "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
                 "enqueue": "#/$defs/EnqueueStmt",
                 "for_each": "#/$defs/ForEachStmt",
@@ -3773,6 +4075,12 @@
               },
               {
                 "$ref": "#/$defs/ConstructLineStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPlaneStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructSolidStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -3861,6 +4169,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -3888,6 +4197,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -3933,6 +4245,7 @@
                   "length": "#/$defs/LengthExpr",
                   "literal": "#/$defs/LiteralExpr",
                   "map_get": "#/$defs/MapGetExpr",
+                  "measure": "#/$defs/MeasureExpr",
                   "midpoint": "#/$defs/MidpointExpr",
                   "neighbors": "#/$defs/NeighborsExpr",
                   "peek": "#/$defs/PeekExpr",
@@ -3960,6 +4273,9 @@
                 },
                 {
                   "$ref": "#/$defs/DivideSegmentExpr"
+                },
+                {
+                  "$ref": "#/$defs/MeasureExpr"
                 },
                 {
                   "$ref": "#/$defs/VarRefExpr"
@@ -4011,6 +4327,7 @@
               "length": "#/$defs/LengthExpr",
               "literal": "#/$defs/LiteralExpr",
               "map_get": "#/$defs/MapGetExpr",
+              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
               "neighbors": "#/$defs/NeighborsExpr",
               "peek": "#/$defs/PeekExpr",
@@ -4038,6 +4355,9 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
+            },
+            {
+              "$ref": "#/$defs/MeasureExpr"
             },
             {
               "$ref": "#/$defs/VarRefExpr"
@@ -4123,8 +4443,10 @@
             "assign": "#/$defs/AssignStmt",
             "break": "#/$defs/BreakStmt",
             "construct_line": "#/$defs/ConstructLineStmt",
+            "construct_plane": "#/$defs/ConstructPlaneStmt",
             "construct_point": "#/$defs/ConstructPointStmt",
             "construct_section": "#/$defs/ConstructSectionStmt",
+            "construct_solid": "#/$defs/ConstructSolidStmt",
             "dequeue": "#/$defs/DequeueStmt",
             "enqueue": "#/$defs/EnqueueStmt",
             "for_each": "#/$defs/ForEachStmt",
@@ -4151,6 +4473,12 @@
           },
           {
             "$ref": "#/$defs/ConstructLineStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructPlaneStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructSolidStmt"
           },
           {
             "$ref": "#/$defs/ConstructSectionStmt"

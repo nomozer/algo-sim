@@ -57,10 +57,34 @@ def _is_seed(value: Any) -> bool:
     )
 
 
+#: Kiểu được phép mang GIẢ THIẾT MÔ HÌNH HOÁ.
+#:
+#: Chỉ hai, và giới hạn này là toàn bộ sức mạnh của kênh: thứ duy nhất mà người
+#: giải hình học được tự chọn là **hệ toạ độ**, tức vị trí của vài điểm gốc.
+#: Mặt phẳng, đường thẳng, khối, và mọi ĐẠI LƯỢNG đều SUY RA từ các điểm ấy —
+#: cho phép giả thiết trên chúng là mở đúng cửa để mô hình khai thẳng đáp án.
+_KIEU_DUOC_GIA_THIET = frozenset({"point3", "vector3"})
+
+#: Ba mã lỗi riêng, không gộp vào `INPUT_NOT_GROUNDED`. Gộp thì thông điệp nói
+#: "không truy được về đề bài" cho một chương trình đang khai đáp án — sai bệnh,
+#: và vòng sửa sẽ đi tìm `source_fact_id` thay vì bỏ giá trị bịa đi.
+ERR_GIA_THIET_SAI_KIEU = "MODEL_ASSUMPTION_TYPE_NOT_ALLOWED"
+ERR_GIA_THIET_LA_DAP_AN = "MODEL_ASSUMPTION_IS_ANSWER"
+ERR_GIA_THIET_KHONG_LY_DO = "MODEL_ASSUMPTION_NO_REASON"
+
+
 class GroundingResult(BaseModel):
     ok: bool
     error_code: str | None = None
     unresolved: list[str] = Field(default_factory=list)
+    #: Giả thiết mô hình hoá đã CHẤP NHẬN — để đếm được, không để trang trí.
+    #:
+    #: P2 không chứng minh được rằng `A=(0,0,0)` là một hệ toạ độ *hợp lệ cho
+    #: đề này* (muốn thế phải kiểm mọi ràng buộc hình học của đề, mà hợp đồng
+    #: chưa mã hoá chúng). Thứ nó làm được là giữ kênh HẸP và ĐẾM ĐƯỢC: bao
+    #: nhiêu giá trị đã đi vào chương trình mà không có nguồn từ đề. Rủi ro còn
+    #: lại được khai ở đây thay vì giấu đi.
+    assumptions: list[str] = Field(default_factory=list)
 
 
 def _canon(value: Any) -> tuple[Any, ...]:
@@ -103,6 +127,10 @@ def check_grounding(
 ) -> GroundingResult:
     """P2 — mọi giá trị khởi tạo phải truy được về ĐÚNG mục dữ liệu đã chỉ."""
     unresolved: list[str] = []
+    gia_thiet: list[str] = []
+    #: Biến nào mang CÂU TRẢ LỜI. Không bao giờ được là giả thiết.
+    dap_an = {ob.witness for ob in contract.obligations if ob.witness}
+    ma_loi: str | None = None
 
     # MỘT lớp được miễn `source_fact_id`, và nó kiểm được ở phía server chứ
     # không do chương trình tự khai.
@@ -133,6 +161,56 @@ def check_grounding(
             continue
 
         fid = decl.source_fact_id
+
+        # ── GIẢ THIẾT MÔ HÌNH HOÁ (Wave 2, 2026-08-24) ──────────────────────
+        #
+        # VÌ SAO CẦN, ĐO ĐƯỢC Ở PHASE 5: 5/10 bài hình học chết ở đúng dòng bên
+        # dưới. Đề hình học **không cho toạ độ** — prompt bảo mô hình tự đặt hệ
+        # trục, còn cổng hỏi *"anh lấy dữ liệu này ở đâu ra?"*. Không có đường
+        # nào thoả cả hai, nên mọi bài đều trượt, kể cả bài làm đúng.
+        #
+        # Ở Tin học, toạ độ là DỮ LIỆU ĐỀ CHO. Ở hình học, hệ toạ độ là LỰA
+        # CHỌN MÔ HÌNH HOÁ. Đó là hai thứ khác nhau, và cổng cũ chỉ biết một.
+        #
+        # RANH GIỚI — vì sao đây KHÔNG phải "nới cổng cho dễ thở":
+        #
+        #   ① `source_fact_id` VẪN THẮNG. Ghim được về đề thì đi đường cũ,
+        #      nghiêm ngặt như trước; giả thiết không được dùng để né kiểm.
+        #   ② Chỉ `point3`/`vector3`. Đại lượng (`float`) không bao giờ là giả
+        #      thiết — đó là chỗ đáp án sống.
+        #   ③ KHÔNG BAO GIỜ cho biến mang câu trả lời. Đây là chốt cứng nhất:
+        #      khai đáp án rồi gắn nhãn "giả thiết" là đúng thứ R0 cấm.
+        #   ④ Phải có LÝ DO viết ra. Không kiểm được nội dung lý do, nhưng bắt
+        #      viết ra thì biến một lựa chọn ngầm thành một lựa chọn KHAI BÁO.
+        #
+        # GIỚI HẠN CÒN LẠI, khai thẳng: cổng KHÔNG kiểm được `A=(0,0,0)` có
+        # dựng nên đúng hình mà đề mô tả không (hợp đồng chưa mã hoá ràng buộc
+        # "ABCD là hình vuông"). Nó giữ kênh hẹp và ĐẾM được, không hơn.
+        if decl.model_assumption is not None and not fid:
+            ly_do = str(decl.model_assumption).strip()
+            if decl.name in dap_an:
+                ma_loi = ma_loi or ERR_GIA_THIET_LA_DAP_AN
+                unresolved.append(
+                    f"{decl.name}: là WITNESS của một nghĩa vụ — câu trả lời "
+                    "không bao giờ được khai làm giả thiết. Hãy để một câu "
+                    "lệnh tính ra nó."
+                )
+            elif decl.type not in _KIEU_DUOC_GIA_THIET:
+                ma_loi = ma_loi or ERR_GIA_THIET_SAI_KIEU
+                unresolved.append(
+                    f"{decl.name}: kiểu '{decl.type}' không được mang giả thiết "
+                    f"mô hình hoá (chỉ {sorted(_KIEU_DUOC_GIA_THIET)}). Đối "
+                    "tượng này phải được DỰNG từ các điểm đã chọn."
+                )
+            elif not ly_do:
+                ma_loi = ma_loi or ERR_GIA_THIET_KHONG_LY_DO
+                unresolved.append(
+                    f"{decl.name}: giả thiết mô hình hoá phải nêu LÝ DO chọn."
+                )
+            else:
+                gia_thiet.append(f"{decl.name}: {ly_do}")
+            continue
+
         if not fid:
             unresolved.append(
                 f"{decl.name}: có initial_value nhưng thiếu source_fact_id — "
@@ -158,6 +236,9 @@ def check_grounding(
 
     if unresolved:
         return GroundingResult(
-            ok=False, error_code="INPUT_NOT_GROUNDED", unresolved=unresolved
+            ok=False,
+            error_code=ma_loi or "INPUT_NOT_GROUNDED",
+            unresolved=unresolved,
+            assumptions=gia_thiet,
         )
-    return GroundingResult(ok=True)
+    return GroundingResult(ok=True, assumptions=gia_thiet)

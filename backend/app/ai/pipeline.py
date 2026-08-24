@@ -303,7 +303,7 @@ async def stage_analyze(text: str, api_key: str) -> dict:
 
 
 async def stage_semantic_analyze(
-    text: str, api_key: str
+    text: str, api_key: str, domain: str | None = None
 ) -> tuple["RequestContract | None", str | None]:
     """Đề bài → `RequestContract` ĐÃ ĐÓNG BĂNG (dữ liệu đề cho + nghĩa vụ).
 
@@ -316,19 +316,31 @@ async def stage_semantic_analyze(
 
     Server ĐÓNG BĂNG, không chép nguyên lời LLM: `build_request_contract` loại
     nghĩa vụ ngoài taxonomy và mục dữ liệu thiếu `id` ngay tại biên.
+
+    ─── `domain` (Wave 2, sau Phase 5) ──────────────────────────────────────
+
+    `None` = miền Tin học, tức **hành vi trước Wave 2 nguyên vẹn**: cùng skill,
+    cùng schema, cùng enum 19 nghĩa vụ. Truyền `hinh_hoc` thì đổi ĐỒNG BỘ ba
+    thứ — skill đọc đề, enum nghĩa vụ trong schema, và bộ lọc phía server. Đổi
+    thiếu một trong ba là đúng cái lỗ Phase 5 đo được: skill viết chương trình
+    đã sang hình học từ lâu, còn skill đọc đề thì không, nên mô hình chọn nghĩa
+    vụ Tin học cho bài hình học ở 3/6 ca hợp lệ.
     """
     from app.simulation.semantic_program.analyze_contract import (
         SEMANTIC_ANALYZE_SCHEMA,
+        analyze_schema_for,
         build_request_contract,
     )
+    from app.simulation.semantic_program.domain_profile import analyze_skill_for
 
+    schema = analyze_schema_for(domain) if domain else SEMANTIC_ANALYZE_SCHEMA
     user = f'Đề bài:\n"""\n{text}\n"""'
     with stage_scope("semantic_analyze"):
         raw = await call_gemini(
             api_key,
-            load_skill("semantic_analyze"),
+            load_skill(analyze_skill_for(domain) if domain else "semantic_analyze"),
             user,
-            SEMANTIC_ANALYZE_SCHEMA,
+            schema,
             0.1,
         )
 
@@ -344,7 +356,7 @@ async def stage_semantic_analyze(
     # `text` đi kèm là bậc P1: `analyze` có thể bỏ trống ô giá trị dù đề ghi rõ
     # literal (đã quan sát: `values=null` cho đề chứa `{[()]}`). Có đề gốc thì
     # server tự neo được literal về span thay vì phụ thuộc model nhớ chép.
-    return build_request_contract(payload, problem_text=text), None
+    return build_request_contract(payload, problem_text=text, domain=domain), None
 
 
 def _facts_for_prompt(contract: "RequestContract") -> str:

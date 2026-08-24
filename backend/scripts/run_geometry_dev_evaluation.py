@@ -57,6 +57,13 @@ ORACLE_PY = GEO / "custodian" / "geometry_oracle.py"
 #: Skill hình học. Ép vào chỗ `pipeline` đang gọi `"semantic_program"`.
 SKILL_HINH_HOC = "geometry_program_generator"
 
+#: Miền truyền thẳng cho `stage_semantic_analyze` (Wave 2). Nhập từ nguồn chứ
+#: không viết chuỗi trần: đổi tên miền ở `domain_profile` mà runner còn giữ
+#: chuỗi cũ thì lượt đo lặng lẽ chạy bằng prompt Tin học — đúng lỗi Phase 5.
+from app.simulation.semantic_program.domain_profile import (  # noqa: E402
+    DOMAIN_HINH_HOC,
+)
+
 #: Trần lượt logic. DẪN từ call graph: analyze ≤2 · semantic_analyze 1 ·
 #: semantic_program ≤3 ⇒ 6/case. 10 case ⇒ 60, cộng đệm transient ⇒ 80.
 #: KHÔNG dùng trần 13/case của miền Tin học: runner này không chạy classify,
@@ -158,7 +165,20 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
 
     pipeline.load_skill = _load
     try:
-        contract, err = await pipeline.stage_semantic_analyze(de, api_key)
+        # ─── WAVE 2: TRUYỀN MIỀN, KHÔNG DÙNG BỘ NHẬN MIỀN ─────────────────
+        #
+        # Lượt Phase 5 đầu chỉ ép skill ở `semantic_program`; `analyze` vẫn là
+        # prompt Tin học với enum 19 nghĩa vụ, và 3/6 chương trình hợp lệ khai
+        # nghĩa vụ Tin học cho bài hình học. Đây là chỗ vá.
+        #
+        # Truyền THẲNG `hinh_hoc` chứ không gọi `detect_domain`: bộ nhận miền
+        # là một SUY ĐOÁN, và một phép đo không được phụ thuộc vào suy đoán —
+        # nếu nó đoán sai một bài thì số của bài đó nói về bộ nhận miền chứ
+        # không nói về hệ sinh. (`test_geometry_wave2` vẫn khoá riêng rằng bộ
+        # nhận miền bắt đúng cả 10 bài này.)
+        contract, err = await pipeline.stage_semantic_analyze(
+            de, api_key, domain=DOMAIN_HINH_HOC
+        )
         if contract is None:
             ra.update(failure_layer=0, failure_code="contract_failure",
                       failure_reason=err)
@@ -231,7 +251,7 @@ async def _main(args) -> int:
     finally:
         gemini.set_budget(None)
 
-    bao = tong_ket(ket, len(cases), dung_som, gemini.MODEL)
+    bao = tong_ket(ket, len(cases), dung_som, gemini.MODEL, budget)
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
     (out / "geometry_dev_results.json").write_text(
@@ -242,12 +262,24 @@ async def _main(args) -> int:
         print(f"  {k:14} {bao[k]['tu_so']}/{bao[k]['mau_so']}")
     print(f"  obligation khớp {bao['obligation_match']['khop_hoan_toan']}"
           f"/{bao['obligation_match']['mau_so']}")
+    cp = bao["chi_phi"]
+    if cp["do_duoc"]:
+        print(f"  chi phí        {cp['luot_logic']}/{cp['tran_logic']} lượt "
+              f"logic · {cp['request_http']}/{cp['tran_http']} HTTP")
     return 0
 
 
-def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str) -> dict:
+def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
+             budget=None) -> dict:
     """ĐẾM THÔ, không phần trăm — mẫu số 10 < 20, `RELIABILITY_EVALUATION_PLAN
-    §3.3` cấm chia."""
+    §3.3` cấm chia.
+
+    `budget` THÊM Ở WAVE 2 và mặc định `None` để test cũ gọi bốn tham số vẫn
+    chạy. Lượt Phase 5 đầu **không ghi số lượt API** — artifact không có
+    `token`/`calls`, nên báo cáo phải ước lượng "20–34 lượt logic" mà không xác
+    nhận được. Đó là lỗi của runner, và đây là chỗ trả nợ: một lượt đo không
+    ghi được nó tiêu bao nhiêu thì không tái lập được chi phí.
+    """
     import reliability_v2 as RV
 
     def dem(k: str) -> dict:
@@ -268,6 +300,27 @@ def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str) -> dict:
         "obligation_match": RV._gop_obligation_match(
             [{"obligation_match": m} for m in om]),
         "phan_bo_that_bai": _phan_bo(ket),
+        "chi_phi": _chi_phi(budget),
+    }
+
+
+def _chi_phi(budget) -> dict:
+    """Lượt đo này đã tiêu bao nhiêu. `None` ⇒ nói thẳng là KHÔNG ĐO ĐƯỢC.
+
+    Không bịa số 0: "không đo" và "không tốn gì" là hai điều khác hẳn nhau, và
+    nhầm chúng chính là cách một báo cáo chi phí trở thành hư cấu.
+    """
+    if budget is None:
+        return {"do_duoc": False,
+                "ly_do": "runner chạy không có ApiBudget — không đếm được"}
+    return {
+        "do_duoc": True,
+        "luot_logic": budget.logical_calls,
+        "request_http": budget.http_requests,
+        "request_do_retry": budget.retry_requests,
+        "lan_gap_429_5xx": budget.transient_hits,
+        "tran_logic": budget.max_logical_calls,
+        "tran_http": budget.max_api_calls,
     }
 
 

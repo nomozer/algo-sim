@@ -53,9 +53,20 @@ def _vi_tu_kiem_duoc() -> list[str]:
 
 _VI_TU_KIEM_DUOC = _vi_tu_kiem_duoc()
 
-SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
-    "type": "OBJECT",
-    "properties": {
+
+def _schema(
+    obligation_kinds: list[str],
+    fact_kinds: tuple[str, ...],
+    co_prescribed: bool,
+) -> dict[str, Any]:
+    """Dựng schema `analyze` cho MỘT miền.
+
+    VÌ SAO THAM SỐ HOÁ thay vì viết hai schema: hai bản rời nhau sẽ lệch ở lần
+    sửa tiếp theo, và lệch câm. Chỉ ba thứ khác nhau giữa hai miền — enum nghĩa
+    vụ, bảng kiểu dữ kiện, và việc có `prescribed_procedure` hay không (đề hình
+    học không "ép thuật toán", nên trường ấy vắng mặt chứ không để rỗng).
+    """
+    props: dict[str, Any] = {
         # Dữ liệu đề cho, MỖI MỤC CÓ ID BỀN. `id` là thứ mà literal trong IR
         # phải THAM CHIẾU tới — ghim *cái nào*, không phải *có tồn tại đâu đó*
         # (chuỗi provenance P2, spec §3.4).
@@ -65,7 +76,7 @@ SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
                 "type": "OBJECT",
                 "properties": {
                     "id": {"type": "STRING"},
-                    "kind": {"type": "STRING", "enum": list(INPUT_FACT_KINDS)},
+                    "kind": {"type": "STRING", "enum": list(fact_kinds)},
                     "label": {"type": "STRING"},
                     # MẢNG, không phải một chuỗi. Bản đầu khai STRING đơn và nó
                     # làm P2 trượt sạch một cách câm: dãy "12, 45, 67" về dưới
@@ -83,7 +94,7 @@ SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
             "items": {
                 "type": "OBJECT",
                 "properties": {
-                    "kind": {"type": "STRING", "enum": sorted(OBLIGATION_KINDS)},
+                    "kind": {"type": "STRING", "enum": obligation_kinds},
                     # ĐỊNH DANH, không phải câu chữ. Lượt pilot 3 thu được
                     # `container` = "các năm từ nam_bat_dau đến nam_ket_thuc" —
                     # một cụm từ tiếng Việt, không thể là tên biến, nên chương
@@ -122,21 +133,75 @@ SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = {
                                        "dùng tên trong danh sách; vị từ ngoài "
                                        "danh sách sẽ không kiểm chứng được.",
                     },
+                    # ── ĐẠI LƯỢNG MONG ĐỢI (miền hình học) ─────────────────
+                    #
+                    # `check_distance`/`check_volume` đọc `params["value"]`,
+                    # `check_angle` đọc `params["cos_sq"]`. Không có hai trường
+                    # này trong schema thì chúng LUÔN `None`, và ba checker đại
+                    # lượng luôn trả `None` = "chỉ kiểm được cấu trúc" — tức ba
+                    # nghĩa vụ nằm trong bảng mà chưa từng kiểm được lần nào.
+                    #
+                    # `cos_sq` chứ không phải số đo độ: góc hình học phần lớn vô
+                    # tỉ, còn `cos²` của nó hữu tỉ. So trên `cos²` giữ được phép
+                    # so BẰNG chính xác, không cần epsilon.
+                    "value": {"type": "STRING", "nullable": True},
+                    "cos_sq": {"type": "STRING", "nullable": True},
+                    # ĐỐI TƯỢNG THỨ HAI của phép đo, khi `witness` là một CON
+                    # SỐ. Không có nó thì cổng C₂ biết con số nhưng không biết
+                    # nó đo giữa cái gì với cái gì, nên chỉ kiểm được cấu trúc.
+                    "wrt": {"type": "STRING", "nullable": True},
                 },
+                # `value`/`cos_sq` KHÔNG bắt buộc: đề bảo *tính* thì không có
+                # đáp số để khai, và ép khai là mời mô hình tự cho điểm mình.
                 "required": ["kind", "container", "witness"],
             },
         },
-        "prescribed_procedure": {
+    }
+    if co_prescribed:
+        props["prescribed_procedure"] = {
             "type": "STRING",
             "enum": sorted(SEMANTIC_PRESCRIBED_PROCEDURES),
             "nullable": True,
-        },
-    },
-    "required": ["input_facts", "obligations"],
-}
+        }
+    return {
+        "type": "OBJECT",
+        "properties": props,
+        "required": ["input_facts", "obligations"],
+    }
 
+
+def analyze_schema_for(domain: str) -> dict[str, Any]:
+    """Schema `analyze` của một miền. Enum nghĩa vụ HẸP theo miền.
+
+    Đây là chỗ lỗ Phase 5 được bịt: bài hình học không còn nhìn thấy
+    `derived_sequence` hay `structural_traversal` trong danh sách chọn.
+    """
+    from .domain_profile import (
+        DOMAIN_HINH_HOC,
+        INPUT_FACT_KINDS_HINH_HOC,
+        obligation_kinds_for,
+    )
+
+    la_hh = domain == DOMAIN_HINH_HOC
+    return _schema(
+        obligation_kinds=sorted(obligation_kinds_for(domain)),
+        fact_kinds=INPUT_FACT_KINDS_HINH_HOC if la_hh else INPUT_FACT_KINDS,
+        co_prescribed=not la_hh,
+    )
+
+
+#: Giữ tên cũ = giữ nguyên mọi đường gọi Tin học đã có.
+SEMANTIC_ANALYZE_SCHEMA: dict[str, Any] = _schema(
+    obligation_kinds=sorted(OBLIGATION_KINDS),
+    fact_kinds=INPUT_FACT_KINDS,
+    co_prescribed=True,
+)
+
+#: `value`/`cos_sq` là ĐẠI LƯỢNG MONG ĐỢI của ba nghĩa vụ hình học. Thiếu chúng
+#: ở đây thì `check_distance`/`check_angle`/`check_volume` đọc `params` ra `None`
+#: và luôn rơi mức yếu — nghĩa vụ có checker mà checker không bao giờ so gì.
 _PARAM_KEYS = ("witness", "cmp", "op", "transform", "pred", "item", "order",
-               "src", "domain")
+               "src", "domain", "value", "cos_sq", "wrt")
 
 
 def _as_values(raw: Any) -> tuple[Any, ...]:
@@ -227,7 +292,7 @@ def _gia_tri_khong_chung_minh_duoc(
 
 
 def build_request_contract(
-    payload: dict[str, Any], problem_text: str = ""
+    payload: dict[str, Any], problem_text: str = "", domain: str | None = None
 ) -> RequestContract:
     """Đóng băng đầu ra của `analyze` thành hợp đồng BẤT BIẾN.
 
@@ -254,7 +319,19 @@ def build_request_contract(
     mà `request_contract.py` tự khai trong docstring của nó — hợp đồng chặn được
     "chương trình sửa đề cho vừa mình", nhưng không chặn được "đề bị khai sai
     ngay từ đầu".
+
+    ─── `domain` (Wave 2, 2026-08-24) ───────────────────────────────────────
+
+    `None` = **không lọc theo miền** — đúng hành vi cũ, mọi đường gọi Tin học
+    giữ nguyên. Truyền một miền vào thì server loại cả nghĩa vụ *hợp lệ trong
+    taxonomy nhưng SAI MIỀN*. Đây là tầng chặn thứ hai sau enum của schema:
+    enum là lời đề nghị gửi cho model, còn đây là thứ cưỡng chế. Phase 5 cho
+    thấy vì sao cần cả hai — model khai `derived_sequence` cho một bài hình
+    học, và không có tầng nào từ chối nó.
     """
+    from .domain_profile import obligation_kinds_for
+
+    cho_phep = obligation_kinds_for(domain) if domain else None
     cands = extract_literals(problem_text) if problem_text else ()
     da_dung: set[int] = set()
 
@@ -319,6 +396,8 @@ def build_request_contract(
             # Ngoài taxonomy ⇒ loại NGAY. Giữ lại thì C₁a mới phát hiện, muộn
             # hơn một tầng và lẫn với lỗi "thiếu witness".
             continue
+        if cho_phep is not None and kind not in cho_phep:
+            continue  # trong taxonomy nhưng SAI MIỀN
         container = raw.get("container")
         if not isinstance(container, str) or not container:
             continue
