@@ -1,8 +1,8 @@
 {
   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
-  "dong_bang_luc": "2026-08-24T12:31:23+00:00",
-  "commit": "b58a5e6e4aad5d6c78c54f28fb1046ae82a05981",
-  "commit_ngan": "b58a5e6",
+  "dong_bang_luc": "2026-08-24T12:55:04+00:00",
+  "commit": "8d5bde155a619bc3e3dc95da154107b5dbf55cce",
+  "commit_ngan": "8d5bde1",
   "cay_lam_viec_sach": true,
   "cache_version": "38",
   "spec_version_ir": "1.0",
@@ -12,24 +12,32 @@
       "frontend/src/simulations/domains/semantic",
       "frontend/src/simulations/domains/generic/semantic_program.schema.json"
     ],
-    "so_file": 137,
-    "tree_hash": "1740c0f31718cde7468dfec092296a9b5952807533fcc2b268d3b00e0fde0e25",
+    "so_file": 139,
+    "tree_hash": "453094ee289ff62c52ceb353c8cff31f19be10772c9c3157ba4767c1334866ae",
     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
   },
   "taxonomy": {
-    "so_nghia_vu": 11,
+    "so_nghia_vu": 19,
     "kinds": [
       "aggregate_matching",
+      "angle",
+      "coplanar",
       "derived_sequence",
+      "distance",
       "extremum",
       "first_match_index",
       "membership",
       "ordering",
+      "parallel",
+      "perpendicular",
+      "point_on_line",
+      "point_on_plane",
       "predicate_verdict",
       "reachability",
       "scalar_accumulation",
       "structural_traversal",
-      "total_mapping"
+      "total_mapping",
+      "volume"
     ],
     "aggregate_ops": [
       "count",
@@ -47,17 +55,25 @@
     ],
     "co_checker_server_owned": [
       "aggregate_matching",
+      "angle",
+      "coplanar",
       "derived_sequence",
+      "distance",
       "extremum",
       "first_match_index",
       "membership",
       "ordering",
+      "parallel",
+      "perpendicular",
+      "point_on_line",
+      "point_on_plane",
       "predicate_verdict",
       "reachability",
       "scalar_accumulation",
-      "total_mapping"
+      "total_mapping",
+      "volume"
     ],
-    "hash": "b30e45dace0efd5813e5e1bc7dd631ec1796258bddc9613a9ed6de1d0e67d7b4"
+    "hash": "2ea8a3d00b6cd4c7769119817f05718d1f5a2f003b09a1ec259cbc5babd8bcb8"
   },
   "visual_primitive_set": {
     "so_primitive": 9,
