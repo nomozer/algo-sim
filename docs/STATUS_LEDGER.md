@@ -331,7 +331,74 @@ quả học tập khi chưa có nghiên cứu trên người học.
 **Tầng lớp học ĐÓNG BĂNG ở mức**: đăng nhập · lớp · giao mô phỏng đã hỗ trợ ·
 học sinh luyện tập · giáo viên quan sát trạng thái có cấu trúc.
 
+### §0-2026-08-24 — ĐỔI ĐỀ TÀI (nguồn: giáo viên hướng dẫn). §0 cũ HẾT HIỆU LỰC
+
+**Đề mới:** *"Nghiên cứu và xây dựng hệ thống mô phỏng 3D hình học không gian."*
+
+Thay thế đề chốt 18/08 (*"…kết hợp LLM phân tích bài toán bằng ngôn ngữ tự
+nhiên, hỗ trợ dạy học môn **Tin học** THPT"*). Mọi khoá phạm vi bên dưới —
+gồm §0-2026-08-20 và bản cắt phạm vi 2026-08 — **không còn ràng buộc**.
+
+⚠️ **Đây KHÔNG phải một wave mới trên hệ cũ.** Đề mới lệch hệ hiện có ở **ba
+trục cùng lúc**, và phải nhìn cả ba, vì chỉ nhìn một trục sẽ dẫn tới ước lượng
+sai công việc còn lại:
+
+| Trục | Đề mới | Hệ hiện có |
+|---|---|---|
+| Môn | **hình học không gian** → Toán 11/12 | Tin học THPT |
+| Chiều | **3D** | 2D — 23/24 target `('2d',)`; **đúng một** cái có 3D |
+| Đối tượng | hình khối **liên tục** | thuật toán **rời rạc** |
+
+**Ghi lại một sự thật dễ quên:** ý tưởng GỐC của dự án là *hình học động — kéo
+để thấy bất biến (GeoGebra)*, rồi mới chuyển sang mô phỏng thuật toán. Nên đổi
+đề lần này gần với **quay về gốc** hơn là rẽ sang hướng lạ.
+
+#### Giữ được — tài sản lớn nhất, KHÔNG được vứt theo
+
+1. **Ranh giới R0** (LLM đọc đề, engine tất định diễn hoạt) — đúng nguyên với
+   hình học, và vẫn là luận điểm mạnh nhất.
+2. **Toàn bộ phương pháp đánh giá**: SEALED + custodian độc lập + seed do GVHD
+   cấp + oracle không import mã sản phẩm + fail-closed + A/B đồng-primary +
+   replay đa đầu vào + taxonomy thất bại 8 tầng + luật báo cáo mẫu nhỏ. Đây là
+   phần **khó nhất và mất nhiều tuần nhất**; một hệ hình học cần y hệt.
+3. Vỏ frontend, store, timeline/transport, tầng lớp học, hạ tầng test 4 tầng.
+4. **Three.js đã là dependency**, và `protocol_encapsulation` là tiền lệ 3D có
+   `meaning_of_z` mang nghĩa.
+
+#### KHÔNG giữ được — phải làm lại phần lõi miền
+
+- 24 module (đều là nội dung Tin học) · 12 family · neo chương trình.
+- **9 primitive thị giác** (`array_strip`, `stack_view`, `graph_view`, …) và
+  **14 `MemoryType`** — **không có một thứ nào là hình học**. Hình học cần
+  điểm · đường · mặt phẳng · khối · thiết diện · giao tuyến.
+- **11 nghĩa vụ** — toàn rời rạc. Hình học cần *thuộc · song song · vuông góc ·
+  đồng phẳng · khoảng cách · thể tích*.
+- Kho **189 bài SGK Tin học** và toàn bộ nội dung SEALED #1/#2.
+
+#### Câu hỏi CHẶN, phải trả lời trước khi mở wave nào
+
+**Nhánh LLM còn trong đề không?** Tên đề mới **không nhắc** LLM hay ngôn ngữ tự
+nhiên. Hai ngả dẫn tới hai luận văn khác hẳn:
+
+- **CÒN** ⇒ kiến trúc chuyển gần trọn; chỉ đổi *miền* (IR primitive, nghĩa vụ,
+  renderer). Toàn bộ máy đánh giá dùng lại. Novelty giữ nguyên.
+- **KHÔNG** ⇒ thành công cụ trực quan 3D thuần; phần lớn hạ tầng LLM + đánh giá
+  thành **gánh nặng chết**, và novelty phải tìm chỗ khác.
+
+Chưa trả lời được câu này thì **cấm đẻ wave**, cấm viết primitive hình học.
+
+#### Kỷ luật giữ nguyên
+
+`CURRICULUM_SUPPORT_PARTIAL` và `LEARNER_IMPACT_NOT_EVALUATED` **vẫn giữ** —
+đổi đề không sinh thêm bằng chứng. Số của SEALED #1 (`A 3/40 · B 1/40`) vẫn là
+kết quả thật của hệ Tin học, và **vẫn trích được** nếu luận văn còn kể phần đó.
+
+---
+
 ### §0-2026-08-20 — MỞ LẠI phạm vi "sinh mô phỏng" (nguồn: giáo viên hướng dẫn)
+
+> ⚠️ **HẾT HIỆU LỰC 2026-08-24** — xem §0-2026-08-24 bên trên. Giữ lại để tra
+> lịch sử quyết định, **không** đọc như ràng buộc hiện hành.
 
 Khoá phạm vi 2026-08 (24 target, không sinh tự động) **được thay thế ở ĐÚNG
 phần sinh mô phỏng** bởi
