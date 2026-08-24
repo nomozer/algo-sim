@@ -68,7 +68,28 @@ MAX_STATEMENTS = 50
 #: 6 chứ không phải 5: chừa đúng một tầng cho `while`/`for` bọc ngoài, thứ mà
 #: bài sắp xếp lồng hai vòng cần tới. Trần vẫn tồn tại — nó chặn chương trình
 #: bệnh lý, và `MAX_STATEMENTS` mới là thứ chặn kích thước.
-MAX_NESTING_DEPTH = 6
+#:
+#: NÂNG 6 → 8 (2026-08-24). CÙNG một bài, CÙNG một nguyên nhân cấu trúc, chỉ là
+#: lần trước chưa đếm hết: ghép ngoặc không dừng ở *"ngăn xếp rỗng chưa"* mà còn
+#: phải so **CẶP** ngoặc — `(` với `)`, `[` với `]`, `{` với `}`. Không có
+#: `elif` thì mỗi cặp là thêm một tầng, nên dây so cặp một mình đã ăn hết phần
+#: trần mà bản 4 → 6 vừa chừa ra. Lượt `serve` thật (telemetry `6b1ee593`,
+#: 2026-08-24) chết ở *"Độ sâu lồng lệnh (7) vượt quá giới hạn tối đa (6)"*.
+#:
+#: VÌ SAO KHÔNG PHẢI "nới cho qua một ca": trần này chặn theo **hình dạng cú
+#: pháp**, mà hình dạng ấy bị thổi lên bởi một thiếu sót đã biết của IR (không
+#: `elif`) chứ không phải bởi độ phức tạp thật của bài. Mọi bài có một dây
+#: "ngược lại, nếu…" từ ba nhánh trở lên đều chạm cùng bức tường này — đó là
+#: một LỚP, không phải một ca.
+#:
+#: 8 chứ không phải 7: 7 vừa đúng cái quan sát được, và đặt trần bằng đúng quan
+#: sát cuối cùng là cách bản 4 → 6 đã sai một lần rồi. Một tầng dự phòng cho
+#: dây bốn nhánh.
+#:
+#: ⚠️ Đây là bản vá HÌNH DẠNG, không phải bản vá ngữ nghĩa. Cách sửa THẬT là cho
+#: IR một `elif` để dây else-if không còn ăn tầng — việc đó đổi schema nên phải
+#: chờ sau lượt đo #2. Ghi ở `RUN2_PROTOCOL §7b`.
+MAX_NESTING_DEPTH = 8
 MAX_MEMORY_DECLARATIONS = 20
 
 class ValidationResult:

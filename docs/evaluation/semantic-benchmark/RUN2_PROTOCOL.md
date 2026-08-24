@@ -198,6 +198,46 @@ Không ai trả lời trung thực được câu đó, kể cả người viết
    primitive · route · checker; bốn hash ngữ nghĩa không đổi. Nó không tạo thêm
    sai lệch nào, chỉ làm `measured_system.tree_hash` trôi nên phải đóng băng lại.
 
+### Lệch lần thứ hai — `MAX_NESTING_DEPTH` 6 → 8 (2026-08-24, sau preflight)
+
+Khai ngay, cùng lý do như trên: seed #2 vẫn chưa tồn tại.
+
+**Bối cảnh**: người dùng chạy sản phẩm thật (`SEMANTIC_ROUTE_MODE=serve`) với đề
+*"Kiểm tra đóng mở ngoặc hợp lệ bằng Stack"* và nhận `unsupported`. Telemetry
+`6b1ee593` cho thấy chuỗi: nghĩa vụ nhận đúng `predicate_verdict` → sinh IR chết
+ở **"Độ sâu lồng lệnh (7) vượt quá giới hạn tối đa (6)"** → vòng sửa chạy (lần
+đầu quan sát được trong sản phẩm) → chương trình lượt 2 hợp lệ nhưng **rỗng
+ruột** (2 bước, `final_memory` toàn `null`, chỉ gán `hop_le=true`) → **C₂ bắt
+được và từ chối phát**.
+
+**Vì sao đây KHÔNG phải vá theo ca đã lộ**: (a) đề này là **fixture DEV
+`P01_STACK_BRACKET`**, không phải ca SEALED — `freeze_protocol §7.3` cho phép mở
+từ DEV; (b) trần chặn theo **hình dạng cú pháp**, mà hình dạng bị thổi lên bởi
+một thiếu sót đã biết của IR (**không có `elif`**, mỗi nhánh else-if ăn một
+tầng), không phải bởi độ phức tạp thật của bài. Mọi bài có dây "ngược lại,
+nếu…" từ ba nhánh trở lên đều chạm cùng bức tường — đó là một LỚP.
+
+**Vì sao 8 chứ không 7**: 7 vừa đúng cái quan sát được, và đặt trần bằng đúng
+quan sát cuối cùng chính là cách bản 4 → 6 đã sai một lần rồi.
+
+**Đây là vá HÌNH DẠNG, không phải vá ngữ nghĩa.** Cách sửa thật là cho IR một
+`elif`; việc đó đổi schema nên chờ sau lượt #2.
+
+**Kết quả sau khi vá**: rào độ sâu hết, lượt chạy đi xa hơn rồi chết ở **cổng
+grounding** — `mo_ngoac_set/dong_ngoac_set: có initial_value nhưng thiếu
+source_fact_id`. **KHÔNG vá tiếp**, và đây là quyết định có chủ đích:
+
+- Đó là căng thẳng thiết kế thật, không phải bug: cổng chặn mọi `initial_value`
+  không phải hạt khởi tạo để LLM không tuồn dữ liệu đề vào; nhưng bảng cặp
+  ngoặc là **hằng số thuật toán**, không có fact nào để ghim. Sửa đúng cách đòi
+  thêm cờ "hằng, không phải dữ liệu đề" vào schema ⇒ đổi thẻ văn phạm ⇒ bump
+  `CACHE_VERSION` ⇒ **mở IR**, thứ §1.1 ranh giới 2 hoãn có chủ đích.
+- Và cùng đề ấy, hai lượt liên tiếp `analyze` trả `bounded_control_flow.
+  bounded_loop` rồi `none`. Đuổi theo từng lượt đơn lẻ là **đo nhiễu**
+  (`RULES §3c`: DEEP_HARDENING).
+
+Ghi lại làm **phát hiện chờ xử lý sau lượt #2**, không phải việc đang làm dở.
+
 ### Kỷ luật từ đây
 
 Đóng băng mã ở §2 **có hiệu lực trở lại** kể từ `b407af0`. Cổng kiểm:
