@@ -292,6 +292,55 @@ class _Thu:
         return next((d for n, d in self.events if n == name), None)
 
 
+#: Tên file khai xuất xứ của lô envelope. Pha B TỪ CHỐI chạy nếu thiếu — không
+#: có nó thì một thư mục envelope chép tay đọc y hệt một lô đo thật.
+TEN_PROVENANCE = "PROVENANCE.json"
+
+
+def _ghi_envelope_pha_b(out: Path, ket_qua: list[dict], bao_cao: dict) -> int:
+    """Xuất envelope DO ROUTE SINH PHÁT cho pha B (trình duyệt).
+
+    VÌ SAO PHẢI QUA FILE: pha B chạy trong trình duyệt và **không được** gọi
+    LLM. Nó chỉ có thể dựng lại cảnh từ envelope mà pha A đã phát ra thật.
+
+    VÌ SAO PHẢI CÓ PROVENANCE: điều kiện PASS *"envelope phải đến từ pha A
+    thật"* chỉ kiểm được nếu lô envelope tự khai nó thuộc lượt đo nào, trên
+    candidate nào, dưới con dấu nào. Thiếu khai thì một thư mục chép tay đọc y
+    hệt — và đó đúng là cách bằng chứng thị giác lần trước hoá ra vô giá trị
+    (`SERVE_PROBE_CHAIN §4b`: ảnh chụp envelope TIÊM THẲNG, không phải envelope
+    do route phát).
+
+    KHÔNG đụng `sealed_summary.json`/`sealed_cases.json` — ghi sang thư mục con
+    riêng, nên artifact của lượt trước không bị chạm tới.
+    """
+    co = [(r["case_id"], r["envelope_route_sinh"]) for r in ket_qua
+          if r.get("envelope_route_sinh")]
+    thu_muc = out / "envelopes"
+    thu_muc.mkdir(parents=True, exist_ok=True)
+
+    for case_id, env in co:
+        (thu_muc / f"{case_id}.json").write_text(
+            json.dumps(env, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    (thu_muc / TEN_PROVENANCE).write_text(json.dumps({
+        "khai": "Envelope DO route sinh PHÁT trong lượt đo, không phải fixture "
+                "và không phải bản chép tay. Pha B phải kiểm file này trước khi "
+                "chấm bất cứ thứ gì.",
+        "dataset": bao_cao.get("dataset"),
+        "measured_system_candidate": bao_cao.get("measured_system_candidate"),
+        "evaluation_harness_commit": bao_cao.get("evaluation_harness_commit"),
+        "sealed_fingerprint": bao_cao.get("sealed_fingerprint"),
+        "model": bao_cao.get("model"),
+        "chay_luc": bao_cao.get("chay_luc"),
+        # Mẫu số của `V` là *số ca có `B`*, không phải N. Ghi cả hai để pha B
+        # không phải suy — suy là chỗ mẫu số bị trộn.
+        "so_envelope": len(co),
+        "N_processed": bao_cao.get("N_processed"),
+        "case_ids": [c for c, _ in co],
+    }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return len(co)
+
+
 def _chay_replay(spec, ghi: dict | None, hop_dong: dict | None) -> bool | None:
     """Replay đa đầu vào cho MỘT case. **0 lượt LLM** — cùng spec, đổi dữ liệu.
 
@@ -355,6 +404,26 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
         return spec, err
 
     pipeline.stage_semantic_program = _bat_spec
+
+    # BẮT ENVELOPE, cùng lý do và cùng cách. `outcome.envelope` có sẵn trên
+    # `SemanticRouteOutcome` nhưng observer KHÔNG mang nó — và ở chế độ
+    # `shadow`, `run_pipeline` trả về envelope của đường CŨ, nên envelope do
+    # route sinh phát ra không tới được artifact bằng đường nào khác.
+    #
+    # Patch ở MODULE NGUỒN, không ở `pipeline`: `_semantic_route_attempt` import
+    # `verify_and_compile` ngay trong thân hàm, nên nó đọc thuộc tính của
+    # `route` mỗi lượt gọi. Patch `pipeline.verify_and_compile` sẽ không có tác
+    # dụng gì — và im lặng không có tác dụng.
+    from app.simulation.semantic_program import route as _route
+
+    goc_vac = _route.verify_and_compile
+
+    def _bat_envelope(*a, **kw):
+        outcome = goc_vac(*a, **kw)
+        bat["envelope"] = getattr(outcome, "envelope", None)
+        return outcome
+
+    _route.verify_and_compile = _bat_envelope
     thu = _Thu()
     text = case["problem_text"]
 
@@ -371,6 +440,7 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
         loi = f"{type(e).__name__}: {e}"
     finally:
         pipeline.stage_semantic_program = goc_stage
+        _route.verify_and_compile = goc_vac
 
     ghi = thu.dau_tien("semantic_route")
     hop_dong = thu.dau_tien("semantic_contract")
@@ -402,6 +472,12 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
         # KHỐI V2 — chỉ THÊM khoá. Mọi khoá cũ ở trên giữ nguyên byte-một-bit,
         # nếu không thì artifact của lượt #1 và lượt sau không so được nữa.
         # `renderer_V=None`: tầng ⑦ chạy ở PHA B (trình duyệt), không ở đây.
+        # Envelope DO ROUTE SINH PHÁT — đầu vào duy nhất hợp lệ cho pha B.
+        # Chỉ giữ khi `servable`: pha B đo `V` trên mẫu số là *số ca có `B`*,
+        # nên chở thêm envelope không phát được là mời người ta chấm nhầm mẫu số.
+        "envelope_route_sinh": (
+            bat.get("envelope") if (ghi or {}).get("servable") else None
+        ),
         "v2": chi_so_case(
             source_id=(case.get("source") or {}).get("source_id") or case.get("case_id"),
             semantic=ghi,
@@ -797,6 +873,7 @@ async def _main_async(args) -> int:
         json.dumps(bao_cao, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out / "sealed_cases.json").write_text(
         json.dumps(ket_qua, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    _ghi_envelope_pha_b(out, ket_qua, bao_cao)
 
     oracle = bao_cao["dung_theo_oracle_doc_lap"]
     hn = bao_cao["evaluation_harness_commit"]
