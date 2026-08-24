@@ -705,6 +705,59 @@ def test_bao_cao_DEV_luon_TU_KHAI_la_dev(rn):
     assert bao["ngan_sach"]["tran_logic"] == rn.TRAN_LOGIC_DEV
 
 
+# ── 8. Reliability V2 — CHỈ THÊM, không đụng output cũ ────────────────────
+#: Khoá top-level của artifact lượt #1. Mất một khoá ⇒ hai lượt không so được
+#: nữa, và không ai phát hiện cho tới lúc mở bảng ra viết luận văn.
+_KHOA_CU = (
+    "A_generative_executability", "B_internal_servable", "A_tru_B_phan_ra",
+    "dung_theo_oracle_doc_lap", "D1_structural_interpreter_khong_ton_token",
+    "semantic_token_per_case", "D2_matched_subset", "phan_bo_that_bai",
+    "N_planned", "N_processed", "evaluation_complete", "ngan_sach",
+    "measured_system_candidate", "evaluation_harness_commit", "sealed_fingerprint",
+)
+
+
+def test_V2_chi_THEM_khoa_khong_xoa_khoa_cu(rn):
+    bao = rn._tong_ket([], 40, {"commit_ngan": "x", "cache_version": "37"},
+                       "van_tay", _NganSachGia(), None)
+    thieu = [k for k in _KHOA_CU if k not in bao]
+    assert not thieu, f"artifact mất khoá cũ {thieu} — lượt #1 hết so được"
+    assert "reliability_v2" in bao, "khối V2 phải có mặt"
+
+
+def test_khoi_V2_dat_CANH_khong_thay_A_va_B_cu(rn):
+    """A/B cũ là hai chỉ số DUY NHẤT so trực tiếp được với lượt #1."""
+    bao = rn._tong_ket([], 40, {"commit_ngan": "x", "cache_version": "37"},
+                       "van_tay", _NganSachGia(), None)
+    assert "A_generative_executability" in bao
+    assert "B_internal_servable" in bao
+    assert bao["reliability_v2"]["N"] == 0
+
+
+def test_proxy_bat_spec_KHONG_ro_ri_sang_case_sau(rn, monkeypatch):
+    """Rủi ro thật của việc bọc hàm: một case ném lỗi mà để lại proxy thì case
+    sau chạy qua một hàm đã bị bọc chồng nhiều lớp, và mỗi lớp thêm một lượt.
+
+    Kiểm bằng cách ép `run_pipeline` ném ngay: `finally` vẫn phải trả hàm gốc.
+    """
+    import asyncio
+
+    from app.ai import pipeline
+
+    goc = pipeline.stage_semantic_program
+
+    async def no(*a, **kw):
+        raise RuntimeError("ép hỏng")
+
+    monkeypatch.setattr(pipeline, "run_pipeline", no)
+    monkeypatch.setattr(rn, "_cham", lambda *a, **k: {"verdict": "NO_RESULT"})
+    r = asyncio.run(rn._chay_mot_case({"case_id": "x", "problem_text": "đề"}, "k"))
+
+    assert pipeline.stage_semantic_program is goc, "proxy còn sót lại"
+    assert r["loi_runner"] is not None
+    assert r["v2"]["replay_R"] is None, "chưa chạy được thì phải None, không phải False"
+
+
 def test_bao_cao_SEALED_khong_deo_canh_bao(rn):
     """Cảnh báo phải VẮNG ở đường sealed. Cảnh báo dán khắp nơi là cảnh báo
     không ai đọc."""

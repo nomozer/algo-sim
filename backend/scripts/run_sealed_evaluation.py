@@ -63,6 +63,12 @@ FINGERPRINT = BENCH / "sealed" / "FINGERPRINT.txt"
 #: một câu: **bốn biên chuẩn hoá + vòng sửa có làm phễu thông hơn không.**
 DEV = BENCH / "dev" / "cases.json"
 
+# Phân loại V2 tách ra module riêng vì nó là phần dễ viết sai nhất VÀ đi thẳng
+# vào bảng của luận văn — nên phải kiểm được offline bằng dữ liệu bịa, trong khi
+# runner thì chỉ được chạy một lần.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from reliability_v2 import chi_so_case, tong_hop  # noqa: E402
+
 sys.path.insert(0, str(BACKEND))
 
 #: NGÂN SÁCH CUỐI CÙNG, chốt 2026-08-22 TRƯỚC khi custodian niêm phong và
@@ -286,6 +292,40 @@ class _Thu:
         return next((d for n, d in self.events if n == name), None)
 
 
+def _chay_replay(spec, ghi: dict | None, hop_dong: dict | None) -> bool | None:
+    """Replay đa đầu vào cho MỘT case. **0 lượt LLM** — cùng spec, đổi dữ liệu.
+
+    Trả `None` khi CHƯA ĐO được, không phải `False`: không có spec, chương trình
+    chưa chạy nổi, hoặc hợp đồng không nêu container đầu vào. Trộn "chưa đo" với
+    "trượt" là bịa thêm thất bại — bịa theo hướng bi quan cũng vẫn là bịa.
+
+    Replay ở đây là **QUAN TRẮC**, không gác cửa phát (`RELIABILITY_EVALUATION_
+    PLAN §2.1`): cho nó chặn `servable` là đổi hành vi sản phẩm, và biến `B` của
+    V2 thành thứ không so được với `B` của lượt #1.
+    """
+    if spec is None or not (ghi or {}).get("executable"):
+        return None
+    obligations = (hop_dong or {}).get("obligations") or []
+    if not obligations:
+        return None
+    containers = [o["container"] for o in obligations if o.get("container")]
+    witness = next((o.get("witness") for o in obligations if o.get("witness")), None)
+    if not containers:
+        return None
+    try:
+        import importlib.util
+        import sys as _sys
+
+        p = Path(__file__).resolve().parent / "replay_harness.py"
+        sp = importlib.util.spec_from_file_location("replay_harness", p)
+        mod = importlib.util.module_from_spec(sp)
+        _sys.modules["replay_harness"] = mod
+        sp.loader.exec_module(mod)
+        return bool(mod.replay(spec, containers, witness=witness).ok)
+    except Exception:  # noqa: BLE001 — quan trắc không được giết lượt đo
+        return None
+
+
 async def _chay_mot_case(case: dict, api_key: str) -> dict:
     from app.ai import pipeline
     from app.ai.telemetry import reset_usage, usage_report
@@ -297,6 +337,24 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
 
     reset_usage()
     reset_coercion()
+
+    # BẮT SPEC TỪ PHÍA HARNESS. Observer KHÔNG mang `SemanticProgramSpec`, mà
+    # replay cần chính nó. Phát thêm spec ra observer là sửa `pipeline.py` —
+    # tức sửa engine, thứ task này cấm. Nên ta BỌC hàm từ ngoài: proxy đi qua
+    # nguyên vẹn, chỉ ghi lại kết quả. Cùng khuôn `monkeypatch.setattr(pipeline,
+    # "call_gemini", …)` mà bộ test đã dùng từ lâu.
+    #
+    # Khôi phục trong `finally`: một lượt case ném lỗi mà để lại proxy thì mọi
+    # case sau chạy qua một hàm đã bị bọc chồng nhiều lớp.
+    bat: dict = {}
+    goc_stage = pipeline.stage_semantic_program
+
+    async def _bat_spec(*a, **kw):
+        spec, err = await goc_stage(*a, **kw)
+        bat["spec"] = spec
+        return spec, err
+
+    pipeline.stage_semantic_program = _bat_spec
     thu = _Thu()
     text = case["problem_text"]
 
@@ -311,11 +369,14 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
         )
     except Exception as e:  # noqa: BLE001 — hỏng một case không được giết cả lượt
         loi = f"{type(e).__name__}: {e}"
+    finally:
+        pipeline.stage_semantic_program = goc_stage
 
     ghi = thu.dau_tien("semantic_route")
     hop_dong = thu.dau_tien("semantic_contract")
     outcome = _outcome_tu_event(ghi)
     token = usage_report()
+    replay_ok = _chay_replay(bat.get("spec"), ghi, hop_dong)
 
     return {
         "case_id": case.get("case_id"),
@@ -338,6 +399,16 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
         # case này. Gộp im lặng thì không phân biệt được "mô hình thỉnh thoảng
         # viết dạng khác" với "hợp đồng đang mô tả sai thứ mô hình phát".
         "coercion": coercion_report(),
+        # KHỐI V2 — chỉ THÊM khoá. Mọi khoá cũ ở trên giữ nguyên byte-một-bit,
+        # nếu không thì artifact của lượt #1 và lượt sau không so được nữa.
+        # `renderer_V=None`: tầng ⑦ chạy ở PHA B (trình duyệt), không ở đây.
+        "v2": chi_so_case(
+            source_id=(case.get("source") or {}).get("source_id") or case.get("case_id"),
+            semantic=ghi,
+            cham=_cham(case, hop_dong, outcome),
+            replay_ok=replay_ok,
+            render_ok=None,
+        ),
     }
 
 
@@ -585,6 +656,10 @@ def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str
                        "và phải được ghi đúng như thế, không phải lỗi runner.",
         },
         "phan_bo_that_bai": _phan_bo(ket_qua),
+        # V2 — bảy tầng + taxonomy thất bại 8 lớp. ĐẶT CẠNH khối cũ, không thay
+        # nó: `A_generative_executability` và `B_internal_servable` ở trên vẫn
+        # là hai chỉ số so được trực tiếp với lượt #1.
+        "reliability_v2": tong_hop([r["v2"] for r in ket_qua if r.get("v2")]),
     }
 
 

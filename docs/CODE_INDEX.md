@@ -2682,6 +2682,36 @@ vòng sửa; (2) ba thứ tưởng hỏng mà validator vẫn cho qua — `state
 gán vào **biến chưa khai**, `value_box` trỏ **biến lạ**. Payload dùng được là
 `push` vào container chưa khai.
 
+### `backend/scripts/reliability_v2.py` · offline · **0 API call**
+
+Phân loại thất bại 8 tầng + khối chỉ số per-case của `RELIABILITY_EVALUATION_PLAN`.
+Export: `phan_loai()` · `chi_so_case()` · `tong_hop()` · `TEN_TANG` · 8 hằng
+`LAYER_*`.
+
+TÁCH KHỎI RUNNER CÓ CHỦ ĐÍCH: phân loại là phần dễ viết sai nhất **và** đi thẳng
+vào bảng luận văn, nên phải kiểm được offline bằng dữ liệu bịa — còn runner thì
+chỉ được chạy một lần.
+
+**Ba lớp dùng CHUNG một mã lỗi.** `semantic_program_invalid` gộp lớp 1
+(`generation` — JSON cụt), lớp 2 (`schema` — Pydantic) và lớp 3
+(`semantic_validation` — validator ngữ nghĩa). Phân biệt bằng **chuỗi lý do**,
+không bằng mã: Pydantic luôn mang `"validation error… for SemanticProgramSpec"`.
+Ai phân loại theo `error_code` sẽ làm đỏ `test_ba_lop_nay_dung_CHUNG_ma_loi` —
+và đó là mục đích của test ấy. Gộp thì bảng thất bại chỉ **sai chỗ phải sửa**:
+lớp 2 chữa được bằng biên chuẩn hoá, lớp 3 thì không.
+
+**Gán theo cổng ĐẦU TIÊN** case chết, mỗi case đúng một tầng (`tong_kiem` phải
+bằng `N`). **Lớp 0 báo riêng** — chặn đề ngoài môn là hành vi ĐÚNG.
+
+**`None` ≠ `False` ở `replay_R`/`renderer_V`/`oracle_O`**: `None` = CHƯA ĐO.
+Trộn hai thứ là bịa thêm thất bại; bịa theo hướng bi quan cũng vẫn là bịa. Cùng
+lý do, `G1`/`G2` là `None` khi case chết ở lớp 0 — `False` ở đó là đổ lỗi sinh
+cho một case chưa bao giờ tới bước sinh.
+
+`tong_hop()` **không tính phần trăm**, chỉ phát tử số + mẫu số: §3.3 cấm chia khi
+mẫu số < 20, mà mẫu số của `R`/`O`/`V` là *số ca đã qua tầng trước* (ở lượt #1 là
+3 và 1). Khoá bởi `test_reliability_v2.py` (23 test).
+
 ### `backend/scripts/replay_harness.py` · offline · **0 API call**
 
 Chạy MỘT `SemanticProgramSpec` trên **nhiều đầu vào** rồi so chuỗi hành động.
@@ -2879,6 +2909,22 @@ ba test mới ở `test_sealed_runner.py` §7.
   Lượt #1 **không có** hai khối này, nhưng token đầu ra của nó vẫn tính lại được
   từ `sealed_cases.json[].token` vì `record_usage` đã ghi đủ năm trường ngay từ
   đầu.
+  **Khối thứ ba, 2026-08-24**: `reliability_v2` (8 tầng thất bại + G1/G2/A/R/B/
+  V/O) — xem `reliability_v2.py`. Đặt CẠNH `A_generative_executability` và
+  `B_internal_servable`, **không thay** chúng: hai cái ấy là chỉ số duy nhất so
+  trực tiếp được với lượt #1. Khoá bởi `test_sealed_runner.py §8`
+  (`_KHOA_CU` — mất một khoá cũ là ĐỎ).
+
+**Runner BỌC `stage_semantic_program` từ phía harness** để bắt
+`SemanticProgramSpec` cho replay. Observer không mang spec, mà phát thêm spec ra
+observer là sửa `pipeline.py` — tức sửa engine. Proxy đi qua nguyên vẹn, chỉ ghi
+lại, và **khôi phục trong `finally`**: một case ném lỗi mà để lại proxy thì case
+sau chạy qua hàm đã bọc chồng nhiều lớp, mỗi lớp thêm một lượt LLM. Khoá bởi
+`test_proxy_bat_spec_KHONG_ro_ri_sang_case_sau`.
+
+**Tầng ⑦ (renderer) KHÔNG chạy ở đây** — `renderer_V` luôn `None` ở pha A. Nó
+thuộc pha B (trình duyệt, 0 call LLM), chạy lại được mà không phải tiêu quota
+lần nữa.
 - `sealed_cases.json` — 40 bản ghi case-level: `semantic` (stage_reached,
   executable, servable, error_code, reason), `legacy` (route module để so),
   `contract` (nghĩa vụ khai), `cham` (verdict oracle), `token` theo stage.
