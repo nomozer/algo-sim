@@ -79,9 +79,50 @@ def test_schema_khong_troi(manifest):
 
 
 def test_dev_fingerprint_khong_troi(manifest):
+    """Băm NỘI DUNG, không băm cách lưu — dùng CHUNG hàm với script đóng băng.
+
+    Băm `read_bytes()` thô ở đây thì test đỏ trên Windows sau mỗi lần git
+    chuyển LF → CRLF, mà nội dung không đổi một ký tự. Xem `bam_noi_dung`.
+    """
+    bam_noi_dung = _freeze_module().bam_noi_dung
+
     dev = BENCH / "dev" / "cases.json"
-    assert manifest["dev"]["fingerprint"] == hashlib.sha256(dev.read_bytes()).hexdigest()
+    assert manifest["dev"]["fingerprint"] == \
+        hashlib.sha256(bam_noi_dung(dev)).hexdigest()
     assert manifest["dev"]["so_case"] == 20
+
+
+def test_fingerprint_GIONG_NHAU_giua_LF_va_CRLF(tmp_path):
+    """Điều kiện sống của cả cơ chế đóng băng: **tái lập được trên máy khác**.
+
+    Đo được 2026-08-24: `dev/cases.json` có 283 dòng CRLF trên đĩa trong khi
+    git lưu LF, và hai bản băm ra hai giá trị khác nhau. Cổng đóng băng lúc ấy
+    báo *"hệ được đo đã trôi"* dù không ai đụng vào — một báo động giả mà nếu
+    quen mắt thì lần trôi THẬT cũng bị bỏ qua.
+    """
+    bam_noi_dung = _freeze_module().bam_noi_dung
+
+    noi_dung = '{\n  "a": 1,\n  "b": [2, 3]\n}\n'
+    lf = tmp_path / "lf.json"
+    crlf = tmp_path / "crlf.json"
+    lf.write_bytes(noi_dung.encode("utf-8"))
+    crlf.write_bytes(noi_dung.replace("\n", "\r\n").encode("utf-8"))
+
+    assert lf.read_bytes() != crlf.read_bytes(), "hai file phải khác byte thô"
+    assert bam_noi_dung(lf) == bam_noi_dung(crlf), \
+        "cùng nội dung mà băm khác nhau ⇒ fingerprint không tái lập được"
+
+
+def test_gia_tri_LF_la_gia_tri_DUNG__manifest_cu_van_khop(manifest):
+    """Chuẩn hoá về LF, không về CRLF — vì LF là thứ git lưu.
+
+    Nhờ vậy mọi manifest đã ghi TRƯỚC bản vá vẫn khớp, không phải viết lại lịch
+    sử. Chọn chiều ngược lại sẽ làm hỏng mọi artifact đã đóng băng.
+    """
+    bam_noi_dung = _freeze_module().bam_noi_dung
+
+    dev = (BENCH / "dev" / "cases.json")
+    assert bam_noi_dung(dev) == dev.read_bytes().replace(b"\r\n", b"\n")
 
 
 # ── MÃ SẢN PHẨM, không chỉ hợp đồng ──────────────────────────────

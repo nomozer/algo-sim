@@ -58,6 +58,31 @@ def _sha(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+def bam_noi_dung(p: Path) -> bytes:
+    """Băm NỘI DUNG một file, không băm cách nó được lưu.
+
+    ⚠️ BẮT BUỘC CHUẨN HOÁ CRLF → LF, và đây không phải tinh chỉnh cho gọn.
+    Đo được 2026-08-24: `docs/evaluation/semantic-benchmark/dev/cases.json` có
+    **283 dòng CRLF** trên đĩa Windows trong khi git lưu bản LF. Hai bản băm ra
+    hai giá trị khác nhau (`c5c8dd81` ↔ `8a3de7a3`) dù **không một ký tự nội
+    dung nào đổi** — git chỉ vừa chuyển đổi lúc checkout.
+
+    Hệ quả nếu không chuẩn hoá: clone lại kho trên máy khác cho fingerprint
+    khác, và cổng đóng băng báo *"hệ được đo đã trôi"* trong khi không ai đụng
+    vào. Với một cơ chế mà toàn bộ giá trị nằm ở chỗ **tái lập được**, đó là
+    lỗi làm nó vô nghĩa.
+
+    Giá trị LF là giá trị ĐÚNG: nó khớp thứ git lưu, nên mọi manifest đã ghi
+    trước đây (`8a3de7a3`, `2ea8a3d0`…) **vẫn khớp** sau bản vá. Không phải
+    viết lại lịch sử.
+
+    File nhị phân có chuỗi `\\r\\n` sẽ bị đổi băm — nhưng đổi **tất định**, nên
+    tính tái lập vẫn giữ. `MEASURED_SYSTEM_PATHS` hiện chỉ gồm `.py`, `.ts`,
+    `.tsx`, `.json`, không có nhị phân nào.
+    """
+    return p.read_bytes().replace(b"\r\n", b"\n")
+
+
 def _measured_system_files() -> list[Path]:
     ra: list[Path] = []
     for muc in MEASURED_SYSTEM_PATHS:
@@ -83,7 +108,7 @@ def measured_system_hash() -> tuple[str, int]:
     for f in files:
         h.update(f.relative_to(ROOT).as_posix().encode("utf-8"))
         h.update(b"\0")
-        h.update(hashlib.sha256(f.read_bytes()).digest())
+        h.update(hashlib.sha256(bam_noi_dung(f)).digest())
     return h.hexdigest(), len(files)
 
 
@@ -164,7 +189,7 @@ def build() -> dict:
         "dev": {
             "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
             "so_case": len(json.loads(dev_path.read_text(encoding="utf-8"))["cases"]),
-            "fingerprint": hashlib.sha256(dev_path.read_bytes()).hexdigest(),
+            "fingerprint": hashlib.sha256(bam_noi_dung(dev_path)).hexdigest(),
         },
         "sealed": {
             "trang_thai": "CHUA_NIEM_PHONG" if not (BENCH / "sealed" / "cases.json").exists()

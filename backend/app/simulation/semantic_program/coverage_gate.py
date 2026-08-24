@@ -47,6 +47,13 @@ def _producers(statements: Iterable) -> set[str]:
         kind = getattr(st, "kind", None)
         if kind == "assign":
             found.add(st.target_var)
+        # Ba câu lệnh dựng TẠO RA `target_var` — cùng vai với `assign`.
+        # Thiếu nhánh này thì C₁a báo *"witness không có producer hợp lệ"* cho
+        # mọi chương trình hình học, kể cả chương trình dựng đúng. Đây là nửa
+        # thứ hai của cùng một lỗ với `_phu_thuoc`: một bên thiếu *ai tạo ra*,
+        # một bên thiếu *tạo ra từ cái gì* — và phải vá cả hai mới thông.
+        elif kind in ("construct_point", "construct_line", "construct_section"):
+            found.add(st.target_var)
         elif kind in ("pop", "dequeue"):
             dest = getattr(st, "dest_var", None)
             if dest:
@@ -99,6 +106,22 @@ def _doc(node: Any) -> set[str]:
     return ra
 
 
+def _ten_trong_bieu_thuc_hinh_hoc(expr: Any) -> set[str]:
+    """Tên vùng nhớ mà một biểu thức HÌNH HỌC đọc.
+
+    Tách khỏi `_doc` vì hai cái trả lời hai câu khác nhau: `_doc` duyệt CÂY và
+    nhặt `kind == "var"`; ở đây trường mang tên là **chuỗi trần** nên phải tra
+    theo `kind`. Bảng tra nhập từ `validator` — nó là chủ sở hữu, và bảng ấy
+    cố ý không gồm `ratio` (một phân số, KHÔNG phải tên vùng nhớ).
+    """
+    from .validator import _BIEU_THUC_HINH_HOC
+
+    truong = _BIEU_THUC_HINH_HOC.get(getattr(expr, "kind", None))
+    if not truong:
+        return set()
+    return {t for t in (getattr(expr, f, None) for f in truong) if isinstance(t, str)}
+
+
 def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
                ra: dict[str, set[str]] | None = None) -> dict[str, set[str]]:
     """Mỗi biến PHỤ THUỘC vào những biến nào — kể cả qua NHÁNH.
@@ -119,6 +142,24 @@ def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
         kind = getattr(st, "kind", None)
         if kind == "assign":
             them(st.target_var, _doc(st.expr))
+        # ── DỰNG HÌNH (2026-08-24) ───────────────────────────────────────
+        #
+        # Thiếu ba nhánh này, `_phu_thuoc` trả về `{}` cho MỌI chương trình
+        # hình học, và C₁b kết luận *"witness khai đáp án chứ không tính nó"*
+        # — tức **từ chối oan toàn bộ miền**, kèm thông báo nói sai bệnh.
+        # Đo được trước khi chạy Phase 5: `H = project_onto(S, day)` ghi nhận
+        # phụ thuộc rỗng, nên `point_on_plane(day, witness=H)` trượt C₁b.
+        #
+        # `_doc` không tự bắt được vì trường của biểu thức hình học là **chuỗi
+        # trần** (`line`, `plane_a`, `point`…), mà nhánh đệ quy của `_doc` bỏ
+        # qua chuỗi. Bảng tên trường lấy từ `validator` — MỘT nguồn sự thật,
+        # không chép bản thứ hai.
+        elif kind == "construct_point":
+            them(st.target_var, _ten_trong_bieu_thuc_hinh_hoc(st.expr) | _doc(st.expr))
+        elif kind == "construct_line":
+            them(st.target_var, {st.through_a, st.through_b})
+        elif kind == "construct_section":
+            them(st.target_var, {st.solid, st.plane})
         elif kind in ("pop", "dequeue"):
             them(getattr(st, "dest_var", None), {st.container})
             them(st.container, set())

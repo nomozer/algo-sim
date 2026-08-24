@@ -57,6 +57,15 @@ def build_initial(mtype: str, raw: Any, ten: str) -> Any:
     được phép khai những thứ này vì chúng có trong đề bài; nó KHÔNG được khai
     thứ phải tính ra.
     """
+    # Ô TRỐNG hợp lệ: đối tượng sẽ được DỰNG bởi một câu lệnh phía sau.
+    #
+    # Không có nhánh này thì khai `{"name":"H","type":"point3","initial_value":
+    # null}` sẽ vỡ, và LLM buộc phải điền một toạ độ giả cho chỗ nó chưa biết —
+    # tức hợp đồng đang ĐẨY mô hình về phía vi phạm R0. Ô trống không phải một
+    # giá trị mặc định bịa ra: nó là "chưa dựng", và mọi phép đọc nó trước khi
+    # dựng sẽ gặp `None` rồi hỏng ở kiểm kiểu, đúng chỗ.
+    if raw is None:
+        return None
     try:
         if mtype == "point3" or mtype == "vector3":
             return Vec3.of(*raw)

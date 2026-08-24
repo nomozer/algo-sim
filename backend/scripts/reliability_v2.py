@@ -134,12 +134,47 @@ def phan_loai(
     return None, None
 
 
+def obligation_match(
+    mong_doi: list[str] | None, khai: list[str] | None
+) -> dict[str, Any]:
+    """Nghĩa vụ LLM khai có ĐÚNG LOẠI đề hỏi không.
+
+    VÌ SAO CẦN, và vì sao KHÔNG cổng nào bắt được: checker chỉ kiểm nghĩa vụ
+    **đã khai** có được thoả không. Đề hỏi *"chứng minh SA ⊥ (ABCD)"* mà LLM
+    khai `volume` rồi tính thể tích đúng thì checker PASS, C₂ PASS, oracle
+    PASS — hệ trả lời **đúng một câu không ai hỏi**.
+
+    Chỗ duy nhất phát hiện được là ở đây, vì chỉ bộ đo mới biết đề **mong đợi**
+    gì (`expected_obligations` của DEV set).
+
+    ⚠️ **QUAN TRẮC, KHÔNG gác cửa** — cố ý không vào `servable`, và cố ý không
+    vào `ok` của bất kỳ cổng nào. Lý do: "đề mong đợi nghĩa vụ nào" là phán
+    đoán của **người soạn đề**, không phải sự thật toán học. Một đề có thể
+    chứng minh được bằng nhiều đường, và biến phán đoán ấy thành cổng là dựng
+    một oracle thứ hai không ai kiểm chứng.
+    """
+    m, k = set(mong_doi or ()), set(khai or ())
+    return {
+        "mong_doi": sorted(m),
+        "khai": sorted(k),
+        "khop": sorted(m & k),
+        "thieu": sorted(m - k),
+        "thua": sorted(k - m),
+        # `khop_hoan_toan` chỉ đúng khi hai tập TRÙNG NHAU. Khai thừa cũng là
+        # lệch: nó nghĩa là mô hình trả lời thêm thứ đề không hỏi, và ở một bài
+        # đánh giá thì thừa cũng che mất chỗ nó thiếu.
+        "khop_hoan_toan": bool(m) and m == k,
+    }
+
+
 def chi_so_case(
     source_id: str | None,
     semantic: dict[str, Any] | None,
     cham: dict[str, Any] | None = None,
     replay_ok: bool | None = None,
     render_ok: bool | None = None,
+    mong_doi_obl: list[str] | None = None,
+    khai_obl: list[str] | None = None,
 ) -> dict[str, Any]:
     """Khối V2 của MỘT case. Chỉ thêm khoá, không đụng khoá cũ của runner."""
     layer, code = phan_loai(semantic, replay_ok, render_ok)
@@ -170,6 +205,12 @@ def chi_so_case(
         "failure_layer": layer,
         "failure_layer_ten": TEN_TANG.get(layer) if layer is not None else None,
         "failure_code": code,
+        # QUAN TRẮC, không gác cửa. `None` khi bộ đo không khai `expected` —
+        # phân biệt "không lệch" với "chưa đo", cùng luật `replay_R`.
+        "obligation_match": (
+            obligation_match(mong_doi_obl, khai_obl)
+            if mong_doi_obl is not None else None
+        ),
     }
 
 
@@ -210,4 +251,28 @@ def tong_hop(khoi: list[dict[str, Any]]) -> dict[str, Any]:
         "O_oracle": dem("oracle_O"),
         "phan_bo_tang_that_bai": dict(sorted(phan_bo.items(), key=lambda kv: -kv[1])),
         "tong_kiem": sum(phan_bo.values()),
+        "obligation_match": _gop_obligation_match(khoi),
+    }
+
+
+def _gop_obligation_match(khoi: list[dict[str, Any]]) -> dict[str, Any]:
+    """Gộp `obligation_match`. ĐẾM THÔ, và báo RIÊNG khỏi mọi chỉ số cổng.
+
+    Đặt cạnh `A`/`B` chứ không trộn vào: một ca `khop_hoan_toan=False` vẫn có
+    thể `executable` và `servable` — nó chỉ nghĩa là mô hình giải một bài khác.
+    Trộn hai thứ lại là bịa ra một con số không đo cái gì cả.
+    """
+    co = [k["obligation_match"] for k in khoi if k.get("obligation_match")]
+    if not co:
+        return {"chua_do": len(khoi), "khai": "bộ đo không cung cấp expected"}
+    thieu = sorted({o for m in co for o in m["thieu"]})
+    thua = sorted({o for m in co for o in m["thua"]})
+    return {
+        "khai": "QUAN TRẮC — không gác cửa, không vào A/B. Lệch nghĩa là mô "
+                "hình giải một bài KHÁC, dù chương trình có thể vẫn chạy đúng.",
+        "khop_hoan_toan": sum(1 for m in co if m["khop_hoan_toan"]),
+        "mau_so": len(co),
+        "chua_do": len(khoi) - len(co),
+        "nghia_vu_hay_bi_THIEU": thieu,
+        "nghia_vu_hay_bi_KHAI_THUA": thua,
     }
