@@ -2597,9 +2597,11 @@ renderer `domains/semantic/ui.tsx`, rồi chạy `export_semantic_program_schema
 
 ### `backend/app/simulation/semantic_program/contract.py` — BIÊN CHUẨN HOÁ · offline
 
-Ngoài các model IR, file này giữ **ba biên gộp cách viết**, tất cả cùng một luật:
+Ngoài các model IR, file này giữ **bốn biên gộp cách viết**, tất cả cùng một luật:
 *gộp hai cách viết của MỘT thứ, KHÔNG nới ngữ nghĩa*. Chúng tồn tại vì fail-closed
-ở tầng cú pháp che mất năng lực ngữ nghĩa thật của chương trình.
+ở tầng cú pháp che mất năng lực ngữ nghĩa thật của chương trình. Mỗi biên gọi
+`ghi_coercion()` khi nó thật sự gộp — xem `coercion_stats.py`; **thêm biên thứ
+năm mà quên khai lớp ở đó là ĐỎ**.
 
 - `canonical_spec_version` — `1.0` (số) ⇒ `"1.0"`. Nguồn: SEALED `7e5df014…`,
   **17/40 case** chết vì đúng lỗi này. Chặn `bool` tường minh (`True` là subclass
@@ -2611,12 +2613,49 @@ Ngoài các model IR, file này giữ **ba biên gộp cách viết**, tất c�
   RANH GIỚI: chỉ gấp dạng mang được bool (`var/field/index/map_get/literal`);
   `arith`/`length`/`neighbors` vẫn bị từ chối vì `2+3` làm điều kiện là lỗi KIỂU
   thật — nới KÝ PHÁP không được thành nới KIỂU.
+- `canonical_const_int` (2026-08-24) — `{"kind":"literal","value":1}` ⇒ `1` cho
+  `for_range.step`. Nguồn: SEALED `7e5df014…`, 2 case. `start`/`end` là
+  `ValueExpr` nên nhận dạng bọc, riêng `step` thì không — mô hình viết cả ba
+  cùng kiểu là NHẤT QUÁN, chỉ hợp đồng là không. RANH GIỚI: chỉ gỡ `literal`
+  mang số nguyên (`bool` bị chặn); `var`/`arith` vẫn từ chối vì bước nhảy phải
+  HẰNG thì vòng lặp mới có biên tất định.
 
 Tests: `test_spec_version_canonicalization.py`, `test_container_ref_canonicalization.py`,
 `test_condition_canonicalization.py`. Sửa model ⇒ chạy
 `scripts/export_semantic_program_schema.py` (ghi HAI bản, khoá bởi
 `test_schema_sync.py`). BeforeValidator KHÔNG vào JSON schema nên hash schema chỉ
 đổi khi model đổi.
+
+### `backend/app/simulation/semantic_program/coercion_stats.py` · offline
+
+Bộ đếm **bốn biên chuẩn hoá** của `contract.py` đã phải ra tay bao nhiêu lần.
+Export: `ghi_coercion` · `reset_coercion` · `coercion_report` · `tong_coercion`
+· `LOP_HOP_LE` + bốn hằng `LOP_*`.
+
+VÌ SAO CẦN: bốn biên ấy cứu rất nhiều case, và chính vì thế mà chúng nguy hiểm —
+gộp im lặng thì không phân biệt được *"mô hình thỉnh thoảng viết dạng khác"*
+(biên làm đúng việc) với *"mô hình LUÔN viết dạng khác"* (hợp đồng đang mô tả
+sai thứ mô hình phát, phải sửa ở prompt/thẻ văn phạm chứ không phải thêm lớp gộp
+thứ năm). Phân biệt hai thứ đó chỉ cần một con số.
+
+CỐ Ý KHÔNG DÙNG LẠI `app/ai/telemetry.py` dù cùng khuôn (bộ đếm trong tiến
+trình, `reset`/`report`): telemetry ấy thuộc tầng `app.ai`, còn `contract.py`
+nằm sâu trong `app.simulation` và không được phụ thuộc ngược lên tầng AI.
+
+`coercion_report()` luôn trả **đủ bốn lớp kể cả khi bằng 0** — vắng mặt không
+phân biệt được "chưa nổ" với "quên gắn bộ đếm". Không bao giờ ném lỗi (lớp lạ bị
+bỏ qua im lặng): quan trắc mà giết được một lượt phân tích thì đắt hơn thứ nó đo.
+
+Khoá bởi `tests/semantic_program/test_coercion_stats.py` (19 test), trong đó
+nửa quan trọng là các ca ÂM TÍNH — dạng đã đúng thì KHÔNG được tính là một lượt
+gộp, nếu không `coercion_rate` luôn 100% và vô nghĩa. `test_bon_lop_khop_voi_so
+_bien_chuan_hoa_trong_contract` đếm bằng cách soi chính `contract.py`, không chép
+tay danh sách — nó đã bắt được drift thật ngay lần chạy đầu (`canonical_const_int`
+có trong mã mà `CODE_INDEX` vẫn ghi "ba biên").
+
+Runner đọc nó ở `run_sealed_evaluation.py`: `reset_coercion()` đầu mỗi case,
+`coercion_report()` vào `sealed_cases.json`, tổng hợp thành khối `coercion_rate`
+trong `sealed_summary.json`.
 
 ### `backend/scripts/cross_domain_matrix.py` · offline · 0 API call
 
@@ -2734,6 +2773,15 @@ công bố như kết quả chính.
 `docs/evaluation/semantic-benchmark/results/`:
 
 - `sealed_summary.json` — số tổng hợp (A/B/A−B/oracle/D1/D2/ngân sách).
+  **Hai khối thêm 2026-08-24, đọc được từ LƯỢT #2 trở đi**:
+  `token_dau_ra_theo_route` (token ĐẦU RA = `candidates` **+** `thoughts`, tách
+  route sinh ↔ route module — bỏ `thoughts` là báo thấp đi gần ba lần, nó lớn
+  hơn `candidates` 2,6× ở stage `semantic_program`; vẫn là telemetry HỖ TRỢ,
+  **không** phải D2 vì hai route chạy trên hai population khác nhau) và
+  `coercion_rate` (bốn biên chuẩn hoá nổ bao nhiêu lần — xem `coercion_stats.py`).
+  Lượt #1 **không có** hai khối này, nhưng token đầu ra của nó vẫn tính lại được
+  từ `sealed_cases.json[].token` vì `record_usage` đã ghi đủ năm trường ngay từ
+  đầu.
 - `sealed_cases.json` — 40 bản ghi case-level: `semantic` (stage_reached,
   executable, servable, error_code, reason), `legacy` (route module để so),
   `contract` (nghĩa vụ khai), `cham` (verdict oracle), `token` theo stage.

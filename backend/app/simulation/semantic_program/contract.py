@@ -11,6 +11,14 @@ import json
 from typing import Annotated, Any, Literal, Optional, Union
 from pydantic import BaseModel, BeforeValidator, Field, Discriminator, Tag, field_validator
 
+from .coercion_stats import (
+    LOP_CONDITION_BOOL,
+    LOP_CONST_INT,
+    LOP_CONTAINER_REF,
+    LOP_SPEC_VERSION,
+    ghi_coercion,
+)
+
 SPEC_VERSION: Literal["1.0"] = "1.0"
 
 
@@ -35,7 +43,10 @@ def canonical_spec_version(v: Any) -> Any:
     if isinstance(v, bool):
         return v
     if isinstance(v, (int, float)):
-        return SPEC_VERSION if float(v) == 1.0 else str(v)
+        if float(v) == 1.0:
+            ghi_coercion(LOP_SPEC_VERSION)
+            return SPEC_VERSION
+        return str(v)
     return v
 
 def canonical_container_name(v: Any) -> Any:
@@ -58,6 +69,7 @@ def canonical_container_name(v: Any) -> Any:
         if v.get("kind") == "var":
             ten = v.get("name")
             if isinstance(ten, str) and ten:
+                ghi_coercion(LOP_CONTAINER_REF)
                 return ten
         # TỪ CHỐI CÓ DẠY, không để Pydantic nói "Input should be a valid string".
         #
@@ -97,6 +109,7 @@ def canonical_const_int(v: Any) -> Any:
     """
     if isinstance(v, dict):
         if v.get("kind") == "literal" and isinstance(v.get("value"), int) and not isinstance(v.get("value"), bool):
+            ghi_coercion(LOP_CONST_INT)
             return v["value"]
         raise ValueError(
             f"`step` phải là HẰNG nguyên, không phải biểu thức (nhận "
@@ -266,6 +279,7 @@ def canonical_condition(v: Any) -> Any:
     NGỮ NGHĨA với thông báo nói đúng bệnh, thay vì chết ở tầng cú pháp.
     """
     if isinstance(v, dict) and v.get("kind") in _DANG_MANG_BOOL:
+        ghi_coercion(LOP_CONDITION_BOOL)
         return {
             "kind": "compare",
             "op": "==",

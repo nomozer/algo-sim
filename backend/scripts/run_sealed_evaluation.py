@@ -272,9 +272,14 @@ class _Thu:
 async def _chay_mot_case(case: dict, api_key: str) -> dict:
     from app.ai import pipeline
     from app.ai.telemetry import reset_usage, usage_report
+    from app.simulation.semantic_program.coercion_stats import (
+        coercion_report,
+        reset_coercion,
+    )
     from app.simulation.semantic_program.route import verify_and_compile  # noqa: F401
 
     reset_usage()
+    reset_coercion()
     thu = _Thu()
     text = case["problem_text"]
 
@@ -312,6 +317,10 @@ async def _chay_mot_case(case: dict, api_key: str) -> dict:
         # Số LƯỢT LLM của case này — bằng chứng cho claim D1 cấu trúc: nó KHÔNG
         # thay đổi theo số bước mô phỏng.
         "so_luot_llm": sum(v.get("calls", 0) for v in token.values()),
+        # Ba biên chuẩn hoá của `contract.py` đã phải ra tay bao nhiêu lần cho
+        # case này. Gộp im lặng thì không phân biệt được "mô hình thỉnh thoảng
+        # viết dạng khác" với "hợp đồng đang mô tả sai thứ mô hình phát".
+        "coercion": coercion_report(),
     }
 
 
@@ -373,6 +382,20 @@ def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str
     def _tok_stage(r, stages) -> int:
         return sum(v.get("total_tokens", 0)
                    for k, v in (r["token"] or {}).items() if k in stages)
+
+    def _tok_ra(r, stages) -> int:
+        """Token ĐẦU RA thật = `candidates` + `thoughts`.
+
+        Bỏ `thoughts` là báo thiếu: token suy nghĩ do model phát ra và được tính
+        tiền như đầu ra. Trên lượt SEALED đầu tiên nó lớn hơn `candidates`
+        **gấp 2,6 lần** ở stage `semantic_program` — gọi riêng `candidates` là
+        "token đầu ra" sẽ báo thấp đi gần ba lần.
+        """
+        return sum(v.get("candidates_tokens", 0) + v.get("thoughts_tokens", 0)
+                   for k, v in (r["token"] or {}).items() if k in stages)
+
+    _STAGE_NGU_NGHIA = {"semantic_analyze", "semantic_program"}
+    _STAGE_LEGACY = {"analyze", "classify", "simulate", "simulate_family"}
 
     # D2 — matched subset: CHỈ case cả hai route đều phục vụ thành công. Quy tắc
     # chọn đã khoá trước ở `freeze_protocol.md §3`; không chọn lại theo kết quả.
@@ -468,6 +491,44 @@ def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str
             "chi_stage_ngu_nghia": round(
                 sum(_tok_stage(r, {"semantic_analyze", "semantic_program"})
                     for r in ket_qua) / n, 1) if n else None,
+        },
+        "token_dau_ra_theo_route": {
+            "khai": "Token ĐẦU RA (`candidates` + `thoughts`) — thứ tiền thật "
+                    "trả cho phần model PHÁT ra. Telemetry HỖ TRỢ, KHÔNG phải "
+                    "D2: hai route chạy trên hai population khác nhau (route "
+                    "sinh phục vụ được ít case hơn nhiều), nên so hai cột này "
+                    "với nhau là apples-to-oranges. D2 chỉ đọc trên "
+                    "`D2_matched_subset`.",
+            "route_sinh": {
+                "tong": sum(_tok_ra(r, _STAGE_NGU_NGHIA) for r in ket_qua),
+                "moi_case": round(
+                    sum(_tok_ra(r, _STAGE_NGU_NGHIA) for r in ket_qua) / n, 1
+                ) if n else None,
+            },
+            "route_module": {
+                "tong": sum(_tok_ra(r, _STAGE_LEGACY) for r in ket_qua),
+                "moi_case": round(
+                    sum(_tok_ra(r, _STAGE_LEGACY) for r in ket_qua) / n, 1
+                ) if n else None,
+            },
+        },
+        "coercion_rate": {
+            "khai": "Số lượt BIÊN CHUẨN HOÁ của `contract.py` phải ra tay. Cao "
+                    "và dai dẳng KHÔNG phải tin tốt: nó nghĩa là mô hình đã "
+                    "thành thói quen viết khác hợp đồng, và chỗ phải sửa là bề "
+                    "mặt sinh (prompt/thẻ văn phạm), không phải thêm một lớp "
+                    "gộp nữa. Cần con số này vì gộp im lặng không phân biệt "
+                    "được 'thỉnh thoảng' với 'luôn luôn'.",
+            "theo_lop": {
+                lop: sum((r.get("coercion") or {}).get(lop, 0) for r in ket_qua)
+                for lop in sorted(
+                    {k for r in ket_qua for k in (r.get("coercion") or {})}
+                )
+            },
+            "so_case_phai_gop": sum(
+                1 for r in ket_qua if any((r.get("coercion") or {}).values())
+            ),
+            "tren_tong_case": n,
         },
         "D2_matched_subset": {
             "so_case": len(giao),
@@ -626,6 +687,11 @@ async def _main_async(args) -> int:
           f" · số bước "
           f"{bao_cao['D1_structural_interpreter_khong_ton_token']['so_buoc_min_max']}")
     print(f"  token/case (hỗ trợ)   {bao_cao['semantic_token_per_case']['chi_stage_ngu_nghia']}")
+    print(f"  token ĐẦU RA/case     sinh {bao_cao['token_dau_ra_theo_route']['route_sinh']['moi_case']}"
+          f" · module {bao_cao['token_dau_ra_theo_route']['route_module']['moi_case']}")
+    print(f"  phải gộp cách viết    {bao_cao['coercion_rate']['so_case_phai_gop']}"
+          f"/{bao_cao['coercion_rate']['tren_tong_case']} case"
+          f" — {bao_cao['coercion_rate']['theo_lop']}")
     print(f"  D2 matched subset     {bao_cao['D2_matched_subset']['so_case']} case")
     print(f"  phân bố thất bại      {bao_cao['phan_bo_that_bai']}")
     print(f"  ngân sách             {bao_cao['ngan_sach']}")
