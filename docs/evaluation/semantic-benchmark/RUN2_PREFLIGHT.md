@@ -14,6 +14,15 @@ HEAD lúc chạy: `1bd0437` · candidate đóng băng: `b407af0` (cây sạch: *
 | 3 | Suite backend không hồi quy | `pytest -q` | ✅ **2033 passed · 18 skipped** |
 | 4 | Tập loại trừ đúng vân tay | `MEASURED_RUN1_IDS_FINGERPRINT.txt` | ✅ `e2ebcf79…` khớp §4 |
 | 5 | Phép chọn còn tái lập, giao rỗng | `select_by_seed.py --seed <giả> --exclude-measured` | ✅ chọn 40/49 · **giao với 40 bài đã đo = 0** |
+| 6 | **Vòng sửa ≤3 lượt thật sự chạy** | `pytest tests/semantic_program/test_repair_loop.py -q` | ✅ **11 passed**; tiêm lỗi (trần 3→1) ⇒ **7/11 ĐỎ** |
+
+Mục 6 thêm 2026-08-24. Nó tồn tại vì lượt #1 đo được 37/37 case gọi **đúng 1
+lượt**, và ta chỉ biết lý do (vòng sửa chưa ra đời) **bằng git log, không bằng
+test**. `test_stage_synthesis.py` không phủ được vòng lặp: sáu test ở đó xanh y
+hệt nhau dù `range(MAX_SEMANTIC_PROGRAM_ATTEMPTS)` bị đổi thành `range(1)`.
+Không có mục này, một vòng lặp hỏng lặng lẽ sẽ tiêu **520 lượt LLM** để bị phát
+hiện lại — thứ `test_mocked_production_e2e.py` ghi là đã xảy ra **ba lượt liên
+tiếp** trong wave này.
 
 Chi tiết mục 5 (seed giả `PREFLIGHT_KHONG_PHAI_SEED_THAT`, **không** ghi file):
 

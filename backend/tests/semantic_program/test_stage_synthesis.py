@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-"""`stage_semantic_program` — LLM tổng hợp IR, ĐÚNG MỘT LƯỢT.
+"""`stage_semantic_program` — LLM tổng hợp IR, hành vi MỘT LƯỢT.
+
+⚠️ File này chỉ phủ nhánh một lượt (hợp lệ → spec; hỏng → lỗi). Từ `d6b7b30`
+stage này chạy **≤3 lượt** với lỗi validator gửi ngược; vòng sửa ấy được khoá ở
+`test_repair_loop.py`, KHÔNG phải ở đây. Sáu test dưới đây xanh y hệt nhau dù
+vòng lặp có chạy hay không — đừng đọc chúng như bằng chứng vòng sửa tồn tại.
 
 R0 giữ nguyên: LLM viết *chương trình*, interpreter mới là authority của kết
 quả. Cấu trúc và enum do `responseSchema` cưỡng chế (constrained decoding đã

@@ -2657,6 +2657,31 @@ Runner đọc nó ở `run_sealed_evaluation.py`: `reset_coercion()` đầu mỗ
 `coercion_report()` vào `sealed_cases.json`, tổng hợp thành khối `coercion_rate`
 trong `sealed_summary.json`.
 
+### `backend/tests/semantic_program/test_repair_loop.py` · offline · 0 API call
+
+Khoá **vòng sửa ≤3 lượt** của `stage_semantic_program` — 11 test, và nó tồn tại
+vì `test_stage_synthesis.py` **không** phủ được vòng lặp: sáu test ở đó xanh y
+hệt nhau dù `range(MAX_SEMANTIC_PROGRAM_ATTEMPTS)` có bị đổi thành `range(1)`.
+Cùng loại lỗ đã làm `stage_semantic_program` từng **không ai gọi** mà suite vẫn
+xanh.
+
+Bốn nhóm khẳng định: vòng lặp **quay thật** (hỏng lượt 1 → sửa lượt 2 → trả
+spec; JSON cụt cũng kích hoạt; thành công lượt 1 KHÔNG gọi thêm) · lỗi validator
+**đi vào prompt lượt sau** kèm đề bài và thẻ văn phạm còn nguyên (thử lại mù ≠
+vòng sửa) · **dừng đúng ở trần** (ngân sách 520 của `RUN2_PROTOCOL §3` dẫn từ
+hằng số này) · mỗi lượt hỏng phát một `semantic_program_attempt` đánh số.
+
+**TIÊM LỖI đã chạy**: hạ `MAX_SEMANTIC_PROGRAM_ATTEMPTS` 3 → 1 thì **7/11 test
+ĐỎ**. Bốn test còn xanh là đúng — chúng phủ nhánh một-lượt hoặc dẫn bound từ
+chính hằng số.
+
+⚠️ Chọn payload hỏng cho bộ test này có HAI bẫy, đều làm test xanh vì lý do sai:
+(1) bốn lớp đã có biên chuẩn hoá (`spec_version`, `container` dạng `var`, `step`
+bọc literal, biến bool làm điều kiện) nay được **gộp** nên không kích hoạt được
+vòng sửa; (2) ba thứ tưởng hỏng mà validator vẫn cho qua — `statements` **rỗng**,
+gán vào **biến chưa khai**, `value_box` trỏ **biến lạ**. Payload dùng được là
+`push` vào container chưa khai.
+
 ### `backend/scripts/classify_run1_failures.py` · offline · **0 API call**
 
 Soi lại các ca trượt thẩm định của SEALED #1 bằng hợp đồng HIỆN TẠI, phân loại
