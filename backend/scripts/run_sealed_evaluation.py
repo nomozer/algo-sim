@@ -367,6 +367,17 @@ _NHOM_KHONG_PHAT = {
 }
 
 
+def _model_da_chay() -> str:
+    """Model THẬT của lượt này. Import muộn để module còn nạp được khi test
+    tổng-kết chạy không có `app` trên path."""
+    try:
+        from app.ai import gemini
+
+        return gemini.MODEL
+    except Exception:  # noqa: BLE001 — quan trắc không được giết lượt đo
+        return "KHONG_XAC_DINH"
+
+
 def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str,
               budget, dung_som: str | None, dataset: str = "sealed",
               tran_logic: int = TRAN_LOGIC, tran_http: int = TRAN_HTTP) -> dict:
@@ -433,6 +444,10 @@ def _tong_ket(ket_qua: list[dict], n_planned: int, candidate: dict, van_tay: str
         "measured_system_candidate": candidate.get("commit_ngan"),
         "evaluation_harness_commit": _danh_tinh_harness(),
         "cache_version": candidate.get("cache_version"),
+        # Model là MỘT PHẦN danh tính hệ được đo. Ghi giá trị THẬT đã chạy, đọc
+        # từ `gemini.MODEL`, không suy từ mặc định — nay nó đọc được từ
+        # `GEMINI_MODEL` nên mặc định không còn là sự thật.
+        "model": _model_da_chay(),
         "sealed_fingerprint": van_tay,
         "dung_som": dung_som,
         "dataset": dataset,

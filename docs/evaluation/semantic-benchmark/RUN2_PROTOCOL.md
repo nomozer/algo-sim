@@ -238,6 +238,34 @@ source_fact_id`. **KHÔNG vá tiếp**, và đây là quyết định có chủ 
 
 Ghi lại làm **phát hiện chờ xử lý sau lượt #2**, không phải việc đang làm dở.
 
+### Lệch lần thứ ba — `MODEL` đọc từ `GEMINI_MODEL` (2026-08-24)
+
+**Mặc định KHÔNG đổi**: vẫn `gemini-2.5-flash`, đúng model của lượt #1. Đây là
+thay đổi *cơ chế cấu hình*, không phải thay đổi *hệ*. Khai vì nó chạm
+`backend/app` nên `measured_system.tree_hash` trôi, và vì model là **một phần
+danh tính của hệ được đo** (`model_target` trong seal manifest).
+
+**Vì sao cần**: `MODEL` đang hardcode, nên mỗi lần thử một model là một lần sửa
+mã ⇒ một lần đóng băng lại candidate. Đúng cái vòng đã đóng băng candidate **sáu
+lần trong một ngày** (2026-08-23). Đưa ra env thì A/B không còn làm trôi cây mã.
+
+**Model khả dụng với key hiện tại** (`ListModels`, 2026-08-24): `gemini-3.7-flash`
+· `3.6-flash` · `3.5-flash` · `3.1-pro-preview` · `3.1-flash-lite` · `3-flash-preview`.
+`gemini-2.5-flash` nay **lạc hậu hai thế hệ**.
+
+**Khoá bằng `tests/test_gemini_model_config.py`**: mặc định phải bằng model lượt
+#1 (đổi ngầm là ĐỎ, kèm lời nhắc khai vào chính mục này) · env phải THẬT SỰ có
+tác dụng (không thì một lượt A/B chạy hai lần cùng model mà không ai biết) · tên
+model chỉ được xuất hiện MỘT lần trong mã · runner phải ghi `model` vào artifact.
+
+**Runner nay ghi `model` thật vào báo cáo** — trước đây suy từ mặc định, mà mặc
+định không còn là sự thật.
+
+> ⚠️ **Model KHÔNG giải thích được `A = 3/40`.** Chẩn đoán lượt #1: LLM sai
+> thuật toán thật chỉ **3/40**, còn 30/40 chết vì hợp đồng đòi cách viết khác.
+> Nói *"tại model cũ"* là báo cáo sai nguyên nhân. Model là đòn bẩy **bổ sung**,
+> đo được bằng A/B trên DEV, không phải lời giải thích cho số cũ.
+
 ### Kỷ luật từ đây
 
 Đóng băng mã ở §2 **có hiệu lực trở lại** kể từ `b407af0`. Cổng kiểm:

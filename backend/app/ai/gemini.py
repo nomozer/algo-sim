@@ -9,13 +9,25 @@ trình duyệt).
 from __future__ import annotations
 
 import asyncio
+import os
 from pathlib import Path
 
 import httpx
 
 from app.ai.telemetry import current_stage, record_usage
 
-MODEL = "gemini-2.5-flash"
+#: Model dùng cho MỌI stage. Đọc từ môi trường để A/B được **mà không phải sửa
+#: mã** — sửa mã thì mỗi lần thử một model là một lần `measured_system.tree_hash`
+#: trôi, và ta lại đóng băng candidate sáu lần trong một ngày như 2026-08-23.
+#:
+#: MẶC ĐỊNH GIỮ NGUYÊN `gemini-2.5-flash`: đổi model là quyết định vận hành
+#: tường minh, không phải tác dụng phụ của một lần nâng cấp — cùng luật với
+#: `SEMANTIC_ROUTE_MODE`.
+#:
+#: ⚠️ Model là MỘT PHẦN DANH TÍNH của hệ được đo (`model_target` trong seal
+#: manifest). Đổi nó ⇒ con số của lượt trước không còn so được trực tiếp. Lượt
+#: đo nào cũng phải ghi model đã dùng vào artifact, không suy từ mặc định.
+MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 SKILLS_DIR = Path(__file__).resolve().parent / "skills"
 
 # Lỗi TẠM THỜI đáng retry (quá tải / hạ tầng). 4xx còn lại (400, 403, 404...)

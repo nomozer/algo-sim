@@ -43,6 +43,13 @@ services:
       # tầng nào; không bật thì mỗi lượt live chỉ trả về "unsupported" trống.
       #   SEMANTIC_TELEMETRY=1 docker compose up -d backend
       SEMANTIC_TELEMETRY: ${SEMANTIC_TELEMETRY:-0}
+      # Model Gemini cho MỌI stage. Mặc định giữ nguyên bản đã dùng ở lượt đo
+      # #1 — đổi model là quyết định TƯỜNG MINH, và nó đổi cả danh tính hệ được
+      # đo (`model_target` trong seal manifest), không chỉ đổi chất lượng.
+      # Key hiện tại gọi được: gemini-3.7-flash · 3.6/3.5-flash ·
+      # 3.1-pro-preview · 3.1-flash-lite (xem `ListModels`).
+      #   GEMINI_MODEL=gemini-3.7-flash docker compose up -d backend
+      GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
     volumes:
       - ./backend/app:/app/app
     env_file:
