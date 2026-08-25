@@ -291,6 +291,21 @@ class IntersectPlanePlaneExpr(BaseModel):
     plane_a: str = Field(..., description="tên mặt phẳng 1")
     plane_b: str = Field(..., description="tên mặt phẳng 2")
 
+# THÊM 2026-08-25, sau một lượt live trên đề học sinh gửi thật. Đề hỏi
+# *"xác định giao điểm Q = d ∩ AD"* — dạng cực phổ biến của bài thiết diện: dựng
+# giao tuyến rồi cắt nó với một cạnh của đáy. Mô hình viết đúng
+# `{"kind": "intersect_line_line", "line_a": "d", "line_b": "AD"}` ở CẢ BA lượt
+# thử, và cả ba lần hợp đồng từ chối vì không có tag ấy.
+#
+# `kernel.intersect_line_line` đã tồn tại từ đầu, chính xác trên `Fraction`, và
+# NÉM đúng khi hai đường chéo nhau hay song song. Đây thuần tuý là bỏ sót ở
+# tầng nối — cùng lớp với lỗ `distance` cho cặp đường–đường ở
+# `GEOMETRY_CURRICULUM_COVERAGE §5`, và cũng rẻ như thế.
+class IntersectLineLineExpr(BaseModel):
+    kind: Literal["intersect_line_line"] = "intersect_line_line"
+    line_a: str = Field(..., description="tên đường thẳng 1")
+    line_b: str = Field(..., description="tên đường thẳng 2")
+
 class MidpointExpr(BaseModel):
     kind: Literal["midpoint"] = "midpoint"
     a: str = Field(..., description="tên điểm đầu")
@@ -354,6 +369,7 @@ ValueExpr = Annotated[
         Annotated[LiteralExpr, Tag("literal")],
         Annotated[IntersectLinePlaneExpr, Tag("intersect_line_plane")],
         Annotated[IntersectPlanePlaneExpr, Tag("intersect_plane_plane")],
+        Annotated[IntersectLineLineExpr, Tag("intersect_line_line")],
         Annotated[MidpointExpr, Tag("midpoint")],
         Annotated[ProjectOntoExpr, Tag("project_onto")],
         Annotated[DivideSegmentExpr, Tag("divide_segment")],

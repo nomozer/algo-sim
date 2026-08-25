@@ -258,6 +258,13 @@ def eval_geometry_expr(kind: str, node: Any, mem: dict[str, Any]) -> Any:
             _lay(mem, node.plane_a, Plane3, "mặt phẳng"),
             _lay(mem, node.plane_b, Plane3, "mặt phẳng"),
         )
+    if kind == "intersect_line_line":
+        # Kernel NÉM khi hai đường chéo nhau — và phải ném: trên hình biểu diễn
+        # phẳng chúng trông như cắt nhau, nên trả một điểm "gần đúng" là dạy sai.
+        return K.intersect_line_line(
+            _lay(mem, node.line_a, Line3, "đường thẳng"),
+            _lay(mem, node.line_b, Line3, "đường thẳng"),
+        )
     if kind == "midpoint":
         return K.midpoint(
             _lay(mem, node.a, Vec3, "điểm"), _lay(mem, node.b, Vec3, "điểm")

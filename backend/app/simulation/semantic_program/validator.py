@@ -99,6 +99,7 @@ MAX_NESTING_DEPTH = 8
 _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
     "intersect_line_plane": ("line", "plane"),
     "intersect_plane_plane": ("plane_a", "plane_b"),
+    "intersect_line_line": ("line_a", "line_b"),
     "midpoint": ("a", "b"),
     "divide_segment": ("a", "b"),
     "project_onto": ("point", "target"),
@@ -106,7 +107,29 @@ _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
     # Cùng lý do `ratio` vắng mặt ở `divide_segment`.
     "measure": ("of", "wrt"),
 }
-MAX_MEMORY_DECLARATIONS = 20
+#: Trần số khai báo bộ nhớ. 20 → 32 (2026-08-25), và lần này CÓ lý do ghi kèm.
+#:
+#: Con số 20 đến từ thời chỉ có miền Tin học, nơi một chương trình điển hình khai
+#: một dãy, một ngăn xếp, vài biến đếm. Một bài THIẾT DIỆN hình học thì khác về
+#: bản chất: mỗi ĐIỂM là một khai báo.
+#:
+#:     S A B C D          5   đỉnh chóp
+#:     M N P Q            4   điểm dựng thêm
+#:     khối · 2 mặt phẳng 3
+#:     2 đường · thiết diện 3
+#:     đại lượng đo       1
+#:     ────────────────────────
+#:                       16   cho một đề TRUNG BÌNH
+#:
+#: Đo được ở lượt live 2026-08-25 trên đề học sinh gửi thật: mô hình chạm trần ở
+#: lượt thử đầu, sửa được ở lượt hai. Tức trần cũ không CHẶN sai — nó chỉ thu
+#: một khoản thuế ~30 giây và một call cho gần như mọi đề hình học cỡ này.
+#:
+#: 32 không phải "nhân đôi cho chắc": nó là 16 (đề trung bình) × 2, và cái chặn
+#: chương trình chạy loạn vốn là ngân sách BƯỚC của interpreter, không phải trần
+#: này. Trần này chống *khai* loạn, và một đề hình học cần 33 tên thì gần như
+#: chắc chắn là mô hình đang khai lại cùng một điểm dưới nhiều tên.
+MAX_MEMORY_DECLARATIONS = 32
 
 class ValidationResult:
     def __init__(self, ok: bool, error: Optional[str] = None, spec: Optional[SemanticProgramSpec] = None):

@@ -193,7 +193,12 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       gửi đều đang mang một lời từ chối trong bảng cache. Không bump thì bản
 #       vá này đọc như không ăn thua ngay trên chính các đề nó nhắm tới — đúng
 #       hồi quy câm mà luật bump sinh ra để chặn.
-CACHE_VERSION = "42"
+#   43 (2026-08-25): IR thêm biểu thức `intersect_line_line`. Thẻ văn phạm SINH
+#       TỪ `contract.py` nên nó tự có mặt trong user message của
+#       `semantic_program` — tức bề mặt prompt ĐÃ ĐỔI mà không ai sửa một file
+#       `.md` nào. Đúng ca mà luật "đổi prompt ⇒ bump" nhắm tới, và là ca dễ
+#       quên nhất vì thay đổi nằm ở một model Pydantic.
+CACHE_VERSION = "43"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

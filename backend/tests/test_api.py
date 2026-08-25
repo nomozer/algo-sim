@@ -337,7 +337,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # nào đã gửi qua sản phẩm đều đang mang sẵn một lời từ chối "ngoài danh mục"
     # trong bảng cache; không bump thì học sinh gửi lại vẫn nhận đúng lời ấy và
     # bản vá đọc như không ăn thua ngay trên chính các đề nó nhắm tới.
-    assert main_module.CACHE_VERSION == "42"
+    # 43: IR thêm `intersect_line_line`. Thẻ văn phạm sinh từ `contract.py` nên
+    # bề mặt prompt đổi mà không file `.md` nào bị sửa — ca dễ quên nhất của luật
+    # bump, vì thay đổi nằm ở một model Pydantic.
+    assert main_module.CACHE_VERSION == "43"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

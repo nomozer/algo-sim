@@ -70,6 +70,20 @@ def _kieu(annotation) -> str:
         return "tên"
     txt = repr(annotation)
     if txt.startswith("list["):
+        # `list[…]` KHÔNG phải lúc nào cũng là thân vòng lặp. Trước bản này thẻ
+        # gọi MỌI list là "khối lệnh", nên `construct_plane.through: list[str]`
+        # — ba TÊN ĐIỂM — được giới thiệu với mô hình như một thân câu lệnh.
+        #
+        # Đo được ở lượt live 2026-08-25 trên đề học sinh gửi thật: cả BA lượt
+        # thử đều điền `{"kind": "literal", "value": ["A","B","C"]}` vào
+        # `through`, `vertices` và `faces`. Mô hình không bịa — nó đang cố nhét
+        # một giá trị vào chỗ thẻ bảo là khối lệnh, và bọc nó lại là cách duy
+        # nhất hợp lý. Nhãn sai của TA đẻ ra lỗi của NÓ.
+        ben_trong = typing.get_args(annotation)
+        if ben_trong and ben_trong[0] is str:
+            return "danh sách TÊN"
+        if ben_trong and repr(ben_trong[0]).startswith("list["):
+            return "danh sách các danh sách"
         return "khối lệnh"
     if "Cond" in txt:
         return "điều kiện"

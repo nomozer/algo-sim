@@ -2650,6 +2650,13 @@ Không hàm nào nhận **toạ độ kết quả** từ IR. Thêm một trườ
 `ConstructPointStmt` "cho nhanh" là trao quyền quyết kết quả cho LLM —
 `test_R0_*` trong `tests/geometry/test_geometry_ir.py` khoá lại.
 
+Biểu thức `intersect_line_line` thêm 2026-08-25 **sau một lượt live**: mô hình
+viết đúng nó ở cả ba lượt thử cho `Q = d ∩ AD` (dạng phổ biến của bài thiết
+diện) và hợp đồng từ chối, trong khi kernel đã có phép ấy từ đầu. Thêm một biểu
+thức hình học phải sửa **BỐN** chỗ — `contract.ValueExpr` ·
+`validator._BIEU_THUC_HINH_HOC` · `eval_geometry_expr` · schema đã export — và
+`test_MOI_bieu_thuc_hinh_hoc_deu_co_NGUOI_THUC_THI` nay bắt ca quên chỗ thứ hai.
+
 Cũng sở hữu **vị từ "giá trị này có lên được hình không"**: `la_doi_tuong_hinh_hoc`
 · `la_dai_luong_do` · `KIEU_DAI_LUONG`. Chúng ở **tầng kernel** có chủ đích — hai
 người dùng là `simulation_state.build_scene` (chiếu ra cảnh) và

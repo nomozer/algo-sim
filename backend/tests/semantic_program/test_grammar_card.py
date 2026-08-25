@@ -88,9 +88,16 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # trước khi nâng trần — vô ích, vì thẻ KHÔNG đọc `description`, nó dẫn xuất
     # từ tên trường và KIỂU.
     #
+    # 3800 → 3900 (2026-08-25): thêm ĐÚNG MỘT biểu thức, `intersect_line_line`
+    # (~48 byte). Một lượt live trên đề học sinh gửi thật cho thấy mô hình viết
+    # đúng nó ở CẢ BA lượt thử — `Q = d ∩ AD`, dạng cực phổ biến của bài thiết
+    # diện — và cả ba lần hợp đồng từ chối vì thiếu tag. Kernel đã có phép ấy từ
+    # đầu; đây thuần tuý là bỏ sót ở tầng nối.
+    #
     # Guard chống nhồi văn xuôi THẬT SỰ là `test_the_khong_phai_van_ban_viet_tay`
-    # ngay dưới đây; trần byte chỉ là lưới thứ hai, chặn ca ai đó thêm 50 kind.
-    assert n <= 3800, (
+    # ngay dưới đây; trần byte chỉ là lưới thứ hai, chặn ca ai đó thêm 50 kind —
+    # đúng như dòng trên đã ghi, và một từ vựng mới không phải ca ấy.
+    assert n <= 3900, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )

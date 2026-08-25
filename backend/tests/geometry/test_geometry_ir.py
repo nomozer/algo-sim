@@ -12,6 +12,7 @@ này"*; toạ độ giao tuyến do kernel tính. Nếu một ngày ai đó thê
 """
 from __future__ import annotations
 
+import inspect
 from fractions import Fraction as F
 
 import pytest
@@ -91,6 +92,122 @@ def test_dung_giao_tuyen_hai_mat_phang():
     ))
     assert isinstance(kq.final_memory["g"], Line3)
     assert isinstance(kq.final_memory["sab"], Plane3)
+
+
+# ── 1b. GIAO HAI ĐƯỜNG THẲNG ─────────────────────────────────────────────
+#
+# Thêm 2026-08-25 sau một lượt LIVE trên đề học sinh gửi thật. Đề hỏi *"xác định
+# giao điểm Q = d ∩ AD"* — dựng giao tuyến rồi cắt nó với một cạnh của đáy, dạng
+# cực phổ biến của bài thiết diện. Mô hình viết đúng
+# `{"kind": "intersect_line_line", ...}` ở CẢ BA lượt thử và cả ba lần hợp đồng
+# từ chối, trong khi `kernel.intersect_line_line` đã có sẵn từ đầu.
+def test_giao_hai_duong_thang_DONG_PHANG_ra_dung_diem():
+    """`AB ∩ AD` = `A`. Đúng tuyệt đối trên `Fraction`, không epsilon."""
+    kq = _chay(_chop_spec([
+        {"kind": "construct_line", "target_var": "ab",
+         "through_a": "A", "through_b": "B"},
+        {"kind": "construct_line", "target_var": "ad",
+         "through_a": "A", "through_b": "D"},
+        {"kind": "construct_point", "target_var": "Q", "expr": {
+            "kind": "intersect_line_line", "line_a": "ab", "line_b": "ad"}},
+    ]))
+    assert kq.final_memory["Q"] == kq.final_memory["A"]
+
+
+def test_giao_duong_CHEO_NHAU_thi_chuong_trinh_HONG():
+    """Hai đường chéo nhau TRÔNG NHƯ cắt nhau trên hình biểu diễn phẳng — đó
+    chính là chỗ hình vẽ tay dạy sai. Trả một điểm "gần đúng" ở đây là chép lại
+    cái sai ấy vào máy, nên kernel phải NỔ và IR không được nuốt."""
+    from app.simulation.geometry import GeometryError
+
+    with pytest.raises(GeometryError) as e:
+        _chay(_chop_spec([
+            {"kind": "construct_line", "target_var": "ab",
+             "through_a": "A", "through_b": "B"},
+            # `SD` không đồng phẳng với `AB`.
+            {"kind": "construct_line", "target_var": "sd",
+             "through_a": "S", "through_b": "D"},
+            {"kind": "construct_point", "target_var": "Q", "expr": {
+                "kind": "intersect_line_line", "line_a": "ab", "line_b": "sd"}},
+        ]))
+    assert "CHÉO NHAU" in str(e.value)
+
+
+def test_giao_duong_SONG_SONG_thi_chuong_trinh_HONG():
+    from app.simulation.geometry import GeometryError
+
+    with pytest.raises(GeometryError):
+        _chay(_chop_spec([
+            {"kind": "construct_line", "target_var": "ab",
+             "through_a": "A", "through_b": "B"},
+            {"kind": "construct_line", "target_var": "dc",
+             "through_a": "D", "through_b": "C"},
+            {"kind": "construct_point", "target_var": "Q", "expr": {
+                "kind": "intersect_line_line", "line_a": "ab", "line_b": "dc"}},
+        ]))
+
+
+def test_tran_khai_bao_DU_CHO_MOT_BAI_THIET_DIEN():
+    """Trần khai báo phải chứa nổi một đề hình học TRUNG BÌNH, có dư.
+
+    Trước bản này trần là `20` — một hằng số trần không lý do, không test. Lượt
+    live 2026-08-25 cho thấy mô hình chạm nó ở lượt thử đầu trên một đề thiết
+    diện bình thường, rồi sửa được ở lượt hai: trần cũ không chặn sai, nó chỉ
+    thu thuế ~30 giây và một call cho gần như mọi đề cỡ ấy.
+
+    Test này ghim con số VÀ lý do, để lần sau ai đó hạ nó xuống thì phải trả lời
+    câu "vậy bài thiết diện khai ở đâu".
+    """
+    from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
+
+    # 5 đỉnh chóp + 4 điểm dựng + khối + 2 mặt + 2 đường + thiết diện + 1 đại
+    # lượng đo = 16 cho một đề trung bình.
+    DE_TRUNG_BINH = 16
+    assert MAX_MEMORY_DECLARATIONS >= DE_TRUNG_BINH * 2, (
+        "trần không còn chỗ dư cho một đề thiết diện — mô hình sẽ tiêu một lượt "
+        "thử chỉ để cắt bớt tên"
+    )
+
+
+def test_MOI_bieu_thuc_hinh_hoc_deu_co_NGUOI_THUC_THI():
+    """BẤT BIẾN #33 — thêm một biểu thức vào hợp đồng mà quên nhánh thực thi.
+
+    Thêm `intersect_line_line` phải sửa BỐN chỗ: `contract.ValueExpr` (union) ·
+    `validator._BIEU_THUC_HINH_HOC` (kiểm tên) · `geometry_exec.eval_geometry_expr`
+    (tính) · schema đã export. Tôi quên chỗ thứ hai, và may là nó nổ to
+    ("Biểu thức giá trị không được hỗ trợ") thay vì trả lặng lẽ một ô rỗng.
+
+    May mắn không phải là một cổng. Test này dẫn danh sách TỪ union — thêm biểu
+    thức hình học mới mà quên đăng ký là ĐỎ ngay, không phải chờ một lượt live.
+    """
+    import typing
+
+    from app.simulation.semantic_program.contract import ValueExpr
+    from app.simulation.semantic_program.geometry_exec import eval_geometry_expr
+    from app.simulation.semantic_program.validator import _BIEU_THUC_HINH_HOC
+
+    # Tag của union phân biệt = tên `kind`.
+    tags = {a.__metadata__[0].tag
+            for a in typing.get_args(typing.get_args(ValueExpr)[0])}
+    # Biểu thức của miền TIN HỌC đi nhánh khác — chỉ soi cái nào kernel hình học
+    # thật sự tính.
+    nguon = inspect.getsource(eval_geometry_expr)
+    hinh_hoc = {t for t in tags if f'kind == "{t}"' in nguon}
+    assert hinh_hoc, "không đọc được nhánh nào — test đang soi nhầm chỗ"
+
+    thieu = sorted(hinh_hoc - set(_BIEU_THUC_HINH_HOC))
+    assert not thieu, (
+        f"biểu thức có người TÍNH mà không ai KIỂM TÊN: {thieu} — "
+        "validator sẽ trả 'không được hỗ trợ' ngay trước khi tới kernel"
+    )
+
+
+def test_the_van_pham_CO_NOI_ve_intersect_line_line():
+    """Hợp đồng có mà thẻ không nói thì mô hình vẫn không biết đường dùng — thẻ
+    sinh TỪ `contract.py` nên điều này đúng tự động, và test giữ nó đúng."""
+    from app.simulation.semantic_program.grammar_card import grammar_card
+
+    assert "intersect_line_line: line_a:tên line_b:tên" in grammar_card()
 
 
 # ── 2. Thiết diện → NHIỀU bước timeline ───────────────────────────────────
