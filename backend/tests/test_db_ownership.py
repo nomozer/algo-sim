@@ -72,3 +72,37 @@ def test_postgres_engine_kwargs_has_durable_pool(monkeypatch):
     assert kwargs["pool_pre_ping"] is True
     assert set(kwargs) == {"pool_pre_ping", "pool_recycle", "pool_size", "max_overflow"}
     assert "connect_args" not in kwargs
+
+
+# ── SUITE CHẠY TRÊN DB RIÊNG, KHÔNG PHẢI DB CỦA DEV ────────────────────────
+#
+# ĐO ĐƯỢC 2026-08-25: một lượt `pytest` full treo quá 600 giây, trong khi lượt
+# ngay trước đó mất 27 giây. Không phải test nào chậm — có BỐN tiến trình pytest
+# cùng chạy (hai phiên làm việc song song) và cả bốn tranh nhau đúng một file
+# `backend/algosim.db`. CPU gần như bằng không: chúng nằm chờ khoá SQLite.
+#
+# Hình dạng của lỗi mới là chỗ đắt: nó trông y hệt một test treo, nên người ta
+# đi tìm test có lỗi. Không có thông báo, không có timeout, không có gì chỉ sang
+# tiến trình kia.
+#
+# Cùng file dùng chung còn đẻ một lớp lỗi thứ hai đã cắn kho này rồi: trạng thái
+# RÒ RỈ giữa các lượt chạy. `test_api.py` ghi lại một lỗi câm suốt nhiều lần bump
+# `CACHE_VERSION` vì "test luôn chạy trên DB sạch", và nó chỉ lộ ra ở bump 36→37
+# khi DB test còn hàng của lượt trước.
+#
+# Hai test dưới khoá hai nửa của cùng một tính chất: KHÔNG đụng DB của dev, và
+# MỖI LƯỢT một file.
+
+
+def test_suite_KHONG_chay_tren_DB_dung_chung_cua_dev():
+    """Suite không được ghi vào `backend/algosim.db` — đó là DB của người dùng."""
+    assert "algosim.db" not in db.DATABASE_URL, (
+        f"pytest đang chạy trên DB dùng chung: {db.DATABASE_URL}"
+    )
+
+
+def test_hai_luot_pytest_SONG_SONG_khong_dung_chung_file():
+    """Đường dẫn dẫn xuất từ PID, nên hai tiến trình không bao giờ đụng nhau."""
+    import conftest
+
+    assert conftest.duong_dan_db_test(111) != conftest.duong_dan_db_test(222)

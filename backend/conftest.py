@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Cấu hình pytest (M7.14T) — OFFLINE-FIRST.
 
-Hai việc:
+Ba việc:
 1. Giúp pytest import được package `app` khi chạy từ thư mục backend/.
 2. HARD GUARD: pytest mặc định KHÔNG BAO GIỜ gọi Gemini thật.
+3. MỖI LƯỢT PYTEST MỘT DATABASE RIÊNG (xem `duong_dan_db_test`).
 
 Vì sao guard đặt Ở ĐÂY chứ không trong app/ai/gemini.py:
 - Biên mạng thật là `httpx.AsyncClient.post` — chỉ gemini.py dùng httpx.
@@ -21,9 +22,58 @@ Thoát guard: chỉ khi ALLOW_LIVE_AI=1 (dùng cho live eval, không dùng trong
 import os
 import socket
 import sys
+import tempfile
+from pathlib import Path
 
 import httpx
 import pytest
+
+
+def duong_dan_db_test(pid: int | None = None) -> str:
+    """URL SQLite RIÊNG cho MỘT lượt pytest, đặt tên theo PID.
+
+    ─── VÌ SAO, ĐO ĐƯỢC 2026-08-25 ──────────────────────────────────────────
+
+    Một lượt `pytest` full treo quá 600 giây trong khi lượt ngay trước đó mất
+    27 giây. Không test nào chậm: có BỐN tiến trình pytest cùng chạy (hai phiên
+    làm việc song song) và cả bốn tranh nhau đúng một file `backend/algosim.db`.
+    CPU gần bằng không — chúng nằm chờ khoá SQLite.
+
+    Cái đắt là HÌNH DẠNG của lỗi: nó trông y hệt một test treo, nên người ta đi
+    tìm test có lỗi, không nghĩ tới tiến trình bên cạnh. Không thông báo, không
+    timeout, không gì trỏ sang thủ phạm.
+
+    File dùng chung còn đẻ lớp lỗi thứ hai đã cắn kho này: trạng thái RÒ RỈ giữa
+    các lượt. `test_api.py` ghi lại một lỗi câm suốt nhiều lần bump
+    `CACHE_VERSION` vì *"test luôn chạy trên DB sạch"*, chỉ lộ ở bump 36→37 khi
+    DB test còn hàng của lượt trước.
+
+    Đặt ở đây chứ không ở từng fixture: `app/persistence/db.py` đọc
+    `DATABASE_URL` **lúc import module**, mà `conftest.py` được pytest nạp trước
+    mọi file test — nên đây là chỗ duy nhất còn kịp. `conftest_classroom.py` giải
+    quyết nửa khác của bài toán (đổi chỗ `SessionLocal` cho từng test cần DB
+    trống); hai thứ không thay nhau được.
+    """
+    pid = os.getpid() if pid is None else pid
+    return f"sqlite:///{Path(tempfile.gettempdir()) / f'algosim-test-{pid}.db'}"
+
+
+# `setdefault`, KHÔNG gán đè: lượt chỉ định DATABASE_URL tường minh (smoke
+# Postgres, CI trỏ DB khác) phải thắng. Test `-m postgres` truyền URL cho tiến
+# trình con nên không đi qua đây.
+os.environ.setdefault("DATABASE_URL", duong_dan_db_test())
+
+
+def pytest_sessionfinish(session, exitstatus):
+    """Dọn file DB của lượt này — thư mục tạm không phải chỗ để rác tích lại."""
+    duong_dan = os.environ.get("DATABASE_URL", "")
+    if duong_dan != duong_dan_db_test():
+        return  # DB do người khác chỉ định — không phải của ta, không đụng
+    try:
+        Path(duong_dan.removeprefix("sqlite:///")).unlink(missing_ok=True)
+    except OSError:
+        pass  # Windows còn giữ handle là chuyện thường; rác trong temp vô hại
+
 
 # Fix WinError 10013 on Windows ephemeral port bind in asyncio self-pipe
 if sys.platform == "win32":
