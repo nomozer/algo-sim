@@ -185,4 +185,10 @@ def test_dem_qua_ca_mot_chuong_trinh_that():
         CS.LOP_CONTAINER_REF: 1,
         CS.LOP_CONDITION_BOOL: 1,
         CS.LOP_CONST_INT: 1,
+        # Lớp thứ NĂM (Phase 5A) — `0` là con số ĐÚNG ở đây, không phải chỗ
+        # trống cần lấp: chương trình Tin học này không có `construct_solid`,
+        # nên biên `faces` chưa từng chạy. So TOÀN BỘ dict thay vì so từng khoá
+        # là có chủ đích — thêm một lớp mà quên nghĩ xem nó có nổ trong ca này
+        # không thì test sẽ ĐỎ, và đó đúng là lúc phải dừng lại nghĩ.
+        CS.LOP_FACE_SYMBOL: 0,
     }

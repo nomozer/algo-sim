@@ -910,6 +910,48 @@ async def _semantic_shadow(
     return await _semantic_route_attempt(text, analysis, api_key, observer)
 
 
+def _dung_scene3d(spec) -> dict | None:
+    """`SemanticProgramSpec` → cảnh 3D, hoặc `None` nếu bài không phải hình học.
+
+    ─── VÌ SAO NGƯỜI GHÉP NẰM Ở ĐÂY, KHÔNG Ở `route.py` ────────────────────
+
+    Hướng phụ thuộc một chiều: engine (kernel · validator · interpreter · các
+    cổng) KHÔNG được biết tới tầng trình bày, vì khi ấy một thay đổi thẩm mỹ sẽ
+    đụng vào thứ đang gác cửa. `test_scene3d.py` giữ luật đó bằng cách cấm **mọi**
+    module dưới `app/simulation` import `scene3d`.
+
+    `pipeline` là người GỌI route, không phải một tầng của nó — nên ghép ở đây
+    thoả cả hai: cảnh 3D vẫn tới được envelope, mà ranh giới không phải nới một
+    milimét nào. `SemanticRouteOutcome.scene3d` chỉ là một Ô TRỐNG kiểu `dict`.
+
+    ─── VÌ SAO CHẠY LẠI INTERPRETER ───────────────────────────────────────
+
+    `verify_and_compile` trả `final_memory` nhưng không trả `trace`, mà timeline
+    cần trace đầy đủ. Interpreter tất định và không đọc trạng thái ngoài, nên
+    chạy lại cho **đúng kết quả cũ**; `compile_semantic_program_to_envelope`
+    trong route cũng đã chạy lại vì cùng lý do, và ghi rõ tiền lệ ấy.
+
+    Bài Tin học trả `None` — cảnh rỗng cũng là `None`: một khung 3D trống không
+    nói được gì, và bày nó ra là mời người học đi tìm thứ không có.
+    """
+    from app.simulation.semantic_program.interpreter import (
+        SemanticProgramInterpreter,
+    )
+    from app.simulation.semantic_program.scene3d import build_scene3d
+    from app.simulation.semantic_program.simulation_state import (
+        build_simulation_state,
+    )
+
+    try:
+        ket = SemanticProgramInterpreter().execute(spec)
+        canh = build_scene3d(build_simulation_state(spec, ket))
+    except Exception:  # noqa: BLE001 — trình bày hỏng KHÔNG được giết phép đo
+        # Một lỗi ở tầng cảnh không được làm hỏng một chương trình đã qua mọi
+        # cổng. Mất hình còn hơn mất cả kết quả đã kiểm chứng.
+        return None
+    return canh if canh["objects"] else None
+
+
 def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> dict:
     """Envelope phát từ route sinh — MỘT chỗ dựng, hai chỗ gọi.
 
@@ -922,6 +964,11 @@ def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> di
     env["analysis"] = analysis
     env["representation_plan"] = plan
     env["source"] = "semantic_program"
+    # Cảnh 3D đi kèm envelope, KHÔNG thay nó: đường 2D cũ nguyên vẹn, và bài
+    # Tin học không có khoá này. Gắn ở đây vì đây là MỘT chỗ dựng envelope duy
+    # nhất — hai lối vào phải ra cùng một hình dạng.
+    if outcome.scene3d:
+        env["scene3d"] = outcome.scene3d
     _emit(observer, "envelope", status="ok",
           simulation_id=env.get("simulation_id"), source="semantic_program")
     return env
@@ -966,6 +1013,11 @@ async def _semantic_route_attempt(
         return None
 
     outcome = verify_and_compile(contract, spec)
+    # Cảnh 3D CHỈ dựng khi chương trình đã chạy trọn. Chương trình không qua
+    # thẩm định thì không có hình — đó là toàn bộ luận điểm của đề tài, và nếu
+    # nới ở đây thì renderer sẽ bày ra thứ chưa ai kiểm.
+    if outcome.executable:
+        outcome = outcome.model_copy(update={"scene3d": _dung_scene3d(spec)})
     _emit(observer, "semantic_route",
           stage_reached=outcome.stage_reached,
           executable=outcome.executable,

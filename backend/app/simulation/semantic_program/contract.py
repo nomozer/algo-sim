@@ -9,12 +9,16 @@ Mục tiêu:
 from __future__ import annotations
 import json
 from typing import Annotated, Any, Literal, Optional, Union
-from pydantic import BaseModel, BeforeValidator, Field, Discriminator, Tag, field_validator
+from pydantic import (
+    BaseModel, BeforeValidator, Field, Discriminator, Tag, field_validator,
+    model_validator,
+)
 
 from .coercion_stats import (
     LOP_CONDITION_BOOL,
     LOP_CONST_INT,
     LOP_CONTAINER_REF,
+    LOP_FACE_SYMBOL,
     LOP_SPEC_VERSION,
     ghi_coercion,
 )
@@ -586,6 +590,85 @@ class ConstructPlaneStmt(BaseModel):
     )
     label: Optional[str] = Field(None, description="nhãn, vd (SBC)")
 
+def canonical_face_indices(v: Any) -> Any:
+    """`faces` khai bằng TÊN ĐỈNH → chỉ số. Biên chuẩn hoá, KHÔNG đụng kernel.
+
+    ─── ĐO ĐƯỢC Ở LƯỢT W4 (`8b4025e`): 3/4 ca trượt schema, CÙNG một trường ───
+
+        statements.N.construct_solid.faces.0.0
+          Input should be a valid integer … input_value='S'
+
+    Mô hình viết `[["S","A","B"], …]`. Đó không phải cẩu thả: `faces:
+    list[list[int]]` dùng **chỉ số vị trí** vào `vertices` — mã hoá thân thiện
+    với máy, **thù địch với người**. Và mô hình vừa được Wave 4 dặn *"giữ nguyên
+    ký hiệu điểm, đừng hạ chữ thường"*, nên nó dùng ký hiệu ở mọi chỗ.
+
+    Ở Wave 3 tôi từ chối vá một lỗi hình-dạng-wire tương tự với lý do *"một lần
+    là giai thoại"*. Nay là **ba lần, cùng một trường** — ngưỡng đã vượt.
+
+    ─── HAI THỨ HÀM NÀY KHÔNG LÀM ─────────────────────────────────────────
+
+    **KHÔNG nhận toạ độ.** Một mục của `faces` chỉ được là `int` (chỉ số) hoặc
+    `str` (tên đỉnh đã khai ở `vertices`). Một `[0,0,0]` lọt vào đây sẽ là LLM
+    tiêm toạ độ thẳng vào khối, bỏ qua cả `vertices` lẫn ranh giới R0 — nên nó
+    bị từ chối tường minh, không phải bị nuốt.
+
+    **KHÔNG đoán `str` là số.** `"0"` không được hiểu thành chỉ số 0. Chỗ này có
+    một cám dỗ hợp lý (mô hình có thể khai `["0","1","2"]`), nhưng bằng chứng
+    hiện có là `["S","A","B"]`, và vá theo thứ CHƯA quan sát được là mở rộng hợp
+    đồng bằng suy đoán. Tên lạ ⇒ lỗi có liệt kê tên hợp lệ, và vòng sửa ≤3 lượt
+    đọc được nó.
+
+    Đồ thị phụ thuộc KHÔNG đổi: `_phu_thuoc` đọc `st.vertices` (danh sách TÊN),
+    và hàm này không chạm `vertices`.
+    """
+    if not isinstance(v, dict):
+        return v
+    dinh = v.get("vertices")
+    mat = v.get("faces")
+    if not isinstance(dinh, list) or not isinstance(mat, list):
+        return v
+    tra = {t: i for i, t in enumerate(dinh) if isinstance(t, str)}
+
+    ra: list[Any] = []
+    da_ghi = False
+    for f in mat:
+        if not isinstance(f, list):
+            ra.append(f)
+            continue
+        moi: list[Any] = []
+        for o in f:
+            if isinstance(o, str):
+                if o not in tra:
+                    raise ValueError(
+                        f"mặt của khối trỏ tới đỉnh '{o}' chưa khai trong "
+                        f"`vertices` (đã khai: {sorted(tra)})"
+                    )
+                moi.append(tra[o])
+                da_ghi = True
+            elif isinstance(o, bool) or not isinstance(o, int):
+                # Chặn TIÊM TOẠ ĐỘ và mọi hình dạng lạ khác. `bool` tách riêng
+                # vì trong Python nó *là* `int`, và `True` lọt vào đây sẽ thành
+                # chỉ số 1 một cách âm thầm.
+                raise ValueError(
+                    f"mặt của khối chỉ nhận TÊN ĐỈNH hoặc chỉ số nguyên, "
+                    f"nhận {o!r} ({type(o).__name__}). Toạ độ phải khai ở "
+                    f"`memory_declarations`, không khai trong `faces`."
+                )
+            else:
+                moi.append(o)
+        if len(set(moi)) != len(moi):
+            raise ValueError(
+                f"mặt {f!r} lặp lại cùng một đỉnh — mặt suy biến, không dựng "
+                "được thành đa giác."
+            )
+        ra.append(moi)
+
+    if da_ghi:
+        ghi_coercion(LOP_FACE_SYMBOL)
+    return {**v, "faces": ra}
+
+
 class ConstructSolidStmt(BaseModel):
     """Dựng khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.
 
@@ -596,14 +679,22 @@ class ConstructSolidStmt(BaseModel):
 
     Chỉ số trong `faces` trỏ vào `vertices` theo VỊ TRÍ, giống hệt cách
     `Polyhedron` của kernel biểu diễn — không đẻ ra một quy ước thứ hai.
+
+    Từ Phase 5A, `faces` nhận **cả TÊN ĐỈNH lẫn chỉ số**; biên chuẩn hoá
+    `canonical_face_indices` quy về chỉ số TRƯỚC khi Pydantic kiểm kiểu, nên
+    kernel vẫn chỉ nhìn thấy `list[list[int]]` như cũ.
     """
+    _canonical_faces = model_validator(mode="before")(canonical_face_indices)
+
     kind: Literal["construct_solid"] = "construct_solid"
     target_var: str = Field(..., description="tên khối dựng ra")
     vertices: list[str] = Field(
         ..., min_length=4, description="tên các đỉnh, theo thứ tự"
     )
     faces: list[list[int]] = Field(
-        ..., min_length=4, description="mỗi mặt là danh sách chỉ số đỉnh"
+        ..., min_length=4,
+        description="mỗi mặt là danh sách TÊN ĐỈNH (vd [\"S\",\"A\",\"B\"]) "
+                    "hoặc chỉ số vào `vertices`",
     )
     label: Optional[str] = Field(None, description="nhãn, vd S.ABCD")
 

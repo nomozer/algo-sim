@@ -711,7 +711,7 @@
       "type": "object"
     },
     "ConstructSolidStmt": {
-      "description": "Dựng khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.\n\nCùng lý do với `construct_plane`, và thêm một điều: `faces` là **cấu trúc\ntổ hợp** đọc thẳng từ đề (*\"hình chóp S.ABCD\"* ⇒ một đáy bốn đỉnh, bốn mặt\nbên), KHÔNG phải dữ liệu hình học. LLM sở hữu quan hệ kề; kernel sở hữu\ntoạ độ. Ranh giới R0 rơi đúng vào giữa hai thứ đó.\n\nChỉ số trong `faces` trỏ vào `vertices` theo VỊ TRÍ, giống hệt cách\n`Polyhedron` của kernel biểu diễn — không đẻ ra một quy ước thứ hai.",
+      "description": "Dựng khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.\n\nCùng lý do với `construct_plane`, và thêm một điều: `faces` là **cấu trúc\ntổ hợp** đọc thẳng từ đề (*\"hình chóp S.ABCD\"* ⇒ một đáy bốn đỉnh, bốn mặt\nbên), KHÔNG phải dữ liệu hình học. LLM sở hữu quan hệ kề; kernel sở hữu\ntoạ độ. Ranh giới R0 rơi đúng vào giữa hai thứ đó.\n\nChỉ số trong `faces` trỏ vào `vertices` theo VỊ TRÍ, giống hệt cách\n`Polyhedron` của kernel biểu diễn — không đẻ ra một quy ước thứ hai.\n\nTừ Phase 5A, `faces` nhận **cả TÊN ĐỈNH lẫn chỉ số**; biên chuẩn hoá\n`canonical_face_indices` quy về chỉ số TRƯỚC khi Pydantic kiểm kiểu, nên\nkernel vẫn chỉ nhìn thấy `list[list[int]]` như cũ.",
       "properties": {
         "kind": {
           "const": "construct_solid",
@@ -734,7 +734,7 @@
           "type": "array"
         },
         "faces": {
-          "description": "mỗi mặt là danh sách chỉ số đỉnh",
+          "description": "mỗi mặt là danh sách TÊN ĐỈNH (vd [\"S\",\"A\",\"B\"]) hoặc chỉ số vào `vertices`",
           "items": {
             "items": {
               "type": "integer"

@@ -40,9 +40,18 @@ LOP_SPEC_VERSION = "spec_version_so_thanh_chuoi"
 LOP_CONTAINER_REF = "container_var_thanh_ten"
 LOP_CONDITION_BOOL = "bien_bool_thanh_menh_de"
 LOP_CONST_INT = "step_literal_thanh_so_tran"
+#: Mặt của khối khai bằng TÊN ĐỈNH (`["S","A","B"]`) thay vì chỉ số (`[4,0,1]`).
+#:
+#: Mở 2026-08-25 (Phase 5A). Đo được ở lượt W4 (`8b4025e`): **3/4 ca trượt schema
+#: đều là lỗi này**, cùng một trường. Ngưỡng "một lần là giai thoại, hai lần là
+#: lớp lỗi" đã vượt. `faces: list[list[int]]` là mã hoá thân thiện với máy và
+#: **thù địch với người** — mô hình vừa được bảo *"giữ nguyên ký hiệu điểm"* thì
+#: viết tên điểm ở mọi chỗ, kể cả đây.
+LOP_FACE_SYMBOL = "mat_khoi_ten_dinh_thanh_chi_so"
 
 LOP_HOP_LE: frozenset[str] = frozenset(
-    {LOP_SPEC_VERSION, LOP_CONTAINER_REF, LOP_CONDITION_BOOL, LOP_CONST_INT}
+    {LOP_SPEC_VERSION, LOP_CONTAINER_REF, LOP_CONDITION_BOOL, LOP_CONST_INT,
+     LOP_FACE_SYMBOL}
 )
 
 _dem: Counter[str] = Counter()

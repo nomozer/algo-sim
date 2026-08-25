@@ -2732,6 +2732,159 @@ khác 0 vẫn phải khớp. Nguồn: Phase 5.5 đo 5/10 bài chết vì P2 đò
 trên việc model có nhớ khai `model_assumption` — bắt phép kiểm phụ thuộc trí nhớ
 của model là đo trí nhớ chứ không đo tính có căn cứ. R0 giữ bằng khoá witness.
 
+### `frontend/src/simulations/domains/geometry/scene3d-model.ts` · offline
+
+Kiểu dữ liệu + phép chiếu **THUẦN** của cảnh 3D hình học: `Scene3D`,
+`SceneObject`, `SceneEvent`, `RENDER_KINDS`, `toNumber`, `toVec3`, `objectsAt`,
+`highlightedAt`, `narrationAt`, `stepCount`, `clampStep`, và hai hằng trình bày
+`PLANE_DISPLAY_SIZE` / `LINE_DISPLAY_HALF_LENGTH`.
+
+**KHÔNG import `three`** — có test khoá (kiểm danh sách `from`, không kiểm chuỗi
+thô: chữ `three` nằm trong văn xuôi docstring). Nhờ vậy *cái gì hiện ra ở bước
+nào* kiểm được mà không cần WebGL, cùng khuôn `layerDepth`/`sideX` của
+`network/encap-ui3d.tsx`.
+
+`toNumber` là **chỗ DUY NHẤT** float xuất hiện trong toàn chuỗi — backend giữ
+chuỗi phân số tới tận đây vì kernel so bằng đúng, không epsilon. Chuỗi hỏng
+**NÉM** thay vì trả `NaN`: một `NaN` lọt vào buffer three.js làm cả mesh biến
+mất không báo gì.
+
+`objectsAt` tính từ `events` chứ **không** từ `objects`: `objects` là trạng thái
+CUỐI, chiếu thẳng nó ra thì học sinh thấy ngay hình hoàn chỉnh và mục tiêu sư
+phạm (*"hình được hình thành thế nào"*) biến mất.
+
+### `frontend/src/simulations/domains/geometry/scene3d-view.tsx` · offline
+
+Renderer 3D `display(scene, step)` bằng three.js + `OrbitControls`. Sở hữu
+`Scene3DWorkspace`, `buildObject3D`, `tryCreateWebGLRenderer`,
+`GEOMETRY_WEBGL_FALLBACK`.
+
+Cùng hợp đồng `network/encap-ui3d.tsx`: KHÔNG engine thứ hai, KHÔNG tính lại,
+mesh/camera/vật liệu **renderer-owned** (ref/closure), không vào store.
+
+⚠️ **Không suy luận hình học** — có test cấm `.cross(` `.dot(` `intersect`
+`Raycaster` `distanceTo` `angleTo`. Mặt phẳng vô hạn được vẽ bằng cách đặt một
+`PlaneGeometry` cỡ cố định tại `point` rồi xoay theo `normal` bằng
+`setFromUnitVectors` — pháp tuyến là **dữ liệu đã có**, xoay theo nó là dùng thư
+viện chứ không phải suy ra mặt phẳng từ ba điểm.
+
+⚠️ **Không phải GeoGebra**: test cấm `<button` `<input` `<select`
+`DragControls` `TransformControls`. Hình ở đây **không dựng được bằng chuột** —
+nó chỉ đến từ một chương trình đã qua thẩm định. Người học điều khiển **thời
+gian** (bước dựng) và **góc nhìn**, không phải nội dung hình.
+
+`readout` trả `null` có chủ đích: đại lượng đo được không có vị trí hình học,
+nên nó hiện ở bảng chữ bên cạnh chứ không phải một nhãn lơ lửng trong khung 3D.
+
+### `frontend/src/simulations/domains/geometry/Scene3DSection.tsx` · offline
+
+Vùng **"Quá trình dựng hình 3D"** trong thẻ mô phỏng (Phase 5F): `Scene3DSection`
++ `hopLeScene3D`. Là vùng **THÊM VÀO** dưới thân thẻ, không thay renderer nào và
+không đụng `VisualModeToggle` — bài Tin học không có `envelope.scene3d` nên
+component tự trả `null` và shell không phải biết luật.
+
+`hopLeScene3D` là **biên nhận fail-closed**: `envelope.scene3d` đến qua mạng nên
+hình dạng phải kiểm tại chỗ nhận (cùng lẽ `SimulationEnvelope.config` khai
+`unknown`). Lạ ⇒ không dựng gì — bày một khung 3D rỗng là mời người học đi tìm
+thứ không có.
+
+Diff ở shell đúng **hai dòng** (một import, một chỗ dựng), đặt sau
+`NarrationSlot`.
+
+### `frontend/src/simulations/domains/geometry/Scene3DSection.test.tsx` · offline
+
+Khoá biên nhận (9 hình dạng lạ đều trả rỗng) và khoá **đường 2D không bị lấn**:
+shell chỉ thêm một chỗ dựng, và cảnh 3D không được nhét vào `VisualModeToggle` —
+làm thế là đổi ý nghĩa `visual_modes` cho cả 24 target Tin học.
+
+### `frontend/src/simulations/domains/geometry/scene3d-playback.tsx` · offline
+
+Trình **PHÁT LẠI** quá trình dựng (Phase 5E): `Scene3DPlayer`. Bọc
+`Scene3DWorkspace` và thêm điều khiển **thời gian** — lùi · phát/dừng · tiến ·
+thanh chọn bước — cùng bảng *"đang dựng / dựa trên"*.
+
+Tách khỏi `scene3d-view.tsx` vì renderer là `display(scene, step)` và có test
+cấm `<button`/`<input` trong đó. Luật ấy không phải "cấm mọi giao diện" mà là
+*"khung 3D không được là chỗ dựng hình"* — điều khiển thời gian là việc khác.
+
+⚠️ Ranh giới kiểm được: component này **chỉ phát ra một số nguyên** `step`. Test
+cấm nó chạm `xyz`/`normal`/`vertices`/`toNumber`, cấm import `three`, và khoá
+**đúng hai** `useState` (thêm cái thứ ba là dấu hiệu playback bắt đầu sở hữu thứ
+khác ngoài thời gian). Có test chứng minh `scene` đi vào và ra **nguyên vẹn**.
+
+⚠️ **Giảm chuyển động ở tầng JS**: tự động phát là hoạt cảnh do JavaScript
+phát, mà khối `@media (prefers-reduced-motion: reduce)` của W13-A11Y chỉ chạm
+tới `animation`/`transition` của CSS. `prefersReducedMotion()` (trong
+`scene3d-model.ts`) ẩn nút *Phát*; người học vẫn đi từng bước bằng nút. SSR-an
+toàn: không có `window` ⇒ `false`.
+
+### `frontend/src/simulations/domains/geometry/scene3d-playback.test.tsx` · offline
+
+Khoá ranh giới 5E: điều hướng bước thuần · giảm chuyển động ở tầng JS (4 ca gồm
+`matchMedia` ném lỗi) · nhãn trình đọc màn hình · và quan trọng nhất — playback
+**không đụng nội dung toán học**.
+
+### `frontend/src/simulations/domains/geometry/scene3d.test.tsx` · offline
+
+Khoá bốn ranh giới của 5D: renderer không tính hình học · float chỉ ở
+`toNumber` · không primitive ngoài `RENDER_KINDS` · timeline đúng thứ tự dựng và
+**ổn định** (cùng state cho cùng kết quả). Đồng bộ TS↔Python do
+`backend/tests/geometry/test_scene3d_ts_sync.py` giữ.
+
+### `backend/app/simulation/semantic_program/scene3d.py` · offline
+
+Dữ liệu **CẢNH 3D** cho renderer (Phase 5C):
+`SimulationState → **Scene3D** → Renderer 3D`. Xuất `build_scene3d` ·
+`build_scene_events` · `RENDER_HINT`.
+
+**Ranh giới mạnh nhất trong cả chuỗi, và nó cưỡng chế được bằng MỘT mệnh đề**:
+module này **không import gì** ngoài `typing` — nhận `dict`, trả `dict`.
+`simulation_state.py` buộc phải biết `Vec3` để đọc bộ nhớ nên ranh giới ở đó
+phải quét `ast` tìm tên hàm bị cấm; ở đây thì *"danh sách import phải rỗng"*, và
+không có cách nào để một phép hình học lẻn vào.
+
+`RENDER_HINT` là bảng **ĐÓNG** (7 mục): không `cylinder`/`sphere`/`curve` — thêm
+là để tầng TRÌNH BÀY đẻ ra năng lực mà tầng SINH không có. `plane3`/`line3` cố ý
+**không mang biên**: chúng vô hạn, và cắt chúng là quyết định của renderer, dựa
+trên `depends` (tên các điểm sinh ra) mà toạ độ đã có sẵn trong cùng cảnh.
+
+⚠️ **KHÔNG đặt tên `VisualTraceAdapter`** — `visual_adapter.VisualTraceAdapter`
+đã tồn tại và làm việc khác hẳn (trace → `VisualFrame[]` cho chín nguyên thuỷ 2D
+qua `visual_bindings`). Có test khoá để không ai đặt trùng.
+
+⚠️ Scene3D đi **VÒNG QUA** đường `visual_bindings` → `envelope`, nên nó **KHÔNG
+mở khoá `B` (servable)**: `learner_surface` vẫn đòi container biến động có
+binding trong tập chín nguyên thuỷ đã đóng băng, và một `solid` vẫn không binding
+nổi. Đo được: `geo_09` cho `executable=True · servable=False` nhưng Scene3D vẫn
+dựng đủ 7 đối tượng.
+
+### `backend/app/simulation/semantic_program/simulation_state.py` · offline
+
+Lớp **TRUNG GIAN giữa interpreter và renderer 3D** (Phase 5B):
+`Semantic Program → Interpreter → **Simulation State** → Renderer`.
+Xuất bốn thứ: `dependency_graph` · `build_scene` · `build_timeline` ·
+`build_simulation_state`.
+
+**CHIẾU, KHÔNG TÍNH** — không một phép hình học nào, khoá bằng test quét `ast` ở
+tầng import (bắt cả `cross`/`dot`/`intersect_*` chưa ai viết). Hệ quả định hình
+cả thiết kế: `Line3`/`Plane3` là **vô hạn**, nên biên để vẽ *không có trong
+kernel* — lớp này **không tính biên** mà chở **provenance** (`sources` = tên các
+điểm sinh ra đối tượng), và renderer dựng biên từ toạ độ đã có sẵn trong cảnh.
+Đó cũng là điều đúng với đề tài: cảnh mô tả *hình được tạo ra thế nào*, không
+phải *hình trông thế nào*.
+
+**KHÔNG FLOAT**: mọi số là **chuỗi phân số** (`"1/2"`), đọc ngược được bằng
+`Fraction`. Renderer hoá float ở bước cuối trước buffer. Khoá bằng test quét
+toàn cây JSON.
+
+`free` vs `derived` **dẫn xuất** từ `_producers`, không phải cờ LLM khai — cờ
+khai được là cờ khai sai được, và ở đây khai sai nghĩa là một điểm dẫn xuất tự
+nhận mình tự do rồi được phép kéo (Phase 5E).
+
+⚠️ `dependency_graph()` là **API TRÌNH BÀY**, cấm dùng để thẩm định — C₁a có bản
+riêng và bản đó mới là cổng. Có test quét toàn `app/simulation` để không module
+nào khác gọi nó.
+
 ### `backend/app/simulation/semantic_program/domain_profile.py` · offline
 
 Sở hữu **hồ sơ MIỀN** của route ngữ nghĩa: mỗi miền (`tin_hoc` · `hinh_hoc`) có
@@ -3011,6 +3164,22 @@ Prompt của `stage_semantic_analyze` — đề bài → dữ liệu đề cho +
 hẳn `analyze.md`** để đề đi đường module không phải trả tiền cho từ vựng nghĩa
 vụ. Không được gộp vào lượt viết IR: một lượt sinh cả nghĩa vụ lẫn chương trình
 thì C₁a tự đối chiếu một nguồn với chính nó.
+
+### `backend/scripts/build_geometry_demo_artifact.py` · offline (HARNESS)
+
+Sinh **demo artifact** miền hình học từ một lượt đo ĐÃ CHẠY — không chấm lại,
+không sửa gì, **0 API call**. Ghép `scene3d` vào bên cạnh `input_text` ·
+`semantic_program` · `validation` · `simulation_steps` · `oracle_result` để đọc
+trọn chuỗi trong một file.
+
+Đọc lại artifact thay vì chạy mới vì câu hỏi Phase 5G là *"AI có sinh được quá
+trình hình thành hình học không"* — chỉ trả lời được bằng thứ **AI thật sự đã
+viết**; chạy lại chỉ tốn quota để lấy một bộ IR khác rồi phải chọn giữa hai bộ.
+
+⚠️ `_phan_loai` phân biệt **CONTRACT vs MODEL** ở tầng schema thay vì gộp: 3/4
+ca trượt schema ở lượt W4 là CÙNG lỗi `construct_solid.faces` nhận tên đỉnh —
+lỗi HỢP ĐỒNG (đã vá ở 5A), không phải *"AI viết sai IR 4 lần"*. Hai câu ấy dẫn
+tới hai wave sửa hoàn toàn khác nhau.
 
 ### `backend/scripts/api_usage_log.py` · offline (HARNESS)
 

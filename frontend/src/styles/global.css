@@ -4698,3 +4698,164 @@ html {
     animation-iteration-count: infinite !important;
   }
 }
+
+/* ── MIỀN HÌNH HỌC KHÔNG GIAN — khung mô phỏng 3D (Phase 5D) ───────────────
+ *
+ * Khung 3D là nơi học sinh xem QUÁ TRÌNH DỰNG, không phải nơi thao tác: không
+ * toolbar, không nút tạo hình. Nên bố cục ở đây chỉ có ba việc — chừa chỗ cho
+ * canvas, đặt lời kể ngay dưới nó, và bày đại lượng đo được thành chữ.
+ *
+ * ⚠️ Đại lượng (`geo3d-readout`) CỐ Ý nằm ngoài canvas: một con số không có vị
+ * trí hình học, nên thả nó lơ lửng trong không gian là đặt nó vào một chỗ không
+ * mang nghĩa. Nó thuộc về chữ.
+ */
+.geo3d {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.geo3d-canvas {
+  /* `aspect-ratio` thay cho chiều cao cứng: khung giữ tỉ lệ khi bảng bên cạnh
+     co lại, nên hình không bị bẹp ở khổ hẹp. */
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  min-height: 240px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-lg);
+  background: var(--canvas-soft);
+  overflow: hidden;
+}
+
+.geo3d-narration {
+  margin: 0;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+}
+
+.geo3d-progress {
+  margin: 0;
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.geo3d-readout {
+  margin: 0;
+  padding: var(--sp-sm) var(--sp-md);
+  list-style: none;
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.geo3d-fallback {
+  margin: 0;
+  padding: var(--sp-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas-soft);
+  color: var(--ink-secondary);
+  line-height: 1.55;
+}
+
+/* ── Điều khiển PHÁT LẠI (Phase 5E) ───────────────────────────────────────
+ *
+ * Điều khiển ở đây chỉ đổi MỘT SỐ NGUYÊN: bước đang xem. Không có nút nào tạo
+ * hình, và đó là khác biệt giữa hệ này với một phần mềm vẽ hình — nên bố cục
+ * cũng không cần một thanh công cụ, chỉ cần một hàng nhỏ dưới khung.
+ */
+.geo3d-player {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.geo3d-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+.geo3d-btn {
+  padding: var(--sp-xs) var(--sp-md);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.geo3d-btn:disabled {
+  /* Mờ đi bằng MÀU CHỮ, không bằng `opacity`: hạ opacity kéo cả viền xuống
+     dưới ngưỡng tương phản, và W13-A11Y vừa dọn đúng lớp lỗi ấy.
+     `--ink-quiet` chứ KHÔNG `--ink-faint`: token faint dành cho NÉT VẼ (dưới
+     3:1), và guard tương phản của W13 bắt đúng chỗ này khi tôi dùng nhầm. */
+  color: var(--ink-quiet);
+  cursor: not-allowed;
+}
+
+.geo3d-scrub {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  flex: 1 1 12rem;
+  min-width: 8rem;
+}
+
+.geo3d-scrub-label {
+  color: var(--ink-muted);
+}
+
+.geo3d-scrub input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.geo3d-focus {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-xs) var(--sp-md);
+  margin: 0;
+  color: var(--ink-secondary);
+}
+
+.geo3d-focus dt {
+  color: var(--ink-muted);
+}
+
+.geo3d-focus dd {
+  margin: 0;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Vùng "Quá trình dựng hình 3D" (Phase 5F) ─────────────────────────────
+ *
+ * Vùng THÊM VÀO dưới thân thẻ mô phỏng, chỉ hiện khi envelope mang `scene3d`.
+ * Không tranh chỗ với renderer 2D và không đụng `VisualModeToggle`: bài Tin học
+ * không có khoá ấy nên không thấy gì đổi.
+ */
+.geo3d-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-lg);
+  padding-top: var(--sp-lg);
+  /* Đường kẻ trên thay cho một khung viền kín: vùng này THUỘC thẻ mô phỏng,
+     đóng khung nó lại sẽ đọc như một thẻ thứ hai chen vào. */
+  border-top: 1px solid var(--hairline);
+}
+
+.geo3d-heading {
+  margin: 0;
+  color: var(--ink);
+}
+
+.geo3d-lead {
+  margin: 0;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+}

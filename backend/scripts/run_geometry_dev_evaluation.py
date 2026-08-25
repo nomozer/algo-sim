@@ -213,6 +213,7 @@ async def chay_mot_case(case: dict, api_key: str, ghi_luot=None) -> dict[str, An
         "stage_reached": None,
         "grounding_assumptions": [],
         "grounding_unresolved_citations": [],
+        "purpose": None,
     }
 
     # ÉP SKILL HÌNH HỌC + BỌC BỘ GHI. Cả hai khôi phục trong `finally`: bỏ sót
@@ -289,6 +290,17 @@ async def chay_mot_case(case: dict, api_key: str, ghi_luot=None) -> dict[str, An
         # Quan trắc grounding ghi cho MỌI bài, kể cả bài đi trọn đường: bài
         # chạy được mà dùng 5 giả thiết là một quan sát khác hẳn bài chạy được
         # mà không dùng giả thiết nào.
+        # PHÂN TÍCH MỤC ĐÍCH — quan trắc sư phạm, không gác cửa. Ghi cho MỌI
+        # bài có IR hợp lệ, kể cả bài trượt: một chương trình chạy không nổi
+        # vẫn nói được điều gì đó về việc nó định dựng gì.
+        try:
+            from app.simulation.semantic_program.purpose_analysis import (
+                purpose_analysis,
+            )
+
+            ra["purpose"] = purpose_analysis(contract, spec)
+        except Exception as e:  # noqa: BLE001 — quan trắc KHÔNG được giết lượt đo
+            ra["purpose"] = {"loi": f"{type(e).__name__}: {e}"[:200]}
         ra["grounding_assumptions"] = list(outcome.grounding_assumptions)
         ra["grounding_unresolved_citations"] = list(
             outcome.grounding_unresolved_citations

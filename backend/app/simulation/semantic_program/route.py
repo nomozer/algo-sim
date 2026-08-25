@@ -77,6 +77,16 @@ class SemanticRouteOutcome(BaseModel):
     #: thay vì suy.
     grounding_assumptions: list[str] = Field(default_factory=list)
     grounding_unresolved_citations: list[str] = Field(default_factory=list)
+    #: Cảnh 3D của miền hình học — **một Ô TRỐNG, không phải một phép tính**.
+    #:
+    #: `route` KHÔNG dựng nó và KHÔNG import `scene3d`: hướng phụ thuộc một
+    #: chiều (engine không được biết tới tầng trình bày) là thứ
+    #: `test_scene3d.py::test_KHONG_module_nao_o_TANG_DUOI_nhap_scene3d` giữ.
+    #: Khai kiểu `dict` ở đây cho phép người GỌI đổ vào mà không ai phải nới
+    #: ranh giới ấy — `pipeline._dung_scene3d` là người đổ.
+    #:
+    #: `None` khi bài không phải hình học, hoặc khi chương trình không chạy nổi.
+    scene3d: dict[str, Any] | None = None
 
 
 def _hong(

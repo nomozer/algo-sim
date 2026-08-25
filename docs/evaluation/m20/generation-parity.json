@@ -1,10 +1,19 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "c0d4e8ead2572756",
-  "dirtyRelevantSources": [],
-  "head": "48a632e0371ce989f48cbcabdf3a81c576568bd0",
-  "dirty": false,
-  "generatedAt": "2026-08-25T01:51:27.276Z",
+  "sourceFingerprint": "47e78e34ec51e51a",
+  "dirtyRelevantSources": [
+    "backend/app/ai/pipeline.py",
+    "backend/app/simulation/semantic_program/coercion_stats.py",
+    "backend/app/simulation/semantic_program/contract.py",
+    "backend/app/simulation/semantic_program/route.py",
+    "backend/tests/semantic_program/test_coercion_stats.py",
+    "frontend/src/components/SimulationWorkspace.tsx",
+    "frontend/src/simulations/domains/generic/semantic_program.schema.json",
+    "frontend/src/styles/global.css"
+  ],
+  "head": "8b4025eead396f8b1f82371e8de28912d1e88096",
+  "dirty": true,
+  "generatedAt": "2026-08-25T08:56:37.128Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {

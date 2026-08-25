@@ -16,6 +16,7 @@ import type {
 import { rendererFitOf } from "../simulations/renderer-fit";
 import { useAppStore } from "../state/store";
 import { SimulationInspector } from "./SimulationInspector";
+import { Scene3DSection } from "../simulations/domains/geometry/Scene3DSection";
 
 /**
  * M8: toggle 2D/3D — component THUẦN theo props (export để test SSR được:
@@ -346,6 +347,11 @@ export function SimulationWorkspace() {
           nên 2D và 3D tự nhiên kể cùng một câu — không còn hai dòng song song
           phải giữ đồng bộ bằng tay. */}
       <NarrationSlot narration={mod.narrate?.(active.state, active.config) ?? null} />
+      {/* (5F) QUÁ TRÌNH DỰNG HÌNH 3D — vùng THÊM VÀO, không thay renderer nào.
+          Chỉ hiện khi envelope mang `scene3d`, tức khi một chương trình hình
+          học đã đi trọn chuỗi sinh → thẩm định → thực thi. Bài Tin học không có
+          khoá ấy nên không thấy gì đổi; component tự trả `null`. */}
+      <Scene3DSection scene={(active.envelope as { scene3d?: unknown }).scene3d} />
       {/* W13 — KHÔNG CÒN THANH DỰ ĐOÁN Ở ĐÂY.
           Chỗ này từng là `PredictionBar`: một câu hỏi + các lựa chọn + phán
           quyết đúng/sai, dựng khi module khai `predict`. Năng lực ấy đã gỡ hẳn —
