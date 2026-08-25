@@ -47,6 +47,13 @@ BACKEND = Path(__file__).resolve().parents[1]
 ROOT = BACKEND.parent
 sys.path.insert(0, str(BACKEND))
 
+#: Thư mục ra MẶC ĐỊNH. Mỗi lượt đo một thư mục RIÊNG — `--out-dir` bắt buộc
+#: khi chạy lượt mới.
+#:
+#: Suýt mất bằng chứng vì chuyện này (2026-08-26): chạy lượt 6.7.2 mà quên đổi
+#: đường ra, và nó bắt đầu ghi đè 15 artifact của Phase 6.7. Luật kho nói rõ
+#: "không sửa lại artifact của lượt cũ — baseline để so sánh", nhưng luật ấy chỉ
+#: nằm trong tài liệu. Nay script TỪ CHỐI ghi vào một thư mục đã có bản ghi.
 RA = ROOT / "docs" / "evaluation" / "geometry" / "stability-6.7"
 
 #: Trần MỖI LƯỢT. Dẫn từ call graph như runner DEV: analyze ≤2 ·
@@ -316,4 +323,16 @@ async def _main(k: int) -> int:
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--k", type=int, default=5)
-    raise SystemExit(asyncio.run(_main(p.parse_args().k)))
+    p.add_argument("--out-dir", default=None,
+                   help="Thư mục ra. Lượt mới PHẢI dùng thư mục mới — script từ "
+                        "chối ghi vào chỗ đã có bản ghi.")
+    a = p.parse_args()
+    if a.out_dir:
+        d = Path(a.out_dir)
+        RA = d if d.is_absolute() else ROOT / d
+    if list(RA.glob("*-lan*.json")):
+        print(f"THƯ MỤC ĐÃ CÓ BẢN GHI: {RA}")
+        print("Ghi đè artifact của lượt cũ là xoá mất baseline để so sánh.")
+        print("Dùng --out-dir với một thư mục MỚI.")
+        raise SystemExit(1)
+    raise SystemExit(asyncio.run(_main(a.k)))
