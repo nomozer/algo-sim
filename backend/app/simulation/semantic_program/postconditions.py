@@ -578,7 +578,7 @@ CHECKERS: dict[str, Callable[[dict, Obligation], str | None]] = {
 
 
 def check_postconditions(
-    contract: RequestContract, spec, exec_result
+    contract: RequestContract, spec, exec_result, ten_da_hoa_giai=None
 ) -> PostconditionResult:
     """Kiểm mọi nghĩa vụ CÓ checker server-owned. Không có ⇒ bỏ qua.
 
@@ -587,6 +587,23 @@ def check_postconditions(
     nhãn "vi phạm hậu điều kiện" là nói sai bản chất.
     """
     snap = _final(exec_result)
+    # ─── DÙNG LẠI ÁNH XẠ CỦA C₁a, KHÔNG HOÀ GIẢI LẦN THỨ HAI ────────────────
+    #
+    # C₁a đã trả lời câu *"tên này của hợp đồng là vật nào trong chương trình"*.
+    # Viết bản thứ hai ở đây là hai nguồn sự thật, và chúng SẼ trôi khỏi nhau.
+    #
+    # Đo được ở lượt smoke 2026-08-25: C₁a nối `AD ≡ line_AD` rồi cho qua; C₂
+    # tra thẳng `AD`, không thấy, và báo *"cần một `line3` và một `point3`"* —
+    # trong khi bộ nhớ có ĐÚNG một `line3` (`line_AD`) và ĐÚNG một `point3`
+    # (`Q`). Học sinh đọc ra "chương trình tự mâu thuẫn với nghĩa vụ nó tự
+    # khai": một lời vu oan sinh ra từ một lưới nửa vời.
+    #
+    # BÍ DANH, không ghi đè: tên chương trình vẫn nguyên trong `snap`, chỉ thêm
+    # lối vào theo tên hợp đồng. Không checker nào duyệt `snap`, nên thêm khoá
+    # là an toàn — và nếu mai có checker duyệt, nó vẫn thấy đúng các giá trị.
+    for ten_hd, ten_ct in (ten_da_hoa_giai or {}).items():
+        if ten_hd not in snap and ten_ct in snap:
+            snap[ten_hd] = snap[ten_ct]
     violations: list[str] = []
     weak: list[str] = []
     for ob in contract.obligations:

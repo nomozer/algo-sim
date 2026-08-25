@@ -51,6 +51,15 @@ class CoverageResult(BaseModel):
     #: một lượt đo thì lưới chưa từng phải đỡ gì, và nó nên được gỡ đi thay vì
     #: nằm lại mãi như một lớp bù nhìn không ai biết còn cần hay không.
     symbol_reconciled: list[str] = Field(default_factory=list)
+    #: ÁNH XẠ đã hoà giải: tên HỢP ĐỒNG → tên CHƯƠNG TRÌNH.
+    #:
+    #: Tồn tại để C₂ dùng lại chứ không tự hoà giải lần thứ hai. Đo được ở lượt
+    #: smoke 2026-08-25: C₁a nối `AD ≡ line_AD` và cho qua, rồi C₂ tra thẳng
+    #: `AD`, không thấy, và báo *"cần một `line3` và một `point3`"* trong khi
+    #: chương trình có ĐÚNG một `line3` và ĐÚNG một `point3`. Một lưới áp ở cổng
+    #: này mà không áp ở cổng kế là một lưới nửa vời, và nửa vời ở đây đọc ra
+    #: thành "chương trình tự mâu thuẫn" — vu oan.
+    ten_da_hoa_giai: dict[str, str] = Field(default_factory=dict)
 
 
 def _producers(statements: Iterable) -> set[str]:
@@ -262,6 +271,7 @@ def check_structural_coverage(
     missing: list[str] = []
     weak: list[str] = []
     dong_nhat: list[str] = []
+    anh_xa: dict[str, str] = {}
 
     for ob in contract.obligations:
         # Kind NGOÀI taxonomy: không có miền kiểu nào để đối chiếu, nên kiểm
@@ -301,6 +311,7 @@ def check_structural_coverage(
             thay = _hoa_giai(con, set(declared))
             if thay:
                 dong_nhat.append(f"{ob.describe()}: container '{con}' ≡ '{thay}'")
+                anh_xa[con] = thay
                 con = thay
 
         ctype = declared.get(con)
@@ -324,6 +335,7 @@ def check_structural_coverage(
             thay = _hoa_giai(w, set(declared))
             if thay:
                 dong_nhat.append(f"{ob.describe()}: witness '{w}' ≡ '{thay}'")
+                anh_xa[w] = thay
                 w = thay
         if w not in declared:
             missing.append(
@@ -430,6 +442,7 @@ def check_structural_coverage(
             missing=missing,
             weak_kinds=sorted(set(weak)),
             symbol_reconciled=dong_nhat,
+            ten_da_hoa_giai=anh_xa,
         )
     if weak:
         return CoverageResult(
@@ -437,11 +450,13 @@ def check_structural_coverage(
             error_code="SEMANTIC_VERIFICATION_UNAVAILABLE",
             weak_kinds=sorted(set(weak)),
             symbol_reconciled=dong_nhat,
+            ten_da_hoa_giai=anh_xa,
         )
     # Nhánh THÀNH CÔNG cũng phải mang quan trắc — và đây mới là nhánh cần nó
     # nhất: một bài đi trọn đường NHỜ lưới hoà giải là bằng chứng bản vá nguồn
     # chưa đủ, còn nhánh hỏng thì đã có `missing` để đọc.
-    return CoverageResult(ok=True, symbol_reconciled=dong_nhat)
+    return CoverageResult(ok=True, symbol_reconciled=dong_nhat,
+                          ten_da_hoa_giai=anh_xa)
 
 
 def check_realized_coverage(

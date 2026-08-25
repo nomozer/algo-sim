@@ -288,3 +288,97 @@ def test_lech_ten_THAT_van_bi_chan():
         Obligation(kind="point_on_line", container="BC",
                    params={"witness": "M"}),))
     assert not check_structural_coverage(hd, spec).ok
+
+
+# ══ ④ MỘT LƯỚI PHẢI ÁP Ở CẢ HAI CỔNG ═════════════════════════════════════
+def _spec_giao_diem():
+    """Hiện trường bài 3: chương trình dựng ĐÚNG, chỉ gọi `AD` là `line_AD`."""
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+
+    return SemanticProgramSpec.model_validate({
+        "title": "giao diem cua duong voi canh day",
+        "memory_declarations": [
+            {"name": "A", "type": "point3", "initial_value": [0, 0, 0]},
+            {"name": "D", "type": "point3", "initial_value": [0, 4, 0]},
+            {"name": "line_AD", "type": "line3"},
+            {"name": "Q", "type": "point3"},
+        ],
+        "statements": [
+            {"kind": "construct_line", "target_var": "line_AD",
+             "through_a": "A", "through_b": "D"},
+            {"kind": "construct_point", "target_var": "Q",
+             "expr": {"kind": "midpoint", "a": "A", "b": "D"}},
+        ],
+    })
+
+
+def _hd_giao_diem():
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+
+    return RequestContract(obligations=(
+        Obligation(kind="point_on_line", container="AD",
+                   params={"witness": "Q"}),))
+
+
+def test_C1a_TRA_VE_anh_xa_da_hoa_giai():
+    """Lưới không trả lại ánh xạ thì cổng kế phải tự hoà giải lần thứ hai — hai
+    nguồn sự thật, và chúng SẼ trôi khỏi nhau."""
+    from app.simulation.semantic_program.coverage_gate import (
+        check_structural_coverage,
+    )
+
+    kq = check_structural_coverage(_hd_giao_diem(), _spec_giao_diem())
+    assert kq.ok, kq.missing
+    assert kq.ten_da_hoa_giai.get("AD") == "line_AD"
+
+
+def test_C2_KHONG_vu_oan_khi_ten_da_duoc_hoa_giai():
+    """Đo được ở lượt smoke 2026-08-25: C₁a nối `AD ≡ line_AD` rồi cho qua; C₂
+    tra thẳng `AD`, không thấy, và báo *"cần một `line3` và một `point3`"* —
+    trong khi bộ nhớ có ĐÚNG một `line3` và ĐÚNG một `point3`.
+
+    Học sinh đọc ra "chương trình tự mâu thuẫn với nghĩa vụ nó tự khai": một lời
+    vu oan sinh ra từ một lưới nửa vời.
+    """
+    from app.simulation.semantic_program.coverage_gate import (
+        check_structural_coverage,
+    )
+    from app.simulation.semantic_program.interpreter import (
+        SemanticProgramInterpreter,
+    )
+    from app.simulation.semantic_program.postconditions import (
+        check_postconditions,
+    )
+
+    spec, hd = _spec_giao_diem(), _hd_giao_diem()
+    ket = SemanticProgramInterpreter().execute(spec)
+    c1a = check_structural_coverage(hd, spec)
+
+    # KHÔNG truyền ánh xạ ⇒ đúng hành vi cũ, và nó SAI.
+    cu = check_postconditions(hd, spec, ket)
+    assert not cu.ok, "test này vô nghĩa nếu bản cũ vốn đã đúng"
+
+    moi = check_postconditions(hd, spec, ket,
+                               ten_da_hoa_giai=c1a.ten_da_hoa_giai)
+    assert moi.ok, moi.violations
+
+
+def test_BI_DANH_khong_ghi_de_ten_chuong_trinh():
+    """Thêm lối vào theo tên hợp đồng, KHÔNG xoá tên chương trình — nếu mai có
+    checker duyệt bộ nhớ, nó vẫn phải thấy đúng các vật."""
+    from app.simulation.semantic_program.coverage_gate import (
+        check_structural_coverage,
+    )
+    from app.simulation.semantic_program.interpreter import (
+        SemanticProgramInterpreter,
+    )
+    from app.simulation.semantic_program.postconditions import _final
+
+    spec, hd = _spec_giao_diem(), _hd_giao_diem()
+    ket = SemanticProgramInterpreter().execute(spec)
+    c1a = check_structural_coverage(hd, spec)
+    snap = _final(ket)
+    for hd_ten, ct_ten in c1a.ten_da_hoa_giai.items():
+        assert ct_ten in snap, ct_ten
+        assert hd_ten not in snap, "bản gốc chưa có bí danh — đó là điều kiện của test"

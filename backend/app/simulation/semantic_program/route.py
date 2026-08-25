@@ -242,7 +242,8 @@ def _sau_grounding(
             **da_chay,
         )
 
-    post = check_postconditions(contract, spec, exec_res)
+    post = check_postconditions(contract, spec, exec_res,
+                                ten_da_hoa_giai=c1a.ten_da_hoa_giai)
     # C₂ nay có HAI kết cục âm, và chúng khác hẳn nhau:
     #   POSTCONDITION_VIOLATED            — chương trình tự mâu thuẫn
     #   SEMANTIC_VERIFICATION_UNAVAILABLE — checker không biểu diễn được vị từ
