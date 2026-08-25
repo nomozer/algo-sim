@@ -279,6 +279,82 @@ def check_grounding(
 
         khai = _canon(decl.initial_value)
         cho = fact.values
+
+        # ── GIẢ THIẾT TOẠ ĐỘ (Wave 4, 2026-08-25) ──────────────────────────
+        #
+        # ĐO ĐƯỢC Ở PHASE 5.5: 5/10 bài chết ở đúng phép so bên dưới, và chúng
+        # chết vì phép so hỏi SAI CÂU.
+        #
+        #   B: giá trị [0, 0] không có trong mục 'canh_day' (cạnh đáy)
+        #   C: giá trị [1, 1, 0] không có trong mục 'abcd_hinh_vuong'
+        #
+        # Mô hình khai `B = (1,0,0)` rồi ghim về `canh_day` (values = `1`). P2
+        # phẳng hoá toạ độ thành các nguyên tử `1, 0, 0` rồi đòi TỪNG CÁI có
+        # trong mục. `1` có; `0` không — nên chương trình chết.
+        #
+        # Nhưng `0` ở đây KHÔNG phải dữ liệu lấy từ đề. Nó là **số không cấu
+        # trúc của hệ trục**: "không dịch theo y, không dịch theo z". Bắt nó
+        # truy về một mục dữ liệu là hỏi một câu không có câu trả lời đúng.
+        #
+        # Và `C = (1,1,0)` ghim về `abcd_hinh_vuong` — một fact QUAN HỆ,
+        # `values` rỗng. Mô hình đang nói *"vị trí C suy ra từ ABCD là hình
+        # vuông"*. Lập luận đúng, mà phép kiểm theo giá trị không diễn đạt được.
+        #
+        # ─── LUẬT MỚI, và nó HẸP ────────────────────────────────────────────
+        #
+        # Chỉ áp cho `point3`/`vector3` CÓ `model_assumption` — tức đã qua ba
+        # khoá của kênh giả thiết (kiểu · không-là-witness · có lý do). Khi ấy
+        # `source_fact_id` là **chỉ dẫn xuất xứ**, không phải hợp đồng giá trị:
+        #
+        #   · nguyên tử `0` bỏ qua — số không cấu trúc của hệ trục;
+        #   · fact QUAN HỆ (`values` rỗng) chấp nhận, ghi vào quan trắc;
+        #   · mọi nguyên tử KHÁC 0 vẫn phải có trong mục được ghim.
+        #
+        # Nên toạ độ bịa `H = (5,7,9)` ghim về `canh_day` (values = `1`) VẪN
+        # chết: `{5,7,9}` không có cái nào trong `{1}`.
+        #
+        # RỦI RO CÒN LẠI, khai thẳng: một điểm KHÔNG phải witness, toạ độ sai,
+        # ghim về một fact quan hệ thì đi qua được. Đó là lỗi ĐÚNG-SAI của hình,
+        # và nó thuộc oracle/C₂ — không phải câu hỏi xuất xứ mà P2 trả lời.
+        # ĐIỀU KIỆN dựa trên KIỂU, không dựa trên việc model có nhớ khai
+        # `model_assumption` hay không.
+        #
+        # Bản đầu đòi cả hai, và đo lại trên Phase 5.5 cho thấy nó chỉ gỡ được
+        # `geo_09` — bốn bài kia (`geo_05/06/07/10`) vẫn chết vì model gắn
+        # `source_fact_id` mà QUÊN gắn `model_assumption` cho cùng một loại khai
+        # báo. Nhưng ở miền này **đề không bao giờ cho toạ độ**: một `point3` có
+        # toạ độ thì đó là hệ trục do người giải chọn, dù bản khai có nhớ nói ra
+        # hay không. Bắt phép kiểm phụ thuộc vào trí nhớ của model là đo trí nhớ
+        # chứ không đo tính có căn cứ.
+        #
+        # R0 vẫn giữ bằng một khoá TƯỜNG MINH thay chỗ: witness của bất kỳ nghĩa
+        # vụ nào KHÔNG được đi lối này. Đáp án không bao giờ là một hệ trục.
+        la_toa_do = (
+            decl.type in _KIEU_DUOC_GIA_THIET and decl.name not in dap_an
+        )
+        if la_toa_do:
+            # FACT QUAN HỆ = fact KHÔNG CÓ SỐ NÀO, chứ không phải fact rỗng.
+            #
+            # Bản đầu kiểm `not cho` và trượt ngay ở lượt thử: `abcd_hinh_vuong`
+            # có `values = ("ABCD là hình vuông",)` — một mệnh đề, không phải
+            # chỗ trống. Nguyên tử của một toạ độ là SỐ; một mục không chứa số
+            # nào thì không thể cấp phép cũng không thể bác bỏ nó, nên đòi khớp
+            # ở đó là một phép kiểm không có câu trả lời đúng.
+            co_so = any(
+                isinstance(v, (int, float)) and not isinstance(v, bool)
+                for v in cho
+            )
+            if not co_so:
+                ly_do = str(decl.model_assumption or "").strip()
+                if ly_do:
+                    gia_thiet.append(f"{decl.name}: {ly_do}")
+                trich_dan_hong.append(
+                    f"{decl.name}: ghim về '{fid}' ({fact.label}) — fact QUAN HỆ "
+                    "không có giá trị để đối chiếu, nhận theo giả thiết toạ độ"
+                )
+                continue
+            khai = tuple(v for v in khai if v != 0 or isinstance(v, bool))
+
         thua = [v for v in khai if v not in cho]
         if thua:
             unresolved.append(

@@ -116,6 +116,73 @@ _DAU_HIEU_YEU = (
 )
 
 
+#: Tiền tố mô tả mà một số bản khai gắn trước ký hiệu điểm.
+_TIEN_TO_KY_HIEU = ("point_", "diem_", "p_", "pt_")
+
+#: Ký hiệu điểm dài nhất được chấp nhận — `A`, `M`, `A1`, `M12`.
+#:
+#: Giới hạn này là thứ giữ cho phép đồng nhất KHÔNG lan ra: `volume` (6 ký tự)
+#: không bao giờ thành một ký hiệu, nên `volume` ≢ `VOLUME`. Không có nó thì
+#: quy tắc này biến thành so-không-phân-biệt-hoa-thường toàn cục, đúng thứ
+#: `A != a` phải giữ.
+_DAI_TOI_DA_KY_HIEU = 3
+
+
+def geometry_symbol_key(ten: str) -> str | None:
+    """KHOÁ ĐỒNG NHẤT của một ký hiệu hình học, hoặc `None` nếu không phải.
+
+    ─── VÌ SAO TỒN TẠI, ĐO ĐƯỢC Ở PHASE 5.5 (`geo_01`) ─────────────────────
+
+    Hợp đồng khai `witness = 'm'`, chương trình khai `M`. Cả hai lượt LLM đều
+    tuân thủ đúng luật được giao — luật thì mâu thuẫn. Nguồn đã vá ở
+    `analyze_contract.MO_TA_WITNESS_HINH_HOC`; hàm này là **lưới an toàn**, cho
+    lần model vẫn hạ chữ thường.
+
+    ─── VÌ SAO KHÔNG PHẢI `lower()` ────────────────────────────────────────
+
+    `lower()` là phép của MỌI chuỗi. Đây là phép của **ký hiệu hình học**, và ba
+    ràng buộc dưới đây giữ cho nó không lan ra thành so-không-phân-biệt-hoa-
+    thường toàn cục:
+
+      · sau khi bỏ tiền tố và gạch nối, phần còn lại phải **≤ 3 ký tự** và
+        alnum ASCII — `A`, `M`, `A1`, `abcd`(4) ✗, `volume`(6) ✗;
+      · chỉ được gọi khi nghĩa vụ thuộc miền hình học (C₁a tự khoá);
+      · trùng khoá ⇒ **KHÔNG khớp** (xem `khop_ky_hieu`), vì mơ hồ thì thà
+        từ chối còn hơn đoán.
+
+    Nên `A ≢ a` ở miền thông thường vẫn đúng: một biến Tin học tên `a` không đi
+    qua hàm này bao giờ.
+    """
+    s = str(ten).strip()
+    thap = s.lower()
+    for t in _TIEN_TO_KY_HIEU:
+        if thap.startswith(t) and len(s) > len(t):
+            s = s[len(t):]
+            break
+    s = s.replace("_", "").replace("-", "")
+    if not s or len(s) > _DAI_TOI_DA_KY_HIEU:
+        return None
+    if not (s.isascii() and s.isalnum()):
+        return None
+    return s.upper()
+
+
+def khop_ky_hieu(ten_hop_dong: str, ung_vien: set[str]) -> str | None:
+    """Tên trong hợp đồng ↔ tên trong chương trình, theo ký hiệu hình học.
+
+    Trả tên của chương trình nếu đồng nhất được, `None` nếu không.
+
+    **Trùng khoá ⇒ trả `None`.** Chương trình khai cả `a` lẫn `A` thì không ai
+    biết hợp đồng đang nói cái nào; đoán ở đó là dựng một kết quả không tra lại
+    được. Mơ hồ thì từ chối — cùng luật fail-closed của mọi cổng khác.
+    """
+    khoa = geometry_symbol_key(ten_hop_dong)
+    if khoa is None:
+        return None
+    trung = [t for t in ung_vien if geometry_symbol_key(t) == khoa]
+    return trung[0] if len(trung) == 1 else None
+
+
 def detect_domain(text: str) -> str:
     """Đoán miền của một đề. Không chắc ⇒ `tin_hoc` (= hành vi hiện tại).
 

@@ -524,7 +524,12 @@ def test_artifact_tu_khai_COMMIT_va_TRANG_THAI_BAN(rn):
     assert len(neo["commit"]) == 40
     assert re.fullmatch(r"[0-9a-f]{64}", neo["measured_system_hash"])
     assert neo["measured_system_so_file"] > 100
-    assert neo["cache_version"] == "40"
+    # Khoá theo NGUỒN, không chép hằng: bump `CACHE_VERSION` là việc thường
+    # xuyên, và một test hằng-số cứng chỉ dạy người ta sửa test theo phản xạ.
+    # Cái đáng khoá là *artifact ghi ĐÚNG giá trị đang chạy*.
+    from app.main import CACHE_VERSION
+
+    assert neo["cache_version"] == CACHE_VERSION
 
 
 def test_hai_pham_vi_ban_KHONG_bi_gop_lam_mot(rn):

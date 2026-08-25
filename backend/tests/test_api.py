@@ -325,7 +325,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `geo_09`/`geo_10`, và nó đứng ngay cạnh câu dạy mô hình khi nào được điền
     # đáp số. Bump theo nghĩa đen của luật (đổi `skills/*.md` ⇒ bump), không vì
     # có cache cần dọn — v39 chưa từng chạy live.
-    assert main_module.CACHE_VERSION == "40"
+    # 41: mô tả `container`/`witness` trong schema `analyze` nay THEO MIỀN. Bản
+    # cũ bắt snake_case cho cả hai — đúng ở Tin học, sai ở hình học (điểm gọi
+    # bằng CHỮ HOA). `geo_01` ở Phase 5.5: hợp đồng `witness='m'`, chương trình
+    # `M`, C₁a từ chối, và cả hai lượt LLM đều làm ĐÚNG luật được giao. Mô tả
+    # trường đi thẳng vào structured output nên nó LÀ bề mặt prompt; không bump
+    # thì đề đã phân tích vẫn trả `witness` hạ chữ thường.
+    assert main_module.CACHE_VERSION == "41"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

@@ -2723,6 +2723,15 @@ nhiều thông tin hơn. **Cố ý KHÔNG** khớp theo `semantic_type`/`entitie
 phía phép khớp ấy đều do cùng một model đặt tên, và một `float` giữ `2/3` sẽ
 khớp fact `semantic_type: volume` — mở thẳng đường tuồn đáp án.
 
+Wave 4 (2026-08-25) thêm **GIẢ THIẾT TOẠ ĐỘ**: với `point3`/`vector3` **không
+phải witness**, `source_fact_id` là *chỉ dẫn xuất xứ* chứ không phải hợp đồng
+giá trị — nguyên tử `0` bỏ qua (số không cấu trúc của hệ trục), fact **không
+chứa số nào** (mệnh đề quan hệ) chấp nhận và ghi quan trắc, còn mọi nguyên tử
+khác 0 vẫn phải khớp. Nguồn: Phase 5.5 đo 5/10 bài chết vì P2 đòi `0` trong
+`(1,0,0)` phải truy về mục `canh_day`. Điều kiện dựa trên **kiểu**, không dựa
+trên việc model có nhớ khai `model_assumption` — bắt phép kiểm phụ thuộc trí nhớ
+của model là đo trí nhớ chứ không đo tính có căn cứ. R0 giữ bằng khoá witness.
+
 ### `backend/app/simulation/semantic_program/domain_profile.py` · offline
 
 Sở hữu **hồ sơ MIỀN** của route ngữ nghĩa: mỗi miền (`tin_hoc` · `hinh_hoc`) có

@@ -25,6 +25,16 @@ from .obligations import (
 )
 from .request_contract import RequestContract
 
+#: Nghĩa vụ hình học trả lời ĐÚNG/SAI — witness là ĐỐI TƯỢNG THỨ HAI của quan
+#: hệ, không phải kết quả tính ra từ container. Tách khỏi nhóm ĐẠI LƯỢNG
+#: (`distance`/`angle`/`volume`), nơi witness là một con số và bắt buộc phải
+#: dẫn xuất thật. Viết tay ở đây, không dẫn xuất tự động: dẫn xuất theo kiểu
+#: container sẽ nuốt luôn `distance` (nhận `plane3`) và mở một cửa không ai
+#: định mở.
+_QUAN_HE_HINH_HOC = frozenset({
+    "point_on_line", "point_on_plane", "parallel", "perpendicular", "coplanar",
+})
+
 
 class CoverageResult(BaseModel):
     ok: bool
@@ -33,6 +43,14 @@ class CoverageResult(BaseModel):
     #: Nghĩa vụ hợp lệ nhưng KHÔNG có checker server-owned → mức yếu (§5.4).
     #: Tách khỏi `missing` vì "chưa chứng minh được" ≠ "thiếu".
     weak_kinds: list[str] = Field(default_factory=list)
+    #: QUAN TRẮC — lần nào lưới ký hiệu hình học phải ra tay. Không gác cửa.
+    #:
+    #: Có mặt để trả lời một câu cụ thể ở lượt đo sau: **bản vá NGUỒN đã đủ
+    #: chưa?** Nguồn là mô tả trường `witness` theo miền
+    #: (`analyze_contract.MO_TA_WITNESS_HINH_HOC`). Nếu danh sách này rỗng suốt
+    #: một lượt đo thì lưới chưa từng phải đỡ gì, và nó nên được gỡ đi thay vì
+    #: nằm lại mãi như một lớp bù nhìn không ai biết còn cần hay không.
+    symbol_reconciled: list[str] = Field(default_factory=list)
 
 
 def _producers(statements: Iterable) -> set[str]:
@@ -217,12 +235,16 @@ def check_structural_coverage(
     contract: RequestContract, spec: SemanticProgramSpec
 ) -> CoverageResult:
     """C₁a — chạy TRƯỚC execution."""
+    from .domain_profile import geometry_obligation_kinds, khop_ky_hieu
+
+    _NGHIA_VU_HINH_HOC = geometry_obligation_kinds()
     declared = {d.name: d.type for d in spec.memory_declarations}
     producers = _producers(spec.statements)
     phu_thuoc = _phu_thuoc(spec.statements, frozenset())
 
     missing: list[str] = []
     weak: list[str] = []
+    dong_nhat: list[str] = []
 
     for ob in contract.obligations:
         # Kind NGOÀI taxonomy: không có miền kiểu nào để đối chiếu, nên kiểm
@@ -248,7 +270,23 @@ def check_structural_coverage(
         # dựng, và hai bệnh ấy cần hai cách chữa khác nhau.
         #
         # Đây là ĐO, không phải NỚI: cổng vẫn từ chối đúng những ca cũ.
-        ctype = declared.get(ob.container)
+        # ─── LƯỚI AN TOÀN KÝ HIỆU HÌNH HỌC (Wave 4) ────────────────────────
+        #
+        # Chỉ mở cho nghĩa vụ thuộc MIỀN HÌNH HỌC, nên `A ≢ a` ở miền Tin học
+        # vẫn nguyên. Nguồn của lỗi đã vá ở `analyze_contract` (mô tả trường
+        # `witness` theo miền); đây là lưới cho lần model vẫn hạ chữ thường.
+        #
+        # Mỗi lần lưới bắt được đều GHI LẠI — nếu nó chưa từng bắt gì ở lượt
+        # đo sau, đó là bằng chứng bản vá nguồn đã đủ và lưới nên gỡ đi.
+        ten_hh = ob.kind in _NGHIA_VU_HINH_HOC
+        con = ob.container
+        if ten_hh and con not in declared:
+            thay = khop_ky_hieu(con, set(declared))
+            if thay:
+                dong_nhat.append(f"{ob.describe()}: container '{con}' ≡ '{thay}'")
+                con = thay
+
+        ctype = declared.get(con)
         if ctype is None:
             missing.append(
                 f"{ob.describe()}: container '{ob.container}' chưa khai báo "
@@ -265,9 +303,14 @@ def check_structural_coverage(
         if not w:
             missing.append(f"{ob.describe()}: thiếu witness")
             continue
+        if ten_hh and w not in declared:
+            thay = khop_ky_hieu(w, set(declared))
+            if thay:
+                dong_nhat.append(f"{ob.describe()}: witness '{w}' ≡ '{thay}'")
+                w = thay
         if w not in declared:
             missing.append(
-                f"{ob.describe()}: witness '{w}' chưa khai báo "
+                f"{ob.describe()}: witness '{ob.witness}' chưa khai báo "
                 f"(chương trình khai: {sorted(declared)})"
             )
             continue
@@ -296,7 +339,60 @@ def check_structural_coverage(
         #
         # Phụ thuộc tính cả qua NHÁNH (`_phu_thuoc`): `result = "KHÔNG HỢP LỆ"`
         # trong nhánh so sánh đỉnh ngăn xếp vẫn là dẫn xuất thật.
-        if ob.container not in _bao_dong(phu_thuoc, w):
+        # ─── NGOẠI LỆ: NGHĨA VỤ QUAN HỆ CỦA MIỀN HÌNH HỌC (Wave 4) ─────────
+        #
+        # ĐO ĐƯỢC Ở PHASE 5.5, `geo_01`: sau khi lưới ký hiệu hoà giải `m ≡ M`,
+        # chương trình lại chết ở ĐÂY — *"witness 'M' không dẫn xuất từ 'abcd'"*.
+        #
+        # Nhưng ở một nghĩa vụ QUAN HỆ hình học, witness **đúng là không dẫn
+        # xuất** từ container, và đó là hình dạng ĐÚNG của bài toán: dựng điểm
+        # `M` (trung điểm AB) và dựng mặt `abcd` (qua A,B,C) là hai việc song
+        # song; rồi mới HỎI M có thuộc abcd không. Bắt M phải sinh ra từ abcd là
+        # đòi một thứ hình học không có.
+        #
+        # VÌ SAO NỚI Ở ĐÂY KHÔNG MẤT BẢO VỆ, và vì sao chỉ ở đây:
+        #
+        #   · Luật này sinh ra để chặn `hop_le = true` gán thẳng — nơi C₂ so
+        #     witness với một giá trị mà chính LLM khai, nên đoán bừa trúng 50%.
+        #   · Ở nghĩa vụ quan hệ hình học, C₂ **tính lại quan hệ từ hai đối
+        #     tượng** bằng số hữu tỉ chính xác (`P.point_on_plane(...)`). Đáp án
+        #     là PHÁN QUYẾT do server tính, không phải witness. Không có gì để
+        #     đoán bừa.
+        #   · Witness vẫn phải có producer (kiểm ngay phía trên), và vẫn không
+        #     bao giờ được là giả thiết (`grounding_gate`).
+        #
+        # Nghĩa vụ ĐẠI LƯỢNG (`distance`/`angle`/`volume`) KHÔNG được miễn:
+        # witness của chúng là một CON SỐ, và con số ấy phải thật sự đo ra từ
+        # container chứ không được gán thẳng.
+        goc = _bao_dong(phu_thuoc, w)
+        if ob.kind in _QUAN_HE_HINH_HOC:
+            # Nới ĐÚNG MỘT BẬC: không đòi dẫn xuất từ `container`, nhưng vẫn
+            # đòi **dẫn xuất từ CÁI GÌ ĐÓ**.
+            #
+            # Bản nới đầu bỏ hẳn phép kiểm này, và `test_3_gan_dap_an_bang_
+            # assign_thi_TRUOT` ĐỎ ngay — đúng nó phải đỏ. Lập luận "C₂ tính lại
+            # nên không có gì để đoán" sai một điểm: **witness chính là thứ bị
+            # đoán**. `H = assign(literal [0,0,0])` là bịa một điểm rồi hy vọng
+            # nó nằm trên mặt phẳng; C₂ tính lại xong vẫn PASS, vì điểm ấy đúng
+            # là nằm trên mặt.
+            #
+            # Phân biệt THẬT không nằm ở "dẫn xuất từ container" mà ở "dẫn xuất
+            # từ gì đó":
+            #
+            #   H = literal [0,0,0]        bao đóng RỖNG   ⇒ bịa      ⇒ CHẶN
+            #   M = midpoint(A, B)         bao đóng {A,B}  ⇒ dựng     ⇒ QUA
+            #
+            # Vì sao KHÔNG đòi chung tổ tiên với container (chặt hơn nữa):
+            # `parallel(AB, DC)` — AB dựng từ A,B còn DC từ D,C, hai nhánh
+            # KHÔNG giao nhau, mà đó là hình dạng đúng của bài. Đòi giao là từ
+            # chối oan đúng lớp bài mà nghĩa vụ này sinh ra để phục vụ.
+            if not goc:
+                missing.append(
+                    f"{ob.describe()}: witness '{w}' không dẫn xuất từ đối "
+                    "tượng nào — chương trình bịa ra nó chứ không dựng"
+                )
+                continue
+        elif ob.container not in goc:
             missing.append(
                 f"{ob.describe()}: witness '{w}' không dẫn xuất từ "
                 f"'{ob.container}' — chương trình khai đáp án chứ không tính nó"
@@ -316,14 +412,19 @@ def check_structural_coverage(
             error_code="REQUESTED_OPERATION_UNCOVERED",
             missing=missing,
             weak_kinds=sorted(set(weak)),
+            symbol_reconciled=dong_nhat,
         )
     if weak:
         return CoverageResult(
             ok=False,
             error_code="SEMANTIC_VERIFICATION_UNAVAILABLE",
             weak_kinds=sorted(set(weak)),
+            symbol_reconciled=dong_nhat,
         )
-    return CoverageResult(ok=True)
+    # Nhánh THÀNH CÔNG cũng phải mang quan trắc — và đây mới là nhánh cần nó
+    # nhất: một bài đi trọn đường NHỜ lưới hoà giải là bằng chứng bản vá nguồn
+    # chưa đủ, còn nhánh hỏng thì đã có `missing` để đọc.
+    return CoverageResult(ok=True, symbol_reconciled=dong_nhat)
 
 
 def check_realized_coverage(

@@ -176,7 +176,14 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       bump), không phải vì có cache cần dọn: v39 chưa từng chạy live nên chưa
 #       mục nào tồn tại. Giữ luật đúng cả khi nó rẻ mới là cách nó còn đúng lúc
 #       đắt.
-CACHE_VERSION = "40"
+#   41 (2026-08-25, Wave 4): mô tả trường `container`/`witness` trong schema
+#       `analyze` nay THEO MIỀN. Bản cũ bắt snake_case cho cả hai miền — đúng ở
+#       Tin học, sai ở hình học, nơi điểm gọi bằng CHỮ HOA. Phase 5.5 đo được
+#       `geo_01`: hợp đồng khai `witness='m'`, chương trình khai `M`, C₁a từ
+#       chối, và cả hai lượt LLM đều làm ĐÚNG luật được giao — luật thì mâu
+#       thuẫn. Mô tả trường là bề mặt prompt (đi thẳng vào structured output),
+#       nên phân tích cache dưới mô tả cũ vẫn trả `witness` hạ chữ thường.
+CACHE_VERSION = "41"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

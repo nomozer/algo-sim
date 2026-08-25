@@ -54,10 +54,44 @@ def _vi_tu_kiem_duoc() -> list[str]:
 _VI_TU_KIEM_DUOC = _vi_tu_kiem_duoc()
 
 
+#: Quy ước ĐẶT TÊN của miền Tin học — chữ thường, snake_case.
+MO_TA_TEN_TIN_HOC = (
+    "Tên biến kiểu snake_case, chỉ chữ thường không dấu, số và gạch dưới. "
+    "KHÔNG viết cụm từ hay câu."
+)
+MO_TA_WITNESS_TIN_HOC = (
+    "Tên biến kiểu snake_case sẽ chứa câu trả lời. KHÔNG viết cụm từ hay câu."
+)
+
+#: Quy ước ĐẶT TÊN của miền hình học — **KHÔNG** snake_case.
+#:
+#: ─── ĐO ĐƯỢC Ở PHASE 5.5 (`5f42363`), `geo_01` ──────────────────────────────
+#:
+#: Hợp đồng khai `witness = 'm'`; chương trình khai `M`. C₁a từ chối, và cả hai
+#: lượt LLM đều **làm đúng luật được giao**: mô tả trường này bắt snake_case
+#: (đúng ở miền Tin học), còn hình học gọi tên điểm bằng CHỮ HOA — `A`, `B`,
+#: `M`, `S` — nên lượt viết chương trình cũng theo đúng quy ước miền nó.
+#:
+#: Hai luật mâu thuẫn, không tầng nào hoà giải. Đây là NGUỒN, và sửa ở nguồn
+#: thì không thể sinh khớp sai; mọi bộ khớp thêm vào chỉ là lưới an toàn.
+MO_TA_TEN_HINH_HOC = (
+    "Ký hiệu của đối tượng, viết ĐÚNG NHƯ ĐỀ BÀI. Hình học dùng CHỮ HOA cho "
+    "điểm (`A`, `M`, `S`), và tên mặt phẳng/khối cũng giữ nguyên ký hiệu "
+    "(`abcd`, `sabcd`). ĐỪNG hạ về chữ thường, đừng đổi sang snake_case."
+)
+MO_TA_WITNESS_HINH_HOC = (
+    "Ký hiệu của thứ mang câu trả lời, viết ĐÚNG NHƯ ĐỀ BÀI — điểm thì CHỮ HOA "
+    "(`M`, `H`). Với nghĩa vụ đại lượng (distance/angle/volume) thì đây là tên "
+    "biến chứa con số. ĐỪNG hạ về chữ thường."
+)
+
+
 def _schema(
     obligation_kinds: list[str],
     fact_kinds: tuple[str, ...],
     co_prescribed: bool,
+    mo_ta_container: str = MO_TA_TEN_TIN_HOC,
+    mo_ta_witness: str = MO_TA_WITNESS_TIN_HOC,
 ) -> dict[str, Any]:
     """Dựng schema `analyze` cho MỘT miền.
 
@@ -101,14 +135,11 @@ def _schema(
                     # trình không có cách nào khai báo trùng và C₁a luôn trượt.
                     "container": {
                         "type": "STRING",
-                        "description": "Tên biến kiểu snake_case, chỉ chữ "
-                                       "thường không dấu, số và gạch dưới. "
-                                       "KHÔNG viết cụm từ hay câu.",
+                        "description": mo_ta_container,
                     },
                     "witness": {
                         "type": "STRING",
-                        "description": "Tên biến kiểu snake_case sẽ chứa câu "
-                                       "trả lời. KHÔNG viết cụm từ hay câu.",
+                        "description": mo_ta_witness,
                     },
                     "cmp": {"type": "STRING", "nullable": True},
                     "op": {"type": "STRING", "nullable": True},
@@ -187,6 +218,9 @@ def analyze_schema_for(domain: str) -> dict[str, Any]:
         obligation_kinds=sorted(obligation_kinds_for(domain)),
         fact_kinds=INPUT_FACT_KINDS_HINH_HOC if la_hh else INPUT_FACT_KINDS,
         co_prescribed=not la_hh,
+        mo_ta_container=MO_TA_TEN_HINH_HOC if la_hh else MO_TA_TEN_TIN_HOC,
+        mo_ta_witness=(MO_TA_WITNESS_HINH_HOC if la_hh
+                       else MO_TA_WITNESS_TIN_HOC),
     )
 
 
