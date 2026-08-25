@@ -63,11 +63,25 @@ _MSG_PIPELINE_FAILED = (
 )
 
 
+_MSG_GEOMETRY_GENERATION_FAILED = (
+    "AlgoSim đã nhận ra đây là bài hình học không gian và đã thử dựng chương "
+    "trình mô phỏng, nhưng chương trình sinh ra chưa qua được khâu kiểm chứng. "
+    "Hệ thống không hiển thị hình chưa được kiểm — thà không có mô phỏng còn hơn "
+    "một hình sai mà em tin theo. Em thử diễn đạt lại đề gọn hơn (nêu rõ hình "
+    "gì, dữ kiện nào, cần dựng hoặc tính gì) rồi gửi lại nhé."
+)
+
+
 def learner_reason(envelope: dict) -> str:
     """Thông điệp học sinh cho envelope ``status="unsupported"`` — chọn theo
     ``failure_category`` (structured), không đọc text reason."""
     if envelope.get("failure_category") == "capability_gap":
         return _MSG_CAPABILITY_GAP
+    if envelope.get("failure_category") == "geometry_generation_failed":
+        # KHÔNG dùng `_MSG_OUT_OF_SCOPE` ở đây, và đó là toàn bộ lý do nhánh này
+        # tồn tại: nói "bài thuộc môn khác" cho một đề hình học mà hệ VỪA bỏ hai
+        # phút để dựng là đổ lỗi cho đề bài cái sai của hệ.
+        return _MSG_GEOMETRY_GENERATION_FAILED
     if envelope.get("failure_category") == "out_of_scope":
         return _MSG_OUT_OF_SCOPE
     if envelope.get("failure_category") == "not_simulation_suitable":

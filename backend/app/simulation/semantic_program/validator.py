@@ -96,6 +96,8 @@ MAX_NESTING_DEPTH = 8
 #: "trường nào là tham chiếu", và dẫn xuất tự động sẽ nuốt luôn `ratio` — một
 #: chuỗi phân số, KHÔNG phải tên đối tượng. Thêm biểu thức hình học mà quên
 #: dòng ở đây thì validator trả "không được hỗ trợ" và ĐỎ ngay, không im lặng.
+from .geometry_exec import GEOMETRY_TYPES
+
 _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
     "intersect_line_plane": ("line", "plane"),
     "intersect_plane_plane": ("plane_a", "plane_b"),
@@ -129,6 +131,10 @@ _BIEU_THUC_HINH_HOC: dict[str, tuple[str, ...]] = {
 #: chương trình chạy loạn vốn là ngân sách BƯỚC của interpreter, không phải trần
 #: này. Trần này chống *khai* loạn, và một đề hình học cần 33 tên thì gần như
 #: chắc chắn là mô hình đang khai lại cùng một điểm dưới nhiều tên.
+#: Kiểu mà một giá trị KHÔNG được đến từ `literal`. DẪN từ nguồn, không chép:
+#: thêm một kiểu hình học vào kernel là nó tự vào luật này.
+_KIEU_HINH_HOC = GEOMETRY_TYPES
+
 MAX_MEMORY_DECLARATIONS = 32
 
 class ValidationResult:
@@ -214,7 +220,34 @@ class SemanticTypeChecker:
             return f"Câu lệnh không có trường 'kind': {stmt}"
 
         if isinstance(stmt, AssignStmt):
-            # Biến được gán nếu chưa có trong symbols thì được ghi nhận vào scoped_vars
+            # ─── R0 Ở MIỀN HÌNH HỌC: GIÁ TRỊ HÌNH HỌC KHÔNG ĐƯỢC LÀ LITERAL ──
+            #
+            # Prompt đã dạy luật này từ đầu: *"Bạn chỉ khai toạ độ cho các ĐIỂM
+            # gốc. Đường, mặt, khối, thiết diện, số đo đều phải đến từ một phép
+            # dựng hoặc một phép đo."* Nhưng nó chỉ là một câu trong prompt, và
+            # hợp đồng KHÔNG cưỡng chế — nên nó là lời khuyên, không phải luật.
+            #
+            # Đo được ở lượt smoke 2026-08-25 (bài thể tích): mô hình khai
+            # `ABCD` kiểu `polygon3` rồi `assign ABCD = literal(["A","B","C","D"])`.
+            # Một biến kiểu hình học giữ một danh sách CHUỖI. Không cổng nào
+            # kêu, và lỗi chỉ lộ ra tận `learner_surface` dưới dạng *"ABCD đổi
+            # giá trị nhưng không có binding"* — một thông báo nói về TRIỆU
+            # CHỨNG ở cách chỗ sai bốn tầng.
+            #
+            # Bắt ở đây vì `validate_semantic_program` là thứ DUY NHẤT có đường
+            # gửi lỗi ngược cho mô hình sửa (≤3 lượt). Bắt lúc chạy thì chỉ được
+            # `executable=False`, không sửa được.
+            #
+            # `initial_value` của KHAI BÁO thì KHÔNG đụng tới: đó là kênh hợp lệ
+            # cho điểm gốc và cho dữ kiện đề cho, và P2 đã gác nó.
+            if (sym := self.symbols.get(stmt.target_var)) is not None:
+                if sym.type in _KIEU_HINH_HOC and stmt.expr.kind == "literal":
+                    return (
+                        f"'{stmt.target_var}' kiểu {sym.type} không được gán "
+                        f"bằng `literal` — giá trị hình học phải đến từ một phép "
+                        f"DỰNG (construct_*) hoặc một phép ĐO. Khai toạ độ trực "
+                        f"tiếp chỉ hợp lệ ở `initial_value` của điểm gốc."
+                    )
             err = self._check_value_expr(stmt.expr)
             if err:
                 return err

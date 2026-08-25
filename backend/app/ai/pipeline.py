@@ -999,6 +999,42 @@ def _dung_scene3d(spec) -> dict | None:
     return canh if canh["objects"] else None
 
 
+def _la_hinh_hoc(text: str) -> bool:
+    """Đề này có thuộc miền hình học không — TẤT ĐỊNH, không hỏi LLM."""
+    from app.simulation.semantic_program.domain_profile import (
+        DOMAIN_HINH_HOC,
+        detect_domain,
+    )
+
+    return detect_domain(text) == DOMAIN_HINH_HOC
+
+
+def _that_bai_hinh_hoc(outcome, analysis: dict, plan: dict, observer) -> dict:
+    """Envelope cho đề HÌNH HỌC mà route sinh không phục vụ được.
+
+    Nói đúng thứ đã xảy ra: *hệ hiểu đây là hình học, đã thử dựng, và chương
+    trình chưa qua kiểm chứng* — thay vì đổ cho đề bài là "môn khác".
+
+    `outcome` có thể `None`: route dừng trước khi dựng nổi IR. Khi ấy vẫn là
+    thất bại của việc SINH, không phải của phạm vi.
+    """
+    category = "geometry_generation_failed"
+    ly_do = getattr(outcome, "reason", None) if outcome is not None else None
+    _emit(observer, "envelope", status="unsupported", simulation_id=None,
+          failure_category=category)
+    return {
+        "status": "unsupported",
+        # `reason` KỸ THUẬT giữ nguyên — nó nuôi harness và diagnostics. Học
+        # sinh đọc `learner_reason`, gắn ở biên API (`learner_messages`).
+        "reason": ly_do or "Chưa dựng được chương trình hình học cho đề này.",
+        "failure_category": category,
+        "error_code": getattr(outcome, "error_code", None) if outcome else None,
+        "stage_reached": getattr(outcome, "stage_reached", None) if outcome else None,
+        "representation_plan": plan,
+        "analysis": analysis,
+    }
+
+
 def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> dict:
     """Envelope phát từ route sinh — MỘT chỗ dựng, hai chỗ gọi.
 
@@ -1240,6 +1276,23 @@ async def run_pipeline(
         if scope_gate is not None:
             if scope_gate[0] is ErrorCode.GATE_SCOPE_UNDECLARED:
                 deferred_scope = scope_gate
+            elif (scope_gate[0] is ErrorCode.GATE_OUT_OF_SCOPE
+                  and _la_hinh_hoc(text)):
+                # ─── LỜI TỪ CHỐI PHẢI NÓI THẬT ──────────────────────────────
+                #
+                # Đo được ở lượt smoke 2026-08-25: hệ nhận ra đề là hình học,
+                # chạy route sinh 120 GIÂY, chương trình trượt ở cổng phủ — rồi
+                # học sinh nhận *"Bài này thuộc môn khác, không nằm trong chương
+                # trình Tin học THPT"*. Câu ấy SAI, và sai theo hướng tệ nhất:
+                # nó đổ cho ĐỀ BÀI cái lỗi thuộc về HỆ.
+                #
+                # Cùng một luật với ngoại lệ ở `_semantic_shadow`, và cùng một
+                # bộ dò tất định: enum `domain_scope` của `analyze.md` không có
+                # giá trị nào cho hình học không gian, nên phán quyết của mô hình
+                # ở trường ấy không mang thông tin. Đề hoá học vẫn `tin_hoc` ⇒
+                # vẫn nhận đúng lời từ chối cũ.
+                return _that_bai_hinh_hoc(semantic_outcome, analysis, plan,
+                                          observer)
             else:
                 return _scope_refusal(scope_gate)
 

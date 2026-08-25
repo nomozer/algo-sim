@@ -1,10 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "67d33d97222dfdb2",
+  "sourceFingerprint": "cb233fea5ac77afb",
   "dirtyRelevantSources": [],
-  "head": "a2a3d0dc359cf1a7e7d1db2d214d69497bc8792c",
+  "head": "72ca0164c630a4587875e6807d5b16820c56a83e",
   "dirty": false,
-  "generatedAt": "2026-08-25T14:42:52.997Z",
+  "generatedAt": "2026-08-25T15:17:31.736Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
