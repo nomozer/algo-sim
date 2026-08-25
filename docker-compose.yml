@@ -50,8 +50,26 @@ services:
       # 3.1-pro-preview · 3.1-flash-lite (xem `ListModels`).
       #   GEMINI_MODEL=gemini-3.7-flash docker compose up -d backend
       GEMINI_MODEL: ${GEMINI_MODEL:-gemini-2.5-flash}
+      # NẠP LẠI KHI SỬA MÃ. Mặc định TẮT — `--reload` là cho máy lập trình.
+      #
+      # Không bật thì `backend/app` được mount nhưng uvicorn giữ module đã import
+      # trong bộ nhớ: sửa mã KHÔNG có tác dụng gì cho tới `docker compose restart
+      # backend`, và nó im lặng. Bật thì mọi lần lưu file đều nạp lại — kể cả
+      # `skills/*.md`, thứ `gemini.load_skill` cache trong tiến trình.
+      #
+      # ⚠️ Vẫn còn một tầng nữa mà reload KHÔNG chạm tới: cache exact trong
+      # Postgres khoá theo (text đề đã chuẩn hoá + CACHE_VERSION). Cùng một đề
+      # gửi lại vẫn trả envelope cũ mà không gọi LLM. Xem `scripts/cache_clear.py`.
+      #   DEV_RELOAD=1 docker compose up -d backend
+      DEV_RELOAD: ${DEV_RELOAD:-0}
     volumes:
       - ./backend/app:/app/app
+      # CHỈ ĐỌC, và chỉ để chạy công cụ vận hành BÊN TRONG mạng compose —
+      # `scripts/cache_clear.py` cần `DATABASE_URL` trỏ `db:5432`, mà tên ấy chỉ
+      # phân giải được ở trong này. Image KHÔNG copy `scripts/`, nên không mount
+      # thì `docker compose exec backend python scripts/…` báo không có file.
+      #   docker compose exec backend python scripts/cache_clear.py --liet-ke
+      - ./backend/scripts:/app/scripts:ro
     env_file:
       # GEMINI_API_KEY nằm ở đây — tạo từ backend/.env.example
       - path: ./backend/.env

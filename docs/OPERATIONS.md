@@ -36,6 +36,65 @@ này — mỗi lượt vài phút và cần Chrome. Chạy khi cần **bằng ch
 để lấy phản hồi. Việc chúng hỏi mà vitest không hỏi được thì đã có cổng offline
 tương ứng (vd `simulations/experience-gate.test.ts`).
 
+## "Sửa rồi mà nó vẫn nhận bản cũ" — BỐN tầng, bốn cách gỡ
+
+Triệu chứng: sửa mã hoặc prompt, gửi lại đề, nhận **y nguyên kết quả cũ**. Không
+lỗi, không cảnh báo. Bốn thứ khác nhau có thể đang giữ bản cũ, và **restart chỉ
+gỡ được hai**.
+
+| | Tầng | Giữ gì | Sửa gì thì dính | Gỡ bằng |
+|---|---|---|---|---|
+| ① | uvicorn **không** `--reload` | module Python đã import | mọi sửa `backend/app/**` | `docker compose restart backend`, hoặc `DEV_RELOAD=1` |
+| ② | `gemini._skill_cache` | nội dung `skills/*.md` | sửa prompt | như ① |
+| ③ | **cache exact** (Postgres) | envelope theo *(text đề chuẩn hoá + `CACHE_VERSION`)* | sửa mã/prompt mà không bump | `scripts/cache_clear.py`, hoặc bump |
+| ④ | history `localStorage` (FE) | envelope đã xem | — | mở phiên MỚI, đừng mở lại phiên cũ |
+
+**① là tầng nặng nhất và cũng lặng nhất.** `docker-compose.yml` mount
+`./backend/app:/app/app` nên file trên đĩa luôn mới — dễ tưởng là đã ăn. Nhưng
+uvicorn giữ module đã import trong bộ nhớ, nên sửa mã **không có tác dụng gì**
+cho tới khi khởi động lại tiến trình.
+
+```bash
+DEV_RELOAD=1 docker compose up -d --build backend   # --build: CMD nằm TRONG image
+```
+
+`--build` là bắt buộc ở lần đầu: `CMD` được nướng vào image, nên `up -d` không
+kèm `--build` sẽ dựng lại container từ image cũ và cờ không có tác dụng. Xác
+nhận bằng log — phải thấy `Started reloader process … using WatchFiles`; thấy
+`Started server process [1]` là **chưa** bật.
+
+`WATCHFILES_FORCE_POLLING=1` đi kèm và **bắt buộc** cho bind mount từ host
+Windows: inotify không lan qua ranh giới ấy, nên thiếu nó thì `--reload` bật mà
+không bao giờ nạp lại — đổi một lỗi im lặng lấy một lỗi im lặng khác.
+
+⚠️ **Polling có giá, và nó không nhỏ.** Đo được 2026-08-25 trên máy này: với
+`DEV_RELOAD=1` đang chạy, một lượt `pytest` đầy đủ **không xong trong 10 phút**;
+tắt đi thì **27,7 giây**. Polling quét cả cây `/app/app` qua ranh giới
+Windows↔container, và nó tranh I/O với mọi thứ khác. Nên bật khi đang sửa vòng
+lặp ngắn, **tắt trước khi chạy suite hay chạy lượt đo**:
+
+```bash
+docker compose up -d backend        # DEV_RELOAD mặc định 0 — polling tắt
+```
+
+**③ là tầng lừa người nhất**: restart xong, mã mới đã chạy, gửi lại **đúng đề
+cũ** vẫn nhận kết quả cũ — vì khoá cache không dính dáng gì tới mã nguồn.
+
+```bash
+docker compose exec backend python scripts/cache_clear.py --liet-ke
+docker compose exec backend python scripts/cache_clear.py --de "<đề>"
+docker compose exec backend python scripts/cache_clear.py --cu    # mọi row khác CACHE_VERSION
+```
+
+Chạy **trong** container: `DATABASE_URL` trỏ `db:5432`, tên ấy chỉ phân giải
+được trong mạng compose (chạy từ host sẽ lặng lẽ đụng SQLite, không phải DB
+thật). `scripts/` được mount chỉ-đọc riêng cho việc này.
+
+⚠️ `CACHE_VERSION` vẫn là **đường chính thức** để vô hiệu hoá cache khi đổi
+prompt hoặc chính sách định tuyến — bump là một tuyên bố về hợp đồng, đọc được
+trong lịch sử. `cache_clear.py` dành cho việc khác: thử đi thử lại một đề trong
+lúc đang sửa, nơi bump số cho mỗi lần lưu file là vô nghĩa.
+
 ## Cơ sở dữ liệu & migration
 
 **PostgreSQL 16** chạy trong Docker (service `db`, dữ liệu bền trong volume

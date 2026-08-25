@@ -2698,6 +2698,22 @@ mất một thứ không lấy lại được. `neo_kho_ma()` ghi **hai phạm v
 vs chỉ `MEASURED_SYSTEM_PATHS`) vì hai định nghĩa "sạch" trong kho này khác nhau.
 Khoá bởi `tests/geometry/test_geometry_dev_runner.py`.
 
+### `backend/scripts/cache_clear.py` · offline · **0 API call**
+
+Xoá cache phân tích đề. Phải chạy **trong container** (`docker compose exec
+backend python scripts/cache_clear.py …`) vì `DATABASE_URL` trỏ `db:5432` — chạy
+từ host sẽ lặng lẽ đụng SQLite thay vì DB thật.
+
+Tồn tại vì có **bốn** tầng giữ "bản cũ" và chúng gỡ bằng bốn cách khác nhau
+(bảng đầy đủ: `docs/OPERATIONS.md`). Tầng này — cache exact ở Postgres, khoá
+theo *(text đề chuẩn hoá + `CACHE_VERSION`)* — là tầng **restart không chạm
+tới**, và vì thế là tầng lừa người nhất.
+
+KHÔNG thay `CACHE_VERSION`: bump vẫn là đường chính thức khi đổi prompt/định
+tuyến, vì nó là một tuyên bố đọc được trong lịch sử. Script này cho việc thử đi
+thử lại một đề trong lúc đang sửa. `--tat-ca` đòi thêm `--toi-chac-chan` — nó
+xoá kết quả đã trả cho người học, không phải file tạm.
+
 ### `backend/scripts/seal_geometry_holdout.py` · offline · **0 API call**
 
 Rút + niêm phong tập held-out. Sở hữu **`BANG_O`** — 20 ô đích danh (14 tầng A
