@@ -2650,6 +2650,14 @@ Không hàm nào nhận **toạ độ kết quả** từ IR. Thêm một trườ
 `ConstructPointStmt` "cho nhanh" là trao quyền quyết kết quả cho LLM —
 `test_R0_*` trong `tests/geometry/test_geometry_ir.py` khoá lại.
 
+Cũng sở hữu **vị từ "giá trị này có lên được hình không"**: `la_doi_tuong_hinh_hoc`
+· `la_dai_luong_do` · `KIEU_DAI_LUONG`. Chúng ở **tầng kernel** có chủ đích — hai
+người dùng là `simulation_state.build_scene` (chiếu ra cảnh) và
+`learner_surface` (cổng), mà cổng **không được** nhập tầng trình bày. Đây là chỗ
+duy nhất cả hai cùng nhìn được mà không đảo chiều phụ thuộc; hai bản `isinstance`
+song song sẽ trôi khỏi nhau đúng vào ngày thêm một kiểu hình học mới, và khi ấy
+cổng NÓI DỐI. Khoá bởi `tests/geometry/test_learner_surface_3d.py` (14).
+
 ### `docs/evaluation/geometry/custodian/geometry_oracle.py` · **0 API call**
 
 Oracle độc lập, chỉ `import fractions`. Đầu vào là **tuple số thuần** (dạng dây)
@@ -2966,6 +2974,14 @@ vì đòi mọi biến là từ chối oan hàng loạt mô phỏng đúng (bi�
 một cổng kêu oan là một cổng sẽ bị tắt. Bảng tra HẰNG (`pairs`) không đổi giá trị
 nên không bị đòi. Cùng danh sách `PLACEHOLDER_LEAKS` với
 `frontend/src/simulations/learner-gate.ts` — hai đầu của một luật.
+
+**MÀN HÌNH CÓ HAI NỬA** (2026-08-25). `visual_bindings` là nửa 2D, phải KHAI;
+`Scene3D` là nửa 3D, chiếu TẤT ĐỊNH. Chương trình hình học không khai binding
+nào và nó ĐÚNG khi không khai — cổng đọc sót nửa kia nên từng từ chối **mọi**
+chương trình hình học, kể cả bốn bài đã qua oracle ở Wave 4, và envelope rơi
+xuống classifier rồi hiện "NGOÀI DANH MỤC MÔ PHỎNG" cho học sinh. `_tren_canh_3d`
+bù nửa còn thiếu bằng vị từ ở `geometry_exec` (KHÔNG nhập tầng trình bày). Câu
+hỏi của cổng không đổi một chữ — nó chỉ thôi nhìn sót.
 
 Phát hiện đầu tiên của nó: fixture #18 dựng bảng tần suất suốt lượt chạy mà màn
 hình không bao giờ có bảng — vì `map` là `MemoryType` đã admit mà không primitive
