@@ -1,0 +1,273 @@
+{
+  "ban_ghi": {
+    "case_id": "2-the-tich",
+    "lan": 2,
+    "do_tre_giay": 29.0,
+    "stage_reached": "structural_coverage",
+    "executable": false,
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "failure_category": "semantic_incomplete",
+    "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+    "details": [
+      "volume(S.ABCD): witness 'V_S_ABCD' không dẫn xuất từ 'S.ABCD' — chương trình khai đáp án chứ không tính nó"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "volume"
+    ],
+    "nghia_vu_mong_doi": [
+      "volume"
+    ],
+    "obligation_match": true,
+    "oracle_dat": null,
+    "oracle_vi_sao": "không có final_memory",
+    "envelope_status": "unsupported",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "volume",
+        "container": "S.ABCD",
+        "params": {
+          "witness": "V_S_ABCD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_hinh_vuong",
+        "label": "ABCD là hình vuông",
+        "values": [
+          "ABCD là hình vuông"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "canh_day",
+        "label": "cạnh đáy",
+        "values": [
+          3
+        ],
+        "provenance": "confirmed",
+        "source_start": 52,
+        "source_end": 53,
+        "source_text": "3",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_vuong_goc_day",
+        "label": "SA vuông góc với mặt phẳng đáy",
+        "values": [
+          "SA vuông góc với mặt phẳng (ABCD)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "SA vuông góc với mặt phẳng (ABCD)"
+        ]
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "SA",
+        "values": [
+          4
+        ],
+        "provenance": "confirmed",
+        "source_start": 94,
+        "source_end": 95,
+        "source_text": "4",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp S.ABCD",
+    "description": "Chương trình dựng hình và tính thể tích khối chóp S.ABCD với đáy là hình vuông và cạnh bên SA vuông góc với đáy.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day",
+        "model_assumption": "Chọn cạnh AB nằm trên trục Ox."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_vuong",
+        "model_assumption": "Chọn cạnh AD nằm trên trục Oy, do ABCD là hình vuông và AB nằm trên Ox."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_vuong",
+        "model_assumption": "Xác định tọa độ điểm C để hoàn thành hình vuông ABCD."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          4
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sa_vuong_goc_day",
+        "model_assumption": "Do SA vuông góc với mặt phẳng đáy (ABCD) và A là gốc tọa độ, S nằm trên trục Oz."
+      },
+      {
+        "name": "ABCD",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_vuong",
+        "model_assumption": null
+      },
+      {
+        "name": "S_ABCD_solid",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "V_S_ABCD",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_polygon",
+        "target_var": "ABCD",
+        "vertices": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "label": "Dựng mặt đáy ABCD"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "S_ABCD_solid",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3,
+            4
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            4
+          ],
+          [
+            0,
+            4,
+            1
+          ]
+        ],
+        "label": "Dựng khối chóp S.ABCD"
+      },
+      {
+        "kind": "assign",
+        "target_var": "V_S_ABCD",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "S_ABCD_solid",
+          "wrt": null
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài tập này minh họa cách dựng hình chóp có cạnh bên vuông góc với đáy và tính thể tích của nó. Học sinh sẽ thấy cách chọn hệ tọa độ phù hợp để đơn giản hóa việc xác định các điểm và sau đó sử dụng các phép dựng hình học để tạo ra khối chóp."
+  },
+  "final_memory": {}
+}

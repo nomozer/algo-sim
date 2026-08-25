@@ -95,10 +95,44 @@ class Ghi:
 
 
 # ══ ORACLE — ĐỘC LẬP, so QUAN HỆ ═════════════════════════════════════════
+def an_toan(x):
+    """Bất kỳ giá trị nào → JSON được, KHÔNG mất mát.
+
+    Observer nhận `final_memory` THÔ (Vec3, Fraction, Line3…) chứ không phải bản
+    đã serialize — telemetry mới là chỗ serialize. `Fraction` → chuỗi phân số vì
+    `float` sẽ lặng lẽ làm tròn đúng thứ cả kernel dựng ra để tránh.
+    """
+    if isinstance(x, Fraction):
+        return str(x)
+    if isinstance(x, (str, int, bool, type(None))):
+        return x
+    if isinstance(x, float):
+        return str(Fraction(x).limit_denominator())
+    if isinstance(x, dict):
+        return {str(k): an_toan(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [an_toan(v) for v in x]
+    if hasattr(x, "__dict__") or hasattr(x, "_fields"):
+        d = getattr(x, "__dict__", None) or {
+            f: getattr(x, f) for f in getattr(x, "_fields", ())}
+        return {"__loai__": type(x).__name__,
+                **{str(k): an_toan(v) for k, v in d.items()}}
+    return str(x)
+
+
 def _v(x):
-    """Giá trị trong `final_memory` đã serialize; đọc lại thành Fraction."""
+    """Một điểm → bộ ba `Fraction`, hoặc `None` nếu không phải điểm.
+
+    Nhận CẢ `Vec3` thô lẫn dict đã serialize: oracle phải chấm được ở cả hai
+    dạng, vì hai đường (observer vs telemetry) cho hai dạng khác nhau.
+    """
+    if not isinstance(x, dict) and all(hasattr(x, k) for k in ("x", "y", "z")):
+        return tuple(Fraction(str(getattr(x, k))) for k in ("x", "y", "z"))
     if isinstance(x, dict) and {"x", "y", "z"} <= set(x):
-        return tuple(Fraction(str(x[k])) for k in ("x", "y", "z"))
+        try:
+            return tuple(Fraction(str(x[k])) for k in ("x", "y", "z"))
+        except (ValueError, ZeroDivisionError):
+            return None
     return None
 
 
@@ -108,14 +142,17 @@ def cham_oracle(ten: str, fm: dict) -> tuple[bool | None, str]:
         return None, "không có final_memory"
 
     if ten == "the_tich_12":
+        so = {}
         for k, val in fm.items():
-            if isinstance(val, str):
+            if isinstance(val, bool):
+                continue
+            if isinstance(val, (Fraction, int, str)):
                 try:
+                    so[k] = str(val)
                     if Fraction(val) == 12:
                         return True, f"{k} = 12"
                 except (ValueError, ZeroDivisionError):
-                    continue
-        so = {k: v for k, v in fm.items() if isinstance(v, str)}
+                    so.pop(k, None)
         return False, f"không biến nào bằng 12 · số đã đo: {so}"
 
     if ten == "M_tren_SA":
@@ -193,7 +230,7 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "error_code": sr.get("error_code"),
         "failure_category": sr.get("failure_category"),
         "reason": sr.get("reason"),
-        "details": sr.get("details"),
+        "details": an_toan(sr.get("details")),
         "so_nghia_vu": len(hd.obligations) if hd else 0,
         "nghia_vu_kinds": kinds,
         "nghia_vu_mong_doi": mong,
@@ -219,7 +256,7 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "request_contract": hd.model_dump(mode="json") if hd else None,
         "generated_program": (bat["spec"].model_dump(mode="json")
                               if bat.get("spec") else None),
-        "final_memory": fm,
+        "final_memory": an_toan(fm),
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return ban_ghi
 
