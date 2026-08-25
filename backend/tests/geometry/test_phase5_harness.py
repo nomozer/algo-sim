@@ -450,6 +450,64 @@ def test_artifact_GIU_DUOC_dau_ra_tho_khi_truot_schema(rn, monkeypatch):
     assert '"type": "volume"' in ra["generated_raw"]
 
 
+# ══ §4. ARTIFACT PHẢI TỰ NEO VÀO MỘT BẢN MÃ ══════════════════════════════
+def test_artifact_tu_khai_COMMIT_va_TRANG_THAI_BAN(rn):
+    """Không có khối này thì điểm số không buộc được vào commit nào — người đọc
+    sau ba tháng không tái lập được, và không biết cây có bẩn lúc chạy không."""
+    neo = rn.neo_kho_ma()
+    for k in ("commit", "commit_ngan", "nhanh", "cache_version",
+              "measured_system_hash", "measured_system_so_file",
+              "dirty_toan_kho", "dirty_he_duoc_do",
+              "sach_toan_kho", "sach_he_duoc_do"):
+        assert k in neo, f"thiếu {k}"
+    assert len(neo["commit"]) == 40
+    assert re.fullmatch(r"[0-9a-f]{64}", neo["measured_system_hash"])
+    assert neo["measured_system_so_file"] > 100
+    assert neo["cache_version"] == "40"
+
+
+def test_hai_pham_vi_ban_KHONG_bi_gop_lam_mot(rn):
+    """`bẩn` có hai nghĩa không trùng nhau, và gộp chúng là mất thông tin quyết
+    định: cây bẩn NGOÀI hệ được đo vẫn tái lập được, bẩn TRONG thì không.
+
+    Runner cố ý không chọn phe — nó ghi cả hai và để người đọc phán.
+    """
+    neo = rn.neo_kho_ma()
+    assert set(neo["dirty_he_duoc_do"]) <= set(neo["dirty_toan_kho"])
+    assert neo["sach_he_duoc_do"] == (not neo["dirty_he_duoc_do"])
+    assert neo["sach_toan_kho"] == (not neo["dirty_toan_kho"])
+    # Sạch toàn kho thì tất yếu sạch hệ được đo; chiều ngược lại KHÔNG đúng.
+    if neo["sach_toan_kho"]:
+        assert neo["sach_he_duoc_do"]
+
+
+def test_neo_dung_DUNG_pham_vi_cua_freeze(rn):
+    """Runner không được tự chép một danh sách đường dẫn thứ hai: hai bản rời
+    nhau sẽ lệch, và lệch câm."""
+    import inspect
+
+    import freeze_evaluation_candidate as FZ
+
+    src = inspect.getsource(rn.neo_kho_ma)
+    assert "FZ.MEASURED_SYSTEM_PATHS" in src
+    assert "backend/app" in FZ.MEASURED_SYSTEM_PATHS
+
+
+def test_measured_system_hash_KHONG_doi_theo_file_ngoai_pham_vi(rn, tmp_path):
+    """Bằng chứng cho câu khẳng định ở `neo.khai`. Không có test này thì đó chỉ
+    là một lời tuyên bố trong JSON."""
+    import freeze_evaluation_candidate as FZ
+
+    truoc, _ = FZ.measured_system_hash()
+    ngoai = _GOC / "docs" / "_tam_kiem_pham_vi.md"
+    ngoai.write_text("file rác ngoài hệ được đo\n", encoding="utf-8")
+    try:
+        sau, _ = FZ.measured_system_hash()
+    finally:
+        ngoai.unlink()
+    assert truoc == sau, "file ngoài MEASURED_SYSTEM_PATHS làm đổi hash hệ đo"
+
+
 def test_tong_ket_du_khoa_va_co_CHI_PHI(rn):
     class _B:
         logical_calls, http_requests, retry_requests, transient_hits = 3, 3, 0, 0

@@ -341,6 +341,59 @@ def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
             [{"obligation_match": m} for m in om]),
         "phan_bo_that_bai": _phan_bo(ket),
         "chi_phi": AU.bao_cao(model, budget),
+        "neo": neo_kho_ma(),
+    }
+
+
+def neo_kho_ma() -> dict[str, Any]:
+    """Artifact phải TỰ NÓI nó đo bản mã nào. Trước bản này thì không.
+
+    Thiếu khối này, `geometry_dev_results.json` chỉ có điểm số và không có cách
+    nào buộc điểm ấy vào một commit — người đọc sau ba tháng không tái lập được,
+    và cũng không biết cây có bẩn lúc chạy hay không.
+
+    ─── VÌ SAO GHI HAI PHẠM VI BẨN, KHÔNG CHỌN MỘT ──────────────────────────
+
+    `bẩn` có hai nghĩa và chúng KHÔNG trùng nhau:
+
+      · `dirty_toan_kho`     — mọi thứ `git status` thấy. Bao gồm cả wave khác
+                               đang chạy song song, `docs/`, artifact tự sinh.
+      · `dirty_he_duoc_do`   — chỉ `MEASURED_SYSTEM_PATHS`. Đây mới là thứ
+                               quyết định phép đo có tái lập được không.
+
+    `evidence.mjs` đã chốt nguyên tắc ấy từ trước và viết thẳng lý do:
+    *"sửa một file `docs/` rồi đo thì phép đo vẫn tái lập được, nên gọi nó là
+    bẩn sẽ làm cảnh báo mất giá trị và người ta thôi đọc"*. Còn
+    `freeze_evaluation_candidate.cay_lam_viec_sach` lại soi TOÀN KHO — hai chỗ
+    trong cùng kho nói hai nghĩa khác nhau cho cùng một chữ.
+
+    Runner **không đứng về phe nào**: nó ghi cả hai con số và để người đọc
+    artifact tự phán. Chọn phe ở đây là sửa một cổng trong lúc chính cổng ấy
+    đang chặn mình — dù lập luận có đúng, thời điểm cũng làm nó thành động cơ.
+    """
+    import freeze_evaluation_candidate as FZ
+    from app.main import CACHE_VERSION
+
+    toan = [d for d in FZ._git("status", "--porcelain").splitlines() if d.strip()]
+    he_do = [
+        d for d in toan
+        if any(d[3:].strip().startswith(p) for p in FZ.MEASURED_SYSTEM_PATHS)
+    ]
+    bam, so_file = FZ.measured_system_hash()
+    return {
+        "commit": FZ._git("rev-parse", "HEAD"),
+        "commit_ngan": FZ._git("rev-parse", "--short", "HEAD"),
+        "nhanh": FZ._git("rev-parse", "--abbrev-ref", "HEAD"),
+        "cache_version": CACHE_VERSION,
+        "measured_system_hash": bam,
+        "measured_system_so_file": so_file,
+        "dirty_toan_kho": [d[3:].strip() for d in toan],
+        "dirty_he_duoc_do": [d[3:].strip() for d in he_do],
+        "sach_toan_kho": not toan,
+        "sach_he_duoc_do": not he_do,
+        "khai": "Điểm số trong artifact này CHỈ có nghĩa với `measured_system_hash` "
+                "ở trên. Cây bẩn ngoài hệ được đo không làm hỏng tính tái lập; "
+                "cây bẩn TRONG hệ được đo thì có.",
     }
 
 
