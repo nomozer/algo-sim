@@ -3409,6 +3409,25 @@ Sở hữu **bộ đếm token theo stage**. Dùng `ContextVar` (`stage_scope`) 
 thêm tham số vào `call_gemini`: hàm đó có 13 test double, và một double gãy vì
 production thêm tham số QUAN TRẮC là mùi thiết kế.
 
+### `backend/app/ai/route_trace.py` · **live**
+
+Sở hữu **chuỗi sự kiện của một lượt phân tích** — route ngữ nghĩa có chạy
+không, tới đâu, chết vì gì. Khác `telemetry.py` (đếm token): file này ghi
+*chuyện gì đã xảy ra*. Vòng đệm 20 lượt trong tiến trình, đọc qua
+`GET /api/diagnostics/semantic`, bật bằng `SEMANTIC_TELEMETRY=1`.
+
+**Bất biến: mọi thứ trong `_kho` đều `json.dumps` được**, do `_json_an_toan`
+giữ, hạ MỘT LẦN ở `ket_thuc` (không ở `emit` — `ket_cuc` đọc thẳng từ envelope
+nên sẽ lọt; không ở endpoint — mỗi người đọc `_kho` lại phải tự nhớ).
+`Fraction` → chuỗi phân số **không hoá float** (cùng quy ước `scene3d`); kiểu
+lạ → `repr`, không ném.
+
+Vì sao bất biến ấy phải là bất biến: `semantic_route` phát kèm `final_memory`,
+mà bộ nhớ cuối của interpreter hình học chứa `Fraction`/`Vec3`/`Line3`/`Plane3`
+— và nó **chỉ** được phát khi route đi đủ xa. Nên trước bản vá, endpoint chẩn
+đoán trả 500 **đúng vào lượt hình học CHẠY ĐƯỢC**, còn lượt hỏng thì đọc bình
+thường. Khoá bởi `tests/test_route_trace_json_safe.py`.
+
 ### `backend/scripts/seal_benchmark.py` · offline
 
 Khoá/kiểm fingerprint của SEALED benchmark. Thoát != 0 khi seal vỡ.
