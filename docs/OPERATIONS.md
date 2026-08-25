@@ -108,6 +108,14 @@ cd backend && python -m venv .venv && .venv/Scripts/pip install -r requirements-
 .venv/Scripts/python -m uvicorn app.main:app --port 8000
 ```
 
+**`pytest` KHÔNG chạy trên `backend/algosim.db`.** `conftest.py` trỏ
+`DATABASE_URL` sang một file tạm đặt tên theo PID, nên mỗi lượt pytest có DB
+riêng và DB dev của bạn không bao giờ bị test ghi vào. Hệ quả cần biết: dữ liệu
+test **không** hiện ra trong `algosim.db`, và hai lượt pytest song song không
+chặn nhau (trước bản này chúng tranh khoá SQLite và trông hệt như một test
+treo). Đặt `DATABASE_URL` tường minh thì lượt đó thắng — `setdefault`, không gán
+đè. Khoá bởi `tests/test_db_ownership.py`.
+
 **Migration (Alembic).** Trên DB bền (Postgres), schema tiến hoá qua Alembic —
 container tự chạy `alembic upgrade head` ở entrypoint trước khi phục vụ. Khi đổi
 model trong `app/persistence/db.py`:
