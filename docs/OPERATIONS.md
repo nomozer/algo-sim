@@ -111,10 +111,26 @@ cd backend && python -m venv .venv && .venv/Scripts/pip install -r requirements-
 **`pytest` KHÔNG chạy trên `backend/algosim.db`.** `conftest.py` trỏ
 `DATABASE_URL` sang một file tạm đặt tên theo PID, nên mỗi lượt pytest có DB
 riêng và DB dev của bạn không bao giờ bị test ghi vào. Hệ quả cần biết: dữ liệu
-test **không** hiện ra trong `algosim.db`, và hai lượt pytest song song không
-chặn nhau (trước bản này chúng tranh khoá SQLite và trông hệt như một test
-treo). Đặt `DATABASE_URL` tường minh thì lượt đó thắng — `setdefault`, không gán
-đè. Khoá bởi `tests/test_db_ownership.py`.
+test **không** hiện ra trong `algosim.db`. Đặt `DATABASE_URL` tường minh thì
+lượt đó thắng — `setdefault`, không gán đè. Khoá bởi
+`tests/test_db_ownership.py`.
+
+⚠️ **Suite treo mà không có test nào chậm?** Đếm tiến trình pytest trước khi đi
+tìm test có lỗi:
+
+```powershell
+Get-CimInstance Win32_Process -Filter "Name='python.exe'" | Select ProcessId,CommandLine
+```
+
+Đo được 2026-08-25: một lượt full treo quá 600 giây (lượt trước đó 27 giây) khi
+có **bốn** tiến trình pytest cùng chạy từ hai phiên làm việc song song. CPU gần
+bằng không — chờ khoá. Bản vá DB riêng ở trên gỡ nguyên nhân *đã xác định được*
+là tranh file SQLite; **chưa** đo được rằng chạy song song nay đã hoàn toàn an
+toàn, vì lượt đo lại bị chính vòng lặp chờ bận của người đo làm nhiễu. Còn một
+nghi phạm chưa chứng minh: `_windows_fixed_socketpair` trong `conftest.py` gọi
+`connect()`/`accept()` **không đặt timeout**, nên dưới áp lực cổng ephemeral nó
+có thể chờ vô hạn. Chưa dựng lại được một ca hỏng ổn định ⇒ chưa vá (sửa mù một
+treo không tái hiện được là cách đẻ ra lỗi thứ hai).
 
 **Migration (Alembic).** Trên DB bền (Postgres), schema tiến hoá qua Alembic —
 container tự chạy `alembic upgrade head` ở entrypoint trước khi phục vụ. Khi đổi
