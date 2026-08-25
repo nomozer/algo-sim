@@ -123,14 +123,41 @@ def test_details_noi_ca_HAI_PHIA_khi_witness_khai_ma_khong_ai_tao():
 
 
 def test_details_noi_hai_phia_khi_CONTAINER_lech():
+    """⚠️ TÊN CONTAINER ĐÃ ĐỔI (Phase 6.7.1), và lý do phải đọc kèm.
+
+    Bản cũ dùng `khoi_chop` và nó XANH NHỜ CHÍNH CON BUG mà pha này sửa:
+    lưới phụ tố của Phase 6.6 hoà giải `khoi_chop ≡ chop` (`khoi` là một phụ tố
+    kiểu hợp lệ), nhưng phép kiểm dẫn xuất tra `ob.container` chứ không tra tên
+    đã hoà giải — nên nó vẫn phát ra một thông điệp lệch. Sửa bug đi thì
+    `khoi_chop` không còn là ca lệch nữa, và test mất đối tượng.
+
+    Ý ĐỊNH của test không đổi: khi container thật sự KHÔNG phân giải được,
+    thông điệp phải nói cả hai phía. Nên đổi sang một tên không lưới nào hoà
+    giải nổi.
+    """
+    spec = _spec(_DIEM + [{"name": "chop", "type": "solid"},
+                          {"name": "V", "type": "float"}],
+                 [_DUNG_KHOI, _DO])
+    hd = RequestContract(obligations=(
+        Obligation(kind="volume", container="hinh_lang_tru",
+                   params={"witness": "V"}),
+    ))
+    txt = " ".join(check_structural_coverage(hd, spec).missing)
+    assert "hinh_lang_tru" in txt and "chương trình khai" in txt
+
+
+def test_container_LECH_PHU_TO_nay_HOA_GIAI_duoc():
+    """Vế còn lại của cùng một sự thật: `khoi_chop` ≡ `chop` là hoà giải ĐÚNG,
+    và trước Phase 6.7.1 nó bị từ chối oan ở phép kiểm dẫn xuất."""
     spec = _spec(_DIEM + [{"name": "chop", "type": "solid"},
                           {"name": "V", "type": "float"}],
                  [_DUNG_KHOI, _DO])
     hd = RequestContract(obligations=(
         Obligation(kind="volume", container="khoi_chop", params={"witness": "V"}),
     ))
-    txt = " ".join(check_structural_coverage(hd, spec).missing)
-    assert "khoi_chop" in txt and "chương trình khai" in txt
+    kq = check_structural_coverage(hd, spec)
+    assert kq.ok, kq.missing
+    assert any("khoi_chop" in d and "chop" in d for d in kq.symbol_reconciled)
 
 
 # ══ PRODUCER SET ĐÚNG — nền cho mọi thiết kế sau này ══════════════════════

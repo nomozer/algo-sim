@@ -232,7 +232,8 @@ def _sau_grounding(
         "weak": list(c1a.weak_kinds),
     }
 
-    c1b = check_realized_coverage(contract, spec, exec_res)
+    c1b = check_realized_coverage(contract, spec, exec_res,
+                                  ten_da_hoa_giai=c1a.ten_da_hoa_giai)
     if not c1b.ok:
         return _hong(
             "realized_coverage",

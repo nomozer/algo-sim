@@ -459,10 +459,27 @@ def check_structural_coverage(
                     "tượng nào — chương trình bịa ra nó chứ không dựng"
                 )
                 continue
-        elif ob.container not in goc:
+        elif con not in goc:
+            # `con`, KHÔNG phải `ob.container`.
+            #
+            # ─── LỖI ĐÃ ĐO ĐƯỢC (Phase 6.7, bài thể tích, 2/5 lượt) ────────
+            #
+            # Lưới hoà giải phía trên đã trả lời xong câu *"`S.ABCD` của hợp
+            # đồng là vật nào trong chương trình"* → `S_ABCD_solid`, và gán vào
+            # `con`. Dòng này lại tra `ob.container` — tức tra TÊN HỢP ĐỒNG
+            # trong một bao đóng chỉ chứa TÊN CHƯƠNG TRÌNH. Kết quả của lưới bị
+            # vứt đi ngay dòng kế.
+            #
+            # Hậu quả không chỉ là một FALSE NEGATIVE. Lời từ chối còn VU OAN:
+            # nó nói *"chương trình khai đáp án chứ không tính nó"* trong khi
+            # chương trình gọi đúng `measure(volume, of=S_ABCD_solid)`. Đo năng
+            # lực AI bằng một thước như thế là kết tội mô hình ở đúng chỗ nó
+            # làm đúng.
+            ten = (f"'{con}'" if con == ob.container
+                   else f"'{ob.container}' (≡ '{con}')")
             missing.append(
-                f"{ob.describe()}: witness '{w}' không dẫn xuất từ "
-                f"'{ob.container}' — chương trình khai đáp án chứ không tính nó"
+                f"{ob.describe()}: witness '{w}' không dẫn xuất từ {ten} — "
+                "chương trình khai đáp án chứ không tính nó"
             )
             continue
 
@@ -498,7 +515,8 @@ def check_structural_coverage(
 
 
 def check_realized_coverage(
-    contract: RequestContract, spec: SemanticProgramSpec, exec_result
+    contract: RequestContract, spec: SemanticProgramSpec, exec_result,
+    ten_da_hoa_giai=None,
 ) -> CoverageResult:
     """C₁b — chạy SAU execution.
 
@@ -519,11 +537,25 @@ def check_realized_coverage(
             if value is not None:
                 realized.add(name)
 
+    # DÙNG LẠI ánh xạ của C₁a — `realized` chứa TÊN CHƯƠNG TRÌNH, còn
+    # `ob.witness` là TÊN HỢP ĐỒNG. Không đổi tên trước khi tra thì mọi nghĩa vụ
+    # từng phải hoà giải sẽ bị báo "chưa hiện thực hoá" dù biến ấy có giá trị
+    # thật trong mọi bước. Cùng lỗi với phép kiểm dẫn xuất của C₁a, soát ra ở
+    # Phase 6.7.1 khi rà TẤT CẢ các chỗ dùng tên gốc.
+    doi = ten_da_hoa_giai or {}
+
+    def _ten(w: str) -> str:
+        return doi.get(w, w)
+
     missing = [
-        f"{ob.describe()}: witness '{ob.witness}' không được hiện thực hoá trong "
-        "lượt chạy (nhánh chết, hoặc không đạt tới)"
+        f"{ob.describe()}: witness "
+        + (f"'{ob.witness}'" if _ten(ob.witness) == ob.witness
+           else f"'{ob.witness}' (≡ '{_ten(ob.witness)}')")
+        + " không được hiện thực hoá trong lượt chạy "
+        "(nhánh chết, hoặc không đạt tới)"
         for ob in contract.obligations
-        if has_server_owned_checker(ob.kind) and ob.witness and ob.witness not in realized
+        if has_server_owned_checker(ob.kind) and ob.witness
+        and _ten(ob.witness) not in realized
     ]
 
     if missing:
