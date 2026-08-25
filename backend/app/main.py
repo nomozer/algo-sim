@@ -198,7 +198,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       `semantic_program` — tức bề mặt prompt ĐÃ ĐỔI mà không ai sửa một file
 #       `.md` nào. Đúng ca mà luật "đổi prompt ⇒ bump" nhắm tới, và là ca dễ
 #       quên nhất vì thay đổi nằm ở một model Pydantic.
-CACHE_VERSION = "43"
+CACHE_VERSION = "44"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

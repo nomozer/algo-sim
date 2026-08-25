@@ -340,7 +340,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # 43: IR thêm `intersect_line_line`. Thẻ văn phạm sinh từ `contract.py` nên
     # bề mặt prompt đổi mà không file `.md` nào bị sửa — ca dễ quên nhất của luật
     # bump, vì thay đổi nằm ở một model Pydantic.
-    assert main_module.CACHE_VERSION == "43"
+    # 44: `detect_domain` nhận thêm mệnh đề phủ quyết bằng từ vựng Tin học. Đây
+    # là POLICY ĐỊNH TUYẾN — cùng một đề nay có thể đi sang miền khác, nên mọi
+    # envelope cache dưới bộ dò cũ đều không còn định danh được bản đã sinh ra
+    # nó. Đo được: 4/5 đề Tin học hợp lệ có mượn từ vựng hình học từng bị kéo
+    # sang route hình học rồi trả về "ngoài danh mục" — tức bản vá này ĐỔI KẾT
+    # QUẢ cho những đề ấy, đúng ca mà bump tồn tại để dọn.
+    assert main_module.CACHE_VERSION == "44"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

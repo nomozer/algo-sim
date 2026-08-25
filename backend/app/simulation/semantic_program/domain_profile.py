@@ -116,6 +116,47 @@ _DAU_HIEU_YEU = (
 )
 
 
+#: DẤU HIỆU TIN HỌC — phủ quyết đường YẾU, và CHỈ đường yếu.
+#
+# ─── VÌ SAO CẦN, ĐO ĐƯỢC 2026-08-26 ──────────────────────────────────────────
+#
+# Bốn trên năm đề Tin học HỢP LỆ bị kéo sang hình học chỉ vì đủ ba cụm yếu:
+#
+#     "Cho toạ độ ba đỉnh một tam giác. VIẾT CHƯƠNG TRÌNH kiểm tra tam giác đó
+#      có vuông góc ở đỉnh A không, và tính trung điểm cạnh BC."
+#      → trung điểm · tam giác · vuông góc = 3 ⇒ hinh_hoc. Sai.
+#
+# Chúng không phải đề bịa: hình học tính toán, đồ hoạ và bài toán lưới đều nằm
+# trong chương trình, và đều nói "tam giác", "song song", "thể tích" tự nhiên.
+#
+# Bản cũ ĐÃ khai giới hạn này và chấp nhận nó, với lý do *"thất bại lộ ra ở C₁a
+# chứ không âm thầm"*. Phép đo cho thấy lý do ấy sai hai chỗ: nó KHÔNG hiếm, và
+# "lộ ra" với học sinh nghĩa là tấm thẻ **NGOÀI DANH MỤC MÔ PHỎNG** giáng xuống
+# một đề mà hệ vốn mô phỏng được — route hình học ăn mất chính 24 target đang
+# chạy tốt. Một cổng chẩn đoán được với dev vẫn là một lời từ chối sai với học
+# sinh.
+#
+# ─── VÌ SAO PHỦ QUYẾT, KHÔNG PHẢI NÂNG NGƯỠNG ────────────────────────────────
+#
+# Nâng ngưỡng 3 → 5 giết `geo_08` (hình vuông PHẲNG: 0 cụm mạnh, chỉ đủ cụm
+# yếu) — đổi một lỗ lấy một lỗ khác. Đòi ít nhất một cụm mạnh cũng giết `geo_08`
+# vì nó không có cụm nào. Cái thiếu không phải "ít cụm hình học hơn" mà là **bộ
+# dò chưa từng đọc từ vựng Tin học**: "viết chương trình" là bằng chứng dứt
+# khoát mà nó đang ném đi.
+#
+# CHỈ đường yếu: cụm MẠNH (`thiết diện`, `hình chóp`…) không xuất hiện trong đề
+# Tin học, nên *"viết chương trình dựng thiết diện"* vẫn phải là hình học.
+#
+# Không đề nào trong 10 bài dev hình học chứa một cụm nào dưới đây (đã kiểm).
+_DAU_HIEU_TIN_HOC = (
+    "viết chương trình", "thuật toán", "ngăn xếp", "hàng đợi", "mảng",
+    "duyệt", "sắp xếp", "đồ thị", "bfs", "dfs", "đệ quy", "vòng lặp",
+    "cấu trúc dữ liệu", "độ phức tạp", "truy vấn", "cơ sở dữ liệu",
+    "gói tin", "giao thức", "nhị phân", "mã hoá", "in ra", "nhập vào",
+    "câu lệnh", "mã nguồn", "con trỏ", "python", "pascal", "c++",
+)
+
+
 #: Tiền tố mô tả mà một số bản khai gắn trước ký hiệu điểm.
 _TIEN_TO_KY_HIEU = ("point_", "diem_", "p_", "pt_")
 
@@ -246,17 +287,31 @@ def khop_ky_hieu(ten_hop_dong: str, ung_vien: set[str]) -> str | None:
 def detect_domain(text: str) -> str:
     """Đoán miền của một đề. Không chắc ⇒ `tin_hoc` (= hành vi hiện tại).
 
-    KHÔNG dùng ở đường đo. Đây là tiện ích cho đường sản phẩm, và giới hạn của
-    nó phải đọc kèm: nó nhận diện **từ ngữ**, không nhận diện **bài toán**. Một
-    đề Tin học về "đồ thị hình học" viết bằng đủ ba cụm yếu sẽ bị kéo sang, và
-    khi ấy `analyze` hình học sẽ khai được rất ít nghĩa vụ — thất bại lộ ra ở
-    C₁a chứ không âm thầm.
+    KHÔNG dùng ở đường đo. Nó nhận diện **từ ngữ**, không nhận diện **bài
+    toán** — giới hạn ấy vẫn còn, và vẫn phải đọc kèm.
+
+    Ba luật, xếp theo sức mạnh của bằng chứng:
+
+    1. có cụm MẠNH  ⇒ `hinh_hoc`. Dứt khoát: `thiết diện`, `hình chóp`, `tứ
+       diện` không xuất hiện trong đề Tin học.
+    2. đủ 3 cụm YẾU **và không có dấu hiệu Tin học** ⇒ `hinh_hoc`.
+    3. còn lại ⇒ `tin_hoc` (fail-safe).
+
+    Luật 2 mang mệnh đề phủ quyết vì bản không có nó kéo nhầm 4/5 đề Tin học
+    hợp lệ có mượn từ vựng hình học — xem `_DAU_HIEU_TIN_HOC` để biết phép đo
+    và vì sao phủ quyết chứ không nâng ngưỡng.
+
+    Bản cũ ghi ở đây rằng kéo nhầm là *"thất bại lộ ra ở C₁a chứ không âm
+    thầm"* nên chấp nhận được. Câu đó đã BỎ: với học sinh, "lộ ra" là tấm thẻ
+    **NGOÀI DANH MỤC MÔ PHỎNG** trên một đề hệ vốn mô phỏng được.
     """
     if not text:
         return DOMAIN_TIN_HOC
     t = text.lower()
     if any(d in t for d in _DAU_HIEU_MANH):
         return DOMAIN_HINH_HOC
+    if any(d in t for d in _DAU_HIEU_TIN_HOC):
+        return DOMAIN_TIN_HOC
     if sum(1 for d in _DAU_HIEU_YEU if d in t) >= 3:
         return DOMAIN_HINH_HOC
     return DOMAIN_TIN_HOC
