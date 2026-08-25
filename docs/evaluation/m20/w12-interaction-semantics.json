@@ -1,14 +1,10 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "10d72e171bbf107f",
-  "dirtyRelevantSources": [
-    "backend/app/simulation/semantic_program/coverage_gate.py",
-    "backend/app/simulation/semantic_program/geometry_exec.py",
-    "backend/tests/semantic_program/test_evaluation_candidate.py"
-  ],
-  "head": "7c7e025c8732883b1813eb0d126b5d97ae98deb9",
-  "dirty": true,
-  "generatedAt": "2026-08-24T13:34:06.074Z",
+  "sourceFingerprint": "c0d4e8ead2572756",
+  "dirtyRelevantSources": [],
+  "head": "48a632e0371ce989f48cbcabdf3a81c576568bd0",
+  "dirty": false,
+  "generatedAt": "2026-08-25T01:51:26.898Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
