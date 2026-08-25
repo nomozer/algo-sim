@@ -67,6 +67,72 @@ def stable_catalog_hash() -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _bam(x: str) -> str:
+    """Băm nội dung, chuẩn hoá CRLF→LF.
+
+    Bắt buộc: file skill nằm trên bind mount từ host Windows, nên Git đổi cách
+    xuống dòng khi chạm file. Không chuẩn hoá thì vân tay lệch giữa host và
+    container **mà nội dung không đổi một chữ** — một báo động giả, và báo động
+    giả là cách nhanh nhất để một cổng bị tắt.
+    """
+    return hashlib.sha256(
+        x.replace("\r\n", "\n").encode("utf-8")
+    ).hexdigest()
+
+
+def skill_fingerprint() -> dict:
+    """Vân tay prompt — ĐO THỨ TIẾN TRÌNH ĐANG GIỮ, không phải thứ trên đĩa.
+
+    ─── VÌ SAO PHÂN BIỆT NÀY LÀ TOÀN BỘ GIÁ TRỊ CỦA HÀM ────────────────────
+
+    `gemini.load_skill()` cache nội dung `.md` **trong tiến trình**. Sửa một
+    prompt rồi gửi đề mà quên restart thì backend vẫn gửi cho LLM bản CŨ, và
+    không gì báo. `runtime_doctor` trước bản này chỉ *cảnh báo bằng lời* về ca
+    ấy — nó so `git_sha`, `CACHE_VERSION`, catalog hash, và cả ba đều KHỚP khi
+    prompt cũ đang được dùng, vì cả ba đều không đọc file `.md` nào.
+
+    Nếu hàm này đọc lại file trên đĩa để băm, nó sẽ báo "khớp" trong đúng cái ca
+    nó sinh ra để bắt. Nên:
+
+        tren_dia    băm MỌI file `skills/*.md` hiện có
+        da_nap      băm nội dung `_skill_cache` — thứ THẬT SỰ gửi đi
+        cu          skill nào đã nạp mà khác đĩa  ⇒ CẦN RESTART
+
+    `da_nap` rỗng ở một tiến trình vừa khởi động là ĐÚNG, không phải lỗi: chưa
+    lượt nào chạy thì chưa prompt nào bị giữ, và khi ấy không có gì cũ được.
+
+    `grammar_card` đi kèm vì nó cũng là bề mặt prompt: nó SINH TỪ `contract.py`
+    và ghép vào user message, nên đổi một model Pydantic là đổi thứ LLM đọc —
+    mà không file `.md` nào bị sửa. Đó là ca dễ quên nhất.
+    """
+    from app.ai import gemini
+
+    tren_dia = {
+        f.stem: _bam(f.read_text(encoding="utf-8"))
+        for f in sorted(gemini.SKILLS_DIR.glob("*.md"))
+    }
+    da_nap = {ten: _bam(noi_dung)
+              for ten, noi_dung in sorted(gemini._skill_cache.items())}
+    cu = sorted(t for t, h in da_nap.items() if tren_dia.get(t) != h)
+
+    try:
+        from app.simulation.semantic_program.grammar_card import grammar_card
+
+        the = _bam(grammar_card())
+    except Exception:  # noqa: BLE001 — chẩn đoán không được giết tiến trình
+        the = "unavailable"
+
+    return {
+        "tren_dia": tren_dia,
+        "da_nap": da_nap,
+        "cu": cu,
+        "grammar_card": the,
+        # Một con số để so nhanh. KHÔNG dùng nó thay `cu`: hai vân tay tổng thể
+        # khớp nhau vẫn có thể che một skill đã nạp bị cũ, vì `da_nap` là tập con.
+        "tong": _bam(json.dumps(tren_dia, sort_keys=True)),
+    }
+
+
 def runtime_identity() -> dict:
     """Danh tính runtime máy-đọc. `git_sha`/`build_timestamp` được BAKE lúc build
     image (build-arg → env); ngoài Docker thì báo "unknown" trung thực thay vì
@@ -83,6 +149,10 @@ def runtime_identity() -> dict:
         "target_count": len(CATALOG),
         "ai_reachable_target_count": len(ai_targets),
         "stable_catalog_hash": stable_catalog_hash(),
+        # Vân tay PROMPT. Ba trường trước đó (`git_sha`, `cache_version`,
+        # `stable_catalog_hash`) đều KHỚP khi một prompt cũ đang được gửi đi,
+        # vì không trường nào trong chúng đọc một file `.md`.
+        "skills": skill_fingerprint(),
         "registered_target_ids": sorted(CATALOG),
         "registered_ai_reachable_ids": ai_targets,
         # executor_id là danh tính engine FE mà target trỏ tới (contract M14 §C1)

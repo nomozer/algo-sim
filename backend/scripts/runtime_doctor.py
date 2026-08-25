@@ -41,6 +41,11 @@ FIX_RESTART_SKILL = (
     "Nếu chỉ sửa prompt trong backend/app/ai/skills/*.md: prompt được CACHE THEO "
     "TIẾN TRÌNH → phải restart container/process, không đủ nếu chỉ lưu file."
 )
+FIX_PROMPT = (
+    "docker compose restart backend\n"
+    "      (prompt cache theo TIẾN TRÌNH — lưu file là chưa đủ, và ba phép so "
+    "phía trên đều KHỚP trong đúng ca này)"
+)
 CATEGORY_FIX = {
     "RUNTIME_STALE_IMAGE": FIX_REBUILD,
     "CACHE_VERSION_MISMATCH": FIX_REBUILD,
@@ -49,6 +54,10 @@ CATEGORY_FIX = {
     "MISSING_RUNTIME_TARGET": FIX_REBUILD,
     "MISSING_RUNTIME_EXECUTOR": FIX_REBUILD,
     "MISSING_RUNTIME_RENDERER": FIX_REBUILD,
+    "PROMPT_STALE_IN_PROCESS": FIX_PROMPT,
+    "SKILL_FILE_MISMATCH": FIX_REBUILD,
+    "GRAMMAR_CARD_MISMATCH": FIX_REBUILD,
+    "PROMPT_FINGERPRINT_MISSING": FIX_PROMPT,
 }
 
 
@@ -108,6 +117,45 @@ def diagnose(source: dict, runtime: dict, source_sha: str) -> list[dict]:
             source["stable_catalog_hash"][:16] + "…",
             str(runtime.get("stable_catalog_hash"))[:16] + "…")
 
+    # 3b. VÂN TAY PROMPT — ba phép so phía trên đều KHỚP khi một prompt cũ đang
+    #     được gửi đi, vì không phép nào trong chúng đọc một file `.md`.
+    rt_sk = runtime.get("skills") or {}
+    src_sk = source.get("skills") or {}
+    if src_sk and not rt_sk:
+        # Runtime KHÔNG khai vân tay prompt trong khi source có ⇒ tiến trình đang
+        # chạy một bản `runtime_identity` cũ hơn source. Bỏ qua im lặng ở đây là
+        # đúng cái lỗi cả module này sinh ra để chặn: một cổng không đo được thì
+        # phải nói "không đo được", không được nói "khớp".
+        add("PROMPT_FINGERPRINT_MISSING",
+            "Runtime không khai vân tay prompt — tiến trình chạy bản cũ hơn "
+            "source, nên KHÔNG kiểm được prompt.",
+            "có vân tay", "không có")
+    elif rt_sk and src_sk:
+        # (a) TIẾN TRÌNH đang giữ bản cũ — ca nguy hiểm nhất, vì file trên đĩa
+        #     đã đúng nên mọi phép so theo đĩa đều nói "khớp".
+        if cu := rt_sk.get("cu"):
+            add("PROMPT_STALE_IN_PROCESS",
+                f"Tiến trình đang giữ prompt CŨ cho: {', '.join(cu)} — "
+                "LLM đang đọc bản khác với file trên đĩa.",
+                "prompt trên đĩa", "bản đã cache trong tiến trình")
+
+        # (b) File skill trong image khác file trong source.
+        sd, rd = src_sk.get("tren_dia", {}), rt_sk.get("tren_dia", {})
+        lech = sorted(t for t in set(sd) | set(rd) if sd.get(t) != rd.get(t))
+        if lech:
+            add("SKILL_FILE_MISMATCH",
+                f"File skill ở runtime khác source: {', '.join(lech)}",
+                f"{len(sd)} skill", f"{len(rd)} skill")
+
+        # (c) Thẻ văn phạm SINH TỪ `contract.py` và ghép vào user message, nên
+        #     đổi một model Pydantic là đổi thứ LLM đọc — mà không file `.md`
+        #     nào bị sửa. Ca dễ quên nhất.
+        if src_sk.get("grammar_card") != rt_sk.get("grammar_card"):
+            add("GRAMMAR_CARD_MISMATCH",
+                "Thẻ văn phạm ở runtime khác source (đổi ở contract.py?).",
+                str(src_sk.get("grammar_card"))[:16] + "…",
+                str(rt_sk.get("grammar_card"))[:16] + "…")
+
     # 4–7. Thiếu THÀNH PHẦN cụ thể — chỉ đúng tên cái thiếu, không đoán
     for key, category, label in (
         ("family_ids", "MISSING_RUNTIME_FAMILY", "family"),
@@ -135,9 +183,12 @@ def main() -> int:
 
     runtime, err = fetch_runtime(args.url)
     print("=== RUNTIME DOCTOR (M17-RC1 §A) ===")
+    _sk = source.get("skills") or {}
     print(f"source : sha={source_sha[:12]} cache={source['cache_version']} "
           f"family={source['family_count']} target={source['target_count']} "
-          f"hash={source['stable_catalog_hash'][:12]}")
+          f"hash={source['stable_catalog_hash'][:12]} "
+          f"skill={len(_sk.get('tren_dia', {}))}/{str(_sk.get('tong'))[:8]} "
+          f"card={str(_sk.get('grammar_card'))[:8]}")
 
     if runtime is None:
         print(f"runtime: KHÔNG ĐỌC ĐƯỢC — {err}")
@@ -147,10 +198,17 @@ def main() -> int:
                    "findings": [{"category": "RUNTIME_STALE_IMAGE", "detail": err,
                                  "fix": FIX_REBUILD}], "ok": False}
     else:
+        _rk = runtime.get("skills") or {}
         print(f"runtime: sha={str(runtime.get('git_sha'))[:12]} "
               f"cache={runtime.get('cache_version')} "
               f"family={runtime.get('family_count')} target={runtime.get('target_count')} "
-              f"hash={str(runtime.get('stable_catalog_hash'))[:12]}")
+              f"hash={str(runtime.get('stable_catalog_hash'))[:12]} "
+              f"skill={len(_rk.get('tren_dia', {}))}/{str(_rk.get('tong'))[:8]} "
+              f"card={str(_rk.get('grammar_card'))[:8]}")
+        # `da_nap` rỗng ở tiến trình vừa khởi động là ĐÚNG — chưa lượt nào chạy
+        # thì chưa prompt nào bị giữ. Nói ra để không ai đọc nhầm thành "hỏng".
+        print(f"         prompt đã nạp trong tiến trình: "
+              f"{len(_rk.get('da_nap', {}))} · cũ: {_rk.get('cu') or 'không'}")
         findings = diagnose(source, runtime, source_sha)
         payload = {"source": source, "runtime": runtime, "findings": findings,
                    "ok": not findings}

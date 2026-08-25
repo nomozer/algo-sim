@@ -25,6 +25,13 @@ biến đánh số). Trước khi thêm bất cứ thứ gì: đọc `docs/RULES
 
 Danh tính runtime (so source ↔ container) do `backend/app/runtime_identity.py` +
 `backend/scripts/runtime_doctor.py` lo — endpoint `GET /api/diagnostics/runtime`.
+Nó so **năm** thứ: `git_sha` · `CACHE_VERSION` · catalog hash · **vân tay prompt**
+· **thẻ văn phạm**. Hai cái sau thêm 2026-08-25 vì ba cái đầu đều KHỚP khi backend
+đang gửi cho LLM một prompt cũ — không cái nào đọc một file `.md`.
+`skill_fingerprint()` băm **thứ tiến trình ĐANG GIỮ** (`gemini._skill_cache`),
+không phải thứ trên đĩa: đọc lại đĩa rồi băm sẽ báo "khớp" trong đúng ca nó sinh
+ra để bắt. `da_nap` rỗng lúc mới khởi động là ĐÚNG. Khoá bởi
+`tests/test_prompt_fingerprint.py` (11), có tiêm lỗi cho cả ba mã mới.
 
 ## 0b. Điểm vào (entry point) — đã xác minh tồn tại ở baseline này
 
