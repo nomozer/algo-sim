@@ -318,6 +318,48 @@ def exec_construct_plane(node: Any, mem: dict[str, Any]) -> tuple[Plane3, str]:
     )
 
 
+def exec_construct_polygon(
+    node: Any, mem: dict[str, Any]
+) -> tuple[tuple[Vec3, ...], str]:
+    """Đa giác từ các ĐỈNH ĐÃ ĐẶT TÊN. Trả tuple các `Vec3` — đúng hình dạng mà
+    `polygon3` vốn đã dùng từ Wave 2, nên không tầng nào phía sau phải đổi.
+
+    KIỂM HAI ĐIỀU, và cả hai bằng thứ kernel ĐÃ CÓ (không sửa kernel):
+
+    · **trùng đỉnh** — `A B C A` không phải đa giác, nó là một đường gấp khúc
+      khép sớm. Bắt ở đây vì `Polyhedron`/`Section` phía sau sẽ vỡ muộn với một
+      thông báo không nói được đỉnh nào lặp.
+    · **đồng phẳng** (từ đỉnh thứ tư trở đi) — một "đa giác" bốn đỉnh không đồng
+      phẳng KHÔNG phải một hình phẳng. Cho nó qua là dựng một vật không tồn tại,
+      rồi renderer sẽ vẽ ra một thứ trông hợp lý mà sai. `predicates.coplanar`
+      so bằng ĐÚNG trên `Fraction`, không epsilon.
+    """
+    from ..geometry import predicates as P
+
+    ten = node.label or node.target_var
+    dinh = tuple(_lay(mem, t, Vec3, "đỉnh") for t in node.vertices)
+
+    for i in range(len(dinh)):
+        for j in range(i + 1, len(dinh)):
+            if P.same_point(dinh[i], dinh[j]):
+                raise GeometryError(
+                    ERR_SAI_LOAI,
+                    f"đa giác '{ten}': đỉnh '{node.vertices[i]}' và "
+                    f"'{node.vertices[j]}' TRÙNG NHAU",
+                )
+    for k in range(3, len(dinh)):
+        if not P.coplanar(dinh[0], dinh[1], dinh[2], dinh[k]):
+            raise GeometryError(
+                ERR_SAI_LOAI,
+                f"đa giác '{ten}': đỉnh '{node.vertices[k]}' KHÔNG đồng phẳng "
+                f"với ba đỉnh đầu — bốn điểm ấy không tạo thành một hình phẳng",
+            )
+    return dinh, (
+        f"Dựng đa giác {ten} qua {len(dinh)} đỉnh "
+        f"{', '.join(node.vertices)}."
+    )
+
+
 def exec_construct_solid(node: Any, mem: dict[str, Any]) -> tuple[Polyhedron, str]:
     """Khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.
 

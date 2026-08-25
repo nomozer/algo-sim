@@ -129,7 +129,11 @@ def test_C1a_hoa_giai_m_va_M_va_GHI_LAI():
     ))
     kq = check_structural_coverage(hd, _spec("M"))
     assert kq.ok, kq.missing
-    assert kq.symbol_reconciled == ["point_on_plane(abcd): witness 'm' ≡ 'M'"]
+    # Ghi chú nay kèm TÊN LƯỚI đã ra tay (Phase 6.6: có ba lưới). Đọc artifact
+    # mà không biết lưới nào đỡ thì không biết nên gỡ lưới nào khi vá xong nguồn.
+    assert len(kq.symbol_reconciled) == 1
+    assert "witness 'm' ≡ 'M'" in kq.symbol_reconciled[0]
+    assert "ký hiệu điểm" in kq.symbol_reconciled[0]
 
 
 def test_khop_thang_thi_KHONG_ghi_hoa_giai():

@@ -198,7 +198,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       `semantic_program` — tức bề mặt prompt ĐÃ ĐỔI mà không ai sửa một file
 #       `.md` nào. Đúng ca mà luật "đổi prompt ⇒ bump" nhắm tới, và là ca dễ
 #       quên nhất vì thay đổi nằm ở một model Pydantic.
-CACHE_VERSION = "44"
+#   45 (2026-08-26, Phase 6.6): IR thêm câu lệnh `construct_polygon`. Thẻ văn
+#       phạm sinh từ `contract.py` nên bề mặt prompt đổi — cùng ca với bump 43,
+#       và vẫn là ca dễ quên nhất vì thay đổi nằm ở một model Pydantic.
+#
+#       Có cache thật cần dọn: mọi đề hình học đã phân tích đều mang một chương
+#       trình sinh dưới hợp đồng CŨ, nơi "đáy ABCD" không có cách nói nào hợp lệ.
+CACHE_VERSION = "45"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

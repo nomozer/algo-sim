@@ -53,6 +53,7 @@ _NGUON_CUA_PHEP_DUNG: dict[str, tuple[str, ...]] = {
     "construct_line": ("through_a", "through_b"),
     "construct_plane": ("through",),
     "construct_solid": ("vertices",),
+    "construct_polygon": ("vertices",),
     "construct_section": ("solid", "plane"),
 }
 

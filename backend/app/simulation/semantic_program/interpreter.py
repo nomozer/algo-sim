@@ -60,6 +60,7 @@ from .geometry_exec import (  # noqa: E402
     build_initial,
     exec_construct_line,
     exec_construct_plane,
+    exec_construct_polygon,
     exec_construct_point,
     exec_construct_section,
     exec_construct_solid,
@@ -294,6 +295,15 @@ class SemanticProgramInterpreter:
             self._record_step(
                 action="construct_plane", target=stmt.target_var,
                 details={"label": stmt.label, "qua": list(stmt.through)},
+                narration=ke,
+            )
+
+        elif stmt.kind == "construct_polygon":
+            dg, ke = exec_construct_polygon(stmt, self.memory)
+            self.memory[stmt.target_var] = dg
+            self._record_step(
+                action="construct_polygon", target=stmt.target_var,
+                details={"label": stmt.label, "dinh": list(stmt.vertices)},
                 narration=ke,
             )
 

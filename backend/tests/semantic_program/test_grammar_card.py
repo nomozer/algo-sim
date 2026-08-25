@@ -97,7 +97,14 @@ def test_the_du_gon_de_khong_thanh_nhoi_prompt():
     # Guard chống nhồi văn xuôi THẬT SỰ là `test_the_khong_phai_van_ban_viet_tay`
     # ngay dưới đây; trần byte chỉ là lưới thứ hai, chặn ca ai đó thêm 50 kind —
     # đúng như dòng trên đã ghi, và một từ vựng mới không phải ca ấy.
-    assert n <= 3900, (
+    # 3900 → 4000 (2026-08-26, Phase 6.6): thêm ĐÚNG MỘT câu lệnh,
+    # `construct_polygon` (~62 byte). Bốn lượt smoke cho thấy mô hình với tay
+    # tìm "đáy ABCD" ở 2/4 lượt qua hai đường khác nhau — hợp đồng không có từ
+    # cho một MIỀN PHẲNG HỮU HẠN, chỉ có mặt phẳng vô hạn và khối.
+    #
+    # Vẫn là TỪ VỰNG, không phải văn xuôi — đúng ca mà dòng dưới đã ghi là
+    # trần byte KHÔNG nhắm tới.
+    assert n <= 4000, (
         f"thẻ = {n} byte. Luật nào mã hoá được thì để validator giữ, đừng viết "
         "vào thẻ."
     )

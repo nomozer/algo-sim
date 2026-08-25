@@ -268,6 +268,99 @@ def khop_ten_doi_tuong(ten_hop_dong: str, ung_vien: set[str]) -> str | None:
     return trung[0] if len(trung) == 1 else None
 
 
+def tach_ky_hieu_diem(ten: str, diem_da_khai: set[str]) -> tuple[str, ...] | None:
+    """Tên hợp đồng → DÃY KÝ HIỆU ĐIỂM, hoặc `None` nếu không đọc được như vậy.
+
+    `AD` → `(A, D)` · `(ABCD)` → `(A, B, C, D)` · `S.ABCD` → `(S, A, B, C, D)`
+
+    ─── ĐIỀU KIỆN CHẶT NHẤT NẰM Ở THAM SỐ THỨ HAI ─────────────────────────
+
+    Mọi ký hiệu tách ra **phải là một điểm ĐÃ KHAI trong chương trình**. Không có
+    điều kiện ấy thì `MAX` sẽ đọc thành `(M, A, X)` và hàm này biến thành một
+    máy đoán. Có nó thì `MAX` chỉ đọc được như ba điểm khi chương trình thật sự
+    khai ba điểm tên `M`, `A`, `X` — và khi ấy đọc như thế là ĐÚNG.
+
+    Đòi ít nhất HAI ký hiệu: một điểm lẻ không phải một vật *dựng từ* các điểm.
+    """
+    goc = str(ten).strip().strip("()[]{}")
+    for d in ("_", "-", "."):
+        goc = goc.replace(d, "")
+    if not goc:
+        return None
+
+    ra: list[str] = []
+    i = 0
+    while i < len(goc):
+        c = goc[i]
+        if not (c.isascii() and c.isalpha()):
+            return None
+        j = i + 1
+        while j < len(goc) and goc[j].isdigit():
+            j += 1
+        ra.append(goc[i:j])
+        i = j
+    if len(ra) < 2 or any(t not in diem_da_khai for t in ra):
+        return None
+    return tuple(ra)
+
+
+#: Bao nhiêu ĐIỂM xác định một vật, theo kiểu. Quyết định phép so là BẰNG hay
+#: là TẬP CON — và đó là chỗ duy nhất trong resolver mang tri thức hình học.
+#:
+#: · một đường thẳng qua `A`, `D` được xác định bởi ĐÚNG hai điểm ấy ⇒ BẰNG
+#: · một mặt phẳng gọi là `(ABCD)` được dựng từ BA trong bốn điểm ấy ⇒ TẬP CON
+#: · một đa giác/khối `ABCD` có ĐÚNG bốn đỉnh ⇒ BẰNG
+_SO_BANG_TAP_CON = frozenset({"plane3"})
+
+
+def khop_theo_topo(
+    ten_hop_dong: str,
+    diem_da_khai: set[str],
+    dinh_nghia: dict[str, tuple[str, frozenset[str]]],
+    chap_nhan_kieu,
+) -> str | None:
+    """Tên hợp đồng ↔ tên chương trình, theo **TOPOLOGY** chứ không theo chính tả.
+
+    ─── VÌ SAO KHÔNG DÙNG DANH SÁCH BÍ DANH ───────────────────────────────
+
+    Đo được ở bốn lượt smoke 2026-08-26: cùng một vật, mỗi lượt một cái tên —
+    `SA_line`, `line_AD`, `DA`, `AD_segment`. Một danh sách phụ tố phải dài thêm
+    sau mỗi lượt đỏ, tức nó không bao giờ đóng, và mỗi lần dài thêm là một lần
+    nới cổng theo một lỗi cụ thể.
+
+    Hàm này hỏi câu khác hẳn, và câu ấy có câu trả lời hữu hạn:
+
+        "Trong chương trình, vật nào ĐƯỢC DỰNG TỪ đúng những điểm này,
+         và có kiểu mà nghĩa vụ này chấp nhận?"
+
+    Tên gọi thành **không liên quan**. `DA` và `line_AD` cùng khớp vì cả hai
+    được dựng từ `{A, D}` — không phải vì chuỗi của chúng giống nhau.
+
+    ─── FAIL-CLOSED ───────────────────────────────────────────────────────
+
+    Không đúng một ứng viên ⇒ `None`. Hai đường cùng qua `A` và `D` thì không ai
+    biết hợp đồng nói cái nào, và đoán ở đó là dựng một kết quả không tra lại
+    được.
+
+    `dinh_nghia`: `tên → (kiểu, tập tên điểm dựng ra nó)`. Vật khai bằng
+    `initial_value` không có tập ấy ⇒ không tham gia, và đó là đúng: không có
+    topology thì không có gì để so.
+    """
+    ky_hieu = tach_ky_hieu_diem(ten_hop_dong, diem_da_khai)
+    if ky_hieu is None:
+        return None
+    can = frozenset(ky_hieu)
+
+    trung: list[str] = []
+    for ten, (kieu, nguon) in dinh_nghia.items():
+        if not nguon or not chap_nhan_kieu(kieu):
+            continue
+        khop = (nguon <= can and len(nguon) >= 3) if kieu in _SO_BANG_TAP_CON             else (nguon == can)
+        if khop:
+            trung.append(ten)
+    return trung[0] if len(trung) == 1 else None
+
+
 def khop_ky_hieu(ten_hop_dong: str, ung_vien: set[str]) -> str | None:
     """Tên trong hợp đồng ↔ tên trong chương trình, theo ký hiệu hình học.
 

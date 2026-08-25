@@ -188,7 +188,21 @@ def test_chuoi_dung_hien_tai_SAU_TOI_DA_HAI_TANG():
 
 
 def test_IR_chua_co_phep_dung_nao_chia_nho_KHOI():
-    """Bằng chứng cho §trên: hợp đồng không diễn đạt được `đáy → khối`."""
+    """Bằng chứng cho §trên — CẬP NHẬT 2026-08-26 (Phase 6.6).
+
+    Phase 6.6 thêm `construct_polygon`, nên nay hợp đồng **nói được `đáy ABCD`**
+    như một vật. Đó là nửa đầu của chuỗi `đáy → khối`.
+
+    Nửa sau VẪN CHƯA CÓ, và test này giữ nguyên vai trò bằng chứng cho điều ấy:
+    không phép nào nâng một đa giác thành khối (`extrude`), và `construct_solid`
+    vẫn nhận cả danh sách đỉnh trong MỘT câu lệnh. Nên độ sâu chuỗi phụ thuộc
+    vẫn bị hợp đồng chặn, chỉ là chặn ở chỗ khác trước một bước.
+
+    Thêm `construct_polygon` KHÔNG phải bước về phía phần mềm dựng hình: nó
+    không thêm năng lực tính toán nào — `polygon3` đã là `MemoryType` từ Wave 2,
+    kernel đã có `predicates.coplanar`, `RENDER_HINT` đã có ô cho nó. Nó chỉ mở
+    một ĐƯỜNG KHAI BÁO hợp lệ cho một kiểu đã tồn tại.
+    """
     import typing
 
     from app.simulation.semantic_program.contract import SemanticStatement
@@ -197,7 +211,8 @@ def test_IR_chua_co_phep_dung_nao_chia_nho_KHOI():
             for a in typing.get_args(typing.get_args(SemanticStatement)[0])
             if "construct" in str(a)}
     assert tags == {"construct_point", "construct_line", "construct_plane",
-                    "construct_solid", "construct_section"}
+                    "construct_polygon", "construct_solid", "construct_section"}
+    # NỬA SAU của chuỗi — vẫn chưa có, và đó mới là thứ chặn độ sâu.
     for chua_co in ("construct_base", "construct_prism", "extrude",
                     "construct_pyramid_from_base"):
         assert chua_co not in tags

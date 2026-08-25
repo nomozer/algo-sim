@@ -80,7 +80,8 @@ def _producers(statements: Iterable) -> set[str]:
         # thứ hai của cùng một lỗ với `_phu_thuoc`: một bên thiếu *ai tạo ra*,
         # một bên thiếu *tạo ra từ cái gì* — và phải vá cả hai mới thông.
         elif kind in ("construct_point", "construct_line", "construct_plane",
-                      "construct_solid", "construct_section"):
+                      "construct_solid", "construct_section",
+                      "construct_polygon"):
             found.add(st.target_var)
         elif kind in ("pop", "dequeue"):
             dest = getattr(st, "dest_var", None)
@@ -194,7 +195,7 @@ def _phu_thuoc(statements: Iterable, ngoai: frozenset[str],
             them(st.target_var, {st.through_a, st.through_b})
         elif kind == "construct_plane":
             them(st.target_var, set(st.through))
-        elif kind == "construct_solid":
+        elif kind in ("construct_solid", "construct_polygon"):
             them(st.target_var, set(st.vertices))
         elif kind == "construct_section":
             them(st.target_var, {st.solid, st.plane})
@@ -248,23 +249,58 @@ def check_structural_coverage(
         geometry_obligation_kinds,
         khop_ky_hieu,
         khop_ten_doi_tuong,
+        khop_theo_topo,
     )
 
-    def _hoa_giai(ten: str, ung_vien: set[str]) -> str | None:
-        """Hai lưới, THỨ TỰ CÓ Ý NGHĨA.
+    def _hoa_giai(ten: str, ung_vien: set[str], kind: str) -> tuple[str, str] | None:
+        """BA lưới, THỨ TỰ CÓ Ý NGHĨA. Trả `(tên, lưới nào)` để quan trắc được.
 
-        `khop_ky_hieu` lo KÝ HIỆU ĐIỂM (`m ≡ M`) và viết hoa lõi, nên nó chặt và
-        phải chạy trước. `khop_ten_doi_tuong` lo TÊN ĐỐI TƯỢNG (`SA ≡ SA_line`)
-        và **không** viết hoa — nếu chạy ngược thứ tự, một bài có cả `d` (giao
-        tuyến) lẫn `D` (đỉnh) sẽ bị nối nhầm.
+        ① **TOPOLOGY** — nguyên tắc nhất, và vì thế chạy trước: nó hỏi *vật nào
+           được dựng từ đúng những điểm này*, nên tên gọi thành không liên quan.
+           `DA` và `line_AD` cùng khớp vì cùng dựng từ `{A, D}`.
 
-        Cả hai đều fail-closed khi mơ hồ, nên "không hoà giải được" luôn là câu
-        trả lời hợp lệ.
+        ② `khop_ky_hieu` — KÝ HIỆU ĐIỂM (`m ≡ M`), có viết hoa lõi. Dùng cho
+           witness, thứ thường là một điểm lẻ nên không có topology.
+
+        ③ `khop_ten_doi_tuong` — phụ tố kiểu. LƯỚI CUỐI, và là lưới duy nhất
+           dựa vào chính tả. Nó tồn tại cho vật khai bằng `initial_value` (không
+           có topology để so). `_PHU_TO_KIEU` là danh sách ĐÓNG và có test ghim
+           độ dài: dài thêm sau mỗi lượt đỏ là đúng thứ Phase 6.6 cấm.
+
+        Cả ba fail-closed khi mơ hồ, nên "không hoà giải được" luôn là câu trả
+        lời hợp lệ — cổng vẫn từ chối, chỉ không từ chối OAN.
         """
-        return khop_ky_hieu(ten, ung_vien) or khop_ten_doi_tuong(ten, ung_vien)
+        t = khop_theo_topo(ten, diem_da_khai, dinh_nghia,
+                           lambda kieu: accepts_container_type(kind, kieu))
+        if t:
+            return t, "topology"
+        if (t := khop_ky_hieu(ten, ung_vien)):
+            return t, "ký hiệu điểm"
+        if (t := khop_ten_doi_tuong(ten, ung_vien)):
+            return t, "phụ tố kiểu"
+        return None
 
     _NGHIA_VU_HINH_HOC = geometry_obligation_kinds()
     declared = {d.name: d.type for d in spec.memory_declarations}
+
+    # TOPOLOGY của chương trình: `tên → (kiểu, tập điểm dựng ra nó)`. Chỉ vật
+    # ĐƯỢC DỰNG mới có mục ở đây; vật khai bằng `initial_value` không có
+    # topology, và khi ấy không có gì để so.
+    dinh_nghia: dict[str, tuple[str, frozenset[str]]] = {}
+    for st in spec.statements or ():
+        k = getattr(st, "kind", None)
+        nguon: set[str] = set()
+        if k == "construct_line":
+            nguon = {st.through_a, st.through_b}
+        elif k == "construct_plane":
+            nguon = set(st.through)
+        elif k in ("construct_polygon", "construct_solid"):
+            nguon = set(st.vertices)
+        if nguon:
+            dinh_nghia[st.target_var] = (
+                declared.get(st.target_var, ""), frozenset(nguon))
+    diem_da_khai = {n for n, t in declared.items() if t == "point3"}
+
     producers = _producers(spec.statements)
     phu_thuoc = _phu_thuoc(spec.statements, frozenset())
 
@@ -308,9 +344,10 @@ def check_structural_coverage(
         ten_hh = ob.kind in _NGHIA_VU_HINH_HOC
         con = ob.container
         if ten_hh and con not in declared:
-            thay = _hoa_giai(con, set(declared))
-            if thay:
-                dong_nhat.append(f"{ob.describe()}: container '{con}' ≡ '{thay}'")
+            if (kq := _hoa_giai(con, set(declared), ob.kind)):
+                thay, luoi = kq
+                dong_nhat.append(
+                    f"{ob.describe()}: container '{con}' ≡ '{thay}' (lưới: {luoi})")
                 anh_xa[con] = thay
                 con = thay
 
@@ -332,9 +369,10 @@ def check_structural_coverage(
             missing.append(f"{ob.describe()}: thiếu witness")
             continue
         if ten_hh and w not in declared:
-            thay = _hoa_giai(w, set(declared))
-            if thay:
-                dong_nhat.append(f"{ob.describe()}: witness '{w}' ≡ '{thay}'")
+            if (kq := _hoa_giai(w, set(declared), ob.kind)):
+                thay, luoi = kq
+                dong_nhat.append(
+                    f"{ob.describe()}: witness '{w}' ≡ '{thay}' (lưới: {luoi})")
                 anh_xa[w] = thay
                 w = thay
         if w not in declared:

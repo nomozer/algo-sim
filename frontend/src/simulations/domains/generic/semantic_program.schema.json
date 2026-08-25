@@ -689,6 +689,50 @@
       "title": "ConstructPointStmt",
       "type": "object"
     },
+    "ConstructPolygonStmt": {
+      "description": "Đa giác từ CÁC ĐIỂM ĐÃ ĐẶT TÊN — `đáy ABCD`, `mặt ABC`, `thiết diện`.\n\n─── VÌ SAO THÊM, ĐO ĐƯỢC Ở LƯỢT SMOKE 2026-08-26 ──────────────────────\n\nĐề *\"hình chóp S.ABCD có đáy ABCD là hình vuông\"* nêu một vật: **đáy**. IR\nkhông có từ nào cho nó — có `construct_solid(vertices)` cho cả KHỐI, có\n`construct_plane(through)` cho MẶT PHẲNG VÔ HẠN, nhưng không có gì cho một\n**miền phẳng hữu hạn có biên**.\n\nNên mô hình phải bịa đường, và nó bịa theo hai cách khác nhau ở hai lượt:\n\n    assign ABCD = literal([\"A\",\"B\",\"C\",\"D\"])        ← rác trong biến polygon3\n    khai `ABCD` type=polygon3 initial_value=[\"A\",…] ← P2 bắt: không có trong đề\n\nCả hai đều là **triệu chứng của cùng một khoảng trống**, và cả hai đều làm\nmất Ý NGHĨA QUÁ TRÌNH DỰNG: đáy trở thành một hằng số thay vì một vật được\ndựng ra từ bốn điểm.\n\n─── KHÔNG PHẢI MỘT BƯỚC VỀ PHÍA PHẦN MỀM DỰNG HÌNH ────────────────────\n\nNó KHÔNG thêm năng lực tính toán nào: `polygon3` đã là một `MemoryType` từ\nWave 2, kernel đã có mọi thứ cần (`predicates.coplanar`), `RENDER_HINT` đã\ncó ô cho nó, và `simulation_state` đã chiếu tuple-các-đỉnh thành cảnh. Câu\nlệnh này chỉ mở ĐƯỜNG KHAI BÁO hợp lệ cho một kiểu đã tồn tại — thứ duy\nnhất còn thiếu là cách nói.\n\nR0 nguyên vẹn: nhận **TÊN**, không nhận toạ độ. Toạ độ đọc từ bộ nhớ.",
+      "properties": {
+        "kind": {
+          "const": "construct_polygon",
+          "default": "construct_polygon",
+          "title": "Kind",
+          "type": "string"
+        },
+        "target_var": {
+          "description": "tên đa giác dựng ra",
+          "title": "Target Var",
+          "type": "string"
+        },
+        "vertices": {
+          "description": "tên các đỉnh theo THỨ TỰ VÒNG QUANH, ít nhất 3",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 3,
+          "title": "Vertices",
+          "type": "array"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "nhãn, vd ABCD",
+          "title": "Label"
+        }
+      },
+      "required": [
+        "target_var",
+        "vertices"
+      ],
+      "title": "ConstructPolygonStmt",
+      "type": "object"
+    },
     "ConstructSectionStmt": {
       "description": "Dựng thiết diện — engine đi theo MẶT và sinh ra NHIỀU bước con.\n\nMột câu lệnh cho ra cả dãy cạnh, vì thứ tự cạnh do kernel quyết chứ không do\nLLM quyết. LLM chỉ nói *\"cắt khối này bằng mặt phẳng kia\"*.",
       "properties": {
@@ -1272,6 +1316,7 @@
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -1306,6 +1351,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPolygonStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -1556,6 +1604,7 @@
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -1590,6 +1639,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPolygonStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -1707,6 +1759,7 @@
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -1741,6 +1794,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPolygonStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -1805,6 +1861,7 @@
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -1839,6 +1896,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPolygonStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -4181,6 +4241,7 @@
                 "construct_line": "#/$defs/ConstructLineStmt",
                 "construct_plane": "#/$defs/ConstructPlaneStmt",
                 "construct_point": "#/$defs/ConstructPointStmt",
+                "construct_polygon": "#/$defs/ConstructPolygonStmt",
                 "construct_section": "#/$defs/ConstructSectionStmt",
                 "construct_solid": "#/$defs/ConstructSolidStmt",
                 "dequeue": "#/$defs/DequeueStmt",
@@ -4215,6 +4276,9 @@
               },
               {
                 "$ref": "#/$defs/ConstructSolidStmt"
+              },
+              {
+                "$ref": "#/$defs/ConstructPolygonStmt"
               },
               {
                 "$ref": "#/$defs/ConstructSectionStmt"
@@ -4591,6 +4655,7 @@
             "construct_line": "#/$defs/ConstructLineStmt",
             "construct_plane": "#/$defs/ConstructPlaneStmt",
             "construct_point": "#/$defs/ConstructPointStmt",
+            "construct_polygon": "#/$defs/ConstructPolygonStmt",
             "construct_section": "#/$defs/ConstructSectionStmt",
             "construct_solid": "#/$defs/ConstructSolidStmt",
             "dequeue": "#/$defs/DequeueStmt",
@@ -4625,6 +4690,9 @@
           },
           {
             "$ref": "#/$defs/ConstructSolidStmt"
+          },
+          {
+            "$ref": "#/$defs/ConstructPolygonStmt"
           },
           {
             "$ref": "#/$defs/ConstructSectionStmt"

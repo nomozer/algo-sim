@@ -400,7 +400,8 @@ class SemanticTypeChecker:
         # trước ở đây là dựng một tầng hình học thứ hai, và hai tầng thì sẽ
         # lệch nhau.
         elif stmt.kind in ("construct_point", "construct_line", "construct_plane",
-                           "construct_solid", "construct_section"):
+                           "construct_solid", "construct_section",
+                           "construct_polygon"):
             for ten in self._ten_tham_chieu(stmt):
                 if ten not in self.symbols and ten not in self.scoped_vars:
                     return (f"Câu lệnh dựng tham chiếu '{ten}' chưa khai trong "
@@ -424,7 +425,7 @@ class SemanticTypeChecker:
             return [stmt.through_a, stmt.through_b]
         if stmt.kind == "construct_plane":
             return list(stmt.through)
-        if stmt.kind == "construct_solid":
+        if stmt.kind in ("construct_solid", "construct_polygon"):
             return list(stmt.vertices)
         if stmt.kind == "construct_section":
             return [stmt.solid, stmt.plane]

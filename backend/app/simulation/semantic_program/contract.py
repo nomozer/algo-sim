@@ -685,6 +685,44 @@ def canonical_face_indices(v: Any) -> Any:
     return {**v, "faces": ra}
 
 
+class ConstructPolygonStmt(BaseModel):
+    """Đa giác từ CÁC ĐIỂM ĐÃ ĐẶT TÊN — `đáy ABCD`, `mặt ABC`, `thiết diện`.
+
+    ─── VÌ SAO THÊM, ĐO ĐƯỢC Ở LƯỢT SMOKE 2026-08-26 ──────────────────────
+
+    Đề *"hình chóp S.ABCD có đáy ABCD là hình vuông"* nêu một vật: **đáy**. IR
+    không có từ nào cho nó — có `construct_solid(vertices)` cho cả KHỐI, có
+    `construct_plane(through)` cho MẶT PHẲNG VÔ HẠN, nhưng không có gì cho một
+    **miền phẳng hữu hạn có biên**.
+
+    Nên mô hình phải bịa đường, và nó bịa theo hai cách khác nhau ở hai lượt:
+
+        assign ABCD = literal(["A","B","C","D"])        ← rác trong biến polygon3
+        khai `ABCD` type=polygon3 initial_value=["A",…] ← P2 bắt: không có trong đề
+
+    Cả hai đều là **triệu chứng của cùng một khoảng trống**, và cả hai đều làm
+    mất Ý NGHĨA QUÁ TRÌNH DỰNG: đáy trở thành một hằng số thay vì một vật được
+    dựng ra từ bốn điểm.
+
+    ─── KHÔNG PHẢI MỘT BƯỚC VỀ PHÍA PHẦN MỀM DỰNG HÌNH ────────────────────
+
+    Nó KHÔNG thêm năng lực tính toán nào: `polygon3` đã là một `MemoryType` từ
+    Wave 2, kernel đã có mọi thứ cần (`predicates.coplanar`), `RENDER_HINT` đã
+    có ô cho nó, và `simulation_state` đã chiếu tuple-các-đỉnh thành cảnh. Câu
+    lệnh này chỉ mở ĐƯỜNG KHAI BÁO hợp lệ cho một kiểu đã tồn tại — thứ duy
+    nhất còn thiếu là cách nói.
+
+    R0 nguyên vẹn: nhận **TÊN**, không nhận toạ độ. Toạ độ đọc từ bộ nhớ.
+    """
+    kind: Literal["construct_polygon"] = "construct_polygon"
+    target_var: str = Field(..., description="tên đa giác dựng ra")
+    vertices: list[str] = Field(
+        ..., min_length=3,
+        description="tên các đỉnh theo THỨ TỰ VÒNG QUANH, ít nhất 3",
+    )
+    label: Optional[str] = Field(None, description="nhãn, vd ABCD")
+
+
 class ConstructSolidStmt(BaseModel):
     """Dựng khối từ ĐỈNH ĐÃ ĐẶT TÊN + bảng mặt.
 
@@ -734,6 +772,7 @@ SemanticStatement = Annotated[
         Annotated[ConstructLineStmt, Tag("construct_line")],
         Annotated[ConstructPlaneStmt, Tag("construct_plane")],
         Annotated[ConstructSolidStmt, Tag("construct_solid")],
+        Annotated[ConstructPolygonStmt, Tag("construct_polygon")],
         Annotated[ConstructSectionStmt, Tag("construct_section")],
         Annotated[WriteIndexStmt, Tag("write_index")],
         Annotated[MapSetStmt, Tag("map_set")],
