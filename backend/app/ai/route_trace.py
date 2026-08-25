@@ -32,6 +32,10 @@ KHÔNG BAO GIỜ ghi khoá API hay bí mật: chỉ nhận các trường mà `a
 
 Vòng đệm trong tiến trình, không chạm CSDL: công cụ của người sửa lỗi trong một
 phiên, không phải nhật ký kiểm toán.
+
+BẤT BIẾN CỦA VÒNG ĐỆM: **mọi thứ nằm trong `_kho` đều tuần tự hoá được thành
+JSON.** Xem `_json_an_toan` để biết vì sao nó phải là một bất biến chứ không
+phải một lời nhắc.
 """
 from __future__ import annotations
 
@@ -39,6 +43,8 @@ import os
 import time
 import uuid
 from collections import deque
+from dataclasses import fields, is_dataclass
+from fractions import Fraction
 from typing import Any
 
 #: Số lượt gần nhất giữ lại. Nhỏ có chủ đích — công cụ chẩn đoán, không phải kho.
@@ -50,6 +56,44 @@ _kho: deque[dict[str, Any]] = deque(maxlen=SUC_CHUA)
 def bat_telemetry() -> bool:
     """Mặc định TẮT. Bật là một quyết định vận hành tường minh."""
     return os.getenv("SEMANTIC_TELEMETRY", "0") == "1"
+
+
+def _json_an_toan(gt: Any) -> Any:
+    """Hạ một giá trị bất kỳ về thứ `json.dumps` nuốt được.
+
+    ─── VÌ SAO CẦN, ĐO ĐƯỢC Ở LƯỢT LIVE 2026-08-25 ────────────────────────
+
+    `semantic_route` phát kèm `final_memory` — bộ nhớ cuối của interpreter, và
+    chỗ phát ghi rõ nó là thứ DUY NHẤT đem so được với ground truth độc lập.
+    Với miền hình học, bộ nhớ ấy chứa `Fraction` và các dataclass `Vec3`/
+    `Line3`/`Plane3`. `jsonable_encoder` của FastAPI thử `dict(obj)` rồi
+    `vars(obj)`, cả hai hỏng trên `Fraction`, và endpoint trả **500**.
+
+    Hình dạng của lỗi mới là chỗ đắt: `final_memory` chỉ có mặt khi route đi đủ
+    xa, nên công cụ chẩn đoán **mù đúng vào lúc hình học chạy được**. Lượt hỏng
+    đọc được vết, lượt chạy được thì không — ngược hẳn thứ ta cần.
+
+    Hai lựa chọn có chủ đích:
+
+    - `Fraction` → **chuỗi phân số**, không hoá float. Cùng quy ước với
+      `scene3d` (*"mọi số là chuỗi phân số CHÍNH XÁC"*); hoá `2.5` là ném đi
+      đúng tính chính xác hữu tỉ mà lõi hình học tồn tại để giữ.
+    - Kiểu chưa ai lường → `repr`, **không ném**. Một vòng đệm chẩn đoán tự
+      giết mình vì dữ liệu nó được giao là một công cụ hỏng; `repr` xấu vẫn đọc
+      được, còn 500 thì không nói gì cả.
+    """
+    if gt is None or isinstance(gt, (str, bool, int, float)):
+        return gt
+    if isinstance(gt, Fraction):
+        return str(gt)
+    # `is_dataclass` đúng cả với LỚP, nên phải loại lớp ra — ta chỉ hạ THỰC THỂ.
+    if is_dataclass(gt) and not isinstance(gt, type):
+        return {f.name: _json_an_toan(getattr(gt, f.name)) for f in fields(gt)}
+    if isinstance(gt, dict):
+        return {str(k): _json_an_toan(v) for k, v in gt.items()}
+    if isinstance(gt, (list, tuple, set, frozenset)):
+        return [_json_an_toan(v) for v in gt]
+    return repr(gt)
 
 
 class DiagnosticObserver:
@@ -99,6 +143,11 @@ class DiagnosticObserver:
                 None,
             ),
         }
+        # HẠ MỘT LẦN, Ở ĐÂY. Đặt phép hạ tại `emit` thì `ket_cuc` (đọc thẳng từ
+        # envelope) vẫn lọt; đặt tại endpoint thì mỗi người đọc `_kho` lại phải
+        # tự nhớ. Bản ghi chỉ vào kho qua đúng cửa này, nên đây là chỗ duy nhất
+        # giữ được bất biến "mọi thứ trong `_kho` đều dumps được".
+        ban_ghi = _json_an_toan(ban_ghi)
         _kho.append(ban_ghi)
         return ban_ghi
 
