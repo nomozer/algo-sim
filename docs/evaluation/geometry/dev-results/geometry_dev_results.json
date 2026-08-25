@@ -7,44 +7,103 @@
     "dung_som": null,
     "model": "gemini-2.5-flash",
     "G1_schema": {
-      "tu_so": 6,
+      "tu_so": 9,
       "mau_so": 10,
       "chua_do": 0
     },
     "G2_semantic": {
-      "tu_so": 6,
+      "tu_so": 9,
       "mau_so": 10,
       "chua_do": 0
     },
     "A_executable": {
-      "tu_so": 0,
+      "tu_so": 1,
       "mau_so": 10,
       "chua_do": 0
     },
     "O_oracle": {
-      "tu_so": 0,
-      "mau_so": 0,
-      "chua_do": 10
+      "tu_so": 1,
+      "mau_so": 1,
+      "chua_do": 9
     },
     "obligation_match": {
       "khai": "QUAN TRẮC — không gác cửa, không vào A/B. Lệch nghĩa là mô hình giải một bài KHÁC, dù chương trình có thể vẫn chạy đúng.",
-      "khop_hoan_toan": 3,
-      "mau_so": 6,
+      "khop_hoan_toan": 10,
+      "mau_so": 10,
       "chua_do": 0,
-      "nghia_vu_hay_bi_THIEU": [
-        "coplanar",
-        "point_on_line",
-        "point_on_plane"
-      ],
-      "nghia_vu_hay_bi_KHAI_THUA": [
-        "derived_sequence",
-        "predicate_verdict",
-        "structural_traversal"
-      ]
+      "nghia_vu_hay_bi_THIEU": [],
+      "nghia_vu_hay_bi_KHAI_THUA": []
     },
     "phan_bo_that_bai": {
-      "lop_6": 6,
-      "lop_2": 4
+      "lop_6": 8,
+      "di_tron_duong": 1,
+      "lop_2": 1
+    },
+    "chi_phi": {
+      "do_duoc": true,
+      "model": "gemini-2.5-flash",
+      "luot_logic": 28,
+      "request_http": 30,
+      "request_do_retry": 2,
+      "lan_gap_429_5xx": 0,
+      "tran_logic": 60,
+      "tran_http": 80,
+      "token_theo_stage": {
+        "semantic_analyze": {
+          "prompt_tokens": 11205,
+          "candidates_tokens": 2554,
+          "cached_content_tokens": 0,
+          "total_tokens": 25594,
+          "thoughts_tokens": 11835,
+          "calls": 10
+        },
+        "semantic_program": {
+          "prompt_tokens": 53802,
+          "candidates_tokens": 17666,
+          "cached_content_tokens": 7956,
+          "total_tokens": 117504,
+          "thoughts_tokens": 46036,
+          "calls": 18
+        }
+      },
+      "token_gop": {
+        "prompt_tokens": 65007,
+        "candidates_tokens": 20220,
+        "cached_content_tokens": 7956,
+        "total_tokens": 143098,
+        "thoughts_tokens": 57871,
+        "calls": 28
+      },
+      "tong_token": 143098,
+      "do_tre": {
+        "so_luot": 0
+      },
+      "uoc_tinh_chi_phi": {
+        "uoc_tinh_duoc": true,
+        "usd": 0.217116,
+        "token_tinh_gia_vao": 72963,
+        "token_tinh_gia_ra": 78091,
+        "don_gia_usd_moi_trieu": {
+          "input": 0.3,
+          "output": 2.5
+        },
+        "ngay_tra_gia": "2026-08-25",
+        "nguon_gia": "ai.google.dev/gemini-api/docs/pricing (tra tay, bậc trả phí)",
+        "khai": "CHẶN TRÊN — token cache tính đầy giá input, không trừ bậc miễn phí."
+      }
+    },
+    "neo": {
+      "commit": "027c9e1a67d550cb348ffd98f904eb36f9b25ad8",
+      "commit_ngan": "027c9e1",
+      "nhanh": "main",
+      "cache_version": "40",
+      "measured_system_hash": "24e80b8ff48ac3610d9ed4d2fbe446dd4fc6db077f160359bc7565872ccb7c58",
+      "measured_system_so_file": 141,
+      "dirty_toan_kho": [],
+      "dirty_he_duoc_do": [],
+      "sach_toan_kho": true,
+      "sach_he_duoc_do": true,
+      "khai": "Điểm số trong artifact này CHỈ có nghĩa với `measured_system_hash` ở trên. Cây bẩn ngoài hệ được đo không làm hỏng tính tái lập; cây bẩn TRONG hệ được đo thì có."
     }
   },
   "cases": [
@@ -57,8 +116,8 @@
       ],
       "generated_program": {
         "spec_version": "1.0",
-        "title": "M nằm trong mặt phẳng đáy (ABCD)",
-        "description": "Xác định vị trí của trung điểm M của cạnh AB trong hình chóp S.ABCD.",
+        "title": "Chỉ ra M nằm trong mặt phẳng đáy (ABCD)",
+        "description": null,
         "memory_declarations": [
           {
             "name": "A",
@@ -71,7 +130,8 @@
             "element_type": null,
             "key_type": null,
             "val_type": null,
-            "source_fact_id": null
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ"
           },
           {
             "name": "B",
@@ -84,20 +144,8 @@
             "element_type": null,
             "key_type": null,
             "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "C",
-            "type": "point3",
-            "initial_value": [
-              1,
-              1,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
+            "source_fact_id": null,
+            "model_assumption": "Chọn AB nằm trên trục Ox, độ dài cạnh đáy là 1"
           },
           {
             "name": "D",
@@ -110,434 +158,8 @@
             "element_type": null,
             "key_type": null,
             "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "S",
-            "type": "point3",
-            "initial_value": [
-              0.5,
-              0.5,
-              2
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "mat_phang_day",
-            "type": "plane3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "mat_phang_day"
-          },
-          {
-            "name": "M_point",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "diem_m",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "diem_m"
-          }
-        ],
-        "statements": [
-          {
-            "kind": "construct_point",
-            "target_var": "M_point",
-            "expr": {
-              "kind": "midpoint",
-              "a": "A",
-              "b": "B"
-            },
-            "label": "M"
-          },
-          {
-            "kind": "assign",
-            "target_var": "diem_m",
-            "expr": {
-              "kind": "var",
-              "name": "M_point"
-            }
-          }
-        ],
-        "visual_bindings": {
-          "containers": [],
-          "pointers": [],
-          "value_boxes": []
-        },
-        "pedagogical_intent": "Bài toán này minh họa rằng nếu một đoạn thẳng nằm trong một mặt phẳng, thì trung điểm của đoạn thẳng đó cũng nằm trong mặt phẳng đó. Nó củng cố khái niệm về điểm thuộc mặt phẳng và tính chất của các điểm trên một đoạn thẳng."
-      },
-      "obligations_declared": [
-        "point_on_plane"
-      ],
-      "schema_pass": true,
-      "semantic_pass": true,
-      "executable": false,
-      "oracle_pass": null,
-      "failure_layer": 6,
-      "failure_code": "input_not_grounded",
-      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
-      "oracle": {
-        "verdict": "NO_RESULT",
-        "ly_do": "chương trình không chạy ra kết quả"
-      },
-      "obligation_match": {
-        "mong_doi": [
-          "point_on_plane"
-        ],
-        "khai": [
-          "point_on_plane"
-        ],
-        "khop": [
-          "point_on_plane"
-        ],
-        "thieu": [],
-        "thua": [],
-        "khop_hoan_toan": true
-      }
-    },
-    {
-      "case_id": "geo_02",
-      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD. Hãy dựng giao tuyến của mặt phẳng (SAB) và mặt phẳng đáy (ABCD).",
-      "chu_de": "Giao tuyến hai mặt phẳng",
-      "expected_obligations": [
-        "point_on_line"
-      ],
-      "generated_program": {
-        "spec_version": "1.0",
-        "title": "Dựng giao tuyến của mặt phẳng (SAB) và mặt phẳng đáy (ABCD)",
-        "description": "Bài toán này minh họa cách tìm giao tuyến của hai mặt phẳng khi chúng có một cạnh chung rõ ràng. Giao tuyến của hai mặt phẳng là một đường thẳng chứa tất cả các điểm chung của hai mặt phẳng đó.",
-        "memory_declarations": [
-          {
-            "name": "A",
-            "type": "point3",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                0,
-                0,
-                0
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "B",
-            "type": "point3",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                1,
-                0,
-                0
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "C",
-            "type": "point3",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                1,
-                1,
-                0
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "D",
-            "type": "point3",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                0,
-                1,
-                0
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "S",
-            "type": "point3",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                0.5,
-                0.5,
-                2
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "pyramid_sabcd",
-            "type": "solid",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                "S",
-                "A",
-                "B",
-                "C",
-                "D"
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "pyramid_name"
-          },
-          {
-            "name": "plane_abcd",
-            "type": "plane3",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                "A",
-                "B",
-                "C"
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "plane_abcd"
-          },
-          {
-            "name": "plane_sab",
-            "type": "plane3",
-            "initial_value": {
-              "kind": "literal",
-              "value": [
-                "S",
-                "A",
-                "B"
-              ]
-            },
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "plane_sab"
-          },
-          {
-            "name": "input_planes",
-            "type": "array",
-            "initial_value": {
-              "kind": "literal",
-              "value": []
-            },
-            "element_type": "plane3",
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "derived_sequence"
-          },
-          {
-            "name": "giao_tuyen_points",
-            "type": "line3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "derived_sequence"
-          }
-        ],
-        "statements": [
-          {
-            "kind": "push",
-            "container": "input_planes",
-            "val": {
-              "kind": "var",
-              "name": "plane_sab"
-            }
-          },
-          {
-            "kind": "push",
-            "container": "input_planes",
-            "val": {
-              "kind": "var",
-              "name": "plane_abcd"
-            }
-          },
-          {
-            "kind": "assign",
-            "target_var": "giao_tuyen_points",
-            "expr": {
-              "kind": "intersect_plane_plane",
-              "plane_a": "plane_sab",
-              "plane_b": "plane_abcd"
-            }
-          }
-        ],
-        "visual_bindings": {
-          "containers": [],
-          "pointers": [],
-          "value_boxes": []
-        },
-        "pedagogical_intent": "Bài toán này giúp học sinh nhận diện giao tuyến của hai mặt phẳng khi chúng có một cạnh chung. Đây là một trường hợp cơ bản và trực quan của phép dựng giao tuyến."
-      },
-      "obligations_declared": [
-        "derived_sequence"
-      ],
-      "schema_pass": true,
-      "semantic_pass": true,
-      "executable": false,
-      "oracle_pass": null,
-      "failure_layer": 6,
-      "failure_code": "input_not_grounded",
-      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
-      "oracle": {
-        "verdict": "NO_RESULT",
-        "ly_do": "chương trình không chạy ra kết quả"
-      },
-      "obligation_match": {
-        "mong_doi": [
-          "point_on_line"
-        ],
-        "khai": [
-          "derived_sequence"
-        ],
-        "khop": [],
-        "thieu": [
-          "point_on_line"
-        ],
-        "thua": [
-          "derived_sequence"
-        ],
-        "khop_hoan_toan": false
-      }
-    },
-    {
-      "case_id": "geo_03",
-      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Một mặt phẳng song song với đáy và cắt SA tại trung điểm của SA. Hãy dựng thiết diện của hình chóp tạo bởi mặt phẳng đó.",
-      "chu_de": "Thiết diện hình chóp",
-      "expected_obligations": [
-        "coplanar"
-      ],
-      "generated_program": {
-        "spec_version": "1.0",
-        "title": "Dựng thiết diện của hình chóp S.ABCD",
-        "description": "Bài toán này minh họa cách dựng thiết diện của một hình chóp khi bị cắt bởi một mặt phẳng song song với đáy và đi qua trung điểm của một cạnh bên vuông góc với đáy. Cơ chế ẩn là sự đồng dạng của thiết diện với mặt đáy.",
-        "memory_declarations": [
-          {
-            "name": "hinh_chop_ten",
-            "type": "str",
-            "initial_value": "S.ABCD",
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "hinh_chop_ten"
-          },
-          {
-            "name": "day_la_hinh_vuong",
-            "type": "bool",
-            "initial_value": true,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "day_la_hinh_vuong"
-          },
-          {
-            "name": "canh_day",
-            "type": "float",
-            "initial_value": 1.0,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "canh_day"
-          },
-          {
-            "name": "sa_vuong_goc_day",
-            "type": "bool",
-            "initial_value": true,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "sa_vuong_goc_day"
-          },
-          {
-            "name": "do_dai_sa",
-            "type": "float",
-            "initial_value": 2.0,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "do_dai_sa"
-          },
-          {
-            "name": "mat_phang_song_song_day",
-            "type": "bool",
-            "initial_value": true,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "mat_phang_song_song_day"
-          },
-          {
-            "name": "diem_cat_sa_la_trung_diem",
-            "type": "bool",
-            "initial_value": true,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "diem_cat_sa_la_trung_diem"
-          },
-          {
-            "name": "A",
-            "type": "point3",
-            "initial_value": [
-              0,
-              0,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "B",
-            "type": "point3",
-            "initial_value": [
-              1,
-              0,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
+            "source_fact_id": null,
+            "model_assumption": "Chọn AD nằm trên trục Oy, ABCD là hình vuông"
           },
           {
             "name": "C",
@@ -550,20 +172,8 @@
             "element_type": null,
             "key_type": null,
             "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "D",
-            "type": "point3",
-            "initial_value": [
-              0,
-              1,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
+            "source_fact_id": null,
+            "model_assumption": "ABCD là hình vuông"
           },
           {
             "name": "S",
@@ -576,30 +186,8 @@
             "element_type": null,
             "key_type": null,
             "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "hinh_chop",
-            "type": "solid",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "mp_day",
-            "type": "plane3",
-            "initial_value": [
-              0,
-              0,
-              1,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
+            "source_fact_id": null,
+            "model_assumption": "Chọn S có chiều cao tùy ý, không ảnh hưởng đến bài toán"
           },
           {
             "name": "M",
@@ -608,42 +196,28 @@
             "element_type": null,
             "key_type": null,
             "val_type": null,
-            "source_fact_id": null
+            "source_fact_id": "m_trung_diem_ab",
+            "model_assumption": null
           },
           {
-            "name": "mp_cat",
+            "name": "abcd",
             "type": "plane3",
-            "initial_value": [
-              0,
-              0,
-              1,
-              -1
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "thiet_dien",
-            "type": "polygon3",
             "initial_value": null,
             "element_type": null,
             "key_type": null,
             "val_type": null,
-            "source_fact_id": null
+            "source_fact_id": "abcd_hinh_vuong",
+            "model_assumption": null
           },
           {
-            "name": "structural_traversal",
-            "type": "map",
-            "initial_value": {
-              "hinh_chop": "hinh_chop",
-              "thiet_dien": "thiet_dien"
-            },
+            "name": "point_on_plane",
+            "type": "bool",
+            "initial_value": null,
             "element_type": null,
-            "key_type": "str",
-            "val_type": "str",
-            "source_fact_id": null
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
           }
         ],
         "statements": [
@@ -652,184 +226,20 @@
             "target_var": "M",
             "expr": {
               "kind": "midpoint",
-              "a": "S",
-              "b": "A"
+              "a": "A",
+              "b": "B"
             },
-            "label": "Trung điểm M của SA"
+            "label": "M là trung điểm của cạnh AB"
           },
           {
-            "kind": "construct_section",
-            "target_var": "thiet_dien",
-            "solid": "hinh_chop",
-            "plane": "mp_cat",
-            "label": "Thiết diện của hình chóp tạo bởi mặt phẳng đi qua M và song song với đáy"
-          }
-        ],
-        "visual_bindings": {
-          "containers": [],
-          "pointers": [],
-          "value_boxes": []
-        },
-        "pedagogical_intent": "Bài toán này giúp học sinh hình dung thiết diện của hình chóp khi cắt bởi mặt phẳng song song với đáy, và hiểu rằng thiết diện đó là một hình đồng dạng với đáy."
-      },
-      "obligations_declared": [
-        "structural_traversal"
-      ],
-      "schema_pass": true,
-      "semantic_pass": true,
-      "executable": false,
-      "oracle_pass": null,
-      "failure_layer": 6,
-      "failure_code": "input_not_grounded",
-      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
-      "oracle": {
-        "verdict": "NO_RESULT",
-        "ly_do": "chương trình không chạy ra kết quả"
-      },
-      "obligation_match": {
-        "mong_doi": [
-          "coplanar"
-        ],
-        "khai": [
-          "structural_traversal"
-        ],
-        "khop": [],
-        "thieu": [
-          "coplanar"
-        ],
-        "thua": [
-          "structural_traversal"
-        ],
-        "khop_hoan_toan": false
-      }
-    },
-    {
-      "case_id": "geo_04",
-      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD, SA vuông góc với mặt phẳng đáy. Hãy xác định hình chiếu vuông góc của điểm S lên mặt phẳng (ABCD).",
-      "chu_de": "Hình chiếu vuông góc",
-      "expected_obligations": [
-        "point_on_plane"
-      ],
-      "generated_program": {
-        "spec_version": "1.0",
-        "title": "Xác định hình chiếu vuông góc của điểm S lên mặt phẳng (ABCD)",
-        "description": "Bài toán này minh họa cách xác định hình chiếu vuông góc của một điểm lên một mặt phẳng khi đã biết một đường thẳng đi qua điểm đó và vuông góc với mặt phẳng.",
-        "memory_declarations": [
-          {
-            "name": "A",
-            "type": "point3",
-            "initial_value": [
-              0,
-              0,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "day_dinh"
-          },
-          {
-            "name": "B",
-            "type": "point3",
-            "initial_value": [
-              1,
-              0,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "day_dinh"
-          },
-          {
-            "name": "C",
-            "type": "point3",
-            "initial_value": [
-              1,
-              1,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "day_dinh"
-          },
-          {
-            "name": "D",
-            "type": "point3",
-            "initial_value": [
-              0,
-              1,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "day_dinh"
-          },
-          {
-            "name": "S",
-            "type": "point3",
-            "initial_value": [
-              0,
-              0,
-              2
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "diem_s"
-          },
-          {
-            "name": "mp_abcd",
-            "type": "plane3",
-            "initial_value": [
+            "kind": "construct_plane",
+            "target_var": "abcd",
+            "through": [
               "A",
               "B",
-              "C"
+              "D"
             ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "mat_phang_day_ten"
-          },
-          {
-            "name": "hinh_chieu_vuong_goc_s_len_abcd",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "diem_a",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          }
-        ],
-        "statements": [
-          {
-            "kind": "construct_point",
-            "target_var": "hinh_chieu_vuong_goc_s_len_abcd",
-            "expr": {
-              "kind": "project_onto",
-              "point": "S",
-              "target": "mp_abcd"
-            },
-            "label": "Hình chiếu vuông góc của S lên mặt phẳng (ABCD)"
-          },
-          {
-            "kind": "assign",
-            "target_var": "diem_a",
-            "expr": {
-              "kind": "var",
-              "name": "A"
-            }
+            "label": "Mặt phẳng đáy (ABCD)"
           }
         ],
         "visual_bindings": {
@@ -837,372 +247,11 @@
           "pointers": [],
           "value_boxes": []
         },
-        "pedagogical_intent": "Bài toán này giúp học sinh hiểu định nghĩa hình chiếu vuông góc của một điểm lên một mặt phẳng, đặc biệt trong trường hợp điểm đó nằm trên một đường thẳng vuông góc với mặt phẳng. Khi SA vuông góc với mặt phẳng đáy (ABCD), điểm A chính là hình chiếu vuông góc của S lên mặt phẳng này."
+        "pedagogical_intent": "Bài toán này minh họa cách xác định một điểm là trung điểm của một cạnh và cách dựng mặt phẳng đáy từ các đỉnh của nó, sau đó kiểm tra quan hệ thuộc mặt phẳng."
       },
+      "generated_raw": null,
       "obligations_declared": [
-        "predicate_verdict"
-      ],
-      "schema_pass": true,
-      "semantic_pass": true,
-      "executable": false,
-      "oracle_pass": null,
-      "failure_layer": 6,
-      "failure_code": "input_not_grounded",
-      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
-      "oracle": {
-        "verdict": "NO_RESULT",
-        "ly_do": "chương trình không chạy ra kết quả"
-      },
-      "obligation_match": {
-        "mong_doi": [
-          "point_on_plane"
-        ],
-        "khai": [
-          "predicate_verdict"
-        ],
-        "khop": [],
-        "thieu": [
-          "point_on_plane"
-        ],
-        "thua": [
-          "predicate_verdict"
-        ],
-        "khop_hoan_toan": false
-      }
-    },
-    {
-      "case_id": "geo_05",
-      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD và cạnh bên SA vuông góc với đáy. Chứng minh rằng đường thẳng SA vuông góc với mặt phẳng (ABCD).",
-      "chu_de": "Đường thẳng vuông góc mặt phẳng",
-      "expected_obligations": [
-        "perpendicular"
-      ],
-      "generated_program": {
-        "spec_version": "1.0",
-        "title": "Chứng minh đường thẳng vuông góc với mặt phẳng",
-        "description": "Bài toán cơ bản về quan hệ vuông góc giữa đường thẳng và mặt phẳng trong hình chóp.",
-        "memory_declarations": [
-          {
-            "name": "A",
-            "type": "point3",
-            "initial_value": [
-              0,
-              0,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "B",
-            "type": "point3",
-            "initial_value": [
-              1,
-              0,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "C",
-            "type": "point3",
-            "initial_value": [
-              1,
-              1,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "D",
-            "type": "point3",
-            "initial_value": [
-              0,
-              1,
-              0
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "S",
-            "type": "point3",
-            "initial_value": [
-              0,
-              0,
-              2
-            ],
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "duong_thang_sa",
-            "type": "line3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "mat_phang_abcd",
-            "type": "plane3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "perpendicular",
-            "type": "bool",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          }
-        ],
-        "statements": [
-          {
-            "kind": "construct_line",
-            "target_var": "duong_thang_sa",
-            "through_a": "S",
-            "through_b": "A",
-            "label": "Đường thẳng SA"
-          },
-          {
-            "kind": "assign",
-            "target_var": "mat_phang_abcd",
-            "expr": {
-              "kind": "literal",
-              "value": [
-                0,
-                0,
-                1,
-                0
-              ]
-            }
-          }
-        ],
-        "visual_bindings": {
-          "containers": [],
-          "pointers": [],
-          "value_boxes": []
-        },
-        "pedagogical_intent": "Bài này minh họa cách khai báo các điểm, đường thẳng và mặt phẳng bằng tọa độ và phương trình, sau đó kiểm tra quan hệ vuông góc giữa đường thẳng và mặt phẳng. Nó cũng cho thấy cách định nghĩa một mặt phẳng bằng phương trình khi không có phép dựng 'construct_plane'."
-      },
-      "obligations_declared": [
-        "perpendicular"
-      ],
-      "schema_pass": true,
-      "semantic_pass": true,
-      "executable": false,
-      "oracle_pass": null,
-      "failure_layer": 6,
-      "failure_code": "input_not_grounded",
-      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
-      "oracle": {
-        "verdict": "NO_RESULT",
-        "ly_do": "chương trình không chạy ra kết quả"
-      },
-      "obligation_match": {
-        "mong_doi": [
-          "perpendicular"
-        ],
-        "khai": [
-          "perpendicular"
-        ],
-        "khop": [
-          "perpendicular"
-        ],
-        "thieu": [],
-        "thua": [],
-        "khop_hoan_toan": true
-      }
-    },
-    {
-      "case_id": "geo_06",
-      "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông. Chứng minh rằng đường thẳng AB song song với đường thẳng DC.",
-      "chu_de": "Hai đường thẳng song song",
-      "expected_obligations": [
-        "parallel"
-      ],
-      "generated_program": {
-        "spec_version": "1.0",
-        "title": "Chứng minh đường thẳng AB song song với đường thẳng DC",
-        "description": "Bài toán này minh họa cách xác định và chứng minh quan hệ song song giữa hai đường thẳng trong không gian, dựa trên các tính chất cơ bản của hình học phẳng (hình vuông).",
-        "memory_declarations": [
-          {
-            "name": "A",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "B",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "C",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "D",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "S",
-            "type": "point3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "duong_thang_ab",
-            "type": "line3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "duong_thang_dc",
-            "type": "line3",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": null
-          },
-          {
-            "name": "parallel",
-            "type": "bool",
-            "initial_value": null,
-            "element_type": null,
-            "key_type": null,
-            "val_type": null,
-            "source_fact_id": "day_abcd"
-          }
-        ],
-        "statements": [
-          {
-            "kind": "assign",
-            "target_var": "A",
-            "expr": {
-              "kind": "literal",
-              "value": [
-                0,
-                0,
-                0
-              ]
-            }
-          },
-          {
-            "kind": "assign",
-            "target_var": "B",
-            "expr": {
-              "kind": "literal",
-              "value": [
-                1,
-                0,
-                0
-              ]
-            }
-          },
-          {
-            "kind": "assign",
-            "target_var": "D",
-            "expr": {
-              "kind": "literal",
-              "value": [
-                0,
-                1,
-                0
-              ]
-            }
-          },
-          {
-            "kind": "assign",
-            "target_var": "C",
-            "expr": {
-              "kind": "literal",
-              "value": [
-                1,
-                1,
-                0
-              ]
-            }
-          },
-          {
-            "kind": "assign",
-            "target_var": "S",
-            "expr": {
-              "kind": "literal",
-              "value": [
-                0.5,
-                0.5,
-                1
-              ]
-            }
-          },
-          {
-            "kind": "construct_line",
-            "target_var": "duong_thang_ab",
-            "through_a": "A",
-            "through_b": "B",
-            "label": "Đường thẳng AB"
-          },
-          {
-            "kind": "construct_line",
-            "target_var": "duong_thang_dc",
-            "through_a": "D",
-            "through_b": "C",
-            "label": "Đường thẳng DC"
-          }
-        ],
-        "visual_bindings": {
-          "containers": [],
-          "pointers": [],
-          "value_boxes": []
-        },
-        "pedagogical_intent": "Bài này giúp học sinh hiểu rằng các tính chất hình học phẳng cơ bản (như cạnh đối song song trong hình vuông) vẫn đúng khi được xét trong không gian ba chiều. Nó cũng giới thiệu cách biểu diễn các đối tượng hình học và quan hệ của chúng trong một hệ thống mô phỏng."
-      },
-      "obligations_declared": [
-        "parallel"
+        "point_on_plane"
       ],
       "schema_pass": true,
       "semantic_pass": true,
@@ -1217,6 +266,1107 @@
       },
       "obligation_match": {
         "mong_doi": [
+          "point_on_plane"
+        ],
+        "khai": [
+          "point_on_plane"
+        ],
+        "khop": [
+          "point_on_plane"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 26.579,
+        "cham_nhat_giay": 15.199,
+        "theo_stage": {
+          "semantic_analyze": 3.172,
+          "semantic_program": 23.407
+        }
+      }
+    },
+    {
+      "case_id": "geo_02",
+      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD. Hãy dựng giao tuyến của mặt phẳng (SAB) và mặt phẳng đáy (ABCD).",
+      "chu_de": "Giao tuyến hai mặt phẳng",
+      "expected_obligations": [
+        "point_on_line"
+      ],
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Dựng giao tuyến của mặt phẳng (SAB) và mặt phẳng đáy (ABCD)",
+        "description": "Chương trình này dựng hình chóp S.ABCD với đáy là hình vuông và tìm giao tuyến của mặt phẳng (SAB) với mặt phẳng đáy (ABCD).",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)."
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh AB nằm trên trục Ox, độ dài cạnh đáy là 1."
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "ABCD là hình vuông, cạnh AD nằm trên trục Oy."
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "ABCD là hình vuông."
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn SA vuông góc với mặt phẳng đáy và có chiều cao là 2."
+          },
+          {
+            "name": "plane_abcd",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "day_abcd_hinh_vuong",
+            "model_assumption": null
+          },
+          {
+            "name": "plane_sab",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "hinh_chop_sabcd",
+            "model_assumption": null
+          },
+          {
+            "name": "giao_tuyen_sab_abcd",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "a",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "b",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_plane",
+            "target_var": "plane_abcd",
+            "through": [
+              "A",
+              "B",
+              "C"
+            ],
+            "label": "Mặt phẳng đáy (ABCD)"
+          },
+          {
+            "kind": "construct_plane",
+            "target_var": "plane_sab",
+            "through": [
+              "S",
+              "A",
+              "B"
+            ],
+            "label": "Mặt phẳng (SAB)"
+          },
+          {
+            "kind": "assign",
+            "target_var": "giao_tuyen_sab_abcd",
+            "expr": {
+              "kind": "intersect_plane_plane",
+              "plane_a": "plane_sab",
+              "plane_b": "plane_abcd"
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "a",
+            "expr": {
+              "kind": "var",
+              "name": "A"
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "b",
+            "expr": {
+              "kind": "var",
+              "name": "B"
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài tập này minh họa cách tìm giao tuyến của hai mặt phẳng bằng cách xác định hai điểm chung của chúng. Trong trường hợp này, hai mặt phẳng (SAB) và (ABCD) có chung hai điểm A và B, do đó giao tuyến của chúng là đường thẳng AB."
+      },
+      "generated_raw": null,
+      "obligations_declared": [
+        "point_on_line"
+      ],
+      "schema_pass": true,
+      "semantic_pass": true,
+      "executable": false,
+      "oracle_pass": null,
+      "failure_layer": 6,
+      "failure_code": "requested_operation_uncovered",
+      "failure_reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "point_on_line"
+        ],
+        "khai": [
+          "point_on_line"
+        ],
+        "khop": [
+          "point_on_line"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 293.833,
+        "cham_nhat_giay": 270.197,
+        "theo_stage": {
+          "semantic_analyze": 270.197,
+          "semantic_program": 23.636
+        }
+      }
+    },
+    {
+      "case_id": "geo_03",
+      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA vuông góc với đáy và SA = 2a. Một mặt phẳng song song với đáy và cắt SA tại trung điểm của SA. Hãy dựng thiết diện của hình chóp tạo bởi mặt phẳng đó.",
+      "chu_de": "Thiết diện hình chóp",
+      "expected_obligations": [
+        "coplanar"
+      ],
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Dựng thiết diện của hình chóp S.ABCD",
+        "description": "Dựng thiết diện của hình chóp S.ABCD khi cắt bởi mặt phẳng song song với đáy và đi qua trung điểm của SA.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) để SA vuông góc với đáy."
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh đáy AB nằm trên trục Ox, với độ dài a=1."
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh đáy AD nằm trên trục Oy, với độ dài a=1."
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_is_square",
+            "model_assumption": null
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sa_perp_base",
+            "model_assumption": "SA vuông góc với đáy và SA = 2a. Chọn SA nằm trên trục Oz, với độ dài 2a=2."
+          },
+          {
+            "name": "pyramid_s_abcd",
+            "type": "solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "pyramid_s_abcd",
+            "model_assumption": null
+          },
+          {
+            "name": "M_SA",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "plane_cuts_sa_midpoint",
+            "model_assumption": null
+          },
+          {
+            "name": "M_SB",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "M_SC",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "M_SD",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "cutting_plane",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "plane_parallel_base",
+            "model_assumption": null
+          },
+          {
+            "name": "cross_section_polygon",
+            "type": "polygon3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "cross_section_vertices",
+            "type": "array",
+            "initial_value": null,
+            "element_type": "point3",
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "coplanar",
+            "type": "bool",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_solid",
+            "target_var": "pyramid_s_abcd",
+            "vertices": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "faces": [
+              [
+                0,
+                1,
+                2
+              ],
+              [
+                0,
+                2,
+                3
+              ],
+              [
+                0,
+                3,
+                4
+              ],
+              [
+                0,
+                4,
+                1
+              ],
+              [
+                1,
+                2,
+                3,
+                4
+              ]
+            ],
+            "label": "Dựng hình chóp S.ABCD"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "M_SA",
+            "expr": {
+              "kind": "midpoint",
+              "a": "S",
+              "b": "A"
+            },
+            "label": "Dựng trung điểm M_SA của SA"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "M_SB",
+            "expr": {
+              "kind": "midpoint",
+              "a": "S",
+              "b": "B"
+            },
+            "label": "Dựng trung điểm M_SB của SB"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "M_SC",
+            "expr": {
+              "kind": "midpoint",
+              "a": "S",
+              "b": "C"
+            },
+            "label": "Dựng trung điểm M_SC của SC"
+          },
+          {
+            "kind": "construct_point",
+            "target_var": "M_SD",
+            "expr": {
+              "kind": "midpoint",
+              "a": "S",
+              "b": "D"
+            },
+            "label": "Dựng trung điểm M_SD của SD"
+          },
+          {
+            "kind": "construct_plane",
+            "target_var": "cutting_plane",
+            "through": [
+              "M_SA",
+              "M_SB",
+              "M_SD"
+            ],
+            "label": "Dựng mặt phẳng cắt đi qua M_SA, M_SB, M_SD"
+          },
+          {
+            "kind": "construct_section",
+            "target_var": "cross_section_polygon",
+            "solid": "pyramid_s_abcd",
+            "plane": "cutting_plane",
+            "label": "Dựng thiết diện của hình chóp bởi mặt phẳng cắt"
+          },
+          {
+            "kind": "assign",
+            "target_var": "cross_section_vertices",
+            "expr": {
+              "kind": "literal",
+              "value": [
+                "M_SA",
+                "M_SB",
+                "M_SC",
+                "M_SD"
+              ]
+            }
+          },
+          {
+            "kind": "assign",
+            "target_var": "coplanar",
+            "expr": {
+              "kind": "literal",
+              "value": true
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách một mặt phẳng song song với đáy cắt hình chóp tạo ra một thiết diện đồng dạng với đáy."
+      },
+      "generated_raw": null,
+      "obligations_declared": [
+        "coplanar"
+      ],
+      "schema_pass": true,
+      "semantic_pass": true,
+      "executable": false,
+      "oracle_pass": null,
+      "failure_layer": 6,
+      "failure_code": "input_not_grounded",
+      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "coplanar"
+        ],
+        "khai": [
+          "coplanar"
+        ],
+        "khop": [
+          "coplanar"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 81.979,
+        "cham_nhat_giay": 29.23,
+        "theo_stage": {
+          "semantic_analyze": 29.23,
+          "semantic_program": 52.749
+        }
+      }
+    },
+    {
+      "case_id": "geo_04",
+      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD, SA vuông góc với mặt phẳng đáy. Hãy xác định hình chiếu vuông góc của điểm S lên mặt phẳng (ABCD).",
+      "chu_de": "Hình chiếu vuông góc",
+      "expected_obligations": [
+        "point_on_plane"
+      ],
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Xác định hình chiếu vuông góc của điểm S lên mặt phẳng (ABCD)",
+        "description": "Chương trình này xác định hình chiếu vuông góc của điểm S lên mặt phẳng đáy (ABCD) trong hình chóp S.ABCD, với đáy là hình vuông và SA vuông góc với mặt phẳng đáy.",
+        "memory_declarations": [
+          {
+            "name": "A_point",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với mặt phẳng đáy (ABCD)."
+          },
+          {
+            "name": "B_point",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh AB nằm trên trục Ox, độ dài cạnh hình vuông là 1."
+          },
+          {
+            "name": "D_point",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh AD nằm trên trục Oy, độ dài cạnh hình vuông là 1."
+          },
+          {
+            "name": "C_point",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Xác định C dựa trên A, B, D để tạo thành hình vuông ABCD."
+          },
+          {
+            "name": "S_point",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Vì SA vuông góc với đáy (ghim `sa_vuong_goc_day`), S nằm trên trục Oz. Chọn chiều cao SA = 2."
+          },
+          {
+            "name": "abcd",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_hinh_vuong",
+            "model_assumption": null
+          },
+          {
+            "name": "a",
+            "type": "point3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "point_on_plane",
+            "type": "bool",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_plane",
+            "target_var": "abcd",
+            "through": [
+              "A_point",
+              "B_point",
+              "D_point"
+            ],
+            "label": "Dựng mặt phẳng đáy (ABCD) từ ba điểm A, B, D."
+          },
+          {
+            "kind": "assign",
+            "target_var": "a",
+            "expr": {
+              "kind": "project_onto",
+              "point": "S_point",
+              "target": "abcd"
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài tập này minh họa cách xác định hình chiếu vuông góc của một điểm lên một mặt phẳng khi biết quan hệ vuông góc giữa một đường thẳng đi qua điểm đó và mặt phẳng. Trong trường hợp này, do SA vuông góc với đáy, hình chiếu của S chính là A."
+      },
+      "generated_raw": null,
+      "obligations_declared": [
+        "point_on_plane"
+      ],
+      "schema_pass": true,
+      "semantic_pass": true,
+      "executable": true,
+      "oracle_pass": true,
+      "failure_layer": null,
+      "failure_code": null,
+      "failure_reason": null,
+      "oracle": {
+        "verdict": "PASS",
+        "lech": [],
+        "da_cham": [
+          "point_on_plane"
+        ]
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "point_on_plane"
+        ],
+        "khai": [
+          "point_on_plane"
+        ],
+        "khop": [
+          "point_on_plane"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 40.248,
+        "cham_nhat_giay": 18.905,
+        "theo_stage": {
+          "semantic_analyze": 3.022,
+          "semantic_program": 37.226
+        }
+      }
+    },
+    {
+      "case_id": "geo_05",
+      "problem": "Cho hình chóp S.ABCD có đáy là hình vuông ABCD và cạnh bên SA vuông góc với đáy. Chứng minh rằng đường thẳng SA vuông góc với mặt phẳng (ABCD).",
+      "chu_de": "Đường thẳng vuông góc mặt phẳng",
+      "expected_obligations": [
+        "perpendicular"
+      ],
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Chứng minh đường thẳng vuông góc với mặt phẳng",
+        "description": "Bài toán này yêu cầu chứng minh đường thẳng SA vuông góc với mặt phẳng (ABCD) trong hình chóp S.ABCD có đáy là hình vuông và SA vuông góc với đáy. Chương trình sẽ dựng hình và kiểm tra tính vuông góc này.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với đáy."
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh AB nằm trên trục Ox, độ dài cạnh đáy hình vuông là 1."
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh AD nằm trên trục Oy, ABCD là hình vuông."
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "ABCD là hình vuông."
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn SA vuông góc với đáy và có độ dài 2, nên S nằm trên trục Oz."
+          },
+          {
+            "name": "duong_thang_sa",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "s_abcd_hinh_chop",
+            "model_assumption": null
+          },
+          {
+            "name": "mat_phang_abcd",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_hinh_vuong",
+            "model_assumption": null
+          },
+          {
+            "name": "perpendicular",
+            "type": "bool",
+            "initial_value": true,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sa_vuong_goc_day",
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_line",
+            "target_var": "duong_thang_sa",
+            "through_a": "S",
+            "through_b": "A",
+            "label": "Đường thẳng SA"
+          },
+          {
+            "kind": "construct_plane",
+            "target_var": "mat_phang_abcd",
+            "through": [
+              "A",
+              "B",
+              "D"
+            ],
+            "label": "Mặt phẳng (ABCD)"
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Học sinh sẽ thấy cách các giả thiết hình học (SA vuông góc đáy) được mã hóa vào hệ tọa độ và sau đó được xác nhận bởi công cụ hình học. Điều này củng cố định nghĩa về đường thẳng vuông góc với mặt phẳng."
+      },
+      "generated_raw": null,
+      "obligations_declared": [
+        "perpendicular"
+      ],
+      "schema_pass": true,
+      "semantic_pass": true,
+      "executable": false,
+      "oracle_pass": null,
+      "failure_layer": 6,
+      "failure_code": "input_not_grounded",
+      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "perpendicular"
+        ],
+        "khai": [
+          "perpendicular"
+        ],
+        "khop": [
+          "perpendicular"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 2,
+        "tong_giay": 52.822,
+        "cham_nhat_giay": 49.598,
+        "theo_stage": {
+          "semantic_analyze": 3.224,
+          "semantic_program": 49.598
+        }
+      }
+    },
+    {
+      "case_id": "geo_06",
+      "problem": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông. Chứng minh rằng đường thẳng AB song song với đường thẳng DC.",
+      "chu_de": "Hai đường thẳng song song",
+      "expected_obligations": [
+        "parallel"
+      ],
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Chứng minh AB song song với DC trong hình vuông ABCD",
+        "description": "Chương trình này dựng hình chóp S.ABCD với đáy ABCD là hình vuông và chứng minh rằng đường thẳng AB song song với đường thẳng DC, một tính chất cơ bản của hình vuông.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) của hệ trục Descartes."
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh AB nằm trên trục Ox và có độ dài bằng 1."
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn cạnh AD nằm trên trục Oy và có độ dài bằng 1 (do ABCD là hình vuông)."
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_hinh_vuong",
+            "model_assumption": "Điểm C được xác định từ A, B, D để tạo thành hình vuông ABCD."
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0.5,
+              0.5,
+              1
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn S tại một điểm bất kỳ phía trên mặt phẳng đáy, không ảnh hưởng đến tính song song của AB và DC."
+          },
+          {
+            "name": "ab",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "dc",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "parallel",
+            "type": "bool",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_line",
+            "target_var": "ab",
+            "through_a": "A",
+            "through_b": "B",
+            "label": "Đường thẳng AB"
+          },
+          {
+            "kind": "construct_line",
+            "target_var": "dc",
+            "through_a": "D",
+            "through_b": "C",
+            "label": "Đường thẳng DC"
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài tập này minh họa cách dựng các đối tượng hình học cơ bản (điểm, đường thẳng) và kiểm tra một tính chất hình học (song song) dựa trên định nghĩa của hình vuông. Nó cho thấy rằng các tính chất cơ bản của hình phẳng vẫn đúng khi nhúng vào không gian 3D."
+      },
+      "generated_raw": null,
+      "obligations_declared": [
+        "parallel"
+      ],
+      "schema_pass": true,
+      "semantic_pass": true,
+      "executable": false,
+      "oracle_pass": null,
+      "failure_layer": 6,
+      "failure_code": "input_not_grounded",
+      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
           "parallel"
         ],
         "khai": [
@@ -1228,6 +1378,15 @@
         "thieu": [],
         "thua": [],
         "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 2,
+        "tong_giay": 8.728,
+        "cham_nhat_giay": 6.062,
+        "theo_stage": {
+          "semantic_analyze": 2.666,
+          "semantic_program": 6.062
+        }
       }
     },
     {
@@ -1237,17 +1396,169 @@
       "expected_obligations": [
         "distance"
       ],
-      "generated_program": null,
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Tính khoảng cách từ điểm S đến mặt phẳng (ABCD)",
+        "description": "Chương trình dựng hình và tính khoảng cách từ đỉnh chóp S đến mặt phẳng đáy (ABCD) của hình chóp S.ABCD.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "chọn A làm gốc vì SA vuông góc đáy"
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "canh_day",
+            "model_assumption": null
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "canh_day",
+            "model_assumption": null
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_hinh_vuong",
+            "model_assumption": null
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "sa_length",
+            "model_assumption": null
+          },
+          {
+            "name": "abcd",
+            "type": "plane3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_hinh_vuong",
+            "model_assumption": null
+          },
+          {
+            "name": "khoang_cach_s_abcd",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_plane",
+            "target_var": "abcd",
+            "through": [
+              "A",
+              "B",
+              "C"
+            ],
+            "label": "Mặt phẳng đáy (ABCD)"
+          },
+          {
+            "kind": "assign",
+            "target_var": "khoang_cach_s_abcd",
+            "expr": {
+              "kind": "measure",
+              "quantity": "distance",
+              "of": "S",
+              "wrt": "abcd"
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng khi điểm đó là đỉnh của hình chóp và mặt phẳng là mặt đáy, với cạnh bên vuông góc với đáy. Khoảng cách này chính là độ dài cạnh bên vuông góc với đáy."
+      },
+      "generated_raw": null,
       "obligations_declared": [
         "distance"
       ],
-      "schema_pass": false,
-      "semantic_pass": false,
+      "schema_pass": true,
+      "semantic_pass": true,
       "executable": false,
       "oracle_pass": null,
-      "failure_layer": 2,
-      "failure_code": "semantic_program_invalid",
-      "failure_reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nstatements.5\n  Input tag 'construct_plane' found using 'kind' does not match any of the expected tags: 'assign', 'construct_point', 'construct_line', 'construct_section', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'construct_plane...: 'B', 'through_c': 'D'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid\nstatements.6\n  Input tag 'construct_solid' found using 'kind' does not match any of the expected tags: 'assign', 'construct_point', 'construct_line', 'construct_section', 'write_index', 'map_set', 'swap', 'push', 'pop', 'enqueue', 'dequeue', 'set_insert', 'set_remove', 'if', 'while', 'for_range', 'for_each', 'break', 'return' [type=union_tag_invalid, input_value={'kind': 'construct_solid..., ['A', 'B', 'C', 'D']]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid\nstatements.9.assign.expr\n  Input tag 'distance' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'midpoint', 'project_onto', 'divide_segment', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get', 'neighbors' [type=union_tag_invalid, input_value={'kind': 'distance', 'a': 'S', 'b': 'ABCD_plane'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid"
+      "failure_layer": 6,
+      "failure_code": "input_not_grounded",
+      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "distance"
+        ],
+        "khai": [
+          "distance"
+        ],
+        "khop": [
+          "distance"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 38.188,
+        "cham_nhat_giay": 28.456,
+        "theo_stage": {
+          "semantic_analyze": 3.948,
+          "semantic_program": 34.24
+        }
+      }
     },
     {
       "case_id": "geo_08",
@@ -1256,17 +1567,169 @@
       "expected_obligations": [
         "angle"
       ],
-      "generated_program": null,
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Tính góc giữa đường thẳng AB và đường chéo AC của hình vuông ABCD",
+        "description": null,
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "canh_hinh_vuong",
+            "model_assumption": "Chọn B trên trục Ox, cách A một đơn vị, phù hợp với cạnh hình vuông bằng 1"
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "canh_hinh_vuong",
+            "model_assumption": "Chọn D trên trục Oy, cách A một đơn vị, phù hợp với cạnh hình vuông bằng 1"
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_is_square",
+            "model_assumption": "Xác định C dựa trên A, B, D để tạo thành hình vuông ABCD"
+          },
+          {
+            "name": "ab",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "AC",
+            "type": "line3",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "goc_ab_ac",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_line",
+            "target_var": "ab",
+            "through_a": "A",
+            "through_b": "B",
+            "label": "Đường thẳng AB"
+          },
+          {
+            "kind": "construct_line",
+            "target_var": "AC",
+            "through_a": "A",
+            "through_b": "C",
+            "label": "Đường thẳng AC"
+          },
+          {
+            "kind": "assign",
+            "target_var": "goc_ab_ac",
+            "expr": {
+              "kind": "measure",
+              "quantity": "angle_cos_sq",
+              "of": "ab",
+              "wrt": "AC"
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách xác định và tính toán góc giữa hai đường thẳng trong không gian, cụ thể là một cạnh và một đường chéo của hình vuông. Nó cũng cho thấy việc chọn hệ tọa độ phù hợp giúp đơn giản hóa việc định nghĩa các điểm."
+      },
+      "generated_raw": null,
       "obligations_declared": [
         "angle"
       ],
-      "schema_pass": false,
-      "semantic_pass": false,
+      "schema_pass": true,
+      "semantic_pass": true,
       "executable": false,
       "oracle_pass": null,
-      "failure_layer": 2,
-      "failure_code": "semantic_program_invalid",
-      "failure_reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nmemory_declarations.8.type\n  Input should be 'int', 'str', 'bool', 'float', 'array', 'stack', 'queue', 'matrix', 'map', 'set', 'tree_node', 'graph', 'node_ref', 'null', 'point3', 'vector3', 'line3', 'plane3', 'polygon3' or 'solid' [type=literal_error, input_value='angle', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+      "failure_layer": 6,
+      "failure_code": "input_not_grounded",
+      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "angle"
+        ],
+        "khai": [
+          "angle"
+        ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 2,
+        "tong_giay": 12.396,
+        "cham_nhat_giay": 9.439,
+        "theo_stage": {
+          "semantic_analyze": 2.957,
+          "semantic_program": 9.439
+        }
+      }
     },
     {
       "case_id": "geo_09",
@@ -1275,17 +1738,199 @@
       "expected_obligations": [
         "volume"
       ],
-      "generated_program": null,
+      "generated_program": {
+        "spec_version": "1.0",
+        "title": "Tính thể tích khối chóp S.ABCD",
+        "description": "Chương trình dựng hình và tính thể tích khối chóp S.ABCD với đáy là hình vuông và cạnh bên SA vuông góc với đáy.",
+        "memory_declarations": [
+          {
+            "name": "A",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với mặt phẳng đáy."
+          },
+          {
+            "name": "B",
+            "type": "point3",
+            "initial_value": [
+              1,
+              0,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "canh_day",
+            "model_assumption": "Đặt cạnh AB dọc theo trục Ox, có độ dài 1."
+          },
+          {
+            "name": "D",
+            "type": "point3",
+            "initial_value": [
+              0,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "canh_day",
+            "model_assumption": "Đặt cạnh AD dọc theo trục Oy, có độ dài 1. ABCD là hình vuông."
+          },
+          {
+            "name": "C",
+            "type": "point3",
+            "initial_value": [
+              1,
+              1,
+              0
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "abcd_hinh_vuong",
+            "model_assumption": "Hoàn thành hình vuông ABCD."
+          },
+          {
+            "name": "S",
+            "type": "point3",
+            "initial_value": [
+              0,
+              0,
+              2
+            ],
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": "chieu_cao_sa",
+            "model_assumption": "Đặt S trên trục Oz vì SA vuông góc đáy và SA = 2."
+          },
+          {
+            "name": "s_abcd",
+            "type": "solid",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          },
+          {
+            "name": "the_tich_s_abcd",
+            "type": "float",
+            "initial_value": null,
+            "element_type": null,
+            "key_type": null,
+            "val_type": null,
+            "source_fact_id": null,
+            "model_assumption": null
+          }
+        ],
+        "statements": [
+          {
+            "kind": "construct_solid",
+            "target_var": "s_abcd",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "S"
+            ],
+            "faces": [
+              [
+                4,
+                0,
+                1
+              ],
+              [
+                4,
+                1,
+                2
+              ],
+              [
+                4,
+                2,
+                3
+              ],
+              [
+                4,
+                3,
+                0
+              ],
+              [
+                0,
+                1,
+                2,
+                3
+              ]
+            ],
+            "label": "Hình chóp S.ABCD"
+          },
+          {
+            "kind": "assign",
+            "target_var": "the_tich_s_abcd",
+            "expr": {
+              "kind": "measure",
+              "quantity": "volume",
+              "of": "s_abcd",
+              "wrt": null
+            }
+          }
+        ],
+        "visual_bindings": {
+          "containers": [],
+          "pointers": [],
+          "value_boxes": []
+        },
+        "pedagogical_intent": "Bài toán này minh họa cách dựng một khối chóp và tính thể tích của nó khi biết các thông số cơ bản và vị trí tương đối của các đỉnh."
+      },
+      "generated_raw": null,
       "obligations_declared": [
         "volume"
       ],
-      "schema_pass": false,
-      "semantic_pass": false,
+      "schema_pass": true,
+      "semantic_pass": true,
       "executable": false,
       "oracle_pass": null,
-      "failure_layer": 2,
-      "failure_code": "semantic_program_invalid",
-      "failure_reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nmemory_declarations.8.type\n  Input should be 'int', 'str', 'bool', 'float', 'array', 'stack', 'queue', 'matrix', 'map', 'set', 'tree_node', 'graph', 'node_ref', 'null', 'point3', 'vector3', 'line3', 'plane3', 'polygon3' or 'solid' [type=literal_error, input_value='volume', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+      "failure_layer": 6,
+      "failure_code": "input_not_grounded",
+      "failure_reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "oracle": {
+        "verdict": "NO_RESULT",
+        "ly_do": "chương trình không chạy ra kết quả"
+      },
+      "obligation_match": {
+        "mong_doi": [
+          "volume"
+        ],
+        "khai": [
+          "volume"
+        ],
+        "khop": [
+          "volume"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 3,
+        "tong_giay": 23.763,
+        "cham_nhat_giay": 11.938,
+        "theo_stage": {
+          "semantic_analyze": 2.652,
+          "semantic_program": 21.111
+        }
+      }
     },
     {
       "case_id": "geo_10",
@@ -1297,7 +1942,10 @@
         "volume"
       ],
       "generated_program": null,
+      "generated_raw": "{\n  \"title\": \"Hình chóp S.ABCD có đáy là hình vuông, SA vuông góc đáy\",\n  \"description\": \"Dựng hình chóp S.ABCD, xác định trung điểm M của SA, tìm hình chiếu của M lên đáy, và tính thể tích khối chóp.\",\n  \"memory_declarations\": [\n    {\n      \"name\": \"A\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 0],\n      \"model_assumption\": \"Chọn A làm gốc tọa độ vì SA vuông góc với đáy ABCD.\"\n    },\n    {\n      \"name\": \"B\",\n      \"type\": \"point3\",\n      \"initial_value\": [1, 0, 0],\n      \"model_assumption\": \"Đặt cạnh AB dọc theo trục x, độ dài cạnh đáy là 1.\",\n      \"source_fact_id\": \"canh_day\"\n    },\n    {\n      \"name\": \"D\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 1, 0],\n      \"model_assumption\": \"Đặt cạnh AD dọc theo trục y, độ dài cạnh đáy là 1.\",\n      \"source_fact_id\": \"canh_day\"\n    },\n    {\n      \"name\": \"C\",\n      \"type\": \"point3\",\n      \"initial_value\": [1, 1, 0],\n      \"model_assumption\": \"Xác định C dựa trên A, B, D để tạo hình vuông ABCD.\",\n      \"source_fact_id\": \"abcd_hinh_vuong\"\n    },\n    {\n      \"name\": \"S\",\n      \"type\": \"point3\",\n      \"initial_value\": [0, 0, 2],\n      \"model_assumption\": \"SA vuông góc với đáy, nên S nằm trên trục z. SA = 2.\",\n      \"source_fact_id\": \"sa_length\"\n    },\n    {\n      \"name\": \"M\",\n      \"type\": \"point3\",\n      \"description\": \"Trung điểm của SA.\"\n    },\n    {\n      \"name\": \"sa\",\n      \"type\": \"line3\",\n      \"description\": \"Đường thẳng SA.\"\n    },\n    {\n      \"name\": \"abcd_plane\",\n      \"type\": \"plane3\",\n      \"description\": \"Mặt phẳng đáy (ABCD).\"\n    },\n    {\n      \"name\": \"s_abcd_pyramid\",\n      \"type\": \"solid\",\n      \"description\": \"Khối chóp S.ABCD.\"\n    },\n    {\n      \"name\": \"hinh_chieu_m\",\n      \"type\": \"point3\",\n      \"description\": \"Hình chiếu của M lên mặt phẳng (ABCD).\"\n    },\n    {\n      \"name\": \"the_tich_s_abcd\",\n      \"type\": \"float\",\n      \"description\": \"Thể tích khối chóp S.ABCD.\"\n    },\n    {\n      \"name\": \"perpendicular\",\n      \"type\": \"bool\",\n      \"params\": {\n        \"a\": \"sa\"\n      },\n      \"witness\": \"abcd_plane\",\n      \"pedagogical_intent\": \"Kiểm tra lại giả thiết SA vuông góc với đáy.\"\n    },\n    {\n      \"name\": \"point_on_plane\",\n      \"type\": \"bool\",\n      \"params\": {\n        \"plane\": \"abcd_plane\"\n      },\n      \"witness\": \"hinh_chieu_m\",\n      \"pedagogical_intent\": \"Xác định và kiểm tra hình chiếu của M lên mặt phẳng đáy.\"\n    },\n    {\n      \"name\": \"volume\",\n      \"type\": \"float\",\n      \"params\": {\n        \"of\": \"s_abcd_pyramid\"\n      },\n      \"witness\": \"the_tich_s_abcd\",\n      \"pedagogical_intent\": \"Tính toán thể tích khối chóp S.ABCD.\"\n    }\n  ],\n  \"statements\": [\n    {\n      \"kind\": \"construct_plane\",\n      \"target_var\": \"abcd_plane\",\n      \"through\": {\n        \"kind\": \"literal\",\n        \"value\": [\"A\", \"B\", \"C\"]\n      },\n      \"label\": \"Mặt phẳng đáy (ABCD)\"\n    },\n    {\n      \"kind\": \"construct_line\",\n      \"target_var\": \"sa\",\n      \"through_a\": \"S\",\n      \"through_b\": \"A\",\n      \"label\": \"Đường thẳng SA\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"M\",\n      \"expr\": {\n        \"kind\": \"midpoint\",\n        \"a\": \"S\",\n        \"b\": \"A\"\n      },\n      \"source_fact_id\": \"m_trung_diem_sa\",\n      \"label\": \"Trung điểm M của SA\"\n    },\n    {\n      \"kind\": \"construct_solid\",\n      \"target_var\": \"s_abcd_pyramid\",\n      \"vertices\": {\n        \"kind\": \"literal\",\n        \"value\": [\"S\", \"A\", \"B\", \"C\", \"D\"]\n      },\n      \"faces\": {\n        \"kind\": \"literal\",\n        \"value\": [\n          [0, 1, 2],\n          [0, 2, 3],\n          [0, 3, 4],\n          [0, 4, 1],\n          [1, 2, 3, 4]\n        ]\n      },\n      \"label\": \"Khối chóp S.ABCD\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"hinh_chieu_m\",\n      \"expr\": {\n        \"kind\": \"project_onto\",\n        \"point\": \"M\",\n        \"target\": \"abcd_plane\"\n      },\n      \"label\": \"Hình chiếu của M lên mặt phẳng (ABCD)\"\n    },\n    {\n      \"kind\": \"assign\",\n      \"target_var\": \"the_tich_s_abcd\",\n      \"expr\": {\n        \"kind\": \"measure\",\n        \"quantity\": \"volume\",\n        \"of\": \"s_abcd_pyramid\"\n      },\n      \"label\": \"Thể tích khối chóp S.ABCD\"\n    }\n  ]\n}",
       "obligations_declared": [
+        "perpendicular",
+        "point_on_plane",
         "volume"
       ],
       "schema_pass": false,
@@ -1306,7 +1954,36 @@
       "oracle_pass": null,
       "failure_layer": 2,
       "failure_code": "semantic_program_invalid",
-      "failure_reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nmemory_declarations.10.type\n  Input should be 'int', 'str', 'bool', 'float', 'array', 'stack', 'queue', 'matrix', 'map', 'set', 'tree_node', 'graph', 'node_ref', 'null', 'point3', 'vector3', 'line3', 'plane3', 'polygon3' or 'solid' [type=literal_error, input_value='volume', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\nmemory_declarations.11.type\n  Input should be 'int', 'str', 'bool', 'float', 'array', 'stack', 'queue', 'matrix', 'map', 'set', 'tree_node', 'graph', 'node_ref', 'null', 'point3', 'vector3', 'line3', 'plane3', 'polygon3' or 'solid' [type=literal_error, input_value='perpendicular', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+      "failure_reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 3 validation errors for SemanticProgramSpec\nstatements.0.construct_plane.through\n  Input should be a valid list [type=list_type, input_value={'kind': 'literal', 'value': ['A', 'B', 'C']}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type\nstatements.3.construct_solid.vertices\n  Input should be a valid list [type=list_type, input_value={'kind': 'literal', 'valu...S', 'A', 'B', 'C', 'D']}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type\nstatements.3.construct_solid.faces\n  Input should be a valid list [type=list_type, input_value={'kind': 'literal', 'valu...0, 4, 1], [1, 2, 3, 4]]}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/list_type",
+      "obligation_match": {
+        "mong_doi": [
+          "perpendicular",
+          "point_on_plane",
+          "volume"
+        ],
+        "khai": [
+          "perpendicular",
+          "point_on_plane",
+          "volume"
+        ],
+        "khop": [
+          "perpendicular",
+          "point_on_plane",
+          "volume"
+        ],
+        "thieu": [],
+        "thua": [],
+        "khop_hoan_toan": true
+      },
+      "do_tre": {
+        "so_luot": 4,
+        "tong_giay": 60.952,
+        "cham_nhat_giay": 26.357,
+        "theo_stage": {
+          "semantic_analyze": 3.981,
+          "semantic_program": 56.971
+        }
+      }
     }
   ]
 }

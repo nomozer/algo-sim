@@ -2713,6 +2713,16 @@ witness của một nghĩa vụ (`MODEL_ASSUMPTION_IS_ANSWER`), đòi lý do vi�
 bài hình học chết ở cổng này trong khi prompt *bảo* mô hình tự đặt hệ toạ độ —
 hợp đồng mâu thuẫn với prompt, không phải mô hình sai.
 
+Wave 3 (2026-08-25) nới thêm **hai bậc, đều tất định**. ① `fact_noi_long` khớp
+`source_fact_id` sau chuẩn hoá (`CANH-DAY` ≡ `cạnh_đáy`) — không đoán nghĩa.
+② Trích dẫn **không giải được** thôi chí mạng **nếu** khai báo đã tự đứng vững
+bằng kênh giả thiết; id ấy hạ xuống `unresolved_citations`, ghi lại chứ không
+giết. Nguồn: Phase 5 lượt 2 — mô hình khai `model_assumption` ĐÚNG rồi gắn
+*thêm* `source_fact_id`, và luật "`source_fact_id` vẫn thắng" phạt nó vì đã nói
+nhiều thông tin hơn. **Cố ý KHÔNG** khớp theo `semantic_type`/`entities`: cả hai
+phía phép khớp ấy đều do cùng một model đặt tên, và một `float` giữ `2/3` sẽ
+khớp fact `semantic_type: volume` — mở thẳng đường tuồn đáp án.
+
 ### `backend/app/simulation/semantic_program/domain_profile.py` · offline
 
 Sở hữu **hồ sơ MIỀN** của route ngữ nghĩa: mỗi miền (`tin_hoc` · `hinh_hoc`) có

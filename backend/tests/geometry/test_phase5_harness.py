@@ -313,6 +313,67 @@ def test_khong_co_budget_thi_KHONG_DO_DUOC_chu_khong_phai_ZERO(AU):
     assert kq["do_duoc"] is False and "luot_logic" not in kq
 
 
+def test_latency_MOCK_10s_phai_ra_dung_10(AU, rn, monkeypatch):
+    """TASK 6 — hồi quy cho lỗi Phase 5 lượt 2: `chi_phi.do_tre` in ra `0s`
+    trong khi độ trễ thật là 639s.
+
+    Nguyên nhân là một tham số bị bỏ quên (`tong_ket` gọi `bao_cao(model,
+    budget)` thiếu vế thứ ba), nên test phải đi qua **đúng đường ghép thật** —
+    từ `chay_mot_case` lên tới `tong_ket` — chứ không gọi thẳng `bao_cao`. Gọi
+    thẳng thì lỗi ấy vẫn xanh.
+    """
+    import time
+
+    from app.ai import pipeline
+
+    goc = time.perf_counter
+    dem = iter(range(0, 10_000, 10))  # mỗi lần gọi nhảy 10 "giây"
+
+    monkeypatch.setattr(time, "perf_counter", lambda: float(next(dem)))
+
+    async def gia_call(*x, **k):
+        return "{}"
+
+    async def a(*x, **k):
+        from app.ai.telemetry import stage_scope
+        with stage_scope("semantic_analyze"):
+            await pipeline.call_gemini("k", "s", "p", {}, 0.1)
+        return None, "dung o day"
+
+    monkeypatch.setattr(pipeline, "call_gemini", gia_call)
+    monkeypatch.setattr(pipeline, "stage_semantic_analyze", a)
+
+    ghi_luot = AU.GhiNhanApi()
+    ra = asyncio.run(rn.chay_mot_case(_CASES[0], "khoa-gia", ghi_luot))
+    monkeypatch.setattr(time, "perf_counter", goc)
+
+    assert ra["do_tre"]["tong_giay"] == 10.0, ra["do_tre"]
+
+    class _B:
+        logical_calls, http_requests, retry_requests, transient_hits = 1, 1, 0, 0
+        max_logical_calls, max_api_calls = 60, 80
+
+    bao = rn.tong_ket([ra], 1, None, "gemini-2.5-flash", _B(), ghi_luot)
+    assert bao["chi_phi"]["do_tre"]["tong_giay"] == 10.0, bao["chi_phi"]["do_tre"]
+    assert bao["chi_phi"]["do_tre"]["so_luot"] == 1
+
+
+def test_do_tre_cap_luot_KHONG_bao_gio_rong_khi_co_luot_goi(AU, rn):
+    """Chốt hình dạng: `{so_luot: 0}` khi thật sự có lượt gọi là dấu hiệu tham
+    số bị bỏ quên — đúng lỗi lượt 2, và nó im lặng."""
+    ghi = AU.GhiNhanApi()
+    ghi.luot.append({"stage": "semantic_program", "giay": 3.5, "loi": None,
+                     "raw": "x"})
+
+    class _B:
+        logical_calls, http_requests, retry_requests, transient_hits = 1, 1, 0, 0
+        max_logical_calls, max_api_calls = 60, 80
+
+    bao = rn.tong_ket([], 1, None, "gemini-2.5-flash", _B(), ghi)
+    assert bao["chi_phi"]["do_tre"]["so_luot"] == 1
+    assert bao["chi_phi"]["do_tre"]["tong_giay"] == 3.5
+
+
 def test_bao_cao_gom_du_BON_truc_yeu_cau(AU):
     """model · api_calls · tokens · latency · cost — bốn trục của mục 2."""
     from app.ai import telemetry

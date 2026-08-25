@@ -85,6 +85,11 @@ class GroundingResult(BaseModel):
     #: nhiêu giá trị đã đi vào chương trình mà không có nguồn từ đề. Rủi ro còn
     #: lại được khai ở đây thay vì giấu đi.
     assumptions: list[str] = Field(default_factory=list)
+    #: Trích dẫn `source_fact_id` KHÔNG giải được, hoặc chỉ giải được sau chuẩn
+    #: hoá. Không gác cửa — chỉ QUAN TRẮC, để lượt đo sau đếm được mức lệch danh
+    #: xưng giữa hai lượt LLM thay vì phải suy từ dấu vết. Rỗng ⇔ hai lượt gọi
+    #: tên dữ kiện y hệt nhau.
+    unresolved_citations: list[str] = Field(default_factory=list)
 
 
 def _canon(value: Any) -> tuple[Any, ...]:
@@ -128,6 +133,7 @@ def check_grounding(
     """P2 — mọi giá trị khởi tạo phải truy được về ĐÚNG mục dữ liệu đã chỉ."""
     unresolved: list[str] = []
     gia_thiet: list[str] = []
+    trich_dan_hong: list[str] = []
     #: Biến nào mang CÂU TRẢ LỜI. Không bao giờ được là giả thiết.
     dap_an = {ob.witness for ob in contract.obligations if ob.witness}
     ma_loi: str | None = None
@@ -218,12 +224,58 @@ def check_grounding(
             )
             continue
 
-        fact = contract.fact(fid)
+        fact, cach = contract.fact_noi_long(fid)
         if fact is None:
+            # ── TRÍCH DẪN KHÔNG GIẢI ĐƯỢC (Wave 3, 2026-08-25) ─────────────
+            #
+            # ĐO ĐƯỢC Ở PHASE 5 LƯỢT 2: 6/10 bài chết đúng ở đây, và chúng chết
+            # vì mô hình làm THÊM chứ không phải làm thiếu. `geo_09` khai
+            # `B point3 [1,0,0]` kèm `model_assumption` hợp lệ, rồi gắn thêm
+            # `source_fact_id='canh_day'` để nói toạ độ ấy bắt nguồn từ dữ kiện
+            # nào. Id đó không có trong hợp đồng (hai lượt LLM không dùng chung
+            # không gian tên), và luật Wave 2 — "`source_fact_id` VẪN THẮNG khi
+            # khai cả hai" — biến một trích dẫn hỏng thành lỗi chí mạng, giết
+            # một chương trình gần như trùng khít bản viết tay làm chuẩn.
+            #
+            # RANH GIỚI, và nó hẹp có chủ đích: hạ cấp CHỈ KHI khai báo đã tự
+            # đứng vững bằng kênh giả thiết — tức đã qua ba khoá độc lập (chỉ
+            # `point3`/`vector3` · KHÔNG BAO GIỜ là witness của một nghĩa vụ ·
+            # phải có lý do viết ra). Khi ấy trích dẫn hỏng là **thông tin
+            # thừa sai**, không phải **dữ liệu vô căn cứ**.
+            #
+            # Không có `model_assumption` ⇒ chết y như cũ. Một `float` giữ
+            # `2/3` với `source_fact_id` bịa vẫn không đi qua được — đó là
+            # đường tuồn đáp án, và nó vẫn đóng.
+            if decl.model_assumption and str(decl.model_assumption).strip():
+                if decl.name in dap_an:
+                    ma_loi = ma_loi or ERR_GIA_THIET_LA_DAP_AN
+                    unresolved.append(
+                        f"{decl.name}: là WITNESS của một nghĩa vụ — không được "
+                        "khai làm giả thiết, kể cả khi có source_fact_id."
+                    )
+                elif decl.type not in _KIEU_DUOC_GIA_THIET:
+                    ma_loi = ma_loi or ERR_GIA_THIET_SAI_KIEU
+                    unresolved.append(
+                        f"{decl.name}: kiểu '{decl.type}' không được mang giả "
+                        f"thiết mô hình hoá (chỉ {sorted(_KIEU_DUOC_GIA_THIET)})."
+                    )
+                else:
+                    gia_thiet.append(
+                        f"{decl.name}: {str(decl.model_assumption).strip()}"
+                    )
+                    trich_dan_hong.append(
+                        f"{decl.name}: source_fact_id '{fid}' không giải được — "
+                        "nhận theo kênh giả thiết mô hình hoá"
+                    )
+                continue
             unresolved.append(
                 f"{decl.name}: source_fact_id '{fid}' không có trong RequestContract"
             )
             continue
+        if cach != "exact":
+            trich_dan_hong.append(
+                f"{decl.name}: '{fid}' khớp '{fact.fact_id}' sau chuẩn hoá"
+            )
 
         khai = _canon(decl.initial_value)
         cho = fact.values
@@ -240,5 +292,8 @@ def check_grounding(
             error_code=ma_loi or "INPUT_NOT_GROUNDED",
             unresolved=unresolved,
             assumptions=gia_thiet,
+            unresolved_citations=trich_dan_hong,
         )
-    return GroundingResult(ok=True, assumptions=gia_thiet)
+    return GroundingResult(
+        ok=True, assumptions=gia_thiet, unresolved_citations=trich_dan_hong
+    )

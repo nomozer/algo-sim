@@ -238,9 +238,22 @@ def check_structural_coverage(
         # container (vd `structural_traversal` gắn lên mảng) thoát khỏi mọi
         # kiểm tra cấu trúc, và một lỗi thật lọt qua dưới danh nghĩa "chưa kiểm
         # chứng được".
+        # ─── VÌ SAO THÔNG ĐIỆP MANG THEO DANH SÁCH TÊN (Wave 3) ────────────
+        #
+        # PHASE 5 lượt 2: `geo_02` tạo ra MỌI thứ nó khai mà C₁a vẫn từ chối.
+        # Phân tích phải suy *"chắc là lệch tên witness"* từ dấu vết, vì thông
+        # điệp chỉ nói tên bên HỢP ĐỒNG mà không nói chương trình có những tên
+        # nào. Kèm cả hai phía thì lượt đo sau đọc ra ngay: hợp đồng đòi `X`,
+        # chương trình có `Y Z T` — đó là lệch danh xưng, không phải thiếu phép
+        # dựng, và hai bệnh ấy cần hai cách chữa khác nhau.
+        #
+        # Đây là ĐO, không phải NỚI: cổng vẫn từ chối đúng những ca cũ.
         ctype = declared.get(ob.container)
         if ctype is None:
-            missing.append(f"{ob.describe()}: container '{ob.container}' chưa khai báo")
+            missing.append(
+                f"{ob.describe()}: container '{ob.container}' chưa khai báo "
+                f"(chương trình khai: {sorted(declared)})"
+            )
             continue
         if not accepts_container_type(ob.kind, ctype):
             missing.append(
@@ -253,10 +266,16 @@ def check_structural_coverage(
             missing.append(f"{ob.describe()}: thiếu witness")
             continue
         if w not in declared:
-            missing.append(f"{ob.describe()}: witness '{w}' chưa khai báo")
+            missing.append(
+                f"{ob.describe()}: witness '{w}' chưa khai báo "
+                f"(chương trình khai: {sorted(declared)})"
+            )
             continue
         if w not in producers:
-            missing.append(f"{ob.describe()}: witness '{w}' không có producer hợp lệ")
+            missing.append(
+                f"{ob.describe()}: witness '{w}' không có producer hợp lệ "
+                f"(được tạo ra: {sorted(producers)})"
+            )
             continue
 
         # WITNESS PHẢI DẪN XUẤT TỪ DỮ LIỆU, không được là hằng gán thẳng.

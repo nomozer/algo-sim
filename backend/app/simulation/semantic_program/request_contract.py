@@ -101,3 +101,55 @@ class RequestContract(BaseModel):
             if f.fact_id == fact_id:
                 return f
         return None
+
+    def fact_noi_long(self, fact_id: str) -> tuple["InputFact | None", str]:
+        """Giải một `source_fact_id`, nới ĐÚNG một bậc TẤT ĐỊNH.
+
+        Trả `(fact, cách_khớp)` với `cách_khớp ∈ {exact, chuan_hoa, khong_khop}`.
+
+        ─── VÌ SAO CẦN, ĐO ĐƯỢC Ở PHASE 5 LƯỢT 2 (2026-08-25) ──────────────
+
+        6/10 bài chết vì `source_fact_id` không giải được: mô hình trích dẫn
+        `canh_day`, `abcd_hinh_vuong`, `sa_vuong_goc_day` — những id **hợp lý**
+        mà lượt `analyze` không đặt. Hai lượt LLM không dùng chung không gian tên.
+
+        ─── VÌ SAO CHỈ NỚI TỚI ĐÂY, KHÔNG KHỚP NGỮ NGHĨA ───────────────────
+
+        Có đề nghị khớp theo `semantic_type`/`entities`/`attributes`. Không làm,
+        và lý do là cơ chế chứ không phải khẩu vị: **cả hai phía của phép khớp
+        ấy đều do cùng một model đặt tên**, nên nó là model tự đối chiếu nhãn
+        của chính nó — đúng chế độ hỏng mà `RequestContract` sinh ra để chặn
+        (xem docstring module). Cụ thể hơn: một biến `float` giữ `2/3` sẽ khớp
+        một fact `semantic_type: volume`, tức mở thẳng đường tuồn đáp án.
+
+        Bậc `chuan_hoa` ở đây **không có phán đoán ngữ nghĩa nào**: bỏ dấu tiếng
+        Việt, thường hoá, gộp `-_ `. `CANH-DAY` ≡ `canh_day` ≡ `cạnh đáy`. Máy
+        kiểm được, người đọc lại được, không ai phải tin một model nào cả.
+        """
+        f = self.fact(fact_id)
+        if f is not None:
+            return f, "exact"
+        khoa = _chuan_hoa_id(fact_id)
+        for g in self.input_facts:
+            if _chuan_hoa_id(g.fact_id) == khoa:
+                return g, "chuan_hoa"
+        return None, "khong_khop"
+
+
+#: Dấu tiếng Việt → chữ không dấu. Bảng tay, không phụ thuộc `unicodedata`
+#: normalize form nào — id do LLM đặt có thể ở NFC hoặc NFD, và `str.translate`
+#: trên cả hai dạng thì phải xử lý cả tổ hợp lẫn ký tự dựng sẵn.
+_DAU = str.maketrans(
+    "àáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ"
+    "ÀÁẢÃẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆÌÍỈĨỊÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÙÚỦŨỤƯỪỨỬỮỰỲÝỶỸỴĐ",
+    "a" * 17 + "e" * 11 + "i" * 5 + "o" * 17 + "u" * 11 + "y" * 5 + "d"
+    + "A" * 17 + "E" * 11 + "I" * 5 + "O" * 17 + "U" * 11 + "Y" * 5 + "D",
+)
+
+
+def _chuan_hoa_id(s: str) -> str:
+    """Dạng chuẩn của một định danh — TẤT ĐỊNH, không đoán nghĩa."""
+    import unicodedata
+
+    s = unicodedata.normalize("NFC", str(s)).translate(_DAU).lower()
+    return "".join(c for c in s if c.isalnum())

@@ -132,8 +132,47 @@ def cham_oracle(case: dict, contract, final_memory: dict | None) -> dict[str, An
             "da_cham": cham_duoc}
 
 
+def _hop_dong_ra_json(contract) -> dict[str, Any]:
+    """`RequestContract` → JSON quan trắc. KHÔNG có tầng chấm nào đọc nó.
+
+    Ghi ĐỦ hai thứ mà chẩn đoán cần và PHASE 5 lượt 2 không có:
+
+      · `facts` kèm `fact_id` — để đối chiếu với `source_fact_id` trong IR.
+        Kèm luôn `provenance`/`unproven_values` vì P1 phân biệt "đề có thật" với
+        "`analyze` tự khai", và hai thứ ấy dẫn tới hai kết luận khác nhau.
+      · `obligations` kèm `container` + `witness` — tên THẬT mà C₁a đối chiếu.
+        Không có nó thì "witness lệch tên" mãi là suy đoán.
+
+    `contract is None` không tới đây được (đường gọi đã chặn), nhưng hợp đồng
+    RỖNG thì tới — và phải ghi ra `{"facts": [], "obligations": []}` chứ không
+    phải `None`: "đề không cho dữ kiện nào" là một quan sát, khác hẳn "không
+    ghi lại được".
+    """
+    return {
+        "facts": [
+            {
+                "fact_id": f.fact_id,
+                "label": f.label,
+                "values": list(f.values),
+                "provenance": f.provenance,
+                "unproven_values": list(f.unproven_values),
+            }
+            for f in contract.input_facts
+        ],
+        "obligations": [
+            {
+                "kind": o.kind,
+                "container": o.container,
+                "witness": o.witness,
+                "params": dict(o.params),
+            }
+            for o in contract.obligations
+        ],
+    }
+
+
 # ── một case ──────────────────────────────────────────────────────────────
-async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
+async def chay_mot_case(case: dict, api_key: str, ghi_luot=None) -> dict[str, Any]:
     from app.ai import gemini, pipeline
     from app.simulation.semantic_program.route import verify_and_compile
 
@@ -151,6 +190,17 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
         # nào để lại thứ mô hình thật sự viết — phân tích phải dựng lại từ chuỗi
         # lỗi Pydantic, tức đọc dấu vết thay vì đọc vật chứng.
         "generated_raw": None,
+        # ─── HỢP ĐỒNG LƯỢT `analyze` (Wave 3) ────────────────────────────
+        #
+        # Thiếu sót NẶNG NHẤT của PHASE 5 lượt 2, tự khai ở §6 báo cáo: không
+        # lưu `RequestContract` thì chẩn đoán hai ca C₁a chỉ là SUY TỪ DẤU VẾT.
+        # Không biết `analyze` đặt `fact_id` gì và `witness` tên gì thì không
+        # xác nhận được cái nào lệch — mà lệch danh xưng lại đúng là giả thuyết
+        # hàng đầu.
+        #
+        # QUAN TRẮC THUẦN: không tầng chấm nào đọc khoá này. Thêm nó không đổi
+        # đường thực thi, không đổi điểm.
+        "request_contract": None,
         "obligations_declared": [],
         "schema_pass": False,
         "semantic_pass": False,
@@ -159,6 +209,10 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
         "failure_layer": None,
         "failure_code": None,
         "failure_reason": None,
+        "failure_details": [],
+        "stage_reached": None,
+        "grounding_assumptions": [],
+        "grounding_unresolved_citations": [],
     }
 
     # ÉP SKILL HÌNH HỌC + BỌC BỘ GHI. Cả hai khôi phục trong `finally`: bỏ sót
@@ -201,6 +255,7 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
                       failure_reason=err,
                       generated_raw=ghi.tho_cuoi("semantic_analyze"))
             return
+        ra["request_contract"] = _hop_dong_ra_json(contract)
         ra["obligations_declared"] = sorted({o.kind for o in contract.obligations})
 
         spec, serr = await pipeline.stage_semantic_program(de, {}, api_key, contract)
@@ -224,7 +279,20 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
         if not outcome.executable:
             ra.update(failure_layer=4 if outcome.stage_reached == "execution" else 6,
                       failure_code=outcome.error_code,
-                      failure_reason=outcome.reason)
+                      failure_reason=outcome.reason,
+                      # `details` là chỗ chẩn đoán THẬT sống. `reason` chỉ là
+                      # một câu tiếng Việt chung ("Chương trình dùng dữ liệu
+                      # không truy được về đề bài") — giống hệt nhau ở cả 6 ca
+                      # grounding của lượt 2, nên nó không phân biệt được gì.
+                      failure_details=list(outcome.details),
+                      stage_reached=outcome.stage_reached)
+        # Quan trắc grounding ghi cho MỌI bài, kể cả bài đi trọn đường: bài
+        # chạy được mà dùng 5 giả thiết là một quan sát khác hẳn bài chạy được
+        # mà không dùng giả thiết nào.
+        ra["grounding_assumptions"] = list(outcome.grounding_assumptions)
+        ra["grounding_unresolved_citations"] = list(
+            outcome.grounding_unresolved_citations
+        )
         cham = cham_oracle(case, contract, outcome.final_memory)
         ra["oracle"] = cham
         ra["oracle_pass"] = (True if cham["verdict"] == "PASS"
@@ -249,6 +317,10 @@ async def chay_mot_case(case: dict, api_key: str) -> dict[str, Any]:
     # Độ trễ THEO TỪNG BÀI. Tổng của cả lượt không thay được: một bài chậm gấp
     # mười vì đi hết ba vòng sửa là thông tin, còn trung bình thì che nó đi.
     ra["do_tre"] = ghi.do_tre()
+    # …và dồn lên bộ ghi CẤP LƯỢT để `chi_phi.do_tre` không còn rỗng. Bộ ghi
+    # per-case vẫn là bản chính; đây chỉ là phép cộng, không phải nguồn thứ hai.
+    if ghi_luot is not None:
+        ghi_luot.luot.extend(ghi.luot)
     return ra
 
 
@@ -265,6 +337,9 @@ async def _main(args) -> int:
     print(f"Skill ép: {SKILL_HINH_HOC} · model {gemini.MODEL}")
     print(f"Ngân sách: {TRAN_LOGIC} logic / {TRAN_HTTP} HTTP\n")
 
+    import api_usage_log as AU
+
+    ghi_luot = AU.GhiNhanApi()
     budget = gemini.ApiBudget(max_api_calls=TRAN_HTTP, max_logical_calls=TRAN_LOGIC)
     gemini.set_budget(budget)
     # Bộ đếm token là TOÀN CỤC trong tiến trình. Không xoá thì con số của lượt
@@ -276,14 +351,14 @@ async def _main(args) -> int:
     try:
         for i, c in enumerate(cases, 1):
             print(f"[{i}/{len(cases)}] {c['case_id']}", flush=True)
-            ket.append(await chay_mot_case(c, api_key))
+            ket.append(await chay_mot_case(c, api_key, ghi_luot))
     except gemini.BudgetExceeded as e:
         dung_som = f"BUDGET_EXHAUSTED: {e}"
         print(f"\n{dung_som}")
     finally:
         gemini.set_budget(None)
 
-    bao = tong_ket(ket, len(cases), dung_som, gemini.MODEL, budget)
+    bao = tong_ket(ket, len(cases), dung_som, gemini.MODEL, budget, ghi_luot)
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
     (out / "geometry_dev_results.json").write_text(
@@ -309,7 +384,7 @@ async def _main(args) -> int:
 
 
 def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
-             budget=None) -> dict:
+             budget=None, ghi=None) -> dict:
     """ĐẾM THÔ, không phần trăm — mẫu số 10 < 20, `RELIABILITY_EVALUATION_PLAN
     §3.3` cấm chia.
 
@@ -340,7 +415,12 @@ def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
         "obligation_match": RV._gop_obligation_match(
             [{"obligation_match": m} for m in om]),
         "phan_bo_that_bai": _phan_bo(ket),
-        "chi_phi": AU.bao_cao(model, budget),
+        # `ghi` PHẢI truyền vào, không được bỏ. Lượt Phase 5 (2026-08-25) gọi
+        # `bao_cao(model, budget)` thiếu tham số thứ ba, nên `do_tre` cấp lượt
+        # in ra `0s` trong khi độ trễ thật là 639s. Dữ liệu không mất — `do_tre`
+        # từng bài vẫn đủ — nhưng con số SAI in ra màn hình lúc chạy là thứ dễ
+        # bị chép lại nhất.
+        "chi_phi": AU.bao_cao(model, budget, ghi),
         "neo": neo_kho_ma(),
     }
 

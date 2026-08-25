@@ -70,6 +70,13 @@ class SemanticRouteOutcome(BaseModel):
     #: adapter thị giác.
     final_memory: dict[str, Any] | None = None
     envelope: dict[str, Any] | None = None
+    #: QUAN TRẮC grounding — không gác cửa, không vào A/B, không tầng nào đọc để
+    #: chấm. Có mặt vì PHASE 5 lượt 2 không đo được **mức lệch danh xưng giữa hai
+    #: lượt LLM**: mọi ca grounding đều phát cùng một câu `reason`, còn số lượng
+    #: giả thiết và trích dẫn hỏng thì mất hẳn. Ghi ra đây để lượt sau đếm được
+    #: thay vì suy.
+    grounding_assumptions: list[str] = Field(default_factory=list)
+    grounding_unresolved_citations: list[str] = Field(default_factory=list)
 
 
 def _hong(
@@ -102,6 +109,32 @@ def verify_and_compile(
     execution_budget: int = DEFAULT_EXECUTION_BUDGET,
     presentation_budget: int = DEFAULT_PRESENTATION_BUDGET,
 ) -> SemanticRouteOutcome:
+    """Bọc mỏng quanh `_sau_grounding` để **gắn quan trắc grounding ở MỘT chỗ**.
+
+    Thân hàm có 11 điểm thoát. Gắn tay vào từng chỗ thì lần thêm nhánh tiếp theo
+    chắc chắn sót một cái, và sót ở đây là im lặng: trường quan trắc rỗng đọc
+    y hệt "không có giả thiết nào", nên số liệu sai mà không ai thấy.
+    """
+    ground = check_grounding(contract, spec)
+    kq = _sau_grounding(
+        contract, spec, ground,
+        execution_budget=execution_budget,
+        presentation_budget=presentation_budget,
+    )
+    return kq.model_copy(update={
+        "grounding_assumptions": list(ground.assumptions),
+        "grounding_unresolved_citations": list(ground.unresolved_citations),
+    })
+
+
+def _sau_grounding(
+    contract: RequestContract,
+    spec: SemanticProgramSpec,
+    ground,
+    *,
+    execution_budget: int = DEFAULT_EXECUTION_BUDGET,
+    presentation_budget: int = DEFAULT_PRESENTATION_BUDGET,
+) -> SemanticRouteOutcome:
     """Contract (đã đóng băng) + IR (LLM viết) → phán quyết tất định.
 
     THỨ TỰ CÓ Ý NGHĨA, không tuỳ tiện:
@@ -116,7 +149,6 @@ def verify_and_compile(
     5. **C₂** — hậu điều kiện server-owned.
     6. **Biên dịch** — binding fail-closed (bất biến #34) nói lời cuối.
     """
-    ground = check_grounding(contract, spec)
     if not ground.ok:
         # `ErrorCode` giữ nguyên — đây vẫn là một thất bại grounding, và mở rộng
         # enum là đụng vào bề mặt mọi tầng phía sau đọc. Nhưng mã CHI TIẾT phải
@@ -153,10 +185,17 @@ def verify_and_compile(
     try:
         exec_res = SemanticProgramInterpreter(max_steps=execution_budget).execute(spec)
     except Exception as e:  # interpreter vỡ = hệ không thực thi được bài này
+        # `details` phải có LOẠI lỗi tách khỏi lời kể. Đo được ở Wave 3.5: đây
+        # là tầng DUY NHẤT trong bốn tầng phát ra `details` rỗng, nên một lượt
+        # vỡ ở kernel chỉ để lại một câu tiếng Việt — và phân loại thất bại sau
+        # đó không phân biệt được "song song nên không giao" với "chỉ số đỉnh
+        # ngoài biên", hai bệnh mà kernel đã cố ý tách bằng mã lỗi riêng.
+        ma = getattr(e, "code", None)
         return _hong(
             "execution",
             ErrorCode.SEMANTIC_PROGRAM_INVALID,
             f"Interpreter không thực thi được chương trình: {e}",
+            details=[f"[{ma or type(e).__name__}]", str(e)],
             weak=list(c1a.weak_kinds),
         )
 
