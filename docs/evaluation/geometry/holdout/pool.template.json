@@ -1,0 +1,52 @@
+{
+  "__khai__": [
+    "ĐÂY LÀ KHUÔN, KHÔNG PHẢI POOL. Đổi tên thành pool.json và thay bằng đề THẬT",
+    "trích từ nguồn công khai thì mới rút được. Mọi trường <...> là chỗ phải điền.",
+    "Kiểm khuôn đã điền: python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool"
+  ],
+  "dataset": "geometry_holdout_pool",
+  "version": 1,
+  "luat_soan": [
+    "Đề và ĐÁP ÁN đều đến từ NGOÀI: đề thi/đề minh hoạ/chuyên đề có lời giải chi tiết. Người soạn pool KHÔNG tự tính đáp án — vì người soạn cũng là người sửa hệ.",
+    "`nguon.url` bắt buộc: một đáp án không tra ngược được thì không phải oracle độc lập, chỉ là một con số ai đó gõ vào.",
+    "`dap_an_chinh_thuc` chép NGUYÊN VĂN đáp án nguồn (ví dụ `a√3/3`). KHÔNG chuẩn hoá ở đây.",
+    "`phep_chuyen` ghi RÕ cách đổi sang đơn vị checker, kèm giá trị gán cho tham số cạnh. Đây là chỗ duy nhất người soạn được phép tính, và nó phải hiện ra để người khác kiểm lại.",
+    "`oracle_result` dùng đúng đơn vị checker: `distance`/`volume` là phân số dạng chuỗi; `angle` là cos²; quan hệ là true/false.",
+    "Ô B* KHÔNG có `oracle_result` — chấm bằng 'từ chối trung thực', không bằng đáp án.",
+    "`chua_chay_he: true` khai tại thời điểm soạn. Soạn đáp án sau khi thấy hệ chạy là chép bài của chính mình.",
+    "Đề KHÔNG được trùng tập DEV (`../dev/cases.json`) — bộ rút chặn cứng."
+  ],
+  "cases": [
+    {
+      "case_id": "hp_a11_001",
+      "slot": "A11",
+      "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
+      "problem_text": "<chép nguyên văn đề, tiếng Việt, KHÔNG cho sẵn toạ độ>",
+      "expected_obligations": ["distance"],
+      "nguon": {
+        "ten": "<tên tài liệu>",
+        "url": "<https://…>",
+        "vi_tri": "<Câu 43 / trang 12>"
+      },
+      "dap_an_chinh_thuc": "<a√3/3>",
+      "phep_chuyen": "<gán a = 1 ⇒ d = √3/3 vô tỉ ⇒ checker so d² = 1/3>",
+      "oracle_result": { "distance": "1/3" },
+      "chua_chay_he": true
+    },
+    {
+      "case_id": "hp_b01_001",
+      "slot": "B01",
+      "chu_de": "Khoảng cách giữa hai đường thẳng chéo nhau",
+      "problem_text": "<chép nguyên văn đề>",
+      "expected_obligations": [],
+      "nguon": {
+        "ten": "<tên tài liệu>",
+        "url": "<https://…>",
+        "vi_tri": "<Câu 47>"
+      },
+      "dap_an_chinh_thuc": "<a√2/2>",
+      "ly_do_ngoai_phu": "measure chưa nối distance cho cặp đường–đường (GEOMETRY_OPERAND_TYPE) — xem GEOMETRY_CURRENT_COVERAGE #13. Hệ PHẢI nói thẳng là không diễn đạt được, KHÔNG được đổi sang một khoảng cách điểm–mặt gần giống.",
+      "chua_chay_he": true
+    }
+  ]
+}

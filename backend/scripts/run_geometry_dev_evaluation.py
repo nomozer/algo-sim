@@ -65,23 +65,72 @@ from app.simulation.semantic_program.domain_profile import (  # noqa: E402
 )
 
 #: Trần lượt logic. DẪN từ call graph: analyze ≤2 · semantic_analyze 1 ·
-#: semantic_program ≤3 ⇒ 6/case. 10 case ⇒ 60, cộng đệm transient ⇒ 80.
+#: semantic_program ≤3 ⇒ 6/case; cộng đệm transient ⇒ 8 HTTP/case.
 #: KHÔNG dùng trần 13/case của miền Tin học: runner này không chạy classify,
 #: simulate hay one-route recovery, nên mượn trần ấy là xin thừa quota.
-TRAN_LOGIC = 60
-TRAN_HTTP = 80
+#:
+#: Nhân theo SỐ BÀI chứ không viết cứng: tập held-out có 20 bài, và một con số
+#: cứng `60` sẽ làm lượt ấy đứt giữa chừng ở bài thứ mười — nhìn hệt như hệ
+#: hỏng. n=10 ra đúng 60/80, tức trần đã duyệt cho DEV không đổi một đơn vị.
+TRAN_LOGIC_MOI_CASE = 6
+TRAN_HTTP_MOI_CASE = 8
+
+HOLDOUT = GEO / "holdout" / "cases.json"
+HOLDOUT_SEAL = GEO / "holdout" / "HOLDOUT_SEAL.json"
 
 
 class DungSach(Exception):
     """Dừng có chủ đích, không phải sự cố."""
 
 
-def _bat_buoc_live() -> None:
+def _bat_buoc_live(n: int) -> None:
     if os.environ.get("ALLOW_LIVE_AI") != "1":
         raise DungSach(
             "Thiếu ALLOW_LIVE_AI=1. Lượt này TIÊU QUOTA THẬT — "
-            f"trần {TRAN_LOGIC} lượt logic / {TRAN_HTTP} lần thử HTTP."
+            f"trần {TRAN_LOGIC_MOI_CASE * n} lượt logic / "
+            f"{TRAN_HTTP_MOI_CASE * n} lần thử HTTP cho {n} bài."
         )
+
+
+def _kiem_con_dau(cases: list[dict]) -> None:
+    """Chạy held-out CHỈ khi tập đề *và* hệ thống vẫn đúng bản đã niêm phong.
+
+    Hai điều kiện, hai lý do khác nhau:
+
+    · `seal_hash` — tập đề không bị đổi sau khi đã thấy kết quả lượt trước.
+    · `measured_system_hash` — hệ không bị sửa **giữa lúc niêm phong và lúc
+      chạy**. Đây là chỗ biến lời hứa *"không sửa hợp đồng theo từng bài"*
+      thành thứ đối chiếu được: sửa xong rồi chạy thì runner từ chối, thay vì
+      để con số đi vào báo cáo mang tiếng "held-out".
+
+    Lối thoát duy nhất là **niêm phong lại** — tức khai ra rằng đây là lượt
+    khác, trên một hệ khác. Đúng như vậy thì tập ấy đã thành DEV.
+    """
+    if not HOLDOUT_SEAL.exists():
+        raise DungSach(
+            f"Không có con dấu {HOLDOUT_SEAL}. Không có con dấu trong lịch sử "
+            "thì không chứng minh được tập đề không bị sửa sau khi thấy kết quả."
+        )
+    seal = json.loads(HOLDOUT_SEAL.read_text(encoding="utf-8"))
+
+    import seal_geometry_holdout as SH
+
+    if (bam := SH._bam(cases)) != seal.get("seal_hash"):
+        raise DungSach(
+            f"TẬP ĐỀ LỆCH CON DẤU: {bam[:16]}… ≠ {str(seal.get('seal_hash'))[:16]}…"
+        )
+    hien, so_file = SH._bam_he_thong()
+    if hien != seal.get("measured_system_hash"):
+        raise DungSach(
+            "HỆ ĐÃ ĐỔI SAU KHI NIÊM PHONG — "
+            f"{hien[:16]}… ({so_file} file) ≠ "
+            f"{str(seal.get('measured_system_hash'))[:16]}… "
+            f"({seal.get('measured_system_files')} file).\n"
+            "Chạy tiếp thì con số KHÔNG còn là held-out: hệ đã được sửa sau khi "
+            "tập đề được chốt. Muốn đo bản mới thì niêm phong lại tập KHÁC."
+        )
+    print(f"CON DẤU KHỚP · seed {seal.get('seed')} ({seal.get('nguon_seed')}) "
+          f"· niêm phong {seal.get('niem_phong_luc')}")
 
 
 def _nap_oracle():
@@ -339,20 +388,29 @@ async def chay_mot_case(case: dict, api_key: str, ghi_luot=None) -> dict[str, An
 async def _main(args) -> int:
     from app.ai import gemini, telemetry
 
-    _bat_buoc_live()
+    tap, nhan = (HOLDOUT, "HELD-OUT (đã niêm phong)") if args.holdout \
+        else (DEV, "DEV — ĐƯỢC NHÌN, không phải held-out")
+    if not tap.exists():
+        raise DungSach(f"Không có tập đề: {tap}")
+    cases = json.loads(tap.read_text(encoding="utf-8"))["cases"]
+    if args.holdout:
+        _kiem_con_dau(cases)
+
+    _bat_buoc_live(len(cases))
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise DungSach("Thiếu GEMINI_API_KEY (backend/.env).")
 
-    cases = json.loads(DEV.read_text(encoding="utf-8"))["cases"]
-    print(f"DEV HÌNH HỌC: {len(cases)} bài — ĐƯỢC NHÌN, không phải held-out")
+    tran_logic = TRAN_LOGIC_MOI_CASE * len(cases)
+    tran_http = TRAN_HTTP_MOI_CASE * len(cases)
+    print(f"HÌNH HỌC · {nhan}: {len(cases)} bài")
     print(f"Skill ép: {SKILL_HINH_HOC} · model {gemini.MODEL}")
-    print(f"Ngân sách: {TRAN_LOGIC} logic / {TRAN_HTTP} HTTP\n")
+    print(f"Ngân sách: {tran_logic} logic / {tran_http} HTTP\n")
 
     import api_usage_log as AU
 
     ghi_luot = AU.GhiNhanApi()
-    budget = gemini.ApiBudget(max_api_calls=TRAN_HTTP, max_logical_calls=TRAN_LOGIC)
+    budget = gemini.ApiBudget(max_api_calls=tran_http, max_logical_calls=tran_logic)
     gemini.set_budget(budget)
     # Bộ đếm token là TOÀN CỤC trong tiến trình. Không xoá thì con số của lượt
     # này cộng dồn cả những gì đã chạy trước trong cùng tiến trình — và một con
@@ -370,13 +428,14 @@ async def _main(args) -> int:
     finally:
         gemini.set_budget(None)
 
-    bao = tong_ket(ket, len(cases), dung_som, gemini.MODEL, budget, ghi_luot)
+    bao = tong_ket(ket, len(cases), dung_som, gemini.MODEL, budget, ghi_luot,
+                   held_out=bool(args.holdout))
     out = Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
     (out / "geometry_dev_results.json").write_text(
         json.dumps({"tom_tat": bao, "cases": ket}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
-    print("\n── KẾT QUẢ (DEV, không phải held-out) ──")
+    print(f"\n── KẾT QUẢ · {nhan} ──")
     for k in ("G1_schema", "G2_semantic", "A_executable", "O_oracle"):
         print(f"  {k:14} {bao[k]['tu_so']}/{bao[k]['mau_so']}")
     print(f"  obligation khớp {bao['obligation_match']['khop_hoan_toan']}"
@@ -396,9 +455,10 @@ async def _main(args) -> int:
 
 
 def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
-             budget=None, ghi=None) -> dict:
+             budget=None, ghi=None, held_out: bool = False) -> dict:
     """ĐẾM THÔ, không phần trăm — mẫu số 10 < 20, `RELIABILITY_EVALUATION_PLAN
-    §3.3` cấm chia.
+    §3.3` cấm chia. (Tập held-out có N=20 nên **được** chia; phép chia ấy thuộc
+    về báo cáo, không thuộc về đây — runner chỉ đếm.)
 
     `budget` THÊM Ở WAVE 2 và mặc định `None` để test cũ gọi bốn tham số vẫn
     chạy. Lượt Phase 5 đầu **không ghi số lượt API** — artifact không có
@@ -416,8 +476,12 @@ def tong_ket(ket: list[dict], n: int, dung_som: str | None, model: str,
 
     om = [r["obligation_match"] for r in ket if r.get("obligation_match")]
     return {
-        "khai": "TẬP DEV — được nhìn, hệ được sửa theo nó. KHÔNG phải số "
-                "held-out của luận văn.",
+        "khai": ("TẬP HELD-OUT đã niêm phong — con dấu và băm hệ thống đều đã "
+                 "đối chiếu trước khi chạy. Chạy MỘT LƯỢT."
+                 if held_out else
+                 "TẬP DEV — được nhìn, hệ được sửa theo nó. KHÔNG phải số "
+                 "held-out của luận văn."),
+        "held_out": held_out,
         "N": len(ket), "N_planned": n, "hoan_tat": len(ket) == n and not dung_som,
         "dung_som": dung_som, "model": model,
         "G1_schema": dem("schema_pass"),
@@ -500,8 +564,16 @@ def _phan_bo(ket: list[dict]) -> dict[str, int]:
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--out-dir", default=str(GEO / "dev-results"))
+    p.add_argument("--out-dir", default=None)
+    p.add_argument("--holdout", action="store_true",
+                   help="Chạy tập ĐÃ NIÊM PHONG thay vì DEV. Kiểm con dấu "
+                        "trước, và TỪ CHỐI nếu hệ đã đổi kể từ lúc niêm phong.")
     args = p.parse_args()
+    if args.out_dir is None:
+        # Mặc định theo tập, không theo cờ người gõ: ghi kết quả held-out đè lên
+        # `dev-results/` là mất một baseline mà không có cách nào lấy lại.
+        args.out_dir = str(GEO / ("holdout-results" if args.holdout
+                                  else "dev-results"))
     try:
         from dotenv import load_dotenv
 

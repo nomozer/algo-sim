@@ -2666,6 +2666,55 @@ và đỏ oan vì chính docstring nhắc tên module bị cấm) · khớp trê
 (CẦN, chưa ĐỦ) · **tiêm lỗi vào kernel thì oracle BẮT ĐƯỢC** (4 phép tiêm) ·
 cộng hai ca ranh giới chống **bắt oan**.
 
+### `backend/scripts/run_geometry_dev_evaluation.py` · **TIÊU QUOTA THẬT**
+
+Runner đo sinh chương trình hình học. **Hai tập, một mã**: mặc định chạy `dev/`
+(được nhìn); `--holdout` chạy `holdout/cases.json` đã niêm phong và **đối chiếu
+hai băm trước khi tiêu call đầu tiên** — `seal_hash` (tập đề không bị đổi) và
+`measured_system_hash` (hệ không bị sửa kể từ lúc niêm phong). Lệch băm nào cũng
+là `DungSach`, không phải cảnh báo.
+
+Trần **nhân theo số bài** (`TRAN_LOGIC_MOI_CASE=6`, `TRAN_HTTP_MOI_CASE=8`, dẫn
+từ call graph) — N=10 vẫn ra đúng 60/80 đã duyệt, N=20 ra 120/160. Viết cứng `60`
+thì lượt held-out đứt ở bài thứ mười và nhìn hệt như hệ hỏng.
+
+Đường ra dẫn từ cờ: `dev-results/` vs `holdout-results/` — ghi đè baseline cũ là
+mất một thứ không lấy lại được. `neo_kho_ma()` ghi **hai phạm vi bẩn** (toàn kho
+vs chỉ `MEASURED_SYSTEM_PATHS`) vì hai định nghĩa "sạch" trong kho này khác nhau.
+Khoá bởi `tests/geometry/test_geometry_dev_runner.py`.
+
+### `backend/scripts/seal_geometry_holdout.py` · offline · **0 API call**
+
+Rút + niêm phong tập held-out. Sở hữu **`BANG_O`** — 20 ô đích danh (14 tầng A
+phủ đủ tám nghĩa vụ hình học + 6 tầng B ngoài phủ) — và `kiem_pool`.
+
+**Đa dạng là tính chất của thiết kế, không phải may rủi của seed**: rút *một bài
+mỗi ô*, seed chỉ chọn *bài nào trong ô*. Mỗi ô một `Random` gieo từ
+`(seed, tên ô)` để thêm bài vào ô này không làm trượt phép rút ở ô khác. Ô thiếu
+bài ⇒ dừng, **không rút bù** — rút bù là lặng lẽ đổi tập đo thành tập dễ hơn.
+
+`--seed` **không có mặc định** (tôi chọn seed thì tôi chọn được cả tập).
+`kiem_pool` chặn: thiếu `nguon.url` · thiếu `phep_chuyen` · ô B mang
+`oracle_result` · `chua_chay_he` không true · **đề trùng tập DEV**. Băm hệ thống
+mượn thẳng `freeze_evaluation_candidate.measured_system_hash()` để hai con số
+không bao giờ trôi khỏi nhau. Giao thức: `docs/evaluation/geometry/HOLDOUT_PROTOCOL.md`.
+Khoá bởi `tests/geometry/test_holdout_protocol.py` (25).
+
+### `backend/app/simulation/semantic_program/purpose_analysis.py` · offline
+
+Sở hữu câu hỏi **"bước nào phục vụ đáp án, bước nào là đường cụt"** — ghép
+`RequestContract` (đề hỏi gì) với bao đóng phụ thuộc (mỗi đối tượng dựng từ gì).
+Không sửa IR, **không thêm trường `why`**: mục đích tự khai thì không kiểm được.
+
+**Ba nhãn, và phải tách ba**: `serves` · `redundant` · `name_mismatch`. Gộp hai
+cái sau thì một ca lệch tên (hợp đồng gọi `(ABCD)`, chương trình khai
+`ABCD_plane`) bị đọc thành "mô hình dựng hai bước vô ích" — vu oan cho mô hình ở
+đúng chỗ ta sai. Nên `redundant` chỉ phát khi **mọi** tên trong nghĩa vụ giải
+được, và `ti_le_huu_ich` trả `None` (không phải `0`) khi không đo được.
+
+⚠️ **QUAN TRẮC, KHÔNG GÁC CỬA** — chương trình có bước thừa vẫn là chương trình
+đúng. Có test cấm mọi module dưới `app/simulation` gọi nó.
+
 ## Đường sinh ngữ nghĩa `generic.semantic_program` (2026-08-20 → 21)
 
 Spec: `docs/superpowers/specs/2026-08-20-semantic-program-generative-route-design.md`.

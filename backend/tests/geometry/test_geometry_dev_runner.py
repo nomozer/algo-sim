@@ -41,14 +41,19 @@ class _HD:
 def test_khong_co_ALLOW_LIVE_AI_thi_TU_CHOI(rn, monkeypatch):
     monkeypatch.delenv("ALLOW_LIVE_AI", raising=False)
     with pytest.raises(rn.DungSach, match="ALLOW_LIVE_AI"):
-        rn._bat_buoc_live()
+        rn._bat_buoc_live(10)
 
 
 def test_ngan_sach_DAN_tu_call_graph_khong_muon_tran_Tin_hoc(rn):
     """13/case là trần của miền Tin học (có classify + simulate + recovery).
-    Runner này không chạy ba thứ đó, nên mượn trần ấy là xin thừa quota."""
-    assert rn.TRAN_LOGIC == 60 and rn.TRAN_HTTP == 80
-    assert rn.TRAN_LOGIC == 6 * 10, "6 lượt/case × 10 case"
+    Runner này không chạy ba thứ đó, nên mượn trần ấy là xin thừa quota.
+
+    Trần nhân theo SỐ BÀI kể từ khi có tập held-out 20 bài — nhưng con số ở
+    N=10 phải giữ nguyên 60/80, vì đó là trần đã được duyệt và báo cáo đã ghi.
+    """
+    assert rn.TRAN_LOGIC_MOI_CASE == 6, "6 lượt/case, dẫn từ call graph"
+    assert rn.TRAN_LOGIC_MOI_CASE * 10 == 60
+    assert rn.TRAN_HTTP_MOI_CASE * 10 == 80
 
 
 # ── 2. Ép skill hình học ──────────────────────────────────────────────────
@@ -80,12 +85,19 @@ def test_runner_KHONG_import_run_sealed_evaluation(rn):
 
 def test_runner_KHONG_ghi_vao_thu_muc_cua_lUot_SEALED(rn):
     """Đường ra mặc định phải nằm trong `docs/evaluation/geometry/`, không đụng
-    `semantic-benchmark/results/` — nơi giữ artifact held-out duy nhất."""
+    `semantic-benchmark/results/` — nơi giữ artifact held-out duy nhất.
+
+    Mặc định nay dẫn từ CỜ `--holdout` chứ không phải một chuỗi cứng, nên test
+    soi chính đoạn dẫn ấy: hai đường ra phải KHÁC nhau (ghi kết quả held-out đè
+    lên `dev-results/` là mất một baseline không lấy lại được) và cả hai phải
+    nằm dưới `GEO`.
+    """
     import inspect
 
-    mac_dinh = [d for d in inspect.getsource(rn.main).splitlines()
-                if "out-dir" in d]
-    assert mac_dinh and "GEO" in mac_dinh[0]
+    src = inspect.getsource(rn.main)
+    assert "holdout-results" in src and "dev-results" in src
+    assert 'default=None' in src, "đường ra phải dẫn từ cờ, không viết cứng"
+    assert "GEO /" in src
     assert "semantic-benchmark" not in str(rn.GEO)
 
 
