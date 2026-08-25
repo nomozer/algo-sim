@@ -204,7 +204,13 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #
 #       Có cache thật cần dọn: mọi đề hình học đã phân tích đều mang một chương
 #       trình sinh dưới hợp đồng CŨ, nơi "đáy ABCD" không có cách nói nào hợp lệ.
-CACHE_VERSION = "45"
+#   46 (2026-08-26, Phase 6.8): `ConstructPointStmt.expr` thu hẹp từ `ValueExpr`
+#       xuống `PointExpr` — năm phép dựng sinh ra một ĐIỂM. Hợp đồng trước đó
+#       CHO PHÉP `arith`/`literal`, tức cho phép đúng thứ engine cấm, và mô hình
+#       tin hợp đồng: `construct_point C = arith(B + D)` xuất hiện ở HAI vòng đo
+#       độc lập. Thẻ văn phạm nay gọi trường ấy là "phép dựng ĐIỂM" thay vì
+#       "biểu thức" ⇒ bề mặt prompt đổi.
+CACHE_VERSION = "46"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

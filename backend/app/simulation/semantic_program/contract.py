@@ -387,6 +387,57 @@ ValueExpr = Annotated[
     Discriminator("kind"),
 ]
 
+# ── ĐIỂM DẪN XUẤT: chỉ nhận PHÉP DỰNG HÌNH HỌC ───────────────────────────
+#
+# ─── HAI LOẠI ĐIỂM, VÀ RANH GIỚI GIỮA CHÚNG LÀ MỘT PHẦN CỦA R0 ──────────
+#
+#   ĐIỂM DỮ KIỆN     khai ở `memory_declarations` với `initial_value`, kèm
+#                    `source_fact_id` (đề cho) hoặc `model_assumption` (mô hình
+#                    tự chọn hệ trục). Grounding gác kênh này.
+#
+#   ĐIỂM DẪN XUẤT    sinh ra bởi `construct_point`. Toạ độ của nó phải do
+#                    KERNEL tính, không do LLM tính.
+#
+# ─── VÌ SAO THU HẸP KIỂU, ĐO ĐƯỢC 2 LẦN Ở 2 VÒNG ĐO ĐỘC LẬP ────────────
+#
+# `expr: ValueExpr` cho phép cả `arith`, `literal`, `index`, `peek`… — biểu thức
+# của miền Tin học. `eval_geometry_expr` từ chối chúng, nhưng từ chối ở LÚC CHẠY.
+# Hợp đồng nói HỢP LỆ, engine nói KHÔNG, và mô hình tin hợp đồng:
+#
+#     {"kind":"construct_point","target_var":"C",
+#      "expr":{"kind":"arith","op":"+","left":{"var":"B"},"right":{"var":"D"}}}
+#
+# Nó tự cộng hai điểm để tính đỉnh thứ tư — vừa vi phạm R0 vừa sai công thức
+# (đỉnh thứ tư là `B + D − A`, chỉ đúng khi `A` ở gốc). Xuất hiện ở Phase 6.7
+# lượt `2-the-tich-lan5` VÀ Phase 6.7.2 lượt `2-the-tich-lan2`: hai vòng đo độc
+# lập, hai bản mã khác nhau, cùng một câu lệnh.
+#
+# Hệ quả nặng hơn cả việc trượt: lỗi nổ ở EXECUTION, tức SAU vòng sửa. Lỗi
+# validator được gửi ngược cho mô hình sửa (≤3 lượt); lỗi runtime thì không —
+# `thu_that_bai` của cả hai lượt đều RỖNG, không một lần thử lại nào.
+#
+# Thu hẹp kiểu đẩy phép từ chối lên tận biên PARSE, nơi mô hình còn sửa được.
+#
+# ─── ĐÓNG THEO BẰNG CHỨNG, KHÔNG THEO SUY ĐOÁN ─────────────────────────
+#
+# Năm biểu thức dưới đây là **toàn bộ** biểu thức mà kernel trả về một `Point3`.
+# Soi 30 chương trình đã sinh: `construct_point` dùng `midpoint` 22 lần và
+# `arith` 2 lần, không gì khác. Soi test: dùng đúng năm cái này. Nên thu hẹp
+# KHÔNG phá một đường đúng nào.
+#
+# `intersect_plane_plane` CỐ Ý VẮNG MẶT: nó trả `Line3`, không phải điểm.
+# `var` cũng vắng: sao chép một điểm đã có không phải một phép DỰNG.
+PointExpr = Annotated[
+    Union[
+        Annotated[IntersectLinePlaneExpr, Tag("intersect_line_plane")],
+        Annotated[IntersectLineLineExpr, Tag("intersect_line_line")],
+        Annotated[MidpointExpr, Tag("midpoint")],
+        Annotated[ProjectOntoExpr, Tag("project_onto")],
+        Annotated[DivideSegmentExpr, Tag("divide_segment")],
+    ],
+    Discriminator("kind"),
+]
+
 # Rebuild models for recursive references
 IndexRefExpr.model_rebuild()
 FieldRefExpr.model_rebuild()
@@ -572,7 +623,11 @@ class ReturnStmt(BaseModel):
 class ConstructPointStmt(BaseModel):
     kind: Literal["construct_point"] = "construct_point"
     target_var: str = Field(..., description="tên điểm dựng ra")
-    expr: ValueExpr = Field(..., description="biểu thức hình học")
+    expr: PointExpr = Field(
+        ...,
+        description="PHÉP DỰNG sinh ra điểm — toạ độ do kernel tính. Toạ độ đề "
+                    "cho hoặc do mình chọn thì khai ở memory_declarations.",
+    )
     label: Optional[str] = Field(None, description="nhãn, vd M")
 
 class ConstructLineStmt(BaseModel):

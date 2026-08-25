@@ -590,38 +590,20 @@
           "type": "string"
         },
         "expr": {
-          "description": "biểu thức hình học",
+          "description": "PHÉP DỰNG sinh ra điểm — toạ độ do kernel tính. Toạ độ đề cho hoặc do mình chọn thì khai ở memory_declarations.",
           "discriminator": {
             "mapping": {
-              "arith": "#/$defs/BinaryArithExpr",
               "divide_segment": "#/$defs/DivideSegmentExpr",
-              "field": "#/$defs/FieldRefExpr",
-              "index": "#/$defs/IndexRefExpr",
               "intersect_line_line": "#/$defs/IntersectLineLineExpr",
               "intersect_line_plane": "#/$defs/IntersectLinePlaneExpr",
-              "intersect_plane_plane": "#/$defs/IntersectPlanePlaneExpr",
-              "length": "#/$defs/LengthExpr",
-              "literal": "#/$defs/LiteralExpr",
-              "map_get": "#/$defs/MapGetExpr",
-              "measure": "#/$defs/MeasureExpr",
               "midpoint": "#/$defs/MidpointExpr",
-              "neighbors": "#/$defs/NeighborsExpr",
-              "peek": "#/$defs/PeekExpr",
-              "project_onto": "#/$defs/ProjectOntoExpr",
-              "unary": "#/$defs/UnaryArithExpr",
-              "var": "#/$defs/VarRefExpr"
+              "project_onto": "#/$defs/ProjectOntoExpr"
             },
             "propertyName": "kind"
           },
           "oneOf": [
             {
-              "$ref": "#/$defs/LiteralExpr"
-            },
-            {
               "$ref": "#/$defs/IntersectLinePlaneExpr"
-            },
-            {
-              "$ref": "#/$defs/IntersectPlanePlaneExpr"
             },
             {
               "$ref": "#/$defs/IntersectLineLineExpr"
@@ -634,36 +616,6 @@
             },
             {
               "$ref": "#/$defs/DivideSegmentExpr"
-            },
-            {
-              "$ref": "#/$defs/MeasureExpr"
-            },
-            {
-              "$ref": "#/$defs/VarRefExpr"
-            },
-            {
-              "$ref": "#/$defs/IndexRefExpr"
-            },
-            {
-              "$ref": "#/$defs/FieldRefExpr"
-            },
-            {
-              "$ref": "#/$defs/BinaryArithExpr"
-            },
-            {
-              "$ref": "#/$defs/UnaryArithExpr"
-            },
-            {
-              "$ref": "#/$defs/LengthExpr"
-            },
-            {
-              "$ref": "#/$defs/PeekExpr"
-            },
-            {
-              "$ref": "#/$defs/MapGetExpr"
-            },
-            {
-              "$ref": "#/$defs/NeighborsExpr"
             }
           ],
           "title": "Expr"

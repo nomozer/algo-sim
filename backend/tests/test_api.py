@@ -348,7 +348,9 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # QUẢ cho những đề ấy, đúng ca mà bump tồn tại để dọn.
     # 45: IR thêm `construct_polygon` (Phase 6.6). Thẻ văn phạm sinh từ
     # `contract.py` ⇒ bề mặt prompt đổi mà không file `.md` nào bị sửa.
-    assert main_module.CACHE_VERSION == "45"
+    # 46: `ConstructPointStmt.expr` thu hẹp xuống `PointExpr`; thẻ văn phạm gọi
+    # trường ấy là "phép dựng ĐIỂM" ⇒ bề mặt prompt đổi.
+    assert main_module.CACHE_VERSION == "46"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

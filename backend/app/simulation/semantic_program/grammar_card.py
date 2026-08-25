@@ -58,6 +58,24 @@ def _gia_tri_dong(annotation) -> tuple[str, ...]:
     return ()
 
 
+def _tag(annotation) -> frozenset[str]:
+    """Tập `kind` của một union phân biệt; rỗng nếu không phải union như thế.
+
+    Nhận HAI hình dạng, và phải nhận cả hai: alias gốc là
+    `Annotated[Union[...], Discriminator]`, nhưng Pydantic **bóc lớp ngoài** khi
+    trả `model_fields[...].annotation`, để lại `Union[...]` trần. Chỉ xử một
+    dạng thì hàm im lặng trả rỗng ở đúng chỗ nó được gọi.
+    """
+    for ung_vien in (annotation, *typing.get_args(annotation)[:1]):
+        ra = frozenset(
+            a.__metadata__[0].tag for a in typing.get_args(ung_vien)
+            if hasattr(a, "__metadata__") and a.__metadata__
+            and hasattr(a.__metadata__[0], "tag"))
+        if ra:
+            return ra
+    return frozenset()
+
+
 def _kieu(annotation) -> str:
     """Nhãn KIỂU gọn cho một trường — thứ tên trường không nói được.
 
@@ -88,6 +106,14 @@ def _kieu(annotation) -> str:
     if "Cond" in txt:
         return "điều kiện"
     if "Expr" in txt or "Stmt" in txt:
+        # `PointExpr` là TẬP CON THẬT SỰ của `ValueExpr` — chỉ năm phép dựng
+        # sinh ra một điểm. Gọi nó là "biểu thức" như mọi chỗ khác là nói với mô
+        # hình rằng chỗ ấy nhận bất kỳ biểu thức nào, đúng cái hiểu đã đẻ ra
+        # `construct_point C = arith(B + D)` ở hai vòng đo độc lập.
+        #
+        # So bằng TẬP TAG, không so tên: đổi tên alias thì nhãn vẫn đúng.
+        if _tag(annotation) and _tag(annotation) < _tag(C.ValueExpr):
+            return "phép dựng ĐIỂM"
         return "biểu thức"
     # Trường nhận JSON THÔ (`Any`, hoặc union của các kiểu nền). Phải nói rõ,
     # nếu không mô hình cho rằng chỗ nào cũng điền được biểu thức: lượt kiểm
