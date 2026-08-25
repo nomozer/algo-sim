@@ -147,6 +147,62 @@ def test_doctor_XANH_khi_moi_thu_khop():
     assert rd.diagnose(src, dict(src), src["git_sha"]) == []
 
 
+# ══ CỜ VẬN HÀNH — KHÔNG phải danh tính mã, nhưng quyết định HÀNH VI ══════
+def test_danh_tinh_khai_ca_CO_VAN_HANH():
+    """Doctor từng PASS TRỌN VẸN trong khi `SEMANTIC_ROUTE_MODE=off`, tức route
+    sinh KHÔNG CHẠY và mọi đề hình học rơi xuống classifier.
+
+    Mã khớp từng bit, hành vi khác hẳn — và "PASS" đọc thành "mọi thứ đúng". Đo
+    được 2026-08-25: một lượt `docker compose up -d --build` không kèm env kéo cờ
+    về mặc định `off` mà không gì báo.
+    """
+    from app.runtime_identity import runtime_identity
+
+    r = runtime_identity()
+    for co in ("semantic_route_mode", "gemini_model", "semantic_telemetry",
+               "dev_reload"):
+        assert co in r, co
+
+
+def test_doctor_KHONG_tu_phan_route_mode_la_sai():
+    """`off` là lựa chọn HỢP LỆ cho bản chạy thật. Doctor in ra, không phán —
+    tự phán thì nó sẽ đỏ ở mọi lượt production và bị tắt."""
+    rd = _doctor()
+    src = _nen()
+    rt = {**src, "semantic_route_mode": "off"}
+    assert rd.diagnose(src, rt, src["git_sha"]) == []
+
+
+def test_doctor_DO_khi_khai_ky_vong_ma_lech():
+    """Trước một lượt ĐO thì `off` là sai, và người chạy khai điều đó bằng
+    `--doi-mode serve`. Kiểm bằng chính đường `main` xử lý cờ."""
+    import io as _io
+    import sys as _sys
+    from contextlib import redirect_stdout
+    from unittest.mock import patch
+
+    rd = _doctor()
+    src = _nen()
+    rt = {**src, "semantic_route_mode": "off", "git_sha": src["git_sha"]}
+    gia = (
+        patch.object(rd, "fetch_runtime", lambda url: (rt, None)),
+        patch.object(rd, "runtime_identity", lambda: src),
+        patch.object(rd, "_source_git_sha", lambda: src["git_sha"]),
+        patch.object(_sys, "argv", ["rd", "--doi-mode", "serve"]),
+    )
+    buf = _io.StringIO()
+    for g in gia:
+        g.start()
+    try:
+        with redirect_stdout(buf):
+            ma = rd.main()
+    finally:
+        for g in gia:
+            g.stop()
+    assert ma != 0, "khai kỳ vọng serve mà runtime off thì PHẢI đỏ"
+    assert "ROUTE_MODE_MISMATCH" in buf.getvalue()
+
+
 # ══ ĐƯỜNG DÂY: ENDPOINT PHẢI PHƠI RA ═════════════════════════════════════
 def test_endpoint_diagnostics_runtime_co_khoa_skills():
     from app.main import app

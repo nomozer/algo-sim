@@ -175,6 +175,11 @@ def main() -> int:
     p = argparse.ArgumentParser(description="So khớp danh tính source ↔ runtime.")
     p.add_argument("--url", default="http://localhost:8000")
     p.add_argument("--json", default=None, help="Ghi artifact runtime_identity.json")
+    p.add_argument("--doi-mode", default=None, choices=("off", "shadow", "serve"),
+                   help="KHAI KỲ VỌNG cho SEMANTIC_ROUTE_MODE. Lệch ⇒ FAIL. "
+                        "Dùng trước một lượt ĐO; không khai thì chỉ in ra.")
+    p.add_argument("--doi-model", default=None,
+                   help="KHAI KỲ VỌNG cho GEMINI_MODEL. Lệch ⇒ FAIL.")
     args = p.parse_args()
 
     source = runtime_identity()
@@ -209,7 +214,28 @@ def main() -> int:
         # thì chưa prompt nào bị giữ. Nói ra để không ai đọc nhầm thành "hỏng".
         print(f"         prompt đã nạp trong tiến trình: "
               f"{len(_rk.get('da_nap', {}))} · cũ: {_rk.get('cu') or 'không'}")
+        # CỜ VẬN HÀNH — in RIÊNG một dòng, vì chúng không phải danh tính mã
+        # nhưng quyết định hành vi. Doctor từng PASS trọn vẹn trong khi
+        # `SEMANTIC_ROUTE_MODE=off`, tức route sinh không chạy.
+        print(f"cờ     : route={runtime.get('semantic_route_mode')} "
+              f"model={runtime.get('gemini_model')} "
+              f"telemetry={runtime.get('semantic_telemetry')} "
+              f"reload={runtime.get('dev_reload')}")
         findings = diagnose(source, runtime, source_sha)
+        # Kỳ vọng vận hành: chỉ kiểm khi người chạy KHAI ra. Doctor không tự
+        # phán `off` là sai — nó là lựa chọn hợp lệ cho bản chạy thật.
+        for co, mong, ma in (
+            ("semantic_route_mode", args.doi_mode, "ROUTE_MODE_MISMATCH"),
+            ("gemini_model", args.doi_model, "MODEL_MISMATCH"),
+        ):
+            if mong is not None and runtime.get(co) != mong:
+                findings.append({
+                    "category": ma,
+                    "detail": f"{co} ở runtime là {runtime.get(co)!r}, "
+                              f"lượt này khai kỳ vọng {mong!r}.",
+                    "expected": mong, "actual": runtime.get(co),
+                    "fix": f"{co.upper()}={mong} docker compose up -d backend",
+                })
         payload = {"source": source, "runtime": runtime, "findings": findings,
                    "ok": not findings}
         if not findings:

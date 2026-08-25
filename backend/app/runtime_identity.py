@@ -138,7 +138,7 @@ def runtime_identity() -> dict:
     image (build-arg → env); ngoài Docker thì báo "unknown" trung thực thay vì
     đoán — doctor sẽ xử lý riêng trường hợp đó."""
     # Nhập muộn: main.py import module này, tránh vòng import.
-    from app.main import CACHE_VERSION
+    from app.main import CACHE_VERSION, semantic_route_mode
 
     ai_targets = _ai_reachable()
     return {
@@ -153,6 +153,22 @@ def runtime_identity() -> dict:
         # `stable_catalog_hash`) đều KHỚP khi một prompt cũ đang được gửi đi,
         # vì không trường nào trong chúng đọc một file `.md`.
         "skills": skill_fingerprint(),
+        # ─── CỜ VẬN HÀNH — KHÔNG phải danh tính mã, nhưng quyết định HÀNH VI ──
+        #
+        # `runtime_doctor` từng báo PASS trọn vẹn trong khi `SEMANTIC_ROUTE_MODE`
+        # là `off`, tức route sinh KHÔNG CHẠY và mọi đề hình học rơi xuống
+        # classifier. Mã khớp từng bit, hành vi thì khác hẳn — và "PASS" đọc
+        # thành "mọi thứ đúng".
+        #
+        # Đo được 2026-08-25: một lượt `docker compose up -d --build` không kèm
+        # env kéo cờ về mặc định `off` mà không gì báo. Chúng phải HIỆN RA.
+        # Doctor không phán chúng đúng/sai — `off` là lựa chọn hợp lệ cho bản
+        # chạy thật — nhưng người đọc phải thấy, và `--doi-mode` cho phép khai
+        # kỳ vọng khi lượt này là một lượt ĐO.
+        "semantic_route_mode": semantic_route_mode(),
+        "semantic_telemetry": os.getenv("SEMANTIC_TELEMETRY", "0"),
+        "gemini_model": os.getenv("GEMINI_MODEL", "gemini-2.5-flash"),
+        "dev_reload": os.getenv("DEV_RELOAD", "0"),
         "registered_target_ids": sorted(CATALOG),
         "registered_ai_reachable_ids": ai_targets,
         # executor_id là danh tính engine FE mà target trỏ tới (contract M14 §C1)
