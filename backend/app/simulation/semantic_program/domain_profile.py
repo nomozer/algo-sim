@@ -167,6 +167,66 @@ def geometry_symbol_key(ten: str) -> str | None:
     return s.upper()
 
 
+#: Phụ tố KIỂU mà lượt sinh hay gắn vào tên đối tượng — ĐÓNG, không mở rộng
+#: bằng suy đoán. Mỗi mục ở đây phải đến từ một lượt live đã quan sát được.
+#:
+#: Quan sát 2026-08-25 (ba smoke qua đường sản phẩm):
+#:     hợp đồng `SA`      → chương trình `SA_line`
+#:     hợp đồng `AD`      → chương trình `line_AD`
+#:     hợp đồng `(ABCD)`  → chương trình `plane_ABCD` / `ABCD_plane`
+#:     hợp đồng `S.ABCD`  → chương trình `S_ABCD_solid`
+_PHU_TO_KIEU = (
+    "line", "duong", "plane", "mp", "mat", "solid", "khoi",
+    "point", "diem", "segment", "doan", "section", "thiet_dien", "vector",
+)
+
+
+def ten_loi(ten: str) -> str | None:
+    """LÕI của một tên đối tượng hình học, hoặc `None` nếu không rút được.
+
+    Bỏ dấu ngoặc (hợp đồng viết `(ABCD)`), bỏ **một** phụ tố kiểu ở đầu hoặc
+    cuối, rồi bỏ mọi dấu nối. `SA_line` · `line_AD` · `plane_ABCD` ·
+    `S_ABCD_solid` đều rút về đúng thứ đề bài gọi.
+
+    ⚠️ **KHÔNG viết hoa.** Đây là chỗ khác `geometry_symbol_key`, và khác vì một
+    lý do cụ thể: một bài thiết diện có cả `d` (giao tuyến) lẫn `D` (đỉnh đáy).
+    Viết hoa lõi là gộp hai đối tượng KHÁC NHAU vào một khoá, và khi ấy phép
+    hoà giải sẽ nối `point_on_line(d)` vào đỉnh `D`. Hoà giải sai còn tệ hơn
+    không hoà giải: nó dựng một kết quả không tra lại được.
+
+    Trả `None` khi rút xong rỗng — không có lõi thì không có gì để so.
+    """
+    s = str(ten).strip().strip("()[]{}")
+    thap = s.lower()
+    for t in _PHU_TO_KIEU:
+        if thap.startswith(t + "_") and len(s) > len(t) + 1:
+            s = s[len(t) + 1:]
+            break
+        if thap.endswith("_" + t) and len(s) > len(t) + 1:
+            s = s[: -(len(t) + 1)]
+            break
+    s = s.replace("_", "").replace("-", "").replace(".", "")
+    return s or None
+
+
+def khop_ten_doi_tuong(ten_hop_dong: str, ung_vien: set[str]) -> str | None:
+    """Tên trong hợp đồng ↔ tên trong chương trình, theo LÕI TÊN.
+
+    Hai lượt LLM đặt tên cho cùng một vật, và lượt viết chương trình hay gắn
+    thêm phụ tố kiểu. Đó là lệch DANH XƯNG, không phải thiếu phép dựng — hai
+    bệnh cần hai cách chữa, và trước bản này chúng bị gộp làm một.
+
+    **Trùng lõi ⇒ trả `None`.** Chương trình khai cả `AD` lẫn `line_AD` thì
+    không ai biết hợp đồng đang nói cái nào; đoán ở đó là dựng một kết quả
+    không tra lại được. Cùng luật fail-closed với `khop_ky_hieu`.
+    """
+    loi = ten_loi(ten_hop_dong)
+    if loi is None:
+        return None
+    trung = [t for t in ung_vien if ten_loi(t) == loi]
+    return trung[0] if len(trung) == 1 else None
+
+
 def khop_ky_hieu(ten_hop_dong: str, ung_vien: set[str]) -> str | None:
     """Tên trong hợp đồng ↔ tên trong chương trình, theo ký hiệu hình học.
 

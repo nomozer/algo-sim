@@ -235,7 +235,24 @@ def check_structural_coverage(
     contract: RequestContract, spec: SemanticProgramSpec
 ) -> CoverageResult:
     """C₁a — chạy TRƯỚC execution."""
-    from .domain_profile import geometry_obligation_kinds, khop_ky_hieu
+    from .domain_profile import (
+        geometry_obligation_kinds,
+        khop_ky_hieu,
+        khop_ten_doi_tuong,
+    )
+
+    def _hoa_giai(ten: str, ung_vien: set[str]) -> str | None:
+        """Hai lưới, THỨ TỰ CÓ Ý NGHĨA.
+
+        `khop_ky_hieu` lo KÝ HIỆU ĐIỂM (`m ≡ M`) và viết hoa lõi, nên nó chặt và
+        phải chạy trước. `khop_ten_doi_tuong` lo TÊN ĐỐI TƯỢNG (`SA ≡ SA_line`)
+        và **không** viết hoa — nếu chạy ngược thứ tự, một bài có cả `d` (giao
+        tuyến) lẫn `D` (đỉnh) sẽ bị nối nhầm.
+
+        Cả hai đều fail-closed khi mơ hồ, nên "không hoà giải được" luôn là câu
+        trả lời hợp lệ.
+        """
+        return khop_ky_hieu(ten, ung_vien) or khop_ten_doi_tuong(ten, ung_vien)
 
     _NGHIA_VU_HINH_HOC = geometry_obligation_kinds()
     declared = {d.name: d.type for d in spec.memory_declarations}
@@ -281,7 +298,7 @@ def check_structural_coverage(
         ten_hh = ob.kind in _NGHIA_VU_HINH_HOC
         con = ob.container
         if ten_hh and con not in declared:
-            thay = khop_ky_hieu(con, set(declared))
+            thay = _hoa_giai(con, set(declared))
             if thay:
                 dong_nhat.append(f"{ob.describe()}: container '{con}' ≡ '{thay}'")
                 con = thay
@@ -304,7 +321,7 @@ def check_structural_coverage(
             missing.append(f"{ob.describe()}: thiếu witness")
             continue
         if ten_hh and w not in declared:
-            thay = khop_ky_hieu(w, set(declared))
+            thay = _hoa_giai(w, set(declared))
             if thay:
                 dong_nhat.append(f"{ob.describe()}: witness '{w}' ≡ '{thay}'")
                 w = thay

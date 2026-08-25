@@ -179,3 +179,112 @@ def test_danh_sach_kieu_DAN_tu_kernel_khong_chep_tay():
     from app.simulation.semantic_program.validator import _KIEU_HINH_HOC
 
     assert _KIEU_HINH_HOC is GEOMETRY_TYPES
+
+
+# ══ ③ LỆCH DANH XƯNG: HAI LƯỢT LLM ĐẶT TÊN KHÁC NHAU ═════════════════════
+#
+# Đo được ở lượt smoke 2026-08-25 — 2/3 bài trượt vì ĐÚNG một nguyên nhân:
+#
+#     bài 1   hợp đồng `SA`   ·  chương trình `SA_line`
+#     bài 3   hợp đồng `AD`   ·  chương trình `line_AD`
+#
+# Lượt viết chương trình gắn thêm PHỤ TỐ KIỂU. Đó là lệch danh xưng, không phải
+# thiếu phép dựng — và trước bản này C₁a gộp hai bệnh làm một rồi báo "chương
+# trình không có đường tạo ra thứ đề bài yêu cầu", một câu SAI.
+def test_hoa_giai_PHU_TO_KIEU_o_dau_va_o_cuoi():
+    from app.simulation.semantic_program.domain_profile import khop_ten_doi_tuong
+
+    ct = {"A", "B", "C", "D", "M", "S", "SA_line", "ABCD_plane", "S_ABCD_solid"}
+    assert khop_ten_doi_tuong("SA", ct) == "SA_line"
+    assert khop_ten_doi_tuong("(ABCD)", ct) == "ABCD_plane"
+    assert khop_ten_doi_tuong("S.ABCD", ct) == "S_ABCD_solid"
+    assert khop_ten_doi_tuong("line_AD", {"AD", "X"}) == "AD"
+
+
+def test_KHONG_gop_d_giao_tuyen_voi_D_dinh_day():
+    """Bẫy THẬT của bài thiết diện: `d` là giao tuyến, `D` là một đỉnh đáy.
+
+    `geometry_symbol_key` viết hoa lõi (đúng cho ký hiệu điểm `m ≡ M`), nên nếu
+    lưới tên đối tượng cũng viết hoa thì `point_on_line(d)` sẽ bị nối vào đỉnh
+    `D`. Hoà giải SAI còn tệ hơn không hoà giải: nó dựng một kết quả không tra
+    lại được.
+    """
+    from app.simulation.semantic_program.domain_profile import (
+        khop_ten_doi_tuong,
+        ten_loi,
+    )
+
+    assert ten_loi("d") == "d" and ten_loi("D") == "D"
+    assert khop_ten_doi_tuong("d", {"D", "A", "B"}) is None
+
+
+def test_MO_HO_thi_TU_CHOI_chu_khong_doan():
+    """Chương trình khai cả `AD` lẫn `line_AD` thì không ai biết hợp đồng nói
+    cái nào. Cùng luật fail-closed với mọi cổng khác."""
+    from app.simulation.semantic_program.domain_profile import khop_ten_doi_tuong
+
+    assert khop_ten_doi_tuong("AD", {"AD", "line_AD"}) is None
+
+
+def test_C1a_QUA_duoc_khi_chi_lech_phu_to():
+    """Đúng hiện trường bài 1: nghĩa vụ `point_on_line(SA, M)`, chương trình
+    khai `SA_line`."""
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.coverage_gate import (
+        check_structural_coverage,
+    )
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+
+    spec = SemanticProgramSpec.model_validate({
+        "title": "trung diem SA",
+        "memory_declarations": [
+            {"name": "A", "type": "point3", "initial_value": [0, 0, 0]},
+            {"name": "S", "type": "point3", "initial_value": [0, 0, 2]},
+            {"name": "SA_line", "type": "line3"},
+            {"name": "M", "type": "point3"},
+        ],
+        "statements": [
+            {"kind": "construct_line", "target_var": "SA_line",
+             "through_a": "S", "through_b": "A"},
+            {"kind": "construct_point", "target_var": "M",
+             "expr": {"kind": "midpoint", "a": "S", "b": "A"}},
+        ],
+    })
+    hd = RequestContract(obligations=(
+        Obligation(kind="point_on_line", container="SA",
+                   params={"witness": "M"}),))
+    kq = check_structural_coverage(hd, spec)
+    assert kq.ok, kq.missing
+    assert any("SA" in d and "SA_line" in d for d in kq.symbol_reconciled),         "phải GHI LẠI mỗi lần lưới ra tay — lưới không ai đếm là lưới không ai gỡ được"
+
+
+def test_lech_ten_THAT_van_bi_chan():
+    """Nới đúng chỗ phụ tố, KHÔNG nới thành khớp mờ. Hợp đồng đòi `BC` mà
+    chương trình chỉ có `AD_line` thì vẫn phải trượt."""
+    from app.simulation.semantic_program.contract import SemanticProgramSpec
+    from app.simulation.semantic_program.coverage_gate import (
+        check_structural_coverage,
+    )
+    from app.simulation.semantic_program.obligations import Obligation
+    from app.simulation.semantic_program.request_contract import RequestContract
+
+    spec = SemanticProgramSpec.model_validate({
+        "title": "lech ten that",
+        "memory_declarations": [
+            {"name": "A", "type": "point3", "initial_value": [0, 0, 0]},
+            {"name": "D", "type": "point3", "initial_value": [0, 1, 0]},
+            {"name": "AD_line", "type": "line3"},
+            {"name": "M", "type": "point3"},
+        ],
+        "statements": [
+            {"kind": "construct_line", "target_var": "AD_line",
+             "through_a": "A", "through_b": "D"},
+            {"kind": "construct_point", "target_var": "M",
+             "expr": {"kind": "midpoint", "a": "A", "b": "D"}},
+        ],
+    })
+    hd = RequestContract(obligations=(
+        Obligation(kind="point_on_line", container="BC",
+                   params={"witness": "M"}),))
+    assert not check_structural_coverage(hd, spec).ok
