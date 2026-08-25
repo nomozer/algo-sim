@@ -1,0 +1,939 @@
+[
+  {
+    "ten": "1-trung-diem-lan1",
+    "so_khai": 8,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "M",
+      "SA"
+    ],
+    "so_phai_dung": 3,
+    "do_sau_max": 1,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.667,
+    "witness": [
+      "M"
+    ],
+    "witness_dan_xuat": [
+      "M"
+    ],
+    "ban_ghi": {
+      "case_id": "1-trung-diem",
+      "lan": 1,
+      "do_tre_giay": 88.7,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "M là trung điểm AS",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 7,
+      "so_buoc_phat_lai": 3,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.4.assign.expr\n  Input tag 'point_on_line' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'ma"
+      ]
+    }
+  },
+  {
+    "ten": "1-trung-diem-lan2",
+    "so_khai": 10,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD",
+      "M",
+      "SA",
+      "S_ABCD"
+    ],
+    "so_phai_dung": 5,
+    "do_sau_max": 1,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.8,
+    "witness": [
+      "M"
+    ],
+    "witness_dan_xuat": [
+      "M"
+    ],
+    "ban_ghi": {
+      "case_id": "1-trung-diem",
+      "lan": 2,
+      "do_tre_giay": 63.4,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "M là trung điểm AS",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 9,
+      "so_buoc_phat_lai": 5,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "1-trung-diem-lan3",
+    "so_khai": 10,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD_polygon",
+      "M",
+      "SA",
+      "S_ABCD_solid",
+      "point_on_line"
+    ],
+    "so_phai_dung": 5,
+    "do_sau_max": 2,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 1.0,
+    "witness": [
+      "M"
+    ],
+    "witness_dan_xuat": [
+      "M"
+    ],
+    "ban_ghi": {
+      "case_id": "1-trung-diem",
+      "lan": 3,
+      "do_tre_giay": 30.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "M là trung điểm AS",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 10,
+      "so_buoc_phat_lai": 6,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "1-trung-diem-lan4",
+    "so_khai": 6,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [],
+    "so_phai_dung": 1,
+    "do_sau_max": 1,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.0,
+    "witness": [
+      "M"
+    ],
+    "witness_dan_xuat": [
+      "M"
+    ],
+    "ban_ghi": {
+      "case_id": "1-trung-diem",
+      "lan": 4,
+      "do_tre_giay": 60.7,
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "details": [
+        "point_on_line(SA): container 'SA' chưa khai báo (chương trình khai: ['A', 'B', 'C', 'D', 'S', 'point_on_line_M_SA'])"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "ok",
+      "envelope_id": "generic.rule_scene",
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "1-trung-diem-lan5",
+    "so_khai": 10,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD",
+      "M",
+      "SA",
+      "S_ABCD"
+    ],
+    "so_phai_dung": 5,
+    "do_sau_max": 1,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.8,
+    "witness": [
+      "M"
+    ],
+    "witness_dan_xuat": [
+      "M"
+    ],
+    "ban_ghi": {
+      "case_id": "1-trung-diem",
+      "lan": 5,
+      "do_tre_giay": 33.4,
+      "stage_reached": "grounding",
+      "executable": false,
+      "servable": false,
+      "error_code": "input_not_grounded",
+      "failure_category": "insufficient_specification",
+      "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+      "details": [
+        "C: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "unsupported",
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "2-the-tich-lan1",
+    "so_khai": 9,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD",
+      "S.ABCD",
+      "V_S_ABCD"
+    ],
+    "so_phai_dung": 4,
+    "do_sau_max": 2,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.75,
+    "witness": [
+      "V_S_ABCD"
+    ],
+    "witness_dan_xuat": [
+      "V_S_ABCD"
+    ],
+    "ban_ghi": {
+      "case_id": "2-the-tich",
+      "lan": 1,
+      "do_tre_giay": 25.7,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "V_S_ABCD = 12",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "2-the-tich-lan2",
+    "so_khai": 8,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD",
+      "S_ABCD_solid",
+      "V_S_ABCD"
+    ],
+    "so_phai_dung": 3,
+    "do_sau_max": 2,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 1.0,
+    "witness": [
+      "V_S_ABCD"
+    ],
+    "witness_dan_xuat": [
+      "V_S_ABCD"
+    ],
+    "ban_ghi": {
+      "case_id": "2-the-tich",
+      "lan": 2,
+      "do_tre_giay": 29.0,
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "details": [
+        "volume(S.ABCD): witness 'V_S_ABCD' không dẫn xuất từ 'S.ABCD' — chương trình khai đáp án chứ không tính nó"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "unsupported",
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "2-the-tich-lan3",
+    "so_khai": 12,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD",
+      "SAB",
+      "SBC",
+      "SCD",
+      "SDA",
+      "S_ABCD",
+      "V_S_ABCD"
+    ],
+    "so_phai_dung": 7,
+    "do_sau_max": 2,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 1.0,
+    "witness": [
+      "V_S_ABCD"
+    ],
+    "witness_dan_xuat": [
+      "V_S_ABCD"
+    ],
+    "ban_ghi": {
+      "case_id": "2-the-tich",
+      "lan": 3,
+      "do_tre_giay": 32.1,
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "details": [
+        "volume(S.ABCD): witness 'V_S_ABCD' không dẫn xuất từ 'S.ABCD' — chương trình khai đáp án chứ không tính nó"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "unsupported",
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "2-the-tich-lan4",
+    "so_khai": 8,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD",
+      "S.ABCD",
+      "V_S_ABCD"
+    ],
+    "so_phai_dung": 3,
+    "do_sau_max": 2,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 1.0,
+    "witness": [
+      "V_S_ABCD"
+    ],
+    "witness_dan_xuat": [
+      "V_S_ABCD"
+    ],
+    "ban_ghi": {
+      "case_id": "2-the-tich",
+      "lan": 4,
+      "do_tre_giay": 26.0,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "V_S_ABCD = 12",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "2-the-tich-lan5",
+    "so_khai": 22,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "AB",
+      "BC",
+      "C",
+      "CD",
+      "DA",
+      "S.ABCD",
+      "SA",
+      "SB",
+      "SC",
+      "SD",
+      "V_S_ABCD",
+      "base_ABCD",
+      "plane_ABCD",
+      "plane_SAB",
+      "plane_SBC",
+      "plane_SCD",
+      "plane_SDA"
+    ],
+    "so_phai_dung": 18,
+    "do_sau_max": 3,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.944,
+    "witness": [
+      "V_S_ABCD"
+    ],
+    "witness_dan_xuat": [
+      "V_S_ABCD"
+    ],
+    "ban_ghi": {
+      "case_id": "2-the-tich",
+      "lan": 5,
+      "do_tre_giay": 48.4,
+      "stage_reached": "execution",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "failure_category": "capability_gap",
+      "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: biểu thức hình học lạ: arith",
+      "details": [
+        "[GEOMETRY_OPERAND_TYPE]",
+        "GEOMETRY_OPERAND_TYPE: biểu thức hình học lạ: arith"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "unsupported",
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "3-pmn-giao-tuyen-lan1",
+    "so_khai": 14,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "d",
+      "line_AD",
+      "plane_ABCD",
+      "plane_PMN",
+      "solid_S_ABCD"
+    ],
+    "so_phai_dung": 9,
+    "do_sau_max": 4,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 1.0,
+    "witness": [],
+    "witness_dan_xuat": [],
+    "ban_ghi": {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 1,
+      "do_tre_giay": 201.9,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 0,
+      "nghia_vu_kinds": [],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 14,
+      "so_buoc_phat_lai": 10,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "3-pmn-giao-tuyen-lan2",
+    "so_khai": 27,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "AB",
+      "ABCD",
+      "BC",
+      "CD",
+      "DA",
+      "M",
+      "MN",
+      "N",
+      "NP",
+      "P",
+      "PM",
+      "PMN",
+      "Q",
+      "SA",
+      "SABCD",
+      "SB",
+      "SC",
+      "SD",
+      "d"
+    ],
+    "so_phai_dung": 22,
+    "do_sau_max": 4,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.864,
+    "witness": [
+      "Q"
+    ],
+    "witness_dan_xuat": [
+      "Q"
+    ],
+    "ban_ghi": {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 2,
+      "do_tre_giay": 224.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 3,
+      "nghia_vu_kinds": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 24,
+      "so_buoc_phat_lai": 20,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Tên vùng nhớ bị khai báo trùng lặp: 'point_on_plane'."
+      ]
+    }
+  },
+  {
+    "ten": "3-pmn-giao-tuyen-lan3",
+    "so_khai": 13,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD_plane",
+      "AD_line",
+      "M",
+      "N",
+      "P",
+      "PMN_plane",
+      "Q",
+      "d"
+    ],
+    "so_phai_dung": 8,
+    "do_sau_max": 4,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 1.0,
+    "witness": [
+      "Q"
+    ],
+    "witness_dan_xuat": [
+      "Q"
+    ],
+    "ban_ghi": {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 3,
+      "do_tre_giay": 197.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 2,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 13,
+      "so_buoc_phat_lai": 9,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.assign.expr\n  Input tag 'construct_point' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', '"
+      ]
+    }
+  },
+  {
+    "ten": "3-pmn-giao-tuyen-lan4",
+    "so_khai": 13,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "M",
+      "N",
+      "P",
+      "Q",
+      "line_ad",
+      "line_d",
+      "plane_abcd",
+      "plane_pmn"
+    ],
+    "so_phai_dung": 8,
+    "do_sau_max": 4,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 1.0,
+    "witness": [],
+    "witness_dan_xuat": [],
+    "ban_ghi": {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 4,
+      "do_tre_giay": 437.6,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 0,
+      "nghia_vu_kinds": [],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 13,
+      "so_buoc_phat_lai": 9,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  },
+  {
+    "ten": "3-pmn-giao-tuyen-lan5",
+    "so_khai": 28,
+    "literal_hop_le": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+    ],
+    "literal_thay_the": [],
+    "chi_tiet_thay_the": [],
+    "dung_phu_thuoc": [
+      "ABCD_plane",
+      "ABCD_polygon",
+      "AB_line",
+      "BC_line",
+      "CD_line",
+      "DA_line",
+      "M",
+      "N",
+      "P",
+      "PMN_plane",
+      "Q",
+      "SAB_plane",
+      "SA_line",
+      "SBC_plane",
+      "SB_line",
+      "SCD_plane",
+      "SC_line",
+      "SDA_plane",
+      "SD_line",
+      "S_ABCD_solid",
+      "d"
+    ],
+    "so_phai_dung": 23,
+    "do_sau_max": 4,
+    "ti_le_literal_thay_the": 0.0,
+    "ti_le_dung_phu_thuoc": 0.913,
+    "witness": [
+      "Q",
+      "d"
+    ],
+    "witness_dan_xuat": [
+      "Q",
+      "d"
+    ],
+    "ban_ghi": {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 5,
+      "do_tre_giay": 99.4,
+      "stage_reached": "structural_coverage",
+      "executable": false,
+      "servable": false,
+      "error_code": "requested_operation_uncovered",
+      "failure_category": "semantic_incomplete",
+      "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+      "details": [
+        "coplanar(PMN): kiểu 'plane3' không hợp với nghĩa vụ này"
+      ],
+      "so_nghia_vu": 4,
+      "nghia_vu_kinds": [
+        "coplanar",
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": false,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "unsupported",
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  }
+]
