@@ -98,6 +98,48 @@ GEOMETRY_TYPES = frozenset(
     {"point3", "vector3", "line3", "plane3", "polygon3", "solid"}
 )
 
+#: Kiểu KHAI của một đại lượng đo được. `measure` trả `Fraction`, và IR khai nó
+#: bằng kiểu số thường — nên nhận diện phải xét CẢ giá trị lẫn kiểu khai.
+KIEU_DAI_LUONG = ("float", "int")
+
+
+def la_doi_tuong_hinh_hoc(gt: Any) -> bool:
+    """Giá trị này có phải một **đối tượng hình học** không?
+
+    ─── VÌ SAO VỊ TỪ NÀY Ở ĐÂY, KHÔNG Ở TẦNG TRÌNH BÀY ──────────────────────
+
+    Hai nơi cần nó, và chúng nằm ở hai tầng **không được biết tới nhau**:
+
+      · `simulation_state.build_scene` — nhặt đối tượng để chiếu ra cảnh
+      · `learner_surface` — hỏi *"biến này có hiện trên màn hình không?"*
+
+    `learner_surface` là một CỔNG, nên nó không được phụ thuộc vào tầng mô
+    phỏng (`test_KHONG_module_nao_o_TANG_DUOI_nhap_lop_nay` giữ luật ấy). Nhưng
+    nếu mỗi bên tự viết một chuỗi `isinstance` thì có hai nguồn sự thật, và
+    chúng sẽ trôi khỏi nhau đúng vào ngày thêm một kiểu hình học mới: cổng bảo
+    "có trên hình", cảnh thì không vẽ. Đưa vị từ xuống **tầng kernel** — nơi
+    kiểu dữ liệu được định nghĩa — là chỗ duy nhất cả hai cùng nhìn được mà
+    không đảo chiều phụ thuộc.
+
+    Xét **GIÁ TRỊ**, không xét kiểu khai: `construct_point` có thể ghi một `Vec3`
+    vào một biến khai kiểu khác, và cái quyết định vẽ được hay không là thứ thật
+    sự nằm trong bộ nhớ.
+    """
+    if isinstance(gt, (Vec3, Line3, Plane3, Polyhedron, Section)):
+        return True
+    # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
+    return bool(isinstance(gt, tuple) and gt
+                and all(isinstance(v, Vec3) for v in gt))
+
+
+def la_dai_luong_do(gt: Any, kieu_khai: str | None) -> bool:
+    """Giá trị này có phải một **đại lượng đo được** không?
+
+    Không vẽ được, nhưng phải HIỆN LÊN: nó là câu trả lời của bài. Bỏ nó khỏi
+    màn hình thì mô phỏng chạy xong mà học sinh không thấy đáp số.
+    """
+    return isinstance(gt, Fraction) and kieu_khai in KIEU_DAI_LUONG
+
 
 def volume_polyhedron(sol: Polyhedron) -> Fraction:
     """Thể tích một khối — phân rã quạt từ đỉnh đầu qua MỌI mặt.

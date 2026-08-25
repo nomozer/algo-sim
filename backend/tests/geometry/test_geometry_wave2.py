@@ -524,30 +524,38 @@ def test_geo_09_CHAY_TRON_qua_grounding_C1a_C1b_C2():
     assert kq.stage_reached != "grounding"
 
 
-def test_B_VAN_CHAN_va_chan_o_dung_MOT_chỗ_da_biet():
-    """Ranh giới trung thực của Wave 2, khoá lại để không ai tuyên bố quá.
+def test_B_NAY_DA_XANH_vi_man_hinh_co_them_nua_thu_hai():
+    """⚠️ TEST NÀY ĐÃ BỊ LẬT NGƯỢC (2026-08-25). Đọc kèm lý do.
 
-    `servable` (claim B) VẪN `False`, và **chỉ vì một lý do**: `chop` là một
-    `solid` đổi giá trị trong lượt chạy, mà tập nguyên thuỷ thị giác đã đóng
-    băng **không có nguyên thuỷ 3D nào** để bày nó. Đó là việc của wave
-    renderer, nằm ngoài phạm vi wave này theo đúng yêu cầu.
+    Bản Wave 2 khẳng định `servable` **VẪN False**, và chặn ở đúng một chỗ:
+    `chop` là một `solid` đổi giá trị mà tập nguyên thuỷ thị giác đóng băng
+    không có nguyên thuỷ 3D nào để bày. Nó tự dặn:
 
-    Test này ĐỎ theo hai chiều, và cả hai đều có ích:
-      · B tự nhiên xanh lên  ⇒ ai đó đã thêm nguyên thuỷ 3D, hãy sửa test và
-        cập nhật ledger thay vì để nó âm thầm đúng.
-      · B chặn thêm lý do KHÁC ⇒ Wave 2 hồi quy ở chỗ chưa ai nhìn.
+        "B tự nhiên xanh lên ⇒ ai đó đã thêm nguyên thuỷ 3D, hãy SỬA TEST và
+         cập nhật ledger thay vì để nó âm thầm đúng."
+
+    Đúng điều đó đã xảy ra, chỉ khác đường: **không** ai thêm nguyên thuỷ 3D vào
+    `visual_bindings`. Thay vào đó Phase 5C–5F dựng một **màn hình thứ hai** —
+    `Scene3D` — nơi mọi đối tượng hình học được chiếu ra tất định, không ai phải
+    khai binding. `learner_surface` nay đọc **cả hai nửa** màn hình.
+
+    Đó là lý do bản vá này không phải nới cổng: câu hỏi của cổng không đổi một
+    chữ (*"thứ này có hiện trên màn hình không?"*), chỉ là trước đây nó nhìn sót
+    một nửa và vì thế từ chối **mọi** chương trình hình học — kể cả bốn bài đã
+    qua oracle độc lập ở Wave 4.
+
+    Giá của việc nhìn sót ấy đo được ở phía học sinh: đề hình chóp dán vào sản
+    phẩm nhận "NGOÀI DANH MỤC MÔ PHỎNG" sau ~7 lượt LLM, vì `executable=True`
+    mà `servable=False` thì envelope rơi xuống classifier.
     """
     from app.simulation.semantic_program.route import verify_and_compile
 
     spec = SemanticProgramSpec.model_validate(_chuong_trinh_geo_09())
     kq = verify_and_compile(_hop_dong_geo_09(), spec)
 
-    assert not kq.servable
-    assert len(kq.details) == 1, f"chặn vì NHIỀU hơn một lý do: {kq.details}"
-    assert "chop" in kq.details[0] and "solid" in kq.details[0]
-    # Witness đã bày được bằng `value_box` — nửa kia của cổng bề mặt học sinh
-    # KHÔNG còn là vấn đề, và đó là thay đổi thật của Wave 2.
-    assert "witness" not in kq.details[0]
+    assert kq.servable, f"{kq.stage_reached}: {kq.details}"
+    assert kq.stage_reached == "served"
+    assert not kq.details
 
 
 def test_KHONG_co_nguyen_thuy_thi_giac_3D_nao():

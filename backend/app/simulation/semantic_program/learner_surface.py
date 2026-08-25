@@ -163,6 +163,34 @@ def _bound_names(spec: SemanticProgramSpec) -> set[str]:
     return ra
 
 
+def _tren_canh_3d(
+    spec: SemanticProgramSpec, exec_res: SemanticExecutionResult
+) -> set[str]:
+    """Mọi tên được chiếu ra **cảnh 3D** — nửa còn lại của màn hình.
+
+    Chương trình hình học không khai `visual_bindings`, và nó ĐÚNG khi không
+    khai: điểm, đường, mặt, khối được `build_scene` chiếu ra tất định từ bộ nhớ,
+    không ai phải khai gì. Nên với một chương trình như thế, câu hỏi *"có hiện
+    trên màn hình không"* được trả lời bởi cảnh, không bởi binding.
+
+    ⚠️ **KHÔNG import tầng mô phỏng.** Hàm này ở trong một CỔNG, và cổng không
+    được phụ thuộc vào tầng trình bày (`test_KHONG_module_nao_o_TANG_DUOI_nhap_
+    lop_nay`). Vị từ dùng chung nằm ở `geometry_exec` — tầng kernel — nên hai bên
+    có cùng một định nghĩa mà không bên nào biết tới bên kia.
+
+    Xét **BỘ NHỚ CUỐI**, đúng thứ `build_scene` xét. Một biến hình học chưa dựng
+    xong mang `None` ở đó, và nó không có trên hình thật — cổng phải thấy đúng
+    như vậy, không được đoán từ kiểu khai.
+    """
+    from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
+
+    kieu = {d.name: d.type for d in spec.memory_declarations}
+    return {
+        ten for ten, gt in (exec_res.final_memory or {}).items()
+        if la_doi_tuong_hinh_hoc(gt) or la_dai_luong_do(gt, kieu.get(ten))
+    }
+
+
 def _bien_dong(exec_res: SemanticExecutionResult, ten: str) -> bool:
     """Biến này có ĐỔI giá trị trong lượt chạy không?
 
@@ -263,13 +291,31 @@ def check_learner_surface(
     thật sự được phát, không phải về ý định của chương trình.
     """
     thieu: list[str] = []
-    da_bind = _bound_names(spec)
+    # MÀN HÌNH CÓ HAI NỬA, VÀ CỔNG NÀY TỪNG CHỈ BIẾT MỘT.
+    #
+    # `visual_bindings` là đường lên màn hình của miền Tin học: ngăn xếp, mảng,
+    # ô kết quả — mỗi thứ phải được khai gắn vào một primitive 2D. Nhưng một
+    # chương trình HÌNH HỌC không khai binding nào, và nó đúng khi không khai:
+    # màn hình của nó là **cảnh 3D**, nơi mọi điểm/đường/mặt/khối được chiếu ra
+    # tất định, không ai phải khai gì.
+    #
+    # Trước bản này cổng chỉ đọc nửa 2D, nên nó từ chối **mọi** chương trình
+    # hình học — kể cả bốn bài đã qua oracle ở Wave 4. Triệu chứng ở phía học
+    # sinh: `executable=True` mà `servable=False`, và envelope rơi xuống
+    # classifier rồi hiện "NGOÀI DANH MỤC MÔ PHỎNG".
+    #
+    # Đây KHÔNG phải miễn trừ cho miền hình học. Câu hỏi của cổng không đổi một
+    # chữ — *"thứ này có hiện trên màn hình không?"* — chỉ là nay nó đọc cả hai
+    # nửa của màn hình. Vị từ nằm ở tầng kernel (`geometry_exec`) để cảnh và
+    # cổng dùng CHUNG một định nghĩa; hai bản `isinstance` song song sẽ trôi
+    # khỏi nhau đúng vào ngày thêm một kiểu hình học mới.
+    thay_duoc = _bound_names(spec) | _tren_canh_3d(spec, exec_res)
 
     # (1) Container BIẾN ĐỘNG mà không có đường lên màn hình.
     for decl in spec.memory_declarations:
         if decl.type not in CONTAINER_TYPES:
             continue
-        if decl.name in da_bind:
+        if decl.name in thay_duoc:
             continue
         if _bien_dong(exec_res, decl.name):
             thieu.append(
@@ -300,7 +346,7 @@ def check_learner_surface(
     for decl in spec.memory_declarations:
         if not decl.source_fact_id:
             continue
-        if decl.name not in da_bind:
+        if decl.name not in thay_duoc:
             thieu.append(
                 f"'{decl.name}' mang dữ liệu đề (mục '{decl.source_fact_id}') "
                 "nhưng không có binding — học sinh không thấy đầu vào để theo dõi"
@@ -309,7 +355,7 @@ def check_learner_surface(
     # (3) Chỗ chứa CÂU TRẢ LỜI phải nhìn thấy được.
     for ob in contract.obligations:
         witness = (ob.params or {}).get("witness")
-        if witness and witness not in da_bind:
+        if witness and witness not in thay_duoc:
             thieu.append(
                 f"witness '{witness}' của nghĩa vụ '{ob.kind}' không hiện trên "
                 "màn hình — mô phỏng chạy xong mà học sinh không thấy đáp án"

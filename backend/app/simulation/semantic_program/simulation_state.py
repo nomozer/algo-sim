@@ -42,6 +42,7 @@ from typing import Any
 from ..geometry import Line3, Plane3, Vec3
 from ..geometry.section import Polyhedron, Section
 from .contract import SemanticProgramSpec
+from .geometry_exec import la_dai_luong_do, la_doi_tuong_hinh_hoc
 
 #: Câu lệnh dựng → tên các trường mang TÊN đối tượng nó ĐỌC.
 #:
@@ -210,10 +211,11 @@ def build_scene(
                             "steps": [{"face_index": s.face_index,
                                        "a": _xyz(s.a), "b": _xyz(s.b)}
                                       for s in gt.steps]})
-        elif isinstance(gt, tuple) and gt and all(isinstance(v, Vec3) for v in gt):
+        elif la_doi_tuong_hinh_hoc(gt) and isinstance(gt, tuple):
+            # `polygon3` sống dưới dạng tuple các đỉnh — không có lớp riêng.
             objects.append({**chung, "type": "polygon3",
                             "vertices": [_xyz(v) for v in gt]})
-        elif isinstance(gt, Fraction) and kieu.get(ten) in ("float", "int"):
+        elif la_dai_luong_do(gt, kieu.get(ten)):
             # ĐẠI LƯỢNG đo được (`measure`) — không vẽ được, nhưng phải HIỆN
             # LÊN: nó là câu trả lời của bài. Bỏ nó khỏi cảnh thì mô phỏng chạy
             # xong mà học sinh không thấy đáp số.

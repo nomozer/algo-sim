@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-25T08:56:42.022Z",
+  "generatedAt": "2026-08-25T13:29:08.516Z",
   "note": "sinh từ registry qua vitest (KHÔNG cần trình duyệt); dùng kèm commit chứa nó.",
   "gateOwners": {
     "semantic": "backend/app/evaluation/authenticity_audit.py",

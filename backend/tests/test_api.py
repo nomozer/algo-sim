@@ -331,7 +331,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `M`, C₁a từ chối, và cả hai lượt LLM đều làm ĐÚNG luật được giao. Mô tả
     # trường đi thẳng vào structured output nên nó LÀ bề mặt prompt; không bump
     # thì đề đã phân tích vẫn trả `witness` hạ chữ thường.
-    assert main_module.CACHE_VERSION == "41"
+    # 42: định tuyến MIỀN nối vào đường sản phẩm — `domain` đi xuống cả hai lượt
+    # LLM của route sinh, và `stage_semantic_program` thôi viết cứng tên skill.
+    # Khác mọi bump trước ở một điểm: lần này CÓ cache thật cần dọn. Đề hình học
+    # nào đã gửi qua sản phẩm đều đang mang sẵn một lời từ chối "ngoài danh mục"
+    # trong bảng cache; không bump thì học sinh gửi lại vẫn nhận đúng lời ấy và
+    # bản vá đọc như không ăn thua ngay trên chính các đề nó nhắm tới.
+    assert main_module.CACHE_VERSION == "42"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

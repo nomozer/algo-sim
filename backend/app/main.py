@@ -183,7 +183,17 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       chối, và cả hai lượt LLM đều làm ĐÚNG luật được giao — luật thì mâu
 #       thuẫn. Mô tả trường là bề mặt prompt (đi thẳng vào structured output),
 #       nên phân tích cache dưới mô tả cũ vẫn trả `witness` hạ chữ thường.
-CACHE_VERSION = "41"
+#   42 (2026-08-25): ĐỊNH TUYẾN MIỀN nối vào đường sản phẩm. Trước bản này
+#       `_semantic_route_attempt` gọi `stage_semantic_analyze(text, api_key)`
+#       không có `domain`, và `stage_semantic_program` viết cứng
+#       `load_skill("semantic_program")` — nên đề hình học đi qua sản phẩm được
+#       ĐỌC và VIẾT bằng prompt Tin học, dựng không nổi IR, rồi rơi xuống
+#       classifier và hiện "NGOÀI DANH MỤC MÔ PHỎNG". Đây là bump theo nghĩa
+#       "policy định tuyến đổi", và nó có cache thật cần dọn: mọi đề hình học đã
+#       gửi đều đang mang một lời từ chối trong bảng cache. Không bump thì bản
+#       vá này đọc như không ăn thua ngay trên chính các đề nó nhắm tới — đúng
+#       hồi quy câm mà luật bump sinh ra để chặn.
+CACHE_VERSION = "42"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

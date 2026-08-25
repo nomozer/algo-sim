@@ -439,6 +439,7 @@ async def stage_semantic_program(
     api_key: str,
     contract: "RequestContract | None" = None,
     observer=None,
+    domain: str | None = None,
 ) -> tuple["SemanticProgramSpec | None", str | None]:
     """LLM tổng hợp `SemanticProgramSpec` — ≤3 lượt, lỗi validator gửi ngược.
 
@@ -470,11 +471,23 @@ async def stage_semantic_program(
     đó KHÔNG phải đảm bảo tuyệt đối — Flash có ghi nhận rơi vào vòng lặp lặp
     token trong literal số cho tới `MAX_TOKENS` rồi trả JSON cụt; nên nhánh lỗi
     parse dưới đây là đường sống, không phải phòng thủ thừa.
+
+    ─── `domain` ────────────────────────────────────────────────────────────
+
+    `None` = miền Tin học, tức **hành vi trước đó nguyên vẹn**. Trước bản này
+    tên skill viết CỨNG là `"semantic_program"`, nên `geometry_program_generator.md`
+    không có một người gọi nào trong `app/` — chỉ harness đo mới với tới nó bằng
+    cách bọc `load_skill` từ ngoài. Hệ quả: đề hình học đi qua sản phẩm được
+    **viết chương trình bằng prompt Tin học**, và trượt ở chỗ trông như mô hình
+    kém trong khi thật ra ta đưa nhầm đề bài cho nó.
     """
     from app.simulation.semantic_program.contract import generate_json_schema
+    from app.simulation.semantic_program.domain_profile import program_skill_for
     from app.simulation.semantic_program.validator import validate_semantic_program
 
     from app.simulation.semantic_program.grammar_card import grammar_card
+
+    skill = program_skill_for(domain) if domain else "semantic_program"
 
     base = f'Đề bài:\n"""\n{text}\n"""'
     if contract is not None:
@@ -492,7 +505,7 @@ async def stage_semantic_program(
         with stage_scope("semantic_program"):
             raw = await call_gemini(
                 api_key,
-                load_skill("semantic_program"),
+                load_skill(skill),
                 prompt,
                 generate_json_schema(),
                 0.1,
@@ -889,13 +902,47 @@ async def _semantic_shadow(
     Cố ý KHÔNG hỏi classifier chọn target nào. Hỏi thì claim A tụt xuống thành
     "hệ sinh được mô phỏng cho những bài mà classifier không nhận", tức một
     claim về classifier chứ không phải về route sinh.
+
+    ─── MIỀN QUYẾT ĐỊNH TẤT ĐỊNH, TRƯỚC MỌI LƯỢT LLM ────────────────────────
+
+    `detect_domain` chạy trên VĂN BẢN ĐỀ, ở server, không tốn call. Nó phải nằm
+    trước cả cổng phạm vi vì chính cổng ấy cần biết câu hỏi đang hỏi về môn nào.
     """
+    from app.simulation.semantic_program.domain_profile import (
+        DOMAIN_HINH_HOC,
+        detect_domain,
+    )
+
+    domain = detect_domain(text)
+    _emit(observer, "semantic_domain", domain=domain)
+
     scope = check_scope_and_simulatability(analysis)
     if scope is not None and scope[0] is not ErrorCode.GATE_SCOPE_UNDECLARED:
-        _emit(observer, "semantic_route", stage_reached="scope",
-              executable=False, servable=False,
-              error_code=scope[0].value, reason=scope[1])
-        return None
+        # ─── VÌ SAO HÌNH HỌC KHÔNG BỊ CỔNG NÀY PHỦ QUYẾT ────────────────────
+        #
+        # Đây KHÔNG phải nới cổng — đọc kỹ enum thì rõ. `analyze.md` chỉ cho
+        # `domain_scope` bốn giá trị: THPT_INFORMATICS · ADJACENT_CONTEXT ·
+        # OUT_OF_SCOPE ("môn khác thật sự: hoá học, vật lí, sinh học") ·
+        # AMBIGUOUS. **Không có giá trị nào cho hình học không gian.** Nên với
+        # một đề hình học, mô hình buộc phải chọn một nhãn sai, và phán quyết ấy
+        # KHÔNG MANG THÔNG TIN. Thay một phán quyết rỗng nghĩa bằng một phép
+        # kiểm tất định phía server là SIẾT, không phải nới.
+        #
+        # Phạm vi ngoại lệ hẹp đúng bằng chỗ cần: chỉ khi bộ dò tất định nói
+        # `hinh_hoc`. Đề hoá học không có từ khoá hình học ⇒ `tin_hoc` ⇒ cổng
+        # nguyên vẹn, và lời từ chối trung thực vẫn tới học sinh như cũ.
+        #
+        # Nới ở đây cũng KHÔNG mở đường cho một cảnh chưa ai kiểm: grounding,
+        # C₁a, C₁b, C₂ đều còn nguyên phía sau, và `servable` mới là thứ quyết
+        # định có phát hay không.
+        if not (domain == DOMAIN_HINH_HOC
+                and scope[0] is ErrorCode.GATE_OUT_OF_SCOPE):
+            _emit(observer, "semantic_route", stage_reached="scope",
+                  executable=False, servable=False,
+                  error_code=scope[0].value, reason=scope[1])
+            return None
+        _emit(observer, "gate_checked", gate="scope", fired=False,
+              reason_code=None)
 
     auth = check_execution_authority(analysis, plan, has_interpreter=True)
     _emit(observer, "gate_checked", gate="execution_authority",
@@ -907,7 +954,7 @@ async def _semantic_shadow(
               error_code=ErrorCode.GATE_RESULT_OWNERSHIP.value, reason=auth)
         return None
 
-    return await _semantic_route_attempt(text, analysis, api_key, observer)
+    return await _semantic_route_attempt(text, analysis, api_key, observer, domain)
 
 
 def _dung_scene3d(spec) -> dict | None:
@@ -975,16 +1022,20 @@ def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> di
 
 
 async def _semantic_route_attempt(
-    text: str, analysis: dict, api_key: str, observer
+    text: str, analysis: dict, api_key: str, observer, domain: str | None = None
 ) -> "SemanticRouteOutcome | None":
     """Hai lượt LLM + toàn bộ cổng tất định. Trả `None` khi chưa dựng nổi IR.
 
     Mọi thất bại đều được EMIT chứ không nuốt: benchmark cần biết bài hỏng ở
     khâu nào, và "hỏng ở khâu nào" mới là dữ liệu, còn "hỏng" thì không.
+
+    `domain` đi xuống **cả hai** lượt LLM. Đổi một lượt mà quên lượt kia là đúng
+    lỗi Phase 5 đo được: skill viết chương trình đã sang hình học, skill đọc đề
+    thì không, nên mô hình khai nghĩa vụ Tin học cho bài hình học ở 3/6 ca.
     """
     from app.simulation.semantic_program.route import verify_and_compile
 
-    contract, cerr = await stage_semantic_analyze(text, api_key)
+    contract, cerr = await stage_semantic_analyze(text, api_key, domain)
     if contract is None:
         _emit(observer, "semantic_route", stage_reached="semantic_analyze",
               executable=False, servable=False,
@@ -1004,7 +1055,7 @@ async def _semantic_route_attempt(
           ])
 
     spec, serr = await stage_semantic_program(
-        text, analysis, api_key, contract, observer=observer
+        text, analysis, api_key, contract, observer=observer, domain=domain
     )
     if spec is None:
         _emit(observer, "semantic_route", stage_reached="semantic_program",

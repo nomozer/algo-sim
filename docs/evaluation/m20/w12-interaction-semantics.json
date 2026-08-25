@@ -1,19 +1,18 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "47e78e34ec51e51a",
+  "sourceFingerprint": "7fba0a02c988feaa",
   "dirtyRelevantSources": [
     "backend/app/ai/pipeline.py",
-    "backend/app/simulation/semantic_program/coercion_stats.py",
-    "backend/app/simulation/semantic_program/contract.py",
-    "backend/app/simulation/semantic_program/route.py",
-    "backend/tests/semantic_program/test_coercion_stats.py",
-    "frontend/src/components/SimulationWorkspace.tsx",
-    "frontend/src/simulations/domains/generic/semantic_program.schema.json",
-    "frontend/src/styles/global.css"
+    "backend/app/main.py",
+    "backend/app/simulation/semantic_program/geometry_exec.py",
+    "backend/app/simulation/semantic_program/learner_surface.py",
+    "backend/app/simulation/semantic_program/simulation_state.py",
+    "backend/tests/geometry/test_geometry_wave2.py",
+    "backend/tests/test_api.py"
   ],
-  "head": "8b4025eead396f8b1f82371e8de28912d1e88096",
+  "head": "71de593cc49f867eae55e486007996fab6a87e8d",
   "dirty": true,
-  "generatedAt": "2026-08-25T08:56:37.050Z",
+  "generatedAt": "2026-08-25T13:29:02.913Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {
