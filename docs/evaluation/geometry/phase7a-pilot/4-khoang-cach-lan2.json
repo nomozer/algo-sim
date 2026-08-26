@@ -1,0 +1,263 @@
+{
+  "ban_ghi": {
+    "case_id": "4-khoang-cach",
+    "lan": 2,
+    "do_tre_giay": 26.2,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [
+      "distance"
+    ],
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "khoang_cach_a_sb = 12/5",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 7,
+    "so_buoc_phat_lai": 3,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "SB",
+        "params": {
+          "witness": "khoang_cach_a_sb",
+          "wrt": "A"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_is_square",
+        "label": "ABCD là hình vuông",
+        "values": [
+          "ABCD là hình vuông"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "canh_day_abcd",
+        "label": "cạnh đáy ABCD",
+        "values": [
+          3
+        ],
+        "provenance": "confirmed",
+        "source_start": 52,
+        "source_end": 53,
+        "source_text": "3",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_vuong_goc_day",
+        "label": "SA vuông góc với mặt phẳng đáy",
+        "values": [
+          "SA vuông góc với mặt phẳng đáy"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "độ dài SA",
+        "values": [
+          4
+        ],
+        "provenance": "confirmed",
+        "source_start": 94,
+        "source_end": 95,
+        "source_text": "4",
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ điểm A đến đường thẳng SB trong hình chóp S.ABCD",
+    "description": "Chương trình dựng hình và tính toán khoảng cách từ một điểm đến một đường thẳng trong không gian.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ vì SA vuông góc với mặt phẳng đáy."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          3,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day_abcd",
+        "model_assumption": "Đặt cạnh AB dọc theo trục Ox."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day_abcd",
+        "model_assumption": "Đặt cạnh AD dọc theo trục Oy."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          3,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_is_square",
+        "model_assumption": "Hoàn thành hình vuông ABCD trên mặt phẳng Oxy."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          4
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sa_length",
+        "model_assumption": "Đặt SA dọc theo trục Oz vì SA vuông góc với đáy."
+      },
+      {
+        "name": "line_SB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_a_sb",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "line_SB",
+        "through_a": "S",
+        "through_b": "B",
+        "label": "Đường thẳng SB"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_a_sb",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "A",
+          "wrt": "line_SB"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tính khoảng cách từ một điểm đến một đường thẳng trong không gian. Phương pháp hình học thường dùng là dựng đường cao từ điểm đó xuống đường thẳng, hoặc sử dụng công thức diện tích tam giác. Hệ thống sẽ tự động tính toán giá trị này dựa trên các tọa độ đã khai báo."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "3",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "3",
+      "y": "3",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "4"
+    },
+    "line_SB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "4"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "3",
+        "y": "0",
+        "z": "-4"
+      }
+    },
+    "khoang_cach_a_sb": "12/5"
+  }
+}

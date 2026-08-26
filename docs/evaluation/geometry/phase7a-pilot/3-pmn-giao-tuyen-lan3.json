@@ -1,0 +1,483 @@
+{
+  "ban_ghi": {
+    "case_id": "3-pmn-giao-tuyen",
+    "lan": 3,
+    "do_tre_giay": 77.3,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 0,
+    "nghia_vu_kinds": [],
+    "nghia_vu_mong_doi": [
+      "point_on_line",
+      "point_on_plane"
+    ],
+    "obligation_match": false,
+    "oracle_dat": true,
+    "oracle_vi_sao": "Q là trung điểm AD",
+    "envelope_status": "ok",
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 13,
+    "so_buoc_phat_lai": 9,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 2 validation errors for SemanticProgramSpec\nstatements.5.construct_line.through_a\n  Field required [type=missing, input_value={'kind': 'construct_line'...của (PMN) và (ABCD)'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/missing\nstatements.5.construct_line.through_b\n  Field required [type=missing, input_value={'kind'"
+    ]
+  },
+  "request_contract": {
+    "obligations": [],
+    "input_facts": [
+      {
+        "fact_id": "abcd_hinh_vuong",
+        "label": "ABCD là hình vuông",
+        "values": [
+          "ABCD là hình vuông"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "canh_day_abcd",
+        "label": "Cạnh đáy ABCD",
+        "values": [
+          4
+        ],
+        "provenance": "confirmed",
+        "source_start": 52,
+        "source_end": 53,
+        "source_text": "4",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_vuong_goc_day",
+        "label": "SA vuông góc với mặt phẳng đáy",
+        "values": [
+          "SA vuông góc với (ABCD)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "SA vuông góc với (ABCD)"
+        ]
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "Độ dài SA",
+        "values": [
+          5
+        ],
+        "provenance": "confirmed",
+        "source_start": 92,
+        "source_end": 93,
+        "source_text": "5",
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_sb",
+        "label": "M là trung điểm của SB",
+        "values": [
+          "M là trung điểm của SB"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "M là trung điểm của SB"
+        ]
+      },
+      {
+        "fact_id": "n_trung_diem_sd",
+        "label": "N là trung điểm của SD",
+        "values": [
+          "N là trung điểm của SD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "N là trung điểm của SD"
+        ]
+      },
+      {
+        "fact_id": "p_trung_diem_ab",
+        "label": "P là trung điểm của AB",
+        "values": [
+          "P là trung điểm của AB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Dựng mặt phẳng (PMN) và xác định giao tuyến, giao điểm",
+    "description": "Chương trình dựng hình chóp S.ABCD, xác định các trung điểm M, N, P, sau đó dựng mặt phẳng (PMN), tìm giao tuyến của (PMN) với mặt đáy (ABCD) và giao điểm của giao tuyến đó với cạnh AD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với đáy."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          4,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day_abcd",
+        "model_assumption": "Đặt AB dọc theo trục Ox, độ dài cạnh đáy là 4."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          4,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_day_abcd",
+        "model_assumption": "Đặt AD dọc theo trục Oy, độ dài cạnh đáy là 4."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          4,
+          4,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_vuong",
+        "model_assumption": "ABCD là hình vuông cạnh 4."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          5
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sa_length",
+        "model_assumption": "SA vuông góc đáy, nên S nằm trên trục Oz với SA=5."
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_trung_diem_ab",
+        "model_assumption": null
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_sb",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_sd",
+        "model_assumption": null
+      },
+      {
+        "name": "plane_ABCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_PMN",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_d",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_AD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "Q",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "B"
+        },
+        "label": "P là trung điểm của AB"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "B"
+        },
+        "label": "M là trung điểm của SB"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "D"
+        },
+        "label": "N là trung điểm của SD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ABCD",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng đáy (ABCD)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_PMN",
+        "through": [
+          "P",
+          "M",
+          "N"
+        ],
+        "label": "Mặt phẳng (PMN)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "line_d",
+        "expr": {
+          "kind": "intersect_plane_plane",
+          "plane_a": "plane_PMN",
+          "plane_b": "plane_ABCD"
+        }
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_AD",
+        "through_a": "A",
+        "through_b": "D",
+        "label": "Đường thẳng AD"
+      },
+      {
+        "kind": "assign",
+        "target_var": "Q",
+        "expr": {
+          "kind": "intersect_line_line",
+          "line_a": "line_d",
+          "line_b": "line_AD"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": null
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "4",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "4",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "4",
+      "y": "4",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "5"
+    },
+    "P": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "M": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "5/2"
+    },
+    "N": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "5/2"
+    },
+    "plane_ABCD": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "16"
+      }
+    },
+    "plane_PMN": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "-5",
+        "y": "-5",
+        "z": "0"
+      }
+    },
+    "line_d": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-80",
+        "y": "80",
+        "z": "0"
+      }
+    },
+    "line_AD": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "4",
+        "z": "0"
+      }
+    },
+    "Q": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    }
+  }
+}
