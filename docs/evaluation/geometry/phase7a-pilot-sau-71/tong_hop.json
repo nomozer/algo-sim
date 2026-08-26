@@ -1,0 +1,448 @@
+{
+  "k": 3,
+  "runs": [
+    {
+      "case_id": "1-trung-diem",
+      "lan": 1,
+      "do_tre_giay": 36.1,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "M là trung điểm AS",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 16,
+      "so_buoc_phat_lai": 12,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "1-trung-diem",
+      "lan": 2,
+      "do_tre_giay": 39.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "M là trung điểm AS",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 9,
+      "so_buoc_phat_lai": 5,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "1-trung-diem",
+      "lan": 3,
+      "do_tre_giay": 42.6,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "M là trung điểm AS",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 13,
+      "so_buoc_phat_lai": 9,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "2-the-tich",
+      "lan": 1,
+      "do_tre_giay": 43.1,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "V_S_ABCD = 12",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "2-the-tich",
+      "lan": 2,
+      "do_tre_giay": 38.5,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "V_S_ABCD = 12",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "2-the-tich",
+      "lan": 3,
+      "do_tre_giay": 32.4,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "volume"
+      ],
+      "nghia_vu_mong_doi": [
+        "volume"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "V = 12",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 16,
+      "so_buoc_phat_lai": 12,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 1,
+      "do_tre_giay": 202.7,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 13,
+      "so_buoc_phat_lai": 9,
+      "so_lan_thu_sinh": 1,
+      "thu_that_bai": [
+        "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nmemory_declarations.13.key_type\n  Input should be 'int', 'str', 'bool' or 'float' [type=literal_error, input_value='line3', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+      ]
+    },
+    {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 2,
+      "do_tre_giay": 310.9,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": false,
+      "oracle_dat": true,
+      "oracle_vi_sao": "Q là trung điểm AD",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 14,
+      "so_buoc_phat_lai": 10,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "3-pmn-giao-tuyen",
+      "lan": 3,
+      "do_tre_giay": 69.8,
+      "stage_reached": "execution",
+      "executable": false,
+      "servable": false,
+      "error_code": "semantic_program_invalid",
+      "failure_category": "capability_gap",
+      "reason": "Interpreter không thực thi được chương trình: GEOMETRY_OPERAND_TYPE: điểm 'P' là NoneType, cần Vec3",
+      "details": [
+        "[GEOMETRY_OPERAND_TYPE]",
+        "GEOMETRY_OPERAND_TYPE: điểm 'P' là NoneType, cần Vec3"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "point_on_line"
+      ],
+      "nghia_vu_mong_doi": [
+        "point_on_line",
+        "point_on_plane"
+      ],
+      "obligation_match": false,
+      "oracle_dat": null,
+      "oracle_vi_sao": "không có final_memory",
+      "envelope_status": "unsupported",
+      "envelope_id": null,
+      "co_scene3d": false,
+      "so_doi_tuong_canh": 0,
+      "so_buoc_phat_lai": 0,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "4-khoang-cach",
+      "lan": 1,
+      "do_tre_giay": 27.2,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "distance"
+      ],
+      "nghia_vu_mong_doi": [
+        "distance"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "khoang_cach_a_sb = 12/5",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 7,
+      "so_buoc_phat_lai": 3,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "4-khoang-cach",
+      "lan": 2,
+      "do_tre_giay": 26.0,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "distance"
+      ],
+      "nghia_vu_mong_doi": [
+        "distance"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "khoang_cach_a_sb = 12/5",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 16,
+      "so_buoc_phat_lai": 12,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "4-khoang-cach",
+      "lan": 3,
+      "do_tre_giay": 36.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "distance"
+      ],
+      "nghia_vu_mong_doi": [
+        "distance"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "khoang_cach_a_sb = 12/5",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "5-goc",
+      "lan": 1,
+      "do_tre_giay": 48.9,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_sb_sd = 1/4",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "5-goc",
+      "lan": 2,
+      "do_tre_giay": 30.3,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_sb_sd = 1/4",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    },
+    {
+      "case_id": "5-goc",
+      "lan": 3,
+      "do_tre_giay": 28.9,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
+      "error_code": null,
+      "failure_category": null,
+      "reason": null,
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
+      "nghia_vu_mong_doi": [
+        "angle"
+      ],
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_sb_sd = 1/4",
+      "envelope_status": "ok",
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 8,
+      "so_buoc_phat_lai": 4,
+      "so_lan_thu_sinh": 0,
+      "thu_that_bai": []
+    }
+  ]
+}
