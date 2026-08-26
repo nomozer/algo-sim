@@ -284,6 +284,7 @@ def check_learner_surface(
     spec: SemanticProgramSpec,
     exec_res: SemanticExecutionResult,
     envelope: dict[str, Any],
+    ten_da_hoa_giai=None,
 ) -> LearnerSurfaceResult:
     """Chạy được RỒI, nhưng học sinh có thấy đủ để hiểu không?
 
@@ -310,6 +311,25 @@ def check_learner_surface(
     # cổng dùng CHUNG một định nghĩa; hai bản `isinstance` song song sẽ trôi
     # khỏi nhau đúng vào ngày thêm một kiểu hình học mới.
     thay_duoc = _bound_names(spec) | _tren_canh_3d(spec, exec_res)
+
+    # ─── TÊN HỢP ĐỒNG PHẢI ĐI QUA CÙNG PHÉP PHÂN GIẢI VỚI MỌI CỔNG KHÁC ────
+    #
+    # `thay_duoc` toàn TÊN CHƯƠNG TRÌNH; `ob.witness` là TÊN HỢP ĐỒNG. Không
+    # phân giải trước khi tra thì cổng kết luận "học sinh không thấy đáp án"
+    # trong khi đáp án ĐANG NẰM TRÊN CẢNH dưới một cái tên khác.
+    #
+    # Đo được ở Phase 7A (`3-pmn` lượt 1): hợp đồng đòi witness `Q`, chương
+    # trình dựng `Q_point`, `oracle = True` (đáp án ĐÚNG), `servable = False`.
+    # Chương trình đúng, học sinh không nhận được gì.
+    #
+    # Đây là cổng THỨ TƯ của cùng một lớp lỗi — C₁a, C₁b, C₂ đã nhận ánh xạ này
+    # từ Phase 6.7.1. Ba cổng dùng chung một nguồn sự thật, cổng thứ tư đứng
+    # ngoài, và nó đứng ngoài suốt hai pha mà không ai thấy.
+    doi = ten_da_hoa_giai or {}
+
+    def _pg(ten: str) -> str:
+        """Tên hợp đồng → tên chương trình. Không có ánh xạ ⇒ giữ nguyên."""
+        return doi.get(ten, ten)
 
     # (1) Container BIẾN ĐỘNG mà không có đường lên màn hình.
     for decl in spec.memory_declarations:
@@ -355,9 +375,13 @@ def check_learner_surface(
     # (3) Chỗ chứa CÂU TRẢ LỜI phải nhìn thấy được.
     for ob in contract.obligations:
         witness = (ob.params or {}).get("witness")
-        if witness and witness not in thay_duoc:
+        if witness and _pg(witness) not in thay_duoc:
+            # Nêu CẢ HAI TÊN khi có hoà giải — Wave 3 đã học một lần rằng thông
+            # điệp một phía buộc lượt phân tích sau phải chạy forensics.
+            ten = (f"'{witness}'" if _pg(witness) == witness
+                   else f"'{witness}' (≡ '{_pg(witness)}')")
             thieu.append(
-                f"witness '{witness}' của nghĩa vụ '{ob.kind}' không hiện trên "
+                f"witness {ten} của nghĩa vụ '{ob.kind}' không hiện trên "
                 "màn hình — mô phỏng chạy xong mà học sinh không thấy đáp án"
             )
 

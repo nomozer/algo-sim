@@ -19,17 +19,59 @@ from app.simulation.dsl.manifest import known_gap_roles
 _CO_AUTHORITY_SAN = ("provided", "rule_derivable")
 
 
+#: Vai trò mà **NHÂN HÌNH HỌC** sở hữu, dù manifest DSL 2D xếp chúng là gap.
+#:
+#: ─── VÌ SAO DANH SÁCH NÀY TỒN TẠI (đo được ở Phase 7A, `5-goc` lượt 2) ────
+#:
+#: `known_gap_roles()` dẫn xuất từ `manifest.py`: *"vai trò trong taxonomy mà
+#: KHÔNG PRIMITIVE THỊ GIÁC nào cover"*. Đó là một câu đúng **về DSL 2D**.
+#:
+#: Đường sinh hình học KHÔNG ĐI QUA DSL — nó chạy trên kernel hữu tỉ. Nên áp
+#: danh sách ấy cho nó là áp giới hạn của một engine lên một engine khác. Hậu
+#: quả đo được: một đề *"tính góc giữa SB và SD"* bị từ chối TRƯỚC KHI SINH vì
+#: `analyze` khai `geometric_perpendicular`, trong khi kernel có
+#: `P.perpendicular_lines` từ Wave 1.
+#:
+#: Nó KHÔNG tất định — cùng đề, hai lượt qua, một lượt trượt, tuỳ `analyze` có
+#: khai vai trò ấy không. Nên nó vào báo cáo như "mô hình không làm được".
+#:
+#: ─── VÌ SAO CHỈ BA, KHÔNG MIỄN TRỪ CẢ MIỀN ───────────────────────────────
+#:
+#: Kernel **KHÔNG** sở hữu `geometric_circle` và `geometric_locus`: nó dựng trên
+#: `Fraction` và đa diện, mặt cong không nằm trong mô hình
+#: (`GEOMETRY_CURRICULUM_COVERAGE §4`, mục #19 và #20 đều ghi KHÔNG).
+#:
+#: Miễn trừ cả gói thì một đề mặt cầu đi thẳng vào sinh, tiêu ~5 lượt LLM rồi
+#: hỏng muộn — hoặc tệ hơn, dựng một khối đa diện "gần giống" và học sinh tin
+#: nó. Từ chối sớm ở đây mới là hành vi trung thực.
+#:
+#: Mỗi mục dưới đây có test khẳng định kernel THẬT SỰ có hàm tương ứng.
+GEOMETRY_OWNED_GAP_ROLES = frozenset({
+    "geometric_perpendicular",   # predicates.perpendicular_lines / _planes
+    "geometric_intersection",    # kernel.intersect_line_plane / _plane_plane / _line_line
+    "geometric_projection",      # kernel.project_point_onto_plane / _line
+})
+
+
 def check_execution_authority(
-    analysis: dict, plan: dict, has_interpreter: bool
+    analysis: dict, plan: dict, has_interpreter: bool, domain: str | None = None
 ) -> str | None:
     """Trả lý do (tiếng Việt) khi KHÔNG có authority; `None` khi được đi tiếp.
 
     `has_interpreter` = route hiện tại có `SemanticProgramInterpreter` đứng sau
     hay không. Đường module truyền `False` ⇒ hành vi y hệt `computation_gate` cũ.
+
+    `domain` = miền đã dò TẤT ĐỊNH. `None` (mặc định) giữ nguyên hành vi cũ cho
+    miền Tin học — cơ chế chặn của nó KHÔNG được nới một milimét.
     """
     # Vai trò không engine tất định nào sở hữu thì interpreter cũng không cứu
     # được — có interpreter KHÔNG có nghĩa là biểu diễn được mọi cơ chế.
-    gaps = sorted(set(plan.get("unsupported_capabilities", [])) & known_gap_roles())
+    lo_hong = known_gap_roles()
+    if domain == "hinh_hoc":
+        # Trừ đi ĐÚNG những vai trò nhân hình học sở hữu. `geometric_circle` và
+        # `geometric_locus` KHÔNG được trừ — kernel thật sự không có chúng.
+        lo_hong = lo_hong - GEOMETRY_OWNED_GAP_ROLES
+    gaps = sorted(set(plan.get("unsupported_capabilities", [])) & lo_hong)
     if gaps:
         return (
             f"Bài cần cơ chế chưa có engine tất định sở hữu ({', '.join(gaps)}) — "

@@ -944,7 +944,8 @@ async def _semantic_shadow(
         _emit(observer, "gate_checked", gate="scope", fired=False,
               reason_code=None)
 
-    auth = check_execution_authority(analysis, plan, has_interpreter=True)
+    auth = check_execution_authority(analysis, plan, has_interpreter=True,
+                                     domain=domain)
     _emit(observer, "gate_checked", gate="execution_authority",
           fired=bool(auth),
           reason_code=ErrorCode.GATE_RESULT_OWNERSHIP.value if auth else None)

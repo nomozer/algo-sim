@@ -292,7 +292,8 @@ def _sau_grounding(
     # được đúng thứ đã ship: chương trình chạy đúng, lời kể đúng, envelope sạch —
     # mà ngăn xếp trên hình rỗng suốt bảy bước. Chạy SAU `compile` vì câu hỏi là
     # về những khung SẼ ĐƯỢC PHÁT, không phải về ý định của chương trình.
-    surface = check_learner_surface(contract, spec, exec_res, envelope)
+    surface = check_learner_surface(contract, spec, exec_res, envelope,
+                                    ten_da_hoa_giai=c1a.ten_da_hoa_giai)
     if not surface.ok:
         code = ErrorCode.LEARNER_SURFACE_INCOMPLETE
         return SemanticRouteOutcome(

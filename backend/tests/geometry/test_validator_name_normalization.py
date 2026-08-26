@@ -83,8 +83,22 @@ def test_dap_an_dung_12_chu_khong_chi_QUA_CONG(ten):
 
 
 # ══ BẤT BIẾN: ĐỔI TÊN KHÔNG ĐƯỢC ĐỔI PHÁN QUYẾT ═════════════════════════
+#: Hậu tố dùng để đổi tên. Mỗi cái phải NẰM TRONG `_PHU_TO_KIEU` — và có test
+#: khẳng định điều đó.
+#:
+#: ─── VÌ SAO KHÔNG BỊA HẬU TỐ ────────────────────────────────────────────
+#:
+#: Bản nháp dùng `_pt` cho `point3`, và bất biến đỏ. Đọc kỹ thì ĐỎ OAN: `pt`
+#: không nằm trong danh sách phụ tố đã quan sát được, nên không lưới nào hoà
+#: giải nổi — và thêm nó vào danh sách là "alias thủ công theo lỗi", đúng thứ
+#: Phase 6.6 cấm và một test đang ghim độ dài danh sách để chặn.
+#:
+#: Bất biến này kiểm **CÁC CỔNG CÓ NHẤT QUÁN VỚI NHAU KHÔNG**, không kiểm lưới
+#: phủ được bao nhiêu cách viết. Hai câu hỏi khác nhau: câu sau bị chặn bởi bằng
+#: chứng (chỉ thêm phụ tố khi quan sát được mô hình dùng nó), câu trước thì
+#: không — mọi cổng phải nhất quán, luôn luôn.
 _HAU_TO = {"line3": "_line", "plane3": "_plane", "solid": "_solid",
-           "polygon3": "_poly", "point3": "_pt"}
+           "polygon3": "_mat", "point3": "_point", "vector3": "_vector"}
 
 
 def _doi_ten(spec: SemanticProgramSpec) -> SemanticProgramSpec:
@@ -94,6 +108,12 @@ def _doi_ten(spec: SemanticProgramSpec) -> SemanticProgramSpec:
     giữ nguyên tên, vì chúng là thứ hợp đồng dùng để nói về topology.
     """
     kieu = {d.name: d.type for d in spec.memory_declarations}
+    # ─── ĐỔI TÊN VẬT DỰNG, KHÔNG ĐỔI TÊN ĐẠI LƯỢNG VÔ HƯỚNG ────────────────
+    #
+    # Chỉ vật dựng bằng `construct_*` mới có TOPOLOGY, tức mới có đường phân
+    # giải nguyên tắc. Một `float` sinh bằng `assign` thì danh tính CHÍNH LÀ cái
+    # tên — đòi hệ hoà giải `V_S_ABCD ≡ V_total` là đòi khớp mờ, đúng thứ Phase
+    # 6.6 đã cấm. Bất biến phải mạnh đúng mức, mạnh quá thì nó đòi một thứ sai.
     tao_ra = {st.target_var for st in spec.statements
               if getattr(st, "kind", "").startswith("construct")}
     doi = {t: t + _HAU_TO.get(kieu.get(t, ""), "_x") for t in tao_ra}
@@ -105,21 +125,59 @@ def _doi_ten(spec: SemanticProgramSpec) -> SemanticProgramSpec:
     return SemanticProgramSpec.model_validate(json.loads(van))
 
 
-@pytest.mark.parametrize("ten", ["2-the-tich-lan2", "2-the-tich-lan3"])
-def test_DOI_TEN_KHONG_DOI_PHAN_QUYET(ten):
-    """BẤT BIẾN của cả pha này, và là thứ chặn LỚP lỗi chứ không chặn hai ca.
+def _moi_luot_da_served() -> list[str]:
+    """MỌI artifact từng `served`, gom từ mọi vòng đo.
+
+    ⚠️ Đây là chỗ bất biến này TỪNG THỦNG, và nó thủng vì CORPUS chứ không vì
+    logic. Bản đầu chỉ chạy trên hai lượt bài thể tích, nơi witness (`V_S_ABCD`)
+    sinh bằng `assign` nên không bao giờ bị đổi tên — tức tên witness trong test
+    không bao giờ khác tên hợp đồng.
+
+    Bài thiết diện thì khác: witness `Q` sinh bằng `construct_point`, tức nó CÓ
+    bị đổi tên. Đúng ca ấy đã lộ ra `check_learner_surface` là cổng THỨ TƯ chưa
+    nhận ánh xạ — và bất biến cũ không thấy vì nó chưa từng đọc bài thiết diện.
+    Nay nó đọc MỌI lượt đã served, nên corpus không tự thu hẹp được nữa.
+    """
+    ra = []
+    for f in sorted(GOC.glob("docs/evaluation/geometry/*/[0-9]*-lan*.json")):
+        d = json.loads(f.read_text(encoding="utf-8"))
+        if d["ban_ghi"].get("servable") and d.get("generated_program"):
+            ra.append(str(f))
+    return ra
+
+
+@pytest.mark.parametrize("duong", _moi_luot_da_served(),
+                         ids=lambda p: Path(p).stem)
+def test_DOI_TEN_KHONG_DOI_PHAN_QUYET(duong):
+    """BẤT BIẾN chặn CẢ LỚP lỗi, không chặn từng ca.
 
     Đổi tên mọi vật dựng mà giữ nguyên topology ⇒ mọi cổng phải cho cùng một
     phán quyết. Cổng nào còn đọc tên gốc của hợp đồng sẽ lệch ở đây, bất kể nó
-    nằm ở C₁a, C₁b, C₂ hay một cổng chưa ai viết.
+    nằm ở C₁a, C₁b, C₂, `learner_surface` hay một cổng chưa ai viết.
     """
-    hd, spec = _luot(ten)
+    d = json.loads(Path(duong).read_text(encoding="utf-8"))
+    hd = RequestContract.model_validate(d["request_contract"])
+    spec = SemanticProgramSpec.model_validate(d["generated_program"])
     goc = verify_and_compile(hd, spec)
     moi = verify_and_compile(hd, _doi_ten(spec))
     assert (moi.executable, moi.servable) == (goc.executable, goc.servable), (
         f"đổi tên làm đổi phán quyết: {goc.stage_reached} → {moi.stage_reached} "
         f"· {moi.details}"
     )
+
+
+def test_HAU_TO_deu_DAN_TU_danh_sach_phu_to_that():
+    """Nếu test tự bịa hậu tố thì nó đo lưới, không đo cổng — và sẽ đỏ oan."""
+    from app.simulation.semantic_program.domain_profile import _PHU_TO_KIEU
+
+    for kieu, h in _HAU_TO.items():
+        assert h.lstrip("_") in _PHU_TO_KIEU, f"{kieu} → {h} không phải phụ tố thật"
+
+
+@pytest.mark.parametrize("ten", ["2-the-tich-lan2", "2-the-tich-lan3"])
+def test_DOI_TEN_van_ra_dung_dap_so(ten):
+    hd, spec = _luot(ten)
+    moi = verify_and_compile(hd, _doi_ten(spec))
     assert str((moi.final_memory or {}).get("V_S_ABCD")) == "12"
 
 

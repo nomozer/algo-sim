@@ -381,6 +381,34 @@ def check_structural_coverage(
                 f"(chương trình khai: {sorted(declared)})"
             )
             continue
+        # ─── THAM SỐ KHÁC CŨNG CÓ THỂ LÀ TÊN ĐỐI TƯỢNG ─────────────────────
+        #
+        # `angle` mang `params.wrt` — vật thứ hai của phép đo. `distance` cũng
+        # vậy. C₁a trước đây chỉ hoà giải `container` và `witness`, nên C₂ tra
+        # `wrt` bằng tên HỢP ĐỒNG trong một snapshot chỉ có tên CHƯƠNG TRÌNH và
+        # kết luận "cặp đối tượng không hợp lệ cho góc" — trong khi cả hai đường
+        # đều nằm đó dưới tên khác.
+        #
+        # KHÔNG liệt kê khoá tham số bằng tay: danh sách ấy sẽ thiếu ở lần thêm
+        # nghĩa vụ tiếp theo, đúng như `container`/`witness` đã thiếu ở lần này.
+        # Thay vào đó thử hoà giải MỌI giá trị chuỗi chưa khai — cùng ba lưới,
+        # cùng luật fail-closed, và CHỈ cho nghĩa vụ hình học nên tham số của
+        # miền Tin học không bị đụng tới.
+        #
+        # An toàn vì lưới vốn đã chặt: `pred="balanced_delimiters"` hay
+        # `cmp="max"` không phân giải về đâu cả, nên chúng đi qua nguyên vẹn.
+        if ten_hh:
+            for khoa, gt in (ob.params or {}).items():
+                if khoa == "witness" or not isinstance(gt, str):
+                    continue
+                if gt in declared or gt in anh_xa:
+                    continue
+                if (kq := _hoa_giai(gt, set(declared), ob.kind)):
+                    thay, luoi = kq
+                    dong_nhat.append(
+                        f"{ob.describe()}: {khoa} '{gt}' ≡ '{thay}' (lưới: {luoi})")
+                    anh_xa[gt] = thay
+
         if w not in producers:
             missing.append(
                 f"{ob.describe()}: witness '{w}' không có producer hợp lệ "
