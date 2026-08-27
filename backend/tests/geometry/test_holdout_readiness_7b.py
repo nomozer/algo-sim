@@ -14,6 +14,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -674,6 +675,41 @@ def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
     assert d["pool_hash"] in src, "báo cáo trôi khỏi pool — chạy lại script"
     assert f"accepted`: {d['accepted']}/40" in src
     assert ("READY_FOR_PHASE7B:  NO" in src) == bool(RP.blockers(d))
+
+
+# ══ BÁO CÁO ỨNG VIÊN — không được MÂU THUẪN với pool ═════════════════════
+def test_bao_cao_ung_vien_KHONG_nhan_bai_pool_DA_LOAI(POOL_D):
+    """Dương tính giả đã xảy ra: bộ sàng đọc VĂN BẢN ĐỀ, nên nó không thấy cái
+    vô tỉ nằm ở ĐÁP ÁN — bài lập phương `d = 3√6` có đề sạch trơn, không một
+    dấu căn, và được đánh ✅ NHẬN trong khi pool đã phán
+    `rejected_capability_boundary`.
+
+    Hai nguồn sự thật thì bản dễ dãi hơn là bản người ta đọc. Nên phán quyết
+    của pool THẮNG: nó đã tra tới tận kernel, bộ sàng thì chưa.
+    """
+    f = GEO / "HOLDOUT_CANDIDATE_REPORT.md"
+    if not f.exists():
+        pytest.skip("chưa sinh HOLDOUT_CANDIDATE_REPORT.md")
+    src = f.read_text(encoding="utf-8")
+    da_loai = {c.get("nguon", {}).get("url")
+               for c in POOL_D["cases"] if c.get("status", "accepted") != "accepted"}
+    for dong in src.splitlines():
+        if "✅ NHẬN" not in dong:
+            continue
+        for u in da_loai:
+            assert u and u not in dong, (
+                f"báo cáo nhận một bài pool đã loại: {u}")
+
+
+def test_bao_cao_ung_vien_khai_dung_READY_FOR_INGEST():
+    f = GEO / "HOLDOUT_CANDIDATE_REPORT.md"
+    if not f.exists():
+        pytest.skip("chưa sinh HOLDOUT_CANDIDATE_REPORT.md")
+    src = f.read_text(encoding="utf-8")
+    m = re.search(r"ACCEPTABLE_CANDIDATES:\s*(\d+)", src)
+    assert m, "báo cáo thiếu dòng ACCEPTABLE_CANDIDATES"
+    co = int(m.group(1)) > 0
+    assert (f"READY_FOR_INGEST:      {'YES' if co else 'NO'}") in src
 
 
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
