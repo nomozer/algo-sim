@@ -2813,6 +2813,27 @@ chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracl
 (tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
 `problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
 
+### `backend/scripts/ingest_holdout_batch.py` · offline · **0 API call**
+
+Nạp một **lô đề do NGƯỜI chép** thành mục `pool.json`. Export: `phan_tich` ·
+`thanh_case`. Khuôn vào chỉ **ba dòng mỗi bài** (`[A14]` + đề + `NGUỒN:` +
+`ĐÁP ÁN:`); script lo phần còn lại — xếp trường, gán `capability_tag` từ
+`NANG_LUC`, dựng `oracle_result`, chạy `check_capability_boundary`.
+
+**Cổng cốt lõi — dòng `NGƯỜI CHÉP:`.** Giao thức đòi đề NGUYÊN VĂN, và đã đo
+được rằng **mọi kênh tự động hỏng IM LẶNG** (công cụ đọc web tóm tắt; trích PDF
+rơi `⊥` — 0 lần trong 217 trang về quan hệ vuông góc). Thứ duy nhất chưa hỏng là
+người mở sách đọc và gõ lại, nên **hành vi chép CHÍNH LÀ bước xác minh**: thiếu
+dòng ấy ⇒ từ chối cả lô. ⚠️ Dòng ấy **do người viết** — agent tự viết là tự cấp
+một chứng nhận không có tư cách cấp; `test_bo_nap_KHONG_tu_viet_dong_NGUOI_CHEP`
+khoá điều đó vào docstring.
+
+**Cảnh báo chứ không tự loại** (phán quyết cuối là của người): trắc nghiệm 4
+phương án · căn thức · tham chiếu hình vẽ không có trong văn bản · mặt cong ·
+Oxyz cho sẵn toạ độ. Chặn cứng thì có: thiếu `NGUỒN`, ô A thiếu `ĐÁP ÁN`, ô B
+**có** `ĐÁP ÁN` (trộn hai thang chấm), ô ứng nhiều thẻ. Khoá bởi
+`test_holdout_readiness_7b.py`.
+
 ### `backend/scripts/harvest_holdout_candidates.py` · **0 API call của hệ**
 
 Thu **ứng viên** đề held-out từ HTML thô. Export: `soi_mot_trang` ·

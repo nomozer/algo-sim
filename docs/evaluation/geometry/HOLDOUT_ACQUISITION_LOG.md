@@ -443,11 +443,25 @@ giao thức đòi — nên `problem_text_verified` hạ được ngay.
 Ba dòng mỗi bài: **ô** · **đề nguyên văn** · **nguồn + đáp án**. Không cần JSON,
 không cần biết `capability_tag` hay `answer_shape`.
 
-### Máy làm phần còn lại
+⚠️ File lô phải mở đầu bằng **`NGƯỜI CHÉP: <tên> · <ngày> · <chép từ đâu>`**.
+Không có dòng ấy thì `ingest_holdout_batch.py` **từ chối cả lô** — vì hành vi
+chép của người **chính là** bước xác minh nguyên văn, và không ai khác cấp được
+chứng nhận ấy.
 
-xếp ô · gán `capability_tag`/`answer_shape` · dẫn `phep_chuyen` và
-`oracle_result` · chạy `check_capability_boundary` · dựng
-`expectations/holdout.json` · cập nhật ma trận độ phủ.
+### Máy làm phần còn lại — đã có đường nạp (Phase 7B.2)
+
+```bash
+python scripts/ingest_holdout_batch.py lo1.txt          # soi, không ghi
+python scripts/ingest_holdout_batch.py lo1.txt --ghi    # ghi vào pool.json
+```
+
+Nó xếp ô · gán `capability_tag`/`answer_shape` từ `NANG_LUC` · dựng
+`oracle_result` · chạy `check_capability_boundary`, và **cảnh báo** đúng năm lớp
+đề không hợp luật (trắc nghiệm · căn thức · tham chiếu hình vẽ · mặt cong ·
+Oxyz cho sẵn) mà **không tự loại** — phán quyết cuối là của người.
+
+Chạy thử đầu-cuối với lô mẫu 2 bài (A14 + A09): cả hai qua cổng, đúng thẻ, đúng
+`oracle_result`. Đường nạp **sẵn sàng**; chỉ còn thiếu đề thật.
 
 ### Ưu tiên, theo tỉ lệ loại thấp nhất
 

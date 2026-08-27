@@ -451,6 +451,87 @@ def test_bo_thu_KHONG_ghi_vao_pool():
     assert "problem_text_verified" in src, "phải nhắc rõ giới hạn của nó"
 
 
+# ══ ĐƯỜNG NẠP LÔ ĐỀ DO NGƯỜI CHÉP ═══════════════════════════════════════
+@pytest.fixture(scope="module")
+def IN():
+    return _nap("ingest_holdout_batch")
+
+
+_LO = """NGƯỜI CHÉP: Nguyễn Văn A · 2026-08-28 · SGK Toán 11 tập 2 KNTT
+
+[A14] Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA
+      vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.
+      NGUỒN: SGK Toán 11 tập 2 KNTT, bài 7.15 trang 62
+      ĐÁP ÁN: 4
+"""
+
+
+def test_lo_HOP_LE_thi_ra_case_qua_duoc_cong(IN, SH):
+    nguoi, bai, loi = IN.phan_tich(_LO, SH)
+    assert loi == [] and nguoi.startswith("Nguyễn Văn A")
+    c = IN.thanh_case(bai[0], nguoi, SH)
+    assert SH.check_capability_boundary(c) == []
+    assert c["capability_tag"] == "rational_volume"
+    assert c["answer_shape"] == "exact_fraction"
+    assert c["oracle_result"] == {"volume": "4"}
+    assert c["problem_text_verified"] is True
+
+
+def test_THIEU_dong_NGUOI_CHEP_thi_TU_CHOI(IN, SH):
+    """Cổng cốt lõi: không ai chịu trách nhiệm cho việc đề đúng nguyên văn thì
+    không lô nào được vào. Mọi kênh tự động đã đo được là hỏng IM LẶNG."""
+    _, _, loi = IN.phan_tich(_LO.split("\n", 1)[1], SH)
+    assert loi and "NGƯỜI CHÉP" in loi[0]
+
+
+def test_THIEU_NGUON_thi_TU_CHOI(IN, SH):
+    _, _, loi = IN.phan_tich(
+        _LO.replace("      NGUỒN: SGK Toán 11 tập 2 KNTT, bài 7.15 trang 62\n", ""),
+        SH)
+    assert any("NGUỒN" in d for d in loi)
+
+
+def test_o_tang_A_THIEU_DAP_AN_thi_TU_CHOI(IN, SH):
+    _, _, loi = IN.phan_tich(_LO.replace("      ĐÁP ÁN: 4\n", ""), SH)
+    assert any("ĐÁP ÁN" in d for d in loi)
+
+
+def test_o_tang_B_MANG_DAP_AN_thi_TU_CHOI(IN, SH):
+    """Tầng B chấm bằng 'từ chối trung thực', chấm nó bằng đáp án là trộn hai
+    thang."""
+    _, _, loi = IN.phan_tich(_LO.replace("[A14]", "[B03]"), SH)
+    assert any("tầng B" in d for d in loi)
+
+
+@pytest.mark.parametrize("chen,dau", [
+    ("Đáp án: A. 12. B. 6. C. 8. D. 4.", "TRẮC NGHIỆM"),
+    ("và SA = a√3.", "CĂN THỨC"),
+    ("(tham khảo hình vẽ)", "HÌNH VẼ"),
+    ("Cho mặt cầu tâm O.", "MẶT CONG"),
+    ("Trong không gian Oxyz, cho", "Oxyz"),
+])
+def test_canh_bao_dung_lop_de_KHONG_hop_luat(IN, SH, chen, dau):
+    """Cảnh báo, KHÔNG tự loại: phán quyết cuối là của người, script chỉ chỉ chỗ."""
+    _, bai, _ = IN.phan_tich(_LO.replace("Tính thể tích", chen + " Tính thể tích"), SH)
+    assert any(dau in cb for cb in bai[0]["canh_bao"]), bai[0]["canh_bao"]
+
+
+def test_ORACLE_dang_can_thuc_bi_CONG_chan(IN, SH):
+    """Người chép đúng nguyên văn một đáp án CĂN THỨC vẫn bị chặn ở cổng sau —
+    hai cổng, hai câu hỏi khác nhau."""
+    nguoi, bai, loi = IN.phan_tich(_LO.replace("ĐÁP ÁN: 4", "ĐÁP ÁN: 4√3"), SH)
+    assert loi == []
+    c = IN.thanh_case(bai[0], nguoi, SH)
+    assert any("CĂN THỨC" in d for d in SH.check_capability_boundary(c))
+
+
+def test_bo_nap_KHONG_tu_viet_dong_NGUOI_CHEP():
+    """Tôi tự viết dòng ấy là tự cấp cho mình một chứng nhận không có tư cách
+    cấp. Docstring phải nói thẳng điều đó."""
+    src = (SCRIPTS / "ingest_holdout_batch.py").read_text(encoding="utf-8")
+    assert "do NGƯỜI viết" in src and "không có tư cách cấp" in src
+
+
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
     """Ô không có thẻ nào ⇒ người soạn bài cho ô ấy không biết khai gì."""
     co = {o for t in POOL_D["__the_nang_luc__"].values()
