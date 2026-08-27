@@ -2813,6 +2813,20 @@ chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracl
 (tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
 `problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
 
+### `backend/scripts/report_holdout_readiness.py` · offline · **0 API call**
+
+Sinh `docs/evaluation/geometry/PHASE7B_READINESS_REPORT.md` — **ảnh chụp số** của
+mức sẵn sàng: environment (7 băm) · dataset (đếm theo `status`, độ phủ 20 ô, bảng
+bài bị loại) · expectation · blockers. Export: `thu_thap` · `blockers` · `_md`.
+
+**Sinh ra chứ không viết tay**, vì nó mang băm và số đếm: viết tay thì đúng đúng
+một lần rồi trôi ở commit sau, và một báo cáo *sẵn sàng* nói sai về mức sẵn sàng
+còn tệ hơn không có báo cáo. Khoá bởi `test_bao_cao_da_sinh_va_KHONG_TROI`.
+
+Khác `PHASE7B_READINESS.md` — file ấy là **phân tích blocker** do người viết (vì
+sao rào tồn tại, ba đường đi, cái giá từng đường). File này là **số**. Hai vai,
+đừng gộp. Thoát `1` khi còn blocker.
+
 ### `backend/scripts/ingest_holdout_batch.py` · offline · **0 API call**
 
 Nạp một **lô đề do NGƯỜI chép** thành mục `pool.json`. Export: `phan_tich` ·

@@ -175,11 +175,20 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
 def thanh_case(b: dict, nguoi: str, SH) -> dict:
     o, tag = b["o"], b["tag"]
     _, dang, _ = SH.NANG_LUC[tag]
+    # NGHĨA VỤ KIỂM dẫn từ `BANG_O`, không hỏi người.
+    #
+    # Bỏ sót chỗ này là lỗ đã có thật: lô nạp xong trông hợp lệ, `answer_shape`
+    # đúng, oracle đúng — rồi trượt `kiem_pool` ở dòng *"ô A14 đòi nghĩa vụ
+    # 'volume'"*, tức gãy GIỮA hai chặng mà từng chặng đều xanh. Test đầu-cuối
+    # bắt được; test từng chặng thì không.
+    nghia_vu = [nv] if (nv := SH.BANG_O[o][0]) else []
     c = {
         "case_id": b["ma"],
         "status": "accepted",
         "slot": o, "coverage_slot": o,
         "capability_tag": tag, "answer_shape": dang,
+        "expected_obligations": nghia_vu,
+        "expected_verification_types": nghia_vu,
         "domain": "geometry_3d",
         "problem_text": b["de"], "problem_text_original": b["de"],
         # Chính hành vi CHÉP của người là bước xác minh — xem docstring.

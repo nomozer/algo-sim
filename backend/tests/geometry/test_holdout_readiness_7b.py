@@ -571,6 +571,111 @@ def test_bo_nap_KHONG_tu_viet_dong_NGUOI_CHEP():
     assert "do NGƯỜI viết" in src and "không có tư cách cấp" in src
 
 
+# ══ LUỒNG ĐẦU-CUỐI — chứng minh từng chặng NỐI ĐƯỢC ══════════════════════
+#
+# VÌ SAO CẦN: sáu chặng (nguồn → pool → ranh giới → oracle → độ phủ → con dấu)
+# đều có test riêng, nhưng **chưa chặng nào chạy nối vào chặng kia** — pool thật
+# rỗng nên luồng chưa từng chạy trọn một lần. Một luồng chưa từng chạy trọn là
+# một luồng chưa được chứng minh, và chỗ nó gãy sẽ lộ ra đúng lúc có dữ liệu
+# thật, tức đúng lúc đắt nhất.
+#
+# Lô ở đây là lô GIẢ, sống trong `tmp_path`, KHÔNG chạm `pool.json` thật.
+_LO_E2E = """NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · fixture của test
+
+[A14] Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA
+      vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.
+      NGUỒN: fixture · bài 1
+      ĐÁP ÁN: 4
+
+[A09] Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa hai đường thẳng AB và
+      B'C', biểu diễn kết quả bằng bình phương cosin của góc ấy.
+      NGUỒN: fixture · bài 2
+      ĐÁP ÁN: 0
+"""
+
+
+def test_luong_DAU_CUOI_noi_duoc(IN, SH, MT, tmp_path):
+    """Sáu chặng, chạy nối nhau một lần."""
+    # ① nguồn → lô
+    nguoi, bai, loi = IN.phan_tich(_LO_E2E, SH)
+    assert loi == [], loi
+    assert [b["o"] for b in bai] == ["A14", "A09"]
+
+    # ② lô → case
+    cases = [IN.thanh_case(b, nguoi, SH) for b in bai]
+    assert all(c["problem_text_verified"] for c in cases)
+
+    # ③ ranh giới năng lực
+    assert [d for c in cases for d in SH.check_capability_boundary(c)] == []
+
+    # ④ oracle đúng đơn vị — dẫn từ thẻ, không chép tay
+    assert cases[0]["oracle_result"] == {"volume": "4"}
+    assert cases[1]["oracle_result"] == {"angle": "0"}
+
+    # ⑤ pool → độ phủ
+    assert SH.kiem_pool(cases) == []
+    m = MT.ma_tran(cases)
+    assert m["so_bai"] == 2
+    assert "A14" not in m["o_trong"] and "A09" not in m["o_trong"]
+
+    # ⑥ con dấu VẪN từ chối — 18 ô còn trống. Đây là chặng cuối, và nó phải
+    #    nói KHÔNG, nếu không thì 2 bài cũng niêm phong được.
+    assert len(m["o_trong"]) == 18
+
+
+def test_luong_DAU_CUOI_DO_DUOC_o_tung_chang(IN, SH, tmp_path):
+    """Tiêm lỗi vào từng chặng — guard chưa từng đỏ là guard chưa được chứng
+    minh (`ARCHITECTURE_MAP §8` #14)."""
+    # chặng ①: mất chữ ký người chép
+    assert IN.phan_tich(_LO_E2E.split("\n", 1)[1], SH)[2]
+
+    # chặng ③: đề đúng, nhưng oracle là CĂN THỨC ⇒ ngoài ranh giới
+    nguoi, bai, _ = IN.phan_tich(_LO_E2E.replace("ĐÁP ÁN: 4", "ĐÁP ÁN: 2√3"), SH)
+    assert any("CĂN THỨC" in d
+               for d in SH.check_capability_boundary(
+                   IN.thanh_case(bai[0], nguoi, SH)))
+
+    # chặng ③: thẻ đúng, ô sai
+    nguoi, bai, _ = IN.phan_tich(_LO_E2E, SH)
+    c = IN.thanh_case(bai[0], nguoi, SH)
+    assert SH.check_capability_boundary({**c, "slot": "A11"})
+
+    # chặng ⑤: bài chưa đối chiếu nguyên văn không vào được pool
+    assert SH.kiem_pool([{**c, "problem_text_verified": False}])
+
+
+# ══ BÁO CÁO SẴN SÀNG — sinh ra, không viết tay ═══════════════════════════
+@pytest.fixture(scope="module")
+def RP():
+    return _nap("report_holdout_readiness")
+
+
+def test_bao_cao_thu_thap_du_bay_bam(RP):
+    d = RP.thu_thap()
+    for k in ("git_sha", "cache_version", "skill_hash", "prompt_hash",
+              "measured_system_hash", "metric_contract_hash",
+              "capability_boundary_hash", "pool_hash"):
+        assert d[k] and d[k] != "unknown", f"thiếu `{k}`"
+
+
+def test_bao_cao_NEU_RA_blocker_khi_pool_rong(RP):
+    d = RP.thu_thap()
+    b = RP.blockers(d)
+    assert any("POOL" in x for x in b) and any("SEED" in x for x in b)
+    assert any("ĐỘ PHỦ" in x for x in b)
+
+
+def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
+    """Báo cáo mang băm và số đếm. Viết tay thì nó đúng đúng một lần."""
+    f = GEO / "PHASE7B_READINESS_REPORT.md"
+    assert f.exists(), "chưa sinh PHASE7B_READINESS_REPORT.md"
+    src = f.read_text(encoding="utf-8")
+    d = RP.thu_thap()
+    assert d["pool_hash"] in src, "báo cáo trôi khỏi pool — chạy lại script"
+    assert f"accepted`: {d['accepted']}/40" in src
+    assert ("READY_FOR_PHASE7B:  NO" in src) == bool(RP.blockers(d))
+
+
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
     """Ô không có thẻ nào ⇒ người soạn bài cho ô ấy không biết khai gì."""
     co = {o for t in POOL_D["__the_nang_luc__"].values()
