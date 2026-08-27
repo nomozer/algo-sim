@@ -83,13 +83,53 @@ Hai thứ ra **cùng một dạng**. Đây là rào **nhận nhầm bài**, khá
 
 **2 đạt / 11.** Muốn 3 bài A14 thì phải soi **≈ 17 bài**.
 
-> **Ba luật bỏ nhanh** — rút từ chính bảng trên:
-> - thấy **`√`** ở dữ kiện ⇒ **bỏ**
-> - thấy góc **30° · 60° · 120°** ⇒ **bỏ** (`tan`/`cos` sinh `√3`)
-> - giữ được: cạnh là **bội nguyên của `a`**, góc **vuông** hoặc **45°**
+### 4c. Bảng sàng có EVIDENCE — vùng trang 80–81 (đề kèm lời giải)
+
+| `case_id` dự kiến | Vị trí | Kết quả | Lý do | Evidence |
+|---|---|---|---|---|
+| — | tr 80 · Câu 1 | ✅ **PASS** | dữ kiện hữu tỉ, đáp án phân số | `AB = a`, `AC = 2a`, `SA = 2a` → **`V = 2a³/3`** |
+| — | tr 80 · Câu 2 | ✅ **PASS** | dữ kiện toàn `a` | `SA ⊥ (ABC)`, `△ABC` vuông cân tại `A`, `SA = BC = a` |
+| `cand_tr81_c3` | tr 81 · Câu 3 | ⛔ REJECT | **đáp án vô tỉ** dù dữ kiện sạch | `BC = √(AC²−AB²) = a√2` ⇒ **`V = a³√2/3`** |
+| `cand_tr81_c4` | tr 81 · Câu 4 | ⛔ REJECT | căn ở dữ kiện | `SA = 2√3a`, đáy đều cạnh `a` |
+| `cand_tr46_c3` | tr 46 · Câu 3 | ⛔ REJECT | căn ở dữ kiện | `AC = a√3`, `SB = a√5` |
+| `cand_tr46_c4` | tr 46 · Câu 4 | ⛔ REJECT | căn ở dữ kiện | `SA = 2√3a` |
+| `cand_tr46_c5` | tr 46 · Câu 5 | ⛔ REJECT | góc sinh vô tỉ | `∠BAC = 120°` ⇒ đỉnh ở `(−a, a√3, 0)` |
+| `cand_tr46_c6` | tr 46 · Câu 6 | ⛔ REJECT | căn ở dữ kiện | `SA = a√3`, `AC = a√2` |
+| `cand_tr46_c7` | tr 46 · Câu 7 | ⚠️ **hoãn** | dữ kiện hữu tỉ (`3a, 2a, 5a`) nhưng **lời giải không kề bên** | trang 45–47 là danh sách đề, không có `Lời giải` |
+| `cand_tr46_c8..11` | tr 46 | ⛔ REJECT | căn / tối ưu tham số | `SA = a√3` · `a√6/2` · `a√2` · `x²+y²=a²` tìm GTLN |
+
+**Không bài nào trong bảng này vào `pool.json`** — chúng là ghi chép sàng
+nguồn, không phải case. Bài `PASS` chỉ thành case khi **người** chép và ký.
+
+### ⚠️ SỬA LUẬT SÀNG CỦA CHÍNH TÔI — nhìn **ĐÁP ÁN**, đừng chỉ nhìn dữ kiện
+
+Bản trước tôi đưa ba luật dựa trên **dữ kiện**: bỏ khi thấy `√`, bỏ khi thấy
+góc `30°/60°/120°`. **Ba luật ấy CHƯA ĐỦ**, và trang 81 cho phản ví dụ:
+
+> **Câu 3** — dữ kiện `AB = a`, `AC`, `SB` đều **hữu tỉ**, không một dấu căn.
+> Lời giải: `SA = √(SB²−AB²) = 2a` (hữu tỉ), nhưng
+> `BC = √(AC²−AB²) = a√2` ⇒ `V = a³√2/3` — **VÔ TỈ**.
+
+Dữ kiện sạch, **đáp án vẫn vô tỉ**: căn sinh ra từ **định lí Pythagoras**
+trong lúc giải, không có mặt trong đề. Một tam giác vuông có cạnh `a` và
+`a√2` thì **không đặt được cả ba đỉnh vào toạ độ hữu tỉ** — ngoài ranh giới.
+
+> **LUẬT SÀNG ĐÚNG, theo thứ tự:**
+> 1. **Nhìn ĐÁP ÁN trước.** Có `√` ⇒ **bỏ ngay.** Đây là phép kiểm chắc chắn
+>    nhất, và ở vùng trang 80+ thì lời giải nằm ngay dưới đề nên **không tốn
+>    thêm công**.
+> 2. Đáp án sạch rồi mới xét dữ kiện: có `√` hoặc góc `30°/60°/120°` ⇒ bỏ.
+> 3. Giữ: đáp án là **phân số của `a³`** (`2a³/3`, `a³/6`…), dữ kiện là **bội
+>    nguyên của `a`**.
 >
-> Ba luật này là thứ tiết kiệm nhiều thời gian nhất khi chép — chúng loại được
-> ~80% bài chỉ bằng liếc mắt.
+> Luật 1 làm được luật 2 gần như thừa — nhưng giữ cả hai vì luật 2 bắt được
+> bài mà lời giải bị cắt trang.
+
+⚠️ Đây là **lớp thứ ba** của rào vô tỉ, khác hai lớp đã ghi ở
+`CAPABILITY_BOUNDARY §2.1` (đáp án `distance` vô tỉ) và `§2.2` (tỉ số dữ kiện
+vô tỉ): **dữ kiện hữu tỉ mà HÌNH buộc toạ độ vô tỉ**. Pha này cấm sửa
+`CAPABILITY_BOUNDARY`, nên ghi ở đây như một **đề nghị bổ sung `§2.2b`** cho
+lượt nào được phép sửa tài liệu ấy.
 
 ---
 
