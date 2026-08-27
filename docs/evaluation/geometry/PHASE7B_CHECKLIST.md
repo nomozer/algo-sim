@@ -45,6 +45,20 @@
 | ☐ | **Rút seed** | `seal_geometry_holdout.py --seed <SỐ CỦA GVHD>` — **một bài mỗi ô**, ô thiếu ⇒ dừng, KHÔNG rút bù |
 | ☐ | **Niêm phong + COMMIT** | `HOLDOUT_SEAL.json` + `cases.json` vào lịch sử **trước** khi chạy. Không có con dấu trong lịch sử = không chứng minh được tập không bị sửa |
 | ☐ | **Chạy `k=3` lượt** | `ALLOW_LIVE_AI=1 … run_geometry_dev_evaluation.py --holdout` — runner đối chiếu **cả hai băm** trước call đầu tiên |
+
+### Nạp dữ liệu — MỘT lệnh, chạy trước mọi bước ở bảng trên
+
+```bash
+cd backend
+python scripts/run_m1_pipeline.py <lô>.txt          # soi — không đụng pool
+python scripts/run_m1_pipeline.py <lô>.txt --ghi    # ghi thật
+```
+
+Nó chạy `ingest → pool → scaffold → freeze check → coverage → readiness`. Hỏng
+thì dừng ở chặng đầu tiên và in `FAILED_STAGE` · `REASON` · `FIX_REQUIRED`.
+
+⚠️ `seal` **không** nằm trong chuỗi, có chủ đích: nó tiêu seed của GVHD và chỉ
+chạy được một lần.
 | ☐ | **Lưu artifact từng lượt** | `case_id/run_00k/` — bộ đo **từ chối ghi đè** thư mục đã có bản ghi |
 | ☐ | **Không sửa code** | `freeze --verify` phải vẫn PASS **sau** khi chạy xong. Lệch = lượt đo không còn là held-out |
 

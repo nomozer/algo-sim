@@ -2813,6 +2813,24 @@ chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracl
 (tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
 `problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
 
+### `backend/scripts/run_m1_pipeline.py` · offline · **0 API call**
+
+Chạy **trọn** chuỗi holdout bằng MỘT lệnh: `ingest → pool → scaffold →
+freeze check → coverage → readiness`. `--ghi` để ghi thật, không có thì chỉ soi
+(chế độ soi **không đụng** `pool.json` — có test khẳng định).
+
+**Vì sao gộp**: năm lệnh rời có một chỗ hỏng người dùng không thấy — chạy
+`ingest --ghi` rồi **quên** `scaffold`, hoặc chạy `coverage` mà quên
+`freeze_expectation_check`; pool đổi mà báo cáo không, và lần sau đọc báo cáo
+là đọc một trạng thái đã chết.
+
+**Vì sao KHÔNG gộp `seal`**: nó tiêu seed của GVHD và chỉ chạy được một lần;
+để trong một lệnh chạy-hàng-ngày là mời một cú `--ghi` lỡ tay tiêu mất con dấu.
+Khoá bởi `test_chuoi_KHONG_gop_seal`.
+
+Hỏng thì in đúng ba dòng `FAILED_STAGE` · `REASON` · `FIX_REQUIRED` — không để
+người đọc ngược log tìm chặng chết.
+
 ### `backend/scripts/scaffold_expectation.py` · offline · **0 API call**
 
 Dựng **khung** `expectations/holdout.json` từ bài `accepted` trong pool. Export:

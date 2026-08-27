@@ -43,14 +43,48 @@ nhiều hơn, nhưng **không ô nào được để trống** — ô thiếu �
 
 ## 2. Luật sàng — thứ tự thao tác khi ngồi trước tài liệu
 
-1. **Nhìn ĐÁP ÁN trước.** Có `√` ⇒ **bỏ ngay.**
-   Đây là phép kiểm chắc chắn nhất: căn có thể sinh ra **trong lúc giải** từ
-   dữ kiện hoàn toàn sạch (tr 81 · Câu 3: `AB, AC, SB` hữu tỉ → `V = a³√2/3`).
-2. Đáp án sạch rồi mới xét **dữ kiện**: có `√`, hoặc góc `30°/60°/120°` ⇒ bỏ.
+> ⚠️ **Bản trước của mục này SAI, và sai theo hướng nguy hiểm.** Nó đặt *"nhìn
+> ĐÁP ÁN trước, có `√` thì bỏ"* làm **phép kiểm chắc chắn nhất**. Phản ví dụ đo
+> được (tr 80 · Câu 2): `SA = BC = a` — dữ kiện sạch; `V = a³/12` — **đáp án
+> cũng sạch**; mà bài vẫn **ngoài phủ**, vì vuông cân ⇒ `AB = a/√2` ⇒ tỉ số
+> `AB : BC = 1 : √2` vô tỉ ⇒ không đặt được ba đỉnh vào toạ độ hữu tỉ.
+> Ai theo luật cũ sẽ **NHẬN một bài ngoài phủ** — hỏng theo hướng nhận nhầm.
+
+**LUẬT ĐỦ, và là luật duy nhất đủ — hỏi câu này trước mọi câu khác:**
+
+> ### “Đặt được cả hình vào toạ độ HỮU TỈ không?”
+>
+> Tức: **mọi tỉ số độ dài suy ra được từ đề** có hữu tỉ không?
+
+| Hình | Tỉ số | |
+|---|---|:-:|
+| tam giác vuông **cân** | `1 : 1 : √2` | ⛔ |
+| tam giác **đều** | đường cao `a√3/2` | ⛔ |
+| góc `30°` · `60°` · `120°` | `tan`/`cos` sinh `√3` | ⛔ |
+| vuông, hai cạnh góc vuông là **bội nguyên của `a`** | | ✅ |
+
+⚠️ Chỗ tinh tế: cạnh **không dùng tới** được phép vô tỉ. Bài A14 mẫu có cạnh
+huyền `BC = a√5`, vẫn dùng được, vì thể tích chỉ cần `AB`, `AC`, `SA`. Cái
+quyết định là **toạ độ đỉnh**, không phải mọi độ dài trong hình.
+
+**Ba luật phụ — nhanh hơn nhưng KHÔNG đủ một mình**, dùng để loại sớm:
+
+1. Đáp án có `√` ⇒ bỏ. *(Bắt được §2.1 và §2.2b, **không** bắt được §2.2c.)*
+2. Dữ kiện có `√`, hoặc góc `30°/60°/120°` ⇒ bỏ.
 3. Bỏ tiếp: **trắc nghiệm** · **tham chiếu hình vẽ** không có trong văn bản ·
    **mặt cong** · **Oxyz cho sẵn toạ độ** · bài **tối ưu tham số**.
-4. Giữ: đáp án là **phân số của `a³`** hoặc **true/false**, dữ kiện là **bội
-   nguyên của `a`**, góc **vuông** hoặc **45°**.
+
+Giữ: đáp án là **phân số của `a³`** hoặc **true/false**, dữ kiện **bội nguyên
+của `a`**, góc **vuông** — và hình **đặt được vào toạ độ hữu tỉ**.
+
+### Bốn lớp rào vô tỉ — mỗi lớp phá luật của lớp trước
+
+| | Dữ kiện | Đáp án | Toạ độ | Ví dụ |
+|---|:-:|:-:|:-:|---|
+| §2.1 | hữu tỉ | **vô tỉ** | — | `d = 3√6` |
+| §2.2 | **vô tỉ** | — | vô tỉ | `SA = a√3` |
+| §2.2b | hữu tỉ | **vô tỉ** | vô tỉ | `BC = √(AC²−AB²)` |
+| §2.2c | hữu tỉ | hữu tỉ | **vô tỉ** | vuông cân, `V = a³/12` |
 
 **Tỉ lệ đạt đo được: ≈ 2/11.** Muốn 40 bài thì phải soi **≈ 220 bài** — nghe
 nhiều, nhưng ở vùng trang 80+ mỗi trang có 2–3 bài kèm lời giải, nên là

@@ -956,6 +956,61 @@ def test_khung_KHONG_dung_duoc_khi_pool_rong(SC, SH):
     assert SC.dung_khung([], SH)["cases"] == []
 
 
+# ══ CHUỖI MỘT LỆNH ═══════════════════════════════════════════════════════
+@pytest.fixture(scope="module")
+def M1():
+    return _nap("run_m1_pipeline")
+
+
+def test_chuoi_KHONG_gop_seal(M1):
+    """`seal` tiêu seed của GVHD và chỉ chạy được MỘT LẦN. Để nó trong một
+    lệnh chạy-hàng-ngày là mời một cú `--ghi` lỡ tay tiêu mất con dấu."""
+    src = (SCRIPTS / "run_m1_pipeline.py").read_text(encoding="utf-8")
+    assert "seal_geometry_holdout" not in src.replace("`seal`", "") \
+        or "KHÔNG gộp `seal`" in src
+    assert "KHÔNG gộp `seal`" in src
+
+
+def test_chuoi_DUNG_o_chang_dau_tien_hong(M1, tmp_path, capsys):
+    """Hỏng thì phải nói CHẶNG NÀO — không để người đọc ngược log đi tìm."""
+    f = tmp_path / "lo.txt"
+    f.write_text("[A14] đề quá ngắn\n", encoding="utf-8")
+    ma = M1.main.__globals__
+    import sys as _s
+    cu = _s.argv
+    _s.argv = ["x", str(f)]
+    try:
+        assert M1.main() == 2
+    finally:
+        _s.argv = cu
+    ra = capsys.readouterr().out
+    assert "FAILED_STAGE:" in ra and "REASON:" in ra and "FIX_REQUIRED:" in ra
+    assert "KHÔNG sửa validator" in ra
+
+
+def test_chuoi_SOI_khong_ghi_gi(M1, POOL_D, tmp_path, capsys):
+    """Chế độ soi phải hoàn toàn vô hại — đọc pool thật, không đụng vào nó."""
+    f = tmp_path / "lo.txt"
+    f.write_text(
+        "NGƯỜI CHÉP: Test · 2026-08-28 · fixture\n\n"
+        "[A14] Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, "
+        "AB = a, AC = 2a. Cạnh bên SA vuông góc với đáy và SA = 2a. "
+        "Tính thể tích V của khối chóp S.ABC.\n"
+        "      NGUỒN: fixture trang 80\n      ĐÁP ÁN: 2/3\n", encoding="utf-8")
+    truoc = (GEO / "holdout" / "pool.json").read_text(encoding="utf-8")
+    import sys as _s
+    cu = _s.argv
+    _s.argv = ["x", str(f)]
+    try:
+        assert M1.main() == 0
+    finally:
+        _s.argv = cu
+    assert (GEO / "holdout" / "pool.json").read_text(encoding="utf-8") == truoc
+    ra = capsys.readouterr().out
+    assert "[1/6]" in ra and "[6/6]" in ra
+    assert "accepted = 1" in ra
+
+
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
     """Ô không có thẻ nào ⇒ người soạn bài cho ô ấy không biết khai gì."""
     co = {o for t in POOL_D["__the_nang_luc__"].values()
