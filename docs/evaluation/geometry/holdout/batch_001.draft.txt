@@ -1,0 +1,68 @@
+﻿# ═══════════════════════════════════════════════════════════════════════
+# BẢN NHÁP — CHƯA XÁC MINH. **KHÔNG PHẢI batch_001.txt.**
+#
+# Đề dưới đây do MÁY đọc từ ảnh dựng lại của trang PDF. Đó chính là kênh mà
+# wave này đã đo được là KHÔNG an toàn ở đúng chỗ ký hiệu `√`. Nên bản này
+# là **thứ để bạn ĐỐI CHIẾU**, không phải thứ để tin.
+#
+# CÁCH DÙNG:
+#   1. Mở "Khối đa diện & thể tích khối đa diện", trang 80.
+#   2. Đọc Câu 1 và so từng ký hiệu với bản dưới. Sai chỗ nào thì sửa chỗ đó.
+#   3. Chép khối đã sửa sang `batch_001.txt`.
+#   4. Điền `NGƯỜI CHÉP:` ở `batch_001.txt` — dòng ấy là CHỮ KÝ cho bước 2,
+#      và chỉ bạn ký được.
+#
+# ⚠️ Bước 3 (chép sang file khác) là CỐ Ý. Nếu bạn chỉ thêm tên vào file này
+#    thì việc đối chiếu dễ bị bỏ qua, và cổng xác minh thành ô trống.
+#
+# File này KHÔNG có dòng `NGƯỜI CHÉP:`, nên `ingest` sẽ từ chối nó — đúng ý.
+# ═══════════════════════════════════════════════════════════════════════
+
+
+[A14] Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a.
+      Cạnh bên SA vuông góc với đáy và SA = 2a. Tính thể tích V của khối chóp
+      S.ABC.
+      NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — trang 80, Câu 1 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
+      ĐÁP ÁN: 2/3
+
+
+# ─── VÌ SAO ĐÁP ÁN LÀ `2/3` ────────────────────────────────────────────
+#
+# Lời giải trong tài liệu (ngay dưới đề, cùng trang 80):
+#     Đường cao: SA = 2a
+#     Diện tích: S_ABC = AB·AC/2 = a²
+#     ⇒ V = (1/3)·S_ABC·SA = 2a³/3
+#
+# Gán a = 1 ⇒ V = 2/3. Phép gán ấy là chỗ DUY NHẤT người soạn được phép
+# tính, và `ingest` tự ghi nó vào `phep_chuyen`.
+#
+# Toạ độ hữu tỉ hoá được: A(0,0,0) · B(1,0,0) · C(0,2,0) · S(0,0,2).
+#
+#
+# ─── CÂU 2 TRANG 80: ĐÃ SOI, VÀ PHẢI LOẠI ──────────────────────────────
+#
+# Đề: "Cho hình chóp S.ABC có SA ⊥ (ABC), △ABC vuông cân tại A,
+#      SA = BC = a. Tính theo a thể tích V của khối chóp S.ABC."
+#
+# Đáp án `V = a³/12` — HỮU TỈ. Nhưng bài vẫn NGOÀI RANH GIỚI:
+#
+#     tam giác vuông cân tại A, cạnh huyền BC = a  ⇒  AB = AC = a/√2
+#     tỉ số AB : BC = 1 : √2  →  VÔ TỈ
+#     ⇒ không hệ trục nào đặt được cả ba đỉnh vào toạ độ hữu tỉ
+#
+# ⚠️ ĐÂY LÀ LỚP THỨ TƯ của rào vô tỉ, và nó PHÁ luật sàng tôi đưa ở lượt
+# trước ("nhìn đáp án trước"):
+#
+#     §2.1   đáp án `distance` vô tỉ
+#     §2.2   tỉ số DỮ KIỆN vô tỉ
+#     §2.2b  dữ kiện hữu tỉ, đáp án vô tỉ (căn sinh khi giải)
+#     MỚI    dữ kiện hữu tỉ, ĐÁP ÁN HỮU TỈ, mà TOẠ ĐỘ vẫn vô tỉ  ← Câu 2
+#
+# ⇒ LUẬT SÀNG ĐỦ, và nó là luật duy nhất đủ:
+#
+#     "Đặt được cả hình vào toạ độ HỮU TỈ không?"
+#
+#   Kiểm nhanh: mọi tỉ số độ dài suy ra được từ đề có hữu tỉ không?
+#   Tam giác vuông cân (1 : 1 : √2) · tam giác đều (đường cao a√3/2) ·
+#   góc 30°/60° — đều KHÔNG. Tam giác vuông có hai cạnh góc vuông là bội
+#   nguyên của a thì CÓ.
