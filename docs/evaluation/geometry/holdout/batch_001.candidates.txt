@@ -1,0 +1,55 @@
+﻿# ═══════════════════════════════════════════════════════════════════════
+# KHUÔN CHÉP MỘT BÀI — chỉ còn HAI chỗ bạn phải gõ.
+#
+# Mọi thứ khác (ô, nguồn, đáp án) đã xác định bằng cách SOI NGUỒN, không
+# phải đoán. Việc của bạn:
+#
+#   ① mở nguồn, đọc đề, GÕ LẠI NGUYÊN VĂN vào chỗ <ĐỀ>
+#   ② điền tên mình vào dòng NGƯỜI CHÉP
+#
+# Rồi chép khối đã điền sang `batch_001.txt` và chạy:
+#
+#   cd backend
+#   python scripts/run_m1_pipeline.py \
+#       ../docs/evaluation/geometry/holdout/batch_001.txt --ghi
+#
+# ⚠️ Chép sang `batch_001.txt` là CỐ Ý: nó buộc đọc lại một lượt. File này
+#    không có dòng NGƯỜI CHÉP hợp lệ nên `ingest` sẽ từ chối — đúng ý.
+#
+# ─── NGUỒN ─────────────────────────────────────────────────────────────
+#
+#   Tài liệu chuyên đề khối đa diện và thể tích khối đa diện (443 trang)
+#   https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
+#
+# ─── ỨNG VIÊN 1 (KHUYẾN NGHỊ) · trang 80 · Câu 1 ───────────────────────
+#
+#   Dữ kiện đã soi : ABC vuông tại A · AB = a · AC = 2a · SA ⊥ đáy · SA = 2a
+#   Lời giải nguồn : S_ABC = AB·AC/2 = a²  ⇒  V = (1/3)·a²·2a = 2a³/3
+#   Gán a = 1      ⇒  ĐÁP ÁN: 2/3
+#   Vì sao chọn    : đề NGẮN NHẤT, không góc đặc biệt, không bước nào sinh căn
+#
+# ─── ỨNG VIÊN 2 (dự phòng) · trang 82 · Câu 7 ──────────────────────────
+#
+#   Dữ kiện đã soi : đáy chữ nhật · SA ⊥ (ABCD) · AB = 3a · AD = 2a · SB = 5a
+#   Suy ra         : SA = √(25−9)·a = 4a  (bộ ba 3-4-5, HỮU TỈ)
+#   Lời giải nguồn ⇒ V = (1/3)·(3a·2a)·4a = 8a³/3
+#   Gán a = 1      ⇒  ĐÁP ÁN: 8/3
+#
+# ⚠️ Hai dòng "Dữ kiện đã soi" ở trên là TÓM TẮT để bạn tìm đúng bài — KHÔNG
+#    phải đề nguyên văn, và KHÔNG được chép vào chỗ <ĐỀ>. Đề phải từ nguồn.
+#
+# ─── KIỂM NHANH TRƯỚC KHI GÕ ───────────────────────────────────────────
+#
+#   Nhìn đáp án trong sách: có `√` ⇒ BỎ, chọn bài khác.
+#   Nhìn hình: vuông cân · tam giác đều · góc 30/60/120° ⇒ BỎ.
+#   (Cả hai luật trên đều là luật PHỤ. Luật đủ: "đặt được cả hình vào toạ độ
+#    hữu tỉ không?" — xem CANDIDATE_REVIEW.md §2, ca rej_01.)
+# ═══════════════════════════════════════════════════════════════════════
+
+
+NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · Khối đa diện & thể tích, trang 80
+
+
+[A14] <GÕ NGUYÊN VĂN Câu 1 trang 80 vào đây, giữ đủ ký hiệu = ⊥ √ ∥>
+      NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — trang 80, Câu 1 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
+      ĐÁP ÁN: 2/3
