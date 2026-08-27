@@ -18,10 +18,15 @@ một rào mới — chúng che nhau:
 | 2 | **Miền số của kernel** — dữ kiện/đáp án vô tỉ vs `Fraction` | 2 | **năng lực** |
 | 3 | **Nguyên văn** — kênh tự động rơi ký hiệu toán, IM LẶNG | 3–4 | **tính toàn vẹn dữ liệu** |
 | 4 | **LỆCH KIỂU NHIỆM VỤ** — 92% đề là trắc nghiệm 4 phương án | 5 | **thiết kế phép đo** |
+| 5 | **`2a` KHÔNG PHÂN BIỆT được với `a√2`** khi trích PDF | 7 | **nhận nhầm bài** |
 
-Rào **4 nặng nhất**: nó không nói *"thu chậm"* mà nói **nguồn dễ lấy nhất
-(đề thi THPT sau 2025) là nguồn ít khớp nhất với kiểu nhiệm vụ của hệ**. Và nó
-cần **quyết định của người**, không phải thêm công thu thập.
+Rào **5 nặng nhất**, và nó khác hẳn bốn rào kia về **hướng hỏng**: bốn rào đầu
+làm **mất bài** (an toàn — bỏ sót), rào 5 làm **nhận nhầm bài** (nguy hiểm — một
+đề ngoài phủ trông như trong phủ, lọt vào tập niêm phong, rồi cái trượt của nó
+vào luận văn thành *"mô hình không làm được"*). Xem **§1f**.
+
+Rào **4** thì cần **quyết định của người**, không phải thêm công thu thập: nguồn
+dễ lấy nhất (đề thi THPT sau 2025) là nguồn ít khớp nhất với kiểu nhiệm vụ.
 
 Rào 3 đã được **giải một nửa**: HTML thô giữ nguyên văn (LaTeX còn nguyên), nên
 người chỉ còn phải **đọc soát**, không phải **gõ lại**.
@@ -295,6 +300,57 @@ Dữ kiện **hữu tỉ hoàn toàn** (2 và 3), `V = (1/3)·4·3 = 4` là **ph
 xác** — thoả mọi điều kiện của `CAPABILITY_BOUNDARY`. Nó kẹt **chỉ** vì bốn
 phương án. Đã đưa vào `cases` với `status: needs_manual_review` để quyết định
 ①/②/③ có một ví dụ cụ thể trước mắt.
+
+---
+
+## 1f. ⛔ RÀO THỨ NĂM — trích PDF LÀM MẤT PHÂN BIỆT `2a` với `a√2`
+
+Lượt 3 kết luận *"trích PDF rơi ký hiệu toán"*. Đúng, nhưng **chưa đủ nặng**.
+Đo lại trên hai nguồn được chỉ định, và một trong hai giữ ký hiệu khá tốt:
+
+| Nguồn | `=` | `⊥` | `√` | `∈` | `°` |
+|---|--:|--:|--:|--:|--:|
+| Quan hệ vuông góc — Lê Minh Tâm (217tr) | 1 | **0** | **0** | 0 | 3 |
+| **Khối đa diện & thể tích (443tr)** | **6797** | **520** | **0** | 33 | 419 |
+
+Tài liệu thứ hai giữ được `⊥` **520 lần**, `=` **6797 lần** — tưởng là dùng
+được. Nhưng `√` vẫn **0**, và đó **không** phải "mất một ký hiệu trang trí".
+
+### Đối chiếu ảnh trang gốc với bản trích — trang 46
+
+| Bài | **Bản gốc** (dựng ảnh từ PDF rồi đọc) | **Bản trích tự động** |
+|---|---|---|
+| Câu 3 | `AC = a√3` · `SB = a√5` | `3 AC a =` · `5 SB a =` |
+| Câu 4 | `SA = 2√3a` | `2 3 SA a =` |
+| **Câu 5** | **`AC = 2a`** | **`2 AC a =`** |
+| Câu 7 | `AB = 3a` · `AD = 2a` · `SB = 5a` | `3 AB a =` · `2 AD a =` · `5 SB a =` |
+
+> **`AC = a√3` và `AC = 2a` trích ra thành CÙNG MỘT DẠNG `<số> AC a =`.**
+> Dấu căn biến mất, và con số vốn nằm **dưới** dấu căn bị dồn ra **trước** tên
+> đối tượng — chỗ mà một hệ số nhân cũng nằm.
+
+### Vì sao đây là rào nặng nhất trong năm rào
+
+Bốn rào trước làm **mất bài**. Rào này làm **nhận nhầm bài**:
+
+`a√3` là dữ kiện **ngoài ranh giới năng lực** (`CAPABILITY_BOUNDARY §2.2`);
+`2a` thì **trong**. Bản trích khiến cả hai trông như nhau, và cái trông giống
+hơn là cái **hữu tỉ**. Nên bộ lọc năng lực sẽ **nhận** một bài ngoài phủ, nó
+vào tập đã niêm phong, hệ trượt nó, và cái trượt ấy vào luận văn thành *"mô
+hình không tính được thể tích"*.
+
+Đó **đúng là** lớp sai lệch mà Phase 7A.1 đã phải đi sửa một lần, và lần này
+nó vào từ cửa dữ liệu chứ không từ cửa bộ đo.
+
+⇒ **Không có ngoại lệ cho tài liệu "giữ ký hiệu tốt".** `√` là ký hiệu quyết
+định tư cách; mất nó là mất đúng thứ cần nhất.
+
+### Điều này KHÔNG nói
+
+Nó **không** nói tài liệu vô dụng — vật liệu có thật và đủ. Trang 46 của
+*Khối đa diện & thể tích* có **Câu 7** với `AB = 3a`, `AD = 2a`, `SB = 5a`:
+dữ kiện **hữu tỉ hoàn toàn**, một ứng viên **A14 tốt**. Chỉ là muốn biết điều
+đó thì phải **nhìn trang gốc**, và người nhìn phải là người ký `NGƯỜI CHÉP`.
 
 ---
 
