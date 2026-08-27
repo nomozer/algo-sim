@@ -174,14 +174,30 @@ def _md(d: dict) -> str:
     if not co:
         o.append("| *(không có)* | — | — |")
 
-    o += ["", "---", "", "## 3. Expectation", "",
+    o += ["", "---", "", "## 3. Metric — năm chỉ số đã đóng băng", "",
+          "Định nghĩa ở `PHASE7_METRIC_CONTRACT §2`, đóng băng ở `§6` (Phase",
+          "7A.2). **Chưa chỉ số nào có giá trị** — chúng chỉ sinh ra từ một lượt",
+          "chạy thật, và lượt ấy chưa xảy ra.", "",
+          "| | Chỉ số | Đơn vị | Trạng thái |", "|---|---|---|---|",
+          "| ① | `served` | `x/k` mỗi đề | chưa đo |",
+          "| ② | `oracle` | `x/k` · **ba trạng thái**, `None` ≠ `False` | chưa đo |",
+          "| ③a | `construction_match` | `x/k'` · `k'` = số lượt **chấm được** | **chưa từng đo lần nào** |",
+          "| ③b | `verification_match` | `x/k` · so **bằng đúng** | chưa đo |",
+          "| ④ | `construction_validity` | 4 số rời, **không gộp** | chưa đo |",
+          "| ⑤ | `stability` | `x/k` + **phân bố** | chưa đo · cần `k = 3` |", "",
+          f"`k = {d['k']}` · ngân sách `{d['budget'][0]}` logic / "
+          f"`{d['budget'][1]}` HTTP — chốt ở `HOLDOUT_K_FINAL.md`.", "",
+          "⚠️ ③a **chưa từng được đo trong bất kỳ lượt nào**, kể cả DEV. Con số",
+          "đầu tiên của nó phải đến từ một lượt chạy thật — không được điền bằng",
+          "cách chấm lại artifact cũ rồi gọi đó là kết quả.", "",
+          "---", "", "## 4. Expectation", "",
           f"- Tồn tại: **{'CÓ' if d['expectation_ton_tai'] else 'CHƯA'}**",
           f"- `expectation_hash`: `{d['expectation_hash']}`",
           f"- Con dấu `HOLDOUT_SEAL.json`: "
           f"**{'CÓ' if d['seal_ton_tai'] else 'CHƯA'}**", "",
           "Expectation chỉ soạn **sau** khi pool có bài `accepted` — soạn trước",
           "là soạn kỳ vọng cho những bài chưa biết có nhận được không.", "",
-          "---", "", "## 4. Blockers", ""]
+          "---", "", "## 5. Blockers", ""]
     o += [f"{i}. {x}" for i, x in enumerate(b, 1)] or ["*(không còn)*"]
     o += ["", "Phân tích từng rào — vì sao tồn tại, ba đường đi, cái giá từng",
           "đường: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và",

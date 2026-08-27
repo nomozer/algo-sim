@@ -2,7 +2,7 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-27T19:22:11+00:00`.
+> Chụp lúc `2026-08-27T19:28:05+00:00`.
 
 ```
 READY_FOR_PHASE7B:  NO
@@ -13,7 +13,7 @@ READY_FOR_PHASE7B:  NO
 ## 1. Environment
 
 ```
-git_sha                  : d25cc6d2c08a4c94f5b8fd6e09b51dadf441e7d0
+git_sha                  : 9ed904a3895ec850448a221021434cf11bda8848
 cây sạch                 : KHÔNG
 cache_version            : 46
 skill_hash               : 6208fc2a2d5ba98d31f56ace90d6f6e35edf5a013082553f7299146405e30a42
@@ -79,7 +79,30 @@ chót** ngay trước `seal`, không phải một ô tick giữ mãi.
 
 ---
 
-## 3. Expectation
+## 3. Metric — năm chỉ số đã đóng băng
+
+Định nghĩa ở `PHASE7_METRIC_CONTRACT §2`, đóng băng ở `§6` (Phase
+7A.2). **Chưa chỉ số nào có giá trị** — chúng chỉ sinh ra từ một lượt
+chạy thật, và lượt ấy chưa xảy ra.
+
+| | Chỉ số | Đơn vị | Trạng thái |
+|---|---|---|---|
+| ① | `served` | `x/k` mỗi đề | chưa đo |
+| ② | `oracle` | `x/k` · **ba trạng thái**, `None` ≠ `False` | chưa đo |
+| ③a | `construction_match` | `x/k'` · `k'` = số lượt **chấm được** | **chưa từng đo lần nào** |
+| ③b | `verification_match` | `x/k` · so **bằng đúng** | chưa đo |
+| ④ | `construction_validity` | 4 số rời, **không gộp** | chưa đo |
+| ⑤ | `stability` | `x/k` + **phân bố** | chưa đo · cần `k = 3` |
+
+`k = 3` · ngân sách `360` logic / `480` HTTP — chốt ở `HOLDOUT_K_FINAL.md`.
+
+⚠️ ③a **chưa từng được đo trong bất kỳ lượt nào**, kể cả DEV. Con số
+đầu tiên của nó phải đến từ một lượt chạy thật — không được điền bằng
+cách chấm lại artifact cũ rồi gọi đó là kết quả.
+
+---
+
+## 4. Expectation
 
 - Tồn tại: **CHƯA**
 - `expectation_hash`: `THIẾU_FILE`
@@ -90,7 +113,7 @@ là soạn kỳ vọng cho những bài chưa biết có nhận được không.
 
 ---
 
-## 4. Blockers
+## 5. Blockers
 
 1. POOL — 0/40 bài `accepted`. Thiếu **40** bài.
 2. ĐỘ PHỦ — 20/20 ô trống: A01 A02 A03 A04 A05 A06 A07 A08 A09 A10 A11 A12 A13 A14 B01 B02 B03 B04 B05 B06

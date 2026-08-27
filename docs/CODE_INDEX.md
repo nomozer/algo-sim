@@ -2813,6 +2813,24 @@ chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracl
 (tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
 `problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
 
+### `backend/scripts/freeze_expectation_check.py` · offline · **0 API call**
+
+Cổng **đóng băng tập kỳ vọng**, chạy TRƯỚC `seal`. Export: `kiem` ·
+`bam_ky_vong`.
+
+`geometry_expectations.nap()` kiểm được **một mình** file kỳ vọng; cổng này kiểm
+thứ chỉ lộ ra khi đặt nó **cạnh `pool.json`**: bài `accepted` không có kỳ vọng
+(⇒ chấm bằng tập rỗng ⇒ luôn trượt, và cái trượt ấy vào báo cáo thành *"mô hình
+sai"*) · kỳ vọng mồ côi · ô lệch giữa hai file · nghĩa vụ kiểm không khớp
+`BANG_O` · **nghĩa vụ DỰNG lẫn vào tập KIỂM** (cổng chống quay lại đúng lỗi
+Phase 7A.2 đi tách) · con trỏ oracle trỏ vào hư không · `problem_text` lệch.
+Cả bảy **không sửa được sau khi niêm phong**.
+
+**Tách khỏi `seal` có chủ đích**: `seal` chạy **một lần** với seed của GVHD,
+còn cổng này cần chạy **sau mỗi lô** lúc đang soạn — gộp hai nhịp nghĩa là muốn
+kiểm kỳ vọng thì phải tiêu một seed. `--bam` in `expectation_hash` cho con dấu;
+vắng file thì trả `THIẾU_FILE` chứ không trả một chuỗi trông như băm thật.
+
 ### `backend/scripts/report_holdout_readiness.py` · offline · **0 API call**
 
 Sinh `docs/evaluation/geometry/PHASE7B_READINESS_REPORT.md` — **ảnh chụp số** của

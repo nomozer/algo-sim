@@ -768,6 +768,85 @@ def test_bai_HOP_LE_day_du_van_qua(SH):
     assert SH.kiem_pool([b]) == []
 
 
+# ══ CỔNG ĐÓNG BĂNG TẬP KỲ VỌNG ═══════════════════════════════════════════
+@pytest.fixture(scope="module")
+def FEC():
+    return _nap("freeze_expectation_check")
+
+
+def _pool_a11() -> dict:
+    return {"case_id": "hp_a11_x", "slot": "A11", "status": "accepted",
+            "problem_text": "Cho hình chóp…",
+            "oracle_result": {"distance": "1"}}
+
+
+def _kv_a11(**doi) -> dict:
+    c = {"case_id": "hp_a11_x", "slot": "A11", "problem_text": "Cho hình chóp…",
+         "construction_obligations": [],
+         "verification_obligations": [
+             {"kind": "distance", "ly_do": "đề hỏi khoảng cách điểm đến mặt"}],
+         "oracle_ref": {"pool_case_id": "hp_a11_x", "khoa": "distance"}}
+    c.update(doi)
+    return {"cases": [c]}
+
+
+def test_kY_VONG_KHOP_POOL_thi_khong_bao_loi(FEC, SH, GE):
+    assert FEC.kiem(_kv_a11(), [_pool_a11()], SH, GE) == []
+
+
+def test_BAI_TRONG_POOL_ma_KHONG_co_ky_vong_thi_DO(FEC, SH, GE):
+    """Thiếu kỳ vọng ⇒ chấm bằng tập rỗng ⇒ bài LUÔN trượt, và cái trượt ấy
+    vào báo cáo thành *"mô hình sai"*."""
+    loi = FEC.kiem({"cases": []}, [_pool_a11()], SH, GE)
+    assert loi and "KHÔNG có kỳ vọng" in loi[0]
+
+
+def test_KY_VONG_MO_COI_thi_DO(FEC, SH, GE):
+    loi = FEC.kiem(_kv_a11(), [], SH, GE)
+    assert loi and "KHÔNG có bài `accepted`" in loi[0]
+
+
+def test_O_LECH_giua_hai_file_thi_DO(FEC, SH, GE):
+    loi = FEC.kiem(_kv_a11(slot="A12"), [_pool_a11()], SH, GE)
+    assert any("ô LỆCH" in d for d in loi), loi
+
+
+def test_NGHIA_VU_KHONG_KHOP_BANG_O_thi_DO(FEC, SH, GE):
+    """Hoặc đề vào nhầm ô, hoặc kỳ vọng sai — cả hai đều phải dừng."""
+    kv = _kv_a11(verification_obligations=[
+        {"kind": "volume", "ly_do": "khai nhầm nghĩa vụ"}])
+    loi = FEC.kiem(kv, [_pool_a11()], SH, GE)
+    assert any("đòi nghĩa vụ kiểm" in d for d in loi), loi
+
+
+def test_TRON_HAI_TAP_thi_DO(FEC, SH, GE):
+    """Cổng chống quay lại đúng lỗi mà Phase 7A.2 đi tách."""
+    kv = _kv_a11(construction_obligations=[
+        {"ten_trong_de": "distance", "kieu": "point3", "ly_do": "x" * 30}])
+    loi = FEC.kiem(kv, [_pool_a11()], SH, GE)
+    assert any("hai tập bị trộn" in d for d in loi), loi
+
+
+def test_DE_LECH_giua_hai_file_thi_DO(FEC, SH, GE):
+    loi = FEC.kiem(_kv_a11(problem_text="Cho hình chóp… (đã sửa)"),
+                   [_pool_a11()], SH, GE)
+    assert any("LỆCH với pool" in d for d in loi), loi
+
+
+def test_bam_ky_vong_khai_THIEU_FILE_khi_chua_co(FEC):
+    """Băm phải nói thẳng là thiếu, không trả một chuỗi trông như băm thật —
+    con dấu mang một băm giả còn tệ hơn con dấu thiếu băm."""
+    assert FEC.bam_ky_vong() == "THIẾU_FILE"
+
+
+def test_bao_cao_co_muc_METRIC_voi_du_NAM_chi_so(RP):
+    src = (GEO / "PHASE7B_READINESS_REPORT.md").read_text(encoding="utf-8")
+    assert "## 3. Metric" in src
+    for m in ("served", "oracle", "construction_match", "verification_match",
+              "construction_validity", "stability"):
+        assert f"`{m}`" in src, f"báo cáo thiếu chỉ số `{m}`"
+
+
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
     """Ô không có thẻ nào ⇒ người soạn bài cho ô ấy không biết khai gì."""
     co = {o for t in POOL_D["__the_nang_luc__"].values()
