@@ -50,6 +50,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -71,6 +72,32 @@ TAP_CHO_PHEP_NGUOI_DO = frozenset({"pilot"})
 
 _TRUONG_BAT_BUOC = ("dataset", "tap", "version", "nguoi_danh_gia",
                     "sinh_tu_model_output", "cases")
+
+
+#: Dấu CHỖ TRỐNG chưa điền, cùng tập với `ingest_holdout_batch`.
+#:
+#: CHỈ `<…>` và `TODO`. **Không** bắt `…` hay `...` đứng một mình: dấu ba chấm
+#: xuất hiện hợp lệ trong đề thật (*"Cho hình chóp S.ABCD…"*), và bắt nó là
+#: từ chối dữ liệu đúng — đúng lớp lỗi "đổ cho dữ liệu cái lỗi của bộ đo" mà
+#: cả wave này đi sửa. Khuôn dùng `<…>` nên vẫn bị bắt bởi nhánh đầu.
+_CHO_TRONG = re.compile(r"<[^>]*>|\bTODO\b")
+
+
+def _tim_cho_trong(x, duong: str = "") -> list[str]:
+    """Mọi chuỗi còn `<…>` / `TODO`, kèm ĐƯỜNG DẪN tới nó.
+
+    Trả đường dẫn chứ không trả `True`: người điền cần biết **chỗ nào**, và
+    một tập 20 bài thì "còn chỗ trống ở đâu đó" là thông tin vô dụng.
+    """
+    if isinstance(x, str):
+        return [duong or "(gốc)"] if _CHO_TRONG.search(x) else []
+    if isinstance(x, dict):
+        return [d for k, v in x.items()
+                for d in _tim_cho_trong(v, f"{duong}.{k}" if duong else k)]
+    if isinstance(x, list):
+        return [d for i, v in enumerate(x)
+                for d in _tim_cho_trong(v, f"{duong}[{i}]")]
+    return []
 
 
 def _nap_module(ten: str):
@@ -104,6 +131,18 @@ def nap(tap: str, thu_muc: Path | None = None) -> dict[str, Any]:
         raise ValueError(
             f"{f.name}: `sinh_tu_model_output` phải là false. Kỳ vọng chép từ "
             "đầu ra mô hình thì chỉ số thành tautology.")
+
+    # CHỖ TRỐNG chưa điền — cùng luật `ingest_holdout_batch`.
+    #
+    # `scaffold_expectation.py` sinh khung đầy `<…>`, và mọi trường của khung
+    # đều "có giá trị" theo nghĩa chuỗi rỗng-hay-không. Không chặn thì một
+    # khung chưa ai đụng vào sẽ nạp được, và `ly_do: "<vì sao…>"` đi thẳng vào
+    # tập đã niêm phong như một lý do thật.
+    if (cho := _tim_cho_trong(d)):
+        raise ValueError(
+            f"{f.name}: còn {len(cho)} CHỖ TRỐNG chưa điền — {cho[:3]}"
+            + (" …" if len(cho) > 3 else "")
+            + ". Khung do máy dựng KHÔNG phải tập kỳ vọng.")
 
     loai = (d["nguoi_danh_gia"] or {}).get("loai")
     if loai == "nguoi_do" and tap not in TAP_CHO_PHEP_NGUOI_DO:

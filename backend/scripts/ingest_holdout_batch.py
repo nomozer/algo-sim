@@ -103,7 +103,9 @@ def _the_cho_o(SH, o: str) -> str | None:
 #: Dấu CHỖ TRỐNG chưa điền. Bịt ở đây vì khuôn `batch_001.txt` mang sẵn chúng,
 #: và một `NGƯỜI CHÉP: <tên người chép>` lọt qua thì cổng xác minh thành ô
 #: trống — đúng cái nó sinh ra để chặn.
-_CHO_TRONG = re.compile(r"<[^>]*>|\bTODO\b|\.\.\.|…")
+#: CHỈ `<…>` và `TODO`. Không bắt `…`/`...` đứng một mình — dấu ba chấm xuất
+#: hiện hợp lệ trong đề thật, và bắt nó là từ chối dữ liệu ĐÚNG.
+_CHO_TRONG = re.compile(r"<[^>]*>|\bTODO\b")
 
 
 def _con_cho_trong(s: str | None) -> bool:

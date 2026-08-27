@@ -545,7 +545,8 @@ def test_ORACLE_dang_can_thuc_bi_CONG_chan(IN, SH):
     assert any("CĂN THỨC" in d for d in SH.check_capability_boundary(c))
 
 
-@pytest.mark.parametrize("cho_trong", ["<tên người chép>", "TODO", "..."])
+@pytest.mark.parametrize("cho_trong", ["<tên người chép>", "TODO",
+                                       "<…> · <ngày>"])
 def test_NGUOI_CHEP_con_CHO_TRONG_thi_TU_CHOI(IN, SH, cho_trong):
     """Một chứng nhận xác minh mang tên `<tên người chép>` thì không chứng nhận
     gì cả. Khuôn `batch_001.txt` mang sẵn chỗ trống, nên lỗ này là có thật."""
@@ -553,6 +554,15 @@ def test_NGUOI_CHEP_con_CHO_TRONG_thi_TU_CHOI(IN, SH, cho_trong):
         _LO.replace("Nguyễn Văn A · 2026-08-28 · SGK Toán 11 tập 2 KNTT",
                     cho_trong), SH)
     assert loi and "CHỖ TRỐNG" in loi[0]
+
+
+def test_dau_BA_CHAM_trong_de_THAT_khong_bi_coi_la_cho_trong(IN, SH):
+    """Guard từng bắt nhầm `…`, và `…` xuất hiện hợp lệ trong đề thật. Từ chối
+    dữ liệu ĐÚNG là đúng lớp lỗi "đổ cho dữ liệu cái lỗi của bộ đo"."""
+    _, _, loi = IN.phan_tich(
+        _LO.replace("Tính thể tích khối chóp S.ABCD.",
+                    "Tính thể tích khối chóp S.ABCD… (làm tròn nếu cần)."), SH)
+    assert loi == [], loi
 
 
 @pytest.mark.parametrize("truong,dong_cu", [
@@ -845,6 +855,71 @@ def test_bao_cao_co_muc_METRIC_voi_du_NAM_chi_so(RP):
     for m in ("served", "oracle", "construction_match", "verification_match",
               "construction_validity", "stability"):
         assert f"`{m}`" in src, f"báo cáo thiếu chỉ số `{m}`"
+
+
+# ══ KHUNG KỲ VỌNG — máy điền thứ SUY RA ĐƯỢC, người điền thứ PHÁN ═══════
+@pytest.fixture(scope="module")
+def SC():
+    return _nap("scaffold_expectation")
+
+
+def _pool_accepted() -> list[dict]:
+    return [{"case_id": "hp_a14_001", "slot": "A14", "status": "accepted",
+             "capability_tag": "rational_volume", "answer_shape": "exact_fraction",
+             "problem_text": "Cho hình chóp S.ABCD…", "oracle_ref": "volume",
+             "oracle_result": {"volume": "2/3"}}]
+
+
+def test_khung_DIEN_thu_suy_ra_duoc(SC, SH):
+    k = SC.dung_khung(_pool_accepted(), SH)
+    c = k["cases"][0]
+    assert c["case_id"] == "hp_a14_001" and c["slot"] == "A14"
+    # problem_text CHÉP từ pool ⇒ không bao giờ lệch giữa hai file.
+    assert c["problem_text"] == "Cho hình chóp S.ABCD…"
+    assert c["oracle_ref"]["khoa"] == "volume"
+    # `kind` suy từ BANG_O — ô đã định nghĩa nghĩa vụ kiểm.
+    assert [o["kind"] for o in c["verification_obligations"]] == ["volume"]
+
+
+def test_khung_KHONG_doan_nghia_vu_DUNG(SC, SH):
+    """`BANG_O` chỉ định nghĩa nghĩa vụ KIỂM. Nghĩa vụ DỰNG đọc từ ĐỘNG TỪ của
+    đề — máy điền bừa là tái lập đúng lỗi Phase 7A.2 đi tách."""
+    k = SC.dung_khung(_pool_accepted(), SH)
+    assert k["cases"][0]["construction_obligations"] == []
+    assert any("ĐỘNG TỪ" in d or "động từ" in d
+               for d in k["cases"][0]["__can_nguoi_dien__"])
+
+
+def test_khung_KHONG_tu_khai_nguoi_phan(SC, SH):
+    k = SC.dung_khung(_pool_accepted(), SH)
+    assert k["nguoi_danh_gia"]["loai"].startswith("<")
+    assert "nguoi_do" in k["nguoi_danh_gia"]["loai"]  # nhắc điều bị cấm
+    assert k["sinh_tu_model_output"] is False
+
+
+def test_khung_CHUA_NAP_DUOC_chung_nao_con_cho_trong(SC, SH, GE, tmp_path):
+    """Khung không phải tập kỳ vọng. Không chặn thì `ly_do: "<vì sao…>"` đi
+    thẳng vào tập đã niêm phong như một lý do thật."""
+    k = SC.dung_khung(_pool_accepted(), SH)
+    (tmp_path / "holdout.json").write_text(
+        json.dumps(k, ensure_ascii=False), encoding="utf-8")
+    with pytest.raises(ValueError, match="CHỖ TRỐNG"):
+        GE.nap("holdout", thu_muc=tmp_path)
+
+
+def test_bao_loi_CHO_TRONG_kem_DUONG_DAN(GE):
+    """"Còn chỗ trống ở đâu đó" là thông tin vô dụng trên một tập 20 bài."""
+    assert GE._tim_cho_trong({"a": "<x>", "b": [{"c": "ok"}, {"d": "TODO"}]}) \
+        == ["a", "b[1].d"]
+
+
+def test_pilot_VAN_nap_duoc_sau_khi_them_cong(GE):
+    """Hồi quy: cổng chỗ trống không được làm hỏng tập đang dùng."""
+    assert GE.nap("pilot")["tap"] == "pilot"
+
+
+def test_khung_KHONG_dung_duoc_khi_pool_rong(SC, SH):
+    assert SC.dung_khung([], SH)["cases"] == []
 
 
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):

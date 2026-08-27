@@ -2813,6 +2813,20 @@ chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracl
 (tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
 `problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
 
+### `backend/scripts/scaffold_expectation.py` · offline · **0 API call**
+
+Dựng **khung** `expectations/holdout.json` từ bài `accepted` trong pool. Export:
+`dung_khung`. Chia theo **một** đường: thứ **suy ra được** máy điền
+(`case_id` · `slot` · `problem_text` chép từ pool nên không bao giờ lệch ·
+`oracle_ref` · `kind` từ `BANG_O`); thứ cần **phán đoán** để trống
+(`nguoi_danh_gia` · `ly_do` · `trich_de` · `construction_obligations`).
+
+**Không đoán nghĩa vụ DỰNG**: `BANG_O` chỉ định nghĩa nghĩa vụ **KIỂM**; nghĩa
+vụ dựng đọc từ **động từ của đề**. Máy điền bừa vào đấy là tái lập đúng lỗi
+Phase 7A.2 đi tách. Từ chối ghi đè file đã có — ghi đè một tập kỳ vọng đã soạn
+là xoá phán quyết của người. Khung sinh ra **chưa nạp được**: `nap()` chặn chỗ
+trống `<…>`.
+
 ### `backend/scripts/freeze_expectation_check.py` · offline · **0 API call**
 
 Cổng **đóng băng tập kỳ vọng**, chạy TRƯỚC `seal`. Export: `kiem` ·
