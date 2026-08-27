@@ -1,13 +1,14 @@
 {
-  "__trang_thai__": "ĐANG THU THẬP — 0 bài hợp lệ · 0/20 ô · 1 bài BỊ LOẠI",
+  "__trang_thai__": "ĐANG THU THẬP — 0 bài accepted · 0/20 ô · 1 bài rejected_capability_boundary",
   "__khai__": [
     "CHƯA ĐỦ ĐỂ RÚT. Cổng máy đang chặn đúng chỗ:",
     "  python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
     "  → 'Pool KHÔNG phủ 20/20 ô' · exit 2 · KHÔNG sinh con dấu",
     "",
-    "Không bài giả, và KHÔNG giữ lại bài đã biết là ngoài phủ chỉ để bảng đỡ",
-    "trống. Bài bị loại ghi ở `__bai_bi_loai__` kèm lý do — loại im lặng là",
-    "một dạng chọn tập.",
+    "Không bài giả. Bài BỊ LOẠI vẫn nằm trong `cases` kèm `status` + `reason`",
+    "— xoá đi là loại IM LẶNG, và loại im lặng là một dạng chọn tập. Nhưng nó",
+    "KHÔNG vào rổ rút và KHÔNG được đếm vào độ phủ: lấp một ô bằng bài hệ không",
+    "phục vụ được là dựng một ô chắc chắn trượt.",
     "",
     "AI ĐIỀN FILE NÀY: người soạn pool, từ NGUỒN NGOÀI (đề thi / đề minh hoạ /",
     "chuyên đề có lời giải chi tiết). KHÔNG tự tính đáp án — người soạn cũng là",
@@ -27,8 +28,15 @@
     "quan_he": "true / false.",
     "he_qua_chon_de": "Toạ độ ĐỀ CHO phải hữu tỉ hoá được. Đề cho `SA = a√3` với đáy cạnh `a` thì TỈ SỐ hai dữ kiện là vô tỉ, và không phép chọn hệ trục nào làm cả hai hữu tỉ ⇒ ngoài phủ. Đề cho đáp án vô tỉ mà DỮ KIỆN hữu tỉ thì vẫn ngoài phủ RIÊNG với `distance`, nhưng KHÔNG sao với `angle` (cos²/sin² luôn hữu tỉ) và `volume`."
   },
+  "__trang_thai_bai__": {
+    "khai": "Phase 7A.5. Bài BỊ LOẠI nay nằm TRONG `cases` kèm `status`, không bị xoá — xoá là loại im lặng, và loại im lặng là một dạng chọn tập. Chỉ `accepted` mới vào rổ rút và mới được đếm vào độ phủ (`seal_geometry_holdout.duoc_rut`).",
+    "accepted": "đủ ba điều kiện của HOLDOUT_PROTOCOL §2b — trong ranh giới năng lực, oracle biểu diễn được, có expectation độc lập",
+    "rejected_capability_boundary": "NGOÀI ranh giới năng lực (CAPABILITY_BOUNDARY §2). Giữ lại để tra ngược. KHÔNG phải lỗi mô hình",
+    "needs_manual_review": "chưa phán được — thường vì `can_kiem_tay` chưa trả, hoặc chưa rõ có thuộc ranh giới không"
+  },
   "__bai_bi_loai__": [
     {
+      "khai": "BẢN TÓM TẮT để đọc nhanh. Nguồn sự thật là mục tương ứng trong `cases` (mang `status`).",
       "case_id_du_kien": "hp_a11_001",
       "o_du_kien": "A11",
       "problem_text": "Cho hình lập phương ABCD.MNPQ có cạnh bằng 6. Gọi E là trung điểm của đoạn thẳng AB. Khoảng cách từ điểm P đến mặt phẳng (MED) bằng bao nhiêu (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng đến hàng phần trăm)?",
@@ -66,7 +74,98 @@
     "expected_construction_types": "TRƯỜNG MỚI (7B). Kiểu IR thô: point3 | line3 | plane3 | polygon3 | solid",
     "expected_verification_types": "expected_obligations — KHOÁ MÁY ĐỌC. `kiem_pool` đối chiếu nó với BANG_O[slot]",
     "answer_available": "dan xuất từ `dap_an_chinh_thuc` khác rỗng; khai tường minh để soi nhanh",
-    "evaluator": "TRƯỜNG MỚI (7B). Ai cung cấp đề+đáp án — KHÔNG phải người phán nghĩa vụ"
+    "evaluator": "TRƯỜNG MỚI (7B). Ai cung cấp đề+đáp án — KHÔNG phải người phán nghĩa vụ",
+    "capability_tag": "TRƯỜNG MỚI (7A.5). Năng lực bài này ĐÒI, theo `CAPABILITY_BOUNDARY`. Nó nói VÌ SAO bài thuộc/không thuộc ranh giới, trong khi `slot` chỉ nói bài nằm ở ô nào — hai câu khác nhau, và ô A11 vừa cho thấy chúng lệch được",
+    "status": "TRƯỜNG MỚI (7A.5). accepted | rejected_capability_boundary | needs_manual_review — xem `__trang_thai_bai__`"
+  },
+  "__the_nang_luc__": {
+    "khai": "Giá trị hợp lệ của `capability_tag`, ánh xạ sang ô và hình dạng đáp án. Dẫn từ COVERAGE_MATRIX_BOUNDARY_REVIEW.md.",
+    "intersection_point": {
+      "o": [
+        "A01"
+      ],
+      "answer_shape": "construction",
+      "trong_ranh_gioi": true
+    },
+    "incidence": {
+      "o": [
+        "A02"
+      ],
+      "answer_shape": "verdict",
+      "trong_ranh_gioi": true
+    },
+    "parallel_relation": {
+      "o": [
+        "A03",
+        "A04",
+        "A05"
+      ],
+      "answer_shape": "verdict",
+      "trong_ranh_gioi": true
+    },
+    "perpendicular_relation": {
+      "o": [
+        "A06",
+        "A07",
+        "A08"
+      ],
+      "answer_shape": "verdict",
+      "trong_ranh_gioi": true
+    },
+    "angle_cos_sq": {
+      "o": [
+        "A09"
+      ],
+      "answer_shape": "fraction",
+      "trong_ranh_gioi": true,
+      "ghi_chu": "cặp ĐƯỜNG–ĐƯỜNG và MẶT–MẶT"
+    },
+    "angle_sin_sq": {
+      "o": [
+        "A10"
+      ],
+      "answer_shape": "fraction",
+      "trong_ranh_gioi": true,
+      "ghi_chu": "⚠️ cặp ĐƯỜNG–MẶT trả sin², KHÔNG phải cos² — cùng tên trường `angle_cos_sq`, khai nhầm là chấm sai IM LẶNG"
+    },
+    "rational_distance": {
+      "o": [
+        "A11",
+        "A12"
+      ],
+      "answer_shape": "fraction",
+      "trong_ranh_gioi": true,
+      "ghi_chu": "CHỈ khi `d` hữu tỉ. Vô tỉ ⇒ GEOMETRY_IRRATIONAL_RESULT ⇒ ngoài ranh giới"
+    },
+    "coplanar_section": {
+      "o": [
+        "A13"
+      ],
+      "answer_shape": "verdict",
+      "trong_ranh_gioi": true,
+      "ghi_chu": "chỉ khối đa diện LỒI"
+    },
+    "rational_volume": {
+      "o": [
+        "A14"
+      ],
+      "answer_shape": "fraction",
+      "trong_ranh_gioi": true,
+      "ghi_chu": "luôn hữu tỉ — ô an toàn nhất"
+    },
+    "out_of_capability": {
+      "o": [
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06"
+      ],
+      "answer_shape": "refusal",
+      "trong_ranh_gioi": false,
+      "ghi_chu": "CỐ Ý ngoài phủ — chấm bằng từ chối trung thực, không bằng đáp án"
+    }
   },
   "luat_soan": [
     "Đề và ĐÁP ÁN đều đến từ NGOÀI: đề thi/đề minh hoạ/chuyên đề có lời giải chi tiết. Người soạn pool KHÔNG tự tính đáp án — vì người soạn cũng là người sửa hệ.",
@@ -115,5 +214,43 @@
     },
     "chua_chay_he": true
   },
-  "cases": []
+  "cases": [
+    {
+      "case_id": "hp_a11_001",
+      "status": "rejected_capability_boundary",
+      "reason": "distance output irrational and unsupported by kernel — d(P,(MED)) = 3√6; d² = 54 và √54 không hữu tỉ, nên `geometry_exec._do` ném GEOMETRY_IRRATIONAL_RESULT. Xem CAPABILITY_BOUNDARY §2.1.",
+      "capability_tag": "rational_distance",
+      "capability_thoa": false,
+      "slot": "A11",
+      "domain": "geometry_3d",
+      "geometry_family": "measurement",
+      "answer_shape": "fraction",
+      "difficulty": "van_dung_cao",
+      "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
+      "problem_text": "Cho hình lập phương ABCD.MNPQ có cạnh bằng 6. Gọi E là trung điểm của đoạn thẳng AB. Khoảng cách từ điểm P đến mặt phẳng (MED) bằng bao nhiêu (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng đến hàng phần trăm)?",
+      "expected_construction_types": [
+        "point3",
+        "plane3"
+      ],
+      "expected_verification_types": [
+        "distance"
+      ],
+      "expected_obligations": [
+        "distance"
+      ],
+      "nguon": {
+        "ten": "Đề thi chính thức tốt nghiệp THPT 2026 môn Toán, mã đề 0103 — Câu 6 Phần III (bản lời giải trên Toán Học Việt Nam)",
+        "url": "https://www.mathvn.com/2026/06/tinh-khoang-cach-tu-iem-en-mat-phang.html",
+        "vi_tri": "Mã đề 0103 · Câu 6 · Phần III",
+        "nam": "2026"
+      },
+      "evaluator": "Bộ GD-ĐT (đề + đáp án chính thức, thi ngày 11/06/2026); lời giải chi tiết do mathvn.com đăng",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "7,35",
+      "chua_chay_he": true,
+      "can_kiem_tay": true,
+      "ghi_chu": "KHÔNG khai `oracle_result`: hệ không trả ra giá trị nào cho bài này, nó NÉM. Khai d² để lách là sai quy ước (`_do` trả khoảng cách thật) và tệ hơn — nó giấu đúng cái phát hiện.",
+      "co_the_dung_lai_khi": "BANG_O mở một ô tầng B cho lớp 'đáp án vô tỉ' — hiện KHÔNG có ô nào nhận nó (B01–B06 là chéo nhau · đường∥mặt · nhị diện · Oxyz · mặt cong · vectơ). Mở ô mới là ĐỔI THIẾT KẾ TẬP ĐO: N và ngân sách đổi theo, nên phải do người duyệt quyết, và phải quyết TRƯỚC khi niêm phong."
+    }
+  ]
 }

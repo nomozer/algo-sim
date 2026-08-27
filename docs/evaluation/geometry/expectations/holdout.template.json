@@ -43,6 +43,8 @@
     {
       "case_id": "<khớp case_id trong holdout/pool.json, ví dụ hp_a01_001>",
       "slot": "A01",
+      "capability_tag": "<khớp `capability_tag` của bài trong pool.json — xem pool.json.__the_nang_luc__>",
+      "answer_shape": "<construction | verdict | fraction | refusal>",
       "problem_text": "<chép nguyên văn đề, GIỐNG HỆT bản trong pool.json>",
       "construction_obligations": [
         {

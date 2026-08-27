@@ -124,16 +124,46 @@ def _de_cua_dev() -> set[str]:
             for c in json.loads(f.read_text(encoding="utf-8"))["cases"]}
 
 
+#: Trạng thái một bài trong pool (Phase 7A.5). VẮNG MẶT ⇒ `accepted`, để bài
+#: soạn tay trước đó không phải sửa.
+#:
+#: VÌ SAO GIỮ BÀI BỊ LOẠI TRONG FILE thay vì xoá: xoá là **loại im lặng**, và
+#: loại im lặng là một dạng chọn tập. Giữ lại kèm lý do thì người sau kiểm được
+#: rằng bài bị loại vì *nằm ngoài ranh giới năng lực*, không phải vì *hệ làm
+#: sai nó* — hai câu khác hẳn nhau khi đọc một benchmark.
+TRANG_THAI = ("accepted", "rejected_capability_boundary", "needs_manual_review")
+
+#: Chỉ `accepted` mới được đếm vào độ phủ và được rút.
+def duoc_rut(c: dict) -> bool:
+    return c.get("status", "accepted") == "accepted"
+
+
 def kiem_pool(cases: list[dict]) -> list[str]:
     """Trả danh sách lỗi. Rỗng ⇒ pool hợp lệ.
 
     Kiểm ở đây chứ không ở lúc chạy: một bài thiếu `nguon` phát hiện sau khi đã
     niêm phong thì **không sửa được nữa** mà không phá con dấu.
+
+    Bài **không** `accepted` chỉ bị kiểm hai thứ: trạng thái hợp lệ và **có
+    lý do**. Kiểm chúng như bài thật là đòi `oracle_result` cho một bài vừa bị
+    loại **vì** không có oracle biểu diễn được.
     """
     loi: list[str] = []
     dev = _de_cua_dev()
     for i, c in enumerate(cases):
         cid = c.get("case_id") or f"#{i}"
+        tt = c.get("status", "accepted")
+        if tt not in TRANG_THAI:
+            loi.append(f"{cid}: status {tt!r} không hợp lệ — {list(TRANG_THAI)}")
+            continue
+        if tt != "accepted":
+            if not (c.get("reason") or c.get("ly_do_loai")):
+                loi.append(f"{cid}: status={tt} mà không nêu `reason` — "
+                           "loại im lặng là một dạng chọn tập")
+            if not (c.get("nguon") or {}).get("url"):
+                loi.append(f"{cid}: bài bị loại vẫn phải giữ `nguon.url` "
+                           "để người sau tra ngược được")
+            continue
         o = c.get("slot")
         if _chuan_de(c.get("problem_text") or "") in dev:
             # Bốn wave đã sửa hệ theo đúng những đề này. Để lọt một bài DEV vào
@@ -206,7 +236,11 @@ def main() -> int:
 
     theo_o: dict[str, list[dict]] = {}
     for c in cases:
-        theo_o.setdefault(c["slot"], []).append(c)
+        # Chỉ `accepted` mới vào rổ rút. Bài bị loại nằm trong file để tra
+        # ngược, KHÔNG để lấp ô — lấp ô bằng một bài hệ không phục vụ được là
+        # dựng một ô chắc chắn trượt.
+        if duoc_rut(c):
+            theo_o.setdefault(c["slot"], []).append(c)
     thieu = [o for o in BANG_O if not theo_o.get(o)]
     if thieu:
         print(f"Pool KHÔNG phủ {len(thieu)}/20 ô: {thieu}")

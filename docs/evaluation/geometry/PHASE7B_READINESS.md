@@ -30,8 +30,10 @@ nhật ký**, không phải đổi định nghĩa chỉ số nào — xem mục 
 
 | # | Việc | Kết quả |
 |---|---|---|
-| 1 | `holdout/pool.json` | schema đầy đủ · **0 bài hợp lệ · 0/20 ô · 1 bài BỊ LOẠI** (lý do ghi trong `__bai_bi_loai__`) |
+| 1 | `holdout/pool.json` | schema đầy đủ · **0 bài `accepted` · 0/20 ô · 1 bài `rejected_capability_boundary`** |
 | 1c | `pool.json.__don_vi_oracle__` | quy ước đơn vị oracle **dẫn từ `geometry_exec._do`**, khoá bằng test — khuôn cũ dạy SAI và đã sửa |
+| 1d | `CAPABILITY_BOUNDARY.md` + `COVERAGE_MATRIX_BOUNDARY_REVIEW.md` | **ranh giới năng lực đã đóng băng** (7A.5) · `HOLDOUT_PROTOCOL §2b` điều kiện nhận bài |
+| 1e | `status` + `capability_tag` | bài bị loại **giữ trong `cases`** kèm lý do, nhưng **không lấp ô** — `duoc_rut()` |
 | 1b | `HOLDOUT_ACQUISITION_LOG.md` | sản lượng đo được của từng loại nguồn + **hạn chế của cách thu thập** |
 | 2 | `holdout/COVERAGE_MATRIX.md` | sinh từ `holdout_coverage_matrix.py`, 20 ô × 7 họ × 4 hình dạng đáp án |
 | 3 | Cổng kỳ vọng | `nap()` nay đòi thêm **`slot` + `oracle_ref`**; `kiem_noi_oracle()` nối con trỏ sang pool |
@@ -46,11 +48,21 @@ nhật ký**, không phải đổi định nghĩa chỉ số nào — xem mục 
 
 ## 2. BLOCKERS
 
-### ⛔ B0 — MIỀN SỐ CỦA KERNEL loại phần lớn đề thi *(mới, và là đường găng)*
+### ✅ B0a — RANH GIỚI NĂNG LỰC: **ĐÃ ĐÓNG BĂNG** (7A.5)
 
-Phát hiện ở lượt 7A.4, kiểm chứng bằng chính kernel. Kernel dựng trên `Fraction`
-(cố ý — so bằng đúng, không epsilon), và hệ quả với việc **chọn đề** thì chưa ai
-viết ra:
+[CAPABILITY_BOUNDARY.md](CAPABILITY_BOUNDARY.md) — `SUPPORTED` / `UNSUPPORTED`,
+mỗi mục dẫn từ mã, kèm **lỗi gì nếu đưa vào** và **vì sao KHÔNG phải lỗi AI**.
+[COVERAGE_MATRIX_BOUNDARY_REVIEW.md](COVERAGE_MATRIX_BOUNDARY_REVIEW.md) — rà
+từng ô: **16/20 trong ranh giới, 4 ô cần điều kiện miền**.
+`HOLDOUT_PROTOCOL §2b` — điều kiện nhận bài vào tầng A.
+
+**Không còn mơ hồ về phạm vi đo.** Cái còn thiếu là **dữ liệu**, không phải
+định nghĩa.
+
+### ⛔ B0b — Hai ô có thể không lấp nổi *(quyết định của người duyệt)*
+
+Kernel dựng trên `Fraction` (cố ý — so bằng đúng, không epsilon), và hệ quả với
+việc **chọn đề**:
 
 | Lớp đề | Ví dụ | Trạng thái |
 |---|---|---|
@@ -71,19 +83,20 @@ viết ra:
 công hai lần — và tệ hơn, người soạn sẽ bị cám dỗ "chữa" đơn vị oracle cho vừa,
 đúng cái vừa suýt xảy ra.
 
-### ⛔ B1 — Pool 0 bài hợp lệ, phủ 0/20 ô *(chặn cứng)*
+### ⛔ B1 — Pool 0 bài `accepted`, phủ 0/20 ô *(chặn cứng)*
 
 ```
-pool: 0 bài · phủ 0/20 ô · 1 bài BỊ LOẠI
+pool: 0 bài dùng được · phủ 0/20 ô · 1 bài không vào rổ rút
 seal_geometry_holdout.py --seed 0 --chi-kiem-pool  →  exit 2, KHÔNG sinh con dấu
 ```
 
 `hp_a11_001` (Câu 6 mã đề 0103, TN THPT 2026) là đề **thật**, thu đúng quy
-trình, nhưng **đáp án `3√6` vô tỉ** ⇒ hệ không phục vụ được. Giữ nó trong A11 là
-dựng một ô **chắc chắn trượt** rồi ghi cái trượt ấy thành *"mô hình không làm
-được khoảng cách"* — đúng loại sai lệch Phase 7A.1 đã phải đi sửa một lần. Đã
-loại, ghi lý do ở `pool.json.__bai_bi_loai__` và
-[HOLDOUT_ACQUISITION_LOG §3](HOLDOUT_ACQUISITION_LOG.md).
+trình, nhưng **đáp án `3√6` vô tỉ** ⇒ hệ không phục vụ được. Nó **vẫn nằm trong
+`cases`** với `status: rejected_capability_boundary` + `reason` — xoá đi là
+**loại im lặng**, và loại im lặng là một dạng chọn tập. Nhưng nó **không vào rổ
+rút và không lấp ô A11**: lấp một ô bằng bài hệ không phục vụ được là dựng một ô
+**chắc chắn trượt** rồi ghi cái trượt ấy thành *"mô hình không làm được khoảng
+cách"* — đúng loại sai lệch Phase 7A.1 đã phải đi sửa một lần.
 
 **Rào thứ hai — định dạng:** chuyên đề tổng hợp nằm trong **PDF**, lời giải đề
 thi chính thức nằm trong **ảnh**, trang SGK chỉ có **lời giải mà không có đề

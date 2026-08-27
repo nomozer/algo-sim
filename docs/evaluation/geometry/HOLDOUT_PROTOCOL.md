@@ -85,6 +85,45 @@ tập held-out thì tập ấy **thành DEV** — và phải nói ra điều đ�
 
 ---
 
+## 2b. ĐIỀU KIỆN NHẬN BÀI VÀO TẦNG A — thêm 2026-08-27 (Phase 7A.5)
+
+Một bài chỉ được vào **tầng A** khi thoả **cả ba**:
+
+| | Điều kiện | Kiểm ở đâu |
+|---|---|---|
+| **1** | **Thuộc ranh giới năng lực** | [`CAPABILITY_BOUNDARY.md`](CAPABILITY_BOUNDARY.md) §1, và điều kiện miền của đúng ô ở [`COVERAGE_MATRIX_BOUNDARY_REVIEW.md`](COVERAGE_MATRIX_BOUNDARY_REVIEW.md) |
+| **2** | **Oracle biểu diễn được trong kernel** | `distance` phải **hữu tỉ** · `angle` khai `cos²` (đường–đường, mặt–mặt) hoặc **`sin²`** (đường–mặt) · `volume` phân số · quan hệ true/false |
+| **3** | **Có expectation độc lập** | một mục trong `expectations/holdout.json`, `nguoi_danh_gia.loai ≠ nguoi_do`, mỗi nghĩa vụ có `ly_do` trích từ đề |
+
+### Bài NGOÀI ranh giới thì làm gì
+
+- **KHÔNG** đưa vào tầng A. Một ô mà hệ **không thể** phục vụ là một ô **chắc
+  chắn trượt**, và cái trượt ấy sẽ vào báo cáo như *"mô hình không làm được"* —
+  trong khi mô hình có thể đã dựng hình đúng hoàn toàn.
+- Được phép: **loại khỏi pool** (`status: rejected_capability_boundary`, kèm
+  `reason` và giữ `nguon.url`), hoặc để dành cho một **nghiên cứu riêng về hành
+  vi từ chối** sau Phase 7B.
+
+### ⛔ KHÔNG tự chuyển bài khó xuống tầng B
+
+Sáu ô `B*` là **sáu loại đích danh** đã khai từ đầu (chéo nhau · đường∥mặt ·
+nhị diện · Oxyz · mặt cong · vectơ). Nhét một bài A11 vô tỉ vào đó là **đổi
+thiết kế tập đo** — `N`, ngân sách và `HOLDOUT_K_FINAL` đổi theo.
+
+Muốn mở một ô tầng B cho lớp *"đáp án vô tỉ"* thì phải **sửa giao thức trước**,
+và phải do người duyệt quyết, **trước khi niêm phong**. Làm ngược lại — rút
+xong rồi mới đổi ô — là chọn tập sau khi đã thấy nó.
+
+### Và một luật đọc, cho lúc báo cáo
+
+Bài ngoài ranh giới mà lọt vào tầng A thì lượt trượt của nó **không thuộc bốn
+nhóm** taxonomy (`PHASE7_METRIC_CONTRACT §3`): nó không phải lỗi sinh, không
+phải hợp đồng thiếu diễn đạt, không phải validator sai, không phải định tuyến.
+Ghi nhãn **`out_of_capability`** trong `FAILURE_LOG.md` và nêu riêng — cùng luật
+đã áp cho lỗi hạ tầng.
+
+---
+
 ## 3. Hai mươi ô — đa dạng do THIẾT KẾ, không do may rủi của seed
 
 Bản trước rút `70% / 30%` từ hai rổ. **Tỉ lệ không bảo đảm đa dạng**: 14 bài

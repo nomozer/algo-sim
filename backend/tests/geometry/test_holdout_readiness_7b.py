@@ -129,11 +129,132 @@ def test_bai_CHUA_DOI_CHIEU_TAY_thi_bi_chan(SH):
     assert loi and "can_kiem_tay" in loi[0]
 
 
-def test_pool_HIEN_TAI_van_con_no_doi_chieu(SH, POOL_D):
-    """Trạng thái thật lúc này — test đổi màu khi nợ được trả."""
-    loi = SH.kiem_pool(POOL_D["cases"])
-    assert all("can_kiem_tay" in d for d in loi), (
-        f"pool có lỗi KHÁC ngoài nợ đối chiếu: {loi}")
+def test_pool_HIEN_TAI_khong_co_loi_nao(SH, POOL_D):
+    """Trạng thái thật lúc này: bài duy nhất mang `status` ngoài `accepted` nên
+    không bị kiểm như bài thật. Test đổi màu khi thêm bài `accepted` hỏng."""
+    assert SH.kiem_pool(POOL_D["cases"]) == []
+
+
+# ══ PHASE 7A.5 — RANH GIỚI NĂNG LỰC ══════════════════════════════════════
+_BOUNDARY = GEO / "CAPABILITY_BOUNDARY.md"
+_REVIEW = GEO / "COVERAGE_MATRIX_BOUNDARY_REVIEW.md"
+
+
+def test_tai_lieu_ranh_gioi_ton_tai_va_KHAI_ca_hai_phia():
+    for f in (_BOUNDARY, _REVIEW):
+        assert f.exists(), f"chưa có {f.name}"
+    src = _BOUNDARY.read_text(encoding="utf-8")
+    assert "## 1. SUPPORTED" in src and "## 2. UNSUPPORTED" in src
+    # Luật đọc quan trọng nhất của cả tài liệu — bỏ nó đi thì tài liệu thành
+    # một danh sách tính năng, và Phase 7B lại kết tội mô hình ở chỗ nó đúng.
+    assert "lỗi của mô hình" in src
+    assert src.lower().count("không phải lỗi ai") >= 5, (
+        "mỗi mục UNSUPPORTED phải tự khai điều này, không chỉ nói một lần ở đầu")
+
+
+@pytest.mark.parametrize("muc", [
+    "GEOMETRY_IRRATIONAL_RESULT",      # §2.1 distance vô tỉ
+    "a√3",                             # §2.2 tỉ số dữ kiện vô tỉ
+    "distance_sq_skew_lines",          # §2.3 kernel có, IR chưa nối
+    "nhị diện",                        # §2.4
+    "GEOMETRY_CURRICULUM_COVERAGE",    # §2.6 mặt cong
+])
+def test_UNSUPPORTED_neu_du_cac_lop_da_biet(muc):
+    assert muc in _BOUNDARY.read_text(encoding="utf-8"), f"thiếu lớp `{muc}`"
+
+
+def test_bay_SIN_BINH_cua_o_A10_duoc_ghi_o_CA_HAI_tai_lieu():
+    """Bẫy im lặng nhất: khai nhầm cos² cho ô A10 thì chấm sai mà không cổng
+    nào báo. Ghi một chỗ là chưa đủ — người soạn pool đọc `REVIEW`, người soạn
+    oracle đọc `BOUNDARY`."""
+    for f in (_BOUNDARY, _REVIEW):
+        assert "sin²" in f.read_text(encoding="utf-8"), f"{f.name} thiếu cảnh báo"
+
+
+def test_protocol_khai_DIEU_KIEN_NHAN_BAI_tang_A():
+    src = (GEO / "HOLDOUT_PROTOCOL.md").read_text(encoding="utf-8")
+    assert "## 2b." in src
+    doan = src.split("## 2b.")[1].split("## 3.")[0]
+    assert "CAPABILITY_BOUNDARY" in doan
+    assert "expectation độc lập" in doan
+    assert "KHÔNG tự chuyển bài khó xuống tầng B" in doan
+
+
+# ── status: bài bị loại được GIỮ, nhưng KHÔNG lấp ô ──────────────────────
+def _bai(**doi) -> dict:
+    c = {"case_id": "x", "slot": "A11", "problem_text": "đề",
+         "nguon": {"url": "https://x"}, "dap_an_chinh_thuc": "1",
+         "phep_chuyen": "…", "oracle_result": {"distance": "1"},
+         "expected_obligations": ["distance"], "chua_chay_he": True}
+    c.update(doi)
+    return c
+
+
+def test_status_VANG_MAT_van_duoc_coi_la_accepted(SH):
+    """Tương thích ngược: bài soạn trước 7A.5 không phải sửa."""
+    assert SH.duoc_rut(_bai()) is True
+    assert SH.kiem_pool([_bai()]) == []
+
+
+def test_bai_BI_LOAI_khong_bi_kiem_nhu_bai_that(SH):
+    """Đòi `oracle_result` ở một bài vừa bị loại VÌ không có oracle biểu diễn
+    được là một vòng lặp vô nghĩa."""
+    b = _bai(status="rejected_capability_boundary", reason="vô tỉ")
+    del b["oracle_result"], b["phep_chuyen"]
+    assert SH.kiem_pool([b]) == []
+    assert SH.duoc_rut(b) is False
+
+
+def test_bai_BI_LOAI_ma_KHONG_neu_ly_do_thi_DO(SH):
+    loi = SH.kiem_pool([_bai(status="rejected_capability_boundary")])
+    assert loi and "loại im lặng" in loi[0]
+
+
+def test_bai_BI_LOAI_van_phai_giu_URL(SH):
+    b = _bai(status="rejected_capability_boundary", reason="vô tỉ", nguon={})
+    loi = SH.kiem_pool([b])
+    assert loi and "tra ngược" in loi[0]
+
+
+def test_status_LA_thi_DO(SH):
+    loi = SH.kiem_pool([_bai(status="hong")])
+    assert loi and "không hợp lệ" in loi[0]
+
+
+def test_bai_BI_LOAI_KHONG_lap_o_trong_ma_tran(MT):
+    """Cốt lõi của 7A.5: giữ bài để tra ngược, nhưng ô vẫn phải hiện là TRỐNG.
+    Đếm nó vào độ phủ là nói dối về mức sẵn sàng."""
+    m = MT.ma_tran([{"case_id": "x", "slot": "A11",
+                     "status": "rejected_capability_boundary"}])
+    assert m["so_bai"] == 0 and m["so_bi_loai"] == 1
+    assert "A11" in m["o_trong"], "bài bị loại đang lấp ô A11"
+
+
+def test_pool_THAT_dang_o_dung_trang_thai_ay(POOL_D, MT, SH):
+    """Hiện trường thật: `hp_a11_001` nằm trong file, mang `status`, và A11 vẫn
+    trống."""
+    c = {x["case_id"]: x for x in POOL_D["cases"]}["hp_a11_001"]
+    assert c["status"] == "rejected_capability_boundary"
+    assert c["reason"] and c["nguon"]["url"]
+    assert "oracle_result" not in c, (
+        "bài hệ KHÔNG trả ra giá trị nào thì không được khai oracle")
+    assert "A11" in MT.ma_tran(POOL_D["cases"])["o_trong"]
+
+
+def test_capability_tag_cua_moi_bai_deu_co_trong_bang(POOL_D):
+    bang = POOL_D["__the_nang_luc__"]
+    for c in POOL_D["cases"]:
+        t = c.get("capability_tag")
+        assert t in bang, f"{c['case_id']}: capability_tag {t!r} ngoài bảng"
+        assert c["slot"] in bang[t]["o"], (
+            f"{c['case_id']}: tag {t!r} không dùng cho ô {c['slot']}")
+
+
+def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
+    """Ô không có thẻ nào ⇒ người soạn bài cho ô ấy không biết khai gì."""
+    co = {o for t in POOL_D["__the_nang_luc__"].values()
+          if isinstance(t, dict) for o in t.get("o", [])}
+    assert co == set(SH.BANG_O), f"thiếu ô: {sorted(set(SH.BANG_O) - co)}"
 
 
 def test_con_dau_CHUA_ton_tai():

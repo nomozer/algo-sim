@@ -108,11 +108,20 @@ def doc_pool() -> list[dict]:
 
 
 def ma_tran(cases: list[dict]) -> dict:
-    """Đếm bài theo ô, theo họ, theo hình dạng đáp án. Không phán gì thêm."""
+    """Đếm bài theo ô, theo họ, theo hình dạng đáp án. Không phán gì thêm.
+
+    Chỉ đếm bài `accepted` (`seal_geometry_holdout.duoc_rut`). Bài bị loại vì
+    ngoài ranh giới năng lực vẫn nằm trong file để tra ngược, nhưng đếm nó vào
+    độ phủ là nói dối về mức sẵn sàng — ô ấy vẫn trống.
+    """
     SH = _nap_seal()
     theo_o: dict[str, list[str]] = {o: [] for o in SH.BANG_O}
     la: list[str] = []
+    bi_loai: list[str] = []
     for c in cases:
+        if not SH.duoc_rut(c):
+            bi_loai.append(f"{c.get('case_id')} [{c.get('status')}]")
+            continue
         o = c.get("slot")
         (theo_o[o] if o in theo_o else la).append(c.get("case_id") or "?")
 
@@ -135,7 +144,9 @@ def ma_tran(cases: list[dict]) -> dict:
         theo_dang[d] = theo_dang.get(d, 0) + len(theo_o.get(o, []))
 
     return {
-        "so_bai": len(cases),
+        "so_bai": sum(len(v) for v in theo_o.values()) + len(la),
+        "so_bi_loai": len(bi_loai),
+        "bi_loai": bi_loai,
         "slot_la": la,
         "theo_o": theo_o,
         "theo_ho": theo_ho,
@@ -155,8 +166,12 @@ def _md(m: dict) -> str:
          "> Không thêm bài, không chọn bài — chỉ đếm và chỉ ra chỗ trống.", ""]
 
     thieu = len(m["o_trong"])
-    d += [f"**Pool: {m['so_bai']} bài · phủ {20 - thieu}/20 ô"
+    d += [f"**Pool: {m['so_bai']} bài dùng được · phủ {20 - thieu}/20 ô"
           f"{' · ⛔ CHƯA RÚT ĐƯỢC' if thieu else ' · ✅ đủ điều kiện rút'}**", ""]
+    if m["so_bi_loai"]:
+        d += [f"Ngoài ra **{m['so_bi_loai']} bài KHÔNG vào rổ rút** (giữ trong "
+              f"file để tra ngược, không đếm vào độ phủ): "
+              f"{', '.join(m['bi_loai'])}", ""]
     if m["slot_la"]:
         d += [f"⚠️ Bài mang `slot` không có trong `BANG_O`: {m['slot_la']}", ""]
 

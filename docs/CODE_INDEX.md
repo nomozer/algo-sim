@@ -2736,7 +2736,15 @@ bài ⇒ dừng, **không rút bù** — rút bù là lặng lẽ đổi tập �
 `oracle_result` · `chua_chay_he` không true · **đề trùng tập DEV** · và (từ
 2026-08-27) **`can_kiem_tay` còn `true`** — nợ đối chiếu của đề thu bằng công cụ
 đọc web, vì nội dung đi qua một mô hình tóm tắt nên `problem_text` là bản chép
-LẠI chứ không phải nguyên văn; cờ vắng mặt ⇒ không ảnh hưởng bài soạn tay. Băm hệ thống
+LẠI chứ không phải nguyên văn; cờ vắng mặt ⇒ không ảnh hưởng bài soạn tay.
+
+**`status` + `duoc_rut()` (Phase 7A.5)** — `accepted` (mặc định khi vắng) ·
+`rejected_capability_boundary` · `needs_manual_review`. Bài không `accepted`
+**giữ trong `cases`** (xoá là *loại im lặng*, một dạng chọn tập) nhưng **không
+vào rổ rút và không đếm vào độ phủ** — lấp ô bằng bài hệ không phục vụ được là
+dựng một ô chắc chắn trượt. Bài ấy chỉ bị đòi `reason` + `nguon.url`; đòi
+`oracle_result` ở một bài vừa bị loại **vì** không có oracle biểu diễn được là
+một vòng lặp vô nghĩa. Băm hệ thống
 mượn thẳng `freeze_evaluation_candidate.measured_system_hash()` để hai con số
 không bao giờ trôi khỏi nhau. Giao thức: `docs/evaluation/geometry/HOLDOUT_PROTOCOL.md`.
 Khoá bởi `tests/geometry/test_holdout_protocol.py` (25).

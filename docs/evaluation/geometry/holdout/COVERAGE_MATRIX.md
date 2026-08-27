@@ -3,7 +3,9 @@
 > Sinh bằng `scripts/holdout_coverage_matrix.py`. **0 API call.**
 > Không thêm bài, không chọn bài — chỉ đếm và chỉ ra chỗ trống.
 
-**Pool: 0 bài · phủ 0/20 ô · ⛔ CHƯA RÚT ĐƯỢC**
+**Pool: 0 bài dùng được · phủ 0/20 ô · ⛔ CHƯA RÚT ĐƯỢC**
+
+Ngoài ra **1 bài KHÔNG vào rổ rút** (giữ trong file để tra ngược, không đếm vào độ phủ): hp_a11_001 [rejected_capability_boundary]
 
 ---
 
