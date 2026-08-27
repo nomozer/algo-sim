@@ -246,6 +246,37 @@ lại là nguồn **ít khớp nhất** với kiểu nhiệm vụ của hệ. B�
 mất điều này ở lượt 3: nó *là* tự luận (trả lời ngắn), nên tôi không thấy rằng
 nó là **ngoại lệ**, không phải mẫu số chung.
 
+### Lượt C — quét riêng nhánh SGK, để tìm đề TỰ LUẬN
+
+Giả thuyết: bài tập SGK là **tự luận** (*"Chứng minh rằng…"*, *"Hãy dựng…"*),
+nên nhánh SGK sẽ né được rào trắc nghiệm. Quét 269 url `giai-bai-tap` /
+`sgk-toan` / `bai-tap-N` / `chung-minh` (2024–2026):
+
+```
+269 url → 9 có khối đề → 4 SẠCH
+```
+
+**Giả thuyết SAI, và lý do đáng ghi:** trang giải SGK **không chép lại đề bài**
+— chúng viết thẳng lời giải, vì người đọc đã có sách trước mặt. Đúng thứ đã
+thấy ở lượt 2 khi đọc `bai-tap-416-417-418`: có lời giải, không có đề.
+
+### Tổng ba lượt quét, trên trục TỰ LUẬN
+
+| Lượt | URL quét | SẠCH | Câu HHKG | **Tự luận + trong ranh giới** |
+|---|--:|--:|--:|--:|
+| A — lọc từ khoá | 60 | 2 | 2 | **0** |
+| B — toàn bộ 2026 | 344 | 125 | 26 | **0** |
+| C — nhánh SGK | 269 | 4 | ~0 | **0** |
+| **Tổng** | **673** | **131** | **26** | **0** |
+
+Sàng theo đúng luật nhận bài của Phase 7B.1 (chỉ tự luận · có mệnh lệnh dựng
+hoặc tính · không vô tỉ · không Oxyz cho sẵn · không mặt cong · không cần hình
+vẽ kèm): **1 câu** lọt tới vòng cuối, và nó chính là bài A11 đã loại vì vô tỉ.
+
+⇒ **Kênh tự động đã cạn kiệt.** Không phải thiếu công quét — 673 url là đủ để
+thấy quy luật: nguồn web tiếng Việt cho **lời giải**, không cho **đề tự luận
+dạng văn bản**.
+
 ### Ứng viên tốt nhất tìm được — và nó kẹt ở đúng rào này
 
 `hp_a14_cand_002` (Sở GD&ĐT Hà Tĩnh, đề thi thử TN THPT 2026 lần 2):
@@ -387,6 +418,49 @@ Nguồn máy đọc được: `pool.json.__bai_bi_loai__`, khoá bởi
 `test_bai_bi_loai_deu_co_LY_DO`. **Loại im lặng là một dạng chọn tập** — mỗi
 lần loại phải ghi lý do và giữ url, để người sau kiểm được rằng bài bị loại vì
 *nằm ngoài phủ*, không phải vì *hệ làm sai nó*.
+
+---
+
+## 5b. BÀN GIAO — dán đề vào, tôi làm phần còn lại
+
+Sau 673 url, kênh tự động **cạn**. Nhưng phần người phải làm **nhỏ hơn nhiều**
+so với lượt 3 tưởng: không phải *"gõ lại 40 đề rồi điền JSON"*, mà chỉ là **dán
+đề tự luận dạng văn bản**. Mọi việc còn lại là máy làm được, và đã có cổng kiểm.
+
+### Người làm
+
+Chép đề từ **SGK Toán 11/12** hoặc **PDF chuyên đề tự luận** đang có, dán theo
+khuôn dưới. Chép từ sách/PDF **bằng mắt** chính là bước xác minh nguyên văn mà
+giao thức đòi — nên `problem_text_verified` hạ được ngay.
+
+```
+[A14] Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc
+      với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.
+      NGUỒN: SGK Toán 11 tập 1 KNTT, bài 7.x trang NN
+      ĐÁP ÁN: 4
+```
+
+Ba dòng mỗi bài: **ô** · **đề nguyên văn** · **nguồn + đáp án**. Không cần JSON,
+không cần biết `capability_tag` hay `answer_shape`.
+
+### Máy làm phần còn lại
+
+xếp ô · gán `capability_tag`/`answer_shape` · dẫn `phep_chuyen` và
+`oracle_result` · chạy `check_capability_boundary` · dựng
+`expectations/holdout.json` · cập nhật ma trận độ phủ.
+
+### Ưu tiên, theo tỉ lệ loại thấp nhất
+
+| Thứ tự | Ô | Vì sao dễ |
+|---|---|---|
+| 1 | **A14** thể tích | `volume` **luôn hữu tỉ** — không vướng rào vô tỉ |
+| 2 | **A09 · A10** góc | `cos²`/`sin²` **luôn hữu tỉ**. ⚠️ A10 khai **sin²** |
+| 3 | **A01–A08 · A13** quan hệ | đáp án **true/false**, không cần `phep_chuyen` |
+| 4 | **A11 · A12** khoảng cách | **khó nhất** — cần `d` hữu tỉ; chờ quyết định ①/② |
+| 5 | **B01–B06** ngoài phủ | không cần đáp án, chỉ cần đúng loại |
+
+⚠️ Với **mọi** ô: tránh đề có **tỉ số dữ kiện vô tỉ** (`đáy cạnh a, SA = a√3`) —
+lớp này phổ biến trong đề thi và nằm ngoài ranh giới **kể cả ở A14**.
 
 ---
 
