@@ -1,4 +1,24 @@
 ﻿# ═══════════════════════════════════════════════════════════════════════
+# ⛔⛔ FILE NÀY BỊ LOẠI KHỎI DANH SÁCH NGUỒN ⛔⛔
+#
+# Phase 7B · TASK 1 ghi thẳng:
+#
+#     "Không dùng:
+#        - batch_001.draft.txt
+#        - OCR output
+#        - text trích từ PDF
+#        - nội dung AI đọc lại"
+#
+# File này thuộc mục cuối. Nó **KHÔNG** được dùng làm nguồn chép, kể cả một
+# phần, kể cả sau khi sửa vài chữ.
+#
+# Giữ lại vì hai lý do, cả hai đều KHÔNG phải để chép từ nó:
+#   · ghi nhận rằng bản nháp này từng được tạo, và vì sao bị loại;
+#   · phần phân tích Câu 2 ở cuối file — thứ chỉ lộ ra khi làm thật.
+#
+# Người thực hiện phải: mở nguồn gốc → đọc trực tiếp → chép nguyên văn.
+# ═══════════════════════════════════════════════════════════════════════
+#
 # BẢN NHÁP — CHƯA XÁC MINH. **KHÔNG PHẢI batch_001.txt.**
 #
 # Đề dưới đây do MÁY đọc từ ảnh dựng lại của trang PDF. Đó chính là kênh mà

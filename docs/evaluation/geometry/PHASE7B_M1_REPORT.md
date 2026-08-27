@@ -13,6 +13,19 @@ READY_FOR_PHASE7B:   NO
 **Chặn ở đúng MỘT chỗ: chữ ký `NGƯỜI CHÉP`.** Mọi cổng khác đã qua — chứng
 minh bên dưới.
 
+> ### ⛔ Bản nháp đã bị LOẠI khỏi danh sách nguồn
+>
+> Phase 7B · TASK 1 ghi thẳng: *"Không dùng: `batch_001.draft.txt` · OCR
+> output · text trích từ PDF · **nội dung AI đọc lại**"*.
+>
+> Bản nháp tôi soạn ở lượt trước thuộc mục cuối, nên nó **không** phải lối
+> tắt: đề trong `batch_001.txt` phải do **người mở nguồn gốc, đọc trực tiếp,
+> chép nguyên văn**. Bản nháp giữ lại chỉ để ghi nhận nó từng tồn tại và để
+> lưu phần phân tích Câu 2; đã dán cảnh báo ở đầu file.
+>
+> Đây cũng là câu trả lời cho đề nghị tôi nêu ở lượt trước ("tôi có thể soạn
+> nháp nếu bạn muốn"): **không**, và ranh giới ấy nay đã rõ.
+
 ---
 
 ## 1. Bài ứng viên — `Câu 1 trang 80`
@@ -108,12 +121,24 @@ B01 0  B02 0  B03 0  B04 0  B05 0  B06 0
 
 ## 5. Việc còn lại để đạt M1
 
-1. Mở tài liệu → **trang 80** → đọc **Câu 1**.
-2. So từng ký hiệu với bản nháp ở
-   [`holdout/batch_001.draft.txt`](holdout/batch_001.draft.txt). Sai thì sửa.
-3. Chép khối `[A14]` đã sửa sang `holdout/batch_001.txt`.
-4. Điền `NGƯỜI CHÉP: <tên> · <ngày> · <tài liệu, trang>`.
-5. `ingest_holdout_batch.py … ` (soi) → `--ghi`.
+1. Mở [tài liệu](https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html)
+   → **trang 80** → đọc **Câu 1** trên chính trang đó.
+2. **Gõ lại nguyên văn** vào `holdout/batch_001.txt`, giữ đủ `= ⊥ √ ∥`.
+   *(Không chép từ bản nháp — TASK 1 loại nó khỏi danh sách nguồn.)*
+3. `NGUỒN:` — tên tài liệu + trang 80 + Câu 1.
+4. `ĐÁP ÁN: 2/3` — lời giải in ngay dưới đề cho `V = 2a³/3`; gán `a = 1`.
+5. `NGƯỜI CHÉP: <tên> · <ngày> · <tài liệu, trang>`.
+6. `ingest_holdout_batch.py … ` (soi) → `--ghi`.
 
-⚠️ **Bước 3 là cố ý.** Chép sang file khác buộc phải đọc lại; chỉ thêm tên vào
-bản nháp thì việc đối chiếu dễ bị bỏ qua, và cổng xác minh thành ô trống.
+Khối cần điền, đúng khuôn:
+
+```
+NGƯỜI CHÉP: <tên bạn> · 2026-08-28 · Khối đa diện & thể tích, trang 80
+
+[A14] <gõ nguyên văn Câu 1 từ trang 80>
+      NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — trang 80, Câu 1
+      ĐÁP ÁN: 2/3
+```
+
+Ba dòng còn lại (`NGUỒN`, `ĐÁP ÁN`) đã xác định chắc chắn; dòng duy nhất cần
+bạn đọc nguồn để viết là **đề bài**.
