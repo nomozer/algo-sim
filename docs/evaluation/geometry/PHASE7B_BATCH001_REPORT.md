@@ -93,14 +93,41 @@ Hai thứ ra **cùng một dạng**. Đây là rào **nhận nhầm bài**, khá
 
 ---
 
-## 5. Những ô còn thiếu
+## 5. ⚠️ SỬA KHUYẾN NGHỊ CỦA CHÍNH BÁO CÁO NÀY — **trang 80, không phải trang 46**
 
-**Cả 20.** Thứ tự nên lấp, kèm nguồn đã xác minh:
+Bản trước chỉ vào **trang 46**. Đó là chỗ sai, và lý do đáng ghi:
+
+Tài liệu là **hợp tuyển** — đánh số trang trong lặp lại nhiều lần (`Page 20`
+rồi lại `Page 2`). Trang 45–47 là **danh sách đề không kèm lời giải**; lời giải
+của chúng không nằm kề bên và không tra ra bằng phép cộng trừ số trang.
+
+Mà `TASK 2` cấm *"tự suy luận đáp án nếu nguồn không có"*. Nên chép Câu 2 / Câu 7
+ở trang 46 thì **kẹt ở dòng `ĐÁP ÁN:`**.
+
+### Đo lại toàn tài liệu — chỗ đúng ở đâu
+
+| | Số trang |
+|---|--:|
+| tự luận **CÓ lời giải kề bên** | **76** — bắt đầu **trang 80** |
+| tự luận, **không** lời giải | 21 |
+| trắc nghiệm + lời giải | 234 |
+
+Kiểm bằng mắt trang 80 — đúng thứ cần:
+
+> **Câu 1** *(nửa trên)* — `AB = a`, `AC = 2a`, `SA = 2a` → **Lời giải** →
+> `V = 2a³/3`
+> **Câu 2** — *"Cho hình chóp S.ABC có SA ⊥ (ABC), △ABC vuông cân tại A,
+> SA = BC = a. Tính theo a thể tích V"* → **Lời giải** kề ngay dưới
+
+Dữ kiện **hữu tỉ hoàn toàn**, đáp án là **phân số của `a³`**, và lời giải nằm
+**cùng trang**. Ba điều kiện khó nhất thoả cùng lúc.
+
+### Thứ tự nên lấp
 
 | Ưu tiên | Ô | Nguồn | Vị trí |
 |---|---|---|---|
-| 1 | **A14** ×3 | *Khối đa diện & thể tích* (443tr) | **trang 46** — Câu 2, Câu 7 đã soi thấy đạt; soi tiếp trang 45, 47 |
-| 2 | **A09 · A10** ×2 | *Quan hệ vuông góc — Lê Minh Tâm* (217tr) | 117 trang tự luận, **0 trắc nghiệm**; mẫu ở trang 5, 6, 17, 18 |
+| 1 | **A14** ×3 | *Khối đa diện & thể tích* (443tr) | **trang 80–94** — 76 trang tự luận có lời giải kề bên |
+| 2 | **A09 · A10** ×2 | *Quan hệ vuông góc — Lê Minh Tâm* (217tr) | 117 trang tự luận, **0 trắc nghiệm**; mẫu trang 5, 6, 17, 18 |
 | 3 | A01–A08 | *Quan hệ song song — Toán 11* (75tr) | 32 trang tự luận, **0 trắc nghiệm** |
 
 Cả ba nguồn: `SOURCE_CANDIDATE_REPORT.md`.
@@ -112,12 +139,15 @@ nhưng cặp **đường–mặt** khai **`sin²`**. Khai nhầm là chấm sai 
 
 ## 6. Việc còn lại — một bước, và nó là bước của người
 
-1. Mở *Khối đa diện & thể tích* → **trang 46**.
-2. Chép **Câu 7** (và Câu 2) vào `holdout/batch_001.txt`, giữ đủ `= ⊥ √ ∥`.
-3. Lời giải nằm trong cùng tài liệu (**312 trang có mục *Lời giải***) — chép
-   đáp án từ đó, **không tự tính**.
-4. Điền `NGƯỜI CHÉP: <tên> · <ngày> · <tài liệu, trang>`.
-5. `ingest_holdout_batch.py …` (soi) → `--ghi`.
+1. Mở *Khối đa diện & thể tích* → **trang 80** (rồi 81, 82… — 76 trang liền).
+2. Chọn bài có dữ kiện **bội nguyên của `a`**, tránh `√` và góc `30°/60°/120°`.
+3. Chép đề **và** đáp án (nằm ngay dưới, mục *Lời giải*) vào
+   `holdout/batch_001.txt`, giữ đủ `= ⊥ √ ∥`.
+4. Đáp án dạng `2a³/3` → dòng `ĐÁP ÁN:` ghi **`2/3`** (gán `a = 1`). Phép gán ấy
+   là chỗ **duy nhất** người soạn được phép tính, và `ingest` sẽ ghi nó vào
+   `phep_chuyen` để người khác kiểm lại.
+5. Điền `NGƯỜI CHÉP: <tên> · <ngày> · <tài liệu, trang>`.
+6. `ingest_holdout_batch.py …` (soi) → `--ghi`.
 
 Từ đó tới coverage là **một lệnh**. Hạ tầng đã chạy nối đầu-cuối và có test
 tiêm lỗi ở bốn chặng.
