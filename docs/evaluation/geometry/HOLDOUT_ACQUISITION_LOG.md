@@ -106,17 +106,62 @@ TRÍCH TỰ ĐỘNG          … 3  ,,AB a AD a SA ABCD và  SA a .…
 Mất `=`, mất `⊥`, mất `√`. Bản trích **vẫn đọc như một đề bài** — đó là chỗ nguy
 hiểm. Đưa nó vào pool là niêm phong một **bài toán khác**.
 
-### ⇒ Không kênh TỰ ĐỘNG nào cho nguyên văn
+## 1d. ✅ KÊNH THỨ BA — HTML thô GIỮ được nguyên văn (lượt 4)
 
-| Kênh | Kết quả | Hỏng kiểu gì |
-|---|---|---|
-| Công cụ đọc web | ❌ | nội dung đi qua một mô hình tóm tắt |
+Hai kênh trước hỏng vì có **một bước diễn giải lại** (tóm tắt · ánh xạ glyph).
+`curl` thì không: nó trả **byte gốc**, và trên site dùng MathJax, toán nằm sẵn
+trong HTML dưới dạng **LaTeX**. Hiện trường:
+
+```html
+<h3>Đề bài</h3>
+<div class="math-box">
+  <p>Cho hình lập phương \(ABCD.MNPQ\) có cạnh bằng \(6\). Gọi \(E\) là
+     trung điểm của đoạn thẳng \(AB\).</p>
+</div>
+```
+
+`\(...\)` giữ **đủ** thông tin: `\perp`, `\sqrt{3}`, `\frac` đều còn nguyên.
+Không bước nào diễn giải ⇒ không bước nào làm mất.
+
+Đóng gói thành `scripts/harvest_holdout_candidates.py`, **ba cổng trung thực**:
+① có khối *Đề bài* tách được (không có ⇒ đang **đoán** đâu là đề) · ② **không**
+`<img>` trong khối · ③ có dấu vết LaTeX.
+
+### Nhưng sản lượng thì cạn — đo được
+
+```
+3883 url (sitemap mathvn)
+  → 60  ứng viên (lọc từ khoá hình học không gian)
+  → 11  có khối đề tách được
+  →  2  SẠCH (qua cả ba cổng)
+  →  0  trong ranh giới năng lực
+```
+
+Hai bài sạch: bài lập phương (**đã loại**, đáp án `3√6` vô tỉ) và một bài
+**chứng minh công thức tổng quát** cho tứ diện đẳng diện — tham số ký hiệu
+`a, b, c`, không phải bài cụ thể, nên cũng ngoài ranh giới.
+
+**Cổng ② là chỗ mất nhiều nhất (9/11).** Phần lớn nội dung toán trên web tiếng
+Việt là **ảnh chụp**, và `curl` cũng không đọc được ảnh.
+
+Ba site khác đã thử (`vted.vn`, `hoc247.net`, `diendantoanhoc.org`) đều **chặn
+fetch tự động** hoặc trả trang rỗng.
+
+### ⇒ Kênh ĐÚNG, nguồn CẠN
+
+| Kênh | Nguyên văn? | Hỏng kiểu gì |
+|---|:-:|---|
+| Công cụ đọc web | ❌ | đi qua một mô hình tóm tắt |
 | Trích PDF tự động | ❌ | rơi ký hiệu toán, **im lặng** |
+| **HTML thô + parse** | ✅ | không hỏng — nhưng **0 bài dùng được** trên nguồn đã quét |
 | **Người mở nguồn đọc** | ✅ | — |
 
 Nên `problem_text_verified` **chỉ** người hạ được, và `kiem_pool` **từ chối**
 niêm phong khi nó chưa `true`. Bài chưa xác minh mang
 `status: rejected_unverified` và **không được vào holdout**.
+
+Bộ thu vẫn đáng giữ: chạy nó trên **site khác** là việc rẻ (một lệnh), và mỗi
+bài SẠCH nó tìm ra là một bài người chỉ phải **đọc soát** thay vì **gõ lại**.
 
 ---
 

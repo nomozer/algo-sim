@@ -20,7 +20,7 @@
 | ☐ | **Expectation đủ** | `pytest tests/geometry/test_holdout_readiness_7b.py -q` — hai cổng `skip` phải TỰ BẬT | ⛔ chưa có `holdout.json` |
 | ☐ | **Ngân sách được duyệt** | 360 logic / 480 HTTP *(người)* | ⛔ chờ |
 | ☐ | **Seed GVHD** | một số nguyên, **không** do người đo chọn *(người)* | ⛔ chờ |
-| ☐ | **Runtime identity PASS** | `runtime_doctor.py` → exit 0, `source SHA == runtime SHA` | ⛔ `RUNTIME_STALE_IMAGE` |
+| — | ~~Runtime identity PASS~~ | **chuyển xuống §B** — xem ghi chú dưới | ⚙️ |
 | ☐ | **Cây sạch + hệ đúng bản** | `git status --porcelain` rỗng · `freeze_evaluation_candidate.py --verify` PASS | ✅ đang PASS, **kiểm lại ngay trước ④** |
 | ☐ | **Cache sạch** | lượt đo gọi `run_pipeline` thẳng, **không qua HTTP** ⇒ không có cache để dính. Kiểm: runner không import `main.py` | ✅ theo thiết kế bộ đo |
 
@@ -28,6 +28,11 @@
 > `measured_system_hash`; chạm `backend/app` sau khi niêm phong là **hỏng con
 > dấu**, và lối thoát duy nhất là niêm phong lại — tức khai ra đây là lượt khác,
 > trên một hệ khác.
+>
+> ⚠️ **`runtime_doctor` KHÔNG phải ô tick một lần.** Nó so **git SHA**, nên
+> *mọi* commit — kể cả commit chỉ sửa tài liệu — làm image cũ đi và nó FAIL lại.
+> Đó là hành vi đúng. Vì thế nó nằm ở **§B, bước áp chót**, sau commit cuối
+> cùng và ngay trước `seal`. Đặt nó ở PRECONDITION là tự tạo một cổng luôn đỏ.
 
 ---
 

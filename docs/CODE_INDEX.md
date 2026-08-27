@@ -2813,6 +2813,29 @@ chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracl
 (tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
 `problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
 
+### `backend/scripts/harvest_holdout_candidates.py` · **0 API call của hệ**
+
+Thu **ứng viên** đề held-out từ HTML thô. Export: `soi_mot_trang` ·
+`tach_khoi_de` · `go_the` · `TU_KHOA` · `LATEX`. **KHÔNG ghi vào `pool.json`** —
+nó đặt đề lên bàn, `problem_text_verified` vẫn do **người** hạ.
+
+**Vì sao có nó — hai kênh trước hỏng IM LẶNG**: công cụ đọc web đi qua một mô
+hình *tóm tắt*; trích PDF tự động *rơi ký hiệu toán* (đo: `⊥` xuất hiện **0
+lần** trong chuyên đề 217 trang về quan hệ vuông góc, `√ ∈ ∥` cũng 0, trong khi
+`=` còn 1303 — hai thư viện độc lập cùng kết quả). Cả hai cho văn bản **vẫn đọc
+như một đề bài**, mà đề mất một ký hiệu là một **bài toán khác**.
+
+`curl` khác về **bản chất**: byte gốc, toán nằm sẵn dưới dạng LaTeX
+(`\(ABCD.MNPQ\)`) — không bước nào diễn giải lại nên không bước nào làm mất.
+
+**Ba cổng trung thực**: ① có khối *Đề bài* tách được (không ⇒ đang **đoán** đâu
+là đề) · ② **không** `<img>` trong khối · ③ có dấu vết LaTeX. Cổng ② mất nhiều
+nhất — phần lớn nội dung toán web tiếng Việt là **ảnh chụp**.
+
+Sản lượng đo được (mathvn, 2026-08-27): `3883 url → 60 ứng viên → 11 có khối đề
+→ 2 sạch → 0 trong ranh giới`. **Kênh đúng, nguồn cạn.** Khoá bởi
+`test_holdout_readiness_7b.py`.
+
 ### `backend/scripts/holdout_coverage_matrix.py` · offline · **0 API call**
 
 Trả lời **một** câu: *pool held-out còn thiếu ô nào?* Không thêm bài, không chọn

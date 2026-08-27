@@ -387,6 +387,57 @@ def test_bang_NANG_LUC_trong_MA_va_trong_POOL_khong_troi(SH, POOL_D):
         assert bang[tag]["answer_shape"] == dang, f"{tag}: answer_shape lệch"
 
 
+# ══ BỘ THU ỨNG VIÊN — ba cổng trung thực ═════════════════════════════════
+@pytest.fixture(scope="module")
+def HV():
+    return _nap("harvest_holdout_candidates")
+
+
+_TRANG = """<html><title>T</title><body>
+<h3>Đề bài</h3><div class="math-box"><p>{de}</p></div><h3>Lời giải</h3>
+</body></html>"""
+
+
+def test_thu_duoc_de_NGUYEN_VAN_giu_nguyen_LaTeX(HV):
+    """Điểm khác bản chất so với hai kênh đã hỏng: không bước nào diễn giải
+    lại, nên không bước nào làm mất ký hiệu."""
+    de = r"Cho hình chóp \(S.ABCD\) có \(SA \perp (ABCD)\), \(SA = a\sqrt{3}\)."
+    x = HV.soi_mot_trang("https://x/1.html", _TRANG.format(de=de))
+    assert x["sach"] is True
+    assert r"\perp" in x["problem_text_original"]
+    assert r"\sqrt{3}" in x["problem_text_original"]
+
+
+def test_de_la_ANH_thi_bi_LOAI(HV):
+    """Cổng quan trọng nhất: phần lớn nội dung toán trên web tiếng Việt là ảnh
+    chụp, và `curl` cũng không đọc được ảnh."""
+    x = HV.soi_mot_trang("https://x/2.html", _TRANG.format(
+        de='<img src="de.png"> Cho hình chóp \\(S.ABCD\\) có đáy là hình vuông '
+           'cạnh \\(a\\), cạnh bên \\(SA\\) vuông góc với mặt phẳng đáy.'))
+    assert x["co_anh_trong_de"] is True and x["sach"] is False
+
+
+def test_KHONG_co_dau_vet_LATEX_thi_KHONG_sach(HV):
+    """Hoặc đề không chứa toán, hoặc toán đã mất ở đâu đó — cả hai đều là lý do
+    để người đọc soát trước, không phải để nhận thẳng."""
+    x = HV.soi_mot_trang("https://x/3.html", _TRANG.format(
+        de="Cho hinh chop S.ABCD co day la hinh vuong canh a va SA vuong goc day."))
+    assert x["co_latex"] is False and x["sach"] is False
+
+
+def test_KHONG_tach_duoc_khoi_de_thi_BO_QUA(HV):
+    """Không có khối đề tách được thì đang ĐOÁN đâu là đề — bỏ qua, đừng đoán."""
+    assert HV.soi_mot_trang("https://x/4.html", "<html><p>lung tung</p></html>") is None
+
+
+def test_bo_thu_KHONG_ghi_vao_pool():
+    """Nó đặt đề lên bàn, không nhận bài. `problem_text_verified` vẫn do người
+    hạ — tự động hoá bước ấy là bỏ đúng cái cổng vừa dựng."""
+    src = (SCRIPTS / "harvest_holdout_candidates.py").read_text(encoding="utf-8")
+    assert "pool.json" not in src.replace("`pool.json`", "")
+    assert "problem_text_verified" in src, "phải nhắc rõ giới hạn của nó"
+
+
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
     """Ô không có thẻ nào ⇒ người soạn bài cho ô ấy không biết khai gì."""
     co = {o for t in POOL_D["__the_nang_luc__"].values()

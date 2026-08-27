@@ -132,8 +132,21 @@ hỏng im lặng**.
 ⇒ `problem_text_verified` **chỉ người hạ được**. `kiem_pool` từ chối niêm phong
 khi nó chưa `true`; bài chưa xác minh mang `status: rejected_unverified`.
 
-**Việc cần người:** mở PDF bằng trình đọc, **nhìn** và gõ lại đề, giữ đủ
-`= ⊥ √ ∈ ∥`. Mỗi bài vài phút; 40 bài là việc một buổi.
+**Kênh thứ ba GIỮ được nguyên văn — nhưng nguồn cạn.** `curl` trả byte gốc, và
+trên site dùng MathJax thì toán nằm sẵn dưới dạng LaTeX (`\(ABCD.MNPQ\)`) —
+không bước nào diễn giải lại. Đóng gói ở `harvest_holdout_candidates.py`. Sản
+lượng đo được:
+
+```
+3883 url → 60 ứng viên → 11 có khối đề → 2 SẠCH → 0 trong ranh giới
+```
+
+9/11 rớt vì **đề là ảnh chụp**. Ba site khác đã thử đều chặn fetch tự động.
+
+**Việc cần người:** mở nguồn bằng trình đọc, **nhìn** và gõ lại đề, giữ đủ
+`= ⊥ √ ∈ ∥`. Mỗi bài vài phút; 40 bài là việc một buổi. Chạy bộ thu trên site
+mới trước — mỗi bài SẠCH nó tìm ra là một bài chỉ phải **đọc soát**, không phải
+**gõ lại**.
 
 ### ⛔ B1c — Nợ đối chiếu văn bản đề *(chặn cứng, và không lệnh nào bắt hộ)*
 
@@ -174,16 +187,27 @@ Khuôn đã sẵn và cổng đã đòi đủ: nguồn người đánh giá · l
 nghĩa vụ dựng · nghĩa vụ kiểm · con trỏ oracle. Soạn được **ngay sau** khi có
 pool — không cần seed.
 
-### ✅ B5 — Runtime: **ĐÃ DỌN** (7B-prep)
+### ⚙️ B5 — Runtime: **ĐÃ CHỨNG MINH DỌN ĐƯỢC, nhưng KHÔNG phải việc làm một lần**
+
+Đã build lại kèm `GIT_SHA`/`BUILD_TIME` và `runtime_doctor` **PASS**:
 
 ```
-runtime_doctor  →  PASS — runtime khớp source
 source : sha=53ed4dbdb32f cache=46 skill=11/6208fc2a card=446b0769
 runtime: sha=53ed4dbdb32f cache=46 skill=11/6208fc2a card=446b0769
+KẾT LUẬN: PASS — runtime khớp source.
 ```
 
-Build lại kèm `GIT_SHA`/`BUILD_TIME`. `RUNTIME_STALE_IMAGE` đã đóng.
-⚠️ Chạm `backend/app` sau mốc này ⇒ phải build lại **trước** khi niêm phong.
+⚠️ **Rồi FAIL lại ngay ở commit kế tiếp** — và đó là hành vi ĐÚNG của cổng, không
+phải hồi quy. `runtime_doctor` so **git SHA**, nên *mọi* commit đều làm image
+cũ đi, kể cả commit chỉ sửa tài liệu.
+
+**Hệ quả vận hành, sửa lại chỗ bản trước ghi nhầm là "đã dọn xong":** dọn runtime
+là **bước áp chót**, ngay trước `seal`, **sau** khi commit cuối cùng — không phải
+một ô tick được một lần rồi giữ mãi. Đưa nó lên đầu checklist là tự tạo một cổng
+luôn đỏ.
+
+Xem `PHASE7B_CHECKLIST.md` §B — thứ tự ở đó đã đúng: dọn runtime nằm **trong**
+EXECUTION, không nằm trong PRECONDITION.
 
 ---
 
