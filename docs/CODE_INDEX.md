@@ -2733,7 +2733,10 @@ bài ⇒ dừng, **không rút bù** — rút bù là lặng lẽ đổi tập �
 
 `--seed` **không có mặc định** (tôi chọn seed thì tôi chọn được cả tập).
 `kiem_pool` chặn: thiếu `nguon.url` · thiếu `phep_chuyen` · ô B mang
-`oracle_result` · `chua_chay_he` không true · **đề trùng tập DEV**. Băm hệ thống
+`oracle_result` · `chua_chay_he` không true · **đề trùng tập DEV** · và (từ
+2026-08-27) **`can_kiem_tay` còn `true`** — nợ đối chiếu của đề thu bằng công cụ
+đọc web, vì nội dung đi qua một mô hình tóm tắt nên `problem_text` là bản chép
+LẠI chứ không phải nguyên văn; cờ vắng mặt ⇒ không ảnh hưởng bài soạn tay. Băm hệ thống
 mượn thẳng `freeze_evaluation_candidate.measured_system_hash()` để hai con số
 không bao giờ trôi khỏi nhau. Giao thức: `docs/evaluation/geometry/HOLDOUT_PROTOCOL.md`.
 Khoá bởi `tests/geometry/test_holdout_protocol.py` (25).

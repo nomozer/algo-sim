@@ -1,16 +1,22 @@
 {
-  "__trang_thai__": "EMPTY",
+  "__trang_thai__": "ĐANG THU THẬP — 1/40 bài · 1/20 ô",
   "__khai__": [
-    "POOL RỖNG CÓ CHỦ ĐÍCH — `cases: []`. Đây là SCHEMA đã sẵn sàng nhận đề,",
-    "không phải một tập đề. Không có bài giả, không có expectation sinh sẵn.",
-    "",
-    "Cổng máy đang chặn đúng chỗ và sẽ tiếp tục chặn cho tới khi có đề thật:",
+    "CHƯA ĐỦ ĐỂ RÚT. Cổng máy đang chặn đúng chỗ và sẽ tiếp tục chặn:",
     "  python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
-    "  → 'Pool KHÔNG phủ 20/20 ô' · exit 2 · KHÔNG sinh con dấu",
+    "  → 'Pool KHÔNG phủ 19/20 ô' · exit 2 · KHÔNG sinh con dấu",
+    "",
+    "Không bài giả. Bài duy nhất trong `cases` là đề THẬT, trích từ đề thi",
+    "CHÍNH THỨC, có url tra ngược được và đáp án của nguồn.",
     "",
     "AI ĐIỀN FILE NÀY: người soạn pool, từ NGUỒN NGOÀI (đề thi / đề minh hoạ /",
     "chuyên đề có lời giải chi tiết). KHÔNG tự tính đáp án — người soạn cũng là",
-    "người sửa hệ. HOLDOUT_PROTOCOL §1."
+    "người sửa hệ. HOLDOUT_PROTOCOL §1.",
+    "",
+    "⚠️ MỌI BÀI THU THẬP QUA CÔNG CỤ ĐỌC WEB đều mang `can_kiem_tay: true`.",
+    "Nội dung về qua một mô hình tóm tắt, tức `problem_text` là bản chép LẠI,",
+    "không phải bản chép NGUYÊN VĂN. Phải mở url đối chiếu bằng mắt rồi hạ cờ.",
+    "`kiem_pool` TỪ CHỐI niêm phong khi còn bài mang cờ này.",
+    "Nguồn nào lấy được / không lấy được: ../HOLDOUT_ACQUISITION_LOG.md"
   ],
 
   "dataset": "geometry_holdout_pool",
@@ -83,5 +89,39 @@
     "chua_chay_he": true
   },
 
-  "cases": []
+  "cases": [
+    {
+      "case_id": "hp_a11_001",
+      "slot": "A11",
+      "domain": "geometry_3d",
+      "geometry_family": "measurement",
+      "answer_shape": "quantity",
+      "difficulty": "van_dung_cao",
+      "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
+
+      "problem_text": "Cho hình lập phương ABCD.MNPQ có cạnh bằng 6. Gọi E là trung điểm của đoạn thẳng AB. Khoảng cách từ điểm P đến mặt phẳng (MED) bằng bao nhiêu (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng đến hàng phần trăm)?",
+
+      "expected_construction_types": ["point3", "plane3"],
+      "expected_verification_types": ["distance"],
+      "expected_obligations": ["distance"],
+
+      "nguon": {
+        "ten": "Đề thi chính thức tốt nghiệp THPT 2026 môn Toán, mã đề 0103 — Câu 6 Phần III (bản lời giải trên Toán Học Việt Nam)",
+        "url": "https://www.mathvn.com/2026/06/tinh-khoang-cach-tu-iem-en-mat-phang.html",
+        "vi_tri": "Mã đề 0103 · Câu 6 · Phần III",
+        "nam": "2026"
+      },
+      "evaluator": "Bộ GD-ĐT (đề + đáp án chính thức, thi ngày 11/06/2026); lời giải chi tiết do mathvn.com đăng",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "7,35",
+
+      "phep_chuyen": "Đáp án nguồn là số đã LÀM TRÒN theo yêu cầu của đề (hàng phần trăm), nên không dùng thẳng làm oracle được. Giá trị đúng: đặt A(0,0,0) B(6,0,0) D(0,6,0) M(0,0,6) P(6,6,6), E=(3,0,0) là trung điểm AB. Mặt (MED) qua ba điểm ⇒ x/3 + y/6 + z/6 = 1 ⇒ 2x + y + z − 6 = 0. d(P,(MED)) = |2·6+6+6−6|/√(4+1+1) = 18/√6 = 3√6 ≈ 7,348… → làm tròn 7,35 (khớp đáp án nguồn). 3√6 VÔ TỈ nên checker so BÌNH PHƯƠNG: d² = 9·6 = 54.",
+      "oracle_result": { "distance": "54" },
+      "don_vi_oracle": "d² (bình phương khoảng cách) — khai rõ vì `distance` ở bài khác có thể là phân số của chính d",
+
+      "chua_chay_he": true,
+      "can_kiem_tay": true,
+      "ghi_chu_kiem_tay": "Đề lấy qua công cụ đọc web (nội dung đi qua một mô hình tóm tắt) ⇒ `problem_text` là bản chép LẠI. Phải mở url đối chiếu từng chữ rồi mới hạ cờ. Phần `phep_chuyen` ĐÃ được tính lại độc lập và khớp đáp án nguồn tới hàng phần trăm — nhưng vẫn cần một người xác nhận, vì oracle sai trong tập đã niêm phong thì không sửa được nữa."
+    }
+  ]
 }

@@ -150,6 +150,18 @@ def kiem_pool(cases: list[dict]) -> list[str]:
         if c.get("chua_chay_he") is not True:
             # Soạn đáp án SAU khi thấy hệ chạy là chép bài của chính mình.
             loi.append(f"{cid}: chua_chay_he phải là true tại thời điểm soạn")
+        if c.get("can_kiem_tay") is True:
+            # NỢ ĐỐI CHIẾU, thêm 2026-08-27. Đề thu thập bằng công cụ đọc web
+            # đi qua một mô hình tóm tắt, nên `problem_text` là bản chép LẠI
+            # chứ không phải chép NGUYÊN VĂN — mà giao thức đòi nguyên văn, và
+            # một chữ sai trong đề làm bài toán thành bài khác.
+            #
+            # Cờ mặc định VẮNG MẶT ⇒ không ảnh hưởng bài soạn tay. Chỉ bài nào
+            # TỰ KHAI còn nợ mới bị chặn, và cách trả nợ là mở url đối chiếu
+            # bằng mắt rồi xoá cờ — không phải xoá cờ rồi thôi.
+            loi.append(f"{cid}: can_kiem_tay còn true — chưa ai đối chiếu "
+                       f"problem_text với nguồn. Niêm phong một đề chép sai là "
+                       f"niêm phong một bài toán KHÁC.")
         if o.startswith("A"):
             mong = BANG_O[o][0]
             if mong not in (c.get("expected_obligations") or []):

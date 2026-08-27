@@ -56,11 +56,21 @@ def POOL_D():
 
 
 # ══ TASK 1 — POOL SCHEMA, RỖNG VÀ THỪA NHẬN LÀ RỖNG ══════════════════════
-def test_pool_ton_tai_va_RONG(POOL_D):
-    """Rỗng là trạng thái ĐÚNG lúc này. Có bài trong đây mà không ai soạn từ
-    nguồn ngoài thì đó là bài giả, và một bài giả đủ để giết cả lượt đo."""
-    assert POOL_D["cases"] == [], "pool phải rỗng cho tới khi có đề từ nguồn ngoài"
-    assert POOL_D["__trang_thai__"] == "EMPTY"
+def test_moi_bai_trong_pool_deu_CO_NGUON_NGOAI(POOL_D):
+    """Không bài giả. Mỗi bài phải tra ngược được về một url — đó là toàn bộ
+    thứ phân biệt một tập held-out với một tập tôi tự soạn."""
+    for c in POOL_D["cases"]:
+        n = c.get("nguon") or {}
+        assert n.get("url", "").startswith("http"), f"{c['case_id']}: thiếu url"
+        assert c.get("dap_an_chinh_thuc"), f"{c['case_id']}: thiếu đáp án nguồn"
+        assert c.get("evaluator"), f"{c['case_id']}: chưa khai ai ra đáp án"
+        assert c.get("chua_chay_he") is True, f"{c['case_id']}: chua_chay_he"
+
+
+def test_pool_TU_KHAI_dung_so_bai_dang_co(POOL_D):
+    """Nhãn trạng thái là thứ người đọc tin trước khi chạy lệnh nào. Nó trôi
+    khỏi `cases` là nói dối về mức sẵn sàng."""
+    assert str(len(POOL_D["cases"])) in POOL_D["__trang_thai__"]
 
 
 def test_pool_KHAI_DU_moi_truong_Phase7B_doi(POOL_D):
@@ -93,14 +103,37 @@ def test_khuon_mang_DU_ca_hai_bo_ten(POOL_D):
         assert truong in k, f"khuôn thiếu khoá 7B `{truong}`"
 
 
-def test_pool_RONG_thi_KHONG_niem_phong_duoc(SH, POOL_D):
-    """Cổng thật: rỗng ⇒ không phủ ô nào ⇒ dừng. Không có con dấu nào ra đời."""
-    assert SH.kiem_pool(POOL_D["cases"]) == [], "pool rỗng không có lỗi ĐỀ"
-    theo_o = {}
+def test_pool_CHUA_DU_thi_KHONG_niem_phong_duoc(SH, POOL_D):
+    """Cổng thật: thiếu ô ⇒ dừng. Không có con dấu nào ra đời."""
+    theo_o: dict[str, list] = {}
     for c in POOL_D["cases"]:
         theo_o.setdefault(c["slot"], []).append(c)
-    assert [o for o in SH.BANG_O if not theo_o.get(o)] == list(SH.BANG_O), (
-        "pool rỗng phải để TRỐNG cả 20 ô")
+    thieu = [o for o in SH.BANG_O if not theo_o.get(o)]
+    assert thieu, "pool đã phủ đủ 20 ô — cập nhật test này khi thật sự tới đó"
+
+
+def test_bai_CHUA_DOI_CHIEU_TAY_thi_bi_chan(SH):
+    """`can_kiem_tay` là NỢ ĐỐI CHIẾU, không phải ghi chú.
+
+    Đề thu thập bằng công cụ đọc web đi qua một mô hình tóm tắt, nên
+    `problem_text` là bản chép LẠI. Giao thức đòi chép NGUYÊN VĂN, và một chữ
+    sai trong đề làm bài toán thành bài KHÁC — sau khi niêm phong thì không sửa
+    được nữa.
+    """
+    goc = {"case_id": "x", "slot": "A11", "problem_text": "đề",
+           "nguon": {"url": "https://x"}, "dap_an_chinh_thuc": "1",
+           "phep_chuyen": "…", "oracle_result": {"distance": "1"},
+           "expected_obligations": ["distance"], "chua_chay_he": True}
+    assert SH.kiem_pool([goc]) == [], "bài không mang cờ thì phải qua"
+    loi = SH.kiem_pool([{**goc, "can_kiem_tay": True}])
+    assert loi and "can_kiem_tay" in loi[0]
+
+
+def test_pool_HIEN_TAI_van_con_no_doi_chieu(SH, POOL_D):
+    """Trạng thái thật lúc này — test đổi màu khi nợ được trả."""
+    loi = SH.kiem_pool(POOL_D["cases"])
+    assert all("can_kiem_tay" in d for d in loi), (
+        f"pool có lỗi KHÁC ngoài nợ đối chiếu: {loi}")
 
 
 def test_con_dau_CHUA_ton_tai():
@@ -158,13 +191,19 @@ def test_phat_hien_hai_cho_KHONG_KHIT_duoc_DAN_TU_ANH_XA(MT):
     assert m["o_khong_thuoc_ho"] == ["B04"]
 
 
-def test_bao_cao_ma_tran_da_sinh_va_khop_anh_xa(MT):
+def test_bao_cao_ma_tran_da_sinh_va_KHONG_TROI_khoi_pool(MT):
+    """Báo cáo đã sinh phải khớp pool ĐANG CÓ. Con số dẫn từ `ma_tran`, không
+    ghim tay: ghim tay thì mỗi lần thêm bài là một test đỏ oan, và người ta sẽ
+    sửa test thay vì sinh lại báo cáo."""
     f = GEO / "holdout" / "COVERAGE_MATRIX.md"
     assert f.exists(), "chưa sinh COVERAGE_MATRIX.md"
     src = f.read_text(encoding="utf-8")
     for h in MT.HO:
         assert h in src
-    assert "0/20 ô" in src and "CHƯA RÚT ĐƯỢC" in src
+    m = MT.ma_tran(MT.doc_pool())
+    assert f"{20 - len(m['o_trong'])}/20 ô" in src, (
+        "COVERAGE_MATRIX.md trôi khỏi pool — chạy lại holdout_coverage_matrix.py")
+    assert ("CHƯA RÚT ĐƯỢC" in src) == bool(m["o_trong"])
 
 
 # ══ TASK 3 — CỔNG THẨM ĐỊNH KỲ VỌNG ══════════════════════════════════════

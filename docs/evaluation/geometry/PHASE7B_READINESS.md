@@ -16,33 +16,53 @@ ngoài kho mã.
 
 | # | Việc | Kết quả |
 |---|---|---|
-| 1 | `holdout/pool.json` | schema đầy đủ, **`cases: []`**, tự khai `__trang_thai__: EMPTY` |
+| 1 | `holdout/pool.json` | schema đầy đủ · **1/40 bài · 1/20 ô** — bài duy nhất là đề THẬT từ đề thi chính thức |
+| 1b | `HOLDOUT_ACQUISITION_LOG.md` | sản lượng đo được của từng loại nguồn + **hạn chế của cách thu thập** |
 | 2 | `holdout/COVERAGE_MATRIX.md` | sinh từ `holdout_coverage_matrix.py`, 20 ô × 7 họ × 4 hình dạng đáp án |
 | 3 | Cổng kỳ vọng | `nap()` nay đòi thêm **`slot` + `oracle_ref`**; `kiem_noi_oracle()` nối con trỏ sang pool |
-| 4 | `HOLDOUT_K_DECISION.md` | ba phương án + chi phí + khuyến nghị (**chưa** triển khai) |
-| 5 | Kế hoạch dọn runtime | §4 dưới đây (**chưa** chạy) |
-| — | Test | **29 test mới** · `tests/geometry/test_holdout_readiness_7b.py` · `pytest 2979` |
+| 3b | Cổng `can_kiem_tay` | `kiem_pool` **từ chối niêm phong** khi còn bài chưa ai đối chiếu với nguồn |
+| 4 | `HOLDOUT_K_DECISION.md` | ba phương án + chi phí + khuyến nghị (**chưa** triển khai, **chờ xác nhận**) |
+| 5 | Kế hoạch dọn runtime | §4 dưới đây (**chưa** chạy — đúng luật "chỉ sau khi pool + expectation xong") |
+| — | Test | `tests/geometry/test_holdout_readiness_7b.py` · `pytest 2982` |
 
 ---
 
 ## 2. BLOCKERS
 
-### ⛔ B1 — Pool chưa có bài nào *(chặn cứng)*
+### ⛔ B1 — Pool mới có 1/40 bài, phủ 1/20 ô *(chặn cứng)*
 
 ```
-pool: 0 bài · phủ 0/20 ô
-Ô TRỐNG (20): A01 … B06
+pool: 1 bài · phủ 1/20 ô
+Ô TRỐNG (19): A01 A02 A03 A04 A05 A06 A07 A08 A09 A10 A12 A13 A14 B01 … B06
 seal_geometry_holdout.py --seed 0 --chi-kiem-pool  →  exit 2, KHÔNG sinh con dấu
 ```
 
-Cần **≥40 bài** trích từ **đề thi / đề minh hoạ / chuyên đề có lời giải chi
-tiết**, mỗi bài kèm `dap_an_chinh_thuc` **nguyên văn** và `nguon.url` tra ngược
-được, phủ đủ 20/20 ô.
+Bài đã có (`hp_a11_001`, ô A11) là đề **thật**: Câu 6 Phần III mã đề 0103, đề
+thi chính thức TN THPT 2026, có url và đáp án nguồn. Chi tiết + nguồn nào lấy
+được / không lấy được: [HOLDOUT_ACQUISITION_LOG.md](HOLDOUT_ACQUISITION_LOG.md).
 
-**Không tôi tự soạn.** `HOLDOUT_PROTOCOL §0`: bất kỳ đề nào tôi viết ra thì tôi
-đã nhìn, và bốn wave vừa rồi đã sửa hệ theo đúng chỗ tập DEV hỏng. Bảo đảm thật
-không phải *"tôi chưa nhìn"* mà là **"tôi không viết được ra chúng và không sửa
-được đáp án"**.
+**Vì sao mới một bài** — không phải thiếu nguồn mà là **định dạng**: chuyên đề
+tổng hợp nằm trong **PDF**, lời giải đề thi chính thức nằm trong **ảnh**, và loại
+duy nhất đọc được dạng văn bản là *bài viết riêng cho từng câu* (1 bài/trang).
+Đường nhanh hơn cần người: tải PDF chuyên đề (toanmath có tài liệu 217–704 trang
+kèm lời giải) rồi chép đề — và **chép từ PDF là chép nguyên văn thật**.
+
+### ⛔ B1b — Nợ đối chiếu văn bản đề *(chặn cứng, và không lệnh nào bắt hộ)*
+
+Công cụ đọc web trả nội dung **đã đi qua một mô hình tóm tắt**, nên
+`problem_text` là bản **chép LẠI**, không phải **chép NGUYÊN VĂN**. Một chữ sai
+trong đề hình học làm bài toán thành **bài khác** — và nó vẫn đọc trôi chảy, vẫn
+giải được, vẫn ra một số. Chỉ lộ ra khi có người mở url đối chiếu từng chữ.
+
+Nên mọi bài thu kiểu này mang `can_kiem_tay: true`, và cổng đã chặn thật:
+
+```
+POOL KHÔNG HỢP LỆ — 1 lỗi:
+  · hp_a11_001: can_kiem_tay còn true — chưa ai đối chiếu problem_text với
+    nguồn. Niêm phong một đề chép sai là niêm phong một bài toán KHÁC.
+```
+
+Trả nợ = mở url, đọc, sửa nếu lệch, **rồi mới** xoá cờ.
 
 ### ⛔ B2 — Chưa có seed của GVHD *(chặn cứng)*
 
@@ -137,7 +157,8 @@ Nhưng để nguyên thì hồ sơ bằng chứng mang **hai danh tính** cùng 
 ## 5. Thứ tự việc còn lại
 
 ```
-① SOẠN POOL          ≥40 bài, nguồn ngoài, phủ 20/20 ô        ← làm được NGAY
+① SOẠN POOL          còn 39 bài / 19 ô                        ← làm được NGAY
+   + trả nợ `can_kiem_tay` cho mọi bài thu bằng công cụ đọc web
    kiểm: seal_geometry_holdout.py --seed 0 --chi-kiem-pool
          holdout_coverage_matrix.py --md …/COVERAGE_MATRIX.md
 
@@ -160,10 +181,16 @@ Bước ① là đường găng và **không** cần GVHD.
 
 ## 6. Điều lượt này KHÔNG làm
 
-- **Không** soạn một bài nào. `cases: []`.
-- **Không** sinh expectation nào cho held-out.
-- **Không** rút, không niêm phong, không chạy.
+- **Không** sáng tác một đề nào. Bài duy nhất trong pool là đề thi chính thức,
+  có url tra ngược được.
+- **Không** tự tạo đáp án. `dap_an_chinh_thuc` chép từ nguồn; `phep_chuyen` là
+  phần **duy nhất** người soạn được tính, và nó hiện ra để người khác kiểm lại.
+- **Không** hạ cờ `can_kiem_tay` cho bài mình vừa thu — nợ đối chiếu phải do
+  người trả.
+- **Không** sinh expectation nào cho held-out (chờ pool hợp lệ).
+- **Không** rút, không niêm phong, không chạy benchmark, không gọi LLM của hệ.
 - **Không** chọn `k` thay người trả ngân sách.
-- **Không** rebuild container.
-- **Không** đụng `backend/app`, prompt, DSL, hợp đồng chỉ số. `freeze --verify`
-  vẫn PASS trên cùng băm `7ab25683…` của Phase 7A.2.
+- **Không** rebuild container — đúng luật *"chỉ sau khi pool + expectation
+  hoàn thành"*.
+- **Không** đụng `backend/app`, prompt, DSL, hợp đồng chỉ số, validator,
+  frontend. `freeze --verify` vẫn PASS trên cùng băm `7ab25683…` của Phase 7A.2.
