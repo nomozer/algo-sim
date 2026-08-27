@@ -51,8 +51,37 @@ những chỗ hệ yếu; một câu trong đề tốt nghiệp thì không.
 chạy. Không có con dấu trong lịch sử thì không có cách nào chứng minh tập không
 bị sửa sau khi thấy kết quả.
 
-**Chạy MỘT LƯỢT.** Trượt thì ghi nhận là trượt. Sửa hệ rồi chạy lại trên cùng
+**Chạy MỘT PHIÊN.** Trượt thì ghi nhận là trượt. Sửa hệ rồi chạy lại trên cùng
 tập held-out thì tập ấy **thành DEV** — và phải nói ra điều đó, không được im.
+
+> ### ⚠️ "MỘT LƯỢT" nghĩa là gì — làm rõ 2026-08-27 (Phase 7A.3)
+>
+> Bản trước viết *"chạy MỘT LƯỢT"*, và câu ấy đọc được theo hai nghĩa. Nghĩa
+> đúng là nghĩa hẹp:
+>
+> | | |
+> |---|---|
+> | ✅ **CÓ** nghĩa là | **một PHIÊN ĐO đã niêm phong**, gồm `k` lượt độc lập cho mỗi bài, **không sửa hệ giữa các lượt**, **không chọn lượt đẹp nhất** |
+> | ❌ **KHÔNG** có nghĩa là | chạy đúng một lần cho mỗi bài rồi kết luận |
+>
+> Điều luật này cấm là **lặp CÓ SỬA**: chạy → thấy trượt → sửa hệ → chạy lại
+> trên cùng tập. Đó là thứ biến held-out thành DEV. `k` lượt **trong cùng một
+> phiên**, cùng một `measured_system_hash`, không đụng gì ở giữa, **không** vi
+> phạm điều ấy — chúng là `k` phép lấy mẫu của **một** phép đo.
+>
+> **Vì sao phải làm rõ, chứ không phải nới lỏng:** `PHASE7_METRIC_CONTRACT §2⑤`
+> đòi `k ≥ 3` cho chỉ số `stability`, và §4 **cấm** báo pass/fail cho một đề
+> chạy `k` lượt. Đọc *"một lượt"* theo nghĩa rộng thì hai tài liệu chống nhau và
+> một trong hai phải bị phá — trong khi thật ra chúng nói về hai chuyện khác
+> nhau: cái này về **lặp lại sau khi thấy kết quả**, cái kia về **cỡ mẫu**.
+>
+> Bằng chứng cho thấy `k = 1` không đủ, đo được trên chính kho này: Phase 6.6
+> cùng mã cùng đề cho **0/3 rồi 3/3**; Phase 7A bài `5-goc` qua ở lượt 1 và 3,
+> trượt ở lượt 2 vì `analyze` không tất định. Lượt trượt ấy, nếu là lượt **duy
+> nhất**, sẽ vào luận văn thành *"mô hình không làm được"* — và nó không đúng.
+>
+> Chốt `k`: **`HOLDOUT_K_FINAL.md`**. Phân tích ba phương án:
+> `HOLDOUT_K_DECISION.md`.
 
 ---
 
@@ -156,19 +185,38 @@ Khuôn đầy đủ: [`holdout/pool.template.json`](holdout/pool.template.json).
 ④ NIÊM PHONG         seal_hash + measured_system_hash → HOLDOUT_SEAL.json
                       → COMMIT.  Cây phải SẠCH, freeze --verify PASS
 
-⑤ CHẠY MỘT LƯỢT      run_geometry_dev_evaluation.py --holdout
+⑤ CHẠY MỘT PHIÊN     run_geometry_dev_evaluation.py --holdout
+                      k = 3 lượt ĐỘC LẬP mỗi bài, trong CÙNG một phiên
                       runner đối chiếu CẢ HAI băm trước khi tiêu call đầu tiên
-                      không sửa prompt, không bỏ bài, không retry riêng
+                      không sửa prompt, không bỏ bài, không retry riêng,
+                      không chọn lượt đẹp nhất
 
-⑥ BÁO CÁO            tầng A: G1 · G2 · A · O · obligation_match
+⑥ BÁO CÁO            tầng A: G1 · G2 · A · O · construction_match ·
+                              verification_match · stability (x/k)
                       tầng B: từ chối trung thực / bịa hình
                       cộng: taxonomy nguyên nhân trượt
 ```
 
-**Ngân sách**: `6 lượt logic · 8 HTTP` mỗi bài, dẫn từ call graph
-(analyze ≤2 · semantic_analyze 1 · semantic_program ≤3). N=20 ⇒ **120 logic /
-160 HTTP**. Trần đã duyệt cho DEV (60/80 ở N=10) **không đổi một đơn vị** — cùng
-một hằng số nhân với số bài.
+**Ngân sách** — `k = 3`, chốt ở `HOLDOUT_K_FINAL.md`:
+
+```
+mỗi lượt/bài   6 logic · 8 HTTP      dẫn từ call graph:
+                                     analyze ≤2 · semantic_analyze 1
+                                     · semantic_program ≤3
+
+logic   20 bài × 3 lượt × 6 logic  =  360
+HTTP    20 bài × 3 lượt × 8 HTTP   =  480
+```
+
+**Hằng số mỗi lượt KHÔNG đổi một đơn vị** kể từ trần đã duyệt cho DEV (60/80 ở
+N=10, `k=1`) — vẫn đúng `6 × N × k`. Cái đổi là **`k`**, và chỉ nó. Bảng dưới để
+so, và để thấy phần tăng đến từ đâu:
+
+| | N | k | logic | HTTP |
+|---|--:|--:|--:|--:|
+| DEV (đã duyệt) | 10 | 1 | 60 | 80 |
+| Held-out, bản trước (`k=1`) | 20 | 1 | 120 | 160 |
+| **Held-out, chốt (`k=3`)** | 20 | **3** | **360** | **480** |
 
 ---
 
@@ -197,8 +245,16 @@ ra rằng đây là lượt khác, trên một hệ khác.
   phải 20.
 - **Không đo tần suất chương trình.** Chưa ai đếm mỗi chủ đề chiếm bao nhiêu
   phần trăm đề thi thật, nên tập này *đại diện chủ đề*, không *đại diện tần suất*.
-- **Một bài mỗi ô không đo được độ ổn định.** Bài A11 trượt không phân biệt được
-  "hệ không làm được khoảng cách điểm–mặt" với "bài A11 ấy có gì đó lạ".
+- **Một bài mỗi ô vẫn không tách được ô khỏi bài.** Bài A11 trượt cả 3 lượt
+  không phân biệt được *"hệ không làm được khoảng cách điểm–mặt"* với *"bài A11
+  ấy có gì đó lạ"*.
+
+  ⚠️ Từ `k = 3` (Phase 7A.3), hạn chế này **thu hẹp lại chứ không mất**. Cái
+  `k` mua được là **phương sai GIỮA CÁC LƯỢT trên cùng một bài** — phân biệt
+  được *"hệ không làm được"* (0/3) với *"hệ làm được, không ổn định"* (2/3).
+  Cái `k` **không** mua được là phương sai **giữa các bài trong cùng một ô**:
+  muốn thứ đó phải rút nhiều bài mỗi ô, tức một tập khác. Đừng đọc `2/3` thành
+  *"ô A11 đạt 67%"* — nó là *"bài A11 ấy đạt 2/3 lượt"*.
 
 ---
 

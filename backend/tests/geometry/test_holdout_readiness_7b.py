@@ -338,3 +338,65 @@ def test_khuon_ky_vong_ton_tai_va_KHONG_the_nap_lam_tap_that(GE, tmp_path):
 def test_chua_co_tap_ky_vong_held_out_that():
     assert not (KY_VONG / "holdout.json").exists(), (
         "có holdout.json nghĩa là ai đó đã soạn kỳ vọng — kiểm nguồn trước khi đo")
+
+
+# ══ PHASE 7A.3 — `k` VÀ GIAO THỨC ĐÃ ĐÓNG BĂNG ═══════════════════════════
+_K_FINAL = GEO / "HOLDOUT_K_FINAL.md"
+_PROTO = GEO / "HOLDOUT_PROTOCOL.md"
+_METRIC = GEO / "PHASE7_METRIC_CONTRACT.md"
+
+#: `k` đã chốt ở Phase 7A.3. Đổi hằng số này = đổi cỡ mẫu của lượt đo chính
+#: thức, nên nó phải đỏ ở đây trước khi đỏ ở đâu khác.
+K_CHOT = 3
+LOGIC_MOI_LUOT, HTTP_MOI_LUOT = 6, 8
+
+
+def test_k_da_duoc_CHOT_thanh_van_ban(SH):
+    assert _K_FINAL.exists(), "chưa có HOLDOUT_K_FINAL.md"
+    src = _K_FINAL.read_text(encoding="utf-8")
+    assert f"k = {K_CHOT}" in src
+    assert len(SH.BANG_O) == 20, "ngân sách dẫn từ số ô — số ô đổi thì phải chốt lại"
+
+
+def test_ngan_sach_KHOP_PHEP_TINH_o_ca_HAI_tai_lieu(SH):
+    """Con số phải **dẫn ra được**, và hai tài liệu không được nói hai số.
+
+    Ngân sách trôi giữa `HOLDOUT_K_FINAL` và `HOLDOUT_PROTOCOL` là loại lỗi
+    người ta chỉ phát hiện lúc quota cạn giữa phiên đo.
+    """
+    n = len(SH.BANG_O)
+    logic, http = n * K_CHOT * LOGIC_MOI_LUOT, n * K_CHOT * HTTP_MOI_LUOT
+    assert (logic, http) == (360, 480)
+    for f in (_K_FINAL, _PROTO):
+        src = f.read_text(encoding="utf-8")
+        assert str(logic) in src, f"{f.name}: thiếu số logic {logic}"
+        assert str(http) in src, f"{f.name}: thiếu số HTTP {http}"
+
+
+def test_protocol_da_LAM_RO_nghia_cua_MOT_LUOT():
+    """Cấm **lặp CÓ SỬA**, không cấm cỡ mẫu. Không làm rõ thì hai tài liệu đọc
+    như chống nhau, và một trong hai sẽ bị phá lúc chạy."""
+    src = _PROTO.read_text(encoding="utf-8")
+    assert "một PHIÊN ĐO đã niêm phong" in src
+    assert "lặp CÓ SỬA" in src
+    assert "chạy đúng một lần cho mỗi bài rồi kết luận" in src
+
+
+def test_metric_contract_ghi_day_la_DIEU_KIEN_LAY_MAU_khong_phai_dinh_nghia():
+    """`§7` là nhật ký đổi chỉ số. Lần này **không** đổi định nghĩa nào, và
+    việc ghi rõ điều đó quan trọng ngang việc ghi một lần đổi thật."""
+    src = _METRIC.read_text(encoding="utf-8")
+    assert "### 7A.3" in src
+    doan = src.split("### 7A.3")[1]
+    assert "KHÔNG ĐỔI" in doan and "ĐIỀU KIỆN LẤY MẪU" in doan
+
+
+def test_checklist_ton_tai_va_du_BAY_muc_bao_cao():
+    f = GEO / "PHASE7B_CHECKLIST.md"
+    assert f.exists(), "chưa có PHASE7B_CHECKLIST.md"
+    src = f.read_text(encoding="utf-8")
+    for muc in ("served", "oracle", "construction_match", "verification_match",
+                "construction_validity", "stability", "Taxonomy lỗi"):
+        assert muc in src, f"checklist thiếu mục báo cáo `{muc}`"
+    # Câu kết luận bị cấm phải có mặt như một điều CẤM, không phải để dùng.
+    assert "AI hiểu hình học" in src and "❌" in src

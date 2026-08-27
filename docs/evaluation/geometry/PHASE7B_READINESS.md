@@ -1,14 +1,28 @@
-# PHASE 7B — TRẠNG THÁI SẴN SÀNG (2026-08-27)
+# PHASE 7B — TRẠNG THÁI SẴN SÀNG (cập nhật 2026-08-27, sau Phase 7A.3)
 
 > Lượt chuẩn bị. **0 API call · không chạy benchmark · không sửa `backend/app`,
-> prompt, DSL hay hợp đồng chỉ số.**
+> prompt, DSL, renderer hay định nghĩa chỉ số.**
 
 ```
 READY_FOR_PHASE7B:  NO
 ```
 
-Hạ tầng đo **đã xong**. Thiếu **dữ liệu**, và cả hai mắt xích thiếu đều nằm
-ngoài kho mã.
+Hạ tầng đo **đã xong** và **giao thức đã đóng băng** (7A.3). Thiếu **dữ liệu**,
+và hai mắt xích chính đều nằm ngoài kho mã.
+
+**Băm tài liệu đã đóng băng** — chốt ở `641ac5f`, ghi lại để lượt chạy đối chiếu:
+
+```
+holdout_protocol  25c9143b8650d18d5d4836d10fa3cf3cd07e262c767b8a74852d4a1f3b1a62ce
+metric_contract   2bb1b1cd64eba3643a27c5fbbbc881c0f9e3a790121cee5beea6ed6341588fe0
+k_final           b0c46e403af28a9fa348c02fd8a417ee82df84420d23dcc513b17cded5e123ce
+expect_pilot      f9fdd1362b29fa49d0ecde673d15ba56f6a173ec152e8b2b8ef85dcacd8451b5
+pool              4c9eba84742c220061895da25e39f662f03b9da277b347be2978635a4cb2e569
+expect_holdout    ⛔ THIẾU FILE
+```
+
+⚠️ `metric_contract` đổi từ `ae454123…` vì `§7` thêm mục **7A.3**. Đó là **ghi
+nhật ký**, không phải đổi định nghĩa chỉ số nào — xem mục ấy.
 
 ---
 
@@ -21,7 +35,9 @@ ngoài kho mã.
 | 2 | `holdout/COVERAGE_MATRIX.md` | sinh từ `holdout_coverage_matrix.py`, 20 ô × 7 họ × 4 hình dạng đáp án |
 | 3 | Cổng kỳ vọng | `nap()` nay đòi thêm **`slot` + `oracle_ref`**; `kiem_noi_oracle()` nối con trỏ sang pool |
 | 3b | Cổng `can_kiem_tay` | `kiem_pool` **từ chối niêm phong** khi còn bài chưa ai đối chiếu với nguồn |
-| 4 | `HOLDOUT_K_DECISION.md` | ba phương án + chi phí + khuyến nghị (**chưa** triển khai, **chờ xác nhận**) |
+| 4 | `HOLDOUT_K_DECISION.md` → **`HOLDOUT_K_FINAL.md`** | **`k = 3` ĐÃ CHỐT** (7A.3) · 360/480 · rủi ro chấp nhận đã khai |
+| 4b | `HOLDOUT_PROTOCOL` §2 · §5 · §7 | *"một lượt"* đã làm rõ · ngân sách có phép tính · hạn chế "một bài mỗi ô" thu hẹp |
+| 4c | `PHASE7B_CHECKLIST.md` | precondition · execution · report — mỗi ô kèm lệnh kiểm hoặc tên cổng máy |
 | 5 | Kế hoạch dọn runtime | §4 dưới đây (**chưa** chạy — đúng luật "chỉ sau khi pool + expectation xong") |
 | — | Test | `tests/geometry/test_holdout_readiness_7b.py` · `pytest 2982` |
 
@@ -69,17 +85,18 @@ Trả nợ = mở url, đọc, sửa nếu lệch, **rồi mới** xoá cờ.
 `--seed` **không có mặc định** — cố ý. Tôi chọn seed thì tôi chọn được cả tập:
 chạy thử vài seed rồi lấy cái cho điểm đẹp nhất.
 
-### ⛔ B3 — Chưa chốt `k` và ngân sách *(chặn, phải xong TRƯỚC seed)*
+### ✅ B3 — `k` và giao thức: **ĐÃ CHỐT** (7A.3)
 
-`HOLDOUT_PROTOCOL §2` (*"chạy MỘT LƯỢT"*) và `PHASE7_METRIC_CONTRACT §2⑤`
-(*`k ≥ 3`*) đọc như mâu thuẫn. Phân tích ở
-[HOLDOUT_K_DECISION.md](HOLDOUT_K_DECISION.md): mâu thuẫn thật chỉ là **ngân
-sách**, vì *"một lượt"* cấm **lặp có sửa**, không cấm `k` lượt trong một phiên
-đã niêm phong.
+`k = 3` cho cả 20 ô · **360 logic / 480 HTTP** ·
+[HOLDOUT_K_FINAL.md](HOLDOUT_K_FINAL.md).
 
-**Khuyến nghị: `k=3` toàn bộ · 360 logic / 480 HTTP (3,0× trần đã duyệt).**
-Lui về `k=3` tầng A + `k=1` tầng B (288/384) nếu ngân sách bị từ chối. **Không**
-lui về `k=1`: nó buộc phải phá chỉ số ⑤ vừa đóng băng ở 7A.2.
+Mâu thuẫn cũ đã hoà giải bằng **làm rõ**, không phải nới lỏng: *"chạy MỘT LƯỢT"*
+cấm **lặp CÓ SỬA**, không cấm cỡ mẫu — `k` lượt trong **một phiên đã niêm phong**
+là `k` phép lấy mẫu của **một** phép đo (`HOLDOUT_PROTOCOL §2`).
+
+⛔ **Còn lại: ngân sách 360/480 chưa được duyệt.** Con số đã ghi ra; người duyệt
+là người trả. Phương án lui nếu từ chối: `k=3` tầng A + `k=1` tầng B (288/384),
+kèm nghĩa vụ khai *"tầng B chưa đo được độ ổn định của từ chối"*.
 
 ### ⚠️ B4 — `expectations/holdout.json` chưa soạn *(phụ thuộc B1)*
 

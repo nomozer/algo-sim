@@ -289,3 +289,25 @@ một ký tự, nên số của chúng so trực tiếp được.
 ⚠️ **Chưa có lượt đo nào chạy trên thước mới.** Bảng trên là số **cũ**; ③a chưa
 có giá trị nào vì nó chưa từng được đo. Con số đầu tiên của nó sẽ đến từ 7B —
 không được điền vào đây bằng cách chấm lại artifact cũ rồi gọi đó là kết quả.
+
+### 7A.3 · ⑤ `stability` — ĐIỀU KIỆN LẤY MẪU, **không** phải định nghĩa
+
+| | |
+|---|---|
+| **Định nghĩa chỉ số** | **KHÔNG ĐỔI.** Cả năm chỉ số giữ nguyên từng chữ |
+| **Đổi cái gì** | `k` của lượt held-out: chốt **`k = 3`** cho cả 20 ô |
+| **Vì sao ghi vào đây** | ⑤ có `k ≥ 3` **nằm trong định nghĩa** (`§2⑤`), nên chốt `k` là chốt một tham số của chỉ số đã đóng băng — dù không sửa cách tính |
+| **Trước 7B chưa?** | **RỒI** — chưa tiêu một call nào của benchmark |
+| **Ngân sách** | `20 × 3 × 6 = 360` logic · `20 × 3 × 8 = 480` HTTP |
+
+Việc phải làm rõ đi kèm: `HOLDOUT_PROTOCOL §2` viết *"chạy MỘT LƯỢT"*, đọc được
+theo hai nghĩa, và nghĩa rộng thì nó chống với `§2⑤` của file này. Đã làm rõ ở
+`HOLDOUT_PROTOCOL §2`: *một lượt* = **một phiên đã niêm phong gồm `k` lượt độc
+lập**, cấm **lặp CÓ SỬA** chứ không cấm cỡ mẫu. Đó là **làm rõ**, không phải nới
+lỏng — hai tài liệu vốn nói về hai chuyện khác nhau.
+
+Quyết định đầy đủ + phương án lui: `HOLDOUT_K_FINAL.md`, phân tích ba phương án:
+`HOLDOUT_K_DECISION.md`.
+
+⚠️ **Không có số nào đổi ở mục này.** ⑤ chưa từng được đo trên held-out, nên
+không có "số cũ" để so — khác hẳn lần đổi 7A.2 ở trên.
