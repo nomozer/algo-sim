@@ -24,14 +24,30 @@
 # Agent KHÔNG được tự điền dòng ấy — tự điền là tự cấp một chứng nhận không
 # có tư cách cấp.
 #
-# ─── LUẬT NHẬN BÀI (Phase 7B.1) ────────────────────────────────────────
+# ─── NGUỒN NÀO CŨNG ĐƯỢC, miễn tra ngược được ──────────────────────────
 #
-#   NHẬN : đề TỰ LUẬN · yêu cầu dựng hình hoặc tính · dữ kiện HỮU TỈ
+# KHÔNG bắt buộc phải là PDF toanmath. Dùng thứ bạn ĐANG CẦM TRÊN TAY:
+#   · SGK Toán 11/12 · sách bài tập · sách chuyên đề
+#   · đề thi / đề minh hoạ / đề HSG có đáp án
+#   · giáo trình đại học nhập môn hình học
+# Điều kiện: đáp án ĐẾN TỪ NGUỒN (không tự tính) và ghi đủ để người khác mở
+# đúng chỗ ấy. Đầy đủ: ../HOLDOUT_SOURCE_POLICY.md
+#
+# ─── LUẬT NHẬN BÀI ─────────────────────────────────────────────────────
+#
+#   NHẬN : đề TỰ LUẬN · yêu cầu dựng hình hoặc tính · ĐẶT ĐƯỢC VÀO TOẠ ĐỘ HỮU TỈ
 #   LOẠI : trắc nghiệm 4 phương án · chọn đáp án
 #          dữ kiện hoặc đáp án CÓ CĂN (a√3, a√2/2 …)   ← rất phổ biến, coi kỹ
 #          đề tham chiếu "hình vẽ bên" mà văn bản không có
 #          mặt cầu · nón · trụ (kernel dựng trên đa diện)
 #          Oxyz cho sẵn toạ độ (mô hình phải TỰ đặt hệ trục — đó là nửa khó)
+#
+# ⚠️ LUẬT ĐỦ, và là luật DUY NHẤT đủ: "đặt được cả hình vào toạ độ HỮU TỈ
+#    không?" Ba hình sau KHÔNG, dù đề và đáp án trông sạch:
+#      · tam giác vuông CÂN        (1 : 1 : √2)
+#      · tam giác ĐỀU              (đường cao a√3/2)
+#      · góc 30° · 60° · 120°      (tan/cos sinh √3)
+#    GIỮ: tam giác vuông có hai cạnh góc vuông là BỘI NGUYÊN của a.
 #
 # ─── ĐƠN VỊ `ĐÁP ÁN` (dẫn từ `geometry_exec._do`) ──────────────────────
 #
