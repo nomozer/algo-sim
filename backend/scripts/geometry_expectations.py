@@ -114,11 +114,11 @@ def nap(tap: str, thu_muc: Path | None = None) -> dict[str, Any]:
         raise ValueError(f"{f.name}: `nguoi_danh_gia.loai` bắt buộc")
 
     for c in d["cases"]:
-        _kiem_case(f.name, c)
+        _kiem_case(f.name, c, doi_oracle=tap not in TAP_CHO_PHEP_NGUOI_DO)
     return d
 
 
-def _kiem_case(ten_file: str, c: dict) -> None:
+def _kiem_case(ten_file: str, c: dict, doi_oracle: bool = False) -> None:
     ma = c.get("case_id")
     if not ma:
         raise ValueError(f"{ten_file}: một case thiếu `case_id`")
@@ -134,6 +134,76 @@ def _kiem_case(ten_file: str, c: dict) -> None:
         for k in ("kind", "ly_do"):
             if not o.get(k):
                 raise ValueError(f"{ten_file}/{ma}: nghĩa vụ kiểm thiếu `{k}`")
+    if doi_oracle:
+        _kiem_oracle(ten_file, c, ma)
+
+
+def _kiem_oracle(ten_file: str, c: dict, ma: str) -> None:
+    """Nghĩa vụ phải NỐI ĐƯỢC tới một oracle — bằng CON TRỎ, không phải bản sao.
+
+    VÌ SAO KHÔNG CHÉP ĐÁP ÁN VÀO ĐÂY: `holdout/pool.json` sở hữu
+    `dap_an_chinh_thuc` + `phep_chuyen` + `oracle_result`, và nó là thứ được
+    niêm phong. Chép giá trị sang file này là tạo bản thứ hai của đáp án, và
+    hai bản sẽ trôi khỏi nhau đúng lúc cần tra *"số này ở đâu ra"*. Con trỏ thì
+    không trôi được: sai `pool_case_id` là gãy ngay, sai `khoa` cũng gãy ngay.
+
+    Chuỗi truy ngược mà Phase 7B đòi — `problem_text → … → metric` — nhờ vậy
+    khép kín: kỳ vọng chỉ tới ô oracle, ô oracle chỉ tới `nguon.url`.
+
+    Ô `B*` **cấm** có oracle: chúng chấm bằng *từ chối trung thực*, không bằng
+    đáp án. Cùng luật `kiem_pool` áp cho `oracle_result`, chỉ là ở đầu kia.
+    """
+    o = str(c.get("slot") or "")
+    if not o:
+        raise ValueError(f"{ten_file}/{ma}: thiếu `slot` — không biết bài này "
+                         "thuộc ô nào của BANG_O thì không đối chiếu được")
+    ref = c.get("oracle_ref")
+    if o.startswith("B"):
+        if ref:
+            raise ValueError(
+                f"{ten_file}/{ma}: ô {o} NGOÀI phủ — không được có `oracle_ref` "
+                "(chấm bằng 'từ chối trung thực', không bằng đáp án)")
+        if not c.get("ghi_chu_kiem"):
+            raise ValueError(f"{ten_file}/{ma}: ô B* phải ghi `ghi_chu_kiem` "
+                             "— vì sao bài này chấm bằng thang khác")
+        return
+    if not ref:
+        raise ValueError(
+            f"{ten_file}/{ma}: tầng A phải có `oracle_ref` — nghĩa vụ không nối "
+            "được tới đáp án thì `verification_match` đúng cũng không chứng "
+            "minh được mô phỏng đúng")
+    for k in ("pool_case_id", "khoa"):
+        if not ref.get(k):
+            raise ValueError(f"{ten_file}/{ma}: `oracle_ref` thiếu `{k}`")
+
+
+def kiem_noi_oracle(d: dict, pool_cases: list[dict]) -> list[str]:
+    """Con trỏ oracle có trỏ vào chỗ CÓ THẬT không. Trả danh sách lỗi.
+
+    Tách khỏi `nap()` có chủ đích: `nap()` kiểm được một mình file kỳ vọng, còn
+    hàm này cần pool. Gộp vào thì không nạp nổi kỳ vọng khi pool chưa soạn xong
+    — mà thứ tự soạn đúng là pool trước, kỳ vọng sau.
+    """
+    theo_ma = {c.get("case_id"): c for c in pool_cases}
+    loi: list[str] = []
+    for c in d.get("cases") or []:
+        ma, ref = c.get("case_id"), c.get("oracle_ref")
+        if not ref:
+            continue
+        p = theo_ma.get(ref.get("pool_case_id"))
+        if p is None:
+            loi.append(f"{ma}: `oracle_ref` trỏ tới bài không có trong pool: "
+                       f"{ref.get('pool_case_id')!r}")
+            continue
+        if ref.get("khoa") not in (p.get("oracle_result") or {}):
+            loi.append(f"{ma}: pool/{p['case_id']}.oracle_result không có khoá "
+                       f"{ref.get('khoa')!r} — có: "
+                       f"{sorted((p.get('oracle_result') or {}))}")
+        if (p.get("problem_text") or "") != (c.get("problem_text") or ""):
+            # Hai file chép cùng một đề. Lệch một chữ nghĩa là một trong hai
+            # bản đã bị sửa, và sau khi niêm phong thì không biết bản nào.
+            loi.append(f"{ma}: `problem_text` LỆCH với pool/{p['case_id']}")
+    return loi
 
 
 def kinds_kiem(case: dict) -> list[str]:

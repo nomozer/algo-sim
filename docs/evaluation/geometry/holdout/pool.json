@@ -1,0 +1,87 @@
+{
+  "__trang_thai__": "EMPTY",
+  "__khai__": [
+    "POOL RỖNG CÓ CHỦ ĐÍCH — `cases: []`. Đây là SCHEMA đã sẵn sàng nhận đề,",
+    "không phải một tập đề. Không có bài giả, không có expectation sinh sẵn.",
+    "",
+    "Cổng máy đang chặn đúng chỗ và sẽ tiếp tục chặn cho tới khi có đề thật:",
+    "  python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
+    "  → 'Pool KHÔNG phủ 20/20 ô' · exit 2 · KHÔNG sinh con dấu",
+    "",
+    "AI ĐIỀN FILE NÀY: người soạn pool, từ NGUỒN NGOÀI (đề thi / đề minh hoạ /",
+    "chuyên đề có lời giải chi tiết). KHÔNG tự tính đáp án — người soạn cũng là",
+    "người sửa hệ. HOLDOUT_PROTOCOL §1."
+  ],
+
+  "dataset": "geometry_holdout_pool",
+  "version": 1,
+  "ngay_tao_schema": "2026-08-27",
+  "pha": "7B-prep",
+
+  "__phan_chia_tham_quyen__": {
+    "khai": "BA nguồn, BA thẩm quyền. Đừng khai một thứ ở hai chỗ — Phase 7A.2 vừa tách chúng ra, và hai bản sẽ trôi khỏi nhau đúng lúc cần so hai lượt đo.",
+    "holdout/pool.json": "ĐỀ + ĐÁP ÁN CHÍNH THỨC + NGUỒN + phân loại thô để đo độ phủ (file này)",
+    "expectations/holdout.json": "NGHĨA VỤ đã phán, tách dựng/kiểm, kèm `ly_do` trích từ đề và `nguoi_danh_gia`",
+    "seal_geometry_holdout.BANG_O": "ô slot nào đòi nghĩa vụ KIỂM nào",
+    "ranh_gioi_de_lan": [
+      "`expected_construction_types` / `expected_verification_types` ở đây là PHÂN LOẠI THÔ, dùng cho ma trận độ phủ và cho việc chọn đề vào ô. Chúng KHÔNG phải nghĩa vụ đã phán.",
+      "Nghĩa vụ đã phán — có `ten_trong_de`, có `ly_do` trích từ đề, có người phán — nằm ở `expectations/holdout.json`. Chỉ tập ấy mới được dùng để chấm ③a/③b.",
+      "`evaluator` ở đây = ai cung cấp ĐỀ và ĐÁP ÁN (nguồn ngoài). `nguoi_danh_gia` ở expectations = ai PHÁN nghĩa vụ. Hai vai khác nhau, đừng gộp."
+    ]
+  },
+
+  "__anh_xa_ten_truong__": {
+    "khai": "Prompt Phase 7B đặt tên trường theo một bộ, `kiem_pool` (đã có 25 test khoá) đọc theo bộ khác. Giữ CẢ HAI: đổi tên trường máy đang đọc là làm chết cả dây niêm phong. Bảng này là chỗ tra.",
+    "id": "case_id — KHOÁ MÁY ĐỌC (kiem_pool, con dấu, cross-check với expectations)",
+    "source": "nguon.ten",
+    "source_url": "nguon.url — BẮT BUỘC. Đáp án không tra ngược được thì không phải oracle độc lập, chỉ là một con số ai đó gõ vào",
+    "problem_text": "problem_text — giống nhau, chép NGUYÊN VĂN",
+    "domain": "TRƯỜNG MỚI (7B). Ở tập này luôn là `geometry_3d`; giữ để bảng còn đọc được nếu sau này có miền khác",
+    "difficulty": "TRƯỜNG MỚI (7B). `nhan_biet | thong_hieu | van_dung | van_dung_cao` — thang của đề thi THPT, không phải thang tự chế",
+    "geometry_family": "TRƯỜNG MỚI (7B). Một trong bảy họ ở COVERAGE_MATRIX.md. TRỰC GIAO với `slot`: slot nói ô nào của BANG_O, family nói bài nói về cái gì",
+    "expected_construction_types": "TRƯỜNG MỚI (7B). Kiểu IR thô: point3 | line3 | plane3 | polygon3 | solid",
+    "expected_verification_types": "expected_obligations — KHOÁ MÁY ĐỌC. `kiem_pool` đối chiếu nó với BANG_O[slot]",
+    "answer_available": "dan xuất từ `dap_an_chinh_thuc` khác rỗng; khai tường minh để soi nhanh",
+    "evaluator": "TRƯỜNG MỚI (7B). Ai cung cấp đề+đáp án — KHÔNG phải người phán nghĩa vụ"
+  },
+
+  "luat_soan": [
+    "Đề và ĐÁP ÁN đều đến từ NGOÀI: đề thi/đề minh hoạ/chuyên đề có lời giải chi tiết. Người soạn pool KHÔNG tự tính đáp án — vì người soạn cũng là người sửa hệ.",
+    "`nguon.url` bắt buộc: một đáp án không tra ngược được thì không phải oracle độc lập, chỉ là một con số ai đó gõ vào.",
+    "`dap_an_chinh_thuc` chép NGUYÊN VĂN đáp án nguồn (ví dụ `a√3/3`). KHÔNG chuẩn hoá ở đây.",
+    "`phep_chuyen` ghi RÕ cách đổi sang đơn vị checker, kèm giá trị gán cho tham số cạnh. Đây là chỗ duy nhất người soạn được phép tính, và nó phải hiện ra để người khác kiểm lại.",
+    "`oracle_result` dùng đúng đơn vị checker: `distance`/`volume` là phân số dạng chuỗi; `angle` là cos²; quan hệ là true/false.",
+    "Ô B* KHÔNG có `oracle_result` — chấm bằng 'từ chối trung thực', không bằng đáp án.",
+    "`chua_chay_he: true` khai tại thời điểm soạn. Soạn đáp án sau khi thấy hệ chạy là chép bài của chính mình.",
+    "Đề KHÔNG được trùng tập DEV (`../dev/cases.json`) — bộ rút chặn cứng.",
+    "≥40 bài và phủ ĐỦ 20/20 ô. Ô thiếu bài ⇒ DỪNG, không rút bù từ ô khác.",
+    "Soạn XONG pool rồi mới soạn `expectations/holdout.json`, và cả hai phải xong TRƯỚC khi xin seed."
+  ],
+
+  "__khuon_mot_bai__": {
+    "khai": "KHUÔN THAM CHIẾU, không phải một case. Nó nằm ngoài `cases` nên không lọt vào con dấu. Chép nó xuống `cases` rồi điền.",
+    "case_id": "hp_a11_001",
+    "slot": "A11",
+    "domain": "geometry_3d",
+    "geometry_family": "measurement",
+    "difficulty": "van_dung",
+    "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
+    "problem_text": "<chép nguyên văn đề, tiếng Việt, KHÔNG cho sẵn toạ độ>",
+    "expected_construction_types": ["point3", "plane3"],
+    "expected_verification_types": ["distance"],
+    "expected_obligations": ["distance"],
+    "nguon": {
+      "ten": "<tên tài liệu>",
+      "url": "<https://…>",
+      "vi_tri": "<Câu 43 / trang 12>"
+    },
+    "evaluator": "<lời giải chính thức của nguồn — ai tính ra đáp án này>",
+    "answer_available": true,
+    "dap_an_chinh_thuc": "<a√3/3>",
+    "phep_chuyen": "<gán a = 1 ⇒ d = √3/3 vô tỉ ⇒ checker so d² = 1/3>",
+    "oracle_result": { "distance": "1/3" },
+    "chua_chay_he": true
+  },
+
+  "cases": []
+}

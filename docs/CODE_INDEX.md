@@ -2793,6 +2793,36 @@ hai của bộ đo).
 `tests/geometry/test_expectation_contract_7a2.py` (32) — file test ấy cũng khoá
 **mốc đóng băng** bốn chỉ số còn lại trong `PHASE7_METRIC_CONTRACT §6`.
 
+**Thêm ở 7B-prep — nối tới ORACLE bằng CON TRỎ.** Tập ngoài `pilot` còn phải có
+`slot` và, với ô `A*`, một `oracle_ref = {pool_case_id, khoa}`; ô `B*` **cấm**
+mang nó (chấm bằng *từ chối trung thực*, không bằng đáp án) và phải ghi
+`ghi_chu_kiem`. Con trỏ chứ không phải bản sao: `holdout/pool.json` sở hữu
+`dap_an_chinh_thuc`/`phep_chuyen`/`oracle_result` và là thứ được niêm phong —
+chép giá trị sang là tạo bản thứ hai của đáp án. `kiem_noi_oracle(d, pool_cases)`
+(tách khỏi `nap()` vì cần pool) bắt: con trỏ trỏ vào hư không · sai khoá oracle ·
+`problem_text` lệch giữa hai file. Khoá bởi `test_holdout_readiness_7b.py` (29).
+
+### `backend/scripts/holdout_coverage_matrix.py` · offline · **0 API call**
+
+Trả lời **một** câu: *pool held-out còn thiếu ô nào?* Không thêm bài, không chọn
+bài, không chấm. Export: `HO` (7 họ nội dung) · `O_HO` (`slot → (họ, hình dạng
+đáp án)`) · `doc_pool` · `ma_tran`.
+
+**Ba trục, cố ý không gộp**: `BANG_O` 20 ô là trục **thiết kế tập đo** (đã có,
+không đổi) · `geometry_family` 7 họ là trục **nội dung** · `answer_shape`
+(`construction`/`verdict`/`quantity`/`refusal`) là trục **cách chấm** — ba hình
+dạng ấy dùng ba kiểu oracle khác nhau, nên lệch phân bố ở đây làm lệch cả ý
+nghĩa của chỉ số ②.
+
+Hai chỗ hai trục **không khít**, giữ nguyên có chủ đích và **dẫn từ ánh xạ chứ
+không chép tay**: `proof_verification` có **0 ô tầng A** (chứng minh nằm lồng
+trong sáu ô quan hệ A03–A08 ⇒ 7B không tách được *"chứng minh được"* khỏi *"nhận
+ra được"*), và `B04` (Oxyz viết phương trình) **không thuộc họ nào** — ép nó vào
+`plane_construction` thì bảng đủ chỗ mà đọc sai bản chất bài.
+
+Sinh `docs/evaluation/geometry/holdout/COVERAGE_MATRIX.md`; thoát `2` khi còn ô
+trống.
+
 ### `backend/app/simulation/semantic_program/purpose_analysis.py` · offline
 
 Sở hữu câu hỏi **"bước nào phục vụ đáp án, bước nào là đường cụt"** — ghép

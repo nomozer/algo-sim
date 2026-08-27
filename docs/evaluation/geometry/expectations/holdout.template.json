@@ -24,6 +24,9 @@
     "`verification_obligations` của một ô A* PHẢI chứa nghĩa vụ mà `BANG_O` gán cho ô ấy — lệch thì hoặc đề vào nhầm ô, hoặc kỳ vọng sai. Test chặn.",
     "Ô B* (ngoài phủ) chấm bằng 'từ chối trung thực', KHÔNG bằng nghĩa vụ. Khai cả hai tập `[]` và ghi `ghi_chu_dung`/`ghi_chu_kiem`.",
     "`nguoi_danh_gia.loai` KHÔNG được là `nguoi_do`. Kỳ vọng do người đo tự đặt đã một lần ghi 'mô hình sai' ở chỗ mô hình đúng (PHASE_7A_1_REPORT §5), và trên held-out thì không có lượt thứ hai để phát hiện.",
+    "`slot` bắt buộc. Ô A* PHẢI có `oracle_ref`; ô B* CẤM có — B chấm bằng 'từ chối trung thực', không bằng đáp án.",
+    "`oracle_ref` là CON TRỎ, không phải bản sao đáp án. Đáp án ở `holdout/pool.json` (thứ được niêm phong); chép sang đây là tạo bản thứ hai, và hai bản sẽ trôi khỏi nhau đúng lúc cần tra 'số này ở đâu ra'.",
+    "`problem_text` chép GIỐNG HỆT bản trong pool. Lệch một chữ là một trong hai bản đã bị sửa — `kiem_noi_oracle` chặn.",
     "Soạn xong thì NIÊM PHONG cùng pool — file này nằm trong con dấu, sửa sau khi thấy số là phá con dấu."
   ],
 
@@ -55,7 +58,12 @@
           "trich_de": "<cụm chữ trong đề yêu cầu kiểm mệnh đề này>",
           "ly_do": "<vì sao đúng `kind` này: chủ thể thuộc kiểu nào, witness là vật nào>"
         }
-      ]
+      ],
+      "oracle_ref": {
+        "pool_case_id": "<case_id trong holdout/pool.json — cùng bài>",
+        "khoa": "<khoá trong `oracle_result` của bài ấy, ví dụ point_on_line>",
+        "ghi_chu": "<CON TRỎ, không chép giá trị. Đáp án và phep_chuyen ở pool.>"
+      }
     },
     {
       "case_id": "<ví dụ hp_b03_001>",
