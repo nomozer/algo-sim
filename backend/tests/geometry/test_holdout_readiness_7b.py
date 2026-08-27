@@ -298,6 +298,24 @@ def test_answer_shape_NGOAI_TAP_DONG_bi_bat(SH):
         assert loi and "ngoài tập đóng" in loi[0], xau
 
 
+@pytest.mark.parametrize("gt,dau", [
+    ("2a³/3", "THAM SỐ"), ("2a^3/3", "THAM SỐ"), ("a³/6", "THAM SỐ"),
+    ("a³√2/3", "CĂN THỨC"), ("√2", "CĂN THỨC"),
+    ("0.667", "THẬP PHÂN"), ("7,35", "THẬP PHÂN"),
+])
+def test_BA_CHAN_DOAN_ORACLE_khong_bi_gop(SH, gt, dau):
+    """Ba lỗi khác nhau, ba lối sửa khác nhau — gộp chúng là bảo người soạn
+    vứt một bài tốt đi.
+
+    Lỗi thật đã có: `2a³/3` và `2a^3/3` từng bị báo *"CĂN THỨC — ngoài ranh
+    giới"*. Sai hẳn: bài ấy **trong** ranh giới, chỉ là đáp án còn tham số `a`
+    chưa gán. Thông báo cũ đổ cho DỮ LIỆU cái lỗi thuộc về BỘ ĐO — đúng lớp
+    sai lệch mà cả wave này đi sửa.
+    """
+    loi = SH.check_capability_boundary(_bai_a14(oracle_result={"volume": gt}))
+    assert loi and dau in loi[0], loi
+
+
 def test_ORACLE_dang_CAN_THUC_bi_bat(SH):
     """Lách bằng cách viết `3√6` thay vì loại bài — ngoài ranh giới là chuyện
     hệ KHÔNG trả ra giá trị nào, không phải chuyện đổi cách viết."""

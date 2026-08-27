@@ -43,6 +43,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import re
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -284,11 +285,23 @@ def _kiem_don_vi_oracle(cid: str, tag: str, oracle: dict) -> list[str]:
         if gt is None:
             return [f"{cid}: thiếu `oracle_result.{khoa}`"]
         s = str(gt)
-        # Căn thức: hệ KHÔNG biểu diễn được, và khai nó ở đây nghĩa là người
-        # soạn đang định lách bằng cách viết đáp án dưới dạng ký hiệu.
-        if any(k in s for k in ("√", "sqrt", "^", "…")):
+        # ── BA CHẨN ĐOÁN KHÁC NHAU, và trước bản này chúng bị gộp ──────────
+        #
+        # `2a³/3` và `2a^3/3` từng bị báo là "CĂN THỨC — ngoài ranh giới". SAI
+        # HẲN: bài ấy hoàn toàn trong ranh giới, chỉ là đáp án còn **tham số**
+        # `a` chưa gán. Thông báo cũ bảo người soạn vứt một bài tốt đi — đúng
+        # lớp lỗi "đổ cho dữ liệu cái lỗi thuộc về bộ đo" mà cả wave này đi sửa.
+        #
+        # Căn thức: hệ KHÔNG biểu diễn được ⇒ loại thật.
+        if any(k in s for k in ("√", "sqrt", "\\sqrt")):
             return [f"{cid}: `{khoa}` khai dạng CĂN THỨC ({s!r}) — ngoài ranh "
                     "giới, không phải chuyện đổi cách viết"]
+        # Còn tham số (`a`, `a³`, `a^3`) ⇒ CHƯA GÁN, không phải ngoài phủ.
+        if re.search(r"[A-Za-zÀ-ỹ]|\^|³|²", s):
+            return [f"{cid}: `{khoa}` = {s!r} còn THAM SỐ chưa gán — không "
+                    "phải bài ngoài phủ. Gán `a = 1` rồi rút gọn "
+                    "(`2a³/3` → `2/3`), và ghi phép gán ấy vào `phep_chuyen` "
+                    "để người khác kiểm lại."]
         # THẬP PHÂN bị cấm dù `Fraction("1.3333")` parse được.
         #
         # Đây đúng là lỗ đã suýt lọt: đáp án nguồn của `hp_a11_001` là `7,35`,

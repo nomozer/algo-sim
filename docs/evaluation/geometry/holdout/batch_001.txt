@@ -40,6 +40,23 @@
 #   góc đ–đ, m–m  cos²   ·  góc đ–MẶT  →  sin²    ← khác nhau, coi kỹ
 #   quan hệ       true  /  false
 #
+# ⚠️ SÁCH VIẾT ĐÁP ÁN THEO `a`, Ở ĐÂY PHẢI GÁN `a = 1`:
+#
+#     sách:  V = 2a³/3        →  ĐÁP ÁN: 2/3
+#     sách:  V = a³/6         →  ĐÁP ÁN: 1/6
+#     sách:  V = a³√2/3       →  ⛔ LOẠI BÀI (căn — ngoài ranh giới)
+#
+# Phép gán `a = 1` là chỗ DUY NHẤT bạn được phép tính, và `ingest` tự ghi nó
+# vào `phep_chuyen` để người khác kiểm lại. Ba lỗi hay gặp và cách sửa:
+#
+#     "2a³/3"   → còn THAM SỐ   → gán a = 1, viết 2/3
+#     "0.667"   → THẬP PHÂN     → viết phân số 2/3
+#     "a³√2/3"  → CĂN THỨC      → bỏ bài, chọn bài khác
+#
+# ⚠️ NHÌN ĐÁP ÁN TRƯỚC KHI CHÉP ĐỀ. Căn có thể sinh ra TRONG LÚC GIẢI từ dữ
+# kiện hoàn toàn sạch (trang 81 Câu 3: AB, AC, SB đều hữu tỉ → V = a³√2/3).
+# Kiểm đáp án trước tiết kiệm được cả công chép đề.
+#
 # Ô B01–B06 (ngoài phủ): BỎ TRỐNG dòng `ĐÁP ÁN` — chúng chấm bằng
 # "từ chối trung thực", không bằng đáp án.
 #
