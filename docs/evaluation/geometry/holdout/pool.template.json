@@ -2,7 +2,13 @@
   "__khai__": [
     "ĐÂY LÀ KHUÔN, KHÔNG PHẢI POOL. Đổi tên thành pool.json và thay bằng đề THẬT",
     "trích từ nguồn công khai thì mới rút được. Mọi trường <...> là chỗ phải điền.",
-    "Kiểm khuôn đã điền: python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool"
+    "Kiểm khuôn đã điền: python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
+    "",
+    "PHÂN CHIA THẨM QUYỀN (Phase 7A.2): file này sở hữu ĐỀ + ĐÁP ÁN + NGUỒN.",
+    "`expected_obligations` ở đây chỉ để đối chiếu Ô SLOT với BANG_O. Kỳ vọng nghĩa vụ",
+    "ĐẦY ĐỦ — tách dựng/kiểm, kèm ly_do trích từ đề — nằm ở",
+    "../expectations/holdout.json (khuôn: ../expectations/holdout.template.json).",
+    "Đừng khai lý do nghĩa vụ ở cả hai chỗ: hai bản sẽ trôi khỏi nhau."
   ],
   "dataset": "geometry_holdout_pool",
   "version": 1,

@@ -12,9 +12,13 @@
 |---|---|---|---|
 | ① | `served` | Hệ có phát ra một mô phỏng không? | `x/k` mỗi đề |
 | ② | `oracle` | Mô phỏng ấy có **đúng** không? | `x/k` mỗi đề |
-| ③ | `obligation_match` | Hệ có **tự biết** mình đúng không? | `x/k` mỗi đề |
+| ③a | `construction_match` | Nó có dựng **những vật đề bảo dựng** không? | `x/k'` mỗi đề |
+| ③b | `verification_match` | Nó có **tự biết** mình đúng không? | `x/k` mỗi đề |
 | ④ | `construction_validity` | Nó **dựng hình** hay **khai kết quả**? | tỉ lệ trên tổng vật |
 | ⑤ | `stability` | Lặp lại có ra cùng kết quả không? | `k` lượt / đề |
+
+> ③ **tách đôi ở Phase 7A.2.** Trước đó nó là một chỉ số tên `obligation_match`
+> so một danh sách phẳng. Lý do tách và số cũ: **§7**.
 
 **KHÔNG GỘP.** Mỗi chỉ số đo một thứ khác nhau và chúng **đã đi ngược chiều
 nhau** trong dữ liệu thật:
@@ -54,11 +58,58 @@ Ba trạng thái, **không phải hai**: `True` (đạt) · `False` (chấm đư
 `None` (**không chấm được**). Gộp `None` vào `False` là ghi một lượt không đo
 được thành một lượt sai.
 
-### ③ `obligation_match`
+### ③ Nghĩa vụ — HAI chỉ số, vì đề ra HAI loại lệnh
 
-Tập `kind` mà `RequestContract` khai **bằng đúng** tập kỳ vọng của đề. Bằng
-**đúng**, không phải "có giao nhau": đề hỏi hai loại mà hợp đồng khai một thì
-nửa còn lại không ai kiểm.
+Đề hình học nói hai thứ khác nhau, và tới Phase 7A.1 chúng bị nhét chung một
+danh sách phẳng:
+
+```
+"Hãy DỰNG mặt phẳng (PMN)"      → nghĩa vụ DỰNG   — sinh ra một VẬT
+"CHỈ RA RẰNG M nằm trên SA"     → nghĩa vụ KIỂM   — phán một MỆNH ĐỀ
+```
+
+Gộp chúng không phải chuyện chữ nghĩa: bài `3-pmn-giao-tuyen` mang kỳ vọng
+`{point_on_line, point_on_plane}` và bị **8 lượt liên tiếp** bác bỏ theo cùng
+một hướng. `point_on_plane` ở đó chưa bao giờ là nghĩa vụ mô hình bỏ sót — nó là
+một **mệnh lệnh dựng bị xếp nhầm vào tập kiểm**, và vì đề không hỏi điểm nào
+thuộc `(PMN)` nên nghĩa vụ ấy không có witness và **không bao giờ đúng được**.
+Một chỉ số gộp sẽ mãi báo *"mô hình sai"* ở đúng chỗ mô hình đọc đề đúng.
+
+**Hai tập RỜI NHAU, khai riêng, không suy ra nhau.**
+
+#### ③a `construction_match` — vật đề RA LỆNH DỰNG
+
+Mỗi vật khai bằng **tên đề bài gọi** (`Q`, `(PMN)`, `d`) + **kiểu IR**
+(`point3`/`line3`/`plane3`/…). Đạt khi mọi vật ấy có mặt trong tập vật chương
+trình **thật sự dựng** — cùng định nghĩa *"được dựng"* mà ④ dùng, nên hai bảng
+không mâu thuẫn nhau được.
+
+Tên chương trình do **mô hình** đặt (`Q` → `Q_point`), nên phép so đi qua
+`khop_ten_doi_tuong` — **lưới hoà giải của sản phẩm**, không phải lưới thứ hai
+của riêng bộ đo. Trùng lõi ⇒ fail-closed, tính là thiếu.
+
+Ba trạng thái như ②: `True` · `False` · `None`, và `None` ở **hai** chỗ khác
+nhau (`vi_sao` phân biệt): đề không ra lệnh dựng gì ⇒ *không áp dụng*; không có
+chương trình ⇒ *không chấm được*. Mẫu số vì thế là **số lượt chấm được**, không
+phải `k`.
+
+#### ③b `verification_match` — mệnh đề đề YÊU CẦU KIỂM
+
+Tập `kind` mà `RequestContract` khai **bằng đúng** tập kỳ vọng. Đây là chỉ số ③
+cũ, **định nghĩa không đổi**, chỉ đổi tên và đổi **nguồn kỳ vọng**.
+
+#### Hai phép so KHÁC NHAU, có chủ đích
+
+```
+KIỂM   BẰNG ĐÚNG  (m == k)   — khai thừa CŨNG LÀ LỆCH
+DỰNG   CHỨA ĐỦ    (m ⊆ k)    — dựng thêm KHÔNG bị trừ điểm
+```
+
+Bất đối xứng vì hai việc không đối xứng. Khai thừa một nghĩa vụ kiểm nghĩa là
+mô hình trả lời một câu **không ai hỏi**, và thừa che mất chỗ nó thiếu. Còn dựng
+thêm là **bắt buộc**: muốn có giao tuyến `d` thì phải dựng điểm trung gian mà đề
+không gọi tên. Trừ điểm ở đó là phạt mô hình vì làm đúng phép dựng hình. Vật
+thừa vẫn **quan trắc** được (`thua_dung`), chỉ không trừ.
 
 > ⚠️ **Kỳ vọng phải đến từ NGUỒN NGOÀI.** Điều kiện này lộ ra ở Phase 6.7.2: kỳ
 > vọng tôi tự đặt cho bài thiết diện bị **5/5 lượt** bác bỏ theo một hướng nhất
@@ -67,6 +118,12 @@ nửa còn lại không ai kiểm.
 >
 > Cùng lớp vấn đề với việc tự soạn held-out, và `HOLDOUT_PROTOCOL §2` đã có cơ
 > chế: **đáp án và yêu cầu đến từ nguồn ngoài, người đo không sửa được**.
+>
+> **Từ Phase 7A.2 điều kiện này là CỔNG, không còn là đoạn văn:** kỳ vọng nằm ở
+> `expectations/*.json` (ngoài mã bộ đo, có lịch sử Git, `ly_do` trích từ đề cho
+> **từng** nghĩa vụ), và `geometry_expectations.nap()` **từ chối nạp** một tập
+> held-out khai `nguoi_danh_gia.loai = "nguoi_do"`. Tập `pilot` được phép — nó
+> chấm bộ đo, không chấm mô hình — nhưng phải **khai thẳng** hạn chế ấy.
 
 Kèm luôn `so_nghia_vu` thô. `so_nghia_vu = 0` là ca **đặc biệt phải nêu riêng**:
 `served` khi ấy nghĩa là *"chạy trọn và mọi thứ lên được hình"*, **không** phải
@@ -135,10 +192,12 @@ văn báo một con số **thấp hơn thực tế** *và* **kết tội mô hì
 
 ## 4. Điều báo cáo Phase 7 KHÔNG được làm
 
-- **Không** báo `served` mà thiếu `obligation_match`.
-- **Không** gộp `oracle = None` vào `False`.
+- **Không** báo `served` mà thiếu ③.
+- **Không** gộp `oracle = None` vào `False`, và **không** gộp
+  `construction_match = None` vào `False`.
 - **Không** báo pass/fail cho một đề chạy `k` lượt.
-- **Không** dùng kỳ vọng nghĩa vụ do người đo tự đặt.
+- **Không** dùng kỳ vọng nghĩa vụ do người đo tự đặt **trên tập held-out**.
+- **Không** gộp ③a với ③b thành một tỉ lệ — kể cả khi bảng trông gọn hơn.
 - **Không** đổi định nghĩa chỉ số sau khi thấy số; đổi thì phải nói ra kèm số cũ.
 - **Không** suy tỉ lệ khi mẫu `< 20` (`RELIABILITY_EVALUATION_PLAN §3.3`) — dưới
   ngưỡng ấy con số đọc là **đếm thô**.
@@ -162,3 +221,71 @@ văn báo một con số **thấp hơn thực tế** *và* **kết tội mô hì
 
 Đây là **đường cơ sở**, không phải mục tiêu. Phase 7 đo trên tập held-out, và số
 của tập DEV không bao giờ là số của luận văn.
+
+---
+
+## 6. ĐÓNG BĂNG — chốt ở Phase 7A.2, trước 7B
+
+Bốn chỉ số dưới đây **đóng băng định nghĩa**. Không sửa cách tính, không sửa
+mẫu số, không thêm điều kiện, cho tới khi lượt held-out chạy xong:
+
+| | Chỉ số | Đóng băng từ |
+|---|---|---|
+| ① | `served` | Phase 6.8 |
+| ② | `oracle` | Phase 6.8 |
+| ④ | `construction_validity` | Phase 6.8 |
+| ⑤ | `stability` | Phase 6.8 |
+
+③ là chỉ số **duy nhất** đổi ở 7A.2, và đổi **trước** khi tiêu call của 7B —
+xem §7. Từ mốc này nó cũng đóng băng.
+
+**Đóng băng nghĩa là gì, cụ thể:**
+
+- Sửa cách tính một trong bốn chỉ số ⇒ mọi số đã đo **hết so được**, và lượt
+  held-out phải chạy lại từ đầu. Đó là cái giá, nên hãy sửa *bây giờ* nếu định
+  sửa.
+- Đóng băng **chỉ số**, không đóng băng **bộ đo**: sửa lỗi khiến bộ đo tính sai
+  chính định nghĩa đã chốt là **được** — Phase 7A.1 đã làm đúng thế. Ranh giới:
+  *đổi định nghĩa* thì cấm, *sửa để bộ đo khớp định nghĩa* thì phải làm, và phải
+  báo cáo kèm số trước/sau.
+- Đóng băng này **độc lập** với `freeze_evaluation_candidate.py` và với
+  `HOLDOUT_SEAL`: cái kia khoá **hệ được đo** (`backend/app`), cái này khoá
+  **thước**. Một lượt đo đáng tin cần cả hai, và chúng hỏng theo hai cách khác
+  nhau.
+
+Cổng kiểm: `backend/tests/geometry/test_expectation_contract_7a2.py`.
+
+---
+
+## 7. Nhật ký đổi chỉ số — bắt buộc kèm SỐ CŨ
+
+Luật §4 nói *"đổi thì phải nói ra kèm số cũ"*. Đây là chỗ nói.
+
+### 7A.2 · ③ `obligation_match` → `construction_match` + `verification_match`
+
+| | |
+|---|---|
+| **Đổi cái gì** | một danh sách phẳng ⇒ hai tập rời nhau; kỳ vọng ra khỏi mã bộ đo |
+| **Vì sao** | `PHASE_7A_1_REPORT §5` — kỳ vọng của người đo ghi `0/3` ở đúng chỗ mô hình đọc đề đúng |
+| **Đổi sau khi thấy số?** | **CÓ.** Khai thẳng: 8 lượt bác bỏ là thứ làm tôi đi đọc lại đề |
+| **Phán quyết dựa vào đâu** | **văn bản đề**, không phải đầu ra mô hình: *"Hãy dựng mặt phẳng (PMN)"* nằm sau động từ **dựng** |
+| **Trước 7B chưa?** | **RỒI** — chưa tiêu một call nào của benchmark held-out |
+
+**Số cũ, ghi lại để không ai so nhầm hai thước:**
+
+| Vòng đo | `obligation_match` (thước CŨ) | ghi chú |
+|---|---|---|
+| `stability-6.7` + `-6.7.2` | 11/15 → 10/15 | bài thiết diện 0/5 |
+| `phase7a-pilot` | 12/15 | bài 3: 1/3 |
+| `phase7a-pilot-sau-71` | 12/15 | bài 3: 0/3 |
+
+Kỳ vọng đổi **chỉ ở bài `3-pmn-giao-tuyen`**:
+`{point_on_line, point_on_plane}` → `{point_on_line}`. Bốn đề còn lại không đổi
+một ký tự, nên số của chúng so trực tiếp được.
+
+⚠️ **Số của bốn vòng trên và số của 7B nằm trên hai thước khác nhau.** Nhắc lại
+điều này ở mọi bảng có cả hai, hoặc đừng để chúng chung một bảng.
+
+⚠️ **Chưa có lượt đo nào chạy trên thước mới.** Bảng trên là số **cũ**; ③a chưa
+có giá trị nào vì nó chưa từng được đo. Con số đầu tiên của nó sẽ đến từ 7B —
+không được điền vào đây bằng cách chấm lại artifact cũ rồi gọi đó là kết quả.

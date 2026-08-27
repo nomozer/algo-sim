@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import importlib.util
 import json
 import os
 import sys
@@ -46,6 +47,17 @@ from pathlib import Path
 BACKEND = Path(__file__).resolve().parents[1]
 ROOT = BACKEND.parent
 sys.path.insert(0, str(BACKEND))
+
+
+def _nap_anh_em(ten: str):
+    """Nạp script anh em theo ĐƯỜNG DẪN — `scripts/` không phải package, và
+    `run_phase7a_pilot` cũng nạp file này bằng đúng cách ấy."""
+    dd = Path(__file__).resolve().parent / f"{ten}.py"
+    spec = importlib.util.spec_from_file_location(f"_mgs_{ten}", dd)
+    assert spec and spec.loader
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
 
 #: Thư mục ra MẶC ĐỊNH. Mỗi lượt đo một thư mục RIÊNG — `--out-dir` bắt buộc
 #: khi chạy lượt mới.
@@ -60,13 +72,20 @@ RA = ROOT / "docs" / "evaluation" / "geometry" / "stability-6.7"
 #: semantic_analyze 1 · semantic_program ≤3 ⇒ 6, cộng đệm transient.
 TRAN_LOGIC, TRAN_HTTP = 8, 12
 
+#: ⚠️ **KỲ VỌNG NGHĨA VỤ KHÔNG CÒN Ở ĐÂY** (Phase 7A.2).
+#:
+#: Trước đây mỗi bài mang `nghia_vu_mong_doi` ngay tại chỗ này, nghĩa là người
+#: viết bộ đo sửa được thước ngay trong lượt đang đo và không ai tra ngược được
+#: kỳ vọng đã đổi lúc nào. Nay chúng nằm ở
+#: `docs/evaluation/geometry/expectations/pilot.json` — có lịch sử Git, có
+#: `ly_do` trích từ đề cho từng nghĩa vụ, và tách làm HAI TẬP RỜI NHAU (dựng ·
+#: kiểm). Xem `geometry_expectations.py`.
 BAI = [
     {
         "id": "1-trung-diem",
         "de": ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2. Gọi M "
                "là trung điểm của cạnh SA. Hãy dựng điểm M và chỉ ra rằng M "
                "nằm trên đường thẳng SA."),
-        "nghia_vu_mong_doi": ["point_on_line"],
         "oracle": "M_tren_SA",
     },
     {
@@ -74,7 +93,6 @@ BAI = [
         "de": ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA "
                "vuông góc với mặt phẳng đáy và SA = 4. Tính thể tích khối "
                "chóp S.ABCD."),
-        "nghia_vu_mong_doi": ["volume"],
         "oracle": "the_tich_12",
     },
     {
@@ -84,10 +102,34 @@ BAI = [
                "trung điểm của SB, SD; P là trung điểm của AB. Hãy dựng mặt "
                "phẳng (PMN), xác định giao tuyến d của hai mặt phẳng (PMN) và "
                "(ABCD), đồng thời xác định giao điểm Q=d∩AD."),
-        "nghia_vu_mong_doi": ["point_on_line", "point_on_plane"],
         "oracle": "Q_trung_diem_AD",
     },
 ]
+
+#: Tên tập kỳ vọng. `run_phase7a_pilot` ghi đè khi nó thêm hai đề — cùng một
+#: file phục vụ cả hai runner, vì ba đề đầu của pilot CHÍNH LÀ ba đề ở đây.
+TAP_KY_VONG = "pilot"
+
+GE = _nap_anh_em("geometry_expectations")
+
+_KY_VONG_CACHE: dict[str, dict] = {}
+
+
+def _ky_vong_cua(case_id: str) -> dict:
+    """Kỳ vọng của một đề. Thiếu ⇒ **DỪNG**, không chấm bằng tập rỗng.
+
+    Chấm bằng tập rỗng thì `verification_match` tự động False cho mọi lượt và
+    con số ấy đổ lỗi cho mô hình một thiếu sót của bộ đo — đúng lớp sai lệch mà
+    Phase 7A.1 đã phải đi sửa.
+    """
+    if not _KY_VONG_CACHE:
+        d = GE.nap(TAP_KY_VONG)
+        _KY_VONG_CACHE.update({c["case_id"]: c for c in d["cases"]})
+    if case_id not in _KY_VONG_CACHE:
+        raise KeyError(
+            f"tập kỳ vọng {TAP_KY_VONG!r} không có đề {case_id!r} — "
+            f"soạn kỳ vọng TRƯỚC khi đo, đừng đo rồi mới soạn.")
+    return _KY_VONG_CACHE[case_id]
 
 
 class Ghi:
@@ -224,9 +266,15 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
     sr = (ghi.lay("semantic_route") or [{}])[-1]
     hd = bat.get("contract")
     kinds = sorted({ob.kind for ob in hd.obligations}) if hd else []
-    mong = sorted(bai["nghia_vu_mong_doi"])
     fm = sr.get("final_memory") or {}
     dat, vi_sao = cham_oracle(bai["oracle"], fm)
+
+    # ③ TÁCH ĐÔI (Phase 7A.2) — kỳ vọng đọc TỪ FILE, không từ literal trong mã.
+    spec_raw = (bat["spec"].model_dump(mode="json") if bat.get("spec") else None)
+    ky_vong = _ky_vong_cua(bai["id"])
+    cham = GE.cham_mot_luot(ky_vong, kinds, spec_raw)
+    kiem, dung = cham["verification_match"], cham["construction_match"]
+    mong = kiem["mong_doi"]
 
     ban_ghi = {
         "case_id": bai["id"], "lan": lan,
@@ -241,9 +289,22 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "so_nghia_vu": len(hd.obligations) if hd else 0,
         "nghia_vu_kinds": kinds,
         "nghia_vu_mong_doi": mong,
-        # KHỚP HOÀN TOÀN, không "có giao nhau": đề hỏi hai loại mà hợp đồng chỉ
-        # khai một thì nửa còn lại không ai kiểm.
-        "obligation_match": kinds == mong,
+        # ── ③ TÁCH ĐÔI từ Phase 7A.2 ─────────────────────────────────────
+        #
+        # ③b KIỂM: khớp BẰNG ĐÚNG — đề hỏi hai loại mà hợp đồng khai một thì
+        #    nửa còn lại không ai kiểm, và khai thừa cũng che mất chỗ thiếu.
+        # ③a DỰNG: khớp CHỨA ĐỦ, ba trạng thái (`None` = không áp dụng / không
+        #    chấm được). Dựng thêm KHÔNG bị trừ điểm — điểm trung gian là phần
+        #    bắt buộc của phép dựng hình.
+        "verification_match": kiem["khop_hoan_toan"],
+        "verification_chi_tiet": kiem,
+        "construction_match": dung["khop_hoan_toan"],
+        "construction_chi_tiet": dung,
+        # ⚠️ KHOÁ CŨ, GIỮ LẠI CÓ CHỦ ĐÍCH — bằng đúng `verification_match`.
+        # Ba vòng đo trước (`stability-6.7`, `-6.7.2`, `phase7a-pilot*`) ghi số
+        # dưới tên này; bỏ khoá đi là làm chúng hết so được với vòng sau. KHÔNG
+        # phải một chỉ số thứ ba.
+        "obligation_match": kiem["khop_hoan_toan"],
         "oracle_dat": dat, "oracle_vi_sao": vi_sao,
         "envelope_status": env.get("status"),
         "envelope_id": env.get("simulation_id"),
@@ -261,8 +322,7 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
     (RA / f"{bai['id']}-lan{lan}.json").write_text(json.dumps({
         "ban_ghi": ban_ghi,
         "request_contract": hd.model_dump(mode="json") if hd else None,
-        "generated_program": (bat["spec"].model_dump(mode="json")
-                              if bat.get("spec") else None),
+        "generated_program": spec_raw,
         "final_memory": an_toan(fm),
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return ban_ghi
@@ -301,7 +361,8 @@ async def _main(k: int) -> int:
             dau = "✅" if r["servable"] else "❌"
             print(f"{dau} {bai['id']:<18} lần {lan}/{k} · {r['do_tre_giay']:>5}s "
                   f"· {str(r['stage_reached']):<21} nv={r['so_nghia_vu']} "
-                  f"khớp={r['obligation_match']} oracle={r['oracle_dat']}")
+                  f"kiểm={r['verification_match']} dựng={r['construction_match']} "
+                  f"oracle={r['oracle_dat']}")
         print()
 
     RA.mkdir(parents=True, exist_ok=True)
@@ -314,10 +375,20 @@ async def _main(k: int) -> int:
         r = [x for x in tat_ca if x["case_id"] == bai["id"]]
         sv = sum(1 for x in r if x["servable"])
         ora = sum(1 for x in r if x["oracle_dat"] is True)
-        om = sum(1 for x in r if x["obligation_match"])
         print(f"  {bai['id']:<18} served {sv}/{k} · oracle {ora}/{k} · "
-              f"obligation_match {om}/{k}")
+              f"{_dong_nghia_vu(r, k)}")
     return 0
+
+
+def _dong_nghia_vu(r: list[dict], k: int) -> str:
+    """Hai chỉ số, HAI CỘT. Mẫu số của `dựng` là số lượt CHẤM ĐƯỢC, không phải
+    `k`: đề không ra lệnh dựng gì thì `None`, và đếm `None` vào mẫu số là ghi
+    một lượt không áp dụng thành một lượt trượt."""
+    vm = sum(1 for x in r if x["verification_match"])
+    cm = [x["construction_match"] for x in r]
+    co = [x for x in cm if x is not None]
+    dung = f"{sum(1 for x in co if x)}/{len(co)}" if co else "n/a"
+    return f"verification_match {vm}/{k} · construction_match {dung}"
 
 
 if __name__ == "__main__":

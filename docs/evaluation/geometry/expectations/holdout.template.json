@@ -1,0 +1,70 @@
+{
+  "__khai__": [
+    "ĐÂY LÀ KHUÔN, KHÔNG PHẢI TẬP KỲ VỌNG THẬT. Đổi tên thành holdout.json và điền",
+    "theo đúng ĐỀ trong holdout/pool.json thì mới chấm được.",
+    "Kiểm: pytest tests/geometry/test_expectation_contract_7a2.py -q",
+    "",
+    "PHÂN CHIA THẨM QUYỀN — đừng khai một thứ ở hai chỗ:",
+    "  holdout/pool.json      sở hữu ĐỀ + ĐÁP ÁN CHÍNH THỨC + nguồn (đề thi ngoài)",
+    "  file này               sở hữu NGHĨA VỤ đề yêu cầu, tách dựng/kiểm, kèm lý do",
+    "Ô slot trong BANG_O nói nghĩa vụ KIỂM nào ô ấy phải có; test đối chiếu hai bên."
+  ],
+
+  "dataset": "geometry_expectation_set",
+  "tap": "holdout",
+  "version": 1,
+  "ngay": "<YYYY-MM-DD, ngày SOẠN — phải TRƯỚC ngày niêm phong>",
+  "pha": "7B",
+
+  "muc_dich": "Kỳ vọng nghĩa vụ cho tập held-out. Soạn TRƯỚC khi chạy hệ, và soạn từ VĂN BẢN ĐỀ chứ không từ đầu ra mô hình.",
+
+  "luat_soan": [
+    "HAI TẬP RỜI NHAU: `construction_obligations` = vật đề RA LỆNH DỰNG · `verification_obligations` = mệnh đề đề YÊU CẦU KIỂM.",
+    "Mỗi nghĩa vụ phải có `ly_do` TRÍCH TỪ ĐỀ, và `trich_de` chép đúng cụm chữ trong đề làm căn cứ. Không trích được ⇒ đó là kỳ vọng của người đo, bỏ đi.",
+    "`verification_obligations` của một ô A* PHẢI chứa nghĩa vụ mà `BANG_O` gán cho ô ấy — lệch thì hoặc đề vào nhầm ô, hoặc kỳ vọng sai. Test chặn.",
+    "Ô B* (ngoài phủ) chấm bằng 'từ chối trung thực', KHÔNG bằng nghĩa vụ. Khai cả hai tập `[]` và ghi `ghi_chu_dung`/`ghi_chu_kiem`.",
+    "`nguoi_danh_gia.loai` KHÔNG được là `nguoi_do`. Kỳ vọng do người đo tự đặt đã một lần ghi 'mô hình sai' ở chỗ mô hình đúng (PHASE_7A_1_REPORT §5), và trên held-out thì không có lượt thứ hai để phát hiện.",
+    "Soạn xong thì NIÊM PHONG cùng pool — file này nằm trong con dấu, sửa sau khi thấy số là phá con dấu."
+  ],
+
+  "nguoi_danh_gia": {
+    "loai": "de_thi_cong_khai",
+    "ai": "<lời giải chính thức của nguồn — ghi tên tài liệu>",
+    "cach_phan": "<Nghĩa vụ đọc từ ĐỘNG TỪ của đề: 'dựng/gọi/xác định' ⇒ nghĩa vụ DỰNG; 'chứng minh/chỉ ra/tính' ⇒ nghĩa vụ KIỂM. Khi lời giải chính thức nêu rõ bước nào là dựng thì theo lời giải.>",
+    "khai_han_che": "<Người soạn pool đã đọc mọi đề, nên bảo đảm thật là 'không viết ra đề và không sửa được đáp án', yếu hơn 'chưa từng thấy' — HOLDOUT_PROTOCOL §7.>"
+  },
+  "sinh_tu_model_output": false,
+  "chua_chay_he": true,
+
+  "cases": [
+    {
+      "case_id": "<khớp case_id trong holdout/pool.json, ví dụ hp_a01_001>",
+      "slot": "A01",
+      "problem_text": "<chép nguyên văn đề, GIỐNG HỆT bản trong pool.json>",
+      "construction_obligations": [
+        {
+          "ten_trong_de": "<tên ĐỀ BÀI gọi vật ấy, ví dụ d — KHÔNG phải tên chương trình>",
+          "kieu": "<point3 | line3 | plane3 | polygon3 | solid>",
+          "trich_de": "<cụm chữ trong đề ra lệnh dựng vật này>",
+          "ly_do": "<vì sao cụm chữ ấy là mệnh lệnh DỰNG chứ không phải mệnh đề cần kiểm>"
+        }
+      ],
+      "verification_obligations": [
+        {
+          "kind": "point_on_line",
+          "trich_de": "<cụm chữ trong đề yêu cầu kiểm mệnh đề này>",
+          "ly_do": "<vì sao đúng `kind` này: chủ thể thuộc kiểu nào, witness là vật nào>"
+        }
+      ]
+    },
+    {
+      "case_id": "<ví dụ hp_b03_001>",
+      "slot": "B03",
+      "problem_text": "<chép nguyên văn đề>",
+      "construction_obligations": [],
+      "verification_obligations": [],
+      "ghi_chu_dung": "Ô B* — không chấm bằng nghĩa vụ.",
+      "ghi_chu_kiem": "Ô ngoài phủ hợp đồng: chấm nhị phân TỪ CHỐI TRUNG THỰC / BỊA HÌNH. Gộp thang này với thang tầng A là trộn hai câu hỏi khác nhau."
+    }
+  ]
+}

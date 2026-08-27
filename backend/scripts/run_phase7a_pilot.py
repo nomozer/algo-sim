@@ -66,13 +66,15 @@ M = _nap("measure_geometry_stability")
 
 #: Ba đề đầu GIỮ NGUYÊN từ `stability-6.7` — cùng chữ, cùng oracle. Đổi một chữ
 #: là mất khả năng so pilot với hai vòng đo trước.
+#:
+#: Kỳ vọng nghĩa vụ của **cả năm** đề nằm ở `expectations/pilot.json` từ Phase
+#: 7A.2, không còn ở đây (`geometry_expectations.py` giải thích vì sao).
 BAI_PILOT = list(M.BAI) + [
     {
         "id": "4-khoang-cach",
         "de": ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA "
                "vuông góc với mặt phẳng đáy và SA = 4. Tính khoảng cách từ "
                "điểm A đến đường thẳng SB."),
-        "nghia_vu_mong_doi": ["distance"],
         "oracle": "khoang_cach_12_5",
     },
     {
@@ -80,7 +82,6 @@ BAI_PILOT = list(M.BAI) + [
         "de": ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA "
                "vuông góc với mặt phẳng đáy và SA = 2. Tính góc giữa hai đường "
                "thẳng SB và SD."),
-        "nghia_vu_mong_doi": ["angle"],
         "oracle": "goc_cos_sq_1_4",
     },
 ]
@@ -141,8 +142,8 @@ async def _chay(k: int) -> int:
             print(f"{'✅' if rr['servable'] else '❌'} {bai['id']:<18} "
                   f"{lan}/{k} · {rr['do_tre_giay']:>5}s · "
                   f"{str(rr['stage_reached']):<21} nv={rr['so_nghia_vu']} "
-                  f"khớp={rr['obligation_match']} oracle={rr['oracle_dat']} "
-                  f"canh={rr['so_doi_tuong_canh']}")
+                  f"kiểm={rr['verification_match']} dựng={rr['construction_match']} "
+                  f"oracle={rr['oracle_dat']} canh={rr['so_doi_tuong_canh']}")
         print()
 
     import json
@@ -150,12 +151,12 @@ async def _chay(k: int) -> int:
     (M.RA / "tong_hop.json").write_text(
         json.dumps({"k": k, "runs": tat_ca}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8")
-    print("── TỔNG HỢP (served · oracle · obligation_match) ──")
+    print("── TỔNG HỢP (served · oracle · verification · construction) ──")
     for bai in BAI_PILOT:
         x = [t for t in tat_ca if t["case_id"] == bai["id"]]
         print(f"  {bai['id']:<18} {sum(1 for t in x if t['servable'])}/{k} · "
               f"{sum(1 for t in x if t['oracle_dat'] is True)}/{k} · "
-              f"{sum(1 for t in x if t['obligation_match'])}/{k}")
+              f"{M._dong_nghia_vu(x, k)}")
     return 0
 
 

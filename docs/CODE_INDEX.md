@@ -2738,6 +2738,61 @@ mượn thẳng `freeze_evaluation_candidate.measured_system_hash()` để hai c
 không bao giờ trôi khỏi nhau. Giao thức: `docs/evaluation/geometry/HOLDOUT_PROTOCOL.md`.
 Khoá bởi `tests/geometry/test_holdout_protocol.py` (25).
 
+### `backend/scripts/measure_geometry_stability.py` · **TIÊU QUOTA THẬT**
+
+Máy đo độ ổn định: `n` đề × `k` lượt ĐỘC LẬP, không sửa gì giữa chừng. Export
+dùng lại được: `BAI` (3 đề nền) · `mot_luot` · `cham_oracle` · `RA` ·
+`_dong_nghia_vu` · `TAP_KY_VONG`. Gọi thẳng `run_pipeline` **không qua HTTP** —
+cố ý: không có cache nào cho một kết quả cũ lẻn về. Bọc
+`stage_semantic_analyze`/`stage_semantic_program` từ NGOÀI để bắt
+`RequestContract` + `SemanticProgramSpec` (telemetry không phát hai thứ ấy, mà
+chúng đúng là "model output" cần ghi riêng). **Từ chối ghi đè** thư mục đã có
+bản ghi — suýt mất 15 artifact của Phase 6.7 vì quên đổi `--out-dir`.
+
+⚠️ Kỳ vọng nghĩa vụ **KHÔNG** còn ở đây từ Phase 7A.2 → `geometry_expectations`.
+Thiếu kỳ vọng cho một đề ⇒ `_ky_vong_cua` **dừng**, không chấm bằng tập rỗng.
+
+### `backend/scripts/run_phase7a_pilot.py` · **TIÊU QUOTA THẬT**
+
+PILOT: **kiểm bộ đo, không đánh giá mô hình** — 5 đề × `k`. Không viết máy đo
+thứ hai: nạp `measure_geometry_stability` rồi **thay dữ liệu + thêm hai oracle**
+(`khoang_cach_12_5`, `goc_cos_sq_1_4`), ghi đè `M.RA`/`M.BAI`/`M.cham_oracle` ở
+cấp module. Hai đề mới chọn số có chủ đích: `12/5` không trùng dữ kiện nào của
+đề, và góc **đường–đường** phân biệt được `cos_sq_between_lines` với
+`sin_sq_line_plane` (một đề đường–mặt 45° thì không).
+
+### `backend/scripts/geometry_expectations.py` · offline · **0 API call**
+
+Sở hữu **KỲ VỌNG NGHĨA VỤ** của một tập đề, và hai phép so của chỉ số ③. Export:
+`nap` · `kinds_kiem` · `vat_phai_dung` · `khop_kiem` · `khop_dung` ·
+`cham_mot_luot` · `tap_da_dung` · `TAP_CHO_PHEP_NGUOI_DO`.
+
+**HAI TẬP RỜI NHAU** (Phase 7A.2), vì đề hình học ra hai loại lệnh:
+`construction_obligations` = vật đề bảo **dựng** · `verification_obligations` =
+mệnh đề đề bảo **kiểm**. Trước pha này chúng là một danh sách phẳng, và kỳ vọng
+`{point_on_line, point_on_plane}` của bài thiết diện bị **8 lượt liên tiếp** bác
+bỏ — `point_on_plane` là một mệnh lệnh dựng xếp nhầm vào tập kiểm, nên nó không
+có witness và **không bao giờ đúng được** (`PHASE_7A_1_REPORT §5`).
+
+**Hai phép so KHÁC NHAU, có chủ đích**: kiểm so **bằng đúng** (khai thừa cũng là
+lệch), dựng so **chứa đủ** (điểm trung gian là phần bắt buộc của phép dựng hình,
+trừ điểm ở đó là phạt mô hình vì làm đúng). Ba trạng thái như oracle — `None`
+tách *không áp dụng* khỏi *không chấm được*.
+
+Không viết lại phép so nào đã có: `khop_kiem` mượn
+`reliability_v2.obligation_match`, `tap_da_dung` mượn
+`analyze_construction_dependency.phan_tich`, hoà giải tên mượn
+`domain_profile.khop_ten_doi_tuong` (**lưới của sản phẩm**, không phải lưới thứ
+hai của bộ đo).
+
+`nap()` **fail-closed** ngay lúc nạp, không đợi lúc chấm: tập `holdout` khai
+`nguoi_danh_gia.loai = "nguoi_do"` ⇒ từ chối (`TAP_CHO_PHEP_NGUOI_DO` chỉ có
+`pilot`); `sinh_tu_model_output` không phải `false` ⇒ từ chối; nghĩa vụ thiếu
+`ly_do` ⇒ từ chối. Dữ liệu: `docs/evaluation/geometry/expectations/pilot.json` +
+`holdout.template.json`. Khoá bởi
+`tests/geometry/test_expectation_contract_7a2.py` (32) — file test ấy cũng khoá
+**mốc đóng băng** bốn chỉ số còn lại trong `PHASE7_METRIC_CONTRACT §6`.
+
 ### `backend/app/simulation/semantic_program/purpose_analysis.py` · offline
 
 Sở hữu câu hỏi **"bước nào phục vụ đáp án, bước nào là đường cụt"** — ghép
