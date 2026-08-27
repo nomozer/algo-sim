@@ -88,11 +88,18 @@ def _tim_cho_trong(x, duong: str = "") -> list[str]:
 
     Trả đường dẫn chứ không trả `True`: người điền cần biết **chỗ nào**, và
     một tập 20 bài thì "còn chỗ trống ở đâu đó" là thông tin vô dụng.
+
+    ⚠️ **Bỏ qua khoá `__…__`** — chúng là khối CHÚ THÍCH, không phải trường dữ
+    liệu. Lỗi thật đã xảy ra: `__khai__` của khung do `scaffold_expectation`
+    sinh có câu *"Mọi chỗ <...> là chỗ NGƯỜI phải điền"*, nên sau khi người
+    điền xong **mọi** trường thật, `nap()` vẫn từ chối và chỉ vào
+    `__khai__[1]` — một dòng hướng dẫn. Đúng lúc M1, với một thông báo không
+    ai hiểu là phải sửa gì.
     """
     if isinstance(x, str):
         return [duong or "(gốc)"] if _CHO_TRONG.search(x) else []
     if isinstance(x, dict):
-        return [d for k, v in x.items()
+        return [d for k, v in x.items() if not str(k).startswith("__")
                 for d in _tim_cho_trong(v, f"{duong}.{k}" if duong else k)]
     if isinstance(x, list):
         return [d for i, v in enumerate(x)

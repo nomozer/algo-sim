@@ -907,6 +907,40 @@ def test_khung_CHUA_NAP_DUOC_chung_nao_con_cho_trong(SC, SH, GE, tmp_path):
         GE.nap("holdout", thu_muc=tmp_path)
 
 
+def test_khoi_CHU_THICH_khong_bi_coi_la_cho_trong(GE, SC, SH):
+    """Lỗi thật, bắt bằng cách chạy trọn chuỗi M1 trên pool tạm.
+
+    `__khai__` của khung có câu *"Mọi chỗ <...> là chỗ NGƯỜI phải điền"*. Trước
+    bản sửa, người điền xong **mọi** trường thật thì `nap()` VẪN từ chối và chỉ
+    vào `__khai__[1]` — một dòng hướng dẫn. Đúng lúc M1, với thông báo không ai
+    hiểu là phải sửa gì.
+    """
+    assert GE._tim_cho_trong({"__khai__": ["Mọi chỗ <...> phải điền"],
+                              "that": "ok"}) == []
+    # Nhưng trường THẬT còn chỗ trống thì vẫn phải bắt.
+    assert GE._tim_cho_trong({"__khai__": ["<hướng dẫn>"], "that": "<x>"}) \
+        == ["that"]
+
+
+def test_khung_SAU_KHI_DIEN_thi_nap_duoc(GE, SC, SH, tmp_path):
+    """Chuỗi M1 chạy trọn: scaffold → điền → nạp. Trước bản sửa, bước cuối
+    không bao giờ tới được."""
+    pool = [{"case_id": "hp_a14_001", "slot": "A14", "status": "accepted",
+             "capability_tag": "rational_volume", "answer_shape": "exact_fraction",
+             "problem_text": "Cho hình chóp…", "oracle_ref": "volume",
+             "oracle_result": {"volume": "2/3"}}]
+    k = SC.dung_khung(pool, SH)
+    for c in k["cases"]:
+        for o in c["verification_obligations"]:
+            o["trich_de"] = "Tính thể tích V"
+            o["ly_do"] = "đề hỏi một số, chủ thể là solid ⇒ nghĩa vụ volume"
+        c["ghi_chu_dung"] = "đề chỉ TÍNH, không có động từ dựng"
+    k["nguoi_danh_gia"] = {"loai": "sach_chuyen_de", "ai": "lời giải trong tài liệu"}
+    (tmp_path / "holdout.json").write_text(
+        json.dumps(k, ensure_ascii=False), encoding="utf-8")
+    assert GE.nap("holdout", thu_muc=tmp_path)["tap"] == "holdout"
+
+
 def test_bao_loi_CHO_TRONG_kem_DUONG_DAN(GE):
     """"Còn chỗ trống ở đâu đó" là thông tin vô dụng trên một tập 20 bài."""
     assert GE._tim_cho_trong({"a": "<x>", "b": [{"c": "ok"}, {"d": "TODO"}]}) \
