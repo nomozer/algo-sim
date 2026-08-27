@@ -1,5 +1,5 @@
 {
-  "__trang_thai__": "ĐANG THU THẬP — 0 bài accepted · 0/20 ô · 1 rejected_capability_boundary",
+  "__trang_thai__": "ĐANG THU THẬP — 0 accepted · 0/20 ô · 2 rejected_capability_boundary · 1 needs_manual_review",
   "__khai__": [
     "CHƯA ĐỦ ĐỂ RÚT. Cổng máy đang chặn đúng chỗ:",
     "  python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
@@ -35,7 +35,7 @@
     "khai": "Phase 7A.5. Bài BỊ LOẠI nay nằm TRONG `cases` kèm `status`, không bị xoá — xoá là loại im lặng, và loại im lặng là một dạng chọn tập. Chỉ `accepted` mới vào rổ rút và mới được đếm vào độ phủ (`seal_geometry_holdout.duoc_rut`).",
     "accepted": "đủ ba điều kiện của HOLDOUT_PROTOCOL §2b — trong ranh giới năng lực, oracle biểu diễn được, có expectation độc lập",
     "rejected_capability_boundary": "NGOÀI ranh giới năng lực (CAPABILITY_BOUNDARY §2). Giữ lại để tra ngược. KHÔNG phải lỗi mô hình",
-    "needs_manual_review": "chưa phán được — thường vì `can_kiem_tay` chưa trả, hoặc chưa rõ có thuộc ranh giới không",
+    "needs_manual_review": "Chưa phán được, và LÝ DO phải ghi ở `reason`. Hai lý do đã gặp: (a) `problem_text_verified` chưa hạ; (b) đề TRẮC NGHIỆM 4 phương án — vướng LỆCH KIỂU NHIỆM VỤ chứ không vướng ranh giới năng lực, cần người quyết.",
     "rejected_unverified": "Chưa đối chiếu được NGUYÊN VĂN với nguồn bằng kênh đang có. KHÁC `needs_manual_review`: đây là 'không xác minh được', không phải 'chưa ai xem'. KHÔNG được vào holdout — HOLDOUT_PROTOCOL §2b điều kiện 1."
   },
   "__bai_bi_loai__": [
@@ -274,6 +274,88 @@
       "problem_text_verified": false,
       "domain_condition": "rational_distance ĐÒI d hữu tỉ — bài này d = 3√6, KHÔNG thoả",
       "verifier_note": "Chưa ai đối chiếu nguyên văn. Đề lấy qua công cụ đọc web (nội dung đi qua một mô hình tóm tắt). Dù vậy bài đã bị loại vì lý do MẠNH HƠN: ngoài ranh giới năng lực."
+    },
+    {
+      "case_id": "hp_a14_cand_001",
+      "status": "rejected_capability_boundary",
+      "reason": "CHỨNG MINH CÔNG THỨC TỔNG QUÁT, không phải bài cụ thể. Dữ kiện là tham số ký hiệu a, b, c và yêu cầu là chứng minh một đẳng thức — kernel dựng trên toạ độ Fraction cụ thể, không có tầng đại số ký hiệu (CAPABILITY_BOUNDARY §2.5). Không hệ trục nào hữu tỉ hoá được a, b, c tuỳ ý.",
+      "capability_tag": "rational_volume",
+      "capability_thoa": false,
+      "slot": "A14",
+      "coverage_slot": "A14",
+      "domain": "geometry_3d",
+      "geometry_family": "solid_geometry",
+      "answer_shape": "exact_fraction",
+      "difficulty": "van_dung_cao",
+      "chu_de": "Thể tích tứ diện đẳng diện",
+      "problem_text": "Cho tứ diện $ABCD$ có các cặp cạnh đối diện đôi một bằng nhau: $AB = CD = a$, $AC = BD = b$, $AD = BC = c$ (gọi là tứ diện đẳng diện). Chứng minh rằng thể tích $V$ của khối tứ diện được tính bằng công thức: $$V = \frac{\\sqrt{2}}{12} \\sqrt{(a^2 + b^2 - c^2)(b^2 + c^2 - a^2)(c^2 + a^2 - b^2)}$$",
+      "problem_text_original": "Cho tứ diện $ABCD$ có các cặp cạnh đối diện đôi một bằng nhau: $AB = CD = a$, $AC = BD = b$, $AD = BC = c$ (gọi là tứ diện đẳng diện). Chứng minh rằng thể tích $V$ của khối tứ diện được tính bằng công thức: $$V = \frac{\\sqrt{2}}{12} \\sqrt{(a^2 + b^2 - c^2)(b^2 + c^2 - a^2)(c^2 + a^2 - b^2)}$$",
+      "problem_text_verified": false,
+      "expected_construction_types": [
+        "point3",
+        "solid"
+      ],
+      "expected_verification_types": [
+        "volume"
+      ],
+      "expected_obligations": [
+        "volume"
+      ],
+      "nguon": {
+        "ten": "Toán Học Việt Nam — Công thức tính thể tích tứ diện có các cặp cạnh đối bằng nhau",
+        "url": "https://www.mathvn.com/2026/08/cong-thuc-tinh-tich-tu-dien-co-cac-cap.html",
+        "vi_tri": "thân bài",
+        "nam": "2026"
+      },
+      "evaluator": "mathvn.com (lời giải kèm chứng minh)",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "V = (√2/12)·√((a²+b²−c²)(b²+c²−a²)(c²+a²−b²))",
+      "chua_chay_he": true,
+      "verifier_note": "Đề THU ĐƯỢC NGUYÊN VĂN qua HTML thô (LaTeX còn nguyên: \frac, \\sqrt), KHÔNG qua mô hình tóm tắt — nên đây là ứng viên chất lượng cao về mặt văn bản. Vẫn `problem_text_verified: false` vì chưa có người đối chiếu. Dù vậy bài bị loại vì lý do mạnh hơn: ngoài ranh giới năng lực.",
+      "ghi_chu": "KHÔNG khai `oracle_result`: đáp án là một CÔNG THỨC ký hiệu, không phải một phân số."
+    },
+    {
+      "case_id": "hp_a14_cand_002",
+      "status": "needs_manual_review",
+      "reason": "KHÔNG vướng ranh giới năng lực — dữ kiện HỮU TỈ hoàn toàn (đáy vuông cạnh 2, SA = 3), V = (1/3)·4·3 = 4 là phân số chính xác. Vướng chỗ KHÁC: đề ở dạng TRẮC NGHIỆM 4 phương án, mà hệ không 'chọn phương án' — nó dựng cảnh và kiểm nghĩa vụ. Đây là LỆCH KIỂU NHIỆM VỤ, cần người quyết, xem HOLDOUT_ACQUISITION_LOG §1e.",
+      "capability_tag": "rational_volume",
+      "capability_thoa": true,
+      "slot": "A14",
+      "coverage_slot": "A14",
+      "domain": "geometry_3d",
+      "geometry_family": "solid_geometry",
+      "answer_shape": "exact_fraction",
+      "difficulty": "thong_hieu",
+      "chu_de": "Thể tích khối chóp có cạnh bên vuông góc đáy",
+      "problem_text": "Cho hình chóp \\(S.ABCD\\) có đáy \\(ABCD\\) là hình vuông cạnh bằng \\(2\\), cạnh bên \\(SA\\) vuông góc với mặt phẳng đáy và \\(SA=3\\). Thể tích của khối chóp \\(S.ABCD\\) bằng A. \\(12\\). B. \\(6\\). C. \\(8\\). D. \\(4\\).",
+      "problem_text_original": "Cho hình chóp \\(S.ABCD\\) có đáy \\(ABCD\\) là hình vuông cạnh bằng \\(2\\), cạnh bên \\(SA\\) vuông góc với mặt phẳng đáy và \\(SA=3\\). Thể tích của khối chóp \\(S.ABCD\\) bằng A. \\(12\\). B. \\(6\\). C. \\(8\\). D. \\(4\\).",
+      "problem_text_verified": false,
+      "expected_construction_types": [
+        "point3",
+        "solid"
+      ],
+      "expected_verification_types": [
+        "volume"
+      ],
+      "expected_obligations": [
+        "volume"
+      ],
+      "domain_condition": "thể tích khối đa diện toạ độ hữu tỉ ⇒ luôn hữu tỉ; dữ kiện (2, 3) hữu tỉ nên tỉ số cũng hữu tỉ",
+      "nguon": {
+        "ten": "Sở GD&ĐT Hà Tĩnh — đề thi thử tốt nghiệp THPT 2026 môn Toán, lần 2 (bản có lời giải trên Toán Học Việt Nam)",
+        "url": "https://www.mathvn.com/2026/05/so-ha-tinh-l2-e-thi-thu-toan-co-loi.html",
+        "vi_tri": "câu trắc nghiệm phần I",
+        "nam": "2026"
+      },
+      "evaluator": "Sở GD&ĐT Hà Tĩnh (đề + đáp án); lời giải chi tiết do mathvn.com đăng",
+      "answer_available": true,
+      "dap_an_chinh_thuc": "4 (phương án D)",
+      "phep_chuyen": "Đề đã cho số hữu tỉ, không cần đổi: V = (1/3)·S_đáy·h = (1/3)·2²·3 = 4. ĐỀ XUẤT, chưa đối chiếu với đáp án chính thức của Sở.",
+      "oracle_result": {
+        "volume": "4"
+      },
+      "chua_chay_he": true,
+      "verifier_note": "Đề thu NGUYÊN VĂN qua HTML thô (LaTeX còn nguyên), KHÔNG qua mô hình tóm tắt. Người còn phải làm HAI việc: (1) mở url đối chiếu từng ký hiệu và xác nhận đáp án chính thức là D; (2) quyết định về đề TRẮC NGHIỆM — nếu không nhận dạng này thì bài bị loại dù năng lực thoả."
     }
   ],
   "__answer_shape__": {

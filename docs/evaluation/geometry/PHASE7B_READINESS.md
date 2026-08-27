@@ -132,21 +132,37 @@ hỏng im lặng**.
 ⇒ `problem_text_verified` **chỉ người hạ được**. `kiem_pool` từ chối niêm phong
 khi nó chưa `true`; bài chưa xác minh mang `status: rejected_unverified`.
 
-**Kênh thứ ba GIỮ được nguyên văn — nhưng nguồn cạn.** `curl` trả byte gốc, và
-trên site dùng MathJax thì toán nằm sẵn dưới dạng LaTeX (`\(ABCD.MNPQ\)`) —
-không bước nào diễn giải lại. Đóng gói ở `harvest_holdout_candidates.py`. Sản
-lượng đo được:
+**Kênh thứ ba GIỮ được nguyên văn, và nó hiệu quả.** `curl` trả byte gốc, toán
+nằm sẵn dưới dạng LaTeX (`\(ABCD.MNPQ\)`) — không bước nào diễn giải lại. Đóng
+gói ở `harvest_holdout_candidates.py`. Quét đầy đủ 344 bài 2026:
 
 ```
-3883 url → 60 ứng viên → 11 có khối đề → 2 SẠCH → 0 trong ranh giới
+344 url → 208 có khối đề → 125 SẠCH → 26 hình học không gian → 8 trong ranh giới
 ```
 
-9/11 rớt vì **đề là ảnh chụp**. Ba site khác đã thử đều chặn fetch tự động.
+⇒ **Người chỉ còn phải ĐỌC SOÁT, không phải GÕ LẠI.** Đó là phần rào 3 đã giải.
 
-**Việc cần người:** mở nguồn bằng trình đọc, **nhìn** và gõ lại đề, giữ đủ
-`= ⊥ √ ∈ ∥`. Mỗi bài vài phút; 40 bài là việc một buổi. Chạy bộ thu trên site
-mới trước — mỗi bài SẠCH nó tìm ra là một bài chỉ phải **đọc soát**, không phải
-**gõ lại**.
+### ⛔ B1d — LỆCH KIỂU NHIỆM VỤ: **92% đề là TRẮC NGHIỆM** *(rào nặng nhất)*
+
+Trong 26 câu hình học không gian tách được: **24 trắc nghiệm 4 phương án**.
+Trong 8 câu **trong ranh giới năng lực**: **7 trắc nghiệm**; câu tự luận duy
+nhất chính là bài A11 đã loại vì vô tỉ. ⇒ **0 bài dùng được.**
+
+Hệ **dựng cảnh và kiểm nghĩa vụ**, nó **không "chọn phương án"**. Một câu có
+hình học hoàn toàn trong ranh giới vẫn không dùng được nếu câu hỏi là *"chọn
+một trong bốn"* — không có nghĩa vụ nào để khai.
+
+**Ba đường, cần người quyết:**
+
+| | Đường | Cái giá |
+|---|---|---|
+| **①** | nhận nguyên văn đề trắc nghiệm | ô **chắc chắn trượt**, và trượt vì lệch kiểu nhiệm vụ chứ không vì mô hình kém |
+| **②** | viết lại thành đề dựng/chứng minh | ⛔ **CẤM** — *"không tự biến đổi đề"*; viết lại là tôi soạn đề |
+| **③** | đổi nguồn sang **đề TỰ LUẬN** (SGK · chuyên đề · HSG) | tồn tại, nhưng nằm trong PDF/ảnh ⇒ quay lại cần người chép |
+
+Ví dụ cụ thể đã đưa vào `cases` để quyết định có vật đối chiếu:
+`hp_a14_cand_002` — dữ kiện hữu tỉ hoàn toàn (đáy vuông cạnh 2, `SA = 3`,
+`V = 4`), thoả **mọi** điều kiện năng lực, kẹt **chỉ** vì bốn phương án.
 
 ### ⛔ B1c — Nợ đối chiếu văn bản đề *(chặn cứng, và không lệnh nào bắt hộ)*
 

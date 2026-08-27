@@ -67,10 +67,23 @@ def test_moi_bai_trong_pool_deu_CO_NGUON_NGOAI(POOL_D):
         assert c.get("chua_chay_he") is True, f"{c['case_id']}: chua_chay_he"
 
 
-def test_pool_TU_KHAI_dung_so_bai_dang_co(POOL_D):
+def test_pool_TU_KHAI_dung_so_bai_theo_TUNG_TRANG_THAI(POOL_D):
     """Nhãn trạng thái là thứ người đọc tin trước khi chạy lệnh nào. Nó trôi
-    khỏi `cases` là nói dối về mức sẵn sàng."""
-    assert str(len(POOL_D["cases"])) in POOL_D["__trang_thai__"]
+    khỏi `cases` là nói dối về mức sẵn sàng.
+
+    Kiểm theo **từng trạng thái**, không kiểm tổng: một pool 40 bài mà 40 bài
+    đều `rejected` thì con số tổng nói đúng mà nghĩa thì sai hoàn toàn.
+    """
+    nhan = POOL_D["__trang_thai__"]
+    dem: dict[str, int] = {}
+    for c in POOL_D["cases"]:
+        tt = c.get("status", "accepted")
+        dem[tt] = dem.get(tt, 0) + 1
+    assert f"{dem.get('accepted', 0)} accepted" in nhan, (
+        f"nhãn không khai đúng số bài accepted: {nhan!r}")
+    for tt, n in dem.items():
+        if tt != "accepted":
+            assert f"{n} {tt}" in nhan, f"nhãn thiếu `{n} {tt}`"
 
 
 def test_pool_KHAI_DU_moi_truong_Phase7B_doi(POOL_D):

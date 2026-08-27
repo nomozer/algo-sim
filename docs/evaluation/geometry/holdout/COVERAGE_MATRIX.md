@@ -5,7 +5,7 @@
 
 **Pool: 0 bài dùng được · phủ 0/20 ô · ⛔ CHƯA RÚT ĐƯỢC**
 
-Ngoài ra **1 bài KHÔNG vào rổ rút** (giữ trong file để tra ngược, không đếm vào độ phủ): hp_a11_001 [rejected_capability_boundary]
+Ngoài ra **3 bài KHÔNG vào rổ rút** (giữ trong file để tra ngược, không đếm vào độ phủ): hp_a11_001 [rejected_capability_boundary], hp_a14_cand_001 [rejected_capability_boundary], hp_a14_cand_002 [needs_manual_review]
 
 ---
 

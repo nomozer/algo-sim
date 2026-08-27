@@ -9,16 +9,22 @@
 
 ## 0. Kết quả một câu
 
-**0 bài hợp lệ. 1 bài đã thu rồi bị LOẠI.** Hai rào, và rào thứ hai quan trọng
-hơn nhiều:
+**0 bài `accepted`.** Năm lượt thu, **bốn rào khác nhau**, và mỗi lượt lộ ra
+một rào mới — chúng che nhau:
 
-1. **Định dạng** — đề đầy đủ nằm trong PDF hoặc ảnh; thứ đọc được dạng văn bản
-   thì mỗi trang một bài (lượt 1).
-2. **Miền số của kernel** — phần lớn đề thi hình học Việt Nam có **dữ kiện hoặc
-   đáp án vô tỉ** (`a√3`, `a√2/2`), mà kernel dựng trên `Fraction` (lượt 2, §1b).
+| # | Rào | Lượt | Bản chất |
+|---|---|:-:|---|
+| 1 | **Định dạng** — đề nằm trong PDF/ảnh | 1 | thu thập |
+| 2 | **Miền số của kernel** — dữ kiện/đáp án vô tỉ vs `Fraction` | 2 | **năng lực** |
+| 3 | **Nguyên văn** — kênh tự động rơi ký hiệu toán, IM LẶNG | 3–4 | **tính toàn vẹn dữ liệu** |
+| 4 | **LỆCH KIỂU NHIỆM VỤ** — 92% đề là trắc nghiệm 4 phương án | 5 | **thiết kế phép đo** |
 
-Rào thứ hai không phải chuyện thu thập chậm — nó **thu hẹp tập đề đủ tư cách**,
-và phải xử lý trước khi soạn tiếp 40 bài rồi mới phát hiện phần lớn phải loại.
+Rào **4 nặng nhất**: nó không nói *"thu chậm"* mà nói **nguồn dễ lấy nhất
+(đề thi THPT sau 2025) là nguồn ít khớp nhất với kiểu nhiệm vụ của hệ**. Và nó
+cần **quyết định của người**, không phải thêm công thu thập.
+
+Rào 3 đã được **giải một nửa**: HTML thô giữ nguyên văn (LaTeX còn nguyên), nên
+người chỉ còn phải **đọc soát**, không phải **gõ lại**.
 
 ---
 
@@ -127,15 +133,33 @@ Không bước nào diễn giải ⇒ không bước nào làm mất.
 ① có khối *Đề bài* tách được (không có ⇒ đang **đoán** đâu là đề) · ② **không**
 `<img>` trong khối · ③ có dấu vết LaTeX.
 
-### Nhưng sản lượng thì cạn — đo được
+### Nhưng sản lượng thì cạn — đo được, hai lượt quét
+
+**Lượt A — lọc theo từ khoá hình học** (60 url):
 
 ```
-3883 url (sitemap mathvn)
-  → 60  ứng viên (lọc từ khoá hình học không gian)
-  → 11  có khối đề tách được
-  →  2  SẠCH (qua cả ba cổng)
-  →  0  trong ranh giới năng lực
+3883 url (sitemap mathvn) → 60 ứng viên → 11 có khối đề → 2 SẠCH → 0 dùng được
 ```
+
+**Lượt B — quét RỘNG toàn bộ bài 2026** (344 url, không lọc từ khoá), để kiểm
+xem khuôn `math-box` có ở những bài mà slug không mang từ khoá không:
+
+```
+81/344 trang đầu → 0 trang có khối đề tách được
+```
+
+Không phải bộ lọc từ khoá quá hẹp — **khuôn `math-box` bản thân nó hiếm**, chỉ
+có ở một nhúm bài. Tỉ lệ gộp hai lượt: **2 sạch / 141 trang ≈ 1,4%**, và **0%**
+lọt qua ranh giới năng lực.
+
+**Bốn nguồn khác đã thử, không nguồn nào dùng được:**
+
+| Nguồn | Kết quả |
+|---|---|
+| `toanhocbactrungnam.vn` | sitemap 200, nhưng trang đề **0 LaTeX · 5 ảnh** |
+| `vted.vn` · `diendantoanhoc.org` · `hoc247.net` | chặn fetch tự động / trả trang rỗng |
+| `loigiaihay.com` | 189 ảnh, đề không có dạng văn bản |
+| `vietjack.com` | trả 1120 byte — chặn |
 
 Hai bài sạch: bài lập phương (**đã loại**, đáp án `3√6` vô tỉ) và một bài
 **chứng minh công thức tổng quát** cho tứ diện đẳng diện — tham số ký hiệu
@@ -162,6 +186,78 @@ niêm phong khi nó chưa `true`. Bài chưa xác minh mang
 
 Bộ thu vẫn đáng giữ: chạy nó trên **site khác** là việc rẻ (một lệnh), và mỗi
 bài SẠCH nó tìm ra là một bài người chỉ phải **đọc soát** thay vì **gõ lại**.
+
+---
+
+## 1e. ⛔ RÀO THỨ TƯ — LỆCH KIỂU NHIỆM VỤ (lượt 5, và đây là rào nặng nhất)
+
+⚠️ **Sửa một con số tôi báo sai ở lượt 4.** Tôi đọc log lúc sweep đang chạy và
+báo *"81 trang → 0 khối đề"*. Sai: log chưa flush. Sweep chạy xong cho
+**344 url → 208 có khối đề → 125 SẠCH**. Kênh HTML thô **hiệu quả hơn nhiều**
+so với con số tôi đưa ra.
+
+### Sàng 125 ứng viên sạch
+
+```
+125 ứng viên SẠCH
+  → 26  câu hình học không gian (tách theo mốc "Câu N" / "Bài N")
+  →  8  trong ranh giới năng lực
+        (loại: 6 dữ kiện vô tỉ · 4 Oxyz cho sẵn toạ độ · 5 mặt cong)
+  →  1  không phải trắc nghiệm
+  →  0  dùng được   (bài duy nhất ấy chính là bài A11 đã loại vì vô tỉ)
+```
+
+### Con số quyết định: **92% là TRẮC NGHIỆM**
+
+```
+26 câu hình học không gian tách được
+  24 trắc nghiệm 4 phương án   (92%)
+   2 tự luận
+```
+
+Trong 8 câu **trong ranh giới**: **7 trắc nghiệm**, 1 tự luận (đã loại vì vô tỉ).
+
+### Vì sao trắc nghiệm là rào, không phải chi tiết
+
+Hệ nhận đề rồi **dựng cảnh và kiểm nghĩa vụ**. Nó **không "chọn phương án"**.
+Một câu như:
+
+> *Cho tứ diện \(ABCD\) có \(M, N\) lần lượt là trung điểm của \(AB, AC\). Mặt
+> phẳng nào sau đây song song với đường thẳng \(MN\)? A. \((ACD)\). B.
+> \((ABD)\). C. \((ABC)\). D. \((BCD)\).*
+
+có hình học **hoàn toàn trong ranh giới** (dữ kiện hữu tỉ, quan hệ `parallel`),
+nhưng **câu hỏi** thì không phải *"chứng minh MN ∥ (BCD)"* — nó là *"chọn một
+trong bốn"*. Đưa nguyên văn vào hệ thì không có nghĩa vụ nào để khai.
+
+**Ba đường, và không đường nào tôi được tự chọn:**
+
+| | Đường | Cái giá |
+|---|---|---|
+| **①** | **Nhận nguyên văn đề trắc nghiệm** | hệ không có nghĩa vụ để khai ⇒ ô chắc chắn trượt, và trượt vì **lệch kiểu nhiệm vụ** chứ không vì mô hình kém |
+| **②** | **Viết lại thành đề dựng/chứng minh** | ⛔ **CẤM** — *"không tự biến đổi đề"*. Viết lại là tôi soạn đề, và tập held-out mất đúng thứ làm nó có giá trị |
+| **③** | **Đổi nguồn sang đề TỰ LUẬN** | SGK · chuyên đề tự luận · đề HSG. Chúng tồn tại, nhưng nằm trong **PDF/ảnh** (rào §1c) ⇒ quay lại cần người chép |
+
+### Vì sao rào này xuất hiện bây giờ mới thấy
+
+Đề thi tốt nghiệp THPT môn Toán **sau 2025** gần như thuần trắc nghiệm
+(trắc nghiệm nhiều phương án · đúng–sai · trả lời ngắn). Nguồn **dễ lấy nhất**
+lại là nguồn **ít khớp nhất** với kiểu nhiệm vụ của hệ. Bài `hp_a11_001` che
+mất điều này ở lượt 3: nó *là* tự luận (trả lời ngắn), nên tôi không thấy rằng
+nó là **ngoại lệ**, không phải mẫu số chung.
+
+### Ứng viên tốt nhất tìm được — và nó kẹt ở đúng rào này
+
+`hp_a14_cand_002` (Sở GD&ĐT Hà Tĩnh, đề thi thử TN THPT 2026 lần 2):
+
+> *Cho hình chóp \(S.ABCD\) có đáy \(ABCD\) là hình vuông cạnh bằng \(2\), cạnh
+> bên \(SA\) vuông góc với mặt phẳng đáy và \(SA=3\). Thể tích của khối chóp
+> \(S.ABCD\) bằng A. \(12\). B. \(6\). C. \(8\). D. \(4\).*
+
+Dữ kiện **hữu tỉ hoàn toàn** (2 và 3), `V = (1/3)·4·3 = 4` là **phân số chính
+xác** — thoả mọi điều kiện của `CAPABILITY_BOUNDARY`. Nó kẹt **chỉ** vì bốn
+phương án. Đã đưa vào `cases` với `status: needs_manual_review` để quyết định
+①/②/③ có một ví dụ cụ thể trước mắt.
 
 ---
 
@@ -275,11 +371,17 @@ hiện phần lớn phải loại là mất công hai lần, và tệ hơn: ngư
 
 ---
 
-## 5. Bài bị loại — 1
+## 5. Bài bị loại — 2
 
 | Bài | Ô dự kiến | Lý do |
 |---|---|---|
 | `hp_a11_001` | A11 | **đáp án vô tỉ** (`3√6`) ⇒ `GEOMETRY_IRRATIONAL_RESULT` — §3 |
+| `hp_a14_cand_001` | A14 | **chứng minh CÔNG THỨC TỔNG QUÁT**, tham số ký hiệu `a, b, c` — không có tầng đại số ký hiệu (`CAPABILITY_BOUNDARY §2.5`) |
+
+⚠️ Bài thứ hai đáng chú ý: nó **thu được nguyên văn** qua HTML thô (LaTeX còn
+nguyên `\frac`, `\sqrt`), tức **kênh làm đúng việc của kênh**. Nó rớt ở cổng
+**sau** — ranh giới năng lực. Hai cổng khác nhau, và việc chúng chặn ở hai chỗ
+khác nhau là bằng chứng cả hai đang hoạt động.
 
 Nguồn máy đọc được: `pool.json.__bai_bi_loai__`, khoá bởi
 `test_bai_bi_loai_deu_co_LY_DO`. **Loại im lặng là một dạng chọn tập** — mỗi
