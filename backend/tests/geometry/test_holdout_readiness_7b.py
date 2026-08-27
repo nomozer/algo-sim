@@ -250,6 +250,143 @@ def test_capability_tag_cua_moi_bai_deu_co_trong_bang(POOL_D):
             f"{c['case_id']}: tag {t!r} không dùng cho ô {c['slot']}")
 
 
+# ══ PHASE 7B-prep — check_capability_boundary() ══════════════════════════
+def _bai_a14(**doi) -> dict:
+    """Bài A14 tối thiểu HỢP LỆ — ô an toàn nhất (volume luôn hữu tỉ)."""
+    c = {"case_id": "hp_a14_001", "status": "accepted", "slot": "A14",
+         "capability_tag": "rational_volume", "answer_shape": "exact_fraction",
+         "problem_text": "đề", "problem_text_original": "đề",
+         "problem_text_verified": True,
+         "nguon": {"url": "https://x"}, "dap_an_chinh_thuc": "4/3",
+         "phep_chuyen": "gán a = 2 ⇒ V = 4/3", "oracle_result": {"volume": "4/3"},
+         "expected_obligations": ["volume"], "chua_chay_he": True}
+    c.update(doi)
+    return c
+
+
+def test_bai_HOP_LE_thi_qua_ca_hai_cong(SH):
+    b = _bai_a14()
+    assert SH.check_capability_boundary(b) == []
+    assert SH.kiem_pool([b]) == []
+
+
+def test_the_nang_luc_KHONG_khop_O_thi_bi_bat(SH):
+    """`slot` nói bài nằm ô nào, `capability_tag` nói nó ĐÒI năng lực gì. Ô
+    A11 vừa cho thấy hai câu ấy lệch được."""
+    loi = SH.check_capability_boundary(_bai_a14(slot="A11"))
+    assert loi and "không dùng cho ô" in loi[0]
+
+
+def test_answer_shape_NGOAI_TAP_DONG_bi_bat(SH):
+    for xau in ("float", "rounded", "fraction"):
+        loi = SH.check_capability_boundary(_bai_a14(answer_shape=xau))
+        assert loi and "ngoài tập đóng" in loi[0], xau
+
+
+def test_ORACLE_dang_CAN_THUC_bi_bat(SH):
+    """Lách bằng cách viết `3√6` thay vì loại bài — ngoài ranh giới là chuyện
+    hệ KHÔNG trả ra giá trị nào, không phải chuyện đổi cách viết."""
+    loi = SH.check_capability_boundary(
+        _bai_a14(oracle_result={"volume": "3√6"}))
+    assert loi and "CĂN THỨC" in loi[0]
+
+
+def test_ORACLE_so_thap_phan_bi_bat(SH):
+    """`7.35` là số đã LÀM TRÒN. Nhận nó là đưa sai số vào chỗ kernel vừa dựng
+    bằng `Fraction` để tránh."""
+    loi = SH.check_capability_boundary(
+        _bai_a14(oracle_result={"volume": "1.3333"}))
+    assert loi and "THẬP PHÂN" in loi[0]
+    # `7,35` — đúng đáp án nguồn của bài đã bị loại, ở dấu phẩy kiểu Việt Nam.
+    assert SH.check_capability_boundary(_bai_a14(oracle_result={"volume": "7,35"}))
+    # Và `1/2` thì qua: cấm THẬP PHÂN, không phải cấm số không nguyên.
+    assert SH.check_capability_boundary(_bai_a14(oracle_result={"volume": "1/2"})) == []
+
+
+def test_A10_phai_khai_DIEU_KIEN_MIEN(SH):
+    """`angle_sin_sq` chỉ đúng dưới một điều kiện (cặp đường–mặt trả sin²), và
+    điều kiện ấy KHÔNG suy ra được từ `slot`."""
+    b = _bai_a14(slot="A10", capability_tag="angle_sin_sq",
+                 oracle_result={"angle": "1/2"}, expected_obligations=["angle"])
+    assert any("domain_condition" in d for d in SH.check_capability_boundary(b))
+    b["domain_condition"] = "cặp ĐƯỜNG–MẶT ⇒ engine trả sin², không phải cos²"
+    assert SH.check_capability_boundary(b) == []
+
+
+def test_o_tang_B_phai_mang_the_NGOAI_ranh_gioi(SH):
+    b = _bai_a14(slot="B03", capability_tag="out_of_capability",
+                 answer_shape="rejection_expected", oracle_result={})
+    assert SH.check_capability_boundary(b) == []
+    xau = _bai_a14(slot="B03", capability_tag="rational_volume")
+    assert SH.check_capability_boundary(xau), "thẻ trong ranh giới lọt vào ô B"
+
+
+def test_o_tang_A_KHONG_duoc_cham_bang_TU_CHOI(SH):
+    """Trộn hai thang là gộp hai câu hỏi khác nhau vào một cột."""
+    loi = SH.check_capability_boundary(
+        _bai_a14(capability_tag="out_of_capability",
+                 answer_shape="rejection_expected"))
+    assert loi
+
+
+def test_o_NGOAI_PHU_khong_duoc_mang_ORACLE(SH):
+    loi = SH.check_capability_boundary(
+        _bai_a14(slot="B03", capability_tag="out_of_capability",
+                 answer_shape="rejection_expected",
+                 oracle_result={"distance": "1"}))
+    assert loi and "KHÔNG được mang oracle_result" in loi[0]
+
+
+def test_de_CHUA_DOI_CHIEU_NGUYEN_VAN_thi_KHONG_vao_holdout(SH):
+    """Điều kiện của Phase 7B, và là điều kiện KHÔNG kênh tự động nào thoả:
+    công cụ đọc web tóm tắt, trích PDF rơi ký hiệu toán."""
+    loi = SH.kiem_pool([_bai_a14(problem_text_verified=False)])
+    assert loi and "problem_text_verified" in loi[0]
+
+
+def test_rejected_unverified_la_trang_thai_HOP_LE(SH):
+    b = _bai_a14(status="rejected_unverified", reason="không đối chiếu được")
+    assert SH.kiem_pool([b]) == [] and SH.duoc_rut(b) is False
+
+
+def test_bai_KHONG_khai_schema_7A5_van_di_qua(SH):
+    """Tương thích ngược: đổi luật dưới chân một tập đã soạn là cách chắc chắn
+    nhất để không ai soạn tiếp."""
+    cu = {"case_id": "cu", "slot": "A11", "problem_text": "đề",
+          "nguon": {"url": "https://x"}, "dap_an_chinh_thuc": "1",
+          "phep_chuyen": "…", "oracle_result": {"distance": "1"},
+          "expected_obligations": ["distance"], "chua_chay_he": True}
+    assert SH.kiem_pool([cu]) == []
+
+
+# ── con dấu phải mang danh tính ĐẦY ĐỦ ───────────────────────────────────
+def test_con_dau_ghi_DU_bay_thanh_phan_danh_tinh(SH):
+    """Băm hệ thôi chưa đủ: con dấu phải trả lời được *đo bản nào, bằng thước
+    nào, kỳ vọng nào, cỡ mẫu bao nhiêu*."""
+    import inspect
+
+    src = inspect.getsource(SH.main)
+    for khoa in ("commit", "metric_contract_hash", "capability_boundary_hash",
+                 "expectation_hash", "pool_hash", '"k"', '"budget"'):
+        assert khoa in src, f"con dấu thiếu `{khoa}`"
+
+
+def test_k_va_ngan_sach_cua_con_dau_KHOP_K_FINAL(SH):
+    assert (SH.K_CHOT, SH.LOGIC_MOI_LUOT, SH.HTTP_MOI_LUOT) == (3, 6, 8)
+    assert len(SH.BANG_O) * SH.K_CHOT * SH.LOGIC_MOI_LUOT == 360
+    assert len(SH.BANG_O) * SH.K_CHOT * SH.HTTP_MOI_LUOT == 480
+
+
+def test_bang_NANG_LUC_trong_MA_va_trong_POOL_khong_troi(SH, POOL_D):
+    """Hai bảng, một sự thật. `check_capability_boundary` đọc bảng trong mã;
+    người soạn đọc bảng trong pool. Lệch là chuyện sẽ xảy ra, nên khoá."""
+    bang = POOL_D["__the_nang_luc__"]
+    for tag, (o, dang, _) in SH.NANG_LUC.items():
+        assert tag in bang, f"pool thiếu thẻ {tag!r}"
+        assert tuple(bang[tag]["o"]) == tuple(o), f"{tag}: ô lệch"
+        assert bang[tag]["answer_shape"] == dang, f"{tag}: answer_shape lệch"
+
+
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
     """Ô không có thẻ nào ⇒ người soạn bài cho ô ấy không biết khai gì."""
     co = {o for t in POOL_D["__the_nang_luc__"].values()

@@ -74,6 +74,52 @@ của người duyệt, và phải xong **trước** khi soạn tiếp pool, n�
 
 ---
 
+## 1c. ⛔ RÀO THỨ BA — trích PDF cũng KHÔNG cho nguyên văn (lượt 3)
+
+Lượt 2 kết luận *"đường nhanh hơn: chép từ PDF, vì chép từ PDF là chép nguyên
+văn thật"*. **Kết luận ấy SAI khi việc chép là tự động**, và đây là bằng chứng.
+
+Tải thật `chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-le-minh-tam.pdf`
+(toanmath, 10,8 MB, **217 trang**), trích bằng **hai** thư viện độc lập
+(`pymupdf`, `pypdf`). Đếm ký hiệu trên **toàn** văn bản trích được:
+
+| Ký hiệu | Số lần xuất hiện |
+|---|--:|
+| `=` | **1303** |
+| `⊥` **vuông góc** | **0** |
+| `√` căn | **0** |
+| `∈` thuộc | **0** |
+| `∥` song song | **0** |
+| `°` độ | 3 |
+
+**`⊥` xuất hiện ĐÚNG 0 LẦN trong một tài liệu 217 trang về QUAN HỆ VUÔNG GÓC.**
+Font toán trong PDF không có ánh xạ Unicode, nên trình trích **bỏ im lặng** đúng
+những ký hiệu mang hình học.
+
+Hậu quả cụ thể, cùng một câu (Bài 40, trang 20):
+
+```
+NGUỒN (đọc bằng mắt)   …AB = a, AD = a√3, SA ⊥ (ABCD) và SA = a…
+TRÍCH TỰ ĐỘNG          … 3  ,,AB a AD a SA ABCD và  SA a .…
+```
+
+Mất `=`, mất `⊥`, mất `√`. Bản trích **vẫn đọc như một đề bài** — đó là chỗ nguy
+hiểm. Đưa nó vào pool là niêm phong một **bài toán khác**.
+
+### ⇒ Không kênh TỰ ĐỘNG nào cho nguyên văn
+
+| Kênh | Kết quả | Hỏng kiểu gì |
+|---|---|---|
+| Công cụ đọc web | ❌ | nội dung đi qua một mô hình tóm tắt |
+| Trích PDF tự động | ❌ | rơi ký hiệu toán, **im lặng** |
+| **Người mở nguồn đọc** | ✅ | — |
+
+Nên `problem_text_verified` **chỉ** người hạ được, và `kiem_pool` **từ chối**
+niêm phong khi nó chưa `true`. Bài chưa xác minh mang
+`status: rejected_unverified` và **không được vào holdout**.
+
+---
+
 ## 1. Hạn chế của cách thu thập này — quan trọng hơn con số
 
 Công cụ đọc web trả nội dung **đã đi qua một mô hình tóm tắt**. Nghĩa là
@@ -199,10 +245,17 @@ lần loại phải ghi lý do và giữ url, để người sau kiểm được
 
 ## 6. Lượt sau nên làm gì
 
-1. **Chốt ①/② ở §1b** — người duyệt. Đây là đường găng, không phải việc thu thập.
-2. Soạn **A14, A09, A10** trước (không vướng rào vô tỉ) để có bài thật sớm.
-3. Nguồn nên dùng: **PDF chuyên đề** (toanmath 217–704 trang, kèm lời giải).
-   Chép từ PDF là **chép nguyên văn thật** ⇒ hạ được `can_kiem_tay` ngay lúc
-   chép, không mang nợ như lượt này.
+1. **Chốt ①/② ở §1b** — người duyệt. Đường găng, không phải việc thu thập.
+2. **Người chép đề.** Không kênh tự động nào cho nguyên văn (§1c). Cách rẻ nhất
+   đã biết: mở PDF chuyên đề bằng trình đọc, **nhìn** và gõ lại đề, giữ đủ
+   `=`, `⊥`, `√`, `∈`, `∥`. Mỗi bài vài phút; 40 bài là việc một buổi.
+3. Bắt đầu từ **A14 · A09 · A10** — ba ô **không vướng rào vô tỉ**
+   (`volume` và `cos²/sin²` luôn hữu tỉ), nên tỉ lệ loại thấp nhất.
 4. Sau **mỗi lô**: `seal_geometry_holdout.py --seed 0 --chi-kiem-pool` +
-   `holdout_coverage_matrix.py --md …` (có guard chống trôi báo cáo).
+   `holdout_coverage_matrix.py --md …`. `check_capability_boundary()` chạy sẵn
+   trong `kiem_pool` và bắt: thẻ lệch ô · `answer_shape` ngoài tập đóng · oracle
+   dạng căn thức · oracle thập phân · thiếu `domain_condition` · chưa đối chiếu
+   nguyên văn.
+
+> Bản đã tải nằm ở scratchpad của phiên, **không** commit: nó là tài liệu có
+> bản quyền và không phải bằng chứng của lượt đo. Tải lại bằng url ở §2.

@@ -34,6 +34,9 @@ nhật ký**, không phải đổi định nghĩa chỉ số nào — xem mục 
 | 1c | `pool.json.__don_vi_oracle__` | quy ước đơn vị oracle **dẫn từ `geometry_exec._do`**, khoá bằng test — khuôn cũ dạy SAI và đã sửa |
 | 1d | `CAPABILITY_BOUNDARY.md` + `COVERAGE_MATRIX_BOUNDARY_REVIEW.md` | **ranh giới năng lực đã đóng băng** (7A.5) · `HOLDOUT_PROTOCOL §2b` điều kiện nhận bài |
 | 1e | `status` + `capability_tag` | bài bị loại **giữ trong `cases`** kèm lý do, nhưng **không lấp ô** — `duoc_rut()` |
+| 1f | **`check_capability_boundary()`** | cổng CHẠY ĐƯỢC (7B-prep): thẻ lệch ô · `answer_shape` ngoài tập đóng · oracle **căn thức** · oracle **thập phân** · thiếu `domain_condition` · chưa đối chiếu nguyên văn |
+| 1g | Con dấu mang **danh tính đầy đủ** | `commit` · `measured_system_hash` · `metric_contract_hash` · `capability_boundary_hash` · `expectation_hash` · `pool_hash` · `k` · `budget` |
+| 6 | **Runtime** | ✅ `runtime_doctor` **PASS** — `RUNTIME_STALE_IMAGE` đã đóng |
 | 1b | `HOLDOUT_ACQUISITION_LOG.md` | sản lượng đo được của từng loại nguồn + **hạn chế của cách thu thập** |
 | 2 | `holdout/COVERAGE_MATRIX.md` | sinh từ `holdout_coverage_matrix.py`, 20 ô × 7 họ × 4 hình dạng đáp án |
 | 3 | Cổng kỳ vọng | `nap()` nay đòi thêm **`slot` + `oracle_ref`**; `kiem_noi_oracle()` nối con trỏ sang pool |
@@ -104,6 +107,34 @@ bài**. Loại duy nhất đọc được dạng văn bản là *bài viết ri�
 (1 bài/trang). Đường nhanh hơn cần người: chép từ **PDF chuyên đề** — và chép
 từ PDF là **chép nguyên văn thật**, hạ được `can_kiem_tay` ngay lúc chép.
 
+### ⛔ B1b — KHÔNG kênh tự động nào cho NGUYÊN VĂN *(chặn cứng · cần người)*
+
+Đo được ở lượt 7B-prep, hai thư viện độc lập (`pymupdf`, `pypdf`) cùng kết quả
+trên `chuyen-de-quan-he-vuong-goc…pdf` (toanmath, **217 trang**):
+
+| `=` | `⊥` | `√` | `∈` | `∥` |
+|--:|--:|--:|--:|--:|
+| 1303 | **0** | **0** | **0** | **0** |
+
+**`⊥` xuất hiện đúng 0 lần trong một tài liệu 217 trang về quan hệ vuông góc.**
+Font toán không có ánh xạ Unicode ⇒ trình trích **bỏ im lặng** đúng những ký
+hiệu mang hình học:
+
+```
+NGUỒN            …AB = a, AD = a√3, SA ⊥ (ABCD) và SA = a…
+TRÍCH TỰ ĐỘNG    … 3  ,,AB a AD a SA ABCD và  SA a .…
+```
+
+Bản trích **vẫn đọc như một đề bài** — đó là chỗ nguy hiểm. Cộng với công cụ
+đọc web (đi qua một mô hình tóm tắt), **cả hai kênh tự động đều hỏng, và đều
+hỏng im lặng**.
+
+⇒ `problem_text_verified` **chỉ người hạ được**. `kiem_pool` từ chối niêm phong
+khi nó chưa `true`; bài chưa xác minh mang `status: rejected_unverified`.
+
+**Việc cần người:** mở PDF bằng trình đọc, **nhìn** và gõ lại đề, giữ đủ
+`= ⊥ √ ∈ ∥`. Mỗi bài vài phút; 40 bài là việc một buổi.
+
 ### ⛔ B1c — Nợ đối chiếu văn bản đề *(chặn cứng, và không lệnh nào bắt hộ)*
 
 Công cụ đọc web trả nội dung **đã đi qua một mô hình tóm tắt**, nên
@@ -143,9 +174,16 @@ Khuôn đã sẵn và cổng đã đòi đủ: nguồn người đánh giá · l
 nghĩa vụ dựng · nghĩa vụ kiểm · con trỏ oracle. Soạn được **ngay sau** khi có
 pool — không cần seed.
 
-### ⚠️ B5 — `RUNTIME_STALE_IMAGE` *(không chặn phép đo, chặn hồ sơ bằng chứng)*
+### ✅ B5 — Runtime: **ĐÃ DỌN** (7B-prep)
 
-Xem §4.
+```
+runtime_doctor  →  PASS — runtime khớp source
+source : sha=53ed4dbdb32f cache=46 skill=11/6208fc2a card=446b0769
+runtime: sha=53ed4dbdb32f cache=46 skill=11/6208fc2a card=446b0769
+```
+
+Build lại kèm `GIT_SHA`/`BUILD_TIME`. `RUNTIME_STALE_IMAGE` đã đóng.
+⚠️ Chạm `backend/app` sau mốc này ⇒ phải build lại **trước** khi niêm phong.
 
 ---
 

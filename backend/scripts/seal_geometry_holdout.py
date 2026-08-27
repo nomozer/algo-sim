@@ -43,6 +43,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from random import Random
@@ -111,6 +112,33 @@ def _bam_he_thong() -> tuple[str, int]:
     return mod.measured_system_hash()
 
 
+#: Cỡ mẫu và ngân sách MỖI LƯỢT — chốt ở `HOLDOUT_K_FINAL.md` (Phase 7A.3).
+#: Con dấu ghi lại để lượt chạy không cãi được là nó đã đo với `k` khác.
+K_CHOT = 3
+LOGIC_MOI_LUOT, HTTP_MOI_LUOT = 6, 8
+
+
+def _git_sha() -> str:
+    try:
+        return subprocess.run(["git", "rev-parse", "HEAD"], cwd=GOC,
+                              capture_output=True, text=True,
+                              check=True).stdout.strip()
+    except Exception:  # noqa: BLE001 — thiếu git không được làm hỏng con dấu
+        return "unknown"
+
+
+def _bam_tai_lieu(ten: str) -> str:
+    """Băm một tài liệu trong `docs/evaluation/geometry/`. Vắng ⇒ `THIEU_FILE`,
+    khai thẳng chứ không im: con dấu thiếu một băm là con dấu không chứng minh
+    được thứ nó hứa chứng minh."""
+    f = GEO / ten
+    if not f.exists():
+        return "THIEU_FILE"
+    return hashlib.sha256(
+        f.read_text(encoding="utf-8").replace("\r\n", "\n").encode("utf-8")
+    ).hexdigest()
+
+
 def _chuan_de(s: str) -> str:
     """Gom khoảng trắng + bỏ hoa/thường, để so hai bản chép cùng một đề."""
     return " ".join(str(s).split()).lower()
@@ -131,7 +159,128 @@ def _de_cua_dev() -> set[str]:
 #: loại im lặng là một dạng chọn tập. Giữ lại kèm lý do thì người sau kiểm được
 #: rằng bài bị loại vì *nằm ngoài ranh giới năng lực*, không phải vì *hệ làm
 #: sai nó* — hai câu khác hẳn nhau khi đọc một benchmark.
-TRANG_THAI = ("accepted", "rejected_capability_boundary", "needs_manual_review")
+TRANG_THAI = ("accepted", "rejected_capability_boundary", "needs_manual_review",
+              # Phase 7B-prep: đề chưa đối chiếu được NGUYÊN VĂN với nguồn.
+              # Khác `needs_manual_review` ở chỗ đây là **không xác minh được
+              # bằng kênh đang có**, không phải "chưa ai xem".
+              "rejected_unverified")
+
+#: Hình dạng đáp án — tập ĐÓNG. Mỗi giá trị nói oracle chấm bằng cách nào.
+#:
+#: KHÔNG có `float`, KHÔNG có "giá trị làm tròn", KHÔNG có "quan sát bằng mắt":
+#: cả ba đều đưa sai số hoặc phán đoán người vào chỗ đang cần một phép so chính
+#: xác, sau khi cả kernel đã dựng bằng `Fraction` để tránh đúng thứ đó.
+ANSWER_SHAPE = ("exact_fraction", "predicate_boolean", "invariant_relation",
+                "rejection_expected")
+
+#: `capability_tag` → (ô hợp lệ · hình dạng đáp án · trong ranh giới?).
+#: Dẫn từ `docs/evaluation/geometry/CAPABILITY_BOUNDARY.md`, đóng băng ở 7A.5.
+NANG_LUC: dict[str, tuple[tuple[str, ...], str, bool]] = {
+    "intersection_point": (("A01",), "invariant_relation", True),
+    "incidence": (("A02",), "predicate_boolean", True),
+    "parallel_relation": (("A03", "A04", "A05"), "predicate_boolean", True),
+    "perpendicular_relation": (("A06", "A07", "A08"), "predicate_boolean", True),
+    "angle_cos_sq": (("A09",), "exact_fraction", True),
+    "angle_sin_sq": (("A10",), "exact_fraction", True),
+    "rational_distance": (("A11", "A12"), "exact_fraction", True),
+    "coplanar_section": (("A13",), "predicate_boolean", True),
+    "rational_volume": (("A14",), "exact_fraction", True),
+    "out_of_capability": (O_TANG_B, "rejection_expected", False),
+}
+
+#: Thẻ nào bắt buộc khai `domain_condition` — vì thẻ ấy CHỈ đúng dưới một điều
+#: kiện, và điều kiện ấy không suy ra được từ `slot`.
+DOI_DOMAIN_CONDITION = ("rational_distance", "coplanar_section",
+                        "angle_sin_sq")
+
+
+def check_capability_boundary(c: dict) -> list[str]:
+    """Bài này có nằm trong ranh giới năng lực không? Trả LÝ DO FAIL, rỗng = pass.
+
+    ─── VÌ SAO LÀ MỘT HÀM CHỨ KHÔNG PHẢI MỘT ĐOẠN VĂN ────────────────────
+
+    Ranh giới đã ghi ở `CAPABILITY_BOUNDARY.md` từ 7A.5, nhưng tài liệu không
+    chặn được ai cả. Bài `hp_a11_001` lọt vào ô A11 **sau khi** ranh giới ấy
+    tồn tại trong đầu người soạn — nó chỉ lộ ra khi có người đi tra `_do`.
+
+    ─── ÁP CHO AI ────────────────────────────────────────────────────────
+
+    Chỉ cho bài **khai schema 7A.5+** (`capability_tag` có mặt, hoặc `status`
+    khai tường minh). Bài cũ không mang hai trường ấy đi qua như trước — đổi
+    luật dưới chân một tập đã soạn là cách chắc chắn nhất để không ai soạn tiếp.
+    """
+    tag, o = c.get("capability_tag"), c.get("slot")
+    cid = c.get("case_id") or "?"
+    if tag not in NANG_LUC:
+        return [f"{cid}: capability_tag {tag!r} không có trong bảng — "
+                f"{sorted(NANG_LUC)}"]
+
+    o_hop_le, dang_can, trong_ranh_gioi = NANG_LUC[tag]
+    loi: list[str] = []
+    if o not in o_hop_le:
+        loi.append(f"{cid}: thẻ {tag!r} không dùng cho ô {o!r} — chỉ {list(o_hop_le)}")
+
+    dang = c.get("answer_shape")
+    if dang not in ANSWER_SHAPE:
+        loi.append(f"{cid}: answer_shape {dang!r} ngoài tập đóng {list(ANSWER_SHAPE)}")
+    elif dang != dang_can:
+        loi.append(f"{cid}: thẻ {tag!r} đòi answer_shape {dang_can!r}, khai {dang!r}")
+
+    # Tầng A phải chấm được bằng đáp án; tầng B chấm bằng TỪ CHỐI TRUNG THỰC.
+    # Trộn hai thang là gộp hai câu hỏi khác nhau vào một cột.
+    if str(o).startswith("A") and dang == "rejection_expected":
+        loi.append(f"{cid}: ô tầng A không được chấm bằng `rejection_expected`")
+    if str(o).startswith("B") and trong_ranh_gioi:
+        loi.append(f"{cid}: ô tầng B phải mang thẻ ngoài ranh giới")
+
+    if tag in DOI_DOMAIN_CONDITION and not c.get("domain_condition"):
+        loi.append(f"{cid}: thẻ {tag!r} CHỈ đúng dưới một điều kiện miền — "
+                   "phải khai `domain_condition`")
+
+    loi += _kiem_don_vi_oracle(cid, tag, c.get("oracle_result") or {})
+    return loi
+
+
+def _kiem_don_vi_oracle(cid: str, tag: str, oracle: dict) -> list[str]:
+    """Đơn vị oracle phải khớp `geometry_exec._do`. Lỗi ở đây là **im lặng**:
+    oracle đúng về giá trị mà sai về đơn vị vẫn chấm ra một con số."""
+    from fractions import Fraction
+
+    loi: list[str] = []
+    if tag == "out_of_capability":
+        if oracle:
+            loi.append(f"{cid}: ô ngoài phủ KHÔNG được mang oracle_result")
+        return loi
+
+    if tag in ("rational_distance", "angle_cos_sq", "angle_sin_sq",
+               "rational_volume"):
+        khoa = {"rational_distance": "distance", "rational_volume": "volume",
+                "angle_cos_sq": "angle", "angle_sin_sq": "angle"}[tag]
+        gt = oracle.get(khoa)
+        if gt is None:
+            return [f"{cid}: thiếu `oracle_result.{khoa}`"]
+        s = str(gt)
+        # Căn thức: hệ KHÔNG biểu diễn được, và khai nó ở đây nghĩa là người
+        # soạn đang định lách bằng cách viết đáp án dưới dạng ký hiệu.
+        if any(k in s for k in ("√", "sqrt", "^", "…")):
+            return [f"{cid}: `{khoa}` khai dạng CĂN THỨC ({s!r}) — ngoài ranh "
+                    "giới, không phải chuyện đổi cách viết"]
+        # THẬP PHÂN bị cấm dù `Fraction("1.3333")` parse được.
+        #
+        # Đây đúng là lỗ đã suýt lọt: đáp án nguồn của `hp_a11_001` là `7,35`,
+        # một số ĐÃ LÀM TRÒN theo yêu cầu của đề. Nhận nó thì oracle mang sẵn
+        # sai số, ngay sau khi cả kernel dựng bằng `Fraction` để tránh. Viết
+        # `1/2` thay `0.5` không mất gì; viết `0.577` thay `√3/3` thì mất tất.
+        if any(k in s for k in (".", ",")):
+            return [f"{cid}: `{khoa}` = {s!r} viết dạng THẬP PHÂN — khai bằng "
+                    "phân số (`4/3`, không phải `1.3333`). Thập phân hoặc là "
+                    "làm tròn, hoặc là một phân số viết khó kiểm hơn"]
+        try:
+            Fraction(s)
+        except (ValueError, ZeroDivisionError):
+            loi.append(f"{cid}: `{khoa}` = {s!r} không phải phân số chính xác "
+                       "— float và số làm tròn đều bị cấm làm oracle")
+    return loi
 
 #: Chỉ `accepted` mới được đếm vào độ phủ và được rút.
 def duoc_rut(c: dict) -> bool:
@@ -180,6 +329,18 @@ def kiem_pool(cases: list[dict]) -> list[str]:
         if c.get("chua_chay_he") is not True:
             # Soạn đáp án SAU khi thấy hệ chạy là chép bài của chính mình.
             loi.append(f"{cid}: chua_chay_he phải là true tại thời điểm soạn")
+        # Ranh giới năng lực — chỉ áp cho bài khai schema 7A.5+.
+        if c.get("capability_tag") is not None or "status" in c:
+            loi += check_capability_boundary(c)
+            # NGUYÊN VĂN: `problem_text` phải đối chiếu được với nguồn. Bản
+            # tóm tắt của một mô hình đọc web KHÔNG tính — nó rơi mất đúng
+            # những ký hiệu mang hình học (đo được: `⊥` xuất hiện 0 lần trong
+            # một tài liệu 217 trang về quan hệ vuông góc).
+            if c.get("problem_text_verified") is not True:
+                loi.append(
+                    f"{cid}: `problem_text_verified` chưa true — chưa ai đối "
+                    "chiếu NGUYÊN VĂN với nguồn. Đề chép sai một ký hiệu là "
+                    "một bài toán KHÁC, và nó vẫn đọc trôi chảy.")
         if c.get("can_kiem_tay") is True:
             # NỢ ĐỐI CHIẾU, thêm 2026-08-27. Đề thu thập bằng công cụ đọc web
             # đi qua một mô hình tóm tắt, nên `problem_text` là bản chép LẠI
@@ -282,6 +443,22 @@ def main() -> int:
         # Băm hệ ĐANG được đo, để lượt chạy sau chứng minh được là cùng một hệ.
         "measured_system_hash": he_hash,
         "measured_system_files": he_so_file,
+        # ── Danh tính ĐẦY ĐỦ của lượt đo (Phase 7B-prep) ─────────────────
+        #
+        # Băm hệ thôi thì chưa đủ: `HOLDOUT_SEAL` phải trả lời được *"đo bản
+        # nào, bằng thước nào, với kỳ vọng nào, cỡ mẫu bao nhiêu"*. Thiếu một
+        # trong bốn thì sau khi thấy số, mọi câu "lúc ấy thước còn khác" đều
+        # không kiểm chứng được — đúng lý do `freeze_evaluation_candidate` ra đời.
+        "commit": _git_sha(),
+        "metric_contract_hash": _bam_tai_lieu("PHASE7_METRIC_CONTRACT.md"),
+        "capability_boundary_hash": _bam_tai_lieu("CAPABILITY_BOUNDARY.md"),
+        "expectation_hash": _bam_tai_lieu("expectations/holdout.json"),
+        "pool_hash": _bam(cases),
+        "k": K_CHOT,
+        "budget": {"logic": len(chon) * K_CHOT * LOGIC_MOI_LUOT,
+                   "http": len(chon) * K_CHOT * HTTP_MOI_LUOT,
+                   "dan_xuat": f"{len(chon)} bài × {K_CHOT} lượt × "
+                               f"{LOGIC_MOI_LUOT} logic / {HTTP_MOI_LUOT} HTTP"},
         "case_ids": [c["case_id"] for c in chon],
         "theo_o": {c["slot"]: c["case_id"] for c in chon},
         "seal_hash": _bam(chon),

@@ -1,5 +1,5 @@
 {
-  "__trang_thai__": "ĐANG THU THẬP — 0 bài accepted · 0/20 ô · 1 bài rejected_capability_boundary",
+  "__trang_thai__": "ĐANG THU THẬP — 0 bài accepted · 0/20 ô · 1 rejected_capability_boundary",
   "__khai__": [
     "CHƯA ĐỦ ĐỂ RÚT. Cổng máy đang chặn đúng chỗ:",
     "  python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
@@ -7,17 +7,20 @@
     "",
     "Không bài giả. Bài BỊ LOẠI vẫn nằm trong `cases` kèm `status` + `reason`",
     "— xoá đi là loại IM LẶNG, và loại im lặng là một dạng chọn tập. Nhưng nó",
-    "KHÔNG vào rổ rút và KHÔNG được đếm vào độ phủ: lấp một ô bằng bài hệ không",
-    "phục vụ được là dựng một ô chắc chắn trượt.",
+    "KHÔNG vào rổ rút và KHÔNG được đếm vào độ phủ.",
     "",
     "AI ĐIỀN FILE NÀY: người soạn pool, từ NGUỒN NGOÀI (đề thi / đề minh hoạ /",
     "chuyên đề có lời giải chi tiết). KHÔNG tự tính đáp án — người soạn cũng là",
     "người sửa hệ. HOLDOUT_PROTOCOL §1.",
     "",
-    "⚠️ MỌI BÀI THU THẬP QUA CÔNG CỤ ĐỌC WEB đều mang `can_kiem_tay: true`.",
-    "Nội dung về qua một mô hình tóm tắt, tức `problem_text` là bản chép LẠI,",
-    "không phải bản chép NGUYÊN VĂN. Phải mở url đối chiếu bằng mắt rồi hạ cờ.",
-    "`kiem_pool` TỪ CHỐI niêm phong khi còn bài mang cờ này.",
+    "⚠️ NGUYÊN VĂN LÀ ĐIỀU KIỆN, KHÔNG PHẢI LỜI KHUYÊN. Hai kênh tự động đều",
+    "KHÔNG cho nguyên văn, và cả hai hỏng IM LẶNG:",
+    "  · công cụ đọc web  → nội dung đi qua một mô hình tóm tắt",
+    "  · trích PDF tự động → rơi mất ký hiệu toán. ĐO ĐƯỢC: một tài liệu 217",
+    "    trang về QUAN HỆ VUÔNG GÓC cho `⊥` xuất hiện ĐÚNG 0 LẦN (√ 0, ∈ 0, ∥ 0),",
+    "    trong khi `=` còn 1303. Hai bộ trích độc lập (pymupdf, pypdf) cùng kết quả.",
+    "Đề chép thiếu một ký hiệu là một BÀI TOÁN KHÁC, và nó vẫn đọc trôi chảy.",
+    "⇒ `problem_text_verified` chỉ được `true` khi CÓ NGƯỜI mở nguồn đối chiếu.",
     "Nguồn nào lấy được / không lấy được: ../HOLDOUT_ACQUISITION_LOG.md"
   ],
   "__don_vi_oracle__": {
@@ -32,7 +35,8 @@
     "khai": "Phase 7A.5. Bài BỊ LOẠI nay nằm TRONG `cases` kèm `status`, không bị xoá — xoá là loại im lặng, và loại im lặng là một dạng chọn tập. Chỉ `accepted` mới vào rổ rút và mới được đếm vào độ phủ (`seal_geometry_holdout.duoc_rut`).",
     "accepted": "đủ ba điều kiện của HOLDOUT_PROTOCOL §2b — trong ranh giới năng lực, oracle biểu diễn được, có expectation độc lập",
     "rejected_capability_boundary": "NGOÀI ranh giới năng lực (CAPABILITY_BOUNDARY §2). Giữ lại để tra ngược. KHÔNG phải lỗi mô hình",
-    "needs_manual_review": "chưa phán được — thường vì `can_kiem_tay` chưa trả, hoặc chưa rõ có thuộc ranh giới không"
+    "needs_manual_review": "chưa phán được — thường vì `can_kiem_tay` chưa trả, hoặc chưa rõ có thuộc ranh giới không",
+    "rejected_unverified": "Chưa đối chiếu được NGUYÊN VĂN với nguồn bằng kênh đang có. KHÁC `needs_manual_review`: đây là 'không xác minh được', không phải 'chưa ai xem'. KHÔNG được vào holdout — HOLDOUT_PROTOCOL §2b điều kiện 1."
   },
   "__bai_bi_loai__": [
     {
@@ -48,7 +52,7 @@
     }
   ],
   "dataset": "geometry_holdout_pool",
-  "version": 1,
+  "version": 2,
   "ngay_tao_schema": "2026-08-27",
   "pha": "7B-prep",
   "__phan_chia_tham_quyen__": {
@@ -76,22 +80,28 @@
     "answer_available": "dan xuất từ `dap_an_chinh_thuc` khác rỗng; khai tường minh để soi nhanh",
     "evaluator": "TRƯỜNG MỚI (7B). Ai cung cấp đề+đáp án — KHÔNG phải người phán nghĩa vụ",
     "capability_tag": "TRƯỜNG MỚI (7A.5). Năng lực bài này ĐÒI, theo `CAPABILITY_BOUNDARY`. Nó nói VÌ SAO bài thuộc/không thuộc ranh giới, trong khi `slot` chỉ nói bài nằm ở ô nào — hai câu khác nhau, và ô A11 vừa cho thấy chúng lệch được",
-    "status": "TRƯỜNG MỚI (7A.5). accepted | rejected_capability_boundary | needs_manual_review — xem `__trang_thai_bai__`"
+    "status": "TRƯỜNG MỚI (7A.5). accepted | rejected_capability_boundary | needs_manual_review — xem `__trang_thai_bai__`",
+    "problem_text_original": "TRƯỜNG MỚI. Đề chép NGUYÊN VĂN từ nguồn, giữ đủ ký hiệu toán (=, ⊥, √, ∈, ∥). ĐO ĐƯỢC vì sao cần: trích tự động một PDF 217 trang về quan hệ vuông góc cho `⊥` xuất hiện ĐÚNG 0 LẦN — ký hiệu bị rơi im lặng mà văn bản vẫn đọc trôi chảy",
+    "problem_text_verified": "TRƯỜNG MỚI. `true` CHỈ khi có người mở nguồn đối chiếu từng ký hiệu. Chưa ⇒ `status: rejected_unverified`, KHÔNG được vào holdout",
+    "coverage_slot": "slot — cùng một thứ, tên máy đọc là `slot`",
+    "oracle_ref": "trong pool là `oracle_result.<khoá>`; con trỏ từ phía kỳ vọng là `expectations/holdout.json.oracle_ref = {pool_case_id, khoa}`",
+    "domain_condition": "TRƯỜNG MỚI. Điều kiện miền mà thẻ năng lực ĐÒI (ví dụ `rational_distance` ⇒ 'd hữu tỉ'). Bắt buộc với rational_distance · coplanar_section · angle_sin_sq",
+    "verifier_note": "TRƯỜNG MỚI. AI đối chiếu nguyên văn, bằng cách nào, ngày nào"
   },
   "__the_nang_luc__": {
-    "khai": "Giá trị hợp lệ của `capability_tag`, ánh xạ sang ô và hình dạng đáp án. Dẫn từ COVERAGE_MATRIX_BOUNDARY_REVIEW.md.",
+    "khai": "Giá trị hợp lệ của `capability_tag`, ánh xạ sang ô và hình dạng đáp án. NGUỒN SỰ THẬT là `seal_geometry_holdout.NANG_LUC` — `check_capability_boundary()` đọc từ đó, không đọc file này. Bảng ở đây để người soạn tra.",
     "intersection_point": {
       "o": [
         "A01"
       ],
-      "answer_shape": "construction",
+      "answer_shape": "invariant_relation",
       "trong_ranh_gioi": true
     },
     "incidence": {
       "o": [
         "A02"
       ],
-      "answer_shape": "verdict",
+      "answer_shape": "predicate_boolean",
       "trong_ranh_gioi": true
     },
     "parallel_relation": {
@@ -100,7 +110,7 @@
         "A04",
         "A05"
       ],
-      "answer_shape": "verdict",
+      "answer_shape": "predicate_boolean",
       "trong_ranh_gioi": true
     },
     "perpendicular_relation": {
@@ -109,14 +119,14 @@
         "A07",
         "A08"
       ],
-      "answer_shape": "verdict",
+      "answer_shape": "predicate_boolean",
       "trong_ranh_gioi": true
     },
     "angle_cos_sq": {
       "o": [
         "A09"
       ],
-      "answer_shape": "fraction",
+      "answer_shape": "exact_fraction",
       "trong_ranh_gioi": true,
       "ghi_chu": "cặp ĐƯỜNG–ĐƯỜNG và MẶT–MẶT"
     },
@@ -124,7 +134,7 @@
       "o": [
         "A10"
       ],
-      "answer_shape": "fraction",
+      "answer_shape": "exact_fraction",
       "trong_ranh_gioi": true,
       "ghi_chu": "⚠️ cặp ĐƯỜNG–MẶT trả sin², KHÔNG phải cos² — cùng tên trường `angle_cos_sq`, khai nhầm là chấm sai IM LẶNG"
     },
@@ -133,7 +143,7 @@
         "A11",
         "A12"
       ],
-      "answer_shape": "fraction",
+      "answer_shape": "exact_fraction",
       "trong_ranh_gioi": true,
       "ghi_chu": "CHỈ khi `d` hữu tỉ. Vô tỉ ⇒ GEOMETRY_IRRATIONAL_RESULT ⇒ ngoài ranh giới"
     },
@@ -141,7 +151,7 @@
       "o": [
         "A13"
       ],
-      "answer_shape": "verdict",
+      "answer_shape": "predicate_boolean",
       "trong_ranh_gioi": true,
       "ghi_chu": "chỉ khối đa diện LỒI"
     },
@@ -149,7 +159,7 @@
       "o": [
         "A14"
       ],
-      "answer_shape": "fraction",
+      "answer_shape": "exact_fraction",
       "trong_ranh_gioi": true,
       "ghi_chu": "luôn hữu tỉ — ô an toàn nhất"
     },
@@ -162,7 +172,7 @@
         "B05",
         "B06"
       ],
-      "answer_shape": "refusal",
+      "answer_shape": "rejection_expected",
       "trong_ranh_gioi": false,
       "ghi_chu": "CỐ Ý ngoài phủ — chấm bằng từ chối trung thực, không bằng đáp án"
     }
@@ -182,23 +192,23 @@
     "Soạn XONG pool rồi mới soạn `expectations/holdout.json`, và cả hai phải xong TRƯỚC khi xin seed."
   ],
   "__khuon_mot_bai__": {
-    "khai": "KHUÔN THAM CHIẾU, không phải một case. Nó nằm ngoài `cases` nên không lọt vào con dấu. Chép nó xuống `cases` rồi điền.",
+    "khai": "KHUÔN THAM CHIẾU, không phải một case. Đổi sang ô A14 (ô AN TOÀN NHẤT: volume luôn hữu tỉ) thay vì A11 — khuôn cũ dạy người soạn đi thẳng vào ô khó nhất.",
     "case_id": "hp_a11_001",
-    "slot": "A11",
+    "slot": "A14",
     "domain": "geometry_3d",
-    "geometry_family": "measurement",
+    "geometry_family": "solid_geometry",
     "difficulty": "van_dung",
-    "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
-    "problem_text": "<chép nguyên văn đề, tiếng Việt, KHÔNG cho sẵn toạ độ>",
+    "chu_de": "Thể tích khối chóp",
+    "problem_text": "<= problem_text_original, giữ nguyên>",
     "expected_construction_types": [
       "point3",
-      "plane3"
+      "solid"
     ],
     "expected_verification_types": [
-      "distance"
+      "volume"
     ],
     "expected_obligations": [
-      "distance"
+      "volume"
     ],
     "nguon": {
       "ten": "<tên tài liệu>",
@@ -208,11 +218,19 @@
     "evaluator": "<lời giải chính thức của nguồn — ai tính ra đáp án này>",
     "answer_available": true,
     "dap_an_chinh_thuc": "<chép NGUYÊN VĂN đáp án nguồn>",
-    "phep_chuyen": "<gán a = 2 ⇒ d = 1, HỮU TỈ ⇒ oracle_result.distance = \"1\". ⚠️ Nếu đổi cách nào cũng ra VÔ TỈ (a√3/3, a√2/2) thì bài NGOÀI PHỦ — loại, ghi vào __bai_bi_loai__, ĐỪNG khai bình phương để lách: `_do` trả khoảng cách THẬT chứ không trả d².>",
+    "phep_chuyen": "<gán a = 2 ⇒ V = 4/3 ⇒ oracle_result.volume = \"4/3\">",
     "oracle_result": {
-      "distance": "1"
+      "volume": "4/3"
     },
-    "chua_chay_he": true
+    "chua_chay_he": true,
+    "status": "accepted",
+    "capability_tag": "rational_volume",
+    "coverage_slot": "A14",
+    "answer_shape": "exact_fraction",
+    "problem_text_original": "<chép NGUYÊN VĂN từ nguồn, ĐỦ ký hiệu toán>",
+    "problem_text_verified": false,
+    "domain_condition": "thể tích khối đa diện toạ độ hữu tỉ ⇒ luôn hữu tỉ; chỉ cần tránh đề có TỈ SỐ dữ kiện vô tỉ (đáy cạnh a, SA = a√3)",
+    "verifier_note": "<ai đối chiếu nguyên văn · bằng cách nào · ngày>"
   },
   "cases": [
     {
@@ -224,7 +242,7 @@
       "slot": "A11",
       "domain": "geometry_3d",
       "geometry_family": "measurement",
-      "answer_shape": "fraction",
+      "answer_shape": "exact_fraction",
       "difficulty": "van_dung_cao",
       "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
       "problem_text": "Cho hình lập phương ABCD.MNPQ có cạnh bằng 6. Gọi E là trung điểm của đoạn thẳng AB. Khoảng cách từ điểm P đến mặt phẳng (MED) bằng bao nhiêu (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng đến hàng phần trăm)?",
@@ -250,7 +268,19 @@
       "chua_chay_he": true,
       "can_kiem_tay": true,
       "ghi_chu": "KHÔNG khai `oracle_result`: hệ không trả ra giá trị nào cho bài này, nó NÉM. Khai d² để lách là sai quy ước (`_do` trả khoảng cách thật) và tệ hơn — nó giấu đúng cái phát hiện.",
-      "co_the_dung_lai_khi": "BANG_O mở một ô tầng B cho lớp 'đáp án vô tỉ' — hiện KHÔNG có ô nào nhận nó (B01–B06 là chéo nhau · đường∥mặt · nhị diện · Oxyz · mặt cong · vectơ). Mở ô mới là ĐỔI THIẾT KẾ TẬP ĐO: N và ngân sách đổi theo, nên phải do người duyệt quyết, và phải quyết TRƯỚC khi niêm phong."
+      "co_the_dung_lai_khi": "BANG_O mở một ô tầng B cho lớp 'đáp án vô tỉ' — hiện KHÔNG có ô nào nhận nó (B01–B06 là chéo nhau · đường∥mặt · nhị diện · Oxyz · mặt cong · vectơ). Mở ô mới là ĐỔI THIẾT KẾ TẬP ĐO: N và ngân sách đổi theo, nên phải do người duyệt quyết, và phải quyết TRƯỚC khi niêm phong.",
+      "coverage_slot": "A11",
+      "problem_text_original": "Cho hình lập phương ABCD.MNPQ có cạnh bằng 6. Gọi E là trung điểm của đoạn thẳng AB. Khoảng cách từ điểm P đến mặt phẳng (MED) bằng bao nhiêu (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng đến hàng phần trăm)?",
+      "problem_text_verified": false,
+      "domain_condition": "rational_distance ĐÒI d hữu tỉ — bài này d = 3√6, KHÔNG thoả",
+      "verifier_note": "Chưa ai đối chiếu nguyên văn. Đề lấy qua công cụ đọc web (nội dung đi qua một mô hình tóm tắt). Dù vậy bài đã bị loại vì lý do MẠNH HƠN: ngoài ranh giới năng lực."
     }
-  ]
+  ],
+  "__answer_shape__": {
+    "khai": "TẬP ĐÓNG, khớp `seal_geometry_holdout.ANSWER_SHAPE`. KHÔNG có `float`, KHÔNG có giá trị làm tròn, KHÔNG có 'quan sát bằng mắt' — cả ba đưa sai số hoặc phán đoán người vào chỗ đang cần một phép so chính xác.",
+    "exact_fraction": "phân số CHÍNH XÁC. `distance` (chỉ khi hữu tỉ) · `volume` · `angle` dạng cos²/sin². Căn thức ⇒ NGOÀI ranh giới, không phải chuyện đổi cách viết",
+    "predicate_boolean": "true/false. Thuộc · song song · vuông góc · đồng phẳng",
+    "invariant_relation": "bất biến tỉ lệ, ví dụ 'Q là trung điểm AD' — dùng khi vật dựng ra không so được bằng toạ độ vì mô hình tự chọn hệ trục",
+    "rejection_expected": "CHỈ ô tầng B. Chấm bằng 'từ chối trung thực / bịa hình', không bằng đáp án"
+  }
 }
