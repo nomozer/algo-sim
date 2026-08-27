@@ -241,6 +241,30 @@ def check_capability_boundary(c: dict) -> list[str]:
     return loi
 
 
+def _kiem_nguoi_xac_minh(cid: str, c: dict) -> list[str]:
+    """`human_verifier` và `oracle_ref` phải là TRƯỜNG, không phải văn xuôi.
+
+    Hai câu này phải trả lời được **bằng máy**: *ai đã xác minh đề nguyên văn*
+    và *khoá nào trong `oracle_result` là oracle*. Câu thứ hai từng chỉ được
+    dặn bằng văn xuôi trong `dev/cases.json §luat_soan` (*"khoá văn xuôi KHÔNG
+    dùng để chấm"*) — mà bộ chấm thì không đọc văn xuôi.
+    """
+    loi: list[str] = []
+    if c.get("problem_text_verified") is True and not c.get("human_verifier"):
+        loi.append(f"{cid}: `problem_text_verified` là true mà không có "
+                   "`human_verifier` — không ai chịu trách nhiệm cho chữ ký ấy")
+    oracle = c.get("oracle_result") or {}
+    if oracle:
+        ref = c.get("oracle_ref")
+        if not ref:
+            loi.append(f"{cid}: có `oracle_result` mà thiếu `oracle_ref` — "
+                       f"không biết khoá nào là oracle (có: {sorted(oracle)})")
+        elif ref not in oracle:
+            loi.append(f"{cid}: `oracle_ref` = {ref!r} không có trong "
+                       f"`oracle_result` (có: {sorted(oracle)})")
+    return loi
+
+
 def _kiem_don_vi_oracle(cid: str, tag: str, oracle: dict) -> list[str]:
     """Đơn vị oracle phải khớp `geometry_exec._do`. Lỗi ở đây là **im lặng**:
     oracle đúng về giá trị mà sai về đơn vị vẫn chấm ra một con số."""
@@ -341,6 +365,11 @@ def kiem_pool(cases: list[dict]) -> list[str]:
                     f"{cid}: `problem_text_verified` chưa true — chưa ai đối "
                     "chiếu NGUYÊN VĂN với nguồn. Đề chép sai một ký hiệu là "
                     "một bài toán KHÁC, và nó vẫn đọc trôi chảy.")
+            # XUẤT XỨ, không phải NĂNG LỰC — nên kiểm ở đây chứ không nhét vào
+            # `check_capability_boundary`. Hai câu hỏi khác nhau: cái kia hỏi
+            # *"hệ làm được bài này không"*, cái này hỏi *"ai chịu trách nhiệm
+            # cho dữ liệu này"*.
+            loi += _kiem_nguoi_xac_minh(cid, c)
         if c.get("can_kiem_tay") is True:
             # NỢ ĐỐI CHIẾU, thêm 2026-08-27. Đề thu thập bằng công cụ đọc web
             # đi qua một mô hình tóm tắt, nên `problem_text` là bản chép LẠI

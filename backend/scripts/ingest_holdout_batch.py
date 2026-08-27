@@ -198,6 +198,13 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         "answer_available": bool(b["dap_an"]),
         "dap_an_chinh_thuc": b["dap_an"],
         "chua_chay_he": True,
+        # AI xác minh — TRƯỜNG RIÊNG, không chôn trong một câu văn.
+        #
+        # Trước bản này danh tính người chép chỉ nằm trong `verifier_note` dạng
+        # văn xuôi. Câu *"ai đã xác minh bài này"* khi ấy chỉ trả lời được bằng
+        # cách bóc chuỗi — tức không kiểm được bằng máy, mà đây đúng là thứ cần
+        # kiểm được: nó là chữ ký cho toàn bộ bước xác minh nguyên văn.
+        "human_verifier": nguoi,
         "verification_note": (
             f"Đề do NGƯỜI chép nguyên văn từ nguồn: {nguoi}. Không qua OCR, "
             "không qua công cụ đọc web, không qua mô hình viết lại."),
@@ -205,6 +212,14 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
     }
     if (khoa := _khoa_oracle(SH, tag)) and b["dap_an"]:
         c["oracle_result"] = {khoa: b["dap_an"]}
+        # KHOÁ NÀO trong `oracle_result` là oracle — khai tường minh.
+        #
+        # `oracle_result` có thể mang nhiều khoá (khoá văn xuôi làm ghi chú cho
+        # người đọc, như `hinh_chieu_la`), và `dev/cases.json §luat_soan` đã
+        # phải viết cả một đoạn dặn *"khoá văn xuôi KHÔNG dùng để chấm"*. Một
+        # dặn dò bằng văn xuôi thì bộ chấm không đọc được. Trường này biến nó
+        # thành thứ máy tra được.
+        c["oracle_ref"] = khoa
         c["phep_chuyen"] = (
             f"Đáp án nguồn chép thẳng vào đơn vị checker (`{khoa}`). "
             "Nếu nguồn viết dạng khác (căn thức, số làm tròn) thì bài NGOÀI "

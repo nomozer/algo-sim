@@ -270,9 +270,10 @@ def _bai_a14(**doi) -> dict:
     c = {"case_id": "hp_a14_001", "status": "accepted", "slot": "A14",
          "capability_tag": "rational_volume", "answer_shape": "exact_fraction",
          "problem_text": "đề", "problem_text_original": "đề",
-         "problem_text_verified": True,
+         "problem_text_verified": True, "human_verifier": "Người kiểm thử",
          "nguon": {"url": "https://x"}, "dap_an_chinh_thuc": "4/3",
          "phep_chuyen": "gán a = 2 ⇒ V = 4/3", "oracle_result": {"volume": "4/3"},
+         "oracle_ref": "volume",
          "expected_obligations": ["volume"], "chua_chay_he": True}
     c.update(doi)
     return c
@@ -710,6 +711,43 @@ def test_bao_cao_ung_vien_khai_dung_READY_FOR_INGEST():
     assert m, "báo cáo thiếu dòng ACCEPTABLE_CANDIDATES"
     co = int(m.group(1)) > 0
     assert (f"READY_FOR_INGEST:      {'YES' if co else 'NO'}") in src
+
+
+# ══ human_verifier + oracle_ref là TRƯỜNG, không phải văn xuôi ═══════════
+def test_ingest_sinh_du_human_verifier_va_oracle_ref(IN, SH):
+    nguoi, bai, loi = IN.phan_tich(_LO, SH)
+    assert loi == []
+    c = IN.thanh_case(bai[0], nguoi, SH)
+    assert c["human_verifier"] == nguoi, "danh tính người chép phải là TRƯỜNG"
+    assert c["oracle_ref"] == "volume"
+    assert c["oracle_ref"] in c["oracle_result"]
+
+
+def test_XAC_MINH_true_ma_KHONG_ai_ky_thi_DO(SH):
+    """Chữ ký không có người ký thì không phải chữ ký."""
+    b = _bai_a14()
+    b.pop("human_verifier", None)
+    loi = SH.kiem_pool([b])
+    assert loi and "human_verifier" in loi[0]
+
+
+def test_co_ORACLE_ma_khong_biet_KHOA_NAO_la_oracle_thi_DO(SH):
+    """`oracle_result` mang được nhiều khoá — khoá văn xuôi là ghi chú cho
+    người đọc, không dùng để chấm. Dặn dò ấy từng chỉ nằm trong văn xuôi của
+    `dev/cases.json`, mà bộ chấm không đọc văn xuôi."""
+    b = _bai_a14(human_verifier="X")
+    b.pop("oracle_ref", None)
+    loi = SH.kiem_pool([b])
+    assert loi and "thiếu `oracle_ref`" in loi[0]
+
+    b2 = _bai_a14(human_verifier="X", oracle_ref="khong_ton_tai")
+    loi2 = SH.kiem_pool([b2])
+    assert loi2 and "không có trong" in loi2[0]
+
+
+def test_bai_HOP_LE_day_du_van_qua(SH):
+    b = _bai_a14(human_verifier="Người kiểm thử", oracle_ref="volume")
+    assert SH.kiem_pool([b]) == []
 
 
 def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
