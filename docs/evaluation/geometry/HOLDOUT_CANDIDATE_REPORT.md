@@ -17,7 +17,7 @@ READY_FOR_INGEST:      NO
 |---|--:|--:|--:|--:|
 | mathvn — 2026 | — | 208 | 125 | 45 |
 | mathvn — SGK 2024-26 | — | 9 | 4 | 0 |
-| mathvn — 2024-2025 | — | đang chạy (136 trang) | — | — |
+| mathvn — 2024-2025 | — | 7 | 0 | 1 |
 | **toanmath.com** | 34 sitemap | **0** | **0** | — |
 | vted · hoc247 · diendantoanhoc | — | **0** | **0** | chặn fetch |
 | loigiaihay · vietjack | — | **0** | **0** | ảnh / chặn |

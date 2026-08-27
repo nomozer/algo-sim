@@ -267,7 +267,13 @@ thấy ở lượt 2 khi đọc `bai-tap-416-417-418`: có lời giải, không 
 | A — lọc từ khoá | 60 | 2 | 2 | **0** |
 | B — toàn bộ 2026 | 344 | 125 | 26 | **0** |
 | C — nhánh SGK | 269 | 4 | ~0 | **0** |
-| **Tổng** | **673** | **131** | **26** | **0** |
+| D — toàn bộ 2024–2025 | 481 | **0** | 0 | **0** |
+| **Tổng** | **1154** | **131** | **26** | **0** |
+
+⚠️ **Lượt D cho 0 SẠCH trên 481 url** — 7 trang có khối đề, cả 7 rớt vì không
+có dấu vết LaTeX. Đây là bằng chứng cho một điều đã đoán ở lượt B: khuôn
+`math-box`/`Đề bài` là **của riêng loạt bài 2026**; bài cũ hơn đăng toán bằng
+**ảnh**. Quét rộng thêm về quá khứ **không** tăng sản lượng.
 
 Sàng theo đúng luật nhận bài của Phase 7B.1 (chỉ tự luận · có mệnh lệnh dựng
 hoặc tính · không vô tỉ · không Oxyz cho sẵn · không mặt cong · không cần hình
