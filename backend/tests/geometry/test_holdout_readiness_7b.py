@@ -525,6 +525,45 @@ def test_ORACLE_dang_can_thuc_bi_CONG_chan(IN, SH):
     assert any("CĂN THỨC" in d for d in SH.check_capability_boundary(c))
 
 
+@pytest.mark.parametrize("cho_trong", ["<tên người chép>", "TODO", "..."])
+def test_NGUOI_CHEP_con_CHO_TRONG_thi_TU_CHOI(IN, SH, cho_trong):
+    """Một chứng nhận xác minh mang tên `<tên người chép>` thì không chứng nhận
+    gì cả. Khuôn `batch_001.txt` mang sẵn chỗ trống, nên lỗ này là có thật."""
+    _, _, loi = IN.phan_tich(
+        _LO.replace("Nguyễn Văn A · 2026-08-28 · SGK Toán 11 tập 2 KNTT",
+                    cho_trong), SH)
+    assert loi and "CHỖ TRỐNG" in loi[0]
+
+
+@pytest.mark.parametrize("truong,dong_cu", [
+    ("NGUỒN", "      NGUỒN: SGK Toán 11 tập 2 KNTT, bài 7.15 trang 62"),
+    ("ĐÁP ÁN", "      ĐÁP ÁN: 4")])
+def test_TRUONG_con_CHO_TRONG_thi_TU_CHOI(IN, SH, truong, dong_cu):
+    """Thay cả DÒNG, không thay giá trị: thay `"4"` thì `[A14]` cũng thành
+    `[A1<…>]` và mốc bài gãy — test đỏ vì lý do khác cái nó định kiểm."""
+    _, _, loi = IN.phan_tich(
+        _LO.replace(dong_cu, f"      {truong}: <…>"), SH)
+    assert any("CHỖ TRỐNG" in d and truong in d for d in loi), loi
+
+
+def test_dong_CHU_THICH_khong_bi_nuot_vao_DE_BAI(IN, SH):
+    """Lỗi thật, bắt được khi chạy khuôn: khối hướng dẫn ở cuối file bị nuốt
+    vào đề của bài CUỐI CÙNG. Đề dài ngoằng ấy vẫn qua mọi cổng về mặt kiểu,
+    rồi vào tập đã niêm phong."""
+    _, bai, _ = IN.phan_tich(_LO + "\n# Xong thì chạy: ingest --ghi\n# hết\n", SH)
+    assert "#" not in bai[0]["de"] and "ingest" not in bai[0]["de"]
+
+
+def test_KHUNG_batch_001_ton_tai_va_KHONG_the_nap_duoc(IN, SH):
+    """Khung phải nằm sẵn ở chỗ giao thức chỉ, nhưng **không** nạp được chừng
+    nào còn chỗ trống — nếu không thì nó là một lô đề giả."""
+    f = GEO / "holdout" / "batch_001.txt"
+    assert f.exists(), "chưa có khung batch_001.txt"
+    _, _, loi = IN.phan_tich(f.read_text(encoding="utf-8"), SH)
+    assert loi, "khung chưa điền mà nạp được — cổng xác minh thành ô trống"
+    assert any("NGƯỜI CHÉP" in d for d in loi)
+
+
 def test_bo_nap_KHONG_tu_viet_dong_NGUOI_CHEP():
     """Tôi tự viết dòng ấy là tự cấp cho mình một chứng nhận không có tư cách
     cấp. Docstring phải nói thẳng điều đó."""

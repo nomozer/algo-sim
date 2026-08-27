@@ -1,0 +1,79 @@
+﻿# ═══════════════════════════════════════════════════════════════════════
+# BATCH 001 — KHUNG CHƯA ĐIỀN. Đây KHÔNG phải một lô đề.
+#
+# Mọi chỗ <...> là chỗ NGƯỜI phải điền. Chừng nào còn <...> thì
+#     python scripts/ingest_holdout_batch.py \
+#         docs/evaluation/geometry/holdout/batch_001.txt
+# sẽ TỪ CHỐI cả lô — đó là hành vi đúng, không phải lỗi.
+#
+# ─── VÌ SAO PHẢI LÀ NGƯỜI CHÉP ─────────────────────────────────────────
+#
+# Giao thức đòi đề NGUYÊN VĂN. Đã thử ba kênh tự động và ĐO ĐƯỢC rằng cả ba
+# hỏng IM LẶNG — văn bản ra vẫn đọc như một đề bài, nhưng đã là bài khác:
+#
+#   · công cụ đọc web   → nội dung đi qua một mô hình TÓM TẮT
+#   · trích PDF tự động → rơi ký hiệu toán. Trên một chuyên đề 217 trang về
+#                         QUAN HỆ VUÔNG GÓC, ký hiệu `⊥` xuất hiện ĐÚNG 0 LẦN
+#                         (√ 0 · ∈ 0 · ∥ 0), trong khi `=` còn 1303.
+#                         Hai thư viện độc lập cùng kết quả.
+#   · quét HTML thô     → giữ được nguyên văn, NHƯNG 673 url chỉ cho 0 bài tự
+#                         luận trong ranh giới (92% đề công khai là trắc nghiệm)
+#
+# Thứ duy nhất chưa hỏng là NGƯỜI mở sách ra đọc và gõ lại. Nên hành vi chép
+# của bạn CHÍNH LÀ bước xác minh, và dòng `NGƯỜI CHÉP:` là chữ ký cho nó.
+# Agent KHÔNG được tự điền dòng ấy — tự điền là tự cấp một chứng nhận không
+# có tư cách cấp.
+#
+# ─── LUẬT NHẬN BÀI (Phase 7B.1) ────────────────────────────────────────
+#
+#   NHẬN : đề TỰ LUẬN · yêu cầu dựng hình hoặc tính · dữ kiện HỮU TỈ
+#   LOẠI : trắc nghiệm 4 phương án · chọn đáp án
+#          dữ kiện hoặc đáp án CÓ CĂN (a√3, a√2/2 …)   ← rất phổ biến, coi kỹ
+#          đề tham chiếu "hình vẽ bên" mà văn bản không có
+#          mặt cầu · nón · trụ (kernel dựng trên đa diện)
+#          Oxyz cho sẵn toạ độ (mô hình phải TỰ đặt hệ trục — đó là nửa khó)
+#
+# ─── ĐƠN VỊ `ĐÁP ÁN` (dẫn từ `geometry_exec._do`) ──────────────────────
+#
+#   thể tích      phân số:  4   ·   4/3          ← KHÔNG viết 1.333
+#   khoảng cách   phân số, và phải HỮU TỈ         ← có căn ⇒ LOẠI bài
+#   góc đ–đ, m–m  cos²   ·  góc đ–MẶT  →  sin²    ← khác nhau, coi kỹ
+#   quan hệ       true  /  false
+#
+# Ô B01–B06 (ngoài phủ): BỎ TRỐNG dòng `ĐÁP ÁN` — chúng chấm bằng
+# "từ chối trung thực", không bằng đáp án.
+#
+# ─── ƯU TIÊN BATCH 001: 3–5 bài A14 (thể tích) ─────────────────────────
+#
+# A14 là ô AN TOÀN NHẤT: thể tích khối đa diện toạ độ hữu tỉ LUÔN hữu tỉ,
+# nên không vướng rào vô tỉ ở phía đáp án. Chỉ cần tránh dữ kiện có căn.
+# ═══════════════════════════════════════════════════════════════════════
+
+NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ đâu: sách nào, tập nào, hoặc PDF nào>
+
+
+[A14] <chép NGUYÊN VĂN đề bài vào đây, giữ đủ = ⊥ √ ∈ ∥.
+       Ví dụ dạng đúng — KHÔNG dùng lại, chỉ để xem hình thức:
+       "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA
+        vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABCD.">
+      NGUỒN: <tên sách · bài số · trang>   hoặc   <url>
+      ĐÁP ÁN: <đáp án chính thức của nguồn, dạng phân số>
+
+
+[A14] <bài thứ hai>
+      NGUỒN: <…>
+      ĐÁP ÁN: <…>
+
+
+[A14] <bài thứ ba>
+      NGUỒN: <…>
+      ĐÁP ÁN: <…>
+
+
+# Thêm bài thì chép thêm khối [A14] … như trên. Xong thì chạy:
+#
+#   cd backend
+#   python scripts/ingest_holdout_batch.py \
+#       ../docs/evaluation/geometry/holdout/batch_001.txt          # soi
+#   python scripts/ingest_holdout_batch.py \
+#       ../docs/evaluation/geometry/holdout/batch_001.txt --ghi    # ghi vào pool

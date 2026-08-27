@@ -100,8 +100,30 @@ def _the_cho_o(SH, o: str) -> str | None:
     return hop[0] if len(hop) == 1 else None
 
 
+#: Dấu CHỖ TRỐNG chưa điền. Bịt ở đây vì khuôn `batch_001.txt` mang sẵn chúng,
+#: và một `NGƯỜI CHÉP: <tên người chép>` lọt qua thì cổng xác minh thành ô
+#: trống — đúng cái nó sinh ra để chặn.
+_CHO_TRONG = re.compile(r"<[^>]*>|\bTODO\b|\.\.\.|…")
+
+
+def _con_cho_trong(s: str | None) -> bool:
+    return bool(s) and bool(_CHO_TRONG.search(s))
+
+
+def _bo_chu_thich(van_ban: str) -> str:
+    """Bỏ dòng bắt đầu bằng `#`.
+
+    KHÔNG phải tiện nghi: khuôn `batch_001.txt` có khối hướng dẫn ở cuối, và
+    không bỏ thì cả khối ấy bị nuốt vào **đề bài của bài cuối cùng** — một đề
+    dài ngoằng vẫn qua được mọi cổng về mặt kiểu, rồi vào tập đã niêm phong.
+    """
+    return "\n".join(d for d in van_ban.splitlines()
+                     if not d.lstrip().startswith("#"))
+
+
 def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
     """Trả `(người chép, danh sách bài, danh sách lỗi)`."""
+    van_ban = _bo_chu_thich(van_ban)
     loi: list[str] = []
     m = _NGUOI.search(van_ban)
     nguoi = m.group(1).strip() if m else None
@@ -110,6 +132,11 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
             "THIẾU dòng `NGƯỜI CHÉP:` — không có nó thì không ai chịu trách "
             "nhiệm cho việc đề đúng NGUYÊN VĂN, và mọi kênh tự động đã đo được "
             "là hỏng IM LẶNG. Xem docstring.")
+    elif _con_cho_trong(nguoi):
+        loi.append(
+            f"`NGƯỜI CHÉP: {nguoi}` vẫn là CHỖ TRỐNG chưa điền. Một chứng nhận "
+            "xác minh mang tên `<tên người chép>` thì không chứng nhận gì cả — "
+            "điền tên thật, ngày thật, và chép từ đâu.")
 
     bai: list[dict] = []
     for i, (o, than) in enumerate(_BAI.findall(van_ban), 1):
@@ -122,6 +149,9 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
 
         if len(de) < 40:
             loi.append(f"{ma}: đề quá ngắn ({len(de)} ký tự) — chép thiếu?")
+        for ten, gt in (("đề", de), ("NGUỒN", nguon), ("ĐÁP ÁN", dap_an)):
+            if _con_cho_trong(gt):
+                loi.append(f"{ma}: {ten} vẫn là CHỖ TRỐNG chưa điền ({gt!r})")
         if not nguon:
             loi.append(f"{ma}: thiếu dòng `NGUỒN:` — đáp án không tra ngược "
                        "được thì không phải oracle độc lập")
