@@ -17,7 +17,8 @@
     "`nguon.url` bắt buộc: một đáp án không tra ngược được thì không phải oracle độc lập, chỉ là một con số ai đó gõ vào.",
     "`dap_an_chinh_thuc` chép NGUYÊN VĂN đáp án nguồn (ví dụ `a√3/3`). KHÔNG chuẩn hoá ở đây.",
     "`phep_chuyen` ghi RÕ cách đổi sang đơn vị checker, kèm giá trị gán cho tham số cạnh. Đây là chỗ duy nhất người soạn được phép tính, và nó phải hiện ra để người khác kiểm lại.",
-    "`oracle_result` dùng đúng đơn vị checker: `distance`/`volume` là phân số dạng chuỗi; `angle` là cos²; quan hệ là true/false.",
+    "`oracle_result` dùng ĐÚNG đơn vị của `geometry_exec._do`: `distance` = khoảng cách THẬT và phải HỮU TỈ (engine NÉM `GEOMETRY_IRRATIONAL_RESULT` khi vô tỉ — KHÔNG trả bình phương, KHÔNG làm tròn) · `angle` = cos² cho đường–đường và mặt–mặt nhưng **sin²** cho đường–mặt · `volume` = phân số · quan hệ = true/false.",
+    "LOẠI đề mà `distance` ra VÔ TỈ (a√3/3, a√2/2 …) và đề mà TỈ SỐ hai dữ kiện độ dài là vô tỉ (`đáy cạnh a, SA = a√3`) — kernel dựng trên `Fraction`. Cả hai lớp này CỰC PHỔ BIẾN trong đề thi Việt Nam, nên phải soi từng bài. Xem `pool.json.__don_vi_oracle__`.",
     "Ô B* KHÔNG có `oracle_result` — chấm bằng 'từ chối trung thực', không bằng đáp án.",
     "`chua_chay_he: true` khai tại thời điểm soạn. Soạn đáp án sau khi thấy hệ chạy là chép bài của chính mình.",
     "Đề KHÔNG được trùng tập DEV (`../dev/cases.json`) — bộ rút chặn cứng."
@@ -35,8 +36,8 @@
         "vi_tri": "<Câu 43 / trang 12>"
       },
       "dap_an_chinh_thuc": "<a√3/3>",
-      "phep_chuyen": "<gán a = 1 ⇒ d = √3/3 vô tỉ ⇒ checker so d² = 1/3>",
-      "oracle_result": { "distance": "1/3" },
+      "phep_chuyen": "<gán a = 2 ⇒ d = 1, HỮU TỈ ⇒ distance = \"1\". Nếu đổi cách nào cũng vô tỉ thì bài NGOÀI PHỦ — loại, đừng khai d² để lách>",
+      "oracle_result": { "distance": "1" },
       "chua_chay_he": true
     },
     {

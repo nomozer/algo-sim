@@ -9,9 +9,68 @@
 
 ## 0. Kết quả một câu
 
-**1 bài lấy được, 39 bài còn thiếu.** Không phải vì thiếu nguồn — đề thi công
-khai của Việt Nam có rất nhiều — mà vì **định dạng**: thứ có đề đầy đủ thì nằm
-trong PDF hoặc ảnh, thứ đọc được dạng văn bản thì mỗi trang một bài.
+**0 bài hợp lệ. 1 bài đã thu rồi bị LOẠI.** Hai rào, và rào thứ hai quan trọng
+hơn nhiều:
+
+1. **Định dạng** — đề đầy đủ nằm trong PDF hoặc ảnh; thứ đọc được dạng văn bản
+   thì mỗi trang một bài (lượt 1).
+2. **Miền số của kernel** — phần lớn đề thi hình học Việt Nam có **dữ kiện hoặc
+   đáp án vô tỉ** (`a√3`, `a√2/2`), mà kernel dựng trên `Fraction` (lượt 2, §1b).
+
+Rào thứ hai không phải chuyện thu thập chậm — nó **thu hẹp tập đề đủ tư cách**,
+và phải xử lý trước khi soạn tiếp 40 bài rồi mới phát hiện phần lớn phải loại.
+
+---
+
+## 1b. ⛔ RÀO LỚN NHẤT — miền số của kernel (phát hiện lượt 2)
+
+Kernel dựng trên `Fraction` **có chủ đích** (`exact.py`: so bằng đúng, không
+epsilon, nên vuông góc/song song/đồng phẳng là phép so **chính xác**). Hệ quả
+với việc **chọn đề** thì chưa ai viết ra, và nó loại rất nhiều:
+
+### Ba lớp đề KHÔNG đủ tư cách vào tầng A
+
+| Lớp | Ví dụ | Vì sao |
+|---|---|---|
+| **Tỉ số dữ kiện vô tỉ** | *đáy cạnh `a`, `SA = a√3`* | không hệ trục nào làm **cả hai** hữu tỉ. Chọn `a=1` ⇒ `SA=√3`; chọn `a=√3` ⇒ đáy vô tỉ |
+| **Đáp án `distance` vô tỉ** | `d = a√3/3`, `d = 3√6` | `geometry_exec._do` **NÉM** `GEOMETRY_IRRATIONAL_RESULT`. Không làm tròn, **không** trả bình phương |
+| (hệ quả) phần lớn đề khoảng cách trong đề thi thật | | đáp án đề thi hầu như luôn có căn |
+
+**KHÔNG áp cho `angle` và `volume`:** `angle` trả `cos²`/`sin²` — luôn hữu tỉ
+khi toạ độ hữu tỉ; `volume` của khối đa diện hữu tỉ luôn hữu tỉ. Nên **A09,
+A10, A14 vẫn dễ tìm đề**; **A11, A12 mới là hai ô khó**.
+
+### Kiểm chứng bằng chính kernel, không suy đoán
+
+```python
+d2 = distance_sq_point_plane(P, Plane3.through(M, E, D))   # = 54
+_can_huu_ti(Fraction(54))                                  # → None ⇒ NÉM
+```
+
+Khoá bởi `test_distance_VO_TI_thi_engine_NEM_chu_khong_tra_binh_phuong`.
+
+### Và một bẫy đơn vị nữa, im lặng hơn
+
+`angle_cos_sq` trả **cos²** cho cặp đường–đường và mặt–mặt, nhưng **sin²** cho
+cặp **đường–mặt** (`sin_sq_line_plane`) — cùng một tên trường. Ô **A10** (góc
+đường–mặt) khai nhầm `cos²` thì chấm sai mà không cổng nào báo. Đã ghi vào
+`pool.json.__don_vi_oracle__` và khoá bằng test.
+
+### Quyết định cần người — KHÔNG tự quyết
+
+`BANG_O` hiện **không có ô nào** nhận lớp *"đáp án vô tỉ"*: B01–B06 là chéo
+nhau · đường∥mặt · nhị diện · Oxyz · mặt cong · vectơ. Ba đường đi, và cả ba
+đều đổi tính chất của lượt đo:
+
+| | Đường | Cái giá |
+|---|---|---|
+| **1** | **Chỉ nhận đề `distance` hữu tỉ** vào A11/A12 | tập bớt đại diện: đề thi thật hầu như luôn ra căn. Phải khai giới hạn ấy khi báo số |
+| **2** | **Mở một ô tầng B** cho lớp vô tỉ, chấm bằng *từ chối trung thực* | đúng tinh thần tầng B (**hệ có nói thẳng là không biểu diễn chính xác được không?**), nhưng **N đổi từ 20** ⇒ ngân sách và `HOLDOUT_K_FINAL` phải chốt lại |
+| **3** | Cho `measure` trả bình phương cho `distance` | **SỬA HỆ** ⇒ ngoài phạm vi mọi pha 7A/7B, và phá `measured_system_hash` |
+
+Đường **3 bị loại ngay** — pha này cấm sửa hệ. Chọn giữa **1** và **2** là việc
+của người duyệt, và phải xong **trước** khi soạn tiếp pool, nếu không sẽ soạn
+40 bài rồi mới biết phần lớn phải loại.
 
 ---
 
@@ -60,58 +119,90 @@ mô hình tóm tắt, nên `can_kiem_tay` hạ được ngay lúc chép.
 
 ---
 
-## 3. Bài đã thu — 1/40
+## 3. Bài đã thu — và bị LOẠI
 
-### `hp_a11_001` · ô **A11** · họ `measurement` · `quantity`
+### ❌ `hp_a11_001` — thu ở lượt 1, loại ở lượt 2
 
 | | |
 |---|---|
 | Nguồn | **Đề thi chính thức TN THPT 2026**, mã đề 0103, Câu 6 Phần III (thi 11/06/2026) |
 | url | https://www.mathvn.com/2026/06/tinh-khoang-cach-tu-iem-en-mat-phang.html |
 | Đáp án nguồn | **7,35** (đề yêu cầu làm tròn hàng phần trăm) |
-| Đơn vị oracle | `d² = 54` |
+| Ô dự kiến | A11 |
+| **Lý do loại** | **đáp án VÔ TỈ** — hệ không phục vụ được |
 
-**`phep_chuyen`, và vì sao bài này cần nó:** đáp án nguồn là số **đã làm tròn**,
-không dùng thẳng làm oracle được. Tính lại độc lập: `A(0,0,0) B(6,0,0) D(0,6,0)
-M(0,0,6) P(6,6,6)`, `E(3,0,0)`; mặt `(MED)`: `x/3 + y/6 + z/6 = 1` ⇒
-`2x + y + z − 6 = 0`; `d(P) = |12+6+6−6|/√6 = 18/√6 = 3√6 ≈ 7,348…` → làm tròn
-**7,35**, khớp đáp án nguồn. `3√6` vô tỉ ⇒ checker so `d² = 54`.
+Tính lại độc lập: `A(0,0,0) B(6,0,0) D(0,6,0) M(0,0,6) P(6,6,6)`, `E(3,0,0)`;
+mặt `(MED)`: `x/3 + y/6 + z/6 = 1` ⇒ `2x + y + z − 6 = 0`;
+`d(P) = |12+6+6−6|/√6 = 18/√6 = 3√6 ≈ 7,348…` → làm tròn **7,35**, **khớp đáp án
+nguồn**. Nhưng `d² = 54` và `√54` không hữu tỉ ⇒ `_do` ném
+`GEOMETRY_IRRATIONAL_RESULT`.
 
-Phép tính này **đã được làm lại độc lập và khớp nguồn tới hàng phần trăm** — đó
-là lý do tin được. Nhưng nó vẫn là *tôi tính*, và `phep_chuyen` phải hiện ra để
-người khác kiểm lại; giấu nó đi thì *"oracle độc lập"* chỉ còn là lời khai.
+**Bản trước của pool khai `oracle_result: {distance: "54"}` — SAI QUY ƯỚC.**
+`_do` trả **khoảng cách thật** cho `distance`, không trả bình phương. Lỗi ấy
+chép theo `pool.template.json`, và khuôn ấy cũng dạy sai (`d² = 1/3`); cả hai
+đã sửa cùng lượt này.
 
-⚠️ Bài này **vẫn mang `can_kiem_tay: true`** — phần chưa xác nhận là **văn bản
-đề**, không phải phép tính.
+> **Đây là lý do bài phải bị loại chứ không phải sửa đơn vị:** đổi
+> `oracle_result` sang `"54"` hay `"3√6"` đều vô nghĩa — hệ **không trả ra giá
+> trị nào cả**, nó ném lỗi. Giữ bài trong A11 là dựng một ô **chắc chắn trượt**
+> rồi ghi cái trượt ấy vào luận văn thành *"mô hình không làm được khoảng
+> cách"*. Đúng loại sai lệch mà Phase 7A.1 đã phải đi sửa một lần.
+
+Bài này dùng lại được **nếu** chọn đường ② ở §1b (mở một ô tầng B cho lớp vô
+tỉ) — khi đó nó thành một ca *"từ chối trung thực"* khá tốt, vì hệ **nên** nói
+thẳng là không biểu diễn chính xác được thay vì làm tròn.
 
 ---
 
-## 4. Việc còn lại — 19 ô trống
+## 4. Việc còn lại — cả 20 ô trống
 
-```
-A01 A02 A03 A04 A05 A06 A07 A08 A09 A10 A12 A13 A14 B01 B02 B03 B04 B05 B06
-```
+Thứ tự đề nghị, **xếp lại theo rào §1b** (không còn theo độ sẵn có của nguồn):
 
-Thứ tự đề nghị, theo độ sẵn có của nguồn:
-
-1. **A14 (thể tích) · A11–A12 (khoảng cách) · A09–A10 (góc)** — đề thi năm nào
-   cũng có, và đáp án là một số nên `phep_chuyen` gọn.
-2. **A03–A08 (song song · vuông góc)** — nhiều trong chuyên đề Toán 11. Đáp án
-   là **true/false** nên không cần `phep_chuyen`, nhưng phải chọn đề hỏi *chứng
-   minh một quan hệ cụ thể*, đừng lấy đề trắc nghiệm bốn phương án.
+1. **A14 (thể tích) · A09–A10 (góc)** — **dễ nhất**, và lý do là toán học chứ
+   không phải may mắn: `volume` và `cos²/sin²` **luôn hữu tỉ** khi toạ độ hữu
+   tỉ, nên không vướng rào vô tỉ. Chỉ cần tránh đề có **dữ kiện** vô tỉ
+   (`SA = a√3`). ⚠️ A10 phải khai **sin²**, không phải cos².
+2. **A03–A08 (song song · vuông góc)** — đáp án **true/false**, không cần
+   `phep_chuyen`, không vướng vô tỉ. Chọn đề hỏi *chứng minh một quan hệ cụ
+   thể*, đừng lấy trắc nghiệm bốn phương án. Vẫn phải tránh dữ kiện vô tỉ.
 3. **A01 · A02 · A13** — giao tuyến, điểm thuộc mặt, thiết diện. Khó tìm dạng
    *"dựng rồi chỉ ra"*; phần lớn đề thi hỏi trắc nghiệm.
-4. **B01–B06** — sáu ô **ngoài phủ**, chấm bằng *từ chối trung thực*. Dễ tìm
-   nhất (chỉ cần đề đúng loại, **không** cần đáp án ở đơn vị checker) nhưng
-   **B03 — góc nhị diện có miền** là ô quan trọng nhất cả tập: nó kiểm hệ có
-   lặng lẽ trả lời câu nhị diện bằng góc mặt–mặt hay không.
+4. **A11 · A12 (khoảng cách)** — **KHÓ NHẤT, và có thể không lấp được**. Cần đề
+   mà khoảng cách ra **hữu tỉ**, trong khi đề thi thật hầu như luôn ra căn.
+   Chờ quyết định ①/② ở §1b trước khi mất công tìm.
+5. **B01–B06** — sáu ô ngoài phủ, chấm bằng *từ chối trung thực*. Không cần đáp
+   án ở đơn vị checker nên dễ nhất về mặt dữ liệu. **B03 — góc nhị diện có
+   miền** là ô quan trọng nhất cả tập: nó kiểm hệ có lặng lẽ trả lời câu nhị
+   diện bằng góc mặt–mặt hay không.
 
 ⚠️ **Không ép bài vào ô sai bản chất.** Ô thiếu bài ⇒ dừng, không rút bù — rút
 bù là lặng lẽ đổi tập đo thành tập dễ hơn.
 
+⚠️ **Đừng soạn A11/A12 trước khi có quyết định §1b.** Soạn 40 bài rồi mới phát
+hiện phần lớn phải loại là mất công hai lần, và tệ hơn: người soạn sẽ bị cám dỗ
+"chữa" đơn vị oracle cho vừa — đúng cái vừa xảy ra ở lượt này.
+
 ---
 
-## 5. Bài bị loại — chưa có
+## 5. Bài bị loại — 1
 
-Chưa loại bài nào: mới có một bài đạt và nó vào thẳng ô A11. Khi loại, ghi vào
-đây kèm **lý do**, đừng loại im lặng — loại im lặng là một dạng chọn tập.
+| Bài | Ô dự kiến | Lý do |
+|---|---|---|
+| `hp_a11_001` | A11 | **đáp án vô tỉ** (`3√6`) ⇒ `GEOMETRY_IRRATIONAL_RESULT` — §3 |
+
+Nguồn máy đọc được: `pool.json.__bai_bi_loai__`, khoá bởi
+`test_bai_bi_loai_deu_co_LY_DO`. **Loại im lặng là một dạng chọn tập** — mỗi
+lần loại phải ghi lý do và giữ url, để người sau kiểm được rằng bài bị loại vì
+*nằm ngoài phủ*, không phải vì *hệ làm sai nó*.
+
+---
+
+## 6. Lượt sau nên làm gì
+
+1. **Chốt ①/② ở §1b** — người duyệt. Đây là đường găng, không phải việc thu thập.
+2. Soạn **A14, A09, A10** trước (không vướng rào vô tỉ) để có bài thật sớm.
+3. Nguồn nên dùng: **PDF chuyên đề** (toanmath 217–704 trang, kèm lời giải).
+   Chép từ PDF là **chép nguyên văn thật** ⇒ hạ được `can_kiem_tay` ngay lúc
+   chép, không mang nợ như lượt này.
+4. Sau **mỗi lô**: `seal_geometry_holdout.py --seed 0 --chi-kiem-pool` +
+   `holdout_coverage_matrix.py --md …` (có guard chống trôi báo cáo).

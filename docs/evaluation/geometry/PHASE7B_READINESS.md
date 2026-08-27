@@ -30,7 +30,8 @@ nhật ký**, không phải đổi định nghĩa chỉ số nào — xem mục 
 
 | # | Việc | Kết quả |
 |---|---|---|
-| 1 | `holdout/pool.json` | schema đầy đủ · **1/40 bài · 1/20 ô** — bài duy nhất là đề THẬT từ đề thi chính thức |
+| 1 | `holdout/pool.json` | schema đầy đủ · **0 bài hợp lệ · 0/20 ô · 1 bài BỊ LOẠI** (lý do ghi trong `__bai_bi_loai__`) |
+| 1c | `pool.json.__don_vi_oracle__` | quy ước đơn vị oracle **dẫn từ `geometry_exec._do`**, khoá bằng test — khuôn cũ dạy SAI và đã sửa |
 | 1b | `HOLDOUT_ACQUISITION_LOG.md` | sản lượng đo được của từng loại nguồn + **hạn chế của cách thu thập** |
 | 2 | `holdout/COVERAGE_MATRIX.md` | sinh từ `holdout_coverage_matrix.py`, 20 ô × 7 họ × 4 hình dạng đáp án |
 | 3 | Cổng kỳ vọng | `nap()` nay đòi thêm **`slot` + `oracle_ref`**; `kiem_noi_oracle()` nối con trỏ sang pool |
@@ -45,40 +46,65 @@ nhật ký**, không phải đổi định nghĩa chỉ số nào — xem mục 
 
 ## 2. BLOCKERS
 
-### ⛔ B1 — Pool mới có 1/40 bài, phủ 1/20 ô *(chặn cứng)*
+### ⛔ B0 — MIỀN SỐ CỦA KERNEL loại phần lớn đề thi *(mới, và là đường găng)*
+
+Phát hiện ở lượt 7A.4, kiểm chứng bằng chính kernel. Kernel dựng trên `Fraction`
+(cố ý — so bằng đúng, không epsilon), và hệ quả với việc **chọn đề** thì chưa ai
+viết ra:
+
+| Lớp đề | Ví dụ | Trạng thái |
+|---|---|---|
+| Tỉ số dữ kiện vô tỉ | *đáy cạnh `a`, `SA = a√3`* | ⛔ ngoài phủ — không hệ trục nào làm cả hai hữu tỉ |
+| `distance` ra vô tỉ | `d = 3√6`, `a√3/3` | ⛔ ngoài phủ — `_do` **ném** `GEOMETRY_IRRATIONAL_RESULT` |
+| `angle`, `volume` | | ✅ **không** vướng: `cos²`/`sin²` và thể tích luôn hữu tỉ |
+
+Đây là lý do bài duy nhất đã thu **bị loại** (xem B1). Và nó cần **một quyết
+định của người duyệt trước khi soạn tiếp**:
+
+| | Đường | Cái giá |
+|---|---|---|
+| **①** | chỉ nhận đề `distance` **hữu tỉ** vào A11/A12 | tập bớt đại diện; phải khai giới hạn khi báo số. **Rủi ro: có thể không lấp nổi hai ô** |
+| **②** | mở **một ô tầng B** cho lớp vô tỉ, chấm bằng *từ chối trung thực* | đúng tinh thần tầng B, nhưng **N đổi khỏi 20** ⇒ ngân sách và `HOLDOUT_K_FINAL` phải chốt lại |
+| ~~③~~ | cho `measure` trả bình phương | **SỬA HỆ** — loại ngay, ngoài phạm vi mọi pha 7A/7B |
+
+⚠️ **Đừng soạn A11/A12 trước khi chốt ①/②.** Soạn rồi mới biết phải loại là mất
+công hai lần — và tệ hơn, người soạn sẽ bị cám dỗ "chữa" đơn vị oracle cho vừa,
+đúng cái vừa suýt xảy ra.
+
+### ⛔ B1 — Pool 0 bài hợp lệ, phủ 0/20 ô *(chặn cứng)*
 
 ```
-pool: 1 bài · phủ 1/20 ô
-Ô TRỐNG (19): A01 A02 A03 A04 A05 A06 A07 A08 A09 A10 A12 A13 A14 B01 … B06
+pool: 0 bài · phủ 0/20 ô · 1 bài BỊ LOẠI
 seal_geometry_holdout.py --seed 0 --chi-kiem-pool  →  exit 2, KHÔNG sinh con dấu
 ```
 
-Bài đã có (`hp_a11_001`, ô A11) là đề **thật**: Câu 6 Phần III mã đề 0103, đề
-thi chính thức TN THPT 2026, có url và đáp án nguồn. Chi tiết + nguồn nào lấy
-được / không lấy được: [HOLDOUT_ACQUISITION_LOG.md](HOLDOUT_ACQUISITION_LOG.md).
+`hp_a11_001` (Câu 6 mã đề 0103, TN THPT 2026) là đề **thật**, thu đúng quy
+trình, nhưng **đáp án `3√6` vô tỉ** ⇒ hệ không phục vụ được. Giữ nó trong A11 là
+dựng một ô **chắc chắn trượt** rồi ghi cái trượt ấy thành *"mô hình không làm
+được khoảng cách"* — đúng loại sai lệch Phase 7A.1 đã phải đi sửa một lần. Đã
+loại, ghi lý do ở `pool.json.__bai_bi_loai__` và
+[HOLDOUT_ACQUISITION_LOG §3](HOLDOUT_ACQUISITION_LOG.md).
 
-**Vì sao mới một bài** — không phải thiếu nguồn mà là **định dạng**: chuyên đề
-tổng hợp nằm trong **PDF**, lời giải đề thi chính thức nằm trong **ảnh**, và loại
-duy nhất đọc được dạng văn bản là *bài viết riêng cho từng câu* (1 bài/trang).
-Đường nhanh hơn cần người: tải PDF chuyên đề (toanmath có tài liệu 217–704 trang
-kèm lời giải) rồi chép đề — và **chép từ PDF là chép nguyên văn thật**.
+**Rào thứ hai — định dạng:** chuyên đề tổng hợp nằm trong **PDF**, lời giải đề
+thi chính thức nằm trong **ảnh**, trang SGK chỉ có **lời giải mà không có đề
+bài**. Loại duy nhất đọc được dạng văn bản là *bài viết riêng cho từng câu*
+(1 bài/trang). Đường nhanh hơn cần người: chép từ **PDF chuyên đề** — và chép
+từ PDF là **chép nguyên văn thật**, hạ được `can_kiem_tay` ngay lúc chép.
 
-### ⛔ B1b — Nợ đối chiếu văn bản đề *(chặn cứng, và không lệnh nào bắt hộ)*
+### ⛔ B1c — Nợ đối chiếu văn bản đề *(chặn cứng, và không lệnh nào bắt hộ)*
 
 Công cụ đọc web trả nội dung **đã đi qua một mô hình tóm tắt**, nên
 `problem_text` là bản **chép LẠI**, không phải **chép NGUYÊN VĂN**. Một chữ sai
 trong đề hình học làm bài toán thành **bài khác** — và nó vẫn đọc trôi chảy, vẫn
 giải được, vẫn ra một số. Chỉ lộ ra khi có người mở url đối chiếu từng chữ.
 
-Nên mọi bài thu kiểu này mang `can_kiem_tay: true`, và cổng đã chặn thật:
+Nên mọi bài thu kiểu này mang `can_kiem_tay: true`, và cổng chặn thật —
+`kiem_pool` từ chối niêm phong khi cờ còn `true`. Trả nợ = mở url, đọc, sửa nếu
+lệch, **rồi mới** xoá cờ.
 
-```
-POOL KHÔNG HỢP LỆ — 1 lỗi:
-  · hp_a11_001: can_kiem_tay còn true — chưa ai đối chiếu problem_text với
-    nguồn. Niêm phong một đề chép sai là niêm phong một bài toán KHÁC.
-```
-
-Trả nợ = mở url, đọc, sửa nếu lệch, **rồi mới** xoá cờ.
+Hiện **không bài nào** mang cờ (pool rỗng sau khi loại `hp_a11_001`), nhưng cổng
+đứng sẵn cho lô đề tiếp theo. Cách tránh nợ hẳn: **chép từ PDF**, không qua công
+cụ đọc web.
 
 ### ⛔ B2 — Chưa có seed của GVHD *(chặn cứng)*
 

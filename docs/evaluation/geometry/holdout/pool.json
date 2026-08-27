@@ -1,12 +1,13 @@
 {
-  "__trang_thai__": "ĐANG THU THẬP — 1/40 bài · 1/20 ô",
+  "__trang_thai__": "ĐANG THU THẬP — 0 bài hợp lệ · 0/20 ô · 1 bài BỊ LOẠI",
   "__khai__": [
-    "CHƯA ĐỦ ĐỂ RÚT. Cổng máy đang chặn đúng chỗ và sẽ tiếp tục chặn:",
+    "CHƯA ĐỦ ĐỂ RÚT. Cổng máy đang chặn đúng chỗ:",
     "  python scripts/seal_geometry_holdout.py --seed 0 --chi-kiem-pool",
-    "  → 'Pool KHÔNG phủ 19/20 ô' · exit 2 · KHÔNG sinh con dấu",
+    "  → 'Pool KHÔNG phủ 20/20 ô' · exit 2 · KHÔNG sinh con dấu",
     "",
-    "Không bài giả. Bài duy nhất trong `cases` là đề THẬT, trích từ đề thi",
-    "CHÍNH THỨC, có url tra ngược được và đáp án của nguồn.",
+    "Không bài giả, và KHÔNG giữ lại bài đã biết là ngoài phủ chỉ để bảng đỡ",
+    "trống. Bài bị loại ghi ở `__bai_bi_loai__` kèm lý do — loại im lặng là",
+    "một dạng chọn tập.",
     "",
     "AI ĐIỀN FILE NÀY: người soạn pool, từ NGUỒN NGOÀI (đề thi / đề minh hoạ /",
     "chuyên đề có lời giải chi tiết). KHÔNG tự tính đáp án — người soạn cũng là",
@@ -18,12 +19,30 @@
     "`kiem_pool` TỪ CHỐI niêm phong khi còn bài mang cờ này.",
     "Nguồn nào lấy được / không lấy được: ../HOLDOUT_ACQUISITION_LOG.md"
   ],
-
+  "__don_vi_oracle__": {
+    "khai": "DẪN TỪ MÃ, không phải quy ước tự đặt: `geometry_exec._do`. Khai sai đơn vị ở đây thì oracle đúng cũng chấm ra sai, và sau khi niêm phong thì không sửa được.",
+    "distance": "KHOẢNG CÁCH THẬT, phải HỮU TỈ. Engine NÉM `GEOMETRY_IRRATIONAL_RESULT` khi kết quả vô tỉ — KHÔNG trả bình phương, KHÔNG làm tròn. ⇒ đề có đáp án khoảng cách vô tỉ (a√3/3, a√2/2 …) NẰM NGOÀI PHỦ, không được xếp vào A11/A12.",
+    "angle": "cos² cho cặp ĐƯỜNG–ĐƯỜNG và MẶT–MẶT, nhưng **sin²** cho cặp ĐƯỜNG–MẶT (`sin_sq_line_plane`). Hai quy ước dưới cùng một tên `angle_cos_sq` — ô A10 (góc đường–mặt) phải khai sin², khai cos² là chấm sai một cách im lặng.",
+    "volume": "phân số. Thể tích khối đa diện toạ độ hữu tỉ luôn hữu tỉ ⇒ không có bẫy vô tỉ ở đây.",
+    "quan_he": "true / false.",
+    "he_qua_chon_de": "Toạ độ ĐỀ CHO phải hữu tỉ hoá được. Đề cho `SA = a√3` với đáy cạnh `a` thì TỈ SỐ hai dữ kiện là vô tỉ, và không phép chọn hệ trục nào làm cả hai hữu tỉ ⇒ ngoài phủ. Đề cho đáp án vô tỉ mà DỮ KIỆN hữu tỉ thì vẫn ngoài phủ RIÊNG với `distance`, nhưng KHÔNG sao với `angle` (cos²/sin² luôn hữu tỉ) và `volume`."
+  },
+  "__bai_bi_loai__": [
+    {
+      "case_id_du_kien": "hp_a11_001",
+      "o_du_kien": "A11",
+      "problem_text": "Cho hình lập phương ABCD.MNPQ có cạnh bằng 6. Gọi E là trung điểm của đoạn thẳng AB. Khoảng cách từ điểm P đến mặt phẳng (MED) bằng bao nhiêu (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng đến hàng phần trăm)?",
+      "nguon_url": "https://www.mathvn.com/2026/06/tinh-khoang-cach-tu-iem-en-mat-phang.html",
+      "dap_an_chinh_thuc": "7,35",
+      "ly_do_loai": "ĐÁP ÁN VÔ TỈ. d(P,(MED)) = 18/√6 = 3√6; d² = 54 và √54 không hữu tỉ. Kiểm bằng chính kernel: `_can_huu_ti(Fraction(54))` trả `None` ⇒ `geometry_exec._do` NÉM `GEOMETRY_IRRATIONAL_RESULT`. Hệ KHÔNG phục vụ được bài này, nên xếp nó vào A11 là dựng một ô chắc chắn trượt và ghi cái trượt ấy thành 'mô hình không làm được'.",
+      "ghi_chu": "Bản trước của file này từng khai `oracle_result: {distance: \"54\"}` (bình phương) — SAI QUY ƯỚC: `_do` trả khoảng cách THẬT cho `distance`, không trả bình phương. Khuôn `pool.template.json` cũng dạy sai chỗ này và đã sửa cùng lượt.",
+      "co_the_dung_lai_khi": "BANG_O mở một ô tầng B cho lớp 'đáp án vô tỉ' — hiện KHÔNG có ô nào nhận nó (B01–B06 là chéo nhau · đường∥mặt · nhị diện · Oxyz · mặt cong · vectơ). Mở ô mới là ĐỔI THIẾT KẾ TẬP ĐO: N và ngân sách đổi theo, nên phải do người duyệt quyết, và phải quyết TRƯỚC khi niêm phong."
+    }
+  ],
   "dataset": "geometry_holdout_pool",
   "version": 1,
   "ngay_tao_schema": "2026-08-27",
   "pha": "7B-prep",
-
   "__phan_chia_tham_quyen__": {
     "khai": "BA nguồn, BA thẩm quyền. Đừng khai một thứ ở hai chỗ — Phase 7A.2 vừa tách chúng ra, và hai bản sẽ trôi khỏi nhau đúng lúc cần so hai lượt đo.",
     "holdout/pool.json": "ĐỀ + ĐÁP ÁN CHÍNH THỨC + NGUỒN + phân loại thô để đo độ phủ (file này)",
@@ -35,7 +54,6 @@
       "`evaluator` ở đây = ai cung cấp ĐỀ và ĐÁP ÁN (nguồn ngoài). `nguoi_danh_gia` ở expectations = ai PHÁN nghĩa vụ. Hai vai khác nhau, đừng gộp."
     ]
   },
-
   "__anh_xa_ten_truong__": {
     "khai": "Prompt Phase 7B đặt tên trường theo một bộ, `kiem_pool` (đã có 25 test khoá) đọc theo bộ khác. Giữ CẢ HAI: đổi tên trường máy đang đọc là làm chết cả dây niêm phong. Bảng này là chỗ tra.",
     "id": "case_id — KHOÁ MÁY ĐỌC (kiem_pool, con dấu, cross-check với expectations)",
@@ -50,20 +68,20 @@
     "answer_available": "dan xuất từ `dap_an_chinh_thuc` khác rỗng; khai tường minh để soi nhanh",
     "evaluator": "TRƯỜNG MỚI (7B). Ai cung cấp đề+đáp án — KHÔNG phải người phán nghĩa vụ"
   },
-
   "luat_soan": [
     "Đề và ĐÁP ÁN đều đến từ NGOÀI: đề thi/đề minh hoạ/chuyên đề có lời giải chi tiết. Người soạn pool KHÔNG tự tính đáp án — vì người soạn cũng là người sửa hệ.",
     "`nguon.url` bắt buộc: một đáp án không tra ngược được thì không phải oracle độc lập, chỉ là một con số ai đó gõ vào.",
     "`dap_an_chinh_thuc` chép NGUYÊN VĂN đáp án nguồn (ví dụ `a√3/3`). KHÔNG chuẩn hoá ở đây.",
     "`phep_chuyen` ghi RÕ cách đổi sang đơn vị checker, kèm giá trị gán cho tham số cạnh. Đây là chỗ duy nhất người soạn được phép tính, và nó phải hiện ra để người khác kiểm lại.",
-    "`oracle_result` dùng đúng đơn vị checker: `distance`/`volume` là phân số dạng chuỗi; `angle` là cos²; quan hệ là true/false.",
+    "`oracle_result` dùng ĐÚNG đơn vị của `geometry_exec._do` — xem `__don_vi_oracle__` ở đầu file, ĐỌC TRƯỚC KHI SOẠN. Tóm tắt: `distance` = khoảng cách THẬT và phải HỮU TỈ · `angle` = cos² cho đường–đường và mặt–mặt nhưng **sin²** cho đường–mặt · `volume` = phân số · quan hệ = true/false.",
+    "LOẠI NGAY đề mà `distance` ra số VÔ TỈ (a√3/3, a√2/2 …): engine ném `GEOMETRY_IRRATIONAL_RESULT`, không làm tròn, không trả bình phương. Xếp nó vào A11/A12 là dựng một ô chắc chắn trượt rồi ghi cái trượt ấy thành 'mô hình không làm được'. Ghi vào `__bai_bi_loai__` kèm lý do.",
+    "LOẠI NGAY đề mà TỈ SỐ hai dữ kiện độ dài là vô tỉ (`đáy cạnh a, SA = a√3`): kernel dựng trên `Fraction`, không hệ trục nào làm cả hai hữu tỉ. Lưu ý bẫy: đề dạng này CỰC PHỔ BIẾN trong đề thi Việt Nam.",
     "Ô B* KHÔNG có `oracle_result` — chấm bằng 'từ chối trung thực', không bằng đáp án.",
     "`chua_chay_he: true` khai tại thời điểm soạn. Soạn đáp án sau khi thấy hệ chạy là chép bài của chính mình.",
     "Đề KHÔNG được trùng tập DEV (`../dev/cases.json`) — bộ rút chặn cứng.",
     "≥40 bài và phủ ĐỦ 20/20 ô. Ô thiếu bài ⇒ DỪNG, không rút bù từ ô khác.",
     "Soạn XONG pool rồi mới soạn `expectations/holdout.json`, và cả hai phải xong TRƯỚC khi xin seed."
   ],
-
   "__khuon_mot_bai__": {
     "khai": "KHUÔN THAM CHIẾU, không phải một case. Nó nằm ngoài `cases` nên không lọt vào con dấu. Chép nó xuống `cases` rồi điền.",
     "case_id": "hp_a11_001",
@@ -73,9 +91,16 @@
     "difficulty": "van_dung",
     "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
     "problem_text": "<chép nguyên văn đề, tiếng Việt, KHÔNG cho sẵn toạ độ>",
-    "expected_construction_types": ["point3", "plane3"],
-    "expected_verification_types": ["distance"],
-    "expected_obligations": ["distance"],
+    "expected_construction_types": [
+      "point3",
+      "plane3"
+    ],
+    "expected_verification_types": [
+      "distance"
+    ],
+    "expected_obligations": [
+      "distance"
+    ],
     "nguon": {
       "ten": "<tên tài liệu>",
       "url": "<https://…>",
@@ -83,45 +108,12 @@
     },
     "evaluator": "<lời giải chính thức của nguồn — ai tính ra đáp án này>",
     "answer_available": true,
-    "dap_an_chinh_thuc": "<a√3/3>",
-    "phep_chuyen": "<gán a = 1 ⇒ d = √3/3 vô tỉ ⇒ checker so d² = 1/3>",
-    "oracle_result": { "distance": "1/3" },
+    "dap_an_chinh_thuc": "<chép NGUYÊN VĂN đáp án nguồn>",
+    "phep_chuyen": "<gán a = 2 ⇒ d = 1, HỮU TỈ ⇒ oracle_result.distance = \"1\". ⚠️ Nếu đổi cách nào cũng ra VÔ TỈ (a√3/3, a√2/2) thì bài NGOÀI PHỦ — loại, ghi vào __bai_bi_loai__, ĐỪNG khai bình phương để lách: `_do` trả khoảng cách THẬT chứ không trả d².>",
+    "oracle_result": {
+      "distance": "1"
+    },
     "chua_chay_he": true
   },
-
-  "cases": [
-    {
-      "case_id": "hp_a11_001",
-      "slot": "A11",
-      "domain": "geometry_3d",
-      "geometry_family": "measurement",
-      "answer_shape": "quantity",
-      "difficulty": "van_dung_cao",
-      "chu_de": "Khoảng cách từ điểm đến mặt phẳng",
-
-      "problem_text": "Cho hình lập phương ABCD.MNPQ có cạnh bằng 6. Gọi E là trung điểm của đoạn thẳng AB. Khoảng cách từ điểm P đến mặt phẳng (MED) bằng bao nhiêu (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng đến hàng phần trăm)?",
-
-      "expected_construction_types": ["point3", "plane3"],
-      "expected_verification_types": ["distance"],
-      "expected_obligations": ["distance"],
-
-      "nguon": {
-        "ten": "Đề thi chính thức tốt nghiệp THPT 2026 môn Toán, mã đề 0103 — Câu 6 Phần III (bản lời giải trên Toán Học Việt Nam)",
-        "url": "https://www.mathvn.com/2026/06/tinh-khoang-cach-tu-iem-en-mat-phang.html",
-        "vi_tri": "Mã đề 0103 · Câu 6 · Phần III",
-        "nam": "2026"
-      },
-      "evaluator": "Bộ GD-ĐT (đề + đáp án chính thức, thi ngày 11/06/2026); lời giải chi tiết do mathvn.com đăng",
-      "answer_available": true,
-      "dap_an_chinh_thuc": "7,35",
-
-      "phep_chuyen": "Đáp án nguồn là số đã LÀM TRÒN theo yêu cầu của đề (hàng phần trăm), nên không dùng thẳng làm oracle được. Giá trị đúng: đặt A(0,0,0) B(6,0,0) D(0,6,0) M(0,0,6) P(6,6,6), E=(3,0,0) là trung điểm AB. Mặt (MED) qua ba điểm ⇒ x/3 + y/6 + z/6 = 1 ⇒ 2x + y + z − 6 = 0. d(P,(MED)) = |2·6+6+6−6|/√(4+1+1) = 18/√6 = 3√6 ≈ 7,348… → làm tròn 7,35 (khớp đáp án nguồn). 3√6 VÔ TỈ nên checker so BÌNH PHƯƠNG: d² = 9·6 = 54.",
-      "oracle_result": { "distance": "54" },
-      "don_vi_oracle": "d² (bình phương khoảng cách) — khai rõ vì `distance` ở bài khác có thể là phân số của chính d",
-
-      "chua_chay_he": true,
-      "can_kiem_tay": true,
-      "ghi_chu_kiem_tay": "Đề lấy qua công cụ đọc web (nội dung đi qua một mô hình tóm tắt) ⇒ `problem_text` là bản chép LẠI. Phải mở url đối chiếu từng chữ rồi mới hạ cờ. Phần `phep_chuyen` ĐÃ được tính lại độc lập và khớp đáp án nguồn tới hàng phần trăm — nhưng vẫn cần một người xác nhận, vì oracle sai trong tập đã niêm phong thì không sửa được nữa."
-    }
-  ]
+  "cases": []
 }

@@ -3,7 +3,7 @@
 > Sinh bằng `scripts/holdout_coverage_matrix.py`. **0 API call.**
 > Không thêm bài, không chọn bài — chỉ đếm và chỉ ra chỗ trống.
 
-**Pool: 1 bài · phủ 1/20 ô · ⛔ CHƯA RÚT ĐƯỢC**
+**Pool: 0 bài · phủ 0/20 ô · ⛔ CHƯA RÚT ĐƯỢC**
 
 ---
 
@@ -21,7 +21,7 @@
 | **A08** | plane_construction | verdict | `perpendicular` | 0 | ⛔ trống · Hai mặt phẳng vuông góc |
 | **A09** | measurement | quantity | `angle` | 0 | ⛔ trống · Góc giữa hai đường thẳng |
 | **A10** | measurement | quantity | `angle` | 0 | ⛔ trống · Góc giữa đường thẳng và mặt phẳng |
-| **A11** | measurement | quantity | `distance` | 1 | ✅ · Khoảng cách từ điểm đến mặt phẳng |
+| **A11** | measurement | quantity | `distance` | 0 | ⛔ trống · Khoảng cách từ điểm đến mặt phẳng |
 | **A12** | measurement | quantity | `distance` | 0 | ⛔ trống · Khoảng cách từ điểm đến đường thẳng |
 | **A13** | plane_construction | verdict | `coplanar` | 0 | ⛔ trống · Thiết diện / bốn điểm đồng phẳng |
 | **A14** | solid_geometry | quantity | `volume` | 0 | ⛔ trống · Thể tích khối chóp hoặc lăng trụ |
@@ -43,7 +43,7 @@
 | **plane_construction**<br>*dựng mặt · quan hệ mặt–mặt · thiết diện* | A05, A08, A13 | — | 0 | A05, A08, A13 |
 | **intersection**<br>*giao tuyến · giao điểm* | A01 | — | 0 | A01 |
 | **solid_geometry**<br>*khối đa diện* | A14 | B05 | 0 | A14, B05 |
-| **measurement**<br>*khoảng cách · góc · thể tích* | A09, A10, A11, A12 | B01, B02, B03 | 1 | A09, A10, A12, B01, B02, B03 |
+| **measurement**<br>*khoảng cách · góc · thể tích* | A09, A10, A11, A12 | B01, B02, B03 | 0 | A09, A10, A11, A12, B01, B02, B03 |
 | **proof_verification**<br>*chứng minh thuần, tách khỏi một quan hệ cụ thể* | **—** | — | 0 | — |
 
 ---
@@ -57,7 +57,7 @@ làm lệch cả ý nghĩa của chỉ số ② `oracle`.
 |---|--:|---|
 | construction | 0 | vật dựng được + quan hệ định nghĩa nó |
 | verdict | 0 | true/false |
-| quantity | 1 | phân số · cos² |
+| quantity | 0 | phân số · cos² |
 | refusal | 0 | **thang khác**: từ chối trung thực / bịa hình |
 
 ---

@@ -391,6 +391,69 @@ def test_metric_contract_ghi_day_la_DIEU_KIEN_LAY_MAU_khong_phai_dinh_nghia():
     assert "KHÔNG ĐỔI" in doan and "ĐIỀU KIỆN LẤY MẪU" in doan
 
 
+# ══ PHASE 7A.4 — ĐƠN VỊ ORACLE, DẪN TỪ MÃ ═══════════════════════════════
+#
+# VÌ SAO CẦN: bản đầu của pool khai `distance` bằng **bình phương** khoảng
+# cách, chép theo khuôn — và khuôn ấy SAI. `geometry_exec._do` trả khoảng cách
+# THẬT. Sai đơn vị thì oracle đúng cũng chấm ra sai, và sau khi niêm phong thì
+# không sửa được. Nên quy ước phải được **chứng minh bằng mã**, không phải khai
+# trong một đoạn văn.
+def test_distance_VO_TI_thi_engine_NEM_chu_khong_tra_binh_phuong():
+    """Hiện trường thật: bài từng suýt vào ô A11 (lập phương cạnh 6,
+    `d(P,(MED)) = 3√6`). `d² = 54` hữu tỉ, nhưng `d` thì không."""
+    from fractions import Fraction
+
+    from app.simulation.geometry import measure as M
+    from app.simulation.geometry.exact import Plane3, Point3
+    from app.simulation.semantic_program.geometry_exec import _can_huu_ti
+
+    mp, e, d_, p = (Point3(Fraction(0), Fraction(0), Fraction(6)),
+                    Point3(Fraction(3), Fraction(0), Fraction(0)),
+                    Point3(Fraction(0), Fraction(6), Fraction(0)),
+                    Point3(Fraction(6), Fraction(6), Fraction(6)))
+    d2 = M.distance_sq_point_plane(p, Plane3.through(mp, e, d_))
+    assert Fraction(d2) == 54
+    assert _can_huu_ti(Fraction(d2)) is None, (
+        "√54 hữu tỉ hoá được?! Nếu đổi thì quy ước oracle của pool phải viết lại")
+
+
+def test_goc_DUONG_MAT_tra_SIN_binh_khong_phai_COS_binh():
+    """Bẫy im lặng: cùng tên `angle_cos_sq`, nhưng cặp đường–mặt đi qua
+    `sin_sq_line_plane`. Ô A10 khai nhầm cos² thì chấm sai mà không ai biết."""
+    import inspect
+
+    from app.simulation.semantic_program import geometry_exec
+
+    src = inspect.getsource(geometry_exec._do)
+    assert "sin_sq_line_plane" in src and "cos_sq_between_lines" in src
+
+
+def test_pool_KHAI_dung_quy_uoc_don_vi(POOL_D):
+    dv = POOL_D.get("__don_vi_oracle__")
+    assert dv, "pool chưa khai `__don_vi_oracle__`"
+    assert "GEOMETRY_IRRATIONAL_RESULT" in dv["distance"]
+    assert "sin²" in dv["angle"], "chưa cảnh báo bẫy đường–mặt"
+
+
+def test_moi_oracle_distance_trong_pool_deu_HUU_TI(POOL_D):
+    """Cổng cơ học cho đúng lớp lỗi vừa bắt được: một `distance` không phân số
+    hoá được là một bài engine sẽ ném, tức một ô chắc chắn trượt."""
+    from fractions import Fraction
+
+    for c in POOL_D["cases"]:
+        v = (c.get("oracle_result") or {}).get("distance")
+        if v is None:
+            continue
+        Fraction(str(v))  # nổ ở đây = đề không thuộc phủ, phải loại
+
+
+def test_bai_bi_loai_deu_co_LY_DO(POOL_D):
+    """Loại im lặng là một dạng chọn tập."""
+    for b in POOL_D.get("__bai_bi_loai__") or []:
+        assert b.get("ly_do_loai"), f"{b.get('case_id_du_kien')}: loại mà không nêu lý do"
+        assert b.get("nguon_url"), "bài bị loại vẫn phải tra ngược được"
+
+
 def test_checklist_ton_tai_va_du_BAY_muc_bao_cao():
     f = GEO / "PHASE7B_CHECKLIST.md"
     assert f.exists(), "chưa có PHASE7B_CHECKLIST.md"
