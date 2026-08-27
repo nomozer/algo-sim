@@ -65,6 +65,44 @@ lại **giàu bài tự luận**. Nên mở rộng sang chúng **không nới l�
 | **Đề không nêu nguồn** | oracle không tra lại được ⇒ *"một con số ai đó gõ vào"* | `kiem_pool` chặn thiếu `nguon.url` |
 | **Đề tham chiếu hình vẽ** không có trong văn bản | thiếu dữ kiện | tr 46 · Câu 4: *"(tham khảo hình vẽ)"* |
 
+### ⛔ NGUYÊN NHÂN GỐC — tài liệu toán Việt soạn bằng MathType
+
+Ba lượt trước kết luận riêng lẻ: *"PDF rơi ký hiệu"*, *"web là ảnh"*, *"trang
+SGK không chép đề"*. Lượt bốn tìm ra **một nguyên nhân chung**.
+
+Tải bản **`.docx`** của *Chuyên đề hình học không gian 11* (thuvienhoclieu,
+9,2 MB) — giả thuyết: Word giữ toán dạng OMML nên trích được. **Sai**, và cách
+nó sai giải thích luôn ba lượt trước:
+
+| Nội dung `.docx` | |
+|---|--:|
+| `word/embeddings/*.bin` — **OLE MathType** | **2281** file · 7,3 MB |
+| `word/media/*.wmf` — ảnh render của từng công thức | **2236** file · 1,8 MB |
+| `m:rad` · `m:f` · `m:sup` (OMML thật) | **0** |
+| `⊥` · `√` · `∈` · `°` trong dòng văn bản | **0** |
+
+Văn bản trích ra có lỗ đúng chỗ công thức:
+
+```
+"Cho hình chóp ⟨lỗ⟩, đáy ⟨lỗ⟩ có …"      ← S.ABCD và ABCD là OLE, không phải chữ
+```
+
+> **Tài liệu toán phổ thông Việt Nam gần như đều soạn bằng MathType**, và
+> MathType nhúng mỗi công thức thành **một đối tượng OLE kèm ảnh WMF**. Nên:
+>
+> - **PDF** — in ra từ Word ấy ⇒ công thức thành glyph không ánh xạ Unicode;
+> - **Word** — công thức **chưa bao giờ** là chữ;
+> - **Web** — xuất từ Word ấy ⇒ công thức thành `<img>`.
+>
+> Ba triệu chứng, **một nguyên nhân**. Đây là lý do không kênh tự động nào
+> chạm tới được, và cũng là lý do **đổi định dạng không giúp gì** — vấn đề nằm
+> ở khâu **soạn thảo**, không ở khâu phân phối.
+
+Hệ quả cho chính sách: **không tiếp tục thử định dạng mới** (`.doc`, `.tex`,
+`.epub`…). Việc ấy đã đủ bằng chứng để dừng. Người đọc màn hình rồi gõ lại là
+đường duy nhất, và nó **không phải giới hạn kỹ thuật của repo** mà là tính chất
+của kho tài liệu.
+
 ### ⛔ Vì sao trích PDF bị loại dù đọc ra chữ tiếng Việt
 
 Không phải vì văn bản khó đọc — mà vì nó **hỏng đúng chỗ quyết định**:
@@ -154,6 +192,20 @@ Chỉ luật *"toạ độ hữu tỉ"* bắt được cả bốn.
 | vted · hoc247 · diendantoanhoc | ⛔ | chặn fetch tự động |
 | loigiaihay · vietjack | ⛔ | đề là ảnh / chặn |
 | SGK PDF chính thức | ⛔ chưa tìm được | bản trên mạng không tra ngược được về nguồn chính thức |
+| **thuvienhoclieu.com** — HTML | ⛔ | 391 KB · **0** đề dạng chữ · 116 `<img>` |
+| **thuvienhoclieu.com** — `.docx` | ✅ **nguồn hợp lệ** | **74 bài** *"Cho hình chóp…"*; nhưng toán là **OLE MathType** ⇒ vẫn cần người chép |
+| toanmath 2021 — HHKG 11 (255tr) | ✅ nguồn hợp lệ | PDF, cần người chép |
+| Nguồn nước ngoài (IB · A-Level · đại học) | ⛔ **về ngôn ngữ** | đề phải là **tiếng Việt** (bề mặt hệ + `dev/cases.json §luat_soan`); dịch đề = **tự biến đổi đề**, bị cấm |
+
+### ⚠️ Nguồn nước ngoài — loại vì NGÔN NGỮ, không vì chất lượng
+
+Đã tìm: bài thể tích chóp tiếng Anh có sẵn và nhiều bài **hữu tỉ, tự luận**
+(*"square pyramid, height 7 m, base 2 m"*). Nhưng bề mặt hệ là **tiếng Việt**,
+prompt tiếng Việt, và `dev/cases.json` đòi *"văn xuôi tiếng Việt"*. Đưa đề tiếng
+Anh vào là đo **năng lực dịch + hình học**, không phải thứ đề tài tuyên bố đo.
+Dịch sang tiếng Việt thì người đo trở thành người soạn đề.
+
+⇒ Nhận đề tiếng Anh là một **quyết định giao thức**, không phải việc thu thập.
 
 **Nguồn KHÔNG phải là chỗ tắc.** 5 nguồn hợp lệ đã xác minh, ước lượng 35 bài
 lấy được. Chỗ tắc là **bước ③ của §4** — và đó là bước chỉ người làm được.
