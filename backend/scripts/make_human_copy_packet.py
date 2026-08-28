@@ -59,6 +59,230 @@ PHAT: dict[str, int] = {
     **{o: 2 for o in ("B01", "B02", "B03", "B04", "B05", "B06")},
 }
 
+#: BẢN CHÉP MÁY, khoá bằng CHÍNH chuỗi `nguon` — KHÔNG theo vị trí.
+#:
+#: Trước bản này ba trường `de`/`rui_ro_muc`/`kiem_gi` được gán theo CHỈ SỐ
+#: trong `DA_SOI[o]`, còn `nguon` thì viết cùng dict. Mỗi lần chèn ứng viên
+#: mới vào ĐẦU danh sách, chỉ số dịch và ba trường dính sang nguồn khác:
+#: **18/41 bản ghi bị ghép chéo** — `problem_text` không thuộc về trích dẫn
+#: đứng cạnh nó. Đó đúng là thứ cả bộ máy xuất xứ sinh ra để chặn.
+#:
+#: Khoá bằng chuỗi nguồn thì không còn khái niệm "vị trí" để mà lệch.
+BAN_CHEP: dict[str, dict[str, str]] = {
+    "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 80** (nhãn trong tài liệu: 'Page 16'), Câu 1 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html": {
+        "de": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a. Cạnh bên SA vuông góc với đáy và SA = 2a. Tính thể tích V của khối chóp S.ABC.",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "đã đọc ẢNH trang PDF 80 (nhãn 'Page 16'), Câu 1: khớp nguyên văn, lời giải in V = 2a³/3. Chỉ cần liếc lại AB = a và AC = 2a"
+    },
+    "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html": {
+        "de": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "đã đọc ẢNH trang: AB = a, AD = 2a, d(A,(SBD)) = 2a/3, và lời giải in SA = a ⇒ V = 2a³/3. Liếc lại ba số ấy"
+    },
+    "VietJack — Khoảng cách lớp 11 (Lý thuyết Toán 11 Kết nối tri thức), **Ví dụ 2** · https://vietjack.com/toan-11-kn/ly-thuyet-bai-26-khoang-cach.jsp": {
+        "de": "Cho hình chóp S.ABC có mặt phẳng (SAB) vuông góc với mặt đáy, tam giác SAB vuông tại S, AB = a, SA = 3a/5. Tính khoảng cách từ điểm S đến mặt phẳng (ABC).",
+        "rui_ro_muc": "HIGH",
+        "kiem_gi": "SA = 3a/5 là PHÂN SỐ — kiểm kỹ. Và trang tóm tắt ghi công thức SA·AB/SB, ĐÚNG phải là SA·SB/AB; đáp án 12a/25 thì đúng"
+    },
+    "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, Câu 7 (trang PDF 298 = 'Page 57'); lời giải ở mục HDG tr 302–334 · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC là tam giác vuông tại B, BC = 2a. Khoảng cách từ C đến mặt phẳng (SAB) bằng bao nhiêu?",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "BC = 2a, KHÔNG có căn; vuông tại B"
+    },
+    "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 13 (đề tr PDF 3; lời giải tr PDF 13) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình lập phương ABCD.A'B'C'D', gọi I là trung điểm của cạnh AB. Tính côsin của góc giữa hai đường thẳng A'D và B'I.",
+        "rui_ro_muc": "HIGH",
+        "kiem_gi": "nguồn in đáp án cos = √10/5 (CÓ CĂN). ĐÁP ÁN của ta là cos² = 2/5. Kiểm cả đề (I trung điểm AB, cặp A'D và B'I) lẫn việc nguồn thật sự ghi √10/5"
+    },
+    "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 2 **ý c)** (đề tr PDF 2; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng A'C' và B'C.",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "ý c): A'C' và B'C — chú ý B'C KHÔNG có dấu phẩy ở C"
+    },
+    "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "ý b) của đề gốc: cặp AC và B'C'"
+    },
+    "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B23.1 **PHẦN TỰ LUẬN**, Dạng 1, Câu 1 **ý a)** (đề tr PDF 46; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với nhau. Gọi H là hình chiếu vuông góc của O trên mặt phẳng (ABC). a) Chứng minh BC ⊥ (OAH).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "H là hình chiếu của O lên MẶT PHẲNG (ABC); ý a) là BC ⊥ (OAH)"
+    },
+    "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "H là hình chiếu của A lên SB (không phải SD); ý cần chép là b)"
+    },
+    "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B24.1 **PHẦN TỰ LUẬN**, Câu 2 (đề tr PDF 106; lời giải tr PDF 112) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình lập phương ABCD.A'B'C'D'. Góc giữa A'C' và mặt phẳng (BCC'B') bằng bao nhiêu?",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "mặt phẳng (BCC'B') — bốn chữ, hai dấu phẩy trên"
+    },
+    "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "BD = 4a và AC = 2a (đừng đảo), tan góc SBO = 1/2, hỏi góc giữa SC và đáy"
+    },
+    "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "mặt bên SBC ĐỀU cạnh a; (SBC) ⊥ đáy"
+    },
+    "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 (đề tr PDF 300 = 'Page 59') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html": {
+        "de": "Cho hình lăng trụ đứng ABC.A1B1C1 có tam giác ABC vuông cân tại A, AB = a, CC' = 2a. Khoảng cách giữa hai đường thẳng AA1 và BC1 bằng bao nhiêu?",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "chỉ số dưới A1, B1, C1; đề dùng lẫn CC' và CC1 — chép đúng như in"
+    },
+    "SGK Toán 11 Chân trời sáng tạo — **Bài 3 trang 106**, ý a) (lời giải: Loigiaihay)": {
+        "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. a) Tìm giao tuyến của (SCD) và (SAB).",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "đề gốc nhiều ý — xác nhận ý a) đúng là cặp (SCD),(SAB)"
+    },
+    "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho tứ diện ABCD. G là trọng tâm tam giác BCD. Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "G là trọng tâm tam giác BCD, không phải ABC"
+    },
+    "Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "tên điểm M, N và cặp mặt phẳng (SMN), (SAC)"
+    },
+    "SGK Toán 11 — **Bài 4.6 trang 94**, ý b) (lời giải: Loigiaihay)": {
+        "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "G là trọng tâm tam giác SCD; ý b) hỏi giao điểm BG ∩ (SAC)"
+    },
+    "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho tứ giác ABCD có AC và BD giao nhau tại O và một điểm S không thuộc mặt phẳng (ABCD). Trên đoạn SC lấy một điểm M không trùng với S và C. Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "M trên SC, tìm giao điểm của SD (không phải SC) với (ABM)"
+    },
+    "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2 *Tìm giao điểm của đường thẳng và mặt phẳng*, Câu 12 (đề tr PDF 7; lời giải tr 21+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho bốn điểm A, B, C, D không đồng phẳng. Gọi M, N lần lượt là trung điểm của AC và BC. Trên đoạn BD lấy điểm P sao cho BP = 2PD. Tìm giao điểm của đường thẳng CD và mặt phẳng (MNP).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "tỉ số BP = 2PD, và M,N là trung điểm AC,BC"
+    },
+    "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: chứng minh hai đường thẳng song song*, Câu 2 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho tứ diện ABCD. Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD. Chứng minh MPNQ là hình bình hành. Từ đó suy ra ba đoạn MN, PQ, RS cắt nhau tại trung điểm G của mỗi đoạn.",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "thứ tự sáu cặp cạnh AB,CD,BC,AD,AC,BD ứng với M,N,P,Q,R,S"
+    },
+    "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG SONG SONG*, Câu 1 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho tứ diện ABCD có I; J lần lượt là trọng tâm của tam giác ABC, ABD. Chứng minh rằng: IJ // CD.",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "I, J là TRỌNG TÂM (không phải trung điểm) của ABC và ABD"
+    },
+    "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "ý b) dùng M, N trung điểm AB, BC và vẫn dùng P của ý a)"
+    },
+    "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý a)** (đề tr PDF 8; lời giải tr 30+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html": {
+        "de": "Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. a) Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB).",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "AD là đáy LỚN; P nằm trên SD; ý a) cắt bởi (PAB)"
+    },
+    "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html": {
+        "de": "Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "H là hình chiếu của A trên BC; ý a) có HAI kết luận"
+    },
+    "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2; lời giải mục *IV. LỜI GIẢI CHI TIẾT*) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html": {
+        "de": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. b) Chứng minh rằng (ACC'A') ⊥ (BDD'B').",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "hai mặt (ACC'A') và (BDD'B') — kiểm đủ bốn chữ và dấu phẩy trên"
+    },
+    "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html": {
+        "de": "Cho biết kim tự tháp Memphis tại bang Tennessee (Mỹ) có dạng hình chóp tứ giác đều với chiều cao 98 m và cạnh đáy 180 m. Tính số đo góc nhị diện tạo bởi mặt bên và mặt đáy?",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "hai số 98 m và 180 m"
+    },
+    "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 6 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html": {
+        "de": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Xác định và tính góc phẳng nhị diện: a) [A,BD,A']; b) [C,BD,A'].",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "ký hiệu nhị diện dạng [X,YZ,T] — chép đủ dấu ngoặc vuông và dấu phẩy"
+    },
+    "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html": {
+        "de": "Cho hình nón có bán kính đáy r = 3cm và đường sinh l = 5cm. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "r = 3cm, l = 5cm; ý a)"
+    },
+    "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1 *hình nón*, Câu 1 **ý a)** (đề tr PDF 5; lời giải tr 19+) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html": {
+        "de": "Cho tam giác SOA vuông tại O có OA = 3cm, SA = 5cm, quay tam giác SOA xung quanh cạnh SO được hình nón. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "vuông tại O; OA = 3cm, SA = 5cm; quay quanh SO"
+    },
+    "SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)": {
+        "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "G, K là trọng tâm SAD và SCD"
+    },
+    "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 32 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/": {
+        "de": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Trên các cạnh SA, SB, AD lần lượt lấy các điểm M, N, P sao cho SM/SA = SN/SB = PD/AD. a) Chứng minh MN // (ABCD).",
+        "rui_ro_muc": "HIGH",
+        "kiem_gi": "ba tỉ số SM/SA = SN/SB = PD/AD — xác nhận đúng MẪU SỐ, đặc biệt PD/AD chứ không phải AP/AD"
+    },
+    "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 31 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/": {
+        "de": "Cho hình chóp S.ABCD. Gọi M, N lần lượt là trung điểm của AB và BC; G1, G2 tương ứng là trọng tâm các tam giác SAB, SBC. a) Chứng minh AC // (SMN).",
+        "rui_ro_muc": "HIGH",
+        "kiem_gi": "bản trích web hiển thị ký hiệu ∥ thành chữ 'P' — PHẢI mở nguồn xác nhận đúng là AC ∥ (SMN), và tên G1, G2"
+    },
+    "SGK Toán 11 — **Bài 4.17 trang 114** (lời giải: Loigiaihay)": {
+        "de": "Cho hình chóp S.ABCD có đáy là hình thang, AD là đáy lớn và AD = 2BC. Gọi I, K, L lần lượt là trung điểm của AD, SA, SD. Chứng minh (SAB) // (ILC).",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "AD = 2BC; I,K,L là trung điểm AD,SA,SD; cặp mặt (SAB) ∥ (ILC)"
+    },
+    "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song": {
+        "de": "Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "ba trung điểm trên ba cạnh bên SA, SB, SC"
+    },
+    "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian (lí thuyết và bài tập)*, **Ví dụ 1**, ý `AC ⊥ B'D'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html": {
+        "de": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AC ⊥ B'D'.",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "ý thứ hai: AC ⊥ B'D' — chú ý dấu phẩy trên B' và D'"
+    },
+    "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html": {
+        "de": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AB ⊥ CC'.",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "'6 mặt đều là hình vuông' (tức lập phương) và ý cần chép là AB ⊥ CC'"
+    },
+    "SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)": {
+        "de": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. b) Tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D').",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "ý b) của bài 7.27; mặt phẳng (A'B'C'D') là mặt TRÊN"
+    },
+    "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 5**, Câu 1 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html": {
+        "de": "Trong không gian Oxyz, viết phương trình mặt phẳng (P) đi qua điểm M(-1;-2;5) và vuông góc với hai mặt phẳng (Q): x + 2y - 3z + 1 = 0 và (R): 2x - 3y + z + 1 = 0.",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "M(−1;−2;5) và hệ số của (Q), (R) — kiểm từng dấu âm"
+    },
+    "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html": {
+        "de": "Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "toạ độ A(1;2;−2), B(2;−1;4) và hệ số của (β) — kiểm từng dấu âm"
+    },
+    "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần VẬN DỤNG, Câu 1 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song": {
+        "de": "Cho tứ diện ABCD. I là trọng tâm tam giác ABC. Xác định hình chiếu song song của I theo phương CD lên mặt phẳng (ABD).",
+        "rui_ro_muc": "LOW",
+        "kiem_gi": "I là TRỌNG TÂM ABC; phương chiếu CD; mặt phẳng chiếu (ABD)"
+    },
+    "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song": {
+        "de": "Vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA.",
+        "rui_ro_muc": "MEDIUM",
+        "kiem_gi": "phương chiếu là SA; mặt phẳng chiếu là (P)"
+    }
+}
+
+
+def _khoa_chep(nguon: str) -> str:
+    """Khoá tra bản chép: TOÀN BỘ chuỗi nguồn, chuẩn hoá khoảng trắng — cắt ngắn thì "Câu 24 ý a" và "ý b" đụng nhau."""
+    import re as _re
+    return _re.sub(r"\s+", " ", nguon).strip()
+
+
 #: Ứng viên **đã soi tận trang** ở lượt trước (đọc ảnh trang, không phải trích
 #: PDF). Chỉ nguồn + đáp án được prefill — đề vẫn phải do người gõ.
 DA_SOI: dict[str, list[dict]] = {
@@ -69,9 +293,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "2/3",
          "goi_y": "ABC vuông tại A · AB = a · AC = 2a · SA ⊥ đáy · SA = 2a",
          "vi_sao": "đề NGẮN NHẤT; không bước nào sinh căn; lời giải cùng trang",
-         "de": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a. Cạnh bên SA vuông góc với đáy và SA = 2a. Tính thể tích V của khối chóp S.ABC.",
-         "rui_ro_muc": "LOW",
-         "kiem_gi": "đã đọc ẢNH trang PDF 80 (nhãn 'Page 16'), Câu 1: khớp nguyên văn, lời giải in V = 2a³/3. Chỉ cần liếc lại AB = a và AC = 2a",
          "rui_ro": "thấp nhất trong vùng đã soi"},
         {"nguon": "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — "
                   "**trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2 · "
@@ -80,7 +301,6 @@ DA_SOI: dict[str, list[dict]] = {
          "de": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, "
                "AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A "
                "đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.",
-         "rui_ro_muc": "MEDIUM",
          "kiem_gi": "đã đọc ẢNH trang: AB = a, AD = 2a, d(A,(SBD)) = 2a/3, và "
                     "lời giải in SA = a ⇒ V = 2a³/3. Liếc lại ba số ấy",
          "dap_an": "2/3",
@@ -106,9 +326,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "⇒ SB = 4a/5 (bộ ba 3-4-5 thu nhỏ a/5)",
          "vi_sao": "d = SA·SB/AB = 12a/25 — HỮU TỈ. Toạ độ cũng hữu tỉ: "
                    "A(0,0,0) B(a,0,0) S(9a/25, 0, 12a/25)",
-         "de": 'Cho hình chóp S.ABC có mặt phẳng (SAB) vuông góc với mặt đáy, tam giác SAB vuông tại S, AB = a, SA = 3a/5. Tính khoảng cách từ điểm S đến mặt phẳng (ABC).',
-         "rui_ro_muc": 'HIGH',
-         "kiem_gi": 'SA = 3a/5 là PHÂN SỐ — kiểm kỹ. Và trang tóm tắt ghi công thức SA·AB/SB, ĐÚNG phải là SA·SB/AB; đáp án 12a/25 thì đúng',
          "rui_ro": "C là điểm TỰ DO (đề không ràng buộc vị trí) — đã kiểm và "
                    "KHÔNG phải thiếu dữ kiện: d không phụ thuộc C, và mọi ca "
                    "DEV cũng đặt A,B,C,D,S là điểm tự do. Điều PHẢI tự kiểm "
@@ -124,9 +341,6 @@ DA_SOI: dict[str, list[dict]] = {
          "goi_y": "SA ⊥ (ABC) · △ABC vuông tại B · BC = 2a",
          "vi_sao": "BC ⊥ AB và BC ⊥ SA ⇒ BC ⊥ (SAB) ⇒ d(C,(SAB)) = CB = 2a. "
                    "Không phép tính nào sinh căn — an toàn nhất trong ô này",
-         "de": 'Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC là tam giác vuông tại B, BC = 2a. Khoảng cách từ C đến mặt phẳng (SAB) bằng bao nhiêu?',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'BC = 2a, KHÔNG có căn; vuông tại B',
          "rui_ro": "thấp. AB và SA KHÔNG được cho — đáp án không phụ thuộc "
                    "chúng (cùng dạng 'điểm tự do' đã chốt ở ứng viên trên). "
                    "Đã đọc ẢNH TRANG để xác nhận `BC = 2a` không có căn"},
@@ -138,17 +352,11 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "2/5",
          "goi_y": "hình lập phương · I trung điểm AB · côsin góc giữa A'D và B'I",
          "vi_sao": "PASS 2 — ứng viên ĐÁNG GIÁ NHẤT của nhóm: nguồn in cos = √10/5, tức VÔ TỈ, nhưng đơn vị checker là cos² = 10/25 = **2/5**, HỮU TỈ. Nó chứng minh vì sao oracle dùng cos² chứ không dùng cos",
-         "de": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.",
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": "ý b) của đề gốc: cặp AC và B'C'",
          "rui_ro": "trung bình — `phep_chuyen` PHẢI ghi rõ: nguồn cho `√10/5`, bình phương ⇒ `2/5`. Chép thẳng √10/5 vào ĐÁP ÁN là sai đơn vị"},
         {"nguon": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 2 **ý c)** (đề tr PDF 2; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
          "dap_an": "1/4",
          "goi_y": "hình lập phương · góc giữa A'C' và B'C",
          "vi_sao": "PASS 2 — nguồn in 60° ⇒ cos² = 1/4. Hai đường CHÉO NHAU (ý b) là cắt nhau sau khi dời), lập luận qua tam giác đều ACB'",
-         "de": "Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng A'C' và B'C.",
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": "ý c): A'C' và B'C — chú ý B'C KHÔNG có dấu phẩy ở C",
          "rui_ro": "thấp — đã đọc đáp án nguồn trên ảnh cùng lúc với ý b)"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, "
@@ -159,9 +367,6 @@ DA_SOI: dict[str, list[dict]] = {
          "goi_y": "hình LẬP PHƯƠNG ABCD.A'B'C'D' · tính góc giữa AC và B'C'",
          "vi_sao": "lập phương ⇒ toạ độ NGUYÊN, không dữ kiện nào có căn. "
                    "Nguồn in (AC,B'C') = 45° ⇒ cos² = 1/2 — hữu tỉ",
-         "de": "Cho hình lập phương ABCD.A'B'C'D', gọi I là trung điểm của cạnh AB. Tính côsin của góc giữa hai đường thẳng A'D và B'I.",
-         "rui_ro_muc": 'HIGH',
-         "kiem_gi": "nguồn in đáp án cos = √10/5 (CÓ CĂN). ĐÁP ÁN của ta là cos² = 2/5. Kiểm cả đề (I trung điểm AB, cặp A'D và B'I) lẫn việc nguồn thật sự ghi √10/5",
          "rui_ro": "thấp. Đề gốc có BA ý a/b/c; **chỉ chép ý b)** — ý a) ra "
                    "90° (cos²=0, quá tầm thường), ý c) ra 60° (cos²=1/4, dùng "
                    "được nếu cần bài A09 thứ hai). Cạnh không cho ⇒ gán 1"},
@@ -173,9 +378,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "tứ diện OABC có OA, OB, OC ĐÔI MỘT VUÔNG GÓC · H là hình chiếu của O trên (ABC) · chứng minh BC ⊥ (OAH)",
          "vi_sao": "PASS 2 — tứ diện vuông ba mặt (khác chóp đáy chữ nhật), và H là chiếu lên một MẶT thay vì lên một ĐƯỜNG",
-         "de": 'Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'H là hình chiếu của A lên SB (không phải SD); ý cần chép là b)',
          "rui_ro": "thấp. Đề có hai ý — chỉ chép ý a)"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, "
@@ -188,9 +390,6 @@ DA_SOI: dict[str, list[dict]] = {
          "vi_sao": "không dữ kiện số nào ⇒ không chỗ nào sinh căn; mọi cạnh "
                    "gán số nguyên được. H là điểm DẪN XUẤT (chiếu A lên SB) "
                    "⇒ chuỗi phụ thuộc sâu hơn mọi ứng viên khác",
-         "de": 'Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với nhau. Gọi H là hình chiếu vuông góc của O trên mặt phẳng (ABC). a) Chứng minh BC ⊥ (OAH).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'H là hình chiếu của O lên MẶT PHẲNG (ABC); ý a) là BC ⊥ (OAH)',
          "rui_ro": "thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**. Đáp án là "
                    "`true` (bài chứng minh), không phải một con số"},
     ],
@@ -200,9 +399,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "1/2",
          "goi_y": "hình LẬP PHƯƠNG · góc giữa A'C' và mặt phẳng (BCC'B')",
          "vi_sao": "PASS 2 — lập phương (toạ độ nguyên) thay hình thoi; nguồn in 45° ⇒ sin² = 1/2",
-         "de": 'Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'BD = 4a và AC = 2a (đừng đảo), tan góc SBO = 1/2, hỏi góc giữa SC và đáy',
          "rui_ro": "⚠️ ĐƠN VỊ: đường–MẶT ⇒ **sin²**, không phải cos²"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 "
@@ -215,9 +411,6 @@ DA_SOI: dict[str, list[dict]] = {
          "vi_sao": "nguồn in BO = 2a, SO = 2a·½ = a, OC = a ⇒ SCO = 45° "
                    "⇒ **sin² = 1/2**. Toạ độ nguyên: O(0,0,0) B(0,−2,0) "
                    "A(−1,0,0) C(1,0,0) S(0,0,1)",
-         "de": "Cho hình lập phương ABCD.A'B'C'D'. Góc giữa A'C' và mặt phẳng (BCC'B') bằng bao nhiêu?",
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": "mặt phẳng (BCC'B') — bốn chữ, hai dấu phẩy trên",
          "rui_ro": "⚠️ ĐƠN VỊ: ô A10 là đường–MẶT nên checker nhận **sin²**, "
                    "KHÔNG phải cos². Nguồn cho góc 45° ⇒ chép `1/2`"},
     ],
@@ -226,9 +419,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "",
          "goi_y": "chóp S.ABC · đáy vuông cân tại A · mặt bên SBC là tam giác ĐỀU cạnh a · (SBC) ⊥ đáy · khoảng cách giữa SA và BC",
          "vi_sao": "PASS 2 — cùng loại ngoài phủ nhưng cấu hình mặt-bên-vuông-góc-đáy, khác lăng trụ đứng của ứng viên đầu",
-         "de": "Cho hình lăng trụ đứng ABC.A1B1C1 có tam giác ABC vuông cân tại A, AB = a, CC' = 2a. Khoảng cách giữa hai đường thẳng AA1 và BC1 bằng bao nhiêu?",
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": "chỉ số dưới A1, B1, C1; đề dùng lẫn CC' và CC1 — chép đúng như in",
          "rui_ro": "thấp"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH "
@@ -241,9 +431,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "CC' = 2a · khoảng cách giữa AA₁ và BC₁",
          "vi_sao": "đúng LOẠI của ô B01 — khoảng cách hai đường CHÉO NHAU, "
                    "nằm ngoài ranh giới kernel. Tầng B không cần hữu tỉ",
-         "de": 'Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'mặt bên SBC ĐỀU cạnh a; (SBC) ⊥ đáy',
          "rui_ro": "thấp. Nhớ dùng `ĐÁP ÁN NGUỒN:` (chép đáp án sách), "
                    "KHÔNG dùng `ĐÁP ÁN:` — ô tầng B không có oracle"},
     ],
@@ -253,17 +440,11 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "chóp S.ABCD đáy hình bình hành · tìm giao tuyến của (SCD) và (SAB)",
          "vi_sao": "PASS 2 — giao tuyến xác định bởi QUAN HỆ SONG SONG (AB ∥ CD ⇒ giao tuyến qua S và ∥ AB), không phải bởi hai điểm chung. Đây là mẫu dựng khác hẳn hai ứng viên A01 kia",
-         "de": 'Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'tên điểm M, N và cặp mặt phẳng (SMN), (SAC)',
          "rui_ro": "trung bình — `phep_chuyen` ghi rõ: nguồn trả lời *đường qua S song song AB và CD*; nghĩa vụ `point_on_line` kiểm S thuộc giao tuyến ⇒ true"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
          "dap_an": "true",
          "goi_y": "tứ diện ABCD · G trọng tâm △BCD · giao tuyến (ACD) ∩ (GAB)",
          "vi_sao": "PASS 2 — cùng nghĩa vụ A01 nhưng hình KHÁC (tứ diện thay chóp tứ giác) và vật dẫn xuất khác (trọng tâm thay trung điểm)",
-         "de": 'Cho tứ diện ABCD. G là trọng tâm tam giác BCD. Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'G là trọng tâm tam giác BCD, không phải ABC',
          "rui_ro": "thấp"},
         {"nguon": "Đường thẳng và mặt phẳng, quan hệ song song trong không "
                   "gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 "
@@ -277,9 +458,6 @@ DA_SOI: dict[str, list[dict]] = {
          "vi_sao": "bình hành + trung điểm ⇒ toạ độ hữu tỉ hết. Giao tuyến đi "
                    "qua S và tâm O — nghĩa vụ `point_on_line` kiểm O thuộc "
                    "giao tuyến ⇒ `true`",
-         "de": 'Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. a) Tìm giao tuyến của (SCD) và (SAB).',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'đề gốc nhiều ý — xác nhận ý a) đúng là cặp (SCD),(SAB)',
          "rui_ro": "trung bình. `phep_chuyen` phải ghi rõ: nguồn trả lời "
                    "*giao tuyến là SO*, chuyển thành `point_on_line` = true"},
     ],
@@ -288,17 +466,11 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "chóp S.ABCD đáy hình bình hành · G TRỌNG TÂM △SCD · tìm giao điểm của BG và (SAC)",
          "vi_sao": "PASS 2 — chuỗi phụ thuộc SÂU NHẤT cả gói: trọng tâm G → trung điểm E của CD → giao đường-đường F = BE ∩ AC → giao tuyến SF → giao điểm I = BG ∩ SF. Kiểm số: G(1/3,2/3,1/3), E(1/2,1,0), F(2/3,2/3,0) — hữu tỉ hết",
-         "de": 'Cho bốn điểm A, B, C, D không đồng phẳng. Gọi M, N lần lượt là trung điểm của AC và BC. Trên đoạn BD lấy điểm P sao cho BP = 2PD. Tìm giao điểm của đường thẳng CD và mặt phẳng (MNP).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'tỉ số BP = 2PD, và M,N là trung điểm AC,BC',
          "rui_ro": "thấp. Đề có nhiều ý — **chỉ chép ý b)**"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
          "dap_an": "true",
          "goi_y": "tứ giác ABCD có AC ∩ BD = O · S ngoài (ABCD) · M trên SC · giao điểm SD ∩ (ABM)",
          "vi_sao": "PASS 2 — cùng nghĩa vụ A02, nhưng điểm cắt O là DỮ KIỆN chứ không phải vật dựng; M tự do trên SC",
-         "de": 'Cho tứ giác ABCD có AC và BD giao nhau tại O và một điểm S không thuộc mặt phẳng (ABCD). Trên đoạn SC lấy một điểm M không trùng với S và C. Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'M trên SC, tìm giao điểm của SD (không phải SC) với (ABM)',
          "rui_ro": "trung bình — M tự do (lớp đã chốt)"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
                   "— **BÀI TẬP TỰ LUẬN**, Dạng 2 *Tìm giao điểm của đường "
@@ -311,9 +483,6 @@ DA_SOI: dict[str, list[dict]] = {
          "vi_sao": "tỉ số 2:1 và trung điểm đều hữu tỉ ⇒ P = (1/3,0,2/3) khi "
                    "đặt tứ diện đơn vị. Ba điểm dẫn xuất ⇒ chuỗi phụ thuộc "
                    "sâu nhất trong cả gói",
-         "de": 'Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'G là trọng tâm tam giác SCD; ý b) hỏi giao điểm BG ∩ (SAC)',
          "rui_ro": "thấp"},
     ],
     "A03": [
@@ -321,9 +490,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "tứ diện ABCD · M,N,P,Q,R,S trung điểm AB,CD,BC,AD,AC,BD · chứng minh MPNQ là hình bình hành",
          "vi_sao": "PASS 2 — SÁU điểm dẫn xuất, kết luận là một TỨ GIÁC có tính chất, không phải một quan hệ hai đường. Nghĩa vụ song song vẫn giữ",
-         "de": 'Cho tứ diện ABCD có I; J lần lượt là trọng tâm của tam giác ABC, ABD. Chứng minh rằng: IJ // CD.',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'I, J là TRỌNG TÂM (không phải trung điểm) của ABC và ABD',
          "rui_ro": "trung bình — kết luận *hình bình hành* phải chuyển thành quan hệ ∥ trong `phep_chuyen`"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
                   "— **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG "
@@ -335,9 +501,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "chứng minh IJ ∥ CD",
          "vi_sao": "trọng tâm của điểm hữu tỉ vẫn hữu tỉ. Không dữ kiện số "
                    "nào ⇒ không chỗ nào sinh căn. Bài chứng minh ⇒ `true`",
-         "de": 'Cho tứ diện ABCD. Gọi M, N, P, Q, R, S lần lượt là trung điểm của AB, CD, BC, AD, AC, BD. Chứng minh MPNQ là hình bình hành. Từ đó suy ra ba đoạn MN, PQ, RS cắt nhau tại trung điểm G của mỗi đoạn.',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'thứ tự sáu cặp cạnh AB,CD,BC,AD,AC,BD ứng với M,N,P,Q,R,S',
          "rui_ro": "thấp — ứng viên sạch nhất trong nhóm song song"},
     ],
     "A13": [
@@ -345,9 +508,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "cùng chóp hình thang · M, N trung điểm AB, BC · thiết diện cắt bởi (MNP)",
          "vi_sao": "PASS 2 — mặt cắt xác định bởi BA điểm dẫn xuất thay vì hai đỉnh + một điểm tự do",
-         "de": 'Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. a) Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB).',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'AD là đáy LỚN; P nằm trên SD; ý a) cắt bởi (PAB)',
          "rui_ro": "trung bình — vẫn dùng P tự do của ý a)"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
                   "— **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, "
@@ -359,9 +519,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "· xác định thiết diện cắt bởi (PAB)",
          "vi_sao": "chóp trên hình thang là khối LỒI — điều kiện của ô A13. "
                    "Hình thang đặt toạ độ hữu tỉ được",
-         "de": 'Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'ý b) dùng M, N trung điểm AB, BC và vẫn dùng P của ý a)',
          "rui_ro": "trung bình. P là điểm TỰ DO trên SD (như các ca đã chốt); "
                    "tính đồng phẳng của thiết diện đúng với mọi vị trí P. "
                    "**Chỉ chép ý a)**"},
@@ -372,9 +529,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "chóp S.ABC · SA ⊥ (ABC) · H hình chiếu của A trên BC · chứng minh (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC)",
          "vi_sao": "PASS 2 — H là điểm DẪN XUẤT (chiếu vuông góc), khác hẳn ứng viên lập phương vốn không có vật dựng nào",
-         "de": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. b) Chứng minh rằng (ACC'A') ⊥ (BDD'B').",
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": "hai mặt (ACC'A') và (BDD'B') — kiểm đủ bốn chữ và dấu phẩy trên",
          "rui_ro": "thấp. Chỉ chép ý a)"},
         {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* "
                   "(14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 2 **ý b)** (đề tr "
@@ -387,9 +541,6 @@ DA_SOI: dict[str, list[dict]] = {
          "vi_sao": "lập phương ⇒ toạ độ NGUYÊN, hình xác định hoàn toàn, "
                    "không điểm tự do nào. Đúng nghĩa vụ `perpendicular` "
                    "MẶT–MẶT mà ô A08 đòi",
-         "de": 'Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'H là hình chiếu của A trên BC; ý a) có HAI kết luận',
          "rui_ro": "thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**; ý a) hỏi "
                    "đường chéo (ra a√3, vô tỉ), ý c) hỏi số đo góc nhị diện"},
     ],
@@ -398,9 +549,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "",
          "goi_y": "hình lập phương ABCD.A'B'C'D' cạnh a · xác định và tính góc phẳng nhị diện [A,BD,A'] và [C,BD,A']",
          "vi_sao": "PASS 2 — nhị diện trên LẬP PHƯƠNG, khác hẳn ngữ cảnh thực của kim tự tháp",
-         "de": 'Cho biết kim tự tháp Memphis tại bang Tennessee (Mỹ) có dạng hình chóp tứ giác đều với chiều cao 98 m và cạnh đáy 180 m. Tính số đo góc nhị diện tạo bởi mặt bên và mặt đáy?',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'hai số 98 m và 180 m',
          "rui_ro": "thấp"},
         {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* "
                   "(14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 6 (đề tr PDF 2) · "
@@ -412,9 +560,6 @@ DA_SOI: dict[str, list[dict]] = {
          "vi_sao": "đúng loại ô B03 (góc nhị diện có miền). Thêm giá trị: đề "
                    "diễn đạt bằng NGỮ CẢNH THỰC + đơn vị mét — dạng ngôn ngữ "
                    "không ứng viên nào khác có",
-         "de": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Xác định và tính góc phẳng nhị diện: a) [A,BD,A']; b) [C,BD,A'].",
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'ký hiệu nhị diện dạng [X,YZ,T] — chép đủ dấu ngoặc vuông và dấu phẩy',
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
     ],
     # ── Nguồn 4: Chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) ──
@@ -423,9 +568,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "",
          "goi_y": "tam giác SOA vuông tại O, OA = 3cm, SA = 5cm · quay quanh SO được hình nón · tính diện tích xung quanh, toàn phần và thể tích",
          "vi_sao": "PASS 2 — mặt cong sinh bởi PHÉP QUAY, khác đề cho sẵn r và l. Ngôn ngữ *quay quanh cạnh* là dạng diễn đạt mới",
-         "de": 'Cho hình nón có bán kính đáy r = 3cm và đường sinh l = 5cm. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'r = 3cm, l = 5cm; ý a)',
          "rui_ro": "thấp"},
         {"nguon": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — "
                   "**HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1 *hình nón*, Câu 1 "
@@ -437,9 +579,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "diện tích xung quanh và toàn phần",
          "vi_sao": "MẶT CONG — kernel chỉ dựng đa diện lồi. Đề ngắn nhất và "
                    "rõ nhất trong mục",
-         "de": 'Cho tam giác SOA vuông tại O có OA = 3cm, SA = 5cm, quay tam giác SOA xung quanh cạnh SO được hình nón. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'vuông tại O; OA = 3cm, SA = 5cm; quay quanh SO',
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
     ],
     # ── Nguồn 5–8: HTML + SBT, cho sáu ô cuối của Pass 1 ──
@@ -448,17 +587,11 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "chóp S.ABCD đáy hình bình hành · G, K là TRỌNG TÂM △SAD và △SCD · chứng minh GK ∥ (ABCD)",
          "vi_sao": "PASS 2 — hai trọng tâm trên hai mặt bên KHÁC nhau; lời giải nguồn đi qua H trung điểm SD và tỉ số HG/HA = HK/HC = 1/3 ⇒ GK ∥ AC. Kiểm số chính xác: G(0,1/3,1/3) K(1/3,2/3,1/3), GK ∥ AC và GK.z = 0",
-         "de": 'Cho hình chóp S.ABCD. Gọi M, N lần lượt là trung điểm của AB và BC; G1, G2 tương ứng là trọng tâm các tam giác SAB, SBC. a) Chứng minh AC // (SMN).',
-         "rui_ro_muc": 'HIGH',
-         "kiem_gi": "bản trích web hiển thị ký hiệu ∥ thành chữ 'P' — PHẢI mở nguồn xác nhận đúng là AC ∥ (SMN), và tên G1, G2",
          "rui_ro": "thấp — nguồn SGK, đáp án là `true`"},
         {"nguon": "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 32 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/",
          "dap_an": "true",
          "goi_y": "chóp S.ABCD đáy bình hành · M, N, P trên SA, SB, AD với SM/SA = SN/SB = PD/AD · chứng minh MN ∥ (ABCD)",
          "vi_sao": "PASS 2 — điểm chia theo TỈ SỐ BẰNG NHAU thay vì trung điểm; ba điểm trên ba cạnh khác nhau",
-         "de": 'Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Trên các cạnh SA, SB, AD lần lượt lấy các điểm M, N, P sao cho SM/SA = SN/SB = PD/AD. a) Chứng minh MN // (ABCD).',
-         "rui_ro_muc": 'HIGH',
-         "kiem_gi": 'ba tỉ số SM/SA = SN/SB = PD/AD — xác nhận đúng MẪU SỐ, đặc biệt PD/AD chứ không phải AP/AD',
          "rui_ro": "trung bình — tỉ số chung không được cho giá trị; kết luận đúng với mọi tỉ số (cùng lớp *tham số tự do* đã chốt). Chỉ chép ý a)"},
         {"nguon": "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt "
                   "phẳng song song (có lời giải)*, Bài 31 **ý a)** · "
@@ -470,9 +603,6 @@ DA_SOI: dict[str, list[dict]] = {
          "vi_sao": "MN là đường trung bình △ABC ⇒ MN ∥ AC ⇒ AC ∥ (SMN). "
                    "Trung điểm và trọng tâm đều giữ toạ độ hữu tỉ; không dữ "
                    "kiện số nào",
-         "de": 'Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'G, K là trọng tâm SAD và SCD',
          "rui_ro": "thấp. Đề gốc nhiều ý — **chỉ chép ý a)**"},
     ],
     "A05": [
@@ -480,9 +610,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "chóp S.ABCD đáy HÌNH THANG, AD đáy lớn, AD = 2BC · I, K, L trung điểm AD, SA, SD · chứng minh (SAB) ∥ (ILC)",
          "vi_sao": "PASS 2 — đáy hình thang có TỈ SỐ RÀNG BUỘC (AD = 2BC), khác bình hành/tam giác của hai ứng viên kia. Lời giải nguồn ghép IL ∥ SA với IC ∥ AB",
-         "de": 'Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'ba trung điểm trên ba cạnh bên SA, SB, SC',
          "rui_ro": "thấp. Đề gốc chứng minh HAI cặp mặt — **chỉ chép cặp (SAB) ∥ (ILC)**; cặp (SCD) ∥ (BIK) để dành nếu cần"},
         {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 "
                   "Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · "
@@ -493,9 +620,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "(MNP) ∥ (ABC)",
          "vi_sao": "ba trung điểm ⇒ toạ độ hữu tỉ. Nghĩa vụ `parallel` "
                    "MẶT–MẶT, đúng thứ ô A05 đòi. Lời giải hiện ngay trên trang",
-         "de": 'Cho hình chóp S.ABCD có đáy là hình thang, AD là đáy lớn và AD = 2BC. Gọi I, K, L lần lượt là trung điểm của AD, SA, SD. Chứng minh (SAB) // (ILC).',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'AD = 2BC; I,K,L là trung điểm AD,SA,SD; cặp mặt (SAB) ∥ (ILC)',
          "rui_ro": "thấp — ứng viên gọn nhất trong nhóm song song"},
     ],
     "A06": [
@@ -507,9 +631,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "true",
          "goi_y": "hình hộp sáu mặt đều là hình vuông (lập phương) · chứng minh AC ⊥ B'D'",
          "vi_sao": "PASS 2 — cùng hình nhưng đường chéo CHÉO NHAU thay vì cạnh–cạnh; lập luận nguồn đi qua B'D' ∥ BD rồi AC ⊥ BD",
-         "de": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AB ⊥ CC'.",
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": "'6 mặt đều là hình vuông' (tức lập phương) và ý cần chép là AB ⊥ CC'",
          "rui_ro": "thấp"},
         {"nguon": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc "
                   "trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'` · " 
@@ -521,9 +642,6 @@ DA_SOI: dict[str, list[dict]] = {
                    "nguồn: CC' ∥ BB' nên (AB,CC') = (AB,BB') = 90°. Nghĩa vụ "
                    "`perpendicular` ĐƯỜNG–ĐƯỜNG — đúng thứ A06 đòi, và là ô "
                    "DUY NHẤT không tìm được trong hai tài liệu chuyên đề",
-         "de": "Cho hình hộp ABCD.A'B'C'D' có 6 mặt đều là hình vuông. Chứng minh AC ⊥ B'D'.",
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": "ý thứ hai: AC ⊥ B'D' — chú ý dấu phẩy trên B' và D'",
          "rui_ro": "thấp. Ví dụ 1 có hai ý (`AB ⊥ CC'` và `AC ⊥ B'D'`) — "
                    "**chỉ chép ý đầu**; ý sau cũng hữu tỉ, để dành Pass 2"},
     ],
@@ -534,9 +652,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "giữa đường thẳng AC và mặt phẳng (A'B'C'D')",
          "vi_sao": "AC ∥ A'C' ⊂ (A'B'C'D') ⇒ AC ∥ (A'B'C'D') ⇒ khoảng cách "
                    "ĐƯỜNG ∥ MẶT — đúng loại ô B02. Nguồn cho d = AA' = a",
-         "de": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. b) Tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D').",
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": "ý b) của bài 7.27; mặt phẳng (A'B'C'D') là mặt TRÊN",
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:` — dù "
                    "đáp án `a` trông hữu tỉ, tầng B KHÔNG chấm bằng oracle"},
     ],
@@ -545,9 +660,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "",
          "goi_y": "Trong không gian Oxyz, viết phương trình mặt phẳng (P) qua M(−1;−2;5) và vuông góc với HAI mặt phẳng (Q): x + 2y − 3z + 1 = 0 và (R): 2x − 3y + z + 1 = 0",
          "vi_sao": "PASS 2 — ràng buộc là VUÔNG GÓC VỚI HAI MẶT thay vì qua hai điểm; vẫn Oxyz cho sẵn nên vẫn đúng lý do ngoài phủ",
-         "de": 'Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'toạ độ A(1;2;−2), B(2;−1;4) và hệ số của (β) — kiểm từng dấu âm',
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`"},
         {"nguon": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục "
                   "`TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; "
@@ -559,9 +671,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "A(1;2;−2), B(2;−1;4) và vuông góc với (β): x − 2y − z + 1 = 0",
          "vi_sao": "Oxyz CHO SẴN toạ độ ⇒ mô hình không phải tự đặt hệ trục, "
                    "đúng lý do ngoài phủ của ô B04. Hệ số nguyên, đề gọn",
-         "de": 'Trong không gian Oxyz, viết phương trình mặt phẳng (P) đi qua điểm M(-1;-2;5) và vuông góc với hai mặt phẳng (Q): x + 2y - 3z + 1 = 0 và (R): 2x - 3y + z + 1 = 0.',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'M(−1;−2;5) và hệ số của (Q), (R) — kiểm từng dấu âm',
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
     ],
     "B06": [
@@ -569,9 +678,6 @@ DA_SOI: dict[str, list[dict]] = {
          "dap_an": "",
          "goi_y": "vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA",
          "vi_sao": "PASS 2 — chiếu cả một KHỐI (không phải một điểm), và phương chiếu là một CẠNH của khối. Nguồn trả lời: ảnh là tứ giác A'B'C'D'",
-         "de": 'Cho tứ diện ABCD. I là trọng tâm tam giác ABC. Xác định hình chiếu song song của I theo phương CD lên mặt phẳng (ABD).',
-         "rui_ro_muc": 'LOW',
-         "kiem_gi": 'I là TRỌNG TÂM ABC; phương chiếu CD; mặt phẳng chiếu (ABD)',
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`"},
         {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: "
                   "Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · "
@@ -582,9 +688,6 @@ DA_SOI: dict[str, list[dict]] = {
                   "song của I theo phương CD lên mặt phẳng (ABD)",
          "vi_sao": "PHÉP CHIẾU SONG SONG — đúng loại ô B06. Nguồn trả lời: "
                    "ảnh là J, trọng tâm △ABD",
-         "de": 'Vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA.',
-         "rui_ro_muc": 'MEDIUM',
-         "kiem_gi": 'phương chiếu là SA; mặt phẳng chiếu là (P)',
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
     ],
 }
@@ -735,8 +838,10 @@ def _khoi(o: str, SH, MT, da_soi: dict | None,
     # ⚠️ Chép máy ở đây KHÔNG phải trích text PDF: đo trong chính kho này,
     # trích text nuốt sạch `√` (`⊥` 204 lần / `√` 0 lần) và làm rơi tên điểm.
     # Mọi đề dưới đây đọc từ **ảnh trang đã dựng** hoặc HTML hiển thị đủ.
-    if da_soi and da_soi.get("de"):
-        muc = da_soi.get("rui_ro_muc", "MEDIUM")
+    chep = BAN_CHEP.get(_khoa_chep(da_soi["nguon"])) if da_soi else None
+    if chep and chep.get("de"):
+        da_soi = {**da_soi, **chep}
+        muc = chep.get("rui_ro_muc", "MEDIUM")
         d += [f"#     RỦI RO     : {muc}"
               + ("   ← PHẢI mở nguồn đối chiếu" if muc == "HIGH" else ""),
               f"#     CẦN KIỂM GÌ: {da_soi.get('kiem_gi', 'đối chiếu nguyên văn với nguồn')}"]

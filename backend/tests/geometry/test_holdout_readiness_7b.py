@@ -1672,17 +1672,19 @@ def test_de_chep_may_deu_co_MUC_RUI_RO_va_viec_can_kiem(PK):
     """
     for o, v in PK.DA_SOI.items():
         for c in v:
-            assert c.get("de"), f"{o}: ứng viên không có đề"
-            assert c.get("rui_ro_muc") in ("LOW", "MEDIUM", "HIGH"), o
-            assert c.get("kiem_gi"), f"{o}: không nói người cần kiểm gì"
+            chep = PK.BAN_CHEP[PK._khoa_chep(c["nguon"])]
+            assert chep.get("de"), f"{o}: ứng viên không có đề"
+            assert chep.get("rui_ro_muc") in ("LOW", "MEDIUM", "HIGH"), o
+            assert chep.get("kiem_gi"), f"{o}: không nói người cần kiểm gì"
 
 
 def test_de_may_KHONG_doc_chac_thi_de_TRONG_va_gan_HIGH(PK):
     """Máy không đọc chắc thì phải NÓI RA, không đoán cho đủ chỗ."""
     for o, v in PK.DA_SOI.items():
         for c in v:
-            if c["de"].lstrip().startswith("<"):
-                assert c["rui_ro_muc"] == "HIGH", \
+            chep = PK.BAN_CHEP[PK._khoa_chep(c["nguon"])]
+            if chep["de"].lstrip().startswith("<"):
+                assert chep["rui_ro_muc"] == "HIGH", \
                     f"{o}: đề còn chỗ trống mà không gắn HIGH"
 
 
@@ -1834,7 +1836,7 @@ def test_moi_o_phat_DU_khoi_cho_so_ung_vien_da_co(PK):
 
 # ══ VALIDATOR PHẢI TÁCH "CẦN CHÉP" KHỎI "RESERVE" ════════════════════════
 def test_validator_KHONG_dem_khoi_reserve_thanh_viec_phai_lam(PK, VL, SH, GOI):
-    """Gói 51 khối / 42 ứng viên: khối reserve KHÔNG phải việc của người chép.
+    r"""Gói 51 khối / 42 ứng viên: khối reserve KHÔNG phải việc của người chép.
 
     Bản trước gộp cả hai thành một số "còn trống" nên báo 50 việc khi chỉ còn
     41 — đếm sai theo hướng làm nản. Nguyên nhân là `\s*` quay lui vô hiệu
@@ -1995,3 +1997,105 @@ def test_bai_MENH_DE_dung_qua_duoc_kiem_pool(SH):
     c = IN.thanh_case(bai[0], nguoi, SH)
     assert c["oracle_result"] == {"parallel": "true"}, c.get("oracle_result")
     assert SH.check_capability_boundary(c) == [] and SH.kiem_pool([c]) == []
+
+
+# ══ ĐỀ PHẢI THUỘC VỀ ĐÚNG TRÍCH DẪN ĐỨNG CẠNH NÓ ═════════════════════════
+#
+# Lớp bug tệ nhất của cả wave: `de` được gán theo **chỉ số** trong `DA_SOI[o]`
+# còn `nguon` viết cùng dict. Mỗi lần chèn ứng viên mới vào ĐẦU danh sách,
+# chỉ số dịch và đề dính sang trích dẫn khác — **18/41 bản ghi ghép chéo**.
+# Một held-out mà `problem_text` không thuộc `source_citation` thì toàn bộ
+# bộ máy xuất xứ trở thành trang trí: đáp án nguồn chấm một bài, mô hình đọc
+# một bài khác.
+#
+# `BAN_CHEP` khoá theo chuỗi nguồn đã xoá *cơ chế* sinh lệch. Bảng dưới khoá
+# *kết quả*: từng cặp đã soi tận trang, neo bằng một mẩu chữ chỉ có ở đúng
+# bài đó. Đổi bản chép mà quên đổi neo ⇒ ĐỎ.
+#
+# Khoá nguồn ở đây (`"Câu 2"`, `"Câu 1"`…) KHÔNG duy nhất toàn cục — đó là
+# lý do vòng ghép-theo-nội-dung trước sửa được 11 ca rồi ghép sai lại 3 ca.
+# Ở đây chúng chỉ cần duy nhất **trong một vị trí đã biết**, nên đủ.
+_NEO_NGUON_DE: dict[tuple[str, int], tuple[str, str]] = {
+    ("A01", 0): ("Bài 3 trang 106", "Tìm giao tuyến của (SCD) và (SAB)"),
+    ("A01", 1): ("Câu 3", "G là trọng tâm tam giác BCD"),
+    ("A01", 2): ("Câu 5", "trung điểm AD và BC"),
+    ("A02", 0): ("Bài 4.6", "G là trọng tâm tam giác SCD"),
+    ("A02", 1): ("Câu 13", "AC và BD giao nhau tại O"),
+    ("A02", 2): ("Câu 12", "bốn điểm A, B, C, D không đồng phẳng"),
+    # tr PDF 100 của tài liệu CTST 410tr: Câu 1 = IJ//CD, Câu 2 = MPNQ.
+    ("A03", 0): ("Câu 2", "MPNQ là hình bình hành"),
+    ("A03", 1): ("Câu 1", "IJ // CD"),
+    ("A04", 0): ("Bài 4.44", "trọng tâm của tam giác SAD"),
+    ("A04", 1): ("Bài 32", "SM/SA"),
+    ("A04", 2): ("Bài 31", "G1"),
+    ("A05", 0): ("Bài 4.17", "AD = 2BC"),
+    ("A05", 1): ("Câu 4", "(MNP) // (ABC)"),
+    # A06: `nguon` tự ghi ý nào — lệch nhìn thấy được trong chính bản ghi.
+    ("A06", 0): ("ý `AC ⊥ B'D'`", "AC ⊥ B'D'"),
+    ("A06", 1): ("ý `AB ⊥ CC'`", "AB ⊥ CC'"),
+    ("A07", 0): ("Câu 1", "BC ⊥ (OAH)"),
+    ("A07", 1): ("Câu 2", "AH ⊥ (SBC)"),
+    ("A08", 0): ("Câu 1", "(SAB) ⊥ (ABC)"),
+    ("A08", 1): ("Câu 2", "(ACC'A')"),
+    ("A09", 0): ("Câu 13", "A'D và B'I"),
+    ("A09", 1): ("ý c", "A'C' và B'C"),
+    ("A09", 2): ("ý b", "AC và B'C'"),
+    ("A10", 0): ("Câu 2", "(BCC'B')"),
+    ("A10", 1): ("Câu 5", "hình thoi ABCD tâm O"),
+    ("A11", 0): ("Ví dụ 2", "SA = 3a/5"),
+    ("A11", 1): ("Câu 7", "vuông tại B"),
+    ("A13", 0): ("ý b", "(MNP)"),
+    ("A13", 1): ("ý a", "(PAB)"),
+    ("A14", 0): ("trang PDF 80", "AC = 2a"),
+    ("A14", 1): ("trang PDF 91", "(SBD)"),
+    ("B01", 0): ("Câu 26", "tam giác đều cạnh a"),
+    ("B01", 1): ("Câu 28", "AA1"),
+    ("B02", 0): ("Bài 7.27", "(A'B'C'D')"),
+    ("B03", 0): ("Câu 4", "Memphis"),
+    ("B03", 1): ("Câu 6", "[C,BD,A']"),
+    ("B04", 0): ("Dạng 5", "M(-1;-2;5)"),
+    ("B04", 1): ("Dạng 4", "A(1;2;-2)"),
+    ("B05", 0): ("Dạng 1, Câu 2", "r = 3cm và đường sinh l = 5cm"),
+    ("B05", 1): ("Câu 1 **ý a)", "tam giác SOA vuông tại O"),
+    ("B06", 0): ("VẬN DỤNG", "trọng tâm tam giác ABC"),
+    ("B06", 1): ("NHẬN BIẾT", "phương chiếu SA"),
+}
+
+
+def test_bang_neo_phu_HET_ung_vien_da_soi(PK):
+    """Neo phải phủ 100% — thêm ứng viên mà quên neo là mở lại đúng lỗ cũ."""
+    that = {(o, i) for o, ds in PK.DA_SOI.items() for i in range(len(ds))}
+    assert set(_NEO_NGUON_DE) == that, {
+        "thiếu neo": sorted(that - set(_NEO_NGUON_DE)),
+        "neo thừa": sorted(set(_NEO_NGUON_DE) - that),
+    }
+
+
+@pytest.mark.parametrize("vi_tri", sorted(_NEO_NGUON_DE))
+def test_de_thuoc_ve_dung_trich_dan_dung_canh_no(PK, vi_tri):
+    o, i = vi_tri
+    mau_nguon, mau_de = _NEO_NGUON_DE[vi_tri]
+    ung = PK.DA_SOI[o][i]
+    assert mau_nguon in ung["nguon"], f"{o}#{i}: nguồn không còn chứa {mau_nguon!r}"
+    de = PK.BAN_CHEP[PK._khoa_chep(ung["nguon"])]["de"]
+    assert mau_de in de, f"{o}#{i} [{mau_nguon}]: đề không nói {mau_de!r} → {de[:90]!r}"
+
+
+def test_moi_ung_vien_TRA_DUOC_ban_chep_va_khong_co_muc_mo_coi(PK):
+    """Song ánh `nguon` ⇄ `BAN_CHEP`: không mục mồ côi, không khoá đụng nhau."""
+    khoa = [PK._khoa_chep(c["nguon"]) for ds in PK.DA_SOI.values() for c in ds]
+    assert len(set(khoa)) == len(khoa), "hai ứng viên chung một khoá nguồn"
+    assert set(khoa) == set(PK.BAN_CHEP), {
+        "chưa có bản chép": sorted(set(khoa) - set(PK.BAN_CHEP)),
+        "bản chép mồ côi": sorted(set(PK.BAN_CHEP) - set(khoa)),
+    }
+
+
+def test_khong_hai_ung_vien_nao_dung_chung_mot_DE(PK):
+    """Hoán vị sai kiểu 'copy đè' lộ ra ở đây: hai ô cùng một đề."""
+    thay: dict[str, tuple[str, int]] = {}
+    for o, ds in PK.DA_SOI.items():
+        for i, c in enumerate(ds):
+            de = PK.BAN_CHEP[PK._khoa_chep(c["nguon"])]["de"]
+            assert de not in thay, f"{o}#{i} trùng đề với {thay[de]}"
+            thay[de] = (o, i)

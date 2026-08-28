@@ -75,9 +75,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — giao tuyến xác định bởi QUAN HỆ SONG SONG (AB ∥ CD ⇒ giao tuyến qua S và ∥ AB), không phải bởi hai điểm chung. Đây là mẫu dựng khác hẳn hai ứng viên A01 kia
 #     RỦI RO     : trung bình — `phep_chuyen` ghi rõ: nguồn trả lời *đường qua S song song AB và CD*; nghĩa vụ `point_on_line` kiểm S thuộc giao tuyến ⇒ true
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: tên điểm M, N và cặp mặt phẳng (SMN), (SAC)
-[A01] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: đề gốc nhiều ý — xác nhận ý a) đúng là cặp (SCD),(SAB)
+[A01] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. a) Tìm giao tuyến của (SCD) và (SAB).
       NGUỒN: SGK Toán 11 Chân trời sáng tạo — **Bài 3 trang 106**, ý a) (lời giải: Loigiaihay)
       ĐÁP ÁN: true
 
@@ -90,8 +90,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     RỦI RO     : thấp
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 #     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: G là trọng tâm tam giác BCD, không phải ABC
-[A01] Cho tứ diện ABCD. G là trọng tâm tam giác BCD. Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB).
+#     CẦN KIỂM GÌ: tên điểm M, N và cặp mặt phẳng (SMN), (SAC)
+[A01] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M, N lần lượt là trung điểm AD và BC. Tìm giao tuyến của hai mặt phẳng (SMN) và (SAC).
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
@@ -103,9 +103,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: bình hành + trung điểm ⇒ toạ độ hữu tỉ hết. Giao tuyến đi qua S và tâm O — nghĩa vụ `point_on_line` kiểm O thuộc giao tuyến ⇒ `true`
 #     RỦI RO     : trung bình. `phep_chuyen` phải ghi rõ: nguồn trả lời *giao tuyến là SO*, chuyển thành `point_on_line` = true
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: đề gốc nhiều ý — xác nhận ý a) đúng là cặp (SCD),(SAB)
-[A01] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. a) Tìm giao tuyến của (SCD) và (SAB).
+#     RỦI RO     : LOW
+#     CẦN KIỂM GÌ: G là trọng tâm tam giác BCD, không phải ABC
+[A01] Cho tứ diện ABCD. G là trọng tâm tam giác BCD. Tìm giao tuyến của hai mặt phẳng (ACD) và (GAB).
       NGUỒN: Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
@@ -131,9 +131,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — cùng nghĩa vụ A02, nhưng điểm cắt O là DỮ KIỆN chứ không phải vật dựng; M tự do trên SC
 #     RỦI RO     : trung bình — M tự do (lớp đã chốt)
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: M trên SC, tìm giao điểm của SD (không phải SC) với (ABM)
-[A02] Cho tứ giác ABCD có AC và BD giao nhau tại O và một điểm S không thuộc mặt phẳng (ABCD). Trên đoạn SC lấy một điểm M không trùng với S và C. Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM).
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: G là trọng tâm tam giác SCD; ý b) hỏi giao điểm BG ∩ (SAC)
+[A02] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
@@ -145,9 +145,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: tỉ số 2:1 và trung điểm đều hữu tỉ ⇒ P = (1/3,0,2/3) khi đặt tứ diện đơn vị. Ba điểm dẫn xuất ⇒ chuỗi phụ thuộc sâu nhất trong cả gói
 #     RỦI RO     : thấp
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: G là trọng tâm tam giác SCD; ý b) hỏi giao điểm BG ∩ (SAC)
-[A02] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G là trọng tâm tam giác SCD. b) Tìm giao điểm của BG và mặt phẳng (SAC).
+#     RỦI RO     : LOW
+#     CẦN KIỂM GÌ: M trên SC, tìm giao điểm của SD (không phải SC) với (ABM)
+[A02] Cho tứ giác ABCD có AC và BD giao nhau tại O và một điểm S không thuộc mặt phẳng (ABCD). Trên đoạn SC lấy một điểm M không trùng với S và C. Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM).
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2 *Tìm giao điểm của đường thẳng và mặt phẳng*, Câu 12 (đề tr PDF 7; lời giải tr 21+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
@@ -187,9 +187,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — hai trọng tâm trên hai mặt bên KHÁC nhau; lời giải nguồn đi qua H trung điểm SD và tỉ số HG/HA = HK/HC = 1/3 ⇒ GK ∥ AC. Kiểm số chính xác: G(0,1/3,1/3) K(1/3,2/3,1/3), GK ∥ AC và GK.z = 0
 #     RỦI RO     : thấp — nguồn SGK, đáp án là `true`
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : HIGH   ← PHẢI mở nguồn đối chiếu
-#     CẦN KIỂM GÌ: bản trích web hiển thị ký hiệu ∥ thành chữ 'P' — PHẢI mở nguồn xác nhận đúng là AC ∥ (SMN), và tên G1, G2
-[A04] Cho hình chóp S.ABCD. Gọi M, N lần lượt là trung điểm của AB và BC; G1, G2 tương ứng là trọng tâm các tam giác SAB, SBC. a) Chứng minh AC // (SMN).
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: G, K là trọng tâm SAD và SCD
+[A04] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).
       NGUỒN: SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)
       ĐÁP ÁN: true
 
@@ -215,9 +215,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: MN là đường trung bình △ABC ⇒ MN ∥ AC ⇒ AC ∥ (SMN). Trung điểm và trọng tâm đều giữ toạ độ hữu tỉ; không dữ kiện số nào
 #     RỦI RO     : thấp. Đề gốc nhiều ý — **chỉ chép ý a)**
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: G, K là trọng tâm SAD và SCD
-[A04] Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi G, K lần lượt là trọng tâm của tam giác SAD, SCD. a) Chứng minh GK // (ABCD).
+#     RỦI RO     : HIGH   ← PHẢI mở nguồn đối chiếu
+#     CẦN KIỂM GÌ: bản trích web hiển thị ký hiệu ∥ thành chữ 'P' — PHẢI mở nguồn xác nhận đúng là AC ∥ (SMN), và tên G1, G2
+[A04] Cho hình chóp S.ABCD. Gọi M, N lần lượt là trung điểm của AB và BC; G1, G2 tương ứng là trọng tâm các tam giác SAB, SBC. a) Chứng minh AC // (SMN).
       NGUỒN: DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 31 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/
       ĐÁP ÁN: true
 
@@ -229,9 +229,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — đáy hình thang có TỈ SỐ RÀNG BUỘC (AD = 2BC), khác bình hành/tam giác của hai ứng viên kia. Lời giải nguồn ghép IL ∥ SA với IC ∥ AB
 #     RỦI RO     : thấp. Đề gốc chứng minh HAI cặp mặt — **chỉ chép cặp (SAB) ∥ (ILC)**; cặp (SCD) ∥ (BIK) để dành nếu cần
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: ba trung điểm trên ba cạnh bên SA, SB, SC
-[A05] Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: AD = 2BC; I,K,L là trung điểm AD,SA,SD; cặp mặt (SAB) ∥ (ILC)
+[A05] Cho hình chóp S.ABCD có đáy là hình thang, AD là đáy lớn và AD = 2BC. Gọi I, K, L lần lượt là trung điểm của AD, SA, SD. Chứng minh (SAB) // (ILC).
       NGUỒN: SGK Toán 11 — **Bài 4.17 trang 114** (lời giải: Loigiaihay)
       ĐÁP ÁN: true
 
@@ -243,9 +243,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: ba trung điểm ⇒ toạ độ hữu tỉ. Nghĩa vụ `parallel` MẶT–MẶT, đúng thứ ô A05 đòi. Lời giải hiện ngay trên trang
 #     RỦI RO     : thấp — ứng viên gọn nhất trong nhóm song song
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: AD = 2BC; I,K,L là trung điểm AD,SA,SD; cặp mặt (SAB) ∥ (ILC)
-[A05] Cho hình chóp S.ABCD có đáy là hình thang, AD là đáy lớn và AD = 2BC. Gọi I, K, L lần lượt là trung điểm của AD, SA, SD. Chứng minh (SAB) // (ILC).
+#     RỦI RO     : LOW
+#     CẦN KIỂM GÌ: ba trung điểm trên ba cạnh bên SA, SB, SC
+[A05] Cho hình chóp S.ABC. Gọi M, N, P lần lượt là trung điểm của các cạnh SA, SB, SC. Chứng minh rằng (MNP) // (ABC).
       NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song
       ĐÁP ÁN: true
 
@@ -267,8 +267,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     RỦI RO     : trung bình — vẫn dùng P tự do của ý a)
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 #     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: AD là đáy LỚN; P nằm trên SD; ý a) cắt bởi (PAB)
-[A13] Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. a) Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB).
+#     CẦN KIỂM GÌ: ý b) dùng M, N trung điểm AB, BC và vẫn dùng P của ý a)
+[A13] Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
@@ -282,8 +282,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     RỦI RO     : trung bình. P là điểm TỰ DO trên SD (như các ca đã chốt); tính đồng phẳng của thiết diện đúng với mọi vị trí P. **Chỉ chép ý a)**
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 #     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: ý b) dùng M, N trung điểm AB, BC và vẫn dùng P của ý a)
-[A13] Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. b) Gọi M, N lần lượt là trung điểm của các cạnh AB, BC. Xác định thiết diện của hình chóp cắt bởi (MNP).
+#     CẦN KIỂM GÌ: AD là đáy LỚN; P nằm trên SD; ý a) cắt bởi (PAB)
+[A13] Cho hình chóp tứ giác S.ABCD, có đáy là hình thang với AD là đáy lớn và P là một điểm trên cạnh SD. a) Xác định thiết diện của hình chóp cắt bởi mặt phẳng (PAB).
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý a)** (đề tr PDF 8; lời giải tr 30+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
@@ -339,8 +339,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     RỦI RO     : thấp. Đề có hai ý — chỉ chép ý a)
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 #     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: H là hình chiếu của A lên SB (không phải SD); ý cần chép là b)
-[A07] Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).
+#     CẦN KIỂM GÌ: H là hình chiếu của O lên MẶT PHẲNG (ABC); ý a) là BC ⊥ (OAH)
+[A07] Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với nhau. Gọi H là hình chiếu vuông góc của O trên mặt phẳng (ABC). a) Chứng minh BC ⊥ (OAH).
       NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B23.1 **PHẦN TỰ LUẬN**, Dạng 1, Câu 1 **ý a)** (đề tr PDF 46; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: true
 
@@ -353,8 +353,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     RỦI RO     : thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**. Đáp án là `true` (bài chứng minh), không phải một con số
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 #     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: H là hình chiếu của O lên MẶT PHẲNG (ABC); ý a) là BC ⊥ (OAH)
-[A07] Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với nhau. Gọi H là hình chiếu vuông góc của O trên mặt phẳng (ABC). a) Chứng minh BC ⊥ (OAH).
+#     CẦN KIỂM GÌ: H là hình chiếu của A lên SB (không phải SD); ý cần chép là b)
+[A07] Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, cạnh bên SA vuông góc với mặt đáy. Gọi H, K lần lượt là hình chiếu của A lên SB, SD. b) Chứng minh AH ⊥ (SBC).
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: true
 
@@ -366,9 +366,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — H là điểm DẪN XUẤT (chiếu vuông góc), khác hẳn ứng viên lập phương vốn không có vật dựng nào
 #     RỦI RO     : thấp. Chỉ chép ý a)
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: hai mặt (ACC'A') và (BDD'B') — kiểm đủ bốn chữ và dấu phẩy trên
-[A08] Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. b) Chứng minh rằng (ACC'A') ⊥ (BDD'B').
+#     RỦI RO     : LOW
+#     CẦN KIỂM GÌ: H là hình chiếu của A trên BC; ý a) có HAI kết luận
+[A08] Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).
       NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
       ĐÁP ÁN: true
 
@@ -380,9 +380,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: lập phương ⇒ toạ độ NGUYÊN, hình xác định hoàn toàn, không điểm tự do nào. Đúng nghĩa vụ `perpendicular` MẶT–MẶT mà ô A08 đòi
 #     RỦI RO     : thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**; ý a) hỏi đường chéo (ra a√3, vô tỉ), ý c) hỏi số đo góc nhị diện
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: H là hình chiếu của A trên BC; ý a) có HAI kết luận
-[A08] Cho hình chóp S.ABC có SA ⊥ (ABC). Gọi H là hình chiếu của A trên BC. a) Chứng minh rằng (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC).
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: hai mặt (ACC'A') và (BDD'B') — kiểm đủ bốn chữ và dấu phẩy trên
+[A08] Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. b) Chứng minh rằng (ACC'A') ⊥ (BDD'B').
       NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2; lời giải mục *IV. LỜI GIẢI CHI TIẾT*) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
       ĐÁP ÁN: true
 
@@ -395,9 +395,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — ứng viên ĐÁNG GIÁ NHẤT của nhóm: nguồn in cos = √10/5, tức VÔ TỈ, nhưng đơn vị checker là cos² = 10/25 = **2/5**, HỮU TỈ. Nó chứng minh vì sao oracle dùng cos² chứ không dùng cos
 #     RỦI RO     : trung bình — `phep_chuyen` PHẢI ghi rõ: nguồn cho `√10/5`, bình phương ⇒ `2/5`. Chép thẳng √10/5 vào ĐÁP ÁN là sai đơn vị
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: ý b) của đề gốc: cặp AC và B'C'
-[A09] Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.
+#     RỦI RO     : HIGH   ← PHẢI mở nguồn đối chiếu
+#     CẦN KIỂM GÌ: nguồn in đáp án cos = √10/5 (CÓ CĂN). ĐÁP ÁN của ta là cos² = 2/5. Kiểm cả đề (I trung điểm AB, cặp A'D và B'I) lẫn việc nguồn thật sự ghi √10/5
+[A09] Cho hình lập phương ABCD.A'B'C'D', gọi I là trung điểm của cạnh AB. Tính côsin của góc giữa hai đường thẳng A'D và B'I.
       NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 13 (đề tr PDF 3; lời giải tr PDF 13) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 2/5
 
@@ -425,9 +425,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: lập phương ⇒ toạ độ NGUYÊN, không dữ kiện nào có căn. Nguồn in (AC,B'C') = 45° ⇒ cos² = 1/2 — hữu tỉ
 #     RỦI RO     : thấp. Đề gốc có BA ý a/b/c; **chỉ chép ý b)** — ý a) ra 90° (cos²=0, quá tầm thường), ý c) ra 60° (cos²=1/4, dùng được nếu cần bài A09 thứ hai). Cạnh không cho ⇒ gán 1
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : HIGH   ← PHẢI mở nguồn đối chiếu
-#     CẦN KIỂM GÌ: nguồn in đáp án cos = √10/5 (CÓ CĂN). ĐÁP ÁN của ta là cos² = 2/5. Kiểm cả đề (I trung điểm AB, cặp A'D và B'I) lẫn việc nguồn thật sự ghi √10/5
-[A09] Cho hình lập phương ABCD.A'B'C'D', gọi I là trung điểm của cạnh AB. Tính côsin của góc giữa hai đường thẳng A'D và B'I.
+#     RỦI RO     : LOW
+#     CẦN KIỂM GÌ: ý b) của đề gốc: cặp AC và B'C'
+[A09] Cho hình lập phương ABCD.A'B'C'D'. Tính góc giữa 2 đường thẳng AC và B'C'.
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 1/2
 
@@ -441,9 +441,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — lập phương (toạ độ nguyên) thay hình thoi; nguồn in 45° ⇒ sin² = 1/2
 #     RỦI RO     : ⚠️ ĐƠN VỊ: đường–MẶT ⇒ **sin²**, không phải cos²
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: BD = 4a và AC = 2a (đừng đảo), tan góc SBO = 1/2, hỏi góc giữa SC và đáy
-[A10] Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?
+#     RỦI RO     : LOW
+#     CẦN KIỂM GÌ: mặt phẳng (BCC'B') — bốn chữ, hai dấu phẩy trên
+[A10] Cho hình lập phương ABCD.A'B'C'D'. Góc giữa A'C' và mặt phẳng (BCC'B') bằng bao nhiêu?
       NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B24.1 **PHẦN TỰ LUẬN**, Câu 2 (đề tr PDF 106; lời giải tr PDF 112) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 1/2
 
@@ -457,9 +457,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: nguồn in BO = 2a, SO = 2a·½ = a, OC = a ⇒ SCO = 45° ⇒ **sin² = 1/2**. Toạ độ nguyên: O(0,0,0) B(0,−2,0) A(−1,0,0) C(1,0,0) S(0,0,1)
 #     RỦI RO     : ⚠️ ĐƠN VỊ: ô A10 là đường–MẶT nên checker nhận **sin²**, KHÔNG phải cos². Nguồn cho góc 45° ⇒ chép `1/2`
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: mặt phẳng (BCC'B') — bốn chữ, hai dấu phẩy trên
-[A10] Cho hình lập phương ABCD.A'B'C'D'. Góc giữa A'C' và mặt phẳng (BCC'B') bằng bao nhiêu?
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: BD = 4a và AC = 2a (đừng đảo), tan góc SBO = 1/2, hỏi góc giữa SC và đáy
+[A10] Cho hình thoi ABCD tâm O có BD = 4a, AC = 2a. Lấy điểm S không thuộc (ABCD) sao cho SO ⊥ (ABCD). Biết tan(SBO) = 1/2. Số đo góc giữa SC và (ABCD) bằng bao nhiêu?
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 1/2
 
@@ -646,9 +646,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: PASS 2 — cùng loại ngoài phủ nhưng cấu hình mặt-bên-vuông-góc-đáy, khác lăng trụ đứng của ứng viên đầu
 #     RỦI RO     : thấp
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
-#     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: chỉ số dưới A1, B1, C1; đề dùng lẫn CC' và CC1 — chép đúng như in
-[B01] Cho hình lăng trụ đứng ABC.A1B1C1 có tam giác ABC vuông cân tại A, AB = a, CC' = 2a. Khoảng cách giữa hai đường thẳng AA1 và BC1 bằng bao nhiêu?
+#     RỦI RO     : LOW
+#     CẦN KIỂM GÌ: mặt bên SBC ĐỀU cạnh a; (SBC) ⊥ đáy
+[B01] Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?
       NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
 
@@ -660,9 +660,9 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     VÌ SAO CHỌN: đúng LOẠI của ô B01 — khoảng cách hai đường CHÉO NHAU, nằm ngoài ranh giới kernel. Tầng B không cần hữu tỉ
 #     RỦI RO     : thấp. Nhớ dùng `ĐÁP ÁN NGUỒN:` (chép đáp án sách), KHÔNG dùng `ĐÁP ÁN:` — ô tầng B không có oracle
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
-#     RỦI RO     : LOW
-#     CẦN KIỂM GÌ: mặt bên SBC ĐỀU cạnh a; (SBC) ⊥ đáy
-[B01] Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: chỉ số dưới A1, B1, C1; đề dùng lẫn CC' và CC1 — chép đúng như in
+[B01] Cho hình lăng trụ đứng ABC.A1B1C1 có tam giác ABC vuông cân tại A, AB = a, CC' = 2a. Khoảng cách giữa hai đường thẳng AA1 và BC1 bằng bao nhiêu?
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 (đề tr PDF 300 = 'Page 59') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
 
@@ -725,8 +725,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 #     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: toạ độ A(1;2;−2), B(2;−1;4) và hệ số của (β) — kiểm từng dấu âm
-[B04] Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.
+#     CẦN KIỂM GÌ: M(−1;−2;5) và hệ số của (Q), (R) — kiểm từng dấu âm
+[B04] Trong không gian Oxyz, viết phương trình mặt phẳng (P) đi qua điểm M(-1;-2;5) và vuông góc với hai mặt phẳng (Q): x + 2y - 3z + 1 = 0 và (R): 2x - 3y + z + 1 = 0.
       NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 5**, Câu 1 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
       NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
 
@@ -739,8 +739,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối
 #     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 #     RỦI RO     : MEDIUM
-#     CẦN KIỂM GÌ: M(−1;−2;5) và hệ số của (Q), (R) — kiểm từng dấu âm
-[B04] Trong không gian Oxyz, viết phương trình mặt phẳng (P) đi qua điểm M(-1;-2;5) và vuông góc với hai mặt phẳng (Q): x + 2y - 3z + 1 = 0 và (R): 2x - 3y + z + 1 = 0.
+#     CẦN KIỂM GÌ: toạ độ A(1;2;−2), B(2;−1;4) và hệ số của (β) — kiểm từng dấu âm
+[B04] Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.
       NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
       NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
 
