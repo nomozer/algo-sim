@@ -258,7 +258,7 @@ Mọi thay đổi ở lượt này nằm trong `backend/scripts`, `backend/tests
 | SHA | |
 |---|---|
 | `ef2994d` | *(lượt trước)* phân loại blocker; sửa hai chỗ tài liệu báo tốt hơn thật |
-| *(lượt này)* | đóng hai lỗ cổng; bảng kế hoạch sinh bằng máy |
+| `f4b6e73` | đóng hai lỗ cổng; bảng kế hoạch sinh bằng máy |
 
 ## 15. NEXT SINGLE ACTION
 
