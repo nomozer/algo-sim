@@ -1,10 +1,17 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "e116efb5e15584b3",
-  "dirtyRelevantSources": [],
-  "head": "4e03cd459a8786eeb5a81f251a6cb650aafc4d52",
-  "dirty": false,
-  "generatedAt": "2026-08-28T09:41:19.242Z",
+  "sourceFingerprint": "fd5eb67e82fc9a2b",
+  "dirtyRelevantSources": [
+    "backend/app/ai/pipeline.py",
+    "backend/app/simulation/execution_authority_gate.py",
+    "backend/app/simulation/semantic_program/coverage_gate.py",
+    "backend/app/simulation/semantic_program/learner_surface.py",
+    "backend/app/simulation/semantic_program/route.py",
+    "backend/tests/geometry/test_validator_name_normalization.py"
+  ],
+  "head": "ad411068e338a0ee0b9eb85c7170c786c80ffd7d",
+  "dirty": true,
+  "generatedAt": "2026-08-26T13:11:50.354Z",
   "tool": "generation-parity.test",
   "toolVersion": "1",
   "environment": {
