@@ -279,7 +279,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     RỦI RO     : thấp
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AC ⊥ B'D'`
+      NGUỒN: Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian (lí thuyết và bài tập)*, **Ví dụ 1**, ý `AC ⊥ B'D'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html
       ĐÁP ÁN: true
 
 #   ─── A06 (2/2) · Hai đường thẳng vuông góc ───────────────────────
@@ -291,7 +291,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     RỦI RO     : thấp. Ví dụ 1 có hai ý (`AB ⊥ CC'` và `AC ⊥ B'D'`) — **chỉ chép ý đầu**; ý sau cũng hữu tỉ, để dành Pass 2
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'`
+      NGUỒN: Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'` · https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html
       ĐÁP ÁN: true
 
 #   ─── A07 (1/2) · Đường thẳng vuông góc mặt phẳng ─────────────────

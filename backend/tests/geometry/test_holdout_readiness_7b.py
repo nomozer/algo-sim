@@ -1828,3 +1828,26 @@ def test_bo_hoan_tat_KHONG_lap_lai_nghiep_vu_cua_duong_ong(PK):
     for cam in ("check_capability_boundary", "kiem_pool", "eval_geometry_expr"):
         assert not re.search(rf"\b\w*\.?{cam}\s*\(", src), \
             f"{cam}() bị GỌI trong bộ hoàn tất — nghiệp vụ phải ở script gốc"
+
+
+# ══ MỌI ỨNG VIÊN PHẢI TRA NGƯỢC ĐƯỢC ═════════════════════════════════════
+def test_moi_ung_vien_co_URL_hoac_la_SACH_IN(PK):
+    """Nguồn phải tra ngược được: hoặc có URL, hoặc là SGK/SBT (sách in).
+
+    Không phải luật hình thức. `HOLDOUT_PROTOCOL §3①` đòi nguồn công khai, và
+    `kiem_pool` đòi `nguon.url`; một ứng viên chỉ ghi tên trang mà không có
+    đường dẫn thì người sau không tra lại được lời giải để kiểm đáp án — đúng
+    chỗ đã làm hỏng ứng viên A12 (đáp án nguồn khác đáp án ta tính).
+    """
+    thieu = [(o, c["nguon"][:60]) for o, v in PK.DA_SOI.items() for c in v
+             if "http" not in c["nguon"]
+             and not re.search(r"\bSGK\b|\bSBT\b", c["nguon"])]
+    assert not thieu, f"ứng viên không tra ngược được: {thieu}"
+
+
+def test_moi_ung_vien_khai_DU_vi_tri_trong_nguon(PK):
+    """Phải chỉ được đúng bài: trang / Câu / Bài / Dạng / Ví dụ."""
+    mo = [(o, c["nguon"][:60]) for o, v in PK.DA_SOI.items() for c in v
+          if not re.search(r"tr(ang)? ?PDF? ?\d|Bài [\d.]+|Câu \d|Dạng \d|Ví dụ",
+                           c["nguon"])]
+    assert not mo, f"ứng viên không chỉ rõ vị trí bài: {mo}"

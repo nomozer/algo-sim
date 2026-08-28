@@ -393,13 +393,18 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp — ứng viên gọn nhất trong nhóm song song"},
     ],
     "A06": [
-        {"nguon": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AC ⊥ B'D'`",
+        {"nguon": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc "
+                  "trong không gian (lí thuyết và bài tập)*, **Ví dụ 1**, "
+                  "ý `AC ⊥ B'D'` · https://loigiaihay.com/cach-chung-minh-"
+                  "hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-"
+                  "bai-tap-a187814.html",
          "dap_an": "true",
          "goi_y": "hình hộp sáu mặt đều là hình vuông (lập phương) · chứng minh AC ⊥ B'D'",
          "vi_sao": "PASS 2 — cùng hình nhưng đường chéo CHÉO NHAU thay vì cạnh–cạnh; lập luận nguồn đi qua B'D' ∥ BD rồi AC ⊥ BD",
          "rui_ro": "thấp"},
         {"nguon": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc "
-                  "trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'`",
+                  "trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'` · " 
+                  "https://loigiaihay.com/cach-chung-minh-hai-duong-thang-vuong-goc-trong-khong-gian-li-thuyet-va-bai-tap-a187814.html",
          "dap_an": "true",
          "goi_y": "hình hộp ABCD.A'B'C'D' có **6 mặt đều là hình vuông** "
                   "(tức LẬP PHƯƠNG) · chứng minh AB ⊥ CC'",
