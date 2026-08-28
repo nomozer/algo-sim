@@ -611,3 +611,45 @@ rơi vào **MODE A/B** của §5 (tiếng Anh ⇒ hoặc người dịch trướ
 cách 3D bằng **vectơ và toạ độ cho sẵn**, mà đó đúng là thứ ô **B04** loại khỏi
 tầng A (*"Oxyz cho sẵn toạ độ ⇒ mô hình không phải tự đặt hệ trục"*). Tìm ở đó
 sẽ ra bài cho B04, không ra bài cho A11.
+
+### 7d. Rà Sharygin / Prasolov (2026-08-28, lượt hai) — `SOURCE_GAP_CONFIRMED`
+
+Tải **toàn văn** Sharygin, *Problems in Solid Geometry* (MIR 1986, 340 bài,
+[archive.org](https://archive.org/details/sharyginproblemsinsolidgeometry)) —
+bản `djvu.txt` là **text thật**, không phải ảnh công thức, nên quét được máy.
+
+```
+338 khối đề tách được  ·  34 đề có chữ "distance"  ·  0 đề dùng được cho A11/A12
+```
+
+Từng bài, theo bộ lọc A–D:
+
+| # | Đề | Loại vì |
+|---|---|---|
+| 7 · 22 · 49 · 192 | khoảng cách giữa **hai đường CHÉO NHAU** | **thuộc ô B01**, không phải A11/A12 |
+| 51 | *"distance from the vertex to the centre of gravity"* | điểm → **điểm**, không phải điểm → mặt/đường |
+| 80 | hộp `2a·a·a` nhưng có **tứ diện đều** MNPQ | `REJECT_IRRATIONAL` (√3) · và hỏi khoảng cách hai trung điểm |
+| 105 | P cách N là `2`, cách cạnh MN là `1` | `REJECT_IRRATIONAL` — cạnh thứ ba `√3` |
+| 158 · 212 · 236 | hỏi **thể tích** / **diện tích bóng** / chứng minh | không phải bài khoảng cách |
+
+Prasolov & Sharygin v.2 (560 bài) **không tải được**: archive.org chỉ có v.1
+(*Plane Geometry*), mccme.ru không còn bản tiếng Anh của tập rắn.
+
+#### Vì sao cả ba GENRE đều trượt — mỗi genre trượt một kiểu
+
+| Genre | Có bài khoảng cách không | Rơi vào đâu |
+|---|---|---|
+| Sách chuyên đề VN (15tr · 63tr) | **có, đúng loại** | ⛔ **trắc nghiệm** — 7B chỉ nhận tự luận |
+| Sách olympiad (Sharygin, Prasolov) | có | ⛔ *"distance"* ở đây gần như luôn là **hai đường chéo nhau** ⇒ **ô B01**, ngoài phủ tầng A |
+| A-Level / IB | có | ⇒ dạy bằng **vectơ + toạ độ cho sẵn** ⇒ **ô B04** |
+| Sách tổng hợp cổ điển (Slaught & Lennes) | rất ít | ⛔ quỹ tích · nón · cầu · chóp cụt |
+
+> **A11/A12 nằm ở giao của ba điều kiện hẹp**: thể loại **bài tập luyện của
+> trường** (không phải olympiad) · dạng **tự luận** (không phải trắc nghiệm) ·
+> và số liệu **Pythagore** (không phải `a`, `a√2`, `a√3`). Ba cái ấy hiếm khi
+> gặp nhau, và đó là toàn bộ lý do hai ô này trống.
+
+**Chỗ đáng thử tiếp**: phần **tự luận** của đề thi VN — câu cuối đề thi học kỳ,
+đề HSG tỉnh, đề ôn thi tốt nghiệp phần tự luận — vì phần trắc nghiệm là chỗ
+7B loại, còn phần tự luận thì cùng một tài liệu vẫn có. Lọc bằng chữ ký
+Pythagore đã in sẵn trong khối A11/A12 của gói chép tay.
