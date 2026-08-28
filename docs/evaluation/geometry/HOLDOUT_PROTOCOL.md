@@ -369,16 +369,28 @@ HTML hiển thị đủ ký hiệu. Chỗ máy không đọc chắc thì để t
 | `MEDIUM` | có số liệu, ký hiệu mặt phẳng, chỉ số dưới | nằm trong **mẫu QC** |
 | `LOW` | HTML sạch, bài chứng minh, không số liệu | nằm trong **mẫu QC** |
 
-**Mẫu QC**: toàn bộ `HIGH` + khoảng **20%** số khối `LOW`/`MEDIUM`, tối thiểu 8
-khối. Phát hiện một lỗi chép trong mẫu ⇒ **mở rộng** sang cả họ nguồn của nó.
+**Nghĩa vụ kiểm (chốt 2026-08-28)**: **100% khối `HIGH`**, và **không** còn
+mẫu ngẫu nhiên trên `LOW`/`MEDIUM`.
+
+> Mẫu ngẫu nhiên chỉ **tăng độ tin cậy**, không phải điều kiện giữ tính
+> held-out — ba bảo đảm ấy nằm ở nguồn công khai, đáp án của nguồn, và đóng
+> băng trước khi model chạy. `HIGH` thì khác: mỗi khối `HIGH` có **bằng chứng
+> cụ thể** về nguy cơ hỏng (dấu căn, phân số, tên điểm từng rơi, nguồn từng
+> ghi sai). Kiểm chỗ có bằng chứng, không rải đều.
+
+⚠️ **Cái giá phải khai ra**: khối `LOW`/`MEDIUM` dựa vào **xuất xứ nguồn + kiểm
+nhất quán bằng máy + đóng băng trước niêm phong**, và báo cáo **không được
+tuyên bố** chúng đã được người kiểm từng bài.
 
 ### Câu duy nhất được viết trong báo cáo
 
-> *"Tập held-out được chép máy từ các nguồn đã trích dẫn. Các trường hợp rủi ro
-> cao và một mẫu kiểm chất lượng đã được đối chiếu độc lập với trang nguồn
-> trước khi niêm phong."*
+> *"Machine-assisted transcription was used for all held-out candidates. Human
+> source verification was required for every record classified HIGH_RISK.
+> LOW/MEDIUM records relied on source provenance, machine consistency checks
+> and pre-seal freezing, and were not claimed to have been individually
+> human-verified."*
 
-❌ **Không được viết** *"42/42 do người kiểm"* nếu thực tế không phải vậy.
+❌ **Không được viết** *"all cases human verified"* hay *"41/41 do người kiểm"*.
 
 ### Bổ sung amendment — ô tầng B không phải chép đáp án nguồn
 

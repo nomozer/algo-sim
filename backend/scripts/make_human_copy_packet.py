@@ -633,7 +633,10 @@ _MO_DAU = """\n# ═════════════════════
 #    (1) ký MỘT dòng `NGƯỜI CHÉP:` dưới đây — nay mang nghĩa
 #        NGƯỜI XÁC MINH NGUỒN, kèm cam kết ở cuối phần này
 #    (2) mở nguồn đối chiếu MỌI khối ghi `RỦI RO : HIGH`
-#    (3) đối chiếu thêm một mẫu QC (~20% khối LOW/MEDIUM)
+#
+#  KHÔNG còn mẫu QC ngẫu nhiên. Khối LOW/MEDIUM dựa vào xuất xứ nguồn,
+#  kiểm nhất quán bằng máy, và việc đóng băng trước niêm phong — và báo cáo
+#  sẽ KHÔNG tuyên bố chúng đã được người kiểm từng bài.
 #
 #  Mỗi khối in sẵn `RỦI RO` và `CẦN KIỂM GÌ` — chỉ kiểm đúng thứ nêu ở đó.
 #
@@ -668,14 +671,15 @@ _MO_DAU = """\n# ═════════════════════
 #
 #  CAM KẾT — ký dòng dưới là xác nhận đúng câu này:
 #
-#    "Tôi đã đối chiếu độc lập MỌI khối HIGH_RISK và mẫu QC quy định với
-#     đúng trang nguồn được trích dẫn, trước khi niêm phong. Không dùng bất
-#     kỳ đầu ra nào của hệ được đo trong lúc chuẩn bị tập dữ liệu này."
+#    "Tôi đã đối chiếu độc lập MỌI bản ghi được xếp loại HIGH_RISK với đúng
+#     tài liệu nguồn được trích dẫn, trước khi niêm phong. Không có đầu ra
+#     nào của hệ được đo được dùng để chuẩn bị, sửa đổi hay xác minh tập
+#     dữ liệu held-out này."
 #
-#  Đừng ký nếu chưa làm (2) và (3): báo cáo sẽ khai ĐÚNG những gì dòng này
-#  nói, và nó KHÔNG được phép nói "42/42 người kiểm".
+#  Đừng ký nếu chưa làm (2): báo cáo sẽ khai ĐÚNG những gì dòng này nói, và
+#  nó KHÔNG được phép nói "41/41 người kiểm".
 
-NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK và mẫu QC
+NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu MỌI khối HIGH_RISK
 """
 
 
@@ -726,7 +730,7 @@ def _khoi(o: str, SH, MT, da_soi: dict | None,
     # Đổi 2026-08-28 (`PROTOCOL_AMENDMENT_PRESEAL`): `problem_text` được phép
     # **chép máy từ nguồn đã dẫn**, thay cho việc người gõ lại toàn bộ. Đổi
     # lại, mỗi bài mang **mức rủi ro** và người xác minh chỉ phải mở nguồn cho
-    # nhóm HIGH + một mẫu QC — chứ không phải cả 42.
+    # nhóm HIGH — chứ không phải cả 41.
     #
     # ⚠️ Chép máy ở đây KHÔNG phải trích text PDF: đo trong chính kho này,
     # trích text nuốt sạch `√` (`⊥` 204 lần / `√` 0 lần) và làm rơi tên điểm.
