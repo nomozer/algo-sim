@@ -102,8 +102,13 @@ def main() -> int:
     # ── [2/6] ghi pool ───────────────────────────────────────────────────
     print("[2/6] pool")
     d = json.loads(POOL.read_text(encoding="utf-8"))
-    co = {c["case_id"] for c in d["cases"]}
-    them = [c for c in cases if c["case_id"] not in co]
+    them, va = IN.loc_trung(cases, d["cases"])
+    if va:
+        for x in va:
+            print("      ·", x)
+        return _dung("pool/trung_id", f"{len(va)} bài trùng case_id",
+                     "Trùng id là MẤT BÀI im lặng. Đổi thứ tự khối trong gói, "
+                     "hoặc gỡ bài đã có khỏi pool trước.")
     if a.ghi:
         d["cases"] += them
         POOL.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n",

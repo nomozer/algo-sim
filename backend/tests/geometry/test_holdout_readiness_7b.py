@@ -1571,3 +1571,196 @@ def test_ghi_bao_cao_RA_NGOAI_kho_thi_bi_tu_choi(MT, monkeypatch, capsys):
                         ["x", "--md", "../docs/evaluation/lac.md"])
     assert MT.main() == 2
     assert "NGOÀI kho" in capsys.readouterr().out
+
+
+# ══ QUYẾT ĐỊNH A11/A12 ĐÃ CHỐT — nguồn sinh phải nói đúng ════════════════
+def test_KHONG_con_o_nao_cho_quyet_dinh(MT):
+    assert MT.O_CHO_QUYET_DINH == {}, \
+        "quyết định ① đã chốt 2026-08-28 — để lại là báo một rào không còn"
+
+
+def test_A11_A12_khai_RANG_BUOC_huu_ti_trong_bang_sinh(MT):
+    d = "\n".join(MT._bang_ke_hoach(MT.ma_tran([])))
+    for o in ("A11", "A12"):
+        dong = next(l for l in d.splitlines() if l.startswith(f"| **{o}** |"))
+        assert "hữu tỉ" in dong, f"{o}: mất ràng buộc chỉ-hữu-tỉ"
+        assert "quyết định" not in dong, f"{o}: còn nói là đang chờ quyết định"
+
+
+def test_VAN_dung_20_o_sau_quyet_dinh(MT, SH):
+    """Quyết định là hẹp LUẬT NHẬN, không đổi số ô, không đổi năng lực."""
+    assert len(SH.BANG_O) == 20
+    assert len(MT.O_NGUON) == 20
+    assert set(MT.O_RANG_BUOC_THEM) <= set(SH.BANG_O)
+    assert SH.NANG_LUC["rational_distance"][0] == ("A11", "A12")
+
+
+# ══ HAI CÁI GÓI 45 BÀI SẼ ĐỤNG NGAY ══════════════════════════════════════
+def test_dong_CHU_THICH_trong_khoi_KHONG_chui_vao_de(SH):
+    """Gói chép tay prefill siêu dữ liệu bằng dòng `#`. Lọt vào `problem_text`
+    thì đề gửi cho mô hình mang sẵn lời mách — hỏng im lặng."""
+    IN = _nap("ingest_holdout_batch")
+    lo = ("NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test\n\n"
+          "#   CAPABILITY : rational_volume\n"
+          "#   RỦI RO     : thấp — không bước nào sinh căn\n"
+          "[A14] Cho hình chóp S.ABC có đáy ABC vuông tại A, AB = a, AC = 2a, "
+          "SA vuông góc với đáy và SA = 2a. Tính thể tích khối chóp S.ABC.\n"
+          "#     GỢI Ý NGOÀI LỀ: V = 2a³/3\n"
+          "      NGUỒN: nguồn kiểm thử · https://x\n"
+          "      ĐÁP ÁN: 2/3\n")
+    _, bai, loi = IN.phan_tich(lo, SH)
+    assert loi == [], loi
+    de = bai[0]["de"]
+    assert "GỢI Ý" not in de and "CAPABILITY" not in de and "#" not in de, de
+    assert de.startswith("Cho hình chóp"), de
+
+
+def test_trung_case_id_thi_BAO_LOI_chu_khong_bo_qua_im_lang(SH):
+    """45 bài nạp một lượt: một va chạm id bị bỏ qua im lặng là mất bài mà
+    không ai biết. `hp_a11_001` đã có thật trong pool."""
+    IN = _nap("ingest_holdout_batch")
+    them, va = IN.loc_trung([{"case_id": "hp_a14_001"},
+                             {"case_id": "hp_a14_002"}],
+                            [{"case_id": "hp_a14_001"}])
+    assert [c["case_id"] for c in them] == ["hp_a14_002"]
+    assert va == ["hp_a14_001"], "va chạm id phải TRẢ RA, không nuốt"
+
+
+def test_trung_case_id_TRONG_CUNG_mot_goi_cung_bi_bat(SH):
+    IN = _nap("ingest_holdout_batch")
+    them, va = IN.loc_trung([{"case_id": "hp_b05_001"},
+                             {"case_id": "hp_b05_001"}], [])
+    assert len(them) == 1 and va == ["hp_b05_001"]
+
+
+# ══ GÓI CHÉP TAY — MỘT FILE CHO TOÀN BỘ PHẦN CON NGƯỜI ═══════════════════
+@pytest.fixture(scope="module")
+def PK():
+    return _nap("make_human_copy_packet")
+
+
+@pytest.fixture(scope="module")
+def VL():
+    return _nap("validate_human_copy_packet")
+
+
+@pytest.fixture(scope="module")
+def GOI(PK):
+    return PK.dung_goi()
+
+
+def test_goi_phat_DU_moi_o_va_DU_nguong(PK, SH, GOI):
+    assert set(PK.PHAT) == set(SH.BANG_O), "gói sót ô"
+    assert all(n >= SH.MOI_O_TOI_THIEU for n in PK.PHAT.values())
+    tong = sum(PK.PHAT.values())
+    assert tong > SH.TONG_TOI_THIEU, \
+        "gói phải phát DƯ — tỉ lệ đạt đo được ≈25%, phát đúng 40 là chắc hụt"
+    assert len(re.findall(r"^\[([AB]\d{2})\]", GOI, re.M)) == tong
+
+
+def test_goi_KHONG_prefill_de_bai(GOI):
+    """Bản máy đọc lại đặt sẵn ở ô đề chỉ mời người ta bấm qua."""
+    for dong in GOI.splitlines():
+        if re.match(r"^\[[AB]\d{2}\]", dong):
+            assert "GÕ NGUYÊN VĂN" in dong, f"đề bị prefill: {dong[:80]}"
+
+
+def test_goi_prefill_dap_an_CHI_khi_da_soi_tan_trang(PK, GOI):
+    """Hai ứng viên đã soi thì điền sẵn nguồn + đáp án; còn lại để trống."""
+    da = sum(len(v) for v in PK.DA_SOI.values())
+    assert len(re.findall(r"^\s+ĐÁP ÁN: (?!<)", GOI, re.M)) == da
+
+
+def test_goi_XEP_THEO_NGUON_de_moi_tai_lieu_mo_mot_lan(MT, GOI):
+    assert GOI.count("#  NGUỒN ") == len(set(MT.O_NGUON.values()))
+
+
+def test_goi_danh_dau_SOURCE_GAP(PK, GOI):
+    for o in PK.SOURCE_GAP:
+        assert f"SOURCE_GAP_{o}" in GOI
+
+
+def test_goi_dung_dung_LOAI_DONG_cho_tung_tang(SH, GOI):
+    """Ô A phải có `ĐÁP ÁN:`; ô B phải có hai dòng riêng và KHÔNG có `ĐÁP ÁN:`."""
+    for kh in re.split(r"(?=^\[[AB]\d{2}\])", GOI, flags=re.M)[1:]:
+        o = kh[1:4]
+        if o.startswith("A"):
+            assert re.search(r"^\s+ĐÁP ÁN:", kh, re.M), o
+            assert "ĐÁP ÁN NGUỒN" not in kh and "NGOÀI PHỦ VÌ" not in kh, o
+        else:
+            assert not re.search(r"^\s+ĐÁP ÁN:", kh, re.M), o
+            assert "ĐÁP ÁN NGUỒN:" in kh and "NGOÀI PHỦ VÌ:" in kh, o
+
+
+def test_goi_TRONG_thi_ingest_doc_ra_0_bai_chu_khong_no(SH, VL, GOI):
+    """Gói phát dư nên khối chưa điền là bình thường giữa chừng, không phải lỗi."""
+    IN = _nap("ingest_holdout_batch")
+    r = VL.soi(GOI, SH, IN)
+    assert r["bai"] == [] and r["bo_trong"] == len(re.findall(r"^\[", GOI, re.M))
+    assert any("NGƯỜI CHÉP" in d for d in r["loi"])
+
+
+def _goi_dien_mot_bai(GOI: str) -> str:
+    t = GOI.replace("NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>",
+                    "NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test")
+    return t.replace(
+        "[A14] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>",
+        "[A14] Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, "
+        "AB = a, AC = 2a. Cạnh bên SA vuông góc với mặt phẳng đáy và SA = 2a. "
+        "Tính thể tích khối chóp S.ABC.", 1)
+
+
+def test_khoi_DA_DIEN_di_qua_duoc_ca_ba_cong(SH, VL, GOI):
+    IN = _nap("ingest_holdout_batch")
+    r = VL.soi(_goi_dien_mot_bai(GOI), SH, IN)
+    assert r["loi"] == [] and r["trung"] == [], (r["loi"], r["trung"])
+    assert len(r["bai"]) == 1 and r["bai"][0]["o"] == "A14"
+    c = IN.thanh_case(r["bai"][0], r["nguoi"], SH)
+    assert SH.check_capability_boundary(c) == [] and SH.kiem_pool([c]) == []
+    assert c["oracle_result"] == {"volume": "2/3"}
+
+
+def test_SIEU_DU_LIEU_cua_goi_khong_lot_vao_problem_text(SH, VL, GOI):
+    IN = _nap("ingest_holdout_batch")
+    de = VL.soi(_goi_dien_mot_bai(GOI), SH, IN)["bai"][0]["de"]
+    for ro in ("CAPABILITY", "THANG CHẤM", "TÌM BÀI", "ĐÃ SOI", "RỦI RO", "#"):
+        assert ro not in de, f"{ro!r} lọt vào đề: {de[:120]}"
+
+
+@pytest.mark.parametrize("o,thieu", [("A06", "vuông góc"), ("A03", "song song"),
+                                     ("A14", "thể tích")])
+def test_de_MAT_ky_hieu_dac_trung_thi_canh_bao(SH, VL, GOI, o, thieu):
+    """Trích PDF rơi sạch `⊥` mà văn bản vẫn đọc trôi chảy — hỏng IM LẶNG."""
+    IN = _nap("ingest_holdout_batch")
+    t = GOI.replace("NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>",
+                    "NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test")
+    # Điền TRONG ĐÚNG khối của ô ấy: thay file-wide thì trúng khối đầu tiên
+    # của file (A01), khối đích vẫn còn chỗ trống nên bị bỏ, và test xanh/đỏ
+    # vì lý do khác hẳn thứ nó định đo.
+    i = t.index(f"[{o}] <GÕ")
+    j = t.index("\n#", i)
+    kh = (t[i:j]
+          .replace("<GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>",
+                   "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a và cạnh "
+                   "bên SA bằng 2a. Hỏi kết luận nào sau đây là đúng?")
+          .replace("<sách · trang · câu>   hoặc   <url>", "x · https://x")
+          .replace("<đáp án của nguồn, dạng phân số hoặc true/false>", "true"))
+    r = VL.soi(t[:i] + kh + t[j:], SH, IN)
+    assert any(thieu in c for c in r["canh"]), (thieu, r["canh"])
+
+
+def test_moc_M_doc_dung_theo_so_bai_va_so_o():
+    DP = _nap("run_phase7b_data_pipeline")
+    assert DP.moc_hien_tai(0, 0).startswith("M0")
+    assert DP.moc_hien_tai(1, 1).startswith("M1")
+    assert DP.moc_hien_tai(3, 1).startswith("M2")
+    assert DP.moc_hien_tai(20, 14).startswith("M3")
+    assert DP.moc_hien_tai(40, 20).startswith("M4")
+
+
+def test_goi_KHONG_bi_ghi_de_khi_da_ton_tai(PK, monkeypatch, capsys):
+    """Gói đã điền là công sức của NGƯỜI — máy không dựng lại được."""
+    monkeypatch.setattr(sys, "argv", ["x", "--ghi"])
+    assert PK.RA.exists(), "gói chưa được sinh — sinh trước rồi chạy test này"
+    assert PK.main() == 1
+    assert "KHÔNG ghi đè" in capsys.readouterr().out

@@ -2840,6 +2840,68 @@ Khoá bởi `test_chuoi_KHONG_gop_seal`.
 Hỏng thì in đúng ba dòng `FAILED_STAGE` · `REASON` · `FIX_REQUIRED` — không để
 người đọc ngược log tìm chặng chết.
 
+Lọc trùng `case_id` đi qua `ingest_holdout_batch.loc_trung` — trước 2026-08-28
+chỗ ấy **bỏ qua im lặng**, vô hại với lô một bài nhưng là **mất bài không ai
+biết** với gói 47 khối.
+
+### `backend/scripts/make_human_copy_packet.py` · offline · **0 API call**
+
+Sinh `PHASE7B_HUMAN_COPY_PACKET.txt` — **một** file cho toàn bộ phần con người.
+Export: `PHAT` (số khối phát mỗi ô) · `DA_SOI` (ứng viên đã soi tận trang) ·
+`SOURCE_GAP` · `dung_goi`.
+
+**Xếp theo NGUỒN, không theo ô** — đó là toàn bộ lý do nó tồn tại: cái đắt của
+người chép là **mở lại tài liệu**, không phải gõ thêm một đề. Gói gom 20 ô về 4
+nhóm nguồn ⇒ mỗi tài liệu mở đúng một lần.
+
+Máy prefill mọi thứ **suy ra được** (`slot` · `capability_tag` · `answer_shape`
+· nghĩa vụ · thang chấm · luật sàng của ô · ràng buộc riêng) bằng dòng `#` —
+`ingest` gỡ sạch dòng `#` trước khi lấy `problem_text`, nên siêu dữ liệu không
+lọt vào đề. **Không** prefill `problem_text`, kể cả bản máy đã đọc từ ảnh
+trang: `HOLDOUT_SOURCE_POLICY §4` — hành vi chép của người CHÍNH LÀ bước xác
+minh, một bản nháp đặt sẵn ở đó chỉ mời người ta bấm qua.
+
+Phát **dư** (47 khối cho ngưỡng 40): tỉ lệ đạt đo được ở vùng đã soi ≈25%, phát
+đúng 40 là chắc hụt. **Không** hạn ngạch cứng từng ô — giao thức chỉ đòi ≥1 mỗi
+ô và ≥40 tổng. `--ghi` **từ chối ghi đè** gói đã có: gói điền dở là công sức của
+người, máy không dựng lại được.
+
+### `backend/scripts/validate_human_copy_packet.py` · offline · **0 API call**
+
+Soi gói **giữa chừng**, bao nhiêu lần cũng được. Export: `go_khoi_trong` · `soi`.
+
+`go_khoi_trong` là mấu chốt: gói phát dư nên **khối chưa điền là trạng thái
+bình thường**, trong khi `ingest` từ chối cả lô khi thấy một chỗ trống (đúng
+với một lô đã nộp, sai với một gói đang điền). Nó bỏ khối còn chỗ trống, soi
+phần đã điền, và **nói rõ đã bỏ mấy khối**.
+
+Cảnh báo **ký hiệu bị rơi** (`_DAU_HIEU`): ô A06–A08 mà đề không nhắc *vuông
+góc* / `⊥`, A03–A05 không nhắc *song song* / `∥`, v.v. Bắt đúng cái hỏng đã đo
+được — trích PDF rơi sạch `⊥` (0 lần trong 217 trang) mà văn bản **vẫn đọc trôi
+chảy**. Cảnh báo, không tự loại.
+
+⚠️ `PACKET_READY: YES` **không** nói đề đúng nguyên văn nguồn — máy không kiểm
+được điều đó, và giả vờ kiểm được là bỏ đúng cái cổng `NGƯỜI CHÉP:` vừa dựng.
+
+### `backend/scripts/run_phase7b_data_pipeline.py` · offline · **0 API call**
+
+MỘT lệnh cho cả tuyến: `soi gói → [sáu chặng của run_m1_pipeline] → ngưỡng ≥40
+→ mốc M`. Export: `MOC` · `moc_hien_tai`.
+
+**Gọi lại `run_m1_pipeline`, không chép nó**: hai bản sao của cùng dây chuyền
+là hai bản sẽ trôi khỏi nhau, và cái trôi ở đây là *tập đo được niêm phong theo
+luật nào*. Phần riêng là hai đầu — soi gói ở trước, ngưỡng + mốc ở sau.
+
+**Nguyên tử, không partial**: một lỗi ⇒ không ghi bài nào. Pool ghi một nửa thì
+`pool_hash` trong con dấu không còn nói được nó niêm phong cái gì. Đổi lại, gói
+soi được giữa chừng miễn phí. Hỏng thì in `FAILED_CASE` (**đích danh bài**, vì
+với 47 khối thì *"có lỗi ở đâu đó"* là câu không dùng được) · `FAILED_STAGE` ·
+`REASON` · `FIX_REQUIRED`.
+
+Chế độ soi cộng thêm phần *sẽ* ghi trước khi tính ngưỡng — đọc thẳng pool trên
+đĩa thì ngưỡng báo `0` ngay dưới dòng coverage vừa báo `2`, hai con số cùng màn
+hình cãi nhau.
+
 ### `backend/scripts/scaffold_expectation.py` · offline · **0 API call**
 
 Dựng **khung** `expectations/holdout.json` từ bài `accepted` trong pool. Export:

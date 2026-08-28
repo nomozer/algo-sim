@@ -1,0 +1,528 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#  PHASE 7B — GÓI CHÉP TAY  ·  MỘT FILE CHO TOÀN BỘ PHẦN CON NGƯỜI
+# ═══════════════════════════════════════════════════════════════════════════
+#
+#  Bạn chỉ phải làm HAI việc:
+#
+#    ①  điền chữ ký ở dòng `NGƯỜI CHÉP:` ngay dưới — MỘT lần cho cả file
+#    ②  gõ đề nguyên văn vào mỗi chỗ `<GÕ NGUYÊN VĂN …>`
+#
+#  Mọi thứ khác đã điền sẵn bằng cách dẫn từ `BANG_O` + `NANG_LUC`.
+#  Không cần điền hết mới chạy được: **xoá nguyên khối nào bạn bỏ qua**.
+#
+# ─── LUẬT SÀNG — ĐỌC MỘT LẦN, DÙNG CHO CẢ FILE ────────────────────────────
+#
+#  Luật ĐỦ, và là luật DUY NHẤT đủ:
+#
+#        « ĐẶT ĐƯỢC CẢ HÌNH VÀO TOẠ ĐỘ HỮU TỈ KHÔNG? »
+#
+#  Kernel dựng trên `Fraction` — số hữu tỉ chính xác, không có epsilon. Một
+#  toạ độ đỉnh vô tỉ là bài NGOÀI phủ, dù đề và đáp án trông sạch thế nào.
+#
+#  Loại nhanh bằng mắt (đều là luật PHỤ, không đủ):
+#      √ trong dữ kiện hoặc đáp án      → bỏ
+#      tam giác đều · vuông cân         → bỏ  (tỉ số 1:√2, đường cao a√3/2)
+#      góc 30° · 60° · 120°             → bỏ  (tan/cos sinh √3)
+#      mặt cầu · nón · trụ              → bỏ khỏi TẦNG A (nhưng hợp ô B05!)
+#      Oxyz cho sẵn toạ độ              → bỏ khỏi TẦNG A (hợp ô B04)
+#      "như hình vẽ" mà không có hình   → bỏ  (thiếu dữ kiện)
+#      trắc nghiệm A. B. C. D.          → bỏ  (7B chỉ nhận tự luận)
+#
+#  ⚠️ Vì sao "nhìn đáp án có căn không" KHÔNG đủ: tr 80 Câu 2 có dữ kiện sạch
+#     (`SA = BC = a`) và đáp án sạch (`a³/12`), vẫn ngoài phủ — vuông cân ⇒
+#     `AB : BC = 1 : √2` ⇒ không hệ trục nào đặt cả ba đỉnh vào toạ độ hữu tỉ.
+#     Cạnh KHÔNG dùng tới thì được phép vô tỉ; cái quyết định là TOẠ ĐỘ ĐỈNH.
+#
+# ─── HAI THANG CHẤM, ĐỪNG TRỘN ────────────────────────────────────────────
+#
+#  TẦNG A (A01–A14) hỏi: *hệ tính ĐÚNG không* → cần `ĐÁP ÁN:`
+#  TẦNG B (B01–B06) hỏi: *hệ có BIẾT mình không tính được không*
+#                        → KHÔNG có `ĐÁP ÁN:`; dùng `ĐÁP ÁN NGUỒN:` để ghi
+#                          đáp án sách (chỉ để tra ngược, không dùng chấm)
+#
+#  Tầng B là phần DỄ NHẤT của cả gói: không cần đáp án đúng, không cần soi
+#  toạ độ, không luật sàng nào — chỉ cần đề ĐÚNG LOẠI.
+#
+# ─── XONG THÌ CHẠY ────────────────────────────────────────────────────────
+#
+#    cd backend
+#    python scripts/validate_human_copy_packet.py \
+#        ../docs/evaluation/geometry/holdout/PHASE7B_HUMAN_COPY_PACKET.txt
+#    python scripts/run_phase7b_data_pipeline.py \
+#        ../docs/evaluation/geometry/holdout/PHASE7B_HUMAN_COPY_PACKET.txt --ghi
+#
+# ═══════════════════════════════════════════════════════════════════════════
+
+NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
+
+
+# ═══════════════════════════════════════════════════════════════════════
+#  NGUỒN 1 — Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm)
+#  6 ô · 13 khối · ô: A01 A02 A03 A04 A05 A13
+# ═══════════════════════════════════════════════════════════════════════
+
+#   ─── A01 (1/2) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
+#     CAPABILITY : intersection_point
+#     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A01 (2/2) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
+#     CAPABILITY : intersection_point
+#     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A02 (1/2) · Điểm thuộc mặt phẳng ────────────────────────────
+#     CAPABILITY : incidence
+#     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A02 (2/2) · Điểm thuộc mặt phẳng ────────────────────────────
+#     CAPABILITY : incidence
+#     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A03 (1/2) · Hai đường thẳng song song ───────────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A03 (2/2) · Hai đường thẳng song song ───────────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A04 (1/2) · Đường thẳng song song mặt phẳng ─────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A04 (2/2) · Đường thẳng song song mặt phẳng ─────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A05 (1/2) · Hai mặt phẳng song song ─────────────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A05 (2/2) · Hai mặt phẳng song song ─────────────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A13 (1/3) · Thiết diện / bốn điểm đồng phẳng ────────────────
+#     CAPABILITY : coplanar_section
+#     ANSWER     : predicate_boolean → nghĩa vụ `coplanar`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Cần khối **LỒI**. Đề thiết diện hay kèm hình vẽ — bỏ bài nào phải nhìn hình mới hiểu.
+[A13] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A13 (2/3) · Thiết diện / bốn điểm đồng phẳng ────────────────
+#     CAPABILITY : coplanar_section
+#     ANSWER     : predicate_boolean → nghĩa vụ `coplanar`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Cần khối **LỒI**. Đề thiết diện hay kèm hình vẽ — bỏ bài nào phải nhìn hình mới hiểu.
+[A13] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A13 (3/3) · Thiết diện / bốn điểm đồng phẳng ────────────────
+#     CAPABILITY : coplanar_section
+#     ANSWER     : predicate_boolean → nghĩa vụ `coplanar`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Cần khối **LỒI**. Đề thiết diện hay kèm hình vẽ — bỏ bài nào phải nhìn hình mới hiểu.
+[A13] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+
+# ═══════════════════════════════════════════════════════════════════════
+#  NGUỒN 2 — Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm)
+#  5 ô · 12 khối · ô: A06 A07 A08 A09 A10
+# ═══════════════════════════════════════════════════════════════════════
+
+#   ─── A06 (1/2) · Hai đường thẳng vuông góc ───────────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A06 (2/2) · Hai đường thẳng vuông góc ───────────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A07 (1/2) · Đường thẳng vuông góc mặt phẳng ─────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A07] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A07 (2/2) · Đường thẳng vuông góc mặt phẳng ─────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A07] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A08 (1/2) · Hai mặt phẳng vuông góc ─────────────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A08] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A08 (2/2) · Hai mặt phẳng vuông góc ─────────────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A08] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A09 (1/3) · Góc giữa hai đường thẳng ────────────────────────
+#     CAPABILITY : angle_cos_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
+[A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A09 (2/3) · Góc giữa hai đường thẳng ────────────────────────
+#     CAPABILITY : angle_cos_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
+[A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A09 (3/3) · Góc giữa hai đường thẳng ────────────────────────
+#     CAPABILITY : angle_cos_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
+[A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A10 (1/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
+#     CAPABILITY : angle_sin_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ⚠️ ĐƠN VỊ   : sin² (đường–mặt), KHÔNG phải cos²
+#     TÌM BÀI    : ⚠️ Đường–MẶT trả **`sin²`**, KHÔNG phải `cos²`. Chép nhầm thì chấm sai mà không cổng nào báo. Đáp án sách hay cho góc α ⇒ ghi `sin²α`.
+[A10] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A10 (2/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
+#     CAPABILITY : angle_sin_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ⚠️ ĐƠN VỊ   : sin² (đường–mặt), KHÔNG phải cos²
+#     TÌM BÀI    : ⚠️ Đường–MẶT trả **`sin²`**, KHÔNG phải `cos²`. Chép nhầm thì chấm sai mà không cổng nào báo. Đáp án sách hay cho góc α ⇒ ghi `sin²α`.
+[A10] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A10 (3/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
+#     CAPABILITY : angle_sin_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ⚠️ ĐƠN VỊ   : sin² (đường–mặt), KHÔNG phải cos²
+#     TÌM BÀI    : ⚠️ Đường–MẶT trả **`sin²`**, KHÔNG phải `cos²`. Chép nhầm thì chấm sai mà không cổng nào báo. Đáp án sách hay cho góc α ⇒ ghi `sin²α`.
+[A10] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+
+# ═══════════════════════════════════════════════════════════════════════
+#  NGUỒN 3 — —
+#  2 ô · 6 khối · ô: A11 A12
+# ═══════════════════════════════════════════════════════════════════════
+
+#   ─── A11 (1/3) · Khoảng cách từ điểm đến mặt phẳng ───────────────
+#     CAPABILITY : rational_distance
+#     ANSWER     : exact_fraction → nghĩa vụ `distance`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Khoảng cách điểm → MẶT. Chỉ nhận khi ra phân số HỮU TỈ.
+#                  Mẹo: d = |…| / √(a²+b²+c²) — hữu tỉ khi pháp tuyến có chuẩn hữu tỉ,
+#                  tức các cạnh góc vuông làm thành bộ ba Pythagore (3-4-5, 6-8-10, 5-12-13).
+#     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
+#     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
+[A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A11 (2/3) · Khoảng cách từ điểm đến mặt phẳng ───────────────
+#     CAPABILITY : rational_distance
+#     ANSWER     : exact_fraction → nghĩa vụ `distance`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Khoảng cách điểm → MẶT. Chỉ nhận khi ra phân số HỮU TỈ.
+#                  Mẹo: d = |…| / √(a²+b²+c²) — hữu tỉ khi pháp tuyến có chuẩn hữu tỉ,
+#                  tức các cạnh góc vuông làm thành bộ ba Pythagore (3-4-5, 6-8-10, 5-12-13).
+#     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
+#     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
+[A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A11 (3/3) · Khoảng cách từ điểm đến mặt phẳng ───────────────
+#     CAPABILITY : rational_distance
+#     ANSWER     : exact_fraction → nghĩa vụ `distance`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Khoảng cách điểm → MẶT. Chỉ nhận khi ra phân số HỮU TỈ.
+#                  Mẹo: d = |…| / √(a²+b²+c²) — hữu tỉ khi pháp tuyến có chuẩn hữu tỉ,
+#                  tức các cạnh góc vuông làm thành bộ ba Pythagore (3-4-5, 6-8-10, 5-12-13).
+#     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
+#     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
+[A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A12 (1/3) · Khoảng cách từ điểm đến đường thẳng ─────────────
+#     CAPABILITY : rational_distance
+#     ANSWER     : exact_fraction → nghĩa vụ `distance`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. Cùng luật hữu tỉ như A11.
+#     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
+#     ⛔ SOURCE_GAP_A12 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
+[A12] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A12 (2/3) · Khoảng cách từ điểm đến đường thẳng ─────────────
+#     CAPABILITY : rational_distance
+#     ANSWER     : exact_fraction → nghĩa vụ `distance`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. Cùng luật hữu tỉ như A11.
+#     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
+#     ⛔ SOURCE_GAP_A12 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
+[A12] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A12 (3/3) · Khoảng cách từ điểm đến đường thẳng ─────────────
+#     CAPABILITY : rational_distance
+#     ANSWER     : exact_fraction → nghĩa vụ `distance`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. Cùng luật hữu tỉ như A11.
+#     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
+#     ⛔ SOURCE_GAP_A12 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
+[A12] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+
+# ═══════════════════════════════════════════════════════════════════════
+#  NGUỒN 4 — Khối đa diện & thể tích, tr 80–94 (2 ứng viên đã soi)
+#  1 ô · 4 khối · ô: A14
+# ═══════════════════════════════════════════════════════════════════════
+
+#   ─── A14 (1/4) · Thể tích khối chóp hoặc lăng trụ ────────────────
+#     CAPABILITY : rational_volume
+#     ANSWER     : exact_fraction → nghĩa vụ `volume`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Thể tích. Gán `a = 1` rồi chép phân số (`2a³/3` → `2/3`).
+#     ĐÃ SOI     : ABC vuông tại A · AB = a · AC = 2a · SA ⊥ đáy · SA = 2a
+#     VÌ SAO CHỌN: đề NGẮN NHẤT; không bước nào sinh căn; lời giải cùng trang
+#     RỦI RO     : thấp nhất trong vùng đã soi
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A14] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — trang 80, Câu 1 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
+      ĐÁP ÁN: 2/3
+
+#   ─── A14 (2/4) · Thể tích khối chóp hoặc lăng trụ ────────────────
+#     CAPABILITY : rational_volume
+#     ANSWER     : exact_fraction → nghĩa vụ `volume`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Thể tích. Gán `a = 1` rồi chép phân số (`2a³/3` → `2/3`).
+#     ĐÃ SOI     : đáy chữ nhật · SA ⊥ (ABCD) · AB = 3a · AD = 2a · SB = 5a
+#     VÌ SAO CHỌN: đi qua Pythagoras mà VẪN hữu tỉ (bộ ba 3-4-5)
+#     RỦI RO     : trung bình — SA là SUY RA, phải xác nhận lời giải nguồn cho V = 8a³/3 chứ đừng tự tính
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A14] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — trang 82, Câu 7 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
+      ĐÁP ÁN: 8/3
+
+#   ─── A14 (3/4) · Thể tích khối chóp hoặc lăng trụ ────────────────
+#     CAPABILITY : rational_volume
+#     ANSWER     : exact_fraction → nghĩa vụ `volume`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Thể tích. Gán `a = 1` rồi chép phân số (`2a³/3` → `2/3`).
+[A14] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+#   ─── A14 (4/4) · Thể tích khối chóp hoặc lăng trụ ────────────────
+#     CAPABILITY : rational_volume
+#     ANSWER     : exact_fraction → nghĩa vụ `volume`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : Thể tích. Gán `a = 1` rồi chép phân số (`2a³/3` → `2/3`).
+[A14] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+
+
+# ═══════════════════════════════════════════════════════════════════════
+#  NGUỒN 5 — bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI
+#  6 ô · 12 khối · ô: B01 B02 B03 B04 B05 B06
+# ═══════════════════════════════════════════════════════════════════════
+
+#   ─── B01 (1/2) · Khoảng cách giữa hai đường thẳng chéo nhau ──────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
+
+#   ─── B01 (2/2) · Khoảng cách giữa hai đường thẳng chéo nhau ──────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
+
+#   ─── B02 (1/2) · Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt ─────────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt — ngoài ranh giới kernel
+
+#   ─── B02 (2/2) · Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt ─────────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt — ngoài ranh giới kernel
+
+#   ─── B03 (1/2) · Góc nhị diện có miền (có thể tù) ────────────────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Góc nhị diện có miền (có thể tù) — ngoài ranh giới kernel
+
+#   ─── B03 (2/2) · Góc nhị diện có miền (có thể tù) ────────────────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Góc nhị diện có miền (có thể tù) — ngoài ranh giới kernel
+
+#   ─── B04 (1/2) · Oxyz: viết phương trình mặt phẳng / đường / mặt cầu ───
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
+
+#   ─── B04 (2/2) · Oxyz: viết phương trình mặt phẳng / đường / mặt cầu ───
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
+
+#   ─── B05 (1/2) · Mặt cầu · mặt nón · mặt trụ ─────────────────────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Mặt cầu · mặt nón · mặt trụ — ngoài ranh giới kernel
+
+#   ─── B05 (2/2) · Mặt cầu · mặt nón · mặt trụ ─────────────────────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Mặt cầu · mặt nón · mặt trụ — ngoài ranh giới kernel
+
+#   ─── B06 (1/2) · Phép toán vectơ, hoặc phép chiếu song song ──────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
+
+#   ─── B06 (2/2) · Phép toán vectơ, hoặc phép chiếu song song ──────
+#     CAPABILITY : out_of_capability
+#     ANSWER     : rejection_expected
+#     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+[B06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
+      NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
+
+# ═══════════════════════════════════════════════════════════════════════
+#  HẾT — 47 khối / 20 ô.
+#  Cần ≥1 bài mỗi ô và ≥40 tổng ⇒ gói phát dư 7 khối làm dự phòng.
+#  Khối nào bỏ qua thì XOÁ NGUYÊN KHỐI, đừng để chỗ trống.
+# ═══════════════════════════════════════════════════════════════════════

@@ -295,6 +295,27 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
     return c
 
 
+def loc_trung(moi: list[dict],
+              co_san: list[dict]) -> tuple[list[dict], list[str]]:
+    """Bỏ bài trùng `case_id` và **TRẢ RA danh sách trùng**, không nuốt.
+
+    Trước bản này chỗ lọc trùng là một dòng `[c for c in cases if c["case_id"]
+    not in co]` — bỏ qua **im lặng**. Với lô một bài thì vô hại; với gói 45 bài
+    nạp một lượt thì một va chạm id là **mất bài mà không ai biết**, và pool
+    vẫn báo hợp lệ. Va chạm có thật chứ không phải giả thiết: `ingest` đánh số
+    `hp_<ô>_<thứ tự trong file>`, còn pool đã mang sẵn `hp_a11_001`.
+    """
+    thay: set[str] = {c["case_id"] for c in co_san}
+    them, va = [], []
+    for c in moi:
+        if c["case_id"] in thay:
+            va.append(c["case_id"])
+            continue
+        thay.add(c["case_id"])
+        them.append(c)
+    return them, va
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("file_lo", help="File văn bản chứa lô đề do người chép")
@@ -334,8 +355,12 @@ def main() -> int:
         return 0
 
     d = json.loads(POOL.read_text(encoding="utf-8"))
-    co = {c["case_id"] for c in d["cases"]}
-    them = [c for c in cases if c["case_id"] not in co]
+    them, va = loc_trung(cases, d["cases"])
+    if va:
+        print(f"⛔ {len(va)} bài TRÙNG case_id, KHÔNG ghi gì: {', '.join(va)}")
+        print("   Trùng id là mất bài. Đổi thứ tự khối trong file lô, hoặc "
+              "gỡ bài đã có khỏi pool trước.")
+        return 2
     d["cases"] += them
     POOL.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n",
                     encoding="utf-8")

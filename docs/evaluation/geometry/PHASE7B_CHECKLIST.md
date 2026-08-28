@@ -55,11 +55,14 @@
 
 ```bash
 cd backend
-python scripts/run_m1_pipeline.py <lô>.txt          # soi — không đụng pool
-python scripts/run_m1_pipeline.py <lô>.txt --ghi    # ghi thật
+python scripts/make_human_copy_packet.py --ghi                # sinh gói (một lần)
+python scripts/validate_human_copy_packet.py <gói>.txt        # soi giữa chừng
+python scripts/run_phase7b_data_pipeline.py <gói>.txt         # soi cả tuyến
+python scripts/run_phase7b_data_pipeline.py <gói>.txt --ghi   # ghi thật
 ```
 
-Nó chạy `ingest → pool → scaffold → freeze check → coverage → readiness`. Hỏng
+Tuyến: `soi gói → ingest → pool → scaffold → freeze check → coverage →
+ngưỡng ≥40 → readiness`, rồi báo đang ở mốc M mấy. Hỏng
 thì dừng ở chặng đầu tiên và in `FAILED_STAGE` · `REASON` · `FIX_REQUIRED`.
 
 ⚠️ `seal` **không** nằm trong chuỗi, có chủ đích: nó tiêu seed của GVHD và chỉ

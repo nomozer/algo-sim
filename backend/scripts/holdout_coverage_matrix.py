@@ -112,9 +112,18 @@ O_NGUON: dict[str, str] = {
 
 #: Ô đang chờ **quyết định**, không chờ dữ liệu. Ghi riêng vì hai thứ ấy có
 #: hai người gỡ khác nhau, và gộp chúng vào "blocker" làm mất mất thông tin ấy.
-O_CHO_QUYET_DINH: dict[str, str] = {
-    o: "chờ quyết định ①: chỉ nhận `distance` hữu tỉ, hay mở ô tầng B cho lớp "
-       "vô tỉ (mở ⇒ N đổi khỏi 20 ⇒ chốt lại ngân sách)"
+#:
+#: **Rỗng từ 2026-08-28.** A11·A12 từng nằm đây chờ quyết định ①; quyết định đã
+#: chốt — xem `O_RANG_BUOC_THEM`. Để nguyên dòng cũ sau khi đã quyết là báo cáo
+#: một rào không còn tồn tại, và người đọc sẽ chờ một quyết định đã có.
+O_CHO_QUYET_DINH: dict[str, str] = {}
+
+#: Ràng buộc HẸP HƠN mặc định của ô, do người chốt. Không phải năng lực mới —
+#: `NANG_LUC` không đổi, `BANG_O` không đổi, vẫn đúng 20 ô. Chỉ là **luật nhận
+#: bài** hẹp lại, nên nó thuộc về gói chép tay chứ không thuộc capability.
+O_RANG_BUOC_THEM: dict[str, str] = {
+    o: "**CHỈ `distance` hữu tỉ** (chốt 2026-08-28). Bài mà khoảng cách ra vô "
+       "tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20."
     for o in ("A11", "A12")
 }
 
@@ -222,6 +231,8 @@ def _bang_ke_hoach(m: dict) -> list[str]:
             chan_txt, viec = "⛔ chưa có bài", "người mở nguồn, chép nguyên văn, ký"
         else:
             chan_txt, viec = "—", "đủ tối thiểu; thêm bài để tổng đạt ngưỡng"
+        if them := O_RANG_BUOC_THEM.get(o):
+            viec = f"{viec} · {them}"
         d.append(f"| **{o}** | ≥{SH.MOI_O_TOI_THIEU} | `{tag}` | {oracle} | "
                  f"{chi_so} | {O_NGUON.get(o, '—')} | {n} | {chan_txt} | {viec} |")
     return d
