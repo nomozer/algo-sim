@@ -273,6 +273,80 @@ DA_SOI: dict[str, list[dict]] = {
                    "rõ nhất trong mục",
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
     ],
+    # ── Nguồn 5–8: HTML + SBT, cho sáu ô cuối của Pass 1 ──
+    "A04": [
+        {"nguon": "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt "
+                  "phẳng song song (có lời giải)*, Bài 31 **ý a)** · "
+                  "https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-"
+                  "va-mat-phang-song-song-co-loi-giai-27650/",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD · M, N trung điểm AB và BC · G₁, G₂ trọng tâm "
+                  "△SAB, △SBC · chứng minh AC ∥ (SMN)",
+         "vi_sao": "MN là đường trung bình △ABC ⇒ MN ∥ AC ⇒ AC ∥ (SMN). "
+                   "Trung điểm và trọng tâm đều giữ toạ độ hữu tỉ; không dữ "
+                   "kiện số nào",
+         "rui_ro": "thấp. Đề gốc nhiều ý — **chỉ chép ý a)**"},
+    ],
+    "A05": [
+        {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 "
+                  "Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · "
+                  "https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-"
+                  "chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABC · M, N, P trung điểm SA, SB, SC · chứng minh "
+                  "(MNP) ∥ (ABC)",
+         "vi_sao": "ba trung điểm ⇒ toạ độ hữu tỉ. Nghĩa vụ `parallel` "
+                   "MẶT–MẶT, đúng thứ ô A05 đòi. Lời giải hiện ngay trên trang",
+         "rui_ro": "thấp — ứng viên gọn nhất trong nhóm song song"},
+    ],
+    "A06": [
+        {"nguon": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc "
+                  "trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'`",
+         "dap_an": "true",
+         "goi_y": "hình hộp ABCD.A'B'C'D' có **6 mặt đều là hình vuông** "
+                  "(tức LẬP PHƯƠNG) · chứng minh AB ⊥ CC'",
+         "vi_sao": "sáu mặt vuông ⇒ lập phương ⇒ toạ độ NGUYÊN. Lập luận "
+                   "nguồn: CC' ∥ BB' nên (AB,CC') = (AB,BB') = 90°. Nghĩa vụ "
+                   "`perpendicular` ĐƯỜNG–ĐƯỜNG — đúng thứ A06 đòi, và là ô "
+                   "DUY NHẤT không tìm được trong hai tài liệu chuyên đề",
+         "rui_ro": "thấp. Ví dụ 1 có hai ý (`AB ⊥ CC'` và `AC ⊥ B'D'`) — "
+                   "**chỉ chép ý đầu**; ý sau cũng hữu tỉ, để dành Pass 2"},
+    ],
+    "B02": [
+        {"nguon": "SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)",
+         "dap_an": "",
+         "goi_y": "hình lập phương ABCD.A'B'C'D' cạnh a · tính khoảng cách "
+                  "giữa đường thẳng AC và mặt phẳng (A'B'C'D')",
+         "vi_sao": "AC ∥ A'C' ⊂ (A'B'C'D') ⇒ AC ∥ (A'B'C'D') ⇒ khoảng cách "
+                   "ĐƯỜNG ∥ MẶT — đúng loại ô B02. Nguồn cho d = AA' = a",
+         "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:` — dù "
+                   "đáp án `a` trông hữu tỉ, tầng B KHÔNG chấm bằng oracle"},
+    ],
+    "B04": [
+        {"nguon": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục "
+                  "`TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; "
+                  "lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · "
+                  "https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-"
+                  "trinh-mat-phang.html",
+         "dap_an": "",
+         "goi_y": "Trong không gian Oxyz, viết phương trình mặt phẳng (α) qua "
+                  "A(1;2;−2), B(2;−1;4) và vuông góc với (β): x − 2y − z + 1 = 0",
+         "vi_sao": "Oxyz CHO SẴN toạ độ ⇒ mô hình không phải tự đặt hệ trục, "
+                   "đúng lý do ngoài phủ của ô B04. Hệ số nguyên, đề gọn",
+         "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
+    ],
+    "B06": [
+        {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: "
+                  "Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · "
+                  "https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-"
+                  "ket-noi-bai-14-phep-chieu-song-song",
+         "dap_an": "",
+         "goi_y": "tứ diện ABCD · I trọng tâm △ABC · xác định hình chiếu song "
+                  "song của I theo phương CD lên mặt phẳng (ABD)",
+         "vi_sao": "PHÉP CHIẾU SONG SONG — đúng loại ô B06. Nguồn trả lời: "
+                   "ảnh là J, trọng tâm △ABD",
+         "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
+    ],
 }
 
 #: Ô chưa tra được nguồn nào — đánh dấu chứ không đổi giao thức.

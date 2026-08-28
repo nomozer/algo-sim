@@ -125,9 +125,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABCD · M, N trung điểm AB và BC · G₁, G₂ trọng tâm △SAB, △SBC · chứng minh AC ∥ (SMN)
+#     VÌ SAO CHỌN: MN là đường trung bình △ABC ⇒ MN ∥ AC ⇒ AC ∥ (SMN). Trung điểm và trọng tâm đều giữ toạ độ hữu tỉ; không dữ kiện số nào
+#     RỦI RO     : thấp. Đề gốc nhiều ý — **chỉ chép ý a)**
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 31 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/
+      ĐÁP ÁN: true
 
 #   ─── A04 (2/2) · Đường thẳng song song mặt phẳng ─────────────────
 #     CAPABILITY : parallel_relation
@@ -141,9 +145,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABC · M, N, P trung điểm SA, SB, SC · chứng minh (MNP) ∥ (ABC)
+#     VÌ SAO CHỌN: ba trung điểm ⇒ toạ độ hữu tỉ. Nghĩa vụ `parallel` MẶT–MẶT, đúng thứ ô A05 đòi. Lời giải hiện ngay trên trang
+#     RỦI RO     : thấp — ứng viên gọn nhất trong nhóm song song
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song
+      ĐÁP ÁN: true
 
 #   ─── A05 (2/2) · Hai mặt phẳng song song ─────────────────────────
 #     CAPABILITY : parallel_relation
@@ -194,9 +202,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : perpendicular_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : hình hộp ABCD.A'B'C'D' có **6 mặt đều là hình vuông** (tức LẬP PHƯƠNG) · chứng minh AB ⊥ CC'
+#     VÌ SAO CHỌN: sáu mặt vuông ⇒ lập phương ⇒ toạ độ NGUYÊN. Lập luận nguồn: CC' ∥ BB' nên (AB,CC') = (AB,BB') = 90°. Nghĩa vụ `perpendicular` ĐƯỜNG–ĐƯỜNG — đúng thứ A06 đòi, và là ô DUY NHẤT không tìm được trong hai tài liệu chuyên đề
+#     RỦI RO     : thấp. Ví dụ 1 có hai ý (`AB ⊥ CC'` và `AC ⊥ B'D'`) — **chỉ chép ý đầu**; ý sau cũng hữu tỉ, để dành Pass 2
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'`
+      ĐÁP ÁN: true
 
 #   ─── A06 (2/2) · Hai đường thẳng vuông góc ───────────────────────
 #     CAPABILITY : perpendicular_relation
@@ -494,8 +506,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : hình lập phương ABCD.A'B'C'D' cạnh a · tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D')
+#     VÌ SAO CHỌN: AC ∥ A'C' ⊂ (A'B'C'D') ⇒ AC ∥ (A'B'C'D') ⇒ khoảng cách ĐƯỜNG ∥ MẶT — đúng loại ô B02. Nguồn cho d = AA' = a
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:` — dù đáp án `a` trông hữu tỉ, tầng B KHÔNG chấm bằng oracle
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt — ngoài ranh giới kernel
 
@@ -534,8 +550,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : Trong không gian Oxyz, viết phương trình mặt phẳng (α) qua A(1;2;−2), B(2;−1;4) và vuông góc với (β): x − 2y − z + 1 = 0
+#     VÌ SAO CHỌN: Oxyz CHO SẴN toạ độ ⇒ mô hình không phải tự đặt hệ trục, đúng lý do ngoài phủ của ô B04. Hệ số nguyên, đề gọn
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
 
@@ -574,8 +594,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : tứ diện ABCD · I trọng tâm △ABC · xác định hình chiếu song song của I theo phương CD lên mặt phẳng (ABD)
+#     VÌ SAO CHỌN: PHÉP CHIẾU SONG SONG — đúng loại ô B06. Nguồn trả lời: ảnh là J, trọng tâm △ABD
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
 
