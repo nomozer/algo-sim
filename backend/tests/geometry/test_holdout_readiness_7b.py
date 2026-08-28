@@ -1777,3 +1777,24 @@ def test_goi_KHONG_bi_ghi_de_khi_da_ton_tai(PK, monkeypatch, capsys):
     assert PK.RA.exists(), "gói chưa được sinh — sinh trước rồi chạy test này"
     assert PK.main() == 1
     assert "KHÔNG ghi đè" in capsys.readouterr().out
+
+
+def test_PASS1_phu_19_tren_20_o_va_A12_la_o_DUY_NHAT_con_trong(PK, SH):
+    """Chốt trạng thái Pass 1: 19/20 ô có ứng viên, chỉ A12 còn trống.
+
+    Không phải test trang trí: nếu ai gỡ một ứng viên mà quên cập nhật
+    `SOURCE_GAP`, gói sẽ im lặng phát một ô không có nguồn và người chép
+    mất công mở tài liệu để rồi không tìm thấy gì.
+    """
+    trong = [o for o in SH.BANG_O if o not in PK.DA_SOI]
+    assert trong == ["A12"], f"ô còn trống lệch kỳ vọng: {trong}"
+    assert set(PK.SOURCE_GAP) == set(trong), \
+        "SOURCE_GAP phải khớp ĐÚNG danh sách ô chưa có ứng viên"
+    assert sum(len(v) for v in PK.DA_SOI.values()) >= 31
+
+
+def test_moi_o_phat_DU_khoi_cho_so_ung_vien_da_co(PK):
+    """`PHAT[o]` phải ≥ số ứng viên của ô — nếu không, ứng viên bị rơi lặng."""
+    for o, v in PK.DA_SOI.items():
+        assert PK.PHAT[o] >= len(v), \
+            f"{o}: có {len(v)} ứng viên nhưng chỉ phát {PK.PHAT[o]} khối"

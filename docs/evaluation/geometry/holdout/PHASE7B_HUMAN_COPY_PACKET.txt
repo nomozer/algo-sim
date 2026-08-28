@@ -65,6 +65,18 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : intersection_point
 #     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : tứ diện ABCD · G trọng tâm △BCD · giao tuyến (ACD) ∩ (GAB)
+#     VÌ SAO CHỌN: PASS 2 — cùng nghĩa vụ A01 nhưng hình KHÁC (tứ diện thay chóp tứ giác) và vật dẫn xuất khác (trọng tâm thay trung điểm)
+#     RỦI RO     : thấp
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
+      ĐÁP ÁN: true
+
+#   ─── A01 (2/2) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
+#     CAPABILITY : intersection_point
+#     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
+#     THANG CHẤM : oracle + ③a/③b/⑤
 #     ĐÃ SOI     : chóp S.ABCD đáy HÌNH BÌNH HÀNH · M, N trung điểm AD và BC · tìm giao tuyến (SMN) ∩ (SAC)
 #     VÌ SAO CHỌN: bình hành + trung điểm ⇒ toạ độ hữu tỉ hết. Giao tuyến đi qua S và tâm O — nghĩa vụ `point_on_line` kiểm O thuộc giao tuyến ⇒ `true`
 #     RỦI RO     : trung bình. `phep_chuyen` phải ghi rõ: nguồn trả lời *giao tuyến là SO*, chuyển thành `point_on_line` = true
@@ -73,15 +85,19 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
-#   ─── A01 (2/2) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
-#     CAPABILITY : intersection_point
-#     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-[A01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
-
 #   ─── A02 (1/2) · Điểm thuộc mặt phẳng ────────────────────────────
+#     CAPABILITY : incidence
+#     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : tứ giác ABCD có AC ∩ BD = O · S ngoài (ABCD) · M trên SC · giao điểm SD ∩ (ABM)
+#     VÌ SAO CHỌN: PASS 2 — cùng nghĩa vụ A02, nhưng điểm cắt O là DỮ KIỆN chứ không phải vật dựng; M tự do trên SC
+#     RỦI RO     : trung bình — M tự do (lớp đã chốt)
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
+      ĐÁP ÁN: true
+
+#   ─── A02 (2/2) · Điểm thuộc mặt phẳng ────────────────────────────
 #     CAPABILITY : incidence
 #     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -93,15 +109,19 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2 *Tìm giao điểm của đường thẳng và mặt phẳng*, Câu 12 (đề tr PDF 7; lời giải tr 21+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
-#   ─── A02 (2/2) · Điểm thuộc mặt phẳng ────────────────────────────
-#     CAPABILITY : incidence
-#     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-[A02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
-
 #   ─── A03 (1/2) · Hai đường thẳng song song ───────────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : tứ diện ABCD · M,N,P,Q,R,S trung điểm AB,CD,BC,AD,AC,BD · chứng minh MPNQ là hình bình hành
+#     VÌ SAO CHỌN: PASS 2 — SÁU điểm dẫn xuất, kết luận là một TỨ GIÁC có tính chất, không phải một quan hệ hai đường. Nghĩa vụ song song vẫn giữ
+#     RỦI RO     : trung bình — kết luận *hình bình hành* phải chuyển thành quan hệ ∥ trong `phep_chuyen`
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: chứng minh hai đường thẳng song song*, Câu 2 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
+      ĐÁP ÁN: true
+
+#   ─── A03 (2/2) · Hai đường thẳng song song ───────────────────────
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -112,14 +132,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 [A03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG SONG SONG*, Câu 1 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
-
-#   ─── A03 (2/2) · Hai đường thẳng song song ───────────────────────
-#     CAPABILITY : parallel_relation
-#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-[A03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
 
 #   ─── A04 (1/2) · Đường thẳng song song mặt phẳng ─────────────────
 #     CAPABILITY : parallel_relation
@@ -166,12 +178,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     ANSWER     : predicate_boolean → nghĩa vụ `coplanar`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : Cần khối **LỒI**. Đề thiết diện hay kèm hình vẽ — bỏ bài nào phải nhìn hình mới hiểu.
-#     ĐÃ SOI     : chóp S.ABCD đáy HÌNH THANG, AD là đáy lớn · P trên cạnh SD · xác định thiết diện cắt bởi (PAB)
-#     VÌ SAO CHỌN: chóp trên hình thang là khối LỒI — điều kiện của ô A13. Hình thang đặt toạ độ hữu tỉ được
-#     RỦI RO     : trung bình. P là điểm TỰ DO trên SD (như các ca đã chốt); tính đồng phẳng của thiết diện đúng với mọi vị trí P. **Chỉ chép ý a)**
+#     ĐÃ SOI     : cùng chóp hình thang · M, N trung điểm AB, BC · thiết diện cắt bởi (MNP)
+#     VÌ SAO CHỌN: PASS 2 — mặt cắt xác định bởi BA điểm dẫn xuất thay vì hai đỉnh + một điểm tự do
+#     RỦI RO     : trung bình — vẫn dùng P tự do của ý a)
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A13] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý a)** (đề tr PDF 8; lời giải tr 30+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
+      NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
 #   ─── A13 (2/3) · Thiết diện / bốn điểm đồng phẳng ────────────────
@@ -179,9 +191,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     ANSWER     : predicate_boolean → nghĩa vụ `coplanar`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : Cần khối **LỒI**. Đề thiết diện hay kèm hình vẽ — bỏ bài nào phải nhìn hình mới hiểu.
+#     ĐÃ SOI     : chóp S.ABCD đáy HÌNH THANG, AD là đáy lớn · P trên cạnh SD · xác định thiết diện cắt bởi (PAB)
+#     VÌ SAO CHỌN: chóp trên hình thang là khối LỒI — điều kiện của ô A13. Hình thang đặt toạ độ hữu tỉ được
+#     RỦI RO     : trung bình. P là điểm TỰ DO trên SD (như các ca đã chốt); tính đồng phẳng của thiết diện đúng với mọi vị trí P. **Chỉ chép ý a)**
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A13] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý a)** (đề tr PDF 8; lời giải tr 30+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
+      ĐÁP ÁN: true
 
 #   ─── A13 (3/3) · Thiết diện / bốn điểm đồng phẳng ────────────────
 #     CAPABILITY : coplanar_section
@@ -202,6 +218,18 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : perpendicular_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : hình hộp sáu mặt đều là hình vuông (lập phương) · chứng minh AC ⊥ B'D'
+#     VÌ SAO CHỌN: PASS 2 — cùng hình nhưng đường chéo CHÉO NHAU thay vì cạnh–cạnh; lập luận nguồn đi qua B'D' ∥ BD rồi AC ⊥ BD
+#     RỦI RO     : thấp
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AC ⊥ B'D'`
+      ĐÁP ÁN: true
+
+#   ─── A06 (2/2) · Hai đường thẳng vuông góc ───────────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
 #     ĐÃ SOI     : hình hộp ABCD.A'B'C'D' có **6 mặt đều là hình vuông** (tức LẬP PHƯƠNG) · chứng minh AB ⊥ CC'
 #     VÌ SAO CHỌN: sáu mặt vuông ⇒ lập phương ⇒ toạ độ NGUYÊN. Lập luận nguồn: CC' ∥ BB' nên (AB,CC') = (AB,BB') = 90°. Nghĩa vụ `perpendicular` ĐƯỜNG–ĐƯỜNG — đúng thứ A06 đòi, và là ô DUY NHẤT không tìm được trong hai tài liệu chuyên đề
 #     RỦI RO     : thấp. Ví dụ 1 có hai ý (`AB ⊥ CC'` và `AC ⊥ B'D'`) — **chỉ chép ý đầu**; ý sau cũng hữu tỉ, để dành Pass 2
@@ -209,14 +237,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 [A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'`
       ĐÁP ÁN: true
-
-#   ─── A06 (2/2) · Hai đường thẳng vuông góc ───────────────────────
-#     CAPABILITY : perpendicular_relation
-#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-[A06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
 
 #   ─── A07 (1/2) · Đường thẳng vuông góc mặt phẳng ─────────────────
 #     CAPABILITY : perpendicular_relation
@@ -242,6 +262,18 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : perpendicular_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABC · SA ⊥ (ABC) · H hình chiếu của A trên BC · chứng minh (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC)
+#     VÌ SAO CHỌN: PASS 2 — H là điểm DẪN XUẤT (chiếu vuông góc), khác hẳn ứng viên lập phương vốn không có vật dựng nào
+#     RỦI RO     : thấp. Chỉ chép ý a)
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A08] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
+      ĐÁP ÁN: true
+
+#   ─── A08 (2/2) · Hai mặt phẳng vuông góc ─────────────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
 #     ĐÃ SOI     : hình LẬP PHƯƠNG ABCD.A'B'C'D' cạnh a · chứng minh (ACC'A') ⊥ (BDD'B')
 #     VÌ SAO CHỌN: lập phương ⇒ toạ độ NGUYÊN, hình xác định hoàn toàn, không điểm tự do nào. Đúng nghĩa vụ `perpendicular` MẶT–MẶT mà ô A08 đòi
 #     RỦI RO     : thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**; ý a) hỏi đường chéo (ra a√3, vô tỉ), ý c) hỏi số đo góc nhị diện
@@ -250,15 +282,20 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2; lời giải mục *IV. LỜI GIẢI CHI TIẾT*) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
       ĐÁP ÁN: true
 
-#   ─── A08 (2/2) · Hai mặt phẳng vuông góc ─────────────────────────
-#     CAPABILITY : perpendicular_relation
-#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-[A08] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
-
 #   ─── A09 (1/3) · Góc giữa hai đường thẳng ────────────────────────
+#     CAPABILITY : angle_cos_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
+#     ĐÃ SOI     : hình lập phương · góc giữa A'C' và B'C
+#     VÌ SAO CHỌN: PASS 2 — nguồn in 60° ⇒ cos² = 1/4. Hai đường CHÉO NHAU (ý b) là cắt nhau sau khi dời), lập luận qua tam giác đều ACB'
+#     RỦI RO     : thấp — đã đọc đáp án nguồn trên ảnh cùng lúc với ý b)
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 2 **ý c)** (đề tr PDF 2; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      ĐÁP ÁN: 1/4
+
+#   ─── A09 (2/3) · Góc giữa hai đường thẳng ────────────────────────
 #     CAPABILITY : angle_cos_sq
 #     ANSWER     : exact_fraction → nghĩa vụ `angle`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -270,15 +307,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 [A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 1/2
-
-#   ─── A09 (2/3) · Góc giữa hai đường thẳng ────────────────────────
-#     CAPABILITY : angle_cos_sq
-#     ANSWER     : exact_fraction → nghĩa vụ `angle`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-#     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
-[A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
 
 #   ─── A09 (3/3) · Góc giữa hai đường thẳng ────────────────────────
 #     CAPABILITY : angle_cos_sq
@@ -484,12 +512,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
-#     ĐÃ SOI     : lăng trụ đứng ABC.A₁B₁C₁ · △ABC vuông cân tại A · AB = a · CC' = 2a · khoảng cách giữa AA₁ và BC₁
-#     VÌ SAO CHỌN: đúng LOẠI của ô B01 — khoảng cách hai đường CHÉO NHAU, nằm ngoài ranh giới kernel. Tầng B không cần hữu tỉ
-#     RỦI RO     : thấp. Nhớ dùng `ĐÁP ÁN NGUỒN:` (chép đáp án sách), KHÔNG dùng `ĐÁP ÁN:` — ô tầng B không có oracle
+#     ĐÃ SOI     : chóp S.ABC · đáy vuông cân tại A · mặt bên SBC là tam giác ĐỀU cạnh a · (SBC) ⊥ đáy · khoảng cách giữa SA và BC
+#     VÌ SAO CHỌN: PASS 2 — cùng loại ngoài phủ nhưng cấu hình mặt-bên-vuông-góc-đáy, khác lăng trụ đứng của ứng viên đầu
+#     RỦI RO     : thấp
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 (đề tr PDF 300 = 'Page 59') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
 
@@ -497,8 +525,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : lăng trụ đứng ABC.A₁B₁C₁ · △ABC vuông cân tại A · AB = a · CC' = 2a · khoảng cách giữa AA₁ và BC₁
+#     VÌ SAO CHỌN: đúng LOẠI của ô B01 — khoảng cách hai đường CHÉO NHAU, nằm ngoài ranh giới kernel. Tầng B không cần hữu tỉ
+#     RỦI RO     : thấp. Nhớ dùng `ĐÁP ÁN NGUỒN:` (chép đáp án sách), KHÔNG dùng `ĐÁP ÁN:` — ô tầng B không có oracle
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 (đề tr PDF 300 = 'Page 59') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
 
@@ -528,12 +560,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
-#     ĐÃ SOI     : kim tự tháp Memphis (Tennessee, Mỹ) dạng chóp tứ giác đều, cao 98 m, cạnh đáy 180 m · tính góc nhị diện mặt bên–đáy
-#     VÌ SAO CHỌN: đúng loại ô B03 (góc nhị diện có miền). Thêm giá trị: đề diễn đạt bằng NGỮ CẢNH THỰC + đơn vị mét — dạng ngôn ngữ không ứng viên nào khác có
-#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     ĐÃ SOI     : hình lập phương ABCD.A'B'C'D' cạnh a · xác định và tính góc phẳng nhị diện [A,BD,A'] và [C,BD,A']
+#     VÌ SAO CHỌN: PASS 2 — nhị diện trên LẬP PHƯƠNG, khác hẳn ngữ cảnh thực của kim tự tháp
+#     RỦI RO     : thấp
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 6 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
+      NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Góc nhị diện có miền (có thể tù) — ngoài ranh giới kernel
 
@@ -541,8 +573,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : kim tự tháp Memphis (Tennessee, Mỹ) dạng chóp tứ giác đều, cao 98 m, cạnh đáy 180 m · tính góc nhị diện mặt bên–đáy
+#     VÌ SAO CHỌN: đúng loại ô B03 (góc nhị diện có miền). Thêm giá trị: đề diễn đạt bằng NGỮ CẢNH THỰC + đơn vị mét — dạng ngôn ngữ không ứng viên nào khác có
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B03] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 6 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Góc nhị diện có miền (có thể tù) — ngoài ranh giới kernel
 
@@ -572,12 +608,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
-#     ĐÃ SOI     : hình nón bán kính đáy r = 3cm, đường sinh l = 5cm · tính diện tích xung quanh và toàn phần
-#     VÌ SAO CHỌN: MẶT CONG — kernel chỉ dựng đa diện lồi. Đề ngắn nhất và rõ nhất trong mục
-#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     ĐÃ SOI     : tam giác SOA vuông tại O, OA = 3cm, SA = 5cm · quay quanh SO được hình nón · tính diện tích xung quanh, toàn phần và thể tích
+#     VÌ SAO CHỌN: PASS 2 — mặt cong sinh bởi PHÉP QUAY, khác đề cho sẵn r và l. Ngôn ngữ *quay quanh cạnh* là dạng diễn đạt mới
+#     RỦI RO     : thấp
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1 *hình nón*, Câu 1 **ý a)** (đề tr PDF 5; lời giải tr 19+) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html
+      NGUỒN: Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Mặt cầu · mặt nón · mặt trụ — ngoài ranh giới kernel
 
@@ -585,8 +621,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : hình nón bán kính đáy r = 3cm, đường sinh l = 5cm · tính diện tích xung quanh và toàn phần
+#     VÌ SAO CHỌN: MẶT CONG — kernel chỉ dựng đa diện lồi. Đề ngắn nhất và rõ nhất trong mục
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1 *hình nón*, Câu 1 **ý a)** (đề tr PDF 5; lời giải tr 19+) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Mặt cầu · mặt nón · mặt trụ — ngoài ranh giới kernel
 

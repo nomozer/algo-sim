@@ -110,6 +110,11 @@ DA_SOI: dict[str, list[dict]] = {
     # Ảnh trang đã đọc: đề ở tr PDF 2, lời giải ở tr PDF 5–6. Nguồn tự in
     # a) 90° · b) 45° · c) 60° ⇒ cos² lần lượt 0 · 1/2 · 1/4, đều hữu tỉ.
     "A09": [
+        {"nguon": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 2 **ý c)** (đề tr PDF 2; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "1/4",
+         "goi_y": "hình lập phương · góc giữa A'C' và B'C",
+         "vi_sao": "PASS 2 — nguồn in 60° ⇒ cos² = 1/4. Hai đường CHÉO NHAU (ý b) là cắt nhau sau khi dời), lập luận qua tam giác đều ACB'",
+         "rui_ro": "thấp — đã đọc đáp án nguồn trên ảnh cùng lúc với ý b)"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, "
                   "Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · "
@@ -157,6 +162,11 @@ DA_SOI: dict[str, list[dict]] = {
                    "KHÔNG phải cos². Nguồn cho góc 45° ⇒ chép `1/2`"},
     ],
     "B01": [
+        {"nguon": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "",
+         "goi_y": "chóp S.ABC · đáy vuông cân tại A · mặt bên SBC là tam giác ĐỀU cạnh a · (SBC) ⊥ đáy · khoảng cách giữa SA và BC",
+         "vi_sao": "PASS 2 — cùng loại ngoài phủ nhưng cấu hình mặt-bên-vuông-góc-đáy, khác lăng trụ đứng của ứng viên đầu",
+         "rui_ro": "thấp"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH "
                   "KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 "
@@ -173,6 +183,11 @@ DA_SOI: dict[str, list[dict]] = {
     ],
     # ── Nguồn 2: Đường thẳng & mặt phẳng, QH song song Toán 11 CTST (410tr) ──
     "A01": [
+        {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "tứ diện ABCD · G trọng tâm △BCD · giao tuyến (ACD) ∩ (GAB)",
+         "vi_sao": "PASS 2 — cùng nghĩa vụ A01 nhưng hình KHÁC (tứ diện thay chóp tứ giác) và vật dẫn xuất khác (trọng tâm thay trung điểm)",
+         "rui_ro": "thấp"},
         {"nguon": "Đường thẳng và mặt phẳng, quan hệ song song trong không "
                   "gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 "
                   "*Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; "
@@ -189,6 +204,11 @@ DA_SOI: dict[str, list[dict]] = {
                    "*giao tuyến là SO*, chuyển thành `point_on_line` = true"},
     ],
     "A02": [
+        {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "tứ giác ABCD có AC ∩ BD = O · S ngoài (ABCD) · M trên SC · giao điểm SD ∩ (ABM)",
+         "vi_sao": "PASS 2 — cùng nghĩa vụ A02, nhưng điểm cắt O là DỮ KIỆN chứ không phải vật dựng; M tự do trên SC",
+         "rui_ro": "trung bình — M tự do (lớp đã chốt)"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
                   "— **BÀI TẬP TỰ LUẬN**, Dạng 2 *Tìm giao điểm của đường "
                   "thẳng và mặt phẳng*, Câu 12 (đề tr PDF 7; lời giải tr 21+) · "
@@ -203,6 +223,11 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp"},
     ],
     "A03": [
+        {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: chứng minh hai đường thẳng song song*, Câu 2 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "tứ diện ABCD · M,N,P,Q,R,S trung điểm AB,CD,BC,AD,AC,BD · chứng minh MPNQ là hình bình hành",
+         "vi_sao": "PASS 2 — SÁU điểm dẫn xuất, kết luận là một TỨ GIÁC có tính chất, không phải một quan hệ hai đường. Nghĩa vụ song song vẫn giữ",
+         "rui_ro": "trung bình — kết luận *hình bình hành* phải chuyển thành quan hệ ∥ trong `phep_chuyen`"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
                   "— **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG "
                   "SONG SONG*, Câu 1 (đề tr PDF 100) · "
@@ -216,6 +241,11 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp — ứng viên sạch nhất trong nhóm song song"},
     ],
     "A13": [
+        {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, Câu 24 **ý b)** (đề tr PDF 8) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "cùng chóp hình thang · M, N trung điểm AB, BC · thiết diện cắt bởi (MNP)",
+         "vi_sao": "PASS 2 — mặt cắt xác định bởi BA điểm dẫn xuất thay vì hai đỉnh + một điểm tự do",
+         "rui_ro": "trung bình — vẫn dùng P tự do của ý a)"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
                   "— **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, "
                   "Câu 24 **ý a)** (đề tr PDF 8; lời giải tr 30+) · "
@@ -232,6 +262,11 @@ DA_SOI: dict[str, list[dict]] = {
     ],
     # ── Nguồn 3: Lê Bá Bảo — Dạng toán xác định góc nhị diện (14tr) ──
     "A08": [
+        {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 1 **ý a)** (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABC · SA ⊥ (ABC) · H hình chiếu của A trên BC · chứng minh (SAB) ⊥ (ABC) và (SAH) ⊥ (SBC)",
+         "vi_sao": "PASS 2 — H là điểm DẪN XUẤT (chiếu vuông góc), khác hẳn ứng viên lập phương vốn không có vật dựng nào",
+         "rui_ro": "thấp. Chỉ chép ý a)"},
         {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* "
                   "(14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 2 **ý b)** (đề tr "
                   "PDF 2; lời giải mục *IV. LỜI GIẢI CHI TIẾT*) · "
@@ -247,6 +282,11 @@ DA_SOI: dict[str, list[dict]] = {
                    "đường chéo (ra a√3, vô tỉ), ý c) hỏi số đo góc nhị diện"},
     ],
     "B03": [
+        {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html",
+         "dap_an": "",
+         "goi_y": "hình lập phương ABCD.A'B'C'D' cạnh a · xác định và tính góc phẳng nhị diện [A,BD,A'] và [C,BD,A']",
+         "vi_sao": "PASS 2 — nhị diện trên LẬP PHƯƠNG, khác hẳn ngữ cảnh thực của kim tự tháp",
+         "rui_ro": "thấp"},
         {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* "
                   "(14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 6 (đề tr PDF 2) · "
                   "https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-"
@@ -261,6 +301,11 @@ DA_SOI: dict[str, list[dict]] = {
     ],
     # ── Nguồn 4: Chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) ──
     "B05": [
+        {"nguon": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html",
+         "dap_an": "",
+         "goi_y": "tam giác SOA vuông tại O, OA = 3cm, SA = 5cm · quay quanh SO được hình nón · tính diện tích xung quanh, toàn phần và thể tích",
+         "vi_sao": "PASS 2 — mặt cong sinh bởi PHÉP QUAY, khác đề cho sẵn r và l. Ngôn ngữ *quay quanh cạnh* là dạng diễn đạt mới",
+         "rui_ro": "thấp"},
         {"nguon": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — "
                   "**HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1 *hình nón*, Câu 1 "
                   "**ý a)** (đề tr PDF 5; lời giải tr 19+) · "
@@ -300,6 +345,11 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp — ứng viên gọn nhất trong nhóm song song"},
     ],
     "A06": [
+        {"nguon": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc trong không gian*, **Ví dụ 1**, ý `AC ⊥ B'D'`",
+         "dap_an": "true",
+         "goi_y": "hình hộp sáu mặt đều là hình vuông (lập phương) · chứng minh AC ⊥ B'D'",
+         "vi_sao": "PASS 2 — cùng hình nhưng đường chéo CHÉO NHAU thay vì cạnh–cạnh; lập luận nguồn đi qua B'D' ∥ BD rồi AC ⊥ BD",
+         "rui_ro": "thấp"},
         {"nguon": "Loigiaihay — *Cách chứng minh hai đường thẳng vuông góc "
                   "trong không gian*, **Ví dụ 1**, ý `AB ⊥ CC'`",
          "dap_an": "true",
