@@ -227,9 +227,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     ANSWER     : exact_fraction → nghĩa vụ `angle`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
+#     ĐÃ SOI     : hình LẬP PHƯƠNG ABCD.A'B'C'D' · tính góc giữa AC và B'C'
+#     VÌ SAO CHỌN: lập phương ⇒ toạ độ NGUYÊN, không dữ kiện nào có căn. Nguồn in (AC,B'C') = 45° ⇒ cos² = 1/2 — hữu tỉ
+#     RỦI RO     : thấp. Đề gốc có BA ý a/b/c; **chỉ chép ý b)** — ý a) ra 90° (cos²=0, quá tầm thường), ý c) ra 60° (cos²=1/4, dùng được nếu cần bài A09 thứ hai). Cạnh không cho ⇒ gán 1
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      ĐÁP ÁN: 1/2
 
 #   ─── A09 (2/3) · Góc giữa hai đường thẳng ────────────────────────
 #     CAPABILITY : angle_cos_sq

@@ -107,6 +107,22 @@ DA_SOI: dict[str, list[dict]] = {
                    "chúng (cùng dạng 'điểm tự do' đã chốt ở ứng viên trên). "
                    "Đã đọc ẢNH TRANG để xác nhận `BC = 2a` không có căn"},
     ],
+    # Ảnh trang đã đọc: đề ở tr PDF 2, lời giải ở tr PDF 5–6. Nguồn tự in
+    # a) 90° · b) 45° · c) 60° ⇒ cos² lần lượt 0 · 1/2 · 1/4, đều hữu tỉ.
+    "A09": [
+        {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
+                  "B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, "
+                  "Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · "
+                  "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-"
+                  "trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "1/2",
+         "goi_y": "hình LẬP PHƯƠNG ABCD.A'B'C'D' · tính góc giữa AC và B'C'",
+         "vi_sao": "lập phương ⇒ toạ độ NGUYÊN, không dữ kiện nào có căn. "
+                   "Nguồn in (AC,B'C') = 45° ⇒ cos² = 1/2 — hữu tỉ",
+         "rui_ro": "thấp. Đề gốc có BA ý a/b/c; **chỉ chép ý b)** — ý a) ra "
+                   "90° (cos²=0, quá tầm thường), ý c) ra 60° (cos²=1/4, dùng "
+                   "được nếu cần bài A09 thứ hai). Cạnh không cho ⇒ gán 1"},
+    ],
 }
 
 #: Ô chưa tra được nguồn nào — đánh dấu chứ không đổi giao thức.
