@@ -1851,3 +1851,77 @@ def test_moi_ung_vien_khai_DU_vi_tri_trong_nguon(PK):
           if not re.search(r"tr(ang)? ?PDF? ?\d|Bài [\d.]+|Câu \d|Dạng \d|Ví dụ",
                            c["nguon"])]
     assert not mo, f"ứng viên không chỉ rõ vị trí bài: {mo}"
+
+
+# ══ KHOÁ AN TOÀN: HELD-OUT KHÔNG ĐƯỢC QUA MODEL TRƯỚC KHI NIÊM PHONG ═════
+#
+# Rủi ro có thật chứ không giả định: `run_geometry_dev_evaluation.py --holdout`
+# GỌI MODEL và CÓ chạm miền held-out. Nếu nó chạy trước `seal`, 42 ứng viên
+# công khai đi qua measured system một lượt không ai đếm — và không có cách nào
+# lấy lại tính held-out sau đó. Ba khoá dưới đây phải còn nguyên và đúng THỨ TỰ.
+_RUNNER = "run_geometry_dev_evaluation.py"
+
+
+def test_bo_chay_MODEL_doc_cases_da_rut_chu_KHONG_doc_pool():
+    """Runner chỉ được đọc `holdout/cases.json` (tập ĐÃ RÚT), không đọc pool.
+
+    Pool là 42 ứng viên; `cases.json` là 20 bài seed đã chọn. Cho runner thấy
+    pool là cho nó thấy gấp đôi tập đo, kể cả bài không bao giờ được rút.
+    """
+    src = (SCRIPTS / _RUNNER).read_text(encoding="utf-8")
+    assert 'HOLDOUT = GEO / "holdout" / "cases.json"' in src
+    assert "pool.json" not in src, "runner model KHÔNG được biết tới pool.json"
+
+
+def test_bo_chay_MODEL_kiem_con_dau_TRUOC_khi_cham_api():
+    """Thứ tự quan trọng hơn sự tồn tại: cổng con dấu phải đứng TRƯỚC bước
+    đòi live/API key, nếu không thì quota đã tiêu trước khi cổng kịp chặn."""
+    # Đo trong THÂN `_main`, và đo LỜI GỌI: `src.index("_bat_buoc_live(")`
+    # trúng dòng ĐỊNH NGHĨA ở đầu file nên so ra thứ tự ngược.
+    src = (SCRIPTS / _RUNNER).read_text(encoding="utf-8")
+    than = src[src.index("async def _main("):]
+    i_dau = than.index("_kiem_con_dau(cases)")
+    i_live = than.index("\n    _bat_buoc_live(")
+    i_key = than.index('os.environ.get("GEMINI_API_KEY")')
+    assert i_dau < i_live < i_key, "cổng con dấu bị đẩy xuống sau bước tiêu quota"
+
+
+def test_khong_co_con_dau_thi_TU_CHOI_chay_holdout():
+    """Tiêm lỗi: chưa niêm phong ⇒ phải ném, không phải cảnh báo rồi chạy."""
+    import importlib.util as _iu
+    sp = _iu.spec_from_file_location("_rg", SCRIPTS / _RUNNER)
+    m = _iu.module_from_spec(sp)
+    sp.loader.exec_module(m)
+    assert not m.HOLDOUT_SEAL.exists(), \
+        "đã niêm phong — cập nhật test này khi thật sự tới đó"
+    with pytest.raises(Exception) as e:
+        m._kiem_con_dau([{"case_id": "hp_a14_001"}])
+    assert "con dấu" in str(e.value).lower()
+
+
+def test_chuoi_FINALIZE_khong_module_nao_cham_model():
+    """Toàn bộ dây chuyền nạp gói phải TẤT ĐỊNH — 0 API call, kể cả gián tiếp."""
+    chuoi = ("finalize_phase7b_holdout", "run_phase7b_data_pipeline",
+             "run_m1_pipeline", "ingest_holdout_batch", "seal_geometry_holdout",
+             "scaffold_expectation", "freeze_expectation_check",
+             "holdout_coverage_matrix", "validate_human_copy_packet")
+    for ten in chuoi:
+        src = (SCRIPTS / f"{ten}.py").read_text(encoding="utf-8")
+        ma = "\n".join(d for d in src.splitlines()
+                       if not d.lstrip().startswith("#"))
+        for cam in ("app.ai.gemini", "from app.ai import", "run_pipeline(",
+                    "ALLOW_LIVE_AI"):
+            assert cam not in ma, f"{ten} chạm {cam!r} — dây chuyền hết tất định"
+
+
+def test_DEV_smoke_KHONG_giao_voi_ung_vien_holdout(PK):
+    """Muốn smoke chuỗi model→mô phỏng thì dùng DEV, và DEV phải RỜI hẳn.
+
+    `geo_*` (DEV) vs `hp_*` (held-out): hai không gian tên tách biệt, nên một
+    ca smoke không thể vô tình là một bài của tập đo.
+    """
+    dev = json.loads((GEO / "dev" / "cases.json").read_text(encoding="utf-8"))
+    ids = {c["case_id"] for c in dev["cases"]}
+    assert ids and all(i.startswith("geo_") for i in ids)
+    pool = json.loads(POOL.read_text(encoding="utf-8"))["cases"]
+    assert not (ids & {c["case_id"] for c in pool})
