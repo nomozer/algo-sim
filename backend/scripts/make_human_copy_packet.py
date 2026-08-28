@@ -110,6 +110,11 @@ DA_SOI: dict[str, list[dict]] = {
     # Ảnh trang đã đọc: đề ở tr PDF 2, lời giải ở tr PDF 5–6. Nguồn tự in
     # a) 90° · b) 45° · c) 60° ⇒ cos² lần lượt 0 · 1/2 · 1/4, đều hữu tỉ.
     "A09": [
+        {"nguon": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 13 (đề tr PDF 3; lời giải tr PDF 13) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "2/5",
+         "goi_y": "hình lập phương · I trung điểm AB · côsin góc giữa A'D và B'I",
+         "vi_sao": "PASS 2 — ứng viên ĐÁNG GIÁ NHẤT của nhóm: nguồn in cos = √10/5, tức VÔ TỈ, nhưng đơn vị checker là cos² = 10/25 = **2/5**, HỮU TỈ. Nó chứng minh vì sao oracle dùng cos² chứ không dùng cos",
+         "rui_ro": "trung bình — `phep_chuyen` PHẢI ghi rõ: nguồn cho `√10/5`, bình phương ⇒ `2/5`. Chép thẳng √10/5 vào ĐÁP ÁN là sai đơn vị"},
         {"nguon": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 2 **ý c)** (đề tr PDF 2; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
          "dap_an": "1/4",
          "goi_y": "hình lập phương · góc giữa A'C' và B'C",
@@ -131,6 +136,11 @@ DA_SOI: dict[str, list[dict]] = {
     # Ảnh trang đã đọc: tr PDF 46. Bài chứng minh ⇒ đáp án là `true`, không
     # có số nào để mất căn. Lời giải ở mục HDG tr 49–64.
     "A07": [
+        {"nguon": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B23.1 **PHẦN TỰ LUẬN**, Dạng 1, Câu 1 **ý a)** (đề tr PDF 46; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "true",
+         "goi_y": "tứ diện OABC có OA, OB, OC ĐÔI MỘT VUÔNG GÓC · H là hình chiếu của O trên (ABC) · chứng minh BC ⊥ (OAH)",
+         "vi_sao": "PASS 2 — tứ diện vuông ba mặt (khác chóp đáy chữ nhật), và H là chiếu lên một MẶT thay vì lên một ĐƯỜNG",
+         "rui_ro": "thấp. Đề có hai ý — chỉ chép ý a)"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, "
                   "Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · "
@@ -147,6 +157,11 @@ DA_SOI: dict[str, list[dict]] = {
     ],
     # Ảnh tr PDF 113: đề VÀ lời giải nằm cùng trang — nguồn tự in SCO = 45°.
     "A10": [
+        {"nguon": "Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B24.1 **PHẦN TỰ LUẬN**, Câu 2 (đề tr PDF 106; lời giải tr PDF 112) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "1/2",
+         "goi_y": "hình LẬP PHƯƠNG · góc giữa A'C' và mặt phẳng (BCC'B')",
+         "vi_sao": "PASS 2 — lập phương (toạ độ nguyên) thay hình thoi; nguồn in 45° ⇒ sin² = 1/2",
+         "rui_ro": "⚠️ ĐƠN VỊ: đường–MẶT ⇒ **sin²**, không phải cos²"},
         {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
                   "B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 "
                   "(đề + lời giải cùng ở tr PDF 113 = 'Page 5') · "
@@ -320,6 +335,11 @@ DA_SOI: dict[str, list[dict]] = {
     ],
     # ── Nguồn 5–8: HTML + SBT, cho sáu ô cuối của Pass 1 ──
     "A04": [
+        {"nguon": "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 32 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD đáy bình hành · M, N, P trên SA, SB, AD với SM/SA = SN/SB = PD/AD · chứng minh MN ∥ (ABCD)",
+         "vi_sao": "PASS 2 — điểm chia theo TỈ SỐ BẰNG NHAU thay vì trung điểm; ba điểm trên ba cạnh khác nhau",
+         "rui_ro": "trung bình — tỉ số chung không được cho giá trị; kết luận đúng với mọi tỉ số (cùng lớp *tham số tự do* đã chốt). Chỉ chép ý a)"},
         {"nguon": "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt "
                   "phẳng song song (có lời giải)*, Bài 31 **ý a)** · "
                   "https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-"
@@ -333,6 +353,11 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp. Đề gốc nhiều ý — **chỉ chép ý a)**"},
     ],
     "A05": [
+        {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 5 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song",
+         "dap_an": "true",
+         "goi_y": "chóp đáy HÌNH BÌNH HÀNH tâm O · M, N trung điểm · chứng minh hai mặt phẳng song song (theo bản đồ nguồn: (OMN) ∥ (SBC))",
+         "vi_sao": "PASS 2 — dùng TÂM O của đáy làm điểm dựng, và chuỗi lập luận đi qua HAI quan hệ đường-mặt rồi mới ghép; khác hẳn ba trung điểm của Câu 4",
+         "rui_ro": "⚠️ CAO NHẤT trong gói: bản trích trang RƠI MẤT TÊN ĐIỂM ('gọi lần lượt là trung điểm của'). Phải mở nguồn đối chiếu tên điểm trước khi chép — đừng tin phần gợi ý này"},
         {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 "
                   "Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · "
                   "https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-"
@@ -373,6 +398,11 @@ DA_SOI: dict[str, list[dict]] = {
                    "đáp án `a` trông hữu tỉ, tầng B KHÔNG chấm bằng oracle"},
     ],
     "B04": [
+        {"nguon": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 5**, Câu 1 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html",
+         "dap_an": "",
+         "goi_y": "Trong không gian Oxyz, viết phương trình mặt phẳng (P) qua M(−1;−2;5) và vuông góc với HAI mặt phẳng (Q): x + 2y − 3z + 1 = 0 và (R): 2x − 3y + z + 1 = 0",
+         "vi_sao": "PASS 2 — ràng buộc là VUÔNG GÓC VỚI HAI MẶT thay vì qua hai điểm; vẫn Oxyz cho sẵn nên vẫn đúng lý do ngoài phủ",
+         "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`"},
         {"nguon": "Chuyên đề *Phương trình mặt phẳng* (267tr) — mục "
                   "`TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; "
                   "lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · "
@@ -386,6 +416,11 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
     ],
     "B06": [
+        {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần VẬN DỤNG, Câu 1 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song",
+         "dap_an": "",
+         "goi_y": "vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA",
+         "vi_sao": "PASS 2 — chiếu cả một KHỐI (không phải một điểm), và phương chiếu là một CẠNH của khối. Nguồn trả lời: ảnh là tứ giác A'B'C'D'",
+         "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`"},
         {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: "
                   "Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · "
                   "https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-"

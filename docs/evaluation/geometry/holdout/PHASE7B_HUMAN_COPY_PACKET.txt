@@ -137,6 +137,18 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABCD đáy bình hành · M, N, P trên SA, SB, AD với SM/SA = SN/SB = PD/AD · chứng minh MN ∥ (ABCD)
+#     VÌ SAO CHỌN: PASS 2 — điểm chia theo TỈ SỐ BẰNG NHAU thay vì trung điểm; ba điểm trên ba cạnh khác nhau
+#     RỦI RO     : trung bình — tỉ số chung không được cho giá trị; kết luận đúng với mọi tỉ số (cùng lớp *tham số tự do* đã chốt). Chỉ chép ý a)
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 32 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/
+      ĐÁP ÁN: true
+
+#   ─── A04 (2/2) · Đường thẳng song song mặt phẳng ─────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
 #     ĐÃ SOI     : chóp S.ABCD · M, N trung điểm AB và BC · G₁, G₂ trọng tâm △SAB, △SBC · chứng minh AC ∥ (SMN)
 #     VÌ SAO CHỌN: MN là đường trung bình △ABC ⇒ MN ∥ AC ⇒ AC ∥ (SMN). Trung điểm và trọng tâm đều giữ toạ độ hữu tỉ; không dữ kiện số nào
 #     RỦI RO     : thấp. Đề gốc nhiều ý — **chỉ chép ý a)**
@@ -145,15 +157,19 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 31 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/
       ĐÁP ÁN: true
 
-#   ─── A04 (2/2) · Đường thẳng song song mặt phẳng ─────────────────
+#   ─── A05 (1/2) · Hai mặt phẳng song song ─────────────────────────
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
-[A04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+#     ĐÃ SOI     : chóp đáy HÌNH BÌNH HÀNH tâm O · M, N trung điểm · chứng minh hai mặt phẳng song song (theo bản đồ nguồn: (OMN) ∥ (SBC))
+#     VÌ SAO CHỌN: PASS 2 — dùng TÂM O của đáy làm điểm dựng, và chuỗi lập luận đi qua HAI quan hệ đường-mặt rồi mới ghép; khác hẳn ba trung điểm của Câu 4
+#     RỦI RO     : ⚠️ CAO NHẤT trong gói: bản trích trang RƠI MẤT TÊN ĐIỂM ('gọi lần lượt là trung điểm của'). Phải mở nguồn đối chiếu tên điểm trước khi chép — đừng tin phần gợi ý này
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 5 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song
+      ĐÁP ÁN: true
 
-#   ─── A05 (1/2) · Hai mặt phẳng song song ─────────────────────────
+#   ─── A05 (2/2) · Hai mặt phẳng song song ─────────────────────────
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -164,14 +180,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 [A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song
       ĐÁP ÁN: true
-
-#   ─── A05 (2/2) · Hai mặt phẳng song song ─────────────────────────
-#     CAPABILITY : parallel_relation
-#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-[A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
 
 #   ─── A13 (1/3) · Thiết diện / bốn điểm đồng phẳng ────────────────
 #     CAPABILITY : coplanar_section
@@ -242,6 +250,18 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : perpendicular_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : tứ diện OABC có OA, OB, OC ĐÔI MỘT VUÔNG GÓC · H là hình chiếu của O trên (ABC) · chứng minh BC ⊥ (OAH)
+#     VÌ SAO CHỌN: PASS 2 — tứ diện vuông ba mặt (khác chóp đáy chữ nhật), và H là chiếu lên một MẶT thay vì lên một ĐƯỜNG
+#     RỦI RO     : thấp. Đề có hai ý — chỉ chép ý a)
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A07] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B23.1 **PHẦN TỰ LUẬN**, Dạng 1, Câu 1 **ý a)** (đề tr PDF 46; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      ĐÁP ÁN: true
+
+#   ─── A07 (2/2) · Đường thẳng vuông góc mặt phẳng ─────────────────
+#     CAPABILITY : perpendicular_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
+#     THANG CHẤM : oracle + ③a/③b/⑤
 #     ĐÃ SOI     : đáy ABCD hình CHỮ NHẬT · SA ⊥ đáy · H là hình chiếu của A lên SB · chứng minh AH ⊥ (SBC)
 #     VÌ SAO CHỌN: không dữ kiện số nào ⇒ không chỗ nào sinh căn; mọi cạnh gán số nguyên được. H là điểm DẪN XUẤT (chiếu A lên SB) ⇒ chuỗi phụ thuộc sâu hơn mọi ứng viên khác
 #     RỦI RO     : thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**. Đáp án là `true` (bài chứng minh), không phải một con số
@@ -249,14 +269,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 [A07] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: true
-
-#   ─── A07 (2/2) · Đường thẳng vuông góc mặt phẳng ─────────────────
-#     CAPABILITY : perpendicular_relation
-#     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-[A07] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
 
 #   ─── A08 (1/2) · Hai mặt phẳng vuông góc ─────────────────────────
 #     CAPABILITY : perpendicular_relation
@@ -287,6 +299,19 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     ANSWER     : exact_fraction → nghĩa vụ `angle`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
+#     ĐÃ SOI     : hình lập phương · I trung điểm AB · côsin góc giữa A'D và B'I
+#     VÌ SAO CHỌN: PASS 2 — ứng viên ĐÁNG GIÁ NHẤT của nhóm: nguồn in cos = √10/5, tức VÔ TỈ, nhưng đơn vị checker là cos² = 10/25 = **2/5**, HỮU TỈ. Nó chứng minh vì sao oracle dùng cos² chứ không dùng cos
+#     RỦI RO     : trung bình — `phep_chuyen` PHẢI ghi rõ: nguồn cho `√10/5`, bình phương ⇒ `2/5`. Chép thẳng √10/5 vào ĐÁP ÁN là sai đơn vị
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 13 (đề tr PDF 3; lời giải tr PDF 13) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      ĐÁP ÁN: 2/5
+
+#   ─── A09 (2/3) · Góc giữa hai đường thẳng ────────────────────────
+#     CAPABILITY : angle_cos_sq
+#     ANSWER     : exact_fraction → nghĩa vụ `angle`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
 #     ĐÃ SOI     : hình lập phương · góc giữa A'C' và B'C
 #     VÌ SAO CHỌN: PASS 2 — nguồn in 60° ⇒ cos² = 1/4. Hai đường CHÉO NHAU (ý b) là cắt nhau sau khi dời), lập luận qua tam giác đều ACB'
 #     RỦI RO     : thấp — đã đọc đáp án nguồn trên ảnh cùng lúc với ý b)
@@ -295,7 +320,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B22.1 **PHẦN TỰ LUẬN**, Câu 2 **ý c)** (đề tr PDF 2; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 1/4
 
-#   ─── A09 (2/3) · Góc giữa hai đường thẳng ────────────────────────
+#   ─── A09 (3/3) · Góc giữa hai đường thẳng ────────────────────────
 #     CAPABILITY : angle_cos_sq
 #     ANSWER     : exact_fraction → nghĩa vụ `angle`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -308,16 +333,21 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC, **PHẦN TỰ LUẬN**, Câu 2 **ý b)** (đề tr PDF 2 = 'Page 2'; lời giải tr PDF 6) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 1/2
 
-#   ─── A09 (3/3) · Góc giữa hai đường thẳng ────────────────────────
-#     CAPABILITY : angle_cos_sq
+#   ─── A10 (1/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
+#     CAPABILITY : angle_sin_sq
 #     ANSWER     : exact_fraction → nghĩa vụ `angle`
 #     THANG CHẤM : oracle + ③a/③b/⑤
-#     TÌM BÀI    : `cos²` giữa HAI ĐƯỜNG. Toạ độ hữu tỉ ⇒ `cos²` luôn hữu tỉ, nên ô này KHÔNG vướng rào vô tỉ ở đáp án — dễ hơn A11/A12 nhiều.
-[A09] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+#     ⚠️ ĐƠN VỊ   : sin² (đường–mặt), KHÔNG phải cos²
+#     TÌM BÀI    : ⚠️ Đường–MẶT trả **`sin²`**, KHÔNG phải `cos²`. Chép nhầm thì chấm sai mà không cổng nào báo. Đáp án sách hay cho góc α ⇒ ghi `sin²α`.
+#     ĐÃ SOI     : hình LẬP PHƯƠNG · góc giữa A'C' và mặt phẳng (BCC'B')
+#     VÌ SAO CHỌN: PASS 2 — lập phương (toạ độ nguyên) thay hình thoi; nguồn in 45° ⇒ sin² = 1/2
+#     RỦI RO     : ⚠️ ĐƠN VỊ: đường–MẶT ⇒ **sin²**, không phải cos²
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A10] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B24.1 **PHẦN TỰ LUẬN**, Câu 2 (đề tr PDF 106; lời giải tr PDF 112) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      ĐÁP ÁN: 1/2
 
-#   ─── A10 (1/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
+#   ─── A10 (2/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
 #     CAPABILITY : angle_sin_sq
 #     ANSWER     : exact_fraction → nghĩa vụ `angle`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -330,16 +360,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 [A10] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN: 1/2
-
-#   ─── A10 (2/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
-#     CAPABILITY : angle_sin_sq
-#     ANSWER     : exact_fraction → nghĩa vụ `angle`
-#     THANG CHẤM : oracle + ③a/③b/⑤
-#     ⚠️ ĐƠN VỊ   : sin² (đường–mặt), KHÔNG phải cos²
-#     TÌM BÀI    : ⚠️ Đường–MẶT trả **`sin²`**, KHÔNG phải `cos²`. Chép nhầm thì chấm sai mà không cổng nào báo. Đáp án sách hay cho góc α ⇒ ghi `sin²α`.
-[A10] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
 
 #   ─── A10 (3/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
 #     CAPABILITY : angle_sin_sq
@@ -586,12 +606,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
-#     ĐÃ SOI     : Trong không gian Oxyz, viết phương trình mặt phẳng (α) qua A(1;2;−2), B(2;−1;4) và vuông góc với (β): x − 2y − z + 1 = 0
-#     VÌ SAO CHỌN: Oxyz CHO SẴN toạ độ ⇒ mô hình không phải tự đặt hệ trục, đúng lý do ngoài phủ của ô B04. Hệ số nguyên, đề gọn
-#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     ĐÃ SOI     : Trong không gian Oxyz, viết phương trình mặt phẳng (P) qua M(−1;−2;5) và vuông góc với HAI mặt phẳng (Q): x + 2y − 3z + 1 = 0 và (R): 2x − 3y + z + 1 = 0
+#     VÌ SAO CHỌN: PASS 2 — ràng buộc là VUÔNG GÓC VỚI HAI MẶT thay vì qua hai điểm; vẫn Oxyz cho sẵn nên vẫn đúng lý do ngoài phủ
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
+      NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 5**, Câu 1 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
 
@@ -599,8 +619,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : Trong không gian Oxyz, viết phương trình mặt phẳng (α) qua A(1;2;−2), B(2;−1;4) và vuông góc với (β): x − 2y − z + 1 = 0
+#     VÌ SAO CHỌN: Oxyz CHO SẴN toạ độ ⇒ mô hình không phải tự đặt hệ trục, đúng lý do ngoài phủ của ô B04. Hệ số nguyên, đề gọn
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
 
@@ -634,12 +658,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
-#     ĐÃ SOI     : tứ diện ABCD · I trọng tâm △ABC · xác định hình chiếu song song của I theo phương CD lên mặt phẳng (ABD)
-#     VÌ SAO CHỌN: PHÉP CHIẾU SONG SONG — đúng loại ô B06. Nguồn trả lời: ảnh là J, trọng tâm △ABD
-#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     ĐÃ SOI     : vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA
+#     VÌ SAO CHỌN: PASS 2 — chiếu cả một KHỐI (không phải một điểm), và phương chiếu là một CẠNH của khối. Nguồn trả lời: ảnh là tứ giác A'B'C'D'
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`
 #     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song
+      NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần VẬN DỤNG, Câu 1 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
 
@@ -647,8 +671,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : tứ diện ABCD · I trọng tâm △ABC · xác định hình chiếu song song của I theo phương CD lên mặt phẳng (ABD)
+#     VÌ SAO CHỌN: PHÉP CHIẾU SONG SONG — đúng loại ô B06. Nguồn trả lời: ảnh là J, trọng tâm △ABD
+#     RỦI RO     : thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B06] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
 
