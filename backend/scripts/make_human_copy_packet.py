@@ -123,6 +123,23 @@ DA_SOI: dict[str, list[dict]] = {
                    "90° (cos²=0, quá tầm thường), ý c) ra 60° (cos²=1/4, dùng "
                    "được nếu cần bài A09 thứ hai). Cạnh không cho ⇒ gán 1"},
     ],
+    # Ảnh trang đã đọc: tr PDF 46. Bài chứng minh ⇒ đáp án là `true`, không
+    # có số nào để mất căn. Lời giải ở mục HDG tr 49–64.
+    "A07": [
+        {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
+                  "B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, "
+                  "Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · "
+                  "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-"
+                  "trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "true",
+         "goi_y": "đáy ABCD hình CHỮ NHẬT · SA ⊥ đáy · H là hình chiếu của A "
+                  "lên SB · chứng minh AH ⊥ (SBC)",
+         "vi_sao": "không dữ kiện số nào ⇒ không chỗ nào sinh căn; mọi cạnh "
+                   "gán số nguyên được. H là điểm DẪN XUẤT (chiếu A lên SB) "
+                   "⇒ chuỗi phụ thuộc sâu hơn mọi ứng viên khác",
+         "rui_ro": "thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**. Đáp án là "
+                   "`true` (bài chứng minh), không phải một con số"},
+    ],
 }
 
 #: Ô chưa tra được nguồn nào — đánh dấu chứ không đổi giao thức.

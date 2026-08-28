@@ -194,9 +194,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : perpendicular_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `perpendicular`
 #     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : đáy ABCD hình CHỮ NHẬT · SA ⊥ đáy · H là hình chiếu của A lên SB · chứng minh AH ⊥ (SBC)
+#     VÌ SAO CHỌN: không dữ kiện số nào ⇒ không chỗ nào sinh căn; mọi cạnh gán số nguyên được. H là điểm DẪN XUẤT (chiếu A lên SB) ⇒ chuỗi phụ thuộc sâu hơn mọi ứng viên khác
+#     RỦI RO     : thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**. Đáp án là `true` (bài chứng minh), không phải một con số
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A07] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG, **PHẦN TỰ LUẬN**, Dạng 1, Câu 2 **ý b)** (đề tr PDF 46 = 'Page 11'; lời giải tr 49–64) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      ĐÁP ÁN: true
 
 #   ─── A07 (2/2) · Đường thẳng vuông góc mặt phẳng ─────────────────
 #     CAPABILITY : perpendicular_relation
