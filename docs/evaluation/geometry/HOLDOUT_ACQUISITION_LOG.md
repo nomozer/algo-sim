@@ -755,3 +755,70 @@ Câu hỏi: giao thức có cho dùng bài **do người độc lập/GVHD biên
 khai là sai lệch tiền đăng ký — đúng lệ đã làm với `obligation_match`. Quyết
 định thuộc người dùng; tôi không soạn `A12_HUMAN_AUTHORING_REQUEST` khi giao
 thức hiện hành chưa cho.
+
+### 7g. ⛔ TRÍCH TEXT TỪ PDF NUỐT SẠCH DẤU CĂN — hỏng theo hướng NHẬN NHẦM
+
+Đo trên *Chuyên đề QHVG trong không gian Toán 11* (KNTTVCS, 704 trang), phần
+KHOẢNG CÁCH tự luận + lời giải (tr 294–334):
+
+```
+ký tự '⊥' trong text trích : 204
+ký tự '∆'                  :  58
+ký tự '√'                  :   0     ← MẤT SẠCH
+```
+
+Đối chiếu **ảnh trang** với **text trích**, cùng một trang:
+
+| Bài | Ảnh trang (SỰ THẬT) | Text trích | Máy sẽ kết luận |
+|---|---|---|---|
+| Câu 6 | `BC = a√2` | `BC = a 2` | `2a` — **hữu tỉ** ❌ |
+| Câu 10 | `a√6` | `6 a` | `6a` — **hữu tỉ** ❌ |
+| Câu 12 · 13 | `SA = a√3` | `3 SA a =` | `3a` — **hữu tỉ** ❌ |
+| Câu 2 (đáp án) | `a√3/2` | `3 . 2 a` | `3a/2` — **hữu tỉ** ❌ |
+
+> **Lọc tính hữu tỉ bằng text trích PDF là SAI, và sai theo đúng hướng nguy
+> hiểm nhất: NHẬN NHẦM.** Mọi bài vô tỉ đều hiện ra như bài hữu tỉ. Bốn ca độc
+> lập ở trên đủ để đóng cửa hướng này.
+>
+> Cách duy nhất đã chứng minh dùng được: **dựng ảnh trang rồi đọc**. Đó cũng là
+> cách đã dùng cho hai ứng viên A14 ở tr 80–83.
+
+Ghi chú: `⊥` sống sót còn `√` thì không — nên một quét *"đề có nhắc vuông góc
+không"* vẫn tin được, còn quét *"đáp án có căn không"* thì không.
+
+### 7h. BẢN ĐỒ NGUỒN — mục TỰ LUẬN có lời giải, tra bằng mục lục PDF
+
+Tài liệu 704 trang có **mục lục máy đọc được**, tách rõ `TULUAN` khỏi `TN` và
+`DE` khỏi `HDG`. Đây là siêu dữ liệu **cấu trúc**, không phải công thức, nên
+tin được (khác §7g).
+
+| Mục | Đề (tr) | Lời giải (tr) | Ô |
+|---|--:|--:|---|
+| B22.1 HAI ĐƯỜNG THẲNG VUÔNG GÓC | 1–3 | 4–15 | **A06** |
+| B23.1 ĐƯỜNG THẲNG ⊥ MẶT PHẲNG | 44–48 | 49–64 | **A07** |
+| B24.1 PHÉP CHIẾU ⊥ · GÓC ĐT–MP | 103–108 | 109–140 | **A10** · **B06** |
+| B25.1 HAI MẶT PHẲNG VUÔNG GÓC | 190–201 | 202–249 | **A08** |
+| B26.1 KHOẢNG CÁCH | 294–301 | 302–334 | **A11** · B01 · B02 |
+| B27.1 THỂ TÍCH P1 · P2 | 435–457 · 509–511 | 458–508 · 512–539 | **A14** |
+
+⇒ **10 ô** có nguồn tự luận kèm lời giải trong MỘT tài liệu. Còn thiếu nguồn:
+A01–A05 · A09 · A13 (đều thuộc chương **quan hệ song song**, không nằm trong
+tài liệu chương 7 này) · B03 · B04 · B05.
+
+⚠️ **A12 KHÔNG có trong bản đồ này.** Quét toàn bộ phần tự luận của cả 7 mục:
+**0 bài** hỏi khoảng cách từ điểm đến một **đường thẳng**. Chương trình chương 7
+hiểu *"khoảng cách"* là điểm→**mặt phẳng** và **hai đường chéo nhau**, không
+phải điểm→đường. Khớp với kết luận §7f.
+
+#### ✅ A11 — ứng viên THỨ HAI, đã đọc ảnh trang
+
+```
+Nguồn   : Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) · B26.1 KHOẢNG CÁCH
+          PHẦN TỰ LUẬN · Câu 7 · trang PDF 298 ("Page 57")
+Dữ kiện : SA ⊥ (ABC) · △ABC vuông tại B · BC = 2a
+Đáp án  : d(C,(SAB)) = CB = 2a   ⇒ gán a = 1 ⇒ ĐÁP ÁN 2
+```
+
+`BC ⊥ AB` (vuông tại B) và `BC ⊥ SA` ⇒ `BC ⊥ (SAB)` ⇒ khoảng cách chính là
+`CB`. **Không phép tính nào sinh căn** — an toàn hơn ứng viên VietJack. `AB` và
+`SA` không được cho, và đáp án không phụ thuộc chúng.

@@ -94,6 +94,18 @@ DA_SOI: dict[str, list[dict]] = {
                    "khi mở nguồn: bản tóm tắt ghi công thức là SA·AB/SB, "
                    "ĐÚNG phải là SA·SB/AB — đáp án 12a/25 thì đúng. Đọc lời "
                    "giải GỐC, đừng tin bản tóm tắt"},
+        {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
+                  "B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, Câu 7 (trang PDF 298 "
+                  "= 'Page 57'); lời giải ở mục HDG tr 302–334 · "
+                  "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-"
+                  "trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "2",
+         "goi_y": "SA ⊥ (ABC) · △ABC vuông tại B · BC = 2a",
+         "vi_sao": "BC ⊥ AB và BC ⊥ SA ⇒ BC ⊥ (SAB) ⇒ d(C,(SAB)) = CB = 2a. "
+                   "Không phép tính nào sinh căn — an toàn nhất trong ô này",
+         "rui_ro": "thấp. AB và SA KHÔNG được cho — đáp án không phụ thuộc "
+                   "chúng (cùng dạng 'điểm tự do' đã chốt ở ứng viên trên). "
+                   "Đã đọc ẢNH TRANG để xác nhận `BC = 2a` không có căn"},
     ],
 }
 
