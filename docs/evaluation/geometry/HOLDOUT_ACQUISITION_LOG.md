@@ -822,3 +822,51 @@ Dữ kiện : SA ⊥ (ABC) · △ABC vuông tại B · BC = 2a
 `BC ⊥ AB` (vuông tại B) và `BC ⊥ SA` ⇒ `BC ⊥ (SAB)` ⇒ khoảng cách chính là
 `CB`. **Không phép tính nào sinh căn** — an toàn hơn ứng viên VietJack. `AB` và
 `SA` không được cho, và đáp án không phụ thuộc chúng.
+
+### 7i. ⛔ A12 — ứng viên VietJack BỊ LOẠI: nguồn tự khai `a√13`
+
+Đề, đọc từ [VietJack — Đề kiểm tra 15 phút Toán 11 Chương 3, **Đề số 2 · Câu 1**](https://vietjack.com/de-kiem-tra-lop-11/de-kiem-tra-15-phut-toan-11-chuong-3-hinh-hoc.jsp):
+
+> *"Cho hình chóp tam giác S.ABC với SA vuông góc với mp(ABC); SA = 3a. Diện
+> tích tam giác ABC bằng 2a²; BC = a. Khoảng cách từ S đến BC bằng bao nhiêu?"*
+
+✅ **Đúng là tự luận** — trang không liệt kê A/B/C/D, và ngay sau đề có *"Đáp án
+& Hướng dẫn giải"*. Điều kiện *dạng bài* thoả.
+
+⛔ Nhưng **lời giải in ở nguồn** viết:
+
+```
+SH² = SA² + AH² = 9a² + 4a² = 13a²   ⇒   SH = a√13
+```
+
+Số hạng `4a²` cho thấy nguồn dùng `AH = 2a`.
+
+#### Vì sao vẫn LOẠI, dù phép tính của người đề xuất mới là đúng
+
+`S_ABC = ½·BC·AH` ⇒ `AH = 2·2a²/a = 4a` ⇒ `SH = √(9a²+16a²) = 5a`. Phép tính ấy
+**đúng**; nguồn dùng `AH = 2a` tức đã bỏ mất hệ số `½`, một lỗi sách quen thuộc.
+
+Nhưng giao thức chấm bằng **đáp án CHÍNH THỨC CỦA NGUỒN**, không bằng đáp án ta
+tự tính — đó là toàn bộ nghĩa của *"oracle độc lập"*, và `kiem_pool` đòi
+`chua_chay_he: true` chính để chặn việc ta soạn đáp án cho chính mình. Nhận bài
+này với `ĐÁP ÁN 5` là **thay oracle của nguồn bằng oracle của mình**.
+
+Hai đường đều dẫn tới loại:
+
+| Nếu | Thì |
+|---|---|
+| lấy đáp án nguồn `a√13` | `REJECT_IRRATIONAL` — vô tỉ, ngoài ranh giới `Fraction` |
+| lấy đáp án ta tính `5a` | vi phạm *"không tự soạn đáp án"* — mất tính oracle độc lập |
+
+Thêm một dấu hiệu nữa phải nói ra: có **trang VietJack khác** cùng stem được
+cho là ghi `5a`. Nếu đúng thì cùng một nhà xuất bản đang cho **hai đáp án khác
+nhau** cho cùng một đề ⇒ oracle không chốt được. Một oracle không chốt được còn
+tệ hơn không có oracle.
+
+```
+A12 = REJECTED
+```
+
+⚠️ Bài học tổng quát, đáng ghi hơn cả ca này: **kiểm phép tính KHÔNG thay được
+kiểm nguồn.** Toán đúng mà nguồn ghi khác thì bài vẫn hỏng — và nó hỏng theo
+hướng khó thấy, vì chính vì ta tính ra số đẹp nên ta muốn tin.
