@@ -1658,11 +1658,28 @@ def test_goi_phat_DU_moi_o_va_DU_nguong(PK, SH, GOI):
     assert len(re.findall(r"^\[([AB]\d{2})\]", GOI, re.M)) == tong
 
 
-def test_goi_KHONG_prefill_de_bai(GOI):
-    """Bản máy đọc lại đặt sẵn ở ô đề chỉ mời người ta bấm qua."""
-    for dong in GOI.splitlines():
-        if re.match(r"^\[[AB]\d{2}\]", dong):
-            assert "GÕ NGUYÊN VĂN" in dong, f"đề bị prefill: {dong[:80]}"
+def test_de_chep_may_deu_co_MUC_RUI_RO_va_viec_can_kiem(PK):
+    """`PROTOCOL_AMENDMENT_PRESEAL` (2026-08-28) thay *"người gõ 100%"* bằng
+    *"máy chép + người xác minh theo rủi ro"*.
+
+    Luật cũ (cấm prefill đề) hết hiệu lực. Luật thay thế: đề chép máy chỉ hợp
+    lệ khi đi kèm **mức rủi ro** và **việc cần kiểm** — thiếu chúng thì người
+    xác minh không biết mở nguồn cho bài nào, và cơ chế QC thành lời khai suông.
+    """
+    for o, v in PK.DA_SOI.items():
+        for c in v:
+            assert c.get("de"), f"{o}: ứng viên không có đề"
+            assert c.get("rui_ro_muc") in ("LOW", "MEDIUM", "HIGH"), o
+            assert c.get("kiem_gi"), f"{o}: không nói người cần kiểm gì"
+
+
+def test_de_may_KHONG_doc_chac_thi_de_TRONG_va_gan_HIGH(PK):
+    """Máy không đọc chắc thì phải NÓI RA, không đoán cho đủ chỗ."""
+    for o, v in PK.DA_SOI.items():
+        for c in v:
+            if c["de"].lstrip().startswith("<"):
+                assert c["rui_ro_muc"] == "HIGH", \
+                    f"{o}: đề còn chỗ trống mà không gắn HIGH"
 
 
 def test_goi_prefill_dap_an_CHI_khi_da_soi_tan_trang(PK, GOI):
@@ -1705,32 +1722,44 @@ def test_goi_dung_dung_LOAI_DONG_cho_tung_tang(SH, GOI):
             assert "ĐÁP ÁN NGUỒN:" in kh and "NGOÀI PHỦ VÌ:" in kh, o
 
 
-def test_goi_TRONG_thi_ingest_doc_ra_0_bai_chu_khong_no(SH, VL, GOI):
-    """Gói phát dư nên khối chưa điền là bình thường giữa chừng, không phải lỗi."""
+def test_goi_CHUA_KY_thi_van_bi_chan(SH, VL, GOI):
+    """Sau amendment gói ĐÃ có đề chép máy, nhưng chưa ký thì vẫn phải chặn.
+
+    Chữ ký nay mang nghĩa *người xác minh nguồn đã đối chiếu HIGH_RISK và mẫu
+    QC* — bỏ nó đi là bỏ đúng thứ thay thế cho việc gõ tay.
+    """
     IN = _nap("ingest_holdout_batch")
     r = VL.soi(GOI, SH, IN)
-    assert r["bai"] == [] and r["bo_trong"] == len(re.findall(r"^\[", GOI, re.M))
-    assert any("NGƯỜI CHÉP" in d for d in r["loi"])
+    assert any("NGƯỜI CHÉP" in d for d in r["loi"]), "chưa ký mà không kêu"
+    assert r["bai"], "gói phải đã có đề chép máy, không còn rỗng"
 
 
 def _goi_dien_mot_bai(GOI: str) -> str:
-    t = GOI.replace("NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>",
-                    "NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test")
-    return t.replace(
-        "[A14] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>",
-        "[A14] Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, "
-        "AB = a, AC = 2a. Cạnh bên SA vuông góc với mặt phẳng đáy và SA = 2a. "
-        "Tính thể tích khối chóp S.ABC.", 1)
+    # Ký bằng cách thay CẢ DÒNG, không thay một chuỗi cố định: nội dung mẫu
+    # của dòng chữ ký đã đổi một lần theo amendment và sẽ còn đổi nữa.
+    t = re.sub(r"^NGƯỜI CHÉP:.*$",
+               "NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test",
+               GOI, count=1, flags=re.M)
+    # Sau amendment, khối A14 đã mang đề chép máy — chỉ còn thiếu chữ ký.
+    return t
 
 
 def test_khoi_DA_DIEN_di_qua_duoc_ca_ba_cong(SH, VL, GOI):
     IN = _nap("ingest_holdout_batch")
     r = VL.soi(_goi_dien_mot_bai(GOI), SH, IN)
     assert r["loi"] == [] and r["trung"] == [], (r["loi"], r["trung"])
-    assert len(r["bai"]) == 1 and r["bai"][0]["o"] == "A14"
-    c = IN.thanh_case(r["bai"][0], r["nguoi"], SH)
+    # Sau amendment gói đã chép máy nhiều khối, nên KHÔNG còn đúng một bài.
+    # Cái cần khoá vẫn là: khối A14 đầu tiên đi qua ĐỦ BA cổng và ra đúng
+    # đơn vị oracle — số khối chỉ là bối cảnh.
+    a14 = [b for b in r["bai"] if b["o"] == "A14"]
+    assert a14, "gói phải có ít nhất một khối A14 đã chép"
+    c = IN.thanh_case(a14[0], r["nguoi"], SH)
     assert SH.check_capability_boundary(c) == [] and SH.kiem_pool([c]) == []
     assert c["oracle_result"] == {"volume": "2/3"}
+    # Và mọi khối đã chép khác cũng phải qua được hai cổng tất định.
+    hong = [b["ma"] for b in r["bai"]
+            if SH.check_capability_boundary(IN.thanh_case(b, r["nguoi"], SH))]
+    assert not hong, f"khối chép máy không qua cổng năng lực: {hong}"
 
 
 def test_SIEU_DU_LIEU_cua_goi_khong_lot_vao_problem_text(SH, VL, GOI):
@@ -1750,15 +1779,12 @@ def test_de_MAT_ky_hieu_dac_trung_thi_canh_bao(SH, VL, GOI, o, thieu):
     # Điền TRONG ĐÚNG khối của ô ấy: thay file-wide thì trúng khối đầu tiên
     # của file (A01), khối đích vẫn còn chỗ trống nên bị bỏ, và test xanh/đỏ
     # vì lý do khác hẳn thứ nó định đo.
-    i = t.index(f"[{o}] <GÕ")
-    j = t.index("\n#", i)
-    kh = (t[i:j]
-          .replace("<GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>",
-                   "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a và cạnh "
-                   "bên SA bằng 2a. Hỏi kết luận nào sau đây là đúng?")
-          .replace("<sách · trang · câu>   hoặc   <url>", "x · https://x")
-          .replace("<đáp án của nguồn, dạng phân số hoặc true/false>", "true"))
-    r = VL.soi(t[:i] + kh + t[j:], SH, IN)
+    # Thay ĐÚNG dòng đề của khối đích bằng một đề thiếu ký hiệu đặc trưng.
+    i = t.index(f"[{o}] ")
+    j = t.index("\n", i)
+    thay = (f"[{o}] Cho hình chóp S.ABCD có đáy là hình vuông cạnh a và cạnh "
+            "bên SA bằng 2a. Hỏi kết luận nào sau đây là đúng?")
+    r = VL.soi(t[:i] + thay + t[j:], SH, IN)
     assert any(thieu in c for c in r["canh"]), (thieu, r["canh"])
 
 
@@ -1813,8 +1839,8 @@ def test_validator_KHONG_dem_khoi_reserve_thanh_viec_phai_lam(PK, VL, SH, GOI):
                     "NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test")
     r = VL.soi(t, SH, IN)
     ung_vien = sum(len(v) for v in PK.DA_SOI.values())
-    assert len(r["can_chep"]) == ung_vien, \
-        f"cần chép {len(r['can_chep'])}, phải bằng số ứng viên {ung_vien}"
+    assert len(r["can_chep"]) + len(r["bai"]) == ung_vien, \
+        "đã chép + còn phải chép phải bằng ĐÚNG số ứng viên"
     assert r["reserve"] == sum(PK.PHAT.values()) - ung_vien
     assert r["reserve"] > 0, "gói phải còn khối dự phòng"
 

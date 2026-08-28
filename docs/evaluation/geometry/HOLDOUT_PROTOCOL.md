@@ -322,3 +322,60 @@ HOLDOUT_SEAL.json  CHƯA CÓ
 - [Chuyên đề hình học không gian ôn thi tốt nghiệp THPT 2025, giải chi tiết (Thư Viện Học Liệu)](https://thuvienhoclieu.com/chuyen-de-hinh-hoc-khong-gian-on-thi-tot-nghiep-thpt-giai-chi-tiet/)
 - [Chuyên đề hình học không gian ôn thi tốt nghiệp THPT (HOCMAI)](https://hocmai.vn/kho-tai-lieu/read.php?id=17710)
 - [100 bài tập Toán 11 chương Quan hệ vuông góc, có đáp án (VietJack)](https://vietjack.com/toan-11-ct/trac-nghiem-chuong-8-quan-he-vuong-goc-trong-khong-gian.jsp)
+
+---
+
+## PROTOCOL_AMENDMENT_PRESEAL — 2026-08-28
+
+Thay yêu cầu **"người chép tự gõ nguyên văn toàn bộ đề"** bằng
+**chép máy từ nguồn đã dẫn + xác minh của người theo rủi ro**.
+
+> **Lý do**: giảm công cơ học mà **không** đổi xuất xứ, tính độc lập của
+> oracle, tính bất biến trước niêm phong, hay các cơ chế chống nhiễm.
+
+Ghi ở đây **trước** khi niêm phong, đúng lệ khai sai lệch tiền đăng ký.
+
+### Cái gì đổi, cái gì KHÔNG
+
+| | Trước | Sau |
+|---|---|---|
+| `problem_text` | người gõ 100% | **máy chép** từ nguồn đã dẫn |
+| Xác minh | ngầm định qua hành vi gõ | **tường minh, theo rủi ro** |
+| Chữ ký | mỗi lô một lần | một lần, kèm **cam kết** nói rõ đã kiểm gì |
+
+**KHÔNG đổi** — ba bảo đảm thật của tính held-out:
+① đề đến từ **nguồn công khai có trích dẫn**;
+② **đáp án là của nguồn**, không do người soạn tính;
+③ tập đo **đóng băng và băm** trước khi model chạy.
+
+### Vì sao "gõ tay" không phải bảo đảm
+
+Nó bảo đảm **chống chép sai**, không bảo đảm **chống nhiễm**. Chống nhiễm nằm ở
+① ② ③. Đổi lại, chống chép sai nay do **kiểm theo rủi ro** đảm nhiệm — mạnh hơn
+ở chỗ nó **nhắm đúng** những bài dễ sai, thay vì rải đều công sức lên 42 bài.
+
+### Chép máy nghĩa là gì ở đây
+
+⚠️ **KHÔNG phải trích text PDF.** Đo trong kho: trích text các tài liệu này cho
+`⊥` 204 lần nhưng `√` **0 lần** — mọi bài vô tỉ hiện ra như hữu tỉ (§7g của
+`HOLDOUT_ACQUISITION_LOG`). Chép máy ở đây là **dựng ảnh trang rồi đọc**, hoặc
+HTML hiển thị đủ ký hiệu. Chỗ máy không đọc chắc thì để trống và gắn `HIGH`.
+
+### Ba mức rủi ro và nghĩa vụ kiểm
+
+| Mức | Khi nào | Người phải làm |
+|---|---|---|
+| `HIGH` | có `√` · phân số phức · dấu phẩy trên · nguồn từng nghi ngờ · trích dẫn không tra ra · công thức là ảnh · tên điểm từng bị rơi | **mở nguồn đối chiếu 100%** |
+| `MEDIUM` | có số liệu, ký hiệu mặt phẳng, chỉ số dưới | nằm trong **mẫu QC** |
+| `LOW` | HTML sạch, bài chứng minh, không số liệu | nằm trong **mẫu QC** |
+
+**Mẫu QC**: toàn bộ `HIGH` + khoảng **20%** số khối `LOW`/`MEDIUM`, tối thiểu 8
+khối. Phát hiện một lỗi chép trong mẫu ⇒ **mở rộng** sang cả họ nguồn của nó.
+
+### Câu duy nhất được viết trong báo cáo
+
+> *"Tập held-out được chép máy từ các nguồn đã trích dẫn. Các trường hợp rủi ro
+> cao và một mẫu kiểm chất lượng đã được đối chiếu độc lập với trang nguồn
+> trước khi niêm phong."*
+
+❌ **Không được viết** *"42/42 do người kiểm"* nếu thực tế không phải vậy.
