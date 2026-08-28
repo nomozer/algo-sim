@@ -556,3 +556,58 @@ lớp này phổ biến trong đề thi và nằm ngoài ranh giới **kể cả
 
 > Bản đã tải nằm ở scratchpad của phiên, **không** commit: nó là tài liệu có
 > bản quyền và không phải bằng chứng của lượt đo. Tải lại bằng url ở §2.
+
+---
+
+## 7. Rà nguồn cho **A11 · A12** (2026-08-28) — và vì sao khe hở là CẤU TRÚC
+
+Lượt này chỉ rà đúng hai ô còn `SOURCE_GAP`. Ghi lại **cái đã loại**, để lượt
+sau không tìm lại chính chúng.
+
+### 7a. Đã kiểm, đã loại
+
+| Nguồn | Cỡ | Loại vì |
+|---|--:|---|
+| *Chuyên đề khoảng cách từ điểm đến mặt phẳng* — Trần Mạnh Tường ([toanmath](https://toanmath.com/2020/08/chuyen-de-khoang-cach-tu-diem-den-mat-phang-tran-manh-tuong.html)) | 15 tr | **15 câu trắc nghiệm** — 7B chỉ nhận tự luận |
+| *Bài toán khoảng cách trong không gian* ([toanmath](https://toanmath.com/2022/07/bai-toan-khoang-cach-trong-khong-gian.html)) | 63 tr | **trắc nghiệm tự luyện** |
+| Slaught & Lennes, *Solid Geometry with Problems and Applications* ([Gutenberg 29807](https://www.gutenberg.org/files/29807/29807-pdf.pdf)) | 242 tr | tải về, **quét toàn văn**: chỉ **9 trang** nhắc *"distance from … plane/line"*, và không trang nào là bài A11/A12 — chúng là **quỹ tích**, **hình nón**, **hình cầu**, **chóp cụt**. Mặt cong ⇒ ngoài ranh giới |
+
+Kho sàng của các wave trước (`trong_ranh_gioi.json` 8 mục, `screened.json` 26
+mục) cũng **không có mục A11/A12 nào**, và hầu hết là trắc nghiệm.
+
+### 7b. Vì sao — đây KHÔNG phải thất bại tìm kiếm
+
+Trong cấu hình chuẩn của SGK (`SA ⊥ (ABCD)`, `AB ⊥ BC`), khoảng cách A11 rơi vào
+đúng một công thức:
+
+```
+BC ⊥ AB và BC ⊥ SA  ⇒  BC ⊥ (SAB)  ⇒  (SBC) ⊥ (SAB), giao tuyến SB
+d(A,(SBC)) = d(A, SB) = SA·AB / √(SA² + AB²)
+```
+
+⇒ **hữu tỉ ⟺ `(SA, AB)` là một cặp cạnh góc vuông Pythagore.** Và A12 (điểm →
+đường) rơi vào **cùng** công thức ấy.
+
+Cặp Pythagore đầu tiên: `3–4` (→ `12/5`) · `6–8` (→ `24/5`) · `5–12` (→ `60/13`)
+· `8–15` (→ `120/17`) · `9–12` (→ `36/5`).
+
+Nhưng SGK gần như luôn đặt `SA = a`, `SA = a√2`, `SA = a√3`, đáy hình vuông cạnh
+`a` — mọi lựa chọn ấy cho `d` **vô tỉ**. Ví dụ điển hình gặp trong lượt rà:
+`ABCD` vuông cạnh `a`, `SA = a√3` ⇒ `d = a√3/2`.
+
+> **Khe hở A11/A12 là tính chất của TỔNG THỂ ĐỀ, không phải của lượt tìm.**
+> Lớp bài hữu tỉ tồn tại và mô tả được bằng một câu, nhưng nó **hiếm trong tài
+> liệu phổ thông** vì tác giả chọn số cho đẹp hình, không chọn cho đẹp `d`.
+
+### 7c. Còn lại một đầu mối chưa kiểm
+
+Prasolov & Sharygin, *Problems in Plane and Solid Geometry, v.2 — Solid
+Geometry*: **560 bài kèm lời giải đầy đủ**, hình học **tổng hợp** (không toạ
+độ). Chưa tải được ở lượt này. Đây là chỗ đáng thử tiếp theo, và nếu dùng thì
+rơi vào **MODE A/B** của §5 (tiếng Anh ⇒ hoặc người dịch trước khi seal, hoặc
+đánh dấu `external_challenge` và **không** gộp vào chỉ số chính).
+
+⚠️ Tài liệu A-Level / IB **không** lấp được A11/A12: chương trình ấy dạy khoảng
+cách 3D bằng **vectơ và toạ độ cho sẵn**, mà đó đúng là thứ ô **B04** loại khỏi
+tầng A (*"Oxyz cho sẵn toạ độ ⇒ mô hình không phải tự đặt hệ trục"*). Tìm ở đó
+sẽ ra bài cho B04, không ra bài cho A11.

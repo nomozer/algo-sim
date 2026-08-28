@@ -88,11 +88,15 @@ _GOI_Y_O: dict[str, str] = {
     "A10": "⚠️ Đường–MẶT trả **`sin²`**, KHÔNG phải `cos²`. Chép nhầm thì chấm "
            "sai mà không cổng nào báo. Đáp án sách hay cho góc α ⇒ ghi `sin²α`.",
     "A11": "Khoảng cách điểm → MẶT. Chỉ nhận khi ra phân số HỮU TỈ.\n"
-           "Mẹo: d = |…| / √(a²+b²+c²) — hữu tỉ khi pháp tuyến có chuẩn hữu "
-           "tỉ,\n"
-           "tức các cạnh góc vuông làm thành bộ ba Pythagore (3-4-5, 6-8-10, "
-           "5-12-13).",
-    "A12": "Khoảng cách điểm → ĐƯỜNG. Cùng luật hữu tỉ như A11.",
+           "Trong cấu hình chuẩn (SA ⊥ đáy, AB ⊥ BC) thì BC ⊥ (SAB), nên\n"
+           "    d(A,(SBC)) = SA·AB / √(SA² + AB²)\n"
+           "⇒ HỮU TỈ ⟺ (SA, AB) là cặp cạnh góc vuông PYTHAGORE.\n"
+           "CHỮ KÝ CẦN TÌM — liếc hai số rồi quyết trong một giây:\n"
+           "    3–4 → 12/5 · 6–8 → 24/5 · 5–12 → 60/13 · 9–12 → 36/5\n"
+           "BỎ NGAY nếu thấy: SA = a · a√2 · a√3, hay đáy vuông cạnh a —\n"
+           "chúng cho d vô tỉ, và chúng chiếm gần hết tài liệu phổ thông.",
+    "A12": "Khoảng cách điểm → ĐƯỜNG. CÙNG một công thức, cùng chữ ký\n"
+           "Pythagore như A11: d(A,SB) = SA·AB / √(SA² + AB²).",
     "A13": "Cần khối **LỒI**. Đề thiết diện hay kèm hình vẽ — bỏ bài nào phải "
            "nhìn hình mới hiểu.",
     "A14": "Thể tích. Gán `a = 1` rồi chép phân số (`2a³/3` → `2/3`).",

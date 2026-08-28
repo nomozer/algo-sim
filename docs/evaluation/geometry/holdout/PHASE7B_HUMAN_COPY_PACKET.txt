@@ -281,7 +281,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 
 
 # ═══════════════════════════════════════════════════════════════════════
-#  NGUỒN 3 — ⛔ CHƯA CÓ NGUỒN — phải tự tìm bài `distance` ra hữu tỉ
+#  NGUỒN 3 — ⛔ SOURCE_GAP — tìm theo CHỮ KÝ PYTHAGORE (3–4, 6–8, 5–12); xem HOLDOUT_ACQUISITION_LOG §7
 #  2 ô · 6 khối · ô: A11 A12
 # ═══════════════════════════════════════════════════════════════════════
 
@@ -290,8 +290,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     ANSWER     : exact_fraction → nghĩa vụ `distance`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : Khoảng cách điểm → MẶT. Chỉ nhận khi ra phân số HỮU TỈ.
-#                  Mẹo: d = |…| / √(a²+b²+c²) — hữu tỉ khi pháp tuyến có chuẩn hữu tỉ,
-#                  tức các cạnh góc vuông làm thành bộ ba Pythagore (3-4-5, 6-8-10, 5-12-13).
+#                  Trong cấu hình chuẩn (SA ⊥ đáy, AB ⊥ BC) thì BC ⊥ (SAB), nên
+#                      d(A,(SBC)) = SA·AB / √(SA² + AB²)
+#                  ⇒ HỮU TỈ ⟺ (SA, AB) là cặp cạnh góc vuông PYTHAGORE.
+#                  CHỮ KÝ CẦN TÌM — liếc hai số rồi quyết trong một giây:
+#                      3–4 → 12/5 · 6–8 → 24/5 · 5–12 → 60/13 · 9–12 → 36/5
+#                  BỎ NGAY nếu thấy: SA = a · a√2 · a√3, hay đáy vuông cạnh a —
+#                  chúng cho d vô tỉ, và chúng chiếm gần hết tài liệu phổ thông.
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
 #     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
@@ -303,8 +308,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     ANSWER     : exact_fraction → nghĩa vụ `distance`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : Khoảng cách điểm → MẶT. Chỉ nhận khi ra phân số HỮU TỈ.
-#                  Mẹo: d = |…| / √(a²+b²+c²) — hữu tỉ khi pháp tuyến có chuẩn hữu tỉ,
-#                  tức các cạnh góc vuông làm thành bộ ba Pythagore (3-4-5, 6-8-10, 5-12-13).
+#                  Trong cấu hình chuẩn (SA ⊥ đáy, AB ⊥ BC) thì BC ⊥ (SAB), nên
+#                      d(A,(SBC)) = SA·AB / √(SA² + AB²)
+#                  ⇒ HỮU TỈ ⟺ (SA, AB) là cặp cạnh góc vuông PYTHAGORE.
+#                  CHỮ KÝ CẦN TÌM — liếc hai số rồi quyết trong một giây:
+#                      3–4 → 12/5 · 6–8 → 24/5 · 5–12 → 60/13 · 9–12 → 36/5
+#                  BỎ NGAY nếu thấy: SA = a · a√2 · a√3, hay đáy vuông cạnh a —
+#                  chúng cho d vô tỉ, và chúng chiếm gần hết tài liệu phổ thông.
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
 #     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
@@ -316,8 +326,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     ANSWER     : exact_fraction → nghĩa vụ `distance`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : Khoảng cách điểm → MẶT. Chỉ nhận khi ra phân số HỮU TỈ.
-#                  Mẹo: d = |…| / √(a²+b²+c²) — hữu tỉ khi pháp tuyến có chuẩn hữu tỉ,
-#                  tức các cạnh góc vuông làm thành bộ ba Pythagore (3-4-5, 6-8-10, 5-12-13).
+#                  Trong cấu hình chuẩn (SA ⊥ đáy, AB ⊥ BC) thì BC ⊥ (SAB), nên
+#                      d(A,(SBC)) = SA·AB / √(SA² + AB²)
+#                  ⇒ HỮU TỈ ⟺ (SA, AB) là cặp cạnh góc vuông PYTHAGORE.
+#                  CHỮ KÝ CẦN TÌM — liếc hai số rồi quyết trong một giây:
+#                      3–4 → 12/5 · 6–8 → 24/5 · 5–12 → 60/13 · 9–12 → 36/5
+#                  BỎ NGAY nếu thấy: SA = a · a√2 · a√3, hay đáy vuông cạnh a —
+#                  chúng cho d vô tỉ, và chúng chiếm gần hết tài liệu phổ thông.
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
 #     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
@@ -328,7 +343,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : rational_distance
 #     ANSWER     : exact_fraction → nghĩa vụ `distance`
 #     THANG CHẤM : oracle + ③a/③b/⑤
-#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. Cùng luật hữu tỉ như A11.
+#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. CÙNG một công thức, cùng chữ ký
+#                  Pythagore như A11: d(A,SB) = SA·AB / √(SA² + AB²).
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
 #     ⛔ SOURCE_GAP_A12 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A12] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
@@ -339,7 +355,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : rational_distance
 #     ANSWER     : exact_fraction → nghĩa vụ `distance`
 #     THANG CHẤM : oracle + ③a/③b/⑤
-#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. Cùng luật hữu tỉ như A11.
+#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. CÙNG một công thức, cùng chữ ký
+#                  Pythagore như A11: d(A,SB) = SA·AB / √(SA² + AB²).
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
 #     ⛔ SOURCE_GAP_A12 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A12] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
@@ -350,7 +367,8 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : rational_distance
 #     ANSWER     : exact_fraction → nghĩa vụ `distance`
 #     THANG CHẤM : oracle + ③a/③b/⑤
-#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. Cùng luật hữu tỉ như A11.
+#     TÌM BÀI    : Khoảng cách điểm → ĐƯỜNG. CÙNG một công thức, cùng chữ ký
+#                  Pythagore như A11: d(A,SB) = SA·AB / √(SA² + AB²).
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
 #     ⛔ SOURCE_GAP_A12 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A12] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>

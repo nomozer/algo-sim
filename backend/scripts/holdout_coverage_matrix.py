@@ -104,10 +104,13 @@ O_NGUON: dict[str, str] = {
        for o in ("A01", "A02", "A03", "A04", "A05", "A13")},
     **{o: "Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm)"
        for o in ("A06", "A07", "A08", "A09", "A10")},
-    # Chưa tra được nguồn nào có sẵn bài `distance` ra HỮU TỈ — `SOURCE_GAP`.
-    # Ghi thành câu chứ không để `—`: gói chép tay in chuỗi này làm tiêu đề
-    # nhóm nguồn, và một tiêu đề `—` không nói người đọc phải làm gì.
-    **{o: "⛔ CHƯA CÓ NGUỒN — phải tự tìm bài `distance` ra hữu tỉ"
+    # `SOURCE_GAP` — và là khe hở CẤU TRÚC, không phải thiếu lượt tìm: `d` hữu
+    # tỉ ⟺ hai cạnh góc vuông là cặp Pythagore, mà tài liệu phổ thông gần như
+    # luôn chọn `a`, `a√2`, `a√3`. Rà 2026-08-28 loại 3 nguồn — chi tiết ở
+    # `HOLDOUT_ACQUISITION_LOG §7`. Ghi thành câu chứ không để `—`: gói chép
+    # tay in chuỗi này làm tiêu đề nhóm nguồn.
+    **{o: "⛔ SOURCE_GAP — tìm theo CHỮ KÝ PYTHAGORE (3–4, 6–8, 5–12); "
+          "xem HOLDOUT_ACQUISITION_LOG §7"
        for o in ("A11", "A12")},
     "A14": "Khối đa diện & thể tích, tr 80–94 (2 ứng viên đã soi)",
     **{o: "bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI"
