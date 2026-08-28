@@ -6,7 +6,9 @@
 ```
 M1 (accepted ≥ 1):   CHƯA ĐẠT
 accepted:            0
-rejected:            0   (chưa nhập được bài nào để mà loại)
+rejected:            2   (`hp_a11_001`, `hp_a14_cand_001` — ngoài ranh giới)
+needs_manual_review: 1   (`hp_a14_cand_002` — dạng trắc nghiệm)
+tổng case trong pool: 3   (không case nào đi qua `ingest` — đều soạn tay ở pha trước)
 READY_FOR_PHASE7B:   NO
 ```
 
@@ -142,3 +144,92 @@ NGƯỜI CHÉP: <tên bạn> · 2026-08-28 · Khối đa diện & thể tích, t
 
 Ba dòng còn lại (`NGUỒN`, `ĐÁP ÁN`) đã xác định chắc chắn; dòng duy nhất cần
 bạn đọc nguồn để viết là **đề bài**.
+
+---
+
+## 6. PHÂN LOẠI BLOCKER — bốn nhóm, chỉ nhóm A tôi tự xử
+
+Chia theo **ai gỡ được**, không theo mức nghiêm trọng. Đây là điểm mấu chốt:
+mọi blocker còn lại đều **không** thuộc kho mã, nên viết thêm code không nhích
+được cái nào.
+
+| Nhóm | Nghĩa | Số blocker | Tôi xử được? |
+|---|---|:-:|:-:|
+| **A** | lỗi mã / tài liệu trong repo | **3** | ✅ **đã xử — mục 6a** |
+| **B** | thiếu **dữ liệu** người phải chép | **1** | ⛔ chỉ người mở nguồn |
+| **C** | chờ **quyết định** (người / GVHD) | **3** | ⛔ không được tự quyết |
+| **D** | môi trường / hạ tầng | **1** | ⚙️ theo thứ tự, đúng lúc |
+
+### 6a. Nhóm A — đã đóng ở lượt này
+
+| # | Triệu chứng | Cách xử |
+|---|---|---|
+| A‑1 | `PHASE7B_CHECKLIST §A` ghi **`1/40 bài · 1/20 ô`** — số của lượt cũ, cao hơn thực tế | sửa thành `0/40 · 0/20`, khớp `--chi-kiem-pool` |
+| A‑2 | Checklist trỏ *"nguồn trạng thái sống"* sang `PHASE7B_READINESS.md` — file **gõ tay, đông cứng ở `641ac5f`**, chỉ khác file sinh ra đúng một chữ `_REPORT` | trỏ lại sang `PHASE7B_READINESS_REPORT.md` (sinh bằng script) + dán cảnh báo phân biệt hai file |
+| A‑3 | Kế hoạch 40 bài thiếu **`oracle type`** và **chỉ số sẽ chấm** từng ô | dựng lại bảng `CANDIDATE_REVIEW §3`, tách tầng A / tầng B, **đối chiếu máy** với `NANG_LUC` |
+
+⚠️ A‑1 và A‑2 cùng một giống: **tài liệu báo tốt hơn sự thật.** A‑1 khai dư một
+bài không tồn tại; A‑2 đưa người đọc tới ảnh chụp cũ mà tưởng là trạng thái nay.
+Cả hai đều **không** làm test đỏ — không cổng máy nào canh số trong bảng
+markdown — nên chúng chỉ lộ khi có người đối chiếu tay, và đó là lý do ghi ra
+đây thay vì sửa im lặng.
+
+### 6b. Nhóm B — một blocker, và nó là **cái duy nhất** chặn M1
+
+```
+B‑1  batch_001.txt còn 11 chỗ trống; dòng NGƯỜI CHÉP chưa ký
+     ⇒ ingest từ chối cả lô  ⇒ accepted = 0  ⇒ M1 CHƯA ĐẠT
+```
+
+**Tác động**: chặn dây chuyền tại chặng **đầu tiên**. `pool → scaffold → freeze
+→ coverage → seal` đều đã chạy được, nhưng không có gì để chảy qua.
+
+**Việc phải làm**: đúng **một** dòng — gõ lại nguyên văn `Câu 1 trang 80` rồi ký
+`NGƯỜI CHÉP`. Ba dòng còn lại (`NGUỒN`, `ĐÁP ÁN: 2/3`) đã xác định bằng soi
+nguồn. Khuôn sẵn ở `holdout/batch_001.candidates.txt`.
+
+> Cổng chữ ký **cố ý không tự động hoá được**. Nó không kiểm *"có text không"*
+> mà kiểm *"có người chịu trách nhiệm text này không"* — máy không ký thay được,
+> và nếu tôi ký thì tập held-out mất đúng cái tính chất làm nó là held-out.
+
+### 6c. Nhóm C — chờ quyết định, **không** chờ code
+
+| # | Quyết định | Ai | Chặn cái gì |
+|---|---|---|---|
+| C‑1 | **Seed** — một số nguyên | **GVHD** | bước `seal`. Người đo chọn seed thì chọn được cả tập ⇒ tự huỷ tính held-out |
+| C‑2 | **Ngân sách** 360 logic / 480 HTTP (`k=3`) | người dùng | bước chạy `k` lượt — quota thật |
+| C‑3 | **A11 · A12**: chỉ nhận `distance` hữu tỉ, hay mở ô tầng B cho lớp vô tỉ | người dùng | 4/40 bài. **Không chặn 36 bài kia** |
+
+⚠️ C‑3 nếu chọn hướng "mở ô tầng B" thì `N` đổi khỏi 20 ⇒ **phải chốt lại ngân
+sách C‑2**. Hai quyết định này dính nhau, quyết C‑3 trước.
+
+### 6d. Nhóm D — hạ tầng, đúng thứ tự thì không phải blocker
+
+```
+D‑1  runtime_doctor → RUNTIME_STALE_IMAGE
+```
+
+**Không phải lỗi.** Nó so **git SHA**, nên *mọi* commit — kể cả commit chỉ sửa
+tài liệu, như chính lượt này — làm image cũ đi. Vì thế nó nằm ở
+`CHECKLIST §B` bước áp chót: dựng lại image **sau commit cuối**, ngay trước
+`seal`. Dọn nó bây giờ là dọn một thứ sẽ bẩn lại ngay.
+
+---
+
+## 7. Vì sao lượt này không sinh được báo cáo "chuỗi đã chạy"
+
+Phase yêu cầu chứng minh `Natural Language → Geometry Understanding →
+Construction → Verification → Evaluation` chạy trên **một ca thật**. Không sinh
+được, và lý do phải nói thẳng: **chưa có ca thật nào.** Chuỗi ấy khởi động từ
+`problem_text`, mà `problem_text` là thứ duy nhất máy không được phép tự tạo.
+
+Cái **đã** chứng minh được, bằng chạy thật chứ không bằng lập luận:
+
+| | Bằng chứng |
+|---|---|
+| dây chuyền nạp liệu chạy hết chặng | `run_m1_pipeline.py` dừng đúng chặng đầu, in `FAILED_STAGE` · `REASON` · `FIX_REQUIRED` |
+| không chặng nào qua **im lặng** | test tiêm lỗi ở **bốn chặng** (`HOLDOUT_EXPANSION_PLAN §1`); `pytest tests/geometry -q` → **949 passed, 2 skipped** |
+| bảng ô ↔ oracle **khớp máy** | đối chiếu `CANDIDATE_REVIEW §3` với `NANG_LUC` ⇒ `KHỚP` |
+| hệ được đo **không đổi** từ 7A.2 | `freeze --verify` → exit 0, `7ab25683ce4e4e4d…`, **144 file** |
+
+Nói cách khác: **bộ đo xong, hệ đo đóng băng, thiếu vật đo.**
