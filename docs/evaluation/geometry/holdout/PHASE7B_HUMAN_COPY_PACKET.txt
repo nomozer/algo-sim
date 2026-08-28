@@ -298,10 +298,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #                  BỎ NGAY nếu thấy: SA = a · a√2 · a√3, hay đáy vuông cạnh a —
 #                  chúng cho d vô tỉ, và chúng chiếm gần hết tài liệu phổ thông.
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
-#     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
+#     ĐÃ SOI     : (SAB) ⊥ đáy · △SAB vuông tại S · AB = a · SA = 3a/5 ⇒ SB = 4a/5 (bộ ba 3-4-5 thu nhỏ a/5)
+#     VÌ SAO CHỌN: d = SA·SB/AB = 12a/25 — HỮU TỈ. Toạ độ cũng hữu tỉ: A(0,0,0) B(a,0,0) S(9a/25, 0, 12a/25)
+#     RỦI RO     : HAI điều phải tự kiểm khi mở nguồn: (1) đề đặt tên C nhưng KHÔNG ràng buộc vị trí C — d không phụ thuộc C, nhưng hệ vẫn phải đặt C ở đâu đó; (2) trang tóm tắt ghi công thức là SA·AB/SB, ĐÚNG phải là SA·SB/AB — đáp án 12a/25 thì đúng. Đọc lời giải gốc, đừng tin bản tóm tắt
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: VietJack — Khoảng cách lớp 11 (Lý thuyết Toán 11 Kết nối tri thức), **Ví dụ 2** · https://vietjack.com/toan-11-kn/ly-thuyet-bai-26-khoang-cach.jsp
+      ĐÁP ÁN: 12/25
 
 #   ─── A11 (2/3) · Khoảng cách từ điểm đến mặt phẳng ───────────────
 #     CAPABILITY : rational_distance
@@ -316,7 +319,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #                  BỎ NGAY nếu thấy: SA = a · a√2 · a√3, hay đáy vuông cạnh a —
 #                  chúng cho d vô tỉ, và chúng chiếm gần hết tài liệu phổ thông.
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
-#     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: <sách · trang · câu>   hoặc   <url>
       ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
@@ -334,7 +336,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #                  BỎ NGAY nếu thấy: SA = a · a√2 · a√3, hay đáy vuông cạnh a —
 #                  chúng cho d vô tỉ, và chúng chiếm gần hết tài liệu phổ thông.
 #     RÀNG BUỘC  : CHỈ `distance` hữu tỉ (chốt 2026-08-28). Bài mà khoảng cách ra vô tỉ thì LOẠI, không chuyển sang ô tầng B — số ô giữ nguyên 20.
-#     ⛔ SOURCE_GAP_A11 — chưa tra được nguồn nào có sẵn bài loại này. Bỏ qua được.
 [A11] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: <sách · trang · câu>   hoặc   <url>
       ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>

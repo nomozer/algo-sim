@@ -76,10 +76,34 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "trung bình — SA là SUY RA, phải xác nhận lời giải nguồn "
                    "cho V = 8a³/3 chứ đừng tự tính"},
     ],
+    # Tìm được 2026-08-28 sau khi rà 3 genre nguồn — xem
+    # `HOLDOUT_ACQUISITION_LOG §7e`. Đây là ứng viên A11 DUY NHẤT có đáp án
+    # hữu tỉ trong toàn bộ lượt rà.
+    "A11": [
+        {"nguon": "VietJack — Khoảng cách lớp 11 (Lý thuyết Toán 11 Kết nối "
+                  "tri thức), **Ví dụ 2** · "
+                  "https://vietjack.com/toan-11-kn/ly-thuyet-bai-26-khoang-cach.jsp",
+         "dap_an": "12/25",
+         "goi_y": "(SAB) ⊥ đáy · △SAB vuông tại S · AB = a · SA = 3a/5 "
+                  "⇒ SB = 4a/5 (bộ ba 3-4-5 thu nhỏ a/5)",
+         "vi_sao": "d = SA·SB/AB = 12a/25 — HỮU TỈ. Toạ độ cũng hữu tỉ: "
+                   "A(0,0,0) B(a,0,0) S(9a/25, 0, 12a/25)",
+         "rui_ro": "HAI điều phải tự kiểm khi mở nguồn: (1) đề đặt tên C "
+                   "nhưng KHÔNG ràng buộc vị trí C — d không phụ thuộc C, "
+                   "nhưng hệ vẫn phải đặt C ở đâu đó; (2) trang tóm tắt ghi "
+                   "công thức là SA·AB/SB, ĐÚNG phải là SA·SB/AB — đáp án "
+                   "12a/25 thì đúng. Đọc lời giải gốc, đừng tin bản tóm tắt"},
+    ],
 }
 
-#: Ô chưa tra được nguồn nào — `PHASE 6` đòi đánh dấu chứ không đổi giao thức.
-SOURCE_GAP = ("A11", "A12")
+#: Ô chưa tra được nguồn nào — đánh dấu chứ không đổi giao thức.
+#:
+#: **A11 đã ra khỏi danh sách này (2026-08-28)** — tìm được đúng một ứng viên
+#: hữu tỉ, xem `DA_SOI["A11"]`. A12 thì khác về BẢN CHẤT chứ không phải khác về
+#: công sức tìm: `d(điểm→mặt) = SA·SB/AB` chỉ cần MỘT trùng hợp Pythagore, còn
+#: `d(điểm→đường)` trong không gian ra `√(tổng bình phương)` nên cần trùng hợp
+#: Pythagore LẦN HAI lồng vào. Chi tiết: `HOLDOUT_ACQUISITION_LOG §7e`.
+SOURCE_GAP = ("A12",)
 
 #: Luật sàng nhanh, dán ngay chỗ cần dùng. Luật ĐỦ chỉ có một, ở `_MO_DAU`.
 _GOI_Y_O: dict[str, str] = {

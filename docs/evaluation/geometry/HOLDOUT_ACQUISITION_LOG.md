@@ -653,3 +653,63 @@ Prasolov & Sharygin v.2 (560 bài) **không tải được**: archive.org chỉ 
 đề HSG tỉnh, đề ôn thi tốt nghiệp phần tự luận — vì phần trắc nghiệm là chỗ
 7B loại, còn phần tự luận thì cùng một tài liệu vẫn có. Lọc bằng chữ ký
 Pythagore đã in sẵn trong khối A11/A12 của gói chép tay.
+
+### 7e. Lượt tìm CUỐI cho A11/A12 — nguồn TỰ LUẬN tiếng Việt (2026-08-28)
+
+Rà đúng thể loại còn lại: bài tự luận tiếng Việt kèm lời giải.
+
+| Nguồn | Kết quả |
+|---|---|
+| VietJack — *Khoảng cách lớp 11* (KNTT), **Ví dụ 2** | ✅ **A11 PASS** — xem dưới |
+| VietJack — *Khoảng cách từ một điểm tới một đường thẳng* | ⛔ mọi bài ra **căn**: `2a√6/3` · `a√3/2` · `√22` `√55` `√33` `√66` |
+| SGK Toán 11 KNTT — Bài 26, bài 7.22–7.27 | ⛔ toàn `a` ký hiệu + tam giác **đều** / lập phương ⇒ `√6/3·a`, `√3/2·a` |
+| SGK Toán 12 CTST — *"thiết lập hệ trục Oxyz như Hình 19"* | ⛔ `REJECT_OXYZ` — và `AB=2a, SA=3a` ⇒ `d` có `√13` |
+| edusmart.vn — chuyên đề dạng 2 | ⛔ `REJECT_MISSING_SOURCE` — trang không có nội dung bài |
+
+#### ✅ A11 — ứng viên DUY NHẤT có đáp án hữu tỉ
+
+```
+Nguồn   : VietJack · Khoảng cách lớp 11 (Lý thuyết Toán 11 Kết nối tri thức)
+Vị trí  : Ví dụ 2
+Dữ kiện : (SAB) ⊥ đáy · △SAB vuông tại S · AB = a · SA = 3a/5
+Đáp án  : d(S,(ABC)) = 12a/25        ⇒ gán a = 1 ⇒ ĐÁP ÁN 12/25
+```
+
+Kiểm hữu tỉ, bốn bước:
+
+| | Kiểm | Kết quả |
+|---|---|---|
+| **A** | đặt được vào toạ độ hữu tỉ? | `SB = √(a² − 9a²/25) = 4a/5` — bộ ba **3-4-5 thu nhỏ `a/5`**. `A(0,0,0)` `B(a,0,0)` `S(9a/25, 0, 12a/25)` ✅ |
+| **B** | pháp tuyến hữu tỉ? | mặt đáy `z = 0`, pháp tuyến `(0,0,1)` ✅ |
+| **C** | chuẩn vectơ hữu tỉ? | `‖(0,0,1)‖ = 1` ✅ |
+| **D** | `d` cuối hữu tỉ? | `12a/25` ✅ |
+
+⚠️ **Hai rủi ro người xác minh phải tự kiểm khi mở nguồn** — ghi ra vì cả hai đều
+im lặng:
+
+1. Đề đặt tên `C` nhưng **không ràng buộc vị trí `C`**. `d(S,(ABC))` không phụ
+   thuộc `C`, nhưng hệ vẫn phải đặt `C` ở đâu đó để dựng cảnh. Có thể thành một
+   phép thử **khó hơn** (mô hình phải nhận ra `C` tự do), cũng có thể vấp cổng
+   `input-sufficiency`. Không giấu.
+2. Bản tóm tắt ghi công thức là `SA·AB/SB`; **đúng** phải là `SA·SB/AB`. Đáp án
+   `12a/25` thì đúng. ⇒ **đọc lời giải gốc**, đừng tin bản tóm tắt — kể cả bản
+   này.
+
+Đây là **trang dạy học**, không phải SGK gốc. Truy xuất được và có lời giải nên
+đủ điều kiện 2–3, nhưng nếu tra được đúng bài trong SGK thì tốt hơn.
+
+#### ⛔ A12 — `SOURCE_GAP_CONFIRMED`
+
+Không tìm được bài nào. Lý do có cấu trúc, và **khác** lý do của A11:
+
+```
+A11 (điểm→mặt) : d = SA·SB/AB          — MỘT lần Pythagore là đủ
+A12 (điểm→đường): d = √(SA² + h²)      — cần Pythagore LẦN HAI khớp tiếp
+```
+
+`d(A, BC)` trong không gian gần như luôn ra `√(tổng bình phương)`, nên muốn hữu
+tỉ thì phải có **hai** trùng hợp Pythagore lồng nhau. Ví dụ đo được ở lượt này:
+`SA=3a, SB=a, SC=2a` đôi một vuông góc ⇒ `BC = a√5` ngay từ bước đầu.
+
+⇒ **Ngừng thu thập nguồn cho A12.** Ba lựa chọn thiết kế đánh giá đã nêu trong
+báo cáo lượt này; quyết định thuộc người dùng.
