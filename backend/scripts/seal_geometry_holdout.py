@@ -118,6 +118,19 @@ def _bam_he_thong() -> tuple[str, int]:
 K_CHOT = 3
 LOGIC_MOI_LUOT, HTTP_MOI_LUOT = 6, 8
 
+#: Điều kiện pool — `HOLDOUT_PROTOCOL §3①`: *"≥40 bài, phủ ĐỦ 20/20 ô"*.
+#:
+#: **Hai số, hai câu hỏi khác nhau.** ĐỘ PHỦ hỏi *mọi ô có bài chưa*; ĐỘ SÂU
+#: hỏi *seed còn gì để chọn không*. Pool đúng một bài mỗi ô phủ đủ 20/20 mà
+#: mọi seed cho ra CÙNG một tập — lúc ấy câu "seed quyết định bài nào" thành
+#: lời khai suông, và tính held-out mất mà không cổng nào kêu.
+#:
+#: Trước 2026-08-28 cổng rút chỉ canh vế phủ, còn `report_holdout_readiness`
+#: canh vế sâu bằng một số `40` viết tay — hai cổng đọc cùng một pool bằng hai
+#: ngưỡng rời nhau. Gom về đây để chúng không trôi khỏi nhau được nữa.
+MOI_O_TOI_THIEU = 1
+TONG_TOI_THIEU = 40
+
 
 def _git_sha() -> str:
     try:
@@ -415,6 +428,34 @@ def kiem_pool(cases: list[dict]) -> list[str]:
     return loi
 
 
+def kiem_du_dieu_kien_rut(
+        cases: list[dict]) -> tuple[dict[str, list[dict]], list[str]]:
+    """Rổ rút theo ô + lý do CHƯA rút được. Danh sách rỗng ⇒ rút được.
+
+    Tách khỏi `main()` để **đỏ được từ test**: hai ngưỡng ở đây chỉ chạy một
+    lần trong đời, ngay trước lượt held-out duy nhất, nên chúng phải chứng
+    minh được là chặn thật trước ngày ấy chứ không phải trong ngày ấy.
+    """
+    theo_o: dict[str, list[dict]] = {}
+    for c in cases:
+        # Chỉ `accepted` mới vào rổ rút. Bài bị loại nằm trong file để tra
+        # ngược, KHÔNG để lấp ô — lấp ô bằng một bài hệ không phục vụ được là
+        # dựng một ô chắc chắn trượt.
+        if duoc_rut(c):
+            theo_o.setdefault(c["slot"], []).append(c)
+
+    loi: list[str] = []
+    if thieu := [o for o in BANG_O if len(theo_o.get(o, [])) < MOI_O_TOI_THIEU]:
+        loi.append(f"Pool KHÔNG phủ {len(thieu)}/{len(BANG_O)} ô: {thieu}")
+        loi.append("KHÔNG rút bù từ ô khác — rút bù là lặng lẽ đổi tập đo.")
+    if (n := sum(len(v) for v in theo_o.values())) < TONG_TOI_THIEU:
+        loi.append(f"Pool chỉ {n}/{TONG_TOI_THIEU} bài rút được — "
+                   f"thiếu {TONG_TOI_THIEU - n}.")
+        loi.append("Đủ ô mà thiếu bài thì mọi seed cho ra CÙNG một tập: "
+                   "seed hết quyết định được gì, tập hết là held-out.")
+    return theo_o, loi
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--seed", type=int, required=True,
@@ -437,21 +478,19 @@ def main() -> int:
             print("  ·", d)
         return 2
 
-    theo_o: dict[str, list[dict]] = {}
-    for c in cases:
-        # Chỉ `accepted` mới vào rổ rút. Bài bị loại nằm trong file để tra
-        # ngược, KHÔNG để lấp ô — lấp ô bằng một bài hệ không phục vụ được là
-        # dựng một ô chắc chắn trượt.
-        if duoc_rut(c):
-            theo_o.setdefault(c["slot"], []).append(c)
-    thieu = [o for o in BANG_O if not theo_o.get(o)]
-    if thieu:
-        print(f"Pool KHÔNG phủ {len(thieu)}/20 ô: {thieu}")
-        print("KHÔNG rút bù từ ô khác — rút bù là lặng lẽ đổi tập đo.")
+    theo_o, chua_du = kiem_du_dieu_kien_rut(cases)
+    if chua_du:
+        for d in chua_du:
+            print(d)
         return 2
 
     if a.chi_kiem_pool:
-        print(f"Pool hợp lệ · {len(cases)} bài · phủ đủ 20/20 ô")
+        n = sum(len(v) for v in theo_o.values())
+        # ĐẾM BÀI RÚT ĐƯỢC, không đếm dòng trong file: bài đã loại vẫn nằm
+        # trong pool để tra ngược, và in `len(cases)` ở đây là tự khai đủ
+        # bằng chính những bài vừa bị loại.
+        print(f"Pool hợp lệ · {n} bài rút được · phủ đủ {len(BANG_O)}/"
+              f"{len(BANG_O)} ô")
         for o in BANG_O:
             print(f"  {o}  {len(theo_o[o]):>2} bài   {BANG_O[o][1]}")
         return 0

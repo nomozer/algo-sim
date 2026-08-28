@@ -53,3 +53,35 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · Khối đa diện & thể tích,
 [A14] <GÕ NGUYÊN VĂN Câu 1 trang 80 vào đây, giữ đủ ký hiệu = ⊥ √ ∥>
       NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — trang 80, Câu 1 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
       ĐÁP ÁN: 2/3
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# Ô TẦNG B — 6 ô, và là phần DỄ NHẤT của cả tập
+#
+# Tầng B không hỏi "hệ tính đúng không" mà hỏi "hệ có biết mình KHÔNG tính
+# được không". Nên ở đây bạn KHÔNG cần đề có đáp án hữu tỉ, KHÔNG cần soi
+# toạ độ, KHÔNG cần luật sàng nào ở trên. Chỉ cần đề đúng LOẠI.
+#
+# ⚠️ Trước 2026-08-28 sáu ô này KHÔNG nạp được: khuôn lô cấm ô B có dòng
+#    `ĐÁP ÁN:`, còn `kiem_pool` lại đòi mọi bài có `dap_an_chinh_thuc`. Hai
+#    dòng dưới đây là lối ra, và chúng CHỈ dùng cho ô B.
+#
+#   B01  khoảng cách giữa hai đường thẳng CHÉO NHAU
+#   B02  khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt
+#   B03  góc nhị diện có miền (có thể tù)
+#   B04  Oxyz: viết phương trình mặt phẳng / đường / mặt cầu
+#   B05  mặt cầu · mặt nón · mặt trụ
+#   B06  phép toán vectơ, hoặc phép chiếu song song
+#
+# Khuôn (chép xuống `batch_001.txt`, một khối mỗi ô):
+#
+#   [B05] <gõ nguyên văn một đề mặt cầu/nón/trụ từ nguồn>
+#         NGUỒN: <sách, trang, câu> · <url>
+#         ĐÁP ÁN NGUỒN: <đáp án IN TRONG SÁCH — chỉ để người sau thấy hệ
+#                        đang từ chối tính cái gì; KHÔNG dùng để chấm>
+#         NGOÀI PHỦ VÌ: <vượt ranh giới ở đâu — mặt cong · hai đường chéo
+#                        nhau · Oxyz cho sẵn toạ độ · …>
+#
+# ⚠️ `ĐÁP ÁN NGUỒN` KHÁC `ĐÁP ÁN`. Dùng nhầm dòng `ĐÁP ÁN:` ở ô B thì ingest
+#    chặn — đúng ý, vì dòng ấy dựng oracle và tầng B không có oracle.
+# ═══════════════════════════════════════════════════════════════════════

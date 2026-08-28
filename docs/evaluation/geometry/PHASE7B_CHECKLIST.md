@@ -20,7 +20,7 @@
 | ☑ | **`k` đã freeze** | [HOLDOUT_K_FINAL.md](HOLDOUT_K_FINAL.md) — `k = 3`, 360/480 | ✅ **XONG** (7A.3) |
 | ☑ | **Protocol đã freeze** | `HOLDOUT_PROTOCOL §2` (làm rõ *"một lượt"*) · `§5` (ngân sách) | ✅ **XONG** (7A.3) |
 | ☑ | **Metric đã freeze** | `PHASE7_METRIC_CONTRACT §6` · `test_expectation_contract_7a2.py` | ✅ **XONG** (7A.2) |
-| ☐ | **Pool đủ bài** | `seal_geometry_holdout.py --seed 0 --chi-kiem-pool` → exit 0 | ⛔ **0/40 bài · 0/20 ô** |
+| ☐ | **Pool đủ bài** | `seal_geometry_holdout.py --seed 0 --chi-kiem-pool` → exit 0 (canh **cả hai** ngưỡng: ≥1 mỗi ô **và** ≥40 tổng) | ⛔ **0/40 bài · 0/20 ô** |
 | ☐ | **Nợ đối chiếu đã trả** | `kiem_pool` không còn báo `can_kiem_tay` *(người mở url đọc)* | ⚙️ **chưa kiểm tới** — cổng dừng ở coverage trước |
 | ☐ | **Expectation đủ** | `pytest tests/geometry/test_holdout_readiness_7b.py -q` — hai cổng `skip` phải TỰ BẬT | ⛔ chưa có `holdout.json` |
 | ☐ | **Ngân sách được duyệt** | 360 logic / 480 HTTP *(người)* | ⛔ chờ |

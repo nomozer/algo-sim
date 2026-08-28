@@ -1345,3 +1345,229 @@ def test_checklist_ton_tai_va_du_BAY_muc_bao_cao():
         assert muc in src, f"checklist thiếu mục báo cáo `{muc}`"
     # Câu kết luận bị cấm phải có mặt như một điều CẤM, không phải để dùng.
     assert "AI hiểu hình học" in src and "❌" in src
+
+
+# ══ HAI NGƯỠNG POOL — ĐỘ PHỦ ≠ ĐỘ SÂU ════════════════════════════════════
+#
+# `HOLDOUT_PROTOCOL §3①` đòi **hai** thứ: *"≥40 bài, phủ ĐỦ 20/20 ô"*. Cổng
+# rút chỉ canh vế sau. Pool 20 bài — đúng một bài mỗi ô — phủ đủ 20/20 và
+# thoát 0, trong khi seed không còn gì để chọn: mọi seed cho ra CÙNG một tập.
+# Lúc ấy câu *"seed quyết định bài nào"* thành lời khai suông.
+def _bai_hop_le(SH, o: str, n: int = 1) -> dict:
+    """Bài tối thiểu hợp lệ cho ô bất kỳ, dẫn thẳng từ BANG_O + NANG_LUC."""
+    tag, hinh, tang_a = next(
+        (t, h, a) for t, (os_, h, a) in SH.NANG_LUC.items() if o in os_)
+    nv = SH.BANG_O[o][0]
+    c = {"case_id": f"t_{o.lower()}_{n:03d}", "status": "accepted", "slot": o,
+         "capability_tag": tag, "answer_shape": hinh,
+         "problem_text": f"đề {o} #{n}", "problem_text_original": f"đề {o} #{n}",
+         "problem_text_verified": True, "human_verifier": "Người kiểm thử",
+         "nguon": {"url": "https://x"}, "chua_chay_he": True}
+    if tang_a:
+        gt = {"predicate_boolean": True, "invariant_relation": True}.get(hinh, "4/3")
+        c |= {"dap_an_chinh_thuc": str(gt), "phep_chuyen": "gán a = 2",
+              "oracle_result": {nv: gt}, "oracle_ref": nv,
+              "expected_obligations": [nv]}
+    else:
+        # Tầng B vẫn phải mang đáp án CỦA NGUỒN (để thấy hệ từ chối tính cái
+        # gì) — chỉ không được mang `oracle_result`.
+        c |= {"dap_an_chinh_thuc": "đáp án sách, không dùng chấm",
+              "ly_do_ngoai_phu": "ngoài ranh giới năng lực"}
+    if tag in SH.DOI_DOMAIN_CONDITION:
+        c["domain_condition"] = "hữu tỉ hoá được"
+    return c
+
+
+def _pool(SH, moi_o: int) -> list[dict]:
+    return [_bai_hop_le(SH, o, n)
+            for o in SH.BANG_O for n in range(1, moi_o + 1)]
+
+
+def test_khuon_bai_cua_TEST_nay_thuc_su_hop_le(SH):
+    """Chốt chặn: nếu khuôn sai thì mọi test dưới đỏ vì lý do KHÁC."""
+    p = _pool(SH, 2)
+    assert len(p) == 40
+    assert SH.kiem_pool(p) == []
+    assert [d for c in p for d in SH.check_capability_boundary(c)] == []
+
+
+def test_PHU_du_20_o_ma_THIEU_bai_thi_KHONG_rut_duoc(SH):
+    """20 bài, phủ đủ 20/20 ô — vẫn phải chặn: protocol đòi ≥40."""
+    _, loi = SH.kiem_du_dieu_kien_rut(_pool(SH, 1))
+    assert loi, "pool 20 bài phủ đủ 20 ô mà cổng cho qua — mất vế ≥40"
+    assert any("40" in d for d in loi), loi
+
+
+def test_du_ca_HAI_nguong_thi_rut_duoc(SH):
+    theo_o, loi = SH.kiem_du_dieu_kien_rut(_pool(SH, 2))
+    assert loi == []
+    assert len(theo_o) == 20
+
+
+def test_thieu_MOT_o_thi_chan_du_tong_bai_thua(SH):
+    """Độ sâu KHÔNG bù được độ phủ — 60 bài mà hụt một ô vẫn chặn."""
+    p = [c for c in _pool(SH, 3) if c["slot"] != "A07"]
+    _, loi = SH.kiem_du_dieu_kien_rut(p)
+    assert any("A07" in d for d in loi), loi
+
+
+def test_bai_BI_LOAI_khong_duoc_tinh_vao_TONG(SH):
+    """`len(cases)` ≠ số bài rút được. Đếm cả bài đã loại là tự khai đủ."""
+    p = _pool(SH, 1)
+    for c in _pool(SH, 1):
+        p.append(c | {"case_id": c["case_id"] + "_x",
+                      "status": "rejected_capability_boundary",
+                      "reason": "ngoài ranh giới"})
+    assert len(p) == 40
+    _, loi = SH.kiem_du_dieu_kien_rut(p)
+    assert loi, "40 dòng nhưng chỉ 20 bài rút được — cổng phải chặn"
+
+
+def test_hai_NGUONG_khop_dung_giao_thuc(SH):
+    t = (GEO / "HOLDOUT_PROTOCOL.md").read_text(encoding="utf-8")
+    assert f"≥{SH.TONG_TOI_THIEU} bài" in t or f"≥ {SH.TONG_TOI_THIEU} bài" in t
+    assert SH.MOI_O_TOI_THIEU == 1
+    assert SH.TONG_TOI_THIEU >= len(SH.BANG_O) * SH.MOI_O_TOI_THIEU
+
+
+def test_bao_cao_san_sang_KHONG_giu_nguong_RIENG(SH):
+    """Hai cổng đọc cùng một pool; hai ngưỡng viết rời nhau là chờ trôi."""
+    src = (SCRIPTS / "report_holdout_readiness.py").read_text(encoding="utf-8")
+    assert "TONG_TOI_THIEU" in src, "báo cáo còn hằng số 40 viết tay"
+    assert not re.search(r"(?<![\w.])40(?![\w])", src), \
+        "còn số 40 trần trong báo cáo — phải dẫn từ seal_geometry_holdout"
+
+
+# ══ Ô TẦNG B CÓ NẠP ĐƯỢC KHÔNG — HAI CỔNG TỪNG CÃI NHAU ══════════════════
+#
+# `ingest.phan_tich` CẤM ô B có dòng `ĐÁP ÁN:` (nó sẽ dựng `oracle_result`,
+# mà tầng B chấm bằng từ chối trung thực). `kiem_pool` lại ĐÒI mọi bài
+# `accepted` có `dap_an_chinh_thuc`. Hai luật đều đúng phần mình và cùng đọc
+# một bài — nên B01–B06 (6/20 ô, đúng những ô kế hoạch gọi là *"dễ nhất về
+# dữ liệu"*) **không nạp được bằng bất kỳ file lô nào**.
+#
+# Nặng hơn cả việc chặn: `FIX_REQUIRED` bảo *"Sửa dữ liệu lô"* — một việc
+# không làm được. Cổng chặn đúng còn dạy sai thì tệ hơn cổng chặn sai.
+def _lo_tang_b(dap_an_nguon: str = "S_xq = 15π", ly_do: str = "mặt cong") -> str:
+    return (
+        "NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test\n\n"
+        "[B05] Cho hình nón bán kính đáy r = 3, chiều cao h = 4. "
+        "Tính diện tích xung quanh.\n"
+        "      NGUỒN: nguồn kiểm thử · https://x\n"
+        f"      ĐÁP ÁN NGUỒN: {dap_an_nguon}\n"
+        f"      NGOÀI PHỦ VÌ: {ly_do}\n")
+
+
+def test_o_tang_B_NAP_DUOC_qua_file_lo(SH):
+    IN = _nap("ingest_holdout_batch")
+    nguoi, bai, loi = IN.phan_tich(_lo_tang_b(), SH)
+    assert loi == [], loi
+    c = IN.thanh_case(bai[0], nguoi, SH)
+    assert SH.check_capability_boundary(c) == []
+    assert SH.kiem_pool([c]) == [], "ô tầng B vẫn không qua nổi kiem_pool"
+
+
+def test_o_tang_B_van_KHONG_duoc_mang_oracle_result(SH):
+    """Nới cho `dap_an_chinh_thuc` KHÔNG được nới luôn `oracle_result`."""
+    IN = _nap("ingest_holdout_batch")
+    nguoi, bai, _ = IN.phan_tich(_lo_tang_b(), SH)
+    c = IN.thanh_case(bai[0], nguoi, SH)
+    assert not c.get("oracle_result"), "tầng B mà có oracle_result — chấm nhầm thang"
+    assert c["dap_an_chinh_thuc"] == "S_xq = 15π"
+    assert c["ly_do_ngoai_phu"] == "mặt cong"
+
+
+def test_o_tang_B_dung_dong_DAP_AN_thuong_thi_VAN_bi_chan(SH):
+    """Dòng cũ vẫn cấm — nó là dòng dựng `oracle_result`."""
+    IN = _nap("ingest_holdout_batch")
+    lo = _lo_tang_b().replace("ĐÁP ÁN NGUỒN:", "ĐÁP ÁN:")
+    _, _, loi = IN.phan_tich(lo, SH)
+    assert any("KHÔNG được có `ĐÁP ÁN:`" in d for d in loi), loi
+
+
+def test_o_tang_B_thieu_LY_DO_thi_bao_dung_cho_thieu(SH):
+    IN = _nap("ingest_holdout_batch")
+    lo = "\n".join(l for l in _lo_tang_b().splitlines()
+                   if "NGOÀI PHỦ VÌ" not in l)
+    _, _, loi = IN.phan_tich(lo, SH)
+    assert any("NGOÀI PHỦ VÌ" in d for d in loi), loi
+
+
+def test_o_tang_A_KHONG_duoc_dung_khuon_cua_tang_B(SH):
+    """Hai dòng mới chỉ dành cho tầng B — dùng ở tầng A là lách oracle."""
+    IN = _nap("ingest_holdout_batch")
+    lo = ("NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test\n\n"
+          "[A14] Cho hình chóp S.ABC …\n"
+          "      NGUỒN: nguồn kiểm thử · https://x\n"
+          "      ĐÁP ÁN NGUỒN: 2a³/3\n"
+          "      NGOÀI PHỦ VÌ: không lý do gì\n")
+    _, _, loi = IN.phan_tich(lo, SH)
+    for dong in ("ĐÁP ÁN NGUỒN", "NGOÀI PHỦ VÌ"):
+        assert any(f"`{dong}:` chỉ dùng cho ô tầng B" in d for d in loi), \
+            f"{dong} lọt vào ô tầng A — đó là lối lách oracle"
+
+
+# ══ BẢNG KẾ HOẠCH TỪNG Ô — SINH RA, KHÔNG GÕ TAY ═════════════════════════
+#
+# Cùng nội dung này từng nằm trong `CANDIDATE_REVIEW §3` dưới dạng markdown gõ
+# tay, và đã sai: nó khai hạn ngạch CỨNG cho từng ô trong khi
+# `HOLDOUT_EXPANSION_PLAN §1` cố ý để MỀM (*"mỗi ô ≥1; tổng ≥40; ô nào dễ tìm
+# thì lấy"*). Sai kiểu ấy không làm test nào đỏ — không cổng nào đọc markdown.
+def test_bang_ke_hoach_phu_DU_20_o(MT, SH):
+    d = "\n".join(MT._bang_ke_hoach(MT.ma_tran([])))
+    for o in SH.BANG_O:
+        assert f"| **{o}** |" in d, f"bảng kế hoạch sót ô {o}"
+
+
+def test_bang_ke_hoach_KHAI_dung_the_nang_luc(MT, SH):
+    """Mọi ô phải mang đúng `capability_tag` của nó — dẫn máy, không chép."""
+    d = "\n".join(MT._bang_ke_hoach(MT.ma_tran([])))
+    for tag, (os_, _, _) in SH.NANG_LUC.items():
+        for o in os_:
+            dong = next(l for l in d.splitlines() if l.startswith(f"| **{o}** |"))
+            assert f"`{tag}`" in dong, f"{o}: bảng ghi sai thẻ, phải là {tag}"
+
+
+def test_bang_ke_hoach_KHONG_dat_han_ngach_cung(MT, SH):
+    """`≥1` chứ không phải một con số — kế hoạch cố ý để mềm."""
+    d = "\n".join(MT._bang_ke_hoach(MT.ma_tran([])))
+    for o in SH.BANG_O:
+        dong = next(l for l in d.splitlines() if l.startswith(f"| **{o}** |"))
+        assert f"≥{SH.MOI_O_TOI_THIEU}" in dong, o
+
+
+def test_bang_ke_hoach_DANH_DAU_bay_sin_binh_o_A10(MT):
+    d = "\n".join(MT._bang_ke_hoach(MT.ma_tran([])))
+    dong = next(l for l in d.splitlines() if l.startswith("| **A10** |"))
+    assert "sin²" in dong, "A10 mất cảnh báo sin² — chỗ sai im lặng duy nhất"
+    dong9 = next(l for l in d.splitlines() if l.startswith("| **A09** |"))
+    assert "sin²" not in dong9, "A09 dán nhầm cảnh báo sin²"
+
+
+def test_bang_ke_hoach_TACH_hai_thang_cham(MT, SH):
+    """Tầng B chấm bằng từ chối trung thực — không được mang chỉ số oracle."""
+    d = "\n".join(MT._bang_ke_hoach(MT.ma_tran([])))
+    for o in SH.BANG_O:
+        dong = next(l for l in d.splitlines() if l.startswith(f"| **{o}** |"))
+        if o.startswith("A"):
+            assert "① ②" in dong, f"{o}: tầng A mất chỉ số oracle"
+        else:
+            assert "từ chối trung thực" in dong and "①" not in dong, \
+                f"{o}: tầng B mang thang của tầng A"
+
+
+def test_moi_o_deu_khai_NGUON(MT, SH):
+    assert set(MT.O_NGUON) == set(SH.BANG_O), \
+        "O_NGUON lệch BANG_O — ô mới thêm mà không ai nói lấy đề ở đâu"
+
+
+def test_o_CHO_QUYET_DINH_deu_co_that(MT, SH):
+    assert set(MT.O_CHO_QUYET_DINH) <= set(SH.BANG_O)
+
+
+def test_ghi_bao_cao_RA_NGOAI_kho_thi_bi_tu_choi(MT, monkeypatch, capsys):
+    """`../docs/…` từ `backend/` trỏ ra ngoài kho và từng dựng cây lạc thật."""
+    monkeypatch.setattr(sys, "argv",
+                        ["x", "--md", "../docs/evaluation/lac.md"])
+    assert MT.main() == 2
+    assert "NGOÀI kho" in capsys.readouterr().out

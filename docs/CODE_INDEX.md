@@ -2731,6 +2731,15 @@ mỗi ô*, seed chỉ chọn *bài nào trong ô*. Mỗi ô một `Random` gieo 
 `(seed, tên ô)` để thêm bài vào ô này không làm trượt phép rút ở ô khác. Ô thiếu
 bài ⇒ dừng, **không rút bù** — rút bù là lặng lẽ đổi tập đo thành tập dễ hơn.
 
+**`kiem_du_dieu_kien_rut` sở hữu HAI ngưỡng pool**, cùng `MOI_O_TOI_THIEU = 1`
+và `TONG_TOI_THIEU = 40` (`HOLDOUT_PROTOCOL §3①`: *"≥40 bài, phủ ĐỦ 20/20 ô"*).
+Hai vế hỏi hai câu khác nhau — **độ phủ** *(mọi ô có bài chưa)* và **độ sâu**
+*(seed còn gì để chọn không)*. Trước 2026-08-28 cổng rút chỉ canh vế phủ, còn
+`report_holdout_readiness` canh vế sâu bằng một số `40` **viết tay**: pool đúng
+một bài mỗi ô thoát `0` trong khi mọi seed cho ra **cùng một tập**, tức tính
+held-out mất mà không cổng nào kêu. Tách khỏi `main()` để **đỏ được từ test** —
+hai ngưỡng này chỉ chạy một lần trong đời, ngay trước lượt đo duy nhất.
+
 `--seed` **không có mặc định** (tôi chọn seed thì tôi chọn được cả tập).
 `kiem_pool` chặn: thiếu `nguon.url` · thiếu `phep_chuyen` · ô B mang
 `oracle_result` · `chua_chay_he` không true · **đề trùng tập DEV** · và (từ
@@ -2884,6 +2893,16 @@ Nạp một **lô đề do NGƯỜI chép** thành mục `pool.json`. Export: `p
 `ĐÁP ÁN:`); script lo phần còn lại — xếp trường, gán `capability_tag` từ
 `NANG_LUC`, dựng `oracle_result`, chạy `check_capability_boundary`.
 
+**Ô tầng B dùng HAI DÒNG KHÁC: `ĐÁP ÁN NGUỒN:` + `NGOÀI PHỦ VÌ:`.** Không phải
+tuỳ chọn cho đẹp — trước 2026-08-28 **B01–B06 (6/20 ô) không nạp được bằng bất
+kỳ file lô nào**: khuôn lô CẤM ô B mang `ĐÁP ÁN:` (dòng ấy dựng `oracle_result`,
+mà tầng B chấm bằng *từ chối trung thực*), còn `kiem_pool` lại ĐÒI mọi bài
+`accepted` có `dap_an_chinh_thuc` + `ly_do_ngoai_phu`. Hai luật đều đúng phần
+mình, cùng đọc một bài ⇒ chuỗi chết ở `kiem_pool` với `FIX_REQUIRED: "sửa dữ
+liệu lô"` — **một việc không làm được**. Lối ra là **tách tên dòng**, không nới
+dòng cũ: `ĐÁP ÁN NGUỒN:` chỉ chảy vào `dap_an_chinh_thuc`, không bao giờ thành
+`oracle_result`; dùng nó ở ô tầng A thì bị chặn, và ngược lại. 5 test khoá.
+
 **Cổng cốt lõi — dòng `NGƯỜI CHÉP:`.** Giao thức đòi đề NGUYÊN VĂN, và đã đo
 được rằng **mọi kênh tự động hỏng IM LẶNG** (công cụ đọc web tóm tắt; trích PDF
 rơi `⊥` — 0 lần trong 217 trang về quan hệ vuông góc). Thứ duy nhất chưa hỏng là
@@ -2925,7 +2944,22 @@ Sản lượng đo được (mathvn, 2026-08-27): `3883 url → 60 ứng viên �
 
 Trả lời **một** câu: *pool held-out còn thiếu ô nào?* Không thêm bài, không chọn
 bài, không chấm. Export: `HO` (7 họ nội dung) · `O_HO` (`slot → (họ, hình dạng
-đáp án)`) · `doc_pool` · `ma_tran`.
+đáp án)`) · **`O_NGUON`** (`slot → nguồn đang nhắm`) · **`O_CHO_QUYET_DINH`**
+(ô chờ *quyết định*, không chờ dữ liệu — A11·A12) · `doc_pool` · `ma_tran` ·
+**`_bang_ke_hoach`**.
+
+**`_bang_ke_hoach` sinh §1b của COVERAGE_MATRIX — bảng kế hoạch 9 cột từng ô**
+(cần · thẻ năng lực · oracle · chỉ số chấm · nguồn · số bài · chặn ở · việc kế
+tiếp), dẫn thẳng từ `BANG_O` + `NANG_LUC`. Nó thay một bảng **gõ tay** ở
+`CANDIDATE_REVIEW §3` đã sai thật: bảng ấy khai hạn ngạch **cứng** từng ô trong
+khi kế hoạch cố ý để **mềm** (`≥1` mỗi ô, `≥40` tổng). Sai kiểu ấy không cổng
+nào bắt — không test nào đọc markdown — nên nguồn gõ tay bị gỡ hẳn thay vì sửa
+con số. Khoá bởi 8 test ở `test_holdout_readiness_7b.py`, gồm cả bẫy `sin²` ô
+A10 và luật *"ô B không được mang chỉ số của tầng A"*.
+
+`--md` **từ chối đường dẫn ra ngoài kho**: đường tương đối ghép vào **gốc kho**,
+nên `../docs/…` — cách gõ tự nhiên khi đang ở `backend/` — từng lặng lẽ dựng cả
+một cây tài liệu lạc bên ngoài repo (2026-08-28).
 
 **Ba trục, cố ý không gộp**: `BANG_O` 20 ô là trục **thiết kế tập đo** (đã có,
 không đổi) · `geometry_family` 7 họ là trục **nội dung** · `answer_shape`

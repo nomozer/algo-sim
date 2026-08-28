@@ -36,6 +36,38 @@ Ngoài ra **3 bài KHÔNG vào rổ rút** (giữ trong file để tra ngược,
 
 ---
 
+## 1b. KẾ HOẠCH TỪNG Ô — sinh từ `BANG_O` + `NANG_LUC`
+
+Ngưỡng pool (`HOLDOUT_PROTOCOL §3①`): **mỗi ô ≥ 1 bài** *và* **tổng ≥ 40 bài**.
+Hai vế, hai câu hỏi — đủ ô mà thiếu bài thì mọi seed cho ra cùng một
+tập. Kế hoạch **không** đặt hạn ngạch cứng cho từng ô: ô nào dễ tìm
+thì lấy nhiều, miễn không ô nào rỗng và tổng đủ.
+
+| Ô | Cần | `capability_tag` | oracle | Chỉ số chấm | Nguồn | Có | Chặn ở | Việc kế tiếp |
+|---|---|---|---|---|---|--:|---|---|
+| **A01** | ≥1 | `intersection_point` | `invariant_relation` → `point_on_line` | ① ② ③a ③b ⑤ | Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A02** | ≥1 | `incidence` | `predicate_boolean` → `point_on_plane` | ① ② ③a ③b ⑤ | Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A03** | ≥1 | `parallel_relation` | `predicate_boolean` → `parallel` | ① ② ③a ③b ⑤ | Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A04** | ≥1 | `parallel_relation` | `predicate_boolean` → `parallel` | ① ② ③a ③b ⑤ | Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A05** | ≥1 | `parallel_relation` | `predicate_boolean` → `parallel` | ① ② ③a ③b ⑤ | Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A06** | ≥1 | `perpendicular_relation` | `predicate_boolean` → `perpendicular` | ① ② ③a ③b ⑤ | Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A07** | ≥1 | `perpendicular_relation` | `predicate_boolean` → `perpendicular` | ① ② ③a ③b ⑤ | Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A08** | ≥1 | `perpendicular_relation` | `predicate_boolean` → `perpendicular` | ① ② ③a ③b ⑤ | Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A09** | ≥1 | `angle_cos_sq` | `exact_fraction` → `angle` | ① ② ③a ③b ⑤ | Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A10** | ≥1 | `angle_sin_sq` | `exact_fraction` → `angle` ⚠️ **`sin²`**, không phải `cos²` | ① ② ③a ③b ⑤ | Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A11** | ≥1 | `rational_distance` | `exact_fraction` → `distance` | ① ② ③a ③b ⑤ | — | 0 | ⛔ **quyết định** | chờ quyết định ①: chỉ nhận `distance` hữu tỉ, hay mở ô tầng B cho lớp vô tỉ (mở ⇒ N đổi khỏi 20 ⇒ chốt lại ngân sách) |
+| **A12** | ≥1 | `rational_distance` | `exact_fraction` → `distance` | ① ② ③a ③b ⑤ | — | 0 | ⛔ **quyết định** | chờ quyết định ①: chỉ nhận `distance` hữu tỉ, hay mở ô tầng B cho lớp vô tỉ (mở ⇒ N đổi khỏi 20 ⇒ chốt lại ngân sách) |
+| **A13** | ≥1 | `coplanar_section` | `predicate_boolean` → `coplanar` | ① ② ③a ③b ⑤ | Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **A14** | ≥1 | `rational_volume` | `exact_fraction` → `volume` | ① ② ③a ③b ⑤ | Khối đa diện & thể tích, tr 80–94 (2 ứng viên đã soi) | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **B01** | ≥1 | `out_of_capability` | `rejection_expected` — **bỏ trống** | **từ chối trung thực** — thang KHÁC | bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **B02** | ≥1 | `out_of_capability` | `rejection_expected` — **bỏ trống** | **từ chối trung thực** — thang KHÁC | bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **B03** | ≥1 | `out_of_capability` | `rejection_expected` — **bỏ trống** | **từ chối trung thực** — thang KHÁC | bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **B04** | ≥1 | `out_of_capability` | `rejection_expected` — **bỏ trống** | **từ chối trung thực** — thang KHÁC | bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **B05** | ≥1 | `out_of_capability` | `rejection_expected` — **bỏ trống** | **từ chối trung thực** — thang KHÁC | bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+| **B06** | ≥1 | `out_of_capability` | `rejection_expected` — **bỏ trống** | **từ chối trung thực** — thang KHÁC | bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI | 0 | ⛔ chưa có bài | người mở nguồn, chép nguyên văn, ký |
+
+---
+
 ## 2. Theo HỌ (trục nội dung)
 
 | Họ | Ô tầng A | Ô tầng B | Bài | Ô còn trống |

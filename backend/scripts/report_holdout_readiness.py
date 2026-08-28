@@ -97,6 +97,9 @@ def thu_thap() -> dict:
         "bang_o": m["bang_o"],
         "cases": cases,
         "k": SH.K_CHOT,
+        # Ngưỡng pool DẪN TỪ `seal_geometry_holdout`, không viết lại ở đây:
+        # hai cổng đọc cùng một pool, hai ngưỡng rời nhau là chờ chúng trôi.
+        "tong_toi_thieu": SH.TONG_TOI_THIEU,
         "budget": (len(SH.BANG_O) * SH.K_CHOT * SH.LOGIC_MOI_LUOT,
                    len(SH.BANG_O) * SH.K_CHOT * SH.HTTP_MOI_LUOT),
     }
@@ -104,9 +107,9 @@ def thu_thap() -> dict:
 
 def blockers(d: dict) -> list[str]:
     b: list[str] = []
-    if d["accepted"] < 40:
-        b.append(f"POOL — {d['accepted']}/40 bài `accepted`. "
-                 f"Thiếu **{40 - d['accepted']}** bài.")
+    if d["accepted"] < d["tong_toi_thieu"]:
+        b.append(f"POOL — {d['accepted']}/{d['tong_toi_thieu']} bài `accepted`. "
+                 f"Thiếu **{d['tong_toi_thieu'] - d['accepted']}** bài.")
     if d["o_trong"]:
         b.append(f"ĐỘ PHỦ — {len(d['o_trong'])}/20 ô trống: "
                  f"{' '.join(d['o_trong'])}")
@@ -148,7 +151,7 @@ def _md(d: dict) -> str:
          "commit — kể cả commit sửa tài liệu — làm nó FAIL lại. Nó là bước **áp",
          "chót** ngay trước `seal`, không phải một ô tick giữ mãi.", "",
          "---", "", "## 2. Dataset", "",
-         f"**`accepted`: {d['accepted']}/40**", ""]
+         f"**`accepted`: {d['accepted']}/{d['tong_toi_thieu']}**", ""]
 
     o += ["| Trạng thái | Số bài | `case_id` |", "|---|--:|---|"]
     for tt, ds in sorted(d["theo_trang_thai"].items()):
@@ -215,7 +218,8 @@ def main() -> int:
         RA.write_text(_md(d), encoding="utf-8")
         print(f"Đã ghi {RA}")
     print(f"READY_FOR_PHASE7B: {'YES' if not b else 'NO'}")
-    print(f"accepted: {d['accepted']}/40 · ô trống: {len(d['o_trong'])}/20")
+    print(f"accepted: {d['accepted']}/{d['tong_toi_thieu']} · "
+          f"ô trống: {len(d['o_trong'])}/{len(d['bang_o'])}")
     for x in b:
         print("  ⛔", x)
     return 0 if not b else 1

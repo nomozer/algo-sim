@@ -44,6 +44,20 @@ Dòng `ĐÁP ÁN` chép **đáp án của nguồn**, đúng đơn vị checker
 (`pool.json.__don_vi_oracle__`): `distance`/`volume` là phân số · `angle` là
 `cos²` (đường–đường, mặt–mặt) hoặc **`sin²`** (đường–mặt) · quan hệ là
 `true`/`false`. Ô `B*` **bỏ trống** dòng ấy.
+
+─── Ô TẦNG B DÙNG HAI DÒNG KHÁC ───────────────────────────────────────────
+
+    [B05] Cho hình nón có bán kính đáy r = 3, chiều cao h = 4. Tính diện
+          tích xung quanh của hình nón đó.
+          NGUỒN: SGK Toán 12 tập 1, bài 2.14 trang 47
+          ĐÁP ÁN NGUỒN: S_xq = 15π
+          NGOÀI PHỦ VÌ: mặt cong — kernel chỉ dựng khối đa diện lồi
+
+`ĐÁP ÁN NGUỒN:` ghi đáp án sách để người sau thấy hệ đang **từ chối tính cái
+gì**; nó chảy vào `dap_an_chinh_thuc` và **không bao giờ** thành
+`oracle_result` — tầng B chấm bằng *từ chối trung thực*, không bằng đáp án.
+`NGOÀI PHỦ VÌ:` là phán đoán của người về chỗ bài vượt ranh giới; không suy hộ
+được, và `kiem_pool` đòi nó.
 """
 from __future__ import annotations
 
@@ -63,6 +77,23 @@ _BAI = re.compile(r"^\s*\[([AB]\d{2})\]\s*(.+?)(?=^\s*\[[AB]\d{2}\]|\Z)",
                   re.M | re.S)
 _NGUON = re.compile(r"^\s*NGUỒN\s*:\s*(.+?)\s*$", re.M)
 _DAPAN = re.compile(r"^\s*ĐÁP ÁN\s*:\s*(.+?)\s*$", re.M)
+
+#: HAI DÒNG CHỈ DÀNH CHO Ô TẦNG B — và vì sao chúng phải tồn tại.
+#:
+#: `kiem_pool` đòi **mọi** bài `accepted` có `dap_an_chinh_thuc`; còn khuôn lô
+#: lại CẤM ô B mang dòng `ĐÁP ÁN:` (dòng ấy dựng `oracle_result`, mà tầng B
+#: chấm bằng từ chối trung thực chứ không bằng đáp án). Hai luật đều đúng phần
+#: mình, nhưng cùng đọc một bài ⇒ **B01–B06 không nạp được bằng bất kỳ file lô
+#: nào** (đo 2026-08-28: chuỗi dừng ở `kiem_pool`, và `FIX_REQUIRED` bảo *"sửa
+#: dữ liệu lô"* — một việc không làm được). 6/20 ô, đúng những ô kế hoạch gọi
+#: là *"dễ nhất về dữ liệu"*.
+#:
+#: Lối ra là **tách tên dòng**, không phải nới dòng cũ: `ĐÁP ÁN NGUỒN:` chỉ
+#: chảy vào `dap_an_chinh_thuc` (để người sau thấy hệ đang từ chối tính CÁI
+#: GÌ), và **không bao giờ** thành `oracle_result`. Nới `ĐÁP ÁN:` thì tầng B
+#: có oracle, tức chấm nhầm thang.
+_DAPAN_NGUON = re.compile(r"^\s*ĐÁP ÁN NGUỒN\s*:\s*(.+?)\s*$", re.M)
+_NGOAI_PHU = re.compile(r"^\s*NGOÀI PHỦ VÌ\s*:\s*(.+?)\s*$", re.M)
 
 #: Dấu hiệu bài KHÔNG hợp luật nhận của Phase 7B.1 — cảnh báo, không tự loại:
 #: phán quyết cuối là của người, script chỉ chỉ chỗ.
@@ -143,15 +174,23 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
     bai: list[dict] = []
     for i, (o, than) in enumerate(_BAI.findall(van_ban), 1):
         ma = f"hp_{o.lower()}_{i:03d}"
-        de = _NGUON.sub("", _DAPAN.sub("", than)).strip()
-        de = re.sub(r"\s+", " ", de)
+        # Gỡ MỌI dòng siêu dữ liệu trước khi lấy đề. Bỏ sót một dòng thì nó
+        # chui vào `problem_text` và đề gửi cho mô hình mang sẵn đáp án.
+        de = than
+        for r in (_NGUON, _DAPAN_NGUON, _NGOAI_PHU, _DAPAN):
+            de = r.sub("", de)
+        de = re.sub(r"\s+", " ", de.strip())
         nguon = (g.group(1) if (g := _NGUON.search(than)) else None)
         dap_an = (g.group(1) if (g := _DAPAN.search(than)) else None)
+        dap_an_nguon = (g.group(1) if (g := _DAPAN_NGUON.search(than)) else None)
+        ngoai_phu = (g.group(1) if (g := _NGOAI_PHU.search(than)) else None)
         tag = _the_cho_o(SH, o)
 
         if len(de) < 40:
             loi.append(f"{ma}: đề quá ngắn ({len(de)} ký tự) — chép thiếu?")
-        for ten, gt in (("đề", de), ("NGUỒN", nguon), ("ĐÁP ÁN", dap_an)):
+        for ten, gt in (("đề", de), ("NGUỒN", nguon), ("ĐÁP ÁN", dap_an),
+                        ("ĐÁP ÁN NGUỒN", dap_an_nguon),
+                        ("NGOÀI PHỦ VÌ", ngoai_phu)):
             if _con_cho_trong(gt):
                 loi.append(f"{ma}: {ten} vẫn là CHỖ TRỐNG chưa điền ({gt!r})")
         if not nguon:
@@ -160,15 +199,31 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
         if tag is None:
             loi.append(f"{ma}: ô {o} ứng với NHIỀU thẻ năng lực — khai tay "
                        "`capability_tag`, script không đoán")
-        if o.startswith("A") and not dap_an:
-            loi.append(f"{ma}: ô tầng A phải có dòng `ĐÁP ÁN:`")
-        if o.startswith("B") and dap_an:
-            loi.append(f"{ma}: ô tầng B chấm bằng 'từ chối trung thực', "
-                       "KHÔNG được có `ĐÁP ÁN:`")
+        if o.startswith("A"):
+            if not dap_an:
+                loi.append(f"{ma}: ô tầng A phải có dòng `ĐÁP ÁN:`")
+            for ten, gt in (("ĐÁP ÁN NGUỒN", dap_an_nguon),
+                            ("NGOÀI PHỦ VÌ", ngoai_phu)):
+                if gt:
+                    loi.append(f"{ma}: `{ten}:` chỉ dùng cho ô tầng B — ô tầng "
+                               f"A chấm bằng oracle, dùng `ĐÁP ÁN:`")
+        else:
+            if dap_an:
+                loi.append(f"{ma}: ô tầng B chấm bằng 'từ chối trung thực', "
+                           "KHÔNG được có `ĐÁP ÁN:`")
+            if not dap_an_nguon:
+                loi.append(f"{ma}: ô tầng B phải có dòng `ĐÁP ÁN NGUỒN:` — "
+                           "đáp án của sách, ghi để người sau thấy hệ đang từ "
+                           "chối tính CÁI GÌ. Nó KHÔNG được dùng để chấm.")
+            if not ngoai_phu:
+                loi.append(f"{ma}: ô tầng B phải có dòng `NGOÀI PHỦ VÌ:` — "
+                           "nêu bài vượt ranh giới ở đâu (mặt cong · khoảng "
+                           "cách hai đường chéo nhau · Oxyz cho sẵn toạ độ…)")
 
         canh_bao = [msg for r, msg in _CANH_BAO if r.search(de)]
         bai.append({"ma": ma, "o": o, "de": de, "nguon": nguon,
-                    "dap_an": dap_an, "tag": tag, "canh_bao": canh_bao})
+                    "dap_an": dap_an, "dap_an_nguon": dap_an_nguon,
+                    "ngoai_phu": ngoai_phu, "tag": tag, "canh_bao": canh_bao})
     if not bai:
         loi.append("Không đọc được bài nào — mỗi bài phải mở đầu bằng `[A14]`.")
     return nguoi, bai, loi
@@ -198,7 +253,10 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         "nguon": {"ten": b["nguon"], "url": b["nguon"], "vi_tri": b["nguon"]},
         "evaluator": b["nguon"],
         "answer_available": bool(b["dap_an"]),
-        "dap_an_chinh_thuc": b["dap_an"],
+        # Tầng A lấy `ĐÁP ÁN:` (cũng là nguồn của `oracle_result`); tầng B lấy
+        # `ĐÁP ÁN NGUỒN:` — cùng đổ vào một trường vì `kiem_pool` đòi mọi bài
+        # có đáp án của nguồn, nhưng CHỈ tầng A đi tiếp thành `oracle_result`.
+        "dap_an_chinh_thuc": b["dap_an"] or b.get("dap_an_nguon"),
         "chua_chay_he": True,
         # AI xác minh — TRƯỜNG RIÊNG, không chôn trong một câu văn.
         #
@@ -226,6 +284,11 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
             f"Đáp án nguồn chép thẳng vào đơn vị checker (`{khoa}`). "
             "Nếu nguồn viết dạng khác (căn thức, số làm tròn) thì bài NGOÀI "
             "ranh giới — xem pool.json.__don_vi_oracle__.")
+    else:
+        # Tầng B: lý do NGOÀI PHỦ là thứ duy nhất người phải tự khai — nó nói
+        # bài vượt ranh giới ở ĐÂU, và `kiem_pool` đòi nó. Suy hộ thì mất đúng
+        # phán đoán đang muốn ghi lại.
+        c["ly_do_ngoai_phu"] = b.get("ngoai_phu")
     if tag in SH.DOI_DOMAIN_CONDITION:
         c["domain_condition"] = ("CẦN NGƯỜI KHAI: thẻ này chỉ đúng dưới một "
                                  "điều kiện miền — xem CAPABILITY_BOUNDARY.")

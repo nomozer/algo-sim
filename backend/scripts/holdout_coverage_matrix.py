@@ -92,6 +92,33 @@ O_HO: dict[str, tuple[str, str]] = {
 }
 
 
+#: `slot → nguồn đang nhắm`. Giống `O_HO`: **phán đoán của người**, không suy
+#: ra được từ dữ liệu — nên để ở đây, đọc được và sửa được, thay vì nằm rải
+#: trong một bảng markdown mà không cổng nào canh.
+#:
+#: Bảng ấy đã trôi thật: `CANDIDATE_REVIEW §3` từng ghi số bài cần cho từng ô
+#: như một hạn ngạch cứng, trong khi `HOLDOUT_EXPANSION_PLAN §1` cố ý để mềm
+#: (*"mỗi ô cần ≥1 bài; tổng ≥40 ⇒ trung bình 2 bài/ô. Ô nào dễ tìm thì lấy"*).
+O_NGUON: dict[str, str] = {
+    **{o: "Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm)"
+       for o in ("A01", "A02", "A03", "A04", "A05", "A13")},
+    **{o: "Quan hệ vuông góc — Lê Minh Tâm (117tr, 0 trắc nghiệm)"
+       for o in ("A06", "A07", "A08", "A09", "A10")},
+    "A11": "—", "A12": "—",
+    "A14": "Khối đa diện & thể tích, tr 80–94 (2 ứng viên đã soi)",
+    **{o: "bất kỳ — không cần đáp án đúng, chỉ cần đúng LOẠI"
+       for o in ("B01", "B02", "B03", "B04", "B05", "B06")},
+}
+
+#: Ô đang chờ **quyết định**, không chờ dữ liệu. Ghi riêng vì hai thứ ấy có
+#: hai người gỡ khác nhau, và gộp chúng vào "blocker" làm mất mất thông tin ấy.
+O_CHO_QUYET_DINH: dict[str, str] = {
+    o: "chờ quyết định ①: chỉ nhận `distance` hữu tỉ, hay mở ô tầng B cho lớp "
+       "vô tỉ (mở ⇒ N đổi khỏi 20 ⇒ chốt lại ngân sách)"
+    for o in ("A11", "A12")
+}
+
+
 def _nap_seal():
     dd = Path(__file__).resolve().parent / "seal_geometry_holdout.py"
     spec = importlib.util.spec_from_file_location("_hcm_seal", dd)
@@ -160,6 +187,46 @@ def ma_tran(cases: list[dict]) -> dict:
     }
 
 
+def _bang_ke_hoach(m: dict) -> list[str]:
+    """Bảng KẾ HOẠCH từng ô — `oracle`, chỉ số sẽ chấm, nguồn, việc kế tiếp.
+
+    Sinh ra chứ không gõ: mọi cột trừ `nguồn` **dẫn thẳng** từ `BANG_O` và
+    `NANG_LUC`. Bảng gõ tay của cùng nội dung này đã sai một lần (khai hạn
+    ngạch cứng cho thứ kế hoạch cố ý để mềm), và sai kiểu ấy không làm test
+    nào đỏ vì không cổng nào đọc markdown.
+    """
+    SH = _nap_seal()
+    d = ["", "---", "", "## 1b. KẾ HOẠCH TỪNG Ô — sinh từ `BANG_O` + `NANG_LUC`",
+         "",
+         f"Ngưỡng pool (`HOLDOUT_PROTOCOL §3①`): **mỗi ô ≥ "
+         f"{SH.MOI_O_TOI_THIEU} bài** *và* **tổng ≥ {SH.TONG_TOI_THIEU} bài**.",
+         "Hai vế, hai câu hỏi — đủ ô mà thiếu bài thì mọi seed cho ra cùng một",
+         "tập. Kế hoạch **không** đặt hạn ngạch cứng cho từng ô: ô nào dễ tìm",
+         "thì lấy nhiều, miễn không ô nào rỗng và tổng đủ.", "",
+         "| Ô | Cần | `capability_tag` | oracle | Chỉ số chấm | Nguồn | Có | Chặn ở | Việc kế tiếp |",
+         "|---|---|---|---|---|---|--:|---|---|"]
+    for o in SH.BANG_O:
+        tag, hinh, tang_a = next(
+            (t, h, a) for t, (os_, h, a) in SH.NANG_LUC.items() if o in os_)
+        nv = SH.BANG_O[o][0]
+        n = len(m["theo_o"].get(o, []))
+        oracle = (f"`{hinh}` → `{nv}`" if tang_a else f"`{hinh}` — **bỏ trống**")
+        # ⚠️ Ô A10 trả `sin²` dưới cùng tên trường `angle_cos_sq`. Đánh dấu ở
+        # đây vì đó là chỗ duy nhất trong bảng khai sai mà KHÔNG cổng nào báo.
+        if tag == "angle_sin_sq":
+            oracle += " ⚠️ **`sin²`**, không phải `cos²`"
+        chi_so = ("① ② ③a ③b ⑤" if tang_a else "**từ chối trung thực** — thang KHÁC")
+        if chan := O_CHO_QUYET_DINH.get(o):
+            chan_txt, viec = "⛔ **quyết định**", chan
+        elif n < SH.MOI_O_TOI_THIEU:
+            chan_txt, viec = "⛔ chưa có bài", "người mở nguồn, chép nguyên văn, ký"
+        else:
+            chan_txt, viec = "—", "đủ tối thiểu; thêm bài để tổng đạt ngưỡng"
+        d.append(f"| **{o}** | ≥{SH.MOI_O_TOI_THIEU} | `{tag}` | {oracle} | "
+                 f"{chi_so} | {O_NGUON.get(o, '—')} | {n} | {chan_txt} | {viec} |")
+    return d
+
+
 def _md(m: dict) -> str:
     d = ["# MA TRẬN ĐỘ PHỦ — POOL HELD-OUT HÌNH HỌC", "",
          "> Sinh bằng `scripts/holdout_coverage_matrix.py`. **0 API call.**",
@@ -183,6 +250,8 @@ def _md(m: dict) -> str:
         n = len(m["theo_o"].get(o, []))
         d.append(f"| **{o}** | {ho or '— (không họ nào khớp)'} | {dang} | "
                  f"`{nv or '—'}` | {n} | {'✅' if n else '⛔ trống'} · {mota} |")
+
+    d += _bang_ke_hoach(m)
 
     d += ["", "---", "", "## 2. Theo HỌ (trục nội dung)", "",
           "| Họ | Ô tầng A | Ô tầng B | Bài | Ô còn trống |",
@@ -237,6 +306,17 @@ def main() -> int:
     if a.md:
         f = Path(a.md)
         f = f if f.is_absolute() else GOC / f
+        # Đường dẫn tương đối được ghép vào GỐC KHO, nên `../docs/…` — cách gõ
+        # tự nhiên khi đang đứng ở `backend/` — lặng lẽ trỏ RA NGOÀI kho và
+        # `mkdir(parents=True)` dựng luôn một cây tài liệu lạc ở đó (xảy ra
+        # thật 2026-08-28). Báo cáo ghi ngoài kho thì không ai thấy nó nữa.
+        try:
+            f.resolve().relative_to(GOC)
+        except ValueError:
+            print(f"TỪ CHỐI: {f.resolve()} nằm NGOÀI kho {GOC}.")
+            print("Đường dẫn tương đối tính từ GỐC KHO, không từ thư mục hiện "
+                  "tại — viết `docs/evaluation/…`, không `../docs/evaluation/…`.")
+            return 2
         f.parent.mkdir(parents=True, exist_ok=True)
         f.write_text(_md(m), encoding="utf-8")
         print(f"Đã ghi {f}")

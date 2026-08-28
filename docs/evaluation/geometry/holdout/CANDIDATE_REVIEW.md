@@ -57,47 +57,35 @@
 
 ---
 
-## 3. Kế hoạch 40 bài — từng ô, kèm ORACLE và CHỈ SỐ sẽ chấm
+## 3. Kế hoạch từng ô → **[COVERAGE_MATRIX.md §1b](COVERAGE_MATRIX.md)**
 
-`oracle type` dẫn từ `seal_geometry_holdout.NANG_LUC`; `chỉ số` dẫn từ
-`HOLDOUT_PROTOCOL §3`. Không chép tay — sai một ô là chấm sai im lặng.
+Bảng ấy **sinh bằng máy** từ `BANG_O` + `NANG_LUC`
+(`scripts/holdout_coverage_matrix.py`), mang đủ chín cột: ô · cần · thẻ năng
+lực · oracle · chỉ số sẽ chấm · nguồn · số bài đang có · chặn ở đâu · việc kế
+tiếp. Chạy lại là có bản mới.
 
-### Tầng A — 14 ô · chấm ① `served` ② `oracle` ③a ③b ⑤ `stability`
+> ### Vì sao bảng ấy KHÔNG còn được chép vào đây
+>
+> Chỗ này từng giữ chính bảng đó, gõ tay — và nó **sai**: cột *"Cần"* ghi hạn
+> ngạch **cứng** cho từng ô (2 · 4 · 6), trong khi `HOLDOUT_EXPANSION_PLAN §1`
+> cố ý để **mềm**: *"mỗi ô cần ≥1 bài; tổng ≥40 ⇒ trung bình 2 bài/ô. Ô nào dễ
+> tìm thì lấy."* Cổng rút cũng chỉ canh `≥1` mỗi ô.
+>
+> Sai kiểu ấy **không làm test nào đỏ** — không cổng nào đọc bảng markdown —
+> nên nó chỉ lộ khi có người đi tra `seal_geometry_holdout`. Đó là lần thứ ba
+> trong wave này một con số gõ tay báo tốt hơn sự thật, nên lần này gỡ luôn
+> nguồn gõ tay thay vì sửa con số.
 
-| Ô | Cần | `capability_tag` | **oracle type** | Nguồn | Trạng thái |
-|---|--:|---|---|---|---|
-| **A01** | 2 | `intersection_point` | `invariant_relation` | song song 32tr · `.docx` | `needs_human_copy` |
-| **A02** | 2 | `incidence` | `predicate_boolean` | song song 32tr | `needs_human_copy` |
-| **A03** | 2 | `parallel_relation` | `predicate_boolean` | song song 32tr | `needs_human_copy` |
-| **A04** | 2 | `parallel_relation` | `predicate_boolean` | song song 32tr | `needs_human_copy` |
-| **A05** | 2 | `parallel_relation` | `predicate_boolean` | song song 32tr | `needs_human_copy` |
-| **A06** | 2 | `perpendicular_relation` | `predicate_boolean` | Lê Minh Tâm 117tr | `needs_human_copy` |
-| **A07** | 2 | `perpendicular_relation` | `predicate_boolean` | Lê Minh Tâm 117tr | `needs_human_copy` |
-| **A08** | 2 | `perpendicular_relation` | `predicate_boolean` | Lê Minh Tâm 117tr | `needs_human_copy` |
-| **A09** | 4 | `angle_cos_sq` | `exact_fraction` — **`cos²`** | Lê Minh Tâm 117tr | `needs_human_copy` |
-| **A10** | 4 | `angle_sin_sq` | `exact_fraction` — ⚠️ **`sin²`** | Lê Minh Tâm 117tr | `needs_human_copy` |
-| **A11** | 2 | `rational_distance` | `exact_fraction`, **phải hữu tỉ** | — | ⛔ **blocked** |
-| **A12** | 2 | `rational_distance` | `exact_fraction`, **phải hữu tỉ** | — | ⛔ **blocked** |
-| **A13** | 2 | `coplanar_section` | `predicate_boolean` | song song 32tr | `needs_human_copy` |
-| **A14** | 4 | `rational_volume` | `exact_fraction` | **tr 80–94** · 2 ứng viên đã soi | ✅ **available** |
-
-### Tầng B — 6 ô · chấm **DUY NHẤT**: từ chối trung thực / bịa hình
-
-| Ô | Cần | `capability_tag` | oracle type | Trạng thái |
-|---|--:|---|---|---|
-| **B01–B06** | 6 | `out_of_capability` | `rejection_expected` — **bỏ trống `ĐÁP ÁN`** | **available** — dễ nhất về dữ liệu |
+Hai điều bảng sinh ra **không** nói được, giữ lại ở đây:
 
 ⚠️ **Hai thang KHÔNG gộp.** Tầng A hỏi *"tính đúng không"*, tầng B hỏi *"có biết
-mình không tính được không"*. Đưa `ĐÁP ÁN` vào ô B là trộn hai câu hỏi —
-`kiem_pool` chặn.
+mình không tính được không"*. Ô B mang `ĐÁP ÁN:` là trộn hai câu hỏi —
+`ingest` chặn. Đáp án của sách vẫn ghi được, bằng dòng **riêng**
+`ĐÁP ÁN NGUỒN:`, và dòng ấy **không bao giờ** thành `oracle_result`.
 
-⚠️ **A10 là bẫy im lặng duy nhất trong bảng.** Cặp đường–mặt trả **`sin²`**
-nhưng đi qua cùng tên trường `angle_cos_sq`. Khai `cos²` ở đó thì chấm sai mà
-không cổng nào báo.
-
-⛔ **A11 · A12 blocked** — không phải thiếu nguồn mà thiếu **quyết định**: chỉ
-nhận `distance` hữu tỉ (rủi ro không lấp nổi), hay mở một ô tầng B cho lớp vô
-tỉ (⇒ `N` đổi khỏi 20 ⇒ chốt lại ngân sách). 12 ô còn lại **không** chờ nó.
+⚠️ **A10 là bẫy im lặng duy nhất.** Cặp đường–mặt trả **`sin²`** nhưng đi qua
+cùng tên trường `angle_cos_sq`. Khai `cos²` ở đó thì chấm sai mà không cổng nào
+báo — nên bảng sinh ra dán cảnh báo ngay ô ấy, và có test khoá.
 
 **Ước lượng công**: tỉ lệ đạt 25% ⇒ soi ~160 bài cho 40 ô. Vùng tr 80–94 có
 2–3 bài/trang kèm lời giải ⇒ **≈ 60 trang**. Luật sàng loại phần lớn bằng liếc
