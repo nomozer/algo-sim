@@ -46,8 +46,11 @@ RA = GOC / "docs" / "evaluation" / "geometry" / "holdout" / \
 #: Số **khối phát ra** mỗi ô. Không phải hạn ngạch — xem docstring. Ô nào khó
 #: tìm thì phát dư hơn, vì cái đắt là mở lại tài liệu chứ không phải gõ thêm.
 PHAT: dict[str, int] = {
-    **{o: 2 for o in ("A01", "A02", "A03", "A04", "A05",
-                      "A06", "A07", "A08")},
+    # Bốn ô nới 2 → 3 (2026-08-28): mỗi ô nhận thêm một ứng viên SGK, và
+    # 38 ứng viên KHÔNG đủ cho ngưỡng `accepted >= 40` — khối trống chỉ là
+    # SỨC CHỨA, không phải ứng viên dự phòng.
+    **{o: 3 for o in ("A01", "A02", "A04", "A05")},
+    **{o: 2 for o in ("A03", "A06", "A07", "A08")},
     "A09": 3, "A10": 3, "A13": 3,
     # Khó nhất: `distance` phải ra HỮU TỈ. Phát dư nhất.
     "A11": 3, "A12": 3,
@@ -198,6 +201,11 @@ DA_SOI: dict[str, list[dict]] = {
     ],
     # ── Nguồn 2: Đường thẳng & mặt phẳng, QH song song Toán 11 CTST (410tr) ──
     "A01": [
+        {"nguon": "SGK Toán 11 Chân trời sáng tạo — **Bài 3 trang 106**, ý a) (lời giải: Loigiaihay)",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD đáy hình bình hành · tìm giao tuyến của (SCD) và (SAB)",
+         "vi_sao": "PASS 2 — giao tuyến xác định bởi QUAN HỆ SONG SONG (AB ∥ CD ⇒ giao tuyến qua S và ∥ AB), không phải bởi hai điểm chung. Đây là mẫu dựng khác hẳn hai ứng viên A01 kia",
+         "rui_ro": "trung bình — `phep_chuyen` ghi rõ: nguồn trả lời *đường qua S song song AB và CD*; nghĩa vụ `point_on_line` kiểm S thuộc giao tuyến ⇒ true"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
          "dap_an": "true",
          "goi_y": "tứ diện ABCD · G trọng tâm △BCD · giao tuyến (ACD) ∩ (GAB)",
@@ -219,6 +227,11 @@ DA_SOI: dict[str, list[dict]] = {
                    "*giao tuyến là SO*, chuyển thành `point_on_line` = true"},
     ],
     "A02": [
+        {"nguon": "SGK Toán 11 — **Bài 4.6 trang 94**, ý b) (lời giải: Loigiaihay)",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD đáy hình bình hành · G TRỌNG TÂM △SCD · tìm giao điểm của BG và (SAC)",
+         "vi_sao": "PASS 2 — chuỗi phụ thuộc SÂU NHẤT cả gói: trọng tâm G → trung điểm E của CD → giao đường-đường F = BE ∩ AC → giao tuyến SF → giao điểm I = BG ∩ SF. Kiểm số: G(1/3,2/3,1/3), E(1/2,1,0), F(2/3,2/3,0) — hữu tỉ hết",
+         "rui_ro": "thấp. Đề có nhiều ý — **chỉ chép ý b)**"},
         {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html",
          "dap_an": "true",
          "goi_y": "tứ giác ABCD có AC ∩ BD = O · S ngoài (ABCD) · M trên SC · giao điểm SD ∩ (ABM)",
@@ -335,6 +348,11 @@ DA_SOI: dict[str, list[dict]] = {
     ],
     # ── Nguồn 5–8: HTML + SBT, cho sáu ô cuối của Pass 1 ──
     "A04": [
+        {"nguon": "SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD đáy hình bình hành · G, K là TRỌNG TÂM △SAD và △SCD · chứng minh GK ∥ (ABCD)",
+         "vi_sao": "PASS 2 — hai trọng tâm trên hai mặt bên KHÁC nhau; lời giải nguồn đi qua H trung điểm SD và tỉ số HG/HA = HK/HC = 1/3 ⇒ GK ∥ AC. Kiểm số chính xác: G(0,1/3,1/3) K(1/3,2/3,1/3), GK ∥ AC và GK.z = 0",
+         "rui_ro": "thấp — nguồn SGK, đáp án là `true`"},
         {"nguon": "DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 32 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/",
          "dap_an": "true",
          "goi_y": "chóp S.ABCD đáy bình hành · M, N, P trên SA, SB, AD với SM/SA = SN/SB = PD/AD · chứng minh MN ∥ (ABCD)",
@@ -353,6 +371,11 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp. Đề gốc nhiều ý — **chỉ chép ý a)**"},
     ],
     "A05": [
+        {"nguon": "SGK Toán 11 — **Bài 4.17 trang 114** (lời giải: Loigiaihay)",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD đáy HÌNH THANG, AD đáy lớn, AD = 2BC · I, K, L trung điểm AD, SA, SD · chứng minh (SAB) ∥ (ILC)",
+         "vi_sao": "PASS 2 — đáy hình thang có TỈ SỐ RÀNG BUỘC (AD = 2BC), khác bình hành/tam giác của hai ứng viên kia. Lời giải nguồn ghép IL ∥ SA với IC ∥ AB",
+         "rui_ro": "thấp. Đề gốc chứng minh HAI cặp mặt — **chỉ chép cặp (SAB) ∥ (ILC)**; cặp (SCD) ∥ (BIK) để dành nếu cần"},
         {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 5 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song",
          "dap_an": "true",
          "goi_y": "chóp đáy HÌNH BÌNH HÀNH tâm O · M, N trung điểm · chứng minh hai mặt phẳng song song (theo bản đồ nguồn: (OMN) ∥ (SBC))",

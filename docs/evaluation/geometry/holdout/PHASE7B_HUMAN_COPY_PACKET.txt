@@ -58,10 +58,22 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 
 # ═══════════════════════════════════════════════════════════════════════
 #  NGUỒN 1 — Quan hệ song song Toán 11 (32tr, 0 trắc nghiệm)
-#  6 ô · 13 khối · ô: A01 A02 A03 A04 A05 A13
+#  6 ô · 17 khối · ô: A01 A02 A03 A04 A05 A13
 # ═══════════════════════════════════════════════════════════════════════
 
-#   ─── A01 (1/2) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
+#   ─── A01 (1/3) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
+#     CAPABILITY : intersection_point
+#     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABCD đáy hình bình hành · tìm giao tuyến của (SCD) và (SAB)
+#     VÌ SAO CHỌN: PASS 2 — giao tuyến xác định bởi QUAN HỆ SONG SONG (AB ∥ CD ⇒ giao tuyến qua S và ∥ AB), không phải bởi hai điểm chung. Đây là mẫu dựng khác hẳn hai ứng viên A01 kia
+#     RỦI RO     : trung bình — `phep_chuyen` ghi rõ: nguồn trả lời *đường qua S song song AB và CD*; nghĩa vụ `point_on_line` kiểm S thuộc giao tuyến ⇒ true
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: SGK Toán 11 Chân trời sáng tạo — **Bài 3 trang 106**, ý a) (lời giải: Loigiaihay)
+      ĐÁP ÁN: true
+
+#   ─── A01 (2/3) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
 #     CAPABILITY : intersection_point
 #     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -73,7 +85,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 3 (đề tr PDF 4) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
-#   ─── A01 (2/2) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
+#   ─── A01 (3/3) · Giao tuyến hai mặt phẳng — điểm thuộc giao tuyến ───
 #     CAPABILITY : intersection_point
 #     ANSWER     : invariant_relation → nghĩa vụ `point_on_line`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -85,7 +97,19 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Đường thẳng và mặt phẳng, quan hệ song song trong không gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 *Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; lời giải mục Dạng 1 tr 15+) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
-#   ─── A02 (1/2) · Điểm thuộc mặt phẳng ────────────────────────────
+#   ─── A02 (1/3) · Điểm thuộc mặt phẳng ────────────────────────────
+#     CAPABILITY : incidence
+#     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABCD đáy hình bình hành · G TRỌNG TÂM △SCD · tìm giao điểm của BG và (SAC)
+#     VÌ SAO CHỌN: PASS 2 — chuỗi phụ thuộc SÂU NHẤT cả gói: trọng tâm G → trung điểm E của CD → giao đường-đường F = BE ∩ AC → giao tuyến SF → giao điểm I = BG ∩ SF. Kiểm số: G(1/3,2/3,1/3), E(1/2,1,0), F(2/3,2/3,0) — hữu tỉ hết
+#     RỦI RO     : thấp. Đề có nhiều ý — **chỉ chép ý b)**
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: SGK Toán 11 — **Bài 4.6 trang 94**, ý b) (lời giải: Loigiaihay)
+      ĐÁP ÁN: true
+
+#   ─── A02 (2/3) · Điểm thuộc mặt phẳng ────────────────────────────
 #     CAPABILITY : incidence
 #     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -97,7 +121,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 2, Câu 13 (đề tr PDF 7) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
-#   ─── A02 (2/2) · Điểm thuộc mặt phẳng ────────────────────────────
+#   ─── A02 (3/3) · Điểm thuộc mặt phẳng ────────────────────────────
 #     CAPABILITY : incidence
 #     ANSWER     : predicate_boolean → nghĩa vụ `point_on_plane`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -133,7 +157,19 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG SONG SONG*, Câu 1 (đề tr PDF 100) · https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-he-song-song-trong-khong-gian-toan-11-ctst-2.html
       ĐÁP ÁN: true
 
-#   ─── A04 (1/2) · Đường thẳng song song mặt phẳng ─────────────────
+#   ─── A04 (1/3) · Đường thẳng song song mặt phẳng ─────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABCD đáy hình bình hành · G, K là TRỌNG TÂM △SAD và △SCD · chứng minh GK ∥ (ABCD)
+#     VÌ SAO CHỌN: PASS 2 — hai trọng tâm trên hai mặt bên KHÁC nhau; lời giải nguồn đi qua H trung điểm SD và tỉ số HG/HA = HK/HC = 1/3 ⇒ GK ∥ AC. Kiểm số chính xác: G(0,1/3,1/3) K(1/3,2/3,1/3), GK ∥ AC và GK.z = 0
+#     RỦI RO     : thấp — nguồn SGK, đáp án là `true`
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A04] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: SGK Toán 11 Kết nối tri thức — **Bài 4.44 trang 103**, ý a) (lời giải: Loigiaihay)
+      ĐÁP ÁN: true
+
+#   ─── A04 (2/3) · Đường thẳng song song mặt phẳng ─────────────────
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -145,7 +181,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 32 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/
       ĐÁP ÁN: true
 
-#   ─── A04 (2/2) · Đường thẳng song song mặt phẳng ─────────────────
+#   ─── A04 (3/3) · Đường thẳng song song mặt phẳng ─────────────────
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -157,7 +193,19 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: DeThi.edu.vn — *Bài tập tự luận Toán 11: Đường thẳng và mặt phẳng song song (có lời giải)*, Bài 31 **ý a)** · https://dethi.edu.vn/bai-tap-tu-luan-toan-11-duong-thang-va-mat-phang-song-song-co-loi-giai-27650/
       ĐÁP ÁN: true
 
-#   ─── A05 (1/2) · Hai mặt phẳng song song ─────────────────────────
+#   ─── A05 (1/3) · Hai mặt phẳng song song ─────────────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+#     ĐÃ SOI     : chóp S.ABCD đáy HÌNH THANG, AD đáy lớn, AD = 2BC · I, K, L trung điểm AD, SA, SD · chứng minh (SAB) ∥ (ILC)
+#     VÌ SAO CHỌN: PASS 2 — đáy hình thang có TỈ SỐ RÀNG BUỘC (AD = 2BC), khác bình hành/tam giác của hai ứng viên kia. Lời giải nguồn ghép IL ∥ SA với IC ∥ AB
+#     RỦI RO     : thấp. Đề gốc chứng minh HAI cặp mặt — **chỉ chép cặp (SAB) ∥ (ILC)**; cặp (SCD) ∥ (BIK) để dành nếu cần
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
+[A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: SGK Toán 11 — **Bài 4.17 trang 114** (lời giải: Loigiaihay)
+      ĐÁP ÁN: true
+
+#   ─── A05 (2/3) · Hai mặt phẳng song song ─────────────────────────
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -169,7 +217,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 5 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song
       ĐÁP ÁN: true
 
-#   ─── A05 (2/2) · Hai mặt phẳng song song ─────────────────────────
+#   ─── A05 (3/3) · Hai mặt phẳng song song ─────────────────────────
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
@@ -681,7 +729,7 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
       NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
 
 # ═══════════════════════════════════════════════════════════════════════
-#  HẾT — 47 khối / 20 ô.
-#  Cần ≥1 bài mỗi ô và ≥40 tổng ⇒ gói phát dư 7 khối làm dự phòng.
+#  HẾT — 51 khối / 20 ô.
+#  Cần ≥1 bài mỗi ô và ≥40 tổng ⇒ gói phát dư 11 khối làm dự phòng.
 #  Khối nào bỏ qua thì XOÁ NGUYÊN KHỐI, đừng để chỗ trống.
 # ═══════════════════════════════════════════════════════════════════════
