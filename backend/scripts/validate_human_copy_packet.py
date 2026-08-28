@@ -30,6 +30,7 @@ GOC = BACKEND.parent
 POOL = GOC / "docs" / "evaluation" / "geometry" / "holdout" / "pool.json"
 
 _KHOI = re.compile(r"^\s*\[([AB]\d{2})\]", re.M)
+_NGUON = re.compile(r"^[ \t]*NGUỒN[ \t]*:[ \t]*(.+?)[ \t]*$", re.M)
 
 #: Ký hiệu hình học **phải** xuất hiện ở ô nào — dạng chữ hoặc dạng ký tự.
 #: Cảnh báo chứ không loại: đề có thể diễn đạt khác. Nhưng nó bắt đúng cái
@@ -114,10 +115,37 @@ def soi(van_ban: str, SH, IN) -> dict:
     trung = sorted({i for i in ids if ids.count(i) > 1}
                    | ({c["case_id"] for c in co_san} & set(ids)))
 
+    # ── PHÂN LOẠI khối chưa điền: CẦN CHÉP vs RESERVE ────────────────────
+    #
+    # Khối đã prefill `NGUỒN:` là **ứng viên máy đã tìm và xác minh** — người
+    # chép phải gõ đề vào đó. Khối để trống hoàn toàn là **sức chứa dự phòng**,
+    # dùng khi có ứng viên bị loại lúc `ingest`.
+    #
+    # Trước bản này validator gộp cả hai thành một số "còn trống", nên gói 51
+    # khối / 42 ứng viên báo *"50 còn trống"* khi mới chép 1 — người chép tưởng
+    # còn 50 việc trong khi chỉ còn 41. Đếm sai theo hướng làm nản.
+    can_chep: list[str] = []
+    reserve = 0
+    for i, v in enumerate(vt := [m.start() for m in _KHOI.finditer(van_ban)]):
+        than = van_ban[v:vt[i + 1] if i + 1 < len(vt) else len(van_ban)]
+        du_lieu = "\n".join(d for d in than.splitlines()
+                            if not d.lstrip().startswith("#"))
+        if not _con_trong(du_lieu):
+            continue                      # đã chép xong
+        # BẮT giá trị rồi kiểm, KHÔNG dùng lookahead sau `\s*`: `\s*` quay lui
+        # về rỗng rồi lookahead soi nhầm dấu cách, nên `NGUỒN: <…>` (khối
+        # reserve) vẫn khớp và 9 khối reserve bị đếm thành việc phải làm.
+        g = _NGUON.search(than)
+        if g and not _con_trong(g.group(1)):
+            can_chep.append(than[1:4])    # có nguồn thật ⇒ còn phải chép
+        else:
+            reserve += 1
+
     theo_o: dict[str, int] = {}
     for b in bai:
         theo_o[b["o"]] = theo_o.get(b["o"], 0) + 1
     return {"nguoi": ky, "bai": bai, "loi": loi, "canh": canh, "trung": trung,
+            "can_chep": can_chep, "reserve": reserve,
             "tong_khoi": tong_khoi, "bo_trong": bo_trong, "theo_o": theo_o,
             "o_trong": [o for o in SH.BANG_O if not theo_o.get(o)],
             "da_co_trong_pool": len([c for c in co_san
@@ -133,9 +161,18 @@ def main() -> int:
     r = soi(Path(a.goi).read_text(encoding="utf-8"), SH, IN)
 
     n = len(r["bai"])
+    ung_vien = n + len(r["can_chep"])
     print(f"CHỮ KÝ    : {r['nguoi'] or '⛔ THIẾU'}")
-    print(f"KHỐI      : {r['tong_khoi']} tổng · {n} đã điền · "
-          f"{r['bo_trong']} còn trống (bỏ qua khi soi)")
+    print(f"TIẾN ĐỘ   : đã chép {n}/{ung_vien} ứng viên · "
+          f"còn {len(r['can_chep'])}")
+    if r["can_chep"]:
+        import collections as _c
+        con = _c.Counter(r["can_chep"])
+        print("            còn phải chép: "
+              + " ".join(f"{o}×{k}" if k > 1 else o
+                         for o, k in sorted(con.items())))
+    print(f"            + {r['reserve']} khối RESERVE — bỏ trống là ĐÚNG, "
+          f"chỉ dùng khi có ứng viên bị loại lúc ingest")
     du = n + r["da_co_trong_pool"]
     print(f"NGƯỠNG    : {du}/{SH.TONG_TOI_THIEU} bài · "
           f"phủ {len(SH.BANG_O) - len(r['o_trong'])}/{len(SH.BANG_O)} ô")

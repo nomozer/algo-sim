@@ -1798,3 +1798,33 @@ def test_moi_o_phat_DU_khoi_cho_so_ung_vien_da_co(PK):
     for o, v in PK.DA_SOI.items():
         assert PK.PHAT[o] >= len(v), \
             f"{o}: có {len(v)} ứng viên nhưng chỉ phát {PK.PHAT[o]} khối"
+
+
+# ══ VALIDATOR PHẢI TÁCH "CẦN CHÉP" KHỎI "RESERVE" ════════════════════════
+def test_validator_KHONG_dem_khoi_reserve_thanh_viec_phai_lam(PK, VL, SH, GOI):
+    """Gói 51 khối / 42 ứng viên: khối reserve KHÔNG phải việc của người chép.
+
+    Bản trước gộp cả hai thành một số "còn trống" nên báo 50 việc khi chỉ còn
+    41 — đếm sai theo hướng làm nản. Nguyên nhân là `\s*` quay lui vô hiệu
+    hoá lookahead `(?!<)`, khiến `NGUỒN: <…>` của khối reserve vẫn khớp.
+    """
+    IN = _nap("ingest_holdout_batch")
+    t = GOI.replace("NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>",
+                    "NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test")
+    r = VL.soi(t, SH, IN)
+    ung_vien = sum(len(v) for v in PK.DA_SOI.values())
+    assert len(r["can_chep"]) == ung_vien, \
+        f"cần chép {len(r['can_chep'])}, phải bằng số ứng viên {ung_vien}"
+    assert r["reserve"] == sum(PK.PHAT.values()) - ung_vien
+    assert r["reserve"] > 0, "gói phải còn khối dự phòng"
+
+
+def test_bo_hoan_tat_KHONG_lap_lai_nghiep_vu_cua_duong_ong(PK):
+    """`finalize` chỉ được ORCHESTRATE — nghiệp vụ nằm ở script gốc."""
+    src = (SCRIPTS / "finalize_phase7b_holdout.py").read_text(encoding="utf-8")
+    assert "DP.main()" in src, "phải gọi lại run_phase7b_data_pipeline"
+    # Đo LỜI GỌI, không đo chữ: tên hàm nhắc trong docstring là giải thích,
+    # không phải chép nghiệp vụ. Đo thô thì test đỏ vì một câu văn.
+    for cam in ("check_capability_boundary", "kiem_pool", "eval_geometry_expr"):
+        assert not re.search(rf"\b\w*\.?{cam}\s*\(", src), \
+            f"{cam}() bị GỌI trong bộ hoàn tất — nghiệp vụ phải ở script gốc"

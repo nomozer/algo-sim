@@ -2880,6 +2880,13 @@ góc* / `⊥`, A03–A05 không nhắc *song song* / `∥`, v.v. Bắt đúng c�
 được — trích PDF rơi sạch `⊥` (0 lần trong 217 trang) mà văn bản **vẫn đọc trôi
 chảy**. Cảnh báo, không tự loại.
 
+**Tách `cần chép` khỏi `reserve`** (2026-08-28): khối đã prefill `NGUỒN:` là
+ứng viên máy đã xác minh, người chép phải gõ đề vào; khối để trống hoàn toàn là
+**sức chứa**. Bản trước gộp cả hai nên gói 51 khối / 42 ứng viên báo *"50 còn
+trống"* khi mới chép 1 — đếm sai theo hướng làm nản. Nguyên nhân là `\s*` quay
+lui vô hiệu hoá lookahead `(?!<)`, khiến `NGUỒN: <…>` của khối reserve vẫn khớp;
+nay **bắt giá trị rồi kiểm** thay vì lookahead.
+
 ⚠️ `PACKET_READY: YES` **không** nói đề đúng nguyên văn nguồn — máy không kiểm
 được điều đó, và giả vờ kiểm được là bỏ đúng cái cổng `NGƯỜI CHÉP:` vừa dựng.
 
@@ -2901,6 +2908,24 @@ với 47 khối thì *"có lỗi ở đâu đó"* là câu không dùng được
 Chế độ soi cộng thêm phần *sẽ* ghi trước khi tính ngưỡng — đọc thẳng pool trên
 đĩa thì ngưỡng báo `0` ngay dưới dòng coverage vừa báo `2`, hai con số cùng màn
 hình cãi nhau.
+
+### `backend/scripts/finalize_phase7b_holdout.py` · offline · **0 API call**
+
+MỘT lệnh chạy **sau khi người chép xong gói**. Export: `main`. Nó **không thêm
+chặng nào** — gọi lại `run_phase7b_data_pipeline` rồi trả lời một câu mà dây
+chuyền ấy không trả lời: *sau khi nạp, còn thiếu bao nhiêu và vì sao bài nào bị
+loại*. Khoá bởi `test_bo_hoan_tat_KHONG_lap_lai_nghiep_vu_cua_duong_ong` (đo
+**lời gọi**, không đo chữ — tên hàm trong docstring là giải thích).
+
+**Vì sao đáng có**: một con số đã sai một lần — **42 ứng viên KHÔNG phải 42
+`accepted`**. Báo cáo tách bạch `CANDIDATES / ACCEPTED / REJECTED` và không bao
+giờ in số gộp. Thoát `1` khi chưa đủ ngưỡng nhưng **vẫn in báo cáo** (đó chính
+là lúc cần nó nhất); chỉ `2` — hỏng dữ liệu — mới dừng sớm.
+
+**Ba loại ô trống, tách riêng, vì gộp là giấu mất loại nguy hiểm nhất**: `A12`
+chưa từng có nguồn (biết trước) · ô **chưa chép** (bình thường, không phải lỗi)
+· **`DATA_GAP` MỚI** — đã chép mà nạp vào mất sạch, đây mới là dấu hiệu vừa
+hỏng. Khi còn ứng viên chưa chép thì **không** kết luận "cần thu thêm N bài".
 
 ### `backend/scripts/scaffold_expectation.py` · offline · **0 API call**
 
