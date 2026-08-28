@@ -870,3 +870,37 @@ A12 = REJECTED
 ⚠️ Bài học tổng quát, đáng ghi hơn cả ca này: **kiểm phép tính KHÔNG thay được
 kiểm nguồn.** Toán đúng mà nguồn ghi khác thì bài vẫn hỏng — và nó hỏng theo
 hướng khó thấy, vì chính vì ta tính ra số đẹp nên ta muốn tin.
+
+### 7j. Pass 1 — bản đồ nguồn sau khi rà 5 tài liệu (2026-08-28)
+
+`PASS1_COVERAGE = 13/20`. Bảy ô còn lại chia làm **hai loại rất khác nhau** —
+gộp chúng vào một chữ "còn thiếu" là mất thông tin.
+
+#### Loại 1 — CHƯA LÀM, không phải không làm được (4 ô)
+
+| Ô | Nguồn đã chỉ ra, chưa mở |
+|---|---|
+| A04 | DeThi.edu — *Đường thẳng và mặt phẳng song song*, HTML có đề + lời giải |
+| A05 | Kênh Giáo Viên — *Hai mặt phẳng song song*, 17 câu tự luận |
+| B06 | Kênh Giáo Viên — *Phép chiếu song song* |
+| B04 | Chuyên đề *Phương trình mặt phẳng* (267tr, đã tải) — mới thấy phần lý thuyết, chưa định vị mục tự luận |
+
+#### Loại 2 — ĐÃ CHỨNG MINH KHÔNG CÓ trong nguồn đã rà (3 ô)
+
+**A06** *(chứng minh hai đường thẳng vuông góc)* — vắng mặt ở **cả hai** tài
+liệu QHVG. Đối chiếu KNTTVCS tr 2 với CTST tr 2: **danh sách bài giống hệt
+nhau**, và cả hai đều là bài **TÍNH GÓC** (tức A09). Phần *"DẠNG 2. HAI ĐƯỜNG
+THẲNG VUÔNG GÓC"* nằm ở mục **trắc nghiệm** (tr 20). Ứng viên duy nhất có dạng
+chứng minh — CTST Câu 6, hình hộp thoi, `ABC = B'BA = B'BC = 60°` — cho toạ độ
+vô tỉ ⇒ loại.
+
+**B02** *(khoảng cách đường ∥ mặt, mặt ∥ mặt)* — quét toàn bộ phần tự luận của
+**cả hai** tài liệu: **0 bài**. Cả hai chỉ có `BÀI TOÁN 1` (điểm→mặt) và
+`BÀI TOÁN 2` (hai đường chéo nhau). Khoảng cách song song chỉ xuất hiện ở phần
+**lý thuyết** (CTST tr 214 — *"Chú ý"* của định nghĩa), không thành bài tập.
+
+**A12** — `SOURCE_GAP_CONFIRMED`, xem §7f–7i.
+
+> Cả ba đều là **lỗ của thể loại tài liệu**, không phải của lượt tìm: sách
+> chuyên đề Việt dạy *tính*, không dạy *chứng minh*, và bỏ hẳn lớp khoảng cách
+> song song vì nó quy về hai lớp kia.
