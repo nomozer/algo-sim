@@ -74,16 +74,25 @@ DA_SOI: dict[str, list[dict]] = {
          "kiem_gi": "đã đọc ẢNH trang PDF 80 (nhãn 'Page 16'), Câu 1: khớp nguyên văn, lời giải in V = 2a³/3. Chỉ cần liếc lại AB = a và AC = 2a",
          "rui_ro": "thấp nhất trong vùng đã soi"},
         {"nguon": "Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — "
-                  "trang 82, Câu 7 · https://toanmath.com/2023/07/tai-lieu-"
-                  "chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html",
-         "dap_an": "8/3",
-         "goi_y": "đáy chữ nhật · SA ⊥ (ABCD) · AB = 3a · AD = 2a · SB = 5a",
-         "vi_sao": "đi qua Pythagoras mà VẪN hữu tỉ (bộ ba 3-4-5)",
-         "de": "<TRÍCH DẪN KHÔNG TRA RA ĐƯỢC — xem CẦN KIỂM GÌ>",
-         "rui_ro_muc": "HIGH",
-         "kiem_gi": "⛔ Trích dẫn 'trang 82, Câu 7' KHÔNG khớp tài liệu: PDF tr 82 là Câu 6 (đáy hình vuông, SA = a√3), và quét tr 60–110 không thấy bài AB = 3a, AD = 2a, SB = 5a. Hoặc tìm lại đúng vị trí, hoặc THAY ứng viên. Gợi ý đã soi: PDF tr 91 ('Page 27') Câu 2 — đáy chữ nhật AB = a, AD = 2a, d(A,(SBD)) = 2a/3, tính V; kiểm nhanh cho SA = a ⇒ V = 2a³/3, hữu tỉ, và là dạng NGƯỢC (cho khoảng cách, tìm thể tích)",
-         "rui_ro": "trung bình — SA là SUY RA, phải xác nhận lời giải nguồn "
-                   "cho V = 8a³/3 chứ đừng tự tính"},
+                  "**trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2 · "
+                  "https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-"
+                  "dien-va-the-tich-khoi-da-dien.html",
+         "de": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, "
+               "AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A "
+               "đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.",
+         "rui_ro_muc": "MEDIUM",
+         "kiem_gi": "đã đọc ẢNH trang: AB = a, AD = 2a, d(A,(SBD)) = 2a/3, và "
+                    "lời giải in SA = a ⇒ V = 2a³/3. Liếc lại ba số ấy",
+         "dap_an": "2/3",
+         "goi_y": "đáy chữ nhật AB = a, AD = 2a · SA ⊥ đáy · CHO khoảng cách "
+                  "d(A,(SBD)) = 2a/3 · hỏi thể tích",
+         "vi_sao": "THAY ứng viên cũ có trích dẫn hỏng. Dạng NGƯỢC — cho "
+                   "khoảng cách, tìm thể tích — khác hẳn hai ứng viên A14 kia. "
+                   "Toạ độ hữu tỉ: A(0,0,0) B(1,0,0) D(0,2,0) S(0,0,1), và cả "
+                   "chân đường vuông góc E(4/5,2/5,0) cũng hữu tỉ",
+         "rui_ro": "trung bình. Độ dài trung gian AE = 2a/√5 CÓ CĂN, nhưng "
+                   "ĐIỂM E vẫn hữu tỉ và câu hỏi là THỂ TÍCH — kernel không "
+                   "phải tính AE"},
     ],
     # Tìm được 2026-08-28 sau khi rà 3 genre nguồn — xem
     # `HOLDOUT_ACQUISITION_LOG §7e`. Đây là ứng viên A11 DUY NHẤT có đáp án
@@ -475,14 +484,6 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro_muc": 'LOW',
          "kiem_gi": 'ba trung điểm trên ba cạnh bên SA, SB, SC',
          "rui_ro": "thấp. Đề gốc chứng minh HAI cặp mặt — **chỉ chép cặp (SAB) ∥ (ILC)**; cặp (SCD) ∥ (BIK) để dành nếu cần"},
-        {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 5 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song",
-         "dap_an": "true",
-         "goi_y": "chóp đáy HÌNH BÌNH HÀNH tâm O · M, N trung điểm · chứng minh hai mặt phẳng song song (theo bản đồ nguồn: (OMN) ∥ (SBC))",
-         "vi_sao": "PASS 2 — dùng TÂM O của đáy làm điểm dựng, và chuỗi lập luận đi qua HAI quan hệ đường-mặt rồi mới ghép; khác hẳn ba trung điểm của Câu 4",
-         "de": '<CHƯA CHÉP ĐƯỢC — bản trích trang rơi mất tên điểm; xem CẦN KIỂM GÌ>',
-         "rui_ro_muc": 'HIGH',
-         "kiem_gi": "bản trích rơi TOÀN BỘ tên điểm ('gọi … lần lượt là trung điểm của …'). PHẢI mở nguồn gõ lại đề; theo bản đồ nguồn là đáy hình bình hành tâm O, chứng minh (OMN) ∥ (SBC)",
-         "rui_ro": "⚠️ CAO NHẤT trong gói: bản trích trang RƠI MẤT TÊN ĐIỂM ('gọi lần lượt là trung điểm của'). Phải mở nguồn đối chiếu tên điểm trước khi chép — đừng tin phần gợi ý này"},
         {"nguon": "Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 "
                   "Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · "
                   "https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-"
@@ -742,8 +743,12 @@ def _khoi(o: str, SH, MT, da_soi: dict | None,
     if tang_a:
         d.append(f"      ĐÁP ÁN: {da_soi['dap_an'] if da_soi else '<đáp án của nguồn, dạng phân số hoặc true/false>'}")
     else:
-        d += ["      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>",
-              f"      NGOÀI PHỦ VÌ: {SH.BANG_O[o][1]} — ngoài ranh giới kernel"]
+        # Tầng B KHÔNG còn ô `ĐÁP ÁN NGUỒN` bắt buộc: bộ chấm không đọc nó
+        # (xem `PROTOCOL_AMENDMENT_PRESEAL`). Dòng `NGUỒN:` đã chỉ đúng vị trí
+        # lời giải, và đó là thứ duy nhất cần chứng minh.
+        d.append(f"      NGOÀI PHỦ VÌ: {SH.BANG_O[o][1]} — ngoài ranh giới kernel")
+        if da_soi and da_soi.get("dap_an"):
+            d.append(f"      ĐÁP ÁN NGUỒN: {da_soi['dap_an']}   (tuỳ chọn, KHÔNG dùng để chấm)")
     d.append("")
     return d
 

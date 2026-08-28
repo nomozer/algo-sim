@@ -211,10 +211,12 @@ def phan_tich(van_ban: str, SH) -> tuple[str | None, list[dict], list[str]]:
             if dap_an:
                 loi.append(f"{ma}: ô tầng B chấm bằng 'từ chối trung thực', "
                            "KHÔNG được có `ĐÁP ÁN:`")
-            if not dap_an_nguon:
-                loi.append(f"{ma}: ô tầng B phải có dòng `ĐÁP ÁN NGUỒN:` — "
-                           "đáp án của sách, ghi để người sau thấy hệ đang từ "
-                           "chối tính CÁI GÌ. Nó KHÔNG được dùng để chấm.")
+            # `ĐÁP ÁN NGUỒN:` nay TUỲ CHỌN — `PROTOCOL_AMENDMENT_PRESEAL`
+            # 2026-08-28. Audit cho thấy bộ chấm không đọc nó, và tầng B bị
+            # cấm có `oracle_result`, nên nó thuần xuất xứ. Cái BẮT BUỘC là
+            # chứng minh lời giải TỒN TẠI và TRA ĐƯỢC — dòng `NGUỒN:` đã
+            # mang vị trí bài, nên nó chính là `nguon_loi_giai`.
+            pass
             if not ngoai_phu:
                 loi.append(f"{ma}: ô tầng B phải có dòng `NGOÀI PHỦ VÌ:` — "
                            "nêu bài vượt ranh giới ở đâu (mặt cong · khoảng "
@@ -289,6 +291,10 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
         # bài vượt ranh giới ở ĐÂU, và `kiem_pool` đòi nó. Suy hộ thì mất đúng
         # phán đoán đang muốn ghi lại.
         c["ly_do_ngoai_phu"] = b.get("ngoai_phu")
+        # Xuất xứ lời giải cho tầng B: chứng minh bài có lời giải và tra
+        # ngược được, thay cho việc chép nguyên văn một đáp án không ai chấm.
+        c["nguon_loi_giai"] = b["nguon"]
+        c["source_solution_present"] = True
     if tag in SH.DOI_DOMAIN_CONDITION:
         c["domain_condition"] = ("CẦN NGƯỜI KHAI: thẻ này chỉ đúng dưới một "
                                  "điều kiện miền — xem CAPABILITY_BOUNDARY.")

@@ -235,20 +235,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CAPABILITY : parallel_relation
 #     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
 #     THANG CHẤM : oracle + ③a/③b/⑤
-#     ĐÃ SOI     : chóp đáy HÌNH BÌNH HÀNH tâm O · M, N trung điểm · chứng minh hai mặt phẳng song song (theo bản đồ nguồn: (OMN) ∥ (SBC))
-#     VÌ SAO CHỌN: PASS 2 — dùng TÂM O của đáy làm điểm dựng, và chuỗi lập luận đi qua HAI quan hệ đường-mặt rồi mới ghép; khác hẳn ba trung điểm của Câu 4
-#     RỦI RO     : ⚠️ CAO NHẤT trong gói: bản trích trang RƠI MẤT TÊN ĐIỂM ('gọi lần lượt là trung điểm của'). Phải mở nguồn đối chiếu tên điểm trước khi chép — đừng tin phần gợi ý này
-#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : HIGH   ← PHẢI mở nguồn đối chiếu
-#     CẦN KIỂM GÌ: bản trích rơi TOÀN BỘ tên điểm ('gọi … lần lượt là trung điểm của …'). PHẢI mở nguồn gõ lại đề; theo bản đồ nguồn là đáy hình bình hành tâm O, chứng minh (OMN) ∥ (SBC)
-[A05] <CHƯA CHÉP ĐƯỢC — bản trích trang rơi mất tên điểm; xem CẦN KIỂM GÌ>
-      NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 5 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song
-      ĐÁP ÁN: true
-
-#   ─── A05 (3/3) · Hai mặt phẳng song song ─────────────────────────
-#     CAPABILITY : parallel_relation
-#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
-#     THANG CHẤM : oracle + ③a/③b/⑤
 #     ĐÃ SOI     : chóp S.ABC · M, N, P trung điểm SA, SB, SC · chứng minh (MNP) ∥ (ABC)
 #     VÌ SAO CHỌN: ba trung điểm ⇒ toạ độ hữu tỉ. Nghĩa vụ `parallel` MẶT–MẶT, đúng thứ ô A05 đòi. Lời giải hiện ngay trên trang
 #     RỦI RO     : thấp — ứng viên gọn nhất trong nhóm song song
@@ -258,6 +244,14 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 [A05] Cho hình chóp S.ABCD có đáy là hình thang, AD là đáy lớn và AD = 2BC. Gọi I, K, L lần lượt là trung điểm của AD, SA, SD. Chứng minh (SAB) // (ILC).
       NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 CTST, Chương 4 Bài 4: Hai mặt phẳng song song*, phần NHẬN BIẾT, Câu 4 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-chan-troi-sang-tao-chuong-4-bai-4-hai-mat-phang-song-song
       ĐÁP ÁN: true
+
+#   ─── A05 (3/3) · Hai mặt phẳng song song ─────────────────────────
+#     CAPABILITY : parallel_relation
+#     ANSWER     : predicate_boolean → nghĩa vụ `parallel`
+#     THANG CHẤM : oracle + ③a/③b/⑤
+[A05] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
+      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
 
 #   ─── A13 (1/3) · Thiết diện / bốn điểm đồng phẳng ────────────────
 #     CAPABILITY : coplanar_section
@@ -606,15 +600,15 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     ANSWER     : exact_fraction → nghĩa vụ `volume`
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     TÌM BÀI    : Thể tích. Gán `a = 1` rồi chép phân số (`2a³/3` → `2/3`).
-#     ĐÃ SOI     : đáy chữ nhật · SA ⊥ (ABCD) · AB = 3a · AD = 2a · SB = 5a
-#     VÌ SAO CHỌN: đi qua Pythagoras mà VẪN hữu tỉ (bộ ba 3-4-5)
-#     RỦI RO     : trung bình — SA là SUY RA, phải xác nhận lời giải nguồn cho V = 8a³/3 chứ đừng tự tính
+#     ĐÃ SOI     : đáy chữ nhật AB = a, AD = 2a · SA ⊥ đáy · CHO khoảng cách d(A,(SBD)) = 2a/3 · hỏi thể tích
+#     VÌ SAO CHỌN: THAY ứng viên cũ có trích dẫn hỏng. Dạng NGƯỢC — cho khoảng cách, tìm thể tích — khác hẳn hai ứng viên A14 kia. Toạ độ hữu tỉ: A(0,0,0) B(1,0,0) D(0,2,0) S(0,0,1), và cả chân đường vuông góc E(4/5,2/5,0) cũng hữu tỉ
+#     RỦI RO     : trung bình. Độ dài trung gian AE = 2a/√5 CÓ CĂN, nhưng ĐIỂM E vẫn hữu tỉ và câu hỏi là THỂ TÍCH — kernel không phải tính AE
 #     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
-#     RỦI RO     : HIGH   ← PHẢI mở nguồn đối chiếu
-#     CẦN KIỂM GÌ: ⛔ Trích dẫn 'trang 82, Câu 7' KHÔNG khớp tài liệu: PDF tr 82 là Câu 6 (đáy hình vuông, SA = a√3), và quét tr 60–110 không thấy bài AB = 3a, AD = 2a, SB = 5a. Hoặc tìm lại đúng vị trí, hoặc THAY ứng viên. Gợi ý đã soi: PDF tr 91 ('Page 27') Câu 2 — đáy chữ nhật AB = a, AD = 2a, d(A,(SBD)) = 2a/3, tính V; kiểm nhanh cho SA = a ⇒ V = 2a³/3, hữu tỉ, và là dạng NGƯỢC (cho khoảng cách, tìm thể tích)
-[A14] <TRÍCH DẪN KHÔNG TRA RA ĐƯỢC — xem CẦN KIỂM GÌ>
-      NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — trang 82, Câu 7 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
-      ĐÁP ÁN: 8/3
+#     RỦI RO     : MEDIUM
+#     CẦN KIỂM GÌ: đã đọc ẢNH trang: AB = a, AD = 2a, d(A,(SBD)) = 2a/3, và lời giải in SA = a ⇒ V = 2a³/3. Liếc lại ba số ấy
+[A14] Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = a, AD = 2a; cạnh bên SA vuông góc với đáy. Khoảng cách từ điểm A đến mặt phẳng (SBD) bằng 2a/3. Tính thể tích khối chóp S.ABCD.
+      NGUỒN: Tài liệu chuyên đề khối đa diện và thể tích khối đa diện — **trang PDF 91** (nhãn trong tài liệu: 'Page 27'), Câu 2 · https://toanmath.com/2023/07/tai-lieu-chuyen-de-khoi-da-dien-va-the-tich-khoi-da-dien.html
+      ĐÁP ÁN: 2/3
 
 #   ─── A14 (3/4) · Thể tích khối chóp hoặc lăng trụ ────────────────
 #     CAPABILITY : rational_volume
@@ -652,7 +646,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: chỉ số dưới A1, B1, C1; đề dùng lẫn CC' và CC1 — chép đúng như in
 [B01] Cho hình lăng trụ đứng ABC.A1B1C1 có tam giác ABC vuông cân tại A, AB = a, CC' = 2a. Khoảng cách giữa hai đường thẳng AA1 và BC1 bằng bao nhiêu?
       NGUỒN: Chuyên đề QHVG Toán 11 (KNTTVCS, 704tr) — B26.1 **PHẦN TỰ LUẬN**, *BÀI TOÁN 2*, Câu 26 (đề tr PDF 300) · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
 
 #   ─── B01 (2/2) · Khoảng cách giữa hai đường thẳng chéo nhau ──────
@@ -667,7 +660,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: mặt bên SBC ĐỀU cạnh a; (SBC) ⊥ đáy
 [B01] Cho hình chóp S.ABC có đáy ABC là tam giác vuông cân tại A, mặt bên SBC là tam giác đều cạnh a và mặt phẳng (SBC) vuông góc với mặt đáy. Khoảng cách giữa hai đường thẳng SA và BC bằng bao nhiêu?
       NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 (đề tr PDF 300 = 'Page 59') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
 
 #   ─── B02 (1/2) · Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt ─────────
@@ -682,7 +674,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: ý b) của bài 7.27; mặt phẳng (A'B'C'D') là mặt TRÊN
 [B02] Cho hình lập phương ABCD.A'B'C'D' cạnh a. b) Tính khoảng cách giữa đường thẳng AC và mặt phẳng (A'B'C'D').
       NGUỒN: SBT Toán 11 Kết nối tri thức — **Bài 7.27 trang 37**, ý b)
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt — ngoài ranh giới kernel
 
 #   ─── B02 (2/2) · Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt ─────────
@@ -691,7 +682,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
 [B02] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
       NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách đường ∥ mặt, hoặc mặt ∥ mặt — ngoài ranh giới kernel
 
 #   ─── B03 (1/2) · Góc nhị diện có miền (có thể tù) ────────────────
@@ -706,7 +696,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: hai số 98 m và 180 m
 [B03] Cho biết kim tự tháp Memphis tại bang Tennessee (Mỹ) có dạng hình chóp tứ giác đều với chiều cao 98 m và cạnh đáy 180 m. Tính số đo góc nhị diện tạo bởi mặt bên và mặt đáy?
       NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 4 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Góc nhị diện có miền (có thể tù) — ngoài ranh giới kernel
 
 #   ─── B03 (2/2) · Góc nhị diện có miền (có thể tù) ────────────────
@@ -721,7 +710,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: ký hiệu nhị diện dạng [X,YZ,T] — chép đủ dấu ngoặc vuông và dấu phẩy
 [B03] Cho hình lập phương ABCD.A'B'C'D' cạnh a. Xác định và tính góc phẳng nhị diện: a) [A,BD,A']; b) [C,BD,A'].
       NGUỒN: Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* (14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 6 (đề tr PDF 2) · https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-dien-toan-11.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Góc nhị diện có miền (có thể tù) — ngoài ranh giới kernel
 
 #   ─── B04 (1/2) · Oxyz: viết phương trình mặt phẳng / đường / mặt cầu ───
@@ -736,7 +724,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: toạ độ A(1;2;−2), B(2;−1;4) và hệ số của (β) — kiểm từng dấu âm
 [B04] Trong không gian Oxyz, viết phương trình mặt phẳng (α) đi qua điểm A(1;2;-2), B(2;-1;4) và vuông góc với (β): x - 2y - z + 1 = 0.
       NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 5**, Câu 1 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
 
 #   ─── B04 (2/2) · Oxyz: viết phương trình mặt phẳng / đường / mặt cầu ───
@@ -751,7 +738,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: M(−1;−2;5) và hệ số của (Q), (R) — kiểm từng dấu âm
 [B04] Trong không gian Oxyz, viết phương trình mặt phẳng (P) đi qua điểm M(-1;-2;5) và vuông góc với hai mặt phẳng (Q): x + 2y - 3z + 1 = 0 và (R): 2x - 3y + z + 1 = 0.
       NGUỒN: Chuyên đề *Phương trình mặt phẳng* (267tr) — mục `TU-LUAN_DE`, **Dạng 4**, Câu 1 (đề tr PDF 5 = 'Page 55'; lời giải mục `TU-LUAN_HDG-CHI-TIET` tr 13–35) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-phuong-trinh-mat-phang.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Oxyz: viết phương trình mặt phẳng / đường / mặt cầu — ngoài ranh giới kernel
 
 #   ─── B05 (1/2) · Mặt cầu · mặt nón · mặt trụ ─────────────────────
@@ -766,7 +752,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: r = 3cm, l = 5cm; ý a)
 [B05] Cho hình nón có bán kính đáy r = 3cm và đường sinh l = 5cm. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.
       NGUỒN: Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1, Câu 2 (đề tr PDF 5) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Mặt cầu · mặt nón · mặt trụ — ngoài ranh giới kernel
 
 #   ─── B05 (2/2) · Mặt cầu · mặt nón · mặt trụ ─────────────────────
@@ -781,7 +766,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: vuông tại O; OA = 3cm, SA = 5cm; quay quanh SO
 [B05] Cho tam giác SOA vuông tại O có OA = 3cm, SA = 5cm, quay tam giác SOA xung quanh cạnh SO được hình nón. a) Tính diện tích xung quanh và diện tích toàn phần của hình nón.
       NGUỒN: Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — **HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1 *hình nón*, Câu 1 **ý a)** (đề tr PDF 5; lời giải tr 19+) · https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-mat-tru-mat-cau.html
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Mặt cầu · mặt nón · mặt trụ — ngoài ranh giới kernel
 
 #   ─── B06 (1/2) · Phép toán vectơ, hoặc phép chiếu song song ──────
@@ -796,7 +780,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: I là TRỌNG TÂM ABC; phương chiếu CD; mặt phẳng chiếu (ABD)
 [B06] Cho tứ diện ABCD. I là trọng tâm tam giác ABC. Xác định hình chiếu song song của I theo phương CD lên mặt phẳng (ABD).
       NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần VẬN DỤNG, Câu 1 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
 
 #   ─── B06 (2/2) · Phép toán vectơ, hoặc phép chiếu song song ──────
@@ -811,7 +794,6 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · đã đối chiếu HIGH_RISK v�
 #     CẦN KIỂM GÌ: phương chiếu là SA; mặt phẳng chiếu là (P)
 [B06] Vẽ hình chiếu của hình chóp S.ABCD lên mặt phẳng (P) theo phương chiếu SA.
       NGUỒN: Kênh Giáo Viên — *Bài tập tự luận Toán 11 KNTT, Bài 14: Phép chiếu song song*, phần NHẬN BIẾT, Câu 3 · https://kenhgiaovien.com/tai-lieu/bai-tap-file-word-toan-11-ket-noi-bai-14-phep-chieu-song-song
-      ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Phép toán vectơ, hoặc phép chiếu song song — ngoài ranh giới kernel
 
 # ═══════════════════════════════════════════════════════════════════════

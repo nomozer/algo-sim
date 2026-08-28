@@ -371,7 +371,19 @@ def kiem_pool(cases: list[dict]) -> list[str]:
         if o not in BANG_O:
             loi.append(f"{cid}: slot {o!r} không có trong BANG_O")
             continue
-        for truong in ("problem_text", "nguon", "dap_an_chinh_thuc"):
+        # `dap_an_chinh_thuc` chỉ BẮT BUỘC ở tầng A — nơi nó là gốc của
+        # `oracle_result`. Tầng B chấm bằng *từ chối trung thực* và bị CẤM có
+        # `oracle_result`, nên ở đó đáp án nguồn thuần là **xuất xứ**: bộ chấm
+        # (`geometry_expectations.cham_mot_luot`) không hề đọc nó.
+        #
+        # `PROTOCOL_AMENDMENT_PRESEAL` 2026-08-28: tầng B chỉ cần **chứng minh
+        # lời giải TỒN TẠI và tra được** — `nguon_loi_giai`. Bắt chép nguyên
+        # văn một con số không ai chấm là bắt làm việc thừa.
+        bat_buoc = ["problem_text", "nguon"]
+        bat_buoc.append("dap_an_chinh_thuc"
+                        if str(c.get("slot") or "").startswith("A")
+                        else "nguon_loi_giai")
+        for truong in bat_buoc:
             if not c.get(truong):
                 loi.append(f"{cid}: thiếu {truong}")
         if not (c.get("nguon") or {}).get("url"):

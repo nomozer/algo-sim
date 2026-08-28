@@ -379,3 +379,27 @@ khối. Phát hiện một lỗi chép trong mẫu ⇒ **mở rộng** sang cả
 > trước khi niêm phong."*
 
 ❌ **Không được viết** *"42/42 do người kiểm"* nếu thực tế không phải vậy.
+
+### Bổ sung amendment — ô tầng B không phải chép đáp án nguồn
+
+**Audit trước khi đổi** (bắt buộc, và đây là kết quả): bộ chấm
+`geometry_expectations.cham_mot_luot` đọc `oracle_result` + nghĩa vụ, **không**
+đọc `dap_an_chinh_thuc`; và `kiem_pool` **cấm** ô tầng B mang `oracle_result`.
+⇒ Với tầng B, đáp án nguồn **không tham gia metric, oracle, hay quyết định
+nhận bài** — nó thuần **xuất xứ**.
+
+Nên yêu cầu đổi thành:
+
+```
+nguon_loi_giai          : trang / mục / câu     ← BẮT BUỘC
+source_solution_present : true                   ← BẮT BUỘC
+ly_do_ngoai_phu         : …                      ← BẮT BUỘC (không suy hộ được)
+ĐÁP ÁN NGUỒN            : …                      ← TUỲ CHỌN
+```
+
+> *"For refusal-oriented B cases, the published solution must exist and be
+> traceable, but its full answer text is not an evaluation oracle and therefore
+> need not be manually transcribed."*
+
+⚠️ Nếu về sau có bộ chấm nào bắt đầu đọc `dap_an_chinh_thuc` của ô B, **luật này
+phải bị thu hồi trước** — đừng để một chỉ số lặng lẽ dựa vào trường tuỳ chọn.

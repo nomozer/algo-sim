@@ -1371,7 +1371,11 @@ def _bai_hop_le(SH, o: str, n: int = 1) -> dict:
     else:
         # Tầng B vẫn phải mang đáp án CỦA NGUỒN (để thấy hệ từ chối tính cái
         # gì) — chỉ không được mang `oracle_result`.
-        c |= {"dap_an_chinh_thuc": "đáp án sách, không dùng chấm",
+        # `PROTOCOL_AMENDMENT_PRESEAL`: tầng B chỉ cần chứng minh lời giải
+        # TỒN TẠI và TRA ĐƯỢC; đáp án nguồn thành tuỳ chọn vì bộ chấm không
+        # đọc nó và tầng B bị cấm có `oracle_result`.
+        c |= {"nguon_loi_giai": "nguồn kiểm thử · trang 1, Câu 1",
+              "source_solution_present": True,
               "ly_do_ngoai_phu": "ngoài ranh giới năng lực"}
     if tag in SH.DOI_DOMAIN_CONDITION:
         c["domain_condition"] = "hữu tỉ hoá được"
@@ -1719,7 +1723,9 @@ def test_goi_dung_dung_LOAI_DONG_cho_tung_tang(SH, GOI):
             assert "ĐÁP ÁN NGUỒN" not in kh and "NGOÀI PHỦ VÌ" not in kh, o
         else:
             assert not re.search(r"^\s+ĐÁP ÁN:", kh, re.M), o
-            assert "ĐÁP ÁN NGUỒN:" in kh and "NGOÀI PHỦ VÌ:" in kh, o
+            # `ĐÁP ÁN NGUỒN:` nay TUỲ CHỌN (amendment) — chỉ `NGOÀI PHỦ VÌ:`
+            # còn bắt buộc, vì nó là phán đoán không suy hộ được.
+            assert "NGOÀI PHỦ VÌ:" in kh, o
 
 
 def test_goi_CHUA_KY_thi_van_bi_chan(SH, VL, GOI):

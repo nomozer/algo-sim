@@ -146,6 +146,10 @@ def test_o_NGOAI_PHU_khong_duoc_mang_oracle_result(SH):
     điểm, và mất luôn thứ duy nhất nó đo được."""
     b = _bai(case_id="hp_b", slot="B01", expected_obligations=[],
              oracle_result=None, phep_chuyen=None,
+             # `PROTOCOL_AMENDMENT_PRESEAL` 2026-08-28: tầng B đổi từ "phải có
+             # `dap_an_chinh_thuc`" sang "phải chứng minh lời giải TỒN TẠI và
+             # TRA ĐƯỢC" — bộ chấm không đọc đáp án nguồn của ô B.
+             nguon_loi_giai="nguồn kiểm thử · trang 1, Câu 1",
              ly_do_ngoai_phu="measure chưa nối distance đường–đường")
     assert SH.kiem_pool([b]) == []
     xau = dict(b, oracle_result={"distance": "1/2"})
