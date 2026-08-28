@@ -88,11 +88,12 @@ DA_SOI: dict[str, list[dict]] = {
                   "⇒ SB = 4a/5 (bộ ba 3-4-5 thu nhỏ a/5)",
          "vi_sao": "d = SA·SB/AB = 12a/25 — HỮU TỈ. Toạ độ cũng hữu tỉ: "
                    "A(0,0,0) B(a,0,0) S(9a/25, 0, 12a/25)",
-         "rui_ro": "HAI điều phải tự kiểm khi mở nguồn: (1) đề đặt tên C "
-                   "nhưng KHÔNG ràng buộc vị trí C — d không phụ thuộc C, "
-                   "nhưng hệ vẫn phải đặt C ở đâu đó; (2) trang tóm tắt ghi "
-                   "công thức là SA·AB/SB, ĐÚNG phải là SA·SB/AB — đáp án "
-                   "12a/25 thì đúng. Đọc lời giải gốc, đừng tin bản tóm tắt"},
+         "rui_ro": "C là điểm TỰ DO (đề không ràng buộc vị trí) — đã kiểm và "
+                   "KHÔNG phải thiếu dữ kiện: d không phụ thuộc C, và mọi ca "
+                   "DEV cũng đặt A,B,C,D,S là điểm tự do. Điều PHẢI tự kiểm "
+                   "khi mở nguồn: bản tóm tắt ghi công thức là SA·AB/SB, "
+                   "ĐÚNG phải là SA·SB/AB — đáp án 12a/25 thì đúng. Đọc lời "
+                   "giải GỐC, đừng tin bản tóm tắt"},
     ],
 }
 

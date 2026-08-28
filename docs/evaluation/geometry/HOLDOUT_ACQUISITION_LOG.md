@@ -713,3 +713,45 @@ tỉ thì phải có **hai** trùng hợp Pythagore lồng nhau. Ví dụ đo đ
 
 ⇒ **Ngừng thu thập nguồn cho A12.** Ba lựa chọn thiết kế đánh giá đã nêu trong
 báo cáo lượt này; quyết định thuộc người dùng.
+
+### 7f. Chốt A11, và vì sao A12 bị chặn bởi GIAO THỨC chứ không bởi nguồn
+
+#### A11 — `A11_VALID`, sau khi giải quyết nghi vấn "điểm C tự do"
+
+Nghi vấn nêu ở §7e: đề đặt tên `C` nhưng không ràng buộc vị trí. Đã tra thẳng
+mã, không suy đoán:
+
+| Kiểm | Kết quả |
+|---|---|
+| `construct_plane` dựng được kiểu nào? | **chỉ qua BA ĐIỂM đã có tên** — không có dạng *"mặt qua đường thẳng, vuông góc mặt khác"* |
+| Cổng `input_requirements` có mục hình học? | **KHÔNG** — bảng ấy chỉ phục vụ miền Tin học cũ |
+| `request_contract` có đòi mọi điểm bị ràng buộc? | **KHÔNG** |
+| Ca DEV đặt điểm tự do chưa? | **có, mọi ca** — `free_objects: ['A','B','C','D','S']` |
+
+⇒ Đặt `C` tự do là **quyền dựng hình mà hệ vốn đã dùng**, không phải bịa dữ
+kiện. Và `d` **bất biến** theo `C`: `(SAB) ⊥ (ABC)` giao tuyến `AB`, nên
+`d(S,(ABC)) = d(S,AB)` — chỉ phụ thuộc `A`, `B`, `S`.
+
+Kiểm nốt tính nhất quán của phép đặt: `A(0,0,0)` · `B(a,0,0)` · `C` bất kỳ
+trong `z=0` · `S(9a/25, 0, 12a/25)` ⇒ `(SAB)` là `y=0`, `(ABC)` là `z=0`, hai
+mặt **vuông góc** ✅. Ràng buộc của đề thoả, và phép đặt là duy nhất sai khác
+một phép dời hình.
+
+**Đa dạng cấu trúc**: khác DEV trên **ba** trục — đáy **tam giác** (DEV toàn
+hình vuông) · **mặt bên** ⊥ đáy (DEV toàn **cạnh bên** ⊥ đáy) · mặt đáy suy từ
+một **quan hệ vuông góc** chứ không từ một đa giác có tên.
+
+#### A12 — `A12_BLOCKED_BY_PROTOCOL`
+
+Câu hỏi: giao thức có cho dùng bài **do người độc lập/GVHD biên soạn** không?
+
+- **Nguyên tắc thì cho.** `HOLDOUT_PROTOCOL §1` nói điểm mạnh *"không nằm ở chỗ
+  tôi chưa nhìn — mà ở chỗ **tôi không viết được ra chúng, và không sửa được
+  đáp án**"*. Bài do GVHD soạn thoả đúng tính chất ấy.
+- **Chữ thì không.** `§3①` viết: *"SOẠN POOL ≥40 bài, phủ ĐỦ 20/20 ô, **trích
+  từ nguồn công khai**"*. Bài GVHD soạn **không phải nguồn công khai**.
+
+⇒ Không tự nới. Muốn dùng đường này thì phải **sửa `§3①` TRƯỚC khi seal** và
+khai là sai lệch tiền đăng ký — đúng lệ đã làm với `obligation_match`. Quyết
+định thuộc người dùng; tôi không soạn `A12_HUMAN_AUTHORING_REQUEST` khi giao
+thức hiện hành chưa cho.
