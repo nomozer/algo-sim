@@ -120,9 +120,21 @@ def _nap_seal():
     return m
 
 
-def _khoa_oracle(SH, tag: str) -> str | None:
-    return {"rational_distance": "distance", "rational_volume": "volume",
-            "angle_cos_sq": "angle", "angle_sin_sq": "angle"}.get(tag)
+def _khoa_oracle(SH, o: str) -> str | None:
+    """Khoá `oracle_result` của ô — DẪN TỪ `BANG_O`, không chép tay.
+
+    Bản trước là một `dict` chép tay chỉ có bốn thẻ đo lường (`distance`,
+    `volume`, `angle`×2) và **thiếu năm nghĩa vụ mệnh đề** (`point_on_line`,
+    `point_on_plane`, `parallel`, `perpendicular`, `coplanar`). Hậu quả đo
+    được: 21/41 ứng viên — toàn bộ ô A01–A08 và A13 — rớt `kiem_pool` với
+    *"tầng A phải có oracle_result"*, vì `thanh_case` chỉ dựng `oracle_result`
+    và `phep_chuyen` khi hàm này trả khoá.
+
+    Bug sống sót lâu vì **chưa ca mệnh đề nào từng đi qua ingest**: mọi ứng
+    viên trước đều là bài đo lường. `BANG_O[o][0]` đã là nguồn đúng ngay từ
+    đầu — trả `None` cho ô tầng B, đúng thứ ta cần.
+    """
+    return SH.BANG_O[o][0] if o in SH.BANG_O else None
 
 
 def _the_cho_o(SH, o: str) -> str | None:
@@ -272,7 +284,7 @@ def thanh_case(b: dict, nguoi: str, SH) -> dict:
             "không qua công cụ đọc web, không qua mô hình viết lại."),
         "verifier_note": f"NGƯỜI CHÉP: {nguoi}",
     }
-    if (khoa := _khoa_oracle(SH, tag)) and b["dap_an"]:
+    if (khoa := _khoa_oracle(SH, o)) and b["dap_an"]:
         c["oracle_result"] = {khoa: b["dap_an"]}
         # KHOÁ NÀO trong `oracle_result` là oracle — khai tường minh.
         #

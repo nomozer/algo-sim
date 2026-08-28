@@ -1957,3 +1957,41 @@ def test_DEV_smoke_KHONG_giao_voi_ung_vien_holdout(PK):
     assert ids and all(i.startswith("geo_") for i in ids)
     pool = json.loads(POOL.read_text(encoding="utf-8"))["cases"]
     assert not (ids & {c["case_id"] for c in pool})
+
+
+# ══ KHOÁ ORACLE PHẢI PHỦ ĐỦ TÁM NGHĨA VỤ ═════════════════════════════════
+def test_khoa_oracle_phu_DU_moi_o_tang_A(SH):
+    """`_khoa_oracle` phải dẫn từ `BANG_O`, không phải bảng chép tay.
+
+    Bản chép tay cũ chỉ có bốn thẻ ĐO LƯỜNG và thiếu năm nghĩa vụ MỆNH ĐỀ
+    (`point_on_line`, `point_on_plane`, `parallel`, `perpendicular`,
+    `coplanar`). Đo được hậu quả: **21/41 ứng viên** — toàn bộ A01–A08 và
+    A13 — rớt `kiem_pool` với *"tầng A phải có oracle_result"*, vì
+    `thanh_case` chỉ dựng `oracle_result` và `phep_chuyen` khi có khoá.
+
+    Bug sống sót lâu vì chưa ca mệnh đề nào từng đi qua ingest — mọi ứng viên
+    trước đều là bài đo lường.
+    """
+    IN = _nap("ingest_holdout_batch")
+    for o in SH.BANG_O:
+        khoa = IN._khoa_oracle(SH, o)
+        if o.startswith("A"):
+            assert khoa == SH.BANG_O[o][0], f"{o}: khoá lệch BANG_O"
+            assert khoa, f"{o}: ô tầng A mà không có khoá oracle"
+        else:
+            assert khoa is None, f"{o}: ô tầng B không được có khoá oracle"
+
+
+def test_bai_MENH_DE_dung_qua_duoc_kiem_pool(SH):
+    """Ca hồi quy trực tiếp: một bài A03 (`parallel`, đáp án `true`) phải qua."""
+    IN = _nap("ingest_holdout_batch")
+    lo = ("NGƯỜI CHÉP: Người kiểm thử · 2026-08-28 · lô test\n\n"
+          "[A03] Cho tứ diện ABCD có I, J lần lượt là trọng tâm của tam giác "
+          "ABC, ABD. Chứng minh rằng IJ song song CD.\n"
+          "      NGUỒN: nguồn kiểm thử · https://x\n"
+          "      ĐÁP ÁN: true\n")
+    nguoi, bai, loi = IN.phan_tich(lo, SH)
+    assert loi == [], loi
+    c = IN.thanh_case(bai[0], nguoi, SH)
+    assert c["oracle_result"] == {"parallel": "true"}, c.get("oracle_result")
+    assert SH.check_capability_boundary(c) == [] and SH.kiem_pool([c]) == []
