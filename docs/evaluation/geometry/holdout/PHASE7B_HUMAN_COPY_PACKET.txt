@@ -263,9 +263,13 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     THANG CHẤM : oracle + ③a/③b/⑤
 #     ⚠️ ĐƠN VỊ   : sin² (đường–mặt), KHÔNG phải cos²
 #     TÌM BÀI    : ⚠️ Đường–MẶT trả **`sin²`**, KHÔNG phải `cos²`. Chép nhầm thì chấm sai mà không cổng nào báo. Đáp án sách hay cho góc α ⇒ ghi `sin²α`.
+#     ĐÃ SOI     : hình THOI ABCD tâm O · BD = 4a · AC = 2a · SO ⊥ (ABCD) · tan(SBO) = 1/2 · góc giữa SC và (ABCD)
+#     VÌ SAO CHỌN: nguồn in BO = 2a, SO = 2a·½ = a, OC = a ⇒ SCO = 45° ⇒ **sin² = 1/2**. Toạ độ nguyên: O(0,0,0) B(0,−2,0) A(−1,0,0) C(1,0,0) S(0,0,1)
+#     RỦI RO     : ⚠️ ĐƠN VỊ: ô A10 là đường–MẶT nên checker nhận **sin²**, KHÔNG phải cos². Nguồn cho góc 45° ⇒ chép `1/2`
+#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ.
 [A10] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
-      ĐÁP ÁN: <đáp án của nguồn, dạng phân số hoặc true/false>
+      NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 (đề + lời giải cùng ở tr PDF 113 = 'Page 5') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
+      ĐÁP ÁN: 1/2
 
 #   ─── A10 (2/3) · Góc giữa đường thẳng và mặt phẳng ───────────────
 #     CAPABILITY : angle_sin_sq
@@ -448,8 +452,12 @@ NGƯỜI CHÉP: <tên bạn> · <YYYY-MM-DD> · <chép từ tài liệu nào>
 #     CAPABILITY : out_of_capability
 #     ANSWER     : rejection_expected
 #     THANG CHẤM : TỪ CHỐI TRUNG THỰC — không oracle
+#     ĐÃ SOI     : lăng trụ đứng ABC.A₁B₁C₁ · △ABC vuông cân tại A · AB = a · CC' = 2a · khoảng cách giữa AA₁ và BC₁
+#     VÌ SAO CHỌN: đúng LOẠI của ô B01 — khoảng cách hai đường CHÉO NHAU, nằm ngoài ranh giới kernel. Tầng B không cần hữu tỉ
+#     RỦI RO     : thấp. Nhớ dùng `ĐÁP ÁN NGUỒN:` (chép đáp án sách), KHÔNG dùng `ĐÁP ÁN:` — ô tầng B không có oracle
+#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN.
 [B01] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>
-      NGUỒN: <sách · trang · câu>   hoặc   <url>
+      NGUỒN: Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 (đề tr PDF 300 = 'Page 59') · https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-trong-khong-gian-toan-11-knttvcs.html
       ĐÁP ÁN NGUỒN: <đáp án in trong sách — chỉ để tra ngược>
       NGOÀI PHỦ VÌ: Khoảng cách giữa hai đường thẳng chéo nhau — ngoài ranh giới kernel
 

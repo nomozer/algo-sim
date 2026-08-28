@@ -1666,9 +1666,17 @@ def test_goi_KHONG_prefill_de_bai(GOI):
 
 
 def test_goi_prefill_dap_an_CHI_khi_da_soi_tan_trang(PK, GOI):
-    """Hai ứng viên đã soi thì điền sẵn nguồn + đáp án; còn lại để trống."""
-    da = sum(len(v) for v in PK.DA_SOI.values())
+    """Ứng viên đã soi thì điền sẵn nguồn + đáp án; còn lại để trống.
+
+    Chỉ đếm ô TẦNG A: ô tầng B có `DA_SOI` cũng không sinh dòng `ĐÁP ÁN:` —
+    nó dùng `ĐÁP ÁN NGUỒN:`, và đáp án ấy do người chép từ sách."""
+    da = sum(len(v) for o, v in PK.DA_SOI.items() if o.startswith("A"))
     assert len(re.findall(r"^\s+ĐÁP ÁN: (?!<)", GOI, re.M)) == da
+    # Ô tầng B có DA_SOI thì phải được prefill NGUỒN, dù không có ĐÁP ÁN.
+    for o in (o for o in PK.DA_SOI if o.startswith("B")):
+        kh = next(k for k in re.split(r"(?=^\[[AB]\d{2}\])", GOI, flags=re.M)
+                  if k.startswith(f"[{o}]"))
+        assert re.search(r"^\s+NGUỒN: (?!<)", kh, re.M), o
 
 
 def test_goi_XEP_THEO_NGUON_de_moi_tai_lieu_mo_mot_lan(MT, GOI):
@@ -1684,6 +1692,11 @@ def test_goi_dung_dung_LOAI_DONG_cho_tung_tang(SH, GOI):
     """Ô A phải có `ĐÁP ÁN:`; ô B phải có hai dòng riêng và KHÔNG có `ĐÁP ÁN:`."""
     for kh in re.split(r"(?=^\[[AB]\d{2}\])", GOI, flags=re.M)[1:]:
         o = kh[1:4]
+        # Cắt dòng `#`: khối bị tách theo `[XNN]` nên đuôi nó ôm luôn phần
+        # chú thích của khối SAU. Chú thích thì `ingest` gỡ sạch, nên luật
+        # "đúng loại dòng" chỉ áp cho DÒNG DỮ LIỆU.
+        kh = "\n".join(d for d in kh.splitlines()
+                       if not d.lstrip().startswith("#"))
         if o.startswith("A"):
             assert re.search(r"^\s+ĐÁP ÁN:", kh, re.M), o
             assert "ĐÁP ÁN NGUỒN" not in kh and "NGOÀI PHỦ VÌ" not in kh, o

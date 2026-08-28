@@ -140,6 +140,37 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**. Đáp án là "
                    "`true` (bài chứng minh), không phải một con số"},
     ],
+    # Ảnh tr PDF 113: đề VÀ lời giải nằm cùng trang — nguồn tự in SCO = 45°.
+    "A10": [
+        {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
+                  "B24.1 GÓC ĐƯỜNG THẲNG–MẶT PHẲNG, **PHẦN TỰ LUẬN**, Câu 5 "
+                  "(đề + lời giải cùng ở tr PDF 113 = 'Page 5') · "
+                  "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-"
+                  "trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "1/2",
+         "goi_y": "hình THOI ABCD tâm O · BD = 4a · AC = 2a · SO ⊥ (ABCD) · "
+                  "tan(SBO) = 1/2 · góc giữa SC và (ABCD)",
+         "vi_sao": "nguồn in BO = 2a, SO = 2a·½ = a, OC = a ⇒ SCO = 45° "
+                   "⇒ **sin² = 1/2**. Toạ độ nguyên: O(0,0,0) B(0,−2,0) "
+                   "A(−1,0,0) C(1,0,0) S(0,0,1)",
+         "rui_ro": "⚠️ ĐƠN VỊ: ô A10 là đường–MẶT nên checker nhận **sin²**, "
+                   "KHÔNG phải cos². Nguồn cho góc 45° ⇒ chép `1/2`"},
+    ],
+    "B01": [
+        {"nguon": "Chuyên đề QHVG trong không gian Toán 11 (KNTTVCS, 704tr) — "
+                  "B26.1 KHOẢNG CÁCH, **PHẦN TỰ LUẬN**, *BÀI TOÁN 2. TÍNH "
+                  "KHOẢNG CÁCH HAI ĐƯỜNG THẲNG CHÉO NHAU*, Câu 28 "
+                  "(đề tr PDF 300 = 'Page 59') · "
+                  "https://toanmath.com/2023/08/chuyen-de-quan-he-vuong-goc-"
+                  "trong-khong-gian-toan-11-knttvcs.html",
+         "dap_an": "",
+         "goi_y": "lăng trụ đứng ABC.A₁B₁C₁ · △ABC vuông cân tại A · AB = a · "
+                  "CC' = 2a · khoảng cách giữa AA₁ và BC₁",
+         "vi_sao": "đúng LOẠI của ô B01 — khoảng cách hai đường CHÉO NHAU, "
+                   "nằm ngoài ranh giới kernel. Tầng B không cần hữu tỉ",
+         "rui_ro": "thấp. Nhớ dùng `ĐÁP ÁN NGUỒN:` (chép đáp án sách), "
+                   "KHÔNG dùng `ĐÁP ÁN:` — ô tầng B không có oracle"},
+    ],
 }
 
 #: Ô chưa tra được nguồn nào — đánh dấu chứ không đổi giao thức.
@@ -270,7 +301,9 @@ def _khoi(o: str, SH, MT, da_soi: dict | None,
         d += [f"#     ĐÃ SOI     : {da_soi['goi_y']}",
               f"#     VÌ SAO CHỌN: {da_soi['vi_sao']}",
               f"#     RỦI RO     : {da_soi['rui_ro']}",
-              "#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ."]
+              "#     → NGUỒN và ĐÁP ÁN đã điền sẵn. Chỉ còn gõ ĐỀ."
+              if tang_a else
+              "#     → NGUỒN đã điền sẵn. Còn gõ ĐỀ + chép ĐÁP ÁN NGUỒN."]
 
     d.append(f"[{o}] <GÕ NGUYÊN VĂN ĐỀ VÀO ĐÂY — giữ đủ = ⊥ ∥ ∈ √ ·>")
     d.append(f"      NGUỒN: {da_soi['nguon'] if da_soi else '<sách · trang · câu>   hoặc   <url>'}")
