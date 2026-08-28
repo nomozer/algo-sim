@@ -171,6 +171,108 @@ DA_SOI: dict[str, list[dict]] = {
          "rui_ro": "thấp. Nhớ dùng `ĐÁP ÁN NGUỒN:` (chép đáp án sách), "
                    "KHÔNG dùng `ĐÁP ÁN:` — ô tầng B không có oracle"},
     ],
+    # ── Nguồn 2: Đường thẳng & mặt phẳng, QH song song Toán 11 CTST (410tr) ──
+    "A01": [
+        {"nguon": "Đường thẳng và mặt phẳng, quan hệ song song trong không "
+                  "gian Toán 11 CTST (410tr) — **BÀI TẬP TỰ LUẬN**, Dạng 1 "
+                  "*Tìm giao tuyến của hai mặt phẳng*, Câu 5 (đề tr PDF 4; "
+                  "lời giải mục Dạng 1 tr 15+) · "
+                  "https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-"
+                  "he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD đáy HÌNH BÌNH HÀNH · M, N trung điểm AD và BC · "
+                  "tìm giao tuyến (SMN) ∩ (SAC)",
+         "vi_sao": "bình hành + trung điểm ⇒ toạ độ hữu tỉ hết. Giao tuyến đi "
+                   "qua S và tâm O — nghĩa vụ `point_on_line` kiểm O thuộc "
+                   "giao tuyến ⇒ `true`",
+         "rui_ro": "trung bình. `phep_chuyen` phải ghi rõ: nguồn trả lời "
+                   "*giao tuyến là SO*, chuyển thành `point_on_line` = true"},
+    ],
+    "A02": [
+        {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
+                  "— **BÀI TẬP TỰ LUẬN**, Dạng 2 *Tìm giao điểm của đường "
+                  "thẳng và mặt phẳng*, Câu 12 (đề tr PDF 7; lời giải tr 21+) · "
+                  "https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-"
+                  "he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "bốn điểm A,B,C,D không đồng phẳng · M,N trung điểm AC,BC · "
+                  "P trên BD với BP = 2PD · tìm giao điểm CD ∩ (MNP)",
+         "vi_sao": "tỉ số 2:1 và trung điểm đều hữu tỉ ⇒ P = (1/3,0,2/3) khi "
+                   "đặt tứ diện đơn vị. Ba điểm dẫn xuất ⇒ chuỗi phụ thuộc "
+                   "sâu nhất trong cả gói",
+         "rui_ro": "thấp"},
+    ],
+    "A03": [
+        {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
+                  "— **BÀI TẬP TỰ LUẬN**, *Dạng 1: CHỨNG MINH HAI ĐƯỜNG THẲNG "
+                  "SONG SONG*, Câu 1 (đề tr PDF 100) · "
+                  "https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-"
+                  "he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "tứ diện ABCD · I, J là TRỌNG TÂM của △ABC và △ABD · "
+                  "chứng minh IJ ∥ CD",
+         "vi_sao": "trọng tâm của điểm hữu tỉ vẫn hữu tỉ. Không dữ kiện số "
+                   "nào ⇒ không chỗ nào sinh căn. Bài chứng minh ⇒ `true`",
+         "rui_ro": "thấp — ứng viên sạch nhất trong nhóm song song"},
+    ],
+    "A13": [
+        {"nguon": "Đường thẳng và mặt phẳng, QH song song Toán 11 CTST (410tr) "
+                  "— **BÀI TẬP TỰ LUẬN**, *Dạng 3: BÀI TOÁN THIẾT DIỆN*, "
+                  "Câu 24 **ý a)** (đề tr PDF 8; lời giải tr 30+) · "
+                  "https://toanmath.com/2023/08/duong-thang-va-mat-phang-quan-"
+                  "he-song-song-trong-khong-gian-toan-11-ctst-2.html",
+         "dap_an": "true",
+         "goi_y": "chóp S.ABCD đáy HÌNH THANG, AD là đáy lớn · P trên cạnh SD "
+                  "· xác định thiết diện cắt bởi (PAB)",
+         "vi_sao": "chóp trên hình thang là khối LỒI — điều kiện của ô A13. "
+                   "Hình thang đặt toạ độ hữu tỉ được",
+         "rui_ro": "trung bình. P là điểm TỰ DO trên SD (như các ca đã chốt); "
+                   "tính đồng phẳng của thiết diện đúng với mọi vị trí P. "
+                   "**Chỉ chép ý a)**"},
+    ],
+    # ── Nguồn 3: Lê Bá Bảo — Dạng toán xác định góc nhị diện (14tr) ──
+    "A08": [
+        {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* "
+                  "(14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 2 **ý b)** (đề tr "
+                  "PDF 2; lời giải mục *IV. LỜI GIẢI CHI TIẾT*) · "
+                  "https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-"
+                  "dien-toan-11.html",
+         "dap_an": "true",
+         "goi_y": "hình LẬP PHƯƠNG ABCD.A'B'C'D' cạnh a · chứng minh "
+                  "(ACC'A') ⊥ (BDD'B')",
+         "vi_sao": "lập phương ⇒ toạ độ NGUYÊN, hình xác định hoàn toàn, "
+                   "không điểm tự do nào. Đúng nghĩa vụ `perpendicular` "
+                   "MẶT–MẶT mà ô A08 đòi",
+         "rui_ro": "thấp. Đề gốc có ba ý a/b/c — **chỉ chép ý b)**; ý a) hỏi "
+                   "đường chéo (ra a√3, vô tỉ), ý c) hỏi số đo góc nhị diện"},
+    ],
+    "B03": [
+        {"nguon": "Lê Bá Bảo — *Dạng toán xác định góc nhị diện Toán 11* "
+                  "(14tr) — **II. BÀI TẬP TỰ LUẬN**, Câu 6 (đề tr PDF 2) · "
+                  "https://toanmath.com/2024/03/dang-toan-xac-dinh-goc-nhi-"
+                  "dien-toan-11.html",
+         "dap_an": "",
+         "goi_y": "kim tự tháp Memphis (Tennessee, Mỹ) dạng chóp tứ giác đều, "
+                  "cao 98 m, cạnh đáy 180 m · tính góc nhị diện mặt bên–đáy",
+         "vi_sao": "đúng loại ô B03 (góc nhị diện có miền). Thêm giá trị: đề "
+                   "diễn đạt bằng NGỮ CẢNH THỰC + đơn vị mét — dạng ngôn ngữ "
+                   "không ứng viên nào khác có",
+         "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
+    ],
+    # ── Nguồn 4: Chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) ──
+    "B05": [
+        {"nguon": "Tài liệu chuyên đề mặt nón, mặt trụ, mặt cầu (302tr) — "
+                  "**HỆ THỐNG BÀI TẬP TỰ LUẬN**, Dạng 1 *hình nón*, Câu 1 "
+                  "**ý a)** (đề tr PDF 5; lời giải tr 19+) · "
+                  "https://toanmath.com/2023/07/tai-lieu-chuyen-de-mat-non-"
+                  "mat-tru-mat-cau.html",
+         "dap_an": "",
+         "goi_y": "hình nón bán kính đáy r = 3cm, đường sinh l = 5cm · tính "
+                  "diện tích xung quanh và toàn phần",
+         "vi_sao": "MẶT CONG — kernel chỉ dựng đa diện lồi. Đề ngắn nhất và "
+                   "rõ nhất trong mục",
+         "rui_ro": "thấp. Dùng `ĐÁP ÁN NGUỒN:`, KHÔNG dùng `ĐÁP ÁN:`"},
+    ],
 }
 
 #: Ô chưa tra được nguồn nào — đánh dấu chứ không đổi giao thức.
