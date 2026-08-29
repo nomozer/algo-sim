@@ -525,6 +525,41 @@ async def stage_semantic_program(
             else:
                 val = validate_semantic_program(payload)
                 if val.ok:
+                    # ─── XUẤT XỨ CŨNG PHẢI GỬI NGƯỢC ────────────────────────
+                    #
+                    # Vòng sửa này trước đây chỉ gửi lại lỗi SCHEMA. Cổng
+                    # grounding thì chạy SAU, ở `route.py`, nên lời từ chối
+                    # của nó **không bao giờ tới được mô hình**: chương trình
+                    # được sinh đúng một lần rồi bị giết ở hạ nguồn.
+                    #
+                    # Đo được ở CONFIRMATION_V2: 6/10 chi tiết grounding là
+                    # *"có initial_value nhưng thiếu source_fact_id"* trên các
+                    # đỉnh dẫn xuất (`C`, `D`, `B'`, `C'`, `D'`, `S`). Mô hình
+                    # khai `model_assumption` cho hai đỉnh đầu rồi quên phần
+                    # còn lại — một lỗi nó tự sửa được nếu biết mình đã sai.
+                    #
+                    # ⚠️ KHÔNG nới cổng. Cùng `check_grounding`, cùng phán
+                    # quyết, cùng trần 3 lượt; chỉ thêm ĐƯỜNG PHẢN HỒI. Và
+                    # cùng khuôn với lỗi schema: gửi lại LỜI TỪ CHỐI, không
+                    # gợi ý cách sửa — gợi ý là ta đang viết chương trình hộ.
+                    #
+                    # Vì sao không nhồi luật này vào prompt: `test_prompt_size_
+                    # guard` chặn ở 4800 byte với đúng lý do ấy — *"luật trong
+                    # prompt là GỢI Ý, luật trong validator là RÀNG BUỘC"*.
+                    if contract is not None:
+                        from app.simulation.semantic_program.grounding_gate import (
+                            check_grounding,
+                        )
+                        g = check_grounding(contract, val.spec)
+                        if not g.ok and lan < MAX_SEMANTIC_PROGRAM_ATTEMPTS - 1:
+                            loi = ("xuất xứ dữ liệu chưa đủ — "
+                                   + "; ".join(g.unresolved[:4]))
+                            _emit(observer, "semantic_program_attempt",
+                                  n=lan, ok=False, message=loi, gate="grounding")
+                            prompt = (
+                                f"{base}\n\nLần trước bị từ chối vì: {loi}\n"
+                                "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại.")
+                            continue
                     return val.spec, None
                 loi = val.error
 

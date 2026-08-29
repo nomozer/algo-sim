@@ -350,7 +350,14 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # `contract.py` ⇒ bề mặt prompt đổi mà không file `.md` nào bị sửa.
     # 46: `ConstructPointStmt.expr` thu hẹp xuống `PointExpr`; thẻ văn phạm gọi
     # trường ấy là "phép dựng ĐIỂM" ⇒ bề mặt prompt đổi.
-    assert main_module.CACHE_VERSION == "46"
+    # 47: `geometry_program_generator.md` thêm luật XUẤT XỨ ĐẦY ĐỦ cho mọi
+    # điểm khai toạ độ, cộng một bước tự soát trước khi trả lời. Đo được ở
+    # CONFIRMATION_V2: 6/10 chi tiết grounding là "có initial_value nhưng
+    # thiếu source_fact_id" trên các đỉnh DẪN XUẤT (C, D, B', C', D', S) —
+    # mô hình khai `model_assumption` cho hai đỉnh đầu rồi quên phần còn lại.
+    # Prompt đổi ⇒ đề cũ trong cache sẽ trả chương trình sinh bằng bản prompt
+    # cũ, tức đo nhầm bản.
+    assert main_module.CACHE_VERSION == "47"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
