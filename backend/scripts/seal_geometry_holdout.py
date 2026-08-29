@@ -540,7 +540,21 @@ def kiem_du_dieu_kien_rut(
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--seed", type=int, required=True,
-                   help="SỐ NGUYÊN DO GVHD CHO. Không có mặc định — cố ý.")
+                   help="SỐ NGUYÊN DO NGƯỜI NGOÀI CHO. Không mặc định — cố ý.")
+    # SEED ĐẾN TỪ ĐÂU — khai, không mặc định.
+    #
+    # Trước 2026-08-29 con dấu ghi CỨNG `"nguon_seed": "GVHD"`. Nó đúng đúng
+    # một lần: lượt nào seed không do GVHD cấp thì artifact niêm phong mang
+    # một lời khai SAI về chính thứ nó sinh ra để bảo đảm — *ai đã chọn tập*.
+    # Và nó sai IM LẶNG, vì không có gì đối chiếu được một chuỗi viết cứng.
+    #
+    # Ba giá trị, mạnh dần: `gvhd` (bên thứ ba, đúng `§5②`) · `nguoi_van_hanh`
+    # (người vận hành kho đọc số — vẫn tách khỏi *người soạn pool* nếu là hai
+    # người, nhưng KHÔNG phải bên thứ ba) · `cong_khai` (số công khai không
+    # chọn được, vd ngày). Ai đọc con dấu về sau sẽ biết mình đang đọc mức nào.
+    p.add_argument("--nguon-seed", required=True,
+                   choices=("gvhd", "nguoi_van_hanh", "cong_khai"),
+                   help="Seed đến từ đâu. Ghi vào con dấu, không suy hộ.")
     p.add_argument("--chi-kiem-pool", action="store_true",
                    help="Chỉ soi pool rồi thoát, KHÔNG niêm phong.")
     a = p.parse_args()
@@ -595,7 +609,22 @@ def main() -> int:
         "khai": "Tập HELD-OUT đã niêm phong. Chạy MỘT LƯỢT. Sửa hệ rồi chạy "
                 "lại trên chính tập này thì nó THÀNH DEV — và phải nói ra.",
         "seed": a.seed,
-        "nguon_seed": "GVHD",
+        "nguon_seed": a.nguon_seed,
+        # Câu người đọc luận văn thật sự cần, viết sẵn để không ai phải suy:
+        "nguon_seed_khai": {
+            "gvhd": "Seed do GVHD (bên thứ ba) cấp — thoả HOLDOUT_PROTOCOL §5②.",
+            "nguoi_van_hanh": (
+                "⚠️ Seed do NGƯỜI VẬN HÀNH kho mã đọc, KHÔNG phải bên thứ ba. "
+                "`HOLDOUT_PROTOCOL §5②` đòi seed từ GVHD; lượt này nới luật ấy "
+                "y như đã nới §1 cho ô A12, và cái mất phải được khai: tính "
+                "độc lập của phép rút dựa vào việc người chọn seed KHÔNG phải "
+                "người soạn pool, chứ không dựa vào một bên thứ ba. Pool đã "
+                "đóng băng và băm TRƯỚC khi seed được đọc — `pool_hash` trong "
+                "chính con dấu này là bằng chứng kiểm được."),
+            "cong_khai": (
+                "Seed lấy từ một số công khai không chọn được (vd ngày). Không "
+                "phải bên thứ ba, nhưng cũng không do người đo tuỳ ý đặt."),
+        }[a.nguon_seed],
         "niem_phong_luc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "pool_hash": _bam(cases),
         "pool_size": len(cases),

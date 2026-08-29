@@ -1154,10 +1154,45 @@ def test_bang_the_nang_luc_phu_DU_20_o(POOL_D, SH):
     assert co == set(SH.BANG_O), f"thiếu ô: {sorted(set(SH.BANG_O) - co)}"
 
 
-def test_con_dau_CHUA_ton_tai():
-    """Có con dấu mà chưa có đề nghĩa là ai đó đã niêm phong một tập rỗng."""
-    assert not (GEO / "holdout" / "HOLDOUT_SEAL.json").exists()
-    assert not (GEO / "holdout" / "cases.json").exists()
+def test_con_dau_va_cases_LUON_di_cung_nhau():
+    """Bản trước khẳng định *chưa có* con dấu — đúng cho tới 2026-08-29, rồi
+    đỏ vào đúng ngày niêm phong. Cái nó thật sự bảo vệ thì không hết hiệu
+    lực: **con dấu và tập đề phải đi cùng nhau**. Có dấu mà không có đề là
+    niêm phong một tập rỗng; có đề mà không có dấu là một tập không ai chứng
+    minh được là chưa bị sửa sau khi thấy kết quả.
+    """
+    dau = GEO / "holdout" / "HOLDOUT_SEAL.json"
+    de = GEO / "holdout" / "cases.json"
+    assert dau.exists() == de.exists(), (dau.exists(), de.exists())
+    if not dau.exists():
+        pytest.skip("chưa niêm phong")
+    s = json.loads(dau.read_text(encoding="utf-8"))
+    ds = json.loads(de.read_text(encoding="utf-8"))
+    ds = ds["cases"] if isinstance(ds, dict) else ds
+    assert s["n"] == len(ds) == 20
+    assert sorted(s["case_ids"]) == sorted(c["case_id"] for c in ds)
+    pool = {c["case_id"] for c in json.loads(
+        (GEO / "holdout" / "pool.json").read_text(encoding="utf-8"))["cases"]}
+    assert set(s["case_ids"]) <= pool, "bài trong con dấu không có trong pool"
+
+
+def test_con_dau_KHAI_seed_den_tu_dau_khong_ghi_cung(SH):
+    """`nguon_seed` từng là chuỗi VIẾT CỨNG `"GVHD"`.
+
+    Nó đúng đúng một lần. Lượt nào seed không do GVHD cấp thì artifact niêm
+    phong mang lời khai SAI về chính thứ nó sinh ra để bảo đảm — *ai đã chọn
+    tập* — và sai im lặng, vì không gì đối chiếu được một chuỗi viết cứng.
+    """
+    dau = GEO / "holdout" / "HOLDOUT_SEAL.json"
+    if not dau.exists():
+        pytest.skip("chưa niêm phong")
+    s = json.loads(dau.read_text(encoding="utf-8"))
+    assert s["nguon_seed"] in ("gvhd", "nguoi_van_hanh", "cong_khai")
+    assert s.get("nguon_seed_khai"), "phải khai bằng câu người đọc được"
+    if s["nguon_seed"] != "gvhd":
+        assert "KHÔNG phải bên thứ ba" in s["nguon_seed_khai"] \
+            or "không do người đo tuỳ ý" in s["nguon_seed_khai"], \
+            "nới §5② mà không khai cái mất đi"
 
 
 # ══ TASK 2 — MA TRẬN ĐỘ PHỦ ══════════════════════════════════════════════
@@ -2115,8 +2150,11 @@ def test_khong_co_con_dau_thi_TU_CHOI_chay_holdout():
     sp = _iu.spec_from_file_location("_rg", SCRIPTS / _RUNNER)
     m = _iu.module_from_spec(sp)
     sp.loader.exec_module(m)
-    assert not m.HOLDOUT_SEAL.exists(), \
-        "đã niêm phong — cập nhật test này khi thật sự tới đó"
+    # TIÊM LỖI, không chờ hiện trường: trỏ đường dẫn con dấu sang chỗ không
+    # có. Bản trước dựa vào việc kho CHƯA niêm phong, nên nó tự vô hiệu hoá
+    # đúng vào ngày niêm phong — tức guard mất tác dụng đúng lúc cần nhất.
+    m.HOLDOUT_SEAL = Path(str(m.HOLDOUT_SEAL) + ".khong-ton-tai")
+    assert not m.HOLDOUT_SEAL.exists()
     with pytest.raises(Exception) as e:
         m._kiem_con_dau([{"case_id": "hp_a14_001"}])
     assert "con dấu" in str(e.value).lower()
