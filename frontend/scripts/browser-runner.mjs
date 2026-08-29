@@ -37,10 +37,24 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** Vòng đời trình duyệt — mở MỘT lần cho cả lượt chạy. */
 export class BrowserSession {
-  constructor({ viewport = 1920, height = 1080, url = "http://localhost:3000" } = {}) {
+  constructor({ viewport = 1920, height = 1080, url = "http://localhost:3000",
+                webgl = false } = {}) {
     this.viewport = viewport;
     this.height = height;
     this.url = url;
+    /**
+     * WEBGL — mặc định TẮT, và mặc định ấy phải giữ nguyên.
+     *
+     * Mọi kịch bản W12 chạy `--disable-gpu` vì chúng đo bố cục, và GPU ảo chỉ
+     * thêm biến số. Nhưng khung 3D **không dựng nổi** khi không có WebGL:
+     * `tryCreateWebGLRenderer` trả `null` và trang hiện lời nhắn thay canvas —
+     * lúc ấy một bản soát "không lỗi" chẳng chứng minh gì cả.
+     *
+     * Bật cờ này thì Chrome dùng SwiftShader (GPU phần mềm). Chậm hơn, nhưng
+     * đó là cách duy nhất để một cú bấm chuột thật đi qua raycast thật.
+     */
+    this.webgl = webgl;
+    this.consoleEvents = [];
     this.serverStarts = 0;
     this.timings = { startup: 0, scenarios: [], cleanup: 0 };
     this._id = 0;
@@ -51,7 +65,10 @@ export class BrowserSession {
     if (!CHROME) throw new Error("Không tìm thấy Chrome.");
     const t0 = Date.now();
     const port = 9200 + Math.floor(Math.random() * 300);
-    this.chrome = spawn(CHROME, ["--headless=new", "--disable-gpu",
+    const gpuArgs = this.webgl
+      ? ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"]
+      : ["--disable-gpu"];
+    this.chrome = spawn(CHROME, ["--headless=new", ...gpuArgs,
       `--remote-debugging-port=${port}`,
       `--user-data-dir=${mkdtempSync(join(tmpdir(), "w12-"))}`,
       `--window-size=${this.viewport},${this.height}`,
@@ -71,6 +88,24 @@ export class BrowserSession {
     this.ws.onmessage = (e) => {
       const m = JSON.parse(e.data);
       if (m.id && this._pending.has(m.id)) { this._pending.get(m.id)(m); this._pending.delete(m.id); }
+      // LỖI TRANG gom lại ngay từ đầu phiên. Hỏi sau khi xong thì mất những
+      // gì xảy ra lúc tải — và lúc tải là lúc hay hỏng nhất.
+      if (m.method === "Runtime.exceptionThrown") {
+        this.consoleEvents.push({
+          loai: "exception",
+          text: String(m.params?.exceptionDetails?.exception?.description
+            ?? m.params?.exceptionDetails?.text ?? "?")
+            .split(String.fromCharCode(10))[0],
+        });
+      }
+      if (m.method === "Runtime.consoleAPICalled"
+          && ["error", "warning", "assert"].includes(m.params?.type)) {
+        this.consoleEvents.push({
+          loai: m.params.type,
+          text: (m.params.args ?? []).map((a) => String(a.value ?? a.description ?? ""))
+            .join(" ").slice(0, 300),
+        });
+      }
     };
     await this._send("Page.enable");
     await this._send("Runtime.enable");
@@ -192,6 +227,33 @@ export class BrowserSession {
       e.focus();
       const a=document.activeElement;
       return a===e ? 'ok' : 'tiêu điểm rơi vào: '+a.tagName.toLowerCase();})()`);
+  }
+
+  /**
+   * CHUỘT THẬT qua CDP `Input.dispatchMouseEvent` — cùng lý do với `pressKey`.
+   *
+   * Một `new MouseEvent(...)` rồi `dispatchEvent` là sự kiện KHÔNG TIN CẬY và
+   * đi thẳng vào handler; nó **không** chứng minh raycast chạy. Ở đây toạ độ
+   * là điểm ảnh thật trên canvas, và đường đi là đúng đường ngón tay học sinh
+   * đi: pointerdown → pointerup → raycast → id.
+   */
+  async mouse(x, y) {
+    const chung = { x, y, button: "left", clickCount: 1, buttons: 1 };
+    await this._send("Input.dispatchMouseEvent", { type: "mouseMoved", ...chung, buttons: 0 });
+    await this._send("Input.dispatchMouseEvent", { type: "mousePressed", ...chung });
+    await this._send("Input.dispatchMouseEvent", { type: "mouseReleased", ...chung, buttons: 0 });
+    await sleep(80);
+    return "ok";
+  }
+
+  /** Ảnh PNG của trang, ghi ra đĩa. Bằng chứng, không phải trang trí. */
+  async screenshot(path) {
+    const r = await this._send("Page.captureScreenshot", { format: "png" });
+    const data = r.result?.data;
+    if (!data) return "không chụp được";
+    const { writeFileSync } = await import("node:fs");
+    writeFileSync(path, Buffer.from(data, "base64"));
+    return "ok";
   }
 
   /** Chạy một kịch bản và ghi thời gian. */

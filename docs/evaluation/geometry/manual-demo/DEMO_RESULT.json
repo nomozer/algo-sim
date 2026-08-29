@@ -1,0 +1,114 @@
+{
+ "khai": "DEMO TAY giao diện 3D. Bài phát lại từ một lượt LIVE thật, 0 API call.",
+ "nguon": "phase7a-pilot-sau-71/1-trung-diem-lan3 (served, oracle ĐÚNG)",
+ "ket_qua": [
+  {
+   "ma": "APP_STARTED",
+   "pass": true,
+   "note": "ok"
+  },
+  {
+   "ma": "MODEL_RENDERED",
+   "pass": true,
+   "note": "canvas=true nút=26 hạng mục=Điểm/Cạnh/Mặt/Đa giác/Điểm/Đường thẳng"
+  },
+  {
+   "ma": "ROTATE_ZOOM_PAN",
+   "pass": true,
+   "note": "canvas 732×549 (OrbitControls sẵn)"
+  },
+  {
+   "ma": "POINT_PICKING",
+   "pass": false,
+   "note": "điểm bấm trúng: —"
+  },
+  {
+   "ma": "EDGE_PICKING",
+   "pass": false,
+   "note": "cạnh bấm trúng: —"
+  },
+  {
+   "ma": "FACE_PICKING",
+   "pass": false,
+   "note": "mặt bấm trúng: —"
+  },
+  {
+   "ma": "FACE_PICKING_PHAN_BIET",
+   "pass": false,
+   "note": "số mặt PHÂN BIỆT chọn được: 0"
+  },
+  {
+   "ma": "TREE_TO_VIEWPORT",
+   "pass": true,
+   "note": "cây sáng: A"
+  },
+  {
+   "ma": "VIEWPORT_TO_TREE",
+   "pass": true,
+   "note": "2 vật chọn được bằng chuột trong khung"
+  },
+  {
+   "ma": "SELECTION_SINGLE_AUTHORITY",
+   "pass": true,
+   "note": "cây=\"A\" ô soi=\"A\""
+  },
+  {
+   "ma": "INSPECTOR",
+   "pass": true,
+   "note": "trường: Loại · Thuộc · Được tạo bởi · Dựa trên · Do người giải chọn"
+  },
+  {
+   "ma": "ISOLATE",
+   "pass": true,
+   "note": "bấm=\"ok\" · cây 26 nút · canvas còn dựng=true"
+  },
+  {
+   "ma": "DEPENDENCY_HIGHLIGHT",
+   "pass": true,
+   "note": "bấm=\"ok\""
+  },
+  {
+   "ma": "EXPLODED_FACE_PICKING",
+   "pass": false,
+   "note": "không bấm trúng mặt nào sau khi bung"
+  },
+  {
+   "ma": "EXPLODE_COLLAPSE",
+   "pass": false,
+   "note": "nhãn nút đổi: không đổi nhãn"
+  },
+  {
+   "ma": "GEOMETRY_VALUE_UNCHANGED_AFTER_EXPLODE",
+   "pass": false,
+   "note": "TRƯỚC=\"M | S, A\" SAU=\"\""
+  },
+  {
+   "ma": "PLAYBACK",
+   "pass": false,
+   "note": "bước undefined: 0/0 nút tắt → bước undefined: 0/0"
+  },
+  {
+   "ma": "CONSOLE_ERRORS",
+   "pass": false,
+   "note": "exception: Error: Toạ độ không phải phân số hợp lệ: \"0.244949\" || error: The above error occurred in the <Scene3DWorkspace> component:\n\n    at Scene3DWorkspace (http://localhost:3000/src/simulations/domains/geometry/scene3d-view.tsx:144:36)\n    at div\n    at Scene3DPlayer (http://localhost:3000/src/simulations/domains/geometry/scene3d-playback.tsx:33:3)\n    at div\n    at || exception: Error: Toạ độ không phải phân số hợp lệ: \"0.244949\""
+  }
+ ],
+ "console": [
+  {
+   "loai": "exception",
+   "text": "Error: Toạ độ không phải phân số hợp lệ: \"0.244949\""
+  },
+  {
+   "loai": "error",
+   "text": "The above error occurred in the <Scene3DWorkspace> component:\n\n    at Scene3DWorkspace (http://localhost:3000/src/simulations/domains/geometry/scene3d-view.tsx:144:36)\n    at div\n    at Scene3DPlayer (http://localhost:3000/src/simulations/domains/geometry/scene3d-playback.tsx:33:3)\n    at div\n    at"
+  },
+  {
+   "loai": "exception",
+   "text": "Error: Toạ độ không phải phân số hợp lệ: \"0.244949\""
+  }
+ ],
+ "da_chon_bang_chuot": [
+  "Hình chóp S.ABCD",
+  "Mặt bên SBC"
+ ]
+}
