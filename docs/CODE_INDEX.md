@@ -3375,6 +3375,32 @@ Cùng wave, `co_so` hỏi `la_so_huu_ti` thay cho `isinstance(int|float)`: sau c
 hoá thang mục giữ `'4/5'` — một CON SỐ viết chính xác — và hỏi bằng `isinstance`
 thì nó đọc ra "fact quan hệ" rồi cho qua mọi toạ độ ghim vào đó.
 
+### `frontend/src/simulations/domains/geometry/pick-target.ts` · offline
+
+Sở hữu **ĐÍCH BẤM** — tách *cỡ nhìn* khỏi *cỡ bấm*. `BAN_KINH_NHIN` (0.09,
+giữ nguyên) · `DICH_DIEM_PX`/`DICH_CANH_PX` (12/8 px) · `nguongBam` ·
+`banKinhBamDiem` · `nguongBamCanh` · `HANG_CU_THE`/`hangCuThe`.
+
+Vì sao tồn tại, đo bằng lưới 625 điểm ảnh trong Chrome thật: mặt trúng 26 lần,
+đường thẳng 10, đa giác 7 — **điểm 0, cạnh 0**. Cơ chế chọn không hỏng (đường
+thẳng `SA` cũng là `THREE.Line` mà trúng 10 lần); đích bấm quá nhỏ. Cách sửa
+SAI là phóng to chấm: khi ấy một điểm hình học trông như quả cầu. Nên chấm
+nhìn thấy giữ nguyên, còn `scene3d-view` bọc thêm một hình cầu **vô hình**
+(`colorWrite:false` — `visible=false` KHÔNG dùng được vì `Raycaster` bỏ qua
+vật vô hình).
+
+Ngưỡng **dẫn từ khoảng cách camera**, không phải hằng số: `Raycaster` đo ở
+không gian thế giới còn ngón tay đo bằng điểm ảnh, nên một ngưỡng vừa tay ở
+góc nhìn mặc định thành hạt bụi khi phóng to. Dùng `cam.position.length()`,
+KHÔNG dùng phép đo khoảng cách hình học nào (guard cấm ở tầng view). Cả hai
+đầu vào fail-safe: hỏng ⇒ ngưỡng mặc định, vì `NaN` trong
+`params.Line.threshold` làm raycast im lặng không trúng gì.
+
+`HANG_CU_THE` xếp `điểm → cạnh → mặt → … → khối`; `chonCuThe` ở
+`scene3d-view` dùng nó. An toàn vì một vật chỉ vào danh sách va chạm khi tia
+THẬT SỰ trúng vùng bấm của nó — "ưu tiên điểm" không cướp được mặt ở xa con
+trỏ. Test: `pick-target.test.ts` (A–K, 14 ca).
+
 ### `frontend/src/simulations/domains/geometry/scene3d-subentities.ts` · offline
 
 Sở hữu **THỰC THỂ CON THỊ GIÁC** — mặt và cạnh của một khối, dựng từ topology

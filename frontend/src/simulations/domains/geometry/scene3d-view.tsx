@@ -21,6 +21,13 @@ import {
   visualTransformOf,
 } from "./interaction-state";
 import { entitiesPresentAt, parentSolidOf } from "./scene3d-subentities";
+import {
+  BAN_KINH_NHIN,
+  KHOANG_CAM_MAC_DINH,
+  banKinhBamDiem,
+  hangCuThe,
+  nguongBamCanh,
+} from "./pick-target";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -86,17 +93,38 @@ function v(o: THREE.Object3D, name: string): THREE.Object3D {
  * phải trong khung 3D. Vẽ bừa một nhãn lơ lửng là đặt một con số vào một chỗ
  * không có nghĩa hình học.
  */
-export function buildObject3D(o: SceneObject, noiBat: boolean): THREE.Object3D | null {
+export function buildObject3D(
+  o: SceneObject,
+  noiBat: boolean,
+  banKinhBam = banKinhBamDiem(KHOANG_CAM_MAC_DINH),
+): THREE.Object3D | null {
   const mau = noiBat ? MAU.highlight : undefined;
 
   if (o.render === "point_marker" && o.xyz) {
-    const g = new THREE.SphereGeometry(0.09, 16, 12);
+    // HAI hình, một vật: chấm NHÌN THẤY giữ nguyên cỡ, cộng một hình cầu VÔ
+    // HÌNH rộng hơn chỉ để bắt con trỏ. Phóng to chấm cho dễ bấm thì một điểm
+    // hình học bắt đầu trông như quả cầu — đổi thứ học sinh NHÌN THẤY để
+    // chuột dễ hơn là cái giá không được trả.
+    //
+    // `visible = false` KHÔNG dùng được: `Raycaster` bỏ qua vật vô hình. Nên
+    // proxy phải "được vẽ" mà không để lại gì — `colorWrite: false` +
+    // `depthWrite: false`.
+    const nhom = new THREE.Group();
     const m = new THREE.MeshStandardMaterial({
       color: mau ?? (o.origin === "free" ? MAU.free : MAU.derived),
     });
-    const mesh = new THREE.Mesh(g, m);
-    mesh.position.set(...toVec3(o.xyz));
-    return v(mesh, `point:${o.id}`);
+    const mesh = new THREE.Mesh(new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12), m);
+    nhom.add(mesh);
+    const proxy = new THREE.Mesh(
+      new THREE.SphereGeometry(banKinhBam, 8, 6),
+      new THREE.MeshBasicMaterial({
+        colorWrite: false, depthWrite: false, transparent: true, opacity: 0,
+      }),
+    );
+    proxy.name = "pick-proxy";
+    nhom.add(proxy);
+    nhom.position.set(...toVec3(o.xyz));
+    return v(nhom, `point:${o.id}`);
   }
 
   if (o.render === "line" && o.point && o.direction) {
@@ -246,11 +274,25 @@ export function pickSemanticId(o: THREE.Object3D | null): string | null {
  * KHỐI bị bỏ qua khi chính mặt/cạnh của nó cũng nằm trong danh sách. Không có
  * vật con nào thì khối vẫn chọn được như thường.
  */
-export function chonCuThe(ids: string[]): string | null {
+export function chonCuThe(
+  ids: string[],
+  loaiCua?: (id: string) => string | undefined,
+): string | null {
+  if (ids.length === 0) return null;
   const cha = new Set(
     ids.map((x) => parentSolidOf(x)).filter((x): x is string => !!x),
   );
-  return ids.find((x) => !cha.has(x)) ?? ids[0] ?? null;
+  if (!loaiCua) return ids.find((x) => !cha.has(x)) ?? ids[0];
+  // Xếp theo HẠNG CỤ THỂ, giữ thứ tự khoảng cách trong cùng hạng. Một vật
+  // chỉ vào danh sách khi tia THẬT SỰ trúng vùng bấm của nó, nên "ưu tiên
+  // điểm" không bao giờ cướp được một mặt ở xa con trỏ.
+  let tot = ids[0];
+  let hang = hangCuThe(loaiCua(ids[0]));
+  for (const x of ids.slice(1)) {
+    const h = hangCuThe(loaiCua(x));
+    if (h < hang) { tot = x; hang = h; }
+  }
+  return tot;
 }
 
 interface Props {
@@ -273,6 +315,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
   const tuongTac = interaction ?? TRANG_THAI_DAU;
   const chonRef = useRef(onSelect);
   chonRef.current = onSelect;
+  // `id → type`, để luật chọn biết cái nào cụ thể hơn. `ref` vì vòng lặp
+  // raycast sống trong một `useEffect` chạy MỘT LẦN.
+  const loaiRef = useRef(new Map<string, string>());
+  loaiRef.current = new Map(scene.objects.map((o) => [o.id, o.type]));
 
   // Dựng scene MỘT LẦN; đổi bước chỉ thay nội dung nhóm gốc.
   useEffect(() => {
@@ -329,16 +375,20 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
         -((e.clientY - r.top) / r.height) * 2 + 1,
       );
       const tia = new THREE.Raycaster();
-      // Điểm và đường mảnh: cho phép trúng trong một bán kính nhỏ, nếu không
-      // học sinh phải bấm đúng từng pixel của một chấm.
-      tia.params.Line = { threshold: 0.08 };
-      tia.params.Points = { threshold: 0.12 };
+      // NGƯỠNG DẪN TỪ CAMERA, không phải hằng số. `Raycaster` đo ở không gian
+      // THẾ GIỚI còn ngón tay đo bằng ĐIỂM ẢNH: một ngưỡng vừa tay ở góc nhìn
+      // mặc định thành hạt bụi khi phóng to. `cam.position.length()` — camera
+      // luôn nhìn về gốc — chứ KHÔNG một phép đo khoảng cách hình học nào, vốn
+      // bị guard cấm ở tầng này.
+      const kc = cam.position.length();
+      tia.params.Line = { threshold: nguongBamCanh(kc) };
+      tia.params.Points = { threshold: nguongBamCanh(kc) };
       tia.setFromCamera(diem, cam);
       const trung = tia.intersectObjects(goc.children, true);
       const ids = trung
         .map((h) => pickSemanticId(h.object))
         .filter((x): x is string => typeof x === "string" && x.length > 0);
-      chonRef.current(chonCuThe(ids));
+      chonRef.current(chonCuThe(ids, (id) => loaiRef.current.get(id)));
     };
     renderer.domElement.addEventListener("pointerdown", xuongTay);
     renderer.domElement.addEventListener("pointerup", nhacTay);
@@ -397,7 +447,7 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
       // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
       if (!isVisible(tuongTac, o.id, daTonTai)) continue;
-      const obj = buildObject3D(o, noiBat.has(o.id));
+      const obj = buildObject3D(o, noiBat.has(o.id), banKinhBamDiem(KHOANG_CAM_MAC_DINH));
       if (!obj) continue;
       // BUNG HÌNH chỉ dịch vị trí TRÌNH BÀY. Không một toạ độ nào trong
       // `scene` bị chạm — `visualTransformOf` trả về một giá trị mới.

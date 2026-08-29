@@ -195,9 +195,11 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
       // không có sự kiện timeline riêng — không bao giờ được dựng, nên raycast
       // chỉ trúng khối. Module ấy THUẦN: có test riêng buộc nó không nhập
       // three, không toán hình học.
+      // `./pick-target` THÊM 2026-08-30: ĐÍCH BẤM tách khỏi cỡ nhìn. Module
+      // thuần, không three, không toán hình học — có test riêng khoá điều đó.
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
               "./scene3d-model", "./interaction-state",
-              "./scene3d-subentities"]).toContain(i);
+              "./scene3d-subentities", "./pick-target"]).toContain(i);
     }
   });
 
@@ -390,7 +392,7 @@ describe("(5E) thực thể con: dựng riêng và chọn riêng", () => {
   });
 
   it("luật chọn nằm TRONG view, không chỉ trong test", () => {
-    expect(view).toContain("chonCuThe(ids)");
+    expect(view).toContain("chonCuThe(ids,");
     expect(view).not.toContain("pickSemanticId(trung[0]");
   });
 

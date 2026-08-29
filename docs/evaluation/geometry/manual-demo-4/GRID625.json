@@ -1,0 +1,22 @@
+{
+ "khai": "Lưới CỐ ĐỊNH 625 điểm ảnh trên khung 3D, bước cuối. 0 API call.",
+ "theo_loai": {
+  "(trống)": 569,
+  "edge": 22,
+  "line3": 19,
+  "face": 14,
+  "point3": 1
+ },
+ "theo_vat": {
+  "line3:Đường thẳng SA": 19,
+  "face:SBC": 8,
+  "edge:CS": 6,
+  "face:SCD": 6,
+  "edge:DS": 4,
+  "edge:BS": 4,
+  "edge:CD": 3,
+  "edge:DA": 3,
+  "edge:AB": 2,
+  "point3:A": 1
+ }
+}

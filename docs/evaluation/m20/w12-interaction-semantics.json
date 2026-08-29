@@ -1,20 +1,13 @@
 {
   "provenanceVersion": 2,
-  "sourceFingerprint": "5970fec3f55af5b8",
+  "sourceFingerprint": "49b4d0eea7168f1e",
   "dirtyRelevantSources": [
-    "backend/app/simulation/semantic_program/scene3d.py",
-    "backend/tests/geometry/test_scene3d_interaction_contract.py",
-    "frontend/scripts/demo-geometry-interaction.mjs",
-    "frontend/src/simulations/domains/geometry/interaction-state.test.ts",
-    "frontend/src/simulations/domains/geometry/interaction-state.ts",
-    "frontend/src/simulations/domains/geometry/scene3d-model.ts",
-    "frontend/src/simulations/domains/geometry/scene3d-subentities.test.ts",
     "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
     "frontend/src/simulations/domains/geometry/scene3d.test.tsx"
   ],
-  "head": "86ecee7b7b45912c84d45c333699f1ce018bf2ae",
+  "head": "4512b2e1fe61a50a3209512d4f48958c6dfa2149",
   "dirty": true,
-  "generatedAt": "2026-08-29T17:18:24.637Z",
+  "generatedAt": "2026-08-29T17:45:54.085Z",
   "tool": "interaction-semantics.test",
   "toolVersion": "1",
   "environment": {

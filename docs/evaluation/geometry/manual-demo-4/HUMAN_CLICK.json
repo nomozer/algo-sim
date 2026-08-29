@@ -1,0 +1,67 @@
+{
+ "khai": "BẤM NHẮM như người dùng: quét mịn 6px quanh vùng có hình.",
+ "so_lan_bam": 2907,
+ "theo_loai": {
+  "line3": [
+   {
+    "nhan": "Đường thẳng SA",
+    "lan_thu_dau": 41
+   }
+  ],
+  "edge": [
+   {
+    "nhan": "SA",
+    "lan_thu_dau": 798
+   },
+   {
+    "nhan": "DS",
+    "lan_thu_dau": 799
+   },
+   {
+    "nhan": "CS",
+    "lan_thu_dau": 848
+   },
+   {
+    "nhan": "BS",
+    "lan_thu_dau": 952
+   },
+   {
+    "nhan": "DA",
+    "lan_thu_dau": 1392
+   },
+   {
+    "nhan": "CD",
+    "lan_thu_dau": 1436
+   },
+   {
+    "nhan": "AB",
+    "lan_thu_dau": 1557
+   },
+   {
+    "nhan": "BC",
+    "lan_thu_dau": 2215
+   }
+  ],
+  "face": [
+   {
+    "nhan": "SCD",
+    "lan_thu_dau": 1098
+   },
+   {
+    "nhan": "SBC",
+    "lan_thu_dau": 1204
+   }
+  ],
+  "point3": [
+   {
+    "nhan": "A",
+    "lan_thu_dau": 1402
+   }
+  ]
+ },
+ "dong_bo_cay_va_o_soi": {
+  "soCay": 0,
+  "tenCay": "",
+  "tenSoi": ""
+ }
+}
