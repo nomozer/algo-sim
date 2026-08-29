@@ -141,11 +141,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "assumption": "Chọn A làm gốc tọa độ (0,0,0) và SA vuông góc với mặt phẳng đáy."
@@ -170,11 +170,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "fact_id": "canh_day_abcd",
@@ -200,11 +200,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "fact_id": "canh_day_abcd",
@@ -230,11 +230,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "fact_id": "abcd_hinh_vuong",
@@ -260,11 +260,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "assumption": "Chọn chiều cao SA = 2, vuông góc với đáy."
@@ -295,11 +295,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_polygon"
@@ -352,11 +352,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_polygon"
@@ -403,11 +403,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_polygon"
@@ -454,11 +454,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_polygon"
@@ -505,11 +505,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_polygon"
@@ -558,11 +558,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_solid"
@@ -648,11 +648,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_line"
@@ -686,11 +686,11 @@
     ],
     "visual_transform": {
      "translate": [
-      "0",
-      "0",
-      "0"
+      0,
+      0,
+      0
      ],
-     "scale": "1"
+     "scale": 1
     },
     "source": {
      "instruction": "construct_point.midpoint"

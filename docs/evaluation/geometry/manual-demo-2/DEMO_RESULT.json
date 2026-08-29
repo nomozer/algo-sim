@@ -1,0 +1,102 @@
+{
+ "khai": "DEMO TAY giao diện 3D. Bài phát lại từ một lượt LIVE thật, 0 API call.",
+ "nguon": "phase7a-pilot-sau-71/1-trung-diem-lan3 (served, oracle ĐÚNG)",
+ "ket_qua": [
+  {
+   "ma": "APP_STARTED",
+   "pass": true,
+   "note": "ok"
+  },
+  {
+   "ma": "MODEL_RENDERED",
+   "pass": true,
+   "note": "canvas=true nút=26 hạng mục=Điểm/Cạnh/Mặt/Đa giác/Điểm/Đường thẳng"
+  },
+  {
+   "ma": "ROTATE_ZOOM_PAN",
+   "pass": true,
+   "note": "canvas 732×549 (OrbitControls sẵn)"
+  },
+  {
+   "ma": "POINT_PICKING",
+   "pass": false,
+   "note": "điểm bấm trúng: —"
+  },
+  {
+   "ma": "EDGE_PICKING",
+   "pass": true,
+   "note": "cạnh bấm trúng: CS"
+  },
+  {
+   "ma": "FACE_PICKING",
+   "pass": true,
+   "note": "mặt bấm trúng: SCD, SBC"
+  },
+  {
+   "ma": "FACE_PICKING_PHAN_BIET",
+   "pass": true,
+   "note": "số mặt PHÂN BIỆT chọn được: 2"
+  },
+  {
+   "ma": "TREE_TO_VIEWPORT",
+   "pass": true,
+   "note": "cây sáng: A"
+  },
+  {
+   "ma": "VIEWPORT_TO_TREE",
+   "pass": true,
+   "note": "3 vật chọn được bằng chuột trong khung"
+  },
+  {
+   "ma": "SELECTION_SINGLE_AUTHORITY",
+   "pass": true,
+   "note": "cây=\"A\" ô soi=\"A\""
+  },
+  {
+   "ma": "INSPECTOR",
+   "pass": true,
+   "note": "trường: Loại · Thuộc · Được tạo bởi · Dựa trên · Do người giải chọn"
+  },
+  {
+   "ma": "ISOLATE",
+   "pass": true,
+   "note": "bấm=\"ok\" · cây 26 nút · canvas còn dựng=true"
+  },
+  {
+   "ma": "DEPENDENCY_HIGHLIGHT",
+   "pass": true,
+   "note": "bấm=\"ok\""
+  },
+  {
+   "ma": "EXPLODED_FACE_PICKING",
+   "pass": true,
+   "note": "SCD"
+  },
+  {
+   "ma": "EXPLODE_COLLAPSE",
+   "pass": true,
+   "note": "nhãn nút đổi: ok"
+  },
+  {
+   "ma": "GEOMETRY_VALUE_UNCHANGED_AFTER_EXPLODE",
+   "pass": true,
+   "note": "số hiển thị y nguyên"
+  },
+  {
+   "ma": "PLAYBACK",
+   "pass": true,
+   "note": "bước 0: 21/26 nút tắt → bước 2: 19/26"
+  },
+  {
+   "ma": "CONSOLE_ERRORS",
+   "pass": true,
+   "note": "không có"
+  }
+ ],
+ "console": [],
+ "da_chon_bang_chuot": [
+  "SCD",
+  "SBC",
+  "CS"
+ ]
+}

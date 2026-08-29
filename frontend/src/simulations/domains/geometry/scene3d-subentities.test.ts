@@ -8,9 +8,11 @@
  */
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
+import { laSoTrinhBayHopLe, objectsAt, toNumber } from "./scene3d-model";
 import {
   deriveVisualSubEntities,
   edgeId,
+  entitiesPresentAt,
   faceId,
   faceLabel,
   isSubEntity,
@@ -192,7 +194,7 @@ describe("thao tác trên mặt", () => {
     const s = taoTrangThai();
     for (const m of mat()) {
       expect(visualTransformOf(s, day, m.id)).toEqual({
-        translate: ["0", "0", "0"], scale: "1",
+        translate: [0, 0, 0], scale: 1,
       });
     }
   });
@@ -214,5 +216,127 @@ describe("phụ thuộc của thực thể con", () => {
   it("xuất xứ nói rõ đây là TOPOLOGY, không phải một phép dựng của đề", () => {
     expect(mat()[0].source!.instruction).toContain("topology");
     expect(mat()[0].producer).toContain("face[0]");
+  });
+});
+
+
+// ══ A–E · HAI KHÔNG GIAN SỐ, và cái crash đã quan sát được ════════════════
+//
+// Demo tay trong Chrome thật ném: `Toạ độ không phải phân số hợp lệ:
+// "0.244949"`. Nguyên nhân: `visual_transform.translate` khai `ExactVec3`
+// (chuỗi phân số) trong khi phép bung sinh số thập phân. 1674 test cũ không
+// bắt được vì chúng chỉ so các transform VỚI NHAU — chưa lần nào đẩy một cái
+// qua `toNumber`. Các ca dưới đây đóng đúng lỗ ấy.
+describe("A–E · không gian TRÌNH BÀY tách khỏi không gian CHÍNH XÁC", () => {
+  const day = withSubEntities(KHOI);
+
+  it("A · bung sinh SỐ THẬP PHÂN, và đó là hợp lệ", () => {
+    const s = explode(taoTrangThai(), "face");
+    const t = visualTransformOf(s, day, faceId("chop", 1)).translate;
+    for (const x of t) {
+      expect(typeof x).toBe("number");
+      expect(Number.isFinite(x)).toBe(true);
+    }
+    expect(t.some((x) => !Number.isInteger(x))).toBe(true);
+  });
+
+  it("A2 · KHÔNG đẩy khoảng dịch qua bộ phân tích PHÂN SỐ", () => {
+    // Đây là dòng đã làm sập khung 3D. Nay `translate` là số nên không ai
+    // gọi `toNumber` lên nó nữa — và nếu ai đó gọi, ca này nói tại sao đừng.
+    const s = explode(taoTrangThai(), "face");
+    const t = visualTransformOf(s, day, faceId("chop", 1)).translate;
+    expect(() => toNumber(String(t[0]) as never)).toThrow();
+  });
+
+  it("B · số VÔ HẠN ⇒ ĐỒNG NHẤT THỨC, không đẩy NaN xuống buffer", () => {
+    // Một `NaN`/`Infinity` lọt vào three.js làm cả mesh biến mất KHÔNG BÁO GÌ,
+    // và truy ngược từ một khung hình trống là chỗ tốn nhiều giờ nhất.
+    expect(laSoTrinhBayHopLe(0.244949)).toBe(true);
+    for (const x of [NaN, Infinity, -Infinity, "0.5", null, undefined]) {
+      expect(laSoTrinhBayHopLe(x)).toBe(false);
+    }
+    const hong: Scene3D = {
+      ...day,
+      objects: day.objects.map((o) =>
+        o.id === faceId("chop", 0)
+          ? { ...o, polygon: [["1/0", "0", "0"], ["1/0", "0", "0"], ["1/0", "0", "0"]] }
+          : o),
+    };
+    const s = explode(taoTrangThai(), "face");
+    expect(visualTransformOf(s, hong, faceId("chop", 0)))
+      .toEqual({ translate: [0, 0, 0], scale: 1 });
+  });
+
+  it("B2 · trùng tâm cha ⇒ ĐỒNG NHẤT THỨC (không chia cho 0)", () => {
+    const s = explode(taoTrangThai(), "solid");
+    // Khối trùng tâm với chính nó ⇒ hướng bung bằng 0 ⇒ giữ nguyên chỗ.
+    expect(visualTransformOf(s, day, "chop").translate.every(Number.isFinite))
+      .toBe(true);
+  });
+
+  it("C · bung cả tứ diện: mọi mặt cho số hữu hạn, không ném", () => {
+    const s = explode(explode(taoTrangThai(), "face"), "solid_component");
+    for (const o of day.objects) {
+      const t = visualTransformOf(s, day, o.id);
+      expect(t.translate.every(Number.isFinite)).toBe(true);
+      expect(Number.isFinite(t.scale)).toBe(true);
+    }
+  });
+
+  it("D · GeometryState trước/sau bung — SÂU BẰNG NHAU", () => {
+    const truoc = JSON.parse(JSON.stringify(day)) as Scene3D;
+    const s = explode(taoTrangThai(), "face");
+    for (const o of day.objects) visualTransformOf(s, day, o.id);
+    expect(day).toEqual(truoc);
+  });
+
+  it("E · SỐ ĐO trước/sau bung không đổi", () => {
+    const truoc = day.objects.find((o) => o.id === "V")!.value;
+    const s = explode(taoTrangThai(), "face");
+    for (const o of day.objects) visualTransformOf(s, day, o.id);
+    expect(day.objects.find((o) => o.id === "V")!.value).toBe(truoc);
+    expect(truoc).toBe("1/6");
+  });
+});
+
+// ══ F–H, M · MỘT THẨM QUYỀN "CÓ MẶT" ═════════════════════════════════════
+describe("F–H · cây và khung nhìn hỏi CÙNG một thẩm quyền", () => {
+  const day = withSubEntities(KHOI);
+
+  it("F · cùng bước ⇒ cùng tập vật, cho mọi bước", () => {
+    for (let k = 0; k < KHOI.events.length; k++) {
+      const cay = entitiesPresentAt(day, k, objectsAt);
+      const khung = entitiesPresentAt(day, k, objectsAt);
+      expect([...cay].sort()).toEqual([...khung].sort());
+    }
+  });
+
+  it("G · MẶT có mặt dù không có sự kiện timeline riêng", () => {
+    const k = 1; // bước dựng khối
+    const co = entitiesPresentAt(day, k, objectsAt);
+    expect(co.has("chop")).toBe(true);
+    for (let i = 0; i < 4; i++) expect(co.has(faceId("chop", i))).toBe(true);
+    // …và KHÔNG có sự kiện nào mang tên chúng.
+    expect(day.events.some((e) => (e.object ?? "").includes("::"))).toBe(false);
+  });
+
+  it("H · CẠNH cũng vậy", () => {
+    const co = entitiesPresentAt(day, 1, objectsAt);
+    expect(co.has(edgeId("chop", "A", "B"))).toBe(true);
+  });
+
+  it("M · đổi bước ⇒ tập vật lớn dần, không bao giờ mất vật", () => {
+    let truoc = new Set<string>();
+    for (let k = 0; k < KHOI.events.length; k++) {
+      const co = entitiesPresentAt(day, k, objectsAt);
+      for (const x of truoc) expect(co.has(x)).toBe(true);
+      truoc = co;
+    }
+  });
+
+  it("khối CHƯA dựng ⇒ mặt của nó cũng chưa có", () => {
+    const co = entitiesPresentAt(day, 0, objectsAt);
+    expect(co.has("chop")).toBe(false);
+    expect(co.has(faceId("chop", 0))).toBe(false);
   });
 });

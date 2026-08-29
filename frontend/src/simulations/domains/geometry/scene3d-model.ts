@@ -83,10 +83,40 @@ export interface SceneObject {
   value?: Exact;
 }
 
-/** Biến đổi TRÌNH BÀY. Số vẫn là chuỗi phân số — cùng quy ước với toạ độ. */
+/**
+ * `VisualVec3` — KHÔNG GIAN TRÌNH BÀY, tách hẳn khỏi `ExactVec3`.
+ *
+ * ─── VÌ SAO PHẢI LÀ HAI KIỂU, KHÔNG PHẢI MỘT ────────────────────────────
+ *
+ * Bản đầu khai `visual_transform.translate` là `ExactVec3` — chuỗi phân số —
+ * "cho đồng bộ". Demo trong Chrome thật cho thấy cái giá: `visualTransformOf`
+ * sinh `"0.244949"`, `toNumber` ném đúng như nó phải ném, và **cả khung 3D
+ * sập**. 1674 test vitest không bắt được, vì chúng chỉ so các
+ * `visual_transform` với NHAU, chưa lần nào đẩy một cái qua `toNumber`.
+ *
+ * Bài học không phải "ép số thập phân thành phân số". Hai không gian này khác
+ * nhau về BẢN CHẤT:
+ *
+ *   `ExactVec3`  toạ độ TOÁN HỌC — `GeometryState`, kernel, checker, phép đo.
+ *                Phải chính xác tuyệt đối: đó là thứ phân biệt hệ này với một
+ *                bộ vẽ hình.
+ *   `VisualVec3` khoảng dịch TRÌNH BÀY — bung hình, lệch hiển thị. `0.244949`
+ *                hoàn toàn hợp lệ ở đây; làm tròn nó không sai một mệnh đề
+ *                toán nào, vì nó chưa bao giờ là một mệnh đề toán.
+ *
+ * ⚠️ `VisualVec3` **không được đi vào** kernel, checker, hay phép đo. Ranh
+ * giới ấy là lý do tồn tại của kiểu này.
+ */
+export type VisualVec3 = [number, number, number];
+
 export interface VisualTransform {
-  translate: ExactVec3;
-  scale: Exact;
+  translate: VisualVec3;
+  scale: number;
+}
+
+/** Số dùng được cho trình bày: hữu hạn. `NaN`/`Infinity` thì KHÔNG. */
+export function laSoTrinhBayHopLe(x: unknown): x is number {
+  return typeof x === "number" && Number.isFinite(x);
 }
 
 /** Xuất xứ NGẮN cho ô soi. Không chở prompt, không chở lời giải. */
@@ -97,8 +127,8 @@ export interface SceneSource {
 }
 
 export const BIEN_DOI_DONG_NHAT: VisualTransform = {
-  translate: ["0", "0", "0"],
-  scale: "1",
+  translate: [0, 0, 0],
+  scale: 1,
 };
 
 export type EventAction = "INIT" | "CREATE" | "EXTEND" | "MEASURE" | "STEP";

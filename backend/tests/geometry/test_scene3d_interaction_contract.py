@@ -136,8 +136,25 @@ def test_C3_nhom_on_dinh_giua_hai_lan_dung():
 def test_D_server_luon_phat_dong_nhat_thuc():
     """Bung hình là thao tác của NGƯỜI XEM. Server không bao giờ phát sẵn."""
     for o in _canh()["objects"]:
-        assert o["visual_transform"]["translate"] == ["0", "0", "0"]
-        assert o["visual_transform"]["scale"] == "1"
+        assert o["visual_transform"]["translate"] == [0, 0, 0]
+        assert o["visual_transform"]["scale"] == 1
+
+
+def test_D2_bien_doi_trinh_bay_la_SO_khong_phai_chuoi_phan_so():
+    """Hai KHÔNG GIAN, hai cách viết số — và trộn chúng đã làm sập khung 3D.
+
+    Toạ độ hình học là chuỗi phân số CHÍNH XÁC (`"1/2"`). Khoảng dịch trình
+    bày là SỐ THƯỜNG: nó chưa bao giờ là một mệnh đề toán, nên làm tròn nó
+    không sai gì; ép nó thành phân số thì phía kia sinh `"0.244949"` và bộ
+    phân tích phân số ném — đúng cái demo tay đã bắt được.
+    """
+    for o in _canh()["objects"]:
+        for x in o["visual_transform"]["translate"]:
+            assert isinstance(x, (int, float)) and not isinstance(x, bool), x
+        assert isinstance(o["visual_transform"]["scale"], (int, float))
+    # Toạ độ HÌNH HỌC thì vẫn phải là chuỗi phân số — không bị kéo theo.
+    o = _theo_id(_canh())
+    assert o["M"]["xyz"] == ["1/2", "0", "0"]
 
 
 # ══ G · xuất xứ đủ để SOI, không hơn ════════════════════════════════════

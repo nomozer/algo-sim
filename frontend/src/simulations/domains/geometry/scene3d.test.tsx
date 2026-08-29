@@ -14,8 +14,15 @@ import {
   toNumber,
   toVec3,
   type Scene3D,
+  type ExactVec3,
 } from "./scene3d-model";
-import { GEOMETRY_WEBGL_FALLBACK, Scene3DWorkspace, buildObject3D } from "./scene3d-view";
+import {
+  GEOMETRY_WEBGL_FALLBACK,
+  Scene3DWorkspace,
+  buildObject3D,
+  chonCuThe,
+  semanticIdOf,
+} from "./scene3d-view";
 
 /**
  * PHASE 5D — renderer 3D đọc Scene3D.
@@ -182,8 +189,15 @@ describe("(5D) ranh giới: renderer không suy luận hình học", () => {
   it("không import kernel/validator/oracle — chỉ nguồn THUẦN của miền", () => {
     const imports = [...view.matchAll(/from ["']([^"']+)["']/g)].map((m) => m[1]);
     for (const i of imports) {
+      // `./scene3d-subentities` THÊM 2026-08-30, và đây là quyết định được
+      // nói ra: khung nhìn nay hỏi CÙNG một thẩm quyền "vật nào đang có mặt"
+      // với cây phân rã. Trước đó nó tự hỏi `objectsAt`, và mặt/cạnh — vốn
+      // không có sự kiện timeline riêng — không bao giờ được dựng, nên raycast
+      // chỉ trúng khối. Module ấy THUẦN: có test riêng buộc nó không nhập
+      // three, không toán hình học.
       expect(["react", "three", "three/addons/controls/OrbitControls.js",
-              "./scene3d-model", "./interaction-state"]).toContain(i);
+              "./scene3d-model", "./interaction-state",
+              "./scene3d-subentities"]).toContain(i);
     }
   });
 
@@ -305,5 +319,96 @@ describe("(5D) vỏ renderer", () => {
                        "onClick={", "DragControls", "TransformControls"]) {
       expect(src).not.toContain(cam);
     }
+  });
+});
+
+
+// ══ I–L · DỰNG và CHỌN thực thể con ══════════════════════════════════════
+//
+// Demo tay: 144 cú bấm thật chỉ trúng KHỐI, không trúng mặt nào. Hai nguyên
+// nhân, và cả hai đóng ở đây: (a) mặt chưa từng được dựng thành `Object3D`,
+// (b) kể cả khi dựng, tia trúng cả mặt lẫn khối và bản cũ lấy `trung[0]`.
+describe("(5E) thực thể con: dựng riêng và chọn riêng", () => {
+  const view = readFileSync(join(__dirname, "scene3d-view.tsx"), "utf8");
+
+  const khoi = {
+    id: "chop", label: "S.ABC", type: "solid", render: "mesh" as const,
+    origin: "derived" as const, producer: "construct_solid",
+    depends: ["A", "B", "C", "S"],
+    vertices: [["0", "0", "0"], ["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]] as ExactVec3[],
+    vertex_ids: ["A", "B", "C", "S"],
+    faces: [[0, 1, 2], [0, 1, 3], [1, 2, 3], [0, 2, 3]],
+  };
+
+  it("I · MẶT dựng thành một Object3D mang đúng id `chop::face:n`", () => {
+    const m = {
+      id: "chop::face:1", label: "ABS", type: "face", render: "polygon" as const,
+      origin: "derived" as const, producer: "construct_solid.face[1]",
+      depends: ["A", "B", "S"],
+      polygon: [["0", "0", "0"], ["1", "0", "0"], ["0", "0", "1"]] as ExactVec3[],
+    };
+    const o = buildObject3D(m, false);
+    expect(o).not.toBeNull();
+    expect(o!.name).toBe("face:chop::face:1");
+    expect(semanticIdOf(o!.name)).toBe("chop::face:1");
+    // ĐẶC, không phải đường viền: một nét 1px gần như không bấm trúng.
+    expect(o!.type).toBe("Mesh");
+  });
+
+  it("J · CẠNH dựng riêng và mang đúng id", () => {
+    const e = {
+      id: "chop::edge:A-B", label: "AB", type: "edge", render: "line" as const,
+      origin: "derived" as const, producer: "construct_solid.edge",
+      depends: ["A", "B"],
+      polygon: [["0", "0", "0"], ["1", "0", "0"]] as ExactVec3[],
+    };
+    const o = buildObject3D(e, false);
+    expect(o).not.toBeNull();
+    expect(semanticIdOf(o!.name)).toBe("chop::edge:A-B");
+  });
+
+  it("K · tia trúng cả mặt lẫn khối ⇒ chọn MẶT, không rơi về khối", () => {
+    expect(chonCuThe(["chop::face:1", "chop"])).toBe("chop::face:1");
+    expect(chonCuThe(["chop", "chop::face:1"])).toBe("chop::face:1");
+  });
+
+  it("L · tia trúng cả cạnh lẫn khối ⇒ chọn CẠNH", () => {
+    expect(chonCuThe(["chop::edge:A-B", "chop"])).toBe("chop::edge:A-B");
+  });
+
+  it("K2 · ĐIỂM gần hơn thì THẮNG mặt — không nhảy qua nó", () => {
+    // Đây là lỗi bản sửa thứ nhất: luật "lấy vật con đầu tiên" bỏ qua đỉnh
+    // (đỉnh không có `::`) để lấy mặt phía sau. Demo tay đo 0/144 cú bấm
+    // trúng điểm. Thứ tự KHOẢNG CÁCH phải được giữ.
+    expect(chonCuThe(["A", "chop::face:1", "chop"])).toBe("A");
+    expect(chonCuThe(["chop::edge:A-B", "A", "chop"])).toBe("chop::edge:A-B");
+  });
+
+  it("K3 · không có vật con ⇒ KHỐI vẫn chọn được như thường", () => {
+    expect(chonCuThe(["chop"])).toBe("chop");
+    expect(chonCuThe([])).toBeNull();
+  });
+
+  it("luật chọn nằm TRONG view, không chỉ trong test", () => {
+    expect(view).toContain("chonCuThe(ids)");
+    expect(view).not.toContain("pickSemanticId(trung[0]");
+  });
+
+  it("khung nhìn hỏi CÙNG thẩm quyền có-mặt với cây", () => {
+    expect(view).toContain("entitiesPresentAt(scene, buoc, objectsAt)");
+    // Không còn bản sao logic presence riêng cho renderer.
+    expect(view).not.toContain("new Set(hienTai.map");
+  });
+
+  it("khối vẫn dựng được — thực thể con KHÔNG thay nó", () => {
+    const o = buildObject3D(khoi, false);
+    expect(o).not.toBeNull();
+    expect(semanticIdOf(o!.name)).toBe("chop");
+  });
+
+  it("dịch chuyển TRÌNH BÀY không đi qua bộ phân tích phân số", () => {
+    // `toNumber("0.244949")` ném — và đó là cái đã làm sập khung 3D.
+    expect(view).not.toContain("toNumber(bd.translate");
+    expect(view).toContain("obj.position.set(bd.translate[0]");
   });
 });

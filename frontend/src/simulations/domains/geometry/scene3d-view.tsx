@@ -9,7 +9,6 @@ import {
   narrationAt,
   objectsAt,
   stepCount,
-  toNumber,
   toVec3,
   type Scene3D,
   type SceneObject,
@@ -21,6 +20,7 @@ import {
   isVisible,
   visualTransformOf,
 } from "./interaction-state";
+import { entitiesPresentAt, parentSolidOf } from "./scene3d-subentities";
 
 /**
  * Renderer 3D của miền hình học không gian — `display(scene, step)`.
@@ -159,6 +159,38 @@ export function buildObject3D(o: SceneObject, noiBat: boolean): THREE.Object3D |
     return v(nhom, `solid:${o.id}`);
   }
 
+  // ── MẶT của khối: hình ĐẶC, để bấm trúng được ─────────────────────────
+  //
+  // `polygon` bình thường vẽ bằng đường viền, và một đường viền dày 1px gần
+  // như không bấm trúng. Mặt thì phải bấm được — đó là toàn bộ điểm của việc
+  // sinh ra nó. Quạt tam giác ở đây là phép chia LIST trên thứ tự đỉnh do
+  // kernel quyết, cùng khuôn với nhánh `mesh`; không có phép hình học nào.
+  if (o.type === "face" && o.polygon && o.polygon.length >= 3) {
+    const pts = o.polygon.map(toVec3);
+    const pos: number[] = [];
+    for (let i = 1; i < pts.length - 1; i += 1) {
+      for (const j of [0, i, i + 1]) pos.push(...pts[j]);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+    g.computeVertexNormals();
+    return v(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
+      color: mau ?? MAU.polygon,
+      transparent: true,
+      opacity: noiBat ? 0.55 : 0.14,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+    })), `face:${o.id}`);
+  }
+
+  if (o.type === "edge" && o.polygon && o.polygon.length === 2) {
+    const g = new THREE.BufferGeometry().setFromPoints(
+      o.polygon.map((x) => new THREE.Vector3(...toVec3(x))));
+    return v(new THREE.Line(g, new THREE.LineBasicMaterial({
+      color: mau ?? MAU.line, linewidth: 2,
+    })), `edge:${o.id}`);
+  }
+
   if (o.render === "polygon" && (o.polygon || o.vertices)) {
     const pts = (o.polygon ?? o.vertices ?? []).map(toVec3)
       .map((p) => new THREE.Vector3(...p));
@@ -197,6 +229,28 @@ export function pickSemanticId(o: THREE.Object3D | null): string | null {
     if (id) return id;
   }
   return null;
+}
+
+/**
+ * Trong danh sách va chạm (đã sắp theo KHOẢNG CÁCH), chọn vật CỤ THỂ NHẤT.
+ *
+ * ─── HAI LẦN SAI, HAI LÝ DO KHÁC NHAU ───────────────────────────────────
+ *
+ * ① Bản đầu lấy thẳng `ids[0]`. Mặt của khối nằm ĐÚNG trên bề mặt khối nên
+ *    tia trúng cả hai, và học sinh bấm vào mặt SAB thì hệ trả về cả hình chóp.
+ * ② Bản sửa lấy "vật con đầu tiên" — và thế là ĐIỂM không bao giờ chọn được:
+ *    một đỉnh nằm trên mặt khối, tia trúng cả điểm (gần hơn) lẫn mặt, mà luật
+ *    ấy nhảy qua điểm để lấy mặt. Demo tay đo được: 0/144 cú bấm trúng điểm.
+ *
+ * Luật đúng giữ NGUYÊN thứ tự khoảng cách và chỉ **hạ bệ đúng một thứ**: một
+ * KHỐI bị bỏ qua khi chính mặt/cạnh của nó cũng nằm trong danh sách. Không có
+ * vật con nào thì khối vẫn chọn được như thường.
+ */
+export function chonCuThe(ids: string[]): string | null {
+  const cha = new Set(
+    ids.map((x) => parentSolidOf(x)).filter((x): x is string => !!x),
+  );
+  return ids.find((x) => !cha.has(x)) ?? ids[0] ?? null;
 }
 
 interface Props {
@@ -281,7 +335,10 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       tia.params.Points = { threshold: 0.12 };
       tia.setFromCamera(diem, cam);
       const trung = tia.intersectObjects(goc.children, true);
-      chonRef.current(pickSemanticId(trung[0]?.object ?? null));
+      const ids = trung
+        .map((h) => pickSemanticId(h.object))
+        .filter((x): x is string => typeof x === "string" && x.length > 0);
+      chonRef.current(chonCuThe(ids));
     };
     renderer.domElement.addEventListener("pointerdown", xuongTay);
     renderer.domElement.addEventListener("pointerup", nhacTay);
@@ -328,8 +385,14 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
         ? highlightSet(scene, tuongTac.selected_id)
         : highlightedAt(scene, buoc),
     );
-    const hienTai = objectsAt(scene, buoc);
-    const daTonTai = new Set(hienTai.map((o) => o.id));
+    // MỘT thẩm quyền "vật nào đang có mặt", dùng chung với cây phân rã.
+    //
+    // Bản trước hỏi thẳng `objectsAt` ở đây còn cây hỏi `entitiesPresentAt`.
+    // Hai phép khác nhau: mặt và cạnh KHÔNG có sự kiện timeline riêng, nên
+    // `objectsAt` bỏ chúng ra — cây liệt kê được mặt mà khung nhìn không dựng
+    // mặt nào, và raycast chỉ còn trúng khối. Demo tay bắt đúng chuyện đó.
+    const daTonTai = entitiesPresentAt(scene, buoc, objectsAt);
+    const hienTai = scene.objects.filter((o) => daTonTai.has(o.id));
     for (const o of hienTai) {
       // ẨN / CÔ LẬP quyết định CÓ DỰNG HAY KHÔNG — không dựng rồi giấu, vì
       // một mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm.
@@ -338,12 +401,11 @@ export function Scene3DWorkspace({ scene, step, interaction, onSelect }: Props) 
       if (!obj) continue;
       // BUNG HÌNH chỉ dịch vị trí TRÌNH BÀY. Không một toạ độ nào trong
       // `scene` bị chạm — `visualTransformOf` trả về một giá trị mới.
+      // `VisualVec3` là SỐ — không đi qua `toNumber`. Đẩy một khoảng dịch
+      // trình bày (`0.244949`) qua bộ phân tích PHÂN SỐ là đúng thứ đã làm
+      // sập cả khung 3D ở lượt demo tay.
       const bd = visualTransformOf(tuongTac, scene, o.id);
-      obj.position.set(
-        toNumber(bd.translate[0]),
-        toNumber(bd.translate[1]),
-        toNumber(bd.translate[2]),
-      );
+      obj.position.set(bd.translate[0], bd.translate[1], bd.translate[2]);
       goc.add(obj);
     }
     veRef.current?.();

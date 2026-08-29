@@ -71,12 +71,18 @@ _TRUONG: dict[str, tuple[str, ...]] = {
 
 #: Phép biến đổi TRÌNH BÀY mặc định — đồng nhất thức.
 #:
-#: Là **chuỗi phân số** như mọi số khác của cảnh, dù nó không phải toạ độ hình
-#: học. Trộn hai cách viết số trong cùng một payload là chỗ renderer sẽ quên
-#: mất cái nào cần `toNumber`.
-BIEN_DOI_DONG_NHAT: dict[str, Any] = {
-    "translate": ["0", "0", "0"], "scale": "1",
-}
+#: **SỐ thường, không phải chuỗi phân số**, và khác biệt ấy là có chủ đích.
+#:
+#: Bản đầu dùng chuỗi phân số "cho đồng bộ với toạ độ". Demo trong Chrome thật
+#: cho thấy cái giá: phía frontend sinh `"0.244949"` cho khoảng dịch bung
+#: hình, `toNumber` ném vì nó không phải phân số, và cả khung 3D sập.
+#:
+#: Hai không gian này khác nhau về BẢN CHẤT. Toạ độ hình học phải chính xác
+#: tuyệt đối — đó là thứ phân biệt hệ này với một bộ vẽ hình. Khoảng dịch
+#: trình bày thì không: làm tròn nó không sai một mệnh đề toán nào, vì nó chưa
+#: bao giờ là một mệnh đề toán. Dùng chung một cách viết cho hai thứ ấy là mời
+#: chúng đi lẫn vào nhau.
+BIEN_DOI_DONG_NHAT: dict[str, Any] = {"translate": [0, 0, 0], "scale": 1}
 
 
 def _cha(objs: list[dict[str, Any]]) -> dict[str, str]:

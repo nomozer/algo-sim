@@ -40,28 +40,28 @@ const CANH: Scene3D = {
       id: "A", label: "A", type: "point3", render: "point_marker",
       origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"],
       parent: "chop", display_group: ["given"],
-      visual_transform: { translate: ["0", "0", "0"], scale: "1" },
+      visual_transform: { translate: [0, 0, 0], scale: 1 },
       source: { assumption: "chọn A làm gốc" },
     },
     {
       id: "B", label: "B", type: "point3", render: "point_marker",
       origin: "free", producer: null, depends: [], xyz: ["1", "0", "0"],
       parent: "chop", display_group: ["given"],
-      visual_transform: { translate: ["0", "0", "0"], scale: "1" },
+      visual_transform: { translate: [0, 0, 0], scale: 1 },
       source: { fact_id: "ab_length" },
     },
     {
       id: "C", label: "C", type: "point3", render: "point_marker",
       origin: "free", producer: null, depends: [], xyz: ["0", "1", "0"],
       parent: "chop", display_group: ["given"],
-      visual_transform: { translate: ["0", "0", "0"], scale: "1" },
+      visual_transform: { translate: [0, 0, 0], scale: 1 },
       source: {},
     },
     {
       id: "S", label: "S", type: "point3", render: "point_marker",
       origin: "free", producer: null, depends: [], xyz: ["0", "0", "1"],
       parent: "chop", display_group: ["given"],
-      visual_transform: { translate: ["0", "0", "0"], scale: "1" },
+      visual_transform: { translate: [0, 0, 0], scale: 1 },
       source: {},
     },
     {
@@ -69,7 +69,7 @@ const CANH: Scene3D = {
       origin: "derived", producer: "construct_point.midpoint",
       depends: ["A", "B"], xyz: ["1/2", "0", "0"],
       parent: null, display_group: ["construction"],
-      visual_transform: { translate: ["0", "0", "0"], scale: "1" },
+      visual_transform: { translate: [0, 0, 0], scale: 1 },
       source: { instruction: "construct_point.midpoint" },
     },
     {
@@ -79,7 +79,7 @@ const CANH: Scene3D = {
       vertices: [["0", "0", "0"], ["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]],
       faces: [[0, 1, 2], [0, 1, 3], [1, 2, 3], [0, 2, 3]],
       parent: null, display_group: ["construction", "solid", "target"],
-      visual_transform: { translate: ["0", "0", "0"], scale: "1" },
+      visual_transform: { translate: [0, 0, 0], scale: 1 },
       source: { instruction: "construct_solid" },
     },
     {
@@ -87,7 +87,7 @@ const CANH: Scene3D = {
       origin: "derived", producer: "measure.volume", depends: ["chop"],
       value: "1/6",
       parent: null, display_group: ["construction", "measurement", "target"],
-      visual_transform: { translate: ["0", "0", "0"], scale: "1" },
+      visual_transform: { translate: [0, 0, 0], scale: 1 },
       source: { instruction: "measure.volume" },
     },
   ],
@@ -151,13 +151,13 @@ describe("D · biến đổi trình bày mặc định", () => {
   it("chưa bung ⇒ đồng nhất thức cho mọi vật", () => {
     for (const o of CANH.objects) {
       expect(visualTransformOf(taoTrangThai(), CANH, o.id)).toEqual({
-        translate: ["0", "0", "0"], scale: "1",
+        translate: [0, 0, 0], scale: 1,
       });
     }
   });
 
   it("vật không tồn tại ⇒ đồng nhất thức, không ném", () => {
-    expect(visualTransformOf(taoTrangThai(), CANH, "khong-co").scale).toBe("1");
+    expect(visualTransformOf(taoTrangThai(), CANH, "khong-co").scale).toBe(1);
   });
 });
 
@@ -179,7 +179,7 @@ describe("E · bung hình không chạm GeometryState", () => {
   it("bung sinh một dịch chuyển THẬT cho vật có nhóm ấy", () => {
     const s = explode(taoTrangThai(), "given");
     const t = visualTransformOf(s, CANH, "B");
-    expect(t.translate).not.toEqual(["0", "0", "0"]);
+    expect(t.translate).not.toEqual([0, 0, 0]);
   });
 
   it("tất định: bung hai lần cho cùng một kết quả", () => {
@@ -195,7 +195,7 @@ describe("F · gộp", () => {
   it("collapse trả biến đổi về đồng nhất thức", () => {
     const s = collapse(explode(taoTrangThai(), "given"), "given");
     expect(visualTransformOf(s, CANH, "B")).toEqual({
-      translate: ["0", "0", "0"], scale: "1",
+      translate: [0, 0, 0], scale: 1,
     });
   });
 

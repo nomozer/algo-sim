@@ -861,6 +861,25 @@ khiến ba cụm khác chiều cao có mép trên lệch vài pixel dù cùng m�
 đầu vì thế báo 3 hàng cho một dải rõ ràng một hàng. Artifact:
 `docs/evaluation/m20/transport-{before,after,catalog,browser}.json`.
 
+### `frontend/scripts/demo-geometry-interaction.mjs` · offline (cần `npm run dev`)
+
+DEMO TAY giao diện 3D tương tác trong Chrome **thật** — WebGL thật
+(SwiftShader qua cờ `webgl` của `browser-runner`), chuột thật qua
+`Input.dispatchMouseEvent`. **0 API call, 0 LLM.** Ghi 8 ảnh +
+`DEMO_RESULT.json` vào `docs/evaluation/geometry/manual-demo/`.
+
+Bài demo là **phát lại tất định** của `phase7a-pilot-sau-71/1-trung-diem-lan3`
+— một lượt LIVE thật, `served`, oracle đúng — không phải fixture viết tay.
+
+Nó đã trả công: lượt chạy đầu tìm ra một CRASH mà 1674 test vitest bỏ sót
+(`visual_transform` khai `ExactVec3` nhưng phép bung sinh `"0.244949"`), và
+lộ ra mặt/cạnh có trong cây mà không được dựng trong khung nhìn.
+
+⚠️ Hai cái bẫy của chính bộ đo, đã bịt và đừng lặp lại: `clickText` quét CẢ
+TRANG nên bấm nút tên `"A"` trúng logo **AlgoSim** (dùng `bam()` — chỉ trong
+`.geo3d-explorer`); và bấm ở bước 0 thì trên màn gần như không có gì, nên phải
+kéo thanh trượt tới bước cuối trước khi đo picking.
+
 ### `frontend/scripts/browser-runner.mjs` (M20 W12) · offline (cần `npm run dev`)
 MỘT vòng đời trình duyệt cho NHIỀU kịch bản: mở Chrome một lần, chờ trang một
 lần, dọn state giữa các kịch bản bằng `store.reset()` + xoá lưu trữ, đóng một

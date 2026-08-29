@@ -25,12 +25,13 @@
  */
 import {
   BIEN_DOI_DONG_NHAT,
-  type Exact,
   type ExactVec3,
   type Scene3D,
   type SceneObject,
   type VisualTransform,
+  type VisualVec3,
   clampStep,
+  laSoTrinhBayHopLe,
   toNumber,
 } from "./scene3d-model";
 
@@ -207,8 +208,9 @@ function _tam(o: SceneObject): [number, number, number] {
   return [t[0] / dinh.length, t[1] / dinh.length, t[2] / dinh.length];
 }
 
-function _soChuoi(x: number): Exact {
-  return String(Math.round(x * 1e6) / 1e6);
+/** Làm tròn ở KHÔNG GIAN TRÌNH BÀY — không mệnh đề toán nào đi qua đây. */
+function _lamTron(x: number): number {
+  return Math.round(x * 1e6) / 1e6;
 }
 
 /**
@@ -232,16 +234,33 @@ export function visualTransformOf(
   if (!bung) return BIEN_DOI_DONG_NHAT;
 
   const cha = o.parent ? scene.objects.find((x) => x.id === o.parent) : undefined;
-  const goc = cha ? _tam(cha) : ([0, 0, 0] as [number, number, number]);
-  const t = _tam(o);
+  // FAIL-SAFE quanh phép đọc toạ độ. `toNumber` NÉM khi gặp chuỗi hỏng
+  // (`"1/0"`, `"abc"`) — đúng như nó phải làm, vì một toạ độ hỏng không được
+  // lặng lẽ thành `NaN`. Nhưng ném từ đây thì cả khung 3D sập, và một cảnh
+  // hỏng ở MỘT vật không được giết cả màn hình. Bung hình là thứ trang trí;
+  // nó phải chịu được dữ liệu xấu bằng cách KHÔNG bung, không bằng cách sập.
+  let goc: [number, number, number];
+  let t: [number, number, number];
+  try {
+    goc = cha ? _tam(cha) : [0, 0, 0];
+    t = _tam(o);
+  } catch {
+    return BIEN_DOI_DONG_NHAT;
+  }
   const d: [number, number, number] = [t[0] - goc[0], t[1] - goc[1], t[2] - goc[2]];
   const n = Math.hypot(d[0], d[1], d[2]);
   if (n === 0) return BIEN_DOI_DONG_NHAT;
   const k = EXPLODE_DISTANCE / n;
-  return {
-    translate: [_soChuoi(d[0] * k), _soChuoi(d[1] * k), _soChuoi(d[2] * k)],
-    scale: "1",
-  };
+  const dich: VisualVec3 = [
+    _lamTron(d[0] * k), _lamTron(d[1] * k), _lamTron(d[2] * k),
+  ];
+  // FAIL-SAFE: toạ độ suy biến (`NaN`, `Infinity`) thì trả ĐỒNG NHẤT THỨC,
+  // không đẩy một số vô nghĩa xuống buffer của three.js. Một `NaN` lọt vào
+  // làm cả mesh biến mất **không báo gì**, và truy ngược từ một khung hình
+  // trống là chỗ tốn nhiều giờ nhất.
+  return dich.every(laSoTrinhBayHopLe)
+    ? { translate: dich, scale: 1 }
+    : BIEN_DOI_DONG_NHAT;
 }
 
 // ── TUA BƯỚC ─────────────────────────────────────────────────────────────

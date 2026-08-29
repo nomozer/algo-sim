@@ -27,7 +27,10 @@ import { BrowserSession, sleep } from "./browser-runner.mjs";
 
 const GOC = join(import.meta.dirname, "..", "..");
 const ENV = join(GOC, "docs", "evaluation", "geometry", "manual-demo", "envelope.json");
-const RA = join(GOC, "docs", "evaluation", "geometry", "manual-demo");
+// Thư mục bằng chứng nhận từ dòng lệnh: lượt sau KHÔNG được ghi đè ảnh của
+// lượt trước. Một lượt ĐỎ là bằng chứng, không phải rác.
+const RA = join(GOC, "docs", "evaluation", "geometry",
+                process.argv[2] || "manual-demo");
 
 const ket = [];
 const ghi = (ma, pass, note = "") => {
