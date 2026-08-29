@@ -1,0 +1,434 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a14_029",
+    "lan": 1,
+    "do_tre_giay": 30.0,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "volume"
+    ],
+    "nghia_vu_mong_doi": [
+      "volume"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "volume"
+      ],
+      "khai": [
+        "volume"
+      ],
+      "khop": [
+        "volume"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "PASS: []",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1746,
+        "candidates_tokens": 462,
+        "cached_content_tokens": 0,
+        "total_tokens": 2614,
+        "thoughts_tokens": 406,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1135,
+        "candidates_tokens": 381,
+        "cached_content_tokens": 0,
+        "total_tokens": 1958,
+        "thoughts_tokens": 442,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2796,
+        "candidates_tokens": 736,
+        "cached_content_tokens": 0,
+        "total_tokens": 5142,
+        "thoughts_tokens": 1610,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4992,
+        "candidates_tokens": 90,
+        "cached_content_tokens": 0,
+        "total_tokens": 5993,
+        "thoughts_tokens": 911,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 7,
+    "so_buoc_phat_lai": 4,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 5,
+    "retry_requests": 1,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "volume",
+        "container": "S.ABC",
+        "params": {
+          "witness": "V"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "chop_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "day_abc_vuong_a",
+        "label": "Đáy",
+        "values": [
+          "ABC là tam giác vuông tại A"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "ab_length",
+        "label": "Độ dài cạnh AB",
+        "values": [
+          "a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "ac_length",
+        "label": "Độ dài cạnh AC",
+        "values": [
+          "2a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_vuong_goc_day",
+        "label": "Quan hệ",
+        "values": [
+          "SA vuông góc với đáy"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "Độ dài cạnh SA",
+        "values": [
+          "2a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp S.ABC",
+    "description": "Chương trình dựng hình và tính thể tích khối chóp S.ABC với đáy là tam giác vuông tại A, SA vuông góc với đáy.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc đáy và đáy vuông tại A."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn AB nằm trên trục Ox, với AB = a = 1 (tỉ lệ)."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn AC nằm trên trục Oy, với AC = 2a = 2 (tỉ lệ)."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn SA nằm trên trục Oz, với SA = 2a = 2 (tỉ lệ)."
+      },
+      {
+        "name": "ABC_poly",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "day_abc_vuong_a",
+        "model_assumption": null
+      },
+      {
+        "name": "S.ABC",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "chop_s_abc",
+        "model_assumption": null
+      },
+      {
+        "name": "V",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_polygon",
+        "target_var": "ABC_poly",
+        "vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Đáy tam giác ABC"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "S.ABC",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            2,
+            3
+          ],
+          [
+            0,
+            3,
+            1
+          ]
+        ],
+        "label": "Khối chóp S.ABC"
+      },
+      {
+        "kind": "assign",
+        "target_var": "V",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "S.ABC",
+          "wrt": null
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Minh họa cách dựng hình chóp có đáy là tam giác vuông và cạnh bên vuông góc với đáy, sau đó tính thể tích. Học sinh có thể thấy mối liên hệ giữa các kích thước đã cho và thể tích."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "ABC_poly": [
+      {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "2",
+        "z": "0"
+      }
+    ],
+    "S.ABC": {
+      "__loai__": "Polyhedron",
+      "vertices": [
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "2"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "1",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "2",
+          "z": "0"
+        }
+      ],
+      "faces": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          3,
+          1
+        ]
+      ]
+    },
+    "V": "2/3"
+  }
+}

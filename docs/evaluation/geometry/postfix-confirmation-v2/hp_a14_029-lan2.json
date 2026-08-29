@@ -1,0 +1,766 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a14_029",
+    "lan": 2,
+    "do_tre_giay": 28.5,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "volume"
+    ],
+    "nghia_vu_mong_doi": [
+      "volume"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "volume"
+      ],
+      "khai": [
+        "volume"
+      ],
+      "khop": [
+        "volume"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "PASS: []",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1746,
+        "candidates_tokens": 507,
+        "cached_content_tokens": 0,
+        "total_tokens": 2648,
+        "thoughts_tokens": 395,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1135,
+        "candidates_tokens": 375,
+        "cached_content_tokens": 0,
+        "total_tokens": 1929,
+        "thoughts_tokens": 419,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2796,
+        "candidates_tokens": 1643,
+        "cached_content_tokens": 0,
+        "total_tokens": 5478,
+        "thoughts_tokens": 1039,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5037,
+        "candidates_tokens": 155,
+        "cached_content_tokens": 0,
+        "total_tokens": 6104,
+        "thoughts_tokens": 912,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 17,
+    "so_buoc_phat_lai": 14,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "volume",
+        "container": "S.ABC",
+        "params": {
+          "witness": "V"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "ch_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "day_abc_vuong_a",
+        "label": "Đáy",
+        "values": [
+          "ABC là tam giác vuông tại A"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "ab_length",
+        "label": "Độ dài cạnh AB",
+        "values": [
+          "a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "ac_length",
+        "label": "Độ dài cạnh AC",
+        "values": [
+          "2a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_vuong_goc_day",
+        "label": "Quan hệ",
+        "values": [
+          "SA vuông góc với đáy"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "Độ dài cạnh SA",
+        "values": [
+          "2a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính thể tích khối chóp S.ABC",
+    "description": "Chương trình dựng hình và tính thể tích khối chóp S.ABC với đáy là tam giác vuông tại A, cạnh bên SA vuông góc với đáy.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) vì SA vuông góc với đáy ABC."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AB nằm trên trục Ox, với AB = a = 1."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AC nằm trên trục Oy, với AC = 2a = 2. Tam giác ABC vuông tại A được đảm bảo."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh SA nằm trên trục Oz, với SA = 2a = 2. SA vuông góc với đáy được đảm bảo."
+      },
+      {
+        "name": "AB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ab_length",
+        "model_assumption": null
+      },
+      {
+        "name": "AC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ac_length",
+        "model_assumption": null
+      },
+      {
+        "name": "BC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SA",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sa_length",
+        "model_assumption": null
+      },
+      {
+        "name": "SB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABC_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "day_abc_vuong_a",
+        "model_assumption": null
+      },
+      {
+        "name": "SAB_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SAC_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "SBC_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABC_polygon",
+        "type": "polygon3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "day_abc_vuong_a",
+        "model_assumption": null
+      },
+      {
+        "name": "S.ABC",
+        "type": "solid",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ch_s_abc",
+        "model_assumption": null
+      },
+      {
+        "name": "V",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "AB",
+        "through_a": "A",
+        "through_b": "B",
+        "label": "Cạnh đáy AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "AC",
+        "through_a": "A",
+        "through_b": "C",
+        "label": "Cạnh đáy AC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "BC",
+        "through_a": "B",
+        "through_b": "C",
+        "label": "Cạnh đáy BC"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "ABC_polygon",
+        "vertices": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Mặt đáy ABC"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABC_plane",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng đáy (ABC)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SA",
+        "through_a": "S",
+        "through_b": "A",
+        "label": "Cạnh bên SA"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SB",
+        "through_a": "S",
+        "through_b": "B",
+        "label": "Cạnh bên SB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "SC",
+        "through_a": "S",
+        "through_b": "C",
+        "label": "Cạnh bên SC"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SAB_plane",
+        "through": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (SAB)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SAC_plane",
+        "through": [
+          "S",
+          "A",
+          "C"
+        ],
+        "label": "Mặt phẳng (SAC)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "SBC_plane",
+        "through": [
+          "S",
+          "B",
+          "C"
+        ],
+        "label": "Mặt phẳng (SBC)"
+      },
+      {
+        "kind": "construct_solid",
+        "target_var": "S.ABC",
+        "vertices": [
+          "S",
+          "A",
+          "B",
+          "C"
+        ],
+        "faces": [
+          [
+            1,
+            2,
+            3
+          ],
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            0,
+            1,
+            3
+          ],
+          [
+            0,
+            2,
+            3
+          ]
+        ],
+        "label": "Khối chóp S.ABC"
+      },
+      {
+        "kind": "assign",
+        "target_var": "V",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "S.ABC",
+          "wrt": null
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách dựng hình chóp có cạnh bên vuông góc đáy và tính thể tích của nó. Việc chọn hệ tọa độ phù hợp giúp đơn giản hóa việc định nghĩa các điểm và kiểm tra các quan hệ hình học."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "AB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      }
+    },
+    "AC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "BC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-1",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "SA": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "-2"
+      }
+    },
+    "SB": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "-2"
+      }
+    },
+    "SC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "2",
+        "z": "-2"
+      }
+    },
+    "ABC_plane": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      }
+    },
+    "SAB_plane": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "-2",
+        "z": "0"
+      }
+    },
+    "SAC_plane": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "4",
+        "y": "0",
+        "z": "0"
+      }
+    },
+    "SBC_plane": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "2"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "4",
+        "y": "2",
+        "z": "2"
+      }
+    },
+    "ABC_polygon": [
+      {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "0"
+      },
+      {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "2",
+        "z": "0"
+      }
+    ],
+    "S.ABC": {
+      "__loai__": "Polyhedron",
+      "vertices": [
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "2"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "1",
+          "y": "0",
+          "z": "0"
+        },
+        {
+          "__loai__": "Vec3",
+          "x": "0",
+          "y": "2",
+          "z": "0"
+        }
+      ],
+      "faces": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          2,
+          3
+        ]
+      ]
+    },
+    "V": "2/3"
+  }
+}

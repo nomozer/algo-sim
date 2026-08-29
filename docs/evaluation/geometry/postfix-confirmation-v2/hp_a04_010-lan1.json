@@ -1,0 +1,459 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a04_010",
+    "lan": 1,
+    "do_tre_giay": 69.7,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "k: giá trị [0.5] không có trong mục 'ty_le_sm_sa_sn_sb_pd_ad' (Tỷ lệ SM/SA = SN/SB = PD/AD) — đề không cho những giá trị này"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "P"
+      ],
+      "da_dung": {
+        "M": "M",
+        "N": "N",
+        "P": "P"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "ABCD_plane",
+        "C",
+        "MN",
+        "ratio_P"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['parallel: máy=None, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1748,
+        "candidates_tokens": 793,
+        "cached_content_tokens": 0,
+        "total_tokens": 3089,
+        "thoughts_tokens": 548,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1137,
+        "candidates_tokens": 378,
+        "cached_content_tokens": 0,
+        "total_tokens": 1706,
+        "thoughts_tokens": 191,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 5878,
+        "candidates_tokens": 3031,
+        "cached_content_tokens": 0,
+        "total_tokens": 18029,
+        "thoughts_tokens": 9120,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5220,
+        "candidates_tokens": 101,
+        "cached_content_tokens": 0,
+        "total_tokens": 6051,
+        "thoughts_tokens": 730,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 1,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.8.assign.expr\n  Input tag 'parallel' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "MN",
+        "params": {
+          "witness": "ABCD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_hinh_chop",
+        "label": "S.ABCD là hình chóp",
+        "values": [
+          "S.ABCD là hình chóp"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp"
+        ]
+      },
+      {
+        "fact_id": "abcd_hinh_binh_hanh",
+        "label": "ABCD là hình bình hành",
+        "values": [
+          "ABCD là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_tren_sa",
+        "label": "M thuộc SA",
+        "values": [
+          "M thuộc SA"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "M thuộc SA"
+        ]
+      },
+      {
+        "fact_id": "n_tren_sb",
+        "label": "N thuộc SB",
+        "values": [
+          "N thuộc SB"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "N thuộc SB"
+        ]
+      },
+      {
+        "fact_id": "p_tren_ad",
+        "label": "P thuộc AD",
+        "values": [
+          "P thuộc AD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "P thuộc AD"
+        ]
+      },
+      {
+        "fact_id": "ty_le_sm_sa_sn_sb_pd_ad",
+        "label": "Tỷ lệ SM/SA = SN/SB = PD/AD",
+        "values": [
+          "SM/SA = SN/SB = PD/AD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh MN song song với mặt phẳng đáy ABCD",
+    "description": "Bài toán chứng minh đường thẳng song song với mặt phẳng trong hình chóp S.ABCD có đáy là hình bình hành. Các điểm M, N, P được xác định theo tỷ lệ trên các cạnh SA, SB, AD.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên trục Ox tại (2,0,0)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trong mặt phẳng Oxy tại (1,2,0) để tạo hình bình hành ABCD."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S trên trục Oz tại (0,0,3) để đơn giản hóa hình chóp."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": null
+      },
+      {
+        "name": "k",
+        "type": "float",
+        "initial_value": 0.5,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "ty_le_sm_sa_sn_sb_pd_ad",
+        "model_assumption": null
+      },
+      {
+        "name": "ratio_P",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_tren_sa",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_tren_sb",
+        "model_assumption": null
+      },
+      {
+        "name": "P",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "p_tren_ad",
+        "model_assumption": null
+      },
+      {
+        "name": "ABCD_plane",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": null
+      },
+      {
+        "name": "MN",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "MN_parallel_ABCD_duty",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "C",
+        "expr": {
+          "kind": "arith",
+          "op": "+",
+          "left": {
+            "kind": "var",
+            "name": "B"
+          },
+          "right": {
+            "kind": "arith",
+            "op": "-",
+            "left": {
+              "kind": "var",
+              "name": "D"
+            },
+            "right": {
+              "kind": "var",
+              "name": "A"
+            }
+          }
+        }
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "A",
+          "ratio": "k"
+        },
+        "label": null
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "S",
+          "b": "B",
+          "ratio": "k"
+        },
+        "label": null
+      },
+      {
+        "kind": "assign",
+        "target_var": "ratio_P",
+        "expr": {
+          "kind": "arith",
+          "op": "-",
+          "left": {
+            "kind": "literal",
+            "value": 1.0
+          },
+          "right": {
+            "kind": "var",
+            "name": "k"
+          }
+        }
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "A",
+          "b": "D",
+          "ratio": "ratio_P"
+        },
+        "label": null
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "MN",
+        "through_a": "M",
+        "through_b": "N",
+        "label": null
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABCD_plane",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": null
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": null
+  },
+  "final_memory": {}
+}

@@ -1,0 +1,326 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a08_021",
+    "lan": 1,
+    "do_tre_giay": 27.7,
+    "stage_reached": "structural_coverage",
+    "executable": false,
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "failure_category": "semantic_incomplete",
+    "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+    "details": [
+      "perpendicular((ACC'A')): container '(ACC'A')' chưa khai báo (chương trình khai: ['A', 'ACC_prime_A_prime', 'A_prime', 'B', 'BDD_prime_B_prime', 'B_prime', 'C', 'C_prime', 'D', 'D_prime', 'perpendicular'])"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "perpendicular"
+    ],
+    "nghia_vu_mong_doi": [
+      "perpendicular"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "perpendicular"
+      ],
+      "khai": [
+        "perpendicular"
+      ],
+      "khop": [
+        "perpendicular"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['perpendicular: máy=None, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1729,
+        "candidates_tokens": 433,
+        "cached_content_tokens": 0,
+        "total_tokens": 2683,
+        "thoughts_tokens": 521,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1118,
+        "candidates_tokens": 188,
+        "cached_content_tokens": 0,
+        "total_tokens": 1610,
+        "thoughts_tokens": 304,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2731,
+        "candidates_tokens": 1070,
+        "cached_content_tokens": 0,
+        "total_tokens": 4571,
+        "thoughts_tokens": 770,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4979,
+        "candidates_tokens": 105,
+        "cached_content_tokens": 0,
+        "total_tokens": 6291,
+        "thoughts_tokens": 1207,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "perpendicular",
+        "container": "(ACC'A')",
+        "params": {
+          "witness": "(BDD'B')"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lap_phuong",
+        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ]
+      },
+      {
+        "fact_id": "canh_a",
+        "label": "cạnh hình lập phương",
+        "values": [
+          "a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh hai mặt phẳng vuông góc trong hình lập phương",
+    "description": "Bài toán chứng minh hai mặt phẳng (ACC'A') và (BDD'B') vuông góc trong hình lập phương ABCD.A'B'C'D'.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) để đơn giản hóa việc đặt hệ trục."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AB nằm trên trục Ox, có độ dài 1 (tương ứng với 'a' trong đề)."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AD nằm trên trục Oy, có độ dài 1 (tương ứng với 'a' trong đề)."
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh AA' nằm trên trục Oz, có độ dài 1 (tương ứng với 'a' trong đề)."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "ACC_prime_A_prime",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "BDD_prime_B_prime",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "perpendicular",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_plane",
+        "target_var": "ACC_prime_A_prime",
+        "through": [
+          "A",
+          "C",
+          "A_prime"
+        ],
+        "label": "Mặt phẳng (ACC'A')"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "BDD_prime_B_prime",
+        "through": [
+          "B",
+          "D",
+          "B_prime"
+        ],
+        "label": "Mặt phẳng (BDD'B')"
+      },
+      {
+        "kind": "assign",
+        "target_var": "perpendicular",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "ACC_prime_A_prime",
+          "wrt": "BDD_prime_B_prime"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách chứng minh hai mặt phẳng vuông góc bằng cách sử dụng các tính chất hình học của hình lập phương, cụ thể là đường chéo của mặt đáy vuông góc với nhau và các cạnh bên vuông góc với mặt đáy. Engine sẽ tính toán cosin bình phương của góc giữa hai mặt phẳng; nếu kết quả là 0, chúng vuông góc."
+  },
+  "final_memory": {}
+}

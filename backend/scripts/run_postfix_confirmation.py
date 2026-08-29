@@ -50,6 +50,8 @@ sys.path.insert(0, str(BACKEND / "scripts"))
 
 SEL = GEO / "postfix-confirmation" / "CONFIRMATION_SELECTION.json"
 RA = GEO / "postfix-confirmation"
+SEL_V2 = GEO / "postfix-confirmation-v2" / "CONFIRMATION_SELECTION.json"
+RA_V2 = GEO / "postfix-confirmation-v2"
 #: Trần: 6 ca × 2 lượt × (6 logic, 8 HTTP) + đệm.
 TRAN_LOGIC, TRAN_HTTP = 78, 104
 
@@ -123,8 +125,11 @@ async def _chay(cases: list[dict], k: int, key: str) -> list[dict]:
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--tien-kiem", action="store_true", help="0 API call.")
+    p.add_argument("--v2", action="store_true", help="Vòng HAI (d7655c42…).")
     a = p.parse_args()
 
+    if a.v2:
+        globals()["SEL"], globals()["RA"] = SEL_V2, RA_V2
     sel = json.loads(SEL.read_text(encoding="utf-8"))
     lai = hashlib.sha256(json.dumps(
         {k: sel[k] for k in ("case_ids", "luat_chon", "k")},
@@ -165,7 +170,8 @@ def main() -> int:
         print("Thiếu GEMINI_API_KEY.")
         return 2
 
-    M.RA, M.RUN_ID = RA, "postfix-confirmation-v2"
+    M.RA = RA
+    M.RUN_ID = f"postfix-confirmation-v{sel.get('vong', 1)}"
     M.TRAN_LOGIC, M.TRAN_HTTP = 6, 8
     M.cham_oracle = cham_oracle
     M.BAI = [{"id": c["case_id"], "de": c["problem_text"],

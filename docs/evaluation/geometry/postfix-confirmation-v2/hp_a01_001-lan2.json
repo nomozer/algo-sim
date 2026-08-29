@@ -1,0 +1,301 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a01_001",
+    "lan": 2,
+    "do_tre_giay": 192.9,
+    "stage_reached": "structural_coverage",
+    "executable": false,
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "failure_category": "semantic_incomplete",
+    "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+    "details": [
+      "coplanar(delta): kiểu 'line3' không hợp với nghĩa vụ này"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "coplanar"
+    ],
+    "nghia_vu_mong_doi": [
+      "point_on_line"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_line"
+      ],
+      "khai": [
+        "coplanar"
+      ],
+      "khop": [],
+      "thieu": [
+        "point_on_line"
+      ],
+      "thua": [
+        "coplanar"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "giao tuyến của (SCD) và (SAB)"
+      ],
+      "da_dung": {},
+      "thieu": [
+        "giao tuyến của (SCD) và (SAB)"
+      ],
+      "thua_dung": [
+        "delta",
+        "plane_sab",
+        "plane_scd"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['giao tuyến của (SCD) và (SAB)']"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "UNGRADED: không nghĩa vụ nào khớp khoá oracle ['point_on_line']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1722,
+        "candidates_tokens": 447,
+        "cached_content_tokens": 0,
+        "total_tokens": 2615,
+        "thoughts_tokens": 446,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1111,
+        "candidates_tokens": 156,
+        "cached_content_tokens": 0,
+        "total_tokens": 8167,
+        "thoughts_tokens": 6900,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2702,
+        "candidates_tokens": 792,
+        "cached_content_tokens": 0,
+        "total_tokens": 8270,
+        "thoughts_tokens": 4776,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4998,
+        "candidates_tokens": 129,
+        "cached_content_tokens": 0,
+        "total_tokens": 6015,
+        "thoughts_tokens": 888,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 4,
+    "http_requests": 5,
+    "retry_requests": 1,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "coplanar",
+        "container": "delta",
+        "params": {
+          "witness": "null"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_sabcd",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "abcd_hinh_binh_hanh",
+        "label": "Đáy ABCD",
+        "values": [
+          "là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao tuyến của (SCD) và (SAB)",
+    "description": "Chương trình dựng hình tìm giao tuyến của hai mặt phẳng (SCD) và (SAB) trong hình chóp S.ABCD có đáy là hình bình hành.",
+    "memory_declarations": [
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn S tại (1,1,3) để có chiều cao và vị trí tổng quát"
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox, AB có độ dài 2"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trong mặt phẳng Oxy, tạo thành hình bình hành ABCD"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Tính C từ A, B, D để ABCD là hình bình hành"
+      },
+      {
+        "name": "plane_sab",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_scd",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "delta",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_sabcd",
+        "model_assumption": null
+      },
+      {
+        "name": "null",
+        "type": "null",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_sab",
+        "through": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (SAB)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_scd",
+        "through": [
+          "S",
+          "C",
+          "D"
+        ],
+        "label": "Mặt phẳng (SCD)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "delta",
+        "expr": {
+          "kind": "intersect_plane_plane",
+          "plane_a": "plane_sab",
+          "plane_b": "plane_scd"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tìm giao tuyến của hai mặt phẳng trong không gian. Giao tuyến của hai mặt phẳng chứa một điểm chung (S) và hai đường thẳng song song (AB và CD) sẽ là một đường thẳng đi qua điểm chung và song song với hai đường thẳng đó."
+  },
+  "final_memory": {}
+}

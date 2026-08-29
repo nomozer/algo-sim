@@ -1,0 +1,351 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a02_006",
+    "lan": 2,
+    "do_tre_giay": 74.7,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "[MODEL_ASSUMPTION_TYPE_NOT_ALLOWED]",
+      "ratio_bp_pd: kiểu 'float' không được mang giả thiết mô hình hoá (chỉ ['point3', 'vector3']). Đối tượng này phải được DỰNG từ các điểm đã chọn."
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "point_on_plane"
+    ],
+    "nghia_vu_mong_doi": [
+      "point_on_plane"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_plane"
+      ],
+      "khai": [
+        "point_on_plane"
+      ],
+      "khop": [
+        "point_on_plane"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "P",
+        "giao điểm của CD và (MNP)"
+      ],
+      "da_dung": {},
+      "thieu": [
+        "M",
+        "N",
+        "P",
+        "giao điểm của CD và (MNP)"
+      ],
+      "thua_dung": [
+        "I",
+        "MNP"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['M', 'N', 'P', 'giao điểm của CD và (MNP)']"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['point_on_plane: checker nói False, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1748,
+        "candidates_tokens": 752,
+        "cached_content_tokens": 0,
+        "total_tokens": 4989,
+        "thoughts_tokens": 2489,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1137,
+        "candidates_tokens": 297,
+        "cached_content_tokens": 0,
+        "total_tokens": 2331,
+        "thoughts_tokens": 897,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 5727,
+        "candidates_tokens": 2184,
+        "cached_content_tokens": 0,
+        "total_tokens": 15471,
+        "thoughts_tokens": 7560,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5175,
+        "candidates_tokens": 177,
+        "cached_content_tokens": 0,
+        "total_tokens": 7131,
+        "thoughts_tokens": 1779,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'literal', 'value': 2}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "point_on_plane",
+        "container": "MNP",
+        "params": {
+          "witness": "I",
+          "wrt": "CD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "abcd_not_coplanar",
+        "label": "Bốn điểm A, B, C, D không đồng phẳng",
+        "values": [
+          "A, B, C, D không đồng phẳng"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_midpoint_ac",
+        "label": "M là trung điểm của AC",
+        "values": [
+          "M là trung điểm của AC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "M là trung điểm của AC"
+        ]
+      },
+      {
+        "fact_id": "n_midpoint_bc",
+        "label": "N là trung điểm của BC",
+        "values": [
+          "N là trung điểm của BC"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "N là trung điểm của BC"
+        ]
+      },
+      {
+        "fact_id": "p_on_bd_ratio",
+        "label": "P trên đoạn BD sao cho BP = 2PD",
+        "values": [
+          "BP = 2PD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao điểm của đường thẳng CD và mặt phẳng (MNP)",
+    "description": "Chương trình dựng hình để tìm giao điểm của đường thẳng CD và mặt phẳng (MNP) trong không gian.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục x để đơn giản hóa tọa độ."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C trên trục y để đơn giản hóa tọa độ."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_not_coplanar",
+        "model_assumption": "Chọn D không đồng phẳng với A, B, C."
+      },
+      {
+        "name": "ratio_bp_pd",
+        "type": "float",
+        "initial_value": 2.0,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Tỉ lệ BP/PD = 2."
+      },
+      {
+        "name": "MNP",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "I",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "point_on_plane",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "C"
+        },
+        "label": "M là trung điểm của AC"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "B",
+          "b": "C"
+        },
+        "label": "N là trung điểm của BC"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "P",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "B",
+          "b": "D",
+          "ratio": "ratio_bp_pd"
+        },
+        "label": "P trên BD sao cho BP = 2PD"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "MNP",
+        "through": [
+          "M",
+          "N",
+          "P"
+        ],
+        "label": "Mặt phẳng (MNP)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "CD",
+        "through_a": "C",
+        "through_b": "D",
+        "label": "Đường thẳng CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "I",
+        "expr": {
+          "kind": "intersect_line_plane",
+          "line": "CD",
+          "plane": "MNP"
+        },
+        "label": "Giao điểm của đường thẳng CD và mặt phẳng (MNP)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tìm giao điểm của đường thẳng và mặt phẳng bằng cách dựng các đối tượng hình học cơ bản."
+  },
+  "final_memory": {}
+}

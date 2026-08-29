@@ -1,0 +1,106 @@
+{
+  "khai": "XÁC NHẬN POSTFIX trên hệ V2 — KHÔNG phải Phase 7B chính thức",
+  "selection_hash": "0b55e0f9177676724ae4adba44f39beb57180905310c651d5dd4081c0af8b5fa",
+  "cong": "FAIL",
+  "thieu": [
+    "correct executable IR 4/12 < 10",
+    "stable cases 4/6 < 5",
+    "GROUNDING failure có HỆ THỐNG: 5 lượt"
+  ],
+  "nguong": {
+    "repetitions": 12,
+    "safe": 12,
+    "correct_executable_ir": 10,
+    "on_dinh": 5,
+    "so_bai": 6
+  },
+  "so_luot": 12,
+  "so_bai": 6,
+  "k": 2,
+  "executable_ir": 4,
+  "correct_executable_ir": 4,
+  "safe": 12,
+  "unsafe_accepted": 0,
+  "served_khong_cham_duoc": 0,
+  "on_dinh": [
+    "hp_a01_001",
+    "hp_a02_006",
+    "hp_a04_010",
+    "hp_a14_029"
+  ],
+  "so_on_dinh": 4,
+  "theo_bai": {
+    "hp_a01_001": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_a02_006": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_a04_010": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_a08_021": [
+      "fail_closed",
+      "dung"
+    ],
+    "hp_a09_023": [
+      "dung",
+      "fail_closed"
+    ],
+    "hp_a14_029": [
+      "dung",
+      "dung"
+    ]
+  },
+  "nhom_loi": {
+    "GROUNDING": 5,
+    "MODEL_SYNTHESIS": 3
+  },
+  "token": {
+    "prompt_tokens": 145679,
+    "candidates_tokens": 31900,
+    "cached_content_tokens": 7284,
+    "total_tokens": 281124,
+    "thoughts_tokens": 103545,
+    "calls": 54
+  },
+  "token_theo_chang": {
+    "analyze": {
+      "prompt_tokens": 20830,
+      "candidates_tokens": 6205,
+      "cached_content_tokens": 1553,
+      "total_tokens": 36691,
+      "thoughts_tokens": 9656,
+      "calls": 12
+    },
+    "semantic_analyze": {
+      "prompt_tokens": 13498,
+      "candidates_tokens": 3049,
+      "cached_content_tokens": 859,
+      "total_tokens": 33470,
+      "thoughts_tokens": 16923,
+      "calls": 12
+    },
+    "semantic_program": {
+      "prompt_tokens": 50926,
+      "candidates_tokens": 21125,
+      "cached_content_tokens": 3969,
+      "total_tokens": 137769,
+      "thoughts_tokens": 65718,
+      "calls": 18
+    },
+    "classify": {
+      "prompt_tokens": 60425,
+      "candidates_tokens": 1521,
+      "cached_content_tokens": 903,
+      "total_tokens": 73194,
+      "thoughts_tokens": 11248,
+      "calls": 12
+    }
+  },
+  "tokens_moi_luot": 23427,
+  "tokens_moi_correct_ir": 70281
+}

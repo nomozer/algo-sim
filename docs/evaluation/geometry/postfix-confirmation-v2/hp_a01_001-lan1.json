@@ -1,0 +1,413 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a01_001",
+    "lan": 1,
+    "do_tre_giay": 72.3,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "S: giá trị [1, 1, 3] không có trong mục 'hinh_chop_sabcd' (Hình chóp) — đề không cho những giá trị này"
+    ],
+    "so_nghia_vu": 2,
+    "nghia_vu_kinds": [
+      "parallel",
+      "point_on_line"
+    ],
+    "nghia_vu_mong_doi": [
+      "point_on_line"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_line"
+      ],
+      "khai": [
+        "parallel",
+        "point_on_line"
+      ],
+      "khop": [
+        "point_on_line"
+      ],
+      "thieu": [],
+      "thua": [
+        "parallel"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "giao tuyến của (SCD) và (SAB)"
+      ],
+      "da_dung": {},
+      "thieu": [
+        "giao tuyến của (SCD) và (SAB)"
+      ],
+      "thua_dung": [
+        "AB",
+        "C",
+        "d",
+        "plane_sab",
+        "plane_scd",
+        "vector_AB",
+        "vector_AD"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['giao tuyến của (SCD) và (SAB)']"
+    },
+    "obligation_match": false,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['point_on_line: checker nói False, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1722,
+        "candidates_tokens": 438,
+        "cached_content_tokens": 0,
+        "total_tokens": 2821,
+        "thoughts_tokens": 661,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1111,
+        "candidates_tokens": 188,
+        "cached_content_tokens": 0,
+        "total_tokens": 6091,
+        "thoughts_tokens": 4792,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2726,
+        "candidates_tokens": 1542,
+        "cached_content_tokens": 0,
+        "total_tokens": 10745,
+        "thoughts_tokens": 6477,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4989,
+        "candidates_tokens": 123,
+        "cached_content_tokens": 0,
+        "total_tokens": 5856,
+        "thoughts_tokens": 744,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "point_on_line",
+        "container": "d",
+        "params": {
+          "witness": "S"
+        }
+      },
+      {
+        "kind": "parallel",
+        "container": "AB",
+        "params": {
+          "witness": "d"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_sabcd",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "abcd_hinh_binh_hanh",
+        "label": "Đáy ABCD",
+        "values": [
+          "là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao tuyến của (SCD) và (SAB)",
+    "description": "Bài toán tìm giao tuyến của hai mặt phẳng trong hình chóp có đáy là hình bình hành. Giao tuyến sẽ đi qua điểm chung S và song song với các cạnh đáy song song.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": "Chọn B trên trục Ox, cách A 2 đơn vị"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": "Chọn D có tọa độ (1,2,0) để tạo hình bình hành ABCD"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          3
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_sabcd",
+        "model_assumption": "Chọn S có tọa độ (1,1,3) để tạo hình chóp"
+      },
+      {
+        "name": "vector_AB",
+        "type": "vector3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "vector_AD",
+        "type": "vector3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": null
+      },
+      {
+        "name": "AB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": null
+      },
+      {
+        "name": "plane_sab",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_sabcd",
+        "model_assumption": null
+      },
+      {
+        "name": "plane_scd",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_sabcd",
+        "model_assumption": null
+      },
+      {
+        "name": "d",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "point_on_line",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "assign",
+        "target_var": "vector_AB",
+        "expr": {
+          "kind": "arith",
+          "op": "-",
+          "left": {
+            "kind": "var",
+            "name": "B"
+          },
+          "right": {
+            "kind": "var",
+            "name": "A"
+          }
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "vector_AD",
+        "expr": {
+          "kind": "arith",
+          "op": "-",
+          "left": {
+            "kind": "var",
+            "name": "D"
+          },
+          "right": {
+            "kind": "var",
+            "name": "A"
+          }
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "C",
+        "expr": {
+          "kind": "arith",
+          "op": "+",
+          "left": {
+            "kind": "var",
+            "name": "A"
+          },
+          "right": {
+            "kind": "arith",
+            "op": "+",
+            "left": {
+              "kind": "var",
+              "name": "vector_AB"
+            },
+            "right": {
+              "kind": "var",
+              "name": "vector_AD"
+            }
+          }
+        }
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "AB",
+        "through_a": "A",
+        "through_b": "B",
+        "label": "Đường thẳng AB"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_sab",
+        "through": [
+          "S",
+          "A",
+          "B"
+        ],
+        "label": "Mặt phẳng (SAB)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_scd",
+        "through": [
+          "S",
+          "C",
+          "D"
+        ],
+        "label": "Mặt phẳng (SCD)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "d",
+        "expr": {
+          "kind": "intersect_plane_plane",
+          "plane_a": "plane_sab",
+          "plane_b": "plane_scd"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách tìm giao tuyến của hai mặt phẳng trong hình chóp. Khi hai mặt phẳng cùng chứa một điểm chung (S) và có hai đường thẳng song song nằm trong chúng (AB và CD), thì giao tuyến của chúng sẽ đi qua điểm chung đó và song song với hai đường thẳng song song kia."
+  },
+  "final_memory": {}
+}

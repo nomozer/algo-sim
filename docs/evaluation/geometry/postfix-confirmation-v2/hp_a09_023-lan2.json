@@ -1,0 +1,313 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a09_023",
+    "lan": 2,
+    "do_tre_giay": 37.3,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "C: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+      "D: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+      "B_prime: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+      "C_prime: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài",
+      "D_prime: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "angle"
+    ],
+    "nghia_vu_mong_doi": [
+      "angle"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "angle"
+      ],
+      "khai": [
+        "angle"
+      ],
+      "khop": [
+        "angle"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"angle: máy=None, đề mong '1/4'\"]",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1722,
+        "candidates_tokens": 421,
+        "cached_content_tokens": 1553,
+        "total_tokens": 3386,
+        "thoughts_tokens": 1243,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1111,
+        "candidates_tokens": 153,
+        "cached_content_tokens": 859,
+        "total_tokens": 1437,
+        "thoughts_tokens": 173,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2716,
+        "candidates_tokens": 948,
+        "cached_content_tokens": 0,
+        "total_tokens": 6597,
+        "thoughts_tokens": 2933,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4972,
+        "candidates_tokens": 128,
+        "cached_content_tokens": 0,
+        "total_tokens": 5766,
+        "thoughts_tokens": 666,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 4,
+    "http_requests": 5,
+    "retry_requests": 1,
+    "transient_hits": 1,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "angle",
+        "container": "A'C'",
+        "params": {
+          "witness": "goc_a_prime_c_prime_b_prime_c",
+          "wrt": "B'C"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lap_phuong",
+        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính góc giữa 2 đường thẳng A'C' và B'C trong hình lập phương ABCD.A'B'C'D'",
+    "description": "Chương trình dựng hình và tính góc giữa hai đường thẳng chéo nhau trong không gian.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc toạ độ (0,0,0)"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn cạnh hình lập phương bằng 1, cạnh AB nằm trên trục Ox"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Cạnh AA' nằm trên trục Oz"
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "A_prime_C_prime",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "angle",
+        "model_assumption": null
+      },
+      {
+        "name": "line_B_prime_C",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "goc_a_prime_c_prime_b_prime_c",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "angle",
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "A_prime_C_prime",
+        "through_a": "A_prime",
+        "through_b": "C_prime",
+        "label": "Đường thẳng A'C'"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_B_prime_C",
+        "through_a": "B_prime",
+        "through_b": "C",
+        "label": "Đường thẳng B'C"
+      },
+      {
+        "kind": "assign",
+        "target_var": "goc_a_prime_c_prime_b_prime_c",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "A_prime_C_prime",
+          "wrt": "line_B_prime_C"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này minh họa cách xác định góc giữa hai đường thẳng chéo nhau trong không gian bằng cách sử dụng các đối tượng hình học cơ bản và phép đo góc."
+  },
+  "final_memory": {}
+}

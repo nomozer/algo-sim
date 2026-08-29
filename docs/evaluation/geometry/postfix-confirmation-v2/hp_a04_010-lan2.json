@@ -1,0 +1,198 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a04_010",
+    "lan": 2,
+    "do_tre_giay": 90.0,
+    "stage_reached": "semantic_program",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": null,
+    "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '...': 'var', 'name': 'A'}}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+    "details": null,
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "P"
+      ],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "không có chương trình — không chấm được"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['parallel: máy=None, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1748,
+        "candidates_tokens": 499,
+        "cached_content_tokens": 0,
+        "total_tokens": 2732,
+        "thoughts_tokens": 485,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1137,
+        "candidates_tokens": 336,
+        "cached_content_tokens": 0,
+        "total_tokens": 1880,
+        "thoughts_tokens": 407,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 8686,
+        "candidates_tokens": 3660,
+        "cached_content_tokens": 3969,
+        "total_tokens": 24605,
+        "thoughts_tokens": 12259,
+        "calls": 3
+      },
+      "classify": {
+        "prompt_tokens": 5076,
+        "candidates_tokens": 101,
+        "cached_content_tokens": 0,
+        "total_tokens": 6436,
+        "thoughts_tokens": 1259,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 6,
+    "http_requests": 6,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 3,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '...': 'var', 'name': 'A'}}}, input_type=dict]\n   ",
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.construct_point.expr.divide_segment.ratio\n  Input should be a valid string [type=string_type, input_value={'kind': 'arith', 'op': '...d': 'var', 'name': 'k'}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/string_type",
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'arith' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'arith', 'op': '...': 'var', 'name': 'A'}}}, input_type=dict]\n   "
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "MN",
+        "params": {
+          "witness": "ABCD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_pyramid",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABCD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "abcd_parallelogram",
+        "label": "Đáy",
+        "values": [
+          "ABCD là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_on_sa",
+        "label": "Điểm M",
+        "values": [
+          "M thuộc SA"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "M thuộc SA"
+        ]
+      },
+      {
+        "fact_id": "n_on_sb",
+        "label": "Điểm N",
+        "values": [
+          "N thuộc SB"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "N thuộc SB"
+        ]
+      },
+      {
+        "fact_id": "p_on_ad",
+        "label": "Điểm P",
+        "values": [
+          "P thuộc AD"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "P thuộc AD"
+        ]
+      },
+      {
+        "fact_id": "ratio_k",
+        "label": "Tỉ lệ",
+        "values": [
+          "SM/SA = SN/SB = PD/AD"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": null,
+  "final_memory": {}
+}
