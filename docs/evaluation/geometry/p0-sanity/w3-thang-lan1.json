@@ -1,0 +1,424 @@
+{
+  "ban_ghi": {
+    "case_id": "w3-thang",
+    "lan": 1,
+    "do_tre_giay": 39.8,
+    "stage_reached": "source_invariant",
+    "executable": true,
+    "servable": false,
+    "error_code": "postcondition_violated",
+    "failure_category": "verification_gap",
+    "reason": "Hình dựng ra không khớp dữ kiện đề cho.",
+    "details": [
+      "[NORMALIZED_SOURCE_VIOLATED]",
+      "AB = a: đề cho 1, hình dựng có AB² = 625 (cần 1)",
+      "SA = 4a/5: đề cho 4/5, hình dựng có SA² = 400 (cần 16/25)"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [
+      "distance"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "distance"
+      ],
+      "khai": [
+        "distance"
+      ],
+      "khop": [
+        "distance"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"distance: máy=Fraction(12, 1), đề mong '12/25'\"]",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1743,
+        "candidates_tokens": 537,
+        "cached_content_tokens": 0,
+        "total_tokens": 3299,
+        "thoughts_tokens": 1019,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1132,
+        "candidates_tokens": 342,
+        "cached_content_tokens": 0,
+        "total_tokens": 1586,
+        "thoughts_tokens": 112,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2896,
+        "candidates_tokens": 905,
+        "cached_content_tokens": 0,
+        "total_tokens": 7983,
+        "thoughts_tokens": 4182,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5075,
+        "candidates_tokens": 123,
+        "cached_content_tokens": 0,
+        "total_tokens": 6111,
+        "thoughts_tokens": 913,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "p0-sanity",
+    "replicate_index": 1,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": [],
+    "justified_literals": [
+      "A|point3|A|Chọn H là gốc tọa độ (0,0,0), AB nằm trên trục Ox, SH nằm trên trục Oz. Tính HA = sqrt(SA^2 - SH^2) = 16/25. Đặt A tại (-16/25, 0, 0). Để tránh số thập phân, nhân tất cả tọa độ với 25.",
+      "B|point3|A|Tính HB = sqrt(SB^2 - SH^2) = 9/25. Đặt B tại (9/25, 0, 0). Để tránh số thập phân, nhân tất cả tọa độ với 25.",
+      "C|point3|A|Chọn C là một điểm bất kỳ trên mặt phẳng đáy (z=0) không thẳng hàng với A và B. Đặt C tại (0, 1, 0). Để tránh số thập phân, nhân tất cả tọa độ với 25.",
+      "S|point3|A|Vì (SAB) vuông góc với (ABC) và tam giác SAB vuông tại S, đường cao SH của tam giác SAB (với H thuộc AB) chính là đường cao của hình chóp từ S xuống mặt đáy (ABC). Tính SB = sqrt(AB^2 - SA^2) = sqrt(1^2 - (4/5)^2) = 3/5. Tính SH = (SA * SB) / AB = (4/5 * 3/5) / 1 = 12/25. Đặt S tại (0, 0, 12/25). Để tránh số thập phân, nhân tất cả tọa độ với 25."
+    ],
+    "unjustified_literals": [],
+    "constraints_checked": [],
+    "constraints_verified": [],
+    "scale_binding": {
+      "symbol": "a",
+      "canonical_value": "1",
+      "fact_ids": [
+        "ab_length",
+        "sa_length"
+      ],
+      "rewrites": [
+        [
+          "ab_length",
+          "a",
+          "1"
+        ],
+        [
+          "sa_length",
+          "4a/5",
+          "4/5"
+        ]
+      ]
+    },
+    "resolved_names": {},
+    "source_invariants": {
+      "checked": 2,
+      "passed": 0,
+      "violated": 2,
+      "not_checkable": 0
+    }
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "ABC",
+        "params": {
+          "witness": "khoang_cach_s_abc",
+          "wrt": "S"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "mp_s_ab_vuong_goc_day",
+        "label": "Mặt phẳng (SAB) vuông góc với mặt đáy",
+        "values": [
+          "(SAB) \n\n (ABC)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "(SAB) \n\n (ABC)"
+        ],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "tam_giac_s_ab_vuong_tai_s",
+        "label": "Tam giác SAB vuông tại S",
+        "values": [
+          "SAB vuông tại S"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": null,
+        "original_values": []
+      },
+      {
+        "fact_id": "ab_length",
+        "label": "Độ dài cạnh AB",
+        "values": [
+          1
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": "a",
+        "original_values": [
+          "a"
+        ]
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "Độ dài cạnh SA",
+        "values": [
+          "4/5"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [],
+        "scale_symbol": "a",
+        "original_values": [
+          "4a/5"
+        ]
+      }
+    ],
+    "scale_binding": {
+      "symbol": "a",
+      "canonical_value": "1",
+      "fact_ids": [
+        "ab_length",
+        "sa_length"
+      ],
+      "rewrites": [
+        [
+          "ab_length",
+          "a",
+          "1"
+        ],
+        [
+          "sa_length",
+          "4a/5",
+          "4/5"
+        ]
+      ]
+    },
+    "source_invariants": [
+      {
+        "kind": "segment_length",
+        "points": [
+          "A",
+          "B"
+        ],
+        "expected": "1",
+        "source_fact_id": "ab_length",
+        "scale_symbol": "a",
+        "source_text": "AB = a"
+      },
+      {
+        "kind": "segment_length",
+        "points": [
+          "S",
+          "A"
+        ],
+        "expected": "4/5",
+        "source_fact_id": "sa_length",
+        "scale_symbol": "a",
+        "source_text": "SA = 4a/5"
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ điểm S đến mặt phẳng (ABC)",
+    "description": "Chương trình dựng hình và tính khoảng cách từ đỉnh S đến mặt phẳng đáy (ABC) của hình chóp S.ABC, với mặt phẳng (SAB) vuông góc với mặt đáy và tam giác SAB vuông tại S.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          -16,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn H là gốc tọa độ (0,0,0), AB nằm trên trục Ox, SH nằm trên trục Oz. Tính HA = sqrt(SA^2 - SH^2) = 16/25. Đặt A tại (-16/25, 0, 0). Để tránh số thập phân, nhân tất cả tọa độ với 25."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          9,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Tính HB = sqrt(SB^2 - SH^2) = 9/25. Đặt B tại (9/25, 0, 0). Để tránh số thập phân, nhân tất cả tọa độ với 25."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          25,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn C là một điểm bất kỳ trên mặt phẳng đáy (z=0) không thẳng hàng với A và B. Đặt C tại (0, 1, 0). Để tránh số thập phân, nhân tất cả tọa độ với 25."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          12
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Vì (SAB) vuông góc với (ABC) và tam giác SAB vuông tại S, đường cao SH của tam giác SAB (với H thuộc AB) chính là đường cao của hình chóp từ S xuống mặt đáy (ABC). Tính SB = sqrt(AB^2 - SA^2) = sqrt(1^2 - (4/5)^2) = 3/5. Tính SH = (SA * SB) / AB = (4/5 * 3/5) / 1 = 12/25. Đặt S tại (0, 0, 12/25). Để tránh số thập phân, nhân tất cả tọa độ với 25."
+      },
+      {
+        "name": "ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_s_abc",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_plane",
+        "target_var": "ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng đáy (ABC)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_s_abc",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "S",
+          "wrt": "ABC"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định khoảng cách từ một điểm đến một mặt phẳng khi có điều kiện vuông góc giữa các mặt phẳng. Cụ thể, khi mặt phẳng (SAB) vuông góc với mặt phẳng đáy (ABC), đường cao SH của tam giác SAB (với H là chân đường cao từ S xuống AB) chính là đường cao của hình chóp từ S xuống mặt đáy (ABC). Việc chọn hệ tọa độ phù hợp giúp đơn giản hóa việc tính toán."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "-16",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "9",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "25",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "12"
+    },
+    "ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "-16",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "625"
+      }
+    },
+    "khoang_cach_s_abc": "12"
+  }
+}
