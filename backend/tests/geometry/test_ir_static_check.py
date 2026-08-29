@@ -264,6 +264,30 @@ def test_ranh_gioi_voi_validator():
         assert not kiem_tinh(_spec(decls, stmts)).ok
 
 
+# ══ GIỚI HẠN ĐÃ BIẾT — khoá để lời khai không tự mục đi ═══════════════════
+def test_GIOI_HAN_nhanh_khong_chay_van_lot():
+    """`None` VẪN tới được kernel qua một nhánh không chạy. Đây là SỰ THẬT.
+
+    Test này không bảo vệ một tính năng — nó bảo vệ một **lời khai trung
+    thực**. Nếu ngày nào đó phân tích theo nhánh được làm, test này ĐỎ, và
+    người sửa phải xoá nó cùng đoạn "GIỚI HẠN CÒN LẠI" trong docstring module.
+    Bỏ test đi thì báo cáo sẽ dần nói *"None không bao giờ tới kernel"* — một
+    câu mạnh hơn thứ hệ thật sự bảo đảm.
+    """
+    decls = _BON_DIEM + [{"name": "P", "type": "point3"},
+                         {"name": "c", "type": "bool", "initial_value": False}]
+    stmts = [
+        {"kind": "if", "condition": {"kind": "var", "name": "c"},
+         "then_body": [{"kind": "construct_point", "target_var": "P",
+                        "expr": {"kind": "midpoint", "a": "A", "b": "B"}}]},
+        {"kind": "construct_line", "target_var": "d",
+         "through_a": "A", "through_b": "P"},
+    ]
+    assert chan_truoc_kernel(decls, stmts) == ("qua", ""), (
+        "nếu điều này đã bị chặn thì GIỚI HẠN đã đóng — cập nhật docstring "
+        "module và xoá test này")
+
+
 # ══ PHẢN HỒI phải MÁY ĐỌC ĐƯỢC (§5) ═══════════════════════════════════════
 def test_phan_hoi_ngan_va_co_dia_chi():
     kq = kiem_tinh(_spec(

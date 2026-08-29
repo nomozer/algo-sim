@@ -32,6 +32,20 @@ Trong `if`/`while`/`for`, một câu lệnh có thể không chạy. Đòi thứ
 trong nhánh sẽ từ chối oan các chương trình đúng, nên ở đó chỉ hỏi câu ① dạng
 YẾU: tên phải được định nghĩa **ở đâu đó** trong chương trình. Câu hỏi *"lượt
 chạy này có đi qua không"* thuộc C₁b, và tách hai câu hỏi là có chủ đích.
+
+─── GIỚI HẠN CÒN LẠI, KHAI THẲNG ────────────────────────────────────────
+
+Hệ quả trực tiếp của fail-open ấy: một điểm **chỉ được dựng trong một nhánh
+không chạy** rồi dùng ở ngoài vẫn qua được tầng này, và kernel sẽ nhận `None`.
+
+    ⇒ "None không bao giờ tới kernel" là một tuyên bố SAI. Đúng là:
+      *ba họ lỗi đã QUAN SÁT ĐƯỢC ở V3 không còn tới kernel nữa.*
+
+Kernel vẫn fail-closed ở đó (`GEOMETRY_UNDECLARED`/`GEOMETRY_OPERAND_TYPE`),
+nên kết cục vẫn AN TOÀN — chỉ là bị bắt muộn một tầng, và mô hình không có cơ
+hội sửa. Đóng nốt lỗ này đòi phân tích luồng theo nhánh (mỗi đường đi một bảng
+ký hiệu); chưa làm vì chương trình hình học gần như không dùng rẽ nhánh, và
+`test_GIOI_HAN_nhanh_khong_chay_van_lot` khoá cho lời khai này không tự mục đi.
 """
 from __future__ import annotations
 
