@@ -226,8 +226,19 @@ def _CHECKER_QUAN_HE() -> set[str]:
     return set(_QUAN_HE_HINH_HOC)
 
 
-def _cham_bang_checker(kind: str, fm: dict, ob):
-    """`None` ⇒ thoả · `True`/chuỗi ⇒ vi phạm · `False` ⇒ KHÔNG chấm được."""
+def _cham_bang_checker(kind: str, fm: dict, ob, ten_da_hoa_giai=None):
+    """`None` ⇒ thoả · `True`/chuỗi ⇒ vi phạm · `False` ⇒ KHÔNG chấm được.
+
+    ─── THẨM QUYỀN VỀ TÊN, KHÔNG HOÀ GIẢI LẦN THỨ TÁM (V3 §1) ────────────
+
+    Bản trước tự gọi `khop_ky_hieu`. Ở V3 điều đó chấm oan `hp_a04_011` hai
+    lượt: hợp đồng gọi mặt phẳng `(SMN)`, bộ nhớ gọi `SMN`, `khop_ky_hieu`
+    không bóc được ngoặc — trong khi C₁a giải đúng bằng lưới TOPOLOGY (vật nào
+    dựng từ {S, M, N}), và C₂ của hệ đã kiểm `parallel(AC)` ĐẠT.
+
+    Nay hỏi `resolved_names` do route phát ra. `khop_ky_hieu` chỉ còn là lưới
+    DỰ PHÒNG cho artifact cũ chưa có trường ấy — không phải nguồn thứ hai.
+    """
     from app.simulation.semantic_program.domain_profile import khop_ky_hieu
     from app.simulation.semantic_program.geometry_obligations import (
         GEOMETRY_CHECKERS,
@@ -235,18 +246,19 @@ def _cham_bang_checker(kind: str, fm: dict, ob):
     fn = GEOMETRY_CHECKERS.get(kind)
     if fn is None:
         return False
-    # BÍ DANH trước khi gọi — cùng việc `check_postconditions` làm. Thiếu nó
-    # thì checker tra trượt tên hợp đồng (`B'D'` ≠ `B_prime_D_prime`) và trả
-    # "cặp đối tượng không hợp lệ", một lỗi TRA TÊN bị đọc thành SAI.
     try:
         snap = dict(fm)
         ten_can = [getattr(ob, "container", None), getattr(ob, "witness", None)]
         ten_can += [v for v in (getattr(ob, "params", None) or {}).values()
                     if isinstance(v, str)]
         for ten in ten_can:
-            if ten and ten not in snap:
-                if (thay := khop_ky_hieu(ten, set(snap))) is not None:
-                    snap[ten] = snap[thay]
+            if not ten or ten in snap:
+                continue
+            thay = (ten_da_hoa_giai or {}).get(ten)
+            if thay is None:
+                thay = khop_ky_hieu(ten, set(snap))
+            if thay is not None and thay in snap:
+                snap[ten] = snap[thay]
         msg = fn(snap, ob)
     except Exception:  # noqa: BLE001 — lượt đo, không được ném ra ngoài
         return False
@@ -258,7 +270,8 @@ def _cham_bang_checker(kind: str, fm: dict, ob):
     return str(msg)
 
 
-def cham_oracle(case: dict, contract, final_memory: dict | None) -> dict[str, Any]:
+def cham_oracle(case: dict, contract, final_memory: dict | None,
+                ten_da_hoa_giai: dict | None = None) -> dict[str, Any]:
     """So kết quả máy với `oracle_result` — bám theo NGHĨA VỤ, không theo tên biến.
 
     Trả `verdict ∈ {PASS, FAIL, UNGRADED, NO_RESULT}`. `UNGRADED` khi đề không
@@ -297,7 +310,7 @@ def cham_oracle(case: dict, contract, final_memory: dict | None) -> dict[str, An
         # chạy lại tính chất từ trạng thái cuối, quy ước `None` ⇒ thoả. So
         # `final_memory[witness]` với một hằng là đọc nhầm hợp đồng ngay từ
         # đầu — witness của quan hệ là ĐỐI TƯỢNG THỨ HAI, không phải kết quả.
-        loi_ck = (_cham_bang_checker(kind, final_memory, ob)
+        loi_ck = (_cham_bang_checker(kind, final_memory, ob, ten_da_hoa_giai)
                   if isinstance(de, bool) and kind in _CHECKER_QUAN_HE()
                   else False)
         if loi_ck is not False:

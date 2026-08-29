@@ -565,6 +565,27 @@ async def stage_semantic_program(
                     # Vì sao không nhồi luật này vào prompt: `test_prompt_size_
                     # guard` chặn ở 4800 byte với đúng lý do ấy — *"luật trong
                     # prompt là GỢI Ý, luật trong validator là RÀNG BUỘC"*.
+                    # ─── THẨM ĐỊNH TĨNH CŨNG PHẢI GỬI NGƯỢC (V3 §5) ────────
+                    #
+                    # Cùng lý do với grounding, và cùng khuôn. Chạy TRƯỚC
+                    # grounding vì nó rẻ hơn và bệnh nặng hơn: một chương trình
+                    # tham chiếu điểm chưa dựng thì mọi câu hỏi về xuất xứ đều
+                    # nói về một chương trình không chạy nổi.
+                    #
+                    # Thông điệp NGẮN và máy đọc được — `mã · vị trí · vật ·
+                    # mong đợi · thực tế`. Không thêm văn xuôi vào prompt chính.
+                    from app.simulation.semantic_program.ir_static_check import (
+                        kiem_tinh,
+                    )
+                    t = kiem_tinh(val.spec)
+                    if not t.ok and lan < MAX_SEMANTIC_PROGRAM_ATTEMPTS - 1:
+                        loi = "chương trình không thực thi được — " + t.phan_hoi()
+                        _emit(observer, "semantic_program_attempt",
+                              n=lan, ok=False, message=loi, gate="ir_static")
+                        prompt = (
+                            f"{base}\n\nLần trước bị từ chối vì: {loi}\n"
+                            "Hãy sửa ĐÚNG chỗ đó và giữ nguyên phần còn lại.")
+                        continue
                     if contract is not None:
                         from app.simulation.semantic_program.grounding_gate import (
                             check_grounding,
@@ -1206,7 +1227,10 @@ async def _semantic_route_attempt(
           justified_literals=outcome.justified_literals,
           unjustified_literals=outcome.unjustified_literals,
           constraints_checked=outcome.constraints_checked,
-          constraints_verified=outcome.constraints_verified)
+          constraints_verified=outcome.constraints_verified,
+          # THẨM QUYỀN VỀ TÊN cho bộ đo — xem `SemanticRouteOutcome`. Không
+          # phát ra đây thì bộ đo buộc phải hoà giải lần thứ tám.
+          resolved_names=outcome.resolved_names)
     return outcome
 
 

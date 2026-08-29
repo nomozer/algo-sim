@@ -42,6 +42,7 @@ from .pipeline_adapter import (
     VisualBindingUnresolved,
     compile_semantic_program_to_envelope,
 )
+from .ir_static_check import kiem_tinh
 from .postconditions import check_postconditions
 from .request_contract import RequestContract
 
@@ -90,6 +91,18 @@ class SemanticRouteOutcome(BaseModel):
     unjustified_literals: list[str] = Field(default_factory=list)
     constraints_checked: list[str] = Field(default_factory=list)
     constraints_verified: list[str] = Field(default_factory=list)
+    #: THẨM QUYỀN VỀ TÊN — `tên hợp đồng → tên chương trình`, do C₁a giải.
+    #:
+    #: C₁b, C₂ và `learner_surface` đã hỏi bản đồ này từ lâu. Bộ ĐO thì không:
+    #: nó tự hoà giải bằng `khop_ky_hieu`, và ở V3 điều đó biến một chương
+    #: trình ĐÚNG thành hai lượt `UNSAFE` — hợp đồng gọi mặt phẳng `(SMN)`, bộ
+    #: nhớ gọi `SMN`, `khop_ky_hieu` không bóc được ngoặc, checker mất đối
+    #: tượng, và một lỗi TRA TÊN bị đọc thành lỗi HÌNH HỌC (ERRATUM #4).
+    #:
+    #: Đây là lần thứ BẢY của cùng lớp lỗi. Phát bản đồ ra đây để mọi tầng —
+    #: kể cả tầng ngoài `app/` — hỏi CÙNG MỘT thẩm quyền, thay vì viết bản
+    #: hoà giải thứ tám.
+    resolved_names: dict[str, str] = Field(default_factory=dict)
     #: Cảnh 3D của miền hình học — **một Ô TRỐNG, không phải một phép tính**.
     #:
     #: `route` KHÔNG dựng nó và KHÔNG import `scene3d`: hướng phụ thuộc một
@@ -142,7 +155,7 @@ def verify_and_compile(
     # Cùng lý do "gắn ở MỘT chỗ" như trên: `_sau_grounding` có 11 điểm thoát,
     # nên số ràng buộc đã kiểm được nhét vào một ô do hàm bọc sở hữu thay vì
     # gắn tay ở nhánh nào chạy tới C₂.
-    quan_trac: dict[str, list[str]] = {"checked": [], "verified": []}
+    quan_trac: dict[str, Any] = {"checked": [], "verified": [], "ten": {}}
     kq = _sau_grounding(
         contract, spec, ground,
         execution_budget=execution_budget,
@@ -156,6 +169,7 @@ def verify_and_compile(
         "unjustified_literals": list(ground.unjustified_literals),
         "constraints_checked": quan_trac["checked"],
         "constraints_verified": quan_trac["verified"],
+        "resolved_names": quan_trac["ten"],
     })
 
 
@@ -164,7 +178,7 @@ def _sau_grounding(
     spec: SemanticProgramSpec,
     ground,
     *,
-    quan_trac: dict[str, list[str]] | None = None,
+    quan_trac: dict[str, Any] | None = None,
     execution_budget: int = DEFAULT_EXECUTION_BUDGET,
     presentation_budget: int = DEFAULT_PRESENTATION_BUDGET,
 ) -> SemanticRouteOutcome:
@@ -199,6 +213,10 @@ def _sau_grounding(
         )
 
     c1a = check_structural_coverage(contract, spec)
+    # Ghi bản đồ tên NGAY khi có, không đợi tới nhánh thành công: một chương
+    # trình chết ở C₁a vẫn là chương trình mà bộ đo cần đọc tên cho đúng.
+    if quan_trac is not None:
+        quan_trac["ten"] = dict(c1a.ten_da_hoa_giai)
     # C₁a trả `ok=False` cho CẢ HAI mức, và chúng hoàn toàn khác nhau:
     #   REQUESTED_OPERATION_UNCOVERED     — không có đường tạo witness ⇒ CHẶN
     #   SEMANTIC_VERIFICATION_UNAVAILABLE — có đường, chỉ thiếu checker ⇒ ĐI TIẾP
@@ -212,6 +230,26 @@ def _sau_grounding(
             ErrorCode[c1a.error_code],
             "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
             details=list(c1a.missing),
+            weak=list(c1a.weak_kinds),
+        )
+
+    # ── THẨM ĐỊNH TĨNH, NGAY TRƯỚC KERNEL (V3 §2–§4) ────────────────────────
+    #
+    # V3 đo được: 4/7 lượt hỏng chết ở `execution` vì toán hạng — điểm chưa
+    # dựng, tỉ lệ `2:1`, sai kiểu. Cả ba đọc được từ chính chương trình. Chết ở
+    # runtime nghĩa là mô hình KHÔNG có cơ hội sửa: vòng sửa của
+    # `stage_semantic_program` đã đóng trước khi tới đây.
+    #
+    # Cổng này không đổi phán quyết cho chương trình đúng — nó chỉ đổi CHỖ
+    # chương trình sai bị bắt, từ sau kernel lên trước kernel. `ErrorCode` giữ
+    # nguyên, chi tiết đi vào `details`, đúng đường mà `grounding` đã đi.
+    tinh = kiem_tinh(spec)
+    if not tinh.ok:
+        return _hong(
+            "ir_static",
+            ErrorCode.SEMANTIC_PROGRAM_INVALID,
+            "Chương trình tham chiếu vật chưa dựng hoặc sai kiểu toán hạng.",
+            details=[i.dong() for i in tinh.issues],
             weak=list(c1a.weak_kinds),
         )
 

@@ -3238,6 +3238,35 @@ thức thang · **hai** ký hiệu tự do (không được tự kết luận `a
 "dữ kiện quan hệ không có gì để so" và biến kênh giả thiết toạ độ thành cửa sau.
 Test: `tests/geometry/test_scale_normalization.py` (tám ca A–H của chỉ thị).
 
+### `backend/app/simulation/semantic_program/ir_static_check.py` · offline
+
+Sở hữu **thẩm định TĨNH trước kernel** — `kiem_tinh(spec) → StaticCheckResult`.
+V3 đo được: 4/7 lượt hỏng chết ở `execution` với `GEOMETRY_OPERAND_TYPE`, và
+cả bốn **đọc được từ chính chương trình**. Chết ở runtime nghĩa là mô hình
+không có cơ hội sửa — vòng sửa của `stage_semantic_program` đã đóng trước đó.
+
+Bốn mã, bốn phép sửa khác nhau: `IR_UNDEFINED_OBJECT` ·
+`IR_USE_BEFORE_CONSTRUCTION` · `IR_OPERAND_TYPE` · `IR_NOT_EXACT_RATIONAL`.
+`StaticIssue` mang **năm trường máy đọc được** (mã · chỉ số câu lệnh · vật ·
+mong đợi · thực tế); `phan_hoi()` là chuỗi ngắn gửi ngược vào vòng sửa —
+prompt chính KHÔNG phình.
+
+**RANH GIỚI với validator, đo chứ không đoán.** `validate_semantic_program`
+đã hỏi *"tên này có tồn tại không"* cho cả toán hạng câu lệnh dựng lẫn toán
+hạng biểu thức. Bốn thứ nó KHÔNG hỏi và file này sở hữu: khai báo rỗng (`None`
+xuống kernel) · sai KIỂU toán hạng · `ratio` không phải phân số · `measure`
+sai loại đối tượng. `test_ranh_gioi_voi_validator` khoá đúng ranh giới ấy.
+
+`_CHU_KY` là bảng chữ ký của mọi biểu thức hình học — bản sao ngữ nghĩa của
+`eval_geometry_expr`, và đó là rủi ro thật: hai bên trôi khỏi nhau thì tĩnh
+nói OK còn kernel ném. Nhánh lồng (`if`/`while`) chỉ đòi TỒN TẠI, không đòi
+thứ tự — đòi chặt trong nhánh là từ chối oan chương trình đúng.
+`"1.2"` được NHẬN: `Fraction("1.2")` là `6/5`, chính xác; thứ bị cấm là `float`
+của JSON. `"2:1"` bị bác và **không được tự diễn giải lại** — `AM = 2MB` cho
+`t = 2/3` còn đọc lối khác cho `t = 2`.
+Gọi từ hai chỗ: `route` (ngay trước interpreter) và vòng sửa của
+`pipeline.stage_semantic_program`. Test: `tests/geometry/test_ir_static_check.py`.
+
 ### `backend/app/simulation/semantic_program/coverage_gate.py` · offline
 
 Sở hữu **C₁a** (structural, trước execution) và **C₁b** (realized, sau execution).

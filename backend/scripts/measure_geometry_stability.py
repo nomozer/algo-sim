@@ -140,6 +140,33 @@ _KHONG_CHAM_DUOC = __import__("re").compile(
     r"không hợp lệ|thiếu|không tìm thấy|chưa có|không phải", __import__("re").I)
 
 
+def _fm_cham(fm: dict, sr: dict) -> dict:
+    """Trạng thái cuối, ĐÃ gắn bí danh theo THẨM QUYỀN VỀ TÊN của C₁a.
+
+    ─── MỘT CHỖ, KHÔNG PHẢI SÁU (V3 §1) ────────────────────────────────────
+
+    Cùng lưới hoà giải đã phải vá lần lượt ở C₁a, C₁b, C₂, `learner_surface`,
+    bộ chấm DEV, bộ chấm pool — rồi ở V3 lộ ra lần thứ BẢY tại bộ chấm xác
+    nhận, nơi `khop_ky_hieu` không bóc nổi ngoặc của `(SMN)` và chấm oan một
+    chương trình đúng hai lượt liền (ERRATUM #4).
+
+    Nay `route` phát ra `resolved_names` — bản đồ C₁a đã giải, cùng bản đồ mà
+    C₂ dùng. Áp nó **một lần** ở đây, trước mọi bộ chấm, thay vì để từng bộ
+    chấm tự hoà giải. Bản đồ rỗng (artifact cũ, hoặc lượt chết trước C₁a) thì
+    hàm trả nguyên `fm` — các lưới dự phòng cũ vẫn còn nguyên phía sau.
+
+    KHÔNG ghi đè tên chương trình: chỉ THÊM lối vào theo tên hợp đồng.
+    """
+    ten = sr.get("resolved_names") or {}
+    if not ten:
+        return fm
+    snap = dict(fm)
+    for ten_hd, ten_ct in ten.items():
+        if ten_hd not in snap and ten_ct in snap:
+            snap[ten_hd] = snap[ten_ct]
+    return snap
+
+
 def cham_predicate(fm: dict, hd, kind: str) -> tuple[bool | None, str]:
     """Chấm một nghĩa vụ MỆNH ĐỀ bằng CHÍNH checker server-owned.
 
@@ -352,7 +379,7 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
     # Hợp đồng đi kèm: bộ chấm theo POOL cần `ob.witness` để biết đọc biến
     # nào trong `final_memory`. Hai bộ chấm cũ nhận `hd=None` và bỏ qua —
     # thêm tham số có mặc định thay vì đẻ một `mot_luot` thứ hai.
-    dat, vi_sao = cham_oracle(bai["oracle"], fm, hd)
+    dat, vi_sao = cham_oracle(bai["oracle"], _fm_cham(fm, sr), hd)
 
     # ③ TÁCH ĐÔI (Phase 7A.2) — kỳ vọng đọc TỪ FILE, không từ literal trong mã.
     spec_raw = (bat["spec"].model_dump(mode="json") if bat.get("spec") else None)
@@ -434,6 +461,9 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "scale_binding": (
             hd.scale_binding.model_dump(mode="json")
             if hd is not None and hd.scale_binding is not None else None),
+        # THẨM QUYỀN VỀ TÊN, ghi vào artifact: một lượt chấm lại sau này phải
+        # đọc được cùng bản đồ mà lượt chạy đã dùng, không dựng lại nó.
+        "resolved_names": sr.get("resolved_names") or {},
     }
     # MODEL OUTPUT ghi RIÊNG — hợp đồng và chương trình là thứ phải đọc lại được
     # khi phân loại, và không telemetry nào phát chúng ra.

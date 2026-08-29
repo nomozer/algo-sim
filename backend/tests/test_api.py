@@ -363,7 +363,12 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # thẳng `a = 1` là do SERVER chốt. Không file `.md` nào bị sửa nhưng đầu
     # vào của lượt sinh chương trình đổi hẳn — cache cũ sẽ trả chương trình
     # viết dưới thang mô hình TỰ chọn (đã quan sát: `a = 25`), tức đo nhầm bản.
-    assert main_module.CACHE_VERSION == "48"
+    # 49: THẨM ĐỊNH TĨNH vào vòng sửa (`ir_static_check`). Lỗi toán hạng —
+    # điểm chưa dựng, `ratio` `2:1`, sai kiểu — trước đây chết ở kernel SAU khi
+    # vòng sửa đã đóng, nên mô hình không bao giờ được biết. Nay chúng thành
+    # một lời từ chối gửi ngược, tức LƯỢT SINH THỨ HAI nhận prompt khác hẳn.
+    # Cache cũ sẽ trả chương trình của bản chưa có đường phản hồi ấy.
+    assert main_module.CACHE_VERSION == "49"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)
