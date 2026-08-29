@@ -102,7 +102,25 @@ def thu_thap() -> dict:
         "tong_toi_thieu": SH.TONG_TOI_THIEU,
         "budget": (len(SH.BANG_O) * SH.K_CHOT * SH.LOGIC_MOI_LUOT,
                    len(SH.BANG_O) * SH.K_CHOT * SH.HTTP_MOI_LUOT),
+        "ngan_sach_da_duyet": _duyet_ngan_sach(SH),
     }
+
+
+#: Nơi CHÉP LẠI quyết định duyệt ngân sách của người. Không phải nơi script
+#: tự duyệt: nó chỉ đối chiếu con số đã ghi với hằng số hiện hành, và blocker
+#: dựng lại ngay khi hai bên lệch — đổi `K_CHOT` mà quên sửa file là đổi ngân
+#: sách của lượt đo chính thức mà không ai duyệt lại.
+DUYET = GEO / "HOLDOUT_BUDGET_APPROVAL.md"
+
+
+def _duyet_ngan_sach(SH) -> bool:
+    if not DUYET.exists():
+        return False
+    src = DUYET.read_text(encoding="utf-8")
+    lg = len(SH.BANG_O) * SH.K_CHOT * SH.LOGIC_MOI_LUOT
+    ht = len(SH.BANG_O) * SH.K_CHOT * SH.HTTP_MOI_LUOT
+    return (f"DUYET_NGAN_SACH: {lg} logic / {ht} HTTP" in src
+            and f"K: {SH.K_CHOT}" in src)
 
 
 def blockers(d: dict) -> list[str]:
@@ -118,8 +136,11 @@ def blockers(d: dict) -> list[str]:
                  "(chỉ soạn được SAU khi pool có bài accepted).")
     b.append("SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì "
              "người đo chọn được cả tập.")
-    b.append(f"NGÂN SÁCH — {d['budget'][0]} logic / {d['budget'][1]} HTTP "
-             f"(k={d['k']}) chưa được duyệt.")
+    if not d.get("ngan_sach_da_duyet"):
+        b.append(f"NGÂN SÁCH — {d['budget'][0]} logic / {d['budget'][1]} HTTP "
+                 f"(k={d['k']}) chưa được duyệt, hoặc "
+                 "`HOLDOUT_BUDGET_APPROVAL.md` khai con số KHÁC hằng số hiện "
+                 "hành (đổi `K_CHOT` thì phải duyệt lại).")
     if not d["cay_sach"]:
         b.append("CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.")
     return b

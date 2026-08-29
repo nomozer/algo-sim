@@ -758,6 +758,32 @@ def test_bao_cao_NEU_RA_dung_blocker_CON_LAI(RP):
     assert any("POOL" in x and "40" in x for x in b) == (d["accepted"] < 40)
 
 
+# ══ DUYỆT NGÂN SÁCH: CHÉP LẠI QUYẾT ĐỊNH, KHÔNG PHẢI TỰ DUYỆT ════════════
+def test_duyet_ngan_sach_DOI_dung_con_so_hien_hanh(RP, SH, tmp_path, monkeypatch):
+    """File duyệt phải khớp HẰNG SỐ, nếu không nó duyệt cho một ngân sách khác.
+
+    `K_CHOT` là cỡ mẫu của lượt đo chính thức. Đổi nó = đổi ngân sách; nếu
+    file duyệt vẫn nằm đó với con số cũ thì blocker im lặng ở trạng thái
+    "đã duyệt", và lượt chạy tiêu quota theo một con số chưa ai nhìn.
+    """
+    assert RP._duyet_ngan_sach(SH), "file duyệt hiện tại phải khớp"
+
+    class SHKhac:                       # k đổi ⇒ ngân sách đổi
+        BANG_O, K_CHOT = SH.BANG_O, SH.K_CHOT + 1
+        LOGIC_MOI_LUOT, HTTP_MOI_LUOT = SH.LOGIC_MOI_LUOT, SH.HTTP_MOI_LUOT
+    assert not RP._duyet_ngan_sach(SHKhac), "k đổi mà vẫn đọc là đã duyệt"
+
+    monkeypatch.setattr(RP, "DUYET", tmp_path / "khong-co.md")
+    assert not RP._duyet_ngan_sach(SH), "không file mà vẫn đọc là đã duyệt"
+
+
+def test_duyet_ngan_sach_KHONG_ha_blocker_SEED(RP):
+    """Hai cổng, hai quyết định. Duyệt tiền không phải là cấp seed."""
+    d = RP.thu_thap()
+    assert any("SEED" in x for x in RP.blockers(d)), \
+        "seed chưa có mà báo cáo không kêu"
+
+
 def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
     """Báo cáo mang băm và số đếm. Viết tay thì nó đúng đúng một lần."""
     f = GEO / "PHASE7B_READINESS_REPORT.md"

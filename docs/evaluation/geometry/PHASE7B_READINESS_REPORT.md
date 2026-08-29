@@ -2,7 +2,7 @@
 
 > Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**
 > Mọi số dẫn từ nguồn — đừng sửa tay, chạy lại.
-> Chụp lúc `2026-08-29T03:51:37+00:00`.
+> Chụp lúc `2026-08-29T03:58:34+00:00`.
 
 ```
 READY_FOR_PHASE7B:  NO
@@ -13,7 +13,7 @@ READY_FOR_PHASE7B:  NO
 ## 1. Environment
 
 ```
-git_sha                  : 69ece65cd5be17b82cf027792dd804cb19a1535e
+git_sha                  : 702b5061490ae043bf3b8b223ee04bf6aecf842b
 cây sạch                 : KHÔNG
 cache_version            : 46
 skill_hash               : 6208fc2a2d5ba98d31f56ace90d6f6e35edf5a013082553f7299146405e30a42
@@ -21,7 +21,7 @@ prompt_hash (grammar)    : 446b076922120cd426d68843537e91f95339b415f75beeaa66bd5
 measured_system_hash     : 7ab25683ce4e4e4d0e56efb3cb291378e7bde7127cd316eefe9702981735ce00  (144 file)
 metric_contract_hash     : 2bb1b1cd64eba3643a27c5fbbbc881c0f9e3a790121cee5beea6ed6341588fe0
 capability_boundary_hash : 8a85a4b287d631cc8ae11597e2efc4ca45a1f88f15da8e99752a636d4a478adc
-holdout_protocol_hash    : a0e7b94ce64ad5e28f7f90d21ad9f206fa4c5c3904f56343b8207d2cdcc70acf
+holdout_protocol_hash    : 082070cadac037f2b9f78bcc10cd933f2eef5374cb6a1b72adcd5ac751623e01
 pool_hash                : 5aa04d8ee14a136a6dc7a470da389238ddc891e1daafd0f6d21f306d6e1bc784
 ```
 
@@ -117,8 +117,7 @@ là soạn kỳ vọng cho những bài chưa biết có nhận được không.
 ## 5. Blockers
 
 1. SEED — chưa có. Số nguyên do GVHD cấp; người đo chọn seed thì người đo chọn được cả tập.
-2. NGÂN SÁCH — 360 logic / 480 HTTP (k=3) chưa được duyệt.
-3. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
+2. CÂY LÀM VIỆC BẨN — niêm phong đòi cây sạch.
 
 Phân tích từng rào — vì sao tồn tại, ba đường đi, cái giá từng
 đường: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) và
