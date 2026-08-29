@@ -3,12 +3,10 @@
   "selection_hash": "0b55e0f9177676724ae4adba44f39beb57180905310c651d5dd4081c0af8b5fa",
   "cong": "FAIL",
   "thieu": [
-    "SAFE_OUTCOME 11/12",
-    "correct executable IR 2/12 < 10",
+    "correct executable IR 3/12 < 10",
     "stable cases 3/6 < 5",
     "SCOPE failure có HỆ THỐNG: 2 lượt",
-    "GROUNDING failure có HỆ THỐNG: 2 lượt",
-    "accepted-but-wrong = 1, phải 0"
+    "GROUNDING failure có HỆ THỐNG: 2 lượt"
   ],
   "nguong": {
     "repetitions": 12,
@@ -21,9 +19,9 @@
   "so_bai": 6,
   "k": 2,
   "executable_ir": 4,
-  "correct_executable_ir": 2,
-  "safe": 11,
-  "unsafe_accepted": 1,
+  "correct_executable_ir": 3,
+  "safe": 12,
+  "unsafe_accepted": 0,
   "served_khong_cham_duoc": 0,
   "on_dinh": [
     "hp_a02_005",
@@ -54,7 +52,7 @@
     ],
     "hp_a11_027": [
       "fail_closed",
-      "SAI_MA_VAN_NHAN"
+      "dung"
     ]
   },
   "nhom_loi": {
@@ -106,5 +104,5 @@
     }
   },
   "tokens_moi_luot": 19242,
-  "tokens_moi_correct_ir": 115452
+  "tokens_moi_correct_ir": 76968
 }

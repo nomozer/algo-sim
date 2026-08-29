@@ -1,0 +1,57 @@
+{
+  "khai": "Tập XÁC NHẬN POSTFIX. KHÔNG phải Phase 7B chính thức. Chọn và đóng băng TRƯỚC lời gọi model đầu tiên của hệ V2.",
+  "nguon": "PRE_EXISTING_UNUSED_PHASE7B_RESERVE",
+  "luat_chon": [
+    "1. goc_duong_duong",
+    "2. goc_duong_mat",
+    "3. ky_hieu_dan_xuat",
+    "4. quan_he_song_song_vuong_goc",
+    "5. do_luong",
+    "6. nhieu_buoc",
+    "thứ tự trong mỗi ô: case_id nhỏ nhất theo THỨ TỰ CHỮ — không xếp theo độ khó",
+    "ca đã chọn bị loại khỏi các ô sau",
+    "ô không có ứng viên: bù bằng reserve còn lại theo thứ tự chữ; KHÔNG viết đề mới"
+  ],
+  "k": 2,
+  "case_ids": [
+    "hp_a09_023",
+    "hp_a08_021",
+    "hp_a04_010",
+    "hp_a14_029",
+    "hp_a02_006",
+    "hp_a01_001"
+  ],
+  "theo_o_cau_truc": {
+    "goc_duong_duong": "hp_a09_023",
+    "ky_hieu_dan_xuat": "hp_a08_021",
+    "quan_he_song_song_vuong_goc": "hp_a04_010",
+    "do_luong": "hp_a14_029",
+    "nhieu_buoc": "hp_a02_006",
+    "bu_tat_dinh": "hp_a01_001"
+  },
+  "slot": {
+    "hp_a09_023": "A09",
+    "hp_a08_021": "A08",
+    "hp_a04_010": "A04",
+    "hp_a14_029": "A14",
+    "hp_a02_006": "A02",
+    "hp_a01_001": "A01"
+  },
+  "o_thieu_ung_vien": [
+    "goc_duong_mat"
+  ],
+  "reserve_size": 16,
+  "vong": 2,
+  "loai_tru_vong_truoc": [
+    "hp_a02_005",
+    "hp_a03_007",
+    "hp_a06_016",
+    "hp_a09_022",
+    "hp_a10_025",
+    "hp_a11_027"
+  ],
+  "pool_hash_luc_chon": "5aa04d8ee14a136a6dc7a470da389238ddc891e1daafd0f6d21f306d6e1bc784",
+  "commit": "6c21250b7dbd7482fa70a3c61906194d813f7408",
+  "dong_bang_luc": "2026-08-29T12:00:36+00:00",
+  "selection_hash": "d7655c42dad6e0734823b94721d005306d802d403e407da1b8d13e888dbec051"
+}

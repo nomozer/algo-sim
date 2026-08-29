@@ -172,6 +172,54 @@
      "ly_do": "Quan hệ vuông góc giữa hai `line3`, cả hai mang KÝ HIỆU PHẨY. Đây là ca chính của phép sửa đồng nhất ký hiệu: witness `B'D'` phải nối được biến chương trình dù nó tên `B1D1` hay `B_primeD_prime`."
     }
    ]
+  },
+  {
+   "case_id": "w3-hbh",
+   "problem_text": "Cho tứ diện ABCD. Gọi M, N, P, Q lần lượt là trung điểm của AB, CD, BC, AD. Chứng minh MPNQ là hình bình hành.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — vật đi sau \"Cho\" là dữ kiện.",
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "ly_do": "\"hình bình hành\" ⇒ hai cặp cạnh đối song song (định nghĩa SGK). Đây là phép chuyển ngữ nghĩa đã ghi ở `phep_chuyen` của hp_a03_007."
+    }
+   ]
+  },
+  {
+   "case_id": "w3-thang",
+   "problem_text": "Cho hình chóp S.ABC có mặt phẳng (SAB) vuông góc với mặt đáy, tam giác SAB vuông tại S, AB = a, SA = 4a/5. Tính khoảng cách từ điểm S đến mặt phẳng (ABC).",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — vật đi sau \"Cho\" là dữ kiện.",
+   "verification_obligations": [
+    {
+     "kind": "distance",
+     "ly_do": "Đề hỏi MỘT SỐ; chủ thể `point3` (S) và `plane3` (ABC). `a` TỰ DO ⇒ chấm bất biến thang."
+    }
+   ]
+  },
+  {
+   "case_id": "w3-phay",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Chứng minh rằng B'D' vuông góc với AC.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — vật đi sau \"Cho\" là dữ kiện.",
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "ly_do": "Quan hệ vuông góc giữa hai `line3` mang ký hiệu PHẨY — ca chính của phép hoà giải tên ghép."
+    }
+   ]
+  },
+  {
+   "case_id": "w3-nhieu",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M là trung điểm SA, N là trung điểm SB. Chứng minh MN song song với mặt phẳng (ABCD).",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — vật đi sau \"Cho\" là dữ kiện.",
+   "verification_obligations": [
+    {
+     "kind": "parallel",
+     "ly_do": "Song song `line3`(MN) — `plane3`(ABCD), sau hai bước dựng trung điểm."
+    }
+   ]
   }
  ],
  "__khai__": [

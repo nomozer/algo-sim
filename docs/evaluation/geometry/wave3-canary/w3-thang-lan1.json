@@ -1,8 +1,8 @@
 {
   "ban_ghi": {
-    "case_id": "hp_a11_027",
-    "lan": 2,
-    "do_tre_giay": 67.5,
+    "case_id": "w3-thang",
+    "lan": 1,
+    "do_tre_giay": 83.7,
     "stage_reached": "served",
     "executable": true,
     "servable": true,
@@ -49,34 +49,34 @@
     "token": {
       "analyze": {
         "prompt_tokens": 1743,
-        "candidates_tokens": 483,
-        "cached_content_tokens": 1567,
-        "total_tokens": 2753,
-        "thoughts_tokens": 527,
+        "candidates_tokens": 481,
+        "cached_content_tokens": 0,
+        "total_tokens": 3425,
+        "thoughts_tokens": 1201,
         "calls": 1
       },
       "semantic_analyze": {
         "prompt_tokens": 1132,
-        "candidates_tokens": 320,
+        "candidates_tokens": 353,
         "cached_content_tokens": 0,
-        "total_tokens": 1872,
-        "thoughts_tokens": 420,
+        "total_tokens": 1894,
+        "thoughts_tokens": 409,
         "calls": 1
       },
       "semantic_program": {
-        "prompt_tokens": 5631,
-        "candidates_tokens": 1594,
-        "cached_content_tokens": 3963,
-        "total_tokens": 17686,
-        "thoughts_tokens": 10461,
+        "prompt_tokens": 5642,
+        "candidates_tokens": 1606,
+        "cached_content_tokens": 0,
+        "total_tokens": 19897,
+        "thoughts_tokens": 12649,
         "calls": 2
       },
       "classify": {
-        "prompt_tokens": 5021,
-        "candidates_tokens": 146,
+        "prompt_tokens": 5027,
+        "candidates_tokens": 127,
         "cached_content_tokens": 0,
-        "total_tokens": 5724,
-        "thoughts_tokens": 557,
+        "total_tokens": 6050,
+        "thoughts_tokens": 896,
         "calls": 1
       }
     },
@@ -84,8 +84,8 @@
     "co_scene3d": true,
     "so_doi_tuong_canh": 6,
     "so_buoc_phat_lai": 3,
-    "run_id": "postfix-confirmation-v2",
-    "replicate_index": 2,
+    "run_id": "wave1-dev-stability",
+    "replicate_index": 1,
     "logical_calls": 5,
     "http_requests": 5,
     "retry_requests": 0,
@@ -93,9 +93,8 @@
     "budget_aborted": false,
     "so_lan_thu_sinh": 1,
     "thu_that_bai": [
-      "JSON không parse được (Expecting ',' delimiter: line 8 column 27 (char 298))"
-    ],
-    "oracle_cham_lai": "bộ chấm quan hệ dùng checker server-owned, 2026-08-29"
+      "JSON không parse được (Expecting ',' delimiter: line 26 column 29 (char 856))"
+    ]
   },
   "request_contract": {
     "obligations": [
@@ -122,8 +121,8 @@
         "unproven_values": []
       },
       {
-        "fact_id": "sab_vuong_goc_abc",
-        "label": "Quan hệ mặt phẳng",
+        "fact_id": "sab_vuong_goc_day",
+        "label": "Mặt phẳng vuông góc mặt đáy",
         "values": [
           "(SAB) vuông góc với mặt đáy (ABC)"
         ],
@@ -137,9 +136,9 @@
       },
       {
         "fact_id": "sab_vuong_tai_s",
-        "label": "Tính chất tam giác",
+        "label": "Tam giác vuông",
         "values": [
-          "SAB vuông tại S"
+          "tam giác SAB vuông tại S"
         ],
         "provenance": "confirmed",
         "source_start": null,
@@ -149,7 +148,7 @@
       },
       {
         "fact_id": "ab_length",
-        "label": "Độ dài cạnh",
+        "label": "Độ dài cạnh AB",
         "values": [
           "a"
         ],
@@ -161,9 +160,9 @@
       },
       {
         "fact_id": "sa_length",
-        "label": "Độ dài cạnh",
+        "label": "Độ dài cạnh SA",
         "values": [
-          "3a/5"
+          "4a/5"
         ],
         "provenance": "confirmed",
         "source_start": null,
@@ -176,63 +175,63 @@
   "generated_program": {
     "spec_version": "1.0",
     "title": "Tính khoảng cách từ điểm S đến mặt phẳng (ABC)",
-    "description": "Xác định khoảng cách từ đỉnh S đến mặt phẳng đáy (ABC) của hình chóp S.ABC.",
+    "description": "Bài toán này minh họa cách tính khoảng cách từ một điểm đến một mặt phẳng trong trường hợp mặt phẳng chứa điểm đó vuông góc với mặt phẳng đáy. Khoảng cách cần tìm chính là độ dài đường cao từ S trong tam giác SAB.",
     "memory_declarations": [
       {
-        "name": "A",
+        "name": "S",
         "type": "point3",
         "initial_value": [
-          -9,
-          0,
-          0
+          0.0,
+          0.0,
+          0.48
         ],
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "hinh_chop_s_abc",
-        "model_assumption": "Chọn H (chân đường cao từ S xuống AB trong tam giác SAB) làm gốc tọa độ (0,0,0). Đặt A trên trục x âm. Để tránh số thập phân, ta chọn a=25 đơn vị, khi đó SA=15, SB=20, AB=25, SH=12. A=(-9,0,0)."
+        "source_fact_id": null,
+        "model_assumption": "Chọn hệ trục tọa độ sao cho chân đường cao từ S xuống AB là gốc O(0,0,0), AB nằm trên trục Ox, và mặt phẳng (ABC) là mặt phẳng Oxy. Khi đó, S nằm trên trục Oz. Các tọa độ được tính toán dựa trên các điều kiện đề bài với a=1."
+      },
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          -0.64,
+          0.0,
+          0.0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn hệ trục tọa độ sao cho chân đường cao từ S xuống AB là gốc O(0,0,0), AB nằm trên trục Ox, và mặt phẳng (ABC) là mặt phẳng Oxy. Các tọa độ được tính toán dựa trên các điều kiện đề bài với a=1."
       },
       {
         "name": "B",
         "type": "point3",
         "initial_value": [
-          16,
-          0,
-          0
+          0.36,
+          0.0,
+          0.0
         ],
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "hinh_chop_s_abc",
-        "model_assumption": "B nằm trên trục x dương, B=(16,0,0)."
-      },
-      {
-        "name": "S",
-        "type": "point3",
-        "initial_value": [
-          0,
-          0,
-          12
-        ],
-        "element_type": null,
-        "key_type": null,
-        "val_type": null,
-        "source_fact_id": "hinh_chop_s_abc",
-        "model_assumption": "S nằm trên trục z, S=(0,0,12). Đây là vị trí của S sao cho SH là đường cao của chóp và SH=12."
+        "source_fact_id": null,
+        "model_assumption": "Chọn hệ trục tọa độ sao cho chân đường cao từ S xuống AB là gốc O(0,0,0), AB nằm trên trục Ox, và mặt phẳng (ABC) là mặt phẳng Oxy. Các tọa độ được tính toán dựa trên các điều kiện đề bài với a=1."
       },
       {
         "name": "C",
         "type": "point3",
         "initial_value": [
-          0,
-          25,
-          0
+          0.0,
+          1.0,
+          0.0
         ],
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": "hinh_chop_s_abc",
-        "model_assumption": "Chọn C=(0,25,0) để tạo mặt phẳng đáy (ABC) không suy biến và nằm trong mặt phẳng z=0."
+        "source_fact_id": null,
+        "model_assumption": "Chọn điểm C tùy ý không thẳng hàng với A, B để xác định mặt phẳng (ABC). Tọa độ được chọn để đơn giản hóa."
       },
       {
         "name": "ABC",
@@ -241,7 +240,7 @@
         "element_type": null,
         "key_type": null,
         "val_type": null,
-        "source_fact_id": null,
+        "source_fact_id": "sab_vuong_goc_day",
         "model_assumption": null
       },
       {
@@ -264,7 +263,7 @@
           "B",
           "C"
         ],
-        "label": "Dựng mặt phẳng đáy (ABC)"
+        "label": "Dựng mặt phẳng (ABC) đi qua ba điểm A, B, C."
       },
       {
         "kind": "assign",
@@ -282,38 +281,38 @@
       "pointers": [],
       "value_boxes": []
     },
-    "pedagogical_intent": "Bài toán này minh họa cách xác định đường cao của hình chóp khi có điều kiện hai mặt phẳng vuông góc. Cụ thể, nếu mặt phẳng (SAB) vuông góc với mặt phẳng đáy (ABC) và tam giác SAB vuông tại S, thì đường cao SH từ S xuống cạnh chung AB trong tam giác SAB chính là đường cao của chóp S.ABC. Khoảng cách cần tìm chính là độ dài SH. Hệ tọa độ được chọn sao cho H là gốc, AB nằm trên trục x, và SH nằm trên trục z, giúp việc tính toán khoảng cách trở nên trực quan."
+    "pedagogical_intent": "Bài toán này giúp học sinh hiểu rằng khi hai mặt phẳng vuông góc với nhau, và một đường thẳng trong mặt phẳng này vuông góc với giao tuyến của hai mặt phẳng, thì đường thẳng đó vuông góc với mặt phẳng kia. Cụ thể, khoảng cách từ S đến (ABC) chính là độ dài đường cao từ S trong tam giác SAB."
   },
   "final_memory": {
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "12/25"
+    },
     "A": {
       "__loai__": "Vec3",
-      "x": "-9",
+      "x": "-16/25",
       "y": "0",
       "z": "0"
     },
     "B": {
       "__loai__": "Vec3",
-      "x": "16",
+      "x": "9/25",
       "y": "0",
       "z": "0"
-    },
-    "S": {
-      "__loai__": "Vec3",
-      "x": "0",
-      "y": "0",
-      "z": "12"
     },
     "C": {
       "__loai__": "Vec3",
       "x": "0",
-      "y": "25",
+      "y": "1",
       "z": "0"
     },
     "ABC": {
       "__loai__": "Plane3",
       "point": {
         "__loai__": "Vec3",
-        "x": "-9",
+        "x": "-16/25",
         "y": "0",
         "z": "0"
       },
@@ -321,9 +320,9 @@
         "__loai__": "Vec3",
         "x": "0",
         "y": "0",
-        "z": "625"
+        "z": "1"
       }
     },
-    "khoang_cach_s_abc": "12"
+    "khoang_cach_s_abc": "12/25"
   }
 }

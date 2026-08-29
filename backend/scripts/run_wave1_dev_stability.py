@@ -69,6 +69,44 @@ PILOT = _nap("run_phase7a_pilot")
 #:              biệt được sin² với cos² = 2/3)
 #:   w1-phay    AC ⊥ B'D' : AC = (2,2,0), B'D' = D'−B' = (−2,2,0), tích vô
 #:              hướng = −4+4 = 0 ⇒ true
+#: Canary HẬU-SỬA (§12). Bốn họ, mỗi họ một đề DEV **mới**, k=1.
+#:
+#:   w3-hbh    diễn đạt TƯƠNG ĐƯƠNG — "hình bình hành" thay cho "song song".
+#:             Trước sửa, `hp_a03_007` chết ở cổng phạm vi 2/2 vì đúng chỗ này.
+#:   w3-thang  ràng buộc HỮU TỈ có thang tự do. `AB = a`, `SA = 3a/5` ⇒
+#:             d = 12a/25. Nếu một phân số bị nuốt hay đổi giữa đường thì kết
+#:             quả vẫn "hợp lý" mà sai — đúng lớp lỗi §5 đòi thử.
+#:   w3-phay   ký hiệu phẩy + hoà giải tên ghép.
+#:   w3-nhieu  nhiều bước phụ thuộc.
+BAI_W3 = [
+    {
+        "id": "w3-hbh",
+        "de": ("Cho tứ diện ABCD. Gọi M, N, P, Q lần lượt là trung điểm của "
+               "AB, CD, BC, AD. Chứng minh MPNQ là hình bình hành."),
+        "oracle": "w3_parallel_true",
+    },
+    {
+        "id": "w3-thang",
+        "de": ("Cho hình chóp S.ABC có mặt phẳng (SAB) vuông góc với mặt đáy, "
+               "tam giác SAB vuông tại S, AB = a, SA = 4a/5. Tính khoảng cách "
+               "từ điểm S đến mặt phẳng (ABC)."),
+        "oracle": "w3_distance_12_25",
+    },
+    {
+        "id": "w3-phay",
+        "de": ("Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Chứng minh rằng "
+               "B'D' vuông góc với AC."),
+        "oracle": "w3_vuong_goc_true",
+    },
+    {
+        "id": "w3-nhieu",
+        "de": ("Cho hình chóp S.ABCD có đáy ABCD là hình bình hành. Gọi M là "
+               "trung điểm SA, N là trung điểm SB. Chứng minh MN song song "
+               "với mặt phẳng (ABCD)."),
+        "oracle": "w3_parallel_true",
+    },
+]
+
 BAI_W1 = [
     {
         "id": "w1-goc-dd",
@@ -94,6 +132,18 @@ _ORACLE_PILOT = PILOT.cham_oracle
 
 
 def cham_oracle(ten: str, fm: dict, hd=None):
+    if ten == "w3_parallel_true":
+        return M.cham_predicate(fm, hd, "parallel")
+    if ten == "w3_vuong_goc_true":
+        return M.cham_predicate(fm, hd, "perpendicular")
+    if ten == "w3_distance_12_25":
+        # `SA = 4a/5` ⇒ SB = 3a/5 ⇒ d = SA·SB/AB = 12a/25. Chấm BẤT BIẾN
+        # THANG qua `DEV.cham_oracle`: đề để `a` tự do, nên so tuyệt đối là
+        # chấm *mô hình có tình cờ chọn a = 1 không*.
+        DEV = _nap("run_geometry_dev_evaluation")
+        r = DEV.cham_oracle({"oracle_result": {"distance": "12/25"}}, hd, fm)
+        return ({"PASS": True, "FAIL": False}.get(r["verdict"]),
+                f"{r['verdict']}: {r.get('ly_do') or r.get('lech')}")
     if ten == "w1_cos_sq_1_2":
         return PILOT._tim_so(fm, Fraction(1, 2))
     if ten == "w1_sin_sq_1_3":
@@ -143,6 +193,8 @@ def _bang_token(ket: list[dict]) -> dict:
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--canary3", action="store_true",
+                   help="Canary HẬU-SỬA §12: 4 đề DEV mới × 1 lượt.")
     p.add_argument("--canary", action="store_true",
                    help="3 đề × 1 lượt. Chứng minh end-to-end trước, dừng sớm.")
     p.add_argument("--mini", action="store_true",
@@ -154,7 +206,9 @@ def main() -> int:
                    help="Chỉ ba đề MỚI, bỏ năm đề pilot. Rẻ hơn.")
     a = p.parse_args()
 
-    if a.canary:
+    if a.canary3:
+        bai, a.k = BAI_W3, 1
+    elif a.canary:
         bai, a.k = BAI_W1, 1
     elif a.mini:
         moi = {b["id"]: b for b in list(PILOT.BAI_PILOT) + BAI_W1}

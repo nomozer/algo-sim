@@ -101,7 +101,20 @@ _MANH_MOI_NGHIA_VU: dict[str, tuple[str, ...]] = {
               "góc phẳng nhị diện", "góc nhị diện"),
     "distance": ("khoảng cách",),
     "volume": ("thể tích",),
-    "parallel": ("song song", "∥", "//"),
+    # ─── DIỄN ĐẠT TƯƠNG ĐƯƠNG, KHÔNG PHẢI TỪ KHOÁ ĐỒNG NGHĨA ──────────────
+    #
+    # Đề THPT phát biểu quan hệ song song bằng nhiều lối, và lối phổ biến
+    # nhất KHÔNG chứa chữ "song song": *"Chứng minh MPNQ là **hình bình
+    # hành**"*. Đo được 2026-08-29 — `hp_a03_007` chết ở cổng phạm vi 2/2
+    # lượt vì đúng chỗ này, và chính bài ấy đã có `phep_chuyen` ghi rõ phép
+    # chuyển: `parallelogram(M,P,N,Q) ⇒ MP ∥ NQ và PN ∥ MQ`.
+    #
+    # Nghĩa là bộ đo BIẾT phép tương đương, còn cổng thì không. Mỗi mục dưới
+    # đây phải dẫn được về một `phep_chuyen` đã ghi hoặc một định nghĩa SGK —
+    # KHÔNG suy diễn định lý tổng quát, không dựng bộ chứng minh.
+    "parallel": ("song song", "∥", "//",
+                 "hình bình hành",      # hai cặp cạnh đối song song (định nghĩa)
+                 "hình thoi", "hình chữ nhật", "hình vuông"),  # đều là hbh
     "perpendicular": ("vuông góc", "⊥"),
     "coplanar": ("đồng phẳng", "thiết diện"),
     "point_on_line": ("giao tuyến", "thuộc đường thẳng", "nằm trên đường thẳng"),

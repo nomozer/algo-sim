@@ -1,0 +1,337 @@
+{
+  "ban_ghi": {
+    "case_id": "w3-nhieu",
+    "lan": 1,
+    "do_tre_giay": 74.8,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "parallel: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "parallel"
+    ],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [
+        "parallel"
+      ],
+      "khop": [
+        "parallel"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": null,
+    "oracle_vi_sao": "không chấm được: cặp đối tượng không hợp lệ cho quan hệ song song",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1731,
+        "candidates_tokens": 514,
+        "cached_content_tokens": 0,
+        "total_tokens": 3075,
+        "thoughts_tokens": 830,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1120,
+        "candidates_tokens": 297,
+        "cached_content_tokens": 0,
+        "total_tokens": 1744,
+        "thoughts_tokens": 327,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 5661,
+        "candidates_tokens": 2067,
+        "cached_content_tokens": 0,
+        "total_tokens": 17790,
+        "thoughts_tokens": 10062,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5074,
+        "candidates_tokens": 176,
+        "cached_content_tokens": 0,
+        "total_tokens": 6249,
+        "thoughts_tokens": 999,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "wave1-dev-stability",
+    "replicate_index": 1,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.5.assign.expr.measure.quantity\n  Input should be 'distance', 'angle_cos_sq' or 'volume' [type=literal_error, input_value='parallel', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.13/v/literal_error"
+    ]
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "parallel",
+        "container": "MN",
+        "params": {
+          "witness": "ABCD"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "sabcd_hinh_chop",
+        "label": "S.ABCD là hình chóp",
+        "values": [
+          "S.ABCD là hình chóp"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "S.ABCD là hình chóp"
+        ]
+      },
+      {
+        "fact_id": "abcd_hinh_binh_hanh",
+        "label": "ABCD là hình bình hành",
+        "values": [
+          "ABCD là hình bình hành"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "m_trung_diem_sa",
+        "label": "M là trung điểm SA",
+        "values": [
+          "M là trung điểm SA"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "n_trung_diem_sb",
+        "label": "N là trung điểm SB",
+        "values": [
+          "N là trung điểm SB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh MN song song với mặt phẳng (ABCD)",
+    "description": "Bài toán chứng minh đường thẳng song song với mặt phẳng dựa trên định lý đường trung bình trong tam giác và tính chất song song của đường thẳng với mặt phẳng.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          1,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trong mặt phẳng Oxy"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          3,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "abcd_hinh_binh_hanh",
+        "model_assumption": "C được xác định từ A, B, D để ABCD là hình bình hành (C = A + (B-A) + (D-A))"
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          4
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "sabcd_hinh_chop",
+        "model_assumption": "Chọn S có z > 0 để tạo hình chóp"
+      },
+      {
+        "name": "M",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "m_trung_diem_sa",
+        "model_assumption": null
+      },
+      {
+        "name": "N",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "n_trung_diem_sb",
+        "model_assumption": null
+      },
+      {
+        "name": "MN",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "ABCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "parallel",
+        "type": "bool",
+        "initial_value": true,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "M",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "A"
+        },
+        "label": "Dựng điểm M là trung điểm của SA"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "N",
+        "expr": {
+          "kind": "midpoint",
+          "a": "S",
+          "b": "B"
+        },
+        "label": "Dựng điểm N là trung điểm của SB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "MN",
+        "through_a": "M",
+        "through_b": "N",
+        "label": "Dựng đường thẳng MN"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "ABCD",
+        "through": [
+          "A",
+          "B",
+          "D"
+        ],
+        "label": "Dựng mặt phẳng (ABCD)"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Chương trình này minh họa cách dựng hình và thiết lập các đối tượng hình học để kiểm tra mối quan hệ song song giữa đường thẳng và mặt phẳng. Cụ thể, nó cho thấy MN là đường trung bình của tam giác SAB, suy ra MN song song với AB. Vì AB nằm trong mặt phẳng (ABCD), nên MN song song với mặt phẳng (ABCD)."
+  },
+  "final_memory": {}
+}

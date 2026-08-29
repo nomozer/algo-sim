@@ -52,6 +52,7 @@ BACKEND = Path(__file__).resolve().parents[1]
 ROOT = BACKEND.parent
 GEO = ROOT / "docs" / "evaluation" / "geometry"
 RA = GEO / "postfix-confirmation" / "CONFIRMATION_SELECTION.json"
+RA_V2 = GEO / "postfix-confirmation-v2" / "CONFIRMATION_SELECTION.json"
 
 _PHAY = re.compile(r"['′’]")
 #: Ký hiệu dẫn xuất kiểu `A1B1C1D1` — chữ hoa kèm chỉ số, lặp ít nhất ba lần.
@@ -75,14 +76,21 @@ O_CAU_TRUC = (
 )
 
 
-def reserve() -> list[dict]:
+def reserve(loai_tru: set[str] | None = None) -> list[dict]:
+    """Reserve còn NGUYÊN. `loai_tru` gạt thêm những ca đã dùng ở vòng trước.
+
+    V2 phải loại cả 20 ca chính thức LẪN 6 ca của `POSTFIX_CONFIRMATION_V1`:
+    sáu ca ấy đã đi qua hệ được đo, nên chúng mất đúng tính chất làm nên giá
+    trị của tập xác nhận. Chúng vẫn chỉ ra được HỌ lỗi, nhưng không bao giờ
+    được dùng làm ca xác nhận lần nữa.
+    """
     seal = json.loads((GEO / "holdout" / "HOLDOUT_SEAL.json").read_text(encoding="utf-8"))
     pool = json.loads((GEO / "holdout" / "pool.json").read_text(encoding="utf-8"))
-    drawn = set(seal["case_ids"])
+    bo = set(seal["case_ids"]) | set(loai_tru or ())
     return sorted(
         (c for c in pool["cases"]
          if c.get("status", "accepted") == "accepted"
-         and c["case_id"] not in drawn),
+         and c["case_id"] not in bo),
         key=lambda c: c["case_id"])
 
 
@@ -110,9 +118,16 @@ def chon(res: list[dict]) -> tuple[list[dict], list[str]]:
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--ghi", action="store_true")
+    p.add_argument("--v2", action="store_true",
+                   help="Vòng HAI: loại thêm 6 ca của CONFIRMATION_V1.")
     a = p.parse_args()
 
-    res = reserve()
+    dich = RA
+    da_dung: set[str] = set()
+    if a.v2:
+        dich = RA_V2
+        da_dung = set(json.loads(RA.read_text(encoding="utf-8"))["case_ids"])
+    res = reserve(da_dung)
     ra, thieu = chon(res)
     print(f"RESERVE: {len(res)} · chọn {len(ra)}")
     for c in ra:
@@ -136,6 +151,8 @@ def main() -> int:
         "slot": {c["case_id"]: c["slot"] for c in ra},
         "o_thieu_ung_vien": thieu,
         "reserve_size": len(res),
+        "vong": 2 if a.v2 else 1,
+        "loai_tru_vong_truoc": sorted(da_dung),
         "pool_hash_luc_chon": hashlib.sha256(
             (GEO / "holdout" / "pool.json").read_bytes().replace(b"\r\n", b"\n")
         ).hexdigest(),
@@ -151,14 +168,14 @@ def main() -> int:
     if not a.ghi:
         print("(soi thôi — thêm `--ghi` để đóng băng)")
         return 0
-    if RA.exists():
-        print(f"ĐÃ ĐÓNG BĂNG: {RA}")
+    if dich.exists():
+        print(f"ĐÃ ĐÓNG BĂNG: {dich}")
         print("Chọn lại sau khi đã thấy kết quả là bỏ đúng thứ file này bảo vệ.")
         return 1
-    RA.parent.mkdir(parents=True, exist_ok=True)
-    RA.write_text(json.dumps(than, ensure_ascii=False, indent=2) + "\n",
-                  encoding="utf-8")
-    print(f"Đã ghi {RA}")
+    dich.parent.mkdir(parents=True, exist_ok=True)
+    dich.write_text(json.dumps(than, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    print(f"Đã ghi {dich}")
     return 0
 
 

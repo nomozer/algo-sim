@@ -142,6 +142,73 @@ def _nap_oracle():
 
 
 # ── chấm bằng ORACLE ĐỘC LẬP ──────────────────────────────────────────────
+_MAU_DOAN = __import__("re").compile(r"(?<![A-Za-z])([A-Z])([A-Z])(?![A-Za-z])")
+
+
+def _thang_do(fm: dict, contract) -> "Fraction | None":
+    """Thang mà CHƯƠNG TRÌNH đã chọn cho ký hiệu tự do của đề, hoặc `None`.
+
+    ─── VÌ SAO CẦN, ĐO ĐƯỢC 2026-08-29 ───────────────────────────────────
+
+    `hp_a11_027` được phục vụ với `distance = 12` trong khi oracle mong
+    `12/25`, và bộ chấm gọi đó là *"hệ nhận một diễn giải SAI"* — cáo buộc
+    nặng nhất có thể. Đọc trạng thái cuối thì thấy chương trình ĐÚNG:
+    `A(-9,0,0) B(16,0,0)` ⇒ AB = 25; `S(0,0,12)` ⇒ SA = 15 = 3·25/5;
+    SA² + SB² = 625 = AB² (vuông tại S); d(S,(ABC)) = 12. Nó chọn thang
+    `a = 25` — thang nhỏ nhất làm cả `a` lẫn `3a/5` nguyên.
+
+    `12/25` là giá trị khi **chuẩn hoá a = 1**, một quy ước sống trong
+    `phep_chuyen` của BỘ ĐO chứ không có trong đề. Đề để `a` tự do, và
+    prompt bảo mô hình tự chọn hệ trục — nên nó cũng tự chọn thang.
+
+    Cả **5/5** ô đo lường của pool (A11×2, A12, A14×2) đều có `a` tự do, nên
+    so giá trị tuyệt đối là phép so KHÔNG HỢP LỆ với tất cả: nó chấm *mô
+    hình có tình cờ chọn a = 1 không*, không chấm hình học.
+
+    Cách suy thang: đề khai một dữ kiện mà GIÁ TRỊ là ký hiệu trần (`'a'`),
+    và `fact_id` của nó gọi tên đoạn (`ab_length`). Độ dài đoạn ấy trong bộ
+    nhớ chương trình chính là thang. Không suy ra được ⇒ `None` ⇒ KHÔNG CHẤM
+    ĐƯỢC, không phải sai.
+    """
+    from fractions import Fraction
+
+    for f in (getattr(contract, "input_facts", None) or []):
+        gt = [str(v).strip() for v in (getattr(f, "values", None) or [])]
+        if len(gt) != 1 or len(gt[0]) != 1 or not gt[0].isalpha():
+            continue                      # chỉ nhận ký hiệu TRẦN, vd `a`
+        m = _MAU_DOAN.search(str(getattr(f, "fact_id", "")).upper())
+        if not m:
+            continue
+        p1, p2 = fm.get(m.group(1)), fm.get(m.group(2))
+        if p1 is None or p2 is None:
+            continue
+        try:
+            d2 = (p2 - p1).dot(p2 - p1)
+            r = Fraction(d2).limit_denominator(10**9)
+            # Độ dài phải HỮU TỈ, nếu không thang không biểu diễn được.
+            for cand in (Fraction(int(r.numerator ** 0.5 + 0.5),
+                                  int(r.denominator ** 0.5 + 0.5)),):
+                if cand * cand == r:
+                    return cand
+        except Exception:  # noqa: BLE001
+            continue
+    return None
+
+
+def _co_thang_tu_do(contract) -> bool:
+    """Đề có để một ký hiệu độ dài TỰ DO không (`AB = a`)?
+
+    Chỉ khi CÓ thì so giá trị tuyệt đối mới vô nghĩa. Đề cố định số (*"cạnh
+    bằng 2"*) vẫn so tuyệt đối được, và một lệch ở đó là SAI THẬT — không
+    được nới thành "không chấm được".
+    """
+    for f in (getattr(contract, "input_facts", None) or []):
+        gt = [str(v).strip() for v in (getattr(f, "values", None) or [])]
+        if len(gt) == 1 and len(gt[0]) == 1 and gt[0].isalpha():
+            return True
+    return False
+
+
 def _bool_hoac_nguyen(x):
     """`"true"`/`"false"` (chuỗi) → `bool`. Giữ nguyên mọi thứ khác.
 
@@ -211,6 +278,9 @@ def cham_oracle(case: dict, contract, final_memory: dict | None) -> dict[str, An
                 "ly_do": f"không nghĩa vụ nào khớp khoá oracle {sorted(mong)}"}
 
     lech: list[str] = []
+    #: "Không chấm được" phải là hạng RIÊNG. Gộp vào `lech` là biến một giới
+    #: hạn của bộ đo thành một cáo buộc về mô hình — đã xảy ra ba lần.
+    khong_cham: list[str] = []
     for kind in cham_duoc:
         ob = obls[kind]
         may = final_memory.get(ob.witness) if ob.witness else None
@@ -245,12 +315,29 @@ def cham_oracle(case: dict, contract, final_memory: dict | None) -> dict[str, An
                 lech.append(f"{kind}: máy={may!r}, đề mong {de!r}")
         else:
             try:
-                if may is None or Fraction(str(may)) != Fraction(str(de)):
+                if may is None:
                     lech.append(f"{kind}: máy={may!r}, đề mong {de!r}")
+                elif Fraction(str(may)) != Fraction(str(de)):
+                    # BẤT BIẾN THANG trước khi kết luận SAI. Xem `_thang_do`.
+                    bac = {"distance": 1, "volume": 3}.get(kind, 0)
+                    s = _thang_do(final_memory, contract) if bac else None
+                    if s and Fraction(str(may)) / s ** bac == Fraction(str(de)):
+                        pass                       # đúng, chỉ khác thang
+                    elif bac and s is None and _co_thang_tu_do(contract):
+                        khong_cham.append(
+                            f"{kind}: máy={may!r}, đề mong {de!r} ở thang "
+                            "a=1 — thang chương trình chọn không suy ra được")
+                    else:
+                        lech.append(f"{kind}: máy={may!r}, đề mong {de!r}")
             except (ValueError, ZeroDivisionError, TypeError):
                 lech.append(f"{kind}: không so được máy={may!r} với {de!r}")
-    return {"verdict": "FAIL" if lech else "PASS", "lech": lech,
-            "da_cham": cham_duoc}
+    if lech:
+        return {"verdict": "FAIL", "lech": lech, "khong_cham": khong_cham,
+                "da_cham": cham_duoc}
+    if khong_cham:
+        return {"verdict": "UNGRADED", "khong_cham": khong_cham,
+                "ly_do": "; ".join(khong_cham)[:200], "da_cham": cham_duoc}
+    return {"verdict": "PASS", "lech": [], "da_cham": cham_duoc}
 
 
 def _hop_dong_ra_json(contract) -> dict[str, Any]:
