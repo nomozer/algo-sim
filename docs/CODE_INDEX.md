@@ -3385,6 +3385,28 @@ sách thứ hai. Giữ luôn `detect_domain`, một heuristic từ khoá **fail-
 `tin_hoc`**: cửa duy nhất nó mở là cửa sang hình học, nên 24 target Tin học
 không thể bị nó làm hỏng. Đường ĐO không dùng nó — runner truyền miền thẳng.
 
+**BỐN MỨC, không phải ba** (sửa sau Phase 7B, 2026-08-29). `_MANH_QUAN_HE`
+(`thiết diện`, `giao tuyến`, `đồng phẳng`, `chéo nhau`…) thắng cả phủ quyết Tin
+học; `_MANH_DANH_TU_KHOI` (`hình chóp`, `lăng trụ`, `mặt cầu`, `hình lập
+phương`…) thì **không**. Ranh giới: lớp đầu gọi tên một QUAN HỆ hoặc PHÉP DỰNG,
+lớp sau gọi tên một VẬT — đề hỏi *làm gì* chứ không hỏi *có vật gì*. Bản gộp
+hai lớp kéo nhầm ba đề Tin học hợp lệ sang hình học (*"viết chương trình tính
+thể tích **hình chóp**"*).
+
+⚠️ **Lỗ đã ship và đo được ở Phase 7B**: `hình lập phương` — khối mà bốn ô
+`BANG_O` dùng (A06 · A08 · A09 · A10) — không nằm trong cụm mạnh. Đề góc trên
+hình lập phương RẤT NGẮN, chỉ gom được hai cụm yếu, dưới ngưỡng ba ⇒ `tin_hoc`
+⇒ ngoại lệ hình học của cổng phạm vi không áp ⇒ **hai ô GÓC chết ở `scope` 3/3
+lượt mỗi ô**, 0 nghĩa vụ, và học sinh nhận thẻ *"bài này thuộc môn khác"*.
+
+**`geometry_symbol_key` nay chuẩn hoá DẤU PHẨY** — `A'` · `A′` · `A_prime` ·
+`Aprime` → `A1`, bậc hai `A''` → `A2`. Trước đó hàm bỏ `_`/`-` rồi đòi
+`isalnum()`, nên `'` rớt cả hai vế và `geometry_symbol_key("A'")` trả `None`:
+cách viết phổ biến nhất của hình học không gian THPT **không được nhận là ký
+hiệu**, và `khop_ky_hieu` không bao giờ nối được witness `A'` của hợp đồng với
+biến nào của chương trình. Gộp an toàn vì `khop_ky_hieu` fail-closed sẵn —
+trùng khoá ⇒ `None`, không đoán.
+
 ### `backend/app/simulation/semantic_program/postconditions.py` · offline
 
 Sở hữu **C₂** — 8 checker server-owned. Mỗi checker tính lại tính chất TỪ TRẠNG

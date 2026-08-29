@@ -1,0 +1,182 @@
+{
+ "dataset": "geometry_expectation_set",
+ "tap": "wave1",
+ "version": 1,
+ "ngay": "2026-08-27",
+ "pha": "7A.2",
+ "muc_dich": "Kỳ vọng nghĩa vụ cho 5 đề pilot, TÁCH KHỎI mã bộ đo. Trước bản này kỳ vọng nằm ngay trong `measure_geometry_stability.BAI` và `run_phase7a_pilot.BAI_PILOT` — tức người viết bộ đo sửa được thước ngay trong lượt đang đo, và không ai tra ngược được kỳ vọng đã đổi lúc nào.",
+ "luat_soan": [
+  "HAI TẬP RỜI NHAU, không dùng chung một tập. `construction_obligations` = vật đề RA LỆNH DỰNG. `verification_obligations` = mệnh đề đề YÊU CẦU KIỂM. Một đề có thể có tập này rỗng còn tập kia không.",
+  "`verification_obligations[].kind` phải nằm trong `OBLIGATION_KINDS` — đó là thứ `RequestContract` khai được.",
+  "`construction_obligations[].ten_trong_de` là tên ĐỀ BÀI gọi vật ấy, KHÔNG phải tên chương trình. Mô hình tự đặt tên; bộ đo hoà giải bằng `khop_ten_doi_tuong`, không đoán chính tả.",
+  "Mỗi nghĩa vụ phải có `ly_do` TRÍCH TỪ ĐỀ. Lý do không trích được từ đề là kỳ vọng của người đo, không phải yêu cầu của bài.",
+  "KHÔNG sinh từ đầu ra mô hình. Soạn xong rồi mới đọc artifact; đọc trước thì đây là bản chép lại thứ mô hình đã làm, và chỉ số thành tautology.",
+  "Đổi một kỳ vọng SAU KHI đã đo phải ghi vào `lich_su_doi` kèm giá trị cũ, vòng đo bị ảnh hưởng, và lý do — luật `PHASE7_METRIC_CONTRACT §4`."
+ ],
+ "nguoi_danh_gia": {
+  "loai": "nguoi_do",
+  "ai": "tác giả khoá luận",
+  "khai_han_che": "ĐÂY LÀ TẬP DEV. Kỳ vọng do người đo đặt, nên số của nó KHÔNG BAO GIỜ là số luận văn — đúng như `pilot.json` đã khai. Nó chỉ trả lời một câu: hai họ vừa sửa (góc trên hình lập phương · ký hiệu phẩy) có còn chết ở cổng phạm vi và ở tầng đồng nhất ký hiệu không."
+ },
+ "sinh_tu_model_output": false,
+ "cases": [
+  {
+   "case_id": "1-trung-diem",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2. Gọi M là trung điểm của cạnh SA. Hãy dựng điểm M và chỉ ra rằng M nằm trên đường thẳng SA.",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Hãy dựng điểm M\" — mệnh lệnh dựng tường minh, và \"Gọi M là trung điểm của cạnh SA\" cho phép dựng."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_line",
+     "ly_do": "\"chỉ ra rằng M nằm trên đường thẳng SA\" — mệnh đề cần kiểm, chủ thể là một `line3`."
+    }
+   ]
+  },
+  {
+   "case_id": "2-the-tich",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA vuông góc với mặt phẳng đáy và SA = 4. Tính thể tích khối chóp S.ABCD.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Khối S.ABCD là DỮ KIỆN (\"Cho hình chóp\"), không phải vật đề ra lệnh dựng. Việc khối ấy được DỰNG hay được KHAI SẴN là câu hỏi của chỉ số ④ `construction_validity` (`solid` mang `initial_value` ⇒ `literal_thay_the`), không phải của ③a. Đếm nó ở cả hai chỗ là tính hai lần một sự việc.",
+   "verification_obligations": [
+    {
+     "kind": "volume",
+     "ly_do": "\"Tính thể tích khối chóp S.ABCD\" — đề hỏi MỘT SỐ, chủ thể là `solid`."
+    }
+   ]
+  },
+  {
+   "case_id": "3-pmn-giao-tuyen",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với mặt phẳng đáy và SA=5. Gọi M, N lần lượt là trung điểm của SB, SD; P là trung điểm của AB. Hãy dựng mặt phẳng (PMN), xác định giao tuyến d của hai mặt phẳng (PMN) và (ABCD), đồng thời xác định giao điểm Q=d∩AD.",
+   "construction_obligations": [
+    {
+     "ten_trong_de": "M",
+     "kieu": "point3",
+     "ly_do": "\"Gọi M ... là trung điểm của SB\" — trung điểm là một phép dựng, không phải dữ kiện toạ độ."
+    },
+    {
+     "ten_trong_de": "N",
+     "kieu": "point3",
+     "ly_do": "\"Gọi ... N lần lượt là trung điểm của ... SD\"."
+    },
+    {
+     "ten_trong_de": "P",
+     "kieu": "point3",
+     "ly_do": "\"P là trung điểm của AB\"."
+    },
+    {
+     "ten_trong_de": "(PMN)",
+     "kieu": "plane3",
+     "ly_do": "\"Hãy dựng mặt phẳng (PMN)\" — mệnh lệnh dựng tường minh."
+    },
+    {
+     "ten_trong_de": "d",
+     "kieu": "line3",
+     "ly_do": "\"xác định giao tuyến d của hai mặt phẳng (PMN) và (ABCD)\" — \"xác định\" ở đây là dựng ra một vật mới, không phải kiểm một mệnh đề."
+    },
+    {
+     "ten_trong_de": "Q",
+     "kieu": "point3",
+     "ly_do": "\"xác định giao điểm Q=d∩AD\"."
+    }
+   ],
+   "verification_obligations": [
+    {
+     "kind": "point_on_line",
+     "ly_do": "Q được ĐỊNH NGHĨA bằng d∩AD, nên điều kiện làm cho phép dựng ấy kiểm được là Q ∈ d và Q ∈ AD. Cả hai đều là `point_on_line`."
+    }
+   ],
+   "lich_su_doi": [
+    {
+     "ngay": "2026-08-27",
+     "pha": "7A.2",
+     "truong": "verification_obligations",
+     "gia_tri_cu": [
+      "point_on_line",
+      "point_on_plane"
+     ],
+     "gia_tri_moi": [
+      "point_on_line"
+     ],
+     "vong_do_anh_huong": [
+      "stability-6.7.2",
+      "phase7a-pilot",
+      "phase7a-pilot-sau-71"
+     ],
+     "so_cu": "obligation_match 0/5 (6.7.2) · 1/3 (7A) · 0/3 (7A.1)",
+     "ly_do": "`point_on_plane` chưa bao giờ là nghĩa vụ KIỂM của đề này. \"Hãy dựng mặt phẳng (PMN)\" là mệnh lệnh DỰNG, và đề không hỏi điểm nào thuộc (PMN) nên không có witness cho một nghĩa vụ `point_on_plane`. Kỳ vọng cũ trộn một nghĩa vụ dựng vào tập kiểm — đúng cái lỗi mà việc tách hai tập ở pha này sửa. Phát hiện qua 8 lượt liên tiếp bác bỏ theo CÙNG MỘT HƯỚNG (`PHASE_7A_1_REPORT §5`), nhưng phán quyết dựa trên VĂN BẢN ĐỀ, không dựa trên đầu ra mô hình: đọc lại đề thì (PMN) nằm sau động từ \"dựng\".",
+     "canh_bao": "Đây là một lần ĐỔI THƯỚC SAU KHI THẤY SỐ. Luật `§4` cho phép với điều kiện khai ra kèm số cũ — dòng này là chỗ khai. Số mới KHÔNG được so trực tiếp với số cũ mà không nhắc lần đổi này."
+    }
+   ]
+  },
+  {
+   "case_id": "4-khoang-cach",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3, SA vuông góc với mặt phẳng đáy và SA = 4. Tính khoảng cách từ điểm A đến đường thẳng SB.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG: đề không có động từ dựng nào. A và SB đều xác định bởi dữ kiện. Việc mô hình có phải dựng `line3` SB để đo hay không là chi tiết THỰC THI, không phải yêu cầu của đề.",
+   "verification_obligations": [
+    {
+     "kind": "distance",
+     "ly_do": "\"Tính khoảng cách từ điểm A đến đường thẳng SB\" — cặp `point3`–`line3`."
+    }
+   ]
+  },
+  {
+   "case_id": "5-goc",
+   "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy và SA = 2. Tính góc giữa hai đường thẳng SB và SD.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG, cùng lý do bài 4.",
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "ly_do": "\"Tính góc giữa hai đường thẳng SB và SD\" — cặp ĐƯỜNG–ĐƯỜNG. Chọn đường–đường có chủ đích: engine trả `cos_sq_between_lines` cho cặp đường nhưng `sin_sq_line_plane` cho đường–mặt, nên một đề đường–mặt 45° sẽ không phân biệt được hai quy ước."
+    }
+   ]
+  },
+  {
+   "case_id": "w1-goc-dd",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính góc giữa hai đường thẳng AC và B'C'.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH. Khối và các đỉnh đi sau \"Cho\" là DỮ KIỆN. Hai đường AC, B'C' được NHẮC TỚI trong câu hỏi chứ không được đề ra lệnh dựng.",
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "ly_do": "\"Tính góc giữa hai đường thẳng AC và B'C'\" — đề hỏi MỘT SỐ, chủ thể là hai `line3` ⇒ đơn vị checker là **cos²**."
+    }
+   ]
+  },
+  {
+   "case_id": "w1-goc-dm",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính góc giữa đường thẳng AC' và mặt phẳng (ABCD).",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — như trên.",
+   "verification_obligations": [
+    {
+     "kind": "angle",
+     "ly_do": "Chủ thể là một `line3` và một `plane3` ⇒ đơn vị checker là **sin²**, KHÁC ô đường–đường. Đáp án 1/3 ≠ 1/2 nên ca này PHÂN BIỆT ĐƯỢC hai quy ước; một đề 45° thì không."
+    }
+   ]
+  },
+  {
+   "case_id": "w1-phay",
+   "problem_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Chứng minh rằng AC vuông góc với B'D'.",
+   "construction_obligations": [],
+   "ghi_chu_dung": "RỖNG CÓ CHỦ ĐÍCH — đề chỉ yêu cầu CHỨNG MINH.",
+   "verification_obligations": [
+    {
+     "kind": "perpendicular",
+     "ly_do": "Quan hệ vuông góc giữa hai `line3`, cả hai mang KÝ HIỆU PHẨY. Đây là ca chính của phép sửa đồng nhất ký hiệu: witness `B'D'` phải nối được biến chương trình dù nó tên `B1D1` hay `B_primeD_prime`."
+    }
+   ]
+  }
+ ],
+ "__khai__": [
+  "Kỳ vọng cho WAVE 1 sau Phase 7B — DEV, KHÔNG phải held-out.",
+  "Năm đề pilot giữ nguyên; ba đề `w1-*` do wave này viết ra.",
+  "Soạn TRƯỚC khi đo: `_ky_vong_cua` từ chối chấm bằng tập rỗng."
+ ]
+}

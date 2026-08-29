@@ -256,12 +256,24 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
     gemini.set_budget(bd)
     telemetry.reset_usage()
     ghi = Ghi()
+    su_co: str | None = None
     t0 = time.time()
     try:
         env = await pipeline.run_pipeline(bai["de"], api_key, observer=ghi,
                                           semantic_route="serve")
     except Exception as e:  # noqa: BLE001 — lượt đo, muốn thấy cả sự cố
         env = {"status": "EXCEPTION", "reason": f"{type(e).__name__}: {e}"}
+        # GIỮ LẠI LỜI NHẮN CỦA SỰ CỐ. `ban_ghi` đọc `sr` từ observer, mà
+        # observer không phát gì khi pipeline ném trước chặng đầu — nên
+        # `reason` của `env` rơi mất và artifact chỉ còn `envelope_status`.
+        #
+        # Đo được 2026-08-29, và cái giá đúng bằng thứ nó che: ba lượt cuối
+        # của lượt chính thức Phase 7B mang chữ ký `logic=1 · ~8.7s · không
+        # contract · reason=None`, TRÙNG KHÍT với một lượt `HTTP 429 credits
+        # depleted` đã xác nhận. Không có dòng này thì không cách nào phân
+        # biệt *hệ ném lỗi* với *nhà cung cấp hết quota* — và hai câu ấy nằm
+        # ở hai nhóm khác hẳn nhau trong taxonomy (E và F).
+        su_co = f"{type(e).__name__}: {e}"
     finally:
         gemini.set_budget(None)
         pipeline.stage_semantic_analyze = goc_an
@@ -314,6 +326,7 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "obligation_match": kiem["khop_hoan_toan"],
         "oracle_dat": dat, "oracle_vi_sao": vi_sao,
         "envelope_status": env.get("status"),
+        "su_co": su_co,
         "envelope_id": env.get("simulation_id"),
         "co_scene3d": bool(env.get("scene3d")),
         "so_doi_tuong_canh": len((env.get("scene3d") or {}).get("objects") or []),

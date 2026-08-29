@@ -1,0 +1,61 @@
+{
+  "ban_ghi": {
+    "case_id": "5-goc",
+    "lan": 2,
+    "do_tre_giay": 8.6,
+    "stage_reached": null,
+    "executable": null,
+    "servable": null,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": null,
+    "so_nghia_vu": 0,
+    "nghia_vu_kinds": [],
+    "nghia_vu_mong_doi": [
+      "angle"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "angle"
+      ],
+      "khai": [],
+      "khop": [],
+      "thieu": [
+        "angle"
+      ],
+      "thua": [],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "không có final_memory",
+    "envelope_status": "EXCEPTION",
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "wave1-dev-stability",
+    "replicate_index": 2,
+    "logical_calls": 1,
+    "http_requests": 4,
+    "retry_requests": 3,
+    "transient_hits": 4,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": []
+  },
+  "request_contract": null,
+  "generated_program": null,
+  "final_memory": {}
+}

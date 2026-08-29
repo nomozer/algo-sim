@@ -103,12 +103,92 @@ def program_skill_for(domain: str) -> str:
 # Ngưỡng 3 không phải số đẹp: nó là số nhỏ nhất mà bài `geo_08` (hình vuông
 # phẳng, không có cụm mạnh nào) vẫn qua được — `mặt phẳng`, `đường thẳng`,
 # `đường chéo`, `góc giữa` = 4. Hạ xuống 2 là nới không có lý do.
-_DAU_HIEU_MANH = (
-    "hình chóp", "khối chóp", "tứ diện", "lăng trụ", "hình hộp", "hình nón",
-    "hình trụ", "mặt cầu", "thiết diện", "giao tuyến", "mặt phẳng đáy",
+#: CỤM MẠNH — một mình nó đủ kết luận `hinh_hoc`.
+#:
+#: ─── LỖ ĐO ĐƯỢC Ở PHASE 7B CHÍNH THỨC (2026-08-29) ──────────────────────────
+#:
+#: `hình lập phương` KHÔNG có trong danh sách này — khối phổ biến nhất của hình
+#: học không gian THPT, và là khối mà bốn ô của `BANG_O` dùng (A06 · A08 · A09
+#: · A10). Hậu quả đo được: hai ô GÓC chết ở cổng phạm vi **3/3 lượt mỗi ô**,
+#: `stage_reached = "scope"`, 0 nghĩa vụ — đề bị loại TRƯỚC khi tầng sinh có
+#: cơ hội nào, và học sinh nhận tấm thẻ *"bài này thuộc môn khác"* cho một đề
+#: nằm đúng giữa chương trình Toán 11.
+#:
+#: Vì sao lỗ ấy sống được: đề góc trên hình lập phương thường RẤT NGẮN và chỉ
+#: gom được hai cụm yếu (`góc giữa`, `đường thẳng`), dưới ngưỡng ba. Ngưỡng ba
+#: không sai — nó là thứ chặn 4/5 đề Tin học bị kéo nhầm — nhưng nó đòi đề
+#: hình học phải *dài*, và đề góc thì không.
+#:
+#: Thêm cả biến thể `khối …` cho những khối ĐÃ có tên ở đây: SGK gọi cùng một
+#: vật bằng hai cách (`hình hộp` / `khối hộp`), và để sót một cách là để lại
+#: đúng cái lỗ vừa vá.
+#:
+#: ⚠️ Đây **không** phải nới năng lực. Danh sách này quyết định MIỀN (Toán hay
+#: Tin), không quyết định KHẢ NĂNG. `mặt cầu`/`hình nón`/`hình trụ` đã nằm đây
+#: từ trước dù kernel không dựng được mặt cong — và đúng như vậy: định tuyến
+#: về hình học rồi từ chối trung thực ở cổng sau thì tốt hơn nhiều so với dán
+#: nhãn *"môn khác"*.
+#: ─── HAI LỚP CỤM MẠNH, VÀ VÌ SAO PHẢI TÁCH ─────────────────────────────────
+#:
+#: Lớp ① — **quan hệ/phép dựng** chỉ có trong hình học không gian. `thiết
+#: diện`, `giao tuyến`, `đồng phẳng`, `chéo nhau` không xuất hiện trong đề Tin
+#: học ở bất kỳ nghĩa nào. Chúng THẮNG cả phủ quyết Tin học: một đề nói *"viết
+#: chương trình dựng thiết diện của hình chóp"* vẫn là bài hình học được diễn
+#: đạt bằng giọng lập trình.
+#:
+#: Lớp ② — **danh từ khối**. `hình chóp`, `lăng trụ`, `mặt cầu`, `hình lập
+#: phương` xuất hiện tự nhiên trong đề Tin học: hình học tính toán, đồ thị trên
+#: lăng trụ, đếm cặp mặt cầu giao nhau. Nên chúng KHÔNG thắng phủ quyết.
+#:
+#: Đo được 2026-08-29, ba đề Tin học hợp lệ bị kéo sang hình học vì lớp ② được
+#: đối xử như lớp ①:
+#:
+#:     "Viết chương trình tính thể tích HÌNH CHÓP tam giác đều."
+#:     "Viết chương trình duyệt đồ thị LĂNG TRỤ bằng BFS."
+#:     "Cho mảng các MẶT CẦU, viết thuật toán đếm số cặp giao nhau."
+#:
+#: Ranh giới giữa hai lớp không phải cảm tính: lớp ① gọi tên một QUAN HỆ hoặc
+#: PHÉP DỰNG, lớp ② gọi tên một VẬT. Đề hỏi *làm gì* chứ không hỏi *có vật
+#: gì* — nên chỉ lớp ① mới là bằng chứng về việc.
+_MANH_QUAN_HE = (
+    "thiết diện", "giao tuyến", "mặt phẳng đáy",
     "vuông góc với đáy", "vuông góc với mặt phẳng", "hình chiếu vuông góc",
     "đồng phẳng", "chéo nhau",
 )
+
+#: ─── LỖ ĐO ĐƯỢC Ở PHASE 7B CHÍNH THỨC (2026-08-29) ──────────────────────────
+#:
+#: `hình lập phương` KHÔNG có ở đây — khối phổ biến nhất của hình học không
+#: gian THPT, và là khối mà bốn ô của `BANG_O` dùng (A06 · A08 · A09 · A10).
+#: Hậu quả đo được: hai ô GÓC chết ở cổng phạm vi **3/3 lượt mỗi ô**,
+#: `stage_reached = "scope"`, 0 nghĩa vụ — đề bị loại TRƯỚC khi tầng sinh có
+#: cơ hội nào, và học sinh nhận tấm thẻ *"bài này thuộc môn khác"* cho một đề
+#: nằm đúng giữa chương trình Toán 11.
+#:
+#: Vì sao lỗ ấy sống được: đề góc trên hình lập phương thường RẤT NGẮN, chỉ
+#: gom được hai cụm yếu (`góc giữa`, `đường thẳng`), dưới ngưỡng ba. Ngưỡng ba
+#: không sai — nó chặn 4/5 đề Tin học bị kéo nhầm — nhưng nó đòi đề hình học
+#: phải *dài*, và đề góc thì không.
+#:
+#: Thêm cả biến thể `khối …` cho khối ĐÃ có tên: SGK gọi cùng một vật bằng hai
+#: cách (`hình hộp` / `khối hộp`), để sót một cách là để lại đúng lỗ vừa vá.
+#:
+#: ⚠️ Đây **không** phải nới năng lực. Danh sách này quyết định MIỀN (Toán hay
+#: Tin), không quyết định KHẢ NĂNG. `mặt cầu`/`hình nón`/`hình trụ` đã nằm đây
+#: từ trước dù kernel không dựng được mặt cong — và đúng như vậy: định tuyến
+#: về hình học rồi từ chối trung thực ở cổng sau thì tốt hơn nhiều so với dán
+#: nhãn *"môn khác"*.
+_MANH_DANH_TU_KHOI = (
+    "hình chóp", "khối chóp", "tứ diện", "lăng trụ", "hình hộp", "hình nón",
+    "hình trụ", "mặt cầu",
+    # ── bổ sung sau Phase 7B ─────────────────────────────────────────────
+    "hình lập phương", "khối lập phương",
+    "khối hộp", "khối lăng trụ", "khối đa diện", "hình đa diện",
+    "khối cầu", "khối nón", "khối trụ",
+)
+
+#: Giữ tên cũ: nhiều test và bảng đồng bộ đọc nó như "toàn bộ cụm mạnh".
+_DAU_HIEU_MANH = _MANH_QUAN_HE + _MANH_DANH_TU_KHOI
 _DAU_HIEU_YEU = (
     "mặt phẳng", "đường thẳng", "đường chéo", "góc giữa", "trung điểm",
     "hình vuông", "hình chữ nhật", "tam giác", "thể tích", "khoảng cách từ",
@@ -169,6 +249,38 @@ _TIEN_TO_KY_HIEU = ("point_", "diem_", "p_", "pt_")
 _DAI_TOI_DA_KY_HIEU = 3
 
 
+#: Bốn cách viết CÙNG một điểm bậc một, đo được ở lượt sinh thật:
+#: `A'` (SGK cả ba bộ) · `A1` (mô hình hay hạ dấu phẩy thành chỉ số) ·
+#: `A_prime` · `Aprime`. Chuẩn hoá về dạng CHỈ SỐ.
+#:
+#: ─── LỖ ĐO ĐƯỢC Ở PHASE 7B (2026-08-29) ─────────────────────────────────────
+#:
+#: `geometry_symbol_key("A'")` trả `None`: hàm bỏ `_`/`-` rồi đòi phần còn lại
+#: `isalnum()`, mà `'` rớt cả hai vế. Nên **dấu phẩy — cách viết phổ biến nhất
+#: của hình học không gian THPT — không được nhận là ký hiệu**, và
+#: `khop_ky_hieu` không bao giờ nối được `A'` của hợp đồng với biến nào của
+#: chương trình. Nghĩa vụ mang witness `A'` vì thế không có đường nào thoả, kể
+#: cả khi chương trình dựng đúng điểm ấy dưới tên `A1`.
+#:
+#: Gộp `A'` ≡ `A1` an toàn vì `khop_ky_hieu` fail-closed sẵn: trùng khoá ⇒
+#: `None`. Chương trình khai cả hai như hai điểm khác nhau thì cổng từ chối,
+#: không đoán.
+_PHAY = ("′", "'", "’", "`")
+_HAU_TO_PHAY = ("_prime", "prime")
+
+
+def _chuan_hoa_phay(s: str) -> str:
+    """`A'` · `A′` · `A_prime` · `Aprime` → `A1`. Bậc hai (`A''`) → `A2`."""
+    thap = s.lower()
+    for h in _HAU_TO_PHAY:
+        if thap.endswith(h) and len(s) > len(h):
+            return s[: -len(h)] + "1"
+    n = 0
+    while s and s[-1] in _PHAY:
+        s, n = s[:-1], n + 1
+    return f"{s}{n}" if n else s
+
+
 def geometry_symbol_key(ten: str) -> str | None:
     """KHOÁ ĐỒNG NHẤT của một ký hiệu hình học, hoặc `None` nếu không phải.
 
@@ -200,6 +312,7 @@ def geometry_symbol_key(ten: str) -> str | None:
         if thap.startswith(t) and len(s) > len(t):
             s = s[len(t):]
             break
+    s = _chuan_hoa_phay(s)
     s = s.replace("_", "").replace("-", "")
     if not s or len(s) > _DAI_TOI_DA_KY_HIEU:
         return None
@@ -401,10 +514,17 @@ def detect_domain(text: str) -> str:
     if not text:
         return DOMAIN_TIN_HOC
     t = text.lower()
-    if any(d in t for d in _DAU_HIEU_MANH):
+    # BỐN MỨC, không còn ba (sửa 2026-08-29 — xem `_MANH_QUAN_HE`).
+    #
+    # Cụm QUAN HỆ thắng cả phủ quyết Tin học; danh từ KHỐI thì không. Bản cũ
+    # gộp hai lớp làm một nên ba đề Tin học hợp lệ đi thẳng sang hình học chỉ
+    # vì có một danh từ khối.
+    if any(d in t for d in _MANH_QUAN_HE):
         return DOMAIN_HINH_HOC
     if any(d in t for d in _DAU_HIEU_TIN_HOC):
         return DOMAIN_TIN_HOC
+    if any(d in t for d in _MANH_DANH_TU_KHOI):
+        return DOMAIN_HINH_HOC
     if sum(1 for d in _DAU_HIEU_YEU if d in t) >= 3:
         return DOMAIN_HINH_HOC
     return DOMAIN_TIN_HOC

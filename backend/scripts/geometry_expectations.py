@@ -68,7 +68,16 @@ if str(BACKEND) not in sys.path:
 #: bao giờ là số luận văn. `holdout` thì KHÔNG: `PHASE_7A_1_REPORT §5` cho thấy
 #: kỳ vọng do người đo đặt đã một lần ghi *"mô hình sai"* ở chỗ mô hình đúng, và
 #: trên tập held-out thì không có lượt thứ hai để phát hiện ra điều đó.
-TAP_CHO_PHEP_NGUOI_DO = frozenset({"pilot"})
+#: `wave1` cũng được, cùng một lý do và cùng một giới hạn: nó là tập DEV của
+#: wave sửa lỗi sau Phase 7B, dùng để trả lời *"hai họ vừa sửa còn chết ở cổng
+#: nữa không"*. Số của nó **không bao giờ** là số luận văn — `POST_PHASE7B`
+#: §2 nói thẳng: taxonomy của lượt chính thức được dẫn đường, nhưng bằng chứng
+#: sửa phải đến từ DEV độc lập, và DEV thì kỳ vọng do người đo đặt.
+#:
+#: Danh sách này là chỗ duy nhất nới được, và nới ở đây là một dòng thấy được
+#: trong diff — khác hẳn với việc lặng lẽ đặt `loai != "nguoi_do"` cho một tập
+#: held-out.
+TAP_CHO_PHEP_NGUOI_DO = frozenset({"pilot", "wave1"})
 
 _TRUONG_BAT_BUOC = ("dataset", "tap", "version", "nguoi_danh_gia",
                     "sinh_tu_model_output", "cases")
