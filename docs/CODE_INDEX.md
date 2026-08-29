@@ -2793,6 +2793,41 @@ vượt trần. **Không in PASS/FAIL cho câu hỏi nghiên cứu**: đã soát
 giao thức, KHÔNG có ngưỡng chấp nhận nào đăng ký trước, nên nó in
 `EVIDENCE_SUPPORTS_3D_NEXT` và tự khai đó là diễn giải.
 
+### `backend/scripts/provider_health_gate.py` · **1 API call, ĐÚNG MỘT**
+
+Hỏi nhà cung cấp ba câu trước khi tiêu quota cho bất kỳ lượt đo nào:
+credential còn hợp lệ · credit dùng được · model gọi tới được. Ép
+`ApiBudget(max_attempts=1)` để **tắt thang retry**.
+
+**Vì sao tắt retry ở đây, đo được 2026-08-29**: `MAX_ATTEMPTS = 4` tồn tại để
+nuốt sự cố NHẤT THỜI của một lượt đo thật, nhưng `429 credits depleted`
+không nhất thời. Lượt canary trước tiêu **12 HTTP** (3 lượt × 4 lần thử) cho
+đúng một thông tin đã biết ngay từ request đầu; cổng này tiêu **1**.
+
+Cố ý KHÔNG kèm `responseSchema`, KHÔNG nạp skill: nó kiểm ĐƯỜNG TRUYỀN, không
+kiểm khả năng. Trộn hai thứ thì một lỗi schema đọc ra như lỗi credential.
+Ghi `wave1-canary/PROVIDER_HEALTH.json`.
+
+### `backend/scripts/run_wave1_dev_stability.py` · **TIÊU QUOTA THẬT**
+
+Bộ đo DEV của wave sửa lỗi sau Phase 7B. Ba chế độ: `--canary` (3 đề × 1
+lượt, chứng minh end-to-end trước) · `--mini` (4 đề × k, chỉ chạy SAU canary
+PASS) · mặc định 8 đề. Trần cứng wave `90 logic / 120 HTTP`, chặn **trước**
+khi vượt chứ không dừng sau.
+
+**Dừng sớm khi hỏng vì NHÀ CUNG CẤP**: quét `su_co` tìm `429`/
+`RESOURCE_EXHAUSTED` rồi in `PROVIDER_BLOCKED` và thoát `2`. Phân biệt này là
+toàn bộ giá trị của trường `su_co` — trước đó lời nhắn 429 bị rơi mất và một
+lượt hết quota đọc y hệt một lượt hệ ném lỗi, hai nhóm khác hẳn nhau trong
+taxonomy (E và F).
+
+`_bang_token` cộng token theo **ba mẫu số**: mỗi lượt · mỗi IR **chạy được** ·
+mỗi IR **đúng**. Một con số tổng che mất chỗ đắt: 1/3 lượt hỏng thì giá thật
+của một kết quả dùng được gấp ba giá trung bình mỗi lượt.
+
+Đề DEV do wave này viết (`w1-goc-dd` · `w1-goc-dm` · `w1-phay`), kỳ vọng ở
+`expectations/wave1.json`. **KHÔNG** dùng đề của 20 bài chính thức.
+
 ### `backend/scripts/measure_geometry_stability.py` · **TIÊU QUOTA THẬT**
 
 Máy đo độ ổn định: `n` đề × `k` lượt ĐỘC LẬP, không sửa gì giữa chừng. Export
