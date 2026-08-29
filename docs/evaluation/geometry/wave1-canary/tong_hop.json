@@ -1,46 +1,52 @@
 {
   "k": 1,
   "token": {
-    "prompt_tokens": 0,
-    "candidates_tokens": 0,
-    "thoughts_tokens": 0,
-    "total_tokens": 0,
+    "prompt_tokens": 27677,
+    "candidates_tokens": 3904,
+    "thoughts_tokens": 11977,
+    "total_tokens": 43558,
     "so_luot": 3,
-    "executable_ir": 0,
-    "correct_ir": 0,
-    "tokens_moi_luot": 0,
-    "tokens_moi_executable_ir": null,
-    "tokens_moi_correct_ir": null
+    "executable_ir": 1,
+    "correct_ir": 1,
+    "tokens_moi_luot": 14519,
+    "tokens_moi_executable_ir": 43558,
+    "tokens_moi_correct_ir": 43558
   },
   "runs": [
     {
       "case_id": "w1-goc-dd",
       "lan": 1,
-      "do_tre_giay": 9.0,
-      "stage_reached": null,
-      "executable": null,
-      "servable": null,
-      "error_code": null,
-      "failure_category": null,
-      "reason": null,
-      "details": null,
-      "so_nghia_vu": 0,
-      "nghia_vu_kinds": [],
+      "do_tre_giay": 31.9,
+      "stage_reached": "postconditions",
+      "executable": true,
+      "servable": false,
+      "error_code": "postcondition_violated",
+      "failure_category": "verification_gap",
+      "reason": "Chương trình tự mâu thuẫn với nghĩa vụ nó tự khai.",
+      "details": [
+        "cặp đối tượng không hợp lệ cho góc"
+      ],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "angle"
+      ],
       "nghia_vu_mong_doi": [
         "angle"
       ],
-      "verification_match": false,
+      "verification_match": true,
       "verification_chi_tiet": {
         "mong_doi": [
           "angle"
         ],
-        "khai": [],
-        "khop": [],
-        "thieu": [
+        "khai": [
           "angle"
         ],
+        "khop": [
+          "angle"
+        ],
+        "thieu": [],
         "thua": [],
-        "khop_hoan_toan": false
+        "khop_hoan_toan": true
       },
       "construction_match": null,
       "construction_chi_tiet": {
@@ -51,22 +57,55 @@
         "khop_hoan_toan": null,
         "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
       },
-      "obligation_match": false,
-      "oracle_dat": false,
-      "oracle_vi_sao": "không biến nào bằng 1/2 · số đã đo: {}",
-      "envelope_status": "EXCEPTION",
-      "su_co": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n",
-      "token": {},
+      "obligation_match": true,
+      "oracle_dat": true,
+      "oracle_vi_sao": "goc_ac_b_c = 1/2",
+      "envelope_status": "unsupported",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1722,
+          "candidates_tokens": 393,
+          "cached_content_tokens": 0,
+          "total_tokens": 2662,
+          "thoughts_tokens": 547,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1111,
+          "candidates_tokens": 196,
+          "cached_content_tokens": 0,
+          "total_tokens": 1460,
+          "thoughts_tokens": 153,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2732,
+          "candidates_tokens": 967,
+          "cached_content_tokens": 0,
+          "total_tokens": 6040,
+          "thoughts_tokens": 2341,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4929,
+          "candidates_tokens": 120,
+          "cached_content_tokens": 0,
+          "total_tokens": 5818,
+          "thoughts_tokens": 769,
+          "calls": 1
+        }
+      },
       "envelope_id": null,
       "co_scene3d": false,
       "so_doi_tuong_canh": 0,
       "so_buoc_phat_lai": 0,
       "run_id": "wave1-dev-stability",
       "replicate_index": 1,
-      "logical_calls": 1,
+      "logical_calls": 4,
       "http_requests": 4,
-      "retry_requests": 3,
-      "transient_hits": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
       "budget_aborted": false,
       "so_lan_thu_sinh": 0,
       "thu_that_bai": []
@@ -74,13 +113,13 @@
     {
       "case_id": "w1-goc-dm",
       "lan": 1,
-      "do_tre_giay": 8.5,
-      "stage_reached": null,
-      "executable": null,
-      "servable": null,
-      "error_code": null,
+      "do_tre_giay": 10.8,
+      "stage_reached": "scope",
+      "executable": false,
+      "servable": false,
+      "error_code": "gate_not_simulation_suitable",
       "failure_category": null,
-      "reason": null,
+      "reason": "Bài này thuộc chương trình nhưng không có cơ chế nào để mô phỏng — dựng cảnh cho nó chỉ là trang trí, không giúp hiểu thêm.",
       "details": null,
       "so_nghia_vu": 0,
       "nghia_vu_kinds": [],
@@ -112,19 +151,36 @@
       "obligation_match": false,
       "oracle_dat": false,
       "oracle_vi_sao": "không biến nào bằng 1/3 · số đã đo: {}",
-      "envelope_status": "EXCEPTION",
-      "su_co": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n",
-      "token": {},
+      "envelope_status": "unsupported",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1723,
+          "candidates_tokens": 421,
+          "cached_content_tokens": 0,
+          "total_tokens": 2531,
+          "thoughts_tokens": 387,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4958,
+          "candidates_tokens": 105,
+          "cached_content_tokens": 0,
+          "total_tokens": 5805,
+          "thoughts_tokens": 742,
+          "calls": 1
+        }
+      },
       "envelope_id": null,
       "co_scene3d": false,
       "so_doi_tuong_canh": 0,
       "so_buoc_phat_lai": 0,
       "run_id": "wave1-dev-stability",
       "replicate_index": 1,
-      "logical_calls": 1,
-      "http_requests": 4,
-      "retry_requests": 3,
-      "transient_hits": 4,
+      "logical_calls": 2,
+      "http_requests": 2,
+      "retry_requests": 0,
+      "transient_hits": 0,
       "budget_aborted": false,
       "so_lan_thu_sinh": 0,
       "thu_that_bai": []
@@ -132,31 +188,35 @@
     {
       "case_id": "w1-phay",
       "lan": 1,
-      "do_tre_giay": 8.7,
-      "stage_reached": null,
-      "executable": null,
-      "servable": null,
+      "do_tre_giay": 44.8,
+      "stage_reached": "served",
+      "executable": true,
+      "servable": true,
       "error_code": null,
       "failure_category": null,
       "reason": null,
-      "details": null,
-      "so_nghia_vu": 0,
-      "nghia_vu_kinds": [],
+      "details": [],
+      "so_nghia_vu": 1,
+      "nghia_vu_kinds": [
+        "perpendicular"
+      ],
       "nghia_vu_mong_doi": [
         "perpendicular"
       ],
-      "verification_match": false,
+      "verification_match": true,
       "verification_chi_tiet": {
         "mong_doi": [
           "perpendicular"
         ],
-        "khai": [],
-        "khop": [],
-        "thieu": [
+        "khai": [
           "perpendicular"
         ],
+        "khop": [
+          "perpendicular"
+        ],
+        "thieu": [],
         "thua": [],
-        "khop_hoan_toan": false
+        "khop_hoan_toan": true
       },
       "construction_match": null,
       "construction_chi_tiet": {
@@ -167,22 +227,55 @@
         "khop_hoan_toan": null,
         "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
       },
-      "obligation_match": false,
+      "obligation_match": true,
       "oracle_dat": false,
       "oracle_vi_sao": "không khẳng định",
-      "envelope_status": "EXCEPTION",
-      "su_co": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n",
-      "token": {},
-      "envelope_id": null,
-      "co_scene3d": false,
-      "so_doi_tuong_canh": 0,
-      "so_buoc_phat_lai": 0,
+      "envelope_status": "ok",
+      "su_co": null,
+      "token": {
+        "analyze": {
+          "prompt_tokens": 1721,
+          "candidates_tokens": 411,
+          "cached_content_tokens": 0,
+          "total_tokens": 2590,
+          "thoughts_tokens": 458,
+          "calls": 1
+        },
+        "semantic_analyze": {
+          "prompt_tokens": 1110,
+          "candidates_tokens": 192,
+          "cached_content_tokens": 0,
+          "total_tokens": 1598,
+          "thoughts_tokens": 296,
+          "calls": 1
+        },
+        "semantic_program": {
+          "prompt_tokens": 2725,
+          "candidates_tokens": 999,
+          "cached_content_tokens": 0,
+          "total_tokens": 9283,
+          "thoughts_tokens": 5559,
+          "calls": 1
+        },
+        "classify": {
+          "prompt_tokens": 4946,
+          "candidates_tokens": 100,
+          "cached_content_tokens": 0,
+          "total_tokens": 5771,
+          "thoughts_tokens": 725,
+          "calls": 1
+        }
+      },
+      "envelope_id": "generic.semantic_program",
+      "co_scene3d": true,
+      "so_doi_tuong_canh": 10,
+      "so_buoc_phat_lai": 3,
       "run_id": "wave1-dev-stability",
       "replicate_index": 1,
-      "logical_calls": 1,
+      "logical_calls": 4,
       "http_requests": 4,
-      "retry_requests": 3,
-      "transient_hits": 4,
+      "retry_requests": 0,
+      "transient_hits": 0,
       "budget_aborted": false,
       "so_lan_thu_sinh": 0,
       "thu_that_bai": []

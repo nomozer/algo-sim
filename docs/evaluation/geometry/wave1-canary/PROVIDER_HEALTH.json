@@ -1,14 +1,14 @@
 {
   "model": "gemini-2.5-flash",
-  "provider_ready": false,
+  "provider_ready": true,
   "http_calls": 1,
   "logical_calls": 1,
-  "transient_hits": 1,
+  "transient_hits": 0,
   "token": {
-    "prompt_tokens": 0,
-    "candidates_tokens": 0,
-    "thoughts_tokens": 0,
-    "total_tokens": 0
+    "prompt_tokens": 11,
+    "candidates_tokens": 1,
+    "thoughts_tokens": 18,
+    "total_tokens": 30
   },
-  "loi": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n"
+  "loi": null
 }

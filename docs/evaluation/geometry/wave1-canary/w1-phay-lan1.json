@@ -2,31 +2,35 @@
   "ban_ghi": {
     "case_id": "w1-phay",
     "lan": 1,
-    "do_tre_giay": 8.7,
-    "stage_reached": null,
-    "executable": null,
-    "servable": null,
+    "do_tre_giay": 44.8,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
     "error_code": null,
     "failure_category": null,
     "reason": null,
-    "details": null,
-    "so_nghia_vu": 0,
-    "nghia_vu_kinds": [],
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "perpendicular"
+    ],
     "nghia_vu_mong_doi": [
       "perpendicular"
     ],
-    "verification_match": false,
+    "verification_match": true,
     "verification_chi_tiet": {
       "mong_doi": [
         "perpendicular"
       ],
-      "khai": [],
-      "khop": [],
-      "thieu": [
+      "khai": [
         "perpendicular"
       ],
+      "khop": [
+        "perpendicular"
+      ],
+      "thieu": [],
       "thua": [],
-      "khop_hoan_toan": false
+      "khop_hoan_toan": true
     },
     "construction_match": null,
     "construction_chi_tiet": {
@@ -37,27 +41,350 @@
       "khop_hoan_toan": null,
       "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
     },
-    "obligation_match": false,
+    "obligation_match": true,
     "oracle_dat": false,
     "oracle_vi_sao": "không khẳng định",
-    "envelope_status": "EXCEPTION",
-    "su_co": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n",
-    "token": {},
-    "envelope_id": null,
-    "co_scene3d": false,
-    "so_doi_tuong_canh": 0,
-    "so_buoc_phat_lai": 0,
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1721,
+        "candidates_tokens": 411,
+        "cached_content_tokens": 0,
+        "total_tokens": 2590,
+        "thoughts_tokens": 458,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1110,
+        "candidates_tokens": 192,
+        "cached_content_tokens": 0,
+        "total_tokens": 1598,
+        "thoughts_tokens": 296,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2725,
+        "candidates_tokens": 999,
+        "cached_content_tokens": 0,
+        "total_tokens": 9283,
+        "thoughts_tokens": 5559,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4946,
+        "candidates_tokens": 100,
+        "cached_content_tokens": 0,
+        "total_tokens": 5771,
+        "thoughts_tokens": 725,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 10,
+    "so_buoc_phat_lai": 3,
     "run_id": "wave1-dev-stability",
     "replicate_index": 1,
-    "logical_calls": 1,
+    "logical_calls": 4,
     "http_requests": 4,
-    "retry_requests": 3,
-    "transient_hits": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
     "budget_aborted": false,
     "so_lan_thu_sinh": 0,
     "thu_that_bai": []
   },
-  "request_contract": null,
-  "generated_program": null,
-  "final_memory": {}
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "perpendicular",
+        "container": "AC",
+        "params": {
+          "witness": "B'D'"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lap_phuong",
+        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ]
+      },
+      {
+        "fact_id": "canh_hinh_lap_phuong",
+        "label": "Cạnh hình lập phương",
+        "values": [
+          2
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          2
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Chứng minh AC vuông góc B'D' trong hình lập phương",
+    "description": "Chương trình dựng hình để chứng minh hai đường chéo không gian của hình lập phương vuông góc với nhau.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn A làm gốc toạ độ (0,0,0)"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "A'",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "canh_hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "ABCD là hình vuông đáy"
+      },
+      {
+        "name": "B'",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "AA'BB' là hình vuông mặt bên"
+      },
+      {
+        "name": "D'",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "AA'D'D là hình vuông mặt bên"
+      },
+      {
+        "name": "C'",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": "ABCD.A'B'C'D' là hình lập phương"
+      },
+      {
+        "name": "AC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "B'D'",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "perpendicular",
+        "type": "bool",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "AC",
+        "through_a": "A",
+        "through_b": "C",
+        "label": "Dựng đường chéo AC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "B'D'",
+        "through_a": "B'",
+        "through_b": "D'",
+        "label": "Dựng đường chéo B'D'"
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách sử dụng hệ toạ độ để chứng minh quan hệ vuông góc giữa hai đường thẳng trong không gian, đặc biệt là hai đường chéo không gian của hình lập phương. Học sinh sẽ thấy rằng việc chọn hệ toạ độ phù hợp giúp đơn giản hóa việc chứng minh các tính chất hình học."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "A'": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "0"
+    },
+    "B'": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "2"
+    },
+    "D'": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "2"
+    },
+    "C'": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "2"
+    },
+    "AC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "B'D'": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-2",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "perpendicular": null
+  }
 }

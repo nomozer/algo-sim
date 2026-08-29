@@ -2,31 +2,37 @@
   "ban_ghi": {
     "case_id": "w1-goc-dd",
     "lan": 1,
-    "do_tre_giay": 9.0,
-    "stage_reached": null,
-    "executable": null,
-    "servable": null,
-    "error_code": null,
-    "failure_category": null,
-    "reason": null,
-    "details": null,
-    "so_nghia_vu": 0,
-    "nghia_vu_kinds": [],
+    "do_tre_giay": 31.9,
+    "stage_reached": "postconditions",
+    "executable": true,
+    "servable": false,
+    "error_code": "postcondition_violated",
+    "failure_category": "verification_gap",
+    "reason": "Chương trình tự mâu thuẫn với nghĩa vụ nó tự khai.",
+    "details": [
+      "cặp đối tượng không hợp lệ cho góc"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "angle"
+    ],
     "nghia_vu_mong_doi": [
       "angle"
     ],
-    "verification_match": false,
+    "verification_match": true,
     "verification_chi_tiet": {
       "mong_doi": [
         "angle"
       ],
-      "khai": [],
-      "khop": [],
-      "thieu": [
+      "khai": [
         "angle"
       ],
+      "khop": [
+        "angle"
+      ],
+      "thieu": [],
       "thua": [],
-      "khop_hoan_toan": false
+      "khop_hoan_toan": true
     },
     "construction_match": null,
     "construction_chi_tiet": {
@@ -37,27 +43,361 @@
       "khop_hoan_toan": null,
       "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
     },
-    "obligation_match": false,
-    "oracle_dat": false,
-    "oracle_vi_sao": "không biến nào bằng 1/2 · số đã đo: {}",
-    "envelope_status": "EXCEPTION",
-    "su_co": "RuntimeError: Gemini API lỗi HTTP 429: {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. \",\n    \"status\": \"RESOURCE_EXHAUSTED\"\n  }\n}\n",
-    "token": {},
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "goc_ac_b_c = 1/2",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1722,
+        "candidates_tokens": 393,
+        "cached_content_tokens": 0,
+        "total_tokens": 2662,
+        "thoughts_tokens": 547,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1111,
+        "candidates_tokens": 196,
+        "cached_content_tokens": 0,
+        "total_tokens": 1460,
+        "thoughts_tokens": 153,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2732,
+        "candidates_tokens": 967,
+        "cached_content_tokens": 0,
+        "total_tokens": 6040,
+        "thoughts_tokens": 2341,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 4929,
+        "candidates_tokens": 120,
+        "cached_content_tokens": 0,
+        "total_tokens": 5818,
+        "thoughts_tokens": 769,
+        "calls": 1
+      }
+    },
     "envelope_id": null,
     "co_scene3d": false,
     "so_doi_tuong_canh": 0,
     "so_buoc_phat_lai": 0,
     "run_id": "wave1-dev-stability",
     "replicate_index": 1,
-    "logical_calls": 1,
+    "logical_calls": 4,
     "http_requests": 4,
-    "retry_requests": 3,
-    "transient_hits": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
     "budget_aborted": false,
     "so_lan_thu_sinh": 0,
     "thu_that_bai": []
   },
-  "request_contract": null,
-  "generated_program": null,
-  "final_memory": {}
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "angle",
+        "container": "AC",
+        "params": {
+          "witness": "goc_ac_b_c",
+          "wrt": "B'C'"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lap_phuong",
+        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ]
+      },
+      {
+        "fact_id": "canh_hinh_lap_phuong",
+        "label": "Cạnh của hình lập phương",
+        "values": [
+          2
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          2
+        ]
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính góc giữa hai đường thẳng AC và B'C' trong hình lập phương",
+    "description": "Chương trình dựng hình lập phương và tính góc giữa hai đường thẳng chéo nhau AC và B'C'.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0)"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn B trên trục Ox, cách A một khoảng bằng cạnh hình lập phương là 2"
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn D trên trục Oy, cách A một khoảng bằng cạnh hình lập phương là 2"
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A' trên trục Oz, cách A một khoảng bằng cạnh hình lập phương là 2"
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "C là đỉnh còn lại của mặt đáy ABCD"
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "B' là đỉnh đối diện với B qua mặt phẳng A'ADD'"
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "C' là đỉnh đối diện với C qua mặt phẳng A'ADD'"
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "D' là đỉnh đối diện với D qua mặt phẳng A'ABB'"
+      },
+      {
+        "name": "AC",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "B_prime_C_prime",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "goc_ac_b_c",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "AC",
+        "through_a": "A",
+        "through_b": "C",
+        "label": "Đường thẳng AC"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "B_prime_C_prime",
+        "through_a": "B_prime",
+        "through_b": "C_prime",
+        "label": "Đường thẳng B'C'"
+      },
+      {
+        "kind": "assign",
+        "target_var": "goc_ac_b_c",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "AC",
+          "wrt": "B_prime_C_prime"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Minh họa cách dựng hình lập phương và tính góc giữa hai đường thẳng chéo nhau bằng cách sử dụng phép đo góc giữa hai đường thẳng."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "0"
+    },
+    "A_prime": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "2"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "0"
+    },
+    "B_prime": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "0",
+      "z": "2"
+    },
+    "C_prime": {
+      "__loai__": "Vec3",
+      "x": "2",
+      "y": "2",
+      "z": "2"
+    },
+    "D_prime": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "2",
+      "z": "2"
+    },
+    "AC": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "0"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "B_prime_C_prime": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "2",
+        "y": "0",
+        "z": "2"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "2",
+        "z": "0"
+      }
+    },
+    "goc_ac_b_c": "1/2"
+  }
 }
