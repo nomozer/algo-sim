@@ -67,6 +67,9 @@ def _nap_anh_em(ten: str):
 #: "không sửa lại artifact của lượt cũ — baseline để so sánh", nhưng luật ấy chỉ
 #: nằm trong tài liệu. Nay script TỪ CHỐI ghi vào một thư mục đã có bản ghi.
 RA = ROOT / "docs" / "evaluation" / "geometry" / "stability-6.7"
+#: Danh tính lượt đo, bộ chạy ngoài gán đè. Mặc định `None` để lượt 6.7 cũ
+#: không tự nhận một `run_id` mà nó chưa từng có.
+RUN_ID = None
 
 #: Trần MỖI LƯỢT. Dẫn từ call graph như runner DEV: analyze ≤2 ·
 #: semantic_analyze 1 · semantic_program ≤3 ⇒ 6, cộng đệm transient.
@@ -185,7 +188,7 @@ def _v(x):
     return None
 
 
-def cham_oracle(ten: str, fm: dict) -> tuple[bool | None, str]:
+def cham_oracle(ten: str, fm: dict, hd=None) -> tuple[bool | None, str]:
     """Trả `(đạt, giải thích)`. `None` = KHÔNG CHẤM ĐƯỢC, khác hẳn `False`."""
     if not fm:
         return None, "không có final_memory"
@@ -248,8 +251,9 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         return r
 
     pipeline.stage_semantic_analyze, pipeline.stage_semantic_program = an, ct
-    gemini.set_budget(gemini.ApiBudget(max_api_calls=TRAN_HTTP,
-                                       max_logical_calls=TRAN_LOGIC))
+    bd = gemini.ApiBudget(max_api_calls=TRAN_HTTP,
+                          max_logical_calls=TRAN_LOGIC)
+    gemini.set_budget(bd)
     telemetry.reset_usage()
     ghi = Ghi()
     t0 = time.time()
@@ -267,7 +271,10 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
     hd = bat.get("contract")
     kinds = sorted({ob.kind for ob in hd.obligations}) if hd else []
     fm = sr.get("final_memory") or {}
-    dat, vi_sao = cham_oracle(bai["oracle"], fm)
+    # Hợp đồng đi kèm: bộ chấm theo POOL cần `ob.witness` để biết đọc biến
+    # nào trong `final_memory`. Hai bộ chấm cũ nhận `hd=None` và bỏ qua —
+    # thêm tham số có mặc định thay vì đẻ một `mot_luot` thứ hai.
+    dat, vi_sao = cham_oracle(bai["oracle"], fm, hd)
 
     # ③ TÁCH ĐÔI (Phase 7A.2) — kỳ vọng đọc TỪ FILE, không từ literal trong mã.
     spec_raw = (bat["spec"].model_dump(mode="json") if bat.get("spec") else None)
@@ -311,6 +318,16 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "co_scene3d": bool(env.get("scene3d")),
         "so_doi_tuong_canh": len((env.get("scene3d") or {}).get("objects") or []),
         "so_buoc_phat_lai": len((env.get("scene3d") or {}).get("events") or []),
+        # DANH TÍNH + CHI PHÍ của đúng lượt này. `run_id` để artifact nói
+        # được nó thuộc lượt đo nào; bộ đếm để §12 đối chiếu được tổng
+        # logic/HTTP với trần đã duyệt thay vì tin một con số tổng hợp.
+        "run_id": RUN_ID,
+        "replicate_index": lan,
+        "logical_calls": bd.logical_calls,
+        "http_requests": bd.http_requests,
+        "retry_requests": bd.retry_requests,
+        "transient_hits": bd.transient_hits,
+        "budget_aborted": bd.aborted,
         "so_lan_thu_sinh": len(ghi.lay("semantic_program_attempt")),
         "thu_that_bai": [d.get("message", "")[:400]
                          for d in ghi.lay("semantic_program_attempt")

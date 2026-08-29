@@ -109,7 +109,7 @@ def _tim_so(fm: dict, mong: Fraction) -> tuple[bool, str]:
     return False, f"không biến nào bằng {mong} · số đã đo: {so}"
 
 
-def cham_oracle(ten: str, fm: dict):
+def cham_oracle(ten: str, fm: dict, hd=None):
     """Ba trạng thái, đúng hợp đồng chỉ số: True · False · **None**.
 
     `None` = KHÔNG CHẤM ĐƯỢC, khác hẳn `False`. Gộp chúng là ghi một lượt không
