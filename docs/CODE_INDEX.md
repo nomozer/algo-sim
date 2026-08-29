@@ -2998,6 +2998,44 @@ dòng ấy ⇒ từ chối cả lô. ⚠️ Dòng ấy **do người viết** �
 một chứng nhận không có tư cách cấp; `test_bo_nap_KHONG_tu_viet_dong_NGUOI_CHEP`
 khoá điều đó vào docstring.
 
+**BA CHẾ ĐỘ XÁC MINH, và TÊN DÒNG mang luôn chế độ** (`_CHE_DO`, 2026-08-29):
+`NGƯỜI CHÉP:` → `human_verifier` · `MÁY CHÉP:` → `machine_verifier` ·
+`SOẠN NỘI BỘ:` → `internal_author`. Đúng **một** dòng mỗi lô; hai dòng ⇒ đỏ.
+Thiết kế bị bỏ: giữ `NGƯỜI CHÉP:` rồi thêm cờ `CHẾ ĐỘ XÁC MINH:` — hai mẩu
+phải khớp mới đúng, mà không gì bắt chúng khớp, nên một lô chép máy vẫn ghi
+được tên người thật. Trước bản này `verification_note` khẳng định *"Đề do
+NGƯỜI chép nguyên văn… không qua OCR"* cho **mọi** bài — câu sinh sẵn, và nó
+thành lời khai SAI ngay ở lô đầu tiên chép máy. Kèm trường
+`measured_output_used_for_source_verification: false` (lời hứa nặng nhất của
+tập held-out, trước chỉ nằm trong văn xuôi giao thức).
+
+**`PHÉP CHUYỂN:` — bắt buộc ở tầng A, cấm ở tầng B.** Đáp án nguồn gần như
+không bao giờ ĐÃ ở đơn vị checker: nguồn in `cos = √10/5` mà A09 nhận **cos²**;
+in `V = 2a³/3` mà A14 nhận phân số với `a = 1`; kết luận *hình bình hành* mà
+`parallel` chỉ nhận quan hệ hai đường. Trước dòng này `phep_chuyen` là **một
+câu sinh sẵn dùng chung** (*"đáp án nguồn chép thẳng vào đơn vị checker"*) —
+sai ở đúng những ca cần đúng nhất, và sai **bên trong artifact đã niêm phong**,
+trong khi `seal` chỉ kiểm trường CÓ MẶT.
+
+**`_tach_nguon` — `nguon.loai` ∈ `web` | `sach_in` | `soan_noi_bo`.** Trước
+2026-08-29 cả `ten`/`url`/`vi_tri` nhận **nguyên câu trích dẫn**, nên cổng
+`url.startswith("http")` xanh mà không kiểm gì. `web` đòi url thật; `sach_in`
+đòi *tên sách + trang*; `KHONG_TRA_NGUOC` là trạng thái ĐỎ.
+
+**`_nhan_trang_thai`** dựng lại `pool.__trang_thai__` TỪ `cases`. Có **hai** bộ
+ghi pool song song (`ingest.main` và `run_m1_pipeline`), nên sửa một bộ thì bộ
+kia đè lại — sau lượt nạp 41 bài nhãn vẫn đọc *"0 accepted · 0/20 ô"*, tức mời
+người sau đi thu thập thêm rồi nạp trùng.
+
+**`curated_preseal` — ngoại lệ DUY NHẤT, có trần cứng.** Ô A12 (khoảng cách
+điểm–ĐƯỜNG, hữu tỉ) không lấp được bằng nguồn công khai (3 lượt / 673 url), và
+`§5③` cấm rút bù. Bài tự soạn được nhận nhưng phải mang đủ sáu dấu hiệu
+(`curated_preseal` · `SOẠN-NỘI-BỘ` · `internal_author` · `loai: soan_noi_bo` ·
+`han_che` · `suy_dan` ≥ 2 cách độc lập), và `kiem_pool` đặt **trần ĐÚNG MỘT**:
+ngoại lệ không trần thì lối rẻ nhất để "phủ đủ 20/20 ô" là tự soạn nốt phần
+khó. Biên bản: `holdout/A12_CURATED_DERIVATION.md`. Luật báo cáo đi kèm: mọi
+số nêu **hai lần** — 20/20 ô và **19/20 ô (held-out thật)**.
+
 **Cảnh báo chứ không tự loại** (phán quyết cuối là của người): trắc nghiệm 4
 phương án · căn thức · tham chiếu hình vẽ không có trong văn bản · mặt cong ·
 Oxyz cho sẵn toạ độ. Chặn cứng thì có: thiếu `NGUỒN`, ô A thiếu `ĐÁP ÁN`, ô B
