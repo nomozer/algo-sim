@@ -29,6 +29,7 @@ from .literal_extractor import (
     gia_tri_kem_ky_tu,
 )
 from .request_contract import InputFact, RequestContract, norm_value
+from .scale_normalization import chuan_hoa_thang
 
 #: Kiểu của một mục dữ liệu đề cho — đóng, và bám hệ kiểu của IR.
 INPUT_FACT_KINDS = ("array", "matrix", "map", "set", "graph", "tree_node",
@@ -440,6 +441,21 @@ def build_request_contract(
             Obligation(kind=kind, container=container, params=params)
         )
 
-    return RequestContract(
+    hd = RequestContract(
         obligations=tuple(obligations), input_facts=tuple(facts)
     )
+    # ── CHUẨN HOÁ THANG — SERVER quyết, và quyết TRƯỚC khi mô hình nhìn thấy ─
+    #
+    # Đặt ở cuối `build_request_contract` chứ không ở pipeline là có chủ đích:
+    # đây là biên đóng băng hợp đồng, nên MỌI đường gọi — pipeline live, bộ
+    # chấm DEV, test — đều thấy cùng một hợp đồng. Đặt ở pipeline thì hai đường
+    # nhìn hai bản khác nhau, đúng lớp lỗi "một cổng mới đọc dữ liệu thô" đã
+    # vấp sáu lần.
+    #
+    # Chỉ hình học: ở Tin học một chuỗi `"a"` là DỮ LIỆU ĐỀ CHO, không phải
+    # tham số tỉ lệ, và viết lại nó thành `1` là phá đúng bài toán.
+    from .domain_profile import DOMAIN_HINH_HOC
+
+    if domain == DOMAIN_HINH_HOC:
+        hd = chuan_hoa_thang(hd, problem_text)
+    return hd

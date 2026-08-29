@@ -389,6 +389,13 @@ def _facts_for_prompt(contract: "RequestContract") -> str:
         định cắt ra kèm span. Có nó thì hiển thị nó — không có cách viết nào
         trung thực hơn thế.
         """
+        # CHUẨN HOÁ THANG THẮNG `source_text`. Mục đã viết lại thì `source_text`
+        # còn giữ nguyên văn (`4a/5`) — chính là thứ mô hình KHÔNG được dùng
+        # nữa. Hiện nó ra thì mô hình lại đi tìm một giá trị cho `a`, tức đúng
+        # bế tắc mà phép chuẩn hoá sinh ra để gỡ.
+        if f.scale_symbol:
+            goc = ", ".join(str(v) for v in f.original_values)
+            return f": {', '.join(str(v) for v in f.values)}  (đề viết: {goc})"
         if f.source_text:
             return f': "{f.source_text}"'
         if f.values:
@@ -396,7 +403,19 @@ def _facts_for_prompt(contract: "RequestContract") -> str:
         return " (đề chưa cho giá trị)"
 
     dong = [f"- id `{f.fact_id}` — {f.label}{_hien(f)}" for f in contract.input_facts]
-    return "Dữ liệu đề cho (ghim `source_fact_id` về đúng id dưới đây):\n" + "\n".join(dong)
+    dau = ""
+    if contract.scale_binding is not None:
+        # Nói THẲNG rằng thang đã được chốt, và chốt bởi ai. Không có dòng này
+        # thì mô hình thấy `AB = 1` mà vẫn tưởng mình được chọn lại thang.
+        b = contract.scale_binding
+        dau = (
+            f"Đề dùng ký hiệu tỉ lệ tự do `{b.symbol}`. Hệ ĐÃ CHỐT "
+            f"`{b.symbol} = {b.canonical_value}` và viết lại các số dưới đây "
+            f"theo thang ấy. Dùng đúng những số này; KHÔNG tự chọn giá trị "
+            f"khác cho `{b.symbol}`, KHÔNG khai lại `{b.symbol}` như một biến.\n"
+        )
+    return (dau + "Dữ liệu đề cho (ghim `source_fact_id` về đúng id dưới đây):\n"
+            + "\n".join(dong))
 
 
 def _obligations_for_prompt(contract: "RequestContract") -> str:
@@ -1179,7 +1198,15 @@ async def _semantic_route_attempt(
           # Trạng thái cuối là thứ DUY NHẤT đem so được với ground truth độc
           # lập. Thiếu nó ở đây thì benchmark chấm được đúng 0 case — và chấm
           # sai theo hướng im lặng, sau khi đã tiêu hết quota.
-          final_memory=outcome.final_memory)
+          final_memory=outcome.final_memory,
+          # §7 — ba con số của SCALE NORMALIZATION. Phát cùng chỗ với mọi quan
+          # trắc khác: một lượt đo không giữ được chúng thì tỉ lệ literal có
+          # căn cứ phải suy ngược từ `details`, và suy ngược là chỗ hai định
+          # nghĩa "biện minh" bắt đầu trôi khỏi nhau.
+          justified_literals=outcome.justified_literals,
+          unjustified_literals=outcome.unjustified_literals,
+          constraints_checked=outcome.constraints_checked,
+          constraints_verified=outcome.constraints_verified)
     return outcome
 
 

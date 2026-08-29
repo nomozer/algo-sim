@@ -22,6 +22,9 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict
 
 from .obligations import Obligation
+# Một chiều: `scale_normalization` không import ngược file này (nó nhận hợp
+# đồng theo giao diện), nên khai kiểu thật ở đây không tạo vòng.
+from .scale_normalization import ScaleBinding
 
 
 def norm_value(v: Any) -> Any:
@@ -87,6 +90,20 @@ class InputFact(BaseModel):
     #: Đúng những giá trị KHÔNG chứng minh được. Rỗng ⇔ không có gì để trách.
     unproven_values: tuple[Any, ...] = ()
 
+    # ── CHUẨN HOÁ THANG (`scale_normalization.py`) ──────────────────────────
+    #
+    # Chuỗi xuất xứ phải đọc ngược được ba chặng, nếu không phép chuẩn hoá tự
+    # nó thành một chỗ dữ liệu bốc hơi:
+    #
+    #     values (đã chuẩn hoá) → original_values (nguyên văn) → scale_symbol
+    #
+    # `fact_id` KHÔNG đổi: nó là thứ IR ghim vào, và đổi nó thì mọi trích dẫn
+    # của chương trình trượt hàng loạt vì một lý do chẳng liên quan gì tới đề.
+    #: Ký hiệu thang đã buộc về 1. `None` ⇔ mục này chưa từng bị viết lại.
+    scale_symbol: str | None = None
+    #: `values` TRƯỚC khi chuẩn hoá — `('4a/5',)`. Rỗng ⇔ không có phép viết lại.
+    original_values: tuple[Any, ...] = ()
+
 
 class RequestContract(BaseModel):
     """Hợp đồng yêu cầu — bất biến sau khi server đóng băng."""
@@ -95,6 +112,8 @@ class RequestContract(BaseModel):
 
     obligations: tuple[Obligation, ...] = ()
     input_facts: tuple[InputFact, ...] = ()
+    #: Phép buộc thang do SERVER quyết, không do LLM. `None` ⇔ không chuẩn hoá.
+    scale_binding: ScaleBinding | None = None
 
     def fact(self, fact_id: str) -> InputFact | None:
         for f in self.input_facts:

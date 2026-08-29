@@ -31,6 +31,7 @@ from .contract import SemanticProgramSpec
 # và hai bản rời nhau chắc chắn sẽ lệch khi thêm primitive.
 from .coverage_gate import _producers
 from .request_contract import RequestContract, norm_value
+from .scale_normalization import bang_huu_ti, la_so_huu_ti
 
 #: HẠT KHỞI TẠO — giá trị quy ước để bắt đầu, KHÔNG mang thông tin của đề.
 #:
@@ -68,6 +69,26 @@ _KIEU_DUOC_GIA_THIET = frozenset({"point3", "vector3"})
 #: Ba mã lỗi riêng, không gộp vào `INPUT_NOT_GROUNDED`. Gộp thì thông điệp nói
 #: "không truy được về đề bài" cho một chương trình đang khai đáp án — sai bệnh,
 #: và vòng sửa sẽ đi tìm `source_fact_id` thay vì bỏ giá trị bịa đi.
+#: Kiểu mang TOẠ ĐỘ — tập được đếm cho `JUSTIFIED_GEOMETRY_LITERAL_RATE`.
+#:
+#: Rộng hơn `_KIEU_DUOC_GIA_THIET` một cách CÓ CHỦ ĐÍCH: `plane3`/`line3` khai
+#: literal thì đó vẫn là một giá trị hình học phải biện minh, dù kênh giả thiết
+#: không nhận chúng. Đếm hẹp hơn tập phải biện minh là tự cho mình điểm.
+_KIEU_HINH_HOC = frozenset({"point3", "vector3", "plane3", "line3"})
+
+#: BA LỚP BIỆN MINH cho một literal hình học (§6 của chỉ thị). Không có lớp nào
+#: khớp ⇒ literal bị TỪ CHỐI — đó là bất biến, còn tỉ lệ chỉ là phép đếm.
+#:
+#:   A  tự do hệ trục      — người giải được chọn hệ toạ độ, đề không cho.
+#:   B  ghim về nguồn      — mọi nguyên tử truy được về mục dữ kiện đã chỉ.
+#:   C  hiện thực mô hình  — ghim về một dữ kiện QUAN HỆ (không có số để đối
+#:                           chiếu); ràng buộc của nó do hậu điều kiện/oracle
+#:                           tất định kiểm sau, không phải P2.
+#:
+#: Buộc thang KHÔNG phải giả thiết tuỳ tiện: nó đi lối B, vì mục dữ kiện đã
+#: mang đúng con số mà server tự chốt.
+LOP_BIEN_MINH = ("A", "B", "C")
+
 ERR_GIA_THIET_SAI_KIEU = "MODEL_ASSUMPTION_TYPE_NOT_ALLOWED"
 ERR_GIA_THIET_LA_DAP_AN = "MODEL_ASSUMPTION_IS_ANSWER"
 ERR_GIA_THIET_KHONG_LY_DO = "MODEL_ASSUMPTION_NO_REASON"
@@ -90,6 +111,12 @@ class GroundingResult(BaseModel):
     #: xưng giữa hai lượt LLM thay vì phải suy từ dấu vết. Rỗng ⇔ hai lượt gọi
     #: tên dữ kiện y hệt nhau.
     unresolved_citations: list[str] = Field(default_factory=list)
+    #: `"tên|kiểu|lớp|lý do"` cho từng literal ĐÃ biện minh được, và `"tên|kiểu|
+    #: lý do"` cho từng literal KHÔNG. Hai danh sách này là mẫu số và tử số của
+    #: `JUSTIFIED_GEOMETRY_LITERAL_RATE`; đếm lại từ `unresolved` thì không tách
+    #: được literal hình học khỏi mọi lời từ chối khác.
+    justified_literals: list[str] = Field(default_factory=list)
+    unjustified_literals: list[str] = Field(default_factory=list)
 
 
 def _canon(value: Any) -> tuple[Any, ...]:
@@ -137,6 +164,18 @@ def check_grounding(
     #: Biến nào mang CÂU TRẢ LỜI. Không bao giờ được là giả thiết.
     dap_an = {ob.witness for ob in contract.obligations if ob.witness}
     ma_loi: str | None = None
+    biet_minh: list[str] = []
+    vo_can: list[str] = []
+
+    def _ghi(decl, lop: str, ly_do: str) -> None:
+        biet_minh.append(f"{decl.name}|{decl.type}|{lop}|{ly_do}")
+
+    def _bac(decl, ly_do: str) -> None:
+        """Từ chối MỘT literal. Ghi vào cả hai chỗ: `unresolved` gác cửa,
+        `vo_can` để đếm — trộn hai vai vào một danh sách thì lần thêm nhánh
+        sau chắc chắn có chỗ quên một trong hai."""
+        unresolved.append(f"{decl.name}: {ly_do}")
+        vo_can.append(f"{decl.name}|{decl.type}|{ly_do}")
 
     # MỘT lớp được miễn `source_fact_id`, và nó kiểm được ở phía server chứ
     # không do chương trình tự khai.
@@ -196,32 +235,27 @@ def check_grounding(
             ly_do = str(decl.model_assumption).strip()
             if decl.name in dap_an:
                 ma_loi = ma_loi or ERR_GIA_THIET_LA_DAP_AN
-                unresolved.append(
-                    f"{decl.name}: là WITNESS của một nghĩa vụ — câu trả lời "
-                    "không bao giờ được khai làm giả thiết. Hãy để một câu "
-                    "lệnh tính ra nó."
-                )
+                _bac(decl,
+                     "là WITNESS của một nghĩa vụ — câu trả lời không bao giờ "
+                     "được khai làm giả thiết. Hãy để một câu lệnh tính ra nó.")
             elif decl.type not in _KIEU_DUOC_GIA_THIET:
                 ma_loi = ma_loi or ERR_GIA_THIET_SAI_KIEU
-                unresolved.append(
-                    f"{decl.name}: kiểu '{decl.type}' không được mang giả thiết "
-                    f"mô hình hoá (chỉ {sorted(_KIEU_DUOC_GIA_THIET)}). Đối "
-                    "tượng này phải được DỰNG từ các điểm đã chọn."
-                )
+                _bac(decl,
+                     f"kiểu '{decl.type}' không được mang giả thiết mô hình hoá "
+                     f"(chỉ {sorted(_KIEU_DUOC_GIA_THIET)}). Đối tượng này phải "
+                     "được DỰNG từ các điểm đã chọn.")
             elif not ly_do:
                 ma_loi = ma_loi or ERR_GIA_THIET_KHONG_LY_DO
-                unresolved.append(
-                    f"{decl.name}: giả thiết mô hình hoá phải nêu LÝ DO chọn."
-                )
+                _bac(decl, "giả thiết mô hình hoá phải nêu LÝ DO chọn.")
             else:
                 gia_thiet.append(f"{decl.name}: {ly_do}")
+                _ghi(decl, "A", ly_do)
             continue
 
         if not fid:
-            unresolved.append(
-                f"{decl.name}: có initial_value nhưng thiếu source_fact_id — "
-                "không truy được về đề bài"
-            )
+            _bac(decl,
+                 "có initial_value nhưng thiếu source_fact_id — không truy "
+                 "được về đề bài")
             continue
 
         fact, cach = contract.fact_noi_long(fid)
@@ -249,28 +283,25 @@ def check_grounding(
             if decl.model_assumption and str(decl.model_assumption).strip():
                 if decl.name in dap_an:
                     ma_loi = ma_loi or ERR_GIA_THIET_LA_DAP_AN
-                    unresolved.append(
-                        f"{decl.name}: là WITNESS của một nghĩa vụ — không được "
-                        "khai làm giả thiết, kể cả khi có source_fact_id."
-                    )
+                    _bac(decl,
+                         "là WITNESS của một nghĩa vụ — không được khai làm "
+                         "giả thiết, kể cả khi có source_fact_id.")
                 elif decl.type not in _KIEU_DUOC_GIA_THIET:
                     ma_loi = ma_loi or ERR_GIA_THIET_SAI_KIEU
-                    unresolved.append(
-                        f"{decl.name}: kiểu '{decl.type}' không được mang giả "
-                        f"thiết mô hình hoá (chỉ {sorted(_KIEU_DUOC_GIA_THIET)})."
-                    )
+                    _bac(decl,
+                         f"kiểu '{decl.type}' không được mang giả thiết mô "
+                         f"hình hoá (chỉ {sorted(_KIEU_DUOC_GIA_THIET)}).")
                 else:
-                    gia_thiet.append(
-                        f"{decl.name}: {str(decl.model_assumption).strip()}"
-                    )
+                    ly_do = str(decl.model_assumption).strip()
+                    gia_thiet.append(f"{decl.name}: {ly_do}")
+                    _ghi(decl, "A", ly_do)
                     trich_dan_hong.append(
                         f"{decl.name}: source_fact_id '{fid}' không giải được — "
                         "nhận theo kênh giả thiết mô hình hoá"
                     )
                 continue
-            unresolved.append(
-                f"{decl.name}: source_fact_id '{fid}' không có trong RequestContract"
-            )
+            _bac(decl,
+                 f"source_fact_id '{fid}' không có trong RequestContract")
             continue
         if cach != "exact":
             trich_dan_hong.append(
@@ -340,14 +371,19 @@ def check_grounding(
             # chỗ trống. Nguyên tử của một toạ độ là SỐ; một mục không chứa số
             # nào thì không thể cấp phép cũng không thể bác bỏ nó, nên đòi khớp
             # ở đó là một phép kiểm không có câu trả lời đúng.
-            co_so = any(
-                isinstance(v, (int, float)) and not isinstance(v, bool)
-                for v in cho
-            )
+            # `la_so_huu_ti`, không phải `isinstance(int|float)`: sau khi
+            # chuẩn hoá thang, mục dữ kiện giữ `'4/5'` — một CON SỐ viết chính
+            # xác. Hỏi bằng `isinstance` thì nó đọc ra "fact quan hệ", và mọi
+            # toạ độ ghim vào đó đi qua mà không ai đối chiếu gì. Đúng thứ cửa
+            # sau mà nhánh này được viết ra để KHÔNG mở.
+            co_so = any(la_so_huu_ti(v) for v in cho)
             if not co_so:
                 ly_do = str(decl.model_assumption or "").strip()
                 if ly_do:
                     gia_thiet.append(f"{decl.name}: {ly_do}")
+                _ghi(decl, "C",
+                     f"hiện thực mô hình theo dữ kiện quan hệ '{fid}' "
+                     f"({fact.label}) — ràng buộc do hậu điều kiện kiểm")
                 trich_dan_hong.append(
                     f"{decl.name}: ghim về '{fid}' ({fact.label}) — fact QUAN HỆ "
                     "không có giá trị để đối chiếu, nhận theo giả thiết toạ độ"
@@ -355,12 +391,28 @@ def check_grounding(
                 continue
             khai = tuple(v for v in khai if v != 0 or isinstance(v, bool))
 
-        thua = [v for v in khai if v not in cho]
+        # `v not in cho` là phép so THEO GIÁ TRỊ, và nó mù với cách viết: mục
+        # đã chuẩn hoá thang giữ `'4/5'` (chính xác), còn IR chỉ viết được
+        # `0.8` vì JSON không có kiểu phân số. Không có `bang_huu_ti` thì phép
+        # chuẩn hoá thang tự bắn vào chân mình.
+        thua = [
+            v for v in khai
+            if v not in cho and not any(bang_huu_ti(v, c) for c in cho)
+        ]
         if thua:
-            unresolved.append(
-                f"{decl.name}: giá trị {thua!r} không có trong mục '{fid}' "
-                f"({fact.label}) — đề không cho những giá trị này"
-            )
+            # Với TOẠ ĐỘ, nói thêm đúng một điều: có hai kênh, và đây là kênh
+            # sai. Không phải gợi ý cách giải — một toạ độ SUY RA từ ràng buộc
+            # (chân đường cao, đỉnh của một tam giác vuông) không bằng số nào
+            # trong mục độ dài, nên ghim vào mục ấy là khai sai XUẤT XỨ chứ
+            # chưa chắc đã sai hình. Không nói ra thì vòng sửa đi chỉnh toạ độ
+            # cho khớp một con số — tức là sửa đúng thứ đang đúng.
+            them = (" — toạ độ suy ra từ ràng buộc thì ghim về dữ kiện QUAN HỆ "
+                    "mô tả ràng buộc ấy" if la_toa_do else "")
+            _bac(decl,
+                 f"giá trị {thua!r} không có trong mục '{fid}' ({fact.label}) "
+                 f"— đề không cho những giá trị này{them}")
+        else:
+            _ghi(decl, "B", f"ghim về '{fid}' ({fact.label})")
 
     if unresolved:
         return GroundingResult(
@@ -369,7 +421,23 @@ def check_grounding(
             unresolved=unresolved,
             assumptions=gia_thiet,
             unresolved_citations=trich_dan_hong,
+            justified_literals=biet_minh,
+            unjustified_literals=vo_can,
         )
     return GroundingResult(
-        ok=True, assumptions=gia_thiet, unresolved_citations=trich_dan_hong
+        ok=True, assumptions=gia_thiet, unresolved_citations=trich_dan_hong,
+        justified_literals=biet_minh, unjustified_literals=vo_can,
     )
+
+
+def ti_le_literal_hinh_hoc(kq: GroundingResult) -> tuple[int, int]:
+    """`(số literal hình học ĐÃ biện minh, tổng literal hình học)`.
+
+    Tách khỏi `check_grounding` để bộ đo gọi được mà không phải bóc chuỗi —
+    và để định nghĩa "literal hình học" nằm ở ĐÚNG MỘT chỗ.
+    """
+    def dem(ds: list[str]) -> int:
+        return sum(1 for d in ds if d.split("|")[1] in _KIEU_HINH_HOC)
+
+    dat = dem(kq.justified_literals)
+    return dat, dat + dem(kq.unjustified_literals)

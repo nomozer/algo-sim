@@ -191,6 +191,38 @@ def _bang_token(ket: list[dict]) -> dict:
             "tokens_moi_correct_ir": round(tt / dung) if dung else None}
 
 
+#: Kiểu mang toạ độ — cùng tập mà `grounding_gate._KIEU_HINH_HOC` đếm. Chép ở
+#: đây thì hai bên sẽ trôi; nên bộ đo HỎI hệ được đo, không tự định nghĩa.
+def _kieu_hinh_hoc() -> frozenset[str]:
+    from app.simulation.semantic_program.grounding_gate import _KIEU_HINH_HOC
+    return _KIEU_HINH_HOC
+
+
+def _do_luong_7(ket: list[dict]) -> dict:
+    """Ba con số §7. Cộng theo LƯỢT, không trung bình hoá tỉ lệ từng lượt.
+
+    Trung bình các tỉ lệ cho một lượt khai 1 literal cùng trọng số với một lượt
+    khai 12 — và lượt 12 literal mới là chỗ mô hình dễ bỏ sót xuất xứ nhất.
+    """
+    kieu = _kieu_hinh_hoc()
+
+    def dem(ds) -> int:
+        return sum(1 for d in (ds or []) if d.split("|")[1] in kieu)
+
+    dat = sum(dem(r.get("justified_literals")) for r in ket)
+    vo_can = sum(dem(r.get("unjustified_literals")) for r in ket)
+    kiem = sum(len(r.get("constraints_checked") or []) for r in ket)
+    thoa = sum(len(r.get("constraints_verified") or []) for r in ket)
+    tong = dat + vo_can
+    return {
+        "literal_co_can_cu": dat, "literal_vo_can": vo_can, "literal_tong": tong,
+        "ti_le_literal": f"{dat / tong:.0%}" if tong else "—",
+        "rang_buoc_kiem": kiem, "rang_buoc_dat": thoa,
+        "ti_le_rang_buoc": f"{thoa / kiem:.0%}" if kiem else "—",
+        "co_buoc_thang": sum(1 for r in ket if r.get("scale_binding")),
+    }
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--canary3", action="store_true",
@@ -292,12 +324,20 @@ def main() -> int:
               f" dựng={sum(1 for t in x if t['construction_match'])}/{a.k}"
               f" nv={sorted({t['so_nghia_vu'] for t in x})}"
               f" stage={sorted({str(t['stage_reached']) for t in x})}")
+    do = _do_luong_7(ket)
+    print("\n── §7 · LITERAL & RÀNG BUỘC NGUỒN ──")
+    print(f"  JUSTIFIED_GEOMETRY_LITERAL_RATE  {do['literal_co_can_cu']}/"
+          f"{do['literal_tong']} = {do['ti_le_literal']}")
+    print(f"  UNJUSTIFIED_LITERAL_COUNT        {do['literal_vo_can']}")
+    print(f"  SOURCE_CONSTRAINT_PRESERVATION   {do['rang_buoc_dat']}/"
+          f"{do['rang_buoc_kiem']} = {do['ti_le_rang_buoc']}")
+    print(f"  buộc thang đã áp               {do['co_buoc_thang']}/{len(ket)} lượt")
     tok = _bang_token(ket)
     print("\n── TOKEN ──")
     for k2, v in tok.items():
         print(f"  {k2:<26} {v}")
     (M.RA / "tong_hop.json").write_text(
-        json.dumps({"k": a.k, "token": tok, "runs": ket},
+        json.dumps({"k": a.k, "token": tok, "do_luong_7": do, "runs": ket},
                    ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return 2 if nha_cc else 0
 

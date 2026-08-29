@@ -357,7 +357,13 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # mô hình khai `model_assumption` cho hai đỉnh đầu rồi quên phần còn lại.
     # Prompt đổi ⇒ đề cũ trong cache sẽ trả chương trình sinh bằng bản prompt
     # cũ, tức đo nhầm bản.
-    assert main_module.CACHE_VERSION == "47"
+    # 48: CHUẨN HOÁ THANG (`scale_normalization.py`). `build_request_contract`
+    # nay viết lại dữ kiện hình học `AB = a`, `SA = 4a/5` thành `1`, `4/5`
+    # TRƯỚC khi mô hình nhìn thấy hợp đồng, và khối dữ kiện trong prompt khai
+    # thẳng `a = 1` là do SERVER chốt. Không file `.md` nào bị sửa nhưng đầu
+    # vào của lượt sinh chương trình đổi hẳn — cache cũ sẽ trả chương trình
+    # viết dưới thang mô hình TỰ chọn (đã quan sát: `a = 25`), tức đo nhầm bản.
+    assert main_module.CACHE_VERSION == "48"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

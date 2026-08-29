@@ -419,6 +419,21 @@ async def mot_luot(bai: dict, lan: int, api_key: str) -> dict:
         "thu_that_bai": [d.get("message", "")[:400]
                          for d in ghi.lay("semantic_program_attempt")
                          if not d.get("ok")],
+        # ── §7 · BA CON SỐ MỚI, và chúng do HỆ ĐƯỢC ĐO phát ra ──────────────
+        #
+        # Không dựng lại từ artifact ở phía bộ đo: dựng lại là định nghĩa
+        # "biện minh" lần thứ hai, và hai định nghĩa sẽ trôi khỏi nhau đúng
+        # như sáu lần trước (C₁a → C₁b → C₂ → learner_surface → bộ chấm DEV →
+        # bộ chấm pool). `route` là chủ sở hữu; ở đây chỉ chép.
+        "justified_literals": sr.get("justified_literals") or [],
+        "unjustified_literals": sr.get("unjustified_literals") or [],
+        "constraints_checked": sr.get("constraints_checked") or [],
+        "constraints_verified": sr.get("constraints_verified") or [],
+        # Phép buộc thang, nếu có: ký hiệu nào, viết lại những gì. Đây là chỗ
+        # đọc ngược được `4a/5 → 4/5` mà không phải tin một dòng log.
+        "scale_binding": (
+            hd.scale_binding.model_dump(mode="json")
+            if hd is not None and hd.scale_binding is not None else None),
     }
     # MODEL OUTPUT ghi RIÊNG — hợp đồng và chương trình là thứ phải đọc lại được
     # khi phân loại, và không telemetry nào phát chúng ra.

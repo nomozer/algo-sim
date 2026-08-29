@@ -37,6 +37,14 @@ class PostconditionResult(BaseModel):
     #: Nghĩa vụ mà checker KHÔNG biểu diễn được ⇒ mức yếu (`verification_gap`).
     #: Tách hẳn khỏi `violations`: "tôi không biết" ≠ "chương trình sai".
     weak_kinds: list[str] = Field(default_factory=list)
+    #: RÀNG BUỘC NGUỒN đã chạy qua một checker tất định — mẫu số của
+    #: `SOURCE_CONSTRAINT_PRESERVATION_RATE`. Nghĩa vụ không có checker KHÔNG
+    #: nằm ở đây: nó chưa từng được thi hành, nên đưa vào mẫu số là tính một
+    #: phép kiểm chưa xảy ra.
+    checked: list[str] = Field(default_factory=list)
+    #: Trong `checked`, những cái checker nói ĐẠT. Tử số của cùng tỉ lệ ấy.
+    #: `weak` nằm trong `checked` mà không nằm đây — đúng như nó phải thế.
+    verified: list[str] = Field(default_factory=list)
 
 
 def _final(exec_result) -> dict[str, Any]:
@@ -606,6 +614,8 @@ def check_postconditions(
             snap[ten_hd] = snap[ten_ct]
     violations: list[str] = []
     weak: list[str] = []
+    da_kiem: list[str] = []
+    da_dat: list[str] = []
     for ob in contract.obligations:
         # Kiểm TRƯỚC mọi checker, cho MỌI nghĩa vụ: trạng thái chứa node biểu
         # thức chưa được tính là rác, bất kể kind là gì. Để từng checker tự lo
@@ -620,6 +630,7 @@ def check_postconditions(
         fn = CHECKERS.get(ob.kind)
         if fn is None:
             continue
+        da_kiem.append(ob.describe())
         try:
             msg = fn(snap, ob)
         except KhongKiemChungDuoc as e:
@@ -630,15 +641,18 @@ def check_postconditions(
             msg = f"{ob.describe()}: không kiểm được hậu điều kiện ({e})"
         if msg:
             violations.append(msg)
+        else:
+            da_dat.append(ob.describe())
 
+    dem = {"checked": da_kiem, "verified": da_dat}
     if violations:
         return PostconditionResult(
             ok=False, error_code="POSTCONDITION_VIOLATED",
-            violations=violations, weak_kinds=sorted(set(weak)),
+            violations=violations, weak_kinds=sorted(set(weak)), **dem,
         )
     if weak:
         return PostconditionResult(
             ok=False, error_code="SEMANTIC_VERIFICATION_UNAVAILABLE",
-            weak_kinds=sorted(set(weak)),
+            weak_kinds=sorted(set(weak)), **dem,
         )
-    return PostconditionResult(ok=True)
+    return PostconditionResult(ok=True, **dem)

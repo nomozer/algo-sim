@@ -3217,6 +3217,27 @@ Sở hữu **hợp đồng yêu cầu đã đóng băng** (`frozen=True`). Đây
 sinh không được khai lại nghĩa vụ" trở thành bất khả thay vì lời dặn. Ghi rõ giới
 hạn: separation of responsibility, **không phải** independent oracle.
 
+### `backend/app/simulation/semantic_program/scale_normalization.py` · offline
+
+Sở hữu **SOURCE_SYMBOL_BINDING / SCALE_NORMALIZATION** — phép buộc *thang tự do*
+của đề hình học về `1`, tất định, do SERVER quyết chứ không do LLM. Đề viết
+`AB = a`, `SA = 4a/5` ⇒ hợp đồng ra `1`, `4/5` (giữ **phân số chính xác**, không
+đi qua `float`). Điểm vào duy nhất `chuan_hoa_thang(contract, problem_text)`,
+gọi từ cuối `build_request_contract` và **chỉ cho `hinh_hoc`**.
+
+Vì sao tồn tại: `_KIEU_DUOC_GIA_THIET` chỉ cho `point3`/`vector3` mang giả thiết
+— đúng, và **không được nới** — nên một đại lượng vô hướng hiện thực ký hiệu `a`
+không có đường hợp lệ nào. Đó là khoảng trống BIỂU DIỄN, không phải mô hình sai.
+
+Năm chỗ **fail closed**, mỗi chỗ là một cách nói dối mà vẫn xanh: không có biểu
+thức thang · **hai** ký hiệu tự do (không được tự kết luận `a = b`) · đề gán số
+(`a = 5`) · ký hiệu chính là ẩn số (*"tìm a"*) · biểu thức vô tỉ/nhập nhằng
+(`a√2`, `3/2a`). Xuất xứ ba chặng: `values` → `original_values` → `scale_symbol`,
+`fact_id` **không đổi**. Cũng sở hữu `la_so_huu_ti` / `bang_huu_ti` — phép so
+`'4/5' ≡ 0.8` mà `grounding_gate` phải dùng, nếu không mục đã chuẩn hoá đọc ra
+"dữ kiện quan hệ không có gì để so" và biến kênh giả thiết toạ độ thành cửa sau.
+Test: `tests/geometry/test_scale_normalization.py` (tám ca A–H của chỉ thị).
+
 ### `backend/app/simulation/semantic_program/coverage_gate.py` · offline
 
 Sở hữu **C₁a** (structural, trước execution) và **C₁b** (realized, sau execution).
@@ -3256,6 +3277,20 @@ khác 0 vẫn phải khớp. Nguồn: Phase 5.5 đo 5/10 bài chết vì P2 đò
 `(1,0,0)` phải truy về mục `canh_day`. Điều kiện dựa trên **kiểu**, không dựa
 trên việc model có nhớ khai `model_assumption` — bắt phép kiểm phụ thuộc trí nhớ
 của model là đo trí nhớ chứ không đo tính có căn cứ. R0 giữ bằng khoá witness.
+
+Wave 5 (2026-08-29) thêm **PHÉP ĐẾM BIỆN MINH**, không thêm luật gác cửa. Ba lớp
+`A` tự do hệ trục · `B` ghim về nguồn · `C` hiện thực mô hình theo dữ kiện quan
+hệ; không lớp nào ⇒ từ chối (đúng như trước). Mới là hai danh sách
+`justified_literals` / `unjustified_literals` (khuôn `tên|kiểu|lớp|lý do`) và
+`ti_le_literal_hinh_hoc()` — nguồn DUY NHẤT của
+`JUSTIFIED_GEOMETRY_LITERAL_RATE`; bộ đo **hỏi** hàm này chứ không tự định
+nghĩa "biện minh" lần thứ hai. Bất biến *"mọi đỉnh dẫn xuất phải do primitive
+dựng"* đã bị **bác bỏ**: IR không có tịnh tiến/hoàn thành hình bình hành, nên nó
+sẽ buộc `unsupported` gần hết bài hình lập phương.
+
+Cùng wave, `co_so` hỏi `la_so_huu_ti` thay cho `isinstance(int|float)`: sau chuẩn
+hoá thang mục giữ `'4/5'` — một CON SỐ viết chính xác — và hỏi bằng `isinstance`
+thì nó đọc ra "fact quan hệ" rồi cho qua mọi toạ độ ghim vào đó.
 
 ### `frontend/src/simulations/domains/geometry/scene3d-model.ts` · offline
 

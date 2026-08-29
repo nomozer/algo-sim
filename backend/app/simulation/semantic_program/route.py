@@ -77,6 +77,19 @@ class SemanticRouteOutcome(BaseModel):
     #: thay vì suy.
     grounding_assumptions: list[str] = Field(default_factory=list)
     grounding_unresolved_citations: list[str] = Field(default_factory=list)
+    #: QUAN TRẮC §7 — cũng KHÔNG gác cửa. Ba con số của chỉ thị SCALE
+    #: NORMALIZATION được sinh ở đây thay vì để bộ đo dựng lại từ artifact:
+    #: bộ đo dựng lại là bộ đo tự định nghĩa "biện minh" lần thứ hai, và hai
+    #: định nghĩa sẽ trôi khỏi nhau đúng như sáu lần trước.
+    #:
+    #:   `justified_literals` / `unjustified_literals` → tỉ lệ literal có căn cứ
+    #:   `constraints_checked` / `constraints_verified` → tỉ lệ ràng buộc nguồn
+    #:   được BẢO TOÀN và KIỂM. `checked` là mẫu số, nên nghĩa vụ không có
+    #:   checker không lọt vào — chưa thi hành thì không tính là đã kiểm.
+    justified_literals: list[str] = Field(default_factory=list)
+    unjustified_literals: list[str] = Field(default_factory=list)
+    constraints_checked: list[str] = Field(default_factory=list)
+    constraints_verified: list[str] = Field(default_factory=list)
     #: Cảnh 3D của miền hình học — **một Ô TRỐNG, không phải một phép tính**.
     #:
     #: `route` KHÔNG dựng nó và KHÔNG import `scene3d`: hướng phụ thuộc một
@@ -126,14 +139,23 @@ def verify_and_compile(
     y hệt "không có giả thiết nào", nên số liệu sai mà không ai thấy.
     """
     ground = check_grounding(contract, spec)
+    # Cùng lý do "gắn ở MỘT chỗ" như trên: `_sau_grounding` có 11 điểm thoát,
+    # nên số ràng buộc đã kiểm được nhét vào một ô do hàm bọc sở hữu thay vì
+    # gắn tay ở nhánh nào chạy tới C₂.
+    quan_trac: dict[str, list[str]] = {"checked": [], "verified": []}
     kq = _sau_grounding(
         contract, spec, ground,
         execution_budget=execution_budget,
         presentation_budget=presentation_budget,
+        quan_trac=quan_trac,
     )
     return kq.model_copy(update={
         "grounding_assumptions": list(ground.assumptions),
         "grounding_unresolved_citations": list(ground.unresolved_citations),
+        "justified_literals": list(ground.justified_literals),
+        "unjustified_literals": list(ground.unjustified_literals),
+        "constraints_checked": quan_trac["checked"],
+        "constraints_verified": quan_trac["verified"],
     })
 
 
@@ -142,6 +164,7 @@ def _sau_grounding(
     spec: SemanticProgramSpec,
     ground,
     *,
+    quan_trac: dict[str, list[str]] | None = None,
     execution_budget: int = DEFAULT_EXECUTION_BUDGET,
     presentation_budget: int = DEFAULT_PRESENTATION_BUDGET,
 ) -> SemanticRouteOutcome:
@@ -245,6 +268,9 @@ def _sau_grounding(
 
     post = check_postconditions(contract, spec, exec_res,
                                 ten_da_hoa_giai=c1a.ten_da_hoa_giai)
+    if quan_trac is not None:
+        quan_trac["checked"] = list(post.checked)
+        quan_trac["verified"] = list(post.verified)
     # C₂ nay có HAI kết cục âm, và chúng khác hẳn nhau:
     #   POSTCONDITION_VIOLATED            — chương trình tự mâu thuẫn
     #   SEMANTIC_VERIFICATION_UNAVAILABLE — checker không biểu diễn được vị từ

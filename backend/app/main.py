@@ -210,7 +210,7 @@ MAX_EXPLAIN_CONTEXT_BYTES = 16_384
 #       tin hợp đồng: `construct_point C = arith(B + D)` xuất hiện ở HAI vòng đo
 #       độc lập. Thẻ văn phạm nay gọi trường ấy là "phép dựng ĐIỂM" thay vì
 #       "biểu thức" ⇒ bề mặt prompt đổi.
-CACHE_VERSION = "47"
+CACHE_VERSION = "48"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.
