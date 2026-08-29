@@ -142,6 +142,55 @@ def _nap_oracle():
 
 
 # ── chấm bằng ORACLE ĐỘC LẬP ──────────────────────────────────────────────
+def _bool_hoac_nguyen(x):
+    """`"true"`/`"false"` (chuỗi) → `bool`. Giữ nguyên mọi thứ khác.
+
+    `pool.oracle_result` sinh từ dòng `ĐÁP ÁN:` của gói chép, nên quan hệ nằm
+    ở đó dưới dạng CHUỖI. Không chuẩn hoá thì nhánh boolean không bao giờ
+    chạy — xem khối chú thích trong `cham_oracle`.
+    """
+    if isinstance(x, str) and x.strip().lower() in ("true", "false"):
+        return x.strip().lower() == "true"
+    return x
+
+
+def _CHECKER_QUAN_HE() -> set[str]:
+    from app.simulation.semantic_program.coverage_gate import _QUAN_HE_HINH_HOC
+    return set(_QUAN_HE_HINH_HOC)
+
+
+def _cham_bang_checker(kind: str, fm: dict, ob):
+    """`None` ⇒ thoả · `True`/chuỗi ⇒ vi phạm · `False` ⇒ KHÔNG chấm được."""
+    from app.simulation.semantic_program.domain_profile import khop_ky_hieu
+    from app.simulation.semantic_program.geometry_obligations import (
+        GEOMETRY_CHECKERS,
+    )
+    fn = GEOMETRY_CHECKERS.get(kind)
+    if fn is None:
+        return False
+    # BÍ DANH trước khi gọi — cùng việc `check_postconditions` làm. Thiếu nó
+    # thì checker tra trượt tên hợp đồng (`B'D'` ≠ `B_prime_D_prime`) và trả
+    # "cặp đối tượng không hợp lệ", một lỗi TRA TÊN bị đọc thành SAI.
+    try:
+        snap = dict(fm)
+        ten_can = [getattr(ob, "container", None), getattr(ob, "witness", None)]
+        ten_can += [v for v in (getattr(ob, "params", None) or {}).values()
+                    if isinstance(v, str)]
+        for ten in ten_can:
+            if ten and ten not in snap:
+                if (thay := khop_ky_hieu(ten, set(snap))) is not None:
+                    snap[ten] = snap[thay]
+        msg = fn(snap, ob)
+    except Exception:  # noqa: BLE001 — lượt đo, không được ném ra ngoài
+        return False
+    if msg is None:
+        return None
+    import re as _re
+    if _re.search(r"không hợp lệ|thiếu|không tìm thấy|chưa có", str(msg), _re.I):
+        return False                      # không chấm được ≠ sai
+    return str(msg)
+
+
 def cham_oracle(case: dict, contract, final_memory: dict | None) -> dict[str, Any]:
     """So kết quả máy với `oracle_result` — bám theo NGHĨA VỤ, không theo tên biến.
 
@@ -165,8 +214,31 @@ def cham_oracle(case: dict, contract, final_memory: dict | None) -> dict[str, An
     for kind in cham_duoc:
         ob = obls[kind]
         may = final_memory.get(ob.witness) if ob.witness else None
-        de = mong[kind]
-        if isinstance(de, bool):
+        de = _bool_hoac_nguyen(mong[kind])
+        # ─── NGHĨA VỤ QUAN HỆ HỎI CHECKER, KHÔNG SO GIÁ TRỊ ─────────────────
+        #
+        # Đo được 2026-08-29 (xác nhận postfix): `pool.oracle_result` lưu quan
+        # hệ dưới dạng CHUỖI `"true"`, nên `isinstance(de, bool)` là False và
+        # nhánh số học chạy `Fraction("true")` ⇒ luôn *"không so được"*. Mọi
+        # nghĩa vụ `parallel`/`perpendicular`/`point_on_*`/`coplanar` vì thế
+        # KHÔNG BAO GIỜ chấm đúng được — 9/14 ô tầng A của `BANG_O`.
+        #
+        # Sửa đúng tầng: quan hệ được chứng minh bằng **checker server-owned**
+        # chạy lại tính chất từ trạng thái cuối, quy ước `None` ⇒ thoả. So
+        # `final_memory[witness]` với một hằng là đọc nhầm hợp đồng ngay từ
+        # đầu — witness của quan hệ là ĐỐI TƯỢNG THỨ HAI, không phải kết quả.
+        loi_ck = (_cham_bang_checker(kind, final_memory, ob)
+                  if isinstance(de, bool) and kind in _CHECKER_QUAN_HE()
+                  else False)
+        if loi_ck is not False:
+            # Checker chấm được ⇒ nó là nguồn sự thật. `None` ⇒ thoả.
+            thoa = loi_ck is None
+            if thoa is not de:
+                lech.append(f"{kind}: checker nói {thoa}, đề mong {de}")
+        elif isinstance(de, bool):
+            # RƠI VỀ so boolean khi checker không chấm được. Giữ đường cũ cho
+            # chương trình thật sự khai một boolean vào witness — bỏ nó đi là
+            # đổi hợp đồng, không phải sửa lỗi.
             # Quan hệ: checker server-owned đã trả `None` khi thoả. Ở đây chỉ
             # đối chiếu kỳ vọng của đề với việc chương trình có khẳng định nó.
             if bool(may) != de:

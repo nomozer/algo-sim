@@ -1,0 +1,329 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a11_027",
+    "lan": 2,
+    "do_tre_giay": 67.5,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "distance"
+    ],
+    "nghia_vu_mong_doi": [
+      "distance"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "distance"
+      ],
+      "khai": [
+        "distance"
+      ],
+      "khop": [
+        "distance"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"distance: máy='12', đề mong '12/25'\"]",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1743,
+        "candidates_tokens": 483,
+        "cached_content_tokens": 1567,
+        "total_tokens": 2753,
+        "thoughts_tokens": 527,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1132,
+        "candidates_tokens": 320,
+        "cached_content_tokens": 0,
+        "total_tokens": 1872,
+        "thoughts_tokens": 420,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 5631,
+        "candidates_tokens": 1594,
+        "cached_content_tokens": 3963,
+        "total_tokens": 17686,
+        "thoughts_tokens": 10461,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5021,
+        "candidates_tokens": 146,
+        "cached_content_tokens": 0,
+        "total_tokens": 5724,
+        "thoughts_tokens": 557,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 6,
+    "so_buoc_phat_lai": 3,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "JSON không parse được (Expecting ',' delimiter: line 8 column 27 (char 298))"
+    ],
+    "oracle_cham_lai": "bộ chấm quan hệ dùng checker server-owned, 2026-08-29"
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "distance",
+        "container": "ABC",
+        "params": {
+          "witness": "khoang_cach_s_abc",
+          "wrt": "S"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_chop_s_abc",
+        "label": "Hình chóp",
+        "values": [
+          "S.ABC"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sab_vuong_goc_abc",
+        "label": "Quan hệ mặt phẳng",
+        "values": [
+          "(SAB) vuông góc với mặt đáy (ABC)"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "(SAB) vuông góc với mặt đáy (ABC)"
+        ]
+      },
+      {
+        "fact_id": "sab_vuong_tai_s",
+        "label": "Tính chất tam giác",
+        "values": [
+          "SAB vuông tại S"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "ab_length",
+        "label": "Độ dài cạnh",
+        "values": [
+          "a"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sa_length",
+        "label": "Độ dài cạnh",
+        "values": [
+          "3a/5"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính khoảng cách từ điểm S đến mặt phẳng (ABC)",
+    "description": "Xác định khoảng cách từ đỉnh S đến mặt phẳng đáy (ABC) của hình chóp S.ABC.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          -9,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_s_abc",
+        "model_assumption": "Chọn H (chân đường cao từ S xuống AB trong tam giác SAB) làm gốc tọa độ (0,0,0). Đặt A trên trục x âm. Để tránh số thập phân, ta chọn a=25 đơn vị, khi đó SA=15, SB=20, AB=25, SH=12. A=(-9,0,0)."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          16,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_s_abc",
+        "model_assumption": "B nằm trên trục x dương, B=(16,0,0)."
+      },
+      {
+        "name": "S",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          12
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_s_abc",
+        "model_assumption": "S nằm trên trục z, S=(0,0,12). Đây là vị trí của S sao cho SH là đường cao của chóp và SH=12."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          0,
+          25,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_chop_s_abc",
+        "model_assumption": "Chọn C=(0,25,0) để tạo mặt phẳng đáy (ABC) không suy biến và nằm trong mặt phẳng z=0."
+      },
+      {
+        "name": "ABC",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "khoang_cach_s_abc",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_plane",
+        "target_var": "ABC",
+        "through": [
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "Dựng mặt phẳng đáy (ABC)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "khoang_cach_s_abc",
+        "expr": {
+          "kind": "measure",
+          "quantity": "distance",
+          "of": "S",
+          "wrt": "ABC"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách xác định đường cao của hình chóp khi có điều kiện hai mặt phẳng vuông góc. Cụ thể, nếu mặt phẳng (SAB) vuông góc với mặt phẳng đáy (ABC) và tam giác SAB vuông tại S, thì đường cao SH từ S xuống cạnh chung AB trong tam giác SAB chính là đường cao của chóp S.ABC. Khoảng cách cần tìm chính là độ dài SH. Hệ tọa độ được chọn sao cho H là gốc, AB nằm trên trục x, và SH nằm trên trục z, giúp việc tính toán khoảng cách trở nên trực quan."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "-9",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "16",
+      "y": "0",
+      "z": "0"
+    },
+    "S": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "12"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "25",
+      "z": "0"
+    },
+    "ABC": {
+      "__loai__": "Plane3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "-9",
+        "y": "0",
+        "z": "0"
+      },
+      "normal": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "625"
+      }
+    },
+    "khoang_cach_s_abc": "12"
+  }
+}

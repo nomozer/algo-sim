@@ -1,0 +1,88 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a03_007",
+    "lan": 1,
+    "do_tre_giay": 16.1,
+    "stage_reached": "scope",
+    "executable": false,
+    "servable": false,
+    "error_code": "gate_not_simulation_suitable",
+    "failure_category": null,
+    "reason": "Bài này thuộc chương trình nhưng không có cơ chế nào để mô phỏng — dựng cảnh cho nó chỉ là trang trí, không giúp hiểu thêm.",
+    "details": null,
+    "so_nghia_vu": 0,
+    "nghia_vu_kinds": [],
+    "nghia_vu_mong_doi": [
+      "parallel"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "parallel"
+      ],
+      "khai": [],
+      "khop": [],
+      "thieu": [
+        "parallel"
+      ],
+      "thua": [],
+      "khop_hoan_toan": false
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "N",
+        "P",
+        "Q",
+        "R",
+        "S"
+      ],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "không có chương trình — không chấm được"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "UNGRADED: không nghĩa vụ nào khớp khoá oracle ['parallel']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1757,
+        "candidates_tokens": 815,
+        "cached_content_tokens": 0,
+        "total_tokens": 3269,
+        "thoughts_tokens": 697,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5267,
+        "candidates_tokens": 186,
+        "cached_content_tokens": 0,
+        "total_tokens": 6652,
+        "thoughts_tokens": 1199,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 1,
+    "logical_calls": 2,
+    "http_requests": 2,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": [],
+    "oracle_cham_lai": "bộ chấm quan hệ dùng checker server-owned, 2026-08-29"
+  },
+  "request_contract": null,
+  "generated_program": null,
+  "final_memory": {}
+}

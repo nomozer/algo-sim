@@ -1,0 +1,434 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a09_022",
+    "lan": 2,
+    "do_tre_giay": 34.6,
+    "stage_reached": "served",
+    "executable": true,
+    "servable": true,
+    "error_code": null,
+    "failure_category": null,
+    "reason": null,
+    "details": [],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "angle"
+    ],
+    "nghia_vu_mong_doi": [
+      "angle"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "angle"
+      ],
+      "khai": [
+        "angle"
+      ],
+      "khop": [
+        "angle"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "I"
+      ],
+      "da_dung": {
+        "I": "I"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "A'D",
+        "B'I",
+        "cos_sq_goc_a_d_b_i"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": true,
+    "oracle_vi_sao": "PASS: []",
+    "envelope_status": "ok",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1732,
+        "candidates_tokens": 446,
+        "cached_content_tokens": 0,
+        "total_tokens": 3140,
+        "thoughts_tokens": 962,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1121,
+        "candidates_tokens": 221,
+        "cached_content_tokens": 0,
+        "total_tokens": 1832,
+        "thoughts_tokens": 490,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2754,
+        "candidates_tokens": 1074,
+        "cached_content_tokens": 0,
+        "total_tokens": 7000,
+        "thoughts_tokens": 3172,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5007,
+        "candidates_tokens": 99,
+        "cached_content_tokens": 0,
+        "total_tokens": 5677,
+        "thoughts_tokens": 571,
+        "calls": 1
+      }
+    },
+    "envelope_id": "generic.semantic_program",
+    "co_scene3d": true,
+    "so_doi_tuong_canh": 12,
+    "so_buoc_phat_lai": 5,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": [],
+    "oracle_cham_lai": "bộ chấm quan hệ dùng checker server-owned, 2026-08-29"
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "angle",
+        "container": "A'D",
+        "params": {
+          "witness": "cos_sq_goc_a_d_b_i",
+          "wrt": "B'I"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lap_phuong",
+        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ]
+      },
+      {
+        "fact_id": "i_trung_diem_ab",
+        "label": "I là trung điểm của cạnh AB",
+        "values": [
+          "I là trung điểm của cạnh AB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính côsin của góc giữa hai đường thẳng A'D và B'I trong hình lập phương",
+    "description": "Chương trình dựng hình và tính toán côsin bình phương của góc giữa hai đường thẳng A'D và B'I trong hình lập phương ABCD.A'B'C'D' với I là trung điểm của AB.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "chọn A làm gốc, AB, AD, AA' lần lượt trùng với các trục Ox, Oy, Oz, cạnh hình lập phương bằng 1"
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "initial_value": [
+          1,
+          0,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "initial_value": [
+          1,
+          1,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          1,
+          1
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "hinh_lap_phuong",
+        "model_assumption": null
+      },
+      {
+        "name": "I",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "i_trung_diem_ab",
+        "model_assumption": null
+      },
+      {
+        "name": "A'D",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "B'I",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "cos_sq_goc_a_d_b_i",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "I",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "B"
+        },
+        "label": "Dựng điểm I là trung điểm của cạnh AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "A'D",
+        "through_a": "A_prime",
+        "through_b": "D",
+        "label": "Dựng đường thẳng A'D"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "B'I",
+        "through_a": "B_prime",
+        "through_b": "I",
+        "label": "Dựng đường thẳng B'I"
+      },
+      {
+        "kind": "assign",
+        "target_var": "cos_sq_goc_a_d_b_i",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "A'D",
+          "wrt": "B'I"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách sử dụng hệ tọa độ để xác định các điểm và đường thẳng trong không gian, sau đó tính toán góc giữa hai đường thẳng chéo nhau bằng cách sử dụng công cụ đo góc của hệ thống."
+  },
+  "final_memory": {
+    "A": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "0"
+    },
+    "B": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "0"
+    },
+    "C": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "0"
+    },
+    "D": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "1",
+      "z": "0"
+    },
+    "A_prime": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "0",
+      "z": "1"
+    },
+    "B_prime": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "0",
+      "z": "1"
+    },
+    "C_prime": {
+      "__loai__": "Vec3",
+      "x": "1",
+      "y": "1",
+      "z": "1"
+    },
+    "D_prime": {
+      "__loai__": "Vec3",
+      "x": "0",
+      "y": "1",
+      "z": "1"
+    },
+    "I": {
+      "__loai__": "Vec3",
+      "x": "1/2",
+      "y": "0",
+      "z": "0"
+    },
+    "A'D": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "0",
+        "z": "1"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "0",
+        "y": "1",
+        "z": "-1"
+      }
+    },
+    "B'I": {
+      "__loai__": "Line3",
+      "point": {
+        "__loai__": "Vec3",
+        "x": "1",
+        "y": "0",
+        "z": "1"
+      },
+      "direction": {
+        "__loai__": "Vec3",
+        "x": "-1/2",
+        "y": "0",
+        "z": "-1"
+      }
+    },
+    "cos_sq_goc_a_d_b_i": "2/5"
+  }
+}

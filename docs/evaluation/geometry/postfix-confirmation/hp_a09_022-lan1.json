@@ -1,0 +1,364 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a09_022",
+    "lan": 1,
+    "do_tre_giay": 48.6,
+    "stage_reached": "grounding",
+    "executable": false,
+    "servable": false,
+    "error_code": "input_not_grounded",
+    "failure_category": "insufficient_specification",
+    "reason": "Chương trình dùng dữ liệu không truy được về đề bài.",
+    "details": [
+      "angle: có initial_value nhưng thiếu source_fact_id — không truy được về đề bài"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "angle"
+    ],
+    "nghia_vu_mong_doi": [
+      "angle"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "angle"
+      ],
+      "khai": [
+        "angle"
+      ],
+      "khop": [
+        "angle"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": true,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "I"
+      ],
+      "da_dung": {
+        "I": "I"
+      },
+      "thieu": [],
+      "thua_dung": [
+        "cos_sq_goc_a_d_b_i",
+        "line_a_prime_d",
+        "line_b_prime_i"
+      ],
+      "khop_hoan_toan": true,
+      "vi_sao": "dựng đủ mọi vật đề yêu cầu"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: [\"angle: máy=None, đề mong '2/5'\"]",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1732,
+        "candidates_tokens": 443,
+        "cached_content_tokens": 0,
+        "total_tokens": 2698,
+        "thoughts_tokens": 523,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1121,
+        "candidates_tokens": 209,
+        "cached_content_tokens": 0,
+        "total_tokens": 1578,
+        "thoughts_tokens": 248,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 6041,
+        "candidates_tokens": 2675,
+        "cached_content_tokens": 1991,
+        "total_tokens": 13189,
+        "thoughts_tokens": 4473,
+        "calls": 2
+      },
+      "classify": {
+        "prompt_tokens": 5004,
+        "candidates_tokens": 119,
+        "cached_content_tokens": 0,
+        "total_tokens": 6223,
+        "thoughts_tokens": 1100,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 1,
+    "logical_calls": 5,
+    "http_requests": 5,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 1,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 4 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'literal' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'literal', 'value': [2, 2, 0]}, input_type=dict]\n    For furth"
+    ],
+    "oracle_cham_lai": "bộ chấm quan hệ dùng checker server-owned, 2026-08-29"
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "angle",
+        "container": "A'D",
+        "params": {
+          "witness": "cos_sq_goc_a_d_b_i",
+          "wrt": "B'I"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_lap_phuong",
+        "label": "ABCD.A'B'C'D' là hình lập phương",
+        "values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ],
+        "provenance": "claimed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": [
+          "ABCD.A'B'C'D' là hình lập phương"
+        ]
+      },
+      {
+        "fact_id": "i_trung_diem_ab",
+        "label": "I là trung điểm của cạnh AB",
+        "values": [
+          "I là trung điểm của cạnh AB"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tính côsin của góc giữa hai đường thẳng A'D và B'I trong hình lập phương",
+    "description": "Chương trình dựng hình và tính toán côsin bình phương của góc giữa hai đường thẳng A'D và B'I trong hình lập phương ABCD.A'B'C'D' với I là trung điểm của AB.",
+    "memory_declarations": [
+      {
+        "name": "A",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Chọn A làm gốc tọa độ (0,0,0) và cạnh hình lập phương có độ dài 2 để tránh phân số."
+      },
+      {
+        "name": "B",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đặt B trên trục Ox."
+      },
+      {
+        "name": "C",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Xác định C dựa trên A, B, D."
+      },
+      {
+        "name": "D",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          0
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đặt D trên trục Oy."
+      },
+      {
+        "name": "A_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Đặt A' trên trục Oz."
+      },
+      {
+        "name": "B_prime",
+        "type": "point3",
+        "initial_value": [
+          2,
+          0,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Xác định B' dựa trên A, B, A'."
+      },
+      {
+        "name": "C_prime",
+        "type": "point3",
+        "initial_value": [
+          2,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Xác định C' dựa trên A, B, C, A'."
+      },
+      {
+        "name": "D_prime",
+        "type": "point3",
+        "initial_value": [
+          0,
+          2,
+          2
+        ],
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": "Xác định D' dựa trên A, D, A'."
+      },
+      {
+        "name": "I",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "i_trung_diem_ab",
+        "model_assumption": null
+      },
+      {
+        "name": "line_a_prime_d",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_b_prime_i",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "cos_sq_goc_a_d_b_i",
+        "type": "float",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "angle",
+        "type": "map",
+        "initial_value": {
+          "A'D": "cos_sq_goc_a_d_b_i"
+        },
+        "element_type": null,
+        "key_type": "str",
+        "val_type": "float",
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_point",
+        "target_var": "I",
+        "expr": {
+          "kind": "midpoint",
+          "a": "A",
+          "b": "B"
+        },
+        "label": "Dựng điểm I là trung điểm của AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_a_prime_d",
+        "through_a": "A_prime",
+        "through_b": "D",
+        "label": "Dựng đường thẳng A'D"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_b_prime_i",
+        "through_a": "B_prime",
+        "through_b": "I",
+        "label": "Dựng đường thẳng B'I"
+      },
+      {
+        "kind": "assign",
+        "target_var": "cos_sq_goc_a_d_b_i",
+        "expr": {
+          "kind": "measure",
+          "quantity": "angle_cos_sq",
+          "of": "line_a_prime_d",
+          "wrt": "line_b_prime_i"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [],
+      "pointers": [],
+      "value_boxes": []
+    },
+    "pedagogical_intent": "Bài toán này minh họa cách sử dụng phương pháp tọa độ để tính góc giữa hai đường thẳng trong không gian, đặc biệt là trong hình lập phương. Học sinh sẽ thấy cách xác định tọa độ các điểm, dựng các đường thẳng và sử dụng công cụ đo góc."
+  },
+  "final_memory": {}
+}

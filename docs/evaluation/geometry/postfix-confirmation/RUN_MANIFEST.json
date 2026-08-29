@@ -1,0 +1,19 @@
+{
+  "khai": "Lượt XÁC NHẬN POSTFIX trên hệ V2. KHÔNG phải Phase 7B.",
+  "selection_hash": "0b55e0f9177676724ae4adba44f39beb57180905310c651d5dd4081c0af8b5fa",
+  "k": 2,
+  "case_ids": [
+    "hp_a09_022",
+    "hp_a10_025",
+    "hp_a06_016",
+    "hp_a03_007",
+    "hp_a11_027",
+    "hp_a02_005"
+  ],
+  "runtime": {
+    "git_sha": "unknown",
+    "cache_version": "46",
+    "model": "gemini-2.5-flash"
+  },
+  "bat_dau": "2026-08-29T11:16:03+00:00"
+}

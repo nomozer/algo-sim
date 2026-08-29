@@ -1,0 +1,554 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a02_005",
+    "lan": 2,
+    "do_tre_giay": 54.7,
+    "stage_reached": "structural_coverage",
+    "executable": false,
+    "servable": false,
+    "error_code": "requested_operation_uncovered",
+    "failure_category": "semantic_incomplete",
+    "reason": "Chương trình không có đường tạo ra thứ đề bài yêu cầu.",
+    "details": [
+      "total_mapping(duong_thang_sd_mat_phang_abm): kiểu 'array' không hợp với nghĩa vụ này"
+    ],
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "total_mapping"
+    ],
+    "nghia_vu_mong_doi": [
+      "point_on_plane"
+    ],
+    "verification_match": false,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "point_on_plane"
+      ],
+      "khai": [
+        "total_mapping"
+      ],
+      "khop": [],
+      "thieu": [
+        "point_on_plane"
+      ],
+      "thua": [
+        "total_mapping"
+      ],
+      "khop_hoan_toan": false
+    },
+    "construction_match": false,
+    "construction_chi_tiet": {
+      "mong_doi": [
+        "M",
+        "giao điểm của SD và (ABM)"
+      ],
+      "da_dung": {},
+      "thieu": [
+        "M",
+        "giao điểm của SD và (ABM)"
+      ],
+      "thua_dung": [
+        "diem_E",
+        "giao_diem_p",
+        "line_AB",
+        "line_CD",
+        "line_ME",
+        "line_SD",
+        "plane_ABM",
+        "plane_SCD"
+      ],
+      "khop_hoan_toan": false,
+      "vi_sao": "chưa dựng: ['M', 'giao điểm của SD và (ABM)']"
+    },
+    "obligation_match": false,
+    "oracle_dat": null,
+    "oracle_vi_sao": "UNGRADED: không nghĩa vụ nào khớp khoá oracle ['point_on_plane']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1743,
+        "candidates_tokens": 482,
+        "cached_content_tokens": 0,
+        "total_tokens": 3311,
+        "thoughts_tokens": 1086,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 601,
+        "candidates_tokens": 372,
+        "cached_content_tokens": 0,
+        "total_tokens": 3082,
+        "thoughts_tokens": 2109,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 2243,
+        "candidates_tokens": 2033,
+        "cached_content_tokens": 0,
+        "total_tokens": 8831,
+        "thoughts_tokens": 4555,
+        "calls": 1
+      },
+      "classify": {
+        "prompt_tokens": 5054,
+        "candidates_tokens": 159,
+        "cached_content_tokens": 0,
+        "total_tokens": 6083,
+        "thoughts_tokens": 870,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 2,
+    "logical_calls": 4,
+    "http_requests": 4,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 0,
+    "thu_that_bai": [],
+    "oracle_cham_lai": "bộ chấm quan hệ dùng checker server-owned, 2026-08-29"
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "total_mapping",
+        "container": "duong_thang_sd_mat_phang_abm",
+        "params": {
+          "witness": "giao_diem_p"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "diem_a",
+        "label": "Điểm A",
+        "values": [],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "diem_b",
+        "label": "Điểm B",
+        "values": [],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "diem_c",
+        "label": "Điểm C",
+        "values": [],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "diem_d",
+        "label": "Điểm D",
+        "values": [],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "diem_o",
+        "label": "Điểm O",
+        "values": [],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "diem_s",
+        "label": "Điểm S",
+        "values": [],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "diem_m",
+        "label": "Điểm M",
+        "values": [],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": {
+    "spec_version": "1.0",
+    "title": "Tìm giao điểm của đường thẳng SD với mặt phẳng (ABM)",
+    "description": "Tìm giao điểm của đường thẳng và mặt phẳng bằng phương pháp tìm giao tuyến của mặt phẳng phụ.",
+    "memory_declarations": [
+      {
+        "name": "diem_a",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "diem_a",
+        "model_assumption": null
+      },
+      {
+        "name": "diem_b",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "diem_b",
+        "model_assumption": null
+      },
+      {
+        "name": "diem_c",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "diem_c",
+        "model_assumption": null
+      },
+      {
+        "name": "diem_d",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "diem_d",
+        "model_assumption": null
+      },
+      {
+        "name": "diem_o",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "diem_o",
+        "model_assumption": null
+      },
+      {
+        "name": "diem_s",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "diem_s",
+        "model_assumption": null
+      },
+      {
+        "name": "diem_m",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": "diem_m",
+        "model_assumption": null
+      },
+      {
+        "name": "line_AB",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_CD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "diem_E",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_ABM",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "plane_SCD",
+        "type": "plane3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_ME",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "line_SD",
+        "type": "line3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "giao_diem_p",
+        "type": "point3",
+        "initial_value": null,
+        "element_type": null,
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      },
+      {
+        "name": "duong_thang_sd_mat_phang_abm",
+        "type": "array",
+        "initial_value": [],
+        "element_type": "null",
+        "key_type": null,
+        "val_type": null,
+        "source_fact_id": null,
+        "model_assumption": null
+      }
+    ],
+    "statements": [
+      {
+        "kind": "construct_line",
+        "target_var": "line_AB",
+        "through_a": "diem_a",
+        "through_b": "diem_b",
+        "label": "Dựng đường thẳng AB"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_CD",
+        "through_a": "diem_c",
+        "through_b": "diem_d",
+        "label": "Dựng đường thẳng CD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "diem_E",
+        "expr": {
+          "kind": "intersect_line_line",
+          "line_a": "line_AB",
+          "line_b": "line_CD"
+        },
+        "label": "Tìm giao điểm E của AB và CD trong mặt phẳng (ABCD)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_ABM",
+        "through": [
+          "diem_a",
+          "diem_b",
+          "diem_m"
+        ],
+        "label": "Dựng mặt phẳng (ABM)"
+      },
+      {
+        "kind": "construct_plane",
+        "target_var": "plane_SCD",
+        "through": [
+          "diem_s",
+          "diem_c",
+          "diem_d"
+        ],
+        "label": "Dựng mặt phẳng phụ (SCD) chứa đường thẳng SD"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_ME",
+        "through_a": "diem_m",
+        "through_b": "diem_E",
+        "label": "Tìm giao tuyến ME của mặt phẳng (ABM) và mặt phẳng (SCD)"
+      },
+      {
+        "kind": "construct_line",
+        "target_var": "line_SD",
+        "through_a": "diem_s",
+        "through_b": "diem_d",
+        "label": "Dựng đường thẳng SD"
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "giao_diem_p",
+        "expr": {
+          "kind": "intersect_line_line",
+          "line_a": "line_SD",
+          "line_b": "line_ME"
+        },
+        "label": "Giao điểm P của đường thẳng SD và giao tuyến ME chính là giao điểm cần tìm"
+      },
+      {
+        "kind": "write_index",
+        "container": "duong_thang_sd_mat_phang_abm",
+        "index": {
+          "kind": "literal",
+          "value": 0
+        },
+        "second_index": null,
+        "val": {
+          "kind": "var",
+          "name": "line_SD"
+        }
+      },
+      {
+        "kind": "write_index",
+        "container": "duong_thang_sd_mat_phang_abm",
+        "index": {
+          "kind": "literal",
+          "value": 1
+        },
+        "second_index": null,
+        "val": {
+          "kind": "var",
+          "name": "plane_ABM"
+        }
+      }
+    ],
+    "visual_bindings": {
+      "containers": [
+        {
+          "semantic_id": "duong_thang_sd_mat_phang_abm",
+          "primitive": "array_strip",
+          "label": "Dữ liệu bị hỏi",
+          "visited_ref": null,
+          "current_ref": null
+        }
+      ],
+      "pointers": [],
+      "value_boxes": [
+        {
+          "box_id": "box_diem_a",
+          "var_ref": "diem_a",
+          "label": "A"
+        },
+        {
+          "box_id": "box_diem_b",
+          "var_ref": "diem_b",
+          "label": "B"
+        },
+        {
+          "box_id": "box_diem_c",
+          "var_ref": "diem_c",
+          "label": "C"
+        },
+        {
+          "box_id": "box_diem_d",
+          "var_ref": "diem_d",
+          "label": "D"
+        },
+        {
+          "box_id": "box_diem_o",
+          "var_ref": "diem_o",
+          "label": "O"
+        },
+        {
+          "box_id": "box_diem_s",
+          "var_ref": "diem_s",
+          "label": "S"
+        },
+        {
+          "box_id": "box_diem_m",
+          "var_ref": "diem_m",
+          "label": "M"
+        },
+        {
+          "box_id": "box_line_AB",
+          "var_ref": "line_AB",
+          "label": "Đường AB"
+        },
+        {
+          "box_id": "box_line_CD",
+          "var_ref": "line_CD",
+          "label": "Đường CD"
+        },
+        {
+          "box_id": "box_diem_E",
+          "var_ref": "diem_E",
+          "label": "Điểm E"
+        },
+        {
+          "box_id": "box_plane_ABM",
+          "var_ref": "plane_ABM",
+          "label": "Mặt phẳng (ABM)"
+        },
+        {
+          "box_id": "box_plane_SCD",
+          "var_ref": "plane_SCD",
+          "label": "Mặt phẳng (SCD)"
+        },
+        {
+          "box_id": "box_line_ME",
+          "var_ref": "line_ME",
+          "label": "Giao tuyến ME"
+        },
+        {
+          "box_id": "box_line_SD",
+          "var_ref": "line_SD",
+          "label": "Đường SD"
+        },
+        {
+          "box_id": "box_giao_diem_p",
+          "var_ref": "giao_diem_p",
+          "label": "Giao điểm P"
+        }
+      ]
+    },
+    "pedagogical_intent": "Minh họa cách tìm giao điểm của đường thẳng và mặt phẳng bằng phương pháp tìm giao tuyến của hai mặt phẳng phụ."
+  },
+  "final_memory": {}
+}

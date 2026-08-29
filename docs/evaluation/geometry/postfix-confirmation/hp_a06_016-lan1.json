@@ -1,0 +1,141 @@
+{
+  "ban_ghi": {
+    "case_id": "hp_a06_016",
+    "lan": 1,
+    "do_tre_giay": 89.8,
+    "stage_reached": "semantic_program",
+    "executable": false,
+    "servable": false,
+    "error_code": "semantic_program_invalid",
+    "failure_category": null,
+    "reason": "SEMANTIC_PROGRAM_INVALID: Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.assign.expr\n  Input tag 'compare' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get', 'neighbors' [type=union_tag_invalid, input_value={'kind': 'compare', 'op':... 'literal', 'value': 0}}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/union_tag_invalid",
+    "details": null,
+    "so_nghia_vu": 1,
+    "nghia_vu_kinds": [
+      "perpendicular"
+    ],
+    "nghia_vu_mong_doi": [
+      "perpendicular"
+    ],
+    "verification_match": true,
+    "verification_chi_tiet": {
+      "mong_doi": [
+        "perpendicular"
+      ],
+      "khai": [
+        "perpendicular"
+      ],
+      "khop": [
+        "perpendicular"
+      ],
+      "thieu": [],
+      "thua": [],
+      "khop_hoan_toan": true
+    },
+    "construction_match": null,
+    "construction_chi_tiet": {
+      "mong_doi": [],
+      "da_dung": [],
+      "thieu": [],
+      "thua_dung": [],
+      "khop_hoan_toan": null,
+      "vi_sao": "đề không ra lệnh dựng vật nào — không áp dụng"
+    },
+    "obligation_match": true,
+    "oracle_dat": false,
+    "oracle_vi_sao": "FAIL: ['perpendicular: máy=None, đề mong True']",
+    "envelope_status": "unsupported",
+    "su_co": null,
+    "token": {
+      "analyze": {
+        "prompt_tokens": 1723,
+        "candidates_tokens": 403,
+        "cached_content_tokens": 0,
+        "total_tokens": 2846,
+        "thoughts_tokens": 720,
+        "calls": 1
+      },
+      "semantic_analyze": {
+        "prompt_tokens": 1112,
+        "candidates_tokens": 172,
+        "cached_content_tokens": 0,
+        "total_tokens": 1432,
+        "thoughts_tokens": 148,
+        "calls": 1
+      },
+      "semantic_program": {
+        "prompt_tokens": 9384,
+        "candidates_tokens": 3464,
+        "cached_content_tokens": 0,
+        "total_tokens": 27152,
+        "thoughts_tokens": 14304,
+        "calls": 3
+      },
+      "classify": {
+        "prompt_tokens": 4955,
+        "candidates_tokens": 72,
+        "cached_content_tokens": 0,
+        "total_tokens": 5849,
+        "thoughts_tokens": 822,
+        "calls": 1
+      }
+    },
+    "envelope_id": null,
+    "co_scene3d": false,
+    "so_doi_tuong_canh": 0,
+    "so_buoc_phat_lai": 0,
+    "run_id": "postfix-confirmation-v2",
+    "replicate_index": 1,
+    "logical_calls": 6,
+    "http_requests": 6,
+    "retry_requests": 0,
+    "transient_hits": 0,
+    "budget_aborted": false,
+    "so_lan_thu_sinh": 3,
+    "thu_that_bai": [
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.assign.expr\n  Input tag 'compare' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get'",
+      "Lỗi cú pháp schema SemanticProgramSpec: 8 validation errors for SemanticProgramSpec\nstatements.0.construct_point.expr\n  Input tag 'literal' found using 'kind' does not match any of the expected tags: 'intersect_line_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment' [type=union_tag_invalid, input_value={'kind': 'literal', 'value': [0, 0, 0]}, input_type=dict]\n    For furth",
+      "Lỗi cú pháp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec\nstatements.2.assign.expr\n  Input tag 'compare' found using 'kind' does not match any of the expected tags: 'literal', 'intersect_line_plane', 'intersect_plane_plane', 'intersect_line_line', 'midpoint', 'project_onto', 'divide_segment', 'measure', 'var', 'index', 'field', 'arith', 'unary', 'length', 'peek', 'map_get'"
+    ],
+    "oracle_cham_lai": "bộ chấm quan hệ dùng checker server-owned, 2026-08-29"
+  },
+  "request_contract": {
+    "obligations": [
+      {
+        "kind": "perpendicular",
+        "container": "AC",
+        "params": {
+          "witness": "B'D'"
+        }
+      }
+    ],
+    "input_facts": [
+      {
+        "fact_id": "hinh_hop_abcd_a_b_c_d",
+        "label": "Hình hộp",
+        "values": [
+          "ABCD.A'B'C'D'"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      },
+      {
+        "fact_id": "sau_mat_hinh_vuong",
+        "label": "Tính chất các mặt",
+        "values": [
+          "6 mặt đều là hình vuông"
+        ],
+        "provenance": "confirmed",
+        "source_start": null,
+        "source_end": null,
+        "source_text": null,
+        "unproven_values": []
+      }
+    ]
+  },
+  "generated_program": null,
+  "final_memory": {}
+}

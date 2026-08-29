@@ -1,0 +1,110 @@
+{
+  "khai": "XÁC NHẬN POSTFIX trên hệ V2 — KHÔNG phải Phase 7B chính thức",
+  "selection_hash": "0b55e0f9177676724ae4adba44f39beb57180905310c651d5dd4081c0af8b5fa",
+  "cong": "FAIL",
+  "thieu": [
+    "SAFE_OUTCOME 11/12",
+    "correct executable IR 2/12 < 10",
+    "stable cases 3/6 < 5",
+    "SCOPE failure có HỆ THỐNG: 2 lượt",
+    "GROUNDING failure có HỆ THỐNG: 2 lượt",
+    "accepted-but-wrong = 1, phải 0"
+  ],
+  "nguong": {
+    "repetitions": 12,
+    "safe": 12,
+    "correct_executable_ir": 10,
+    "on_dinh": 5,
+    "so_bai": 6
+  },
+  "so_luot": 12,
+  "so_bai": 6,
+  "k": 2,
+  "executable_ir": 4,
+  "correct_executable_ir": 2,
+  "safe": 11,
+  "unsafe_accepted": 1,
+  "served_khong_cham_duoc": 0,
+  "on_dinh": [
+    "hp_a02_005",
+    "hp_a03_007",
+    "hp_a10_025"
+  ],
+  "so_on_dinh": 3,
+  "theo_bai": {
+    "hp_a02_005": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_a03_007": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_a06_016": [
+      "fail_closed",
+      "dung"
+    ],
+    "hp_a09_022": [
+      "fail_closed",
+      "dung"
+    ],
+    "hp_a10_025": [
+      "fail_closed",
+      "fail_closed"
+    ],
+    "hp_a11_027": [
+      "fail_closed",
+      "SAI_MA_VAN_NHAN"
+    ]
+  },
+  "nhom_loi": {
+    "DETERMINISTIC": 1,
+    "MODEL_SYNTHESIS": 4,
+    "SCOPE": 2,
+    "GROUNDING": 2
+  },
+  "token": {
+    "prompt_tokens": 128038,
+    "candidates_tokens": 24589,
+    "cached_content_tokens": 15963,
+    "total_tokens": 230905,
+    "thoughts_tokens": 78278,
+    "calls": 46
+  },
+  "token_theo_chang": {
+    "analyze": {
+      "prompt_tokens": 20846,
+      "candidates_tokens": 6145,
+      "cached_content_tokens": 6265,
+      "total_tokens": 35915,
+      "thoughts_tokens": 8924,
+      "calls": 12
+    },
+    "classify": {
+      "prompt_tokens": 60626,
+      "candidates_tokens": 1434,
+      "cached_content_tokens": 904,
+      "total_tokens": 73685,
+      "thoughts_tokens": 11625,
+      "calls": 12
+    },
+    "semantic_analyze": {
+      "prompt_tokens": 9559,
+      "candidates_tokens": 2110,
+      "cached_content_tokens": 861,
+      "total_tokens": 16009,
+      "thoughts_tokens": 4340,
+      "calls": 9
+    },
+    "semantic_program": {
+      "prompt_tokens": 37007,
+      "candidates_tokens": 14900,
+      "cached_content_tokens": 7933,
+      "total_tokens": 105296,
+      "thoughts_tokens": 53389,
+      "calls": 13
+    }
+  },
+  "tokens_moi_luot": 19242,
+  "tokens_moi_correct_ir": 115452
+}
