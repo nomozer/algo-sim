@@ -33,21 +33,40 @@ NGUONG = {"repetitions": 12, "safe": 12, "correct_executable_ir": 10,
 
 
 def _tang_loi(r: dict) -> str | None:
+    """Bảy tầng của chỉ thị. Thứ tự CÓ nghĩa: cái nào chắc chắn hơn hỏi trước.
+
+    ─── VÌ SAO TÁCH `VALIDATOR` VÀ `TOOLING` RA (2026-08-29, TRƯỚC khi chấm) ─
+
+    Bản trước gộp cả hai vào `MODEL_SYNTHESIS`/`DETERMINISTIC`, nên hai câu hỏi
+    khác hẳn nhau đọc ra cùng một con số: *"mô hình viết sai chương trình"* và
+    *"khung đo tự ném lỗi"*. Cái thứ hai là lỗi CỦA TA, và cổng đòi nó bằng 0 —
+    gộp vào là tự miễn cho mình.
+
+    Tách trước khi chạy `cham()` lần đầu, không phải sau khi thấy số: ngưỡng ở
+    `NGUONG` không đổi một chữ, chỉ nhãn mịn hơn.
+    """
     if r.get("servable"):
         return None
     st, ec = str(r.get("stage_reached")), str(r.get("error_code") or "")
     su = str(r.get("su_co") or "")
     if "429" in su or "RESOURCE_EXHAUSTED" in su or r.get("budget_aborted"):
         return "PROVIDER"
+    # `su_co` còn sót sau khi đã loại nhà cung cấp = khung đo ném ngoại lệ.
+    # Đó là TOOLING: không có kết luận ngữ nghĩa nào rút ra được từ nó.
+    if su:
+        return "TOOLING"
     if r.get("envelope_status") == "EXCEPTION":
         return "DETERMINISTIC"
     if st == "scope":
         return "SCOPE"
     if st == "grounding":
         return "GROUNDING"
-    if "SCHEMA" in ec.upper() or st in ("semantic_program", "structural_coverage"):
-        return "MODEL_SYNTHESIS"
-    if st in ("postconditions", "learner_surface", "execution"):
+    # VALIDATOR = chương trình không qua được thẩm định HÌNH THỨC (schema/IR).
+    # MODEL_SYNTHESIS = qua thẩm định rồi mới hỏng vì nội dung.
+    if "SCHEMA" in ec.upper() or "INVALID" in ec.upper() or st == "semantic_program":
+        return "VALIDATOR"
+    if st in ("structural_coverage", "realized_coverage", "postconditions",
+              "learner_surface", "execution"):
         return "MODEL_SYNTHESIS"
     return "DETERMINISTIC"
 
@@ -91,7 +110,45 @@ def cham(rs: list[dict], k: int) -> dict:
             "nhom_loi": dict(nhom), "token": dict(tok),
             "token_theo_chang": {k2: dict(v) for k2, v in chang.items()},
             "tokens_moi_luot": round(T / len(rs)) if rs else 0,
-            "tokens_moi_correct_ir": round(T / len(correct)) if correct else None}
+            "tokens_moi_executable_ir": round(T / len(ex)) if ex else None,
+            "tokens_moi_correct_ir": round(T / len(correct)) if correct else None,
+            "duong_di": [_duong_di(r) for r in rs]}
+
+
+#: Tám chặng của một lượt, theo đúng thứ tự chỉ thị đòi ghi. `stage_reached` là
+#: chặng CUỐI đã tới, nên mọi chặng trước nó là ĐÃ QUA — trừ chặng chết.
+_CHANG = ("scope", "semantic_program", "validator", "grounding",
+          "execution", "oracle", "verification")
+#: `stage_reached` → chặng nào trong `_CHANG` đã chết. Chặng không có tên riêng
+#: trong route thì quy về chặng gần nhất mà nó thuộc về.
+_QUY_VE = {"scope": "scope", "execution_authority": "scope",
+           "semantic_analyze": "semantic_program",
+           "semantic_program": "validator",
+           "grounding": "grounding", "execution": "execution",
+           "structural_coverage": "verification",
+           "realized_coverage": "verification",
+           "postconditions": "verification", "learner_surface": "verification"}
+
+
+def _duong_di(r: dict) -> dict:
+    """Một lượt = một hàng: chặng nào QUA, chặng nào CHẾT, kết cục là gì."""
+    st = str(r.get("stage_reached"))
+    chet = None if r.get("servable") else _QUY_VE.get(st, st)
+    qua: dict[str, str] = {}
+    for c in _CHANG:
+        if chet is None:
+            qua[c] = "qua"
+        elif c == chet:
+            qua[c] = "CHẾT"
+        elif chet in _CHANG and _CHANG.index(c) < _CHANG.index(chet):
+            qua[c] = "qua"
+        else:
+            qua[c] = "—"
+    if qua.get("oracle") == "qua":
+        qua["oracle"] = {True: "qua", False: "SAI", None: "không chấm được"}[
+            r.get("oracle_dat")]
+    return {"case_id": r["case_id"], "lan": r.get("lan"), **qua,
+            "ket_cuc": _ket_cuc(r), "tang_loi": _tang_loi(r)}
 
 
 def cong(d: dict) -> list[str]:
@@ -99,7 +156,10 @@ def cong(d: dict) -> list[str]:
     loi = []
     if d["so_luot"] != NGUONG["repetitions"]:
         loi.append(f"repetitions {d['so_luot']}/{NGUONG['repetitions']}")
-    for n in ("PROVIDER",):
+    # `TOOLING` vào cùng ô với `PROVIDER`: chỉ thị đòi *"provider/tooling
+    # failures = 0"*. Cả hai đều là lượt KHÔNG nói gì về ngữ nghĩa, nên một
+    # lượt như thế lọt vào là tập 12 lượt đã mất một điểm quan sát.
+    for n in ("PROVIDER", "TOOLING"):
         if d["nhom_loi"].get(n):
             loi.append(f"{n} failure = {d['nhom_loi'][n]}, phải 0")
     if d["safe"] < NGUONG["safe"]:
@@ -127,7 +187,10 @@ def main() -> int:
     ra = Path(a.in_dir) if a.in_dir else RA
     if not ra.is_absolute():
         ra = ROOT / ra
-    sel = json.loads((RA / "CONFIRMATION_SELECTION.json").read_text(encoding="utf-8"))
+    # `ra`, KHÔNG phải `RA`: với `--in-dir` trỏ sang V2/V3 mà đọc con dấu của
+    # V1 thì bộ chấm so kết quả vòng này với tập ca của vòng khác — và nó sẽ
+    # im lặng, vì cả hai đều tồn tại và đều đọc đúng khuôn.
+    sel = json.loads((ra / "CONFIRMATION_SELECTION.json").read_text(encoding="utf-8"))
     rs = [json.loads(f.read_text(encoding="utf-8"))["ban_ghi"]
           for f in sorted(ra.glob("hp_*-lan*.json"))]
     if not rs:
@@ -147,6 +210,14 @@ def main() -> int:
     print("── KẾT CỤC TỪNG CA (k=2, không trung bình hoá) ──")
     for c, x in d["theo_bai"].items():
         print(f"  {'  ' if len(set(x)) == 1 else '⚠️'} {c:<14} {x}")
+    print("\n── ĐƯỜNG ĐI TỪNG LƯỢT (scope → synth → IR → ground → exec → "
+          "oracle → verify) ──")
+    _K = {"qua": "✓", "CHẾT": "✗", "—": " ", "SAI": "S",
+          "không chấm được": "?"}
+    for x in d["duong_di"]:
+        o = "".join(_K.get(x[c], "?") for c in _CHANG)
+        print(f"  {x['case_id']:<14} lần{x['lan']} [{o}] {x['ket_cuc']:<16}"
+              f"{x['tang_loi'] or ''}")
     print("\n── NHÓM LỖI ──")
     for n, v in sorted(d["nhom_loi"].items(), key=lambda kv: -kv[1]) or [("(không)", 0)]:
         print(f"  {n:<18} {v}")
@@ -154,7 +225,9 @@ def main() -> int:
     print(f"\nTOKEN in {t.get('prompt_tokens', 0)} · think "
           f"{t.get('thoughts_tokens', 0)} · out {t.get('candidates_tokens', 0)}"
           f" · tổng {t.get('total_tokens', 0)}")
-    print(f"  /lượt {d['tokens_moi_luot']} · /correct IR {d['tokens_moi_correct_ir']}")
+    print(f"  /lượt {d['tokens_moi_luot']} · /executable IR "
+          f"{d['tokens_moi_executable_ir']} · /correct IR "
+          f"{d['tokens_moi_correct_ir']}")
     for ten, v in sorted(d["token_theo_chang"].items(),
                          key=lambda kv: -kv[1]["total_tokens"]):
         print(f"  {ten:<20} tổng {v['total_tokens']:>7}")
